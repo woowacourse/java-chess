@@ -61,14 +61,27 @@ public class Board {
         Piece sourcePiece = findPiece(source);
         Piece targetPiece = findPiece(target);
 
-        validatePiecesPosition(sourcePiece, targetPiece);
-        validateTurn(sourcePiece);
-        validatePieceCanMove(sourcePiece, targetPiece, source, target);
-        validatePieceRoute(sourcePiece, source, target);
+        validate(sourcePiece, targetPiece, source, target);
 
         board.put(target, sourcePiece);
         board.put(source, Piece.from(PieceType.NONE));
         turnCount++;
+    }
+
+    private void validate(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
+        validatePiecesPosition(sourcePiece, targetPiece);
+        validateTurn(sourcePiece);
+        validatePieceCanMove(sourcePiece, targetPiece, source, target);
+        validatePieceRoute(sourcePiece, source, target);
+    }
+
+    private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
+        if (sourcePiece.isNone()) {
+            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
+        }
+        if (targetPiece.isAlly(turnCount)) {
+            throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
+        }
     }
 
     private void validateTurn(Piece sourcePiece) {
@@ -78,15 +91,6 @@ public class Board {
         }
         if (isEnemy && sourcePiece.isBlack()) {
             throw new IllegalArgumentException("지금은 White 차례입니다.");
-        }
-    }
-
-    private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isNone()) {
-            throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
-        }
-        if (targetPiece.isAlly(turnCount)) {
-            throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
         }
     }
 
@@ -107,23 +111,34 @@ public class Board {
         int columnDifference = target.getColumn() - source.getColumn();
 
         while (Math.abs(rowDifference) > 1 || Math.abs(columnDifference) > 1) {
-            if (rowDifference > 0) {
-                rowDifference--;
-            }
-            if (rowDifference < 0) {
-                rowDifference++;
-            }
-            if (columnDifference > 0) {
-                columnDifference--;
-            }
-            if (columnDifference < 0) {
-                columnDifference++;
-            }
+            rowDifference = consumeRow(rowDifference);
+            columnDifference = consumeColumn(columnDifference);
             Position position = new Position(source.getRow() + rowDifference, source.getColumn() + columnDifference);
-            if (!board.get(position).isNone()) {
+            Piece targetPiece = board.get(position);
+            if (targetPiece.isExist()) {
                 throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
             }
         }
+    }
+
+    private int consumeRow(int rowDifference) {
+        if (rowDifference > 0) {
+            rowDifference--;
+        }
+        if (rowDifference < 0) {
+            rowDifference++;
+        }
+        return rowDifference;
+    }
+
+    private int consumeColumn(int columnDifference) {
+        if (columnDifference > 0) {
+            columnDifference--;
+        }
+        if (columnDifference < 0) {
+            columnDifference++;
+        }
+        return columnDifference;
     }
 
     public Piece findPiece(Position position) {
