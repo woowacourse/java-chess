@@ -13,11 +13,15 @@ public class OutputView {
 
     public static void printChessBoard(final List<RankInfo> rankInfo) {
         for (final RankInfo info : rankInfo) {
-            for (final String piece : info.piecesOfRank()) {
-                System.out.print(piece);
-            }
+            printRank(info);
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printRank(final RankInfo info) {
+        for (final String piece : info.piecesOfRank()) {
+            System.out.print(piece);
+        }
     }
 }
