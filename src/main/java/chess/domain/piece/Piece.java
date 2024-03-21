@@ -16,6 +16,10 @@ public class Piece {
         return colorType.equals(ColorType.BLACK);
     }
 
+    public boolean isWhite() {
+        return colorType.equals(ColorType.WHITE);
+    }
+
     public boolean isSameType(String pieceViewName) {
         return pieceType.name().equals(pieceViewName);
     }

@@ -36,8 +36,8 @@ public class BoardTest {
     void move() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.a, Rank.SEVEN);
-        Square destination = Square.of(File.a, Rank.FIVE);
+        Square source = Square.of(File.a, Rank.TWO);
+        Square destination = Square.of(File.a, Rank.THREE);
 
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
@@ -73,7 +73,7 @@ public class BoardTest {
         // given
         Board board = new Board();
         Square source = Square.of(File.b, Rank.EIGHT);
-        Square destination = Square.of(File.d, Rank.SIX);
+        Square destination = Square.of(File.c, Rank.THREE);
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
@@ -84,10 +84,22 @@ public class BoardTest {
     void checkCanMove() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.b, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.SIX);
+        Square source = Square.of(File.b, Rank.ONE);
+        Square destination = Square.of(File.c, Rank.THREE);
 
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
+    }
+
+    @DisplayName("체스판은 턴에 해당하지 않는 말을 옮기려고 할 때 예외가 발생한다.")
+    @Test
+    void checkTurn() {
+        // given
+        Board board = new Board();
+        Square source = Square.of(File.b, Rank.SEVEN);
+        Square destination = Square.of(File.c, Rank.SIX);
+
+        // when & then
+        assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
     }
 }

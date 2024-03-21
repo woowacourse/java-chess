@@ -16,9 +16,11 @@ public class Board {
     public static final int  HORIZONTAL_DOWN_INDEX = -1;
 
     private final Map<Square, Piece> board;
+    private final Turn turn;
 
     public Board() {
         this.board = new BoardFactory().create();
+        this.turn = new Turn();
     }
 
     public BoardOutput toBoardOutput() {
@@ -29,6 +31,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
         Piece destinationPiece = board.get(destination);
 
+        checkTurn(sourcePiece);
         checkSameColor(sourcePiece, destinationPiece);
         checkCannotMove(source, destination, sourcePiece);
         checkPathBlocked(source, destination, sourcePiece);
@@ -36,6 +39,18 @@ public class Board {
         // TODO: 만약 말을 잡을 수 있으면 잡는 코드 추가
         board.replace(source, destinationPiece);
         board.replace(destination, sourcePiece);
+
+        turn.update();
+    }
+
+    private void checkTurn(Piece sourcePiece) {
+        if (turn.isBlackTurn() && sourcePiece.isWhite()) {
+            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+        }
+
+        if (turn.isWhiteTurn() && sourcePiece.isBlack()) {
+            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+        }
     }
 
     private void checkCannotMove(Square source, Square destination, Piece sourcePiece) {
