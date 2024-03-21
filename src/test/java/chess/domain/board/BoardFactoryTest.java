@@ -9,9 +9,7 @@ import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,39 +33,43 @@ public class BoardFactoryTest {
     private Map<Square, Piece> createExpectedBoard() {
         Map<Square, Piece> expected = new HashMap<>();
 
-        // TODO: 개선하기
-        expected.put(Square.of(File.a, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
-        expected.put(Square.of(File.b, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(Square.of(File.c, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(Square.of(File.d, Rank.ONE), new Piece(PieceType.QUEEN, ColorType.WHITE));
-        expected.put(Square.of(File.e, Rank.ONE), new Piece(PieceType.KING, ColorType.WHITE));
-        expected.put(Square.of(File.f, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(Square.of(File.g, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(Square.of(File.h, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
+        List<PieceType> pieceTypeOrder = List.of(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
 
-        for (File file : File.values()) {
-            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        }
+        makeWhitePiece(pieceTypeOrder, expected);
+        makeBlackPiece(pieceTypeOrder, expected);
+        makeEmptyPiece(expected);
 
-        expected.put(Square.of(File.a, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
-        expected.put(Square.of(File.b, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(Square.of(File.c, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(Square.of(File.d, Rank.EIGHT), new Piece(PieceType.QUEEN, ColorType.BLACK));
-        expected.put(Square.of(File.e, Rank.EIGHT), new Piece(PieceType.KING, ColorType.BLACK));
-        expected.put(Square.of(File.f, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(Square.of(File.g, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(Square.of(File.h, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
+        return expected;
+    }
 
-        for (File file : File.values()) {
-            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        }
-
+    private void makeEmptyPiece(Map<Square, Piece> expected) {
         for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
             for (File file : File.values()) {
                 expected.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
             }
         }
+    }
 
-        return expected;
+    private void makeBlackPiece(List<PieceType> pieceTypeOrder, Map<Square, Piece> expected) {
+        Iterator<PieceType> pieceTypeIterator = pieceTypeOrder.iterator();
+        Iterator<File> fileIterator = Arrays.stream(File.values()).iterator();
+
+        while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
+            File file = fileIterator.next();
+            expected.put(Square.of(file, Rank.EIGHT), new Piece(pieceTypeIterator.next(), ColorType.BLACK));
+            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        }
+    }
+
+    private void makeWhitePiece(List<PieceType> pieceTypeOrder, Map<Square, Piece> expected) {
+        Iterator<File> fileIterator = Arrays.stream(File.values()).iterator();
+        Iterator<PieceType> pieceTypeIterator = pieceTypeOrder.iterator();
+
+        while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
+            File file = fileIterator.next();
+            expected.put(Square.of(file, Rank.ONE), new Piece(pieceTypeIterator.next(), ColorType.WHITE));
+            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        }
     }
 }
