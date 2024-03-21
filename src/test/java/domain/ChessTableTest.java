@@ -115,7 +115,8 @@ class ChessTableTest {
 
         //then
         final Map<Square, Piece> pieceSquares = chessTable.getPieceSquares();
-        assertThat(pieceSquares.values()).doesNotContain(blackPiece);
+
+        assertThat(pieceSquares.values()).hasSize(31);
 
         assertThat(pieceSquares.get(blackTarget)).isEqualTo(whitePiece);
     }

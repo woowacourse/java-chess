@@ -3,10 +3,9 @@ package domain.piece;
 import domain.Camp;
 import domain.Square;
 import domain.SquareVector;
+import java.util.Objects;
 
 public class Queen extends Piece {
-
-    private static final PieceType PIECE_TYPE = PieceType.QUEEN;
 
     public Queen(final Camp color) {
         super(color);
@@ -21,7 +20,18 @@ public class Queen extends Piece {
 
 
     @Override
-    public PieceType getPieceType() {
-        return PIECE_TYPE;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Queen piece)) {
+            return false;
+        }
+        return this.camp == piece.camp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp, Queen.class);
     }
 }

@@ -87,14 +87,14 @@ public class ChessTable {
     }
 
     private void validateCamp(final Piece sourcePiece) {
-        if (sourcePiece.getCamp() != camp) {
+        if (sourcePiece.isOppositeCamp(camp)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
         }
     }
 
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
         final Piece targetPiece = pieceSquares.get(target);
-        if (targetPiece.getCamp() == sourcePiece.getCamp()) {
+        if (targetPiece.isSameCamp(sourcePiece)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
         if (!sourcePiece.canAttack(source, target)) {
@@ -113,7 +113,6 @@ public class ChessTable {
         final SquareVector direction = squareVector.scaleDown();
         final int count = squareVector.divide(direction);
 
-        final Square next = source.next(direction.y(), direction.x());
         final boolean isBlocking = Stream.iterate(source.next(direction.y(), direction.x()),
                         i -> i.next(direction.y(), direction.x()))
                 .limit(count - 1)

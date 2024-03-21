@@ -4,13 +4,13 @@ import domain.Camp;
 import domain.Square;
 import domain.SquareVector;
 import java.util.List;
+import java.util.Objects;
 
 public class Knight extends Piece {
 
     private static final List<SquareVector> SQUARE_VECTORS = List.of(
             new SquareVector(1, 2), new SquareVector(1, -2), new SquareVector(-1, 2), new SquareVector(-1, -2),
             new SquareVector(2, 1), new SquareVector(2, -1), new SquareVector(-2, 1), new SquareVector(-2, -1));
-    private static final PieceType PIECE_TYPE = PieceType.KNIGHT;
 
     public Knight(final Camp color) {
         super(color);
@@ -24,9 +24,19 @@ public class Knight extends Piece {
                 .anyMatch(vector -> vector.equals(targetSquareVector));
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Knight piece)) {
+            return false;
+        }
+        return this.camp == piece.camp;
+    }
 
     @Override
-    public PieceType getPieceType() {
-        return PIECE_TYPE;
+    public int hashCode() {
+        return Objects.hash(camp, Knight.class);
     }
 }

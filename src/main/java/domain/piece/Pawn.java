@@ -5,6 +5,7 @@ import domain.Rank;
 import domain.Square;
 import domain.SquareVector;
 import java.util.List;
+import java.util.Objects;
 
 public class Pawn extends Piece {
 
@@ -16,8 +17,6 @@ public class Pawn extends Piece {
     private static final SquareVector WHITE_START_SQUARE_VECTOR = new SquareVector(0, 2);
     private static final SquareVector BLACK_MOVE_SQUARE_VECTOR = new SquareVector(0, -1);
     private static final SquareVector WHITE_MOVE_SQUARE_VECTOR = new SquareVector(0, 1);
-
-    private static final PieceType PIECE_TYPE = PieceType.PAWN;
 
     public Pawn(final Camp color) {
         super(color);
@@ -55,7 +54,18 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return PIECE_TYPE;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Pawn piece)) {
+            return false;
+        }
+        return this.camp == piece.camp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(camp, Pawn.class);
     }
 }

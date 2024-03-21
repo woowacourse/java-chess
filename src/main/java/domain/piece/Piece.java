@@ -17,9 +17,15 @@ public abstract class Piece {
         return canMove(source, target);
     }
 
-    public abstract PieceType getPieceType();
-
-    public Camp getCamp() {
-        return camp;
+    public boolean isSameCamp(final Piece other) {
+        return this.camp == other.camp;
     }
+
+    public boolean isOppositeCamp(final Camp other) {
+        return camp != other;
+    }
+
+    public abstract boolean equals(final Object o);
+
+    public abstract int hashCode();
 }
