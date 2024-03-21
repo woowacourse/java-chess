@@ -41,7 +41,7 @@ public class ChessBoard {
 
     private void validatePathIsEmpty(List<ChessPosition> path) {
         if (path.isEmpty()) {
-            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+            throw new IllegalArgumentException("타겟 위치로 이동할 수 없습니다.");
         }
     }
 

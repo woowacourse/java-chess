@@ -24,7 +24,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 이름입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 이름입니다."));
     }
 
     public int minus(File other) {
@@ -36,7 +36,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 좌표입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 좌표입니다."));
     }
 
     public int getCoordinate() {

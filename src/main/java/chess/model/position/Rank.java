@@ -27,16 +27,16 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
-    public int minus(Rank other) {
-        return this.coordinate - other.coordinate;
-    }
-
     public Rank findNextRank(int offset) {
         int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
+    }
+
+    public int minus(Rank other) {
+        return this.coordinate - other.coordinate;
     }
 
     public boolean isPawnInitialRank(Side side) {

@@ -31,7 +31,7 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
 
     private static void validateArgumentsSize(List<String> results) {
         if (results.size() != ARGUMENTS_SIZE) {
-            throw new IllegalArgumentException("Source 위치와 Target 위치가 정확하지 않습니다.");
+            throw new IllegalArgumentException("소스 위치와 타겟 위치가 정확하지 않습니다.");
         }
     }
 
