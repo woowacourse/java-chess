@@ -40,7 +40,6 @@ public class InitialBoardGenerator implements BoardGenerator {
         squares.put(Position.of(8, 1), Rook.from(Color.WHITE));
     }
 
-
     @Override
     public Board create() {
         return new Board(squares);
