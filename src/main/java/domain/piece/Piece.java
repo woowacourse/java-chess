@@ -18,15 +18,22 @@ public class Piece {
     }
 
     public boolean isWhite() {
-        return this.color == Color.WHITE;
+        return color == Color.WHITE;
+    }
+
+    private boolean isBlack() {
+        return color == Color.BLACK;
     }
 
     public boolean canMove(Position source, Position target) {
-        return this.type.canMove(source, target);
+        if (isBlack() && isSameType(Type.PAWN)) {
+            return source.isForwardStraight(target, true);
+        }
+        return type.canMove(source, target);
     }
 
     public boolean isDifferentColor(Piece targetPiece) {
-        return this.color != targetPiece.color;
+        return color != targetPiece.color;
     }
 
     @Override

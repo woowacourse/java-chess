@@ -8,7 +8,7 @@ public enum Type {
     BISHOP(Position::isDiagonal),
     KING(Position::isNeighbor),
     KNIGHT(Position::isStraightDiagonal),
-    PAWN(Position::isForwardStraight),
+    PAWN((source, target) -> source.isForwardStraight(target, false)),
     QUEEN((source, target) -> source.isDiagonal(target) || source.isStraight(target)),
     ROOK(Position::isStraight),
     NONE((source, target) -> false),

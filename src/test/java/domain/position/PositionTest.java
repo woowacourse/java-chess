@@ -181,7 +181,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(file, rank);
 
-            assertThat(source.isForwardStraight(target)).isTrue();
+            assertThat(source.isForwardStraight(target, false)).isTrue();
         }
 
         @Test
@@ -190,7 +190,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.A, Rank.THREE);
 
-            assertThat(source.isForwardStraight(target)).isFalse();
+            assertThat(source.isForwardStraight(target, false)).isFalse();
         }
     }
 
