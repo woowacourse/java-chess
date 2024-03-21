@@ -5,11 +5,13 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -68,6 +70,22 @@ class PawnMoveStrategyTest {
                 Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.B, Rank.FIVE)),
                 Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.B, Rank.FOUR))
         );
+    }
+
+    @DisplayName("폰이 전진한 위치에 기물이 존재하면 이동할 수 없다.")
+    @Test
+    void isNotMovableToStraight() {
+        // Given
+        PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(TeamColor.WHITE);
+        Position source = new Position(File.B, Rank.TWO);
+        Position destination = new Position(File.B, Rank.THREE);
+        Set<Position> otherPositions = new HashSet<>(Set.of(destination));
+
+        // When
+        boolean movable = pawnMoveStrategy.isMovable(source, destination, otherPositions);
+
+        // Then
+        assertThat(movable).isFalse();
     }
 
 }

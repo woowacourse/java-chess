@@ -25,11 +25,10 @@ public class PawnMoveStrategy implements MoveStrategy {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
 
-        return goUpWhite(rowDiff, colDiff) || goUpUpWhite(rowDiff, colDiff, source) || goCrossWhite(rowDiff, colDiff, isExistOtherPiece);
-    }
+        boolean isStraightMovable = (goUpWhite(rowDiff, colDiff) || goUpUpWhite(rowDiff, colDiff, source)) && !isExistOtherPiece;
+        boolean isCrossMovable = goCrossWhite(rowDiff, colDiff) && isExistOtherPiece;
 
-    private boolean goCrossWhite(final int rowDiff, final int colDiff, final boolean isExistOtherPiece) {
-        return rowDiff == -1 && Math.abs(colDiff) == 1 && isExistOtherPiece;
+        return isStraightMovable || isCrossMovable;
     }
 
     private boolean goUpWhite(int rowDiff, int colDiff) {
@@ -40,16 +39,19 @@ public class PawnMoveStrategy implements MoveStrategy {
         return rowDiff == -2 && colDiff == 0 && isInitialPosition(source);
     }
 
+    private boolean goCrossWhite(final int rowDiff, final int colDiff) {
+        return rowDiff == -1 && Math.abs(colDiff) == 1;
+    }
+
 
     private boolean isBlackMovable(final Position source, final Position destination, final boolean isExistOtherPiece) {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
 
-        return goUpBlack(rowDiff, colDiff) || goUpUpBlack(rowDiff, colDiff, source) || goCrossBlack(rowDiff, colDiff, isExistOtherPiece);
-    }
+        boolean isStraightMovable = (goUpBlack(rowDiff, colDiff) || goUpUpBlack(rowDiff, colDiff, source)) && !isExistOtherPiece;
+        boolean isCrossMovable = goCrossBlack(rowDiff, colDiff) && isExistOtherPiece;
 
-    private boolean goCrossBlack(final int rowDiff, final int colDiff, final boolean isExistOtherPiece) {
-        return rowDiff == 1 && Math.abs(colDiff) == 1 && isExistOtherPiece;
+        return isStraightMovable || isCrossMovable;
     }
 
     private boolean goUpBlack(int rowDiff, int colDiff) {
@@ -58,6 +60,10 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     private boolean goUpUpBlack(int rowDiff, int colDiff, Position source) {
         return rowDiff == 2 && colDiff == 0 && isInitialPosition(source);
+    }
+
+    private boolean goCrossBlack(final int rowDiff, final int colDiff) {
+        return rowDiff == 1 && Math.abs(colDiff) == 1;
     }
 
     public boolean isInitialPosition(final Position position) {
