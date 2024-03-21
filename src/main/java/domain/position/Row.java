@@ -1,4 +1,4 @@
-package position;
+package domain.position;
 
 import java.util.Objects;
 
@@ -18,16 +18,16 @@ public class Row {
         position.moveBy(distance);
     }
 
-    public int getPositionValue() {
-        return position.getPosition();
-    }
-
     public int getRowDifference(Row row) {
         return position.getMinusPosition(row.position);
     }
 
     public Row copied() {
         return new Row(position.copied());
+    }
+
+    public boolean isSamePosition(int otherPosition) {
+        return position.isSame(otherPosition);
     }
 
     @Override

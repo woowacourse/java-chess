@@ -1,8 +1,8 @@
-package coordinate;
+package domain.coordinate;
 
+import domain.position.Column;
+import domain.position.Row;
 import java.util.Objects;
-import position.Column;
-import position.Row;
 
 public class Coordinate {
 
@@ -14,16 +14,16 @@ public class Coordinate {
         this.column = column;
     }
 
-    public int checkRow(Coordinate coordinate) {
+    public int calculateRowDifference(Coordinate coordinate) {
         return row.getRowDifference(coordinate.row);
     }
 
-    public int checkColumn(Coordinate coordinate) {
+    public int calculateColumnDifference(Coordinate coordinate) {
         return column.getColumnDifference(coordinate.column);
     }
 
-    public int getRowValue() {
-        return row.getPositionValue();
+    public boolean isSameRowPosition(int otherPosition) {
+        return row.isSamePosition(otherPosition);
     }
 
     public void moveByDistances(int rowDistance, int columnDistance) {

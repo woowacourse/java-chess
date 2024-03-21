@@ -1,13 +1,13 @@
-package strategy;
+package domain.piece.strategy;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import coordinate.Coordinate;
+import domain.coordinate.Coordinate;
+import domain.position.Column;
+import domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import position.Column;
-import position.Row;
 
 class KnightStrategyTest {
 
@@ -18,8 +18,8 @@ class KnightStrategyTest {
         Coordinate coordinate = new Coordinate(new Row(3), new Column(3));
         Coordinate destination = new Coordinate(new Row(row), new Column(column));
 
-        int rowDiff = coordinate.checkRow(destination);
-        int columnDiff = coordinate.checkColumn(destination);
+        int rowDiff = coordinate.calculateRowDifference(destination);
+        int columnDiff = coordinate.calculateColumnDifference(destination);
 
         assertThatThrownBy(() -> KnightStrategy.getMoveStrategy(rowDiff, columnDiff))
                 .isInstanceOf(IllegalArgumentException.class)
