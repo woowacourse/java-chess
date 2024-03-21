@@ -14,6 +14,17 @@ public abstract class Piece {
 
     public abstract boolean canMove(final Square from, final Square to);
 
+    public boolean isSameColor(final Piece piece) {
+        if (piece == null) {
+            return false;
+        }
+        return color == piece.color;
+    }
+
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
+    }
+
     public Color color() {
         return color;
     }

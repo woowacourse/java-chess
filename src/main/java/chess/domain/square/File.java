@@ -21,4 +21,15 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
+
+    public File move(int fileMoveUnit) {
+        return indexOf(this.ordinal() + fileMoveUnit);
+    }
+
+    private File indexOf(int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.ordinal() == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
+    }
 }

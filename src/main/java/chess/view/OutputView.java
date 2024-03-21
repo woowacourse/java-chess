@@ -7,7 +7,8 @@ import java.util.stream.IntStream;
 
 public class OutputView {
 
-    public static final char EMPTY_SQUARE = '.';
+    private static final char EMPTY_SQUARE = '.';
+    private static final int BOARD_SIZE = 8;
 
     public void printGameStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
@@ -21,7 +22,7 @@ public class OutputView {
     }
 
     private char[][] setUpBoard() {
-        char[][] board = new char[8][8];
+        char[][] board = new char[BOARD_SIZE][BOARD_SIZE];
         for (char[] line : board) {
             Arrays.fill(line, EMPTY_SQUARE);
         }
@@ -37,12 +38,12 @@ public class OutputView {
     }
 
     private char getPieceDisplay(final String type, final String color) {
-        return PieceView.valueOf(type).getDisplayOf(color);
+        return PieceView.valueOf(type).changeToView(color);
     }
 
     private void printBoardStatus(final char[][] board) {
         IntStream.range(0, board.length)
-                .mapToObj(i -> board[board.length - 1 - i])
+                .mapToObj(lineCount -> board[board.length - 1 - lineCount])
                 .map(String::new)
                 .forEach(System.out::println);
     }

@@ -17,8 +17,8 @@ class PieceViewTest {
         char expectedBlackPawn = 'P';
 
         //when
-        char whitePawnDisplay = PieceView.getDisplayOf("PAWN", "WHITE");
-        char blackPawnDisplay = PieceView.getDisplayOf("PAWN", "BLACK");
+        char whitePawnDisplay = PieceView.PAWN.changeToView("WHITE");
+        char blackPawnDisplay = PieceView.PAWN.changeToView("BLACK");
 
         //then
         assertAll(

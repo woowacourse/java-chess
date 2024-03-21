@@ -11,9 +11,12 @@ import chess.domain.piece.Rook;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BoardFactory {
     private BoardFactory() {
@@ -29,13 +32,8 @@ public class BoardFactory {
     }
 
     private static Map<Square, Piece> createLine(final Rank rank, final Map<File, Piece> line) {
-        Map<Square, Piece> arrangedLine = new HashMap<>();
-        for (Entry<File, Piece> fileToPiece : line.entrySet()) {
-            File file = fileToPiece.getKey();
-            Piece piece = fileToPiece.getValue();
-            arrangedLine.put(new Square(file, rank), piece);
-        }
-        return arrangedLine;
+        return line.entrySet().stream()
+                .collect(Collectors.toMap(entry -> new Square(entry.getKey(), rank), Entry::getValue));
     }
 
     private static Map<File, Piece> createPieceLine(final Color color) {
@@ -52,10 +50,7 @@ public class BoardFactory {
     }
 
     private static Map<File, Piece> createPawnLine(final Color color) {
-        Map<File, Piece> secondLine = new HashMap<>();
-        for (File file : File.values()) {
-            secondLine.put(file, new Pawn(color));
-        }
-        return secondLine;
+        return Arrays.stream(File.values())
+                .collect(Collectors.toMap(Function.identity(), file -> new Pawn(color)));
     }
 }

@@ -28,9 +28,9 @@ class SquareTest {
         assertThat(square.getRankIndex()).isEqualTo(expectedRankIndex);
     }
 
-    @DisplayName("유효하지 않은 파일이면 예외가 발생한다")
+    @DisplayName("유효하지 않은 파일, 랭크이면 예외가 발생한다")
     @ParameterizedTest
-    @ValueSource(strings = {"a9", "I8"})
+    @ValueSource(strings = {"I8", "a9", "I9"})
     void invalidSquare(String square) {
         //given & when & then
         assertThatThrownBy(() -> Square.from(square))

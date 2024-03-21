@@ -1,7 +1,6 @@
 package chess.view;
 
-import java.util.Arrays;
-import java.util.Objects;
+import chess.domain.piece.Color;
 
 public enum PieceView {
     KING('K'),
@@ -17,16 +16,8 @@ public enum PieceView {
         this.display = display;
     }
 
-    public static char getDisplayOf(final String type, final String color) {
-        return Arrays.stream(PieceView.values())
-                .filter(value -> value.name().equals(type))
-                .map(value -> value.getDisplayOf(color))
-                .findFirst()
-                .orElseThrow(IllegalAccessError::new);
-    }
-
-    public char getDisplayOf(final String color) {
-        if (Objects.equals(color, "WHITE")) {
+    public char changeToView(final String color) {
+        if (Color.WHITE.isSame(color)) {
             return Character.toLowerCase(display);
         }
         return display;

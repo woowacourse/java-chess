@@ -15,19 +15,13 @@ public class Square {
         String[] splitSquare = square.split("");
         File file = File.from(splitSquare[0]);
         Rank rank = Rank.from(splitSquare[1]);
-
         return new Square(file, rank);
     }
 
-    public static Square getNextSquare(final int fileIndex, final int rankIndex) {
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                if (file.ordinal() == fileIndex && rank.ordinal() == rankIndex) {
-                    return new Square(file, rank);
-                }
-            }
-        }
-        throw new IllegalStateException();
+    public Square move(int fileMoveUnit, int rankMoveUnit) {
+        File newFile = file.move(fileMoveUnit);
+        Rank newRank = rank.move(rankMoveUnit);
+        return new Square(newFile, newRank);
     }
 
     public int getFileIndex() {

@@ -28,7 +28,7 @@ class BoardTest {
         int expectedSize = 32;
 
         //when & then
-        assertThat(board.getPieces().keySet().size()).isEqualTo(expectedSize);
+        assertThat(board.getPieces().size()).isEqualTo(expectedSize);
     }
 
     @DisplayName("기물이 없는 위치를 이동시킬 경우 예외가 발생한다")
@@ -106,6 +106,7 @@ class BoardTest {
     @DisplayName("목적지로 이동한다")
     @Test
     void move() {
+        //given
         Square from = Square.from("a2");
         Square to = Square.from("a3");
 

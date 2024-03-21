@@ -15,6 +15,7 @@ import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,16 +23,20 @@ import org.junit.jupiter.api.Test;
 @DisplayName("기물 생성")
 class BoardFactoryTest {
 
+    Map<Square, Piece> pieces;
+
+    @BeforeEach
+    void setUp() {
+        pieces = BoardFactory.createBoard().getPieces();
+    }
+
     @DisplayName("검은 기물")
     @Nested
     class BlackTest {
         @DisplayName("검은 기물들의 생성에 성공한다")
         @Test
         void createBlackPieces() {
-            //given
-            Map<Square, Piece> pieces = BoardFactory.createBoard().getPieces();
-
-            //when & then
+            //given & when & then
             assertAll(
                     () -> assertThat(pieces.get(new Square(File.A, Rank.EIGHT))).isEqualTo(new Rook(Color.BLACK)),
                     () -> assertThat(pieces.get(new Square(File.B, Rank.EIGHT))).isEqualTo(new Knight(Color.BLACK)),
@@ -47,10 +52,7 @@ class BoardFactoryTest {
         @DisplayName("검은 폰 생성에 성공한다")
         @Test
         void createBlackPawns() {
-            //given
-            Map<Square, Piece> pieces = BoardFactory.createBoard().getPieces();
-
-            //when & then
+            //given & when & then
             assertAll(
                     () -> assertThat(pieces.get(new Square(File.A, Rank.SEVEN))).isEqualTo(new Pawn(Color.BLACK)),
                     () -> assertThat(pieces.get(new Square(File.B, Rank.SEVEN))).isEqualTo(new Pawn(Color.BLACK)),
@@ -70,10 +72,7 @@ class BoardFactoryTest {
         @DisplayName("흰 기물들의 생성에 성공한다")
         @Test
         void createWhitePieces() {
-            //given
-            Map<Square, Piece> pieces = BoardFactory.createBoard().getPieces();
-
-            //when & then
+            //given & when & then
             assertAll(
                     () -> assertThat(pieces.get(new Square(File.A, Rank.ONE))).isEqualTo(new Rook(Color.WHITE)),
                     () -> assertThat(pieces.get(new Square(File.B, Rank.ONE))).isEqualTo(new Knight(Color.WHITE)),
@@ -89,10 +88,7 @@ class BoardFactoryTest {
         @DisplayName("흰 폰 생성에 성공한다")
         @Test
         void createWhitePawns() {
-            //given
-            Map<Square, Piece> pieces = BoardFactory.createBoard().getPieces();
-
-            //when & then
+            //given & when & then
             assertAll(
                     () -> assertThat(pieces.get(new Square(File.A, Rank.TWO))).isEqualTo(new Pawn(Color.WHITE)),
                     () -> assertThat(pieces.get(new Square(File.B, Rank.TWO))).isEqualTo(new Pawn(Color.WHITE)),

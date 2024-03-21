@@ -21,4 +21,15 @@ public enum Rank {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK));
     }
+
+    private static Rank from(final int index) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.ordinal() == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK));
+    }
+
+    public Rank move(int rankMoveUnit) {
+        return Rank.from(this.ordinal() + rankMoveUnit);
+    }
 }
