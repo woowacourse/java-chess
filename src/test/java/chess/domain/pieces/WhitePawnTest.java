@@ -1,6 +1,5 @@
 package chess.domain.pieces;
 
-import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("폰")
-class PawnTest {
+@DisplayName("흰 폰")
+class WhitePawnTest {
 
     @DisplayName("움직일 수 있는 경우")
     @Nested
@@ -23,21 +22,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("a4");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
-
-            Square blackSource = Square.from("a7");
-            Square blackDestination = Square.from("a5");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
-            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isTrue();
-            assertThat(blackCanMove).isTrue();
         }
 
         @DisplayName("1칸 전진할 수 있다")
@@ -46,21 +38,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a3");
             Square whiteDestination = Square.from("a4");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
-
-            Square blackSource = Square.from("a6");
-            Square blackDestination = Square.from("a5");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
-            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isTrue();
-            assertThat(blackCanMove).isTrue();
         }
 
         @DisplayName("상대 기물이 있을 경우 대각선으로 공격할 수 있다")
@@ -69,21 +54,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("b3");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
-            Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("c6");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
-
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new Pawn(Color.BLACK));
-            boolean blackCanMove = blackPawn.canMove(blackMovement, new Pawn(Color.WHITE));
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());
 
             //then
             assertThat(whiteCanMove).isTrue();
-            assertThat(blackCanMove).isTrue();
         }
     }
 
@@ -97,21 +75,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a3");
             Square whiteDestination = Square.from("a5");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
-
-            Square blackSource = Square.from("a5");
-            Square blackDestination = Square.from("a3");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
-            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isFalse();
-            assertThat(blackCanMove).isFalse();
         }
 
         @DisplayName("상대 기물이 없을 경우 공격할 수 없다")
@@ -120,21 +91,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("b3");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
-
-            Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("c6");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
-            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isFalse();
-            assertThat(blackCanMove).isFalse();
         }
 
         @DisplayName("상대 기물이 바로 앞에 있을 경우 공격할 수 없다")
@@ -143,21 +107,14 @@ class PawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("a3");
-            Piece whitePawn = new Pawn(Color.WHITE);
+            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
-            Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("d6");
-            Piece blackPawn = new Pawn(Color.BLACK);
-            Movement blackMovement = new Movement(blackSource, blackDestination);
-
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new Pawn(Color.BLACK));
-            boolean blackCanMove = blackPawn.canMove(blackMovement, new Pawn(Color.WHITE));
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());
 
             //then
             assertThat(whiteCanMove).isFalse();
-            assertThat(blackCanMove).isFalse();
         }
     }
 }
