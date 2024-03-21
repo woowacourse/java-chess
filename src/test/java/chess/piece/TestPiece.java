@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 public class TestPiece extends Piece {
 
     public TestPiece(Color color) {
-        super(color);
+        super(color, ((fileDifference, rankDifference) -> false));
     }
 
     @Override

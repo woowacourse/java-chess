@@ -8,19 +8,14 @@ import chess.domain.position.RankDifference;
 
 public class Rook extends Piece {
 
-    private final Rule moveRule;
-
     public Rook(Color color) {
-        super(color);
-        moveRule = (fileDifference, rankDifference) ->
-                (!fileDifference.equals(new FileDifference(0)) && rankDifference.equals(new RankDifference(0))) ||
-                        (fileDifference.equals(new FileDifference(0)) && !rankDifference.equals(new RankDifference(0)));
+        super(color, decideRule());
     }
 
-    @Override
-    public boolean isMovable(Position from, Position to) {
-        PositionDifference positionDifference = from.calculateDifferenceTo(to);
-        return positionDifference.isObeyRule(moveRule);
+    private static Rule decideRule() {
+        return (fileDifference, rankDifference) ->
+                (!fileDifference.equals(new FileDifference(0)) && rankDifference.equals(new RankDifference(0))) ||
+                        (fileDifference.equals(new FileDifference(0)) && !rankDifference.equals(new RankDifference(0)));
     }
 
     @Override
