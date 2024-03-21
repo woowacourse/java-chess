@@ -6,6 +6,7 @@ public enum Command {
 
     START("start"),
     END("end"),
+    MOVE("move"),
     ;
 
     private final String value;
@@ -23,5 +24,21 @@ public enum Command {
 
     public boolean isStart() {
         return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
+
+    public boolean isSameAs(Command command) {
+        return this == command;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

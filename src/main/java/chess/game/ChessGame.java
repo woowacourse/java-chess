@@ -2,8 +2,11 @@ package chess.game;
 
 import chess.board.Board;
 import chess.board.BoardInitializer;
+import chess.board.Position;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.PositionDto;
 import chess.view.display.BoardDisplayConverter;
 import chess.view.display.RankDisplay;
 import java.util.List;
@@ -19,14 +22,43 @@ public class ChessGame {
     }
 
     public void run() {
+        outputView.printInitMessage();
         Board board = BoardInitializer.createBoard();
         BoardDisplayConverter converter = new BoardDisplayConverter();
+        List<RankDisplay> rankDisplays = converter.convert(board.pieces());
 
-        outputView.printInitMessage();
-        outputView.printCommandRequestMessage();
-        if (inputView.isCommandStart()) {
-            List<RankDisplay> rankDisplays = converter.convert(board.pieces());
-            outputView.printBoard(rankDisplays);
+        Command command = inputView.readCommand();
+        if (command.isStart()) {
+            startGame(board, converter);
         }
+    }
+
+    private void startGame(Board board, BoardDisplayConverter converter) {
+        printBoard(converter, board);
+        while (true) {
+            Command command = inputView.readCommand();
+            if (command.isEnd()) {
+                break;
+            }
+            if (command.isStart()) {
+                throw new IllegalArgumentException("이미 시작된 게임입니다.");
+            }
+            if (command.isMove()) {
+                Position source = readPosition();
+                Position destination = readPosition();
+                board.move(source, destination);
+                printBoard(converter, board);
+            }
+        }
+    }
+
+    private void printBoard(BoardDisplayConverter converter, Board board) {
+        List<RankDisplay> rankDisplays = converter.convert(board.pieces());
+        outputView.printBoard(rankDisplays);
+    }
+
+    private Position readPosition() {
+        PositionDto positionDto = inputView.readPosition();
+        return Position.of(positionDto.fileName(), positionDto.rankNumber());
     }
 }
