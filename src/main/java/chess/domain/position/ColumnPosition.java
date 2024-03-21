@@ -13,8 +13,20 @@ public class ColumnPosition {
         this.columnNumber = columnNumber;
     }
 
+    public int move(int columnMove) {
+        return columnNumber + columnMove;
+    }
+
     public int intervalWith(ColumnPosition otherColumnPosition) {
         return Math.abs(columnNumber - otherColumnPosition.columnNumber);
+    }
+
+    public boolean isLeft(ColumnPosition otherColumnPosition) {
+        return columnNumber < otherColumnPosition.columnNumber;
+    }
+
+    public boolean isRight(ColumnPosition otherColumnPosition) {
+        return columnNumber > otherColumnPosition.columnNumber;
     }
 
     private void validateNumberRange(int columnNumber) {

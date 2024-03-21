@@ -15,6 +15,10 @@ public class RowPosition {
         this.rowNumber = rowNumber;
     }
 
+    public int move(int rowMove) {
+        return rowNumber + rowMove;
+    }
+
     public RowPosition reverse() {
         return new RowPosition(MAX_NUMBER - rowNumber);
     }
@@ -24,11 +28,11 @@ public class RowPosition {
     }
 
     public boolean isHigherThan(RowPosition target) {
-        return rowNumber < target.rowNumber;
+        return rowNumber > target.rowNumber;
     }
 
     public boolean isLowerThan(RowPosition target) {
-        return rowNumber > target.rowNumber;
+        return rowNumber < target.rowNumber;
     }
 
     private void validateNumberRange(int rowNumber) {

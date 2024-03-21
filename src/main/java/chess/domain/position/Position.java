@@ -4,6 +4,8 @@ import static chess.domain.position.ColumnPosition.MAX_NUMBER;
 import static chess.domain.position.ColumnPosition.MIN_NUMBER;
 import static java.util.stream.Collectors.toMap;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -50,8 +52,8 @@ public class Position {
     }
 
     public Direction directionTo(Position target) {
-        boolean destinationHigher = target.rowPosition.isHigherThan(rowPosition);
-        return Direction.from(destinationHigher);
+        boolean destinationIsAbove = target.rowPosition.isLowerThan(rowPosition);
+        return Direction.from(destinationIsAbove);
     }
 
     public int squaredDistanceWith(Position target) {
@@ -60,8 +62,85 @@ public class Position {
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
 
+    //isDirectionRight(Position start, Position target)
+//isDirectionLeft(Position start, Position target)
+//isDirectionRight(Position start, Position target)
+//isDirectionRight(Position start, Position target)
+//isDirectionRight(Position start, Position target)
+//isDirectionRight(Position start, Position target)
+
     public boolean rowIs(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);
+    }
+
+    public List<Position> diagonalPath(Position target) {
+
+        //도착지와 현재 위치의 방향을 찾는다.
+        if (!isDiagonalWith(target)) {
+            throw new IllegalArgumentException("대각선 경로를 계산할 수 없습니다");
+        }
+
+        List<Position> path = new ArrayList<>();
+        int nextRowStep = 1;
+        int nextColumnStep = 1;
+
+        if (this.rowPosition.isLowerThan(target.rowPosition)) {
+            nextRowStep = -1;
+        }
+
+        if (this.columnPosition.isRight(target.columnPosition)) {
+            nextColumnStep = -1;
+        }
+
+        while (true) {
+            Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
+            if (nextPosition.equals(target)) {
+                break;
+            }
+            path.add(nextPosition);
+        }
+        return path;
+    }
+
+    public List<Position> straightPath(Position target) {
+
+        //도착지와 현재 위치의 방향을 찾는다.
+        if (!isStraightWith(target)) {
+            throw new IllegalArgumentException("직선 경로를 계산할 수 없습니다");
+        }
+
+        List<Position> path = new ArrayList<>();
+        int nextRowStep = 0;
+        int nextColumnStep = 0;
+
+        if (this.rowPosition.isLowerThan(target.rowPosition)) {
+            nextRowStep = 1;
+        }
+
+        if (this.rowPosition.isHigherThan(target.rowPosition)) {
+            nextRowStep = -1;
+        }
+
+        if (this.columnPosition.isLeft(target.columnPosition)) {
+            nextColumnStep = 1;
+        }
+
+        if (this.columnPosition.isRight(target.columnPosition)) {
+            nextColumnStep = -1;
+        }
+
+        while (true) {
+            Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
+            if (nextPosition.equals(target)) {
+                break;
+            }
+            path.add(nextPosition);
+        }
+        return path;
+    }
+
+    private Position movePosition(int rowMove, int columnMove) {
+        return Position.of(rowPosition.move(rowMove), columnPosition.move(columnMove));
     }
 
     @Override
