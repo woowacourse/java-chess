@@ -1,8 +1,7 @@
-package chess.conroller;
+package chess.controller;
 
 import chess.domain.ChessBoard;
 import chess.domain.StartCommand;
-import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -27,11 +26,14 @@ public class ChessController {
 
 
         List<String> positions = inputView.readMoveCommand();
-        chessBoard.move(new Position(positions.get(0)), new Position(positions.get(1)));
-        outputView.printChessBoard(chessBoard.getPieces());
-
-        if (!startCommand.equals(StartCommand.END)) {
-            startCommand = StartCommand.from(inputView.readEnd());
+        while (isNotEndCommand(positions)) {
+            chessBoard.move(positions);
+            outputView.printChessBoard(chessBoard.getPieces());
+            positions = inputView.readMoveCommand();
         }
+    }
+
+    private boolean isNotEndCommand(final List<String> positions) {
+        return !positions.isEmpty();
     }
 }

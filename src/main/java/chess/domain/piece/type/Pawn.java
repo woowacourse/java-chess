@@ -11,16 +11,23 @@ public class Pawn extends Piece {
         super(color, position);
     }
 
+    private boolean isInitPosition() {
+        if (color.equals(Color.WHITE)) {
+            return this.position.isTwoRank();
+        }
+        return this.position.isSevenRank();
+    }
+
     @Override
     public boolean canMoveTo(final Position target) {
         if (color.equals(Color.WHITE)) {
-            if (this.position.isTwoRank()) {
+            if (isInitPosition()) {
                 return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
             }
             return this.position.isForwardWithDistance(target, 1);
         }
 
-        if (this.position.isSevenRank()) {
+        if (isInitPosition()) {
             return this.position.isForwardWithDistance(target, -2) || this.position.isForwardWithDistance(target, -1);
         }
         return this.position.isForwardWithDistance(target, -1);
