@@ -191,6 +191,24 @@ public class ChessBoardTest {
                 .hasMessage("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
     }
 
+    @DisplayName("폰은 앞으로는 공격할 수 없다..")
+    @Test
+    void cannotPawnAttackVertical() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+        board.put(new Position("b3"), new Pawn(PieceColor.BLACK));
+        generatorStub.setBoard(board);
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 대각선으로만 공격할 수 있습니다.");
+    }
+
     @DisplayName("같은 색상의 기물을 연속해서 움직일 수 없다.")
     @Test
     void isNotTurn() {
