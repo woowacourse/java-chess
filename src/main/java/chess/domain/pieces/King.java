@@ -13,6 +13,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(final Movement movement, final Piece destinationPiece) {
-        return (movement.isCross() || movement.isDiagonal()) && movement.findDistance() == 1;
+        return (movement.isCross() || movement.isDiagonal()) && movement.calculateMaxDistance() == 1;
     }
 }

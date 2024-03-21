@@ -27,7 +27,7 @@ public class Movement {
         if (!(isCross() || isDiagonal())) {
             return Collections.emptySet();
         }
-        int distance = findDistance();
+        int distance = calculateMaxDistance();
         Set<Square> route = new HashSet<>();
         IntStream.range(1, distance)
                 .forEach(i -> route.add(calculateRoute(distance, i)));
@@ -42,7 +42,7 @@ public class Movement {
         return Math.abs(getFileDifference()) == Math.abs(getRankDifference());
     }
 
-    public int findDistance() {
+    public int calculateMaxDistance() {
         return Math.max(Math.abs(getFileDifference()), Math.abs(getRankDifference()));
     }
 
