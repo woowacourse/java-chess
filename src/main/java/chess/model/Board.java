@@ -91,7 +91,7 @@ public class Board {
         int rowDifference = target.getRow() - source.getRow();
         int columnDifference = target.getColumn() - source.getColumn();
 
-        while (rowDifference != 0 && columnDifference != 0) {
+        while (Math.abs(rowDifference) > 1 || Math.abs(columnDifference) > 1) {
             if (rowDifference > 0) {
                 rowDifference--;
             }
