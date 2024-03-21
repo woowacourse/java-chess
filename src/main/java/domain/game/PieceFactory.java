@@ -11,6 +11,9 @@ import java.util.Map;
 import static domain.game.PieceType.*;
 
 public class PieceFactory {
+    private PieceFactory() {
+    }
+
     private static final int MAXIMUM_MOVE_BOUND = 8;
     private static final int KING_MAXIMUM_MOVE_BOUND = 1;
     private static final MoveStrategy whitePawnStrategy = new PawnMoveStrategy(TeamColor.WHITE);
