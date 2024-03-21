@@ -47,6 +47,10 @@ public abstract class Piece {
         return pieceAttributes.hasSameColorOf(piece.getColor());
     }
 
+    public boolean hasDifferentColorWith(Piece piece) {
+        return !hasSameColorWith(piece);
+    }
+
     public boolean hasColorOf(Color color) {
         return pieceAttributes.hasSameColorOf(color);
     }
