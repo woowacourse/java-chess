@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 class BishopTest {
 
     @Test
-    @DisplayName("대각선 방향으로 움직일 수 있다(성공)")
-    void should_move_diagonal() {
+    @DisplayName("대각선 방향으로 칸 수 제한 없이 움직일 수 있다(성공)")
+    void should_move_diagonal_unlimited() {
         Piece piece = new Bishop(Color.WHITE);
 
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
@@ -27,8 +27,8 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("대각선 방향으로 움직일 수 있다(실패)")
-    void should_not_move_not_diagonal() {
+    @DisplayName("대각선 방향으로 칸 수 제한 없이 움직일 수 있다(실패)")
+    void should_not_move_not_diagonal_unlimited() {
         Piece piece = new Bishop(Color.WHITE);
 
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
