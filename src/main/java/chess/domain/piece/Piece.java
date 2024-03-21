@@ -49,4 +49,12 @@ public abstract class Piece {
     }
 
     public abstract Set<Position> getRoute(final Position target);
+
+    public boolean isBlack() {
+        return this.color.equals(Color.BLACK);
+    }
+
+    public boolean isWhite() {
+        return this.color.equals(Color.WHITE);
+    }
 }

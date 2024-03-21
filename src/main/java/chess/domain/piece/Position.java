@@ -194,4 +194,12 @@ public class Position {
         }
         return positions;
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
 }
