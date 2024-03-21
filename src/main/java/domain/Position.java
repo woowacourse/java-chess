@@ -110,12 +110,16 @@ public enum Position {
         return targetPosition.column - column;
     }
 
-    boolean isSameRow(Position targetPosition) {
-        return targetPosition.row == row;
+    boolean isOtherRow(Position targetPosition) {
+        return targetPosition.row != row;
     }
 
     boolean isSameColumn(Position targetPosition) {
         return targetPosition.column == column;
+    }
+
+    boolean isOtherColumn(Position targetPosition) {
+        return targetPosition.column != column;
     }
 
     int getColumn() {
