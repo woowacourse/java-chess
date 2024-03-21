@@ -4,20 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
+    Rook rook;
+    Position source;
+
+    @BeforeEach
+    void setUp() {
+        rook = new Rook(Color.WHITE);
+        source = Positions.of(File.A, Rank.ONE);
+    }
+
     @DisplayName("룩은 상하좌우로 움직일 수 있다.")
     @Test
     void canMove() {
         // given
-        Rook rook = new Rook(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.ONE, File.E);
+        Position target = Positions.of(File.E, Rank.ONE);
         Color color = Color.NONE;
 
         // when
@@ -31,10 +39,7 @@ class RookTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Rook rook = new Rook(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.ONE, File.E);
+        Position target = Positions.of(File.E, Rank.ONE);
         Color color = Color.WHITE;
 
         // when
@@ -48,10 +53,7 @@ class RookTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Rook rook = new Rook(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.F);
+        Position target = Positions.of(File.B, Rank.TWO);
         Color color = Color.NONE;
 
         // when
@@ -65,33 +67,27 @@ class RookTest {
     @Test
     void makePathVertical() {
         // given
-        Rook rook = new Rook(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.FOUR, File.C);
+        Position target = Positions.of(File.A, Rank.FOUR);
 
         // when
         List<Position> movingPath = rook.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.TWO, File.C)
-                , new Position(Rank.THREE, File.C));
+        assertThat(movingPath).contains(Positions.of(File.A, Rank.TWO)
+                , Positions.of(File.A, Rank.THREE));
     }
 
     @DisplayName("수평으로 이동한 룩의 이동 경로를 반환한다.")
     @Test
     void makePathHorizon() {
         // given
-        Rook rook = new Rook(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.ONE, File.F);
+        Position target = Positions.of(File.D, Rank.ONE);
 
         // when
         List<Position> movingPath = rook.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.ONE, File.D)
-                , new Position(Rank.ONE, File.E));
+        assertThat(movingPath).contains(Positions.of(File.B, Rank.ONE)
+                , Positions.of(File.C, Rank.ONE));
     }
 }

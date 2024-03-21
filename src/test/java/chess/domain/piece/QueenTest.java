@@ -4,20 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class QueenTest {
+    Queen queen;
+    Position source;
+
+    @BeforeEach
+    void setUp() {
+        queen = new Queen(Color.WHITE);
+        source = Positions.of(File.D, Rank.ONE);
+    }
+
     @DisplayName("퀸은 상하좌우로 움직일 수 있다.")
     @Test
     void canMove() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.ONE, File.E);
+        Position target = Positions.of(File.E, Rank.ONE);
         Color color = Color.NONE;
 
         // when
@@ -31,10 +39,7 @@ class QueenTest {
     @Test
     void canMoveDiagonal() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.E);
+        Position target = Positions.of(File.E, Rank.TWO);
         Color color = Color.NONE;
 
         // when
@@ -48,10 +53,7 @@ class QueenTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.E);
+        Position target = Positions.of(File.E, Rank.TWO);
         Color color = Color.WHITE;
 
         // when
@@ -65,10 +67,7 @@ class QueenTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.B);
+        Position target = Positions.of(File.E, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -82,50 +81,41 @@ class QueenTest {
     @Test
     void makePathDiagonal() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.FOUR, File.F);
+        Position target = Positions.of(File.G, Rank.FOUR);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.TWO, File.D)
-                , new Position(Rank.THREE, File.E));
+        assertThat(movingPath).contains(Positions.of(File.E, Rank.TWO)
+                , Positions.of(File.F, Rank.THREE));
     }
 
     @DisplayName("수직으로 이동한 퀸의 이동 경로를 반환한다.")
     @Test
     void makePathVertical() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.FOUR, File.C);
+        Position target = Positions.of(File.D, Rank.FOUR);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.TWO, File.C)
-                , new Position(Rank.THREE, File.C));
+        assertThat(movingPath).contains(Positions.of(File.D, Rank.TWO)
+                , Positions.of(File.D, Rank.THREE));
     }
 
     @DisplayName("수평으로 이동한 퀸의 이동 경로를 반환한다.")
     @Test
     void makePathHorizon() {
         // given
-        Queen queen = new Queen(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.ONE, File.F);
+        Position target = Positions.of(File.G, Rank.ONE);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.ONE, File.D)
-                , new Position(Rank.ONE, File.E));
+        assertThat(movingPath).contains(Positions.of(File.E, Rank.ONE)
+                , Positions.of(File.F, Rank.ONE));
     }
 }

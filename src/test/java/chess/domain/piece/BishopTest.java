@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,14 +18,14 @@ class BishopTest {
     @BeforeEach
     void setUp() {
         bishop = new Bishop(Color.WHITE);
-        source = new Position(Rank.ONE, File.C);
+        source = Positions.of(File.C, Rank.ONE);
     }
 
     @DisplayName("비숍은 대각선으로 움직일 수 있다.")
     @Test
     void canMove() {
         // given
-        Position target = new Position(Rank.THREE, File.E);
+        Position target = Positions.of(File.E, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -38,7 +39,7 @@ class BishopTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Position target = new Position(Rank.THREE, File.C);
+        Position target = Positions.of(File.C, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -52,7 +53,7 @@ class BishopTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Position target = new Position(Rank.THREE, File.E);
+        Position target = Positions.of(File.E, Rank.THREE);
         Color color = Color.WHITE;
 
         // when
@@ -66,13 +67,13 @@ class BishopTest {
     @Test
     void makePath() {
         // given
-        Position target = new Position(Rank.FOUR, File.F);
+        Position target = Positions.of(File.F, Rank.FOUR);
 
         // when
         List<Position> movingPath = bishop.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(new Position(Rank.TWO, File.D)
-                , new Position(Rank.THREE, File.E));
+        assertThat(movingPath).contains(Positions.of(File.D, Rank.TWO)
+                , Positions.of(File.E, Rank.THREE));
     }
 }

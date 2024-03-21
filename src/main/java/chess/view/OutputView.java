@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     private void printEachPiece(Map<Position, Piece> chessBoard, Rank rank, File file) {
-        Position position = Positions.of(rank, file);
+        Position position = Positions.of(file, rank);
         if (chessBoard.containsKey(position)) {
             Piece piece = chessBoard.get(position);
             System.out.print(PieceSymbol.convertToSymbol(piece));

@@ -4,20 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class KnightTest {
+    Knight knight;
+    Position source;
+
+    @BeforeEach
+    void setUp() {
+        knight = new Knight(Color.WHITE);
+        source = Positions.of(File.B, Rank.ONE);
+    }
+
     @DisplayName("나이트는 상, 하 1칸 + 좌, 우 2칸 움직일 수 있다.")
     @Test
     void canMove_1() {
         // given
-        Knight knight = new Knight(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.TWO, File.A);
+        Position target = Positions.of(File.D, Rank.TWO);
         Color color = Color.NONE;
 
         // when
@@ -31,10 +39,7 @@ class KnightTest {
     @Test
     void canMove_2() {
         // given
-        Knight knight = new Knight(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.D);
+        Position target = Positions.of(File.A, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -48,10 +53,7 @@ class KnightTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Knight knight = new Knight(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.THREE, File.D);
+        Position target = Positions.of(File.A, Rank.THREE);
         Color color = Color.WHITE;
 
         // when
@@ -65,10 +67,7 @@ class KnightTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Knight knight = new Knight(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.TWO, File.D);
+        Position target = Positions.of(File.D, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -82,10 +81,7 @@ class KnightTest {
     @Test
     void makePath() {
         // given
-        Knight knight = new Knight(Color.WHITE);
-
-        Position source = new Position(Rank.ONE, File.C);
-        Position target = new Position(Rank.TWO, File.C);
+        Position target = Positions.of(File.C, Rank.THREE);
 
         // when
         List<Position> movingPath = knight.searchPath(source, target);

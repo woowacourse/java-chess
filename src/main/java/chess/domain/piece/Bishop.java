@@ -41,7 +41,7 @@ public class Bishop implements Piece {
 
         List<Position> path = new ArrayList<>();
         for (int i = Math.abs(rankDiff); i != 1; i--) {
-            source = source.move(rankUnit, fileUnit);
+            source = source.move(fileUnit, rankUnit);
             path.add(source);
         }
         return path;

@@ -71,18 +71,18 @@ public class ChessBoard {
 
     private void initializePawnRank(Rank rank, Color color) {
         for (File file : File.values()) {
-            chessBoard.put(Positions.of(rank, file), new Pawn(color));
+            chessBoard.put(Positions.of(file, rank), new Pawn(color));
         }
     }
 
     private void initializeEdgeRank(Rank rank, Color color) {
-        chessBoard.put(Positions.of(rank, File.A), new Rook(color));
-        chessBoard.put(Positions.of(rank, File.B), new Knight(color));
-        chessBoard.put(Positions.of(rank, File.C), new Bishop(color));
-        chessBoard.put(Positions.of(rank, File.D), new Queen(color));
-        chessBoard.put(Positions.of(rank, File.E), new King(color));
-        chessBoard.put(Positions.of(rank, File.F), new Bishop(color));
-        chessBoard.put(Positions.of(rank, File.G), new Knight(color));
-        chessBoard.put(Positions.of(rank, File.H), new Rook(color));
+        chessBoard.put(Positions.of(File.A, rank), new Rook(color));
+        chessBoard.put(Positions.of(File.B, rank), new Knight(color));
+        chessBoard.put(Positions.of(File.C, rank), new Bishop(color));
+        chessBoard.put(Positions.of(File.D, rank), new Queen(color));
+        chessBoard.put(Positions.of(File.E, rank), new King(color));
+        chessBoard.put(Positions.of(File.F, rank), new Bishop(color));
+        chessBoard.put(Positions.of(File.G, rank), new Knight(color));
+        chessBoard.put(Positions.of(File.H, rank), new Rook(color));
     }
 }

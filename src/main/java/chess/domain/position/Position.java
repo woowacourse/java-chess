@@ -4,31 +4,31 @@ import chess.domain.piece.Color;
 import java.util.Objects;
 
 public class Position {
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
-    public boolean findPosition(Rank rank, File file) {
-        return rank == this.rank && file == this.file;
-    }
-
-    public int calculateRankDifference(Position target) {
-        return rank.calculateDifference(target.rank);
+    public boolean findPosition(File file, Rank rank) {
+        return file == this.file && rank == this.rank;
     }
 
     public int calculateFileDifference(Position target) {
         return file.calculateDifference(target.file);
     }
 
-    public Position move(int rankUnit, int fileUnit) {
-        Rank movedRank = rank.move(rankUnit);
-        File movedFile = file.move(fileUnit);
+    public int calculateRankDifference(Position target) {
+        return rank.calculateDifference(target.rank);
+    }
 
-        return Positions.of(movedRank, movedFile);
+    public Position move(int fileUnit, int rankUnit) {
+        File movedFile = file.move(fileUnit);
+        Rank movedRank = rank.move(rankUnit);
+
+        return Positions.of(movedFile, movedRank);
     }
 
     public boolean isPawnFirstTry(Color color) {
@@ -47,11 +47,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return rank == position.rank && file == position.file;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        return Objects.hash(file, rank);
     }
 }

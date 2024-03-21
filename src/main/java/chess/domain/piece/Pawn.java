@@ -41,7 +41,7 @@ public class Pawn implements Piece {
         List<Position> path = new ArrayList<>();
 
         if (Math.abs(rankDiff) == 2) {
-            source = source.move(rankDiff / 2, 0);
+            source = source.move(0, rankDiff / 2);
             path.add(source);
         }
 

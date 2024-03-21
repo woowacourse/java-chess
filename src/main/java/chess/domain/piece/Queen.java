@@ -61,7 +61,7 @@ public class Queen implements Piece {
 
         List<Position> path = new ArrayList<>();
         for (int i = count; i != 1; i--) {
-            source = source.move(rankUnit, fileUnit);
+            source = source.move(fileUnit, rankUnit);
             path.add(source);
         }
         return path;

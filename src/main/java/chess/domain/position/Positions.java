@@ -13,9 +13,9 @@ public class Positions {
     public Positions() {
     }
 
-    public static Position of(Rank rank, File file) {
+    public static Position of(File file, Rank rank) {
         return positions.stream()
-                .filter(position -> position.findPosition(rank, file))
+                .filter(position -> position.findPosition(file, rank))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("해당되는 포지션이 없습니다."));
     }
@@ -27,7 +27,7 @@ public class Positions {
         File file = File.convertToFile(FileSymbol.convertToFileSymbol(fileValue));
         Rank rank = Rank.convertToRank(rankValue);
 
-        return Positions.of(rank, file);
+        return Positions.of(file, rank);
     }
 
     private static List<Position> generate() {
@@ -39,7 +39,7 @@ public class Positions {
 
     private static List<Position> generatePositionsByFile(Rank rank) {
         return Arrays.stream(File.values())
-                .map(file -> new Position(rank, file))
+                .map(file -> new Position(file, rank))
                 .collect(Collectors.toList());
     }
 }

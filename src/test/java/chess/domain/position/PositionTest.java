@@ -13,10 +13,10 @@ class PositionTest {
         // given
         Rank rank = Rank.ONE;
         File file = File.A;
-        Position position = new Position(Rank.ONE, File.A);
+        Position position = Positions.of(File.A, Rank.ONE);
 
         // when
-        boolean isRightPosition = position.findPosition(rank, file);
+        boolean isRightPosition = position.findPosition(file, rank);
 
         // then
         assertThat(isRightPosition).isTrue();

@@ -9,12 +9,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class PositionsTest {
     @DisplayName("position목록에서 해당되는 position을 찾아온다")
     @ParameterizedTest
-    @CsvSource(value = {"ONE,A", "SIX,C", "EIGHT,H"})
-    void validateCachedPosition(Rank rank, File file) {
+    @CsvSource(value = {"A,ONE", "C,SIX", "H,EIGHT"})
+    void validateCachedPosition(File file, Rank rank) {
         // given, when
-        Position position = Positions.of(rank, file);
+        Position position = Positions.of(file, rank);
 
         // then
-        assertThat(position).isEqualTo(new Position(rank, file));
+        assertThat(position).isEqualTo(Positions.of(file, rank));
     }
 }

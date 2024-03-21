@@ -43,7 +43,7 @@ public class Rook implements Piece {
 
             List<Position> path = new ArrayList<>();
             for (int i = Math.abs(rankDiff); i != 1; i--) {
-                source = source.move(rankUnit, 0);
+                source = source.move(0, rankUnit);
                 path.add(source);
             }
             return path;
@@ -53,7 +53,7 @@ public class Rook implements Piece {
 
         List<Position> path = new ArrayList<>();
         for (int i = Math.abs(fileDiff); i != 1; i--) {
-            source = source.move(0, fileUnit);
+            source = source.move(fileUnit, 0);
             path.add(source);
         }
         return path;
