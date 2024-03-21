@@ -30,41 +30,53 @@ public class Pawn extends Piece {
         Set<Position> movablePositions = new HashSet<>();
 
         directions.forEach(direction -> {
-            Position position = currentPosition;
-            if (!position.canMoveNext(direction)) {
+            if (!currentPosition.canMoveNext(direction)) {
                 return;
             }
 
+            addForwardMoves(board, direction, currentPosition, movablePositions);
+            addDiagonalMoves(board, direction, currentPosition, movablePositions);
+        });
+        return movablePositions;
+    }
+
+    private void addForwardMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
+        if (!direction.isDiagonal()) {
             int currentRank = position.getRank();
-            if ((DEFAULT_WHITE_RANK == currentRank && direction == Direction.NORTH) ||
-                    (DEFAULT_BLACK_RANK == currentRank && direction == Direction.SOUTH)) {
-                Position firstPosition = position.next(direction);
-                Position secondPosition = firstPosition.next(direction);
-
-                Piece firstPiece = board.findPieceByPosition(firstPosition);
-                Piece secondPiece = board.findPieceByPosition(secondPosition);
-
-                if (firstPiece.isEmpty() && secondPiece.isEmpty()) {
-                    movablePositions.add(secondPosition);
-                }
+            Position nextPosition = position.next(direction);
+            Piece firstPiece = board.findPieceByPosition(nextPosition);
+            if (firstPiece.isEmpty()) {
+                movablePositions.add(nextPosition);
+                addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
             }
+        }
+    }
 
-            if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-                position = position.next(direction);
-                Piece piece = board.findPieceByPosition(position);
-                if (piece.isEmpty()) {
-                    movablePositions.add(position);
-                    return;
-                }
+    private void addMultipleForwardMoves(Board board, Direction direction, Set<Position> movablePositions,
+                                         int currentRank,
+                                         Position nextPosition) {
+        if (isStartingPosition(direction, currentRank)) {
+            Position nextNextPosition = nextPosition.next(direction);
+            Piece secondPiece = board.findPieceByPosition(nextNextPosition);
+            if (secondPiece.isEmpty()) {
+                movablePositions.add(nextNextPosition);
             }
+        }
+    }
 
+    private void addDiagonalMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
+        if (direction.isDiagonal()) {
             position = position.next(direction);
             Piece piece = board.findPieceByPosition(position);
 
             if (!isSameColor(piece) && !piece.isEmpty()) {
                 movablePositions.add(position);
             }
-        });
-        return movablePositions;
+        }
+    }
+
+    private boolean isStartingPosition(Direction direction, int currentRank) {
+        return (DEFAULT_WHITE_RANK == currentRank && direction == Direction.NORTH) ||
+                (DEFAULT_BLACK_RANK == currentRank && direction == Direction.SOUTH);
     }
 }

@@ -60,15 +60,15 @@ public enum Direction {
         return Set.of(Direction.NORTH, Direction.NORTH_WEST, Direction.NORTH_EAST);
     }
 
+    public boolean isDiagonal() {
+        return ofDiagonal().contains(this);
+    }
+
     public int getX() {
         return x;
     }
 
     public int getY() {
         return y;
-    }
-
-    public boolean isDiagonal() {
-        return ofDiagonal().contains(this);
     }
 }
