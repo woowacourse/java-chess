@@ -102,7 +102,7 @@ class BoardTest {
         pieces.put(Position.of("a", 1), new Rook(Color.WHITE));
         Board board = new Board(pieces);
         Position source = Position.of("a", 1);
-        Position destination = Position.of("c", 3);
+        Position destination = Position.of("b", 3);
         // when, then
         Assertions.assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)

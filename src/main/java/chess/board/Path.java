@@ -1,6 +1,7 @@
 package chess.board;
 
 import chess.piece.Piece;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -15,12 +16,19 @@ public class Path {
 
     public static Path createExcludingBothEnds(Position source, Position destination) {
         Direction direction = Direction.calculateBetween(source, destination);
-        List<Position> positions = Stream.iterate(
+        if (direction == Direction.KNIGHT) {
+            return new Path(Collections.emptyList());
+        }
+        List<Position> positions = getPositionsBetween(source, destination, direction);
+        return new Path(positions);
+    }
+
+    private static List<Position> getPositionsBetween(Position source, Position destination, Direction direction) {
+        return Stream.iterate(
                         direction.nextPosition(source),
                         position -> position.isNotEquals(destination),
                         direction::nextPosition)
                 .toList();
-        return new Path(positions);
     }
 
     public boolean hasPieceOnRoute(Map<Position, Piece> pieces) {

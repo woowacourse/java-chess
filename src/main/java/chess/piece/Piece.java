@@ -26,11 +26,11 @@ public abstract class Piece {
     }
 
     protected boolean isReachable(Position source, Position destination, Direction direction) {
-        int step = (int) Stream.iterate(source,
+        int distance = (int) Stream.iterate(source,
                         position -> position.isNotEquals(destination),
                         direction::nextPosition)
                 .count();
-        return step <= getMaxUnitMove();
+        return distance <= getMaxUnitMove();
     }
 
     protected abstract int getMaxUnitMove();

@@ -35,20 +35,22 @@ public class ChessGame {
 
     private void startGame(Board board, BoardDisplayConverter converter) {
         printBoard(converter, board);
-        while (true) {
-            Command command = inputView.readCommand();
-            if (command.isEnd()) {
-                break;
-            }
-            if (command.isStart()) {
-                throw new IllegalArgumentException("이미 시작된 게임입니다.");
-            }
-            if (command.isMove()) {
-                Position source = readPosition();
-                Position destination = readPosition();
-                board.move(source, destination);
-                printBoard(converter, board);
-            }
+        Command command = inputView.readCommand();
+        while (!command.isEnd()) {
+            proceedTurn(board, converter, command);
+            command = inputView.readCommand();
+        }
+    }
+
+    private void proceedTurn(Board board, BoardDisplayConverter converter, Command command) {
+        if (command.isStart()) {
+            throw new IllegalArgumentException("이미 시작된 게임입니다.");
+        }
+        if (command.isMove()) {
+            Position source = readPosition();
+            Position destination = readPosition();
+            board.move(source, destination);
+            printBoard(converter, board);
         }
     }
 
