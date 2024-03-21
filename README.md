@@ -6,6 +6,10 @@
 
 - [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
 
+
+# 객체 협력 관계
+![object-relations](src/main/java/resources/static/chess-step-1.png)
+
 # 기능 요구사항
 
 ## Board
