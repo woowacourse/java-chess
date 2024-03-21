@@ -1,5 +1,10 @@
-package domain;
+package domain.game;
 
+import domain.game.Board;
+import domain.game.BoardInitializer;
+import domain.game.Piece;
+import domain.game.PieceFactory;
+import domain.game.PieceType;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -9,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static domain.TeamColor.WHITE;
+import static domain.game.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

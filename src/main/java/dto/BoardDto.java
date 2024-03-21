@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Board;
-import domain.PieceType;
+import domain.game.Board;
+import domain.game.PieceType;
 import domain.position.Position;
 
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package domain.strategy;
 
-import domain.TeamColor;
+import domain.game.TeamColor;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

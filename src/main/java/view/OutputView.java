@@ -1,6 +1,6 @@
 package view;
 
-import domain.PieceType;
+import domain.game.PieceType;
 import domain.position.Position;
 import dto.BoardDto;
 

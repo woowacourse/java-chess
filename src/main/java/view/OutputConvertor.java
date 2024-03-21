@@ -1,10 +1,10 @@
 package view;
 
-import domain.PieceType;
+import domain.game.PieceType;
 
 import java.util.Map;
 
-import static domain.PieceType.*;
+import static domain.game.PieceType.*;
 
 public class OutputConvertor {
     private static final Map<PieceType, String> pieceFormat = Map.ofEntries(

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.position.File;
 import domain.position.Position;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static domain.PieceType.*;
+import static domain.game.PieceType.*;
 import static domain.position.File.*;
 import static domain.position.Rank.*;
 

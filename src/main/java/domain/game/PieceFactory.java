@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.position.UnitVector;
 import domain.strategy.ContinuousMoveStrategy;
@@ -8,7 +8,7 @@ import domain.strategy.PawnMoveStrategy;
 
 import java.util.Map;
 
-import static domain.PieceType.*;
+import static domain.game.PieceType.*;
 
 public class PieceFactory {
     private static final int MAXIMUM_MOVE_BOUND = 8;

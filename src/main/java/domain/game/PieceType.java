@@ -1,7 +1,7 @@
-package domain;
+package domain.game;
 
-import static domain.TeamColor.BLACK;
-import static domain.TeamColor.WHITE;
+import static domain.game.TeamColor.BLACK;
+import static domain.game.TeamColor.WHITE;
 
 public enum PieceType {
     BLACK_PAWN(BLACK),

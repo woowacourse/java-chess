@@ -1,6 +1,9 @@
 package controller;
 
 import domain.*;
+import domain.game.Board;
+import domain.game.BoardInitializer;
+import domain.game.Turn;
 import dto.BoardDto;
 import dto.RequestDto;
 import view.InputView;

@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 import domain.position.Position;
 import domain.strategy.MoveStrategy;
