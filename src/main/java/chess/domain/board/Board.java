@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.Movement;
+import chess.domain.square.Movement;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class Board {
-    private static final String INVALID_TURN = "헤당 색의 턴이 아닙니다.";
+
     private static final String INVALID_PIECE_MOVEMENT = "해당 기물은 위치로 이동할 수 없습니다.";
     private static final String NO_PIECE_EXCEPTION = "해당 위치에 기물이 없습니다.";
 
@@ -22,9 +22,9 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void move(final Square from, final Square to, final Color turn) {
+    public void move(final Square from, final Square to) {
         Piece sourcePiece = pieces.get(from);
-        validateSourcePiece(sourcePiece, turn);
+        validateSourcePiece(sourcePiece);
         Piece destinationPiece = pieces.get(to);
         validateDestinationColor(sourcePiece, destinationPiece);
 
@@ -35,13 +35,9 @@ public class Board {
         pieces.put(to, sourcePiece);
     }
 
-    private void validateSourcePiece(final Piece piece, final Color turn) {
+    private void validateSourcePiece(final Piece piece) {
         if (piece == null) {
             throw new IllegalArgumentException(NO_PIECE_EXCEPTION);
-        }
-
-        if (!piece.isSameColor(turn)) {
-            throw new IllegalArgumentException(INVALID_TURN);
         }
     }
 
@@ -73,6 +69,12 @@ public class Board {
         if (pieces.get(square) != null) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
+    }
+
+    public boolean checkTurn(final Square square, final Color turn) {
+        Piece piece = pieces.get(square);
+        validateSourcePiece(piece);
+        return piece.isSameColor(turn);
     }
 
     public List<PieceResponse> createBoardStatus() {

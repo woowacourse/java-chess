@@ -39,19 +39,7 @@ class BoardTest {
         Square to = Square.from("c5");
 
         //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("해당 턴이 아닌 경우 예외가 발생한다")
-    @Test
-    void invalidTurn() {
-        //given
-        Square from = Square.from("c2");
-        Square to = Square.from("c3");
-
-        //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.BLACK))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,7 +51,7 @@ class BoardTest {
         Square to = Square.from("c5");
 
         //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -75,7 +63,7 @@ class BoardTest {
         Square to = Square.from("f4");
 
         //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -87,7 +75,7 @@ class BoardTest {
         Square to = Square.from("c3");
 
         //when & then
-        assertThatCode(() -> board.move(from, to, Color.WHITE))
+        assertThatCode(() -> board.move(from, to))
                 .doesNotThrowAnyException();
     }
 
@@ -99,7 +87,7 @@ class BoardTest {
         Square to = Square.from("a2");
 
         //when & then
-        assertThatThrownBy(() -> board.move(from, to, Color.WHITE))
+        assertThatThrownBy(() -> board.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -111,7 +99,7 @@ class BoardTest {
         Square to = Square.from("a3");
 
         //when
-        board.move(from, to, Color.WHITE);
+        board.move(from, to);
         List<PieceResponse> boardStatus = board.createBoardStatus();
 
         //then

@@ -2,7 +2,7 @@ package chess.domain.pieces;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Movement;
+import chess.domain.square.Movement;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
