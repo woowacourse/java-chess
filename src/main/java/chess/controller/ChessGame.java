@@ -4,12 +4,16 @@ import chess.dto.BoardDTO;
 import chess.dto.PositionDTO;
 import chess.model.board.Board;
 import chess.model.board.InitialBoardGenerator;
+import chess.model.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ChessGame {
+    private static final Color START_COLOR = Color.WHITE;
+
     private final OutputView outputView;
     private final InputView inputView;
 
@@ -30,8 +34,10 @@ public class ChessGame {
         Board board = new InitialBoardGenerator().create();
         GameStatus gameStatus = new GameStatus();
         showBoard(board);
+        Color currnetColor = START_COLOR;
         while (gameStatus.isRunning()) {
-            retryOnException(() -> playTurn(gameStatus, board));
+            retryOnException((color) -> playTurn(gameStatus, board, color), currnetColor);
+            currnetColor = currnetColor.getOpposite();
         }
     }
 
@@ -40,7 +46,7 @@ public class ChessGame {
         outputView.printBoard(boardDTO);
     }
 
-    private void playTurn(GameStatus gameStatus, Board board) {
+    private void playTurn(GameStatus gameStatus, Board board, Color color) {
         Command command = inputView.askCommand();
         if (command == Command.START) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
@@ -49,14 +55,14 @@ public class ChessGame {
             gameStatus.stop();
             return;
         }
-        move(board);
+        move(board, color);
         showBoard(board);
     }
 
-    private void move(Board board) {
+    private void move(Board board, Color color) {
         PositionDTO sourcePositionDTO = inputView.askPosition();
         PositionDTO targetPositionDTO = inputView.askPosition();
-        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
+        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity(), color);
     }
 
     private Command getValidCommand() {
@@ -69,6 +75,15 @@ public class ChessGame {
         } catch (IllegalArgumentException e) {
             outputView.printException(e.getMessage());
             retryOnException(action);
+        }
+    }
+
+    private <T> void retryOnException(Consumer<T> action, T value) {
+        try {
+            action.accept(value);
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            retryOnException(action, value);
         }
     }
 

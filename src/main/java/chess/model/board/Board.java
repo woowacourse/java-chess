@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.piece.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.piece.Type;
@@ -43,9 +44,12 @@ public class Board {
                 .toList();
     }
 
-    public void move(Position source, Position destination) {
-        Movement movement = new Movement(source, destination);
+    public void move(Position source, Position destination, Color color) {
+        Movement movement = new Movement(source, destination); // TODO: getter 쓰고 인자 줄이기
         Piece sourcePiece = squares.get(source);
+        if (!sourcePiece.hasColor(color)) {
+            throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
+        }
         Piece targetPiece = squares.get(destination);
         validateMove(movement, sourcePiece, targetPiece);
         squares.put(destination, sourcePiece);
