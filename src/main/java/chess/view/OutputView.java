@@ -28,7 +28,7 @@ public class OutputView {
     }
 
     public static void printInputAgainMessage() {
-        System.out.println("잘못된 명령어입니다.");
+        System.out.println("다시 입력하세요.");
     }
 
     public static void printWrongMovementMessage() {
