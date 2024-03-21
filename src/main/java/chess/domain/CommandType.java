@@ -14,4 +14,12 @@ public enum CommandType {
     public String getCommandType() {
         return commandType;
     }
+
+    public boolean sameCommand(String command) {
+        return this.commandType.equals(command);
+    }
+
+    public boolean differentCommand(String command) {
+        return !this.commandType.equals(command);
+    }
 }

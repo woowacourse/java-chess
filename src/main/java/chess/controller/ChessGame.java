@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
+    private static final int BOARD_SIZE = 8;
+    private static final int INDEX_OFFSET = 1;
+    private static final String EMPTY_PIECE = ".";
+
     private final Board board;
 
     public ChessGame(Board board) {
@@ -27,11 +31,11 @@ public class ChessGame {
 
     public void startGame() {
         String startCommand = InputView.inputCommand().get(0);
-        while (!isCommandStart(startCommand) && !isCommandEnd(startCommand)) {
+        while (START.differentCommand(startCommand) && END.differentCommand(startCommand)) {
             OutputView.printInputAgainMessage();
             startCommand = InputView.inputCommand().get(0);
         }
-        if (isCommandStart(startCommand)) {
+        if (START.sameCommand(startCommand)) {
             OutputView.printBoard(makeBoardDto(board.getBoard()));
             playGame();
         }
@@ -47,76 +51,55 @@ public class ChessGame {
     private Team playTurn(Team turn) {
         List<String> commands = InputView.inputCommand();
         String command = commands.get(0);
-        while (!isCommandMove(command) && !isCommandEnd(command)) {
+        while (MOVE.differentCommand(command) && END.differentCommand(command)) {
             OutputView.printInputAgainMessage();
             command = InputView.inputCommand().get(0);
         }
-        if (isCommandMove(command)) {
+        if (MOVE.sameCommand(command)) {
             return playMoveCommand(commands, turn);
         }
         return Team.NONE;
     }
 
     private Team playMoveCommand(List<String> commands, Team turn) {
-        boolean isMoveNoError = movePieceAndRenewBoard(commands, turn);
-        if (isMoveNoError) {
-            return Team.takeTurn(turn);
-        }
-        return turn;
-    }
-
-    private boolean isCommandStart(String startCommand) {
-        return startCommand.equals(START.getCommandType());
-    }
-
-    private boolean isCommandMove(String startCommand) {
-        return startCommand.equals(MOVE.getCommandType());
-    }
-
-    private boolean isCommandEnd(String startCommand) {
-        return startCommand.equals(END.getCommandType());
-    }
-
-    private boolean movePieceAndRenewBoard(List<String> commands, Team turn) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
         if (source.equals(target) || !isCorrectTurn(source, turn)) {
             OutputView.printWrongMovementMessage();
-            return false;
+            return turn;
         }
 
-        movePieceAndRenewBoard(source, target);
-        OutputView.printBoard(makeBoardDto(board.getBoard()));
-        return true;
-    }
-
-    public void movePieceAndRenewBoard(Position source, Position target) {
         board.movePieceAndRenewBoard(source, target);
+        OutputView.printBoard(makeBoardDto(board.getBoard()));
+        return Team.takeTurn(turn);
     }
 
-    public boolean isCorrectTurn(Position source, Team team) {
+    private boolean isCorrectTurn(Position source, Team team) {
         return board.getBoard().get(source).isSameTeam(team);
     }
 
     private BoardDto makeBoardDto(Map<Position, Piece> board) {
-        List<List<String>> rawBoard = new ArrayList<>();
-
-        for (int i = 0; i < 8; i++) {
-            List<String> row = new ArrayList<>(Collections.nCopies(8, "."));
-            rawBoard.add(row);
-        }
-
+        List<List<String>> rawBoard = makeRawBoard();
         for (var entrySet : board.entrySet()) {
             Position position = entrySet.getKey();
             Piece piece = entrySet.getValue();
-
-            int realYPosition = position.getY() - 1;
-            int realXPosition = position.getX() - 1;
             PieceType pieceType = piece.getType();
             PieceInfo pieceInfo = piece.getPieceInfo();
 
-            rawBoard.get(realYPosition).set(realXPosition, pieceType.getPieceLetter(pieceInfo.getTeam()));
+            rawBoard.get(position.getY() - INDEX_OFFSET)
+                    .set(position.getX() - INDEX_OFFSET, pieceType.getPieceLetter(pieceInfo.getTeam()));
         }
         return new BoardDto(rawBoard);
+    }
+
+    private List<List<String>> makeRawBoard() {
+        List<List<String>> rawBoard = new ArrayList<>();
+
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            List<String> row = new ArrayList<>(Collections.nCopies(BOARD_SIZE, EMPTY_PIECE));
+            rawBoard.add(row);
+        }
+
+        return rawBoard;
     }
 }
