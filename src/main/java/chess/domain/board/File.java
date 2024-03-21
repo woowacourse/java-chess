@@ -1,23 +1,23 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Objects;
 
-class Rank {
+class File {
 
-    private static final int MIN_VALUE_RANGE = 1;
-    private static final int MAX_VALUE_RANGE = 8;
+    private static final char MIN_VALUE_RANGE = 'a';
+    private static final char MAX_VALUE_RANGE = 'h';
 
-    private final int value;
+    private final char value;
 
-    public Rank(int value) {
+    public File(char value) {
         if (value < MIN_VALUE_RANGE || value > MAX_VALUE_RANGE) {
-            throw new IllegalArgumentException("유효한 범위의 숫자가 아닙니다.");
+            throw new IllegalArgumentException("유효한 범위의 알파벳이 아닙니다.");
         }
 
         this.value = value;
     }
 
-    public int getValue() {
+    public char getValue() {
         return value;
     }
 
@@ -25,8 +25,8 @@ class Rank {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Rank rank = (Rank) o;
-        return value == rank.value;
+        File file = (File) o;
+        return value == file.value;
     }
 
     @Override

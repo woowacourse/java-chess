@@ -1,7 +1,7 @@
 package chess.view;
 
 import java.util.List;
-import chess.domain.Board;
+import chess.domain.board.Board;
 
 public class OutputView {
 

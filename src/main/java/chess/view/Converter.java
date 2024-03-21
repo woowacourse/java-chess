@@ -3,8 +3,8 @@ package chess.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import chess.domain.Board;
-import chess.domain.Coordinate;
+import chess.domain.board.Board;
+import chess.domain.board.Coordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
