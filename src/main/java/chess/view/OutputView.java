@@ -21,6 +21,7 @@ public class OutputView {
             PieceType.BISHOP, "B", PieceType.ROOK, "R", PieceType.PAWN, "P"
     );
     private static final String EMPTY_SPACE = ".";
+    private static final String ERROR_PREFIX = "[ERROR] ";
 
     public void printStartGame() {
         System.out.println("""
@@ -65,5 +66,9 @@ public class OutputView {
     private void printWhitePiece(PieceType type) {
         String display = PIECE_DISPLAY.get(type);
         System.out.print(display.toLowerCase());
+    }
+
+    public void printExceptionMessage(Exception exception) {
+        System.out.println(ERROR_PREFIX + exception.getMessage());
     }
 }
