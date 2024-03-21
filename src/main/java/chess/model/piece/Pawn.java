@@ -15,12 +15,14 @@ public class Pawn extends Piece {
         if (type.isWhite()) {
             boolean isRowUp = rowDifference == -1;
             boolean isColumnNeutral = columnDifference == 0;
-            return isRowUp && isColumnNeutral;
+            boolean isInitialMove = rowDifference == -2 && source.getRow() == 6;
+            return isColumnNeutral && (isRowUp || isInitialMove);
         }
         if (type.isBlack()) {
             boolean isRowDown = rowDifference == 1;
             boolean isColumnNeutral = columnDifference == 0;
-            return isRowDown && isColumnNeutral;
+            boolean isInitialMove = rowDifference == 2 && source.getRow() == 1;
+            return isColumnNeutral && (isRowDown || isInitialMove);
         }
         return false;
     }
