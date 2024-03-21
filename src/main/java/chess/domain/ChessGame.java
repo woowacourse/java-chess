@@ -99,17 +99,10 @@ public class ChessGame {
     }
 
     public void movePiece(List<Position> positions, Position from, Position to) {
-        Piece fromPiece = board.findPieceByPosition(from);
-        Position toPosition = positions.stream()
-                .filter(position -> position.equals(to))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다."));
-        if (board.hasPiece(toPosition)) {
-            Piece toPiece = board.findPieceByPosition(toPosition);
-            if (fromPiece.isSameTeam(toPiece)) {
-                throw new RuntimeException("같은 팀 기물 위치로 이동시킬 수 없습니다.");
-            }
+        if (positions.contains(to)) {
+            board.movePiece(from, to);
+            return;
         }
-        board.movePiece(from, to);
+        throw new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다.");
     }
 }
