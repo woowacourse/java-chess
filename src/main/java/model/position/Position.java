@@ -1,4 +1,4 @@
-package model;
+package model.position;
 
 import java.util.HashSet;
 import java.util.Objects;
