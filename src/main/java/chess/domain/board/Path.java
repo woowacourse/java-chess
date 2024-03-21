@@ -1,13 +1,24 @@
 package chess.domain.board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Path {
     private final List<Step> steps;
 
     public Path(List<Step> steps) {
+        validatePathDistance(steps);
         this.steps = steps;
+    }
+
+    private void validatePathDistance(List<Step> steps) {
+        if (steps.size() > 7) {
+            throw new IllegalArgumentException("경로의 길이는 7칸을 넘을 수 없습니다.");
+        }
+        if (steps.isEmpty()) {
+            throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
+        }
     }
 
     //TODO 정팩매 이름 찾아
@@ -31,8 +42,6 @@ public class Path {
         return steps.size() == size;
     }
 
-    //TODO getter 삭제
-    //TODO 네이밍 고민
     public boolean categoryNumOf(int categorySize) {
         return steps.stream()
                 .map(Step::getDirection)

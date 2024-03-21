@@ -1,15 +1,40 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PathTest {
+    @DisplayName("경로의 길이는 7칸을 넘을 수 없다.")
+    @Test
+    void pathMaxLengthTest() {
+        assertThatThrownBy(
+                () -> new Path(List.of(
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY),
+                        new Step(Direction.DOWN, SquareState.EMPTY)
+                )))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로의 길이는 7칸을 넘을 수 없습니다.");
+    }
 
-    //TODO 최대 7칸의 경로를 생성해야 한다.
+    @DisplayName("경로의 길이는 1칸 이상이어야 한다.")
+    @Test
+    void pathMinLengthTest() {
+        assertThatThrownBy(() -> new Path(Collections.emptyList()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("제자리 경로를 생성할 수 없습니다.");
+    }
 
     @DisplayName("경로의 길이를 판별할 수 있다.")
     @Test
@@ -22,7 +47,6 @@ class PathTest {
         assertThat(path.isSizeOf(2)).isTrue();
     }
 
-    //TODO 네이밍 고민하기
     @DisplayName("방향의 종류 개수를 판별할 수 있다.")
     @Test
     void categoryNumOfTest() {
