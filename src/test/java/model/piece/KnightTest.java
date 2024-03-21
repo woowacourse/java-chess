@@ -52,7 +52,13 @@ class KnightTest {
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(Position.from("a8"), Position.from("c7"))),
-                Arguments.of(new Moving(Position.from("a8"), Position.from("b6")))
+                Arguments.of(new Moving(Position.from("a8"), Position.from("b6"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("c4"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("b5"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("b7"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("c8"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("e8"))),
+                Arguments.of(new Moving(Position.from("d6"), Position.from("f7")))
         );
     }
 }
