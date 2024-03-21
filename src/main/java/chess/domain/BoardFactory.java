@@ -1,16 +1,16 @@
 package chess.domain;
 
 import chess.domain.color.Color;
-import chess.domain.piece.sliding.Bishop;
-import chess.domain.piece.pawn.BlackFirstPawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
 import chess.domain.piece.blank.Blank;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.nonsliding.Knight;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.piece.pawn.BlackFirstPawn;
+import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.piece.sliding.Bishop;
 import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
-import chess.domain.piece.pawn.WhiteFirstPawn;
 import java.util.HashMap;
 import java.util.Map;
 

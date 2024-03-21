@@ -35,7 +35,7 @@ public class ChessGameController {
             startChessGame(chessGame);
             return;
         }
-        System.out.println("'start'를 입력하면 체스 게임을 시작합니다.");
+        outputView.printGuidanceForStart();
         waitStartCommand();
     }
 
@@ -43,7 +43,7 @@ public class ChessGameController {
         try {
             doOneRound(chessGame);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
         startChessGame(chessGame);
     }

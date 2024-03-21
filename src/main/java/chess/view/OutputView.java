@@ -15,9 +15,17 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public void printGuidanceForStart() {
+        System.out.println("'start'를 입력하면 체스 게임을 시작합니다.");
+    }
+
     public void printBoard(Map<Position, PieceType> board) {
         List<String> lines = PieceDisplay.makeBoardDisplay(board);
         lines.forEach(System.out::println);
         System.out.println();
+    }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
     }
 }

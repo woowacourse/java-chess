@@ -20,8 +20,8 @@ class ChessGameTest {
     @DisplayName("턴은 번갈아 가며 진행된다.")
     Collection<DynamicTest> changeTurnColor() {
         ChessGame chessGame = new ChessGame(new TestBoardFactory().getTestBoard(Map.of(
-                new Position(1, 1), new Rook(new Position(1,1), Color.WHITE),
-                new Position(8, 8), new Rook(new Position(8,8), Color.BLACK)
+                new Position(1, 1), new Rook(new Position(1, 1), Color.WHITE),
+                new Position(8, 8), new Rook(new Position(8, 8), Color.BLACK)
         )));
 
         return List.of(
