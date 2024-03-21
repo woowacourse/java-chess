@@ -5,7 +5,7 @@ import static domain.PieceType.QUEEN;
 
 import java.util.Optional;
 
-final class Queen extends AbstractMoveStraightMovePiece {
+final class Queen extends AbstractStraightMovePiece {
     Queen(Position position, Team team) {
         super(position, team);
     }
