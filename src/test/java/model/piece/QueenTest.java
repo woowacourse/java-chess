@@ -1,13 +1,15 @@
 package model.piece;
 
-import static model.position.Position.*;
+import static model.position.Position.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Set;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,25 +17,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class QueenTest {
 
-    @DisplayName("이동할 수 없는 경로면 false를 반환한다.")
-    @ParameterizedTest
-    @MethodSource("cantMovableParameterProvider")
-    void cantMovable(Moving moving) {
-        Queen queen = new Queen(Camp.BLACK);
-
-        Assertions.assertThat(queen.canMovable(moving)).isFalse();
-    }
-
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
     void invalidRoute(Moving moving) {
         Queen queen = new Queen(Camp.BLACK);
 
-        Assertions.assertThatThrownBy(() -> queen.getRoute(moving))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertAll(
+                () -> assertThat(queen.canMovable(moving)).isFalse(),
+                () -> assertThatThrownBy(() -> queen.getRoute(moving))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
     }
-
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
@@ -45,23 +40,17 @@ class QueenTest {
         );
     }
 
-
-    @DisplayName("이동할 수 있는 경로면 true를 반환한다.")
-    @ParameterizedTest
-    @MethodSource("canMovableParameterProvider")
-    void canMovable(Moving moving, Set<Position> expected) {
-        Queen queen = new Queen(Camp.BLACK);
-
-        Assertions.assertThat(queen.canMovable(moving)).isTrue();
-    }
-
-    @DisplayName("이동할 수 있는 경로면 해당 경로를 반환한다.")
+    @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
     void checkRoute(Moving moving, Set<Position> expected) {
         Queen queen = new Queen(Camp.BLACK);
 
-        Assertions.assertThat(queen.getRoute(moving)).isEqualTo(expected);
+        assertAll(
+                () -> assertThat(queen.canMovable(moving)).isTrue(),
+                () -> assertThat(queen.getRoute(moving)).isEqualTo(expected)
+        );
+
     }
 
     static Stream<Arguments> canMovableParameterProvider() {
