@@ -23,10 +23,6 @@ public abstract class Piece {
         return color.isWhite();
     }
 
-    public boolean isBlack() {
-        return color.isBlack();
-    }
-
     public boolean isEmpty() {
         return getPieceType() == PieceType.NONE;
     }
