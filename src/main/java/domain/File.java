@@ -1,7 +1,10 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public enum File {
 
@@ -46,12 +49,24 @@ public enum File {
 
     public List<File> findBetween(File target) {
         if (this.order > target.order) {
-            return Arrays.stream(values())
-                    .filter(file -> file.order < this.order && file.order > target.order)
-                    .toList();
+            List<File> files = makeBetween(targetToCurrent(target));
+            Collections.reverse(files);
+            return files;
         }
+        return makeBetween(currentToTarget(target));
+    }
+
+    private List<File> makeBetween(Predicate<File> predicate) {
         return Arrays.stream(values())
-                .filter(file -> file.order > this.order && file.order < target.order)
-                .toList();
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+    private Predicate<File> targetToCurrent(File target) {
+        return file -> file.order < this.order && file.order > target.order;
+    }
+
+    private Predicate<File> currentToTarget(File target) {
+        return file -> file.order > this.order && file.order < target.order;
     }
 }

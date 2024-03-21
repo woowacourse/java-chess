@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FileTest {
@@ -27,5 +29,27 @@ class FileTest {
                 () -> assertThat(File.find(7)).isEqualTo(File.G),
                 () -> assertThat(File.find(8)).isEqualTo(File.H)
         );
+    }
+
+    @DisplayName("source order가 작을 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
+    @Test
+    void findBetween1Test() {
+        File currentFile = File.A;
+        File targetFile = File.D;
+
+        List<File> files = currentFile.findBetween(targetFile);
+
+        assertThat(files).containsExactly(File.B, File.C);
+    }
+
+    @DisplayName("source order가 클 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
+    @Test
+    void findBetween2Test() {
+        File currentFile = File.D;
+        File targetFile = File.A;
+
+        List<File> files = currentFile.findBetween(targetFile);
+
+        assertThat(files).containsExactly(File.C, File.B);
     }
 }
