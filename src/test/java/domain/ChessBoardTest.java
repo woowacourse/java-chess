@@ -62,8 +62,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.ONE, File.D);
-        final Square target = new Square(Rank.TWO, File.E);
+        final Square source = new Square(Rank.ONE, File.A);
+        final Square target = new Square(Rank.EIGHT, File.A);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -138,5 +138,28 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자기 말이 아닙니다.");
+    }
+
+    @DisplayName("폰은 대각선으로만 공격할 수 있다.")
+    @Test
+    void canAttack() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.create();
+
+        final Square whiteSource = new Square(Rank.TWO, File.D);
+        final Square whiteTarget = new Square(Rank.FOUR, File.D);
+        final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
+
+        chessBoard.move(whiteSource, whiteTarget);
+
+        final Square blackSource = new Square(Rank.SEVEN, File.D);
+        final Square blackTarget = new Square(Rank.FIVE, File.D);
+        final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
+        chessBoard.move(blackSource, blackTarget);
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move(whiteTarget, blackTarget))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("공격할 수 없는 경로입니다.");
     }
 }
