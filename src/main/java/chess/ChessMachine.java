@@ -23,14 +23,21 @@ public class ChessMachine {
         outputView.printStartGameMessage();
         outputView.printCommandGuideMessage();
 
+        validateFirstCommand();
+
         ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
+        outputView.printChessBoard(chessBoard);
 
+        playChess(chessBoard);
+    }
 
+    private void validateFirstCommand() {
         if (!inputView.getCommand().equals(START_COMMAND)) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
-        outputView.printChessBoard(chessBoard);
+    }
 
+    private void playChess(ChessBoard chessBoard) {
         while (true) {
             List<String> fromTo = inputView.getMoveCommand();
             String command = fromTo.get(0);
