@@ -54,6 +54,8 @@ public class ChessBoard {
         if (canPieceMove) {
             board.remove(current);
             board.put(target, piece);
+        } else {
+            throw new IllegalArgumentException("이동할 수 없는 target 입니다.");
         }
     }
 
@@ -66,6 +68,7 @@ public class ChessBoard {
             for (int i = 0; i < files.size(); i++) {
                 path.add(new Position(files.get(i), ranks.get(i)));
             }
+            System.out.println(path);
 
             return makePiecesOnPath(target, path);
         }
@@ -109,5 +112,16 @@ public class ChessBoard {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public boolean isBlack(Position current) {
+        return board.containsKey(current) && board.get(current).isBlack();
+    }
+
+    public Piece get(Position position) {
+        if (!board.containsKey(position)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+        return board.get(position);
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import domain.ChessBoard;
 import domain.Command;
 import domain.Position;
+import domain.Turn;
 import view.InputView;
 import view.OutputView;
 
@@ -22,19 +23,23 @@ public class ChessManager {
         if (command == Command.END) {
             return;
         }
-        
+
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.init();
         outputView.printChessBoard(chessBoard);
 
+        Turn turn = new Turn();
         while (inputView.readMoveCommand() == Command.MOVE) {
             Position current = inputView.readPosition();
             Position target = inputView.readPosition();
+            inputView.readNextLine();
+
+            turn.check(chessBoard, current);
 
             chessBoard.move(current, target);
             outputView.printChessBoard(chessBoard);
 
-            inputView.readNextLine();
+            turn.end();
         }
     }
 }

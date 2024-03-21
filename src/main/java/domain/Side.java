@@ -13,4 +13,11 @@ public enum Side {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public Side opponent() {
+        if (this.isBlack()) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }

@@ -74,4 +74,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(side);
     }
+
+    public boolean isSameSide(Side other) {
+        return side == other;
+    }
 }
