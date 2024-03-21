@@ -34,7 +34,7 @@ public class Application {
                 List<String> cmd = List.of(input.split(" ")); // TODO 문자로 위치가 주어졌을 때 위치 찾는 테스트 추가하기
                 Moving moving = new Moving(Position.from(cmd.get(1)), Position.from(cmd.get(2)));
                 gameBoard.move(moving, camp);
-                camp = turn(camp);
+                camp = camp.toggle();
             }
             if (command == Command.END) {
                 break;
@@ -45,12 +45,5 @@ public class Application {
             outputView.printGameBoard(GameBoardDto.from(gameBoard));
             System.out.println("현재 턴: " + camp.toString() + "\n");
         }
-    }
-
-    private static Camp turn(Camp camp) {
-        if (camp == Camp.WHITE) {
-            return Camp.BLACK;
-        }
-        return Camp.WHITE;
     }
 }
