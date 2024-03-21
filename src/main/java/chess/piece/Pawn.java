@@ -21,7 +21,7 @@ public abstract class Pawn extends Piece {
             Direction.NEGATIVE_FILE_NEGATIVE_RANK
     );
 
-    public Pawn(Color color) {
+    protected Pawn(Color color) {
         super(PieceType.PAWN, color, getPawnDirectionByColor(color));
     }
 

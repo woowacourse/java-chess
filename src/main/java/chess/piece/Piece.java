@@ -10,7 +10,7 @@ public abstract class Piece {
     private final PieceAttributes pieceAttributes;
     private final List<Direction> directions;
 
-    public Piece(PieceType pieceType, Color color, List<Direction> directions) {
+    protected Piece(PieceType pieceType, Color color, List<Direction> directions) {
         this.pieceAttributes = new PieceAttributes(pieceType, color);
         this.directions = directions;
     }
