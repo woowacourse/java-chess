@@ -53,6 +53,7 @@ public class ChessBoard {
                     findPieceByPosition(destination))) {
                 return true;
             }
+            return false;
         }
 
         if (piece instanceof SlidingPiece) {
@@ -61,13 +62,13 @@ public class ChessBoard {
                     || piece.isOtherTeam(findPieceByPosition(destination)))) {
                 return true;
             }
+            return false;
         }
 
         if (piece.canMove(start, destination) && (positionIsEmpty(destination) || piece.isOtherTeam(
                 findPieceByPosition(destination)))) {
             return true;
         }
-
         return false;
     }
 
