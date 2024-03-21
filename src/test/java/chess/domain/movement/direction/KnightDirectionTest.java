@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightDirectionTest {
-    //TODO: 장애물에 대한 명확한 정의 필요 e.g ) 우리 말
+
     @ParameterizedTest
     @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
     @DisplayName("도착 위치로 이동이 가능할 경우 참을 반환한다.")
