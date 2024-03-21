@@ -1,6 +1,7 @@
-package domain.piece;
+package domain.piece.type;
 
-import domain.piece.type.Pawn;
+import domain.piece.Piece;
+import domain.piece.PieceColor;
 import domain.position.ChessFile;
 import domain.position.ChessRank;
 import domain.position.Position;
