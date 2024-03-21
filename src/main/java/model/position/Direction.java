@@ -25,8 +25,8 @@ public enum Direction {
     }
 
     // 하, 우, 상, 좌, 하우, 하좌, 상우, 상좌
-    public static final int[] dRow = new int[]{1, 0, -1, 0, 1, 1, -1, -1};
-    public static final int[] dColumn = new int[]{0, 1, 0, -1, 1, -1, 1, -1};
+    static final int[] dRow = new int[]{1, 0, -1, 0, 1, 1, -1, -1};
+    static final int[] dColumn = new int[]{0, 1, 0, -1, 1, -1, 1, -1};
 
     public static Direction from(Position currentPosition, Position nextPosition) {
         return Arrays.stream(values())

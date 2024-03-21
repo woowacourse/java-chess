@@ -1,5 +1,6 @@
 package model.position;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public enum Row {
@@ -22,21 +23,17 @@ public enum Row {
     }
 
     public static Row from(char input) {
-        for (Row row : values()) {
-            if (row.value.equals(String.valueOf(input))) {
-                return row;
-            }
-        }
-        throw new IllegalArgumentException("row 없음");
+        return Arrays.stream(values())
+                .filter(row -> row.value.equals(String.valueOf(input)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 row값을 입력했습니다."));
     }
 
     public static Row from(int targetIndex) {
-        for (Row row : values()) {
-            if (Objects.equals(row.index, targetIndex)) {
-                return row;
-            }
-        }
-        throw new IllegalArgumentException("row 없음");
+        return Arrays.stream(values())
+                .filter(row -> row.index == targetIndex)
+                .findFirst()
+                .orElseThrow(() -> new IndexOutOfBoundsException("인덱스 범위 초과"));
     }
 
     public int getIndex() {

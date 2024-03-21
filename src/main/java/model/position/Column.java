@@ -1,5 +1,6 @@
 package model.position;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public enum Column {
@@ -23,21 +24,17 @@ public enum Column {
     }
 
     public static Column from(char input) {
-        for (Column column : values()) {
-            if (column.value.equals(String.valueOf(input))) {
-                return column;
-            }
-        }
-        throw new IllegalArgumentException("col 없음");
+        return Arrays.stream(values())
+                .filter(column -> column.value.equals(String.valueOf(input)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 column값을 입력했습니다."));
     }
 
     public static Column from(int targetIndex) {
-        for (Column column : values()) {
-            if (Objects.equals(column.index, targetIndex)) {
-                return column;
-            }
-        }
-        throw new IllegalArgumentException("col 없음");
+        return Arrays.stream(values())
+                .filter(column -> column.index == targetIndex)
+                .findFirst()
+                .orElseThrow(() -> new IndexOutOfBoundsException("인덱스 범위 초과"));
     }
 
     public String getValue() {

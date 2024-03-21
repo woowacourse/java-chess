@@ -17,13 +17,16 @@ public class Pawn extends Piece {
     public Set<Position> getMoveRoute(Moving moving) {
         Position currentPosition = moving.currentPosition();
         Position nextPosition = moving.nextPosition();
-
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
         if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
             return Set.of();
         }
+        return getTwoStraightRoute(currentPosition);
+    }
+
+    private Set<Position> getTwoStraightRoute(Position currentPosition) {
         if (Camp.BLACK == camp) {
             return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
         }
@@ -32,30 +35,34 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean canMovable(Moving moving) {
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
-
         if (moving.isNotMoved()) {
             return false;
         }
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        return isStraight(currentPosition, dColumn, dRow);
+    }
 
+    private boolean isStraight(Position currentPosition, int dColumn, int dRow) {
         if (dColumn != 0) {
             return false;
         }
-
         if (Camp.BLACK == camp) {
-            if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
-                return true;
-            }
-            return dRow == -1;
+            return isBlackTwoStraight(currentPosition, dRow);
         }
-
         if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
             return true;
         }
         return dRow == 1;
+    }
+
+    private boolean isBlackTwoStraight(Position currentPosition, int dRow) {
+        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
+            return true;
+        }
+        return dRow == -1;
     }
 
     @Override
@@ -67,19 +74,20 @@ public class Pawn extends Piece {
     }
 
     private boolean canAttack(Moving moving) {
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
-
         if (moving.isNotMoved()) {
             return false;
         }
+        Position currentPosition = moving.currentPosition();
+        Position nextPosition = moving.nextPosition();
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        return isDiagonal(dColumn, dRow);
+    }
 
+    private boolean isDiagonal(int dColumn, int dRow) {
         if (Math.abs(dColumn) != 1) {
             return false;
         }
-
         if (Camp.BLACK == camp) {
             return dRow == -1;
         }

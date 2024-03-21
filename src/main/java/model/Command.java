@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public enum Command {
@@ -16,12 +17,9 @@ public enum Command {
     }
 
     public static Command from(String value) {
-        for (Command command : values()) {
-            if (Pattern.compile(command.value).matcher(value).matches()) {
-                return command;
-            }
-        }
-        throw new IllegalArgumentException("값 없음");
-        //TODO : 메세지 변경
+        return Arrays.stream(values())
+                .filter(command -> Pattern.compile(command.value).matcher(value).matches())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하였습니다."));
     }
 }

@@ -1,5 +1,6 @@
 package view.message;
 
+import java.util.Arrays;
 import model.Camp;
 import model.piece.Bishop;
 import model.piece.King;
@@ -33,12 +34,10 @@ public enum PieceType {
     }
 
     public static PieceType from(Piece target) {
-        for (PieceType pieceType : values()) {
-            if (pieceType.piece.equals(target)) {
-                return pieceType;
-            }
-        }
-        throw new IllegalArgumentException("없음");
+        return Arrays.stream(values())
+                .filter(pieceType -> pieceType.piece.equals(target))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 피스는 존재하지 않습니다."));
     }
 
     public String getValue() {
