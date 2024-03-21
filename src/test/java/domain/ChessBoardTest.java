@@ -110,7 +110,6 @@ class ChessBoardTest {
 
         final Square blackSource = new Square(Rank.SEVEN, File.E);
         final Square blackTarget = new Square(Rank.FIVE, File.E);
-        final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 
         // when
@@ -148,13 +147,11 @@ class ChessBoardTest {
 
         final Square whiteSource = new Square(Rank.TWO, File.D);
         final Square whiteTarget = new Square(Rank.FOUR, File.D);
-        final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
 
         chessBoard.move(whiteSource, whiteTarget);
 
         final Square blackSource = new Square(Rank.SEVEN, File.D);
         final Square blackTarget = new Square(Rank.FIVE, File.D);
-        final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 
         // when & then
