@@ -25,7 +25,7 @@ class PositionTest {
         assertThat(position.file()).isEqualTo(file);
     }
 
-    @DisplayName("백터 값을 넘기면 새로운 위치의 Position을 반환한다.")
+    @DisplayName("백터 값을 전달하면 새로운 위치의 Position을 반환한다.")
     @Test
     void addPositionTest() {
         // Given
