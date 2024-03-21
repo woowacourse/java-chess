@@ -18,48 +18,86 @@ public class Board {
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
-        // TODO: 메서드 분리하기
+        Piece piece = squares.get(sourcePosition);
+        validate(sourcePosition, targetPosition);
+        squares.remove(sourcePosition);
+        squares.put(targetPosition, piece);
+    }
+
+    private void validate(Position sourcePosition, Position targetPosition) {
+        validateSamePosition(sourcePosition, targetPosition);
+        validateNoPieceToMove(sourcePosition);
+        validateOwnPieceExistAtTargetPosition(sourcePosition, targetPosition);
+        validatePieceCanMove(sourcePosition, targetPosition);
+        validateWhenStraightOrDiagonalMove(sourcePosition, targetPosition);
+        validateWhenPieceIsPawn(sourcePosition, targetPosition);
+    }
+
+    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
         }
+    }
+
+    private void validateNoPieceToMove(Position sourcePosition) {
         if (isNoPieceAt(sourcePosition)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
         }
+    }
+
+    private void validateOwnPieceExistAtTargetPosition(Position sourcePosition, Position targetPosition) {
         if (isPieceAt(targetPosition) && (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
+    }
 
+    private void validatePieceCanMove(Position sourcePosition, Position targetPosition) {
         Piece piece = squares.get(sourcePosition);
-
         if (piece.canMove(sourcePosition, targetPosition)) {
-            // TODO: 인덴트 줄이기, 가독성 개선하기
-            if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
-                Direction direction = Direction.of(sourcePosition, targetPosition);
-                Position middlePosition = sourcePosition.nextPosition(direction);
-
-                while (!middlePosition.equals(targetPosition)) {
-                    if (isPieceAt(middlePosition)) {
-                        throw new IllegalArgumentException("경로에 말이 있으면 움직일 수 없습니다.");
-                    }
-                    middlePosition = middlePosition.nextPosition(direction);
-                }
-            }
-
-            if (piece instanceof Pawn) {
-                if (isStraightMove(sourcePosition, targetPosition) && isPieceAt(targetPosition)) {
-                    throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
-                }
-
-                if (isDiagonalMove(sourcePosition, targetPosition) && isNoPieceAt(targetPosition)) {
-                    throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
-                }
-            }
-
-            squares.remove(sourcePosition);
-            squares.put(targetPosition, piece);
             return;
         }
         throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
+    }
+
+    private void validateWhenStraightOrDiagonalMove(Position sourcePosition, Position targetPosition) {
+        if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
+            validatePieceExistOnRoute(sourcePosition, targetPosition);
+        }
+    }
+
+    private void validatePieceExistOnRoute(Position sourcePosition, Position targetPosition) {
+        Direction direction = Direction.of(sourcePosition, targetPosition);
+        Position currentPosition = sourcePosition.nextPosition(direction);
+        while (!currentPosition.equals(targetPosition)) {
+            validatePieceExistAt(currentPosition);
+            currentPosition = currentPosition.nextPosition(direction);
+        }
+    }
+
+    private void validatePieceExistAt(Position middlePosition) {
+        if (isPieceAt(middlePosition)) {
+            throw new IllegalArgumentException("경로에 말이 있으면 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateWhenPieceIsPawn(Position sourcePosition, Position targetPosition) {
+        Piece piece = squares.get(sourcePosition);
+        if (piece instanceof Pawn) {
+            validatePawnStraightCapture(sourcePosition, targetPosition);
+            validatePawnDiagonalMove(sourcePosition, targetPosition);
+        }
+    }
+
+    private void validatePawnStraightCapture(Position sourcePosition, Position targetPosition) {
+        if (isStraightMove(sourcePosition, targetPosition) && isPieceAt(targetPosition)) {
+            throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
+        }
+    }
+
+    private void validatePawnDiagonalMove(Position sourcePosition, Position targetPosition) {
+        if (isDiagonalMove(sourcePosition, targetPosition) && isNoPieceAt(targetPosition)) {
+            throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
+        }
     }
 
     private boolean isStraightMove(Position sourcePosition, Position targetPosition) {
