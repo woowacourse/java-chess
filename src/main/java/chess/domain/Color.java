@@ -14,14 +14,6 @@ public enum Color {
         return this == WHITE;
     }
 
-    public Color getOpposite() {
-        if (isBlack()) {
-            return WHITE;
-        }
-
-        return BLACK;
-    }
-
     public boolean isSame(Color color) {
         return this == color;
     }
