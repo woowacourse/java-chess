@@ -10,6 +10,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +23,19 @@ class ChessBoardTest {
     void create() {
         assertThatCode(ChessBoardFactory::makeChessBoard)
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("현재 체스판 위에 존재하는 모든 기물을 구할 수 있다.")
+    void findAllPieces() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 1);
+        positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        List<Piece> allPieces = chessBoard.findAllPieces();
+
+        assertThat(allPieces.size()).isEqualTo(1);
     }
 
     @Test
