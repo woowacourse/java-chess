@@ -45,15 +45,19 @@ public class Board {
     }
 
     public void move(Position source, Position destination, Color color) {
-        Movement movement = new Movement(source, destination); // TODO: getter 쓰고 인자 줄이기
+        Movement movement = new Movement(source, destination);
         Piece sourcePiece = squares.get(source);
-        if (!sourcePiece.hasColor(color)) {
-            throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
-        }
         Piece targetPiece = squares.get(destination);
+        validateTurn(color, sourcePiece);
         validateMove(movement, sourcePiece, targetPiece);
         squares.put(destination, sourcePiece);
         squares.put(source, Empty.getInstance());
+    }
+
+    private void validateTurn(Color color, Piece sourcePiece) {
+        if (!sourcePiece.hasColor(color)) {
+            throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
+        }
     }
 
     private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) {
