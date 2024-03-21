@@ -11,7 +11,6 @@ public abstract class ContinuousMovementRule implements MovementRule {
     public final boolean isMovable(Position start, Position end) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
-
         return isMovable(rankDifference, fileDifference);
     }
 
