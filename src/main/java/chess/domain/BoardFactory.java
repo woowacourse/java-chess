@@ -21,7 +21,7 @@ public class BoardFactory {
         createInitialBoard();
     }
 
-    public static void createInitialBoard() {
+    private static void createInitialBoard() {
         createBlankBoard();
         initWhitePieces();
         initBlackPieces();
