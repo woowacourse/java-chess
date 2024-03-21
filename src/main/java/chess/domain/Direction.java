@@ -3,7 +3,6 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Direction {
-    //row, column
     UP(0, 1),
     DOWN(0, -1),
     LEFT(-1, 0),

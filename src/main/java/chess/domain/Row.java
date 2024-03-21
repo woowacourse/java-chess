@@ -46,10 +46,6 @@ public class Row {
         }
     }
 
-    public boolean isBigger(Row srcRow) {
-        return this.value > srcRow.value;
-    }
-
     public int getValue() {
         return value;
     }

@@ -41,9 +41,6 @@ public class Column {
         return CACHE.get(this.value + columnDirection);
     }
 
-    public boolean isBigger(Column srcColumn) {
-        return this.value > srcColumn.value;
-    }
 
     public boolean isPawnStartPosition(Team team) {
         if (team.isWhite()) {
