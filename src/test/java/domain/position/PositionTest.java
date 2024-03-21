@@ -169,26 +169,44 @@ public class PositionTest {
 
         private static Stream<Arguments> provideFileAndRank() {
             return Stream.of(
-                    Arguments.of(File.D, Rank.FIVE),
-                    Arguments.of(File.D, Rank.SIX)
+                    Arguments.of(File.D, Rank.THREE),
+                    Arguments.of(File.D, Rank.FOUR)
             );
         }
 
         @ParameterizedTest
         @MethodSource("provideFileAndRank")
-        @DisplayName("두 위치가 한 칸 또는 두 칸 앞에 존재하면 참을 반환한다.")
-        void isForwardStraight_True(File file, Rank rank) {
-            Position source = new Position(File.D, Rank.FOUR);
+        @DisplayName("처음에 두 위치가 한 칸 또는 두 칸 앞에 존재하면 참을 반환한다.")
+        void isForwardStraight_First_True(File file, Rank rank) {
+            Position source = new Position(File.D, Rank.TWO);
             Position target = new Position(file, rank);
 
             assertThat(source.isForwardStraight(target, false)).isTrue();
         }
 
         @Test
-        @DisplayName("두 위치가 한 칸 또는 두 칸 앞에 존재하지 않으면 거짓을 반환한다.")
-        void isForwardStraight_False() {
+        @DisplayName("처음에 두 위치가 한 칸 또는 두 칸 앞에 존재하지 않으면 거짓을 반환한다.")
+        void isForwardStraight_First_False() {
             Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(File.A, Rank.THREE);
+            Position target = new Position(File.D, Rank.EIGHT);
+
+            assertThat(source.isForwardStraight(target, false)).isFalse();
+        }
+
+        @Test
+        @DisplayName("처음이 아닐 때 두 위치가 한 칸 앞에 존재하면 참을 반환한다.")
+        void isForwardStraight_NotFirst_True() {
+            Position source = new Position(File.D, Rank.THREE);
+            Position target = new Position(File.D, Rank.FOUR);
+
+            assertThat(source.isForwardStraight(target, false)).isTrue();
+        }
+
+        @Test
+        @DisplayName("처음이 아닐 때 두 위치가 한 칸 앞에 존재하지 않으면 거짓을 반환한다.")
+        void isForwardStraight_NotFirst_False() {
+            Position source = new Position(File.D, Rank.THREE);
+            Position target = new Position(File.D, Rank.FIVE);
 
             assertThat(source.isForwardStraight(target, false)).isFalse();
         }

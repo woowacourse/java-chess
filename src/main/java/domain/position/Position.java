@@ -45,6 +45,21 @@ public class Position {
     }
 
     public boolean isForwardStraight(Position target, boolean isBlack) {
+        if (rank.isSame(Rank.TWO) || rank.isSame(Rank.SEVEN)) {
+            return firstMove(target, isBlack);
+        }
+        return notFirstMove(target, isBlack);
+    }
+
+    private boolean notFirstMove(Position target, boolean isBlack) {
+        int forwardDistance = rank.forwardDistance(target.rank);
+        if (isBlack) {
+            return forwardDistance == -1 && file.isSame(target.file);
+        }
+        return forwardDistance == 1 && file.isSame(target.file);
+    }
+
+    private boolean firstMove(Position target, boolean isBlack) {
         int forwardDistance = rank.forwardDistance(target.rank);
         if (isBlack) {
             return (forwardDistance == -1 || forwardDistance == -2) && file.isSame(target.file);
