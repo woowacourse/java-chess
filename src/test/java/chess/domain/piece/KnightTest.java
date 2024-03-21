@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
-import chess.domain.piece.Knight;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

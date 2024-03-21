@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Color;
 import java.util.Collections;
 import java.util.List;
