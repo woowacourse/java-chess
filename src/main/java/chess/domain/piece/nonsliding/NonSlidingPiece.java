@@ -18,10 +18,10 @@ public abstract class NonSlidingPiece extends Piece {
     public Set<Position> findMovablePositions(Position destination) {
         Set<Position> movable = position.findMovablePositions(directions);
 
-        if (movable.contains(destination)) {
-            return Set.of(destination);
+        if (!movable.contains(destination)) {
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        throw new IllegalArgumentException("이동할 수 없습니다.");
+        return Set.of();
     }
 
     public abstract PieceType pieceType();

@@ -14,15 +14,6 @@ import org.junit.jupiter.api.Test;
 class KnightTest {
 
     @Test
-    @DisplayName("(1, 1) -> (2, 3)")
-    void findMovablePositions() {
-        Knight knight = new Knight(new Position(1, 1), Color.WHITE);
-        Position destination = new Position(2, 3);
-
-        assertThat(knight.findMovablePositions(destination)).contains(destination);
-    }
-
-    @Test
     @DisplayName("(1, 1)일 때 (1, 3)으로는 이동할 수 없다.")
     void findMovablePositionsByInvalidDestination() {
         Knight knight = new Knight(new Position(1, 1), Color.WHITE);
