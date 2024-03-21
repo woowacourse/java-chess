@@ -14,6 +14,10 @@ public abstract class Difference {
         return Math.abs(difference) == distance;
     }
 
+    public boolean hasSameDistance(Difference otherDifference) {
+        return Math.abs(difference) == Math.abs(otherDifference.difference);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
