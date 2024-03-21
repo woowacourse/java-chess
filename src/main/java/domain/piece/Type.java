@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.movement.BishopMovementValidation;
 import domain.movement.Direction;
 import domain.movement.KnightMovementValidation;
 import domain.movement.MovementValidation;
@@ -9,7 +8,7 @@ import domain.movement.RookMovementValidation;
 public enum Type {
     KING(null),
     QUEEN(null),
-    BISHOP(new BishopMovementValidation()),
+    BISHOP(null),
     KNIGHT(new KnightMovementValidation()),
     ROOK(new RookMovementValidation()),
     PAWN(null);
