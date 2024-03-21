@@ -40,6 +40,7 @@ public class ChessBoard {
         validatePosition(source, target);
         validateTarget(source, target);
         validateMovement(source, target);
+        validatePath(source, target);
     }
 
     private void validatePosition(Position source, Position target) {
@@ -58,15 +59,22 @@ public class ChessBoard {
         }
     }
 
-    private boolean isSameColor(Piece sourcePiece, Piece targetPiece) {
-        return targetPiece.isColor(sourcePiece.color());
-    }
-
     private void validateMovement(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isInMovableRange(source, target)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
         }
+        if (sourcePiece.isType(PieceType.PAWN) && source.findDirectionTo(target).isDiagonal() && !isExist(target)) {
+            throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
+        }
+    }
+
+    private boolean isSameColor(Piece sourcePiece, Piece targetPiece) {
+        return targetPiece.isColor(sourcePiece.color());
+    }
+
+    private void validatePath(Position source, Position target) {
+        Piece sourcePiece = board.get(source);
         if (!sourcePiece.isType(PieceType.KNIGHT)) {
             Set<Position> positions = source.findBetween(target);
             for (Position position : positions) {

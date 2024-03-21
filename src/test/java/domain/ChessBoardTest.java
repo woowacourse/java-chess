@@ -4,6 +4,7 @@ import domain.piece.BoardGeneratorStub;
 import domain.piece.ChessBoardGenerator;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
+import domain.piece.type.King;
 import domain.piece.type.Knight;
 import domain.piece.type.Pawn;
 import domain.piece.type.Rook;
@@ -168,5 +169,44 @@ public class ChessBoardTest {
 
         // when & then
         assertThatCode(() -> chessBoard.move("b2", "c4")).doesNotThrowAnyException();
+    }
+
+    @DisplayName("폰은 타겟에 상대 기물이 있으면 대각선으로 이동할 수 있다.")
+    @Test
+    void canPawnMoveDiagonal() {
+        // given
+        PieceInfo expected = PieceInfo.of(new Position("c3"), new Pawn(PieceColor.WHITE));
+
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+        board.put(new Position("c3"), new King(PieceColor.BLACK));
+        generatorStub.setBoard(board);
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when
+        chessBoard.move("b2", "c3");
+        List<PieceInfo> pieceInfos = chessBoard.status().pieceInfos();
+
+        // then
+        assertThat(pieceInfos).contains(expected);
+    }
+
+    @DisplayName("폰은 타겟에 상대 기물이 없으면 대각선으로 이동할 수 없다.")
+    @Test
+    void cannotPawnMoveDiagonalIfNoPiece() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+        generatorStub.setBoard(board);
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "c3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
     }
 }
