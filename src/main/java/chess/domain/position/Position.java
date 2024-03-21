@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Position {
+    //TODO: 풀 생성 과정 단순화 가능한지 고민해보기
     private static final Map<String, Position> POOL = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
             .mapToObj(RowPosition::new)
             .flatMap(rowPosition -> IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
@@ -67,7 +68,6 @@ public class Position {
     }
 
     public List<Position> diagonalPath(Position target) {
-
         //도착지와 현재 위치의 방향을 찾는다.
         if (!isDiagonalWith(target)) {
             throw new IllegalArgumentException("대각선 경로를 계산할 수 없습니다");
@@ -86,9 +86,6 @@ public class Position {
         }
         Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
         while (true) {
-
-            System.out.println("nextRowPosition = " + nextPosition.getRowPosition().getRowNumber());
-            System.out.println("nextColPosition = " + nextPosition.getColumnPosition().getColumnNumber());
             if (nextPosition.equals(target)) {
                 break;
             }
@@ -138,14 +135,6 @@ public class Position {
 
     private Position movePosition(int rowMove, int columnMove) {
         return Position.of(rowPosition.move(rowMove), columnPosition.move(columnMove));
-    }
-
-    public RowPosition getRowPosition() {
-        return rowPosition;
-    }
-
-    public ColumnPosition getColumnPosition() {
-        return columnPosition;
     }
 
     @Override

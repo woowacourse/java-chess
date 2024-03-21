@@ -21,7 +21,7 @@ public abstract class Piece {
         return team.getDirection();
     }
 
-    //TODO: 기물 하나가 팀의 전략을 아는 느낌인데 개선 가능한지 확인해보
+    //TODO: 기물 하나가 팀의 전략을 아는 느낌인데 개선 가능한지 확인해보기
     public RowPosition teamInitialPawnRow() {
         return team.getInitialPawnRow();
     }

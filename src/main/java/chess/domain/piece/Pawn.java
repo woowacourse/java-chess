@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
-
     public static final int KILL_PASSING_DISTANCE = 2;
 
     public Pawn(Team team) {
@@ -12,6 +11,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
+        //TODO: 조건식 가독성 있게 추상화 및 매직넘버 상수화
         if (isForward(start, destination) && start.squaredDistanceWith(destination) == 1) {
             return true;
         }

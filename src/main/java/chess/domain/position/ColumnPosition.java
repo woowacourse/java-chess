@@ -13,6 +13,7 @@ public class ColumnPosition {
         this.columnNumber = columnNumber;
     }
 
+    //TODO: 더 나은 메서드 명 고민해보기
     public int move(int columnMove) {
         return columnNumber + columnMove;
     }
@@ -21,10 +22,12 @@ public class ColumnPosition {
         return Math.abs(columnNumber - otherColumnPosition.columnNumber);
     }
 
+    //TODO: 더 나은 메서드 명 고민해보기
     public boolean isLeft(ColumnPosition otherColumnPosition) {
         return columnNumber < otherColumnPosition.columnNumber;
     }
 
+    //TODO: 더 나은 메서드 명 고민해보기
     public boolean isRight(ColumnPosition otherColumnPosition) {
         return columnNumber > otherColumnPosition.columnNumber;
     }
@@ -33,10 +36,6 @@ public class ColumnPosition {
         if (MIN_NUMBER > columnNumber || columnNumber > MAX_NUMBER) {
             throw new IllegalStateException("체스판의 열 번호는 " + columnNumber + "가 될 수 없습니다.");
         }
-    }
-
-    public int getColumnNumber() {
-        return columnNumber;
     }
 
     @Override
