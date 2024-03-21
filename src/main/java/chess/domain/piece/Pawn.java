@@ -28,15 +28,14 @@ public class Pawn extends Piece {
     @Override
     public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
-
         directions.forEach(direction -> {
             if (!currentPosition.canMoveNext(direction)) {
                 return;
             }
-
             addForwardMoves(board, direction, currentPosition, movablePositions);
             addDiagonalMoves(board, direction, currentPosition, movablePositions);
         });
+
         return movablePositions;
     }
 
