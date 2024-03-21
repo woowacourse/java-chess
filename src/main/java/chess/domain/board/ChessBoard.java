@@ -32,11 +32,12 @@ public class ChessBoard {
     }
 
     public void move(Position source, Position target) {
-        if (canMove(source, target)) {
-            Piece sourcePiece = chessBoard.get(source);
-            chessBoard.put(target, sourcePiece);
-            chessBoard.remove(source);
+        if (!canMove(source, target)) {
+            throw new IllegalArgumentException("올바르지 않은 이동입니다.");
         }
+        Piece sourcePiece = chessBoard.get(source);
+        chessBoard.put(target, sourcePiece);
+        chessBoard.remove(source);
     }
 
     private boolean canMove(Position source, Position target) {
@@ -53,8 +54,7 @@ public class ChessBoard {
         }
 
         if (sourcePiece.canMove(source, target, targetPieceColor)) {
-            return sourcePiece.searchPath(source, target).stream()
-                    .noneMatch(chessBoard::containsKey);
+            return sourcePiece.searchPath(source, target).stream().noneMatch(chessBoard::containsKey);
         }
         return false;
     }
