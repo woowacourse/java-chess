@@ -15,14 +15,6 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public Type type() {
-        return type;
-    }
-
-    public Color color() {
-        return color;
-    }
-
     public boolean isWhite() {
         return color == Color.WHITE;
     }
@@ -38,4 +30,12 @@ public abstract class Piece {
     }
 
     public abstract List<Direction> movableDirections();
+
+    public Type type() {
+        return type;
+    }
+
+    public Color color() {
+        return color;
+    }
 }
