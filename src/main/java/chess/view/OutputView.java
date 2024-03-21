@@ -19,4 +19,8 @@ public class OutputView {
                 .collect(Collectors.joining(System.lineSeparator()));
         System.out.println(board);
     }
+
+    public void printException(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

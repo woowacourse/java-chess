@@ -7,6 +7,7 @@ import chess.model.board.InitialBoardGenerator;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.function.Supplier;
 
 public class ChessGame {
     private final OutputView outputView;
@@ -19,10 +20,10 @@ public class ChessGame {
 
     public void run() {
         outputView.printGameIntro();
-        Command command = inputView.askCommand();
-        if (command == Command.START) {
-            start();
+        while (getValidCommand() != Command.START) {
+            outputView.printException("게임을 시작하려면 start를 입력하세요.");
         }
+        start();
     }
 
     private void start() {
@@ -30,7 +31,7 @@ public class ChessGame {
         GameStatus gameStatus = new GameStatus();
         showBoard(board);
         while (gameStatus.isRunning()) {
-            playTurn(gameStatus, board);
+            retryOnException(() -> playTurn(gameStatus, board));
         }
     }
 
@@ -56,5 +57,27 @@ public class ChessGame {
         PositionDTO sourcePositionDTO = inputView.askPosition();
         PositionDTO targetPositionDTO = inputView.askPosition();
         board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
+    }
+
+    private Command getValidCommand() {
+        return retryOnException(inputView::askCommand);
+    }
+
+    private void retryOnException(Runnable action) {
+        try {
+            action.run();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            retryOnException(action);
+        }
+    }
+
+    private <T> T retryOnException(Supplier<T> retryOperation) {
+        try {
+            return retryOperation.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return retryOnException(retryOperation);
+        }
     }
 }
