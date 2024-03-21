@@ -5,9 +5,11 @@ import chess.dto.PositionDTO;
 import chess.model.board.Board;
 import chess.model.board.InitialBoardGenerator;
 import chess.model.piece.Color;
+import chess.model.position.Movement;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -62,20 +64,12 @@ public class ChessGame {
     private void move(Board board, Color color) {
         PositionDTO sourcePositionDTO = inputView.askPosition();
         PositionDTO targetPositionDTO = inputView.askPosition();
-        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity(), color);
+        Movement movement = new Movement(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
+        board.move(movement, color);
     }
 
     private Command getValidCommand() {
         return retryOnException(inputView::askCommand);
-    }
-
-    private void retryOnException(Runnable action) {
-        try {
-            action.run();
-        } catch (IllegalArgumentException e) {
-            outputView.printException(e.getMessage());
-            retryOnException(action);
-        }
     }
 
     private <T> void retryOnException(Consumer<T> action, T value) {

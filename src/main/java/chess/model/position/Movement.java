@@ -67,4 +67,12 @@ public class Movement {
     public boolean isSourceRankMatch(int rank) {
         return source.isOnRank(rank);
     }
+
+    public Position getSource() {
+        return source;
+    }
+
+    public Position getDestination() {
+        return destination;
+    }
 }
