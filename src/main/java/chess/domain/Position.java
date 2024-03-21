@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class Position {
     private final int rank;
 
     static {
+        // TODO: 상수 분리
         for (char i = 'a'; i <= 'h'; i++) {
             for (int j = 1; j <= 8; j++) {
                 CACHE.put(toKey(i, j), new Position(i, j));
@@ -24,27 +26,28 @@ public class Position {
     }
 
     public static Position of(final char file, final int rank) {
-        return CACHE.get(toKey(file, rank));
+        Position position = CACHE.get(toKey(file, rank));
+        if(position == null) {
+            throw new IllegalArgumentException("[ERROR] 범위를 벗어난 위치입니다.");
+        }
+
+        return position;
     }
 
     private static String toKey(final char file, final int rank) {
         return String.valueOf(file) + rank;
     }
 
-
-    public double calculateGradient(final Position target) {
-        double dx = this.file - target.file;
-        double dy = this.rank - target.rank;
-
-        // TODO: 개선 필요
-        if(dy == 0) {
-            return 0;
-        }
-
-        return dy / dx;
+    public Position moveTowardDirection(final Direction direction) {
+        char x = (char) direction.calculateNextX(this.file);
+        int y = direction.calculateNextY(this.rank);
+        return Position.of(x, y);
     }
 
-    public double calculateDistance(final Position target) {
-        return Math.sqrt(Math.pow(this.file - target.file, 2) + Math.pow(this.rank - target.rank, 2));
+    public Direction calculateDirection(final Position target) {
+        int dx = target.file - this.file;
+        int dy = target.rank - this.rank;
+
+        return Direction.find(dx, dy);
     }
 }

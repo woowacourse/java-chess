@@ -2,71 +2,51 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
-import org.assertj.core.api.Assertions;
+import chess.domain.piece.Direction;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PositionTest {
 
-    @Test
-    @DisplayName("칸을 생성한다.")
-    void create() {
-        char file = 'a';
-        int rank = 1;
-
-        assertThat(Position.of(file, rank)).isInstanceOf(Position.class);
-    }
-
     @ParameterizedTest
-    @CsvSource(value = {"a,1,b,1,0", "a,1,b,2,1", "a,1,b,3,2", "a,1,c,2,0.5"})
-    @DisplayName("타겟 위치와의 기울기를 구한다.")
-    void calculateGradient(char file1, int rank1, char file2, int rank2, Double expectedGradient) {
-        Position position1 = Position.of(file1, rank1);
-        Position position2 = Position.of(file2, rank2);
+    @MethodSource("getMovementResult")
+    @DisplayName("방향에 맞게 이동한다.")
+    void moveTowardDirection(Position sourcePosition, Direction direction, Position expectedTargetPosition) {
+        Position actualTargetPosition = sourcePosition.moveTowardDirection(direction);
 
-        double actualGradient = position1.calculateGradient(position2);
+        assertThat(actualTargetPosition).isEqualTo(expectedTargetPosition);
+    }
 
-        assertThat(actualGradient).isEqualTo(expectedGradient);
+    static Stream<Arguments> getMovementResult() {
+        return Stream.of(
+                Arguments.of(Position.of('d', 5), Direction.UP, Position.of('d', 6)),
+                Arguments.of(Position.of('d', 5), Direction.DOWN, Position.of('d', 4)),
+                Arguments.of(Position.of('d', 5), Direction.LEFT, Position.of('c', 5)),
+                Arguments.of(Position.of('d', 5), Direction.RIGHT, Position.of('e', 5)),
+                Arguments.of(Position.of('d', 5), Direction.LEFT_UP, Position.of('c', 6)),
+                Arguments.of(Position.of('d', 5), Direction.LEFT_DOWN, Position.of('c', 4)),
+                Arguments.of(Position.of('d', 5), Direction.RIGHT_UP, Position.of('e', 6)),
+                Arguments.of(Position.of('d', 5), Direction.RIGHT_DOWN, Position.of('e', 4)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_LEFT_UP, Position.of('b', 6)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_LEFT_DOWN, Position.of('b', 4)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_RIGHT_UP, Position.of('f', 6)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_RIGHT_DOWN, Position.of('f', 4)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_UP_LEFT, Position.of('c', 7)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_UP_RIGHT, Position.of('e', 7)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_LEFT, Position.of('c', 3)),
+                Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_RIGHT, Position.of('e', 3))
+        );
     }
 
     @Test
-    @DisplayName("기울기가 무한대가 되는 경우 정상적으로 계산되는지 테스트한다.")
-    void calculateInfiniteGradient() {
-        Position position1 = Position.of('a', 1);
-        Position position2 = Position.of('a', 2);
-
-        double actualGradient = position1.calculateGradient(position2);
-
-        assertThat(actualGradient).isInfinite();
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = {"a,1,b,1,1", "a,1,a,2,1"})
-    @DisplayName("타겟 위치와의 정수 거리를 구한다.")
-    void calculateIntegerDistance(char file1, int rank1, char file2, int rank2, Double expectedDistance) {
-        Position position1 = Position.of(file1, rank1);
-        Position position2 = Position.of(file2, rank2);
-
-        double actualDistance = position1.calculateDistance(position2);
-
-        assertThat(actualDistance).isEqualTo(expectedDistance);
-    }
-
-    @Test
-    @DisplayName("타겟 위치와의 제곱근 거리를 구한다.")
-    void calculateDoubleDistance() {
-        char file1 = 'a';
-        int rank1 = 1;
-        char file2 = 'b';
-        int rank2 = 2;
-        Position position1 = Position.of(file1, rank1);
-        Position position2 = Position.of(file2, rank2);
-
-        double actualDistance = position1.calculateDistance(position2);
-
-        double expectedDistance = Math.sqrt(Math.pow(file1 - file2, 2) + Math.pow(rank1 - rank2, 2));
-        assertThat(actualDistance).isEqualTo(expectedDistance);
+    @DisplayName("범위를 벗어난 위치는 예외를 발생시킨다.")
+    void findPositionFail() {
+        assertThatCode(() -> Position.of('i', 8))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 범위를 벗어난 위치입니다.");
     }
 }
