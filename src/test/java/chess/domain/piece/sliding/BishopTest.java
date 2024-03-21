@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class BishopTest {
 
     @Test
-    @DisplayName("(1, 1) -> (2 + ?, 2 + ?)")
+    @DisplayName("대각선 이동시 중간경로를 찾는다.")
     void findPathToDiagonal() {
         Bishop bishop = new Bishop(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = bishop.findPathTo(new Position(4, 4));
@@ -21,7 +21,7 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (2, 1) 예외 발생")
+    @DisplayName("대각선이 아닌 방향으로 이동하려하면 예외가 발생한다.")
     void findPathToInvalidDestination() {
         Bishop bishop = new Bishop(new Position(1, 1), Color.WHITE);
         assertThatIllegalArgumentException()

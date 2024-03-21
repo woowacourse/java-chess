@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class RookTest {
 
     @Test
-    @DisplayName("(1, 1) -> (?, 1)")
+    @DisplayName("오른쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsRight() {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = rook.findPathTo(new Position(4, 1));
@@ -21,7 +21,7 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (1, ?)")
+    @DisplayName("위쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsUp() {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = rook.findPathTo(new Position(1, 4));
@@ -30,7 +30,7 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (2, 2) 예외 발생")
+    @DisplayName("대각선으로 이동하려고하면 예외가 발생한다.")
     void findPathToInvalidDestination() {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
         assertThatIllegalArgumentException()

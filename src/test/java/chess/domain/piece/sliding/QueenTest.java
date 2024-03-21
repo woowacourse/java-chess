@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class QueenTest {
 
     @Test
-    @DisplayName("(1, 1) -> (?, 1)")
+    @DisplayName("오른쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsRight() {
         Queen queen = new Queen(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = queen.findPathTo(new Position(4, 1));
@@ -21,7 +21,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (1, ?)")
+    @DisplayName("위쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsUp() {
         Queen queen = new Queen(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = queen.findPathTo(new Position(1, 4));
@@ -30,7 +30,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (2 + ?, 2 + ?)")
+    @DisplayName("대각선으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsDiagonal() {
         Queen queen = new Queen(new Position(1, 1), Color.WHITE);
         Set<Position> movablePositions = queen.findPathTo(new Position(4, 4));
@@ -39,7 +39,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("(1, 1) -> (2, 4) 예외 발생")
+    @DisplayName("여덟 방향이 아닌 방향으로 이동시 예외가 발생한다.")
     void findPathToInvalidDestination() {
         Queen queen = new Queen(new Position(1, 1), Color.WHITE);
         assertThatIllegalArgumentException()

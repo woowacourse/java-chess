@@ -10,7 +10,8 @@ import chess.domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class WhiteFirstPawnTest {
+class
+WhiteFirstPawnTest {
 
     @Test
     @DisplayName("왼쪽 위, 오른쪽 위 방향으로 움직이는지 확인한다.")

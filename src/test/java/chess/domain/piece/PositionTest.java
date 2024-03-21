@@ -23,7 +23,7 @@ class PositionTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
-    @DisplayName("(1,1) 에서 (8,8)의 범위를 벗어난 열의 좌표를 생성할 수 있다.")
+    @DisplayName("(1, 1) 에서 (8, 8)의 범위를 벗어난 열의 좌표를 생성할 수 있다.")
     void createPositionByInvalidateColumnRange(int x) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Position(x, 1))
@@ -32,7 +32,7 @@ class PositionTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 9})
-    @DisplayName("(1,1) 에서 (8,8)의 범위를 벗어난 행의 좌표를 생성할 수 있다.")
+    @DisplayName("(1, 1) 에서 (8, 8)의 범위를 벗어난 행의 좌표를 생성할 수 있다.")
     void createPositionByInvalidateRowRange(int y) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new Position(1, y))
