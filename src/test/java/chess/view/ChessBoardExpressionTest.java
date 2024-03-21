@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Color;
@@ -14,7 +15,7 @@ class ChessBoardExpressionTest {
     @Test
     @DisplayName("현재 체스판의 상태를 문자열로 반환한다.")
     void toChessBoardExpression() {
-        Piece piece = Piece.of(PieceType.KING, Color.WHITE);
+        Piece piece = King.of(Color.WHITE);
         List<Piece> pieces = Collections.nCopies(64, piece);
 
         String actualExpression = ChessBoardExpression.toExpression(pieces);

@@ -1,16 +1,16 @@
 package chess.view;
 
-import static chess.domain.piece.PieceType.BISHOP;
-import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.PieceType.KNIGHT;
-import static chess.domain.piece.PieceType.PAWN;
-import static chess.domain.piece.PieceType.QUEEN;
-import static chess.domain.piece.PieceType.ROOK;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.*;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,18 +30,18 @@ class PieceExpressionTest {
 
     static Stream<Arguments> pieceExpressions() {
         return Stream.of(
-                Arguments.of(Piece.of(KING, BLACK), "K"),
-                Arguments.of(Piece.of(QUEEN, BLACK), "Q"),
-                Arguments.of(Piece.of(ROOK, BLACK), "R"),
-                Arguments.of(Piece.of(BISHOP, BLACK), "B"),
-                Arguments.of(Piece.of(KNIGHT, BLACK), "N"),
-                Arguments.of(Piece.of(PAWN, BLACK), "P"),
-                Arguments.of(Piece.of(KING, WHITE), "k"),
-                Arguments.of(Piece.of(QUEEN, WHITE), "q"),
-                Arguments.of(Piece.of(ROOK, WHITE), "r"),
-                Arguments.of(Piece.of(BISHOP, WHITE), "b"),
-                Arguments.of(Piece.of(KNIGHT, WHITE), "n"),
-                Arguments.of(Piece.of(PAWN, WHITE), "p"),
+                Arguments.of(King.of(BLACK), "K"),
+                Arguments.of(Queen.of(BLACK), "Q"),
+                Arguments.of(Rook.of(BLACK), "R"),
+                Arguments.of(Bishop.of(BLACK), "B"),
+                Arguments.of(Knight.of(BLACK), "N"),
+                Arguments.of(Pawn.of(BLACK), "P"),
+                Arguments.of(King.of(WHITE), "k"),
+                Arguments.of(Queen.of(WHITE), "q"),
+                Arguments.of(Rook.of(WHITE), "r"),
+                Arguments.of(Bishop.of(WHITE), "b"),
+                Arguments.of(Knight.of(WHITE), "n"),
+                Arguments.of(Pawn.of(WHITE), "p"),
                 Arguments.of(null, ".")
         );
     }

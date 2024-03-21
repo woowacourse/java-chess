@@ -1,32 +1,33 @@
 package chess.view;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-
-import java.util.HashMap;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Map;
 
-import static chess.domain.piece.PieceType.*;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 public class PieceExpression {
 
-    private static final Map<Piece, String> pieceExpression = new HashMap<>();
-
-    static {
-        pieceExpression.put(Piece.of(KING, BLACK), "K");
-        pieceExpression.put(Piece.of(QUEEN, BLACK), "Q");
-        pieceExpression.put(Piece.of(ROOK, BLACK), "R");
-        pieceExpression.put(Piece.of(BISHOP, BLACK), "B");
-        pieceExpression.put(Piece.of(KNIGHT, BLACK), "N");
-        pieceExpression.put(Piece.of(PAWN, BLACK), "P");
-        pieceExpression.put(Piece.of(KING, WHITE), "k");
-        pieceExpression.put(Piece.of(QUEEN, WHITE), "q");
-        pieceExpression.put(Piece.of(ROOK, WHITE), "r");
-        pieceExpression.put(Piece.of(BISHOP, WHITE), "b");
-        pieceExpression.put(Piece.of(KNIGHT, WHITE), "n");
-        pieceExpression.put(Piece.of(PAWN, WHITE), "p");
-    }
+    private static final Map<Piece, String> pieceExpression = Map.ofEntries(
+            Map.entry(King.of(BLACK), "K"),
+            Map.entry(Queen.of(BLACK), "Q"),
+            Map.entry(Rook.of(BLACK), "R"),
+            Map.entry(Bishop.of(BLACK), "B"),
+            Map.entry(Knight.of(BLACK), "N"),
+            Map.entry(Pawn.of(BLACK), "P"),
+            Map.entry(King.of(WHITE), "k"),
+            Map.entry(Queen.of(WHITE), "q"),
+            Map.entry(Rook.of(WHITE), "r"),
+            Map.entry(Bishop.of(WHITE), "b"),
+            Map.entry(Knight.of(WHITE), "n"),
+            Map.entry(Pawn.of(WHITE), "p")
+    );
 
     public static String mapToExpression(final Piece piece) {
         if (piece == null) {
