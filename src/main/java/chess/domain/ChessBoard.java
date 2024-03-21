@@ -1,72 +1,77 @@
 package chess.domain;
 
+import chess.domain.chessPiece.*;
+
 import java.util.*;
 
-import static chess.domain.ChessPiece.*;
-import static chess.domain.ChessPiece.BLACK_KNIGHT;
+import static chess.domain.Team.BLACK;
+import static chess.domain.Team.WHITE;
+import static chess.domain.chessPiece.Role.*;
 
 public class ChessBoard {
-    private final Map<Column, List<ChessPiece>> chessBoard;
+    private final Map<Column, Line> chessBoard;
 
-    private ChessBoard(Map<Column, List<ChessPiece>> chessBoard) {
+    private ChessBoard(Map<Column, Line> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
     public static ChessBoard initializeChessBoard() {
-        Map<Column, List<ChessPiece>> board = new LinkedHashMap<>();
-        board.put(Column.valueOf("8"), new ArrayList<>(List.of(BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING, BLACK_BISHOP, BLACK_KNIGHT, BLACK_ROOK)));
-        board.put(Column.valueOf("7"), new ArrayList<>(List.of(BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN, BLACK_PAWN)));
-        board.put(Column.valueOf("6"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
-        board.put(Column.valueOf("5"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
-        board.put(Column.valueOf("4"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
-        board.put(Column.valueOf("3"), new ArrayList<>(List.of(NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE)));
-        board.put(Column.valueOf("2"), new ArrayList<>(List.of(WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN, WHITE_PAWN)));
-        board.put(Column.valueOf("1"), new ArrayList<>(List.of(WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING, WHITE_BISHOP, WHITE_KNIGHT, WHITE_ROOK)));
+        Map<Column, Line> board = new LinkedHashMap<>();
+        board.put(Column.valueOf("8"), new Line(List.of(new Rook(BLACK), new Knight(BLACK), new Bishop(BLACK), new Queen(BLACK), new King(BLACK), new Bishop(BLACK), new Knight(BLACK), new Rook(BLACK))));
+        board.put(Column.valueOf("7"), new Line(List.of(new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK))));
+        board.put(Column.valueOf("6"), new Line(List.of(new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty())));
+        board.put(Column.valueOf("5"), new Line(List.of(new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty())));
+        board.put(Column.valueOf("4"), new Line(List.of(new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty())));
+        board.put(Column.valueOf("3"), new Line(List.of(new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty(), new Empty())));
+        board.put(Column.valueOf("2"), new Line(List.of(new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE))));
+        board.put(Column.valueOf("1"), new Line(List.of(new Rook(WHITE), new Knight(WHITE), new Bishop(WHITE), new Queen(WHITE), new King(WHITE), new Bishop(WHITE), new Knight(WHITE), new Rook(WHITE))));
 
         return new ChessBoard(board);
     }
 
-    public Map<Column, List<ChessPiece>> getChessBoard(){
+    public Map<Column, Line> getChessBoard() {
         return Collections.unmodifiableMap(chessBoard);
     }
 
     public void move(Position source, Position target) {
-//        Column column = source.getColumn();
-//        Row row = source.getRow();
+        Piece piece = findChessPiece(source);
+        List<Position> route = piece.getRoute(source, target);
 
-        ChessPiece chessPiece = findChessPiece(source);
-
-        if(!chessPiece.isValidMovingRule(source, target)) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
+        for (Position position : route) {
+            checkObstacle(position);
         }
 
-        Direction direction = Direction.findDirection(source, target);
-        //임의의 값을 만들고
-        //direction으로 이동을 시키면서 그 칸을 확인 해야되잖아
-        Position movingPosition = direction.move(source);
-        while(!movingPosition.equals(target)) {
-            ChessPiece obstacle = findChessPiece(movingPosition);
-            if(!obstacle.isNone()) {
-                throw new IllegalArgumentException("이동할 수 없습니다.");
-            }
-            movingPosition = direction.move(movingPosition);
+        if(piece.isPawn() && Direction.findUpDown(source, target)) {
+            checkObstacle(target);
+        }
+        //폰이면서, 앞으로 이동하는 경우라면
+        //그냥 장애물이 뭐라도 있으면 못가
+
+        Piece tar = findChessPiece(target);
+        if(piece.isTeam(tar)){
+            throw new IllegalArgumentException("x");
         }
 
-        //목적지에 방해물 있는지
-            //나이트,폰
-        ChessPiece targetPiece = findChessPiece(movingPosition);
-        if(targetPiece.isTeam(chessPiece)){
-            throw new IllegalArgumentException("이동할 수 없습니다.");
-        }
-
-        chessBoard.get(source.getColumn()).set(source.getRow().getValue(), NONE);
-        chessBoard.get(target.getColumn()).set(target.getRow().getValue(), chessPiece);
+        chessBoard.put(source.getColumn(), getUpdate(source, new Empty()));
+        chessBoard.put(target.getColumn(), getUpdate(target, piece));
     }
 
-    private ChessPiece findChessPiece(Position source) {
+    private void checkObstacle(Position position) {
+        Piece obstacle = findChessPiece(position);
+        if (obstacle.getRole() !=EMPTY){
+            throw new IllegalArgumentException("이동 불가");
+        }
+    }
+
+    private Line getUpdate(Position source, Piece piece) {
+        return chessBoard.get(source.getColumn()).update(source.getRow(), piece);
+    }
+
+
+    private Piece findChessPiece(Position source) {
         Column column = source.getColumn();
         Row row = source.getRow();
-        List<ChessPiece> chessPieces = chessBoard.get(column);
-        return chessPieces.get(row.getValue());
+        Line chessPieces = chessBoard.get(column);
+        return chessPieces.getChessPiece(row);
     }
 }

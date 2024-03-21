@@ -13,14 +13,6 @@ public enum Direction {
 
     private final int rowDirection;
 
-    public int getColumnDirection() {
-        return columnDirection;
-    }
-
-    public int getRowDirection() {
-        return rowDirection;
-    }
-
     private final int columnDirection;
 
     Direction(int rowDirection, int columnDirection) {
@@ -59,6 +51,11 @@ public enum Direction {
             return DOWN_LEFT;
         }
         return DOWN_RIGHT;
+    }
+
+    public static boolean findUpDown(Position source, Position target) {
+        Direction direction = findDirection(source, target);
+        return direction == UP || direction == DOWN;
     }
 
     public Position move(Position source) {

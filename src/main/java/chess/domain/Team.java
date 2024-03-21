@@ -3,5 +3,9 @@ package chess.domain;
 public enum Team {
     WHITE,
     BLACK,
-    NOTHING
+    NOTHING;
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }
