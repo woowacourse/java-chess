@@ -28,6 +28,7 @@ public class ChessGame {
     public void playGame() {
         boolean checkFirst = true;
         Team turn = Team.WHITE;
+
         while (true) {
             List<String> commands = InputView.inputCommand();
             String command = commands.get(0);
@@ -61,14 +62,18 @@ public class ChessGame {
             OutputView.printInputAgainMessage();
             return false;
         }
+
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
+
         if (!validateMove(source, target, turn)) {
             OutputView.printWrongMovementMessage();
             return false;
         }
+
         movePieceAndRenewBoard(source, target);
         OutputView.printBoard(makeBoardDto(board.getBoard()));
+
         return true;
     }
 
