@@ -34,12 +34,4 @@ public class PieceGenerator {
         }
         return pieces;
     }
-
-    public static List<Piece> makeEmptyPieces(int amount) {
-        List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
-            pieces.add(new EmptyPiece());
-        }
-        return pieces;
-    }
 }
