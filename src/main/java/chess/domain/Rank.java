@@ -50,4 +50,8 @@ public enum Rank {
     public int get() {
         return rank;
     }
+
+    public int diff(Rank other) {
+        return rank - other.rank;
+    }
 }

@@ -13,14 +13,13 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        // TODO: 순서 의존에 대해 생각 해보기
         if (isBackward(source, target)) {
             return false;
         }
         if (isFirstPosition(source)) {
-            return getDeltaRank(source.rank(), target.rank()) <= 2;
+            return source.calculateRankDiff(target.rank()) <= 2;
         }
-        return getDeltaRank(source.rank(), target.rank()) == 1;
+        return source.calculateRankDiff(target.rank()) == 1;
     }
 
     private boolean isBackward(Position source, Position target) {

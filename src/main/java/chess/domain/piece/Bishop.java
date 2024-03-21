@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return (getDeltaRank(source.rank(), target.rank()) ==
-                getDeltaFile(source.file(), target.file()));
+        return (source.calculateRankDiff(target.rank()) ==
+                source.calculateFileDiff(target.file()));
     }
 }

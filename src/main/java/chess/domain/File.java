@@ -42,4 +42,8 @@ public enum File {
     public int get() {
         return file;
     }
+
+    public int diff(File target) {
+        return file - target.file;
+    }
 }

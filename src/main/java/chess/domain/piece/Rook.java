@@ -12,6 +12,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return isSameRank(source, target) || isSameFile(source, target);
+        return source.isSameRank(target) || source.isSameFile(target);
     }
 }

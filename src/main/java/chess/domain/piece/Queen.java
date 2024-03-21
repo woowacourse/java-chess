@@ -12,8 +12,8 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return (isSameRank(source, target) || isSameFile(source, target)) ||
-                (getDeltaRank(source.rank(), target.rank()) ==
-                        getDeltaFile(source.file(), target.file()));
+        return (source.isSameRank(target) || source.isSameFile(target)) ||
+                (source.calculateRankDiff(target.rank()) ==
+                        source.calculateFileDiff(target.file()));
     }
 }

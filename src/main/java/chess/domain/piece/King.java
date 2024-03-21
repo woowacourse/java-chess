@@ -12,7 +12,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return (getDeltaRank(source.rank(), target.rank()) <= 1 &&
-                getDeltaFile(source.file(), target.file()) <= 1);
+        return (source.calculateRankDiff(target.rank()) <= 1 &&
+                source.calculateFileDiff(target.file()) <= 1);
     }
 }
