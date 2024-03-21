@@ -9,7 +9,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target) {
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+        checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
         if (canMove(distance)) {
             return distance.findPath(source);

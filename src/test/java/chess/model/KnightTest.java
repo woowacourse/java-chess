@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +19,7 @@ class KnightTest {
         Knight knight = new Knight(Side.WHITE);
 
         // when
-        List<ChessPosition> path = knight.findPath(source, target);
+        List<ChessPosition> path = knight.findPath(source, target, null);
 
         // then
         assertThat(path).isEqualTo(expected);

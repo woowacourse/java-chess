@@ -12,4 +12,10 @@ public abstract class Piece implements MoveStrategy {
     public boolean isSameSide(Piece other) {
         return this.side == other.side;
     }
+
+    public void checkValidTargetPiece(Piece other) {
+        if (other != null && isSameSide(other)) {
+            throw new IllegalArgumentException("아군 기물이 존재합니다.");
+        }
+    }
 }

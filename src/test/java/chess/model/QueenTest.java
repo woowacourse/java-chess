@@ -1,14 +1,13 @@
 package chess.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
     @ParameterizedTest
@@ -20,7 +19,7 @@ class QueenTest {
         Queen queen = new Queen(Side.WHITE);
 
         // when
-        List<ChessPosition> path = queen.findPath(source, target);
+        List<ChessPosition> path = queen.findPath(source, target, null);
 
         // then
         assertThat(path).isEqualTo(expected);

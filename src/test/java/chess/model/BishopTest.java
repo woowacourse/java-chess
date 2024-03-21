@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,7 +20,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Side.WHITE);
 
         // when
-        List<ChessPosition> path = bishop.findPath(source, target);
+        List<ChessPosition> path = bishop.findPath(source, target, null);
 
         // then
         assertThat(path).isEqualTo(expected);

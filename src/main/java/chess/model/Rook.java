@@ -9,7 +9,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target) {
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+        checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
         if (distance.isCrossMovement()) {
             return distance.findPath(source);

@@ -9,9 +9,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target) {
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+        checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
-        if(distance.isDiagonalMovement()) {
+        if (distance.isDiagonalMovement()) {
             return distance.findPath(source);
         }
         return List.of();
