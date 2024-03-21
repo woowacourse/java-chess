@@ -1,10 +1,13 @@
 package chess.controller;
 
-import chess.model.*;
-import chess.view.GameCommand;
+import chess.model.ChessBoard;
+import chess.model.ChessBoardInitializer;
+import chess.model.ChessPosition;
+import chess.model.GameCommand;
 import chess.view.InputView;
 import chess.view.MoveArguments;
 import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
     private final InputView inputView;
@@ -16,15 +19,24 @@ public class ChessController {
     }
 
     public void run() {
-        GameCommand gameCommand = inputView.readGameCommand();
+        GameCommand gameCommand = GameCommand.createFirstGameCommand(inputView.readGameCommand());
         if (gameCommand.isEnd()) {
             return;
         }
         ChessBoardInitializer initializer = new ChessBoardInitializer();
         ChessBoard chessBoard = new ChessBoard(initializer.create());
         outputView.printChessBoard(chessBoard);
-        MoveArguments moveArguments = inputView.readMoveArguments();
-        ChessPosition source = moveArguments.createSourcePosition();
-        ChessPosition target = moveArguments.createTargetPosition();
+        while (!gameCommand.isEnd()) {
+            List<String> inputs = inputView.readMoveArguments();
+            gameCommand = GameCommand.createMoveCommand(inputs.get(0));
+            if (gameCommand.isEnd()) {
+                return;
+            }
+            MoveArguments moveArguments = MoveArguments.from(inputs);
+            ChessPosition source = moveArguments.createSourcePosition();
+            ChessPosition target = moveArguments.createTargetPosition();
+            chessBoard.move(source, target);
+            outputView.printChessBoard(chessBoard);
+        }
     }
 }
