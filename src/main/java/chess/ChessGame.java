@@ -23,7 +23,7 @@ public class ChessGame {
 
     public void run() {
         Board board = BoardFactory.createInitialBoard();
-        for (int i = 0; i < 5; i++) {
+        while (gameState.isPlaying()) {
             executeCommand();
         }
         OutputView.printChessBoard(board);

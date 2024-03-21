@@ -15,4 +15,9 @@ public class EndState implements GameState {
     public GameState end() {
         throw new UnsupportedOperationException("종료 상태에서는 종료할 수 없습니다.");
     }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
 }

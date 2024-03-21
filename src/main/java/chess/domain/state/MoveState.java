@@ -24,4 +24,9 @@ public class MoveState implements GameState {
     public GameState end() {
         return new EndState();
     }
+
+    @Override
+    public boolean isPlaying() {
+        return true;
+    }
 }
