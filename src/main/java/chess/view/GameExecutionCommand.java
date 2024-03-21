@@ -19,4 +19,8 @@ public enum GameExecutionCommand {
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("해당 커맨드를 찾을 수 없습니다"));
     }
+
+    public String getCode() {
+        return code;
+    }
 }
