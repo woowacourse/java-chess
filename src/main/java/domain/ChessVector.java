@@ -45,6 +45,6 @@ public record ChessVector(int x, int y) {
     }
 
     public boolean isManhattanDistance(final int distance) {
-        return Math.abs(x) <= 1 && Math.abs(y) <= 1;
+        return Math.abs(x) <= distance && Math.abs(y) <= distance;
     }
 }
