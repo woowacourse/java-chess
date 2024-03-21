@@ -31,6 +31,11 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
+    public Team getTeam() {
+        return pieceInfo.getTeam();
+    }
+
+    @Override
     public boolean isDifferentTeam(Team otherTeam) {
         return pieceInfo.isDifferentTeam(otherTeam);
     }

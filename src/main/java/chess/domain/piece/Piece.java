@@ -11,5 +11,7 @@ public interface Piece {
 
     PieceInfo getPieceInfo();
 
+    Team getTeam();
+
     boolean isDifferentTeam(Team otherTeam);
 }

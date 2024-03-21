@@ -27,7 +27,10 @@ public class Pawn extends ChessPiece {
         return new Pawn(newPieceInfo, changeMovedStrategy());
     }
 
-    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isDifferentTeam) {
+    public Pawn move(Position newPosition,
+                     boolean isDisturbed,
+                     boolean isOtherPieceExist,
+                     boolean isDifferentTeam) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

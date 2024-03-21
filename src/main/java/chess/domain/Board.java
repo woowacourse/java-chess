@@ -134,4 +134,33 @@ public class Board {
 
         return otherPiece.isDifferentTeam(currentTeam);
     }
+
+    public boolean checkPieceExist(Position position) {
+        Piece piece = board.get(position);
+
+        return piece.getType() != PieceType.EMPTY;
+    }
+
+    public void movePieceAndRenewBoard(Position source, Position target) {
+        Piece piece = board.get(source);
+
+        Piece movedPiece = movePiece(source, target, piece);
+
+        PieceInfo pieceInfo = movedPiece.getPieceInfo();
+        board.put(source, new EmptyPiece(new PieceInfo(source, pieceInfo.getTeam()), new EmptyMoveStrategy()));
+        board.put(pieceInfo.getPosition(), movedPiece);
+    }
+
+    private Piece movePiece(Position source, Position target, Piece piece) {
+        if (piece.getType() == PieceType.PAWN) {
+            return ((Pawn) piece).move(target,
+                    checkObstacleInRange(source, target),
+                    checkPieceExist(target),
+                    checkDifferentTeamPieceExist(piece.getTeam(), target));
+        }
+
+        return piece.move(target,
+                checkObstacleInRange(source, target),
+                checkDifferentTeamPieceExist(piece.getTeam(), target));
+    }
 }
