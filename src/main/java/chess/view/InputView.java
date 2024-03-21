@@ -24,7 +24,7 @@ public class InputView {
 
     private void validatePositionLength(String input) {
         if (input.length() != POSITION_LENGTH) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+            throw new IllegalArgumentException("올바르지 않은 위치 입력입니다.");
         }
     }
 
