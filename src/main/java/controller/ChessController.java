@@ -24,40 +24,48 @@ public class ChessController {
         GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
         outputView.printStartMessage();
+        play(gameBoard);
+    }
+
+    private void play(final GameBoard gameBoard) {
+        boolean isStart = false;
         Camp camp = Camp.WHITE;
-        boolean start = false;
 
         while (true) {
             List<String> input = inputController.getCommand();
             Command command = Command.from(input.get(0));
+            isStart = checkStart(command, isStart);
 
-            if (command == Command.START && start) {
-                throw new IllegalArgumentException("이미 게임이 진행중입니다.");
+            if (!isStart) {
+                throw new IllegalArgumentException("시작되지 않은 게임입니다.");
             }
-
-            if (command == Command.START) {
-                start = true;
-            }
-
-            if (!start) {
-                throw new IllegalArgumentException("start하고 시작하세요");
-            }
-
             if (command == Command.MOVE) {
                 Moving moving = getMoving(input.get(1), input.get(2));
                 gameBoard.move(moving, camp);
                 camp = camp.toggle();
-            }
-            if (command == Command.END) {
+            } else if (command == Command.END) {
                 break;
             }
-
-            outputView.printGameBoard(GameBoardDto.from(gameBoard));
-            outputView.printCurrentCame(camp);
+            printCurrentStatus(gameBoard, camp);
         }
     }
 
-    private static Moving getMoving(final String currentPosition, final String nextPosition) {
+    private void printCurrentStatus(final GameBoard gameBoard, final Camp camp) {
+        outputView.printGameBoard(GameBoardDto.from(gameBoard));
+        outputView.printCurrentCame(camp);
+    }
+
+    private boolean checkStart(final Command command, boolean isStart) {
+        if (command == Command.START && isStart) {
+            throw new IllegalArgumentException("이미 게임이 진행중입니다.");
+        }
+        if (command == Command.START) {
+            isStart = true;
+        }
+        return isStart;
+    }
+
+    private Moving getMoving(final String currentPosition, final String nextPosition) {
         return new Moving(Position.from(currentPosition), Position.from(nextPosition));
     }
 }
