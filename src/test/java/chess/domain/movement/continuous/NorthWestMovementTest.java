@@ -8,7 +8,7 @@ import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class NorthWestMovementTest {
+class NorthWestMovementTest {
 
     @Test
     @DisplayName("이동 가능한지 확인한다.")
