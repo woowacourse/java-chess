@@ -4,17 +4,11 @@ import static chess.domain.CommandType.END;
 import static chess.domain.CommandType.START;
 
 import chess.domain.ChessGame;
-import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.dto.BoardDto;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGameController {
 
