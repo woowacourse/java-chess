@@ -30,7 +30,7 @@ public class ChessBoardInitializer {
         );
     }
 
-    private Rank convertSpecialPieceRankWithSide(final Side side) {
+    private Rank convertSpecialPieceRankWithSide(Side side) {
         Rank rank = Rank.ONE;
         if (side == Side.BLACK) {
             rank = Rank.EIGHT;
@@ -52,7 +52,7 @@ public class ChessBoardInitializer {
         );
     }
 
-    private Rank convertPawnRanksWithSide(final Side side) {
+    private Rank convertPawnRanksWithSide(Side side) {
         Rank rank = Rank.TWO;
         if (side == Side.BLACK) {
             rank = Rank.SEVEN;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Queen extends Piece {
 
-    public Queen(final Side side) {
+    public Queen(Side side) {
         super(side);
     }
 

@@ -7,7 +7,7 @@ public class Distance {
     private final int fileDifference;
     private final int rankDifference;
 
-    public Distance(final int fileDifference, final int rankDifference) {
+    public Distance(int fileDifference, int rankDifference) {
         this.fileDifference = fileDifference;
         this.rankDifference = rankDifference;
     }
@@ -60,8 +60,8 @@ public class Distance {
         return path;
     }
 
-    private void addPath(final ChessPosition source, int repeatCount, final int fileOffset, final int rankOffset,
-                           final List<ChessPosition> path) {
+    private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
+                         List<ChessPosition> path) {
         ChessPosition prevPosition = source;
         while (repeatCount-- > 0) {
             File nextFile = prevPosition.findNextFile(fileOffset);

@@ -6,7 +6,7 @@ public class Pawn extends Piece {
     private static final int DISPLACEMENT = 1;
     private static final int INITIAL_SPECIAL_DISPLACEMENT = 2;
 
-    public Pawn(final Side side) {
+    public Pawn(Side side) {
         super(side);
     }
 
@@ -31,7 +31,7 @@ public class Pawn extends Piece {
         return List.of();
     }
 
-    private void validateTargetPieceSameSide(final Piece targetPiece) {
+    private void validateTargetPieceSameSide(Piece targetPiece) {
         if (targetPiece != null && isSameSide(targetPiece)) {
             throw new IllegalArgumentException("아군 기물이 타겟 위치에 있어 움직일 수 없습니다.");
         }

@@ -6,7 +6,7 @@ public class ChessPosition {
     private final File file;
     private final Rank rank;
 
-    public ChessPosition(final File file, final Rank rank) {
+    public ChessPosition(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }

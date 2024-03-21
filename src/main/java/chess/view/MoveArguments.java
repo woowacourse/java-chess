@@ -21,7 +21,7 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
                 arguments.get(2), parseInt(arguments.get(3)));
     }
 
-    private static List<String> convertArguments(final List<String> arguments) {
+    private static List<String> convertArguments(List<String> arguments) {
         return arguments.stream()
                 .skip(1)
                 .filter(MoveArguments::validateMoveArgument)
@@ -29,7 +29,7 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
                 .toList();
     }
 
-    private static void validateArgumentsSize(final List<String> results) {
+    private static void validateArgumentsSize(List<String> results) {
         if (results.size() != ARGUMENTS_SIZE) {
             throw new IllegalArgumentException("Source 위치와 Target 위치가 정확하지 않습니다.");
         }

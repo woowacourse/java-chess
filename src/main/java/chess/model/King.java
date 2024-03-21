@@ -5,7 +5,7 @@ import java.util.List;
 public class King extends Piece {
     private static final int DISPLACEMENT = 1;
 
-    public King(final Side side) {
+    public King(Side side) {
         super(side);
     }
 
