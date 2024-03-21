@@ -37,23 +37,27 @@ public class ChessGame {
     }
 
     private void play(Board board) {
-        GameCommand gameCommand;
-        do {
-            gameCommand = inputView.readCommand();
-            play(gameCommand, board);
-        } while (gameCommand.isContinue());
+        while (true) {
+            processTurn(board);
+        }
     }
 
-    private void play(GameCommand gameCommand, Board board) {
-        if (gameCommand == GameCommand.MOVE) {
-            Position start = inputView.readPosition();
-            Position end = inputView.readPosition();
-            board.move(start, end);
-            showBoard(board);
-        }
-        if (gameCommand == GameCommand.START) {
+    private void processTurn(Board board) {
+        GameCommand command = inputView.readCommand();
+        if (command == GameCommand.START) {
             throw new IllegalArgumentException("이미 게임을 시작했습니다.");
         }
+        if (command == GameCommand.END) {
+            System.exit(0);
+        }
+        executeMove(board);
+    }
+
+    private void executeMove(Board board) {
+        Position start = inputView.readPosition();
+        Position end = inputView.readPosition();
+        board.move(start, end);
+        showBoard(board);
     }
 
     private void showBoard(Board board) {
