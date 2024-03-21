@@ -18,6 +18,10 @@ public class Point {
         this(new File(file), new Rank(rank));
     }
 
+    public Point(String point) {
+        this(new File(point.charAt(0)), new Rank(point.charAt(1) - '0'));
+    }
+
     public boolean isDiagonal(Point point) {
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
