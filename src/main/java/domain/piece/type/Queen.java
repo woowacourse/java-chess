@@ -16,7 +16,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isInMovableRange(Position source, Position target) {
         Direction direction = source.findDirectionTo(target);
         return isMovableDirection(direction) && isMovableDistance(source, target);
     }

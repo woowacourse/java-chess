@@ -40,7 +40,7 @@ class RookTest {
         Piece rook = new Rook(PieceColor.BLACK);
 
         // when
-        boolean result = rook.isMovable(source, target);
+        boolean result = rook.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -54,7 +54,7 @@ class RookTest {
         Piece rook = new Rook(PieceColor.BLACK);
 
         // when
-        boolean result = rook.isMovable(source, target);
+        boolean result = rook.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();

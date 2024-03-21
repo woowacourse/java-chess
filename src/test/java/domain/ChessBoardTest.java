@@ -64,4 +64,39 @@ public class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능합니다.");
     }
+
+    @DisplayName("Source와 Target이 같으면 이동할 수 없다.")
+    @Test
+    void isSamePosition() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "b2"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능합니다.");
+    }
+
+    @DisplayName("Source와 Target이 같은 색이면 이동할 수 없다.")
+    @Test
+    void isTargetSameColor() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Pawn(PieceColor.WHITE));
+        board.put(new Position("b3"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "b3"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동이 불가능합니다.");
+    }
 }

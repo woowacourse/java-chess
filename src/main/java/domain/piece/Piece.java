@@ -15,9 +15,13 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public abstract boolean isMovable(final Position source, final Position target);
+    public abstract boolean isInMovableRange(final Position source, final Position target);
 
     public String name() {
         return name;
+    }
+
+    public PieceColor color() {
+        return color;
     }
 }

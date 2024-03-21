@@ -35,7 +35,7 @@ class QueenTest {
         Piece queen = new Queen(PieceColor.BLACK);
 
         // when
-        boolean result = queen.isMovable(source, target);
+        boolean result = queen.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();

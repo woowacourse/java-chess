@@ -48,7 +48,7 @@ class KingTest {
         Piece king = new King(PieceColor.BLACK);
 
         // when
-        boolean result = king.isMovable(source, target);
+        boolean result = king.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -62,7 +62,7 @@ class KingTest {
         Piece king = new King(PieceColor.BLACK);
 
         // when
-        boolean result = king.isMovable(source, target);
+        boolean result = king.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();

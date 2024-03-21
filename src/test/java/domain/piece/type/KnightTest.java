@@ -48,7 +48,7 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
 
         // when
-        boolean result = knight.isMovable(source, target);
+        boolean result = knight.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -62,7 +62,7 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
 
         // when
-        boolean result = knight.isMovable(source, target);
+        boolean result = knight.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();

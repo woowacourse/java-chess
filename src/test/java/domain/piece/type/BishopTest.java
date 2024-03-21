@@ -40,7 +40,7 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
 
         // when
-        boolean result = bishop.isMovable(source, target);
+        boolean result = bishop.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
@@ -54,7 +54,7 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
 
         // when
-        boolean result = bishop.isMovable(source, target);
+        boolean result = bishop.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();

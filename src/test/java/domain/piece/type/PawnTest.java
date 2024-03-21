@@ -21,7 +21,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.FIVE);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -36,7 +36,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.THREE);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -51,7 +51,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.FIVE);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -66,7 +66,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.FOUR);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -81,7 +81,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.FOUR);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
@@ -96,7 +96,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.FIVE);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
@@ -111,7 +111,7 @@ class PawnTest {
         Position target = new Position(ChessFile.B, ChessRank.FOUR);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -126,7 +126,7 @@ class PawnTest {
         Position target = new Position(ChessFile.A, ChessRank.SIX);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isTrue();
@@ -141,7 +141,7 @@ class PawnTest {
         Position target = new Position(ChessFile.C, ChessRank.FOUR);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
@@ -156,7 +156,7 @@ class PawnTest {
         Position target = new Position(ChessFile.C, ChessRank.FIVE);
 
         // when
-        boolean result = pawn.isMovable(source, target);
+        boolean result = pawn.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
