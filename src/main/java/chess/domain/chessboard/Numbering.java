@@ -1,5 +1,9 @@
 package chess.domain.chessboard;
 
+import static chess.domain.chessboard.Lettering.findLettering;
+
+import java.util.Arrays;
+
 public enum Numbering {
 
     ONE(1),
@@ -11,13 +15,32 @@ public enum Numbering {
     SEVEN(7),
     EIGHT(8);
 
-    private final int number;
+    private final int value;
 
-    Numbering(int number) {
-        this.number = number;
+    Numbering(int value) {
+        this.value = value;
     }
 
-    public int getNumber() {
-        return number;
+    public static Numbering findNumbering(int value) {
+        return Arrays.stream(Numbering.values())
+                .filter(numbering -> numbering.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 넘버링 값이 아닙니다."));
+    }
+
+    public static Numbering findNextNumbering(Numbering numbering) {
+        if (numbering == Numbering.EIGHT) {
+            throw new IllegalArgumentException();
+        }
+        int findNumberingValue = numbering.value + 1;
+        return findNumbering(findNumberingValue);
+    }
+
+    public static Numbering findPreviousNumbering(Numbering numbering) {
+        if (numbering == Numbering.ONE) {
+            throw new IllegalArgumentException();
+        }
+        int findNumberingValue = numbering.value - 1;
+        return findNumbering(findNumberingValue);
     }
 }
