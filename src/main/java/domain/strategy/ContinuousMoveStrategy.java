@@ -25,15 +25,14 @@ public class ContinuousMoveStrategy implements MoveStrategy {
         }
 
         List<Position> movePaths = Stream.iterate(source, position -> position.add(optimalVector))
-                .takeWhile(position -> isAlive(position, destination, piecePositions))
+                .takeWhile(position -> isContinuable(position, destination, piecePositions))
                 .limit(moveBound)
                 .toList();
 
         return isReachable(destination, optimalVector, movePaths);
     }
 
-    // TODO: 메서드 이름 짓기
-    private static boolean isAlive(final Position current, final Position destination, final Set<Position> piecePositions) {
+    private static boolean isContinuable(final Position current, final Position destination, final Set<Position> piecePositions) {
         boolean isReachedDestination = current.equals(destination);
         boolean isOtherPieceExist = piecePositions.contains(current);
         return !isReachedDestination && !isOtherPieceExist;
