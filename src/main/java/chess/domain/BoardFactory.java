@@ -16,6 +16,10 @@ import java.util.Map;
 
 public class BoardFactory {
 
+    private BoardFactory() {
+
+    }
+
     public static Board startGame() {
         Map<Position, Piece> map = new HashMap<>();
         initializePawn(map);
