@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.File;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +16,10 @@ class QueenTest {
     @Test
     void canMoveStraight() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position('d', 8));
+        final boolean canMove = queen.canMoveTo(new Position(File.D, Rank.EIGHT));
 
         // then
         assertThat(canMove).isTrue();
@@ -27,10 +29,10 @@ class QueenTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position('f', 7));
+        final boolean canMove = queen.canMoveTo(new Position(File.F, Rank.SEVEN));
 
         // then
         assertThat(canMove).isTrue();
@@ -40,10 +42,10 @@ class QueenTest {
     @Test
     void canNotMove() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position('a', 1));
+        final boolean canMove = queen.canMoveTo(new Position(File.A, Rank.ONE));
 
         // then
         assertThat(canMove).isFalse();
@@ -53,15 +55,15 @@ class QueenTest {
     @Test
     void getRouteLeft() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
+        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final Set<Position> positions = queen.getRoute(new Position('g', 2));
+        final Set<Position> positions = queen.getRoute(new Position(File.G, Rank.TWO));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('e', 4),
-                new Position('f', 3)
+                new Position(File.E, Rank.FOUR),
+                new Position(File.F, Rank.THREE)
         );
     }
 }

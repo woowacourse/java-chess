@@ -11,10 +11,10 @@ class PieceTest {
     @Test
     void isPosition() {
         // given
-        final Piece pawn = new Pawn(Color.WHITE, new Position('b', 2));
+        final Piece pawn = new Pawn(Color.WHITE, new Position(File.B, Rank.TWO));
 
         // when
-        final boolean isPosition = pawn.isPosition(new Position('b', 2));
+        final boolean isPosition = pawn.isPosition(new Position(File.B, Rank.TWO));
 
         // then
         Assertions.assertThat(isPosition).isTrue();
@@ -24,10 +24,11 @@ class PieceTest {
     @Test
     void isNotPosition() {
         // given
-        final Piece pawn = new Pawn(Color.WHITE, new Position('b', 2));
+        final Piece pawn = new Pawn(Color.WHITE, new Position(File.B, Rank.TWO));
 
         // when
-        final boolean isPosition = pawn.isPosition(new Position('b', 3));
+        final boolean isPosition = pawn.isPosition(new Position(File.B, Rank.THREE));
+
 
         // then
         Assertions.assertThat(isPosition).isFalse();

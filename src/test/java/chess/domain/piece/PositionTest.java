@@ -10,8 +10,8 @@ class PositionTest {
     @Test
     void create() {
         // given
-        final Position positionA_ONE = new Position('a', 1);
-        final Position positionB_TWO = new Position('b', 2);
+        final Position positionA_ONE = new Position(File.A, Rank.ONE);
+        final Position positionB_TWO = new Position(File.B, Rank.TWO);
 
         // when && then
         Assertions.assertThat(positionA_ONE).isEqualTo(new Position(File.A, Rank.ONE));
@@ -22,11 +22,11 @@ class PositionTest {
     @Test
     void canMoveStraight() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position targetPositionUp = new Position('d', 8);
-        final Position targetPositionDown = new Position('d', 1);
-        final Position targetPositionLeft = new Position('a', 5);
-        final Position targetPositionRight = new Position('h', 5);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position targetPositionUp = new Position(File.D, Rank.EIGHT);
+        final Position targetPositionDown = new Position(File.D, Rank.ONE);
+        final Position targetPositionLeft = new Position(File.A, Rank.FIVE);
+        final Position targetPositionRight = new Position(File.H, Rank.FIVE);
 
         // when
         final boolean resultUp = currentPosition.isStraightWith(targetPositionUp);
@@ -45,8 +45,8 @@ class PositionTest {
     @Test
     void canNotMoveStraight() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position notMovablePosition = new Position('a', 1);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position notMovablePosition = new Position(File.A, Rank.ONE);
 
         // when
         final boolean result = currentPosition.isStraightWith(notMovablePosition);
@@ -59,11 +59,11 @@ class PositionTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position targetPositionRightUp = new Position('e', 6);
-        final Position targetPositionRightDown = new Position('e', 4);
-        final Position targetPositionLeftUP = new Position('c', 6);
-        final Position targetPositionLeftDown = new Position('c', 4);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position targetPositionRightUp = new Position(File.E, Rank.SIX);
+        final Position targetPositionRightDown = new Position(File.E, Rank.FOUR);
+        final Position targetPositionLeftUP = new Position(File.C, Rank.SIX);
+        final Position targetPositionLeftDown = new Position(File.C, Rank.FOUR);
 
         // when
         final boolean resultRightUp = currentPosition.isDiagonalWith(targetPositionRightUp);
@@ -82,8 +82,8 @@ class PositionTest {
     @Test
     void canNotMoveDiagonal() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position notMovablePosition = new Position('d', 6);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position notMovablePosition = new Position(File.D, Rank.SIX);
 
         // when
         final boolean result = currentPosition.isDiagonalWith(notMovablePosition);
@@ -96,8 +96,8 @@ class PositionTest {
     @Test
     void isSameVerticalDifference() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('d', 7);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.D, Rank.SEVEN);
 
         // when
         final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
@@ -110,8 +110,8 @@ class PositionTest {
     @Test
     void isNotSameVerticalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('d', 6);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.D, Rank.SIX);
 
         // when
         final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
@@ -124,8 +124,8 @@ class PositionTest {
     @Test
     void isSameHorizontalDifference() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('b', 5);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.B, Rank.FIVE);
 
         // when
         final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
@@ -138,8 +138,8 @@ class PositionTest {
     @Test
     void isNotSameHorizontalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('a', 5);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.A, Rank.FIVE);
 
         // when
         final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
@@ -152,8 +152,8 @@ class PositionTest {
     @Test
     void isSameDiagonalDifference() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('b', 7);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.B, Rank.SEVEN);
 
         // when
         final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 2);
@@ -166,8 +166,8 @@ class PositionTest {
     @Test
     void isNotSameDiagonalDifference() {
         // given
-        final Position currentPosition = new Position('d', 5);
-        final Position otherPosition = new Position('b', 7);
+        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position otherPosition = new Position(File.B, Rank.SEVEN);
 
         // when
         final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 1);

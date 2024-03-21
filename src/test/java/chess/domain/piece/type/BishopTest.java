@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.File;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +16,10 @@ class BishopTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
+        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('e', 4));
+        boolean canMove = bishop.canMoveTo(new Position(File.E, Rank.FOUR));
 
         // then
         assertThat(canMove).isTrue();
@@ -27,10 +29,10 @@ class BishopTest {
     @Test
     void canNotMove() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
+        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position('d', 6)); // 대각선 위
+        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.SIX)); // 대각선 위
 
         // then
         assertThat(canMove).isFalse();
@@ -40,15 +42,15 @@ class BishopTest {
     @Test
     void getRouteRightUp() {
         // given
-        final Bishop bishop = new Bishop(Color.WHITE, new Position('a', 2));
+        final Bishop bishop = new Bishop(Color.WHITE, new Position(File.A, Rank.TWO));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position('d', 5));
+        final Set<Position> positions = bishop.getRoute(new Position(File.D, Rank.FIVE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('b', 3),
-                new Position('c', 4)
+                new Position(File.B, Rank.THREE),
+                new Position(File.C, Rank.FOUR)
         );
     }
 
@@ -56,15 +58,15 @@ class BishopTest {
     @Test
     void getRouteRightDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('c', 4));
+        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position('f', 1));
+        final Set<Position> positions = bishop.getRoute(new Position(File.F, Rank.ONE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('d', 3),
-                new Position('e', 2)
+                new Position(File.D, Rank.THREE),
+                new Position(File.E, Rank.TWO)
         );
     }
 
@@ -72,14 +74,14 @@ class BishopTest {
     @Test
     void getRouteLeftUp() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('c', 4));
+        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position('a', 6));
+        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.SIX));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('b', 5)
+                new Position(File.B, Rank.FIVE)
         );
     }
 
@@ -87,15 +89,15 @@ class BishopTest {
     @Test
     void getRouteLeftDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 6));
+        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.SIX));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position('a', 3));
+        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.THREE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('c', 5),
-                new Position('b', 4)
+                new Position(File.C, Rank.FIVE),
+                new Position(File.B, Rank.FOUR)
         );
     }
 }

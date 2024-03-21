@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.File;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +16,10 @@ class PawnTest {
     @Test
     void canWhiteMoveTwoAtFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 2));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.TWO));
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position('d', 4));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FOUR));
 
         // then
         assertThat(canMove).isTrue();
@@ -27,10 +29,10 @@ class PawnTest {
     @Test
     void canBlackMoveTwoAtFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 7));
+        final Pawn pawn = new Pawn(Color.BLACK, new Position(File.D, Rank.SEVEN));
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position('d', 5));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FIVE));
 
         // then
         assertThat(canMove).isTrue();
@@ -40,10 +42,10 @@ class PawnTest {
     @Test
     void canNotMoveTwo() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 4));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FOUR));
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position('d', 6));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isFalse();
@@ -53,10 +55,10 @@ class PawnTest {
     @Test
     void canMoveForwardOneStep() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position('d', 6));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -66,10 +68,10 @@ class PawnTest {
     @Test
     void canNotMoveForwardOverOneStep() { // TODO: 한칸인데 뒤로가는 경우 추가
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position('d', 8));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.EIGHT));
 
         // then
         assertThat(canMove).isFalse();
@@ -79,14 +81,15 @@ class PawnTest {
     @Test
     void getRouteForward() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position('a', 2));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.A, Rank.TWO));
 
         // when
-        final Set<Position> positions = pawn.getRoute(new Position('a', 4));
+        final Set<Position> positions = pawn.getRoute(new Position(File.A, Rank.FOUR));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position('a', 3)
+                new Position(File.A, Rank.THREE)
         );
+
     }
 }

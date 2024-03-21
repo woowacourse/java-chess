@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.File;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +15,11 @@ class NightTest {
     @Test
     void canMoveVertical2Horizon1() {
         // given
-        final Night night = new Night(Color.BLACK, new Position('d', 5));
+        final Night night = new Night(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMoveRight = night.canMoveTo(new Position('e', 7));
-        final boolean canMoveLeft = night.canMoveTo(new Position('c', 7));
+        final boolean canMoveRight = night.canMoveTo(new Position(File.E, Rank.SEVEN));
+        final boolean canMoveLeft = night.canMoveTo(new Position(File.C, Rank.SEVEN));
 
         // then
         assertThat(canMoveRight).isTrue();
@@ -28,11 +30,11 @@ class NightTest {
     @Test
     void canMoveVertical1Horizon2() {
         // given
-        final Night night = new Night(Color.BLACK, new Position('d', 5));
+        final Night night = new Night(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMoveRight = night.canMoveTo(new Position('f', 6));
-        final boolean canMoveLeft = night.canMoveTo(new Position('b', 6));
+        final boolean canMoveRight = night.canMoveTo(new Position(File.F, Rank.SIX));
+        final boolean canMoveLeft = night.canMoveTo(new Position(File.B, Rank.SIX));
 
         // then
         assertThat(canMoveRight).isTrue();
@@ -43,10 +45,10 @@ class NightTest {
     @Test
     void canNotMove() {
         // given
-        final Night night = new Night(Color.BLACK, new Position('d', 5));
+        final Night night = new Night(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = night.canMoveTo(new Position('f', 1));
+        final boolean canMove = night.canMoveTo(new Position(File.F, Rank.ONE));
 
         // then
         assertThat(canMove).isFalse();

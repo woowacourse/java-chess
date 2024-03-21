@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.File;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +15,10 @@ class KingTest {
     @Test
     void canMoveStraight() {
         // given
-        final King king = new King(Color.WHITE, new Position('d', 5));
+        final King king = new King(Color.WHITE, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = king.canMoveTo(new Position('d', 6));
+        final boolean canMove = king.canMoveTo(new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -26,10 +28,10 @@ class KingTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final King king = new King(Color.WHITE, new Position('d', 5));
+        final King king = new King(Color.WHITE, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = king.canMoveTo(new Position('e', 6));
+        final boolean canMove = king.canMoveTo(new Position(File.E, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -39,10 +41,10 @@ class KingTest {
     @Test
     void canNotMove() {
         // given
-        final King king = new King(Color.BLACK, new Position('d', 5));
+        final King king = new King(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        final boolean canMove = king.canMoveTo(new Position('a', 1));
+        final boolean canMove = king.canMoveTo(new Position(File.A, Rank.ONE));
 
         // then
         assertThat(canMove).isFalse();

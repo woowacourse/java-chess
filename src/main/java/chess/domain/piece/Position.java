@@ -9,13 +9,9 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    Position(final File file, final Rank rank) {
+    public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public Position(final char file, final int rank) {
-        this(File.fromSymbol(file), Rank.from(rank));
     }
 
     public Position(final String input) {
@@ -113,7 +109,7 @@ public class Position {
         int currentFileIndex = start.file.getIndex() + 1;
         int targetRankIndex = end.rank.getIndex();
 
-        while(currentRankIndex < targetRankIndex) {
+        while (currentRankIndex < targetRankIndex) {
             positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
             currentFileIndex++;
             currentRankIndex++;
@@ -136,7 +132,7 @@ public class Position {
         int currentFileIndex = start.file.getIndex() - 1;
         int targetRankIndex = end.rank.getIndex();
 
-        while(currentRankIndex < targetRankIndex) {
+        while (currentRankIndex < targetRankIndex) {
             positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
             currentFileIndex--;
             currentRankIndex++;
