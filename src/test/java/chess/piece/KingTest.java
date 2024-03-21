@@ -1,8 +1,7 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -18,14 +17,14 @@ class KingTest {
         Position source = Position.of("d", 4);
         // when, then
         assertAll(
-                () -> assertTrue(king.isMovable(source, Position.of("d", 5))),
-                () -> assertTrue(king.isMovable(source, Position.of("e", 5))),
-                () -> assertTrue(king.isMovable(source, Position.of("e", 4))),
-                () -> assertTrue(king.isMovable(source, Position.of("e", 3))),
-                () -> assertTrue(king.isMovable(source, Position.of("d", 3))),
-                () -> assertTrue(king.isMovable(source, Position.of("c", 3))),
-                () -> assertTrue(king.isMovable(source, Position.of("c", 4))),
-                () -> assertTrue(king.isMovable(source, Position.of("c", 5)))
+                () -> assertThat(king.isMovable(source, Position.of("d", 5))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("e", 5))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("e", 4))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("e", 3))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("d", 3))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("c", 3))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("c", 4))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of("c", 5))).isTrue()
         );
     }
 
@@ -36,6 +35,6 @@ class KingTest {
         King king = new King(Color.WHITE);
         Position source = Position.of("d", 4);
         // when, then
-        assertFalse(king.isMovable(source, Position.of("d", 6)));
+        assertThat(king.isMovable(source, Position.of("d", 6))).isFalse();
     }
 }

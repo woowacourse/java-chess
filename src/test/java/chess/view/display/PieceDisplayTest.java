@@ -1,9 +1,10 @@
 package chess.view.display;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.piece.Color;
 import chess.piece.King;
 import chess.piece.Piece;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,6 @@ class PieceDisplayTest {
         // when
         PieceDisplay display = PieceDisplay.getNotationByPiece(piece);
         // then
-        Assertions.assertThat(display.getNotation()).isEqualTo("k");
+        assertThat(display.getNotation()).isEqualTo("k");
     }
 }

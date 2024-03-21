@@ -1,6 +1,7 @@
 package chess.board;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -13,7 +14,7 @@ class FileTest {
     @NullAndEmptySource
     @DisplayName("올바르지 않은 열은 변환하는 경우 예외를 발생한다.")
     void invalidFileNameTest(String fileName) {
-        Assertions.assertThatThrownBy(() -> File.from(fileName))
+        assertThatThrownBy(() -> File.from(fileName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 열 번호입니다.");
     }

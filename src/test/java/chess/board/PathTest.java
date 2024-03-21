@@ -1,7 +1,6 @@
 package chess.board;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.piece.Color;
 import chess.piece.Piece;
@@ -23,7 +22,7 @@ class PathTest {
         );
         Path path = Path.createExcludingBothEnds(source, destination);
         // when, then
-        assertTrue(path.hasPieceOnRoute(pieces));
+        assertThat(path.hasPieceOnRoute(pieces)).isTrue();
     }
 
     @Test
@@ -35,6 +34,6 @@ class PathTest {
         Map<Position, Piece> pieces = Map.of();
         Path path = Path.createExcludingBothEnds(source, destination);
         // when, then
-        assertFalse(path.hasPieceOnRoute(pieces));
+        assertThat(path.hasPieceOnRoute(pieces)).isFalse();
     }
 }

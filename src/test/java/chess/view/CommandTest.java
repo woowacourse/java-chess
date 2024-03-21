@@ -1,6 +1,7 @@
 package chess.view;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -13,7 +14,7 @@ class CommandTest {
     @NullAndEmptySource
     @DisplayName("올바르지 않은 명령어가 주어지면 예외를 발생한다.")
     void invalidCommandTest(String command) {
-        Assertions.assertThatThrownBy(() -> Command.from(command))
+        assertThatThrownBy(() -> Command.from(command))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("존재하지 않는 명령어입니다.");
     }

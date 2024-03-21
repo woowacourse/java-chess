@@ -1,8 +1,7 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Direction;
 import chess.board.Position;
@@ -22,10 +21,10 @@ class BishopTest {
         Position source = Position.of("d", 4);
         // when, then
         assertAll(
-                () -> assertTrue(bishop.isMovable(source, Position.of("f", 6))),
-                () -> assertTrue(bishop.isMovable(source, Position.of("b", 2))),
-                () -> assertTrue(bishop.isMovable(source, Position.of("f", 2))),
-                () -> assertTrue(bishop.isMovable(source, Position.of("b", 6)))
+                () -> assertThat(bishop.isMovable(source, Position.of("f", 6))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of("b", 2))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of("f", 2))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of("b", 6))).isTrue()
         );
     }
 
@@ -36,7 +35,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE);
         Position source = Position.of("a", 1);
         // when, then
-        assertTrue(bishop.isMovable(source, Position.of("h", 8)));
+        assertThat(bishop.isMovable(source, Position.of("h", 8))).isTrue();
     }
 
     @ParameterizedTest
@@ -48,6 +47,6 @@ class BishopTest {
         Position source = Position.of("d", 4);
         Position destination = direction.nextPosition(source);
         // when, then
-        assertFalse(bishop.isMovable(source, destination));
+        assertThat(bishop.isMovable(source, destination)).isFalse();
     }
 }

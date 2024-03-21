@@ -1,8 +1,7 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Direction;
 import chess.board.Position;
@@ -22,10 +21,10 @@ class RookTest {
         Position source = Position.of("d", 4);
         // when, then
         assertAll(
-                () -> assertTrue(rook.isMovable(source, Position.of("d", 8))),
-                () -> assertTrue(rook.isMovable(source, Position.of("d", 1))),
-                () -> assertTrue(rook.isMovable(source, Position.of("a", 4))),
-                () -> assertTrue(rook.isMovable(source, Position.of("h", 4)))
+                () -> assertThat(rook.isMovable(source, Position.of("d", 8))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of("d", 1))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of("a", 4))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of("h", 4))).isTrue()
         );
     }
 
@@ -38,6 +37,6 @@ class RookTest {
         Position source = Position.of("d", 4);
         Position destination = direction.nextPosition(source);
         // when, then
-        assertFalse(rook.isMovable(source, destination));
+        assertThat(rook.isMovable(source, destination)).isFalse();
     }
 }

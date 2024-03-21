@@ -1,7 +1,6 @@
 package chess.piece;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.board.Direction;
 import chess.board.Position;
@@ -21,14 +20,14 @@ class KnightTest {
         Position source = Position.of("d", 4);
         // when, then
         Assertions.assertAll(
-                () -> assertTrue(knight.isMovable(source, Position.of("f", 5))),
-                () -> assertTrue(knight.isMovable(source, Position.of("b", 5))),
-                () -> assertTrue(knight.isMovable(source, Position.of("f", 3))),
-                () -> assertTrue(knight.isMovable(source, Position.of("b", 3))),
-                () -> assertTrue(knight.isMovable(source, Position.of("e", 6))),
-                () -> assertTrue(knight.isMovable(source, Position.of("c", 6))),
-                () -> assertTrue(knight.isMovable(source, Position.of("e", 2))),
-                () -> assertTrue(knight.isMovable(source, Position.of("c", 2)))
+                () -> assertThat(knight.isMovable(source, Position.of("f", 5))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("b", 5))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("f", 3))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("b", 3))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("e", 6))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("c", 6))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("e", 2))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of("c", 2))).isTrue()
         );
     }
 
@@ -41,6 +40,6 @@ class KnightTest {
         Position source = Position.of("d", 4);
         Position destination = direction.nextPosition(source);
         // when, then
-        assertFalse(knight.isMovable(source, destination));
+        assertThat(knight.isMovable(source, destination)).isFalse();
     }
 }

@@ -1,6 +1,7 @@
 package chess.board;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,7 @@ class PositionTest {
         // given
         Position position = Position.of("a", 1);
         // when, then
-        Assertions.assertThat(position).isEqualTo(Position.of("a", 1));
+        assertThat(position).isEqualTo(Position.of("a", 1));
     }
 
     @ParameterizedTest
@@ -26,7 +27,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnSameRank(destination)).isTrue();
+        assertThat(source.isOnSameRank(destination)).isTrue();
     }
 
     @ParameterizedTest
@@ -38,7 +39,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnSameRank(destination)).isFalse();
+        assertThat(source.isOnSameRank(destination)).isFalse();
     }
 
     @ParameterizedTest
@@ -50,9 +51,8 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnSameFile(destination)).isTrue();
+        assertThat(source.isOnSameFile(destination)).isTrue();
     }
-
 
     @ParameterizedTest
     @CsvSource(value = {"b,3,c,6", "a,1,b,1"})
@@ -63,7 +63,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnSameFile(destination)).isFalse();
+        assertThat(source.isOnSameFile(destination)).isFalse();
     }
 
     @ParameterizedTest
@@ -75,7 +75,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnPositiveSlopeDiagonal(destination)).isTrue();
+        assertThat(source.isOnPositiveSlopeDiagonal(destination)).isTrue();
     }
 
     @ParameterizedTest
@@ -87,7 +87,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnPositiveSlopeDiagonal(destination)).isFalse();
+        assertThat(source.isOnPositiveSlopeDiagonal(destination)).isFalse();
     }
 
     @ParameterizedTest
@@ -99,7 +99,7 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnNegativeSlopeDiagonal(destination)).isTrue();
+        assertThat(source.isOnNegativeSlopeDiagonal(destination)).isTrue();
     }
 
     @ParameterizedTest
@@ -111,9 +111,8 @@ class PositionTest {
         Position source = Position.of(sourceFileName, sourceRankNumber);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnNegativeSlopeDiagonal(destination)).isFalse();
+        assertThat(source.isOnNegativeSlopeDiagonal(destination)).isFalse();
     }
-
 
     @ParameterizedTest
     @CsvSource(value = {"g,5", "f,6", "d,6", "c,5", "c,3", "d,2", "f,2", "g,3"})
@@ -123,7 +122,7 @@ class PositionTest {
         Position source = Position.of("e", 4);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnKnightRoute(destination)).isTrue();
+        assertThat(source.isOnKnightRoute(destination)).isTrue();
     }
 
     @ParameterizedTest
@@ -134,6 +133,6 @@ class PositionTest {
         Position source = Position.of("e", 4);
         Position destination = Position.of(destinationFileName, destinationFileNumber);
         // when, then
-        Assertions.assertThat(source.isOnKnightRoute(destination)).isFalse();
+        assertThat(source.isOnKnightRoute(destination)).isFalse();
     }
 }

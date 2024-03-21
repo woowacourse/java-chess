@@ -1,7 +1,7 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -17,14 +17,14 @@ class QueenTest {
         Position source = Position.of("d", 4);
         // when, then
         assertAll(
-                () -> assertTrue(queen.isMovable(source, Position.of("d", 8))),
-                () -> assertTrue(queen.isMovable(source, Position.of("d", 1))),
-                () -> assertTrue(queen.isMovable(source, Position.of("a", 4))),
-                () -> assertTrue(queen.isMovable(source, Position.of("h", 4))),
-                () -> assertTrue(queen.isMovable(source, Position.of("f", 6))),
-                () -> assertTrue(queen.isMovable(source, Position.of("b", 2))),
-                () -> assertTrue(queen.isMovable(source, Position.of("f", 2))),
-                () -> assertTrue(queen.isMovable(source, Position.of("b", 6)))
+                () -> assertThat(queen.isMovable(source, Position.of("d", 8))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("d", 1))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("a", 4))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("h", 4))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("f", 6))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("b", 2))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("f", 2))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of("b", 6))).isTrue()
         );
     }
 }

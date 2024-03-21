@@ -1,7 +1,7 @@
 package chess.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.board.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +18,10 @@ class PawnTest {
         Position position = Position.of("d", 4);
         // when, then
         assertAll(
-                () -> assertTrue(whitePawn.isAttackable(position, Position.of("c", 5))),
-                () -> assertTrue(whitePawn.isAttackable(position, Position.of("e", 5))),
-                () -> assertTrue(blackPawn.isAttackable(position, Position.of("c", 3))),
-                () -> assertTrue(blackPawn.isAttackable(position, Position.of("e", 3)))
+                () -> assertThat(whitePawn.isAttackable(position, Position.of("c", 5))).isTrue(),
+                () -> assertThat(whitePawn.isAttackable(position, Position.of("e", 5))).isTrue(),
+                () -> assertThat(blackPawn.isAttackable(position, Position.of("c", 3))).isTrue(),
+                () -> assertThat(blackPawn.isAttackable(position, Position.of("e", 3))).isTrue()
         );
     }
 }

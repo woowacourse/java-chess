@@ -1,8 +1,7 @@
 package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.piece.Color;
 import chess.piece.InitPawn;
@@ -11,7 +10,6 @@ import chess.piece.Piece;
 import chess.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +23,7 @@ class BoardTest {
         Position source = Position.of("a", 1);
         Position destination = Position.of("a", 2);
         // when, then
-        Assertions.assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발 칸에 기물이 없습니다.");
     }
@@ -42,7 +40,7 @@ class BoardTest {
         Position source = Position.of("a", 1);
         Position destination = Position.of("a", 2);
         // when, then
-        Assertions.assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("도착 칸에 자신의 기물이 있습니다.");
     }
@@ -73,7 +71,7 @@ class BoardTest {
         Position source = Position.of("a", 2);
         Position destination = Position.of("a", 3);
         // when, then
-        Assertions.assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 경로입니다.");
     }
@@ -89,7 +87,7 @@ class BoardTest {
         Position source = Position.of("a", 1);
         Position destination = Position.of("a", 8);
         // when, then
-        Assertions.assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 있습니다.");
     }
@@ -104,7 +102,7 @@ class BoardTest {
         Position source = Position.of("a", 1);
         Position destination = Position.of("b", 3);
         // when, then
-        Assertions.assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 경로입니다.");
     }
@@ -121,7 +119,7 @@ class BoardTest {
         // when
         board.move(source, destination);
         // then
-        assertFalse(board.pieces().containsKey(source));
+        assertThat(board.pieces().containsKey(source)).isFalse();
         assertThat(board.pieces().get(destination)).isInstanceOf(Rook.class);
     }
 
@@ -138,9 +136,9 @@ class BoardTest {
         // when
         board.move(source, destination);
         // then
-        assertFalse(board.pieces().containsKey(source));
         Piece actual = board.pieces().get(destination);
+        assertThat(board.pieces().containsKey(source)).isFalse();
         assertThat(actual).isInstanceOf(Rook.class);
-        assertTrue(actual.hasColorOf(Color.WHITE));
+        assertThat(actual.hasColorOf(Color.WHITE)).isTrue();
     }
 }
