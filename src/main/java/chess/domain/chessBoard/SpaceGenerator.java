@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SpaceGenerator {
 
-    public List<Space> generateSpaces();
+    List<Space> generateSpaces();
 }
