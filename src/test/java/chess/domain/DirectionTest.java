@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import chess.domain.Direction;
 import chess.domain.Position;

@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import chess.domain.Command;
 import org.junit.jupiter.api.DisplayName;
