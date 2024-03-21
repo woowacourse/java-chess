@@ -54,14 +54,12 @@ public enum Rank {
 
     public List<Rank> findBetween(Rank target) {
         if (this.order > target.order) {
-            return getRanks(target, this);
+            return Arrays.stream(values())
+                    .filter(rank -> rank.order < this.order && rank.order > target.order)
+                    .toList();
         }
-        return getRanks(this, target);
-    }
-
-    private List<Rank> getRanks(Rank a, Rank b) {
         return Arrays.stream(values())
-                .filter(rank -> rank.order > a.order && rank.order < b.order)
+                .filter(rank -> rank.order > this.order && rank.order < target.order)
                 .toList();
     }
 }

@@ -46,14 +46,12 @@ public enum File {
 
     public List<File> findBetween(File target) {
         if (this.order > target.order) {
-            return getFiles(target, this);
+            return Arrays.stream(values())
+                    .filter(file -> file.order < this.order && file.order > target.order)
+                    .toList();
         }
-        return getFiles(this, target);
-    }
-
-    private List<File> getFiles(File a, File b) {
         return Arrays.stream(values())
-                .filter(file -> file.order > a.order && file.order < b.order)
+                .filter(file -> file.order > this.order && file.order < target.order)
                 .toList();
     }
 }
