@@ -51,6 +51,15 @@ public class Position {
         return notFirstMove(target, isBlack);
     }
 
+    public boolean canAttackDiagonal(Position target, boolean isBlack) {
+        int rankDistance = rank.forwardDistance(target.rank);
+        int fileDistance = file.distance(target.file);
+        if (isBlack) {
+            return rankDistance == -1 || fileDistance == 1;
+        }
+        return rankDistance == 1 || fileDistance == 1;
+    }
+
     private boolean notFirstMove(Position target, boolean isBlack) {
         int forwardDistance = rank.forwardDistance(target.rank);
         if (isBlack) {

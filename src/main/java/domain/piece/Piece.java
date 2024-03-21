@@ -27,7 +27,7 @@ public class Piece {
 
     public boolean canMove(Position source, Position target) {
         if (isBlack() && isSameType(Type.PAWN)) {
-            return source.isForwardStraight(target, true);
+            return source.isForwardStraight(target, true) || source.canAttackDiagonal(target, true);
         }
         return type.canMove(source, target);
     }
