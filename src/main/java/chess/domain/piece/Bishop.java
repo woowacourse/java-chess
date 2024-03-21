@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop implements Piece {
+    private static final int ONE_SQUARE = 1;
+
     private final Color color;
 
     public Bishop(Color color) {
@@ -42,7 +44,7 @@ public class Bishop implements Piece {
         int fileUnit = fileDiff / Math.abs(fileDiff);
 
         List<Position> path = new ArrayList<>();
-        for (int i = Math.abs(rankDiff); i != 1; i--) {
+        for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
             source = source.move(fileUnit, rankUnit);
             path.add(source);
         }

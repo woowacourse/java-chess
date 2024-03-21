@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King implements Piece {
+    private static final int ONE_SQUARE = 1;
+
     private final Color color;
 
     public King(Color color) {
@@ -31,7 +33,7 @@ public class King implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        return Math.abs(rankDiff) <= 1 && Math.abs(fileDiff) <= 1;
+        return Math.abs(rankDiff) <= ONE_SQUARE && Math.abs(fileDiff) <= ONE_SQUARE;
     }
 
     @Override

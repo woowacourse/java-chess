@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn implements Piece {
+    private static final int STAY = 0;
+    private static final int ONE_SQUARE = 1;
+    private static final int TWO_SQUARES = 2;
+
     private final Color color;
 
     public Pawn(Color color) {
@@ -39,8 +43,8 @@ public class Pawn implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         List<Position> path = new ArrayList<>();
 
-        if (Math.abs(rankDiff) == 2) {
-            source = source.move(0, rankDiff / 2);
+        if (Math.abs(rankDiff) == TWO_SQUARES) {
+            source = source.move(STAY, rankDiff / TWO_SQUARES);
             path.add(source);
         }
         return path;
@@ -55,31 +59,31 @@ public class Pawn implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        if (rankDiff == -1 && Math.abs(fileDiff) == 1) {
+        if (rankDiff == -ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
             return color == Color.WHITE;
         }
         if (color == Color.WHITE) {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == -1 || rankDiff == -2) && (fileDiff == 0);
+            return (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARES) && (fileDiff == STAY);
         }
-        return rankDiff == -1 && fileDiff == 0;
+        return rankDiff == -ONE_SQUARE && fileDiff == STAY;
     }
 
     private boolean checkWhite(Position source, Position target, Color color) {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        if (rankDiff == 1 && Math.abs(fileDiff) == 1) {
+        if (rankDiff == ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
             return color == Color.BLACK;
         }
         if (color == Color.BLACK) {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == 1 || rankDiff == 2) && (fileDiff == 0);
+            return (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARES) && (fileDiff == STAY);
         }
-        return rankDiff == 1 && fileDiff == 0;
+        return rankDiff == ONE_SQUARE && fileDiff == STAY;
     }
 }

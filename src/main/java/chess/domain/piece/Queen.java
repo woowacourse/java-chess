@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen implements Piece {
+    private static final int STAY = 0;
+    private static final int ONE_SQUARE = 1;
+
     private final Color color;
 
     public Queen(Color color) {
@@ -31,7 +34,7 @@ public class Queen implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        return Math.abs(rankDiff) == Math.abs(fileDiff) || rankDiff * fileDiff == 0;
+        return Math.abs(rankDiff) == Math.abs(fileDiff) || rankDiff * fileDiff == STAY;
     }
 
     @Override
@@ -43,24 +46,24 @@ public class Queen implements Piece {
         int fileUnit = 0;
         int count = 0;
 
-        if (Math.abs(rankDiff) > 0 && Math.abs(fileDiff) > 0) {
+        if (Math.abs(rankDiff) > STAY && Math.abs(fileDiff) > STAY) {
             rankUnit = rankDiff / Math.abs(rankDiff);
             fileUnit = fileDiff / Math.abs(fileDiff);
             count = Math.abs(rankDiff);
         }
-        if (Math.abs(rankDiff) > 0 && fileDiff == 0) {
+        if (Math.abs(rankDiff) > STAY && fileDiff == STAY) {
             rankUnit = rankDiff / Math.abs(rankDiff);
-            fileUnit = 0;
+            fileUnit = STAY;
             count = Math.abs(rankDiff);
         }
-        if (Math.abs(rankDiff) == 0 && Math.abs(fileDiff) > 0) {
-            rankUnit = 0;
+        if (Math.abs(rankDiff) == STAY && Math.abs(fileDiff) > STAY) {
+            rankUnit = STAY;
             fileUnit = fileDiff / Math.abs(fileDiff);
             count = Math.abs(fileDiff);
         }
 
         List<Position> path = new ArrayList<>();
-        for (int i = count; i != 1; i--) {
+        for (int i = count; i != ONE_SQUARE; i--) {
             source = source.move(fileUnit, rankUnit);
             path.add(source);
         }

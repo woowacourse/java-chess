@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook implements Piece {
+    private static final int STAY = 0;
+    private static final int ONE_SQUARE = 1;
+
     private final Color color;
 
     public Rook(Color color) {
@@ -30,7 +33,7 @@ public class Rook implements Piece {
         }
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
-        return Math.abs(rankDiff) == 0 || Math.abs(fileDiff) == 0;
+        return Math.abs(rankDiff) == STAY || Math.abs(fileDiff) == STAY;
     }
 
     @Override
@@ -38,12 +41,12 @@ public class Rook implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        if (Math.abs(rankDiff) > 0) {
+        if (Math.abs(rankDiff) > STAY) {
             int rankUnit = rankDiff / Math.abs(rankDiff);
 
             List<Position> path = new ArrayList<>();
-            for (int i = Math.abs(rankDiff); i != 1; i--) {
-                source = source.move(0, rankUnit);
+            for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
+                source = source.move(STAY, rankUnit);
                 path.add(source);
             }
             return path;
@@ -52,8 +55,8 @@ public class Rook implements Piece {
         int fileUnit = fileDiff / Math.abs(fileDiff);
 
         List<Position> path = new ArrayList<>();
-        for (int i = Math.abs(fileDiff); i != 1; i--) {
-            source = source.move(fileUnit, 0);
+        for (int i = Math.abs(fileDiff); i != ONE_SQUARE; i--) {
+            source = source.move(fileUnit, STAY);
             path.add(source);
         }
         return path;
