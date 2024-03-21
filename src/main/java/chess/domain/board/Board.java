@@ -31,35 +31,25 @@ public class Board {
     }
 
     public void move(Square source, Square destination) {
-        Piece sourcePiece = board.get(source);
-        Piece destinationPiece = board.get(destination);
+        checkMovable(source, destination);
 
-        checkMovable(source, destination, sourcePiece, destinationPiece);
-
-        moveOrCatch(sourcePiece, destinationPiece, source, destination);
-
+        moveOrCatch(source, destination);
         turn.update();
     }
 
-    private void checkMovable(Square source, Square destination, Piece sourcePiece, Piece destinationPiece) {
+    private void checkMovable(Square source, Square destination) {
+        Piece sourcePiece = board.get(source);
+        Piece destinationPiece = board.get(destination);
+
         checkTurn(sourcePiece);
+        checkCanMove(source, destination, sourcePiece);
         checkSameColor(sourcePiece, destinationPiece);
 
         if (sourcePiece.isSameType(PieceType.PAWN)) {
-            pawnCheck(source, destination, destinationPiece);
+            checkPawnCanCatch(source, destination, destinationPiece);
         }
 
-        checkCannotMove(source, destination, sourcePiece);
         checkPathBlocked(source, destination, sourcePiece);
-    }
-
-    private void pawnCheck(Square source, Square destination, Piece destinationPiece) {
-        SquareDifferent squareDifferent = source.calculateDiff(destination);
-        Direction direction = Direction.findDirectionByDiff(squareDifferent);
-
-        if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
-            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
-        }
     }
 
     private void checkTurn(Piece sourcePiece) {
@@ -72,27 +62,37 @@ public class Board {
         }
     }
 
+    private void checkCanMove(Square source, Square destination, Piece sourcePiece) {
+        if (!sourcePiece.canMove(source, destination)) {
+            throw new IllegalArgumentException(CANNOT_MOVE_ERROR);
+        }
+    }
+
     private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {
         if (sourcePiece.isSameColor(destinationPiece)) {
             throw new IllegalArgumentException(SAME_COLOR_ERROR);
         }
     }
 
-    private void checkCannotMove(Square source, Square destination, Piece sourcePiece) {
-        if (!sourcePiece.canMove(source, destination)) {
-            throw new IllegalArgumentException(CANNOT_MOVE_ERROR);
+
+    private void checkPawnCanCatch(Square source, Square destination, Piece destinationPiece) {
+        SquareDifferent squareDifferent = source.calculateDiff(destination);
+        Direction direction = Direction.findDirectionByDiff(squareDifferent);
+
+        if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
+            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
         }
     }
 
     private void checkPathBlocked(Square source, Square destination, Piece sourcePiece) {
         SquareDifferent diff = source.calculateDiff(destination);
 
-        if (checkNeedFindPath(source, sourcePiece)) {
+        if (needFindPathCondition(source, sourcePiece)) {
             findPath(source, destination, diff);
         }
     }
 
-    private boolean checkNeedFindPath(Square source, Piece sourcePiece) {
+    private boolean needFindPathCondition(Square source, Piece sourcePiece) {
         return !sourcePiece.isSameType(PieceType.KNIGHT)
                 && !(sourcePiece.isSameType(PieceType.PAWN) && source.isPawnStartSquare())
                 && !sourcePiece.isSameType(PieceType.KING);
@@ -114,9 +114,11 @@ public class Board {
         }
     }
 
-    private void moveOrCatch(Piece sourcePiece, Piece destinationPiece, Square source, Square destination) {
+    private void moveOrCatch(Square source, Square destination) {
+        Piece sourcePiece = board.get(source);
+        Piece destinationPiece = board.get(destination);
+
         if (destinationPiece.isNotEmpty()) {
-            board.replace(destination, sourcePiece);
             board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
             return;
         }

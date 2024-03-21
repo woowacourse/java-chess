@@ -16,7 +16,7 @@ public class QueenMoveStrategy implements MoveStrategy {
         return isDiagonal(rankDiff, fileDiff) || isStraight(rankDiff, fileDiff);
     }
 
-    private static boolean isDiagonal(int rankDiff, int fileDiff) {
+    private boolean isDiagonal(int rankDiff, int fileDiff) {
         return fileDiff - rankDiff == 0;
     }
 
