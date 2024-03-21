@@ -27,10 +27,12 @@ public class RowPosition {
         return Math.abs(rowNumber - otherRowPosition.rowNumber);
     }
 
+    //TODO: 인덱스가 높은지 넘버가 높은지 직관적으로 알 수 있는 메서드명 생각하기
     public boolean isHigherThan(RowPosition target) {
         return rowNumber > target.rowNumber;
     }
 
+    //TODO: 인덱스가 높은지 넘버가 높은지 직관적으로 알 수 있는 메서드명 생각하기
     public boolean isLowerThan(RowPosition target) {
         return rowNumber < target.rowNumber;
     }
@@ -39,10 +41,6 @@ public class RowPosition {
         if (MIN_NUMBER > rowNumber || rowNumber > MAX_NUMBER) {
             throw new IllegalStateException("체스판의 행 번호는 " + rowNumber + "가 될 수 없습니다.");
         }
-    }
-
-    public int getRowNumber() {
-        return rowNumber;
     }
 
     @Override
