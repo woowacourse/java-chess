@@ -1,13 +1,13 @@
 package chess.domain.board;
 
 import chess.domain.pieces.Bishop;
-import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Pawn;
-import chess.domain.pieces.piece.Piece;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -34,7 +34,7 @@ public class BoardFactory {
 
     private static Map<Square, Piece> createLine(final Rank rank, final Map<File, Piece> line) {
         return line.entrySet().stream()
-                .collect(Collectors.toMap(entry -> new Square(entry.getKey(), rank), Entry::getValue));
+                .collect(Collectors.toMap(entry -> Square.of(entry.getKey(), rank), Entry::getValue));
     }
 
     private static Map<File, Piece> createPieceLine(final Color color) {
