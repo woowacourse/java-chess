@@ -2,7 +2,7 @@ package model.piece;
 
 import java.util.Set;
 import model.Camp;
-import model.PieceType;
+import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;

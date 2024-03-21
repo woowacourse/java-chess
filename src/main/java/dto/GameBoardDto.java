@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import model.GameBoard;
-import model.PieceType;
+import view.message.PieceType;
 import model.piece.Piece;
 import model.position.Position;
 

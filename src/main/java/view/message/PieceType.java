@@ -1,5 +1,6 @@
-package model;
+package view.message;
 
+import model.Camp;
 import model.piece.Bishop;
 import model.piece.King;
 import model.piece.Knight;
