@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,14 +21,14 @@ public class OutputView {
 
     private List<List<String>> sortByBoardOrder(final Set<Piece> pieces) {
         final List<List<String>> board = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < Rank.values().length; i++) {
             board.add(new ArrayList<>(List.of(".", ".", ".", ".", ".", ".", ".", ".")));
         }
 
         for (Piece piece : pieces) {
             final Position position = piece.getPosition();
             final int fileIndex = position.getFile().getIndex() - 1;
-            final int rankIndex = 7 - (position.getRank().getNumber() - 1);
+            final int rankIndex = 7 - (position.getRank().getIndex() - 1);
             final List<String> marks = board.get(rankIndex);
             marks.set(fileIndex, convertToMark(piece));
         }

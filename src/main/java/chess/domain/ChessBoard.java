@@ -25,10 +25,10 @@ public class ChessBoard {
     public static ChessBoard init() {
         final Set<Piece> pieces = new HashSet<>();
 
-        pieces.addAll((createPieceWithoutPawn(Color.BLACK, Rank.EIGHT.getNumber())));
-        pieces.addAll((createPawn(Color.BLACK, Rank.SEVEN.getNumber())));
-        pieces.addAll((createPawn(Color.WHITE, Rank.TWO.getNumber())));
-        pieces.addAll((createPieceWithoutPawn(Color.WHITE, Rank.ONE.getNumber())));
+        pieces.addAll((createPieceWithoutPawn(Color.BLACK, Rank.EIGHT.getIndex())));
+        pieces.addAll((createPawn(Color.BLACK, Rank.SEVEN.getIndex())));
+        pieces.addAll((createPawn(Color.WHITE, Rank.TWO.getIndex())));
+        pieces.addAll((createPieceWithoutPawn(Color.WHITE, Rank.ONE.getIndex())));
 
         return new ChessBoard(pieces);
     }
@@ -55,15 +55,17 @@ public class ChessBoard {
                 new Rook(color, new Position('h', rank)));
     }
 
-    Piece findBy(final Position other) {
+    Piece findBy(final Position input) {
         return pieces.stream()
-                .filter(piece -> piece.isPosition(other))
+                .filter(piece -> piece.isPosition(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다."));
     }
 
     public void move(final List<String> positions) {
-        move(new Position(positions.get(0)), new Position(positions.get(1)));
+        final String file = positions.get(0);
+        final String rank = positions.get(1);
+        move(new Position(file), new Position(rank));
     }
 
     public void move(final Position currentPosition, final Position nextPosition) {
@@ -87,11 +89,11 @@ public class ChessBoard {
     }
 
     private boolean canCatchByPawn(final Position nextPosition, final Piece currentPiece) {
-        return currentPiece instanceof Pawn && canCatch(currentPiece, nextPosition);
+        return currentPiece instanceof Pawn && canPawnCatch(currentPiece, nextPosition);
     }
 
-    private boolean canCatch(final Piece currentPiece, final Position nextPosition) {
-        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, 1) &&
+    private boolean canPawnCatch(final Piece currentPiece, final Position nextPosition) {
+        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, Pawn.DEFAULT_STEP) &&
                 currentPiece.isOtherColor(findBy(nextPosition));
     }
 
@@ -123,12 +125,12 @@ public class ChessBoard {
         }
     }
 
-    private boolean isTargetExist(final Position other) {
-        return pieces.stream().anyMatch(piece -> piece.isPosition(other));
+    private boolean isTargetExist(final Position target) {
+        return pieces.stream().anyMatch(piece -> piece.isPosition(target));
     }
 
-    private boolean isTargetEmpty(final Position other) {
-        return !isTargetExist(other);
+    private boolean isTargetEmpty(final Position target) {
+        return !isTargetExist(target);
     }
 
     public Set<Piece> getPieces() {

@@ -8,14 +8,19 @@ import java.util.Set;
 
 public class Night extends Piece {
 
+    private static final int DEFAULT_STEP_ONE = 1;
+    private static final int DEFAULT_STEP_TWO = 2;
+
     public Night(final Color color, final Position position) {
         super(color, position);
     }
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.isVerticalWithDistance(target, 2) && this.position.isHorizontalWithDistance(target, 1))
-                || (this.position.isVerticalWithDistance(target, 1) && this.position.isHorizontalWithDistance(target, 2));
+        return (this.position.isVerticalWithDistance(target, DEFAULT_STEP_TWO) && this.position.isHorizontalWithDistance(target,
+                DEFAULT_STEP_ONE))
+                || (this.position.isVerticalWithDistance(target, DEFAULT_STEP_ONE) && this.position.isHorizontalWithDistance(target,
+                DEFAULT_STEP_TWO));
     }
 
     @Override

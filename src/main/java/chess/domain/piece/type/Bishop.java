@@ -22,7 +22,6 @@ public class Bishop extends Piece {
         if (this.position.isRightDiagonalWith(target)) {
             return this.position.getRightDiagonalMiddlePositions(target);
         }
-
         if (this.position.isLeftDiagonalWith(target)) {
             return this.position.getLeftDiagonalMiddlePositions(target);
         }

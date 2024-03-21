@@ -13,28 +13,28 @@ public enum Rank {
     SEVEN(7),
     EIGHT(8);
 
-    private final int number;
+    private final int index;
 
-    Rank(int number) {
-        this.number = number;
+    Rank(int index) {
+        this.index = index;
     }
 
     public static Rank from(final int input) {
         return Arrays.stream(values())
-                .filter(rank -> rank.number == input)
+                .filter(rank -> rank.index == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
     }
 
     public int minus(final Rank other) {
-        return this.number - other.number;
+        return this.index - other.index;
     }
 
     public int getDistance(final Rank other) {
-        return Math.abs(this.number - other.number);
+        return Math.abs(this.index - other.index);
     }
 
-    public int getNumber() {
-        return number;
+    public int getIndex() {
+        return index;
     }
 }

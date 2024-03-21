@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.File;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +13,7 @@ class FileTest {
     @CsvSource(value = {"'a', A", "'b', B", "'c', C", "'d', D", "'e', E", "'f', F", "'g', G", "'h', H"})
     void from(final char input, final File expected) {
         // given && when
-        final File file = File.from(input);
+        final File file = File.fromSymbol(input);
 
         // then
         Assertions.assertThat(file).isEqualTo(expected);
@@ -24,7 +23,7 @@ class FileTest {
     @ParameterizedTest
     @ValueSource(chars = {'i', 'j', 'k', 'z'})
     void invalidFile(final char input) {
-        Assertions.assertThatThrownBy(() -> File.from(input))
+        Assertions.assertThatThrownBy(() -> File.fromSymbol(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효한 파일 입력이 아닙니다.");
     }

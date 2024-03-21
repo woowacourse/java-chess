@@ -22,19 +22,15 @@ public class Queen extends Piece {
         if (this.position.isRightDiagonalWith(target)) {
             return this.position.getRightDiagonalMiddlePositions(target);
         }
-
         if (this.position.isLeftDiagonalWith(target)) {
             return this.position.getLeftDiagonalMiddlePositions(target);
         }
-
         if (this.position.isVerticalWith(target)) {
             return this.position.getVerticalMiddlePositions(target);
         }
-
         if (this.position.isHorizontalWith(target)) {
             return this.position.getHorizontalMiddlePositions(target);
         }
-
         return new HashSet<>();
     }
 }

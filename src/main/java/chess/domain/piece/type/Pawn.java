@@ -7,8 +7,34 @@ import java.util.Set;
 
 public class Pawn extends Piece {
 
+    public static final int DEFAULT_STEP = 1;
+    private static final int INIT_AVAILABLE_STEP = 2;
+
     public Pawn(final Color color, final Position position) {
         super(color, position);
+    }
+
+    @Override
+    public boolean canMoveTo(final Position target) {
+        if (color.equals(Color.WHITE)) {
+            return canWhiteMoveTo(target);
+        }
+        return canBlackMoveTo(target);
+    }
+
+    private boolean canWhiteMoveTo(final Position target) {
+        if (isInitPosition()) {
+            return this.position.isForwardWithDistance(target, INIT_AVAILABLE_STEP) || this.position.isForwardWithDistance(target,
+                    DEFAULT_STEP);
+        }
+        return this.position.isForwardWithDistance(target, DEFAULT_STEP);
+    }
+
+    private boolean canBlackMoveTo(final Position target) {
+        if (isInitPosition()) {
+            return this.position.isForwardWithDistance(target, -INIT_AVAILABLE_STEP) || this.position.isForwardWithDistance(target, -DEFAULT_STEP);
+        }
+        return this.position.isForwardWithDistance(target, -DEFAULT_STEP);
     }
 
     private boolean isInitPosition() {
@@ -16,21 +42,6 @@ public class Pawn extends Piece {
             return this.position.isTwoRank();
         }
         return this.position.isSevenRank();
-    }
-
-    @Override
-    public boolean canMoveTo(final Position target) {
-        if (color.equals(Color.WHITE)) {
-            if (isInitPosition()) {
-                return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
-            }
-            return this.position.isForwardWithDistance(target, 1);
-        }
-
-        if (isInitPosition()) {
-            return this.position.isForwardWithDistance(target, -2) || this.position.isForwardWithDistance(target, -1);
-        }
-        return this.position.isForwardWithDistance(target, -1);
     }
 
     @Override

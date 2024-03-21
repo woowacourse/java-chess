@@ -17,7 +17,8 @@ public class ChessController {
     }
 
     public void runChess() {
-        final ChessBoard chessBoard = startChess();
+        final ChessBoard chessBoard = ChessBoard.init();
+        startChess(chessBoard);
 
         List<String> positions = inputView.readMoveCommand();
 
@@ -28,14 +29,10 @@ public class ChessController {
         }
     }
 
-    private ChessBoard startChess() {
-        final ChessBoard chessBoard = ChessBoard.init();
-
+    private void startChess(final ChessBoard chessBoard) {
         if (isCommandStart()) {
             outputView.printChessBoard(chessBoard.getPieces());
         }
-
-        return chessBoard;
     }
 
     private boolean isCommandStart() {

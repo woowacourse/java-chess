@@ -8,13 +8,16 @@ import java.util.Set;
 
 public class King extends Piece {
 
+    private static final int DEFAULT_STEP = 1;
+
     public King(final Color color, final Position position) {
         super(color, position);
     }
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.isDiagonalWithDistance(target, 1) || this.position.isHorizontalWithDistance(target, 1) || this.position.isVerticalWithDistance(target, 1));
+        return (this.position.isDiagonalWithDistance(target, DEFAULT_STEP) || this.position.isHorizontalWithDistance(target,
+                DEFAULT_STEP) || this.position.isVerticalWithDistance(target, DEFAULT_STEP));
     }
 
     @Override

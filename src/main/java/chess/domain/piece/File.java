@@ -13,22 +13,22 @@ public enum File {
     G('g', 7),
     H('h', 8);
 
-    private final char value;
+    private final char symbol;
     private final int index;
 
-    File(char value, int index) {
-        this.value = value;
+    File(char symbol, int index) {
+        this.symbol = symbol;
         this.index = index;
     }
 
-    public static File from(final char input) {
+    public static File fromSymbol(final char input) {
         return Arrays.stream(values())
-                .filter(file -> file.value == input)
+                .filter(file -> file.symbol == input)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }
 
-    public static File from(final int input) {
+    public static File fromIndex(final int input) {
         return Arrays.stream(values())
                 .filter(file -> file.index == input)
                 .findFirst()
@@ -41,9 +41,5 @@ public enum File {
 
     public int getIndex() {
         return index;
-    }
-
-    public int minus(final File other) {
-        return this.index - other.index;
     }
 }

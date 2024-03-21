@@ -15,11 +15,11 @@ public class Position {
     }
 
     public Position(final char file, final int rank) {
-        this(File.from(file), Rank.from(rank));
+        this(File.fromSymbol(file), Rank.from(rank));
     }
 
     public Position(final String input) {
-        this(File.from(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
+        this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
     }
 
     public boolean isStraightWith(final Position target) {
@@ -48,14 +48,14 @@ public class Position {
 
     public boolean isRightDiagonalWith(final Position target) {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
-                && ((this.file.getIndex() < target.file.getIndex() && this.rank.getNumber() < target.rank.getNumber())
-                || (this.file.getIndex() > target.file.getIndex() && this.rank.getNumber() > target.rank.getNumber()));
+                && ((this.file.getIndex() < target.file.getIndex() && this.rank.getIndex() < target.rank.getIndex())
+                || (this.file.getIndex() > target.file.getIndex() && this.rank.getIndex() > target.rank.getIndex()));
     }
 
     public boolean isLeftDiagonalWith(final Position target) {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
-                && ((this.file.getIndex() > target.file.getIndex() && this.rank.getNumber() < target.rank.getNumber())
-                || (this.file.getIndex() < target.file.getIndex() && this.rank.getNumber() > target.rank.getNumber()));
+                && ((this.file.getIndex() > target.file.getIndex() && this.rank.getIndex() < target.rank.getIndex())
+                || (this.file.getIndex() < target.file.getIndex() && this.rank.getIndex() > target.rank.getIndex()));
 
     }
 
@@ -79,13 +79,13 @@ public class Position {
         Position start = this;
         Position end = target;
 
-        if (this.rank.getNumber() > target.rank.getNumber()) {
+        if (this.rank.getIndex() > target.rank.getIndex()) {
             start = target;
             end = this;
         }
 
         final Set<Position> positions = new HashSet<>();
-        for (int rankIndex = start.rank.getNumber() + 1; rankIndex < end.rank.getNumber(); rankIndex++) {
+        for (int rankIndex = start.rank.getIndex() + 1; rankIndex < end.rank.getIndex(); rankIndex++) {
             positions.add(new Position(start.file, Rank.from(rankIndex)));
         }
         return positions;
@@ -102,7 +102,7 @@ public class Position {
 
         final Set<Position> positions = new HashSet<>();
         for (int fileIndex = start.file.getIndex() + 1; fileIndex < end.file.getIndex(); fileIndex++) {
-            positions.add(new Position(File.from(fileIndex), start.rank));
+            positions.add(new Position(File.fromIndex(fileIndex), start.rank));
         }
         return positions;
     }
@@ -111,19 +111,19 @@ public class Position {
         Position start = this;
         Position end = target;
 
-        if (this.rank.getNumber() > target.rank.getNumber()) {
+        if (this.rank.getIndex() > target.rank.getIndex()) {
             start = target;
             end = this;
         }
 
         final Set<Position> positions = new HashSet<>();
 
-        int currentRankIndex = start.rank.getNumber() + 1;
+        int currentRankIndex = start.rank.getIndex() + 1;
         int currentFileIndex = start.file.getIndex() + 1;
-        int targetRankIndex = end.rank.getNumber();
+        int targetRankIndex = end.rank.getIndex();
 
         while(currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
+            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
             currentFileIndex++;
             currentRankIndex++;
         }
@@ -134,19 +134,19 @@ public class Position {
         Position start = this;
         Position end = target;
 
-        if (this.rank.getNumber() > target.rank.getNumber()) {
+        if (this.rank.getIndex() > target.rank.getIndex()) {
             start = target;
             end = this;
         }
 
         final Set<Position> positions = new HashSet<>();
 
-        int currentRankIndex = start.rank.getNumber() + 1;
+        int currentRankIndex = start.rank.getIndex() + 1;
         int currentFileIndex = start.file.getIndex() - 1;
-        int targetRankIndex = end.rank.getNumber();
+        int targetRankIndex = end.rank.getIndex();
 
         while(currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.from(currentFileIndex), Rank.from(currentRankIndex)));
+            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
             currentFileIndex--;
             currentRankIndex++;
         }

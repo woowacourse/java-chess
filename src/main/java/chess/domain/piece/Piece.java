@@ -8,23 +8,33 @@ public abstract class Piece {
     protected final Color color;
     protected Position position;
 
-    public Piece(final Color color, final Position position) {
+    protected Piece(final Color color, final Position position) {
         this.color = color;
         this.position = position;
     }
 
     public abstract boolean canMoveTo(final Position target);
 
+    public abstract Set<Position> getRoute(final Position target);
+
     public void move(final Position target) {
         this.position = target;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
     public boolean isOtherColor(final Piece other) {
         return this.color != other.color;
+    }
+
+    public boolean isPosition(final Position other) {
+        return this.position.equals(other);
+    }
+
+    public boolean isBlack() {
+        return this.color.equals(Color.BLACK);
+    }
+
+    public Position getPosition() {
+        return position;
     }
 
     @Override
@@ -42,19 +52,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(color, position);
-    }
-
-    public boolean isPosition(final Position other) {
-        return this.position.equals(other);
-    }
-
-    public abstract Set<Position> getRoute(final Position target);
-
-    public boolean isBlack() {
-        return this.color.equals(Color.BLACK);
-    }
-
-    public boolean isWhite() {
-        return this.color.equals(Color.WHITE);
     }
 }
