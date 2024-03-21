@@ -1,5 +1,7 @@
 package chess.domain.chesspiece;
 
+import chess.dto.ChessPieceDto;
+
 public class ChessPiece {
 
     private final Camp camp;
@@ -20,5 +22,9 @@ public class ChessPiece {
 
     public ChessPieceType getChessPieceType() {
         return chessPieceProperty.getChessPieceType();
+    }
+
+    public ChessPieceDto createDto() {
+        return new ChessPieceDto(getChessPieceType(), camp);
     }
 }
