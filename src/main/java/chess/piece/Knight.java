@@ -22,6 +22,6 @@ public class Knight extends Piece {
 
     @Override
     public boolean isCatchable(Position from, Position to) {
-        return false;
+        return isMovable(from, to);
     }
 }

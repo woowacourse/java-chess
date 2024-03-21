@@ -38,4 +38,31 @@ public class KnightTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
+
+    @Test
+    @DisplayName("피스를 뛰어넘어 이동할 수 있다")
+    void should_move_over_piece() {
+        Piece piece1 = new Knight(Color.WHITE);
+        Piece piece2 = new Knight(Color.WHITE);
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.b, Rank.TWO));
+        Space space3 = new Space(new EmptyPiece(), new Position(File.b, Rank.THREE));
+
+        space1.movePiece(space3, List.of(space1, space2, space3));
+
+        assertThat(space3.pieceCharacter()).isEqualTo("n");
+    }
+
+    @Test
+    @DisplayName("이동할 위치에 상대 말이 있고 잡을 수 있으면 이동할 수 있다")
+    void should_move_when_target_space_has_other_color_piece_and_catchable() {
+        Piece piece1 = new Knight(Color.WHITE);
+        Piece piece2 = new Knight(Color.BLACK);
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.b, Rank.THREE));
+
+        space1.movePiece(space2, List.of(space1, space2));
+
+        assertThat(space2.pieceCharacter()).isEqualTo("n");
+    }
 }

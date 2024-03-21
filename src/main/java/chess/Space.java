@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.EmptyPiece;
+import chess.piece.Knight;
 import chess.piece.Piece;
 import chess.position.Position;
 import java.util.List;
@@ -41,12 +42,14 @@ public class Space {
     }
 
     private void validateClearRoute(Space targetSpace, List<Space> spaces) {
-        //TODO: 나이트 바로 반환 구현
+        if (piece.getClass() == Knight.class) {
+            return;
+        }
         List<Position> routes = targetSpace.position.findRoute(position);
-        for(Position position : routes){
-            for(Space space: spaces){
-                if(space.position.equals(position)){
-                    if(space.hasPiece()){
+        for (Position position : routes) {
+            for (Space space : spaces) {
+                if (space.position.equals(position)) {
+                    if (space.hasPiece()) {
                         throw new IllegalArgumentException("루트에 피스가 있습니다.");
                     }
                 }
