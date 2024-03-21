@@ -4,6 +4,7 @@ import chess.domain.square.Square;
 
 public abstract class Piece {
 
+    // TODO: Type 필드 제거 후 Getter 추상화
     private final PieceType type;
     private final PieceColor color;
 

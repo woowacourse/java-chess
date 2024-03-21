@@ -40,19 +40,27 @@ public record Square(File file, Rank rank) {
         return (int) Math.signum(this.rank.diff(rank));
     }
 
-    public boolean isSameRank(Square square) {
-        return rank == square.rank();
+    public boolean isSameRank(Square other) {
+        return rank == other.rank();
     }
 
-    public boolean isSameFile(Square square) {
-        return file == square.file();
+    public boolean isSameFile(Square other) {
+        return file == other.file();
     }
 
-    public int calculateRankDiff(Rank target) {
-        return Math.abs(rank.diff(target));
+    public int calculateRankDiff(Rank other) {
+        return Math.abs(rank.diff(other));
     }
 
-    public int calculateFileDiff(File target) {
-        return Math.abs(file.diff(target));
+    public int calculateFileDiff(File other) {
+        return Math.abs(file.diff(other));
+    }
+
+    public boolean isLessRankThan(Square other) {
+        return rank.diff(other.rank) < 0;
+    }
+
+    public boolean isGreaterRankThan(Square other) {
+        return rank.diff(other.rank) > 0;
     }
 }

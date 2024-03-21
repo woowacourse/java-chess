@@ -5,6 +5,9 @@ import chess.domain.square.Rank;
 
 public class Pawn extends Piece {
 
+    private static final int FIRST_STEP_LIMIT = 2;
+    private static final int STEP_LIMIT = 1;
+
     public Pawn(PieceColor color) {
         super(PieceType.PAWN, color);
     }
@@ -15,16 +18,16 @@ public class Pawn extends Piece {
             return false;
         }
         if (isFirstStep(source)) {
-            return source.calculateRankDiff(target.rank()) <= 2;
+            return source.calculateRankDiff(target.rank()) <= FIRST_STEP_LIMIT;
         }
-        return source.calculateRankDiff(target.rank()) == 1;
+        return source.calculateRankDiff(target.rank()) == STEP_LIMIT;
     }
 
     private boolean isBackward(Square source, Square target) {
         if (getColor() == PieceColor.BLACK) {
-            return source.rank().get() < target.rank().get();
+            return source.isLessRankThan(target);
         }
-        return source.rank().get() > target.rank().get();
+        return source.isGreaterRankThan(target);
     }
 
     private boolean isFirstStep(Square square) {

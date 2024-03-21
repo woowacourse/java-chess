@@ -16,7 +16,7 @@ public enum Rank {
     ;
 
     static final String ERROR_NOT_NUMERIC = "랭크는 숫자여야 합니다.";
-    static final String ERROR_NOT_EXIST_RANK = "존재하지 않는 랭크입니다.";
+    static final String ERROR_NOT_EXIST_RANK = " 은(는) 존재하지 않는 랭크입니다.";
     private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
 
     private final int rank;
@@ -31,7 +31,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.rank == parsedRank)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_RANK));
+                .orElseThrow(() -> new IllegalArgumentException(input + ERROR_NOT_EXIST_RANK));
     }
 
     private static void validateNumeric(String rank) {
@@ -44,14 +44,14 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.rank == this.rank + value)
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("[" + (this.rank + value) + "] (은)는" + ERROR_NOT_EXIST_RANK));
-    }
-
-    public int get() {
-        return rank;
+                .orElseThrow(() -> new IllegalStateException((this.rank + value) + ERROR_NOT_EXIST_RANK));
     }
 
     public int diff(Rank other) {
         return rank - other.rank;
+    }
+
+    public int get() {
+        return rank;
     }
 }

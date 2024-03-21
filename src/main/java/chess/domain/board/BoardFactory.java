@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class BoardFactory {
 
-    public static final List<Function<PieceColor, Piece>> PIECE_GENERATORS = List.of(
+    public static final List<Function<PieceColor, Piece>> PIECES_ARRANGEMENT = List.of(
             Rook::new, Knight::new, Bishop::new, Queen::new,
             King::new, Bishop::new, Knight::new, Rook::new);
 
@@ -33,13 +33,12 @@ public class BoardFactory {
         return new Board(board);
     }
 
-    // TODO: 필드 및 메서드명 재고
     private static Map<Square, Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
-        return IntStream.range(0, PIECE_GENERATORS.size())
+        return IntStream.range(0, PIECES_ARRANGEMENT.size())
                 .boxed()
                 .collect(Collectors.toMap(
                         index -> new Square(File.values()[index], rank),
-                        index -> PIECE_GENERATORS.get(index).apply(pieceColor)
+                        index -> PIECES_ARRANGEMENT.get(index).apply(pieceColor)
                 ));
     }
 

@@ -1,9 +1,11 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -52,5 +54,15 @@ class PawnTest {
         boolean actual = pawn.canMove(Square.from("c3"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("은 후진할 수 없다.")
+    void cannotMoveBackward() {
+        Pawn pawn = new Pawn(PieceColor.WHITE);
+        Square source = Square.from("b3");
+        Square target = Square.from("b2");
+
+        assertThat(pawn.canMove(source, target)).isFalse();
     }
 }
