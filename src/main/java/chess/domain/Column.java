@@ -12,7 +12,7 @@ public class Column {
             .boxed()
             .collect(toMap(Function.identity(), Column::new));
 
-    private Column (int value) {
+    private Column(int value) {
         this.value = value;
     }
 
@@ -31,7 +31,7 @@ public class Column {
     }
 
     private static void validateInRange(int value) {
-        if(value < 1 || value > 8) {
+        if (value < 1 || value > 8) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
@@ -43,6 +43,17 @@ public class Column {
 
     public boolean isBigger(Column srcColumn) {
         return this.value > srcColumn.value;
+    }
+
+    public boolean isPawnStartPosition(Team team) {
+        if (team.isWhite()) {
+            return value == 1;
+        }
+        return value == 5;
+    }
+
+    public int subtractColumn(Column column) {
+        return this.value - column.value;
     }
 
     public int getValue() {

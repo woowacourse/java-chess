@@ -12,15 +12,17 @@ public class Position {
     }
 
     public static Position of(String position) {
-        Row row=Row.valueOf(position.substring(0, 1));
+        Row row = Row.valueOf(position.substring(0, 1));
         Column column = Column.valueOf(position.substring(1));
 
         return new Position(row, column);
     }
-    public Row getRow(){
+
+    public Row getRow() {
         return row;
     }
-    public Column getColumn(){
+
+    public Column getColumn() {
         return column;
     }
 
@@ -39,5 +41,40 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    public int calculateRowDistance(Position target) {
+        return Math.abs(row.getValue() - target.row.getValue());
+    }
+
+    public int calculateColumnDistance(Position target) {
+        return Math.abs(column.getValue() - target.getColumn().getValue());
+    }
+
+    public int calculatePawnColumnDistance(Position target, Team team) {
+        if (team.isWhite()) {
+            return target.column.subtractColumn(column);
+        }
+        return column.subtractColumn(target.column);
+    }
+
+    public boolean isSameRow(Position target) {
+        return this.row == target.row;
+    }
+
+    public boolean isSameColumn(Position target) {
+        return this.column == target.column;
+    }
+
+    public boolean isDifferentRow(Position target) {
+        return !isSameRow(target);
+    }
+
+    public boolean isDifferentColumn(Position target) {
+        return !isSameColumn(target);
+    }
+
+    public boolean isPawnStartPosition(Team team) {
+        return column.isPawnStartPosition(team);
     }
 }
