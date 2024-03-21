@@ -31,6 +31,13 @@ public class Position {
         return Positions.of(movedRank, movedFile);
     }
 
+    public boolean isPawnFirstTry(Color color) {
+        if (color == Color.BLACK && rank == Rank.SEVEN) {
+            return true;
+        }
+        return color == Color.WHITE && rank == Rank.TWO;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,15 +53,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    public boolean isPawnFirstTry(Color color) {
-        if (color == Color.BLACK && rank == Rank.SEVEN) {
-            return true;
-        }
-        if (color == Color.WHITE && rank == Rank.TWO) {
-            return true;
-        }
-        return false;
     }
 }
