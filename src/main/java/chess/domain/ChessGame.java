@@ -7,14 +7,6 @@ public class ChessGame {
         this.board = board;
     }
 
-    public void start() {
-        //
-    }
-
-    public void end() {
-        //
-    }
-
     public void move(Position source, Position target) {
         board.movePieceAndRenewBoard(source, target);
     }
