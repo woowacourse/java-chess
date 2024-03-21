@@ -28,18 +28,23 @@ public class ChessBoard {
 
     public void move(Position start, Position destination) {
         if (canMove(start, destination)) {
-            Piece piece = findPieceByPosition(start);
-            board.remove(start);
-            board.put(destination, piece);
+            movePiece(start, destination);
             return;
         }
         throw new IllegalArgumentException();
     }
 
-    public boolean canMove(Position start, Position destination) {
+    private void movePiece(Position start, Position destination) {
+        Piece piece = findPieceByPosition(start);
+        board.remove(start);
+        board.put(destination, piece);
+    }
 
+    public boolean canMove(Position start, Position destination) {
+        //TODO: 메서드 분리, 반복되는 기능 메서드로 추출
         Piece piece = findPieceByPosition(start);
 
+        //TODO: instanceOf 말고 같은 타입으로 다룰 수 있는 방법 없는지 확인하기
         if (piece instanceof Pawn) {
             if (piece.canMove(start, destination) && positionIsEmpty(destination)) {
                 return true;
@@ -52,7 +57,7 @@ public class ChessBoard {
 
         if (piece instanceof SlidingPiece) {
             List<Position> path = ((SlidingPiece) piece).searchPath(start, destination);
-            if (piece.canMove(start, destination) && path.isEmpty() && (positionIsEmpty(destination)
+            if (piece.canMove(start, destination) && isEmpty(path) && (positionIsEmpty(destination)
                     || piece.isOtherTeam(findPieceByPosition(destination)))) {
                 return true;
             }
