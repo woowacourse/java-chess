@@ -23,4 +23,17 @@ class RookTest {
 
         assertThat(space2.pieceCharacter()).isEqualTo("r");
     }
+
+    @Test
+    @DisplayName("이동할 위치에 상대 말이 있고 잡을 수 있으면 이동할 수 있다")
+    void should_move_when_target_space_has_other_color_piece_and_catchable() {
+        Piece piece1 = new Rook(Color.WHITE);
+        Piece piece2 = new Rook(Color.BLACK);
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.THREE));
+
+        space1.movePiece(space2, List.of(space1, space2));
+
+        assertThat(space2.pieceCharacter()).isEqualTo("r");
+    }
 }
