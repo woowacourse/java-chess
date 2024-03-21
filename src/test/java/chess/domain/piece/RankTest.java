@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import chess.domain.piece.Rank;
 import org.assertj.core.api.Assertions;
