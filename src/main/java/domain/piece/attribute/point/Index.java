@@ -37,12 +37,12 @@ public record Index(int vertical, int horizontal) {
     }
 
     public List<Index> findMovePath(Direction direction, Index other) {
-        List<Index> list = new ArrayList<>();
+        List<Index> pathIndexes = new ArrayList<>();
         Index current = direction.move(this);
         while (!current.equals(other)) {
-            list.add(current);
+            pathIndexes.add(current);
             current = direction.move(current);
         }
-        return list;
+        return pathIndexes;
     }
 }
