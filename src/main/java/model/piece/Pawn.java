@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Moving moving) {
+    public Set<Position> getMoveRoute(Moving moving) {
         Position currentPosition = moving.currentPosition();
         Position nextPosition = moving.nextPosition();
 

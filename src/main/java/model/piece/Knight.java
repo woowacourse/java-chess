@@ -13,7 +13,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(Moving moving) {
+    public Set<Position> getMoveRoute(Moving moving) {
         if (canMovable(moving)) {
             return Set.of();
         }

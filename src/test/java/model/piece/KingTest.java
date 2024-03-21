@@ -23,7 +23,7 @@ class KingTest {
 
         assertAll(
                 () -> assertThat(king.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> king.getRoute(moving))
+                () -> assertThatThrownBy(() -> king.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -47,7 +47,7 @@ class KingTest {
 
         assertAll(
                 () -> assertThat(king.canMovable(moving)).isTrue(),
-                () -> assertThat(king.getRoute(moving)).isEmpty()
+                () -> assertThat(king.getMoveRoute(moving)).isEmpty()
         );
     }
 

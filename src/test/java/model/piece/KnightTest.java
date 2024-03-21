@@ -23,7 +23,7 @@ class KnightTest {
 
         assertAll(
                 () -> assertThat(knight.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> knight.getRoute(moving))
+                () -> assertThatThrownBy(() -> knight.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -44,7 +44,7 @@ class KnightTest {
 
         assertAll(
                 () -> assertThat(knight.canMovable(moving)).isTrue(),
-                () -> assertThat(knight.getRoute(moving)).isEmpty()
+                () -> assertThat(knight.getMoveRoute(moving)).isEmpty()
         );
     }
 

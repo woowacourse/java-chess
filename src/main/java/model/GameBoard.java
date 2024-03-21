@@ -59,36 +59,43 @@ public class GameBoard {
     }
 
     public void move(Moving moving, Camp camp) {
-        if (!board.containsKey(moving.currentPosition())) {
+        validate(camp, moving);
+
+        Piece piece = board.get(moving.currentPosition());
+        board.put(moving.nextPosition(), piece);
+        board.remove(moving.currentPosition());
+    }
+
+    private void validate(Camp camp, Moving moving) {
+        Position currentPosition = moving.currentPosition();
+        if (!board.containsKey(currentPosition)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
 
-        Piece piece = board.get(moving.currentPosition());
+        Piece piece = board.get(currentPosition);
         if (!piece.isSameCamp(camp)) {
             throw new IllegalArgumentException("자신의 기물만 이동 가능합니다.");
         }
 
-        Position nextPosition = moving.nextPosition();
+        Set<Position> positions = getRoute(moving, piece);
 
-        Set<Position> positions;
-
-        if (board.containsKey(nextPosition)) {
-            positions = piece.getAttackRoute(moving);
-        } else {
-            positions = piece.getRoute(moving);
-        }
         for (Position position : positions) {
             if (board.containsKey(position)) {
                 throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
             }
         }
 
-        if (board.containsKey(nextPosition) && piece.getCamp().equals(board.get(nextPosition).getCamp())) {
+        Piece target = board.get(moving.nextPosition());
+        if (target != null && target.isSameCamp(piece.getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
         }
+    }
 
-        board.put(moving.nextPosition(), piece);
-        board.remove(moving.currentPosition());
+    private Set<Position> getRoute(final Moving moving, final Piece piece) {
+        if (board.containsKey(moving.nextPosition())) {
+            return piece.getAttackRoute(moving);
+        }
+        return piece.getMoveRoute(moving);
     }
 
     public Map<Position, Piece> getBoard() {

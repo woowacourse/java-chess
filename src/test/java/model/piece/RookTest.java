@@ -25,7 +25,7 @@ class RookTest {
 
         assertAll(
                 () -> assertThat(rook.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> rook.getRoute(moving))
+                () -> assertThatThrownBy(() -> rook.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -47,7 +47,7 @@ class RookTest {
 
         assertAll(
                 () -> assertThat(rook.canMovable(moving)).isTrue(),
-                () -> assertThat(rook.getRoute(moving)).isEqualTo(expected)
+                () -> assertThat(rook.getMoveRoute(moving)).isEqualTo(expected)
         );
     }
 

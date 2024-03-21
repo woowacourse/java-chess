@@ -25,7 +25,7 @@ class BishopTest {
 
         assertAll(
                 () -> assertThat(bishop.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> bishop.getRoute(moving))
+                () -> assertThatThrownBy(() -> bishop.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -47,7 +47,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Camp.BLACK);
         assertAll(
                 () -> assertThat(bishop.canMovable(moving)).isTrue(),
-                () -> assertThat(bishop.getRoute(moving)).isEqualTo(expected)
+                () -> assertThat(bishop.getMoveRoute(moving)).isEqualTo(expected)
         );
 
     }

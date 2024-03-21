@@ -14,14 +14,12 @@ public abstract class Piece {
         this.camp = camp;
     }
 
-
-    //TODO : 리턴값 자료구조 정하기
-    public abstract Set<Position> getRoute(Moving moving);
+    public abstract Set<Position> getMoveRoute(Moving moving);
 
     protected abstract boolean canMovable(Moving moving);
 
     public Set<Position> getAttackRoute(Moving moving) {
-        return getRoute(moving);
+        return getMoveRoute(moving);
     }
 
     public Camp getCamp() {

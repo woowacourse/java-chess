@@ -23,7 +23,7 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> pawn.getRoute(moving))
+                () -> assertThatThrownBy(() -> pawn.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
 

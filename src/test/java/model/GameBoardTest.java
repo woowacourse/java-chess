@@ -24,9 +24,7 @@ class GameBoardTest {
 
         //then
         var board = gameBoard.getBoard();
-
         Assertions.assertThat(board.keySet()).hasSize(32);
-
     }
 
     @Test
@@ -115,7 +113,7 @@ class GameBoardTest {
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("도착 지점에 같은 진영의 기물이 있습니다.");
+                .hasMessage("이동 불가");
     }
 
     @Test

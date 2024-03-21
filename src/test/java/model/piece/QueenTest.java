@@ -25,7 +25,7 @@ class QueenTest {
 
         assertAll(
                 () -> assertThat(queen.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> queen.getRoute(moving))
+                () -> assertThatThrownBy(() -> queen.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
@@ -48,7 +48,7 @@ class QueenTest {
 
         assertAll(
                 () -> assertThat(queen.canMovable(moving)).isTrue(),
-                () -> assertThat(queen.getRoute(moving)).isEqualTo(expected)
+                () -> assertThat(queen.getMoveRoute(moving)).isEqualTo(expected)
         );
 
     }
