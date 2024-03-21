@@ -7,16 +7,16 @@ import chess.domain.board.Direction;
 
 public class Bishop extends AbstractPiece {
 
-    public Bishop(Team team) {
-        super(PieceType.BISHOP, team);
-    }
-
     private final static List<Direction> POSSIBLE_DIRECTIONS = List.of(
             Direction.LEFT_DOWN,
             Direction.LEFT_UP,
             Direction.RIGHT_DOWN,
             Direction.RIGHT_UP
     );
+
+    public Bishop(Team team) {
+        super(PieceType.BISHOP, team);
+    }
 
     @Override
     public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {

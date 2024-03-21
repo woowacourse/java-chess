@@ -8,7 +8,7 @@ import chess.domain.board.Coordinate;
 
 public class King extends AbstractPiece {
 
-    public static final List<Map.Entry<Integer, Integer>> WEIGHTS = List.of(
+    private static final List<Map.Entry<Integer, Integer>> WEIGHTS = List.of(
             Map.entry(-1, 1),
             Map.entry(-1, 0),
             Map.entry(-1, -1),
