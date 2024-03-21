@@ -1,10 +1,6 @@
 package view.dto;
 
-import domain.board.File;
 import domain.board.Position;
-import domain.board.Rank;
-import view.FileResolver;
-import view.RankResolver;
 
 public record MovePositionDto(Position sourcePosition, Position targetPosition) {
 

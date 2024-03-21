@@ -1,9 +1,7 @@
 package view;
 
 import domain.board.Board;
-import domain.board.File;
 import domain.board.Position;
-import domain.board.Rank;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
