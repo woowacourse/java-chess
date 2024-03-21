@@ -1,14 +1,8 @@
 package chess.model.board;
 
-import chess.model.piece.Bishop;
-import chess.model.piece.Color;
-import chess.model.piece.King;
-import chess.model.piece.Knight;
-import chess.model.piece.Pawn;
-import chess.model.piece.Piece;
-import chess.model.piece.Queen;
-import chess.model.piece.Rook;
+import chess.model.piece.*;
 import chess.model.position.Position;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +33,6 @@ public class InitialBoardGenerator implements BoardGenerator {
         squares.put(Position.of(7, 1), Knight.from(Color.WHITE));
         squares.put(Position.of(8, 1), Rook.from(Color.WHITE));
     }
-
 
     @Override
     public Board create() {
