@@ -44,37 +44,12 @@ public class ChessGameController {
     }
 
     private void playOneTurnForStart(ChessGame chessGame) {
-        OutputView.printBoard(makeBoardDto(chessGame.start()));
+        OutputView.printBoard(BoardDto.of(chessGame.start()));
     }
 
     private void playOneTurnForMove(ChessGame chessGame, List<String> commands) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
-        OutputView.printBoard(makeBoardDto(chessGame.move(source, target)));
-    }
-
-    private BoardDto makeBoardDto(Map<Position, Piece> board) {
-        List<List<String>> rawBoard = new ArrayList<>();
-
-        for (int i = 0; i < 8; i++) {
-            List<String> row = new ArrayList<>(Collections.nCopies(8, "."));
-            rawBoard.add(row);
-        }
-
-        for (var entrySet : board.entrySet()) {
-            Position position = entrySet.getKey();
-            Piece piece = entrySet.getValue();
-            makeBoardDtoPiece(position, piece, rawBoard);
-        }
-        return new BoardDto(rawBoard);
-    }
-
-    private void makeBoardDtoPiece(Position position, Piece piece, List<List<String>> rawBoard) {
-        int realYPosition = position.getY() - 1;
-        int realXPosition = position.getX() - 1;
-        PieceType pieceType = piece.getType();
-        PieceInfo pieceInfo = piece.getPieceInfo();
-
-        rawBoard.get(realYPosition).set(realXPosition, pieceType.getPieceLetter(pieceInfo.getTeam()));
+        OutputView.printBoard(BoardDto.of(chessGame.move(source, target)));
     }
 }

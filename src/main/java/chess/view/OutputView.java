@@ -9,12 +9,16 @@ public class OutputView {
         List<List<String>> rawBoard = boardDto.getBoard();
 
         for (int i = 7; i >= 0; i--) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int j = 0; j < 8; j++) {
-                stringBuilder.append(rawBoard.get(i).get(j));
-            }
-            System.out.println(stringBuilder);
+            rawBoardRow(rawBoard, i);
         }
+    }
+
+    private static void rawBoardRow(List<List<String>> rawBoard, int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int j = 0; j < 8; j++) {
+            stringBuilder.append(rawBoard.get(index).get(j));
+        }
+        System.out.println(stringBuilder);
     }
 
     public static void printChessGameStartMessage() {
