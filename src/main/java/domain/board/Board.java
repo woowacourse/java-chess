@@ -6,20 +6,25 @@ import domain.piece.info.Color;
 import domain.piece.info.Direction;
 import domain.piece.info.Type;
 import domain.strategy.MoveStrategy;
-import java.sql.DriverManager;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
+    private Color color;
     private final Map<Position, Piece> squares;
 
     public Board(final Map<Position, Piece> squares) {
+        this.color = Color.WHITE;
         this.squares = squares;
     }
 
     public void move(final Position source, final Position target) {
         final Piece currentPiece = squares.get(source);
+        if (currentPiece.isNotSameColor(color)) {
+            throw new IllegalArgumentException("현재 차례가 아닙니다.");
+        }
         final List<Direction> directions = currentPiece.movableDirections();
+
         final MoveStrategy strategy = currentPiece.strategy();
         final List<Position> movablePositions = strategy.movablePositions(source, directions, this);
 
@@ -27,6 +32,7 @@ public class Board {
                 .anyMatch(position -> position.equals(target));
         validateMovablePosition(targetMovable);
         updateBoard(source, target, currentPiece);
+        color = Color.opposite(color);
     }
 
     private void validateMovablePosition(final boolean targetMovable) {
