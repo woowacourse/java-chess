@@ -1,30 +1,35 @@
 package chess.view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class InputView {
 
+    private static final Pattern POSITION_PATTERN = Pattern.compile("^[a-h][1-8]$");
+
     private final Scanner scanner = new Scanner(System.in);
 
-    public GameStartCommand readGameStartCommand() {
-        System.out.println("체스 게임을 시작합니다.");
-        String rawInput = read(String.format("게임 시작은 %s, 종료는 %s 명령을 입력하세요.",
-                GameStartCommand.START, GameStartCommand.END));
+    public GameCommand readGameCommand() {
+        String rawInput = scanner.next();
 
-        return GameStartCommand.map(rawInput);
+        return GameCommand.map(rawInput);
     }
 
-    public List<String> readPositions() {
-        String rawInput = read("");
-        return Arrays.stream(rawInput.split(" "))
-                .collect(Collectors.toList());
+    public String readPosition() {
+        String position = scanner.next();
+        validatePositionFormat(position);
+
+        return position;
     }
 
-    private String read(final String message) {
-        System.out.println(message);
-        return scanner.nextLine();
+    private void validatePositionFormat(final String input) {
+        Matcher matcher = POSITION_PATTERN.matcher(input);
+        boolean matches = matcher.matches();
+
+        if (!matches) {
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식의 위치 입력입니다.");
+        }
     }
 }
