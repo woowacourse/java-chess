@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 import chess.domain.square.Square;
 
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Piece implements Square {
     public final Color color;
@@ -48,5 +49,20 @@ public abstract class Piece implements Square {
         return "Piece{" +
                 "color=" + color +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Piece piece = (Piece) o;
+
+        return color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(color);
     }
 }

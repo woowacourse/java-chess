@@ -3,14 +3,14 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Rank {
-    FIRST(1),
-    SECOND(2),
-    THIRD(3),
-    FOURTH(4),
-    FIFTH(5),
-    SIXTH(6),
+    EIGHTH(8),
     SEVENTH(7),
-    EIGHTH(8);
+    SIXTH(6),
+    FIFTH(5),
+    FOURTH(4),
+    THIRD(3),
+    SECOND(2),
+    FIRST(1);
 
     private final int value;
 

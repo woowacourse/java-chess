@@ -16,7 +16,7 @@ import chess.domain.square.piece.Rook;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -27,18 +27,19 @@ public class ChessBoardMaker {
     private static final int EMPTY_START = 3;
     private static final int EMPTY_END = 6;
     private static final int FILE_SIZE = 8;
-    private static final List<Square> FIRST_RANK = List.of(
-            Rook.from(Color.WHITE), Knight.from(Color.WHITE), Bishop.from(Color.WHITE), Queen.from(Color.WHITE),
-            King.from(Color.WHITE), Bishop.from(Color.WHITE), Knight.from(Color.WHITE), Rook.from(Color.WHITE));
-    private static final List<Square> SECOND_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Pawn.from(Color.WHITE)));
-    private static final List<Square> EMPTY_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Empty.getInstance()));
-    private static final List<Square> SEVENTH_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Pawn.from(Color.BLACK)));
     private static final List<Square> EIGHTH_RANK = List.of(
             Rook.from(Color.BLACK), Knight.from(Color.BLACK), Bishop.from(Color.BLACK), Queen.from(Color.BLACK),
             King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
+    // TODO: 폰을 매번 새로 생성하도록 변경
+    private static final List<Square> SEVENTH_RANK = new ArrayList<>(
+            Collections.nCopies(FILE_SIZE, Pawn.createOnStart(Color.BLACK)));
+    private static final List<Square> EMPTY_RANK = new ArrayList<>(
+            Collections.nCopies(FILE_SIZE, Empty.getInstance()));
+    private static final List<Square> SECOND_RANK = new ArrayList<>(
+            Collections.nCopies(FILE_SIZE, Pawn.createOnStart(Color.WHITE)));
+    private static final List<Square> FIRST_RANK = List.of(
+            Rook.from(Color.WHITE), Knight.from(Color.WHITE), Bishop.from(Color.WHITE), Queen.from(Color.WHITE),
+            King.from(Color.WHITE), Bishop.from(Color.WHITE), Knight.from(Color.WHITE), Rook.from(Color.WHITE));
 
     public ChessBoard make() {
         Queue<Square> orderedSquares = makeOrderedSquares();
@@ -47,11 +48,11 @@ public class ChessBoardMaker {
 
     private Queue<Square> makeOrderedSquares() {
         Queue<Square> orderedSquares = new ArrayDeque<>();
-        orderedSquares.addAll(FIRST_RANK);
-        orderedSquares.addAll(SECOND_RANK);
-        orderedSquares.addAll(makeEmptyRanks());
-        orderedSquares.addAll(SEVENTH_RANK);
         orderedSquares.addAll(EIGHTH_RANK);
+        orderedSquares.addAll(SEVENTH_RANK);
+        orderedSquares.addAll(makeEmptyRanks());
+        orderedSquares.addAll(SECOND_RANK);
+        orderedSquares.addAll(FIRST_RANK);
 
         return orderedSquares;
     }
@@ -66,7 +67,7 @@ public class ChessBoardMaker {
     }
 
     private Map<Position, Square> makeInitialSquares(Queue<Square> squareQueue) {
-        Map<Position, Square> squares = new LinkedHashMap<>();
+        Map<Position, Square> squares = new HashMap<>();
         for (Rank rank : Rank.values()) {
             squares.putAll(makeRank(rank, squareQueue));
         }
@@ -74,7 +75,7 @@ public class ChessBoardMaker {
     }
 
     private Map<Position, Square> makeRank(Rank rank, Queue<Square> squareQueue) {
-        Map<Position, Square> squares = new LinkedHashMap<>();
+        Map<Position, Square> squares = new HashMap<>();
         for (File file : File.values()) {
             squares.put(new Position(rank, file), squareQueue.poll());
         }

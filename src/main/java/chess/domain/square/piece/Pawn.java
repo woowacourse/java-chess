@@ -11,6 +11,7 @@ public class Pawn extends Piece {
     public static final int MOVED_MAX_DISTANCE = 1;
     public static final int NOT_MOVED_MAX_DISTANCE = 2;
     public static final int ATTACKABLE_RANK_DISTANCE = 1;
+
     private boolean isMoved;
 
     private Pawn(Color color, boolean isMoved) {
@@ -18,8 +19,12 @@ public class Pawn extends Piece {
         this.isMoved = isMoved;
     }
 
-    public static Pawn from(Color color) {
+    public static Pawn createOnStart(Color color) {
         return new Pawn(color, false);
+    }
+
+    public static Pawn of(Color color, boolean isMoved) {
+        return new Pawn(color, isMoved);
     }
 
     @Override
@@ -52,5 +57,23 @@ public class Pawn extends Piece {
             return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
         }
         return path.subtractRank() == ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Pawn pawn = (Pawn) o;
+
+        return isMoved == pawn.isMoved;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (isMoved ? 1 : 0);
+        return result;
     }
 }
