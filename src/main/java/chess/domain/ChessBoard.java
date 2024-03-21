@@ -33,26 +33,24 @@ public class ChessBoard {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    //TODO : 메서드 분리
     public void move(Position source, Position target) {
         Piece piece = findChessPiece(source);
-        List<Position> route = piece.getRoute(source, target);
-
-        for (Position position : route) {
-            checkObstacle(position);
-        }
+        piece.getRoute(source, target)
+                .forEach(this::checkObstacle);
 
         if (piece.isPawn() && Direction.findUpDown(source, target)) {
             checkObstacle(target);
         }
+        checkTeam(target, piece);
+        chessBoard.put(source.getColumn(), getUpdate(source, new Empty()));
+        chessBoard.put(target.getColumn(), getUpdate(target, piece));
+    }
 
+    private void checkTeam(Position target, Piece piece) {
         Piece targetPiece = findChessPiece(target);
         if (piece.isTeam(targetPiece)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-
-        chessBoard.put(source.getColumn(), getUpdate(source, new Empty()));
-        chessBoard.put(target.getColumn(), getUpdate(target, piece));
     }
 
     private void checkObstacle(Position position) {
