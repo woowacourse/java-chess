@@ -15,7 +15,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public final boolean isMovable(Position source, Position destination) {
+    public boolean isMovable(Position source, Position destination) {
         Direction direction = Direction.calculateBetween(source, destination);
         return matchesDirection(direction) &&
                 isReachable(source, destination, direction);

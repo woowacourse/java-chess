@@ -38,7 +38,6 @@ public enum Direction {
             (source, destination) -> source.isOnSameRank(destination) &&
                     source.hasHigherFileThan(destination),
             position -> position.calculatePositionBy(-1, 0)),
-    KNIGHT(Position::isOnKnightRoute, UnaryOperator.identity()),
     ;
 
     private final BiPredicate<Position, Position> predicate;

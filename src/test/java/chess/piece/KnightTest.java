@@ -33,7 +33,7 @@ class KnightTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Direction.class, mode = EnumSource.Mode.EXCLUDE, names = {"KNIGHT"})
+    @EnumSource(value = Direction.class)
     @DisplayName("나이트가 이동할 수 없는 경우를 판단한다.")
     void knightInvalidMoveTest(Direction direction) {
         // given
