@@ -10,9 +10,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
-            return false;
-        }
         return sourcePosition.isOnSameDiagonalAs(targetPosition)
             || sourcePosition.isOnSameRankAs(targetPosition)
             || sourcePosition.isOnSameFileAs(targetPosition);

@@ -70,13 +70,4 @@ class KingTest {
         Position position2 = Position.of(1, 2);
         assertThat(king.canMove(position1, position2)).isTrue();
     }
-
-    @Test
-    @DisplayName("같은 위치로는 이동 불가")
-    void cannotMove_SamePosition() {
-        King king = new King(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 1);
-        assertThat(king.canMove(position1, position2)).isFalse();
-    }
 }

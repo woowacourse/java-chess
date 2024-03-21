@@ -34,13 +34,4 @@ class RookTest {
         Position position2 = Position.of(8, 8);
         assertThat(rook.canMove(position1, position2)).isFalse();
     }
-
-    @Test
-    @DisplayName("같은 위치로는 이동 불가")
-    void cannotMove_SamePosition() {
-        Rook rook = new Rook(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 1);
-        assertThat(rook.canMove(position1, position2)).isFalse();
-    }
 }

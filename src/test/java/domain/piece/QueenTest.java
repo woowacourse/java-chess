@@ -70,13 +70,4 @@ class QueenTest {
         Position position2 = Position.of(1, 8);
         assertThat(queen.canMove(position1, position2)).isTrue();
     }
-
-    @Test
-    @DisplayName("같은 위치로는 이동 불가")
-    void cannotMove_SamePosition() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 1);
-        assertThat(queen.canMove(position1, position2)).isFalse();
-    }
 }

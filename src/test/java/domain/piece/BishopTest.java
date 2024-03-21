@@ -52,13 +52,4 @@ class BishopTest {
         Position position2 = Position.of(7, 8);
         assertThat(bishop.canMove(position1, position2)).isFalse();
     }
-
-    @Test
-    @DisplayName("같은 위치로는 이동 불가")
-    void cannotMove_SamePosition() {
-        Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 1);
-        assertThat(bishop.canMove(position1, position2)).isFalse();
-    }
 }
