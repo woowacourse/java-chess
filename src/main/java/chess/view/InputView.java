@@ -20,19 +20,43 @@ public class InputView {
     private static final int RANK_INDEX = 1;
 
     public GameCommand readCommand() {
-        return GameCommand.from(SCANNER.next());
+        String input = SCANNER.next();
+        return GameCommand.from(input);
     }
 
     public Position readPosition() {
         String input = SCANNER.next();
+        validatePositionInputLength(input);
+
+        File file = convertToFile(input);
+        Rank rank = convertToRank(input);
+
+        return new Position(file, rank);
+    }
+
+    private void validatePositionInputLength(String input) {
         if (input.length() != POSITION_INPUT_LENGTH) {
             throw new IllegalArgumentException("위치 형식이 올바르지 않습니다.");
         }
-        File file = FILE_INPUT.get(input.charAt(FILE_INDEX));
-        Rank rank = RANK_INPUT.get(input.charAt(RANK_INDEX));
-        if (file == null || rank == null) {
+    }
+
+    private File convertToFile(String input) {
+        char fileInput = input.charAt(FILE_INDEX);
+        File file = FILE_INPUT.get(fileInput);
+        if (file == null) {
             throw new IllegalArgumentException("위치 형식이 올바르지 않습니다.");
         }
-        return new Position(file, rank);
+
+        return file;
+    }
+
+    private Rank convertToRank(String input) {
+        char rankInput = input.charAt(RANK_INDEX);
+        Rank rank = RANK_INPUT.get(rankInput);
+        if (rank == null) {
+            throw new IllegalArgumentException("위치 형식이 올바르지 않습니다.");
+        }
+
+        return rank;
     }
 }

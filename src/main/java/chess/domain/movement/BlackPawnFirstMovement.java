@@ -18,6 +18,8 @@ public class BlackPawnFirstMovement implements MovementRule {
         if (!isMovable(start, end)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
-        return List.of(start.moveToSouth(), end);
+
+        Position middle = start.moveToSouth();
+        return List.of(middle, end);
     }
 }

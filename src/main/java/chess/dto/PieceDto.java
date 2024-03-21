@@ -5,6 +5,9 @@ import chess.domain.piece.Piece;
 public record PieceDto(PieceType type, boolean isBlack) {
 
     public static PieceDto from(Piece piece) {
-        return new PieceDto(PieceType.from(piece), piece.isBlackTeam());
+        PieceType type = PieceType.from(piece);
+        boolean isBlackTeam = piece.isBlackTeam();
+
+        return new PieceDto(type, isBlackTeam);
     }
 }

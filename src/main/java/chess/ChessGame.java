@@ -73,6 +73,7 @@ public class ChessGame {
             return;
         }
         Piece piece = optionalPiece.get();
-        boardDto.put(position, PieceDto.from(piece));
+        PieceDto pieceDto = PieceDto.from(piece);
+        boardDto.put(position, pieceDto);
     }
 }

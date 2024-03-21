@@ -23,7 +23,8 @@ public class Board {
     // TODO 마지막 위치에 적 말이 있을 경우, 잡아먹는다.
     // TODO 흰색부터 번갈아가며 플레이한다.
     public void move(Position start, Position end) {
-        Piece piece = find(start).orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+        Piece piece = find(start)
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
         List<Position> path = piece.findPath(start, end);
 
         if (isMovable(path)) {

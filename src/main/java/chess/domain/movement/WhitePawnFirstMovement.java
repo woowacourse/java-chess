@@ -18,6 +18,8 @@ public class WhitePawnFirstMovement implements MovementRule {
         if (!isMovable(start, end)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
-        return List.of(start.moveToNorth(), end);
+
+        Position middle = start.moveToNorth();
+        return List.of(middle, end);
     }
 }

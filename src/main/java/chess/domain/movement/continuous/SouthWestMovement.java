@@ -11,6 +11,7 @@ public class SouthWestMovement extends ContinuousMovementRule {
 
     @Override
     protected Position next(Position position) {
-        return position.moveToSouth().moveToWest();
+        return position.moveToSouth()
+                .moveToWest();
     }
 }
