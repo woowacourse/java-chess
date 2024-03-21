@@ -3,6 +3,8 @@ package chess.view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.pieces.piece.Color;
+import chess.domain.pieces.piece.Type;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +19,8 @@ class PieceViewTest {
         char expectedBlackPawn = 'P';
 
         //when
-        char whitePawnDisplay = PieceView.PAWN.changeToView("WHITE");
-        char blackPawnDisplay = PieceView.PAWN.changeToView("BLACK");
+        char whitePawnDisplay = PieceView.findByType(Type.PAWN).changeToView(Color.WHITE);
+        char blackPawnDisplay = PieceView.findByType(Type.PAWN).changeToView(Color.BLACK);
 
         //then
         assertAll(
