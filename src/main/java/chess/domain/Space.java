@@ -1,9 +1,9 @@
-package chess;
+package chess.domain;
 
-import chess.piece.EmptyPiece;
-import chess.piece.Knight;
-import chess.piece.Piece;
-import chess.position.Position;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class Space {

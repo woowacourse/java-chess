@@ -1,9 +1,9 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Rule;
-import chess.position.Difference;
-import chess.position.Position;
-import chess.position.PositionDifference;
+import chess.domain.Rule;
+import chess.domain.position.Difference;
+import chess.domain.position.Position;
+import chess.domain.position.PositionDifference;
 
 public class Bishop extends Piece {
 

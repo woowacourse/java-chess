@@ -1,7 +1,9 @@
 package chess.piece;
 
 
-import chess.position.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public class TestPiece extends Piece {
 

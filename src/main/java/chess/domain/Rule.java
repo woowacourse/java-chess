@@ -1,7 +1,7 @@
-package chess;
+package chess.domain;
 
-import chess.position.FileDifference;
-import chess.position.RankDifference;
+import chess.domain.position.FileDifference;
+import chess.domain.position.RankDifference;
 
 @FunctionalInterface
 public interface Rule {

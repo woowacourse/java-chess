@@ -1,11 +1,11 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Color;
-import chess.piece.EmptyPiece;
-import chess.piece.Piece;
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 

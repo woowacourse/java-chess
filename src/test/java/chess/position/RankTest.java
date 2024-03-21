@@ -2,6 +2,8 @@ package chess.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.position.Rank;
+import chess.domain.position.RankDifference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

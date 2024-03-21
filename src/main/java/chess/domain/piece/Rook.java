@@ -1,10 +1,10 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Rule;
-import chess.position.FileDifference;
-import chess.position.Position;
-import chess.position.PositionDifference;
-import chess.position.RankDifference;
+import chess.domain.Rule;
+import chess.domain.position.Position;
+import chess.domain.position.FileDifference;
+import chess.domain.position.PositionDifference;
+import chess.domain.position.RankDifference;
 
 public class Rook extends Piece {
 
