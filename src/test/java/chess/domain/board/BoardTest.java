@@ -121,6 +121,21 @@ public class BoardTest {
         Piece actual = boardOutput.board().get(Square.of(File.h, Rank.FIVE));
 
         // then
-        assertThat(actual.isSameType(PieceType.PAWN.name()) && actual.isSameColor(new Piece(PieceType.PAWN, ColorType.WHITE))).isTrue();
+        assertThat(actual.isSameType(PieceType.PAWN.name())
+                && actual.isSameColor(new Piece(PieceType.PAWN, ColorType.WHITE)))
+                .isTrue();
+    }
+
+    @DisplayName("폰이 직선이동으로 말을 잡으려고 하면 예외가 발생한다.")
+    @Test
+    void pawnStraightCatch() {
+        // given
+        Board board = new Board();
+        board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
+        board.move(Square.of(File.g, Rank.SEVEN), Square.of(File.g, Rank.FIVE));
+
+        // when & then
+        assertThatThrownBy(() -> board.move(Square.of(File.g, Rank.FOUR), Square.of(File.g, Rank.FIVE)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

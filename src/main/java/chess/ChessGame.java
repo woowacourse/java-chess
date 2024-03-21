@@ -61,7 +61,7 @@ public class ChessGame {
         Map<Square, Piece> boardOutput = board.toBoardOutput().board();
         List<String> output = new ArrayList<>();
 
-        for (Rank rank : Rank.values()) {
+        for (Rank rank : Rank.reverse()) {
             output.add(makeRankOutput(rank, boardOutput));
         }
 

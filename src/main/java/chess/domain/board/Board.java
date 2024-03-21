@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Direction;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -11,10 +12,10 @@ import java.util.Map;
 
 public class Board {
 
-    public static final int  VERTICAL_RIGHT_INDEX = 1;
-    public static final int  VERTICAL_LEFT_INDEX = -1;
-    public static final int  HORIZONTAL_UP_INDEX = 1;
-    public static final int  HORIZONTAL_DOWN_INDEX = -1;
+    public static final int VERTICAL_UP_INDEX = 1;
+    public static final int VERTICAL_DOWN_INDEX = -1;
+    public static final int HORIZONTAL_RIGHT_INDEX = 1;
+    public static final int HORIZONTAL_LEFT_INDEX = -1;
 
     private final Map<Square, Piece> board;
     private final Turn turn;
@@ -34,9 +35,20 @@ public class Board {
 
         checkTurn(sourcePiece);
         checkSameColor(sourcePiece, destinationPiece);
+
+        if (sourcePiece.isSameType(PieceType.PAWN.name())) {
+            // Direction LEFT/RIGHT/DOWN/UP이면 그냥 바꿔치기 & 대각 이동 불가
+            SquareDifferent squareDifferent = source.calculateDiff(destination);
+            Direction direction = Direction.findDirectionByDiff(squareDifferent);
+
+            if (!direction.isDiagonal() && !destinationPiece.isEmpty()) {
+                throw new IllegalArgumentException("폰은 직선 경로로 상대 말을 잡을 수 없습니다.");
+            }
+            // Direction 대각이면 잡기 & 대각 이동 가능
+        }
+
         checkCannotMove(source, destination, sourcePiece);
         checkPathBlocked(source, destination, sourcePiece);
-
         moveOrCatch(sourcePiece, destinationPiece, source, destination);
 
         turn.update();
@@ -87,43 +99,43 @@ public class Board {
                 throw new IllegalArgumentException("막힌 경로입니다.");
             }
 
-            if (diff.fileDiff() == 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveVertical(VERTICAL_RIGHT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.UP)) {
+                candidate = candidate.moveVertical(VERTICAL_UP_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() == 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveVertical(VERTICAL_LEFT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.DOWN)) {
+                candidate = candidate.moveVertical(VERTICAL_DOWN_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() < 0 && diff.rankDiff() == 0) {
-                candidate = candidate.moveHorizontal(HORIZONTAL_UP_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT)) {
+                candidate = candidate.moveHorizontal(HORIZONTAL_RIGHT_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() > 0 && diff.rankDiff() == 0) {
-                candidate = candidate.moveHorizontal(HORIZONTAL_DOWN_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT)) {
+                candidate = candidate.moveHorizontal(HORIZONTAL_LEFT_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() < 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_UP_INDEX, VERTICAL_LEFT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT_DOWN)) {
+                candidate = candidate.moveDiagonal(HORIZONTAL_RIGHT_INDEX, VERTICAL_DOWN_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() < 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_UP_INDEX, VERTICAL_RIGHT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.RIGHT_UP)) {
+                candidate = candidate.moveDiagonal(HORIZONTAL_RIGHT_INDEX, VERTICAL_UP_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() > 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_DOWN_INDEX, VERTICAL_LEFT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT_DOWN)) {
+                candidate = candidate.moveDiagonal(HORIZONTAL_LEFT_INDEX, VERTICAL_DOWN_INDEX);
                 continue;
             }
 
-            if (diff.fileDiff() > 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveDiagonal(HORIZONTAL_DOWN_INDEX, VERTICAL_RIGHT_INDEX);
+            if (Direction.findDirectionByDiff(diff).equals(Direction.LEFT_UP)) {
+                candidate = candidate.moveDiagonal(HORIZONTAL_LEFT_INDEX, VERTICAL_UP_INDEX);
             }
         }
     }

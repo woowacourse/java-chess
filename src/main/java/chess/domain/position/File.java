@@ -33,7 +33,7 @@ public enum File {
     public int calculateDiff(File file) {
         List<File> files = List.of(File.values());
 
-        return files.indexOf(this) - files.indexOf(file);
+        return files.indexOf(file) - files.indexOf(this);
     }
 
     public static File findFileByName(String name) {

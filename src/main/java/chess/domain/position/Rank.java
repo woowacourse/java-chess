@@ -1,18 +1,21 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum Rank {
 
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
     ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+
+    EIGHT(8),
     ;
 
     private final int value;
@@ -23,7 +26,7 @@ public enum Rank {
 
     public Rank moveVertical(int index) {
         List<Rank> ranks = List.of(Rank.values());
-        int targetIndex = ranks.indexOf(this) + (index * -1);
+        int targetIndex = ranks.indexOf(this) + index;
 
         validateIndexBound(targetIndex, ranks);
 
@@ -39,7 +42,7 @@ public enum Rank {
     public int calculateDiff(Rank rank) {
         List<Rank> ranks = List.of(Rank.values());
 
-        return ranks.indexOf(this) - ranks.indexOf(rank);
+        return ranks.indexOf(rank) - ranks.indexOf(this);
     }
 
     public static Rank findRankByValue(int value) {
@@ -47,5 +50,12 @@ public enum Rank {
                 .filter(rank -> rank.value == value)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 랭크입니다."));
+    }
+
+    public static List<Rank> reverse() {
+        List<Rank> reversedRanks = new ArrayList<>(List.of(Rank.values()));
+        Collections.reverse(reversedRanks);
+
+        return Collections.unmodifiableList(reversedRanks);
     }
 }
