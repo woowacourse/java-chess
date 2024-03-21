@@ -1,6 +1,8 @@
+package chess;
+
 import chess.ChessMachine;
-import chess.InputView;
-import chess.OutputView;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public class Application {
 

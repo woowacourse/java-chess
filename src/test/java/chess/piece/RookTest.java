@@ -2,7 +2,7 @@ package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Space;
+import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;

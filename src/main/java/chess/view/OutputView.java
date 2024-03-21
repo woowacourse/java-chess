@@ -1,6 +1,6 @@
-package chess;
+package chess.view;
 
-import chess.domain.ChessBoard;
+import chess.domain.chessBoard.ChessBoard;
 
 public class OutputView {
 

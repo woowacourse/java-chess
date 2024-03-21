@@ -1,8 +1,10 @@
 package chess;
 
-import chess.domain.ChessBoard;
-import chess.domain.ChessSpaceGenerator;
+import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessSpaceGenerator;
 import chess.domain.position.Position;
+import chess.view.InputView;
+import chess.view.OutputView;
 import java.util.List;
 
 public class ChessMachine {

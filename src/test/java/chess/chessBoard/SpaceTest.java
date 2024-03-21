@@ -1,10 +1,10 @@
-package chess;
+package chess.chessBoard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.PieceSign;
-import chess.domain.Space;
+import chess.view.PieceSign;
+import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;

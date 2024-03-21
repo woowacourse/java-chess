@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Rule;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {

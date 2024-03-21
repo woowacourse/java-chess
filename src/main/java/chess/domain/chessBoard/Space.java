@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.chessBoard;
 
+import chess.view.PieceSign;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
