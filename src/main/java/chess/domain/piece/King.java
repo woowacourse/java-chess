@@ -6,7 +6,7 @@ public class King extends Piece {
 
     private static final int STEP_LIMIT = 1;
 
-    public King(PieceColor color) {
+    public King(Team color) {
         super(PieceType.KING, color);
     }
 

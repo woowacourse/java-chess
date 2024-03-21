@@ -7,7 +7,7 @@ public class Knight extends Piece {
     private static final int SIDE_STEP = 1;
     private static final int STRAIGHT_STEP = 2;
 
-    public Knight(PieceColor color) {
+    public Knight(Team color) {
         super(PieceType.KNIGHT, color);
     }
 

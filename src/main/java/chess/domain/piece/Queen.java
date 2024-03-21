@@ -4,7 +4,7 @@ import chess.domain.square.Square;
 
 public class Queen extends Piece {
 
-    public Queen(PieceColor color) {
+    public Queen(Team color) {
         super(PieceType.QUEEN, color);
     }
 

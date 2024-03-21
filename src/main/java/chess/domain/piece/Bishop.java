@@ -4,7 +4,7 @@ import chess.domain.square.Square;
 
 public class Bishop extends Piece {
 
-    public Bishop(PieceColor color) {
+    public Bishop(Team color) {
         super(PieceType.BISHOP, color);
     }
 

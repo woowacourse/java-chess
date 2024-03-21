@@ -14,7 +14,7 @@ class QueenTest {
     @ValueSource(strings = {"a8", "c8", "e8", "h6", "h1", "c1", "a4", "a6"})
     @DisplayName("에 대한 이동 루트가 상하좌우 대각선 중 하나인지 판단한다.")
     void canMove(String target) {
-        Queen queen = new Queen(PieceColor.BLACK);
+        Queen queen = new Queen(Team.BLACK);
 
         boolean actual = queen.canMove(Square.from("c6"), Square.from(target));
 

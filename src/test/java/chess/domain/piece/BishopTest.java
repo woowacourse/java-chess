@@ -14,7 +14,7 @@ class BishopTest {
     @ValueSource(strings = {"a8", "e8", "a4", "h1"})
     @DisplayName("에 대한 이동 루트가 대각선인지 판단한다.")
     void canMove(String target) {
-        Bishop bishop = new Bishop(PieceColor.BLACK);
+        Bishop bishop = new Bishop(Team.BLACK);
 
         boolean actual = bishop.canMove(Square.from("c6"), Square.from(target));
 

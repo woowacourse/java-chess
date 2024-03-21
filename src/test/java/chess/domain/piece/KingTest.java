@@ -15,7 +15,7 @@ class KingTest {
     @ValueSource(strings = {"b7", "c7", "d7", "d6", "d5", "c5", "b5", "b6"})
     @DisplayName("에 대한 이동 루트가 상하좌우 대각선 중 하나인지 판단한다.")
     void canMove(String target) {
-        King king = new King(PieceColor.BLACK);
+        King king = new King(Team.BLACK);
 
         boolean actual = king.canMove(Square.from("c6"), Square.from(target));
 
@@ -25,7 +25,7 @@ class KingTest {
     @Test
     @DisplayName("1칸 초과하여 이동 할 수 없다.")
     void cannotMoveMoreThanTwoStep() {
-        King king = new King(PieceColor.BLACK);
+        King king = new King(Team.BLACK);
 
         boolean actual = king.canMove(Square.from("c6"), Square.from("c4"));
 

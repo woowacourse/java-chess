@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     private static final int FIRST_STEP_LIMIT = 2;
     private static final int STEP_LIMIT = 1;
 
-    public Pawn(PieceColor color) {
+    public Pawn(Team color) {
         super(PieceType.PAWN, color);
     }
 
@@ -24,14 +24,14 @@ public class Pawn extends Piece {
     }
 
     private boolean isBackward(Square source, Square target) {
-        if (getColor() == PieceColor.BLACK) {
+        if (getColor() == Team.BLACK) {
             return source.isLessRankThan(target);
         }
         return source.isGreaterRankThan(target);
     }
 
     private boolean isFirstStep(Square square) {
-        if (getColor() == PieceColor.BLACK) {
+        if (getColor() == Team.BLACK) {
             return square.rank() == Rank.SEVEN;
         }
         return square.rank() == Rank.TWO;

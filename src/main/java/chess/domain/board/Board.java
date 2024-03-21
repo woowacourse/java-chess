@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.piece.PieceType;
 import chess.domain.square.Square;
 
@@ -48,5 +49,12 @@ public class Board {
 
     public Map<Square, Piece> get() {
         return values;
+    }
+
+    public boolean isExistPieceWithColor(Square square, Team team) {
+        if (values.containsKey(square)) {
+            return values.get(square).getColor() == team;
+        }
+        return false;
     }
 }

@@ -14,7 +14,7 @@ class RookTest {
     @ValueSource(strings = {"a6", "h6", "c1", "c8"})
     @DisplayName("에 대한 이동 루트가 상하좌우로 이동하는지 판단한다.")
     void canMove(String target) {
-        Rook rook = new Rook(PieceColor.BLACK);
+        Rook rook = new Rook(Team.BLACK);
 
         boolean actual = rook.canMove(Square.from("c6"), Square.from(target));
 

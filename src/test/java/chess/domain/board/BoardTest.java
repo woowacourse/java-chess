@@ -3,8 +3,7 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import chess.domain.board.Board;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.Team;
 import chess.domain.piece.Rook;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +39,7 @@ class BoardTest {
     @Test
     @DisplayName("각 기물의 이동 방식으로 갈 수 없는 목적지인 경우 예외가 발생한다.")
     void occurExceptionWhenCannotMove() {
-        Board board = new Board(Map.of(Square.from("b3"), new Rook(PieceColor.BLACK)));
+        Board board = new Board(Map.of(Square.from("b3"), new Rook(Team.BLACK)));
         Square source = Square.from("b3");
         Square target = Square.from("c4");
 
@@ -53,8 +52,8 @@ class BoardTest {
     @DisplayName(" 이동 경로에 다른 기물이 있으면 예외가 발생한다.")
     void occurExceptionWhenExistObstacleOnPath() {
         Board board = new Board(Map.of(
-                Square.from("b3"), new Rook(PieceColor.BLACK),
-                Square.from("b4"), new Rook(PieceColor.BLACK)
+                Square.from("b3"), new Rook(Team.BLACK),
+                Square.from("b4"), new Rook(Team.BLACK)
         ));
         Square source = Square.from("b3");
         Square target = Square.from("b5");
