@@ -32,27 +32,6 @@ public enum Direction {
         this.directionOfRank = directionOfRank;
     }
 
-    public static List<Direction> findKnightDirections() {
-        return List.of(
-                KNIGHT_UPPER_LEFT,
-                KNIGHT_UPPER_RIGHT,
-                KNIGHT_LOWER_LEFT,
-                KNIGHT_LOWER_RIGHT,
-                KNIGHT_LEFT_UPPER,
-                KNIGHT_LEFT_LOWER,
-                KNIGHT_RIGHT_UPPER,
-                KNIGHT_RIGHT_LOWER
-        );
-    }
-
-    public static List<Direction> findPawnDirections() {
-        return List.of(UPPER_LEFT, UPPER, UPPER_RIGHT);
-    }
-
-    public static List<Direction> findBishopDirection() {
-        return List.of(UPPER_LEFT, UPPER_RIGHT, LOWER_LEFT, LOWER_RIGHT);
-    }
-
     public static Direction of(int file, int rank) {
         return Arrays.stream(values())
                 .filter(direction -> direction.isMatch(file, rank))
@@ -62,6 +41,10 @@ public enum Direction {
 
     private boolean isMatch(int file, int rank) {
         return this.directionOfFile == file && this.directionOfRank == rank;
+    }
+
+    public static List<Direction> findPawnDirections() {
+        return List.of(UPPER_LEFT, UPPER, UPPER_RIGHT);
     }
 
     public int rank() {
