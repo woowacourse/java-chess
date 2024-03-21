@@ -17,22 +17,23 @@ public class ChessManager {
     }
 
     public void start() {
-        Command command = inputView.readCommand();
-        if (command != Command.START) {
-            throw new IllegalArgumentException();
-        }
+        Command command = inputView.readInitCommand();
 
+        if (command == Command.END) {
+            return;
+        }
+        
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.init();
         outputView.printChessBoard(chessBoard);
 
-        while (inputView.readCommand() == Command.MOVE) {
+        while (inputView.readMoveCommand() == Command.MOVE) {
             Position current = inputView.readPosition();
             Position target = inputView.readPosition();
 
             chessBoard.move(current, target);
             outputView.printChessBoard(chessBoard);
-            
+
             inputView.readNextLine();
         }
     }
