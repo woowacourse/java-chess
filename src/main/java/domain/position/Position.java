@@ -1,15 +1,28 @@
 package domain.position;
 
+import domain.game.Direction;
 import domain.game.Gap;
 import java.util.Objects;
 
 public class Position {
-    private final File file;
-    private final Rank rank;
+    private File file;
+    private Rank rank;
 
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public Position(final Position position) {
+        this.file = position.getFile();
+        this.rank = position.getRank();
+    }
+
+    public void move(final Direction direction) {
+        int dFile = direction.getFileUnit();
+        int dRank = direction.getRankUnit();
+        file = file.add(dFile);
+        rank = rank.add(dRank);
     }
 
     @Override
@@ -40,4 +53,5 @@ public class Position {
     public Gap subtract(Position target) {
         return new Gap(file.subtract(target.getFile()), rank.subtract(target.getRank()));
     }
+
 }

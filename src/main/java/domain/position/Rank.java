@@ -34,4 +34,8 @@ public class Rank {
     public int subtract(Rank target) {
         return number - target.getNumber();
     }
+
+    public Rank add(final int movement) {
+        return new Rank(number + movement);
+    }
 }

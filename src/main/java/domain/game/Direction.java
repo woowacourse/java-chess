@@ -2,40 +2,59 @@ package domain.game;
 
 import domain.position.Position;
 import java.util.Arrays;
-import java.util.function.BiPredicate;
 
 public enum Direction {
 
-    NORTH((file, rank) -> file == 0 && rank < 0),
-    NORTH_EAST((file, rank) -> file < 0 && rank < 0 && file.equals(rank)),
-    EAST((file, rank) -> file < 0 && rank == 0),
-    SOUTH_EAST((file, rank) -> file < 0 && rank > 0 && file == (-1) * rank),
-    SOUTH((file, rank) -> file == 0 && rank > 0),
-    SOUTH_WEST((file, rank) -> file > 0 && rank > 0 && file.equals(rank)),
-    WEST((file, rank) -> file > 0 && rank == 0),
-    NORTH_WEST((file, rank) -> file > 0 && rank < 0 && file == (-1) * rank),
+    NORTH(0, 1),
+    NORTH_EAST(1, 1),
+    EAST(1, 0),
+    SOUTH_EAST(1, -1),
+    SOUTH(0, -1),
+    SOUTH_WEST(-1, -1),
+    WEST(-1, 0),
+    NORTH_WEST(-1, 1),
 
     // KNIGHT DIRECTION
-    UP_RIGHT((file, rank) -> file == -1 && rank == -2),
-    UP_LEFT((file, rank) -> file == 1 && rank == -2),
-    RIGHT_UP((file, rank) -> file == -2 && rank == -1),
-    RIGHT_DOWN((file, rank) -> file == -2 && rank == 1),
-    LEFT_DOWN((file, rank) -> file == 2 && rank == 1),
-    LEFT_UP((file, rank) -> file == 2 && rank == -1),
-    DOWN_RIGHT((file, rank) -> file == -1 && rank == 2),
-    DOWN_LEFT((file, rank) -> file == 1 && rank == 2);
+    UP_RIGHT(1, 2),
+    UP_LEFT(-1, 2),
+    RIGHT_UP(2, 1),
+    RIGHT_DOWN(2, -1),
+    LEFT_DOWN(-2, -1),
+    LEFT_UP(-2, 1),
+    DOWN_RIGHT(1, -2),
+    DOWN_LEFT(-1, -2);
 
-    private final BiPredicate<Integer, Integer> directionDecider;
+    private final int fileUnit;
+    private final int rankUnit;
 
-    Direction(BiPredicate<Integer, Integer> directionDecider) {
-        this.directionDecider = directionDecider;
+    Direction(final int fileUnit, final int rankUnit) {
+        this.fileUnit = fileUnit;
+        this.rankUnit = rankUnit;
     }
 
+
     public static Direction findDirection(Position sourcePosition, Position targetPosition) {
-        Gap gap = sourcePosition.subtract(targetPosition);
+        Gap gap = targetPosition.subtract(sourcePosition);
         return Arrays.stream(values())
-                .filter(direction -> direction.directionDecider.test(gap.fileGap(), gap.rankGap()))
+                .filter(direction -> direction.isSameDirection(direction, gap))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
+    }
+
+    private static boolean isSameDirection(final Direction direction, final Gap gap) {
+        for (int i = 1; i <= 8; i++) {
+            if (direction.fileUnit * i == gap.fileGap() && direction.rankUnit * i == gap.rankGap()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getFileUnit() {
+        return fileUnit;
+    }
+
+    public int getRankUnit() {
+        return rankUnit;
     }
 }

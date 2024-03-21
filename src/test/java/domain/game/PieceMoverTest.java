@@ -81,6 +81,7 @@ class PieceMoverTest {
         Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
+
     @DisplayName("앞에 다른 진영의 기물이 있는 경우 폰이 이동하지 못한다.")
     @Test
     void movePawnWhenFrontSquareHasOtherPiece() {

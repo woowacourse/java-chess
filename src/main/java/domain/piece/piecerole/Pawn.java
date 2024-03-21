@@ -30,14 +30,15 @@ public class Pawn implements PieceRole {
 
     @Override
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
+        boolean canMove = routes.stream()
+                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
         if (count == 1) {
             for (Movable movable : routes) {
                 movable.decreaseMaxMovement();
             }
             count++;
         }
-        return routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+        return canMove;
     }
 
     protected int getMaxMovement(final int count) {

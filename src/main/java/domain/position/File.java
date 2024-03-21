@@ -34,4 +34,8 @@ public class File {
     public int subtract(File target) {
         return letter - target.getLetter();
     }
+
+    public File add(final int movement) {
+        return new File((char) ((int) letter + movement));
+    }
 }
