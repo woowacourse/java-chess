@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import chess.domain.Coordinate;
+import chess.domain.board.Coordinate;
+import chess.domain.board.Direction;
 
 public class Bishop extends AbstractPiece {
 
@@ -10,29 +11,19 @@ public class Bishop extends AbstractPiece {
         super(PieceType.BISHOP, team);
     }
 
+    private final static List<Direction> POSSIBLE_DIRECTIONS = List.of(
+            Direction.LEFT_DOWN,
+            Direction.LEFT_UP,
+            Direction.RIGHT_DOWN,
+            Direction.RIGHT_UP
+    );
+
     @Override
-    public List<Coordinate> findAllPossibleCoordinate(Coordinate start) {
-        List<Coordinate> possibleCoordinate = new ArrayList<>();
-        for (int rankValue = 1; rankValue <= 8; rankValue++) {
-            possibleCoordinate.addAll(createOneLinePossibleCoordinate(start, rankValue));
-        }
-
-        return possibleCoordinate;
-    }
-
-    private List<Coordinate> createOneLinePossibleCoordinate(Coordinate start, int rankValue) {
-        List<Coordinate> rowCoordinate = new ArrayList<>();
-        for (char fileValue = 'a'; fileValue <= 'h'; fileValue++) {
-            if (rankValue == start.getRank() && fileValue == start.getFile()) {
-                continue;
-            }
-
-            if (Math.abs((start.getRank() - rankValue)) == Math.abs(start.getFile() - fileValue)) {
-                rowCoordinate.add(new Coordinate(rankValue, fileValue));
-            }
-
-        }
-
-        return rowCoordinate;
+    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
+        return POSSIBLE_DIRECTIONS.stream()
+                .map(possibleDirection -> possibleDirection.createPath(start))
+                .filter(coordinates -> coordinates.contains(destination))
+                .findFirst()
+                .orElse(Collections.emptyList());
     }
 }

@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import java.util.List;
-import chess.domain.Coordinate;
+import chess.domain.board.Coordinate;
 
 public interface Piece {
 
-    List<Coordinate> findAllPossibleCoordinate(Coordinate start);
+    List<Coordinate> findMovablePath(Coordinate start, Coordinate destination);
 
     PieceType getType();
 

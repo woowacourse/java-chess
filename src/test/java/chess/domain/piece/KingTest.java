@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import java.util.List;
-import chess.domain.Coordinate;
+import chess.domain.board.Coordinate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,47 +13,33 @@ class KingTest {
     @DisplayName("생성 테스트")
     @Test
     void create() {
-
         assertThatCode(() -> new King(Team.WHITE))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("킹은 가로, 세로 및 대각선으로도 1칸씩 움직일 수 있다.")
     @Test
-    void findAllPossibleCoordinate() {
+    void findMovablePath() {
         Coordinate start = new Coordinate(4, 'e');
+        Coordinate destination = new Coordinate(5, 'e');
         King king = new King(Team.WHITE);
-        List<Coordinate> expected = List.of(
-                new Coordinate(5, 'd'),
-                new Coordinate(5, 'e'),
-                new Coordinate(5, 'f'),
-                new Coordinate(4, 'd'),
-                new Coordinate(4, 'f'),
-                new Coordinate(3, 'd'),
-                new Coordinate(3, 'e'),
-                new Coordinate(3, 'f')
-        );
 
-        List<Coordinate> result = king.findAllPossibleCoordinate(start);
+        List<Coordinate> result = king.findMovablePath(start, destination);
 
+        List<Coordinate> expected = List.of(new Coordinate(5, 'e'));
         assertThat(result)
-                .containsExactlyInAnyOrderElementsOf(expected);
+                .containsExactlyElementsOf(expected);
     }
 
-    @DisplayName("킹이 모서리칸에 존재하는 경우를 검증한다.")
+    @DisplayName("킹이 목적지로 갈 수 없는 경우, 빈 컬렉션을 반환한다.")
     @Test
-    void findAllPossibleCoordinate2() {
+    void noPath() {
         Coordinate start = new Coordinate(1, 'a');
+        Coordinate destination = new Coordinate(3, 'a');
         King king = new King(Team.WHITE);
-        List<Coordinate> expected = List.of(
-                new Coordinate(1, 'b'),
-                new Coordinate(2, 'b'),
-                new Coordinate(2, 'a')
-        );
 
-        List<Coordinate> result = king.findAllPossibleCoordinate(start);
+        List<Coordinate> result = king.findMovablePath(start, destination);
 
-        assertThat(result)
-                .containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(result).isEmpty();
     }
 }

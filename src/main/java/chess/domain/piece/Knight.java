@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import chess.domain.Coordinate;
+import chess.domain.board.Coordinate;
 
 public class Knight extends AbstractPiece {
 
@@ -23,7 +24,7 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public List<Coordinate> findAllPossibleCoordinate(Coordinate start) {
+    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
         List<Coordinate> possibleCoordinate = new ArrayList<>();
         int startRank = start.getRank();
         char startFile = start.getFile();
@@ -39,6 +40,10 @@ public class Knight extends AbstractPiece {
             }
         }
 
-        return possibleCoordinate;
+        if (possibleCoordinate.contains(destination)) {
+            return List.of(destination);
+        }
+
+        return Collections.emptyList();
     }
 }

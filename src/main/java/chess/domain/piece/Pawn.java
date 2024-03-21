@@ -1,17 +1,15 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import chess.domain.Coordinate;
+import java.util.Objects;
+import chess.domain.board.Coordinate;
 
 public class Pawn extends AbstractPiece {
 
     public static final List<Map.Entry<Integer, Integer>> WEIGHTS = List.of(
             Map.entry(1, 0),
-            Map.entry(2, 0),
-            Map.entry(1, -1),
-            Map.entry(1, 1)
+            Map.entry(2, 0)
     );
 
     public Pawn(Team team) {
@@ -19,23 +17,33 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    public List<Coordinate> findAllPossibleCoordinate(Coordinate start) {
+    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
         int startRank = start.getRank();
         char startFile = start.getFile();
 
-        List<Coordinate> possibleCoordinate = new ArrayList<>();
+        return WEIGHTS.stream()
+                .map(weight -> mapToNextCoordinate(startRank, startFile, weight))
+                .filter(coordinate -> !Objects.isNull(coordinate))
+                .toList();
+    }
 
-        for (Map.Entry<Integer, Integer> weight : WEIGHTS) {
-            int nextRank = startRank + weight.getKey() * getTeam().getForwardDirection();
-            char nextFile = (char) (startFile + weight.getValue());
-
-            try {
-                Coordinate coordinate = new Coordinate(nextRank, nextFile);
-                possibleCoordinate.add(coordinate);
-            } catch (IllegalArgumentException ignored) {
-            }
+    private Coordinate mapToNextCoordinate(int startRank, char startFile, Map.Entry<Integer, Integer> weight) {
+        try {
+            int rankValue = calculateNextRank(startRank, weight);
+            char fileValue = calculateNextFile(startFile, weight);
+            return new Coordinate(rankValue, fileValue);
+        } catch (IllegalArgumentException ignored) {
+            return null;
         }
-        return possibleCoordinate;
+    }
 
+    private int calculateNextRank(int startRank, Map.Entry<Integer, Integer> weight) {
+        int forwardDirection = getTeam().getForwardDirection();
+
+        return startRank + weight.getKey() * forwardDirection;
+    }
+
+    private char calculateNextFile(char startFile, Map.Entry<Integer, Integer> weight) {
+        return (char) (startFile + weight.getValue());
     }
 }

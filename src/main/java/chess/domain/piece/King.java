@@ -1,21 +1,22 @@
 package chess.domain.piece;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import chess.domain.Coordinate;
+import chess.domain.board.Coordinate;
 
 public class King extends AbstractPiece {
 
     public static final List<Map.Entry<Integer, Integer>> WEIGHTS = List.of(
-            Map.entry(-1,1),
-            Map.entry(-1,0),
-            Map.entry(-1,-1),
-            Map.entry(1,1),
-            Map.entry(1,0),
-            Map.entry(1,-1),
-            Map.entry(0,1),
-            Map.entry(0,-1)
+            Map.entry(-1, 1),
+            Map.entry(-1, 0),
+            Map.entry(-1, -1),
+            Map.entry(1, 1),
+            Map.entry(1, 0),
+            Map.entry(1, -1),
+            Map.entry(0, 1),
+            Map.entry(0, -1)
     );
 
     public King(Team team) {
@@ -23,11 +24,10 @@ public class King extends AbstractPiece {
     }
 
     @Override
-    public List<Coordinate> findAllPossibleCoordinate(Coordinate start) {
+    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
+        List<Coordinate> possibleCoordinate = new ArrayList<>();
         int startRank = start.getRank();
         char startFile = start.getFile();
-
-        List<Coordinate> possibleCoordinate = new ArrayList<>();
 
         for (Map.Entry<Integer, Integer> weight : WEIGHTS) {
             int nextRank = startRank + weight.getKey();
@@ -40,6 +40,10 @@ public class King extends AbstractPiece {
             }
         }
 
-        return possibleCoordinate;
+        if (possibleCoordinate.contains(destination)) {
+            return List.of(destination);
+        }
+
+        return Collections.emptyList();
     }
 }
