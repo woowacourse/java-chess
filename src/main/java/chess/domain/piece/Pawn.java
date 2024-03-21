@@ -40,37 +40,40 @@ public class Pawn extends Piece {
     }
 
     private void addForwardMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
-        if (!direction.isDiagonal()) {
-            int currentRank = position.getRank();
-            Position nextPosition = position.next(direction);
-            Piece firstPiece = board.findPieceByPosition(nextPosition);
-            if (firstPiece.isEmpty()) {
-                movablePositions.add(nextPosition);
-                addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
-            }
+        if (direction.isDiagonal()) {
+            return;
+        }
+        int currentRank = position.getRank();
+        Position nextPosition = position.next(direction);
+        Piece firstPiece = board.findPieceByPosition(nextPosition);
+        if (firstPiece.isEmpty()) {
+            movablePositions.add(nextPosition);
+            addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
         }
     }
 
     private void addMultipleForwardMoves(Board board, Direction direction, Set<Position> movablePositions,
                                          int currentRank,
                                          Position nextPosition) {
-        if (isStartingPosition(direction, currentRank)) {
-            Position nextNextPosition = nextPosition.next(direction);
-            Piece secondPiece = board.findPieceByPosition(nextNextPosition);
-            if (secondPiece.isEmpty()) {
-                movablePositions.add(nextNextPosition);
-            }
+        if (!isStartingPosition(direction, currentRank)) {
+            return;
+        }
+        Position nextNextPosition = nextPosition.next(direction);
+        Piece secondPiece = board.findPieceByPosition(nextNextPosition);
+        if (secondPiece.isEmpty()) {
+            movablePositions.add(nextNextPosition);
         }
     }
 
     private void addDiagonalMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
-        if (direction.isDiagonal()) {
-            position = position.next(direction);
-            Piece piece = board.findPieceByPosition(position);
+        if (!direction.isDiagonal()) {
+            return;
+        }
+        position = position.next(direction);
+        Piece piece = board.findPieceByPosition(position);
 
-            if (!isSameColor(piece) && !piece.isEmpty()) {
-                movablePositions.add(position);
-            }
+        if (!isSameColor(piece) && !piece.isEmpty()) {
+            movablePositions.add(position);
         }
     }
 
