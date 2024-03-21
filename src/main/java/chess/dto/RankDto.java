@@ -7,6 +7,9 @@ import java.util.List;
 
 public class RankDto {
 
+    private static final int MAX_INDEX = 7;
+    private static final String DELIMITER = "";
+
     private final List<String> rank;
 
     public RankDto(List<String> rank) {
@@ -15,7 +18,7 @@ public class RankDto {
 
     public static RankDto of(Board board, int row) {
         List<String> rank = new ArrayList<>();
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i <= MAX_INDEX; i++) {
             Position position = new Position(row, i);
             rank.add(findPieceName(board, position));
         }
@@ -29,6 +32,6 @@ public class RankDto {
 
     @Override
     public String toString() {
-        return String.join("", rank);
+        return String.join(DELIMITER, rank);
     }
 }

@@ -4,6 +4,15 @@ import chess.model.Position;
 
 public class Pawn extends Piece {
 
+    private static final int NONE_MOVE = 0;
+    private static final int HORIZONTAL_MOVE = 1;
+    private static final int UP_SINGLE_MOVE = -1;
+    private static final int UP_DOUBLE_MOVE = -2;
+    private static final int DOWN_SINGLE_MOVE = 1;
+    private static final int DOWN_DOUBLE_MOVE = 2;
+    private static final int WHITE_INITIAL_ROW = 6;
+    private static final int BLACK_INITIAL_ROW = 1;
+
     public Pawn(PieceType pieceType) {
         super(pieceType);
     }
@@ -13,15 +22,15 @@ public class Pawn extends Piece {
         int rowDifference = calculateRowDifference(source, target);
         int columnDifference = calculateColumnDifference(source, target);
         if (type.isWhite()) {
-            boolean isRowUp = rowDifference == -1;
-            boolean isColumnNeutral = columnDifference == 0;
-            boolean isInitialMove = rowDifference == -2 && source.getRow() == 6;
+            boolean isRowUp = rowDifference == UP_SINGLE_MOVE;
+            boolean isColumnNeutral = columnDifference == NONE_MOVE;
+            boolean isInitialMove = rowDifference == UP_DOUBLE_MOVE && source.getRow() == WHITE_INITIAL_ROW;
             return isColumnNeutral && (isRowUp || isInitialMove);
         }
         if (type.isBlack()) {
-            boolean isRowDown = rowDifference == 1;
-            boolean isColumnNeutral = columnDifference == 0;
-            boolean isInitialMove = rowDifference == 2 && source.getRow() == 1;
+            boolean isRowDown = rowDifference == DOWN_SINGLE_MOVE;
+            boolean isColumnNeutral = columnDifference == NONE_MOVE;
+            boolean isInitialMove = rowDifference == DOWN_DOUBLE_MOVE && source.getRow() == BLACK_INITIAL_ROW;
             return isColumnNeutral && (isRowDown || isInitialMove);
         }
         return false;
@@ -31,14 +40,14 @@ public class Pawn extends Piece {
         int rowDifference = calculateRowDifference(source, target);
         int columnDifference = calculateColumnDifference(source, target);
         if (type.isWhite()) {
-            boolean isRowUp = rowDifference == -1;
-            boolean isColumnDiagonal = Math.abs(columnDifference) == 1;
-            return isRowUp && isColumnDiagonal;
+            boolean isRowUp = rowDifference == UP_SINGLE_MOVE;
+            boolean isColumnHorizontal = Math.abs(columnDifference) == HORIZONTAL_MOVE;
+            return isRowUp && isColumnHorizontal;
         }
         if (type.isBlack()) {
-            boolean isRowDown = rowDifference == 1;
-            boolean isColumnDiagonal = Math.abs(columnDifference) == 1;
-            return isRowDown && isColumnDiagonal;
+            boolean isRowDown = rowDifference == DOWN_SINGLE_MOVE;
+            boolean isColumnHorizontal = Math.abs(columnDifference) == HORIZONTAL_MOVE;
+            return isRowDown && isColumnHorizontal;
         }
         return false;
     }

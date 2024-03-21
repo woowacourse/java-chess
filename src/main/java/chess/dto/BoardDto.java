@@ -9,6 +9,9 @@ import java.util.List;
 
 public class BoardDto {
 
+    private static final int MAX_INDEX = 7;
+    private static final String DELIMITER = "\n";
+
     private final List<RankDto> ranks;
 
     public BoardDto(List<RankDto> rank) {
@@ -17,7 +20,7 @@ public class BoardDto {
 
     public static BoardDto from(Board board) {
         List<RankDto> ranks = new ArrayList<>();
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i <= MAX_INDEX; i++) {
             ranks.add(RankDto.of(board, i));
         }
         return new BoardDto(ranks);
@@ -27,6 +30,6 @@ public class BoardDto {
     public String toString() {
         return ranks.stream()
                 .map(RankDto::toString)
-                .collect(collectingAndThen(toList(), list -> String.join("\n", list)));
+                .collect(collectingAndThen(toList(), list -> String.join(DELIMITER, list)));
     }
 }
