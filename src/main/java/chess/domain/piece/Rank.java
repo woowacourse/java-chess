@@ -34,6 +34,10 @@ public enum Rank {
         return Math.abs(this.index - other.index);
     }
 
+    public boolean isBigger(final Rank other) {
+        return this.index > other.index;
+    }
+
     public int getIndex() {
         return index;
     }

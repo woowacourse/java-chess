@@ -30,49 +30,40 @@ public class Position {
         return this.file == target.file && this.rank != target.rank;
     }
 
-    public boolean isVerticalWithDistance(final Position target, final int distance) {
-        return this.rank.getDistance(target.rank) == distance;
-    }
-
     public boolean isHorizontalWith(final Position target) {
         return this.file != target.file && this.rank == target.rank;
-    }
-
-    public boolean isHorizontalWithDistance(final Position target, final int distance) {
-        return this.file.getDistance(target.file) == distance;
     }
 
     public boolean isDiagonalWith(final Position target) {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
     }
 
-    public boolean isRightDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
-                && ((this.file.getIndex() < target.file.getIndex() && this.rank.getIndex() < target.rank.getIndex())
-                || (this.file.getIndex() > target.file.getIndex() && this.rank.getIndex() > target.rank.getIndex()));
+    public boolean isVerticalWithDistance(final Position target, final int distance) {
+        return this.rank.getDistance(target.rank) == distance;
     }
 
-    public boolean isLeftDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
-                && ((this.file.getIndex() > target.file.getIndex() && this.rank.getIndex() < target.rank.getIndex())
-                || (this.file.getIndex() < target.file.getIndex() && this.rank.getIndex() > target.rank.getIndex()));
-
+    public boolean isHorizontalWithDistance(final Position target, final int distance) {
+        return this.file.getDistance(target.file) == distance;
     }
 
     public boolean isDiagonalWithDistance(final Position target, final int distance) {
         return isDiagonalWith(target) && this.file.getDistance(target.file) == distance;
     }
 
-    public boolean isSevenRank() {
-        return this.rank.equals(Rank.SEVEN);
-    }
-
-    public boolean isTwoRank() {
-        return this.rank.equals(Rank.TWO);
-    }
-
     public boolean isForwardWithDistance(final Position target, final int distance) {
         return target.rank.minus(this.rank) == distance;
+    }
+
+    public boolean isRightDiagonalWith(final Position target) {
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+                && ((target.file.isBigger(this.file) && target.rank.isBigger(this.rank))
+                || (this.file.isBigger(target.file) && this.rank.isBigger(target.rank)));
+    }
+
+    public boolean isLeftDiagonalWith(final Position target) {
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+                && ((this.file.isBigger(target.file) && target.rank.isBigger(this.rank))
+                || (target.file.isBigger(this.file) && this.rank.isBigger(target.rank)));
     }
 
     public Set<Position> getVerticalMiddlePositions(final Position target) {
@@ -151,6 +142,14 @@ public class Position {
             currentRankIndex++;
         }
         return positions;
+    }
+
+    public boolean isSevenRank() {
+        return this.rank.equals(Rank.SEVEN);
+    }
+
+    public boolean isTwoRank() {
+        return this.rank.equals(Rank.TWO);
     }
 
     public File getFile() {
