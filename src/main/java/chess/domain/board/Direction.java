@@ -25,16 +25,15 @@ public enum Direction {
 
     private static Direction of(int verticalDistance, int horizontalDistance) {
         if (verticalDistance > 0) {
-            return upsideDirection(horizontalDistance);
+            return createUpsideDirection(horizontalDistance);
         }
         if (verticalDistance < 0) {
-            return downsideDirection(horizontalDistance);
+            return createDownsideDirection(horizontalDistance);
         }
-        //TODO 메서드 네이밍 고민
-        return horizontalDirection(horizontalDistance);
+        return createHorizontalDirection(horizontalDistance);
     }
 
-    private static Direction upsideDirection(int horizontalDistance) {
+    private static Direction createUpsideDirection(int horizontalDistance) {
         if (horizontalDistance < 0) {
             return UP_LEFT;
         }
@@ -44,7 +43,7 @@ public enum Direction {
         return UP_RIGHT;
     }
 
-    private static Direction downsideDirection(int horizontalDistance) {
+    private static Direction createDownsideDirection(int horizontalDistance) {
         if (horizontalDistance < 0) {
             return DOWN_LEFT;
         }
@@ -54,22 +53,20 @@ public enum Direction {
         return DOWN_RIGHT;
     }
 
-    private static Direction horizontalDirection(int horizontalDistance) {
+    private static Direction createHorizontalDirection(int horizontalDistance) {
         if (horizontalDistance < 0) {
             return LEFT;
         }
         return RIGHT;
     }
 
-
-    //TODO 이름 바꾸기
     public static List<Direction> createDirections(Location source, Location target) {
         int verticalDistance = source.calculateVerticalDistance(target);
         int horizontalDistance = source.calculateHorizontalDistance(target);
-        return Direction.createDirections(verticalDistance, horizontalDistance);
+        return Direction.createDirectionsByDistance(verticalDistance, horizontalDistance);
     }
 
-    public static List<Direction> createDirections(int verticalDistance, int horizontalDistance) {
+    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
         validateDistance(verticalDistance, horizontalDistance);
         List<Direction> directions = new ArrayList<>();
         while (verticalDistance != 0 || horizontalDistance != 0) {
