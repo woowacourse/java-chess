@@ -198,7 +198,7 @@ public class PositionTest {
     class BetweenPositionsTest {
 
         @Test
-        @DisplayName("두 위치 사이에 존재하는 위치들을 반환한다.")
+        @DisplayName("직선 위 두 위치 사이에 존재하는 위치들을 반환한다.")
         void findBetweenStraightPositions() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.H, Rank.FOUR);
@@ -209,6 +209,21 @@ public class PositionTest {
                     new Position(File.E, Rank.FOUR),
                     new Position(File.F, Rank.FOUR),
                     new Position(File.G, Rank.FOUR)
+            );
+        }
+
+        @Test
+        @DisplayName("대각선 위 두 위치 사이에 존재하는 위치들을 반환한다.")
+        void findBetweenDiagonalPositions() {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(File.H, Rank.EIGHT);
+
+            List<Position> positions = source.findBetweenDiagonalPositions(target);
+
+            assertThat(positions).containsExactly(
+                    new Position(File.E, Rank.FIVE),
+                    new Position(File.F, Rank.SIX),
+                    new Position(File.G, Rank.SEVEN)
             );
         }
     }

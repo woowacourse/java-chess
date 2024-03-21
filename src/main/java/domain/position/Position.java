@@ -1,5 +1,6 @@
 package domain.position;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,6 +58,18 @@ public class Position {
         return file.betweenFiles(target.file).stream()
                 .map(file -> new Position(file, rank))
                 .toList();
+    }
+
+    public List<Position> findBetweenDiagonalPositions(Position target) {
+        List<File> files = file.betweenFiles(target.file);
+        List<Rank> ranks = rank.betweenRanks(target.rank);
+
+        List<Position> positions = new ArrayList<>();
+        for (int index = 0; index < ranks.size(); index++) {
+            Position position = new Position(files.get(index), ranks.get(index));
+            positions.add(position);
+        }
+        return positions;
     }
 
     @Override

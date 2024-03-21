@@ -55,23 +55,23 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("해당 위치에 다른 기물이 있는 경우 참을 반환한다.")
-    void isBlocked_True() {
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.A, Rank.THREE);
+    @DisplayName("해당 위치에 다른 기물이 없는 경우 참을 반환한다.")
+    void isNotBlocked_True() {
+        Position source = new Position(File.A, Rank.TWO);
+        Position target = new Position(File.A, Rank.FOUR);
 
-        boolean actual = board.isBlocked(source, target);
+        boolean actual = board.isNotBlocked(source, target);
 
         assertThat(actual).isTrue();
     }
 
     @Test
-    @DisplayName("해당 위치에 다른 기물이 없는 경우 거짓을 반환한다.")
-    void isBlocked_False() {
-        Position source = new Position(File.A, Rank.TWO);
+    @DisplayName("해당 위치에 다른 기물이 있는 경우 거짓을 반환한다.")
+    void isNotBlocked_False() {
+        Position source = new Position(File.A, Rank.ONE);
         Position target = new Position(File.A, Rank.THREE);
 
-        boolean actual = board.isBlocked(source, target);
+        boolean actual = board.isNotBlocked(source, target);
 
         assertThat(actual).isFalse();
     }
