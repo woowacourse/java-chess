@@ -3,6 +3,7 @@ package domain.game;
 import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +56,20 @@ public class PieceMover {
                 }
             }
         }
+
+        if (findPiece.isNotKnight()) { // 예외 처리만
+            Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
+
+            Position here = new Position(sourceSquare.getPosition());
+            here.move(direction);
+            while (!here.equals(targetSquare.getPosition())) {
+                if (pieceBySquare.containsKey(new Square(here))) {
+                    throw new IllegalStateException("갈 수 없음");
+                }
+                here.move(direction);
+            }
+        }
+
         if (findPiece.canMove(sourceSquare, targetSquare)) {
             if (pieceBySquare.containsKey(targetSquare)) {
                 pieceBySquare.remove(targetSquare);

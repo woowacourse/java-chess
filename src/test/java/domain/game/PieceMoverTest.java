@@ -5,8 +5,10 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceType;
 import domain.piece.piecerole.King;
+import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
+import domain.piece.piecerole.Rook;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -121,5 +123,52 @@ class PieceMoverTest {
         Piece findPiece = pieceMover.findPieceBySquare(targetSquare);
 
         Assertions.assertThat(findPiece).isEqualTo(sourcePiece);
+    }
+
+    @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
+    @Test
+    void isOverlappedPath() {
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateB7Position();
+        Position blockPosition = PositionFixture.generateB2Position();
+
+        Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
+        Square targetSquare = SquareFixture.generateSquare(targetPosition);
+        Square blockSquare = SquareFixture.generateSquare(blockPosition);
+
+        Piece sourcePiece = new Piece(new PieceType(new Rook(), Color.WHITE), sourcePosition);
+        Piece targetPiece = new Piece(new PieceType(new Rook(), Color.WHITE), targetPosition);
+        Piece blockPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), blockPosition);
+
+        PieceMover pieceMover = new PieceMover();
+        pieceMover.add(sourceSquare, sourcePiece);
+        pieceMover.add(targetSquare, targetPiece);
+        pieceMover.add(blockSquare, blockPiece);
+
+        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("나이트는 이동하는 경로에 기물이 있어도 이동할 수 있다.")
+    @Test
+    void knightCanJump() {
+        Position sourcePosition = PositionFixture.generateB1Position();
+        Position targetPosition = PositionFixture.generateC3Position();
+        Position blockPosition = PositionFixture.generateB2Position();
+
+        Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
+        Square targetSquare = SquareFixture.generateSquare(targetPosition);
+        Square blockSquare = SquareFixture.generateSquare(blockPosition);
+
+        Piece sourcePiece = new Piece(new PieceType(new Knight(), Color.WHITE), sourcePosition);
+        Piece targetPiece = new Piece(new PieceType(new Knight(), Color.WHITE), targetPosition);
+        Piece blockPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), blockPosition);
+
+        PieceMover pieceMover = new PieceMover();
+        pieceMover.add(sourceSquare, sourcePiece);
+        pieceMover.add(targetSquare, targetPiece);
+        pieceMover.add(blockSquare, blockPiece);
+
+        Assertions.assertThat(pieceMover.findPieceBySquare(targetSquare)).isEqualTo(sourcePiece);
     }
 }

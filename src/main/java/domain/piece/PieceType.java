@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
@@ -54,5 +55,9 @@ public class PieceType {
 
     public boolean isPawn() {
         return pieceRole instanceof Pawn;
+    }
+
+    public boolean isNotKnight() {
+        return !(pieceRole instanceof Knight);
     }
 }

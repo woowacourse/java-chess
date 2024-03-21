@@ -62,4 +62,8 @@ public class Piece {
     public boolean isPawn() {
         return pieceType.isPawn();
     }
+
+    public boolean isNotKnight() {
+        return pieceType.isNotKnight();
+    }
 }
