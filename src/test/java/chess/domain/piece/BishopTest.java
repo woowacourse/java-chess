@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.Board;
-import chess.domain.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -14,22 +12,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BishopTest {
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Bishop(Color.BLACK))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenBishopMoveWhenMeetTeamMThenStop() {
-        Bishop bishop = new Bishop(Color.WHITE);
+        Bishop bishop = Bishop.ofWhite();
         Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                Position.of(File.B, Rank.THREE), new Bishop(Color.WHITE),
-                Position.of(File.C, Rank.SIX), new Knight(Color.WHITE)
+                Position.of(File.B, Rank.THREE), Bishop.ofWhite(),
+                Position.of(File.C, Rank.SIX), Knight.ofWhite()
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));
@@ -41,12 +32,12 @@ class BishopTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenBishopMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Bishop bishop = new Bishop(Color.WHITE);
+        Bishop bishop = Bishop.ofWhite();
         Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                Position.of(File.B, Rank.THREE), new Bishop(Color.BLACK),
-                Position.of(File.C, Rank.SIX), new Knight(Color.BLACK)
+                Position.of(File.B, Rank.THREE), Bishop.ofBlack(),
+                Position.of(File.C, Rank.SIX), Knight.ofBlack()
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));

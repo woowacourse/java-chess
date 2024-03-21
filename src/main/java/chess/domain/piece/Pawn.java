@@ -10,19 +10,19 @@ import java.util.Set;
 public class Pawn extends Piece {
     private static final int DEFAULT_WHITE_RANK = 2;
     private static final int DEFAULT_BLACK_RANK = 7;
+    private static final Pawn blackPawn = new Pawn(Color.BLACK, Direction.ofBlackPawn());
+    private static final Pawn whitePawn = new Pawn(Color.WHITE, Direction.ofWhitePawn());
 
     private Pawn(Color color, Set<Direction> directions) {
         super(color, PieceType.PAWN, directions);
     }
 
     public static Pawn ofBlack() {
-        Set<Direction> directions = Direction.ofBlackPawn();
-        return new Pawn(Color.BLACK, directions);
+        return blackPawn;
     }
 
     public static Pawn ofWhite() {
-        Set<Direction> directions = Direction.ofWhitePawn();
-        return new Pawn(Color.WHITE, directions);
+        return whitePawn;
     }
 
     @Override

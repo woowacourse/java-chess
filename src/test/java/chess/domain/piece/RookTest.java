@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.Board;
-import chess.domain.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -14,22 +12,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Rook(Color.BLACK))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenRookMoveWhenMeetTeamMThenStop() {
-        Rook rook = new Rook(Color.WHITE);
+        Rook rook = Rook.ofWhite();
         Position currentRookPosition = Position.of(File.A, Rank.ONE);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                Position.of(File.A, Rank.FOUR), new Bishop(Color.WHITE),
-                Position.of(File.E, Rank.ONE), new Knight(Color.WHITE)
+                Position.of(File.A, Rank.FOUR), Bishop.ofWhite(),
+                Position.of(File.E, Rank.ONE), Knight.ofWhite()
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));
@@ -42,12 +33,12 @@ class RookTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenRookMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Rook rook = new Rook(Color.WHITE);
+        Rook rook = Rook.ofWhite();
         Position currentRookPosition = Position.of(File.H, Rank.EIGHT);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                Position.of(File.G, Rank.EIGHT), new Bishop(Color.BLACK),
-                Position.of(File.H, Rank.FIVE), new Knight(Color.BLACK)
+                Position.of(File.G, Rank.EIGHT), Bishop.ofBlack(),
+                Position.of(File.H, Rank.FIVE), Knight.ofBlack()
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));
