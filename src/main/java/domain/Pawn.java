@@ -26,10 +26,17 @@ public class Pawn extends Piece {
         if (isInitPosition(current) && current.hasOnlyTwoRankGap(target)) {
             return true;
         }
-        if (current.hasOneDiagonalGap(target) && pieces.containsKey(target) && pieces.get(target).isOpponent(this)) {
+        if (current.hasOneDiagonalGap(target) && hasOpponentAtTarget(target, pieces)) {
             return true;
         }
         return current.hasOneRankGap(target) && current.isSameFile(target);
+    }
+
+    private boolean isReverseMove(Position current, Position target) {
+        if (isBlack()) {
+            return current.isRankIncreased(target);
+        }
+        return current.isRankDecreased(target);
     }
 
     private boolean isInitPosition(Position current) {
@@ -39,10 +46,7 @@ public class Pawn extends Piece {
         return current.isWhitePawnRank();
     }
 
-    private boolean isReverseMove(Position current, Position target) {
-        if (isBlack()) {
-            return current.isRankIncreased(target);
-        }
-        return current.isRankDecreased(target);
+    private boolean hasOpponentAtTarget(Position target, Map<Position, Piece> pieces) {
+        return pieces.containsKey(target) && pieces.get(target).isOpponent(this);
     }
 }
