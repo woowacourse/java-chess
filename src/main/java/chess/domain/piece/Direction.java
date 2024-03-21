@@ -24,7 +24,6 @@ public enum Direction {
     UP_RIGHT_RIGHT(2, 1),
     DOWN_RIGHT_RIGHT(2, -1);
 
-
     private final int dx;
     private final int dy;
 
