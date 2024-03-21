@@ -1,5 +1,7 @@
 package view.util;
 
+import java.util.Arrays;
+
 public enum Command {
 
     START("start"),
@@ -12,7 +14,10 @@ public enum Command {
         this.identifier = identifier;
     }
 
-    public boolean isSameIdentifier(String identifier) {
-        return this.identifier.equals(identifier);
+    public static Command from(String identifier) {
+        return Arrays.stream(values())
+                .filter(command -> command.identifier.equals(identifier))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당되는 식별자가 존재하지 않습니다."));
     }
 }
