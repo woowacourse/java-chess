@@ -10,7 +10,7 @@ public enum Color {
         return this == WHITE;
     }
 
-    public boolean isSame(Color color) {
-        return this == color;
+    public boolean isSame(Color other) {
+        return this == other;
     }
 }
