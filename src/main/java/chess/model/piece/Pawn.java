@@ -41,7 +41,7 @@ public class Pawn extends Piece {
     }
 
     private boolean isValidVerticalMove(Movement movement) {
-        if (!movement.isVertical()) {
+        if (!movement.isSameFile()) {
             return false;
         }
         int rankGap = movement.getRankGap();

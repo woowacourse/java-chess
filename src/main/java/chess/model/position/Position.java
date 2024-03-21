@@ -42,25 +42,38 @@ public class Position {
         return POSITION_CACHE.get(key);
     }
 
+    public Position moveToTargetByStep(Position target) {
+        int fileStep = Integer.signum(target.file - file);
+        int rankStep = Integer.signum(target.rank - rank);
+        return Position.from(file + fileStep, rank + rankStep);
+    }
+
     public static List<Position> values() {
         return List.copyOf(POSITION_CACHE.values());
     }
 
-    public int getFileGap(Position other) {
-        return other.file - file;
+    public int getFile() {
+        return file;
     }
 
-    public int getRankGap(Position other) {
-        return other.rank - rank;
+    public int getRank() {
+        return rank;
     }
 
-    public Position moveToTargetByStep(Position target) {
-        int fileStep = Integer.signum(getFileGap(target));
-        int rankStep = Integer.signum(getRankGap(target));
-        return Position.from(file + fileStep, rank + rankStep);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
     }
 
-    public boolean isRankEquals(int rank) {
-        return this.rank == rank;
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

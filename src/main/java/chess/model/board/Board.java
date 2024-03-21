@@ -52,16 +52,35 @@ public class Board {
         squares.put(source, Empty.getInstance());
     }
 
-    private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) { // TODO: 메서드 분리
+    private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) {
+        validateOppositeColor(sourcePiece, targetPiece);
+        validateMovementByPiece(movement, sourcePiece, targetPiece);
+        validateIntermediatePositions(movement, sourcePiece);
+    }
+
+    private void validateOppositeColor(Piece sourcePiece, Piece targetPiece) {
         if (sourcePiece.isSameColorWith(targetPiece)) {
             throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
         }
+    }
+
+    private void validateMovementByPiece(Movement movement, Piece sourcePiece, Piece targetPiece) {
         if (!sourcePiece.isValid(movement)) {
             throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
         }
         if (sourcePiece.isType(Type.PAWN)) {
             validatePawn(movement, targetPiece);
         }
+    }
+
+    private void validatePawn(Movement movement, Piece targetPiece) {
+        if (targetPiece.isEmpty() && movement.isSameFile() || !targetPiece.isEmpty() && movement.isDiagonal()) {
+            return;
+        }
+        throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
+    }
+
+    private void validateIntermediatePositions(Movement movement, Piece sourcePiece) {
         if (sourcePiece.isType(Type.KNIGHT)) {
             return;
         }
@@ -69,12 +88,5 @@ public class Board {
         if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
-    }
-
-    private void validatePawn(Movement movement, Piece targetPiece) {
-        if (targetPiece.isEmpty() && movement.isVertical() || !targetPiece.isEmpty() && movement.isDiagonal()) {
-            return;
-        }
-        throw new IllegalArgumentException("올바르지 않은 움직임");
     }
 }

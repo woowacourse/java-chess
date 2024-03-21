@@ -39,13 +39,13 @@ public class MovementTest {
     @Test
     void 출발지와_도착지가_같은_file_혹은_같은_rank_위에_놓여있는지_확인한다() {
         Movement movement = new Movement(Position.from(1, 1), Position.from(1, 2));
-        assertThat(movement.isStraight()).isTrue();
+        assertThat(movement.isSameFileOrRank()).isTrue();
     }
 
     @Test
     void 출발지와_도착지가_같은_file_위에_놓여있는지_확인한다() {
         Movement movement = new Movement(Position.from(1, 1), Position.from(1, 2));
-        assertThat(movement.isVertical()).isTrue();
+        assertThat(movement.isSameFile()).isTrue();
     }
 
     @Test

@@ -19,6 +19,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValid(Movement movement) {
-        return movement.isStraight();
+        return movement.isSameFileOrRank();
     }
 }

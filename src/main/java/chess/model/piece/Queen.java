@@ -19,6 +19,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean isValid(Movement movement) {
-        return movement.isDiagonal() || movement.isStraight();
+        return movement.isDiagonal() || movement.isSameFileOrRank();
     }
 }
