@@ -72,8 +72,6 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackFirstMove(final Movement movement) {
-        System.out.println(movement.isCross());
-        System.out.println(movement.getRankDifference() == -2);
         return movement.isCross() && movement.getRankDifference() == -2;
     }
 
