@@ -8,6 +8,7 @@ import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.dto.BoardDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -47,6 +48,7 @@ public class ChessController {
     }
 
     private void progressChessGame(ChessGame chessGame) {
+        Team turn = Team.WHITE;
         while (true) {
             List<String> commands = InputView.inputCommand();
             String command = commands.get(0);
@@ -57,9 +59,14 @@ public class ChessController {
             if (command.equals(MOVE.getCommandType())) {
                 Position source = Position.of(commands.get(1));
                 Position target = Position.of(commands.get(2));
+                if (source.equals(target) || !chessGame.checkTurn(source, turn)) {
+                    System.out.println("잘못된 움직임입니다.");
+                    continue;
+                }
                 chessGame.move(source, target);
                 Board board = chessGame.getBoard();
                 OutputView.printBoard(makeBoardDto(board.getBoard()));
+                turn = Team.takeTurn(turn);
                 continue;
             }
             if (command.equals(END.getCommandType())) {

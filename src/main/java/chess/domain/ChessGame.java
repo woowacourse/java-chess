@@ -22,4 +22,8 @@ public class ChessGame {
     public Board getBoard() {
         return board;
     }
+
+    public boolean checkTurn(Position source, Team team) {
+        return board.getBoard().get(source).isSameTeam(team);
+    }
 }
