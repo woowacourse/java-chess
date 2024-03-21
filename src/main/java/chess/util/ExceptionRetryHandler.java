@@ -19,8 +19,8 @@ public class ExceptionRetryHandler {
     private static <T> Optional<T> tryGet(Supplier<T> supplier) {
         try {
             return Optional.of(supplier.get());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            printExceptionMessage(exception);
             return Optional.empty();
         }
     }
@@ -36,9 +36,14 @@ public class ExceptionRetryHandler {
         try {
             runnable.run();
             return true;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            printExceptionMessage(exception);
             return false;
         }
+    }
+
+    private static void printExceptionMessage(IllegalArgumentException exception) {
+        System.out.println(System.lineSeparator() + exception.getMessage());
+        System.out.println("다시 입력해 주세요.");
     }
 }
