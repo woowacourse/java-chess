@@ -47,6 +47,23 @@ class PositionTest {
         assertThat(position.canMoveNext(Direction.NORTH)).isTrue();
     }
 
+    @DisplayName("문자열을 받아 Position으로 변환할 수 있다.")
+    @Test
+    void convert() {
+        String source = "a1";
+        Position position = Position.convert(source);
+
+        assertThat(position).isEqualTo(new Position(File.A, Rank.ONE));
+    }
+
+    @DisplayName("잘못된 문자열을 받으면 Position으로 변환할 수 없다.")
+    @Test
+    void convertFail() {
+        String source = "pobi";
+        assertThatThrownBy(() -> Position.convert(source))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     private static Stream<Arguments> nextPositionFailArguments() {
         return Stream.of(
                 Arguments.arguments(new Position(File.A, Rank.ONE), Direction.SOUTH,

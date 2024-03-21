@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.Color;
 import chess.domain.Direction;
 import chess.domain.position.Position;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class Piece {
@@ -41,5 +42,21 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Piece piece)) {
+            return false;
+        }
+        return color == piece.color && pieceType == piece.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, pieceType);
     }
 }
