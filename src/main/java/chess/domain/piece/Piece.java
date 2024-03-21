@@ -60,8 +60,7 @@ public class Piece {
     }
 
     private boolean isRankMove(final Position source, final Position target) {
-        return source.file() == target.file()
-                && (Math.abs(source.rank() - target.rank()) == 1 || Math.abs(source.rank() - target.rank()) == 2);
+        return source.file() == target.file();
     }
 
     private boolean existEnemy(final Position target, final Map<Position, Piece> pieces) {
