@@ -15,7 +15,7 @@ public abstract class Piece implements MoveStrategy {
 
     public void checkValidTargetPiece(Piece other) {
         if (other != null && isSameSide(other)) {
-            throw new IllegalArgumentException("아군 기물이 존재합니다.");
+            throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
     }
 }

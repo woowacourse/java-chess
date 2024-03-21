@@ -20,20 +20,18 @@ public class Pawn extends Piece {
 
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
-        validateTargetPieceSameSide(targetPiece);
+        checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
-        if (targetPiece != null && !isPossibleDiagonal(distance)) {
-            throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 직선으로 움직일 수 없습니다.");
-        }
+        validateForwardPath(source, targetPiece, distance);
         if (canCrossMove(source, distance) || canDiagonalMove(targetPiece, distance)) {
             return distance.findPath(source);
         }
         return List.of();
     }
 
-    private void validateTargetPieceSameSide(Piece targetPiece) {
-        if (targetPiece != null && isSameSide(targetPiece)) {
-            throw new IllegalArgumentException("아군 기물이 타겟 위치에 있어 움직일 수 없습니다.");
+    private void validateForwardPath(ChessPosition source, Piece targetPiece, Distance distance) {
+        if (targetPiece != null && canCrossMove(source, distance)) {
+            throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 전진할 수 없습니다.");
         }
     }
 
