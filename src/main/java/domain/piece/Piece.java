@@ -25,6 +25,10 @@ public class Piece {
         return this.type.canMove(source, target);
     }
 
+    public boolean isDifferentColor(Piece targetPiece) {
+        return this.color != targetPiece.color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
