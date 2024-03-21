@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.Bishop;
+import chess.piece.King;
 import chess.piece.Knight;
 import chess.piece.Pawn;
 import chess.piece.Piece;
@@ -14,6 +15,7 @@ public enum PieceSign {
     KNIGHT(Knight.class, "n"),
     BISHOP(Bishop.class, "b"),
     QUEEN(Queen.class, "q"),
+    KING(King.class, "k"),
     ;
 
     private final Class<? extends Piece> pieceClass;
