@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
 
 public interface Piece {
-    boolean move(Position newPosition, Board board, boolean isDisturbed);
+    Piece move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist);
 
     PieceType getType();
 

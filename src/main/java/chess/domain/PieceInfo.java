@@ -20,4 +20,8 @@ public class PieceInfo {
     public boolean isDifferentTeam(Team otherTeam) {
         return team != otherTeam;
     }
+
+    public PieceInfo renewPosition(Position newPosition) {
+        return new PieceInfo(newPosition, team);
+    }
 }

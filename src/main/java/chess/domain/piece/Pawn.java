@@ -1,7 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.PieceInfo;
+import chess.domain.Position;
+import chess.domain.Team;
+import chess.domain.strategy.BlackPawnNotFirstMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.WhitePawnNotFirstMoveStrategy;
 
 public class Pawn extends ChessPiece {
 
@@ -10,7 +14,28 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
+    public Pawn move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+        Position currentPosition = pieceInfo.getPosition();
+        if (!moveStrategy.canMove(currentPosition, newPosition)) {
+            return this;
+        }
+        if (isDisturbed || isSameTeamExist) {
+            return this;
+        }
+
+        PieceInfo newPieceInfo = pieceInfo.renewPosition(newPosition);
+        return new Pawn(newPieceInfo, changeMovedStrategy());
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.PAWN;
+    }
+
+    private MoveStrategy changeMovedStrategy() {
+        if (pieceInfo.getTeam() == Team.WHITE) {
+            return new WhitePawnNotFirstMoveStrategy();
+        }
+        return new BlackPawnNotFirstMoveStrategy();
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -16,16 +15,7 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
-    public boolean move(Position newPosition, Board board, boolean isDisturbed) {
-        Position currentPosition = pieceInfo.getPosition();
-        if (!moveStrategy.canMove(currentPosition, newPosition)) {
-            return false;
-        }
-        if (isDisturbed) {
-            return false;
-        }
-        return true;
-    }
+    public abstract ChessPiece move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist);
 
     @Override
     public abstract PieceType getType();
