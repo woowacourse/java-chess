@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static view.PositionConvertor.*;
+import static view.PositionConvertor.convertPosition;
 
 public class InputView {
     private static final String START_COMMAND = "start";
@@ -21,6 +21,14 @@ public class InputView {
     );
 
     private final Scanner sc = new Scanner(System.in);
+
+    public GameCommand inputGameStart() {
+        String input = sc.nextLine();
+        if (!gameCommands.containsKey(input)) {
+            throw new IllegalArgumentException("잘못된 명령입니다.");
+        }
+        return gameCommands.get(input);
+    }
 
     public RequestDto inputGameCommand() {
         List<String> input = Arrays.stream(sc.nextLine().split(" ")).toList();

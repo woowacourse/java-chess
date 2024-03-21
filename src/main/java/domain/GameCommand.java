@@ -6,4 +6,8 @@ public enum GameCommand {
     public boolean isContinuable() {
         return this != END;
     }
+
+    public boolean isStart() {
+        return this == START;
+    }
 }
