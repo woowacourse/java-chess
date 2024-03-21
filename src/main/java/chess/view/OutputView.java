@@ -16,7 +16,6 @@ public class OutputView {
 
     public void printChessBoard(final Set<Piece> pieces) {
         List<List<String>> board = sortByBoardOrder(pieces);
-        System.out.println("&&" + board.get(0).get(0));
         board.forEach(row -> printChessRow(row));
     }
 
