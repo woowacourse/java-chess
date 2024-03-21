@@ -20,7 +20,7 @@ public enum PieceDisplay {
     BLACK_ROOK(PieceType.BLACK_ROOK, "R"),
     BLACK_QUEEN(PieceType.BLACK_QUEEN, "Q"),
     BLACK_KING(PieceType.BLACK_KING, "K"),
-    NONE(PieceType.NONE, ".");
+    NONE(PieceType.BLANK, ".");
 
     private final PieceType pieceType;
     private final String display;

@@ -23,6 +23,6 @@ public class Blank extends Piece {
 
     @Override
     public PieceType pieceType() {
-        return PieceType.NONE;
+        return PieceType.BLANK;
     }
 }

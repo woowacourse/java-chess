@@ -13,5 +13,5 @@ public enum PieceType {
     BLACK_ROOK,
     BLACK_QUEEN,
     BLACK_KING,
-    NONE;
+    BLANK;
 }

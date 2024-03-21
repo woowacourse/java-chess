@@ -31,7 +31,7 @@ class PawnMoveStrategyTest {
 
         assertAll(
                 () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(2, 4))).isEqualTo(PieceType.WHITE_PAWN),
-                () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(2, 2))).isEqualTo(PieceType.NONE)
+                () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(2, 2))).isEqualTo(PieceType.BLANK)
         );
     }
 
