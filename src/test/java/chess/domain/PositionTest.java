@@ -64,4 +64,14 @@ class PositionTest {
                 () -> assertThat(D4.route(G1)).containsExactlyInAnyOrder(E3, F2)
         );
     }
+
+    @Test
+    @DisplayName("경로 개념이 정의되지 않은 위치의 경우 실패하는지 검증")
+    void routeFailureCauseInvalidTarget() {
+        Class<IllegalArgumentException> expectedType = IllegalArgumentException.class;
+        Assertions.assertAll(
+                () -> Assertions.assertThrows(expectedType, () -> D5.route(D5), "경로 개념이 정의되지 않는 위치 입니다."),
+                () -> Assertions.assertThrows(expectedType, () -> D5.route(A7), "경로 개념이 정의되지 않는 위치 입니다.")
+        );
+    }
 }

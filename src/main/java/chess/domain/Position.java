@@ -45,7 +45,13 @@ public enum Position {
         if (isRowRoute(absColDistance)) {
             return getRowRoute(targetPosition);
         }
-        throw new RuntimeException();
+        throw new IllegalArgumentException("경로 개념이 정의되지 않는 위치 입니다.");
+    }
+
+    private void validateIsNotSelf(Position targetPosition) {
+        if (this.equals(targetPosition)) {
+            throw new IllegalArgumentException("경로 개념이 정의되지 않는 위치 입니다.");
+        }
     }
 
     private boolean isDiagonalRoute(int absRowDistance, int absColDistance) {
@@ -94,12 +100,6 @@ public enum Position {
             result.add(Position.getInstance(integer, column));
         }
         return Collections.unmodifiableList(result);
-    }
-
-    private void validateIsNotSelf(Position targetPosition) {
-        if (this.equals(targetPosition)) {
-            throw new RuntimeException();
-        }
     }
 
     public int rowDistance(Position targetPosition) {
