@@ -1,10 +1,5 @@
 package domain.game;
 
-import domain.game.Board;
-import domain.game.BoardInitializer;
-import domain.game.Piece;
-import domain.game.PieceFactory;
-import domain.game.PieceType;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

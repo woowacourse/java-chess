@@ -1,7 +1,6 @@
 package domain.position;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum KnightDirection {
     UP_RIGHT(-2, 1),
