@@ -26,4 +26,13 @@ public class Pieces {
         }
         return map;
     }
+
+    public boolean isFriend(Piece piece, Point point) {
+        Optional<Piece> optionalPiece = getPieceWithPoint(point);
+        if (optionalPiece.isEmpty()) {
+            return false;
+        }
+        Piece toPiece = optionalPiece.get();
+        return piece.sameColor(toPiece);
+    }
 }
