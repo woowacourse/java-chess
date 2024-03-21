@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
@@ -13,7 +12,7 @@ class BishopTest {
 
     @DisplayName("비숍을 대각선으로 이동한다.")
     @Test
-    void canMove() {
+    void canMoveDiagonal() {
         // given
         final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 5));
 
@@ -41,10 +40,10 @@ class BishopTest {
     @Test
     void getRouteRightUp() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position('a', 2));
+        final Bishop bishop = new Bishop(Color.WHITE, new Position('a', 2));
 
         // when
-        Set<Position> positions = bishop.getRoute(new Position('d', 5));
+        final Set<Position> positions = bishop.getRoute(new Position('d', 5));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -52,6 +51,7 @@ class BishopTest {
                 new Position('c', 4)
         );
     }
+
     @DisplayName("도착 지점이 오른쪽 아래 대각선일 때 위치들을 반환한다.")
     @Test
     void getRouteRightDown() {
@@ -59,7 +59,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.BLACK, new Position('c', 4));
 
         // when
-        Set<Position> positions = bishop.getRoute(new Position('f', 1));
+        final Set<Position> positions = bishop.getRoute(new Position('f', 1));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -67,6 +67,7 @@ class BishopTest {
                 new Position('e', 2)
         );
     }
+
     @DisplayName("도착 지점이 왼쪽 위 대각선일 때 위치들을 반환한다.")
     @Test
     void getRouteLeftUp() {
@@ -74,13 +75,14 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.BLACK, new Position('c', 4));
 
         // when
-        Set<Position> positions = bishop.getRoute(new Position('a', 6));
+        final Set<Position> positions = bishop.getRoute(new Position('a', 6));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
                 new Position('b', 5)
         );
     }
+
     @DisplayName("도착 지점이 왼쪽 아래 대각선일 때 위치들을 반환한다.")
     @Test
     void getRouteLeftDown() {
@@ -88,7 +90,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.BLACK, new Position('d', 6));
 
         // when
-        Set<Position> positions = bishop.getRoute(new Position('a', 3));
+        final Set<Position> positions = bishop.getRoute(new Position('a', 3));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

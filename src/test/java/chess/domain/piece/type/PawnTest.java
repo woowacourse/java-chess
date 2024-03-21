@@ -10,27 +10,27 @@ import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
-    @DisplayName("화이트폰은 처음에는 앞으로 두칸도 이동할 수 있다.")
+    @DisplayName("화이트폰은 처음에는 앞으로 두칸 이동할 수 있다.")
     @Test
-    void canWhiteMoveTwoStepAtFirst() {
+    void canWhiteMoveTwoAtFirst() {
         // given
         final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 2));
 
         // when
-        boolean canMove = pawn.canMoveTo(new Position('d', 4));
+        final boolean canMove = pawn.canMoveTo(new Position('d', 4));
 
         // then
         assertThat(canMove).isTrue();
     }
 
-    @DisplayName("블랙폰은 처음에는 앞으로 두칸도 이동할 수 있다.")
+    @DisplayName("블랙폰은 처음에 앞으로 두칸 이동할 수 있다.")
     @Test
-    void canBlackMoveTwoStepAtFirst() {
+    void canBlackMoveTwoAtFirst() {
         // given
         final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 7));
 
         // when
-        boolean canMove = pawn.canMoveTo(new Position('d', 5));
+        final boolean canMove = pawn.canMoveTo(new Position('d', 5));
 
         // then
         assertThat(canMove).isTrue();
@@ -38,12 +38,12 @@ class PawnTest {
 
     @DisplayName("폰은 처음이 아니면 두칸을 이동할 수 없다.")
     @Test
-    void canNotMoveTwoStepAtNotFirst() {
+    void canNotMoveTwo() {
         // given
         final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 4));
 
         // when
-        boolean canMove = pawn.canMoveTo(new Position('d', 6));
+        final boolean canMove = pawn.canMoveTo(new Position('d', 6));
 
         // then
         assertThat(canMove).isFalse();
@@ -56,7 +56,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
 
         // when
-        boolean canMove = pawn.canMoveTo(new Position('d', 6));
+        final boolean canMove = pawn.canMoveTo(new Position('d', 6));
 
         // then
         assertThat(canMove).isTrue();
@@ -69,20 +69,20 @@ class PawnTest {
         final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
 
         // when
-        boolean canMove = pawn.canMoveTo(new Position('d', 8));
+        final boolean canMove = pawn.canMoveTo(new Position('d', 8));
 
         // then
         assertThat(canMove).isFalse();
     }
 
-    @DisplayName("처음 시도시 도착 지점이 두칸 앞일 때 위치들을 반환한다.")
+    @DisplayName("도착 지점이 두칸 앞일 때 위치들을 반환한다.")
     @Test
-    void getRouteLeft() {
+    void getRouteForward() {
         // given
         final Pawn pawn = new Pawn(Color.WHITE, new Position('a', 2));
 
         // when
-        Set<Position> positions = pawn.getRoute(new Position('a', 4));
+        final Set<Position> positions = pawn.getRoute(new Position('a', 4));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

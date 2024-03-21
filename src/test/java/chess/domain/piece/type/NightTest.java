@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
@@ -17,8 +16,8 @@ class NightTest {
         final Night night = new Night(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMoveRight = night.canMoveTo(new Position('e', 7));
-        boolean canMoveLeft = night.canMoveTo(new Position('c', 7));
+        final boolean canMoveRight = night.canMoveTo(new Position('e', 7));
+        final boolean canMoveLeft = night.canMoveTo(new Position('c', 7));
 
         // then
         assertThat(canMoveRight).isTrue();
@@ -32,8 +31,8 @@ class NightTest {
         final Night night = new Night(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMoveRight = night.canMoveTo(new Position('f', 6));
-        boolean canMoveLeft = night.canMoveTo(new Position('b', 6));
+        final boolean canMoveRight = night.canMoveTo(new Position('f', 6));
+        final boolean canMoveLeft = night.canMoveTo(new Position('b', 6));
 
         // then
         assertThat(canMoveRight).isTrue();
@@ -47,7 +46,7 @@ class NightTest {
         final Night night = new Night(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = night.canMoveTo(new Position('f', 1));
+        final boolean canMove = night.canMoveTo(new Position('f', 1));
 
         // then
         assertThat(canMove).isFalse();

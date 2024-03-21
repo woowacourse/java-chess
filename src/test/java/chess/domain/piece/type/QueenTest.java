@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
@@ -18,7 +17,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = queen.canMoveTo(new Position('d', 8));
+        final boolean canMove = queen.canMoveTo(new Position('d', 8));
 
         // then
         assertThat(canMove).isTrue();
@@ -31,7 +30,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = queen.canMoveTo(new Position('f', 7));
+        final boolean canMove = queen.canMoveTo(new Position('f', 7));
 
         // then
         assertThat(canMove).isTrue();
@@ -44,7 +43,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = queen.canMoveTo(new Position('a', 1));
+        final boolean canMove = queen.canMoveTo(new Position('a', 1));
 
         // then
         assertThat(canMove).isFalse();
@@ -57,7 +56,7 @@ class QueenTest {
         final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
 
         // when
-        Set<Position> positions = queen.getRoute(new Position('g', 2));
+        final Set<Position> positions = queen.getRoute(new Position('g', 2));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
