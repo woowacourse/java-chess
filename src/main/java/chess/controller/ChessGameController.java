@@ -15,6 +15,9 @@ public class ChessGameController {
     public void run() {
         ChessGame chessGame = new ChessGame();
 
+        OutputView.printChessGameStartMessage();
+        OutputView.printCommandGuideMessage();
+
         playChess(chessGame);
     }
 
