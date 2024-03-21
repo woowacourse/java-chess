@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Team;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,8 +15,15 @@ public class Board {
         this.pieces = pieces;
     }
 
+    public void validateOppositeTeamByPosition(Position position, Team team) {
+        validatePieceExistsOnPosition(position);
+        if (pieces.get(position).isSameTeamWith(team)) {
+            throw new IllegalArgumentException("%s 팀이 움직일 차례가 아닙니다".formatted(team.name()));
+        }
+    }
+
     public void move(Position oldPosition, Position newPosition) {
-        validatePieceExistsOnOldPosition(oldPosition);
+        validatePieceExistsOnPosition(oldPosition);
 
         Piece thisPiece = pieces.get(oldPosition);
         validateSameTeamPieceExistsOnNewPosition(newPosition, thisPiece);
@@ -25,8 +33,8 @@ public class Board {
         pieces.remove(oldPosition);
     }
 
-    private void validatePieceExistsOnOldPosition(Position oldPosition) {
-        if (!pieces.containsKey(oldPosition)) {
+    private void validatePieceExistsOnPosition(Position position) {
+        if (!pieces.containsKey(position)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
         }
     }

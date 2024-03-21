@@ -1,10 +1,12 @@
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Team;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,25 @@ public class BoardTest {
         board.move(Position.of(2, 1), Position.of(3, 1));
 
         assertThat(board.mapPositionToCharacter()).containsEntry(Position.of(3, 1), Character.WHITE_PAWN);
+    }
+
+    @DisplayName("위치에 있는 기물이 입력된 팀과 다른 팀인지 검증한다.")
+    @Test
+    void validateOppositeTeamByPosition() {
+        Board board = new Board(BoardFactory.generateStartBoard());
+        assertThatCode(() ->
+                board.validateOppositeTeamByPosition(Position.of(2, 2), Team.BLACK))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("위치에 있는 기물이 입력된 팀과 같은 팀일 시 예외가 발생한다.")
+    @Test
+    void validateSameTeamByPositionThrowsException() {
+        Board board = new Board(BoardFactory.generateStartBoard());
+        assertThatThrownBy(() ->
+                board.validateOppositeTeamByPosition(Position.of(2, 2), Team.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("%s 팀이 움직일 차례가 아닙니다".formatted(Team.WHITE.name()));
     }
 
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")

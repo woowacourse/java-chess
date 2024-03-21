@@ -50,4 +50,8 @@ public abstract class Piece {
     public boolean isSameTeamWith(Piece piece) {
         return team == piece.team;
     }
+
+    public boolean isSameTeamWith(Team team) {
+        return this.team == team;
+    }
 }
