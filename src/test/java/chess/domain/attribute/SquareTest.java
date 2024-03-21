@@ -14,6 +14,26 @@ import chess.domain.chessboard.attribute.Direction;
 
 class SquareTest {
 
+    private static Stream<Arguments> stringConstructor() {
+        return Stream.of(
+                Arguments.of("a1", Square.of(File.A, Rank.ONE)),
+                Arguments.of("b2", Square.of(File.B, Rank.TWO)),
+                Arguments.of("c3", Square.of(File.C, Rank.THREE)),
+                Arguments.of("d4", Square.of(File.D, Rank.FOUR)),
+                Arguments.of("e5", Square.of(File.E, Rank.FIVE)),
+                Arguments.of("f6", Square.of(File.F, Rank.SIX)),
+                Arguments.of("g7", Square.of(File.G, Rank.SEVEN)),
+                Arguments.of("h8", Square.of(File.H, Rank.EIGHT))
+        );
+    }
+
+    @DisplayName("좌표를 입력받아 체스판의 칸을 생성한다.")
+    @MethodSource
+    @ParameterizedTest
+    void stringConstructor(String input, Square expected) {
+        assertThat(Square.of(input)).isEqualTo(expected);
+    }
+
     private static Stream<Arguments> move() {
         return Stream.of(
                 Arguments.of(Direction.UP, Square.of(File.D, Rank.FIVE)),
