@@ -52,7 +52,7 @@ public class Board {
     }
 
     private void checkCanMove(final Piece sourcePiece, final Movement movement) {
-        if (!sourcePiece.canMove(movement.source(), movement.target())) {
+        if (!sourcePiece.canMove(movement)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }

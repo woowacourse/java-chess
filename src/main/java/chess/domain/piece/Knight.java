@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.Movement;
 
 public class Knight extends Piece {
 
@@ -9,9 +9,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square from, final Square to) {
-        int fileDiff = Math.abs(from.getFileIndex() - to.getFileIndex());
-        int rankDiff = Math.abs(from.getRankIndex() - to.getRankIndex());
+    public boolean canMove(final Movement movement) {
+        int fileDiff = Math.abs(movement.getFileDifference());
+        int rankDiff = Math.abs(movement.getRankDifference());
 
         return (fileDiff == 2 && rankDiff == 1) || (fileDiff == 1 && rankDiff == 2);
     }

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.Movement;
 
 public class King extends Piece {
 
@@ -9,10 +9,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square from, final Square to) {
-        int fileDiff = Math.abs(from.getFileIndex() - to.getFileIndex());
-        int rankDiff = Math.abs(from.getRankIndex() - to.getRankIndex());
-
-        return fileDiff == 1 || rankDiff == 1;
+    public boolean canMove(final Movement movement) {
+        return (movement.isStraight() || movement.isDiagonal()) && movement.findDistance() == 1;
     }
 }

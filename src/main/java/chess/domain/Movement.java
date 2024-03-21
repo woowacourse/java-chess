@@ -43,7 +43,7 @@ public class Movement {
         return Math.abs(getFileDifference()) == Math.abs(getRankDifference());
     }
 
-    private int findDistance() {
+    public int findDistance() {
         return Math.max(Math.abs(getFileDifference()), Math.abs(getRankDifference()));
     }
 
@@ -61,11 +61,7 @@ public class Movement {
         return target.getRankIndex() - source.getRankIndex();
     }
 
-    public Square source() {
-        return source;
-    }
-
-    public Square target() {
-        return target;
+    public int getSourceRankIndex() {
+        return source.getRankIndex();
     }
 }
