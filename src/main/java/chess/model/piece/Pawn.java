@@ -26,4 +26,20 @@ public class Pawn extends Piece {
         }
         return false;
     }
+
+    public boolean canAttack(Position source, Position target) {
+        int rowDifference = calculateRowDifference(source, target);
+        int columnDifference = calculateColumnDifference(source, target);
+        if (type.isWhite()) {
+            boolean isRowUp = rowDifference == -1;
+            boolean isColumnDiagonal = Math.abs(columnDifference) == 1;
+            return isRowUp && isColumnDiagonal;
+        }
+        if (type.isBlack()) {
+            boolean isRowDown = rowDifference == 1;
+            boolean isColumnDiagonal = Math.abs(columnDifference) == 1;
+            return isRowDown && isColumnDiagonal;
+        }
+        return false;
+    }
 }

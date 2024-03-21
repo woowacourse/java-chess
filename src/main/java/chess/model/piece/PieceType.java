@@ -50,6 +50,10 @@ public enum PieceType {
         return this == BLACK_KNIGHT || this == WHITE_KNIGHT;
     }
 
+    public boolean isPawn() {
+        return this == BLACK_PAWN || this == WHITE_PAWN;
+    }
+
     public String getDisplayName() {
         return displayName;
     }

@@ -46,7 +46,7 @@ class PawnTest {
         );
     }
 
-    @DisplayName("White Pawn이 최초 2칸 전진 이동이면 canMove true를 반환하고, 아니면 false를 반환한다")
+    @DisplayName("White Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
     @Test
     void whitePawnCanInitialMove() {
         Piece piece = new Pawn(WHITE_PAWN);
@@ -56,7 +56,7 @@ class PawnTest {
         assertThat(canMove).isEqualTo(true);
     }
 
-    @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 canMove true를 반환하고, 아니면 false를 반환한다")
+    @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
     @Test
     void blackPawnCanInitialMove() {
         Piece piece = new Pawn(BLACK_PAWN);
@@ -64,5 +64,37 @@ class PawnTest {
         Position target = new Position(3, 0);
         boolean canMove = piece.canMove(source, target);
         assertThat(canMove).isEqualTo(true);
+    }
+
+    @DisplayName("White Pawn이 전방 대각선 1칸 공격이면 canAttack true를 반환하고, 아니면 false를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideWhitePawnAttackMovePosition")
+    void whitePawnCanDiagonalMove(Position source, Position target, boolean expected) {
+        Piece piece = new Pawn(WHITE_PAWN);
+        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        assertThat(canMove).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> provideWhitePawnAttackMovePosition() {
+        return Stream.of(
+                Arguments.of(new Position(6, 0), new Position(5, 1), true),
+                Arguments.of(new Position(6, 7), new Position(7, 6), false)
+        );
+    }
+
+    @DisplayName("Black Pawn이 전방 대각선 1칸 공격이면 canAttack true를 반환하고, 아니면 false를 반환한다")
+    @ParameterizedTest
+    @MethodSource("provideBlackPawnAttackMovePosition")
+    void blackPawnCanDiagonalMove(Position source, Position target, boolean expected) {
+        Piece piece = new Pawn(BLACK_PAWN);
+        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        assertThat(canMove).isEqualTo(expected);
+    }
+
+    public static Stream<Arguments> provideBlackPawnAttackMovePosition() {
+        return Stream.of(
+                Arguments.of(new Position(1, 0), new Position(2, 1), true),
+                Arguments.of(new Position(1, 0), new Position(0, 1), false)
+        );
     }
 }

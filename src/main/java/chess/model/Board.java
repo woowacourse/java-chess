@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import java.util.HashMap;
@@ -61,7 +62,7 @@ public class Board {
         Piece targetPiece = findPiece(target);
 
         validatePiecesPosition(sourcePiece, targetPiece);
-        validatePieceCanMove(sourcePiece, source, target);
+        validatePieceCanMove(sourcePiece, targetPiece, source, target);
         validatePieceRoute(sourcePiece, source, target);
 
         board.put(target, sourcePiece);
@@ -73,12 +74,15 @@ public class Board {
         if (sourcePiece.isNone()) {
             throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
         }
-        if (targetPiece.isSameColorBy(turnCount)) {
+        if (targetPiece.isAlly(turnCount)) {
             throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
         }
     }
 
-    private void validatePieceCanMove(Piece sourcePiece, Position source, Position target) {
+    private void validatePieceCanMove(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
+        if (targetPiece.isEnemy(turnCount) && sourcePiece.isPawn() && ((Pawn) sourcePiece).canAttack(source, target)) {
+            return;
+        }
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException("target위치로 기물을 이동할 수 없습니다.");
         }
