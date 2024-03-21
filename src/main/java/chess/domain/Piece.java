@@ -4,6 +4,7 @@ import chess.domain.movement.Movement;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Piece {
@@ -62,5 +63,22 @@ public class Piece {
 
     private boolean isNotEmpty() {
         return pieceType != PieceType.EMPTY;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }
