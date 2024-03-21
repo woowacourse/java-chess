@@ -34,7 +34,7 @@ public class BoardFactory {
 
     private static Map<Square, Piece> createLine(final Rank rank, final Map<File, Piece> line) {
         return line.entrySet().stream()
-                .collect(Collectors.toMap(entry -> new Square(entry.getKey(), rank), Entry::getValue));
+                .collect(Collectors.toMap(entry -> Square.of(rank, entry.getKey()), Entry::getValue));
     }
 
     private static Map<File, Piece> createPieceLine(final Color color) {

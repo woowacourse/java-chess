@@ -5,10 +5,10 @@ import java.util.Objects;
 public class Square {
     private static final String SQUARE_DELIMITER = "";
 
-    private final File file;
     private final Rank rank;
+    private final File file;
 
-    public Square(final File file, final Rank rank) {
+    private Square(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
@@ -17,21 +17,25 @@ public class Square {
         String[] splitSquare = square.split(SQUARE_DELIMITER);
         File file = File.from(splitSquare[0]);
         Rank rank = Rank.from(splitSquare[1]);
-        return new Square(file, rank);
+        return new Square(rank, file);
+    }
+
+    public static Square of(final Rank rank, final File file) {
+        return new Square(rank, file);
     }
 
     public Square move(final int fileMoveStep, final int rankMoveStep) {
         File newFile = file.move(fileMoveStep);
         Rank newRank = rank.move(rankMoveStep);
-        return new Square(newFile, newRank);
-    }
-
-    public int getFileIndex() {
-        return file.ordinal();
+        return new Square(newRank, newFile);
     }
 
     public int getRankIndex() {
         return rank.ordinal();
+    }
+
+    public int getFileIndex() {
+        return file.ordinal();
     }
 
     @Override
