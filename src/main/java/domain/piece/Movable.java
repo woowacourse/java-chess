@@ -15,19 +15,20 @@ public class Movable {
 
     public boolean canMove(Position sourcePosition, Position targetPosition) {
         Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
-
-        // source -> target이 direction으로 몇 칸 이동하는지?
-        // TODO: 코드 개선하기
         if (this.direction == findDirection) {
-            int count = 0;
-            Position here = new Position(sourcePosition);
-            while (!here.equals(targetPosition)) {
-                here.move(direction);
-                count++;
-            }
-            return count <= maxMovement;
+            return doesStepExceedMaxMovement(sourcePosition, targetPosition);
         }
         return false;
+    }
+
+    private boolean doesStepExceedMaxMovement(Position sourcePosition, Position targetPosition) {
+        int step = 0;
+        Position here = new Position(sourcePosition);
+        while (!here.equals(targetPosition)) {
+            here.move(direction);
+            step++;
+        }
+        return step <= maxMovement;
     }
 
     public void decreaseMaxMovement() {
