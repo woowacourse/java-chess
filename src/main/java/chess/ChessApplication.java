@@ -7,6 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessApplication {
+    //TODO: 컨트롤러 혹은 게임 객체 생각해보기
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();

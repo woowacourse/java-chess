@@ -12,6 +12,7 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String POSITION_EMPTY_MESSAGE = ".";
 
+    //TODO: 필요한 메서드임! 적절한 위치에 주입하기
     public void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
     }
