@@ -1,6 +1,7 @@
 package view.dto;
 
 import domain.board.Position;
+import view.FileResolver;
 
 public record MovePositionDto(Position sourcePosition, Position targetPosition) {
 
@@ -11,7 +12,7 @@ public record MovePositionDto(Position sourcePosition, Position targetPosition) 
     }
 
     private static Position resolvePosition(String positionText) {
-        int sourceFile = Character.getNumericValue(positionText.charAt(0));
+        int sourceFile = FileResolver.resolveFile(positionText.charAt(0));
         int sourceRank = Character.getNumericValue(positionText.charAt(1));
         return Position.of(sourceFile, sourceRank);
     }

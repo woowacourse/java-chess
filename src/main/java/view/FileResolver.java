@@ -1,31 +1,30 @@
 package view;
 
-import domain.board.File;
 import java.util.Arrays;
 
 public enum FileResolver {
 
-    A(new File(1), "a"),
-    B(new File(2), "b"),
-    C(new File(3), "c"),
-    D(new File(4), "d"),
-    E(new File(5), "e"),
-    F(new File(6), "f"),
-    G(new File(7), "g"),
-    H(new File(8), "h"),
+    A(1, 'a'),
+    B(2, 'b'),
+    C(3, 'c'),
+    D(4, 'd'),
+    E(5, 'e'),
+    F(6, 'f'),
+    G(7, 'g'),
+    H(8, 'h'),
     ;
 
-    private final File file;
-    private final String fileText;
+    private final int file;
+    private final char rawFile;
 
-    FileResolver(File file, String fileText) {
+    FileResolver(int file, char rawFile) {
         this.file = file;
-        this.fileText = fileText;
+        this.rawFile = rawFile;
     }
 
-    public static File resolveFile(String text) {
+    public static int resolveFile(char rawFile) {
         return Arrays.stream(values())
-            .filter(value -> value.fileText.equals(text))
+            .filter(value -> value.rawFile == rawFile)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 file입니다."))
             .file;
