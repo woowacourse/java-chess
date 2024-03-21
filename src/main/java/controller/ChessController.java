@@ -1,6 +1,7 @@
 package controller;
 
 import domain.ChessBoard;
+import dto.RouteDto;
 import util.BoardMapper;
 import view.ChessCommand;
 import view.InputView;
@@ -18,7 +19,13 @@ public class ChessController {
             if (chessCommand == ChessCommand.START) {
                 chessBoard = ChessBoard.createDefaultBoard();
             }
+            if (chessCommand == ChessCommand.MOVE) {
+                final var source = InputView.inputChessPoint();
+                final var destination = InputView.inputChessPoint();
+                chessBoard.move(new RouteDto(source, destination));
+            }
             OutputView.printBoard(BoardMapper.toDto(chessBoard));
         }
     }
+
 }

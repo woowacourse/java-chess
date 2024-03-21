@@ -3,7 +3,8 @@ package view;
 public enum ChessCommand {
 
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String commandText;
 
