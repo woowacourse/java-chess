@@ -1,11 +1,19 @@
 package chess;
 
-import chess.controller.ChessController;
+import chess.controller.ChessGame;
+import chess.domain.Board;
+import chess.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        ChessController chessController = new ChessController();
-        chessController.startChess();
+        OutputView.printChessGameStartMessage();
+        OutputView.printCommandGuideMessage();
+
+        Board board = new Board();
+        board.placeInitialPieces();
+        ChessGame chessGame = new ChessGame(board);
+
+        chessGame.playGame();
     }
 }

@@ -5,7 +5,6 @@ import static chess.domain.CommandType.MOVE;
 import static chess.domain.CommandType.START;
 
 import chess.domain.Board;
-import chess.domain.ChessGame;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -19,52 +18,40 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ChessController {
+public class ChessGame {
+    private final Board board;
 
-    public void startChess() {
-        ChessGame chessGame;
-
-        OutputView.printChessGameStartMessage();
-        OutputView.printCommandGuideMessage();
-
-        while (true) {
-            String firstCommand = InputView.inputCommand().get(0);
-            if (firstCommand.equals(START.getCommandType())) {
-                Board board = new Board();
-                board.placeInitialPieces();
-                chessGame = new ChessGame(board);
-
-                OutputView.printBoard(makeBoardDto(board.getBoard()));
-
-                progressChessGame(chessGame);
-
-                break;
-            }
-            if (firstCommand.equals(END.getCommandType())) {
-                break;
-            }
-            System.out.println("다시 입력하세요.");
-        }
+    public ChessGame(Board board) {
+        this.board = board;
     }
 
-    private void progressChessGame(ChessGame chessGame) {
+    public void playGame() {
+        boolean checkFirst = true;
         Team turn = Team.WHITE;
         while (true) {
             List<String> commands = InputView.inputCommand();
             String command = commands.get(0);
             if (command.equals(START.getCommandType())) {
-                System.out.println("다시 입력하세요.");
+                if (checkFirst) {
+                    OutputView.printBoard(makeBoardDto(board.getBoard()));
+                    checkFirst = false;
+                } else if (!checkFirst) {
+                    System.out.println("다시 입력하세요.");
+                }
                 continue;
             }
             if (command.equals(MOVE.getCommandType())) {
+                if (checkFirst) {
+                    System.out.println("다시 입력하세요.");
+                    continue;
+                }
                 Position source = Position.of(commands.get(1));
                 Position target = Position.of(commands.get(2));
-                if (source.equals(target) || !chessGame.checkTurn(source, turn)) {
+                if (source.equals(target) || !checkTurn(source, turn)) {
                     System.out.println("잘못된 움직임입니다.");
                     continue;
                 }
-                chessGame.move(source, target);
-                Board board = chessGame.getBoard();
+                movePieceAndRenewBoard(source, target);
                 OutputView.printBoard(makeBoardDto(board.getBoard()));
                 turn = Team.takeTurn(turn);
                 continue;
@@ -73,6 +60,14 @@ public class ChessController {
                 break;
             }
         }
+    }
+
+    public void movePieceAndRenewBoard(Position source, Position target) {
+        board.movePieceAndRenewBoard(source, target);
+    }
+
+    public boolean checkTurn(Position source, Team team) {
+        return board.getBoard().get(source).isSameTeam(team);
     }
 
     private BoardDto makeBoardDto(Map<Position, Piece> board) {
