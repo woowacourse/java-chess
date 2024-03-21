@@ -4,6 +4,8 @@ import chess.domain.ChessBoard;
 
 public class OutputView {
 
+    private static final int CHESS_BOARD_WIDTH = 8;
+
     public void printStartGameMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
     }
@@ -21,7 +23,7 @@ public class OutputView {
             System.out.print(sign);
             count++;
 
-            if (count == 8) {
+            if (count == CHESS_BOARD_WIDTH) {
                 System.out.println();
                 count = 0;
             }
