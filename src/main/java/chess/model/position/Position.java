@@ -42,16 +42,6 @@ public class Position {
         return POSITION_CACHE.get(key);
     }
 
-    public Position moveToTargetByStep(Position target) {
-        int fileStep = Integer.signum(target.file - file);
-        int rankStep = Integer.signum(target.rank - rank);
-        return Position.of(file + fileStep, rank + rankStep);
-    }
-
-    public static List<Position> values() {
-        return List.copyOf(POSITION_CACHE.values());
-    }
-
     public int getFileGap(Position other) {
         return other.file - file;
     }
@@ -66,6 +56,16 @@ public class Position {
 
     public boolean isSameRank(Position other) {
         return rank == other.rank;
+    }
+
+    public Position moveToTargetByStep(Position target) {
+        int fileStep = Integer.signum(target.file - file);
+        int rankStep = Integer.signum(target.rank - rank);
+        return Position.of(file + fileStep, rank + rankStep);
+    }
+
+    public static List<Position> values() {
+        return List.copyOf(POSITION_CACHE.values());
     }
 
     public boolean isOnRank(int rank) {
