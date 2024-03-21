@@ -10,7 +10,7 @@ import chess.domain.movement.continuous.SouthWestMovement;
 import chess.domain.movement.continuous.WestMovement;
 import java.util.List;
 
-public final class Queen extends chess.domain.piece.Piece {
+public final class Queen extends Piece {
 
     private static final List<MovementRule> MOVEMENT_RULES = List.of(
             new EastMovement(), new WestMovement(), new SouthEastMovement(), new NorthMovement(),
