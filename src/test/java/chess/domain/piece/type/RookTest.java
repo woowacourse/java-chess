@@ -17,7 +17,7 @@ class RookTest {
         final Rook rook = new Rook(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = rook.canMoveTo(new Position('d', 6)); // 상
+        final boolean canMove = rook.canMoveTo(new Position('d', 6)); // 상
 
         // then
         assertThat(canMove).isTrue();
@@ -30,7 +30,7 @@ class RookTest {
         final Rook rook = new Rook(Color.BLACK, new Position('d', 5));
 
         // when
-        boolean canMove = rook.canMoveTo(new Position('e', 4)); // 대각선 위
+        final boolean canMove = rook.canMoveTo(new Position('e', 4)); // 대각선 위
 
         // then
         assertThat(canMove).isFalse();
@@ -75,7 +75,7 @@ class RookTest {
         final Rook rook = new Rook(Color.BLACK, new Position('a', 5));
 
         // when
-        Set<Position> positions = rook.getRoute(new Position('d', 5));
+        final Set<Position> positions = rook.getRoute(new Position('d', 5));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -91,7 +91,7 @@ class RookTest {
         final Rook rook = new Rook(Color.BLACK, new Position('d', 5));
 
         // when
-        Set<Position> positions = rook.getRoute(new Position('a', 5));
+        final Set<Position> positions = rook.getRoute(new Position('a', 5));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
