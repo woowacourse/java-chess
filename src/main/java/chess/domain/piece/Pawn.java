@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 public final class Pawn extends Piece {
 
@@ -27,13 +27,18 @@ public final class Pawn extends Piece {
         int forwardDirection = team.forwardDirection();
 
         if (currentPoint.isInitialPointOfPawn()) {
-            Optional<Point> pointOpt = currentPoint.add(0, TWO_RANK * forwardDirection);
-            pointOpt.ifPresent(points::add);
+            findMovablePoint(points, currentPoint, 0, TWO_RANK * forwardDirection);
         }
         for (Direction direction : Direction.findPawnDirections()) {
-            Optional<Point> pointOpt = currentPoint.add(direction.file(), direction.rank() * forwardDirection);
-            pointOpt.ifPresent(points::add);
+            findMovablePoint(points, currentPoint, direction.file(), direction.rank() * forwardDirection);
         }
         return points;
+    }
+
+    private void findMovablePoint(List<Point> points, Point currentPoint, int addFile, int addRank) {
+        if (currentPoint.addable(addFile, addRank)) {
+            Point point = currentPoint.add(addFile, addRank);
+            points.add(point);
+        }
     }
 }

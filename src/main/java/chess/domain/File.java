@@ -16,23 +16,27 @@ public class File {
     }
 
     private void validateRange(char file) {
-        if (file < MINIMUM_FILE || file > MAXIMUM_FILE) {
+        if (isOutOfRange(file)) {
             throw new IllegalArgumentException(
                     String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", MINIMUM_FILE, MAXIMUM_FILE));
         }
+    }
+
+    private boolean isOutOfRange(char file) {
+        return file < MINIMUM_FILE || file > MAXIMUM_FILE;
     }
 
     public int distance(File file) {
         return this.file - file.file;
     }
 
-    public Optional<File> add(int directionOfFile) {
-        try {
-            char file = (char) (this.file + directionOfFile);
-            return Optional.of(new File(file));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
+    public File add(int directionOfFile) {
+        char file = (char) (this.file + directionOfFile);
+        return new File(file);
+    }
+
+    public boolean addable(int addFile) {
+        return !isOutOfRange((char) (this.file + addFile));
     }
 
     @Override

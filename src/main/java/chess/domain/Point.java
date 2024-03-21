@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Direction;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Point {
 
@@ -61,19 +60,19 @@ public class Point {
         return fileDistance * rankDistance;
     }
 
-    // TODO: 이름 변경
     public boolean isInitialPointOfPawn() {
         return rank.isFirstRank();
     }
 
-    public Optional<Point> add(int directionOfFile, int directionOfRank) {
-        Optional<File> fileOpt = file.add(directionOfFile);
-        Optional<Rank> rankOpt = rank.add(directionOfRank);
+    public Point add(int directionOfFile, int directionOfRank) {
+        File addedFile = file.add(directionOfFile);
+        Rank addedRank = rank.add(directionOfRank);
 
-        if (fileOpt.isEmpty() || rankOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(new Point(fileOpt.get(), rankOpt.get()));
+        return new Point(addedFile, addedRank);
+    }
+
+    public boolean addable(int addFile, int addRank) {
+        return file.addable(addFile) && rank.addable(addRank);
     }
 
     public Direction findRoute(Point point) {

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Rank {
 
@@ -16,10 +15,14 @@ public class Rank {
     }
 
     private void validateRange(int rank) {
-        if (rank < MINIMUM_RANK || rank > MAXIMUM_RANK) {
+        if (isOutOfRange(rank)) {
             throw new IllegalArgumentException(
                     String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", MINIMUM_RANK, MAXIMUM_RANK));
         }
+    }
+
+    private boolean isOutOfRange(int rank) {
+        return rank < MINIMUM_RANK || rank > MAXIMUM_RANK;
     }
 
     public int distance(Rank rank) {
@@ -30,12 +33,12 @@ public class Rank {
         return rank == 2 || rank == 7;
     }
 
-    public Optional<Rank> add(int directionOfRank) {
-        try {
-            return Optional.of(new Rank(rank + directionOfRank));
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
-        }
+    public Rank add(int directionOfRank) {
+        return new Rank(rank + directionOfRank);
+    }
+
+    public boolean addable(int addRank) {
+        return !isOutOfRange(this.rank + addRank);
     }
 
     @Override
