@@ -10,8 +10,7 @@ public final class Rook extends AbstractStraightMovePiece {
     }
 
     @Override
-    public Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition,
-                                                        ChessBoard chessBoard) {
+    public Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition, ChessBoard chessBoard) {
         Position nowPosition = getPosition();
         if (nowPosition.isOtherColumn(targetPosition) && nowPosition.isOtherRow(targetPosition)) {
             return Optional.of(PieceMoveResult.FAILURE);

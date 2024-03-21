@@ -13,8 +13,7 @@ public final class Queen extends AbstractStraightMovePiece {
     }
 
     @Override
-    public Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition,
-                                                        ChessBoard chessBoard) {
+    public Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition, ChessBoard chessBoard) {
         Position nowPosition = getPosition();
         int absRowDistance = Math.abs(nowPosition.rowDistance(targetPosition));
         int absColDistance = Math.abs(nowPosition.columnDistance(targetPosition));

@@ -11,8 +11,7 @@ public final class Knight extends AbstractCatchOnMovePiece {
     }
 
     @Override
-    public Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
-                                                                     ChessBoard chessBoard) {
+    public Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition, ChessBoard chessBoard) {
         if (!isMovablePosition(targetPosition)) {
             return Optional.of(PieceMoveResult.FAILURE);
         }

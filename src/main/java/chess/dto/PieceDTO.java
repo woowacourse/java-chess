@@ -9,11 +9,11 @@ public class PieceDTO {
     private final int row;
     private final int column;
 
-    public PieceDTO(Team team, PieceType pieceType, int row, int colmun) {
+    public PieceDTO(Team team, PieceType pieceType, int row, int column) {
         this.team = team;
         this.pieceType = pieceType;
         this.row = row;
-        this.column = colmun;
+        this.column = column;
     }
 
     public Team getTeam() {

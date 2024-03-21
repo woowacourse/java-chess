@@ -10,8 +10,7 @@ public final class King extends AbstractCatchOnMovePiece {
     }
 
     @Override
-    public Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
-                                                                     ChessBoard chessBoard) {
+    public Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition, ChessBoard chessBoard) {
         Position nowPosition = getPosition();
         int absRowDistance = Math.abs(nowPosition.rowDistance(targetPosition));
         int absColDistance = Math.abs(nowPosition.columnDistance(targetPosition));
