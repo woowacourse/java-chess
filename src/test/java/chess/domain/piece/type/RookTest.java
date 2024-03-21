@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.type.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,19 +16,19 @@ class RookTest {
 
     static Stream<Arguments> canRookMoveCrossArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("d3")),
-                Arguments.arguments(new Position("d4"), new Position("h4")),
-                Arguments.arguments(new Position("d4"), new Position("d7")),
-                Arguments.arguments(new Position("d4"), new Position("a4"))
+                Arguments.arguments(Position.of("d4"), Position.of("d3")),
+                Arguments.arguments(Position.of("d4"), Position.of("h4")),
+                Arguments.arguments(Position.of("d4"), Position.of("d7")),
+                Arguments.arguments(Position.of("d4"), Position.of("a4"))
         );
     }
 
     static Stream<Arguments> cannotRookMoveDiagonalArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("e5")),
-                Arguments.arguments(new Position("d4"), new Position("c5")),
-                Arguments.arguments(new Position("d4"), new Position("e3")),
-                Arguments.arguments(new Position("d4"), new Position("c3"))
+                Arguments.arguments(Position.of("d4"), Position.of("e5")),
+                Arguments.arguments(Position.of("d4"), Position.of("c5")),
+                Arguments.arguments(Position.of("d4"), Position.of("e3")),
+                Arguments.arguments(Position.of("d4"), Position.of("c3"))
         );
     }
 

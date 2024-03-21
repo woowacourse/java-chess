@@ -1,9 +1,6 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
-import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,53 +17,53 @@ public class PositionTest {
 
     static Stream<Arguments> findTargetDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("b2"), new Position("b3"), Direction.TOP),
-                Arguments.arguments(new Position("b2"), new Position("b1"), Direction.DOWN),
-                Arguments.arguments(new Position("b2"), new Position("a2"), Direction.LEFT),
-                Arguments.arguments(new Position("b2"), new Position("c2"), Direction.RIGHT),
-                Arguments.arguments(new Position("b2"), new Position("c3"), Direction.TOP_RIGHT),
-                Arguments.arguments(new Position("b2"), new Position("a3"), Direction.TOP_LEFT),
-                Arguments.arguments(new Position("b2"), new Position("c1"), Direction.DOWN_RIGHT),
-                Arguments.arguments(new Position("b2"), new Position("a1"), Direction.DOWN_LEFT)
+                Arguments.arguments(Position.of("b2"), Position.of("b3"), Direction.TOP),
+                Arguments.arguments(Position.of("b2"), Position.of("b1"), Direction.DOWN),
+                Arguments.arguments(Position.of("b2"), Position.of("a2"), Direction.LEFT),
+                Arguments.arguments(Position.of("b2"), Position.of("c2"), Direction.RIGHT),
+                Arguments.arguments(Position.of("b2"), Position.of("c3"), Direction.TOP_RIGHT),
+                Arguments.arguments(Position.of("b2"), Position.of("a3"), Direction.TOP_LEFT),
+                Arguments.arguments(Position.of("b2"), Position.of("c1"), Direction.DOWN_RIGHT),
+                Arguments.arguments(Position.of("b2"), Position.of("a1"), Direction.DOWN_LEFT)
         );
     }
 
     static Stream<Arguments> calculateDistanceArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("b2"), new Position("b3"), 1),
-                Arguments.arguments(new Position("b6"), new Position("b2"), 4),
-                Arguments.arguments(new Position("b2"), new Position("h2"), 6),
-                Arguments.arguments(new Position("h2"), new Position("a2"), 7),
-                Arguments.arguments(new Position("b2"), new Position("f6"), 4),
-                Arguments.arguments(new Position("f6"), new Position("b2"), 4),
-                Arguments.arguments(new Position("b2"), new Position("a1"), 1),
-                Arguments.arguments(new Position("b2"), new Position("c1"), 1)
+                Arguments.arguments(Position.of("b2"), Position.of("b3"), 1),
+                Arguments.arguments(Position.of("b6"), Position.of("b2"), 4),
+                Arguments.arguments(Position.of("b2"), Position.of("h2"), 6),
+                Arguments.arguments(Position.of("h2"), Position.of("a2"), 7),
+                Arguments.arguments(Position.of("b2"), Position.of("f6"), 4),
+                Arguments.arguments(Position.of("f6"), Position.of("b2"), 4),
+                Arguments.arguments(Position.of("b2"), Position.of("a1"), 1),
+                Arguments.arguments(Position.of("b2"), Position.of("c1"), 1)
         );
     }
 
     static Stream<Arguments> findWrongDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("c2")),
-                Arguments.arguments(new Position("d4"), new Position("e2")),
-                Arguments.arguments(new Position("d4"), new Position("c6")),
-                Arguments.arguments(new Position("d4"), new Position("e6")),
-                Arguments.arguments(new Position("d4"), new Position("f3")),
-                Arguments.arguments(new Position("d4"), new Position("f5")),
-                Arguments.arguments(new Position("d4"), new Position("b5")),
-                Arguments.arguments(new Position("d4"), new Position("b3"))
+                Arguments.arguments(Position.of("d4"), Position.of("c2")),
+                Arguments.arguments(Position.of("d4"), Position.of("e2")),
+                Arguments.arguments(Position.of("d4"), Position.of("c6")),
+                Arguments.arguments(Position.of("d4"), Position.of("e6")),
+                Arguments.arguments(Position.of("d4"), Position.of("f3")),
+                Arguments.arguments(Position.of("d4"), Position.of("f5")),
+                Arguments.arguments(Position.of("d4"), Position.of("b5")),
+                Arguments.arguments(Position.of("d4"), Position.of("b3"))
         );
     }
 
     static Stream<Arguments> findBetweenArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("d1"), Set.of(new Position("d3"), new Position("d2"))),
-                Arguments.arguments(new Position("d4"), new Position("g4"), Set.of(new Position("e4"), new Position("f4"))),
-                Arguments.arguments(new Position("d4"), new Position("d7"), Set.of(new Position("d5"), new Position("d6"))),
-                Arguments.arguments(new Position("d4"), new Position("a4"), Set.of(new Position("b4"), new Position("c4"))),
-                Arguments.arguments(new Position("d4"), new Position("g7"), Set.of(new Position("e5"), new Position("f6"))),
-                Arguments.arguments(new Position("d4"), new Position("a7"), Set.of(new Position("c5"), new Position("b6"))),
-                Arguments.arguments(new Position("d4"), new Position("g1"), Set.of(new Position("e3"), new Position("f2"))),
-                Arguments.arguments(new Position("d4"), new Position("a1"), Set.of(new Position("c3"), new Position("b2")))
+                Arguments.arguments(Position.of("d4"), Position.of("d1"), Set.of(Position.of("d3"), Position.of("d2"))),
+                Arguments.arguments(Position.of("d4"), Position.of("g4"), Set.of(Position.of("e4"), Position.of("f4"))),
+                Arguments.arguments(Position.of("d4"), Position.of("d7"), Set.of(Position.of("d5"), Position.of("d6"))),
+                Arguments.arguments(Position.of("d4"), Position.of("a4"), Set.of(Position.of("b4"), Position.of("c4"))),
+                Arguments.arguments(Position.of("d4"), Position.of("g7"), Set.of(Position.of("e5"), Position.of("f6"))),
+                Arguments.arguments(Position.of("d4"), Position.of("a7"), Set.of(Position.of("c5"), Position.of("b6"))),
+                Arguments.arguments(Position.of("d4"), Position.of("g1"), Set.of(Position.of("e3"), Position.of("f2"))),
+                Arguments.arguments(Position.of("d4"), Position.of("a1"), Set.of(Position.of("c3"), Position.of("b2")))
         );
     }
 
@@ -75,10 +72,10 @@ public class PositionTest {
     void createPosition() {
         //given
         String source = "b2";
-        Position expectedPosition = new Position(ChessFile.B, ChessRank.TWO);
+        Position expectedPosition = Position.of("b2");
 
         //when
-        Position position = new Position(source);
+        Position position = Position.of(source);
 
         //then
         assertThat(position).isEqualTo(expectedPosition);

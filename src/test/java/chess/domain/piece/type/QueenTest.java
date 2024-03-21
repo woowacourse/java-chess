@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.type.Queen;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,14 +16,14 @@ class QueenTest {
 
     static Stream<Arguments> cannotQueenMoveAllDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("d1")),
-                Arguments.arguments(new Position("d4"), new Position("g4")),
-                Arguments.arguments(new Position("d4"), new Position("d7")),
-                Arguments.arguments(new Position("d4"), new Position("a4")),
-                Arguments.arguments(new Position("d4"), new Position("g7")),
-                Arguments.arguments(new Position("d4"), new Position("a7")),
-                Arguments.arguments(new Position("d4"), new Position("g1")),
-                Arguments.arguments(new Position("d4"), new Position("a1"))
+                Arguments.arguments(Position.of("d4"), Position.of("d1")),
+                Arguments.arguments(Position.of("d4"), Position.of("g4")),
+                Arguments.arguments(Position.of("d4"), Position.of("d7")),
+                Arguments.arguments(Position.of("d4"), Position.of("a4")),
+                Arguments.arguments(Position.of("d4"), Position.of("g7")),
+                Arguments.arguments(Position.of("d4"), Position.of("a7")),
+                Arguments.arguments(Position.of("d4"), Position.of("g1")),
+                Arguments.arguments(Position.of("d4"), Position.of("a1"))
         );
     }
 

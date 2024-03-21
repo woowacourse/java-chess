@@ -42,6 +42,10 @@ public enum ChessRank {
                 .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
     }
 
+    public String value() {
+        return value;
+    }
+
     public int index() {
         return index;
     }

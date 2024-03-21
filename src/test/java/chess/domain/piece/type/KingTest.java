@@ -2,7 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.type.King;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,27 +16,27 @@ class KingTest {
 
     static Stream<Arguments> canKingMoveAllDirectionOneStepArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("d3")),
-                Arguments.arguments(new Position("d4"), new Position("e4")),
-                Arguments.arguments(new Position("d4"), new Position("d5")),
-                Arguments.arguments(new Position("d4"), new Position("c4")),
-                Arguments.arguments(new Position("d4"), new Position("e5")),
-                Arguments.arguments(new Position("d4"), new Position("c5")),
-                Arguments.arguments(new Position("d4"), new Position("e3")),
-                Arguments.arguments(new Position("d4"), new Position("c3"))
+                Arguments.arguments(Position.of("d4"), Position.of("d3")),
+                Arguments.arguments(Position.of("d4"), Position.of("e4")),
+                Arguments.arguments(Position.of("d4"), Position.of("d5")),
+                Arguments.arguments(Position.of("d4"), Position.of("c4")),
+                Arguments.arguments(Position.of("d4"), Position.of("e5")),
+                Arguments.arguments(Position.of("d4"), Position.of("c5")),
+                Arguments.arguments(Position.of("d4"), Position.of("e3")),
+                Arguments.arguments(Position.of("d4"), Position.of("c3"))
         );
     }
 
     static Stream<Arguments> cannotKingMoveAllDirectionMoreThanTwoStepArguments() {
         return Stream.of(
-                Arguments.arguments(new Position("d4"), new Position("d2")),
-                Arguments.arguments(new Position("d4"), new Position("f4")),
-                Arguments.arguments(new Position("d4"), new Position("d6")),
-                Arguments.arguments(new Position("d4"), new Position("b4")),
-                Arguments.arguments(new Position("d4"), new Position("f6")),
-                Arguments.arguments(new Position("d4"), new Position("b6")),
-                Arguments.arguments(new Position("d4"), new Position("f2")),
-                Arguments.arguments(new Position("d4"), new Position("b2"))
+                Arguments.arguments(Position.of("d4"), Position.of("d2")),
+                Arguments.arguments(Position.of("d4"), Position.of("f4")),
+                Arguments.arguments(Position.of("d4"), Position.of("d6")),
+                Arguments.arguments(Position.of("d4"), Position.of("b4")),
+                Arguments.arguments(Position.of("d4"), Position.of("f6")),
+                Arguments.arguments(Position.of("d4"), Position.of("b6")),
+                Arguments.arguments(Position.of("d4"), Position.of("f2")),
+                Arguments.arguments(Position.of("d4"), Position.of("b2"))
         );
     }
 

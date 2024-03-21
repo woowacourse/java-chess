@@ -5,28 +5,38 @@ import chess.domain.Direction;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Position {
     // TODO: 8x8 사이즈 포지션 캐싱하기
+    private static final Map<String, Position> CACHE = new ConcurrentHashMap<>();
 
     private final ChessFile file;
     private final ChessRank rank;
 
-    public Position(ChessFile file, ChessRank rank) {
+    private Position(ChessFile file, ChessRank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public Position(String position) {
+    private Position(String position) {
         this(
                 ChessFile.findByValue(String.valueOf(position.charAt(0))),
                 ChessRank.findByValue(String.valueOf(position.charAt(1)))
         );
     }
 
-    // TODO : null 제거 및 리팩터링
+    public static Position of(String position) {
+        return CACHE.computeIfAbsent(position, key -> new Position(
+                ChessFile.findByValue(String.valueOf(position.charAt(0))),
+                ChessRank.findByValue(String.valueOf(position.charAt(1)))
+        ));
+    }
+
+    // TODO : 리팩터링
     public Direction findDirectionTo(Position target) {
         if (file.value() == target.file.value() && rank.index() < target.rank.index()) {
             return Direction.TOP;

@@ -26,8 +26,8 @@ public class ChessBoard {
     }
 
     public void move(String from, String to, Turn turn) {
-        Position source = new Position(from);
-        Position target = new Position(to);
+        Position source = Position.of(from);
+        Position target = Position.of(to);
 
         validate(source, target, turn);
 

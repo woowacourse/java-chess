@@ -2,9 +2,6 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.type.Pawn;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +15,8 @@ class PawnTest {
     void canBlackPawnMoveOneStep() {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Position source = new Position(ChessFile.A, ChessRank.SIX);
-        Position target = new Position(ChessFile.A, ChessRank.FIVE);
+        Position source = Position.of("a6");
+        Position target = Position.of("a5");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -33,8 +30,8 @@ class PawnTest {
     void canWhitePawnMoveOneStep() {
         // given
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Position source = new Position(ChessFile.A, ChessRank.TWO);
-        Position target = new Position(ChessFile.A, ChessRank.THREE);
+        Position source = Position.of("a2");
+        Position target = Position.of("a3");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -48,8 +45,8 @@ class PawnTest {
     void canBlackPawnMoveTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Position source = new Position(ChessFile.A, ChessRank.SEVEN);
-        Position target = new Position(ChessFile.A, ChessRank.FIVE);
+        Position source = Position.of("a7");
+        Position target = Position.of("a5");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -63,8 +60,8 @@ class PawnTest {
     void canWhitePawnMoveTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Position source = new Position(ChessFile.A, ChessRank.TWO);
-        Position target = new Position(ChessFile.A, ChessRank.FOUR);
+        Position source = Position.of("a2");
+        Position target = Position.of("a4");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -78,8 +75,8 @@ class PawnTest {
     void cannotBlackPawnMoveTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Position source = new Position(ChessFile.A, ChessRank.SIX);
-        Position target = new Position(ChessFile.A, ChessRank.FOUR);
+        Position source = Position.of("a6");
+        Position target = Position.of("a4");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -93,8 +90,8 @@ class PawnTest {
     void cannotWhitePawnMoveTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Position source = new Position(ChessFile.A, ChessRank.THREE);
-        Position target = new Position(ChessFile.A, ChessRank.FIVE);
+        Position source = Position.of("a3");
+        Position target = Position.of("a5");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -108,8 +105,8 @@ class PawnTest {
     void canWhitePawnMoveDiagonalOneStep() {
         // given
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Position source = new Position(ChessFile.A, ChessRank.THREE);
-        Position target = new Position(ChessFile.B, ChessRank.FOUR);
+        Position source = Position.of("a3");
+        Position target = Position.of("b4");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -123,8 +120,8 @@ class PawnTest {
     void canBlackPawnMoveDiagonalOneStep() {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Position source = new Position(ChessFile.B, ChessRank.SEVEN);
-        Position target = new Position(ChessFile.A, ChessRank.SIX);
+        Position source = Position.of("b7");
+        Position target = Position.of("a6");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -138,8 +135,8 @@ class PawnTest {
     void cannotWhitePawnMoveDiagonalTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.WHITE);
-        Position source = new Position(ChessFile.A, ChessRank.TWO);
-        Position target = new Position(ChessFile.C, ChessRank.FOUR);
+        Position source = Position.of("a2");
+        Position target = Position.of("c4");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -153,8 +150,8 @@ class PawnTest {
     void cannotBlackPawnMoveDiagonalTwoStep() {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
-        Position source = new Position(ChessFile.A, ChessRank.SEVEN);
-        Position target = new Position(ChessFile.C, ChessRank.FIVE);
+        Position source = Position.of("a7");
+        Position target = Position.of("c5");
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
