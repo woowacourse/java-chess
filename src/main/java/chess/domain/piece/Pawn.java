@@ -9,15 +9,15 @@ import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 
 public class Pawn extends AbstractPawn {
-    protected Pawn(final Color color) {
+    public Pawn(final Color color) {
         super(color);
     }
 
     @Override
-    public Set<Square> movableSquares(final Square currentSquare) {
-        Set<Direction> directions = Direction.ofPawn();
+    public Set<Square> movableSquaresFrom(final Square source) {
+        Set<Direction> directions = Direction.ofPawn(color);
         return directions.stream()
-                .map(currentSquare::move)
+                .map(source::move)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toUnmodifiableSet());

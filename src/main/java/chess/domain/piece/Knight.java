@@ -14,7 +14,7 @@ public class Knight extends UnslidingPiece {
     }
 
     @Override
-    public Set<Square> movableSquares(final Square source) {
+    public Set<Square> movableSquaresFrom(final Square source) {
         Set<Set<Direction>> directions = Direction.ofKnight();
         return directions.stream()
                 .map(direction -> movableSquare(direction, source))

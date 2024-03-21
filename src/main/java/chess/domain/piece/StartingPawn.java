@@ -16,8 +16,8 @@ public class StartingPawn extends AbstractPawn {
     }
 
     @Override
-    public Set<Square> movableSquares(final Square source) {
-        Set<List<Direction>> directions = Direction.ofStartingPawn();
+    public Set<Square> movableSquaresFrom(final Square source) {
+        Set<List<Direction>> directions = Direction.ofStartingPawn(color);
         return directions.stream()
                 .map(direction -> movableSquare(direction, source))
                 .filter(Optional::isPresent)

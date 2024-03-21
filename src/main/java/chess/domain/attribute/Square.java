@@ -21,18 +21,18 @@ public class Square {
 
     public static Square of(final File file, final Rank rank) {
         if (SQUARES.isEmpty()) {
-            createSquares();
+            initializeSquares();
         }
         return SQUARES.get(keyOf(file, rank));
     }
 
-    private static void createSquares() {
+    private static void initializeSquares() {
         for (final Rank rank : Rank.values()) {
-            createSquaresOf(rank);
+            putSquares(rank);
         }
     }
 
-    private static void createSquaresOf(final Rank rank) {
+    private static void putSquares(final Rank rank) {
         for (final File file : File.values()) {
             SQUARES.put(keyOf(file, rank), new Square(file, rank));
         }
@@ -68,5 +68,13 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

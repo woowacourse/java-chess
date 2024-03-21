@@ -16,7 +16,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public abstract Set<Square> movableSquares(final Square currentSquare);
+    public abstract Set<Square> movableSquaresFrom(final Square source);
 
     public Color getColor() {
         return color;

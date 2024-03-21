@@ -15,7 +15,7 @@ public class King extends UnslidingPiece {
     }
 
     @Override
-    public Set<Square> movableSquares(final Square source) {
+    public Set<Square> movableSquaresFrom(final Square source) {
         Set<Direction> directions = Direction.all();
         return directions.stream()
                 .map(source::move)
