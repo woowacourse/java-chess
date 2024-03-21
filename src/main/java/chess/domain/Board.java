@@ -141,6 +141,11 @@ public class Board {
         return otherPiece.isSameTeam(currentTeam);
     }
 
+    public boolean isSameTeamFromPosition(Position position, Team team) {
+        Piece piece = board.get(position);
+        return piece.isSameTeam(team);
+    }
+
     public void movePieceAndRenewBoard(Position source, Position target) {
         Piece piece = board.get(source);
 

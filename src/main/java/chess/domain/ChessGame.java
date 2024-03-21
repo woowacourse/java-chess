@@ -27,7 +27,7 @@ public class ChessGame {
     }
 
     private boolean checkTurn(Position source, Team turn) {
-        return board.getBoard().get(source).isSameTeam(turn);
+        return board.isSameTeamFromPosition(source, turn);
     }
 
     private Team turnChange() {
