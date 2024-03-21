@@ -2,10 +2,10 @@ package model.piece;
 
 import model.piece.state.Role;
 
-public class Piece {
+public class PieceHolder {
     private Role role;
 
-    public Piece(Role role) {
+    public PieceHolder(Role role) {
         this.role = role;
     }
 

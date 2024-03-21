@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.piece.Color;
-import model.piece.Piece;
+import model.piece.PieceHolder;
 import model.piece.state.Bishop;
 import model.piece.state.King;
 import model.piece.state.Knight;
@@ -16,6 +16,7 @@ import model.piece.state.Queen;
 import model.piece.state.Role;
 import model.piece.state.Rook;
 import model.piece.state.Square;
+import model.position.Position;
 
 public class ChessBoardFactory {
 
@@ -32,12 +33,12 @@ public class ChessBoardFactory {
     private static final int RANK_SIX = 6;
     private static final int RANK_SEVEN = 7;
     private static final int RANK_EIGHT = 8;
-    private static final Map<Position, Piece> chessBoard = new HashMap<>();
+    private static final Map<Position, PieceHolder> chessBoard = new HashMap<>();
 
     private ChessBoardFactory() {
     }
 
-    public static Map<Position, Piece> create() {
+    public static Map<Position, PieceHolder> create() {
         initRookBishopKnight();
         initKingQueen();
         initPawn();
@@ -55,8 +56,8 @@ public class ChessBoardFactory {
         for (int file = FILE_A; file <= FILE_C; file++) {
             Role role = whiteTypePieces.get(file - 1);
             int mirrorFileIndex = 9 - file;
-            chessBoard.put(Position.of(file, RANK_ONE), new Piece(role));
-            chessBoard.put(Position.of(mirrorFileIndex, RANK_ONE), new Piece(role));
+            chessBoard.put(Position.of(file, RANK_ONE), new PieceHolder(role));
+            chessBoard.put(Position.of(mirrorFileIndex, RANK_ONE), new PieceHolder(role));
         }
     }
 
@@ -65,8 +66,8 @@ public class ChessBoardFactory {
         for (int file = FILE_A; file <= FILE_C; file++) {
             Role role = blackTypePieces.get(file - 1);
             int mirrorFileIndex = 9 - file;
-            chessBoard.put(Position.of(file, RANK_EIGHT), new Piece(role));
-            chessBoard.put(Position.of(mirrorFileIndex, RANK_EIGHT), new Piece(role));
+            chessBoard.put(Position.of(file, RANK_EIGHT), new PieceHolder(role));
+            chessBoard.put(Position.of(mirrorFileIndex, RANK_EIGHT), new PieceHolder(role));
         }
     }
 
@@ -75,25 +76,25 @@ public class ChessBoardFactory {
     }
 
     private static void initKingQueen() {
-        chessBoard.put(Position.of(FILE_D, RANK_ONE), new Piece(new Queen(WHITE)));
-        chessBoard.put(Position.of(FILE_E, RANK_ONE), new Piece(new King(WHITE)));
-        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new Piece(new Queen(BLACK)));
-        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new Piece(new King(BLACK)));
+        chessBoard.put(Position.of(FILE_D, RANK_ONE), new PieceHolder(new Queen(WHITE)));
+        chessBoard.put(Position.of(FILE_E, RANK_ONE), new PieceHolder(new King(WHITE)));
+        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new PieceHolder(new Queen(BLACK)));
+        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new PieceHolder(new King(BLACK)));
     }
 
     private static void initPawn() {
         for (int file = 1; file <= 8; file++) {
-            chessBoard.put(Position.of(file, RANK_TWO), new Piece(new Pawn(WHITE)));
-            chessBoard.put(Position.of(file, RANK_SEVEN), new Piece(new Pawn(BLACK)));
+            chessBoard.put(Position.of(file, RANK_TWO), new PieceHolder(new Pawn(WHITE)));
+            chessBoard.put(Position.of(file, RANK_SEVEN), new PieceHolder(new Pawn(BLACK)));
         }
     }
 
     private static void initSquare() {
         for (int file = FILE_A; file <= FILE_H; file++) {
-            chessBoard.put(Position.of(file, RANK_THREE), new Piece(new Square()));
-            chessBoard.put(Position.of(file, RANK_FOUR), new Piece(new Square()));
-            chessBoard.put(Position.of(file, RANK_FIVE), new Piece(new Square()));
-            chessBoard.put(Position.of(file, RANK_SIX), new Piece(new Square()));
+            chessBoard.put(Position.of(file, RANK_THREE), new PieceHolder(new Square()));
+            chessBoard.put(Position.of(file, RANK_FOUR), new PieceHolder(new Square()));
+            chessBoard.put(Position.of(file, RANK_FIVE), new PieceHolder(new Square()));
+            chessBoard.put(Position.of(file, RANK_SIX), new PieceHolder(new Square()));
         }
     }
 }

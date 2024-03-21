@@ -5,12 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.Map;
-import model.piece.Piece;
+import model.piece.PieceHolder;
 import model.piece.state.King;
 import model.piece.state.Pawn;
 import model.piece.state.Queen;
 import model.piece.state.Rook;
 import model.piece.state.Square;
+import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,14 +20,14 @@ class ChessBoardFactoryTest {
     @Test
     @DisplayName("create 호출 시 체스보드가 비어있지 않아야 한다.")
     void create_ShouldReturnNonEmptyBoard_WhenCalled() {
-        Map<Position, Piece> chessBoard = ChessBoardFactory.create();
+        Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         assertFalse(chessBoard.isEmpty(), "체스 보드는 생성 후 비어있지 않아야 합니다.");
     }
 
     @Test
     @DisplayName("create 호출 시 룩이 올바르게 초기화되어야 한다.")
     void create_ShouldInitializeRooksCorrectly_WhenCalled() {
-        Map<Position, Piece> chessBoard = ChessBoardFactory.create();
+        Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         assertAll("룩의 위치와 색상 검증",
                 () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(1, 1))
                         .getRole(), "백색 룩은 a1 위치에 있어야 합니다."),
@@ -42,7 +43,7 @@ class ChessBoardFactoryTest {
     @Test
     @DisplayName("create 호출 시 킹과 퀸이 올바르게 초기화되어야 한다.")
     void create_ShouldInitializeKingAndQueenCorrectly_WhenCalled() {
-        Map<Position, Piece> chessBoard = ChessBoardFactory.create();
+        Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         assertAll("킹과 퀸의 위치와 색상 검증",
                 () -> assertInstanceOf(Queen.class, chessBoard.get(Position.of(4, 1))
                         .getRole(), "백색 퀸은 d1 위치에 있어야 합니다."),
@@ -58,7 +59,7 @@ class ChessBoardFactoryTest {
     @Test
     @DisplayName("create 호출 시 모든 폰이 올바르게 초기화되어야 한다.")
     void create_ShouldInitializePawnsCorrectly_WhenCalled() {
-        Map<Position, Piece> chessBoard = ChessBoardFactory.create();
+        Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         for (int file = 1; file <= 8; file++) {
             assertInstanceOf(Pawn.class, chessBoard.get(Position.of(file, 2))
                     .getRole(), "백색 폰은 2번 rank에 있어야 합니다.");
@@ -70,7 +71,7 @@ class ChessBoardFactoryTest {
     @Test
     @DisplayName("create 호출 시 모든 Square가 올바르게 초기화되어야 한다.")
     void create_ShouldInitializeSquaresCorrectly_WhenCalled() {
-        Map<Position, Piece> chessBoard = ChessBoardFactory.create();
+        Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         for (int rank = 3; rank <= 6; rank++) {
             for (int file = 1; file <= 8; file++) {
                 assertInstanceOf(Square.class, chessBoard.get(Position.of(file, rank))
