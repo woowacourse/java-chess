@@ -9,7 +9,7 @@ import model.direction.MovingPattern;
 import model.piece.Color;
 
 public abstract class Role {
-    private Color color;
+    protected Color color;
     private List<MovingPattern> movingPatterns;
     protected Role(Color color, List<MovingPattern> movingPatternList){
         this.color = color;

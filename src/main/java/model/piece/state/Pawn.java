@@ -12,18 +12,28 @@ import model.piece.Color;
 
 public final class Pawn extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(N, S);
-    public Pawn(Color color){
+    private boolean isInitialMove;
+
+    public Pawn(Color color) {
         super(color, movingPatterns);
+        this.isInitialMove = true;
     }
 
+    @Override
     public Set<Position> possiblePositions(Position position) {
+        if(color == Color.WHITE){
+            return possiblePawnMovingPostions(N, position);
+        }
+        return possiblePawnMovingPostions(S, position);
+    }
+
+    private Set<Position> possiblePawnMovingPostions(MovingPattern movingPattern, Position position){
         Set<Position> positions = new HashSet<>();
-        for (MovingPattern movingPattern : movingPatterns) {
-            Position movedPosition = position;
-            if (movedPosition.isAvailablePosition(movingPattern)) {
-                movedPosition = movedPosition.getNextPosition(movingPattern);
-                positions.add(movedPosition);
-            }
+        Position nextPosition = position.getNextPosition(movingPattern);
+        positions.add(nextPosition);
+        if (isInitialMove) {
+            Position doubleMovePosition = nextPosition.getNextPosition(movingPattern);
+            positions.add(doubleMovePosition);
         }
         return positions;
     }
