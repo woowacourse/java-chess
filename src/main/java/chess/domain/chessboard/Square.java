@@ -12,6 +12,22 @@ public class Square {
         this.numbering = numbering;
     }
 
+    public boolean isForwardMost() {
+        return numbering == Numbering.EIGHT;
+    }
+
+    public boolean isBackwardMost() {
+        return numbering == Numbering.ONE;
+    }
+
+    public boolean isLeftMost() {
+        return lettering == Lettering.A;
+    }
+
+    public boolean isRightMost() {
+        return lettering == Lettering.H;
+    }
+
     public Lettering getLettering() {
         return lettering;
     }
