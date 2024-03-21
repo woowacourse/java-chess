@@ -1,4 +1,4 @@
-package model;
+package model.chessboard;
 
 import java.util.Map;
 import model.piece.PieceHolder;
@@ -12,14 +12,16 @@ public class ChessBoard {
         this.chessBoard = ChessBoardFactory.create();
     }
 
-    public Map<Position, PieceHolder> getChessBoard() {
-        return Map.copyOf(chessBoard);
+    public void move(Position source, Position destination) {
+        PieceHolder sourcePieceHolder = chessBoard.get(source);
+        PieceHolder destinationPieceHolder = chessBoard.get(destination);
+        Route route = sourcePieceHolder.findRoute(source, destination);
+        validateMovingRoute(route);
+        destinationPieceHolder.changeRoleTo(sourcePieceHolder);
+        sourcePieceHolder.leave();
     }
 
-    public void move(Position source, Position destination) {
-        PieceHolder sourcePiece = chessBoard.get(source);
-        PieceHolder destinationPiece = chessBoard.get(destination);
-        Route route = sourcePiece.findRoute(source, destination);
+    private void validateMovingRoute(Route route) {
         route.getPositions()
                 .stream()
                 .filter(position -> chessBoard.get(position)
@@ -28,7 +30,9 @@ public class ChessBoard {
                 .ifPresent(position -> {
                     throw new IllegalArgumentException("목적 지점에 기물이 위치하여 이동할 수 없습니다.");
                 });
-        destinationPiece.moveFrom(sourcePiece);
-        sourcePiece.leave();
+    }
+
+    public Map<Position, PieceHolder> getChessBoard() {
+        return Map.copyOf(chessBoard);
     }
 }

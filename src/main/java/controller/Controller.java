@@ -5,7 +5,7 @@ import static view.OutputView.printChessBoard;
 import static view.OutputView.printInitialGamePrompt;
 
 import java.util.List;
-import model.ChessBoard;
+import model.chessboard.ChessBoard;
 import model.position.Position;
 import view.GameCommand;
 import view.InputView;
@@ -25,23 +25,22 @@ public class Controller {
     }
 
     private GameCommand runGame(ChessBoard chessBoard) {
-        GameCommand gameCommand;
         List<String> inputCommand = InputView.parseCommand();
-        gameCommand = inputRetryHelper(() -> GameCommand.from(inputCommand));
-        controllChessBoard(chessBoard, gameCommand, inputCommand);
+        GameCommand gameCommand = inputRetryHelper(() -> GameCommand.from(inputCommand));
+        if (gameCommand == GameCommand.MOVE) {
+            controlChessBoard(chessBoard, inputCommand);
+        }
         return gameCommand;
     }
 
-    private void controllChessBoard(ChessBoard chessBoard, GameCommand gameCommand, List<String> inputCommand) {
-        if (gameCommand == GameCommand.MOVE) {
-            int file = GameCommand.toSourceFileValue(inputCommand);
-            int rank = GameCommand.toSourceRankValue(inputCommand);
-            Position source = Position.of(file, rank);
-            int toFile = GameCommand.toDestinationFileValue(inputCommand);
-            int toRank = GameCommand.toDestinationRankValue(inputCommand);
-            Position destination = Position.of(toFile, toRank);
-            chessBoard.move(source, destination);
-        }
+    private void controlChessBoard(ChessBoard chessBoard, List<String> inputCommand) {
+        int file = GameCommand.toSourceFileValue(inputCommand);
+        int rank = GameCommand.toSourceRankValue(inputCommand);
+        Position source = Position.of(file, rank);
+        int toFile = GameCommand.toDestinationFileValue(inputCommand);
+        int toRank = GameCommand.toDestinationRankValue(inputCommand);
+        Position destination = Position.of(toFile, toRank);
+        chessBoard.move(source, destination);
     }
 
     private GameCommand executeInitial() {

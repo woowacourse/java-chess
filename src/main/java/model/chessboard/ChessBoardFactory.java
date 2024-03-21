@@ -1,4 +1,4 @@
-package model;
+package model.chessboard;
 
 import static model.piece.Color.BLACK;
 import static model.piece.Color.WHITE;

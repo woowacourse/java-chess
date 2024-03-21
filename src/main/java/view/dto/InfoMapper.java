@@ -1,7 +1,7 @@
 package view.dto;
 
 import java.util.List;
-import model.ChessBoard;
+import model.chessboard.ChessBoard;
 
 public class InfoMapper {
 
