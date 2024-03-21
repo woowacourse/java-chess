@@ -152,12 +152,6 @@ public class Board {
     }
 
     private Piece movePiece(Position source, Position target, Piece piece) {
-        if (piece.getType() == PieceType.PAWN) {
-            return ((Pawn) piece).move(target,
-                    checkObstacleInRange(source, target),
-                    checkPieceExist(target),
-                    checkSameTeamPieceExist(piece.getTeam(), target));
-        }
         return piece.move(target,
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
