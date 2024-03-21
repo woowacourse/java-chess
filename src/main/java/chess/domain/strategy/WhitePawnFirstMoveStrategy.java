@@ -9,6 +9,10 @@ public class WhitePawnFirstMoveStrategy implements MoveStrategy {
     public boolean canMove(Position currentPosition, Position newPosition) {
         PositionDifference positionDifference = currentPosition.calculateDifference(newPosition);
 
-        return positionDifference.isWithinVerticalRange(-2, -1);
+        boolean canMoveStraight = positionDifference.isWithinVerticalRange(-2, -1);
+        boolean canMoveDiagonal =
+                positionDifference.isWithinVerticalRange(-1, -1) && positionDifference.isMagnitudeEqual();
+
+        return canMoveStraight || canMoveDiagonal;
     }
 }

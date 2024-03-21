@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -16,24 +15,24 @@ public class BishopTest {
 
     private static Stream<Arguments> bishopMoveTestParameters() {
         return Stream.of(
-                Arguments.of(Position.of("d4"), Position.of("a1"), true),
-                Arguments.of(Position.of("d4"), Position.of("b6"), true),
-                Arguments.of(Position.of("d4"), Position.of("e5"), true),
-                Arguments.of(Position.of("d4"), Position.of("g1"), true),
-                Arguments.of(Position.of("d4"), Position.of("b3"), false)
+                Arguments.of(Position.of("d4"), Position.of("a1"), Position.of("a1")),
+                Arguments.of(Position.of("d4"), Position.of("b6"), Position.of("b6")),
+                Arguments.of(Position.of("d4"), Position.of("e5"), Position.of("e5")),
+                Arguments.of(Position.of("d4"), Position.of("g1"), Position.of("g1")),
+                Arguments.of(Position.of("d4"), Position.of("b3"), Position.of("d4"))
         );
     }
 
     @DisplayName("비숍은 한 번에 대각선으로 여러 칸 이동 가능하다.")
     @ParameterizedTest
     @MethodSource("bishopMoveTestParameters")
-    void bishopMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
+    void bishopMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Bishop bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
-        Board board = new Board();
+        Bishop movedBishop = bishop.move(newPosition, false, false);
 
-        boolean actualIsMoved = bishop.move(newPosition, board, false);
+        Position actualMovedPosition = movedBishop.getPosition();
 
-        Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
+        Assertions.assertThat(actualMovedPosition).isEqualTo(expectedMovedPosition);
     }
 }

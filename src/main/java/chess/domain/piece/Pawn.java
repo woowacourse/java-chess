@@ -14,12 +14,25 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public Pawn move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
         }
-        if (isDisturbed || isSameTeamExist) {
+        if (isDisturbed || isOtherPieceExist) {
+            return this;
+        }
+
+        PieceInfo newPieceInfo = pieceInfo.renewPosition(newPosition);
+        return new Pawn(newPieceInfo, changeMovedStrategy());
+    }
+
+    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isDifferentTeam) {
+        Position currentPosition = pieceInfo.getPosition();
+        if (!moveStrategy.canMove(currentPosition, newPosition)) {
+            return this;
+        }
+        if (isDisturbed || !(isOtherPieceExist && isDifferentTeam)) {
             return this;
         }
 

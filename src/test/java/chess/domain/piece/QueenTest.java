@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -16,30 +15,28 @@ public class QueenTest {
 
     private static Stream<Arguments> queenMoveTestParameters() {
         return Stream.of(
-                Arguments.of(Position.of("d4"), Position.of("a1"), true),
-                Arguments.of(Position.of("d4"), Position.of("b6"), true),
-                Arguments.of(Position.of("d4"), Position.of("e5"), true),
-                Arguments.of(Position.of("d4"), Position.of("g1"), true),
-                Arguments.of(Position.of("d4"), Position.of("d1"), true),
-                Arguments.of(Position.of("d4"), Position.of("a4"), true),
-                Arguments.of(Position.of("d4"), Position.of("d8"), true),
-                Arguments.of(Position.of("d4"), Position.of("h4"), true),
-                Arguments.of(Position.of("d4"), Position.of("b3"), false)
+                Arguments.of(Position.of("d4"), Position.of("a1"), Position.of("a1")),
+                Arguments.of(Position.of("d4"), Position.of("b6"), Position.of("b6")),
+                Arguments.of(Position.of("d4"), Position.of("e5"), Position.of("e5")),
+                Arguments.of(Position.of("d4"), Position.of("g1"), Position.of("g1")),
+                Arguments.of(Position.of("d4"), Position.of("d1"), Position.of("d1")),
+                Arguments.of(Position.of("d4"), Position.of("a4"), Position.of("a4")),
+                Arguments.of(Position.of("d4"), Position.of("d8"), Position.of("d8")),
+                Arguments.of(Position.of("d4"), Position.of("h4"), Position.of("h4")),
+                Arguments.of(Position.of("d4"), Position.of("b3"), Position.of("d4"))
         );
     }
 
     @DisplayName("퀸은 한 번에 수직 혹은 수평 혹은 대각선으로 여러 칸 이동 가능하다.")
     @ParameterizedTest
     @MethodSource("queenMoveTestParameters")
-    void queenMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
+    void queenMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Queen queen = new Queen(pieceInfo, new QueenMoveStrategy());
-        Board board = new Board();
+        Queen movedQueen = queen.move(newPosition, false, false);
 
-        boolean actualIsMoved = queen.move(newPosition, board, false);
+        Position actualMovedPosition = movedQueen.getPosition();
 
-        Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
+        Assertions.assertThat(actualMovedPosition).isEqualTo(expectedMovedPosition);
     }
-
-    //TODO: True를 반환하는게 진짜 Position이 옮겨지는것인가 - Board 구현 시 해결될 듯?
 }

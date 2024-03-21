@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -16,22 +15,22 @@ public class BlackPawnNotFirstMoveTest {
 
     private static Stream<Arguments> blackPawnMoveTestParameters() {
         return Stream.of(
-                Arguments.of(Position.of("d4"), Position.of("d3"), true),
-                Arguments.of(Position.of("d4"), Position.of("d2"), false),
-                Arguments.of(Position.of("d4"), Position.of("d5"), false)
+                Arguments.of(Position.of("d4"), Position.of("d3"), Position.of("d3")),
+                Arguments.of(Position.of("d4"), Position.of("d2"), Position.of("d4")),
+                Arguments.of(Position.of("d4"), Position.of("d5"), Position.of("d4"))
         );
     }
 
     @DisplayName("처음 움직이는 것이 아닌 검정 폰은 한 번에 한 칸 아래로 이동 가능하다.")
     @ParameterizedTest
     @MethodSource("blackPawnMoveTestParameters")
-    void pawnMoveTest(Position currentPosition, Position newPosition, boolean expectedIsMoved) {
+    void pawnMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.BLACK);
         Pawn blackPawnNotFirstMove = new Pawn(pieceInfo, new BlackPawnNotFirstMoveStrategy());
-        Board board = new Board();
+        Pawn movedPawn = blackPawnNotFirstMove.move(newPosition, false, false);
 
-        boolean actualIsMoved = blackPawnNotFirstMove.move(newPosition, board, false);
+        Position actualMovedPosition = movedPawn.getPosition();
 
-        Assertions.assertThat(actualIsMoved).isEqualTo(expectedIsMoved);
+        Assertions.assertThat(actualMovedPosition).isEqualTo(expectedMovedPosition);
     }
 }
