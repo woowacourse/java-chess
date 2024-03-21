@@ -29,15 +29,19 @@ public class ChessController {
         PieceGenerator.generate(chessBoard);
 
         outputView.printCommandMessage();
-        List<String> input = inputView.enterAnything();
-        ChessCommand command = ChessCommand.from(input.get(0));
+        ChessCommand command = enterCommand();
         while (command != ChessCommand.END) {
             outputView.printSquareStatus(chessBoard);
-            input = inputView.enterAnything();
+            List<String> input = inputView.enterChessCommand();
             command = ChessCommand.from(input.get(0));
 
             executeMoveCommand(chessBoard, input, command);
         }
+    }
+
+    private ChessCommand enterCommand() {
+        List<String> input = inputView.enterChessCommand();
+        return ChessCommand.from(input.get(0));
     }
 
     private void validateMoveCommand(final List<String> input) {
