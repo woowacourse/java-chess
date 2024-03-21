@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
+import chess.dto.PieceDTO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +14,16 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
     }
 
-    public static void printChessBoard(List<Piece> pieces) {
+    public static void printChessBoard(List<PieceDTO> pieceDTOS) {
         List<List<Character>> boardStatus = new ArrayList<>(8);
         for (int i = 0; i < 9; i++) {
             boardStatus.add(new ArrayList<>(List.of(' ', '.', '.', '.', '.', '.', '.', '.', '.')));
         }
 
-        for (Piece piece : pieces) {
-            int column = piece.getColumn();
-            int row = piece.getRow();
-            boardStatus.get(9 - row).set(column, mappingPiece(piece).value);
+        for (PieceDTO pieceDTO : pieceDTOS) {
+            int column = pieceDTO.getColumn();
+            int row = pieceDTO.getRow();
+            boardStatus.get(9 - row).set(column, mappingPiece(pieceDTO).value);
         }
 
         for (int i = 1; i < boardStatus.size(); i++) {
@@ -34,9 +34,9 @@ public class OutputView {
         }
     }
 
-    private static PieceAsset mappingPiece(Piece piece) {
-        Team pieceTeam = piece.getTeam();
-        PieceType pieceType = piece.getPieceType();
+    private static PieceAsset mappingPiece(PieceDTO pieceDTO) {
+        Team pieceTeam = pieceDTO.getTeam();
+        PieceType pieceType = pieceDTO.getPieceType();
         return PieceAsset.valueOf(pieceTeam.name() + "_" + pieceType.name());
     }
 
