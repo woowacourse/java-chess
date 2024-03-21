@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Direction {
     //row, column
     UP(0, 1),
@@ -21,36 +23,13 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position source, Position target) {
-        Row srcRow = source.getRow();
-        Column srcColumn = source.getColumn();
-        Row trgRow = target.getRow();
-        Column trgColumn = target.getColumn();
-        boolean isRowBigger = trgRow.isBigger(srcRow);
-        boolean isColumnBigger = trgColumn.isBigger(srcColumn);
+        int rowDirection = source.compareRow(target);
+        int columnDirection = source.compareColumn(target);
 
-
-        if (srcRow == trgRow && isColumnBigger) {
-            return UP;
-        }
-        if (srcRow == trgRow && !isColumnBigger) {
-            return DOWN;
-        }
-        if (!isRowBigger && srcColumn == trgColumn) {
-            return LEFT;
-        }
-        if (isRowBigger && srcColumn == trgColumn) {
-            return RIGHT;
-        }
-        if (!isRowBigger && isColumnBigger) {
-            return UP_LEFT;
-        }
-        if (isRowBigger && isColumnBigger) {
-            return UP_RIGHT;
-        }
-        if (!isRowBigger && !isColumnBigger) {
-            return DOWN_LEFT;
-        }
-        return DOWN_RIGHT;
+        return Arrays.stream(values())
+                .filter(value -> value.rowDirection == rowDirection && value.columnDirection == columnDirection)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 방향입니다."));
     }
 
     public static boolean findUpDown(Position source, Position target) {

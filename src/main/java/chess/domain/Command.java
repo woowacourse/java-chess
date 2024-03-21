@@ -20,9 +20,7 @@ public enum Command {
         return START;
     }
 
-    //TODO : 리팩토링
     public static Command getProcessCommand(String command) {
-
         Command inputCommand = Arrays.stream(values())
                 .filter(value -> value.command.equals(command))
                 .findFirst()

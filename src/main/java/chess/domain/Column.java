@@ -49,7 +49,7 @@ public class Column {
         if (team.isWhite()) {
             return value == 1;
         }
-        return value == 5;
+        return value == 6;
     }
 
     public int subtractColumn(Column column) {
@@ -58,5 +58,15 @@ public class Column {
 
     public int getValue() {
         return value;
+    }
+
+    public int compare(Column column) {
+        if(value > column.value) {
+            return -1;
+        }
+        if(value == column.value) {
+            return 0;
+        }
+        return 1;
     }
 }

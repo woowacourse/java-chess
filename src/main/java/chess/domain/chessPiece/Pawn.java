@@ -46,7 +46,6 @@ public class Pawn extends Piece {
 
     private boolean moveForwardTwice(Position source, Position target) {
         int columnDistance = source.calculatePawnColumnDistance(target, team);
-        System.out.println(source.isPawnStartPosition(team));
         return source.isPawnStartPosition(team) && source.isSameRow(target) && columnDistance == 2;
     }
 

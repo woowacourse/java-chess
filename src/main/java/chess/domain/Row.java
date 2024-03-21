@@ -34,7 +34,6 @@ public class Row {
     }
 
     private static void validateAlphabet(String value) {
-        //TODO : charAt 말고 다른 방법 생각해보기
         char row = value.charAt(0);
         if (row < 'a' || row > 'h') {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
@@ -53,5 +52,15 @@ public class Row {
 
     public int getValue() {
         return value;
+    }
+
+    public int compare(Row row) {
+        if(value > row.value) {
+            return -1;
+        }
+        if(value == row.value) {
+            return 0;
+        }
+        return 1;
     }
 }

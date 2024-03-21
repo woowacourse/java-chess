@@ -77,4 +77,12 @@ public class Position {
     public boolean isPawnStartPosition(Team team) {
         return column.isPawnStartPosition(team);
     }
+
+    public int compareRow(Position target) {
+        return row.compare(target.row);
+    }
+
+    public int compareColumn(Position target) {
+        return column.compare(target.column);
+    }
 }
