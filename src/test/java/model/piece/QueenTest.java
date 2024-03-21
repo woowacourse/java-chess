@@ -20,8 +20,8 @@ class QueenTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(Moving moving) {
-        Queen queen = new Queen(Camp.BLACK);
+    void invalidRoute(final Moving moving) {
+        final Queen queen = new Queen(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(queen.canMovable(moving)).isFalse(),
@@ -43,14 +43,13 @@ class QueenTest {
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void checkRoute(Moving moving, Set<Position> expected) {
-        Queen queen = new Queen(Camp.BLACK);
+    void checkRoute(final Moving moving, final Set<Position> expected) {
+        final Queen queen = new Queen(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(queen.canMovable(moving)).isTrue(),
                 () -> assertThat(queen.getMoveRoute(moving)).isEqualTo(expected)
         );
-
     }
 
     static Stream<Arguments> canMovableParameterProvider() {

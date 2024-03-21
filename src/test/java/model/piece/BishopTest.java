@@ -20,8 +20,8 @@ class BishopTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(Moving moving) {
-        Bishop bishop = new Bishop(Camp.BLACK);
+    void invalidRoute(final Moving moving) {
+        final Bishop bishop = new Bishop(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(bishop.canMovable(moving)).isFalse(),
@@ -29,7 +29,6 @@ class BishopTest {
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
-
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
@@ -43,8 +42,9 @@ class BishopTest {
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void checkRoute(Moving moving, Set<Position> expected) {
-        Bishop bishop = new Bishop(Camp.BLACK);
+    void checkRoute(final Moving moving, final Set<Position> expected) {
+        final Bishop bishop = new Bishop(Camp.BLACK);
+
         assertAll(
                 () -> assertThat(bishop.canMovable(moving)).isTrue(),
                 () -> assertThat(bishop.getMoveRoute(moving)).isEqualTo(expected)

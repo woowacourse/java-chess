@@ -17,13 +17,13 @@ class GameBoardTest {
     @DisplayName("초기에는 32개의 기물이 생성된다.")
     void initPieces() {
         //given
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
 
         //when
         gameBoard.setting();
 
         //then
-        var board = gameBoard.getBoard();
+        final Map<Position, Piece> board = gameBoard.getBoard();
         Assertions.assertThat(board.keySet()).hasSize(32);
     }
 
@@ -31,13 +31,13 @@ class GameBoardTest {
     @DisplayName("기물들의 시작 위치를 확인한다.")
     void checkInitialPosition() {
         //given
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
 
         //when
         gameBoard.setting();
 
-        Map<Position, Piece> board = gameBoard.getBoard();
-        StringBuilder stringBuilder = new StringBuilder();
+        final Map<Position, Piece> board = gameBoard.getBoard();
+        final StringBuilder stringBuilder = new StringBuilder();
 
         String[][] res = new String[8][8];
 
@@ -57,7 +57,7 @@ class GameBoardTest {
             stringBuilder.append(System.lineSeparator());
         }
 
-        String expected = String.format("[R, N, B, Q, K, B, N, R]%n"
+        final String expected = String.format("[R, N, B, Q, K, B, N, R]%n"
                 + "[P, P, P, P, P, P, P, P]%n"
                 + "[., ., ., ., ., ., ., .]%n"
                 + "[., ., ., ., ., ., ., .]%n"
@@ -74,10 +74,10 @@ class GameBoardTest {
     @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
     void blankPosition() {
         //given
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
+        final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
         //when & then
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
@@ -87,13 +87,13 @@ class GameBoardTest {
     @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
     @Test
     void routeContainPiece() {
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = gameBoard.getBoard();
         board.put(Position.from("e6"), new Queen(Camp.BLACK));
 
-        Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -103,13 +103,13 @@ class GameBoardTest {
     @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
     @Test
     void targetPositionIsEqualCamp() {
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = gameBoard.getBoard();
         board.put(Position.from("e5"), new Queen(Camp.BLACK));
 
-        Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -120,11 +120,11 @@ class GameBoardTest {
     @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
     void invalidTurn() {
         //given
-        GameBoard gameBoard = new GameBoard();
+        final GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
         //when
-        Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
+        final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
 
         //then
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.WHITE))

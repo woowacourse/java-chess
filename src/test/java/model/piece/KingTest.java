@@ -18,8 +18,8 @@ class KingTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(Moving moving) {
-        King king = new King(Camp.BLACK);
+    void invalidRoute(final Moving moving) {
+        final King king = new King(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(king.canMovable(moving)).isFalse(),
@@ -27,7 +27,6 @@ class KingTest {
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
-
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
@@ -38,12 +37,11 @@ class KingTest {
         );
     }
 
-
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void canMovable(Moving moving) {
-        King king = new King(Camp.BLACK);
+    void canMovable(final Moving moving) {
+        final King king = new King(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(king.canMovable(moving)).isTrue(),

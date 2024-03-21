@@ -18,8 +18,8 @@ class PawnTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(Moving moving) {
-        Pawn pawn = new Pawn(Camp.BLACK);
+    void invalidRoute(final Moving moving) {
+        final Pawn pawn = new Pawn(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isFalse(),
@@ -40,8 +40,8 @@ class PawnTest {
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void canMovable(Moving moving) {
-        Pawn pawn = new Pawn(Camp.BLACK);
+    void canMovable(final Moving moving) {
+        final Pawn pawn = new Pawn(Camp.BLACK);
 
         assertThat(pawn.canMovable(moving)).isTrue();
     }
