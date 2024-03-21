@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public enum Command {
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String displayName;
 
@@ -19,7 +20,15 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 게임 명령어입니다."));
     }
 
-    public boolean isRunning() {
-        return this != END;
+    public boolean isStart() {
+        return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
     }
 }
