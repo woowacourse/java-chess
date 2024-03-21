@@ -13,8 +13,8 @@ class LeftDirectionTest {
     @DisplayName("도착 위치로 이동이 가능할 경우 참을 반환한다.")
     void canReach() {
         LeftDirection direction = new LeftDirection(8);
-        Position from = new Position(1, 8);
-        Position to = new Position(1, 6);
+        Position from = new Position(8, 1);
+        Position to = new Position(6, 1);
         assertThat(direction.canReach(from, to, List.of())).isTrue();
     }
 
@@ -23,7 +23,7 @@ class LeftDirectionTest {
     void canNotReachWhenNowIsBoundary() {
         LeftDirection direction = new LeftDirection(8);
         Position from = new Position(1, 1);
-        Position to = new Position(7, 1);
+        Position to = new Position(1, 7);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }
 
@@ -31,17 +31,17 @@ class LeftDirectionTest {
     @DisplayName("도착위치 중간에 장애물이 있을 경우 거짓을 반환한다.")
     void canNotReachWhenObstacleExist() {
         LeftDirection direction = new LeftDirection(8);
-        Position from = new Position(1, 8);
-        Position to = new Position(1, 6);
-        assertThat(direction.canReach(from, to, List.of(new Position(1, 7)))).isFalse();
+        Position from = new Position(8, 1);
+        Position to = new Position(6, 1);
+        assertThat(direction.canReach(from, to, List.of(new Position(7, 1)))).isFalse();
     }
 
     @Test
     @DisplayName("이동할 수 있는 방향의 개수를 모두 소진함에도 불구하고 도달하지 못할 경우 거짓을 반환한다.")
     void canNotReachWhenOverMoveCount() {
         LeftDirection direction = new LeftDirection(1);
-        Position from = new Position(1, 8);
-        Position to = new Position(1, 6);
+        Position from = new Position(8, 1);
+        Position to = new Position(6, 1);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }
 }

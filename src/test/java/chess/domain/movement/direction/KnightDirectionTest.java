@@ -17,7 +17,7 @@ class KnightDirectionTest {
     void canReach(int row, int column) {
         KnightDirection direction = new KnightDirection();
         Position from = new Position(4, 4);
-        Position to = new Position(row, column);
+        Position to = new Position(column, row);
         assertThat(direction.canReach(from, to, List.of())).isTrue();
     }
 
@@ -26,15 +26,15 @@ class KnightDirectionTest {
     void canNotReachWhenObstacleExist() {
         KnightDirection direction = new KnightDirection();
         Position from = new Position(4, 4);
-        Position to = new Position(5, 2);
-        assertThat(direction.canReach(from, to, List.of(new Position(5, 2)))).isFalse();
+        Position to = new Position(2, 5);
+        assertThat(direction.canReach(from, to, List.of(new Position(2, 5)))).isFalse();
     }
 
     @Test
     @DisplayName("현재 위치에서 도착 위치까지 이동이 불가능한 경우 거짓을 반환한다.")
     void canNotReachWhenNowIsBoundary() {
         KnightDirection direction = new KnightDirection();
-        Position from = new Position(7, 2);
+        Position from = new Position(2, 7);
         Position to = new Position(8, 8);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }

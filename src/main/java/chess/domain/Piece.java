@@ -47,8 +47,8 @@ public class Piece {
 
     // TODO: 의미있는 이름으로 변경
     private boolean isRowDirection(final Position from, final Position to) {
-        return from.column() == to.column() && (Math.abs(from.row() - to.row()) == 1
-                || Math.abs(from.row() - to.row()) == 2);
+        return from.file() == to.file() && (Math.abs(from.rank() - to.rank()) == 1
+                || Math.abs(from.rank() - to.rank()) == 2);
     }
 
     private boolean existEnemy(final Position to, final Map<Position, Piece> pieces) {

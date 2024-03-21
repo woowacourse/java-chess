@@ -8,7 +8,7 @@ public class PositionConverter {
         int column = convertColumn(columnAndRow[0]);
         int row = columnAndRow[1] - '0';
 
-        return new Position(row, column);
+        return new Position(column, row);
     }
 
     private static int convertColumn(final char rawColumn) {

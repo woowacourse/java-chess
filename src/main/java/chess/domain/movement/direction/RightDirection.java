@@ -13,6 +13,6 @@ public class RightDirection extends StraightDirection {
         if (from.isMaximumColumn()) {
             return from;
         }
-        return new Position(from.row(), from.column() + 1);
+        return new Position(from.file() + 1, from.rank());
     }
 }

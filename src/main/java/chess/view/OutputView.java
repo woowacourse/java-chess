@@ -34,7 +34,7 @@ public class OutputView {
     private void printRankLine(Map<Position, Piece> positions, int rank) {
         String rankLine = IntStream.rangeClosed(MINIMUM_FILE, MAXIMUM_FILE)
                 .boxed()
-                .map(file -> positions.get(new Position(rank, file)))
+                .map(file -> positions.get(new Position(file, rank)))
                 .map(PieceSymbol::getDisplay)
                 .collect(Collectors.joining(""));
         System.out.println(rankLine);

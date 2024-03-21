@@ -30,7 +30,7 @@ public class InitialPiecePosition {
 
     private Stream<Position> generateHorizontalLine(int row) {
         return IntStream.rangeClosed(MIN_BOARD_SIZE, MAX_BOARD_SIZE)
-                .mapToObj(column -> new Position(row, column));
+                .mapToObj(column -> new Position(column, row));
     }
 
     private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
@@ -55,26 +55,26 @@ public class InitialPiecePosition {
     }
 
     private Map<Position, Piece> getNotPawnsPieces(Color color, int row) {
-        return Map.of(new Position(row, 1), new Piece(PieceType.ROOK, color),
-                new Position(row, 2), new Piece(PieceType.KNIGHT, color),
-                new Position(row, 3), new Piece(PieceType.BISHOP, color),
-                new Position(row, 4), new Piece(PieceType.QUEEN, color),
-                new Position(row, 5), new Piece(PieceType.KING, color),
-                new Position(row, 6), new Piece(PieceType.BISHOP, color),
-                new Position(row, 7), new Piece(PieceType.KNIGHT, color),
-                new Position(row, 8), new Piece(PieceType.ROOK, color));
+        return Map.of(new Position(1, row), new Piece(PieceType.ROOK, color),
+                new Position(2, row), new Piece(PieceType.KNIGHT, color),
+                new Position(3, row), new Piece(PieceType.BISHOP, color),
+                new Position(4, row), new Piece(PieceType.QUEEN, color),
+                new Position(5, row), new Piece(PieceType.KING, color),
+                new Position(6, row), new Piece(PieceType.BISHOP, color),
+                new Position(7, row), new Piece(PieceType.KNIGHT, color),
+                new Position(8, row), new Piece(PieceType.ROOK, color));
     }
 
 
     private Map<Position, Piece> getPawnsPieces(Color color, int row) {
-        return Map.of(new Position(row, 1), new Piece(PieceType.PAWN, color),
-                new Position(row, 2), new Piece(PieceType.PAWN, color),
-                new Position(row, 3), new Piece(PieceType.PAWN, color),
-                new Position(row, 4), new Piece(PieceType.PAWN, color),
-                new Position(row, 5), new Piece(PieceType.PAWN, color),
-                new Position(row, 6), new Piece(PieceType.PAWN, color),
-                new Position(row, 7), new Piece(PieceType.PAWN, color),
-                new Position(row, 8), new Piece(PieceType.PAWN, color));
+        return Map.of(new Position(1, row), new Piece(PieceType.PAWN, color),
+                new Position(2, row), new Piece(PieceType.PAWN, color),
+                new Position(3, row), new Piece(PieceType.PAWN, color),
+                new Position(4, row), new Piece(PieceType.PAWN, color),
+                new Position(5, row), new Piece(PieceType.PAWN, color),
+                new Position(6, row), new Piece(PieceType.PAWN, color),
+                new Position(7, row), new Piece(PieceType.PAWN, color),
+                new Position(8, row), new Piece(PieceType.PAWN, color));
 
     }
 

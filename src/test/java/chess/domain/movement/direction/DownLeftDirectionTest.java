@@ -25,7 +25,7 @@ class DownLeftDirectionTest {
     @DisplayName("현재 위치에서 더이상 이동이 불가능한 경우 거짓을 반환한다.")
     void canNotReachWhenNowIsBoundary(int row, int column) {
         DownLeftDirection direction = new DownLeftDirection(8);
-        Position from = new Position(row, column);
+        Position from = new Position(column, row);
         Position to = new Position(2, 2);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }

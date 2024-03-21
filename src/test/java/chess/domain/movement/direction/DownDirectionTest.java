@@ -14,7 +14,7 @@ class DownDirectionTest {
     void canReach() {
         DownDirection direction = new DownDirection(8);
         Position from = new Position(3, 3);
-        Position to = new Position(1, 3);
+        Position to = new Position(3, 1);
         assertThat(direction.canReach(from, to, List.of())).isTrue();
     }
 
@@ -22,8 +22,8 @@ class DownDirectionTest {
     @DisplayName("현재 위치에서 더이상 이동이 불가능한 경우 거짓을 반환한다.")
     void canNotReachWhenNowIsBoundary() {
         DownDirection direction = new DownDirection(8);
-        Position from = new Position(1, 3);
-        Position to = new Position(2, 3);
+        Position from = new Position(3, 1);
+        Position to = new Position(3, 2);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }
 
@@ -31,9 +31,9 @@ class DownDirectionTest {
     @DisplayName("도착위치 중간에 장애물이 있을 경우 거짓을 반환한다.")
     void canNotReachWhenObstacleExist() {
         DownDirection direction = new DownDirection(8);
-        Position from = new Position(8, 3);
-        Position to = new Position(1, 3);
-        assertThat(direction.canReach(from, to, List.of(new Position(4, 3)))).isFalse();
+        Position from = new Position(3, 8);
+        Position to = new Position(3, 1);
+        assertThat(direction.canReach(from, to, List.of(new Position(3, 4)))).isFalse();
     }
 
     @Test
@@ -41,7 +41,7 @@ class DownDirectionTest {
     void canNotReachWhenOverMoveCount() {
         DownDirection direction = new DownDirection(1);
         Position from = new Position(8, 8);
-        Position to = new Position(1, 6);
+        Position to = new Position(6, 1);
         assertThat(direction.canReach(from, to, List.of())).isFalse();
     }
 }

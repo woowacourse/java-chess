@@ -1,12 +1,12 @@
 package chess.domain;
 
-public record Position(int row, int column) {
+public record Position(int file, int rank) {
     private static final int MIN_POSITION_RANGE = 1;
     private static final int MAX_POSITION_RANGE = 8;
 
     public Position {
-        validateRange(row);
-        validateRange(column);
+        validateRange(file);
+        validateRange(rank);
     }
 
     private void validateRange(int position) {
@@ -16,18 +16,18 @@ public record Position(int row, int column) {
     }
 
     public boolean isMinimumColumn() {
-        return column == MIN_POSITION_RANGE;
+        return file == MIN_POSITION_RANGE;
     }
 
     public boolean isMaximumColumn() {
-        return column == MAX_POSITION_RANGE;
+        return file == MAX_POSITION_RANGE;
     }
 
     public boolean isMinimumRow() {
-        return row == MIN_POSITION_RANGE;
+        return rank == MIN_POSITION_RANGE;
     }
 
     public boolean isMaximumRow() {
-        return row == MAX_POSITION_RANGE;
+        return rank == MAX_POSITION_RANGE;
     }
 }

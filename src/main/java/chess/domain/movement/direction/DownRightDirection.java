@@ -14,6 +14,6 @@ public class DownRightDirection extends StraightDirection {
             return from;
         }
 
-        return new Position(from.row() - 1, from.column() + 1);
+        return new Position(from.file() + 1, from.rank() - 1);
     }
 }

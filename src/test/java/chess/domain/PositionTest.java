@@ -23,7 +23,7 @@ class PositionTest {
     @DisplayName("위치는 가로, 세로 범위는 각각 1 ~ 8 이다.")
     @CsvSource({"0,1", "1,0", "1, 9", "9, 1"})
     void createPositionThrowException(int row, int column) {
-        assertThatThrownBy(() -> new Position(row, column))
+        assertThatThrownBy(() -> new Position(column, row))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("위치의 가로, 세로 범위는 각각 1 ~ 8이여야 합니다.");
     }
@@ -31,22 +31,22 @@ class PositionTest {
     @Test
     @DisplayName("위치의 column이 최소인 경우 참을 반환한다.")
     void isMinimumColumn() {
-        Position position = new Position(3, 1);
+        Position position = new Position(1, 3);
         assertThat(position.isMinimumColumn()).isTrue();
     }
-    
+
 
     @Test
     @DisplayName("위치의 column이 최대인 경우 참을 반환한다.")
     void isMaximumColumn() {
-        Position position = new Position(3, 8);
+        Position position = new Position(8, 3);
         assertThat(position.isMaximumColumn()).isTrue();
     }
 
     @Test
     @DisplayName("위치의 row가 최소인 경우 참을 반환한다.")
     void isMinimumRow() {
-        Position position = new Position(1, 3);
+        Position position = new Position(3, 1);
         assertThat(position.isMinimumRow()).isTrue();
     }
 
@@ -54,7 +54,7 @@ class PositionTest {
     @Test
     @DisplayName("위치의 row가 최대인 경우 참을 반환한다.")
     void isMaximumRow() {
-        Position position = new Position(8, 3);
+        Position position = new Position(3, 8);
         assertThat(position.isMaximumRow()).isTrue();
     }
 

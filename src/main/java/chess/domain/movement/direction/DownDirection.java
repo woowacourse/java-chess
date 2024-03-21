@@ -13,6 +13,6 @@ public class DownDirection extends StraightDirection {
         if (from.isMinimumRow()) {
             return from;
         }
-        return new Position(from.row() - 1, from.column());
+        return new Position(from.file(), from.rank() - 1);
     }
 }
