@@ -15,6 +15,7 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final int MOVE_SOURCE_INDEX = 1;
     public static final int MOVE_TARGET_INDEX = 2;
+    public static final int MOVE_COMMAND_SIZE = 3;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -61,11 +62,18 @@ public class ChessController {
     }
 
     private void play(final List<String> input, final ChessBoard chessBoard) {
+        validateMoveCommend(input);
         final Square source = Square.from(input.get(MOVE_SOURCE_INDEX));
         final Square target = Square.from(input.get(MOVE_TARGET_INDEX));
 
         chessBoard.move(source, target);
 
         outputView.printChessTable(chessBoard.getPieceSquares());
+    }
+
+    private void validateMoveCommend(final List<String> input) {
+        if (input.size() != MOVE_COMMAND_SIZE) {
+            throw new IllegalArgumentException("잘못된 move 커맨드 입니다.");
+        }
     }
 }
