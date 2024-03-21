@@ -12,11 +12,7 @@ public class Knight extends ChessPiece {
 
     @Override
     public Knight move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
-        Position currentPosition = pieceInfo.getPosition();
-        if (!moveStrategy.canMove(currentPosition, newPosition)) {
-            return this;
-        }
-        if (isSameTeamExist) {
+        if (isMoveInvalid(newPosition, isSameTeamExist)) {
             return this;
         }
 
@@ -27,5 +23,11 @@ public class Knight extends ChessPiece {
     @Override
     public PieceType getType() {
         return PieceType.KNIGHT;
+    }
+
+    private boolean isMoveInvalid(Position newPosition, boolean isSameTeamExist) {
+        Position currentPosition = pieceInfo.getPosition();
+
+        return !moveStrategy.canMove(currentPosition, newPosition) || isSameTeamExist;
     }
 }

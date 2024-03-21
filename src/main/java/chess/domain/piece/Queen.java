@@ -12,11 +12,7 @@ public class Queen extends ChessPiece {
 
     @Override
     public Queen move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
-        Position currentPosition = pieceInfo.getPosition();
-        if (!moveStrategy.canMove(currentPosition, newPosition)) {
-            return this;
-        }
-        if (isDisturbed || isSameTeamExist) {
+        if (isMoveInvalid(newPosition, isDisturbed, isSameTeamExist)) {
             return this;
         }
 
@@ -27,5 +23,11 @@ public class Queen extends ChessPiece {
     @Override
     public PieceType getType() {
         return PieceType.QUEEN;
+    }
+
+    private boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+        Position currentPosition = pieceInfo.getPosition();
+
+        return !moveStrategy.canMove(currentPosition, newPosition) || isDisturbed || isSameTeamExist;
     }
 }
