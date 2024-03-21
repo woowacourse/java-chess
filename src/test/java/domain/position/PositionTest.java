@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PositionTest {
 
@@ -39,6 +40,19 @@ public class PositionTest {
         );
     }
 
+    static Stream<Arguments> findWrongDirectionArguments() {
+        return Stream.of(
+                Arguments.arguments(new Position("d4"), new Position("c2")),
+                Arguments.arguments(new Position("d4"), new Position("e2")),
+                Arguments.arguments(new Position("d4"), new Position("c6")),
+                Arguments.arguments(new Position("d4"), new Position("e6")),
+                Arguments.arguments(new Position("d4"), new Position("f3")),
+                Arguments.arguments(new Position("d4"), new Position("f5")),
+                Arguments.arguments(new Position("d4"), new Position("b5")),
+                Arguments.arguments(new Position("d4"), new Position("b3"))
+        );
+    }
+
     @DisplayName("주어진 위치 값(value)로 Position을 생성한다.")
     @Test
     void createPosition() {
@@ -64,6 +78,16 @@ public class PositionTest {
         assertThat(result).isEqualTo(expectedDirection);
     }
 
+    @DisplayName("주어진 Target이 잘못된 방향에 있다면 예외를 발생한다.")
+    @ParameterizedTest
+    @MethodSource("findWrongDirectionArguments")
+    void findWrongDirection(Position source, Position target) {
+        // when & then
+        assertThatThrownBy(() -> source.findDirectionTo(target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("올바르지 않은 방향입니다.");
+    }
+
     @DisplayName("주어진 Source에서 Target까지의 거리를 계산한다.")
     @ParameterizedTest
     @MethodSource("calculateDistanceArguments")
@@ -74,4 +98,6 @@ public class PositionTest {
         // then
         assertThat(result).isEqualTo(expectedDistance);
     }
+
+
 }
