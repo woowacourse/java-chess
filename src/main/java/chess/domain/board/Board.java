@@ -34,45 +34,86 @@ public class Board {
         return pieces.get(coordinate);
     }
 
-    public int pieceSize() {
-        return pieces.size();
+    public void move(Coordinate source, Coordinate target) {
+        Piece sourcePiece = findSource(source, target);
+
+        pieces.put(target, sourcePiece);
+        pieces.remove(source);
     }
 
-    public void move(Coordinate source, Coordinate target) {
+    private Piece findSource(Coordinate source, Coordinate target) {
+        validateSourceExist(source);
+        validateTargetExist(target);
+        validateMovable(source, target);
+        validateCasePawn(source, target);
+
+        return pieces.get(source);
+    }
+
+    private void validateSourceExist(Coordinate source) {
         if (!pieces.containsKey(source)) {
             throw new NoSuchElementException("보드에 움직일 대상 기물이 없습니다.");
         }
+    }
 
+    private void validateTargetExist(Coordinate target) {
         if (pieces.containsKey(target)) {
             throw new IllegalStateException("목적지 좌표에 기물이 이미 존재합니다.");
         }
+    }
 
+    private void validateMovable(Coordinate source, Coordinate target) {
         Piece sourcePiece = pieces.get(source);
-        List<Coordinate> possibleCoordinate = sourcePiece.findMovablePath(source, target);
+        List<Coordinate> movablePath = sourcePiece.findMovablePath(source, target);
+        List<Coordinate> realPath = createRealPath(movablePath);
 
-        if (!possibleCoordinate.contains(target)) {
-            throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
-        }
+        validatePath(target, movablePath);
+        validateStuckPath(target, realPath);
+    }
 
+    private List<Coordinate> createRealPath(List<Coordinate> possibleCoordinate) {
         List<Coordinate> realPath = new ArrayList<>();
         for (Coordinate coordinate : possibleCoordinate) {
             if (pieces.containsKey(coordinate)) {
                 break;
             }
+
             realPath.add(coordinate);
         }
 
+        return realPath;
+    }
+
+    private void validatePath(Coordinate target, List<Coordinate> possibleCoordinate) {
+        if (!possibleCoordinate.contains(target)) {
+            throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
+        }
+    }
+
+    private void validateStuckPath(Coordinate target, List<Coordinate> realPath) {
         if (!realPath.contains(target)) {
             throw new IllegalStateException("경로 중간에 기물이 존재해 이동할 수 없습니다.");
         }
+    }
 
-        if (sourcePiece instanceof Pawn && !(source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK)) {
-            if (Math.abs(source.getRank() - target.getRank()) != 1) {
-                throw new IllegalStateException("폰이 초기 위치가 아니면, 2칸 전진할 수 없습니다.");
-            }
+    private void validateCasePawn(Coordinate source, Coordinate target) {
+        Piece sourcePiece = pieces.get(source);
+        if (!isMovablePawn(source, target, sourcePiece)) {
+            throw new IllegalStateException("폰이 초기 위치가 아니면, 2칸 전진할 수 없습니다.");
         }
+    }
 
-        pieces.put(target, sourcePiece);
-        pieces.remove(source);
+    private boolean isMovablePawn(Coordinate source, Coordinate target, Piece sourcePiece) {
+        return sourcePiece instanceof Pawn &&
+                isInitialRank(source) &&
+                isTwoStep(source, target);
+    }
+
+    private boolean isInitialRank(Coordinate source) {
+        return source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK;
+    }
+
+    private boolean isTwoStep(Coordinate source, Coordinate target) {
+        return Math.abs(source.getRank() - target.getRank()) != 1;
     }
 }

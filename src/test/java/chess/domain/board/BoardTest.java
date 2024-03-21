@@ -187,16 +187,6 @@ class BoardTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("기본 보드의 기물의 수는 32개이다.")
-    @Test
-    void boardPieceSize() {
-        Board board = new Board();
-
-        int size = board.pieceSize();
-
-        assertThat(size).isEqualTo(32);
-    }
-
     @DisplayName("source 좌표에 기물이 없으면 예외를 발생한다.")
     @Test
     void noSource() {
