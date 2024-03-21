@@ -62,6 +62,9 @@ public class Board {
         if (sourcePiece.isType(Type.PAWN)) {
             validatePawn(movement, targetPiece);
         }
+        if (sourcePiece.isType(Type.KNIGHT)) {
+            return;
+        }
         List<Position> intermediatePositions = movement.getIntermediatePositions();
         if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
