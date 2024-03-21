@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +48,21 @@ class QueenTest {
 
         // then
         assertThat(canMove).isFalse();
+    }
+
+    @DisplayName("도착 지점이 왼쪽일 때 위치들을 반환한다.")
+    @Test
+    void getRouteLeft() {
+        // given
+        final Queen queen = new Queen(Color.BLACK, new Position('d', 5));
+
+        // when
+        Set<Position> positions = queen.getRoute(new Position('g', 2));
+
+        // then
+        assertThat(positions).containsExactlyInAnyOrder(
+                new Position('e', 4),
+                new Position('f', 3)
+        );
     }
 }

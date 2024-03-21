@@ -114,4 +114,17 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
     }
+
+    @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다.퀸의 경우")
+    @Test
+    void existInWayQueen() {
+        // given
+        final Position currentPosition = new Position('d', 1);
+        final Position nextPosition = new Position('d', 3);
+
+        // when && then
+        assertThatThrownBy(() -> chessBoard.move(currentPosition, nextPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 해당 위치로 이동할 수 없습니다.");
+    }
 }
