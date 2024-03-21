@@ -24,10 +24,10 @@ public class BlackPawnFirstMoveTest {
 
     private static Stream<Arguments> pawnDiagonalMoveTestParameters() {
         return Stream.of(
-                Arguments.of(Position.of("d4"), Position.of("c3"), false, true, true, Position.of("c3")),
-                Arguments.of(Position.of("d4"), Position.of("c3"), false, true, false, Position.of("d4")),
-                Arguments.of(Position.of("d4"), Position.of("c3"), false, false, false, Position.of("d4")),
-                Arguments.of(Position.of("d4"), Position.of("c3"), false, false, true, Position.of("d4"))
+                Arguments.of(Position.of("d4"), Position.of("c3"), false, true, false, Position.of("c3")),
+                Arguments.of(Position.of("d4"), Position.of("c3"), false, true, true, Position.of("d4")),
+                Arguments.of(Position.of("d4"), Position.of("c3"), false, false, true, Position.of("d4")),
+                Arguments.of(Position.of("d4"), Position.of("c3"), false, false, false, Position.of("d4"))
         );
     }
 
@@ -37,7 +37,7 @@ public class BlackPawnFirstMoveTest {
     void pawnStraightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.BLACK);
         Pawn blackPawnFirstMove = new Pawn(pieceInfo, new BlackPawnFirstMoveStrategy());
-        Pawn movedPawn = blackPawnFirstMove.move(newPosition, false, false);
+        Pawn movedPawn = blackPawnFirstMove.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedPawn.getPosition();
 
@@ -48,10 +48,10 @@ public class BlackPawnFirstMoveTest {
     @ParameterizedTest
     @MethodSource("pawnDiagonalMoveTestParameters")
     void pawnDiagonalMoveTest(Position currentPosition, Position newPosition, boolean isDisturbed,
-                              boolean isOtherPieceExist, boolean isDifferentTeam, Position expectedMovedPosition) {
+                              boolean isOtherPieceExist, boolean isSameTeam, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.BLACK);
         Pawn blackPawnFirstMove = new Pawn(pieceInfo, new BlackPawnFirstMoveStrategy());
-        Pawn movedPawn = blackPawnFirstMove.move(newPosition, isDisturbed, isOtherPieceExist, isDifferentTeam);
+        Pawn movedPawn = blackPawnFirstMove.move(newPosition, isDisturbed, isOtherPieceExist, isSameTeam);
 
         Position actualMovedPosition = movedPawn.getPosition();
 

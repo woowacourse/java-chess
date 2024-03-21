@@ -11,7 +11,7 @@ public class Queen extends ChessPiece {
     }
 
     @Override
-    public Queen move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    public Queen move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

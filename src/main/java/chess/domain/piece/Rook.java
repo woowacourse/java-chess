@@ -11,7 +11,7 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public Rook move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    public Rook move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

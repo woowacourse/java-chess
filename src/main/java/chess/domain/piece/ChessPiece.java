@@ -20,7 +20,8 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
-    public abstract ChessPiece move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist);
+    public abstract ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                    boolean isSameTeamExist);
 
     @Override
     public abstract PieceType getType();
@@ -36,8 +37,8 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
-    public boolean isDifferentTeam(Team otherTeam) {
-        return pieceInfo.isDifferentTeam(otherTeam);
+    public boolean isSameTeam(Team otherTeam) {
+        return pieceInfo.isSameTeam(otherTeam);
     }
 
     @Override

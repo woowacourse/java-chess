@@ -5,7 +5,7 @@ import chess.domain.Position;
 import chess.domain.Team;
 
 public interface Piece {
-    Piece move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist);
+    Piece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist);
 
     PieceType getType();
 
@@ -13,5 +13,5 @@ public interface Piece {
 
     Team getTeam();
 
-    boolean isDifferentTeam(Team otherTeam);
+    boolean isSameTeam(Team otherTeam);
 }

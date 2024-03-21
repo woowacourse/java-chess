@@ -11,7 +11,7 @@ public class Bishop extends ChessPiece {
     }
 
     @Override
-    public Bishop move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    public Bishop move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

@@ -1,11 +1,17 @@
 package chess.controller;
 
+import static chess.domain.CommandType.END;
+import static chess.domain.CommandType.MOVE;
+import static chess.domain.CommandType.START;
+
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.dto.BoardDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,9 +21,51 @@ import java.util.Map;
 public class ChessController {
 
     public void startChess() {
-        Board board = new Board();
-        board.placeInitialPieces();
-        OutputView.printBoard(makeBoardDto(board.getBoard()));
+        ChessGame chessGame;
+
+        OutputView.printChessGameStartMessage();
+        OutputView.printCommandGuideMessage();
+
+        while (true) {
+            String firstCommand = InputView.inputCommand().get(0);
+            if (firstCommand.equals(START.getCommandType())) {
+                Board board = new Board();
+                board.placeInitialPieces();
+                chessGame = new ChessGame(board);
+
+                OutputView.printBoard(makeBoardDto(board.getBoard()));
+
+                progressChessGame(chessGame);
+
+                break;
+            }
+            if (firstCommand.equals(END.getCommandType())) {
+                break;
+            }
+            System.out.println("다시 입력하세요.");
+        }
+    }
+
+    private void progressChessGame(ChessGame chessGame) {
+        while (true) {
+            List<String> commands = InputView.inputCommand();
+            String command = commands.get(0);
+            if (command.equals(START.getCommandType())) {
+                System.out.println("다시 입력하세요.");
+                continue;
+            }
+            if (command.equals(MOVE.getCommandType())) {
+                Position source = Position.of(commands.get(1));
+                Position target = Position.of(commands.get(2));
+                chessGame.move(source, target);
+                Board board = chessGame.getBoard();
+                OutputView.printBoard(makeBoardDto(board.getBoard()));
+                continue;
+            }
+            if (command.equals(END.getCommandType())) {
+                break;
+            }
+        }
     }
 
     private BoardDto makeBoardDto(Map<Position, Piece> board) {

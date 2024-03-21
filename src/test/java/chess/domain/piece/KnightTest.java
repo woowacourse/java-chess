@@ -33,7 +33,7 @@ public class KnightTest {
     void knightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Knight knight = new Knight(pieceInfo, new KnightMoveStrategy());
-        Knight movedKnight = knight.move(newPosition, false, false);
+        Knight movedKnight = knight.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedKnight.getPosition();
 

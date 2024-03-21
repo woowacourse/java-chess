@@ -129,16 +129,16 @@ public class Board {
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 
-    public boolean checkDifferentTeamPieceExist(Team currentTeam, Position otherPosition) {
-        Piece otherPiece = board.get(otherPosition);
-
-        return otherPiece.isDifferentTeam(currentTeam);
-    }
-
     public boolean checkPieceExist(Position position) {
         Piece piece = board.get(position);
 
         return piece.getType() != PieceType.EMPTY;
+    }
+
+    public boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
+        Piece otherPiece = board.get(otherPosition);
+
+        return otherPiece.isSameTeam(currentTeam);
     }
 
     public void movePieceAndRenewBoard(Position source, Position target) {
@@ -147,7 +147,7 @@ public class Board {
         Piece movedPiece = movePiece(source, target, piece);
 
         PieceInfo pieceInfo = movedPiece.getPieceInfo();
-        board.put(source, new EmptyPiece(new PieceInfo(source, pieceInfo.getTeam()), new EmptyMoveStrategy()));
+        board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE), new EmptyMoveStrategy()));
         board.put(pieceInfo.getPosition(), movedPiece);
     }
 
@@ -156,11 +156,11 @@ public class Board {
             return ((Pawn) piece).move(target,
                     checkObstacleInRange(source, target),
                     checkPieceExist(target),
-                    checkDifferentTeamPieceExist(piece.getTeam(), target));
+                    checkSameTeamPieceExist(piece.getTeam(), target));
         }
-
         return piece.move(target,
                 checkObstacleInRange(source, target),
-                checkDifferentTeamPieceExist(piece.getTeam(), target));
+                checkPieceExist(target),
+                checkSameTeamPieceExist(piece.getTeam(), target));
     }
 }

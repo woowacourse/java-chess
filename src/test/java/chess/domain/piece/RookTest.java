@@ -29,7 +29,7 @@ public class RookTest {
     void rookMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Rook rook = new Rook(pieceInfo, new RookMoveStrategy());
-        Rook movedRook = rook.move(newPosition, false, false);
+        Rook movedRook = rook.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedRook.getPosition();
 

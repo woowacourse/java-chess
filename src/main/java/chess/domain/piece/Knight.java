@@ -11,7 +11,7 @@ public class Knight extends ChessPiece {
     }
 
     @Override
-    public Knight move(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    public Knight move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

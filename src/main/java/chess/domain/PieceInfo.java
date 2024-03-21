@@ -19,8 +19,8 @@ public class PieceInfo {
         return team;
     }
 
-    public boolean isDifferentTeam(Team otherTeam) {
-        return team != otherTeam;
+    public boolean isSameTeam(Team otherTeam) {
+        return team == otherTeam;
     }
 
     public PieceInfo renewPosition(Position newPosition) {
