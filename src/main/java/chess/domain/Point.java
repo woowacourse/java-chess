@@ -44,20 +44,26 @@ public class Point {
         }
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
-        return getDistance(fileDistance, rankDistance) < 2;
+        int distance = getDistance(fileDistance, rankDistance);
+        if (fileDistance != 0 || rankDistance != 0) {
+            return distance == 2;
+        }
+        return distance == 1;
     }
 
-    private double getDistance(int fileDistance, int rankDistance) {
-        return Math.sqrt(Math.pow(fileDistance, 2) + Math.pow(rankDistance, 2));
+    private int getDistance(int fileDistance, int rankDistance) {
+        return Math.abs(fileDistance) + Math.abs(rankDistance);
+    }
+
+    public int multiplyAxis(Point point) {
+        int fileDistance = this.file.distance(point.file);
+        int rankDistance = this.rank.distance(point.rank);
+        return fileDistance * rankDistance;
     }
 
     // TODO: 이름 변경
-    public boolean isFirstPoint() {
+    public boolean isInitialPointOfPawn() {
         return rank.isFirstRank();
-    }
-
-    public Point moveRank(int position) {
-        return new Point(file, rank.add(position).orElseThrow());
     }
 
     public Optional<Point> add(int directionOfFile, int directionOfRank) {

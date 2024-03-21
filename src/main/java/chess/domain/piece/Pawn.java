@@ -26,7 +26,7 @@ public final class Pawn extends Piece {
         List<Point> points = new ArrayList<>();
         int forwardDirection = team.forwardDirection();
 
-        if (currentPoint.isFirstPoint()) {
+        if (currentPoint.isInitialPointOfPawn()) {
             Optional<Point> pointOpt = currentPoint.add(0, TWO_RANK * forwardDirection);
             pointOpt.ifPresent(points::add);
         }

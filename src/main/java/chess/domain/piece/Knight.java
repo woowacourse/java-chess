@@ -14,17 +14,6 @@ public final class Knight extends Piece {
 
     @Override
     public boolean isMovable(Point currentPoint, Point nextPoint) {
-        List<Point> movablePoints = findMovablePoints(currentPoint);
-        return movablePoints.contains(nextPoint);
-    }
-
-    private List<Point> findMovablePoints(Point currentPoint) {
-        List<Direction> directions = Direction.findKnightDirections();
-
-        return directions.stream()
-                .map(direction -> currentPoint.add(direction.file(), direction.rank()))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .toList();
+        return Math.abs(currentPoint.multiplyAxis(nextPoint)) == 2;
     }
 }
