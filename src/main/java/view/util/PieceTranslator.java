@@ -1,13 +1,13 @@
 package view.util;
 
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Queen;
+import domain.piece.Rook;
+import domain.piece.base.ChessPiece;
 import java.util.Arrays;
-import piece.Bishop;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Queen;
-import piece.Rook;
 
 public enum PieceTranslator {
 
@@ -19,15 +19,15 @@ public enum PieceTranslator {
     PAWN(Pawn.class, "p"),
     NONE(null, ".");
 
-    private final Class<? extends Piece> classType;
+    private final Class<? extends ChessPiece> classType;
     private final String name;
 
-    PieceTranslator(Class<? extends Piece> classType, String name) {
+    PieceTranslator(Class<? extends ChessPiece> classType, String name) {
         this.classType = classType;
         this.name = name;
     }
 
-    public static String getName(Piece piece) {
+    public static String getName(ChessPiece piece) {
         if (piece == null) {
             return NONE.name;
         }
@@ -39,7 +39,7 @@ public enum PieceTranslator {
         return pieceTranslator.name;
     }
 
-    private static PieceTranslator from(Piece piece) {
+    private static PieceTranslator from(ChessPiece piece) {
         return Arrays.stream(values())
                 .filter(piece1 -> piece1.classType == piece.getClass())
                 .findAny()

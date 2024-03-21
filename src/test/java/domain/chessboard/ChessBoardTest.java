@@ -1,15 +1,15 @@
-package chessboard;
+package domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import coordinate.Coordinate;
+import domain.coordinate.Coordinate;
+import domain.piece.Color;
+import domain.position.Column;
+import domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import piece.Color;
-import position.Column;
-import position.Row;
 
 class ChessBoardTest {
 

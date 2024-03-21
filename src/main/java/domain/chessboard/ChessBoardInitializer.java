@@ -1,19 +1,19 @@
-package chessboard;
+package domain.chessboard;
 
-import coordinate.Coordinate;
+import domain.coordinate.Coordinate;
+import domain.piece.Bishop;
+import domain.piece.Color;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Queen;
+import domain.piece.Rook;
+import domain.piece.base.ChessPiece;
+import domain.position.Column;
+import domain.position.Row;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import piece.Bishop;
-import piece.Color;
-import piece.King;
-import piece.Knight;
-import piece.Pawn;
-import piece.Piece;
-import piece.Queen;
-import piece.Rook;
-import position.Column;
-import position.Row;
 
 public class ChessBoardInitializer {
 
@@ -23,8 +23,9 @@ public class ChessBoardInitializer {
     private static final int WHITE_SECOND_RANK = 6;
     private static final int CHESS_BOARD_SIZE = 8;
 
-    public static Map<Coordinate, Piece> createInitialBoard() {
-        Map<Coordinate, Piece> board = new HashMap<>();
+    public static Map<Coordinate, ChessPiece> createInitialBoard() {
+        Map<Coordinate, ChessPiece> board = new HashMap<>();
+
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
             board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(Color.BLACK).get(i));
             board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(Color.WHITE).get(i));
@@ -36,7 +37,7 @@ public class ChessBoardInitializer {
         return board;
     }
 
-    private static List<Piece> createFirstRank(Color color) {
+    private static List<ChessPiece> createFirstRank(Color color) {
         return List.of(
                 new Rook(color),
                 new Knight(color),
