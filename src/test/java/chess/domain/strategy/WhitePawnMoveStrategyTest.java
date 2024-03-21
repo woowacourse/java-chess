@@ -70,7 +70,7 @@ class WhitePawnMoveStrategyTest {
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(
                         new Position(Row.RANK4, Column.H)
-                ))
-        ;
+                )
+        );
     }
 }
