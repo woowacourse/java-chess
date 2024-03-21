@@ -7,29 +7,33 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class InitialPiecePosition {
+public class BoardInitializer {
 
-    private static final int MIN_BOARD_SIZE = 1;
-    private static final int MAX_BOARD_SIZE = 8;
+    private static final int MINIMUM_BOARD_POSITION = 1;
+    private static final int MAXIMUM_BOARD_POSITION = 8;
 
     private final Map<Position, Piece> initialPiecePositions;
 
-    public InitialPiecePosition() {
+    public BoardInitializer() {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
         initialPiecePositions.putAll(getWhitePieces());
         initialPiecePositions.putAll(getBlackPieces());
         this.initialPiecePositions = initialPiecePositions;
     }
 
+    public Map<Position, Piece> initialize() {
+        return new HashMap<>(initialPiecePositions);
+    }
+
     private Map<Position, Piece> generateEmptyBoard() {
-        return IntStream.rangeClosed(MIN_BOARD_SIZE, MAX_BOARD_SIZE)
+        return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
                 .boxed()
                 .flatMap(this::generateHorizontalLine)
                 .collect(generateEntry());
     }
 
     private Stream<Position> generateHorizontalLine(int row) {
-        return IntStream.rangeClosed(MIN_BOARD_SIZE, MAX_BOARD_SIZE)
+        return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
                 .mapToObj(column -> new Position(column, row));
     }
 
@@ -81,9 +85,5 @@ public class InitialPiecePosition {
     public boolean isFirstMove(Position position, Piece piece) {
         Piece initialPiece = initialPiecePositions.getOrDefault(position, new Piece(PieceType.EMPTY, Color.NONE));
         return initialPiece.equals(piece);
-    }
-
-    public Map<Position, Piece> getInitialPiecePositions() {
-        return new HashMap<>(initialPiecePositions);
     }
 }

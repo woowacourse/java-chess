@@ -13,7 +13,7 @@ class BoardTest {
     @Test
     @DisplayName("보드에서 체스 말을 이동시킬 수 있다.")
     void movePiece() {
-        Board board = new Board(new InitialPiecePosition());
+        Board board = new Board(new BoardInitializer());
         board.move(new Position(1, 2), new Position(1, 4));
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
@@ -26,7 +26,7 @@ class BoardTest {
     @Test
     @DisplayName("보드에서 체스 말을 이동할 수 없는 경우 예외가 발생한다.")
     void movePieceThrowException() {
-        Board board = new Board(new InitialPiecePosition());
+        Board board = new Board(new BoardInitializer());
         assertThatThrownBy(() -> board.move(new Position(1, 1), new Position(1, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");

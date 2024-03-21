@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
-    private final InitialPiecePosition initialPiecePosition;
+    private final BoardInitializer boardInitializer;
 
-    public Board(final InitialPiecePosition initialPiecePosition) {
-        this.initialPiecePosition = initialPiecePosition;
-        this.board = initialPiecePosition.getInitialPiecePositions();
+    public Board(final BoardInitializer boardInitializer) {
+        this.boardInitializer = boardInitializer;
+        this.board = boardInitializer.initialize();
     }
 
     public void move(final Position from, final Position to) {
@@ -23,7 +23,7 @@ public class Board {
     }
 
     private boolean isFirstMove(final Position from, final Piece currentPiece) {
-        return initialPiecePosition.isFirstMove(from, currentPiece);
+        return boardInitializer.isFirstMove(from, currentPiece);
     }
 
     public Map<Position, Piece> getBoard() {

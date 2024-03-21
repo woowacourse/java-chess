@@ -8,12 +8,12 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class InitialPiecePositionTest {
+class BoardInitializerTest {
 
     @Test
     @DisplayName("전체 말들의 초기 위치 정보를 반환한다. - 기물들의 위치 확인")
     void initializeAllPieces() {
-        Map<Position, Piece> initialPiecePositions = new InitialPiecePosition().getInitialPiecePositions();
+        Map<Position, Piece> initialPiecePositions = new BoardInitializer().initialize();
         assertAll(
                 () -> assertThat(initialPiecePositions)
                         .containsAllEntriesOf(Map.of(
@@ -65,7 +65,7 @@ class InitialPiecePositionTest {
     @Test
     @DisplayName("말의 위치가 비어있는 경우 비어있는 말의 타입을 반환한다.")
     void initializeEmptyPieces() {
-        Map<Position, Piece> initialPiecePositions = new InitialPiecePosition().getInitialPiecePositions();
+        Map<Position, Piece> initialPiecePositions = new BoardInitializer().initialize();
         IntStream.rangeClosed(3, 6).boxed()
                 .flatMap(row -> IntStream.rangeClosed(1, 8).boxed()
                         .map(column -> new Position(column, row)))

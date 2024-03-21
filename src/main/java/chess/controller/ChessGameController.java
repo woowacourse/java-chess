@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
-import chess.domain.InitialPiecePosition;
+import chess.domain.BoardInitializer;
 import chess.domain.Position;
 import chess.view.GameCommand;
 import chess.view.InputView;
@@ -14,12 +14,6 @@ public class ChessGameController {
     public ChessGameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-    }
-
-    private Board initializeBoard() {
-        Board board = new Board(new InitialPiecePosition());
-        outputView.printBoard(board);
-        return board;
     }
 
     public void start() {
@@ -35,6 +29,12 @@ public class ChessGameController {
             gameCommand = inputView.getGameCommand();
             run(board, gameCommand);
         }
+    }
+
+    private Board initializeBoard() {
+        Board board = new Board(new BoardInitializer());
+        outputView.printBoard(board);
+        return board;
     }
 
     private void run(Board board, GameCommand gameCommand) {
