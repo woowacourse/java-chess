@@ -56,7 +56,7 @@ public class Piece {
 
     private boolean isPawnBlockedOnRankMove(final Position source, final Position target,
                                             final Map<Position, Piece> pieces) {
-        Piece piece = pieces.get(target);
+        Piece piece = pieces.getOrDefault(target, new Piece(PieceType.EMPTY, Color.NONE));
         return pieceType == PieceType.PAWN && isRankMove(source, target)
                 && piece.isNotEmpty();
     }
