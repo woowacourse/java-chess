@@ -2,10 +2,10 @@ package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Camp;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import domain.Team;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource(value = "squareArguments")
     void canMove(final Square source, final Square target, final boolean expected) {
-        final Rook rook = new Rook(Camp.BLACK);
+        final Rook rook = new Rook(Team.BLACK);
 
         // when
         final boolean canMove = rook.canMove(source, target);

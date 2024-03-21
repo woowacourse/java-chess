@@ -11,7 +11,7 @@ public record ChessVector(int x, int y) {
         return new ChessVector(x / gcd, y / gcd);
     }
 
-    private int findAbsGCD() {
+    public int findAbsGCD() {
         int num1 = Math.abs(x);
         int num2 = Math.abs(y);
 
@@ -21,19 +21,6 @@ public record ChessVector(int x, int y) {
             num1 = temp;
         }
         return num1;
-    }
-
-    public int divide(final ChessVector other) {
-        if (this.x * other.y != this.y * other.x) {
-            throw new IllegalArgumentException();
-        }
-        if (this.x == 0) {
-            return this.y / other.y;
-        }
-        if (this.y == 0) {
-            return this.x / other.x;
-        }
-        return 1;
     }
 
     public boolean isDiagonal() {

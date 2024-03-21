@@ -15,20 +15,20 @@ import java.util.stream.Stream;
 public class ChessBoard {
 
     private static final Map<File, Piece> BLACK_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Camp.BLACK), File.B, new Knight(Camp.BLACK),
-            File.C, new Bishop(Camp.BLACK), File.D, new Queen(Camp.BLACK),
-            File.E, new King(Camp.BLACK), File.F, new Bishop(Camp.BLACK),
-            File.G, new Knight(Camp.BLACK), File.H, new Rook(Camp.BLACK)
+            File.A, new Rook(Team.BLACK), File.B, new Knight(Team.BLACK),
+            File.C, new Bishop(Team.BLACK), File.D, new Queen(Team.BLACK),
+            File.E, new King(Team.BLACK), File.F, new Bishop(Team.BLACK),
+            File.G, new Knight(Team.BLACK), File.H, new Rook(Team.BLACK)
     );
     private static final Map<File, Piece> WHITE_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Camp.WHITE), File.B, new Knight(Camp.WHITE),
-            File.C, new Bishop(Camp.WHITE), File.D, new Queen(Camp.WHITE),
-            File.E, new King(Camp.WHITE), File.F, new Bishop(Camp.WHITE),
-            File.G, new Knight(Camp.WHITE), File.H, new Rook(Camp.WHITE)
+            File.A, new Rook(Team.WHITE), File.B, new Knight(Team.WHITE),
+            File.C, new Bishop(Team.WHITE), File.D, new Queen(Team.WHITE),
+            File.E, new King(Team.WHITE), File.F, new Bishop(Team.WHITE),
+            File.G, new Knight(Team.WHITE), File.H, new Rook(Team.WHITE)
     );
 
     private final Map<Square, Piece> pieceSquares;
-    private Camp camp;
+    private Team team;
 
     public ChessBoard() {
         this.pieceSquares = new HashMap<>();
@@ -36,15 +36,15 @@ public class ChessBoard {
 
     private ChessBoard(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
-        this.camp = Camp.WHITE;
+        this.team = Team.WHITE;
     }
 
     public static ChessBoard create() {
         final Map<Square, Piece> chessTable = new HashMap<>();
 
         for (final File file : File.values()) {
-            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Camp.BLACK));
-            chessTable.put(new Square(Rank.TWO, file), new Pawn(Camp.WHITE));
+            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Team.BLACK));
+            chessTable.put(new Square(Rank.TWO, file), new Pawn(Team.WHITE));
             chessTable.put(new Square(Rank.EIGHT, file), BLACK_PIECE_TYPE_ORDERS.get(file));
             chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
@@ -69,7 +69,7 @@ public class ChessBoard {
 
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
-        camp = camp.turnAlternation();
+        team = team.turn();
     }
 
     private void validateEmptySource(final Square source) {
@@ -79,7 +79,7 @@ public class ChessBoard {
     }
 
     private void validateCamp(final Piece sourcePiece) {
-        if (sourcePiece.isOppositeCamp(camp)) {
+        if (sourcePiece.isOppositeCamp(team)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
         }
     }
@@ -110,10 +110,10 @@ public class ChessBoard {
         final ChessVector chessVector = target.calculateVector(source);
 
         final ChessVector direction = chessVector.scaleDown();
-        final long count = chessVector.divide(direction);
+        final long pathCount = chessVector.findAbsGCD();
 
         return Stream.iterate(source.next(direction), square -> square.next(direction))
-                .limit(count)
+                .limit(pathCount)
                 .filter(square -> !square.equals(target))
                 .anyMatch(pieceSquares::containsKey);
     }
