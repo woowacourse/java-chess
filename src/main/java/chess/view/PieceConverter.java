@@ -18,7 +18,8 @@ public class PieceConverter {
     }
 
     public static String convert(Piece piece) {
-        String pieceDisplay = PIECE_DISPLAYS.get(piece.getPieceType());
+        PieceType pieceType = piece.getPieceType();
+        String pieceDisplay = PIECE_DISPLAYS.get(pieceType);
 
         if (piece.isWhite()) {
             return pieceDisplay.toLowerCase();

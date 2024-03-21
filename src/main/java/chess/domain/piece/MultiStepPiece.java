@@ -15,23 +15,25 @@ public abstract class MultiStepPiece extends Piece {
     @Override
     public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
-        directions.forEach(direction -> {
-            Position position = currentPosition;
-            while (position.canMoveNext(direction)) {
-                position = position.next(direction);
-                Piece piece = board.findPieceByPosition(position);
+        directions.forEach(direction -> addMoves(board, direction, currentPosition, movablePositions));
 
-                if (isSameColor(piece)) {
-                    break;
-                }
-
-                movablePositions.add(position);
-
-                if (!piece.isEmpty()) {
-                    break;
-                }
-            }
-        });
         return movablePositions;
+    }
+
+    private void addMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
+        while (position.canMoveNext(direction)) {
+            position = position.next(direction);
+            Piece piece = board.findPieceByPosition(position);
+
+            if (isSameColor(piece)) {
+                break;
+            }
+
+            movablePositions.add(position);
+
+            if (!piece.isEmpty()) {
+                break;
+            }
+        }
     }
 }

@@ -36,14 +36,6 @@ public abstract class Piece {
         return color.isSame(other);
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -58,5 +50,13 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(color, pieceType);
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

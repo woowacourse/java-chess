@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
+    private static final int FILE_RANK_COUNT = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -17,12 +21,12 @@ public class Position {
     public static Position convert(String source) {
         List<String> parts = Arrays.stream(source.split("")).toList();
 
-        if (parts.size() != 2) {
+        if (parts.size() != FILE_RANK_COUNT) {
             throw new IllegalArgumentException();
         }
 
-        File file = File.from(parts.get(0));
-        Rank rank = Rank.from(parts.get(1));
+        File file = File.from(parts.get(FILE_INDEX));
+        Rank rank = Rank.from(parts.get(RANK_INDEX));
 
         return new Position(file, rank);
     }
@@ -37,15 +41,8 @@ public class Position {
     public Position next(Direction direction) {
         int x = direction.getX();
         int y = direction.getY();
+
         return new Position(file.add(x), rank.add(y));
-    }
-
-    public int getFile() {
-        return file.getValue();
-    }
-
-    public int getRank() {
-        return rank.getValue();
     }
 
     @Override
@@ -70,5 +67,13 @@ public class Position {
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public int getFile() {
+        return file.getValue();
+    }
+
+    public int getRank() {
+        return rank.getValue();
     }
 }

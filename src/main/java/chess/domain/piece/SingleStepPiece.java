@@ -16,19 +16,22 @@ public abstract class SingleStepPiece extends Piece {
     public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         Set<Position> movablePositions = new HashSet<>();
 
-        directions.forEach(direction -> {
-            Position position = currentPosition;
-            if (!position.canMoveNext(direction)) {
-                return;
-            }
+        directions.forEach(direction -> addMoves(currentPosition, board, direction, movablePositions));
 
-            position = position.next(direction);
-            Piece piece = board.findPieceByPosition(position);
-
-            if (!isSameColor(piece)) {
-                movablePositions.add(position);
-            }
-        });
         return movablePositions;
+    }
+
+    private void addMoves(Position currentPosition, Board board, Direction direction, Set<Position> movablePositions) {
+        Position position = currentPosition;
+        if (!position.canMoveNext(direction)) {
+            return;
+        }
+
+        position = position.next(direction);
+        Piece piece = board.findPieceByPosition(position);
+
+        if (!isSameColor(piece)) {
+            movablePositions.add(position);
+        }
     }
 }
