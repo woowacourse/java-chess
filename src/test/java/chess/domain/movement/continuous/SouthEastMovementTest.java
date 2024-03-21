@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class SouthEastMovementTest {
 
-
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {

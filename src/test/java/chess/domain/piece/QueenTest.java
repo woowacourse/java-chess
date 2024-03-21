@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class QueenTest {
 
-
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
