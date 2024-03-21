@@ -3,10 +3,13 @@ package domain.piece;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,5 +34,23 @@ class DirectionTest {
     @DisplayName("방향에 따라 이동한다.")
     void move_direction(Direction direction, Index actualPoint, Index expectedPoint) {
         assertThat(direction.move(actualPoint)).isEqualTo(expectedPoint);
+    }
+
+    @Test
+    @DisplayName("방향이 세로 방향(위,아래) 방향이면 참을 반환 한다.")
+    void true_if_direction_is_up_or_down() {
+
+        Set<Direction> set = EnumSet.of(Direction.UP, Direction.DOWN);
+        set.forEach(direction -> assertThat(direction.isStraight()).isTrue());
+    }
+
+    @Test
+    @DisplayName("그 외의 방향이면 거짓을 반환 한다.")
+    void false_if_direction_otherwise() {
+        Set<Direction> set = EnumSet.allOf(Direction.class);
+        set.remove(Direction.UP);
+        set.remove(Direction.DOWN);
+
+        set.forEach(direction -> assertThat(direction.isStraight()).isFalse());
     }
 }
