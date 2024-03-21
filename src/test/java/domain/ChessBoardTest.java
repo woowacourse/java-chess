@@ -83,7 +83,7 @@ class ChessBoardTest {
 
         final Piece sourcePiece = chessBoard.getPieceSquares().get(source);
 
-        // when &
+        // when
         chessBoard.move(source, target);
 
         //then
@@ -116,7 +116,7 @@ class ChessBoardTest {
         // when
         chessBoard.move(whiteTarget, blackTarget);
 
-        //then
+        // then
         final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
 
         assertAll(
