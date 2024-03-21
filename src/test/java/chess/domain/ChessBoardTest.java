@@ -142,7 +142,7 @@ class ChessBoardTest {
         // given
         final Position currentPosition = new Position(File.A, Rank.TWO); // 폰
         final Position nextPosition = new Position(File.A, Rank.FOUR);
-        final Piece currentPiece = chessBoard.findBy(currentPosition);
+        final Piece currentPiece = chessBoard.findPieceBy(currentPosition);
 
         // when
         chessBoard.move(currentPosition, nextPosition);
@@ -168,7 +168,7 @@ class ChessBoardTest {
     void moveToCatch() {
         // given
         Position currentPosition = new Position(File.B, Rank.ONE); // 나이트
-        final Piece originPiece = chessBoard.findBy(currentPosition);
+        final Piece originPiece = chessBoard.findPieceBy(currentPosition);
         Position nextPosition = new Position(File.C, Rank.THREE);
         chessBoard.move(currentPosition, nextPosition);
 
@@ -181,7 +181,7 @@ class ChessBoardTest {
         chessBoard.move(currentPosition, nextPosition);
 
         // when && then
-        final Piece currentPiece = chessBoard.findBy(nextPosition);
+        final Piece currentPiece = chessBoard.findPieceBy(nextPosition);
         assertThat(currentPiece).isEqualTo(originPiece);
     }
 

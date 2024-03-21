@@ -21,8 +21,8 @@ public abstract class Piece {
         this.position = target;
     }
 
-    public boolean isOtherColor(final Piece other) {
-        return this.color != other.color;
+    public boolean isMySide(final Piece other) {
+        return this.color == other.color;
     }
 
     public boolean isPosition(final Position other) {

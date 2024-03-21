@@ -56,82 +56,77 @@ public class ChessBoard {
                 new Rook(color, new Position(File.H, rank)));
     }
 
-    Piece findBy(final Position input) {
+    public void move(final List<String> positions) {
+        final String currentPosition = positions.get(0);
+        final String targetPosition = positions.get(1);
+        move(new Position(currentPosition), new Position(targetPosition));
+    }
+
+    void move(final Position currentPosition, final Position targetPosition) {
+        final Piece currentPiece = findPieceBy(currentPosition);
+
+        if (currentPiece instanceof Pawn && canPawnCatch(currentPiece, targetPosition)) {
+            catchPiece(currentPiece, targetPosition);
+            return;
+        }
+
+        validateStrategy(currentPiece, targetPosition);
+        validateJumpOver(currentPiece, targetPosition);
+
+        if (isPieceExist(targetPosition)) {
+            validateNotMySide(currentPiece, targetPosition);
+            catchPiece(currentPiece, targetPosition);
+        }
+
+        currentPiece.move(targetPosition);
+    }
+
+    Piece findPieceBy(final Position input) {
         return pieces.stream()
                 .filter(piece -> piece.isPosition(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다."));
     }
 
-    public void move(final List<String> positions) {
-        final String file = positions.get(0);
-        final String rank = positions.get(1);
-        move(new Position(file), new Position(rank));
-    }
-
-    public void move(final Position currentPosition, final Position nextPosition) {
-        final Piece currentPiece = findBy(currentPosition);
-        if (canCatchByPawn(nextPosition, currentPiece)) {
-            catchPiece(nextPosition, currentPiece);
-            return;
+    private boolean canPawnCatch(final Piece currentPiece, final Position targetPosition) {
+        if (!isPieceExist(targetPosition)) {
+            return false;
         }
-
-        checkStrategy(nextPosition, currentPiece);
-        checkJumpOver(nextPosition, currentPiece);
-
-        if (isTargetExist(nextPosition)) {
-            checkColor(currentPiece, findBy(nextPosition));
-            catchPiece(nextPosition, currentPiece);
-        }
-
-        if (isTargetEmpty(nextPosition)) {
-            currentPiece.move(nextPosition);
-        }
+        return currentPiece.getPosition().isDiagonalWithDistance(targetPosition, Pawn.DEFAULT_STEP) &&
+                !currentPiece.isMySide(findPieceBy(targetPosition));
     }
 
-    private boolean canCatchByPawn(final Position nextPosition, final Piece currentPiece) {
-        return currentPiece instanceof Pawn && canPawnCatch(currentPiece, nextPosition);
+    private boolean isPieceExist(final Position input) {
+        return pieces.stream().anyMatch(piece -> piece.isPosition(input));
     }
 
-    private boolean canPawnCatch(final Piece currentPiece, final Position nextPosition) {
-        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, Pawn.DEFAULT_STEP) &&
-                currentPiece.isOtherColor(findBy(nextPosition));
+    private void catchPiece(final Piece currentPiece, final Position targetPosition) {
+        pieces.remove(findPieceBy(targetPosition));
+        currentPiece.move(targetPosition);
     }
 
-    private void catchPiece(final Position nextPosition, final Piece currentPiece) {
-        pieces.remove(findBy(nextPosition));
-        currentPiece.move(nextPosition);
-    }
-
-    private void checkStrategy(final Position nextPosition, final Piece currentPiece) {
-        if (!currentPiece.canMoveTo(nextPosition)) {
+    private void validateStrategy(final Piece currentPiece, final Position targetPosition) {
+        if (!currentPiece.canMoveTo(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
         }
     }
 
-    private void checkJumpOver(final Position nextPosition, final Piece currentPiece) {
-        if (existInWay(currentPiece, nextPosition)) {
+    private void validateJumpOver(final Piece currentPiece, final Position targetPosition) {
+        if (existPieceInWay(currentPiece, targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 경로상 기물이 존재합니다.");
         }
     }
 
-    private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
-        final Set<Position> route = currentPiece.getRoute(nextPosition);
+    private boolean existPieceInWay(final Piece currentPiece, final Position targetPosition) {
+        final Set<Position> route = currentPiece.getRoute(targetPosition);
         return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
     }
 
-    private void checkColor(final Piece currentPiece, final Piece targetPiece) {
-        if (!currentPiece.isOtherColor(targetPiece)) {
+    private void validateNotMySide(final Piece currentPiece, final Position targetPosition) {
+        final Piece targetPiece = findPieceBy(targetPosition);
+        if (currentPiece.isMySide(targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
         }
-    }
-
-    private boolean isTargetExist(final Position target) {
-        return pieces.stream().anyMatch(piece -> piece.isPosition(target));
-    }
-
-    private boolean isTargetEmpty(final Position target) {
-        return !isTargetExist(target);
     }
 
     public Set<Piece> getPieces() {
