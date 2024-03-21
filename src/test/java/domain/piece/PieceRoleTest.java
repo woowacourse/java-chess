@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 class PieceRoleTest {
     @DisplayName("이동 성공 테스트")
     @Nested
-    class successTest {
+    class SuccessTest {
         @DisplayName("킹이 (b,1)에서 (b,2)로 이동한다.")
         @Test
         void canKingMove() {
@@ -87,7 +87,7 @@ class PieceRoleTest {
 
     @DisplayName("이동 실패 테스트")
     @Nested
-    class failTest {
+    class FailTest {
         @DisplayName("킹이 (b,1)에서 (c,2)로 이동하지 못한다.")
         @Test
         void cannotKingMove() {

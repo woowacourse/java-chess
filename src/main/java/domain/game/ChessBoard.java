@@ -26,7 +26,7 @@ public class ChessBoard {
         pawnMoveValidate(sourceSquare, targetSquare, findPiece);
         moveValidateExceptKnight(sourceSquare, targetSquare, findPiece);
 
-        if (findPiece.canMove(sourceSquare.getPosition(), targetSquare.getPosition())) {
+        if (findPiece.canMove(sourceSquare.position(), targetSquare.position())) {
             update(sourceSquare, targetSquare, findPiece);
         }
     }
@@ -55,7 +55,7 @@ public class ChessBoard {
 
     private void pawnMoveValidate(Square sourceSquare, Square targetSquare, Piece findPiece) {
         if (findPiece.isPawn()) {
-            Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
+            Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
             blackPawnValidate(targetSquare, findPiece, direction);
             whitePawnValidate(targetSquare, findPiece, direction);
         }
@@ -113,16 +113,16 @@ public class ChessBoard {
 
     private void moveValidateExceptKnight(Square sourceSquare, Square targetSquare, Piece findPiece) {
         if (findPiece.isNotKnight()) {
-            Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
+            Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
 
-            Position here = new Position(sourceSquare.getPosition());
+            Position here = new Position(sourceSquare.position());
             here.move(direction);
             checkPieceOnRoute(targetSquare, here, direction);
         }
     }
 
     private void checkPieceOnRoute(Square targetSquare, Position here, Direction direction) {
-        while (!here.equals(targetSquare.getPosition())) {
+        while (!here.equals(targetSquare.position())) {
             if (pieceBySquare.containsKey(new Square(here))) {
                 throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
             }
@@ -144,9 +144,5 @@ public class ChessBoard {
 
     public Piece findPieceBySquare(Square targetSquare) {
         return pieceBySquare.get(targetSquare);
-    }
-
-    static class Validator {
-
     }
 }

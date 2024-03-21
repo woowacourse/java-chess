@@ -3,16 +3,7 @@ package domain.game;
 import domain.position.Position;
 import java.util.Objects;
 
-public class Square {
-    private final Position position;
-
-    public Square(final Position position) {
-        this.position = position;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
+public record Square(Position position) {
 
     @Override
     public boolean equals(final Object o) {
@@ -24,10 +15,5 @@ public class Square {
         }
         final Square square = (Square) o;
         return Objects.equals(position, square.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position);
     }
 }

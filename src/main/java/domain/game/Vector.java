@@ -1,4 +1,7 @@
 package domain.game;
 
-public record Vector(int file, int rank) {
+public record Vector(
+        int file,
+        int rank
+) {
 }
