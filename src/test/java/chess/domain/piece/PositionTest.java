@@ -49,7 +49,7 @@ class PositionTest {
 
     @Test
     @DisplayName("현재 위치가 (1, 1)이고, Direction이 UP, RIGHT이면 (2, 1), (1, 2)로 이동할 수 있다.")
-    void findMovablePositionsByMovableDirections() {
+    void findPathToMovableDirections() {
         Position position = new Position(1, 1);
 
         assertThat(position.findMovablePositions(Set.of(Direction.UP, Direction.RIGHT)))

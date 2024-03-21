@@ -15,7 +15,7 @@ public abstract class NonSlidingPiece extends Piece {
         this.directions = directions;
     }
 
-    public Set<Position> findMovablePositions(Position destination) {
+    public Set<Position> findPathTo(Position destination) {
         Set<Position> movable = position.findMovablePositions(directions);
 
         if (!movable.contains(destination)) {

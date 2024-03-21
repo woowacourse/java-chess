@@ -12,7 +12,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Set<Position> findMovablePositions(Position destination);
+    public abstract Set<Position> findPathTo(Position destination);
 
     public boolean isSameColor(Color otherColor) {
         return color == otherColor;

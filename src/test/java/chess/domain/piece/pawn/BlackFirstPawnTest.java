@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.color.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.piece.pawn.BlackFirstPawn;
-import chess.domain.piece.pawn.BlackPawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,37 +24,37 @@ class BlackFirstPawnTest {
     }
 
     @Test
-    @DisplayName("(2, 7) -> (2, 5), (2, 6)")
-    void findMovablePositionsByUpUp() {
+    @DisplayName("(2, 7) -> (2, 5)로 이동하려고 할 때 중간 경로를 찾는다.")
+    void findPathToUpUp() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
         Position destination = new Position(2, 5);
 
-        assertThat(blackFirstPawn.findMovablePositions(destination)).containsExactly(new Position(2, 6));
+        assertThat(blackFirstPawn.findPathTo(destination)).containsExactly(new Position(2, 6));
     }
 
 
     @Test
     @DisplayName("왼쪽, 오른쪽으로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationLeftRight() {
+    void findPathToInvalidDestinationLeftRight() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
 
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> blackFirstPawn.findMovablePositions(new Position(1, 7)))
+                        .isThrownBy(() -> blackFirstPawn.findPathTo(new Position(1, 7)))
                         .withMessage("이동할 수 없습니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> blackFirstPawn.findMovablePositions(new Position(3, 7)))
+                        .isThrownBy(() -> blackFirstPawn.findPathTo(new Position(3, 7)))
                         .withMessage("이동할 수 없습니다.")
         );
     }
 
     @DisplayName("(2,7)일 때 (2, 1)로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidFarDestination() {
+    void findPathToInvalidFarDestination() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn(new Position(2, 7));
         Position destination = new Position(2, 1);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> blackFirstPawn.findMovablePositions(destination))
+                .isThrownBy(() -> blackFirstPawn.findPathTo(destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

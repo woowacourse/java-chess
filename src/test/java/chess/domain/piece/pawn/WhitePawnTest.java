@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.color.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +30,10 @@ class WhitePawnTest {
 
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whitePawn.findMovablePositions(new Position(1, 2)))
+                        .isThrownBy(() -> whitePawn.findPathTo(new Position(1, 2)))
                         .withMessage("이동할 수 없습니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whitePawn.findMovablePositions(new Position(3, 2)))
+                        .isThrownBy(() -> whitePawn.findPathTo(new Position(3, 2)))
                         .withMessage("이동할 수 없습니다.")
         );
     }
@@ -46,7 +45,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 4);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findMovablePositions(destination))
+                .isThrownBy(() -> whitePawn.findPathTo(destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -59,7 +58,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 1);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findMovablePositions(destination))
+                .isThrownBy(() -> whitePawn.findPathTo(destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -70,7 +69,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findMovablePositions(destination))
+                .isThrownBy(() -> whitePawn.findPathTo(destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

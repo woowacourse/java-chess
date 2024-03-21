@@ -34,7 +34,7 @@ public class PawnMoveStrategy extends MoveStrategy {
     }
 
     private void validateMovable(Position to, Pawn currentPiece) {
-        Set<Position> movablePositions = currentPiece.findMovablePositions(to);
+        Set<Position> movablePositions = currentPiece.findPathTo(to);
         if (!isAllBlankCourses(movablePositions)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }

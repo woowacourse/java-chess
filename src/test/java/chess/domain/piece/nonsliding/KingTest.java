@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import chess.domain.color.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.piece.nonsliding.King;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,12 +14,12 @@ class KingTest {
 
     @Test
     @DisplayName("(1, 1)일 때 (1, 3)으로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestination() {
+    void findPathToInvalidDestination() {
         King king = new King(new Position(1, 1), Color.WHITE);
         Position destination = new Position(1, 3);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> king.findMovablePositions(destination))
+                .isThrownBy(() -> king.findPathTo(destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

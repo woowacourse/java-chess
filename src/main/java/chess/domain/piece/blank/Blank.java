@@ -12,7 +12,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public Set<Position> findMovablePositions(Position destination) {
+    public Set<Position> findPathTo(Position destination) {
         throw new UnsupportedOperationException("해당 위치에 말이 없습니다.");
     }
 
