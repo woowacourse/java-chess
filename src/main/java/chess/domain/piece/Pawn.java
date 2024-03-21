@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
-import chess.domain.Position;
+import chess.domain.Square;
 import chess.domain.Rank;
 
 public class Pawn extends Piece {
@@ -12,27 +12,27 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Square source, Square target) {
         if (isBackward(source, target)) {
             return false;
         }
-        if (isFirstPosition(source)) {
+        if (isFirstStep(source)) {
             return source.calculateRankDiff(target.rank()) <= 2;
         }
         return source.calculateRankDiff(target.rank()) == 1;
     }
 
-    private boolean isBackward(Position source, Position target) {
+    private boolean isBackward(Square source, Square target) {
         if (getColor() == PieceColor.BLACK) {
             return source.rank().get() < target.rank().get();
         }
         return source.rank().get() > target.rank().get();
     }
 
-    private boolean isFirstPosition(Position position) {
+    private boolean isFirstStep(Square square) {
         if (getColor() == PieceColor.BLACK) {
-            return position.rank() == Rank.SEVEN;
+            return square.rank() == Rank.SEVEN;
         }
-        return position.rank() == Rank.TWO;
+        return square.rank() == Rank.TWO;
     }
 }

@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.PieceColor;
-import chess.domain.Position;
+import chess.domain.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ class KingTest {
     void canMove(String target) {
         King king = new King(PieceColor.BLACK);
 
-        boolean actual = king.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = king.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isTrue();
     }
@@ -28,7 +28,7 @@ class KingTest {
     void cannotMoveMoreThanTwoStep() {
         King king = new King(PieceColor.BLACK);
 
-        boolean actual = king.canMove(Position.from("c6"), Position.from("c4"));
+        boolean actual = king.canMove(Square.from("c6"), Square.from("c4"));
 
         assertThat(actual).isFalse();
     }

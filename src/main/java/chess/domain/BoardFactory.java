@@ -26,7 +26,7 @@ public class BoardFactory {
     }
 
     public static Board createBoard() {
-        Map<Position, Piece> board = new HashMap<>();
+        Map<Square, Piece> board = new HashMap<>();
 
         board.putAll(createPiecesWithoutPawn(Rank.EIGHT, PieceColor.BLACK));
         board.putAll(createPawns(Rank.SEVEN, PieceColor.BLACK));
@@ -37,19 +37,19 @@ public class BoardFactory {
     }
 
     // TODO: 필드 및 메서드명 재고
-    private static Map<Position, Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
+    private static Map<Square, Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
         return IntStream.range(0, PIECE_GENERATORS.size())
                 .boxed()
                 .collect(Collectors.toMap(
-                        index -> new Position(File.values()[index], rank),
+                        index -> new Square(File.values()[index], rank),
                         index -> PIECE_GENERATORS.get(index).apply(pieceColor)
                 ));
     }
 
-    private static Map<Position, Piece> createPawns(Rank rank, PieceColor pieceColor) {
+    private static Map<Square, Piece> createPawns(Rank rank, PieceColor pieceColor) {
         return Arrays.stream(File.values())
                 .collect(Collectors.toMap(
-                        file -> new Position(file, rank),
+                        file -> new Square(file, rank),
                         file -> new Pawn(pieceColor)
                 ));
     }

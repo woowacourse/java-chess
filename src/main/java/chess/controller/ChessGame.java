@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.BoardFactory;
-import chess.domain.Position;
+import chess.domain.Square;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -36,8 +36,8 @@ public class ChessGame {
     private static void tryMove(Board board, String source, String target) {
         try {
             board.move(
-                    Position.from(source),
-                    Position.from(target));
+                    Square.from(source),
+                    Square.from(target));
             OutputView.printInitialBoard(board.get());
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());

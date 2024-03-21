@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.PieceColor;
-import chess.domain.Position;
+import chess.domain.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -17,7 +17,7 @@ class BishopTest {
     void canMove(String target) {
         Bishop bishop = new Bishop(PieceColor.BLACK);
 
-        boolean actual = bishop.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = bishop.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isTrue();
     }

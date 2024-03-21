@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,13 +10,13 @@ public class Board {
 
     static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
     static final String ERROR_MOVE_NOT_AVAILABLE = "해당 위치로 기물을 이동할 수 없습니다.";
-    private final Map<Position, Piece> values;
+    private final Map<Square, Piece> values;
 
-    public Board(Map<Position, Piece> values) {
+    public Board(Map<Square, Piece> values) {
         this.values = new HashMap<>(values);
     }
 
-    public void move(final Position source, final Position target) {
+    public void move(final Square source, final Square target) {
         Piece sourcePiece = values.get(source);
 
         if (isNotExistPiece(source)) {
@@ -36,16 +35,16 @@ public class Board {
         values.put(target, sourcePiece);
     }
 
-    private boolean existObstacleOnPath(final Position source, final Position target) {
-        List<Position> path = source.generatePath(target);
+    private boolean existObstacleOnPath(final Square source, final Square target) {
+        List<Square> path = source.generatePath(target);
         return path.stream().anyMatch(values::containsKey);
     }
 
-    public boolean isNotExistPiece(Position position) {
-        return !values.containsKey(position);
+    public boolean isNotExistPiece(Square square) {
+        return !values.containsKey(square);
     }
 
-    public Map<Position, Piece> get() {
+    public Map<Square, Piece> get() {
         return values;
     }
 }

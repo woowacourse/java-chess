@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.PieceColor;
-import chess.domain.Position;
+import chess.domain.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ class KnightTest {
     void canMove() {
         Knight knight = new Knight(PieceColor.BLACK);
 
-        boolean actual = knight.canMove(Position.from("c6"), Position.from("a7"));
+        boolean actual = knight.canMove(Square.from("c6"), Square.from("a7"));
 
         assertThat(actual).isTrue();
     }
@@ -25,7 +25,7 @@ class KnightTest {
     void canMoveIfPieceExistsOnPath() {
         Knight knight = new Knight(PieceColor.BLACK);
 
-        boolean actual = knight.canMove(Position.from("c6"), Position.from("b4"));
+        boolean actual = knight.canMove(Square.from("c6"), Square.from("b4"));
 
         assertThat(actual).isTrue();
     }

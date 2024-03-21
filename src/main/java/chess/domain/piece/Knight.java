@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
-import chess.domain.Position;
+import chess.domain.Square;
 
 public class Knight extends Piece {
 
@@ -11,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Square source, Square target) {
         return (source.calculateFileDiff(target.file()) == 1
                 && source.calculateRankDiff(target.rank()) == 2) ||
                 (source.calculateFileDiff(target.file()) == 2

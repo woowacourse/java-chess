@@ -3,21 +3,21 @@ package chess.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public record Position(File file, Rank rank) {
+public record Square(File file, Rank rank) {
 
-    public static Position from(String position) {
-        File file = File.from(position.substring(0, 1));
-        Rank rank = Rank.from(position.substring(1, 2));
-        return new Position(file, rank);
+    public static Square from(String square) {
+        File file = File.from(square.substring(0, 1));
+        Rank rank = Rank.from(square.substring(1, 2));
+        return new Square(file, rank);
     }
 
-    public List<Position> generatePath(Position target) {
-        List<Position> path = new ArrayList<>();
+    public List<Square> generatePath(Square target) {
+        List<Square> path = new ArrayList<>();
 
         int vectorFile = target.signumFile(file);
         int vectorRank = target.signumRank(rank);
 
-        Position current = this;
+        Square current = this;
         do {
             current = current.addVector(vectorFile, vectorRank);
             path.add(current);
@@ -26,8 +26,8 @@ public record Position(File file, Rank rank) {
         return path;
     }
 
-    private Position addVector(int vectorFile, int vectorRank) {
-        return new Position(
+    private Square addVector(int vectorFile, int vectorRank) {
+        return new Square(
                 this.file.add(vectorFile),
                 this.rank.add(vectorRank));
     }
@@ -40,12 +40,12 @@ public record Position(File file, Rank rank) {
         return (int) Math.signum(this.rank.diff(rank));
     }
 
-    public boolean isSameRank(Position position) {
-        return rank == position.rank();
+    public boolean isSameRank(Square square) {
+        return rank == square.rank();
     }
 
-    public boolean isSameFile(Position position) {
-        return file == position.file();
+    public boolean isSameFile(Square square) {
+        return file == square.file();
     }
 
     public int calculateRankDiff(Rank target) {

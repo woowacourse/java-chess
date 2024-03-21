@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.Position;
+import chess.domain.Square;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class OutputView {
         System.out.printf(TITLE_START);
     }
 
-    public static void printInitialBoard(final Map<Position, Piece> board) {
+    public static void printInitialBoard(final Map<Square, Piece> board) {
         char[][] result = generateEmptyBoard();
         setPiecesOnBoard(board, result);
         printBoard(result);
@@ -33,10 +33,10 @@ public class OutputView {
         return emptyBoard;
     }
 
-    private static void setPiecesOnBoard(final Map<Position, Piece> board, final char[][] result) {
-        board.forEach(((position, piece) -> {
-            int col = position.file().get() - 1;
-            int row = position.rank().get() - 1;
+    private static void setPiecesOnBoard(final Map<Square, Piece> board, final char[][] result) {
+        board.forEach(((square, piece) -> {
+            int col = square.file().get() - 1;
+            int row = square.rank().get() - 1;
             result[row][col] = PieceMapper.map(piece.getType(), piece.getColor());
         }));
     }

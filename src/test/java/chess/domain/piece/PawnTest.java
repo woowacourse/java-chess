@@ -2,14 +2,11 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Board;
 import chess.domain.PieceColor;
-import chess.domain.Position;
+import chess.domain.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.Map;
 
 @DisplayName("폰")
 class PawnTest {
@@ -20,7 +17,7 @@ class PawnTest {
     void canMoveUpToTwoStepWhenBlackPawnFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actual = pawn.canMove(Position.from("c7"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c7"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -31,7 +28,7 @@ class PawnTest {
     void canMoveUpToTwoStepWhenWhitePawnFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actual = pawn.canMove(Position.from("c2"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c2"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -42,7 +39,7 @@ class PawnTest {
     void canMoveOnlyOneStepBlackPawnAfterFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actual = pawn.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -53,7 +50,7 @@ class PawnTest {
     void canMoveOnlyOneStepWhitePawnAfterFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actual = pawn.canMove(Position.from("c3"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c3"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }

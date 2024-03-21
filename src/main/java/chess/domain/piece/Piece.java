@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
-import chess.domain.Position;
+import chess.domain.Square;
 
 public abstract class Piece {
 
@@ -14,7 +14,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(Position source, Position target);
+    public abstract boolean canMove(Square source, Square target);
 
     public PieceType getType() {
         return type;
