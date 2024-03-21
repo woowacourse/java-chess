@@ -61,7 +61,8 @@ public class Pawn extends Piece {
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 
-    private boolean isAttackable(int rowDifference, int columnDifference) {
+    @Override
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
         if (team == Team.WHITE) {
             return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
         }

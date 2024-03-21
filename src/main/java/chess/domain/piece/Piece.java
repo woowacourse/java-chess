@@ -20,6 +20,10 @@ public abstract class Piece {
 
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return isMovable(rowDifference, columnDifference);
+    }
+
     protected abstract List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference);
 
     public abstract Piece move();
@@ -47,11 +51,22 @@ public abstract class Piece {
         return findBetweenPositions(oldPosition, newPosition);
     }
 
+    public boolean isOppositeTeamWith(Team team) {
+        return !isSameTeamWith(team);
+    }
+
     public boolean isSameTeamWith(Piece piece) {
-        return team == piece.team;
+        return isSameTeamWith(piece.team);
     }
 
     public boolean isSameTeamWith(Team team) {
         return this.team == team;
+    }
+
+    public boolean isAttacking(Position oldPosition, Position newPosition) {
+        int rowDifference = oldPosition.calculateRowDifference(newPosition);
+        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+
+        return !oldPosition.equals(newPosition) && isAttackable(rowDifference, columnDifference);
     }
 }

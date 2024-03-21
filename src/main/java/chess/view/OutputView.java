@@ -33,4 +33,8 @@ public class OutputView {
         }
         return ".";
     }
+
+    public static void printCheck() {
+        System.out.println("체크 !" + System.lineSeparator());
+    }
 }
