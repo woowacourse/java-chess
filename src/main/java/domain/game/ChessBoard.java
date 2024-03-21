@@ -43,6 +43,16 @@ public class ChessBoard {
         }
     }
 
+    private boolean hasSameColorPiece(Square sourceSquare, Square targetSquare) {
+        Piece sourcePiece = pieceBySquare.get(sourceSquare);
+
+        if (pieceBySquare.containsKey(targetSquare)) {
+            Piece targetPiece = pieceBySquare.get(targetSquare);
+            return sourcePiece.isEqualColor(targetPiece.getColor());
+        }
+        return false;
+    }
+
     private void pawnMoveValidate(Square sourceSquare, Square targetSquare, Piece findPiece) {
         if (findPiece.isPawn()) {
             Direction direction = Direction.findDirection(sourceSquare.getPosition(), targetSquare.getPosition());
@@ -53,20 +63,31 @@ public class ChessBoard {
 
     private void blackPawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
         if (findPiece.isEqualColor(Color.BLACK)) {
-            pawnMoveValidate(Direction.SOUTH, List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST), targetSquare,
-                    direction);
+            pawnMoveValidate(
+                    Direction.SOUTH,
+                    List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST),
+                    targetSquare,
+                    direction
+            );
         }
     }
 
     private void whitePawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
         if (findPiece.isEqualColor(Color.WHITE)) {
-            pawnMoveValidate(Direction.NORTH, List.of(Direction.NORTH_EAST, Direction.NORTH_WEST), targetSquare,
-                    direction);
+            pawnMoveValidate(
+                    Direction.NORTH,
+                    List.of(Direction.NORTH_EAST, Direction.NORTH_WEST),
+                    targetSquare,
+                    direction
+            );
         }
     }
 
-    private void pawnMoveValidate(Direction forward, List<Direction> diagonals, Square targetSquare,
-                                  Direction direction) {
+    private void pawnMoveValidate(Direction forward,
+                                  List<Direction> diagonals,
+                                  Square targetSquare,
+                                  Direction direction
+    ) {
         forwardValidate(forward, direction, targetSquare);
         diagonalValidate(diagonals, direction, targetSquare);
     }
@@ -113,21 +134,9 @@ public class ChessBoard {
         if (pieceBySquare.containsKey(targetSquare)) {
             pieceBySquare.remove(targetSquare);
         }
-
         pieceBySquare.put(targetSquare, findPiece);
         pieceBySquare.remove(sourceSquare);
     }
-
-    private boolean hasSameColorPiece(Square sourceSquare, Square targetSquare) {
-        Piece sourcePiece = pieceBySquare.get(sourceSquare);
-
-        if (pieceBySquare.containsKey(targetSquare)) {
-            Piece targetPiece = pieceBySquare.get(targetSquare);
-            return sourcePiece.isEqualColor(targetPiece.getColor());
-        }
-        return false;
-    }
-
 
     public boolean hasPiece(final Square square) {
         return pieceBySquare.containsKey(square);
@@ -135,5 +144,9 @@ public class ChessBoard {
 
     public Piece findPieceBySquare(Square targetSquare) {
         return pieceBySquare.get(targetSquare);
+    }
+
+    static class Validator {
+
     }
 }

@@ -25,23 +25,31 @@ public class ChessController {
     }
 
     public void run() {
-        ChessBoard mover = new ChessBoard();
-        PieceGenerator.generate(mover);
+        ChessBoard chessBoard = new ChessBoard();
+        PieceGenerator.generate(chessBoard);
 
         outputView.printCommandMessage();
         List<String> input = inputView.enterAnything();
         ChessCommand command = ChessCommand.from(input.get(0));
         while (command != ChessCommand.END) {
-            outputView.printSquareStatus(mover);
+            outputView.printSquareStatus(chessBoard);
             input = inputView.enterAnything();
             command = ChessCommand.from(input.get(0));
 
-            if (command == ChessCommand.MOVE) {
-                if (input.size() != 3) {
-                    throw new IllegalArgumentException("올바르지 않은 move 명령어입니다.");
-                }
-                mover.move(generateSquare(input.get(1)), generateSquare(input.get(2)));
-            }
+            executeMoveCommand(chessBoard, input, command);
+        }
+    }
+
+    private void validateMoveCommand(final List<String> input) {
+        if (input.size() != 3) {
+            throw new IllegalArgumentException("올바르지 않은 move 명령어입니다.");
+        }
+    }
+
+    private void executeMoveCommand(final ChessBoard chessBoard, final List<String> input, final ChessCommand command) {
+        if (command == ChessCommand.MOVE) {
+            validateMoveCommand(input);
+            chessBoard.move(generateSquare(input.get(1)), generateSquare(input.get(2)));
         }
     }
 
