@@ -23,6 +23,14 @@ public enum Rank {
         this.row = row;
     }
 
+    public static Rank of(final char row) {
+        return of(String.valueOf(row));
+    }
+
+    public static Rank of(final String row) {
+        return of(Integer.parseInt(row));
+    }
+
     public static Rank of(final int row) {
         return Arrays.stream(values())
                 .filter(rank -> rank.row == row)
