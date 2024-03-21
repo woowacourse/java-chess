@@ -31,35 +31,49 @@ public class ChessGame {
         while (true) {
             List<String> commands = InputView.inputCommand();
             String command = commands.get(0);
+
             if (command.equals(START.getCommandType())) {
-                if (checkFirst) {
-                    OutputView.printBoard(makeBoardDto(board.getBoard()));
-                    checkFirst = false;
-                } else if (!checkFirst) {
-                    System.out.println("다시 입력하세요.");
-                }
+                checkFirst = processStartCommand(checkFirst);
                 continue;
             }
             if (command.equals(MOVE.getCommandType())) {
-                if (checkFirst) {
-                    System.out.println("다시 입력하세요.");
-                    continue;
+                if (processMoveCommand(checkFirst, turn, commands)) {
+                    turn = Team.takeTurn(turn);
                 }
-                Position source = Position.of(commands.get(1));
-                Position target = Position.of(commands.get(2));
-                if (source.equals(target) || !checkTurn(source, turn)) {
-                    System.out.println("잘못된 움직임입니다.");
-                    continue;
-                }
-                movePieceAndRenewBoard(source, target);
-                OutputView.printBoard(makeBoardDto(board.getBoard()));
-                turn = Team.takeTurn(turn);
                 continue;
             }
             if (command.equals(END.getCommandType())) {
                 break;
             }
         }
+    }
+
+    private boolean processStartCommand(boolean checkFirst) {
+        if (checkFirst) {
+            OutputView.printBoard(makeBoardDto(board.getBoard()));
+        }
+        OutputView.printInputAgainMessage();
+        return false;
+    }
+
+    private boolean processMoveCommand(boolean checkFirst, Team turn, List<String> commands) {
+        if (checkFirst) {
+            OutputView.printInputAgainMessage();
+            return false;
+        }
+        Position source = Position.of(commands.get(1));
+        Position target = Position.of(commands.get(2));
+        if (!validateMove(source, target, turn)) {
+            OutputView.printWrongMovementMessage();
+            return false;
+        }
+        movePieceAndRenewBoard(source, target);
+        OutputView.printBoard(makeBoardDto(board.getBoard()));
+        return true;
+    }
+
+    private boolean validateMove(Position source, Position target, Team turn) {
+        return !source.equals(target) && checkTurn(source, turn);
     }
 
     public void movePieceAndRenewBoard(Position source, Position target) {
