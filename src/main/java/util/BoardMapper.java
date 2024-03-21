@@ -15,11 +15,11 @@ public class BoardMapper {
         throw new UnsupportedOperationException("생성할 수 없습니다.");
     }
 
-    public static BoardDto toDto(ChessBoard chessBoard) {
+    public static BoardDto toDto(final ChessBoard chessBoard) {
         return new BoardDto(convertMap(chessBoard.toMap()));
     }
 
-    private static Map<PointDto, String> convertMap(Map<Point, Piece> chessMap) {
+    private static Map<PointDto, String> convertMap(final Map<Point, Piece> chessMap) {
         Map<PointDto, String> convertedMap = new HashMap<>();
         for (final var entry : chessMap.entrySet()) {
             convertedMap.put(convertPoint(entry.getKey()), convertPiece(entry.getValue()));
@@ -27,11 +27,11 @@ public class BoardMapper {
         return convertedMap;
     }
 
-    private static PointDto convertPoint(Point point) {
+    private static PointDto convertPoint(final Point point) {
         return new PointDto(point.getRankIndex(), point.getFileIndex());
     }
 
-    private static String convertPiece(Piece piece) {
+    private static String convertPiece(final Piece piece) {
         final var pieceName = convertStatus(piece.getStatus());
         if (piece.isWhite()) {
             return pieceName.toLowerCase();
@@ -39,7 +39,7 @@ public class BoardMapper {
         return pieceName.toUpperCase();
     }
 
-    private static String convertStatus(PieceStatus pieceStatus) {
+    private static String convertStatus(final PieceStatus pieceStatus) {
         return switch (pieceStatus) {
             case ROOK -> "R";
             case BISHOP -> "B";

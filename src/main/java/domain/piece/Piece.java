@@ -18,7 +18,7 @@ public abstract class Piece implements Movable {
 
     public abstract PieceStatus getStatus();
 
-    public void move(Point point) {
+    public void move(final Point point) {
         this.point = point;
     }
 
@@ -38,12 +38,12 @@ public abstract class Piece implements Movable {
         return this.color == Color.WHITE;
     }
 
-    public boolean isDirectionStraight(Point point) {
+    public boolean isDirectionStraight(final Point point) {
         return this.point.calculate(point)
                          .isStraight();
     }
 
-    public boolean isDirectionDiagonal(Point point) {
+    public boolean isDirectionDiagonal(final Point point) {
         return this.point.calculate(point)
                          .isDiagonal();
     }

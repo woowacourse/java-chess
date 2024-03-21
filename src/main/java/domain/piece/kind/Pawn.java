@@ -23,8 +23,8 @@ public class Pawn extends Piece {
     }
 
 
-    public boolean canMove(Point point) {
-        Direction direction = this.point.calculate(point);
+    public boolean canMove(final Point point) {
+        final Direction direction = this.point.calculate(point);
 
         if (!containDirection(direction)) {
             return false;
@@ -32,20 +32,20 @@ public class Pawn extends Piece {
         return singleCase(point, direction) || doubleCase(point, direction);
     }
 
-    private boolean containDirection(Direction direction) {
+    private boolean containDirection(final Direction direction) {
         if (this.isBlack()) {
             return blackList.contains(direction);
         }
         return whiteList.contains(direction);
     }
 
-    private boolean singleCase(Point point, Direction direction) {
-        Index index = this.point.toIndex();
+    private boolean singleCase(final Point point, final Direction direction) {
+        final Index index = this.point.toIndex();
         return Point.fromIndex(index.move(direction, SINGLE_COUNT))
                     .equals(point);
     }
 
-    private boolean doubleCase(Point point, Direction direction) {
+    private boolean doubleCase(final Point point, final Direction direction) {
         if (specialCase(direction)) {
             Index index = this.point.toIndex();
             return Point.fromIndex(index.move(direction, DOUBLE_COUNT))
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
         return false;
     }
 
-    private boolean specialCase(Direction direction) {
+    private boolean specialCase(final Direction direction) {
         return !this.flag && direction.isStraight();
     }
 

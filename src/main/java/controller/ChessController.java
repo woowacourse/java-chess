@@ -20,12 +20,16 @@ public class ChessController {
                 chessBoard = ChessBoard.createDefaultBoard();
             }
             if (chessCommand == ChessCommand.MOVE) {
-                final var source = InputView.inputChessPoint();
-                final var destination = InputView.inputChessPoint();
-                chessBoard.move(new RouteDto(source, destination));
+                pieceMove(chessBoard);
             }
             OutputView.printBoard(BoardMapper.toDto(chessBoard));
         }
+    }
+
+    private void pieceMove(ChessBoard chessBoard) {
+        final var source = InputView.inputChessPoint();
+        final var destination = InputView.inputChessPoint();
+        chessBoard.move(new RouteDto(source, destination));
     }
 
 }

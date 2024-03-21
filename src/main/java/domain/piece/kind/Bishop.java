@@ -21,7 +21,7 @@ public class Bishop extends Piece {
         return PieceStatus.BISHOP;
     }
 
-    public boolean canMove(Point point) {
+    public boolean canMove(final Point point) {
         final Direction direction = this.point.calculate(point);
         return directionList.contains(direction);
     }

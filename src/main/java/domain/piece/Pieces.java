@@ -18,7 +18,7 @@ public class Pieces {
                     .findAny();
     }
 
-    public boolean check(Piece piece, Point endPoint) {
+    public boolean check(final Piece piece, final Point endPoint) {
         if (!piece.canMove(endPoint)) {
             return false;
         }
@@ -30,7 +30,7 @@ public class Pieces {
         };
     }
 
-    public void move(Piece piece, Point point) {
+    public void move(final Piece piece, final Point point) {
         final Optional<Piece> optionalPiece = findPieceWithPoint(point);
         optionalPiece.ifPresent(value::remove);
         piece.move(point);

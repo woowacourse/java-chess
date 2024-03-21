@@ -24,11 +24,11 @@ public record Index(int vertical, int horizontal) {
         return this.horizontal() + 1;
     }
 
-    public Index move(Direction direction) {
+    public Index move(final Direction direction) {
         return direction.move(this);
     }
 
-    public Index move(Direction direction, int count) {
+    public Index move(final Direction direction, final int count) {
         Index index = this;
         for (int i = 0; i < count; i++) {
             index = index.move(direction);
@@ -36,8 +36,8 @@ public record Index(int vertical, int horizontal) {
         return index;
     }
 
-    public List<Index> findMovePath(Direction direction, Index other) {
-        List<Index> pathIndexes = new ArrayList<>();
+    public List<Index> findMovePath(final Direction direction, Index other) {
+        final List<Index> pathIndexes = new ArrayList<>();
         Index current = direction.move(this);
         while (!current.equals(other)) {
             pathIndexes.add(current);

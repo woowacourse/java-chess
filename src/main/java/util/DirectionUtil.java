@@ -9,7 +9,7 @@ public class DirectionUtil {
         throw new UnsupportedOperationException("생성할 수 없습니다.");
     }
 
-    public static Direction determineDirection(Point standard, Point comparison) {
+    public static Direction determineDirection(final Point standard, final Point comparison) {
         if (isUp(standard, comparison)) {
             return Direction.UP;
         }
@@ -38,27 +38,27 @@ public class DirectionUtil {
         throw new IllegalArgumentException();
     }
 
-    private static boolean isUp(Point standard, Point comparison) {
+    private static boolean isUp(final Point standard, final Point comparison) {
         return standard.getFileIndex() == comparison.getFileIndex()
                 && standard.getRankIndex() < comparison.getRankIndex();
     }
 
-    private static boolean isDown(Point standard, Point comparison) {
+    private static boolean isDown(final Point standard, final Point comparison) {
         return standard.getFileIndex() == comparison.getFileIndex()
                 && standard.getRankIndex() > comparison.getRankIndex();
     }
 
-    private static boolean isLeft(Point standard, Point comparison) {
+    private static boolean isLeft(final Point standard, final Point comparison) {
         return standard.getFileIndex() > comparison.getFileIndex()
                 && standard.getRankIndex() == comparison.getRankIndex();
     }
 
-    private static boolean isRight(Point standard, Point comparison) {
+    private static boolean isRight(final Point standard, final Point comparison) {
         return standard.getFileIndex() < comparison.getFileIndex()
                 && standard.getRankIndex() == comparison.getRankIndex();
     }
 
-    private static boolean isUpRight(Point standard, Point comparison) {
+    private static boolean isUpRight(final Point standard, final Point comparison) {
         if (!isDiagonal(standard, comparison)) {
             return false;
         }
@@ -66,7 +66,7 @@ public class DirectionUtil {
                 && standard.getRankIndex() < comparison.getRankIndex();
     }
 
-    private static boolean isUpLeft(Point standard, Point comparison) {
+    private static boolean isUpLeft(final Point standard, final Point comparison) {
         if (!isDiagonal(standard, comparison)) {
             return false;
         }
@@ -74,7 +74,7 @@ public class DirectionUtil {
                 && standard.getRankIndex() < comparison.getRankIndex();
     }
 
-    private static boolean isDownRight(Point standard, Point comparison) {
+    private static boolean isDownRight(final Point standard, final Point comparison) {
         if (!isDiagonal(standard, comparison)) {
             return false;
         }
@@ -82,7 +82,7 @@ public class DirectionUtil {
                 && standard.getRankIndex() > comparison.getRankIndex();
     }
 
-    private static boolean isDownLeft(Point standard, Point comparison) {
+    private static boolean isDownLeft(final Point standard, final Point comparison) {
         if (!isDiagonal(standard, comparison)) {
             return false;
         }
@@ -90,7 +90,7 @@ public class DirectionUtil {
                 && standard.getRankIndex() > comparison.getRankIndex();
     }
 
-    private static boolean isDiagonal(Point standard, Point comparison) {
+    private static boolean isDiagonal(final Point standard, final Point comparison) {
         return (Math.abs(standard.getFileIndex() - comparison.getFileIndex()))
                 == (Math.abs(standard.getRankIndex() - comparison.getRankIndex()));
     }

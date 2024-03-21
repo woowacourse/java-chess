@@ -19,7 +19,7 @@ public class ChessBoardGenerator {
     }
 
     public static ChessBoard createDefaultBoard() {
-        ArrayList<Piece> list = new ArrayList<>();
+        final ArrayList<Piece> list = new ArrayList<>();
         list.addAll(selectPiece(Rank.EIGHT, Color.BLACK));
         list.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
 
@@ -28,14 +28,14 @@ public class ChessBoardGenerator {
         return new ChessBoard(new Pieces(list));
     }
 
-    private static List<Piece> selectPawn(Rank rank, Color color) {
+    private static List<Piece> selectPawn(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
                      .map(file -> new Pawn(new Point(file, rank), color))
                      .map(Piece.class::cast)
                      .toList();
     }
 
-    private static List<Piece> selectPiece(Rank rank, Color color) {
+    private static List<Piece> selectPiece(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
                      .map(file -> switch (file) {
                          case A, H -> new Rook(new Point(file, rank), color);

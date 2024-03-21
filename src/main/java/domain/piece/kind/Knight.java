@@ -26,7 +26,7 @@ public class Knight extends Piece {
     }
 
 
-    public boolean canMove(Point point) {
+    public boolean canMove(final Point point) {
         return directionList.stream()
                             .map(this::moveIndex)
                             .filter(Index::isInBoundary)
@@ -34,7 +34,7 @@ public class Knight extends Piece {
                             .anyMatch(point::equals);
     }
 
-    private Index moveIndex(List<Direction> directions) {
+    private Index moveIndex(final List<Direction> directions) {
         Index index = this.point.toIndex();
         for (final var direction : directions) {
             index = index.move(direction);

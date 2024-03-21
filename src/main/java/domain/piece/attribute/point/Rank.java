@@ -15,7 +15,7 @@ public enum Rank {
         this.value = value;
     }
 
-    public static Rank from(int value) {
+    public static Rank from(final int value) {
         for (final Rank rank : Rank.values()) {
             if (rank.value == value) {
                 return rank;
@@ -24,11 +24,11 @@ public enum Rank {
         throw new IllegalArgumentException(String.format("%d는 랭크에 존재하지 않습니다.", value));
     }
 
-    public static boolean isInBoundary(int index) {
+    public static boolean isInBoundary(final int index) {
         return index >= 0 && index < values().length;
     }
 
-    public static Rank findByIndex(int ordinalIndex) {
+    public static Rank findByIndex(final int ordinalIndex) {
         return values()[ordinalIndex];
     }
 

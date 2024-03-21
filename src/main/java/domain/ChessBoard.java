@@ -19,10 +19,11 @@ public class ChessBoard {
         final var piece = this.pieces.findPieceWithPoint(point);
         return piece.orElseThrow(() -> new IllegalArgumentException("해당 포인트에는 기물이 없습니다"));
     }
-    public void move(RouteDto dto) {
-        Point startPoint = dto.getStartPoint();
-        Point endPoint = dto.getEndPoint();
-        Piece piece = findPieceByPoint(startPoint);
+
+    public void move(final RouteDto dto) {
+        final Point startPoint = dto.getStartPoint();
+        final Point endPoint = dto.getEndPoint();
+        final Piece piece = findPieceByPoint(startPoint);
 
         if (pieces.check(piece, endPoint)) {
             pieces.move(piece, endPoint);

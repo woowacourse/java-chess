@@ -11,7 +11,7 @@ public enum File {
     H('h');
     private char value;
 
-    public static boolean isInBoundary(int index) {
+    public static boolean isInBoundary(final int index) {
         return index >= 0 && index < values().length;
     }
 
@@ -19,7 +19,7 @@ public enum File {
         this.value = value;
     }
 
-    public static File from(char value) {
+    public static File from(final char value) {
         for (final File file : File.values()) {
             if (file.value == value) {
                 return file;
@@ -28,7 +28,7 @@ public enum File {
         throw new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value));
     }
 
-    public static File findByIndex(int ordinalIndex) {
+    public static File findByIndex(final int ordinalIndex) {
         return values()[ordinalIndex];
     }
 

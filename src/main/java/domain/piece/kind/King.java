@@ -16,9 +16,9 @@ public class King extends Piece {
         return PieceStatus.KING;
     }
 
-    public boolean canMove(Point point) {
-        Direction direction = this.point.calculate(point);
-        Index index = this.point.toIndex();
+    public boolean canMove(final Point point) {
+        final Direction direction = this.point.calculate(point);
+        final Index index = this.point.toIndex();
 
         return Point.fromIndex(index.move(direction))
                     .equals(point);
