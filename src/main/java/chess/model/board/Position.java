@@ -53,8 +53,10 @@ public class Position {
         return other.rank - rank;
     }
 
-    public Position move(int fileChange, int rankChange) {
-        return Position.from(file + fileChange, rank + rankChange);
+    public Position moveToTargetByStep(Position target) {
+        int fileStep = Integer.signum(getFileGap(target));
+        int rankStep = Integer.signum(getRankGap(target));
+        return Position.from(file + fileStep, rank + rankStep);
     }
 
     public boolean isRankEquals(int rank) {

@@ -49,22 +49,12 @@ public class Movement {
             throw new IllegalStateException("직선이나 대각선 방향이 아닙니다.");
         }
         List<Position> positions = new ArrayList<>();
-        int fileStep = getFileStep();
-        int rankStep = getRankStep();
-        Position currentPosition = source.move(fileStep, rankStep);
+        Position currentPosition = source.moveToTargetByStep(destination);
         while (!currentPosition.equals(destination)) {
             positions.add(currentPosition);
-            currentPosition = currentPosition.move(fileStep, rankStep);
+            currentPosition = currentPosition.moveToTargetByStep(destination);
         }
         return positions;
-    }
-
-    private int getFileStep() {
-        return Integer.signum(getFileGap());
-    }
-
-    private int getRankStep() {
-        return Integer.signum(getRankGap());
     }
 
     public boolean isSourceRankMatch(int rank) {
