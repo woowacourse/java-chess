@@ -28,6 +28,7 @@ public enum File {
         if (westToEast >= MAX_WEST_TO_EAST) {
             throw new IllegalStateException("동쪽으로 이동할 수 없습니다.");
         }
+
         return find(westToEast + TO_EAST);
     }
 
@@ -35,6 +36,7 @@ public enum File {
         if (westToEast <= MIN_WEST_TO_EAST) {
             throw new IllegalStateException("서쪽으로 이동할 수 없습니다.");
         }
+
         return find(westToEast + TO_WEST);
     }
 

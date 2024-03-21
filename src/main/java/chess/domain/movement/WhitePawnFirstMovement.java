@@ -10,6 +10,7 @@ public class WhitePawnFirstMovement implements MovementRule {
     public boolean isMovable(Position start, Position end) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
+
         return start.isSameRank(Rank.TWO) && rankDifference == 2 && fileDifference == 0;
     }
 

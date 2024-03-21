@@ -69,9 +69,11 @@ public class ChessGame {
 
     private void addPiece(Board board, Position position, Map<Position, PieceDto> boardDto) {
         Optional<Piece> optionalPiece = board.find(position);
+
         if (optionalPiece.isEmpty()) {
             return;
         }
+
         Piece piece = optionalPiece.get();
         PieceDto pieceDto = PieceDto.from(piece);
         boardDto.put(position, pieceDto);

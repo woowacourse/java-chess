@@ -28,6 +28,7 @@ public enum Rank {
         if (southToNorth >= MAX_SOUTH_TO_NORTH) {
             throw new IllegalStateException("북쪽으로 이동할 수 없습니다.");
         }
+
         return find(southToNorth + TO_NORTH);
     }
 
@@ -35,6 +36,7 @@ public enum Rank {
         if (southToNorth <= MIN_SOUTH_TO_NORTH) {
             throw new IllegalStateException("남쪽으로 이동할 수 없습니다.");
         }
+
         return find(southToNorth + TO_SOUTH);
     }
 

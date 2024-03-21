@@ -10,6 +10,7 @@ public abstract class DiscreteMovementRule implements MovementRule {
     public final boolean isMovable(Position start, Position end) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
+
         return isMovable(rankDifference, fileDifference);
     }
 
@@ -18,6 +19,7 @@ public abstract class DiscreteMovementRule implements MovementRule {
         if (!isMovable(start, end)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
+
         return List.of(end);
     }
 
