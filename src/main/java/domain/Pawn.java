@@ -7,9 +7,11 @@ import domain.piece.attribute.point.Point;
 
 import java.util.List;
 
+import static domain.piece.attribute.point.Direction.*;
+
 public class Pawn extends Piece {
-    private static List<Direction> blackList = List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
-    private static List<Direction> whiteList = List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT);
+    private static List<Direction> blackList = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+    private static List<Direction> whiteList = List.of(UP, UP_LEFT, UP_RIGHT);
     private static final int DOUBLE_COUNT = 2;
     private static final int SINGLE_COUNT = 1;
 

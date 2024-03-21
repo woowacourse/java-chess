@@ -3,13 +3,13 @@ package domain;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
-import factory.DirectionFactory;
 
 import java.util.List;
 
+import static domain.piece.attribute.point.Direction.*;
+
 public class Rook extends Piece {
-    private static final List<Direction> rookList =
-            List.of(Direction.UP, Direction.DOWN, Direction.RIGHT, Direction.LEFT);
+    private static final List<Direction> rookList = List.of(UP, DOWN, RIGHT, LEFT);
 
     public Rook(final Point point, final Color color) {
         super(point, color);
@@ -21,7 +21,7 @@ public class Rook extends Piece {
     }
 
     public boolean canMove(final Point point) {
-        final Direction direction = DirectionFactory.generate(this.getPoint(), point);
+        final Direction direction = this.point.calculate(point);
         return rookList.contains(direction);
     }
 }

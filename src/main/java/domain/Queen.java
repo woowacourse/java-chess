@@ -1,15 +1,9 @@
 package domain;
 
 import domain.piece.attribute.Color;
-import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
-import factory.DirectionFactory;
-
-import java.util.List;
 
 public class Queen extends Piece {
-    private static final List<Direction> directionList = Direction.all();
-
     public Queen(final Point point, final Color color) {
         super(point, color);
     }
@@ -19,8 +13,9 @@ public class Queen extends Piece {
         return PieceStatus.QUEEN;
     }
 
+    //TODO : 현재 방향을 계산해야만 검증 로직 가능 좀 더 생각해봐야함
     public boolean canMove(final Point point) {
-        final Direction direction = DirectionFactory.generate(this.getPoint(), point);
-        return directionList.contains(direction);
+        this.point.calculate(point);
+        return true;
     }
 }

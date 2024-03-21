@@ -7,16 +7,18 @@ import domain.piece.attribute.point.Point;
 
 import java.util.List;
 
+import static domain.piece.attribute.point.Direction.*;
+
 public class Knight extends Piece {
-    public static final List<List<Direction>> directionList = List.of(List.of(Direction.UP, Direction.UP_RIGHT),
-            List.of(Direction.UP, Direction.UP_LEFT),
-            List.of(Direction.UP, Direction.UP_RIGHT),
-            List.of(Direction.LEFT, Direction.UP_LEFT),
-            List.of(Direction.LEFT, Direction.DOWN_LEFT),
-            List.of(Direction.RIGHT, Direction.UP_RIGHT),
-            List.of(Direction.RIGHT, Direction.DOWN_RIGHT),
-            List.of(Direction.DOWN, Direction.DOWN_RIGHT),
-            List.of(Direction.DOWN, Direction.DOWN_LEFT));
+    private static final List<List<Direction>> directionList = List.of(List.of(UP, UP_RIGHT),
+            List.of(UP, UP_LEFT),
+            List.of(UP, UP_RIGHT),
+            List.of(LEFT, UP_LEFT),
+            List.of(LEFT, DOWN_LEFT),
+            List.of(RIGHT, UP_RIGHT),
+            List.of(RIGHT, DOWN_RIGHT),
+            List.of(DOWN, DOWN_RIGHT),
+            List.of(DOWN, DOWN_LEFT));
 
     public Knight(final Point point, final Color color) {
         super(point, color);

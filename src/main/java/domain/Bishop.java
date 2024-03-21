@@ -3,7 +3,6 @@ package domain;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
-import factory.DirectionFactory;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class Bishop extends Piece {
     }
 
     public boolean canMove(Point point) {
-        final Direction direction = DirectionFactory.generate(this.getPoint(), point);
+        final Direction direction = this.point.calculate(point);
         return directionList.contains(direction);
     }
 }
