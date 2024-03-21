@@ -39,7 +39,6 @@ public class OutputView {
     }
 
     private String pieceToString(Piece piece) {
-        // TODO: 메소드 라인 줄여보기
         if (piece == null) {
             return ".";
         }
