@@ -56,6 +56,12 @@ public class Distance {
         int repeatCount = calculateRepeatCount();
 
         List<ChessPosition> path = new ArrayList<>();
+        addPath(source, repeatCount, fileOffset, rankOffset, path);
+        return path;
+    }
+
+    private void addPath(final ChessPosition source, int repeatCount, final int fileOffset, final int rankOffset,
+                           final List<ChessPosition> path) {
         ChessPosition prevPosition = source;
         while (repeatCount-- > 0) {
             File nextFile = prevPosition.findNextFile(fileOffset);
@@ -63,17 +69,10 @@ public class Distance {
             prevPosition = new ChessPosition(nextFile, nextRank);
             path.add(prevPosition);
         }
-        return path;
     }
 
     private int calculateIncrement(int difference) {
-        if (difference < 0) {
-            return -1;
-        }
-        if (difference == 0) {
-            return 0;
-        }
-        return 1;
+        return Integer.compare(difference, 0);
     }
 
     private int calculateRepeatCount() {

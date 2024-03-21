@@ -11,18 +11,30 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
-        if (targetPiece != null && isSameSide(targetPiece)) {
-            throw new IllegalArgumentException("아군X");
+    public String getText() {
+        if (side.isWhite()) {
+            return "p";
         }
+        return "P";
+    }
+
+    @Override
+    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+        validateTargetPieceSameSide(targetPiece);
         Distance distance = target.calculateDistance(source);
         if (targetPiece != null && !isPossibleDiagonal(distance)) {
-            throw new IllegalArgumentException("앞에 어떤 기물이든 안됨");
+            throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 직선으로 움직일 수 없습니다.");
         }
         if (canCrossMove(source, distance) || canDiagonalMove(targetPiece, distance)) {
             return distance.findPath(source);
         }
         return List.of();
+    }
+
+    private void validateTargetPieceSameSide(final Piece targetPiece) {
+        if (targetPiece != null && isSameSide(targetPiece)) {
+            throw new IllegalArgumentException("아군 기물이 타겟 위치에 있어 움직일 수 없습니다.");
+        }
     }
 
     private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
@@ -43,13 +55,5 @@ public class Pawn extends Piece {
 
     private boolean canMoveForwardWith(Distance distance, int displacement) {
         return distance.isForward(side) && distance.hasSame(displacement);
-    }
-
-    @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "p";
-        }
-        return "P";
     }
 }

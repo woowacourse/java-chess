@@ -27,13 +27,6 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 이름입니다."));
     }
 
-    public static File from(int coordinate) {
-        return Arrays.stream(values())
-                .filter(file -> file.coordinate == coordinate)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 좌표입니다."));
-    }
-
     public int minus(File other) {
         return this.coordinate - other.coordinate;
     }

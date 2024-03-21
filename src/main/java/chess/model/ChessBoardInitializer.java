@@ -17,10 +17,7 @@ public class ChessBoardInitializer {
     }
 
     private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
-        Rank rank = Rank.ONE;
-        if (side == Side.BLACK) {
-            rank = Rank.EIGHT;
-        }
+        Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Rook(side),
                 new ChessPosition(File.B, rank), new Knight(side),
@@ -33,11 +30,16 @@ public class ChessBoardInitializer {
         );
     }
 
-    private Map<ChessPosition, Piece> createPawns(Side side) {
-        Rank rank = Rank.TWO;
+    private Rank convertSpecialPieceRankWithSide(final Side side) {
+        Rank rank = Rank.ONE;
         if (side == Side.BLACK) {
-            rank = Rank.SEVEN;
+            rank = Rank.EIGHT;
         }
+        return rank;
+    }
+
+    private Map<ChessPosition, Piece> createPawns(Side side) {
+        Rank rank = convertPawnRanksWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Pawn(side),
                 new ChessPosition(File.B, rank), new Pawn(side),
@@ -48,5 +50,13 @@ public class ChessBoardInitializer {
                 new ChessPosition(File.G, rank), new Pawn(side),
                 new ChessPosition(File.H, rank), new Pawn(side)
         );
+    }
+
+    private Rank convertPawnRanksWithSide(final Side side) {
+        Rank rank = Rank.TWO;
+        if (side == Side.BLACK) {
+            rank = Rank.SEVEN;
+        }
+        return rank;
     }
 }

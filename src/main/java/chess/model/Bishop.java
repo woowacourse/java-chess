@@ -9,6 +9,14 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public String getText() {
+        if (side.isWhite()) {
+            return "b";
+        }
+        return "B";
+    }
+
+    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
@@ -16,13 +24,5 @@ public class Bishop extends Piece {
             return distance.findPath(source);
         }
         return List.of();
-    }
-
-    @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "b";
-        }
-        return "B";
     }
 }

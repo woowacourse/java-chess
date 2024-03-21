@@ -10,6 +10,14 @@ public class King extends Piece {
     }
 
     @Override
+    public String getText() {
+        if (side.isWhite()) {
+            return "k";
+        }
+        return "K";
+    }
+
+    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
@@ -17,13 +25,5 @@ public class King extends Piece {
             return List.of(target);
         }
         return List.of();
-    }
-
-    @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "k";
-        }
-        return "K";
     }
 }
