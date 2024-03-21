@@ -22,8 +22,8 @@ class BoardTest {
     @DisplayName("실패: 출발점에 말이 없으면 이동 불가")
     void move_NoPieceAtSourcePosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
-        Position sourcePosition = new Position(new File(4), new Rank(4));
-        Position targetPosition = new Position(new File(4), new Rank(5));
+        Position sourcePosition = Position.of(4, 4);
+        Position targetPosition = Position.of(4, 5);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
@@ -34,8 +34,8 @@ class BoardTest {
     @DisplayName("실패: 도착점에 본인의 말이 있으면 이동 불가")
     void move_OwnPieceExistAtTargetPosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
-        Position sourcePosition = new Position(new File(1), new Rank(1));
-        Position targetPosition = new Position(new File(1), new Rank(2));
+        Position sourcePosition = Position.of(1, 1);
+        Position targetPosition = Position.of(1, 2);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
@@ -46,8 +46,8 @@ class BoardTest {
     @DisplayName("실패: 출발 위치와 도착 위치가 같으면 이동 불가")
     void move_SourcePositionIsSameAsTargetPosition() {
         Board board = Board.generatedBy(new InitialBoardGenerator());
-        Position sourcePosition = new Position(new File(1), new Rank(1));
-        Position targetPosition = new Position(new File(1), new Rank(1));
+        Position sourcePosition = Position.of(1, 1);
+        Position targetPosition = Position.of(1, 1);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
             .isInstanceOf(IllegalArgumentException.class)
@@ -57,8 +57,8 @@ class BoardTest {
     @Test
     @DisplayName("성공: Knight가 규칙에 맞는 위치로 이동")
     void move_LegalMoveKnight() {
-        Position sourcePosition = new Position(new File(2), new Rank(1));
-        Position targetPosition = new Position(new File(3), new Rank(3));
+        Position sourcePosition = Position.of(2, 1);
+        Position targetPosition = Position.of(3, 3);
         Knight knight = new Knight(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
             Map.of(sourcePosition, knight)
@@ -76,8 +76,8 @@ class BoardTest {
     @Test
     @DisplayName("성공: King이 규칙에 맞는 위치로 이동")
     void move_LegalMoveKing() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position targetPosition = new Position(new File(1), new Rank(3));
+        Position sourcePosition = Position.of(2, 2);
+        Position targetPosition = Position.of(1, 3);
         King king = new King(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
             Map.of(sourcePosition, king)
@@ -95,8 +95,8 @@ class BoardTest {
     @Test
     @DisplayName("실패: 말의 규칙에 맞지 않는 위치로 이동")
     void move_IllegalMove() {
-        Position sourcePosition = new Position(new File(2), new Rank(1));
-        Position targetPosition = new Position(new File(3), new Rank(4));
+        Position sourcePosition = Position.of(2, 1);
+        Position targetPosition = Position.of(3, 4);
         Knight knight = new Knight(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
             Map.of(sourcePosition, knight)
@@ -110,9 +110,9 @@ class BoardTest {
     @Test
     @DisplayName("실패: rook 경로에 말이 있는 경우 이동 불가")
     void move_Rook_PieceExistsOnRoute() {
-        Position sourcePosition = new Position(new File(1), new Rank(1));
-        Position middlePosition = new Position(new File(1), new Rank(4));
-        Position targetPosition = new Position(new File(1), new Rank(8));
+        Position sourcePosition = Position.of(1, 1);
+        Position middlePosition = Position.of(1, 4);
+        Position targetPosition = Position.of(1, 8);
 
         Rook rook = new Rook(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
@@ -132,9 +132,9 @@ class BoardTest {
     @Test
     @DisplayName("실패: bishop 경로에 말이 있는 경우 이동 불가")
     void move_Bishop_PieceExistsOnRoute() {
-        Position sourcePosition = new Position(new File(1), new Rank(1));
-        Position middlePosition = new Position(new File(4), new Rank(4));
-        Position targetPosition = new Position(new File(8), new Rank(8));
+        Position sourcePosition = Position.of(1, 1);
+        Position middlePosition = Position.of(4, 4);
+        Position targetPosition = Position.of(8, 8);
 
         Bishop bishop = new Bishop(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
@@ -154,9 +154,9 @@ class BoardTest {
     @Test
     @DisplayName("실패: queen 경로에 말이 있는 경우 이동 불가")
     void move_Queen_PieceExistsOnRoute() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position middlePosition = new Position(new File(2), new Rank(6));
-        Position targetPosition = new Position(new File(2), new Rank(8));
+        Position sourcePosition = Position.of(2, 2);
+        Position middlePosition = Position.of(2, 6);
+        Position targetPosition = Position.of(2, 8);
 
         Queen queen = new Queen(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
@@ -176,9 +176,9 @@ class BoardTest {
     @Test
     @DisplayName("실패: pawn 2칸 전진 시 경로에 말이 있는 경우 이동 불가")
     void move_Pawn_PieceExistsOnRouteWhenMoveForwardTwo() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position middlePosition = new Position(new File(2), new Rank(3));
-        Position targetPosition = new Position(new File(2), new Rank(4));
+        Position sourcePosition = Position.of(2, 2);
+        Position middlePosition = Position.of(2, 3);
+        Position targetPosition = Position.of(2, 4);
 
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.WHITE);
@@ -198,8 +198,8 @@ class BoardTest {
     @Test
     @DisplayName("실패: pawn 전진 시 상대 말이 있으면 이동 불가")
     void move_Pawn_PieceExistsAtTargetPosition() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position targetPosition = new Position(new File(2), new Rank(3));
+        Position sourcePosition = Position.of(2, 2);
+        Position targetPosition = Position.of(2, 3);
 
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.BLACK);
@@ -219,8 +219,8 @@ class BoardTest {
     @Test
     @DisplayName("성공: pawn은 대각선 앞에 상대 기물이 있으면 이동 가능")
     void move_Pawn_PieceExistsAtTargetPositionWhenDiagonalMove() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position targetPosition = new Position(new File(3), new Rank(3));
+        Position sourcePosition = Position.of(2, 2);
+        Position targetPosition = Position.of(3, 3);
 
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.BLACK);
@@ -245,8 +245,8 @@ class BoardTest {
     @Test
     @DisplayName("실패: pawn은 대각선 앞에 상대 기물이 없으면 이동 블가능")
     void move_Pawn_PieceNotExistsAtTargetPositionWhenDiagonalMove() {
-        Position sourcePosition = new Position(new File(2), new Rank(2));
-        Position targetPosition = new Position(new File(3), new Rank(3));
+        Position sourcePosition = Position.of(2, 2);
+        Position targetPosition = Position.of(3, 3);
 
         Pawn pawn = new Pawn(Color.WHITE);
 

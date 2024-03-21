@@ -20,14 +20,14 @@ class InitialBoardGeneratorTest {
         Board board = Board.generatedBy(boardGenerator);
 
         assertAll(
-            () -> assertThat(board.findPieceAt(new Position(new File(1), new Rank(8)))).isInstanceOf(Rook.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(2), new Rank(8)))).isInstanceOf(Knight.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(3), new Rank(8)))).isInstanceOf(Bishop.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(4), new Rank(8)))).isInstanceOf(Queen.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(5), new Rank(8)))).isInstanceOf(King.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(6), new Rank(8)))).isInstanceOf(Bishop.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(7), new Rank(8)))).isInstanceOf(Knight.class),
-            () -> assertThat(board.findPieceAt(new Position(new File(8), new Rank(8)))).isInstanceOf(Rook.class)
+            () -> assertThat(board.findPieceAt(Position.of(1, 8))).isInstanceOf(Rook.class),
+            () -> assertThat(board.findPieceAt(Position.of(2, 8))).isInstanceOf(Knight.class),
+            () -> assertThat(board.findPieceAt(Position.of(3, 8))).isInstanceOf(Bishop.class),
+            () -> assertThat(board.findPieceAt(Position.of(4, 8))).isInstanceOf(Queen.class),
+            () -> assertThat(board.findPieceAt(Position.of(5, 8))).isInstanceOf(King.class),
+            () -> assertThat(board.findPieceAt(Position.of(6, 8))).isInstanceOf(Bishop.class),
+            () -> assertThat(board.findPieceAt(Position.of(7, 8))).isInstanceOf(Knight.class),
+            () -> assertThat(board.findPieceAt(Position.of(8, 8))).isInstanceOf(Rook.class)
         );
     }
 }

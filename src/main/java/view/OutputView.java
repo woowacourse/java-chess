@@ -34,7 +34,7 @@ public class OutputView {
 
     private void printOneRank(Board board, int rank) {
         for (int file = 1; file <= 8; file++) {
-            Piece piece = board.findPieceAt(new Position(new File(file), new Rank(rank)));
+            Piece piece = board.findPieceAt(Position.of(file, rank));
             System.out.print(pieceToString(piece));
         }
         System.out.println();

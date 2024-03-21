@@ -9,6 +9,7 @@ public final class File {
     public File(int value) {
         this.value = value;
     }
+    // TODO: 시간 나면 캐싱
 
     public int subtract(File otherFile) {
         return this.value - otherFile.value;

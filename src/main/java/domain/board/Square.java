@@ -8,6 +8,7 @@ public class Square {
     private final Position position;
     private final Piece piece;
 
+    // TODO: 나중에도 쓸일 없으면 지우자
     public Square(Position position, Piece piece) {
         this.position = position;
         this.piece = piece;

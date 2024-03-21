@@ -14,8 +14,8 @@ class RookTest {
     @DisplayName("Rank가 같으면 룩 이동 가능")
     void canMove_SameRank() {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = new Position(new File(1), new Rank(1));
-        Position position2 = new Position(new File(8), new Rank(1));
+        Position position1 = Position.of(1, 1);
+        Position position2 = Position.of(8, 1);
         assertThat(rook.canMove(position1, position2)).isTrue();
     }
 
@@ -23,8 +23,8 @@ class RookTest {
     @DisplayName("File이 같으면 룩 이동 가능")
     void canMove_SameFile() {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = new Position(new File(1), new Rank(1));
-        Position position2 = new Position(new File(1), new Rank(8));
+        Position position1 = Position.of(1, 1);
+        Position position2 = Position.of(1, 8);
         assertThat(rook.canMove(position1, position2)).isTrue();
     }
 
@@ -32,8 +32,8 @@ class RookTest {
     @DisplayName("Rank와 File이 모두 다르면 룩 이동 불가")
     void cannotMove_DifferentFileDifferentRank() {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = new Position(new File(1), new Rank(1));
-        Position position2 = new Position(new File(8), new Rank(8));
+        Position position1 = Position.of(1, 1);
+        Position position2 = Position.of(8, 8);
         assertThat(rook.canMove(position1, position2)).isFalse();
     }
 
@@ -41,8 +41,8 @@ class RookTest {
     @DisplayName("같은 위치로는 이동 불가")
     void cannotMove_SamePosition() {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = new Position(new File(1), new Rank(1));
-        Position position2 = new Position(new File(1), new Rank(1));
+        Position position1 = Position.of(1, 1);
+        Position position2 = Position.of(1, 1);
         assertThat(rook.canMove(position1, position2)).isFalse();
     }
 }

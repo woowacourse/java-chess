@@ -7,9 +7,13 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(int file, int rank) {
+        return new Position(new File(file), new Rank(rank));
     }
 
     public Position nextPosition(Direction direction) {
@@ -32,6 +36,9 @@ public class Position {
     public int calculateRankDifference(Position otherPosition) {
         return rank.subtract(otherPosition.rank);
     }
+
+    // TODO: isOnSameDiagonal, smaeLine 이런거 만들어서 더  메소드에 의미 부여하기
+    // TODO: 정팩메 만들고  -- 나중에 시간 나면 캐싱
 
     @Override
     public boolean equals(Object o) {

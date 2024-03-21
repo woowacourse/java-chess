@@ -9,6 +9,7 @@ public final class Rank {
     public Rank(int value) {
         this.value = value;
     }
+    // TODO: 시간 나면 캐싱
 
     public int subtract(Rank otherRank) {
         return this.value - otherRank.value;
