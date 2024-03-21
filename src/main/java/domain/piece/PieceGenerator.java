@@ -13,7 +13,9 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class PieceGenerator {
@@ -28,13 +30,21 @@ public class PieceGenerator {
             .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
             .toList();
 
+    private static final Map<Integer, List<Piece>> rankPieces = new HashMap<>();
+
+    static {
+        rankPieces.put(8, generateListPiece(BACK, Color.BLACK));
+        rankPieces.put(7, generateListPiece(FRONT_BLACK, Color.BLACK));
+        rankPieces.put(2, generateListPiece(FRONT_WHITE, Color.WHITE));
+        rankPieces.put(1, generateListPiece(BACK, Color.WHITE));
+    }
 
     private PieceGenerator() {
     }
 
     public static void generate(final ChessBoard mover) {
         for (int row = CHESS_BOARD_SIZE; row >= 1; row--) {
-            List<Piece> pieces = generateRankPieces(row);
+            List<Piece> pieces = rankPieces.getOrDefault(row, new ArrayList<>());
             initializeSquares(mover, pieces, row);
         }
     }
@@ -45,22 +55,6 @@ public class PieceGenerator {
             Piece piece = pieces.get(column);
             mover.add(square, piece);
         }
-    }
-
-    public static List<Piece> generateRankPieces(final int row) {
-        if (row == 8) {
-            return generateListPiece(BACK, Color.BLACK);
-        }
-        if (row == 7) {
-            return generateListPiece(FRONT_BLACK, Color.BLACK);
-        }
-        if (row == 2) {
-            return generateListPiece(FRONT_WHITE, Color.WHITE);
-        }
-        if (row == 1) {
-            return generateListPiece(BACK, Color.WHITE);
-        }
-        return new ArrayList<>();
     }
 
     private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color) {
