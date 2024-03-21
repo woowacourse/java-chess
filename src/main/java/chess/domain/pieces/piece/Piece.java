@@ -19,11 +19,11 @@ public abstract class Piece {
         if (piece == null) {
             return false;
         }
-        return color == piece.color;
+        return color.equals(piece.color);
     }
 
     public boolean isSameColor(final Color color) {
-        return this.color == color;
+        return this.color.equals(color);
     }
 
     public Color color() {
@@ -43,7 +43,7 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return color == piece.color;
+        return color.equals(piece.color);
     }
 
     @Override
