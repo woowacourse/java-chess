@@ -55,4 +55,30 @@ class PiecesTest {
 
         assertThat(sut.isFriend(piece, new Point(File.B, Rank.FIVE))).isTrue();
     }
+
+    @Test
+    @DisplayName("포인트에서 포인트 까지 기물이 있으면 참을 반환한다.")
+    void true_if_exist_piece_in_start_point_to_end_point() {
+        final var sut = new Pieces(List.of(
+                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.THREE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
+
+        final var result = sut.hasAnyPiece(new Point(File.A, Rank.ONE), new Point(File.E, Rank.FIVE));
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트에서 포인트 까지 기물이 없으면 거짓을 반환한다.")
+    void false_if_not_exist_piece_in_start_point_to_end_point() {
+        final var sut = new Pieces(List.of(
+                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
+                new Bishop(new Point(File.C, Rank.THREE), Color.WHITE),
+                new Queen(new Point(File.E, Rank.FIVE), Color.WHITE)));
+
+        final var result = sut.hasAnyPiece(new Point(File.A, Rank.ONE), new Point(File.C, Rank.THREE));
+
+        assertThat(result).isFalse();
+    }
 }

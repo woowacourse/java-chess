@@ -1,5 +1,8 @@
 package domain.piece.attribute.point;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public record Index(int vertical, int horizontal) {
     public boolean isInBoundary() {
         return Rank.isInBoundary(vertical) && File.isInBoundary(horizontal);
@@ -31,5 +34,15 @@ public record Index(int vertical, int horizontal) {
             index = index.move(direction);
         }
         return index;
+    }
+
+    public List<Index> findMovePath(Direction direction, Index other) {
+        List<Index> list = new ArrayList<>();
+        Index current = direction.move(this);
+        while (!current.equals(other)) {
+            list.add(current);
+            current = direction.move(current);
+        }
+        return list;
     }
 }

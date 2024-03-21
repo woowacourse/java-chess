@@ -35,4 +35,13 @@ public class Pieces {
         Piece toPiece = optionalPiece.get();
         return piece.sameColor(toPiece);
     }
+
+    public boolean hasAnyPiece(Point startPoint, Point endPoint) {
+        final var list = startPoint.toIndex()
+                                   .findMovePath(startPoint.calculate(endPoint), endPoint.toIndex());
+
+        return list.stream()
+                   .map(index -> getPieceWithPoint(Point.fromIndex(index)))
+                   .anyMatch(Optional::isPresent);
+    }
 }
