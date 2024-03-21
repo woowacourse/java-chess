@@ -1,15 +1,14 @@
 package chess.model.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.model.piece.Color;
 import chess.model.position.Movement;
 import chess.model.position.Position;
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.Test;
 
 class BoardTest {
     @Test

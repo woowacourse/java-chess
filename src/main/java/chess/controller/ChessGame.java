@@ -9,7 +9,6 @@ import chess.model.position.Movement;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
