@@ -1,59 +1,18 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Color;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
-    private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
+    private final Map<Position, Piece> chessBoard;
 
-    public ChessBoard() {
-        Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-
-        chessBoard.put(Position.of('a', 8), Rook.of(Color.BLACK));
-        chessBoard.put(Position.of('b', 8), Knight.of(Color.BLACK));
-        chessBoard.put(Position.of('c', 8), Bishop.of(Color.BLACK));
-        chessBoard.put(Position.of('d', 8), Queen.of(Color.BLACK));
-        chessBoard.put(Position.of('e', 8), King.of(Color.BLACK));
-        chessBoard.put(Position.of('f', 8), Bishop.of(Color.BLACK));
-        chessBoard.put(Position.of('g', 8), Knight.of(Color.BLACK));
-        chessBoard.put(Position.of('h', 8), Rook.of(Color.BLACK));
-
-        for (char file = 'a'; file <= 'h'; file++) {
-            chessBoard.put(Position.of(file, 7), Pawn.of(Color.BLACK));
-        }
-
-        Map<Position, Piece> blankPieces = new LinkedHashMap<>();
-        for (int rank = 6; rank >= 3; rank--) {
-            for (char file = 'a'; file <= 'h'; file++) {
-                blankPieces.put(Position.of(file, rank), null);
-            }
-        }
-
-        for (char file = 'a'; file <= 'h'; file++) {
-            chessBoard.put(Position.of(file, 2), Pawn.of(Color.WHITE));
-        }
-
-        chessBoard.put(Position.of('a', 1), Rook.of(Color.WHITE));
-        chessBoard.put(Position.of('b', 1), Knight.of(Color.WHITE));
-        chessBoard.put(Position.of('c', 1), Bishop.of(Color.WHITE));
-        chessBoard.put(Position.of('d', 1), Queen.of(Color.WHITE));
-        chessBoard.put(Position.of('e', 1), King.of(Color.WHITE));
-        chessBoard.put(Position.of('f', 1), Bishop.of(Color.WHITE));
-        chessBoard.put(Position.of('g', 1), Knight.of(Color.WHITE));
-        chessBoard.put(Position.of('h', 1), Rook.of(Color.WHITE));
-
+    public ChessBoard(final Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
+
     public List<Piece> findAllPieces() {
         return chessBoard.values()
                 .stream()
@@ -66,19 +25,46 @@ public class ChessBoard {
 
     public void move(final Position source, final Position target) {
         // 소스 위치에 해당하는 피스를 찾는다.
+        // 현재는 Piece 대신 piece을 사용
         Piece piece = chessBoard.get(source);
 
+        // TODO: direction을 찾는 행위를 ChessBoard에서 하는게 이상하지 않나?
+        //      List<Direction> 을 일급 컬렉션으로 포장해서 아래 direction을 찾는 메서드를 만들어주고, PieceAbstract에 넣어주면?
+
+        // Position을 통해 Direction 구하기
+        Direction direction = source.calculateDirection(target);
+
+        // 방향 검증
+        if (!piece.canMoveInTargetDirection(direction)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+        }
+
+        // "한칸씩" 움직여서 뭐 있는지 검증
+        Position nextPosition = source.moveTowardDirection(direction);
+
+        // 다음 위치가 목적지가 아니고, 다음 위치에 아무 기물도 없는 경우만 진행
+        while (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) == null) {
+            nextPosition = nextPosition.moveTowardDirection(direction);
+        }
+        // 한번 이동이 끝인 / 타겟에 도착함 / 장애물이 있는 경우
+
+        // 여기까지 도달했다면 다음 위치가 목적지이거나, 다음 위치에 어떤 기물이 존재하는 경우이거나, 정말로 도착을 못한 경우 (eg 폰이 2칸 가는 경우)
+        if (!nextPosition.equals(target)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
+        }
+
+        // 경로에 기물이 존재하는 것
+        if (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) != null) {
+            throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 존재합니다.");
+        }
+
+        // 여기까지 도달했다면 다음 위치가 목적지이지만, 해당 위치에 기물이 존재하는 경우
+        if(chessBoard.get(source).isAlly(chessBoard.get(nextPosition))) {
+            throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
+        }
+
+        // 여기까지 도달했다면 다음 위치에 상대팀이 있거나, 다음 위치가 원래 비어있던 경우
         chessBoard.put(target, piece);
         chessBoard.put(source, null);
-
-        // 피스의 이동 영역에 타겟 피스가 포함되는지 검사한다.
-        // boolean을 리턴하는 "내 이동 가능 영역에 타겟이 있는지 검사"하는 함수가 피스 안에 있어야 한다.
-        // 그렇기 위해서는 피스를 리팩토링 해야 한다. 왜냐하면 그 가능 영역이 타입에 따라 다르니까/
-        // 즉, 이 시점에서 대규모 리팩토링 필요하다. (추상 클래스를 구현하도록)
-        // 커밋은 나중에 날린다고 생각하고 일단 ㄱㄱ한다.
-        // 그리고 커밋 날리는거 복잡할 수 있으니까 일단 인텔리제이를 사용해서 커밋한다.
-
-        // 이동 경로에 다른 피스가 있는지 검사한다. - 이때 나이트이면 검사하지 않는다.
-        // 도착지에 다른 피스가 있는지 검사한다. - 그 피스를 확인하고, 다른 팀이면 그대로 이동, 같은 팀이면 에러를 띄운다.
     }
 }
