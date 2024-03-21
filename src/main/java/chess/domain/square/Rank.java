@@ -13,7 +13,7 @@ public enum Rank {
     EIGHT,
     ;
 
-    public static final String INVALID_RANK = "유효하지 않는 랭크입니다.";
+    private static final String INVALID_RANK = "유효하지 않는 랭크입니다.";
 
     public static Rank from(final String rank) {
         return Arrays.stream(Rank.values())
