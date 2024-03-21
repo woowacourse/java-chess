@@ -1,19 +1,20 @@
 package controller;
 
-import chessboard.ChessBoard;
-import coordinate.Coordinate;
-import java.util.List;
-import piece.Color;
-import position.Column;
-import position.Row;
+import domain.chessboard.ChessBoard;
+import domain.coordinate.Coordinate;
+import domain.piece.Color;
+import domain.position.Column;
+import domain.position.Row;
 import view.InputView;
 import view.OutputView;
-import view.util.ColumnSymbol;
+import view.dto.Commands;
+import view.dto.CoordinateRequest;
 import view.util.Command;
 
 public class ChessGameController {
 
-    private static final int CHESS_BOARD_SIZE = 8;
+    private static final Color DEFAULT_START_COLOR = Color.WHITE;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -23,32 +24,31 @@ public class ChessGameController {
     }
 
     public void run() {
-        outputView.printInfo();
-        ChessBoard chessBoard = new ChessBoard();
-        List<String> command = inputView.receiveCommands();
+        outputView.printGameGuide();
 
-        if (Command.START.isSameIdentifier(command.get(0))) {
-            outputView.printBoard(chessBoard.getBoard());
-            startGame(chessBoard);
+        ChessBoard chessBoard = initializeBoard();
+        outputView.printBoard(chessBoard.getBoard());
+
+        startGame(chessBoard);
+    }
+
+    private ChessBoard initializeBoard() {
+        Commands commands = inputView.receiveCommands();
+
+        if (Command.START != commands.command()) {
+            throw new IllegalArgumentException("게임을 먼저 시작하세요.");
         }
+        return new ChessBoard();
     }
 
     private void startGame(ChessBoard chessBoard) {
-        Color currentTurn = Color.WHITE;
-        while (true) {
-            List<String> commands = inputView.receiveCommands();
-            if (Command.END.isSameIdentifier(commands.get(0))) {
-                break;
-            }
-            if (Command.START.isSameIdentifier(commands.get(0))) {
-                throw new IllegalArgumentException("이미 시작한 상태 입니다.");
-            }
-            Coordinate start = createCoordinate(commands.get(1));
-            Coordinate to = createCoordinate(commands.get(2));
-            chessBoard.playTurn(start, to, currentTurn);
+        Color currentTurn = DEFAULT_START_COLOR;
+
+        boolean isPlaying;
+        do {
+            isPlaying = playGame(chessBoard, currentTurn);
             currentTurn = changeTurn(currentTurn);
-            outputView.printBoard(chessBoard.getBoard());
-        }
+        } while (isPlaying);
     }
 
     private Color changeTurn(Color currentTurn) {
@@ -58,11 +58,35 @@ public class ChessGameController {
         return Color.BLACK;
     }
 
-    private Coordinate createCoordinate(String input) {
-        String[] split = input.split("");
-        int column = ColumnSymbol.from(split[0]).getPosition();
-        int row = CHESS_BOARD_SIZE - Integer.parseInt(split[1]);
+    private boolean playGame(ChessBoard chessBoard, Color currentTurn) {
+        Commands commands = inputView.receiveCommands();
 
-        return new Coordinate(new Row(row), new Column(column));
+        if (isCommandMove(commands)) {
+            move(chessBoard, currentTurn, commands);
+            outputView.printBoard(chessBoard.getBoard());
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isCommandMove(Commands commands) {
+        if (commands.command() == Command.END) {
+            return false;
+        }
+        if (commands.command() == Command.START) {
+            throw new IllegalArgumentException("이미 시작한 상태 입니다.");
+        }
+        return true;
+    }
+
+    private void move(ChessBoard chessBoard, Color currentTurn, Commands commands) {
+        Coordinate start = createCoordinate(commands.startCoordinate());
+        Coordinate destination = createCoordinate(commands.destinationCoordinate());
+
+        chessBoard.playTurn(start, destination, currentTurn);
+    }
+
+    private Coordinate createCoordinate(CoordinateRequest coordinateRequest) {
+        return new Coordinate(new Row(coordinateRequest.row()), new Column(coordinateRequest.column()));
     }
 }

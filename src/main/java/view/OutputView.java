@@ -1,17 +1,17 @@
 package view;
 
-import coordinate.Coordinate;
+import domain.coordinate.Coordinate;
+import domain.piece.base.ChessPiece;
+import domain.position.Column;
+import domain.position.Row;
 import java.util.Map;
-import piece.Piece;
-import position.Column;
-import position.Row;
 import view.util.PieceTranslator;
 
 public class OutputView {
 
     private static final int CHESS_BOARD_SIZE = 8;
 
-    public void printInfo() {
+    public void printGameGuide() {
         System.out.print("""
                 > 체스 게임을 시작합니다.
                 > 게임 시작 : start
@@ -20,17 +20,17 @@ public class OutputView {
                 """);
     }
 
-    public void printBoard(Map<Coordinate, Piece> board) {
+    public void printBoard(Map<Coordinate, ChessPiece> board) {
         for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
             printRow(board, row);
             System.out.println();
         }
     }
 
-    private void printRow(Map<Coordinate, Piece> board, int row) {
+    private void printRow(Map<Coordinate, ChessPiece> board, int row) {
         for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
             Coordinate coordinate = new Coordinate(new Row(row), new Column(column));
-            Piece piece = board.get(coordinate);
+            ChessPiece piece = board.get(coordinate);
             System.out.print(PieceTranslator.getName(piece));
         }
     }
