@@ -12,6 +12,19 @@ public class GameController {
 
     public void run() {
         outputView.printGameStart();
+        play();
+    }
+
+    private void play() {
+        try {
+            playTurn();
+        } catch (RuntimeException exception) {
+            outputView.printException(exception);
+            play();
+        }
+    }
+
+    private void playTurn() {
         while (true) {
             String command = inputView.readCommand();
             if ("end".equalsIgnoreCase(command)) {

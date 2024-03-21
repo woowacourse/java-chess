@@ -70,4 +70,7 @@ public class OutputView {
     }
 
 
+    public void printException(RuntimeException exception) {
+        System.out.println(exception.getMessage());
+    }
 }
