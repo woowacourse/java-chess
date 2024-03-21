@@ -12,7 +12,6 @@ public class KingMoveStrategy extends SpecialPieceMoveStrategy{
             Direction.S, Direction.SW, Direction.W, Direction.NW
     );
 
-
     public KingMoveStrategy() {
         super(DIRECTIONS, DEFAULT_MAX_MOVE_DISTANCE);
     }

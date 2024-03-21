@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
 
 public abstract class SpecialPieceMoveStrategy implements MoveStrategy {
 
-    private List<Direction> directions;
-    private int defaultMaxMoveDistance;
+    private final List<Direction> directions;
+    private final int defaultMaxMoveDistance;
 
     public SpecialPieceMoveStrategy(List<Direction> directions, int defaultMaxMoveDistance) {
         this.directions = directions;

@@ -1,7 +1,7 @@
 package chess.domain.strategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Column;
 import chess.domain.Direction;
@@ -30,9 +30,9 @@ class QueenMoveStrategyTest {
     @DisplayName("퀸이 D2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
         Position position = new Position(Row.RANK2, Column.D);
-        QueenMoveStrategy queenMoveStrategy = new QueenMoveStrategy();
+        MoveStrategy moveStrategy = new QueenMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = queenMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(

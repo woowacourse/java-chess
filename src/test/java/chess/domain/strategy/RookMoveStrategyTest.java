@@ -1,6 +1,6 @@
 package chess.domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Column;
 import chess.domain.Direction;
@@ -18,9 +18,9 @@ class RookMoveStrategyTest {
     @DisplayName("룩이 A1 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
         Position position = new Position(Row.RANK1, Column.A);
-        RookMoveStrategy rookMoveStrategy = new RookMoveStrategy();
+        MoveStrategy moveStrategy = new RookMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(
@@ -51,9 +51,9 @@ class RookMoveStrategyTest {
     @DisplayName("룩이 D4 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnCenterPosition() {
         Position position = new Position(Row.RANK4, Column.D);
-        RookMoveStrategy rookMoveStrategy = new RookMoveStrategy();
+        MoveStrategy moveStrategy = new RookMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(

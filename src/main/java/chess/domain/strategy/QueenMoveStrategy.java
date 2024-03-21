@@ -12,7 +12,6 @@ public class QueenMoveStrategy extends SpecialPieceMoveStrategy{
             Direction.S, Direction.SW, Direction.W, Direction.NW
     );
 
-
     public QueenMoveStrategy() {
         super(DIRECTIONS, DEFAULT_MAX_MOVE_DISTANCE);
     }

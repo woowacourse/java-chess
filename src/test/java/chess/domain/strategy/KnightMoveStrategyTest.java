@@ -29,9 +29,9 @@ public class KnightMoveStrategyTest {
     @DisplayName("나이트가 D2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
         Position position = new Position(Row.RANK2, Column.D);
-        KnightMoveStrategy knightMoveStrategy = new KnightMoveStrategy();
+        MoveStrategy moveStrategy = new KnightMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = knightMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.NNE)).containsExactly(

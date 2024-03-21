@@ -29,9 +29,9 @@ public class KingMoveStrategyTest {
     @DisplayName("킹이 D2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
         Position position = new Position(Row.RANK2, Column.D);
-        KingMoveStrategy kingMoveStrategy = new KingMoveStrategy();
+        MoveStrategy moveStrategy = new KingMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = kingMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(

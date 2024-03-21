@@ -30,9 +30,9 @@ class BishopMoveStrategyTest {
     @DisplayName("비숍이 B2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
         Position position = new Position(Row.RANK2, Column.B);
-        BishopMoveStrategy bishopMoveStrategy = new BishopMoveStrategy();
+        MoveStrategy moveStrategy = new BishopMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = bishopMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.NE)).containsExactly(
