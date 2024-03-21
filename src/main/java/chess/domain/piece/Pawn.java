@@ -72,8 +72,12 @@ public final class Pawn extends AbstractPiece {
     }
 
     private boolean isOtherTeam(Position targetPosition, ChessBoard chessBoard) {
-        Optional<Team> targetTeam = chessBoard.whichTeam(targetPosition);
-        return targetTeam.isPresent() && !targetTeam.get().equals(getTeam());
+        return chessBoard.whichTeam(targetPosition)
+                .filter(team -> {
+                    Team otherTeam = getTeam().otherTeam();
+                    return team.equals(otherTeam);
+                })
+                .isPresent();
     }
 
     @Override
