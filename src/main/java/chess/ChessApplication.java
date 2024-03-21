@@ -3,7 +3,9 @@ package chess;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardCreator;
 import chess.domain.position.Position;
+import chess.view.GameExecutionCommand;
 import chess.view.InputView;
+import chess.view.MoveCommand;
 import chess.view.OutputView;
 
 public class ChessApplication {
@@ -17,32 +19,21 @@ public class ChessApplication {
             ChessBoard chessBoard = chessBoardCreator.create();
             outputView.printChessBoardMessage(chessBoard);
 
-            String gameCommand = inputView.readGameCommand();
-            while (gameCommand.startsWith("move")) {
+            String inputCommand = inputView.readGameCommand();
+            GameExecutionCommand gameCommand = GameExecutionCommand.from(inputCommand);
 
-                String[] split = gameCommand.split(" ");
+            while (gameCommand != GameExecutionCommand.END) {
+                if (gameCommand == GameExecutionCommand.MOVE) {
+                    MoveCommand moveCommand = MoveCommand.of(inputCommand);
+                    Position startPosition = moveCommand.getStart();
+                    Position destinationPosition = moveCommand.getDestination();
 
-                String start = split[1];
-                String destination = split[2];
+                    chessBoard.move(startPosition, destinationPosition);
+                    outputView.printChessBoardMessage(chessBoard);
+                }
 
-                int startCol = start.charAt(0) - 'a';
-                int startRow = 8 - (start.charAt(1) - '0');
-
-                int destinationCol = destination.charAt(0) - 'a';
-                int destinationRow = 8 - (destination.charAt(1) - '0');
-
-                System.out.println("startRow = " + startRow);
-                System.out.println("destinationRow = " + startCol);
-
-                System.out.println("destinationRow = " + destinationRow);
-                System.out.println("destinationCol = " + destinationCol);
-
-                Position startPosition = Position.of(startRow, startCol);
-                Position destinationPosition = Position.of(destinationRow, destinationCol);
-
-                chessBoard.move(startPosition, destinationPosition);
-                outputView.printChessBoardMessage(chessBoard);
-                gameCommand = inputView.readGameCommand();
+                inputCommand = inputView.readGameCommand();
+                gameCommand = GameExecutionCommand.from(inputCommand);
             }
         }
     }
