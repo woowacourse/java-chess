@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class WhitePawnFirstMoveTest {
 
-    private static Stream<Arguments> whitePawnMoveTestParameters() {
+    private static Stream<Arguments> pawnStraightMoveTestParameters() {
         return Stream.of(
                 Arguments.of(Position.of("d4"), Position.of("d5"), Position.of("d5")),
                 Arguments.of(Position.of("d4"), Position.of("d6"), Position.of("d6")),
@@ -22,13 +22,36 @@ public class WhitePawnFirstMoveTest {
         );
     }
 
+    private static Stream<Arguments> pawnDiagonalMoveTestParameters() {
+        return Stream.of(
+                Arguments.of(Position.of("d4"), Position.of("c5"), false, true, true, Position.of("c5")),
+                Arguments.of(Position.of("d4"), Position.of("c5"), false, true, false, Position.of("d4")),
+                Arguments.of(Position.of("d4"), Position.of("c5"), false, false, false, Position.of("d4")),
+                Arguments.of(Position.of("d4"), Position.of("c5"), false, false, true, Position.of("d4"))
+        );
+    }
+
     @DisplayName("처음 움직이는 흰색 폰은 1칸 혹은 2칸 위로 이동 가능하다.")
     @ParameterizedTest
-    @MethodSource("whitePawnMoveTestParameters")
-    void pawnMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
+    @MethodSource("pawnStraightMoveTestParameters")
+    void pawnStraightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
         Pawn whitePawnFirstMove = new Pawn(pieceInfo, new WhitePawnFirstMoveStrategy());
         Pawn movedPawn = whitePawnFirstMove.move(newPosition, false, false);
+
+        Position actualMovedPosition = movedPawn.getPosition();
+
+        Assertions.assertThat(actualMovedPosition).isEqualTo(expectedMovedPosition);
+    }
+
+    @DisplayName("처음 움직이는 흰색 폰은 전방 대각선에 상대 말이 있다면 해당 위치로 이동 가능하다.")
+    @ParameterizedTest
+    @MethodSource("pawnDiagonalMoveTestParameters")
+    void pawnDiagonalMoveTest(Position currentPosition, Position newPosition, boolean isDisturbed,
+                              boolean isOtherPieceExist, boolean isDifferentTeam, Position expectedMovedPosition) {
+        PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
+        Pawn whitePawnFirstMove = new Pawn(pieceInfo, new WhitePawnFirstMoveStrategy());
+        Pawn movedPawn = whitePawnFirstMove.move(newPosition, isDisturbed, isOtherPieceExist, isDifferentTeam);
 
         Position actualMovedPosition = movedPawn.getPosition();
 
