@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.view.FileSymbol;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -17,6 +18,12 @@ public enum File {
 
     File(int file) {
         this.file = file;
+    }
+
+    public static File convertToFile(FileSymbol fileSymbol) {
+        return Arrays.stream(File.values()).filter(start -> start.name().equals(fileSymbol.name()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 file 값입니다."));
     }
 
     public int calculateDifference(File file) {

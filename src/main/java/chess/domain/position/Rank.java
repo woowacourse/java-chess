@@ -19,6 +19,12 @@ public enum Rank {
         this.rank = rank;
     }
 
+    public static Rank convertToRank(String i) {
+        return Arrays.stream(Rank.values()).filter(start -> start.rank == Integer.parseInt(i))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 rank 값입니다."));
+    }
+
     public int calculateDifference(Rank otherRank) {
         return otherRank.rank - this.rank;
     }
