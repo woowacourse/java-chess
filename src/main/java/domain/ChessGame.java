@@ -1,24 +1,19 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class ChessGame {
-	private final ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
 
-	public ChessGame() {
-		this.chessBoard = new ChessBoard();
-	}
+    public ChessGame() {
+        this.chessBoard = new ChessBoard();
+    }
 
-	public List<Piece> move(Position from, Position to) {
-		boolean move = chessBoard.move(from, to);
-		if (move) {
-			return getPiecesOnBoard();
-		}
-		return Collections.emptyList();
-	}
+    public boolean move(Position from, Position to) {
+        return chessBoard.move(from, to);
+    }
 
-	public List<Piece> getPiecesOnBoard() {
-		return chessBoard.getPiecesOnBoard();
-	}
+    public List<Piece> getPiecesOnBoard() {
+        return chessBoard.getPiecesOnBoard();
+    }
 }

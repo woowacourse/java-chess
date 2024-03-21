@@ -3,11 +3,11 @@ package domain;
 import java.util.List;
 
 public abstract class Command {
-	protected final String option;
+    protected final String[] options;
 
-	public Command(String option) {
-		this.option = option;
-	}
+    public Command(String[] options) {
+        this.options = options;
+    }
 
-	public abstract <T> List<T> getOptions();
+    public abstract <T> List<T> getOptions();
 }

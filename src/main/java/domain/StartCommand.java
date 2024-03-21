@@ -1,21 +1,20 @@
 package domain;
 
-import java.util.Collections;
 import java.util.List;
 
 public class StartCommand extends Command {
-	public static StartCommand START_COMMAND = new StartCommand();
+    public static StartCommand START_COMMAND = new StartCommand();
 
-	private StartCommand() {
-		this("ignore");
-	}
+    private StartCommand() {
+        this(null);
+    }
 
-	private StartCommand(String option) {
-		super(option);
-	}
+    private StartCommand(String[] options) {
+        super(options);
+    }
 
-	@Override
-	public <T> List<T> getOptions() {
-		return Collections.emptyList();
-	}
+    @Override
+    public <T> List<T> getOptions() {
+        throw new UnsupportedOperationException();
+    }
 }
