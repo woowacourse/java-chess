@@ -25,11 +25,11 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    protected Color color() {
+    public Color color() {
         return color;
     }
 
-    protected Type type() {
+    public Type type() {
         return type;
     }
 

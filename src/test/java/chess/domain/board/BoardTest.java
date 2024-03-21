@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.square.Square;
-import chess.domain.pieces.piece.PieceResponse;
+import chess.dto.PieceResponse;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

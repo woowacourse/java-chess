@@ -4,7 +4,7 @@ import chess.domain.Movement;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
-import chess.domain.pieces.piece.PieceResponse;
+import chess.dto.PieceResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

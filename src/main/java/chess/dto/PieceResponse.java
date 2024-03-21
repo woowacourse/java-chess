@@ -1,5 +1,6 @@
-package chess.domain.pieces.piece;
+package chess.dto;
 
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
 
 public record PieceResponse(int fileIndex, int rankIndex, String color, String type) {
