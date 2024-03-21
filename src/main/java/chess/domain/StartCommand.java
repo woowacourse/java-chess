@@ -2,17 +2,17 @@ package chess.domain;
 
 import java.util.Arrays;
 
-public enum Command {
+public enum StartCommand {
 
     START("start"), END("end");
 
     private final String value;
 
-    Command(final String value) {
+    StartCommand(final String value) {
         this.value = value;
     }
 
-    public static Command from(final String input) {
+    public static StartCommand from(final String input) {
         validateBlank(input);
 
         return Arrays.stream(values())

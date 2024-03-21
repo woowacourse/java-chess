@@ -15,9 +15,9 @@ import java.util.Set;
 public class OutputView {
 
     public void printChessBoard(final Set<Piece> pieces) {
-        List<List<String>> borad = sortByBoardOrder(pieces);
-
-        borad.forEach(row -> printChessRow(row));
+        List<List<String>> board = sortByBoardOrder(pieces);
+        System.out.println("&&" + board.get(0).get(0));
+        board.forEach(row -> printChessRow(row));
     }
 
     private void printChessRow(final List<String> row) {
@@ -34,7 +34,7 @@ public class OutputView {
         for (Piece piece : pieces) {
             Position position = piece.getPosition();
             int fileIndex = position.getFile().getIndex() - 1;
-            int rankIndex = position.getRank().getNumber() - 1;
+            int rankIndex = 7 - (position.getRank().getNumber() - 1);
             List<String> marks = board.get(rankIndex);
             marks.set(fileIndex, convertToMark(piece));
         }

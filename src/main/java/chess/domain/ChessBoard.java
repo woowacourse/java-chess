@@ -23,10 +23,10 @@ public class ChessBoard {
     public static ChessBoard init() {
         final Set<Piece> pieces = new HashSet<>();
 
-        pieces.addAll((createPieceWithoutPawn(Color.WHITE, 8)));
-        pieces.addAll((createPawn(Color.WHITE, 7)));
-        pieces.addAll((createPawn(Color.BLACK, 2)));
-        pieces.addAll((createPieceWithoutPawn(Color.BLACK, 1)));
+        pieces.addAll((createPieceWithoutPawn(Color.BLACK, 8)));
+        pieces.addAll((createPawn(Color.BLACK, 7)));
+        pieces.addAll((createPawn(Color.WHITE, 2)));
+        pieces.addAll((createPieceWithoutPawn(Color.WHITE, 1)));
 
         return new ChessBoard(pieces);
     }

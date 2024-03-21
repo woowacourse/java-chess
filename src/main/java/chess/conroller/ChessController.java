@@ -1,9 +1,11 @@
 package chess.conroller;
 
 import chess.domain.ChessBoard;
-import chess.domain.Command;
+import chess.domain.StartCommand;
+import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.List;
 
 public class ChessController {
 
@@ -16,15 +18,20 @@ public class ChessController {
     }
 
     public void runChess() {
-        Command command = Command.from(inputView.readCommand());
+        StartCommand startCommand = StartCommand.from(inputView.readStartCommand());
 
-        if (command.equals(Command.START)) {
-            final ChessBoard chessBoard = ChessBoard.init();
+        final ChessBoard chessBoard = ChessBoard.init();
+        if (startCommand.equals(StartCommand.START)) {
             outputView.printChessBoard(chessBoard.getPieces());
         }
 
-        if (!command.equals(Command.END)) {
-            command = Command.from(inputView.readEnd());
+
+        List<String> positions = inputView.readMoveCommand();
+        chessBoard.move(new Position(positions.get(0)), new Position(positions.get(1)));
+        outputView.printChessBoard(chessBoard.getPieces());
+
+        if (!startCommand.equals(StartCommand.END)) {
+            startCommand = StartCommand.from(inputView.readEnd());
         }
     }
 }

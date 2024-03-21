@@ -18,6 +18,10 @@ public class Position {
         this(File.from(file), Rank.from(rank));
     }
 
+    public Position(final String input) {
+        this(File.from(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
+    }
+
     public boolean isStraightWith(final Position target) {
         return isVerticalWith(target) || isHorizontalWith(target);
     }
