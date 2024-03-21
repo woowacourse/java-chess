@@ -19,22 +19,32 @@ public class Board {
     }
 
     public void movePiece(final TeamColor teamColor, final Position source, final Position destination) {
-        validateRequest(teamColor, source);
-
+        validateColor(teamColor, source);
         Piece piece = chessBoard.get(source);
+        validateReachability(source, destination, piece);
+        validateDestinationPiece(teamColor, destination);
+
+        boolean caughtEnemy = isPieceExist(destination);
+        chessBoard.put(destination, piece);
+        chessBoard.remove(source);
+    }
+
+    private void validateReachability(Position source, Position destination, Piece piece) {
         if (!piece.isMovable(source, destination, parseOtherPiecePositions(source))) {
             throw new IllegalArgumentException("이동 위치까지 이동할 수 없습니다.");
         }
+    }
 
-        // 이동 위치에 아군 기물이 존재
-        if (isPieceExist(destination)) {
-            if (chessBoard.get(destination).hasColor(teamColor)) {
-                throw new IllegalArgumentException("이동 위치에 아군 기물이 존재합니다.");
-            }
+    private void validateDestinationPiece(TeamColor teamColor, Position destination) {
+        if (isAllyPieceExistOnDestination(teamColor, destination)) {
+            throw new IllegalArgumentException("이동 위치에 아군 기물이 존재합니다.");
         }
-        // 공격 없이 빈 칸으로 이동하는 경우
-        chessBoard.put(destination, piece);
-        chessBoard.remove(source);
+    }
+
+    private void validateColor(final TeamColor teamColor, final Position source) {
+        if (!chessBoard.containsKey(source) || !chessBoard.get(source).hasColor(teamColor)) {
+            throw new IllegalArgumentException("차례가 맞지 않습니다.");
+        }
     }
 
     private Set<Position> parseOtherPiecePositions(final Position source) {
@@ -43,10 +53,8 @@ public class Board {
         return positions;
     }
 
-    private void validateRequest(final TeamColor teamColor, final Position source) {
-        if (!chessBoard.containsKey(source) || !chessBoard.get(source).hasColor(teamColor)) {
-            throw new IllegalArgumentException("차례가 맞지 않습니다.");
-        }
+    private boolean isAllyPieceExistOnDestination(TeamColor teamColor, Position destination) {
+        return isPieceExist(destination) && (chessBoard.get(destination).hasColor(teamColor));
     }
 
     private boolean isPieceExist(Position position) {
