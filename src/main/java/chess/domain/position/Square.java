@@ -48,4 +48,8 @@ public class Square {
     public SquareDifferent calculateDiff(Square another) {
         return new SquareDifferent(rank.calculateDiff(another.rank), file.calculateDiff(another.file));
     }
+
+    public boolean isPawnFirstMove() {
+        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    }
 }

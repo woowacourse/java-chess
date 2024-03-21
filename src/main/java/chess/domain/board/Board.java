@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Square;
 import chess.dto.BoardOutput;
 import chess.dto.SquareDifferent;
@@ -8,6 +9,11 @@ import chess.dto.SquareDifferent;
 import java.util.Map;
 
 public class Board {
+
+    public static final int  VERTICAL_RIGHT_INDEX = 1;
+    public static final int  VERTICAL_LEFT_INDEX = -1;
+    public static final int  HORIZONTAL_UP_INDEX = 1;
+    public static final int  HORIZONTAL_DOWN_INDEX = -1;
 
     private final Map<Square, Piece> board;
 
@@ -24,8 +30,31 @@ public class Board {
         Piece destinationPiece = board.get(destination);
 
         checkSameColor(sourcePiece, destinationPiece);
+        checkCannotMove(source, destination, sourcePiece);
+        checkPathBlocked(source, destination, sourcePiece);
 
+        // TODO: 만약 말을 잡을 수 있으면 잡는 코드 추가
+        board.replace(source, destinationPiece);
+        board.replace(destination, sourcePiece);
+    }
+
+    private void checkCannotMove(Square source, Square destination, Piece sourcePiece) {
+        if (!sourcePiece.canMove(source, destination)) {
+            throw new IllegalArgumentException("해당 말의 규칙으로는 도착지로 갈 수 없습니다.");
+        }
+    }
+
+    private void checkPathBlocked(Square source, Square destination, Piece sourcePiece) {
         SquareDifferent diff = source.calculateDiff(destination);
+
+        if (!sourcePiece.isSameType(PieceType.KNIGHT.name())
+                && !(sourcePiece.isSameType(PieceType.PAWN.name()) && source.isPawnFirstMove())
+                && !sourcePiece.isSameType(PieceType.KING.name())) {
+            findPath(source, destination, diff);
+        }
+    }
+
+    private void findPath(Square source, Square destination, SquareDifferent diff) {
         Square candidate = source;
 
         while (!candidate.equals(destination)) {
@@ -34,47 +63,44 @@ public class Board {
             }
 
             if (diff.fileDiff() == 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveVertical(1);
+                candidate = candidate.moveVertical(VERTICAL_RIGHT_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() == 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveVertical(-1);
+                candidate = candidate.moveVertical(VERTICAL_LEFT_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() < 0 && diff.rankDiff() == 0) {
-                candidate = candidate.moveHorizontal(1);
+                candidate = candidate.moveHorizontal(HORIZONTAL_UP_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() > 0 && diff.rankDiff() == 0) {
-                candidate = candidate.moveHorizontal(-1);
+                candidate = candidate.moveHorizontal(HORIZONTAL_DOWN_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() < 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveDiagonal(1, -1);
+                candidate = candidate.moveDiagonal(HORIZONTAL_UP_INDEX, VERTICAL_LEFT_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() < 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveDiagonal(1, 1);
+                candidate = candidate.moveDiagonal(HORIZONTAL_UP_INDEX, VERTICAL_RIGHT_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() > 0 && diff.rankDiff() < 0) {
-                candidate = candidate.moveDiagonal(-1, -1);
+                candidate = candidate.moveDiagonal(HORIZONTAL_DOWN_INDEX, VERTICAL_LEFT_INDEX);
                 continue;
             }
 
             if (diff.fileDiff() > 0 && diff.rankDiff() > 0) {
-                candidate = candidate.moveDiagonal(-1, 1);
+                candidate = candidate.moveDiagonal(HORIZONTAL_DOWN_INDEX, VERTICAL_RIGHT_INDEX);
             }
         }
-
-        board.replace(source, destinationPiece);
-        board.replace(destination, sourcePiece);
     }
 
     private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {

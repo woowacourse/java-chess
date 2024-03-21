@@ -66,4 +66,28 @@ public class BoardTest {
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
     }
+
+    @DisplayName("체스판은 말의 규칙에 따라 갈 수 없는 도착지가 들어오면 예외가 발생한다.")
+    @Test
+    void checkCannotMove() {
+        // given
+        Board board = new Board();
+        Square source = Square.of(File.b, Rank.EIGHT);
+        Square destination = Square.of(File.d, Rank.SIX);
+
+        // when & then
+        assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("체스판은 말의 규칙에 따라 갈 수 있는 도착지가 들어오면 예외가 발생하지 않는다.")
+    @Test
+    void checkCanMove() {
+        // given
+        Board board = new Board();
+        Square source = Square.of(File.b, Rank.EIGHT);
+        Square destination = Square.of(File.c, Rank.SIX);
+
+        // when & then
+        assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
+    }
 }

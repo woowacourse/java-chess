@@ -23,6 +23,7 @@ public class ChessGame {
 
     public void play() {
         String progressCommand = inputView.readProgressCommand();
+        // TODO: end가 들어올 때까지 게임이 실행되게 변경
         if (!inputView.isStartCommand(progressCommand)) {
             return;
         }
