@@ -11,7 +11,7 @@ public class OutputView {
 
         for (int rank = 8; rank > 0; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
-                Piece piece = board.get(new Point(String.valueOf(file), rank));
+                Piece piece = board.get(new Point(file, rank));
                 if (piece == null) {
                     builder.append(".");
                     continue;

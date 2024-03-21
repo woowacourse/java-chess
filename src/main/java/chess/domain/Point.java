@@ -14,7 +14,7 @@ public class Point {
         this.rank = rank;
     }
 
-    public Point(String file, int rank) {
+    public Point(char file, int rank) {
         this(new File(file), new Rank(rank));
     }
 

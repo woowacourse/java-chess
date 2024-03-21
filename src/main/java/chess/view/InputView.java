@@ -13,8 +13,8 @@ public class InputView {
     }
 
     private void validateCommand(String input) {
-        if (!"start".equals(input) && !"end".equals(input)) {
-            throw new IllegalArgumentException("start 와 end 명령만 입력할 수 있습니다.");
+        if (!"start".equals(input) && !"end".equals(input) && !input.startsWith("move")) {
+            throw new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다.");
         }
     }
 }

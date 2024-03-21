@@ -16,8 +16,8 @@ class ChessGameTest {
         Map<Point, Piece> board = BoardFactory.create();
         ChessGame chessGame = new ChessGame(board);
 
-        Point departure = new Point("b", 2);
-        Point destination = new Point("b", 3);
+        Point departure = new Point('b', 2);
+        Point destination = new Point('b', 3);
         chessGame.move(departure, destination);
 
         assertThat(board.get(departure)).isNull();

@@ -10,18 +10,18 @@ import org.junit.jupiter.params.provider.ValueSource;
 class FileTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"a", "h"})
+    @ValueSource(chars = {'a', 'h'})
     @DisplayName("a부터 h까지의 가로 위치를 가진다.")
-    void createRank(String position) {
+    void createRank(char position) {
         File file = new File(position);
 
         assertThat(file).isEqualTo(new File(position));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"z", "i", "ab"})
+    @ValueSource(chars = {'z', 'i'})
     @DisplayName("가로 위치가 a 부터 h 사이의 값이 아니라면 예외가 발생한다.")
-    void invalidRank(String position) {
+    void invalidRank(char position) {
         assertThatThrownBy(() -> new File(position))
                 .isInstanceOf(IllegalArgumentException.class);
     }

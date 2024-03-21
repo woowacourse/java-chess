@@ -48,21 +48,21 @@ public class BoardFactory {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(String.valueOf(c), rank), new Pawn(team));
+            line.put(new Point(c, rank), new Pawn(team));
         }
         return line;
     }
 
     private static Map<Point, Piece> lineOfKing(int rank, Team team) {
         return Map.of(
-                new Point("a", rank), new Rook(team),
-                new Point("b", rank), new Knight(team),
-                new Point("c", rank), new Bishop(team),
-                new Point("d", rank), new Queen(team),
-                new Point("e", rank), new King(team),
-                new Point("f", rank), new Bishop(team),
-                new Point("g", rank), new Knight(team),
-                new Point("h", rank), new Rook(team)
+                new Point('a', rank), new Rook(team),
+                new Point('b', rank), new Knight(team),
+                new Point('c', rank), new Bishop(team),
+                new Point('d', rank), new Queen(team),
+                new Point('e', rank), new King(team),
+                new Point('f', rank), new Bishop(team),
+                new Point('g', rank), new Knight(team),
+                new Point('h', rank), new Rook(team)
         );
     }
 
@@ -70,7 +70,7 @@ public class BoardFactory {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(String.valueOf(c), rank), null);
+            line.put(new Point(c, rank), null);
         }
         return line;
     }

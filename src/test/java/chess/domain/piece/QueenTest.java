@@ -13,7 +13,7 @@ class QueenTest {
     void isMovable1() {
         Queen queen = new Queen(Team.WHITE);
 
-        boolean result = queen.isMovable(new Point("a", 1), new Point("a", 8));
+        boolean result = queen.isMovable(new Point('a', 1), new Point('a', 8));
 
         assertThat(result).isTrue();
     }
@@ -23,7 +23,7 @@ class QueenTest {
     void isMovable2() {
         Queen queen = new Queen(Team.WHITE);
 
-        boolean result = queen.isMovable(new Point("a", 8), new Point("a", 1));
+        boolean result = queen.isMovable(new Point('a', 8), new Point('a', 1));
 
         assertThat(result).isTrue();
     }
@@ -33,7 +33,7 @@ class QueenTest {
     void isMovable3() {
         Queen queen = new Queen(Team.WHITE);
 
-        boolean result = queen.isMovable(new Point("h", 1), new Point("a", 1));
+        boolean result = queen.isMovable(new Point('h', 1), new Point('a', 1));
 
         assertThat(result).isTrue();
     }
@@ -43,7 +43,7 @@ class QueenTest {
     void isMovable4() {
         Queen queen = new Queen(Team.WHITE);
 
-        boolean result = queen.isMovable(new Point("a", 1), new Point("h", 1));
+        boolean result = queen.isMovable(new Point('a', 1), new Point('h', 1));
 
         assertThat(result).isTrue();
     }
@@ -53,8 +53,8 @@ class QueenTest {
     void isMovable5() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovable(
-                new Point("a", 1),
-                new Point("b", 2));
+                new Point('a', 1),
+                new Point('b', 2));
 
         assertThat(result).isTrue();
     }
@@ -64,8 +64,8 @@ class QueenTest {
     void isMovable6() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovable(
-                new Point("c", 4),
-                new Point("e", 2));
+                new Point('c', 4),
+                new Point('e', 2));
 
         assertThat(result).isTrue();
     }
@@ -75,8 +75,8 @@ class QueenTest {
     void isMovable7() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovable(
-                new Point("h", 1),
-                new Point("a", 8));
+                new Point('h', 1),
+                new Point('a', 8));
 
         assertThat(result).isTrue();
     }
@@ -86,8 +86,8 @@ class QueenTest {
     void isMovable8() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovable(
-                new Point("h", 8),
-                new Point("b", 2));
+                new Point('h', 8),
+                new Point('b', 2));
 
         assertThat(result).isTrue();
     }
