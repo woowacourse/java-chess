@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.Map;
@@ -21,23 +25,23 @@ public class BoardTest {
         assertThat(board.mapPositionToCharacter()).containsEntry(Position.of(3, 1), Character.WHITE_PAWN);
     }
 
-    @DisplayName("위치에 있는 기물이 입력된 팀과 다른 팀인지 검증한다.")
+    @DisplayName("위치에 있는 기물이 입력된 팀과 같은 팀인지 검증한다.")
     @Test
     void validateOppositeTeamByPosition() {
         Board board = new Board(BoardFactory.generateStartBoard());
         assertThatCode(() ->
-                board.validateOppositeTeamByPosition(Position.of(2, 2), Team.BLACK))
+                board.validateSameTeamByPosition(Position.of(2, 2), Team.WHITE))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("위치에 있는 기물이 입력된 팀과 같은 팀일 시 예외가 발생한다.")
+    @DisplayName("위치에 있는 기물이 입력된 팀과 다른 팀일 시 예외가 발생한다.")
     @Test
     void validateSameTeamByPositionThrowsException() {
         Board board = new Board(BoardFactory.generateStartBoard());
         assertThatThrownBy(() ->
-                board.validateOppositeTeamByPosition(Position.of(2, 2), Team.WHITE))
+                board.validateSameTeamByPosition(Position.of(2, 2), Team.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("%s 팀이 움직일 차례가 아닙니다".formatted(Team.WHITE.name()));
+                .hasMessage("%s 팀이 움직일 차례입니다".formatted(Team.BLACK.name()));
     }
 
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")
@@ -65,6 +69,32 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(Position.of(1, 1), Position.of(1, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 아군 기물이 존재합니다.");
+    }
+
+    @DisplayName("왕이 체크된 상태에서 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
+    @Test
+    void checkmate() {
+        Board board = new Board(Map.of(
+                Position.of(8, 1), new King(Team.WHITE, true),
+                Position.of(7, 1), new Knight(Team.WHITE, true),
+                Position.of(8, 2), new Pawn(Team.WHITE, true),
+                Position.of(6, 3), new Bishop(Team.BLACK, true)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isTrue();
+    }
+
+    @DisplayName("왕이 체크된 상태에서 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
+    @Test
+    void checkmate2() {
+        Board board = new Board(Map.of(
+                Position.of(8, 1), new King(Team.WHITE, true),
+                Position.of(7, 1), new Knight(Team.WHITE, true),
+                Position.of(8, 2), new Pawn(Team.WHITE, true),
+                Position.of(7, 2), new Bishop(Team.BLACK, true)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
     }
 
     @DisplayName("Board에서 위치와 Character를 알 수 있다.")

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -66,6 +67,12 @@ public class Position {
 
     public Position move(int rowDifference, int columnDifference) {
         return Position.of(row + rowDifference, column + columnDifference);
+    }
+
+    public List<Position> findNearbyPosition(Piece piece) {
+        return positions.stream()
+                .filter(position -> piece.isMovable(this, position))
+                .toList();
     }
 
     @Override

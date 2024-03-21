@@ -18,6 +18,13 @@ public abstract class Piece {
 
     public abstract Character findCharacter();
 
+    public boolean isMovable(Position oldPosition, Position newPosition) {
+        int rowDifference = oldPosition.calculateRowDifference(newPosition);
+        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+
+        return isMovable(rowDifference, columnDifference);
+    }
+
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
     protected boolean isAttackable(int rowDifference, int columnDifference) {
@@ -29,10 +36,7 @@ public abstract class Piece {
     public abstract Piece move();
 
     private void validateMovable(Position oldPosition, Position newPosition) {
-        int rowDifference = oldPosition.calculateRowDifference(newPosition);
-        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
-
-        if (!oldPosition.equals(newPosition) && isMovable(rowDifference, columnDifference)) {
+        if (!oldPosition.equals(newPosition) && isMovable(oldPosition, newPosition)) {
             return;
         }
 

@@ -16,10 +16,10 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void validateOppositeTeamByPosition(Position position, Team team) {
+    public void validateSameTeamByPosition(Position position, Team team) {
         validatePieceExistsOnPosition(position);
-        if (pieces.get(position).isSameTeamWith(team)) {
-            throw new IllegalArgumentException("%s 팀이 움직일 차례가 아닙니다".formatted(team.name()));
+        if (pieces.get(position).isOppositeTeamWith(team)) {
+            throw new IllegalArgumentException("%s 팀이 움직일 차례입니다".formatted(team.name()));
         }
     }
 
@@ -56,13 +56,29 @@ public class Board {
         }
     }
 
+    public boolean isCheckmate(Team attackedTeam) {
+        Position kingPosition = getKingPosition(attackedTeam);
+        Piece king = pieces.get(kingPosition);
+
+        // 자신 및 주변 유닛이 공격받고 있음
+        return kingPosition.findNearbyPosition(king).stream()
+                .filter(position -> !pieces.containsKey(position) ||
+                        (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
+                .allMatch(position -> isBeingAttacked(attackedTeam, position));
+    }
+
     public boolean isChecked(Team team) {
         Position kingPosition = getKingPosition(team);
+        return isBeingAttacked(team, kingPosition);
+    }
+
+    private boolean isBeingAttacked(Team team, Position position) {
         return pieces.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().isOppositeTeamWith(team))
-                .anyMatch(entry -> isChecking(entry.getValue(), entry.getKey(), kingPosition));
+                .anyMatch(entry -> isAttacking(entry.getValue(), entry.getKey(), position));
     }
+
 
     private Position getKingPosition(Team team) {
         Character character = Character.findCharacter(team, Kind.KING);
@@ -75,9 +91,9 @@ public class Board {
                 .getKey();
     }
 
-    private boolean isChecking(Piece thisPiece, Position thisPosition, Position kingPosition) {
-        if (thisPiece.isAttacking(thisPosition, kingPosition)) {
-            List<Position> betweenPositions = findBetweenPositions(thisPiece, thisPosition, kingPosition);
+    private boolean isAttacking(Piece thisPiece, Position thisPosition, Position attackPosition) {
+        if (thisPiece.isAttacking(thisPosition, attackPosition)) {
+            List<Position> betweenPositions = findBetweenPositions(thisPiece, thisPosition, attackPosition);
             return betweenPositions.stream()
                     .noneMatch(pieces::containsKey);
         }
