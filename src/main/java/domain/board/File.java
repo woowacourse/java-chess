@@ -41,5 +41,4 @@ public final class File {
         return "File[" +
             "value=" + value + ']';
     }
-
 }

@@ -17,8 +17,8 @@ public class Position {
     }
 
     public Position nextPosition(Direction direction) {
-        return new Position(new File(file.value() + direction.getFileDirection()),
-            new Rank(rank.value() + direction.getRankDirection()));
+        return Position.of(file.value() + direction.getFileDirection(),
+            rank.value() + direction.getRankDirection());
     }
 
     public boolean isWhitePawnInitialPosition() {
