@@ -4,8 +4,6 @@ import java.util.Objects;
 
 public class Position {
 
-    //TODO : 64개 캐싱
-
     private final Column column;
     private final Row row;
 

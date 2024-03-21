@@ -48,7 +48,6 @@ class KnightTest {
         );
     }
 
-    //TODO : 테스트 케이스 추가
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(Position.from("a8"), Position.from("c7"))),
