@@ -26,7 +26,7 @@ class ChessBoardTest {
                 .hasMessage("갈 수 없는 경로입니다.");
     }
 
-    @DisplayName("갈 수 없는 경로는 못간다.")
+    @DisplayName("기물에 맞지 않는 움직임으로 갈 수 없다.")
     @Test
     void emptyPath() {
         // given
@@ -140,7 +140,7 @@ class ChessBoardTest {
                 .hasMessage("자기 말이 아닙니다.");
     }
 
-    @DisplayName("폰은 대각선으로만 공격할 수 있다.")
+    @DisplayName("기물의 공격 동선이 아닌 경우 움직일 수 없다.")
     @Test
     void canAttack() {
         // given

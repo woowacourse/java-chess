@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
-    @DisplayName("폰 움직임")
+    @DisplayName("폰은 이동시 기본 앞으로 1칸, 초기 위치에서는 2칸까지 가능하다.")
     @ParameterizedTest
     @MethodSource(value = "squareArgumentsMove")
     void canMove(final Camp color, final Square source, final Square target, final boolean result) {
@@ -40,7 +40,7 @@ class PawnTest {
         );
     }
 
-    @DisplayName("폰 공격")
+    @DisplayName("폰은 공격시 대각선 앞으로만 공격가능하다.")
     @ParameterizedTest
     @MethodSource(value = "squareArgumentsAttack")
     void canAttack(final Camp color, final Square source, final Square target, final boolean result) {
