@@ -40,4 +40,16 @@ public enum Rank {
     int subtract(Rank rank) {
         return this.number - rank.number;
     }
+
+    boolean isUpperThan(Rank rank) {
+        return this.number > rank.number;
+    }
+
+    boolean isLowerThan(Rank rank) {
+        return this.number < rank.number;
+    }
+
+    boolean isSame(Rank rank) {
+        return this.number == rank.number;
+    }
 }

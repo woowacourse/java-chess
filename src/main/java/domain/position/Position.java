@@ -52,6 +52,32 @@ public class Position {
         return Math.abs(file.subtract(target.file));
     }
 
+    public int calculateDistance(Position target) {
+        return Math.max(calculateRankGap(target), calculateFileGap(target));
+    }
+
+    public boolean isUpperRankThan(Position target) {
+        return this.rank.isUpperThan(target.rank);
+    }
+
+    public boolean isLowerRankThan(Position target) {
+        return this.rank.isLowerThan(target.rank);
+    }
+
+    public boolean isStraight(Position target) {
+        validateSamePosition(target);
+        return calculateFileGap(target) == 0;
+    }
+
+    public boolean isDiagonal(Position target) {
+        validateSamePosition(target);
+        return calculateFileGap(target) == calculateRankGap(target);
+    }
+
+    public boolean isAtSameRank(Rank rank) {
+        return this.rank.isSame(rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
