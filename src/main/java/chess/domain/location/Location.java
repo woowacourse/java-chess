@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class Location {
 
+    private static final IllegalArgumentException WRONG_LOCATION_INPUT_EXCEPTION
+            = new IllegalArgumentException("잘못된 위치 입력입니다.");
+
     private final Column column;
     private final Row row;
 
@@ -31,18 +34,17 @@ public class Location {
             Row row = Row.of(rowInput);
             return new Location(column, row);
         } catch (IllegalArgumentException exception) {
-            throw new IllegalArgumentException("잘못된 위치 입력입니다.");
+            throw WRONG_LOCATION_INPUT_EXCEPTION;
         }
     }
-    //TODO 예외 중복 처리
 
     private static void validateInput(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("잘못된 위치 입력입니다.");
+            throw WRONG_LOCATION_INPUT_EXCEPTION;
         }
         //TODO 상수 처리
         if (input.length() != 2) {
-            throw new IllegalArgumentException("잘못된 위치 입력입니다.");
+            throw WRONG_LOCATION_INPUT_EXCEPTION;
         }
     }
 
