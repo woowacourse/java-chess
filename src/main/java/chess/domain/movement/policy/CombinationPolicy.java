@@ -1,6 +1,6 @@
 package chess.domain.movement.policy;
 
-import chess.domain.Color;
+import chess.domain.piece.Color;
 import java.util.List;
 
 public class CombinationPolicy implements Policy {

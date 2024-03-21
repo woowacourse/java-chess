@@ -1,8 +1,8 @@
 package chess.domain.movement;
 
-import chess.domain.Color;
 import chess.domain.movement.direction.Direction;
 import chess.domain.movement.policy.Policy;
+import chess.domain.piece.Color;
 
 public class Movement {
     private final Policy policy;

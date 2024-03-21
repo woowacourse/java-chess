@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.Position;
 import chess.domain.movement.Movement;
 import java.util.List;
 import java.util.Map;

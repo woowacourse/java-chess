@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import chess.domain.movement.Movement;
 import chess.domain.movement.direction.DownDirection;

@@ -1,8 +1,12 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.Position;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Map;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;

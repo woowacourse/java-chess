@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Color;
 import chess.domain.movement.direction.DownDirection;
 import chess.domain.movement.direction.UpRightDirection;
 import chess.domain.movement.policy.ColorPolicy;
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
