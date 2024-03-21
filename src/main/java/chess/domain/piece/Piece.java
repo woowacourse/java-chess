@@ -2,31 +2,27 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
 
     protected final List<Direction> directions = new ArrayList<>();
     protected final Color color;
 
-    public Piece(final Color color) {
+    protected Piece(final Color color) {
         this.color = color;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return Objects.equals(directions, piece.directions) && color == piece.color;
+    abstract public boolean canMoveMoreThenOnce();
+
+    final public boolean canMoveInTargetDirection(final Direction targetDirection) {
+        return directions.contains(targetDirection);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(directions, color);
+    final public boolean isAlly(Piece piece) {
+        if (piece == null) {
+            return false;
+        }
+
+        return this.color == piece.color;
     }
 }
