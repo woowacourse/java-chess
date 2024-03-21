@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Collections;
+import java.util.List;
 import model.Command;
 import view.InputView;
 import view.OutputView;
@@ -14,33 +16,28 @@ public class InputController {
         this.outputView = outputView;
     }
 
-    public Command read() {
-        String value = inputView.readCommand();
-
-        Command command = getCommand();
-
-
-        if (command == Command.START) {
-            return Command.START;
-        }
-        return null;
-    }
-
-
-    public Command getCommand() {
-        Command command = null;
-        while (command == null) {
-            command = (Command) readCommand();
+    public List<String> getCommand() {
+        List<String> command = Collections.emptyList();
+        while (command.isEmpty()) {
+            command = readCommand();
         }
         return command;
     }
 
-    private Object readCommand() {
+    private List<String> readCommand() {
         try {
-            return Command.from(inputView.readCommand());
+            return readLine();
         } catch (IllegalArgumentException exception) {
             outputView.printException(exception);
         }
-        return null;
+        return Collections.emptyList();
+    }
+
+    private List<String> readLine() {
+        List<String> input = inputView.readCommandList();
+        for (String value : input) {
+            Command.validate(value);
+        }
+        return input;
     }
 }

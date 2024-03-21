@@ -1,5 +1,6 @@
 package view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -10,10 +11,10 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public String readCommand() {
+    public List<String> readCommandList() {
         String rawCommand = scanner.nextLine();
         validate(rawCommand);
-        return rawCommand;
+        return List.of(rawCommand.split(" "));
     }
 
     private void validate(String value) {
