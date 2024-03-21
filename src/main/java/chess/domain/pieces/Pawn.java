@@ -23,10 +23,7 @@ public class Pawn extends Piece {
     }
 
     private boolean hasDestinationPiece(final Piece destinationPiece) {
-        if (destinationPiece != null) {
-            return true;
-        }
-        return false;
+        return destinationPiece != null;
     }
 
     private boolean isAttack(final Movement movement) {
