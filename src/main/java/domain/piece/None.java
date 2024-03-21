@@ -14,12 +14,12 @@ public class None extends Piece {
 
     @Override
     public MoveStrategy strategy() {
-        return null;
+        throw new UnsupportedOperationException("비어 있는 칸입니다.");
     }
 
     @Override
     public List<Direction> movableDirections() {
-        return null;
+        throw new UnsupportedOperationException("비어 있는 칸입니다.");
     }
 
     public static None none() {

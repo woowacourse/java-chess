@@ -26,12 +26,16 @@ public class DtoMapper {
         final List<String> pieceShapes = new ArrayList<>();
 
         for (final Piece piece : pieces) {
-            if (piece.isWhite()) {
-                pieceShapes.add(PieceShape.whiteShapeOf(piece.type().name()));
-                continue;
-            }
-            pieceShapes.add(PieceShape.blackShapeOf(piece.type().name()));
+            addByPieceColor(piece, pieceShapes);
         }
         return new RankInfo(pieceShapes);
+    }
+
+    private static void addByPieceColor(final Piece piece, final List<String> pieceShapes) {
+        if (piece.isWhite()) {
+            pieceShapes.add(PieceShape.whiteShapeOf(piece.type().name()));
+            return;
+        }
+        pieceShapes.add(PieceShape.blackShapeOf(piece.type().name()));
     }
 }

@@ -23,6 +23,7 @@ public class Position {
     }
 
     public Position next(final Direction direction) {
+
         return new Position(File.of(fileIndex() + direction.file()),
                 Rank.of(rankIndex() + direction.rank()));
     }

@@ -33,9 +33,5 @@ public abstract class Piece {
         return type != Type.NONE;
     }
 
-    public boolean isPawn() {
-        return type == Type.PAWN;
-    }
-
     public abstract List<Direction> movableDirections();
 }

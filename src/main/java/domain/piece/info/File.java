@@ -64,8 +64,4 @@ public enum File {
     public static List<File> queenPosition() {
         return List.of(D);
     }
-
-    public File getNextFile(final int nextIndex) {
-        return File.of(index + nextIndex);
-    }
 }

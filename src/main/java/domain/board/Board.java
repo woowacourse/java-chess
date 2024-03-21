@@ -5,6 +5,8 @@ import domain.piece.Piece;
 import domain.piece.info.Color;
 import domain.piece.info.Direction;
 import domain.piece.info.Type;
+import domain.strategy.MoveStrategy;
+import java.sql.DriverManager;
 import java.util.List;
 import java.util.Map;
 
@@ -16,29 +18,38 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        Piece currentPiece = squares.get(source);
-        List<Direction> directions = currentPiece.movableDirections();
-        List<Position> movablePositions = currentPiece.strategy().movablePositions(source, directions);
+        final Piece currentPiece = squares.get(source);
+        final List<Direction> directions = currentPiece.movableDirections();
+        final MoveStrategy strategy = currentPiece.strategy();
+        final List<Position> movablePositions = strategy.movablePositions(source, directions, this);
 
-        boolean targetMovable = movablePositions.stream()
+        final boolean targetMovable = movablePositions.stream()
                 .anyMatch(position -> position.equals(target));
+        validateMovablePosition(targetMovable);
+        updateBoard(source, target, currentPiece);
+    }
 
-        if (currentPiece.isPawn()) {
-            
-        }
+    private void validateMovablePosition(final boolean targetMovable) {
         if (!targetMovable) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
+    }
+
+    private void updateBoard(final Position source, final Position target, final Piece currentPiece) {
         if (squares.get(target).isNotNone()) {
-            if (squares.get(target).color() == currentPiece.color()) {
-                throw new IllegalArgumentException("같은 팀의 말이 있습니다.");
-            }
+            validateSameColor(target, currentPiece);
             squares.remove(target);
             squares.put(target, currentPiece);
             squares.put(source, new None(Color.NONE, Type.NONE));
         }
         squares.put(target, currentPiece);
         squares.put(source, new None(Color.NONE, Type.NONE));
+    }
+
+    private void validateSameColor(final Position target, final Piece currentPiece) {
+        if (squares.get(target).color() == currentPiece.color()) {
+            throw new IllegalArgumentException("같은 팀의 말이 있습니다.");
+        }
     }
 
     public Map<Position, Piece> squares() {

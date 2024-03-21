@@ -14,30 +14,32 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 public enum BoardInitiator {
 
-    BLACK_PAWN(File.pawnPosition(), Rank.blackPawnRank(), Pawn.black()),
-    BLACK_ROOK(File.rookPosition(), Rank.blackOtherRank(), Rook.black()),
-    BLACK_KNIGHT(File.knightPosition(), Rank.blackOtherRank(), Knight.black()),
-    BLACK_BISHOP(File.bishopPosition(), Rank.blackOtherRank(), Bishop.black()),
-    BLACK_QUEEN(File.queenPosition(), Rank.blackOtherRank(), Queen.black()),
-    BLACK_KING(File.kingPosition(), Rank.blackOtherRank(), King.black()),
+    BLACK_PAWN(File.pawnPosition(), Rank.blackPawnRank(), Pawn::black),
+    BLACK_ROOK(File.rookPosition(), Rank.blackOtherRank(), Rook::black),
+    BLACK_KNIGHT(File.knightPosition(), Rank.blackOtherRank(), Knight::black),
+    BLACK_BISHOP(File.bishopPosition(), Rank.blackOtherRank(), Bishop::black),
+    BLACK_QUEEN(File.queenPosition(), Rank.blackOtherRank(), Queen::black),
+    BLACK_KING(File.kingPosition(), Rank.blackOtherRank(), King::black),
 
-    WHITE_PAWN(File.pawnPosition(), Rank.whitePawnRank(), Pawn.white()),
-    WHITE_ROOK(File.rookPosition(), Rank.whiteOtherRank(), Rook.white()),
-    WHITE_KNIGHT(File.knightPosition(), Rank.whiteOtherRank(), Knight.white()),
-    WHITE_BISHOP(File.bishopPosition(), Rank.whiteOtherRank(), Bishop.white()),
-    WHITE_QUEEN(File.queenPosition(), Rank.whiteOtherRank(), Queen.white()),
-    WHITE_KING(File.kingPosition(), Rank.whiteOtherRank(), King.white()),
+    WHITE_PAWN(File.pawnPosition(), Rank.whitePawnRank(), Pawn::white),
+    WHITE_ROOK(File.rookPosition(), Rank.whiteOtherRank(), Rook::white),
+    WHITE_KNIGHT(File.knightPosition(), Rank.whiteOtherRank(), Knight::white),
+    WHITE_BISHOP(File.bishopPosition(), Rank.whiteOtherRank(), Bishop::white),
+    WHITE_QUEEN(File.queenPosition(), Rank.whiteOtherRank(), Queen::white),
+    WHITE_KING(File.kingPosition(), Rank.whiteOtherRank(), King::white),
 
-    NONE(File.nonePosition(), Rank.nonePosition(), None.none());
+    NONE(File.nonePosition(), Rank.nonePosition(), None::none);
 
     private final List<File> files;
     private final List<Rank> rank;
-    private final Piece piece;
+    private final Supplier<Piece> piece;
 
-    BoardInitiator(final List<File> files, final List<Rank> rank, final Piece piece) {
+    BoardInitiator(final List<File> files, final List<Rank> rank, final Supplier<Piece> piece) {
         this.files = files;
         this.rank = rank;
         this.piece = piece;
@@ -56,7 +58,7 @@ public enum BoardInitiator {
         final List<Position> positions = makePosition(value.files, value.rank);
 
         for (final Position position : positions) {
-            squares.put(position, value.piece);
+            squares.put(position, value.piece.get());
         }
     }
 

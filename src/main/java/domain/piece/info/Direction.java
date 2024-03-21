@@ -22,8 +22,7 @@ public enum Direction {
 
     UP_UP(0, 2),
     DOWN_DOWN(0, -2),
-
-    NONE(0, 0);
+    ;
 
     private final int file;
     private final int rank;
