@@ -4,12 +4,11 @@ import domain.movement.BishopMovementValidation;
 import domain.movement.Direction;
 import domain.movement.KnightMovementValidation;
 import domain.movement.MovementValidation;
-import domain.movement.QueenMovementValidation;
 import domain.movement.RookMovementValidation;
 
 public enum Type {
     KING(null),
-    QUEEN(new QueenMovementValidation()),
+    QUEEN(null),
     BISHOP(new BishopMovementValidation()),
     KNIGHT(new KnightMovementValidation()),
     ROOK(new RookMovementValidation()),
