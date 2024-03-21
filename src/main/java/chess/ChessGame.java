@@ -6,6 +6,7 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.MoveCommand;
+import chess.util.RetryUtil;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceView;
@@ -25,7 +26,7 @@ public class ChessGame {
     }
 
     public void play() {
-        String progressCommand = inputView.readProgressCommand();
+        String progressCommand = RetryUtil.retryUntilNoException(inputView::readProgressCommand);
 
         if (!inputView.isStartCommand(progressCommand)) {
             return;
@@ -34,17 +35,26 @@ public class ChessGame {
         Board board = new Board();
         printBoardOutput(board);
 
+        
         while (true) {
-            List<String> command = inputView.readCommand();
-
-            if (command.size() == 1) {
+            if (!RetryUtil.retryUntilNoException(() -> loopWhileEnd(board))) {
                 break;
             }
-
-            MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
-            board.move(moveCommand.source(), moveCommand.destination());
-            printBoardOutput(board);
         }
+    }
+
+    private boolean loopWhileEnd(Board board) {
+        List<String> command = inputView.readCommand();
+
+        if (command.size() == 1) {
+            return false;
+        }
+
+        MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
+        board.move(moveCommand.source(), moveCommand.destination());
+        printBoardOutput(board);
+
+        return true;
     }
 
     private void printBoardOutput(Board board) {
