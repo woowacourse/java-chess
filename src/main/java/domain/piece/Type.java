@@ -2,14 +2,13 @@ package domain.piece;
 
 import domain.movement.BishopMovementValidation;
 import domain.movement.Direction;
-import domain.movement.KingMovementValidation;
 import domain.movement.KnightMovementValidation;
 import domain.movement.MovementValidation;
 import domain.movement.QueenMovementValidation;
 import domain.movement.RookMovementValidation;
 
 public enum Type {
-    KING(new KingMovementValidation()),
+    KING(null),
     QUEEN(new QueenMovementValidation()),
     BISHOP(new BishopMovementValidation()),
     KNIGHT(new KnightMovementValidation()),

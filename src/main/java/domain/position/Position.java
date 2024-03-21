@@ -44,6 +44,14 @@ public class Position {
         return new Position(nextFile, nextRank);
     }
 
+    public int calculateRankGap(Position target) {
+        return Math.abs(rank.subtract(target.rank));
+    }
+
+    public int calculateFileGap(Position target) {
+        return Math.abs(file.subtract(target.file));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
