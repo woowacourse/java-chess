@@ -1,44 +1,61 @@
 package chess.piece;
 
+import chess.board.Direction;
 import chess.board.Position;
+import java.util.List;
+import java.util.stream.Stream;
 
 public abstract class Piece {
 
-    private final int maxUnitMove;
     private final PieceAttributes pieceAttributes;
+    private final List<Direction> directions;
 
-    public Piece(PieceType pieceType, Color color, int maxUnitMove) {
+    public Piece(PieceType pieceType, Color color, List<Direction> directions) {
         this.pieceAttributes = new PieceAttributes(pieceType, color);
-        this.maxUnitMove = maxUnitMove;
+        this.directions = directions;
     }
 
-    public abstract boolean isMovable(Position source, Position destination);
-
-    public boolean hasMultipleUnitMoves() {
-        return maxUnitMove > 1;
+    public final boolean isMovable(Position source, Position destination) {
+        Direction direction = Direction.calculateBetween(source, destination);
+        return matchesDirection(direction) &&
+                isReachable(source, destination, direction);
     }
 
-    public boolean hasAttributesOf(PieceAttributes pieceAttributes) {
-        return this.pieceAttributes.equals(pieceAttributes);
+    protected boolean matchesDirection(Direction direction) {
+        return directions.contains(direction);
     }
+
+    protected boolean isReachable(Position source, Position destination, Direction direction) {
+        int step = (int) Stream.iterate(source,
+                        position -> position.isNotEquals(destination),
+                        direction::nextPosition)
+                .count();
+        return step <= getMaxUnitMove();
+    }
+
+    protected abstract int getMaxUnitMove();
 
     public boolean isAttackable(Position source, Position destination) {
         return isMovable(source, destination);
     }
 
-    public boolean isAllyPiece(Piece piece) {
-        return pieceAttributes.hasSameColorOf(piece.color());
+    public boolean isInitPawn() {
+        return false;
     }
 
-    public boolean isOpponentPiece(Piece piece) {
-        return !isAllyPiece(piece);
+    public boolean hasSameColorWith(Piece piece) {
+        return pieceAttributes.hasSameColorOf(piece.getColor());
     }
 
     public boolean hasColorOf(Color color) {
         return pieceAttributes.hasSameColorOf(color);
     }
 
-    protected Color color() {
+    public boolean hasAttributesOf(PieceAttributes pieceAttributes) {
+        return this.pieceAttributes.equals(pieceAttributes);
+    }
+
+    public Color getColor() {
         return pieceAttributes.getColor();
     }
 }

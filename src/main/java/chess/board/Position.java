@@ -74,12 +74,6 @@ public class Position {
         return Math.abs(rank.subtract(other.rank) * file.subtract(other.file)) == 2;
     }
 
-    public boolean isAdjacent(Position other) {
-        int rankDifference = rank.subtract(other.rank);
-        int fileDifference = file.subtract(other.file);
-        return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
-    }
-
     public boolean isNotEquals(Position other) {
         return !this.equals(other);
     }

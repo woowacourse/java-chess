@@ -1,17 +1,26 @@
 package chess.piece;
 
-import chess.board.Position;
+import chess.board.Direction;
+import java.util.List;
 
 public class Rook extends Piece {
 
-    private static final int MAX_UNIT_MOVE = 8;
+    private static final int MAX_UNIT_MOVE = 7;
 
     public Rook(Color color) {
-        super(PieceType.ROOK, color, MAX_UNIT_MOVE);
+        super(PieceType.ROOK,
+                color,
+                List.of(
+                        Direction.POSITIVE_FILE_SAME_RANK,
+                        Direction.NEGATIVE_FILE_SAME_RANK,
+                        Direction.SAME_FILE_POSITIVE_RANK,
+                        Direction.SAME_FILE_NEGATIVE_RANK
+                )
+        );
     }
 
     @Override
-    public boolean isMovable(Position source, Position destination) {
-        return source.isOnSameFile(destination) || source.isOnSameRank(destination);
+    protected int getMaxUnitMove() {
+        return MAX_UNIT_MOVE;
     }
 }
