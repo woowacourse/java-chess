@@ -13,6 +13,6 @@ public class Empty extends Piece {
 
     @Override
     public boolean isValid(Movement movement) {
-        throw new IllegalArgumentException("기물이 없는 경우에는 움직일 수 없음");
+        throw new IllegalArgumentException("기물이 없는 경우에는 움직일 수 없습니다.");
     }
 }

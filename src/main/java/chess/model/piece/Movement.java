@@ -10,7 +10,7 @@ public class Movement {
 
     public Movement(Position source, Position destination) {
         if (source == destination) {
-            throw new IllegalArgumentException("출발지와 도착지가 동일하다????");
+            throw new IllegalArgumentException("출발지와 도착지가 동일하면 움직일 수 없습니다.");
         }
         this.source = source;
         this.destination = destination;
