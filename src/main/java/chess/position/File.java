@@ -37,7 +37,7 @@ public enum File {
         return files;
     }
 
-    private static File of(int value) {
+    public static File of(int value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findFirst()

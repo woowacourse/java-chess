@@ -38,7 +38,7 @@ public enum Rank {
         return ranks;
     }
 
-    private static Rank of(int value) {
+    public static Rank of(int value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
