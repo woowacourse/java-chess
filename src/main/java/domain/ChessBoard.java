@@ -2,11 +2,13 @@ package domain;
 
 import domain.piece.ChessBoardGenerator;
 import domain.piece.Piece;
+import domain.piece.PieceType;
 import domain.position.Position;
 import dto.BoardStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
@@ -60,14 +62,22 @@ public class ChessBoard {
         return targetPiece.isColor(sourcePiece.color());
     }
 
-    private boolean isExist(Position target) {
-        return board.containsKey(target);
-    }
-
     private void validateMovement(Position source, Position target) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isInMovableRange(source, target)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
         }
+        if (!sourcePiece.isType(PieceType.KNIGHT)) {
+            Set<Position> positions = source.findBetween(target);
+            for (Position position : positions) {
+                if (isExist(position)) {
+                    throw new IllegalArgumentException("이동하고자 하는 경로 사이에 기물이 존재합니다.");
+                }
+            }
+        }
+    }
+
+    private boolean isExist(Position position) {
+        return board.containsKey(position);
     }
 }

@@ -4,7 +4,9 @@ import domain.piece.BoardGeneratorStub;
 import domain.piece.ChessBoardGenerator;
 import domain.piece.Piece;
 import domain.piece.PieceColor;
+import domain.piece.type.Knight;
 import domain.piece.type.Pawn;
+import domain.piece.type.Rook;
 import domain.position.Position;
 import dto.BoardStatus;
 import dto.PieceInfo;
@@ -132,5 +134,39 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move("b2", "b7"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물이 이동할 수 없는 방식입니다.");
+    }
+
+    @DisplayName("나이트를 제외한 나머지 기물은 Source와 Target 사이에 다른 기물이 존재하면 예외를 발생한다.")
+    @Test
+    void validateBetweenSourceAndTarget() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Rook(PieceColor.WHITE));
+        board.put(new Position("b3"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move("b2", "b7"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동하고자 하는 경로 사이에 기물이 존재합니다.");
+    }
+
+    @DisplayName("나이트는 Source와 Target 사이에 다른 기물이 존재해도 이동할 수 있다.")
+    @Test
+    void canKnightMove() {
+        // given
+        BoardGeneratorStub generatorStub = new BoardGeneratorStub();
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(new Position("b2"), new Knight(PieceColor.WHITE));
+        board.put(new Position("b3"), new Pawn(PieceColor.WHITE));
+
+        generatorStub.setBoard(board);
+        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        // when & then
+        assertThatCode(() -> chessBoard.move("b2", "c4")).doesNotThrowAnyException();
     }
 }
