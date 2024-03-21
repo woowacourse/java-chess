@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MoveCommand extends Command {
-    public MoveCommand(String[] options) {
+    public MoveCommand(String... options) {
         super(options);
     }
 
