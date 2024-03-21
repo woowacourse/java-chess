@@ -1,9 +1,11 @@
 package domain.position;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.junit.jupiter.api.Test;
 
 class FileTest {
     @Test
@@ -14,41 +16,26 @@ class FileTest {
     }
 
     @Test
-    void 존재하는_file명을_찾을_경우_해당_file을_반환한다() {
-        File file = File.fromName("a");
+    void A와_F_사이에_존재하는_file_목록을_반환한다() {
+        File source = File.A;
+        File target = File.F;
 
-        assertThat(file).isEqualTo(File.A);
+        List<File> betweenFiles = source.between(target);
+
+        assertThat(betweenFiles).containsExactlyElementsOf(List.of(
+                File.B, File.C, File.D, File.E
+        ));
     }
 
     @Test
-    void 현재_file의_다음_file을_반환한다() {
-        File file = File.fromName("a");
+    void F와_A_사이에_존재하는_file_목록을_반환한다() {
+        File source = File.F;
+        File target = File.A;
 
-        assertThat(file.next(1)).isEqualTo(File.B);
-    }
+        List<File> betweenFiles = source.between(target);
 
-    @Test
-    void file_H의_다음_file을_호출하면_예외가_발생한다() {
-        File file = File.fromName("h");
-
-        assertThatThrownBy(() -> file.next(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 file입니다.");
-    }
-
-    @Test
-    void 현재_file의_이전_file을_반환한다() {
-        File file = File.fromName("h");
-
-        assertThat(file.next(-1)).isEqualTo(File.G);
-    }
-
-    @Test
-    void File_A의_이전_file을_호출하면_예외가_발생한다() {
-        File file = File.fromName("a");
-
-        assertThatThrownBy(() -> file.next(-1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 file입니다.");
+        assertThat(betweenFiles).containsExactlyElementsOf(List.of(
+                File.E, File.D, File.C, File.B
+        ));
     }
 }
