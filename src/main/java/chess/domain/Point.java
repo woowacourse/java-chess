@@ -45,7 +45,7 @@ public class Point {
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
         int distance = getDistance(fileDistance, rankDistance);
-        if (fileDistance != 0 || rankDistance != 0) {
+        if (fileDistance != 0 && rankDistance != 0) {
             return distance == 2;
         }
         return distance == 1;

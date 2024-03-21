@@ -14,6 +14,7 @@ public class Board {
         this.board = board;
     }
 
+    // TODO 리팩터링
     public void move(Player player, Point currentPoint, Point destination) {
         Piece currentPiece = board.get(currentPoint);
 
@@ -21,13 +22,13 @@ public class Board {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
 
+        if (!currentPiece.isMovable(currentPoint, destination)) {
+            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
+        }
+
         Piece nextPiece = board.get(destination);
         if (nextPiece != null && player.isMyPiece(nextPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
-        }
-
-        if (!currentPiece.isMovable(currentPoint, destination)) {
-            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
         }
 
         Direction route = currentPoint.findRoute(destination);
