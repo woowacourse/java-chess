@@ -31,23 +31,26 @@ public class ChessBoard {
         tryAttack(path);
     }
 
+    // TODO: 예외 로직 세분화
     private void tryExchange(Path path) {
         Square startSquare = squares.get(path.getStart());
-        if (startSquare.canMove(path, squares)) {
-            startSquare.move();
-            Square tmp = squares.get(path.getEnd());
-            squares.put(path.getEnd(), startSquare);
-            squares.put(path.getStart(), tmp);
+        if (!startSquare.canMove(path, squares)) {
+            throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
+        startSquare.move();
+        Square tmp = squares.get(path.getEnd());
+        squares.put(path.getEnd(), startSquare);
+        squares.put(path.getStart(), tmp);
     }
 
     private void tryAttack(Path path) {
         Square startSquare = squares.get(path.getStart());
-        if (startSquare.canAttack(path, squares)) {
-            startSquare.move();
-            squares.put(path.getEnd(), startSquare);
-            squares.put(path.getStart(), Empty.getInstance());
+        if (!startSquare.canAttack(path, squares)) {
+            throw new IllegalArgumentException("해당 위치를 공격할 수 없습니다.");
         }
+        startSquare.move();
+        squares.put(path.getEnd(), startSquare);
+        squares.put(path.getStart(), Empty.getInstance());
     }
 
     // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
