@@ -2,13 +2,21 @@ package chess.domain.pieces.piece;
 
 import chess.domain.square.Square;
 
-public record PieceResponse(int fileIndex, int rankIndex, String color, String type) {
+public record PieceResponse(Square square, Piece piece) {
 
-    public static PieceResponse of(final Square square, final Piece piece) {
-        int fileIndex = square.getFileIndex();
-        int rankIndex = square.getRankIndex();
-        String color = piece.color().name();
-        String type = piece.type().name();
-        return new PieceResponse(fileIndex, rankIndex, color, type);
+    public int getFileIndex() {
+        return square.getFileIndex();
+    }
+
+    public int getRankIndex() {
+        return square.getRankIndex();
+    }
+
+    public Type getType() {
+        return piece.type();
+    }
+
+    public Color getColor() {
+        return piece.color();
     }
 }

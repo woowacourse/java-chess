@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.PieceResponse;
+import chess.domain.pieces.piece.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -29,15 +31,15 @@ public class OutputView {
     }
 
     private void addPieceToBoard(final List<PieceResponse> pieces, final char[][] board) {
-        for (PieceResponse piece : pieces) {
-            int y = piece.rankIndex();
-            int x = piece.fileIndex();
-            board[y][x] = getPieceDisplay(piece.type(), piece.color());
+        for (PieceResponse response : pieces) {
+            int y = response.getRankIndex();
+            int x = response.getFileIndex();
+            board[y][x] = getPieceDisplay(response.getType(), response.getColor());
         }
     }
 
-    private char getPieceDisplay(final String type, final String color) {
-        return PieceView.valueOf(type).changeToView(color);
+    private char getPieceDisplay(final Type type, final Color color) {
+        return PieceView.findByType(type).changeToView(color);
     }
 
     private void printBoardStatus(final char[][] board) {
