@@ -20,7 +20,7 @@
     - [x] BISHOP
     - [x] NIGHT
     - [ ] PAWN
-    - [ ] KING
+    - [x] KING
     - [ ] QUEEN
   - [ ] 이동 가능한 위치인 경우 위치를 이동한다.
 - [ ] 이동 결과를 출력한다.
