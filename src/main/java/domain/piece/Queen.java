@@ -11,14 +11,12 @@ public class Queen extends Piece {
         super(color);
     }
 
-
     @Override
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
         return chessVector.isDiagonal() || chessVector.isHorizontalOrVertical();
     }
-
 
     @Override
     public boolean equals(final Object o) {
