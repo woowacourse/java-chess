@@ -9,9 +9,12 @@ import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,33 +37,21 @@ public class BoardFactoryTest {
 
     private Map<Square, Piece> createExpectedBoard() {
         Map<Square, Piece> expected = new HashMap<>();
+        List<File> files = List.of(File.values());
+        List<PieceType> pieces = List.of(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
 
-        // TODO: 개선하기
-        expected.put(Square.of(File.a, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
-        expected.put(Square.of(File.b, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(Square.of(File.c, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(Square.of(File.d, Rank.ONE), new Piece(PieceType.QUEEN, ColorType.WHITE));
-        expected.put(Square.of(File.e, Rank.ONE), new Piece(PieceType.KING, ColorType.WHITE));
-        expected.put(Square.of(File.f, Rank.ONE), new Piece(PieceType.BISHOP, ColorType.WHITE));
-        expected.put(Square.of(File.g, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
-        expected.put(Square.of(File.h, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
+        IntStream.range(0, 8)
+                .forEach(i -> expected.put(Square.of(files.get(i), Rank.ONE), new Piece(pieces.get(i), ColorType.WHITE)));
 
-        for (File file : File.values()) {
-            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        }
+        IntStream.range(0, 8)
+                .forEach(i -> expected.put(Square.of(files.get(i), Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE)));
 
-        expected.put(Square.of(File.a, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
-        expected.put(Square.of(File.b, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(Square.of(File.c, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(Square.of(File.d, Rank.EIGHT), new Piece(PieceType.QUEEN, ColorType.BLACK));
-        expected.put(Square.of(File.e, Rank.EIGHT), new Piece(PieceType.KING, ColorType.BLACK));
-        expected.put(Square.of(File.f, Rank.EIGHT), new Piece(PieceType.BISHOP, ColorType.BLACK));
-        expected.put(Square.of(File.g, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
-        expected.put(Square.of(File.h, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
+        IntStream.range(0, 8)
+                .forEach(i -> expected.put(Square.of(files.get(i), Rank.EIGHT), new Piece(pieces.get(i), ColorType.BLACK)));
 
-        for (File file : File.values()) {
-            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        }
+        IntStream.range(0, 8)
+                .forEach(i -> expected.put(Square.of(files.get(i), Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK)));
 
         for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
             for (File file : File.values()) {
