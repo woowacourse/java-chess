@@ -36,10 +36,10 @@ public class InputView {
             throw new IllegalArgumentException("유효하지 않은 명령입니다.");
         }
 
+        GameCommand command = gameCommands.get(input.get(0));
         if (input.size() == 3) {
-            return RequestDto.of(gameCommands.get(input.get(0)), convertPosition(input.get(1)), convertPosition(input.get(2)));
+            return RequestDto.of(command, convertPosition(input.get(1)), convertPosition(input.get(2)));
         }
-
-        return RequestDto.of(gameCommands.get(input.get(0)));
+        return RequestDto.of(command);
     }
 }
