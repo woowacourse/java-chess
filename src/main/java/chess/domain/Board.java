@@ -20,7 +20,7 @@ public class Board {
     public void move(Position sourcePosition, Position targetPosition, Color color) {
         Piece sourcePiece = findPieceByPosition(sourcePosition);
 
-        validateIsSamePosition(sourcePosition, targetPosition);
+        validatePositionIsSame(sourcePosition, targetPosition);
         validateSourceIsEmpty(sourcePiece);
         validateIsNotMyTurn(color, sourcePiece);
         validateIsMovablePosition(sourcePosition, targetPosition, sourcePiece);
@@ -29,7 +29,7 @@ public class Board {
         pieces.remove(sourcePosition);
     }
 
-    private void validateIsSamePosition(Position sourcePosition, Position targetPosition) {
+    private void validatePositionIsSame(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("같은 위치를 선택할 수 없습니다.");
         }
