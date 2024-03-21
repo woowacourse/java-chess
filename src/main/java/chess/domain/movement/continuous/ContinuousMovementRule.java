@@ -18,7 +18,7 @@ public abstract class ContinuousMovementRule implements MovementRule {
     @Override
     public final List<Position> findPath(Position start, Position end) {
         if (!isMovable(start, end)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
         int amount = calculate(start, end);
 
