@@ -129,7 +129,7 @@ public class Board {
 
     public Piece findPieceAt(Position position) {
         if (isNoPieceAt(position)) {
-            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+            return null;
         }
         return board.get(position);
     }

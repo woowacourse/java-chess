@@ -66,9 +66,7 @@ class BoardTest {
 
         board.move(sourcePosition, targetPosition);
         assertAll(
-            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
         );
     }
@@ -85,9 +83,7 @@ class BoardTest {
 
         board.move(sourcePosition, targetPosition);
         assertAll(
-            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
         );
     }
@@ -235,9 +231,7 @@ class BoardTest {
         board.move(sourcePosition, targetPosition);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(pawn)
         );
     }
