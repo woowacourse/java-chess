@@ -15,20 +15,7 @@ public class Pawn extends ChessPiece {
 
     @Override
     public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
-        Position currentPosition = pieceInfo.getPosition();
-        if (!moveStrategy.canMove(currentPosition, newPosition)) {
-            return this;
-        }
-        if (isDisturbed) {
-            return this;
-        }
-
-        int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
-
-        if (diffX == 0 && isOtherPieceExist) {
-            return this;
-        }
-        if (diffX == 1 && (!isOtherPieceExist || isSameTeam)) {
+        if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeam)) {
             return this;
         }
 
@@ -39,6 +26,18 @@ public class Pawn extends ChessPiece {
     @Override
     public PieceType getType() {
         return PieceType.PAWN;
+    }
+
+    private boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                  boolean isSameTeam) {
+        Position currentPosition = pieceInfo.getPosition();
+        int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
+
+        boolean isInvalidVerticalMove = diffX == 0 && isOtherPieceExist;
+        boolean isInvalidDiagonalMove = diffX == 1 && (!isOtherPieceExist || isSameTeam);
+
+        return !moveStrategy.canMove(currentPosition, newPosition) || isDisturbed || isInvalidVerticalMove
+                || isInvalidDiagonalMove;
     }
 
     private MoveStrategy changeMovedStrategy() {

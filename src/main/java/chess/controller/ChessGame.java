@@ -64,12 +64,11 @@ public class ChessGame {
     private Team playMoveCommand(List<String> commands, Team turn) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
-        if (source.equals(target) || !isCorrectTurn(source, turn)) {
+        if (source.equals(target) || !isCorrectTurn(source, turn) || !board.movePieceAndRenewBoard(source, target)) {
             OutputView.printWrongMovementMessage();
             return turn;
         }
-
-        board.movePieceAndRenewBoard(source, target);
+        
         OutputView.printBoard(makeBoardDto(board.getBoard()));
         return Team.takeTurn(turn);
     }

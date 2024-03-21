@@ -141,14 +141,17 @@ public class Board {
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    public void movePieceAndRenewBoard(Position source, Position target) {
+    public boolean movePieceAndRenewBoard(Position source, Position target) {
         Piece piece = board.get(source);
-
         Piece movedPiece = movePiece(source, target, piece);
-
         PieceInfo pieceInfo = movedPiece.getPieceInfo();
+
+        if (!pieceInfo.getPosition().equals(target)) {
+            return false;
+        }
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE), new EmptyMoveStrategy()));
         board.put(pieceInfo.getPosition(), movedPiece);
+        return true;
     }
 
     private Piece movePiece(Position source, Position target, Piece piece) {
