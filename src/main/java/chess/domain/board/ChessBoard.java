@@ -1,10 +1,10 @@
-package domain;
+package chess.domain.board;
 
-import domain.piece.ChessBoardGenerator;
-import domain.piece.Piece;
-import domain.piece.PieceType;
-import domain.position.Position;
-import dto.BoardStatus;
+import chess.domain.Turn;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import chess.dto.BoardStatus;
 
 import java.util.HashMap;
 import java.util.Map;

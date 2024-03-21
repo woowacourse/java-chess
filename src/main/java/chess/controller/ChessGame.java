@@ -1,11 +1,12 @@
-package controller;
+package chess.controller;
 
-import domain.ChessBoard;
-import domain.piece.ChessBoardGenerator;
-import dto.BoardStatus;
-import dto.CommandInfo;
-import view.InputView;
-import view.OutputView;
+import chess.domain.board.ChessBoard;
+import chess.domain.Turn;
+import chess.domain.board.ChessBoardGenerator;
+import chess.dto.BoardStatus;
+import chess.dto.CommandInfo;
+import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessGame {
     private final InputView inputView;
