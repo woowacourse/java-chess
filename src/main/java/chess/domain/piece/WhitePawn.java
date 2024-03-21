@@ -5,8 +5,8 @@ import chess.domain.board.Path;
 public class WhitePawn extends Piece {
     private boolean moved = false;
 
-    public WhitePawn(Color color) {
-        super(color);
+    public WhitePawn() {
+        super(Color.WHITE);
     }
 
     @Override

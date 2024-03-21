@@ -19,7 +19,7 @@ class WhitePawnTest {
 
     @BeforeEach
     void beforeEach() {
-        WHITE_PAWN = new WhitePawn(Color.WHITE);
+        WHITE_PAWN = new WhitePawn();
     }
 
     @DisplayName("반대 방향으로 이동할 수 없다.")

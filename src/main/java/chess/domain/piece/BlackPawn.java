@@ -7,9 +7,8 @@ public class BlackPawn extends Piece {
 
     private boolean moved = false;
 
-    //
-    public BlackPawn(Color color) {
-        super(color);
+    public BlackPawn() {
+        super(Color.BLACK);
     }
 
     @Override

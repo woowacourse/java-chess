@@ -39,11 +39,11 @@ public class Board {
 
     private void initialPawnSetting(Map<Location, Piece> board) {
         for (Column value : Column.values()) {
-            board.put(new Location(value, Row.TWO), new WhitePawn(Color.WHITE));
+            board.put(new Location(value, Row.TWO), new WhitePawn());
         }
 
         for (Column value : Column.values()) {
-            board.put(new Location(value, Row.SEVEN), new BlackPawn(Color.BLACK));
+            board.put(new Location(value, Row.SEVEN), new BlackPawn());
         }
     }
 
@@ -82,33 +82,40 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public void move(String sourceInput, String targetInput) {
-        Location source = Location.of(sourceInput);
-        Location target = Location.of(targetInput);
-        Piece piece = findPieceAt(source);
+    public void tryMove(Location source, Location target) {
+        //TODO 더 마음에 드는 변수명을 고민해보기
+        Piece sourcePiece = findPieceAt(source);
         Path path = createPath(source, target);
-        if (piece.canMove(path)) {
-            board.remove(source);
-            board.put(target, piece);
+        if (sourcePiece.canMove(path)) {
+            move(source, target, sourcePiece);
             return;
         }
         throw new IllegalArgumentException("유효하지 않은 움직임입니다.");
     }
 
+    private void move(Location source, Location target, Piece movingPiece) {
+        board.remove(source);
+        board.put(target, movingPiece);
+    }
+
     private Path createPath(Location source, Location target) {
-        Piece movingPiece = findPieceAt(source);
         List<Direction> directions = Direction.createDirections(source, target);
-        List<SquareState> squareStates = new ArrayList<>();
-        Location currentLocation = source;
-        for (Direction direction : directions) {
-            currentLocation = currentLocation.move(direction);
-            Piece locatedPiece = board.get(currentLocation);
-            squareStates.add(findSquareStates(movingPiece, locatedPiece));
-        }
+        List<SquareState> squareStates = createPathState(source, directions);
         return Path.of(directions, squareStates);
     }
 
-    private SquareState findSquareStates(Piece movingPiece, Piece locatedPiece) {
+    private List<SquareState> createPathState(Location current, List<Direction> directions) {
+        Piece movingPiece = findPieceAt(current);
+        List<SquareState> squareStates = new ArrayList<>();
+        for (Direction direction : directions) {
+            current = current.move(direction);
+            squareStates.add(findSquareStates(movingPiece, current));
+        }
+        return squareStates;
+    }
+
+    private SquareState findSquareStates(Piece movingPiece, Location current) {
+        Piece locatedPiece = board.get(current);
         if (locatedPiece == null) {
             return SquareState.EMPTY;
         }

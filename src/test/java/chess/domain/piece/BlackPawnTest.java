@@ -19,7 +19,7 @@ class BlackPawnTest {
 
     @BeforeEach
     void beforeEach() {
-        BLACK_PAWN = new BlackPawn(Color.BLACK);
+        BLACK_PAWN = new BlackPawn();
     }
 
     @DisplayName("반대 방향으로 이동할 수 없다.")
