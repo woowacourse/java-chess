@@ -1,5 +1,8 @@
-package chess.domain.pieces.piece;
+package chess.domain.dto;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.square.Square;
 
 public record PieceResponse(Square square, Piece piece) {

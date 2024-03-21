@@ -5,12 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
-import chess.domain.pieces.piece.Type;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.square.Square;
-import chess.domain.pieces.piece.PieceResponse;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

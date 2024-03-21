@@ -1,29 +1,27 @@
-package chess.domain.pieces;
+package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("나이트")
-class KnightTest {
+@DisplayName("킹")
+class KingTest {
 
     @DisplayName("움직일 수 있다")
     @Test
     void canMove() {
         //given
-        Square source = Square.from("b1");
-        Square destination = Square.from("c3");
+        Square source = Square.from("e1");
+        Square destination = Square.from("e2");
 
-        Piece knight = new Knight(Color.WHITE);
+        Piece king = new King(Color.WHITE);
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = knight.canMove(movement, null);
+        boolean canMove = king.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -33,14 +31,14 @@ class KnightTest {
     @Test
     void canNotMove() {
         //given
-        Square source = Square.from("b1");
-        Square destination = Square.from("b3");
+        Square source = Square.from("e1");
+        Square destination = Square.from("e3");
 
-        Piece knight = new Knight(Color.WHITE);
+        Piece king = new King(Color.WHITE);
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = knight.canMove(movement, null);
+        boolean canMove = king.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();

@@ -1,8 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.Movement;
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import java.util.Collections;
 import java.util.Map;

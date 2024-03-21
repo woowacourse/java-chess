@@ -1,9 +1,6 @@
-package chess.domain.pieces;
+package chess.domain.piece;
 
 import chess.domain.Movement;
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
-import chess.domain.pieces.piece.Type;
 
 public class Pawn extends Piece {
 
@@ -72,8 +69,6 @@ public class Pawn extends Piece {
     }
 
     private boolean isBlackFirstMove(final Movement movement) {
-        System.out.println(movement.isCross());
-        System.out.println(movement.getRankDifference() == -2);
         return movement.isCross() && movement.getRankDifference() == -2;
     }
 

@@ -2,16 +2,14 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
-import chess.domain.pieces.piece.PieceResponse;
+import chess.domain.dto.PieceResponse;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Game {
     private static final String START_COMMAND = "start";

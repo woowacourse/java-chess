@@ -1,9 +1,6 @@
-package chess.domain.pieces;
+package chess.domain.piece;
 
 import chess.domain.Movement;
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.Piece;
-import chess.domain.pieces.piece.Type;
 
 public class King extends Piece {
 

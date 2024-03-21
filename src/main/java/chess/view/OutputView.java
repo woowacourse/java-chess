@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.pieces.piece.Color;
-import chess.domain.pieces.piece.PieceResponse;
-import chess.domain.pieces.piece.Type;
+import chess.domain.dto.PieceResponse;
+import chess.domain.piece.Color;
+import chess.domain.piece.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
