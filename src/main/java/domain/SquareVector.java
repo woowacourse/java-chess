@@ -3,13 +3,7 @@ package domain;
 public record SquareVector(int x, int y) {
 
     public static SquareVector of(final Square source, final Square target) {
-        final File sourceFile = source.getFile();
-        final File targetFile = target.getFile();
-
-        final Rank sourceRank = source.getRank();
-        final Rank targetRank = target.getRank();
-
-        return new SquareVector(targetFile.subtract(sourceFile), targetRank.subtract(sourceRank));
+        return new SquareVector(target.subtractFile(source), target.subtractRank(source));
     }
 
     public SquareVector scaleDown() {

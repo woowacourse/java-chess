@@ -19,10 +19,10 @@ public enum Rank {
     }
 
     public static Rank from(final String input) {
-        return Rank.find(Integer.parseInt(input));
+        return Rank.from(Integer.parseInt(input));
     }
 
-    private static Rank find(final int index) {
+    private static Rank from(final int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
@@ -34,10 +34,6 @@ public enum Rank {
     }
 
     public Rank move(final int i) {
-        return Rank.find(this.index + i);
-    }
-
-    public int getIndex() {
-        return index;
+        return Rank.from(this.index + i);
     }
 }

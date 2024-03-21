@@ -13,10 +13,11 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final SquareVector squareVector = SquareVector.of(source, target);
-        final SquareVector direction = squareVector.scaleDown();
+        final int x = target.subtractFile(source);
+        final int y = target.subtractRank(source);
+        final SquareVector squareVector = new SquareVector(x, y);
 
-        return direction.isManhattanDistance(1);
+        return squareVector.isManhattanDistance(1);
     }
 
     @Override

@@ -22,15 +22,11 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.name().equals(input.toUpperCase()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("File이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 파일입니다."));
     }
 
     public int subtract(final File other) {
         return this.index - other.index;
-    }
-
-    public int getIndex() {
-        return index;
     }
 
     public File move(final int vector) {

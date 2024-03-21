@@ -18,10 +18,12 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final SquareVector targetSquareVector = SquareVector.of(source, target);
+        final int x = target.subtractFile(source);
+        final int y = target.subtractRank(source);
+        final SquareVector squareVector = new SquareVector(x, y);
 
         return SQUARE_VECTORS.stream()
-                .anyMatch(vector -> vector.equals(targetSquareVector));
+                .anyMatch(vector -> vector.equals(squareVector));
     }
 
     @Override

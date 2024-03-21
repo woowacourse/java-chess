@@ -23,14 +23,17 @@ public class Square {
         return new Square(rank.move(rankDirection), file.move(fileDirection));
     }
 
-    public File getFile() {
-        return file;
+    public int subtractRank(final Square other) {
+        return this.rank.subtract(other.rank);
     }
 
-    public Rank getRank() {
-        return rank;
+    public int subtractFile(final Square other) {
+        return this.file.subtract(other.file);
     }
 
+    public boolean isRank(final Rank rank) {
+        return this.rank == rank;
+    }
 
     @Override
     public boolean equals(final Object o) {
@@ -40,12 +43,12 @@ public class Square {
         if (!(o instanceof final Square square)) {
             return false;
         }
-        return getFile() == square.getFile() && getRank() == square.getRank();
+        return rank == square.rank && file == square.file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFile(), getRank());
+        return Objects.hash(rank, file);
     }
 
     @Override

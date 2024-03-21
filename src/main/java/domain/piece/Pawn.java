@@ -24,7 +24,9 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final SquareVector squareVector = SquareVector.of(source, target);
+        final int x = target.subtractFile(source);
+        final int y = target.subtractRank(source);
+        final SquareVector squareVector = new SquareVector(x, y);
 
         Rank rank = Rank.SEVEN;
         SquareVector startSquareVector = BLACK_START_SQUARE_VECTOR;
@@ -36,13 +38,15 @@ public class Pawn extends Piece {
             moveSquareVector = WHITE_MOVE_SQUARE_VECTOR;
         }
 
-        return (source.getRank() == rank && startSquareVector.equals(squareVector))
+        return (source.isRank(rank) && startSquareVector.equals(squareVector))
                 || squareVector.equals(moveSquareVector);
     }
 
     @Override
     public boolean canAttack(final Square source, final Square target) {
-        final SquareVector squareVector = SquareVector.of(source, target);
+        final int x = target.subtractFile(source);
+        final int y = target.subtractRank(source);
+        final SquareVector squareVector = new SquareVector(x, y);
 
         List<SquareVector> attackSquareVectors = BLACK_ATTACK_SQUARE_VECTORS;
 

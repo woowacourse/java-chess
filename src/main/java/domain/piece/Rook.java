@@ -13,7 +13,10 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final SquareVector squareVector = SquareVector.of(source, target);
+        final int x = target.subtractFile(source);
+        final int y = target.subtractRank(source);
+        final SquareVector squareVector = new SquareVector(x, y);
+
         return squareVector.isHorizontalOrVertical();
     }
 

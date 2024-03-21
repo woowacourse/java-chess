@@ -109,6 +109,7 @@ public class ChessTable {
     }
 
     private void validateBlocking(final Square source, final Square target) {
+
         final SquareVector squareVector = SquareVector.of(source, target);
         final SquareVector direction = squareVector.scaleDown();
         final int count = squareVector.divide(direction);

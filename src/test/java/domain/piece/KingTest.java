@@ -38,7 +38,8 @@ class KingTest {
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.C), true),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.E), true),
                 Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.B), false),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), false)
+                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), false),
+                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.EIGHT, File.D), false)
         );
     }
 }
