@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -24,7 +24,6 @@ public class Row {
     }
 
     public Row update(int direction) {
-        int rowDirection = direction;
         return CACHE.get(this.value + direction);
     }
 
@@ -51,12 +50,6 @@ public class Row {
     }
 
     public int compare(Row row) {
-        if(value > row.value) {
-            return -1;
-        }
-        if(value == row.value) {
-            return 0;
-        }
-        return 1;
+        return Integer.compare(row.value, value);
     }
 }

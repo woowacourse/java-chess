@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.position;
+
+import chess.domain.chessPiece.Team;
 
 import java.util.Objects;
 

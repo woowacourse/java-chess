@@ -1,11 +1,15 @@
-package chess.domain;
+package chess.domain.chessBoard;
 
+import chess.domain.position.Direction;
 import chess.domain.chessPiece.*;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 import java.util.*;
 
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.chessPiece.Team.BLACK;
+import static chess.domain.chessPiece.Team.WHITE;
 import static chess.domain.chessPiece.Role.*;
 
 public class ChessBoard {
@@ -46,16 +50,16 @@ public class ChessBoard {
         chessBoard.put(target.getColumn(), getUpdate(target, piece));
     }
 
-    private void checkTeam(Position target, Piece piece) {
-        Piece targetPiece = findChessPiece(target);
-        if (piece.isTeam(targetPiece)) {
+    private void checkObstacle(Position position) {
+        Piece obstacle = findChessPiece(position);
+        if (obstacle.getRole() != EMPTY) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
-    private void checkObstacle(Position position) {
-        Piece obstacle = findChessPiece(position);
-        if (obstacle.getRole() != EMPTY) {
+    private void checkTeam(Position target, Piece piece) {
+        Piece targetPiece = findChessPiece(target);
+        if (piece.isTeam(targetPiece)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

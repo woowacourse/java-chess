@@ -1,6 +1,6 @@
 package chess.domain.chessPiece;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-import static chess.domain.Team.BLACK;
-import static chess.domain.Team.WHITE;
+import static chess.domain.chessPiece.Team.BLACK;
+import static chess.domain.chessPiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

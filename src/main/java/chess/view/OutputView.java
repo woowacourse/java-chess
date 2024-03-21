@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.Line;
-import chess.domain.Column;
+import chess.domain.chessBoard.Line;
+import chess.domain.position.Column;
 import chess.domain.chessPiece.Role;
 import chess.domain.chessPiece.Piece;
 

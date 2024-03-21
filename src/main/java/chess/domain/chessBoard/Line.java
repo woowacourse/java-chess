@@ -1,6 +1,7 @@
-package chess.domain;
+package chess.domain.chessBoard;
 
 import chess.domain.chessPiece.Piece;
+import chess.domain.position.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;
