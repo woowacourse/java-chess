@@ -13,6 +13,7 @@ import chess.view.OutputView;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ChessGame {
     private final Map<GameCommand, CommandExecutor> commands = new EnumMap<>(GameCommand.class);
@@ -38,7 +39,7 @@ public class ChessGame {
         OutputView.printGameStartMessage();
 
         while (gameState.isPlaying()) {
-            executeCommand();
+            repeatUntilValidCommand(this::executeCommand);
         }
     }
 
@@ -63,5 +64,15 @@ public class ChessGame {
 
     private void end() {
         gameState = gameState.end();
+    }
+
+    private static void repeatUntilValidCommand(Runnable runnable) {
+        while (true) {
+            try {
+                runnable.run();
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }
