@@ -22,11 +22,11 @@ public class PieceGenerator {
     private static final int CHESS_BOARD_SIZE = 8;
     private static final List<PieceRole> BACK = List.of(
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
-    private static final List<PieceRole> FRONT_BLACK = IntStream.range(1, CHESS_BOARD_SIZE)
+    private static final List<PieceRole> FRONT_BLACK = IntStream.range(1, CHESS_BOARD_SIZE + 1)
             .mapToObj(number -> (PieceRole) new Pawn(Color.BLACK))
             .toList();
 
-    private static final List<PieceRole> FRONT_WHITE = IntStream.range(1, CHESS_BOARD_SIZE)
+    private static final List<PieceRole> FRONT_WHITE = IntStream.range(1, CHESS_BOARD_SIZE + 1)
             .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
             .toList();
 

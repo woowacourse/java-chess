@@ -24,27 +24,28 @@ public enum Direction {
     DOWN_RIGHT(1, -2),
     DOWN_LEFT(-1, -2);
 
-    private final int fileStepSize;
-    private final int rankStepSize;
+    private final int fileVector;
+    private final int rankVector;
 
-    Direction(final int fileStepSize, final int rankStepSize) {
-        this.fileStepSize = fileStepSize;
-        this.rankStepSize = rankStepSize;
+    Direction(final int fileVector, final int rankVector) {
+        this.fileVector = fileVector;
+        this.rankVector = rankVector;
     }
 
 
-    public static Direction findDirection(Position sourcePosition, Position targetPosition) {
-        DirectionVector directionVector = targetPosition.subtract(sourcePosition);
+    public static Direction findDirection(Position source, Position target) {
+        Vector vector = target.subtract(source);
         return Arrays.stream(values())
-                .filter(direction -> isSameDirection(direction, directionVector))
+                .filter(direction -> isSameDirection(direction, vector))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
     // TODO : 변수명 재정의
-    private static boolean isSameDirection(final Direction direction, final DirectionVector directionVector) {
+    private static boolean isSameDirection(final Direction direction, final Vector vector) {
         for (int step = 1; step <= 8; step++) {
-            if (canReach(findDistance(direction.fileStepSize, step), directionVector.fileVector()) && canReach(findDistance(direction.rankStepSize, step), directionVector.rankVector())){
+            if (canReach(findDistance(direction.fileVector, step), vector.file()) && canReach(
+                    findDistance(direction.rankVector, step), vector.rank())) {
                 return true;
             }
         }
@@ -58,13 +59,13 @@ public enum Direction {
     private static boolean canReach(int step, int unitVector) {
         return step == unitVector;
     }
-    
 
-    public int getFileStepSize() {
-        return fileStepSize;
+
+    public int getFileVector() {
+        return fileVector;
     }
 
-    public int getRankStepSize() {
-        return rankStepSize;
+    public int getRankVector() {
+        return rankVector;
     }
 }
