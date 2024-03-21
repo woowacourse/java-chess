@@ -78,6 +78,14 @@ public class Position {
         return this.rank.isSame(rank);
     }
 
+    public Rank rank() {
+        return rank;
+    }
+
+    public File file() {
+        return file;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

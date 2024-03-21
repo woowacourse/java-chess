@@ -52,4 +52,8 @@ public enum Rank {
     boolean isSame(Rank rank) {
         return this.number == rank.number;
     }
+
+    public int number() {
+        return number;
+    }
 }
