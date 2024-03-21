@@ -34,14 +34,15 @@ public abstract class Piece implements Square {
     protected abstract boolean isValidAttackPath(Path path);
 
     // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
+    // TODO: 체스보드가 검증하도록 변경
     private final boolean isEnemyAttack(Path path, Map<Position, Square> board) {
         Piece endPiece = (Piece) board.get(path.getEnd());
 
         return color != endPiece.color;
     }
 
-    public Color getColor() {
-        return color;
+    public boolean isColor(Color color) {
+        return this.color == color;
     }
 
     @Override
@@ -64,5 +65,9 @@ public abstract class Piece implements Square {
     @Override
     public int hashCode() {
         return Objects.hashCode(color);
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

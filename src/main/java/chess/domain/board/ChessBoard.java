@@ -4,6 +4,8 @@ import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
+import chess.domain.square.piece.Color;
+import chess.domain.square.piece.Piece;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -20,8 +22,8 @@ public class ChessBoard {
         return Collections.unmodifiableMap(squares);
     }
 
-    public void move(Path path) {
-        validateStartEmpty(path);
+    public void move(Path path, Color currentTurn) {
+        validateStartFriendly(path, currentTurn);
         if (squares.get(path.getEnd()) == Empty.getInstance()) {
             tryExchange(path);
             return;
@@ -48,9 +50,20 @@ public class ChessBoard {
         }
     }
 
-    private void validateStartEmpty(Path path) {
-        if (squares.get(path.getStart()) == Empty.getInstance()) {
-            throw new IllegalArgumentException("시작 위치에 체스말이 존재해야 합니다.");
+    // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
+    private void validateStartFriendly(Path path, Color friendlyColor) {
+        Square startSquare = squares.get(path.getStart());
+        if (isStartNotEmpty(startSquare) || isStartEnemy(startSquare, friendlyColor)) {
+            throw new IllegalArgumentException("시작 위치에 아군 체스말이 존재해야 합니다.");
         }
+    }
+
+    private static boolean isStartEnemy(Square startSquare, Color friendlyColor) {
+        Piece startPiece = (Piece) startSquare;
+        return !startPiece.isColor(friendlyColor);
+    }
+
+    private boolean isStartNotEmpty(Square startSquare) {
+        return startSquare == Empty.getInstance();
     }
 }

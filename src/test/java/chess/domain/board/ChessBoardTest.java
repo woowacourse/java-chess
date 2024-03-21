@@ -32,17 +32,18 @@ public class ChessBoardTest {
         }
     }
 
-    @DisplayName("체스말을 움직일 때, 시작 위치에 체스 말이 존재하지 않는 경우 예외를 발생시킨다.")
+    @DisplayName("체스말을 움직일 때, 시작 위치에 아군 말이 존재하지 않는 경우 예외를 발생시킨다.")
     @Test
     void startEmptyExceptionTest() {
         // given
         ChessBoard chessBoard = new ChessBoard(squares);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        Color currentTurn = Color.BLACK;
 
         // when & then
-        assertThatThrownBy(
-                () -> chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B))))
+        assertThatThrownBy(() -> chessBoard.move(path, currentTurn))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("시작 위치에 체스말이 존재해야 합니다.");
+                .hasMessage("시작 위치에 아군 체스말이 존재해야 합니다.");
     }
 
     @DisplayName("target이 비어있는 경우 체스말을 움직인다.")
@@ -55,7 +56,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
+        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);
@@ -72,7 +73,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
+        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);

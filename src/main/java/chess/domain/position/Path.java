@@ -3,7 +3,8 @@ package chess.domain.position;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO : 단위테스트 작성
+// TODO: 단위테스트 작성
+// TODO: 첵임을 줄이는 방안 고려하기
 public class Path {
     private final Position start;
     private final Position end;
