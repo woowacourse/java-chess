@@ -22,7 +22,7 @@ class BishopTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = bishop.canMove(movement);
+        boolean canMove = bishop.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,7 +39,7 @@ class BishopTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = bishop.canMove(movement);
+        boolean canMove = bishop.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();

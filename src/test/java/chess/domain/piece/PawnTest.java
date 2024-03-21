@@ -30,8 +30,8 @@ class PawnTest {
             Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement);
-            boolean blackCanMove = blackPawn.canMove(blackMovement);
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
+            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isTrue();
@@ -53,8 +53,31 @@ class PawnTest {
             Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement);
-            boolean blackCanMove = blackPawn.canMove(blackMovement);
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
+            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
+
+            //then
+            assertThat(whiteCanMove).isTrue();
+            assertThat(blackCanMove).isTrue();
+        }
+
+        @DisplayName("상대 기물이 있을 경우 대각선으로 공격할 수 있다")
+        @Test
+        void canAttack() {
+            //given
+            Square whiteSource = Square.from("a2");
+            Square whiteDestination = Square.from("b3");
+            Piece whitePawn = new Pawn(Color.WHITE);
+            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+
+            Square blackSource = Square.from("d7");
+            Square blackDestination = Square.from("c6");
+            Piece blackPawn = new Pawn(Color.BLACK);
+            Movement blackMovement = new Movement(blackSource, blackDestination);
+
+            //when
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new Pawn(Color.BLACK));
+            boolean blackCanMove = blackPawn.canMove(blackMovement, new Pawn(Color.WHITE));
 
             //then
             assertThat(whiteCanMove).isTrue();
@@ -81,8 +104,31 @@ class PawnTest {
             Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement);
-            boolean blackCanMove = blackPawn.canMove(blackMovement);
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
+            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
+
+            //then
+            assertThat(whiteCanMove).isFalse();
+            assertThat(blackCanMove).isFalse();
+        }
+
+        @DisplayName("상대 기물이 없을 경우 공격할 수 없다")
+        @Test
+        void canNotAttack() {
+            //given
+            Square whiteSource = Square.from("a2");
+            Square whiteDestination = Square.from("b3");
+            Piece whitePawn = new Pawn(Color.WHITE);
+            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+
+            Square blackSource = Square.from("d7");
+            Square blackDestination = Square.from("c6");
+            Piece blackPawn = new Pawn(Color.BLACK);
+            Movement blackMovement = new Movement(blackSource, blackDestination);
+
+            //when
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
+            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
 
             //then
             assertThat(whiteCanMove).isFalse();

@@ -8,52 +8,76 @@ public class Pawn extends Piece {
         super(color, Type.PAWN);
     }
 
-    // TODO: 상대가 있을 경우 대각선 움직임 구현하기
     @Override
-    public boolean canMove(final Movement movement) {
-        int rankSource = movement.getSourceRankIndex();
-        int moveDistance = movement.getRankDifference();
+    public boolean canMove(final Movement movement, final Piece destinationPiece) {
+        if (hasDestinationPiece(destinationPiece)) {
+            return isAttack(movement);
+        }
         if (isSameColor(Color.WHITE)) {
-            return isWhiteMove(rankSource, moveDistance);
+            return isWhiteMove(movement);
         }
-        return isBlackMove(rankSource, moveDistance);
+        return isBlackMove(movement);
     }
 
-    private boolean isWhiteMove(final int rankSource, final int moveDistance) {
-        if (isWhiteInitialSquare(rankSource)) {
-            return isWhiteFirstMove(moveDistance) || isWhiteDefaultMove(moveDistance);
+    private boolean hasDestinationPiece(final Piece destinationPiece) {
+        if (destinationPiece != null) {
+            return true;
         }
-        return isWhiteDefaultMove(moveDistance);
+        return false;
     }
 
-    private boolean isWhiteInitialSquare(final int moveDistance) {
-        return moveDistance == 1;
-    }
-
-    private boolean isWhiteFirstMove(final int moveDistance) {
-        return moveDistance == 2;
-    }
-
-    private boolean isWhiteDefaultMove(final int moveDistance) {
-        return moveDistance == 1;
-    }
-
-    private boolean isBlackMove(final int rankSource, final int moveDistance) {
-        if (isBlackInitialSquare(rankSource)) {
-            return isBlackFirstMove(moveDistance) || isBlackDefaultMove(moveDistance);
+    private boolean isAttack(final Movement movement) {
+        if (isSameColor(Color.WHITE)) {
+            return isWhiteAttack(movement);
         }
-        return isBlackDefaultMove(moveDistance);
+        return isBlackAttack(movement);
     }
 
-    private boolean isBlackInitialSquare(final int moveDistance) {
-        return moveDistance == 6;
+    private boolean isWhiteAttack(final Movement movement) {
+        return movement.isDiagonal() && movement.getRankDifference() == 1;
     }
 
-    private boolean isBlackFirstMove(final int moveDistance) {
-        return moveDistance == -2;
+    private boolean isBlackAttack(final Movement movement) {
+        return movement.isDiagonal() && movement.getRankDifference() == -1;
     }
 
-    private boolean isBlackDefaultMove(final int moveDistance) {
-        return moveDistance == -1;
+    private boolean isWhiteMove(final Movement movement) {
+        if (isWhiteInitialSquare(movement)) {
+            return isWhiteFirstMove(movement) || isWhiteDefaultMove(movement);
+        }
+        return isWhiteDefaultMove(movement);
+    }
+
+    private boolean isWhiteInitialSquare(final Movement movement) {
+        return movement.getSourceRankIndex() == 1;
+    }
+
+    private boolean isWhiteFirstMove(final Movement movement) {
+        return movement.isStraight() && movement.getRankDifference() == 2;
+    }
+
+    private boolean isWhiteDefaultMove(final Movement movement) {
+        return movement.isStraight() && movement.getRankDifference() == 1;
+    }
+
+    private boolean isBlackMove(final Movement movement) {
+        if (isBlackInitialSquare(movement)) {
+            return isBlackFirstMove(movement) || isBlackDefaultMove(movement);
+        }
+        return isBlackDefaultMove(movement);
+    }
+
+    private boolean isBlackInitialSquare(final Movement movement) {
+        return movement.getSourceRankIndex() == 6;
+    }
+
+    private boolean isBlackFirstMove(final Movement movement) {
+        System.out.println(movement.isStraight());
+        System.out.println(movement.getRankDifference() == -2);
+        return movement.isStraight() && movement.getRankDifference() == -2;
+    }
+
+    private boolean isBlackDefaultMove(final Movement movement) {
+        return movement.isStraight() && movement.getRankDifference() == -1;
     }
 }

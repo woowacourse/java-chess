@@ -26,8 +26,8 @@ class QueenTest {
         Movement diagonalMovement = new Movement(diagonalSource, diagonalDestination);
 
         //when
-        boolean canCrossMove = queen.canMove(crossMovement);
-        boolean canDiagonalMove = queen.canMove(diagonalMovement);
+        boolean canCrossMove = queen.canMove(crossMovement, null);
+        boolean canDiagonalMove = queen.canMove(diagonalMovement, null);
 
         //then
         assertThat(canCrossMove).isTrue();

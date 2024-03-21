@@ -24,7 +24,7 @@ public class Board {
         validateDestinationColor(sourcePiece, destinationPiece);
 
         Movement movement = new Movement(from, to);
-        validate(sourcePiece, movement);
+        validate(sourcePiece, destinationPiece, movement);
 
         pieces.remove(from);
         pieces.put(to, sourcePiece);
@@ -46,13 +46,13 @@ public class Board {
         }
     }
 
-    private void validate(final Piece sourcePiece, final Movement movement) {
-        checkCanMove(sourcePiece, movement);
+    private void validate(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
+        checkCanMove(sourcePiece, destinationPiece, movement);
         checkRoute(movement);
     }
 
-    private void checkCanMove(final Piece sourcePiece, final Movement movement) {
-        if (!sourcePiece.canMove(movement)) {
+    private void checkCanMove(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
+        if (!sourcePiece.canMove(movement, destinationPiece)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }

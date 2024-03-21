@@ -22,7 +22,7 @@ class RookTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = rook.canMove(movement);
+        boolean canMove = rook.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,7 +39,7 @@ class RookTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = rook.canMove(movement);
+        boolean canMove = rook.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();

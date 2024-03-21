@@ -22,7 +22,7 @@ class KnightTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = knight.canMove(movement);
+        boolean canMove = knight.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,7 +39,7 @@ class KnightTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = knight.canMove(movement);
+        boolean canMove = knight.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();

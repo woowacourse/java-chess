@@ -21,7 +21,7 @@ class KingTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = king.canMove(movement);
+        boolean canMove = king.canMove(movement, null);
 
         //then
         assertThat(canMove).isTrue();
@@ -38,7 +38,7 @@ class KingTest {
         Movement movement = new Movement(source, destination);
 
         //when
-        boolean canMove = king.canMove(movement);
+        boolean canMove = king.canMove(movement, null);
 
         //then
         assertThat(canMove).isFalse();
