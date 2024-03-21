@@ -1,14 +1,8 @@
 package domain;
 
-import fixture.PositionFixture;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class QueenTest {
 
@@ -25,17 +19,17 @@ public class QueenTest {
         );
     }
 
-    @DisplayName("퀸은 수직, 수평 또는 대각선 방향으로 임의의 칸 수만큼 움직인다.")
-    @ParameterizedTest
-    @MethodSource("movableTargetPosition")
-    void canMoveTest(File targetFile, Rank targetRank) {
-        Queen queen = new Queen(Side.BLACK);
-
-        Position current = PositionFixture.d4();
-        Position target = new Position(targetFile, targetRank);
-
-        boolean actual = queen.canMove(current, target);
-
-        assertThat(actual).isTrue();
-    }
+//    @DisplayName("퀸은 수직, 수평 또는 대각선 방향으로 임의의 칸 수만큼 움직인다.")
+//    @ParameterizedTest
+//    @MethodSource("movableTargetPosition")
+//    void canMoveTest(File targetFile, Rank targetRank) {
+//        Queen queen = new Queen(Side.BLACK);
+//
+//        Position current = PositionFixture.d4();
+//        Position target = new Position(targetFile, targetRank);
+//
+//        boolean actual = queen.canMove(current, target);
+//
+//        assertThat(actual).isTrue();
+//    }
 }

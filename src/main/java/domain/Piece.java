@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -38,7 +40,31 @@ public abstract class Piece {
         return side.isBlack();
     }
 
-    public abstract boolean canMove(Position current, Position target);
+    public boolean isWhite() {
+        return side.isWhite();
+    }
+
+    public boolean isOpponent(Piece other) {
+        return side != other.side;
+    }
+
+    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
+        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
+            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
+        }
+        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
+        if (!positionsExceptTarget.isEmpty()) {
+            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
+        }
+    }
+
+    private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
+        return pieces.keySet().stream()
+                .filter(key -> key != target)
+                .toList();
+    }
+
+    public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
 
     @Override
     public boolean equals(Object object) {

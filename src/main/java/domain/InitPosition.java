@@ -24,26 +24,49 @@ public enum InitPosition {
     private static Function<Side, Rank> majorPieceVertical() {
         return side -> {
             if (side.isBlack()) {
-                return Rank.EIGHT;
+                return domain.Rank.EIGHT;
             }
-            return Rank.ONE;
+            return domain.Rank.ONE;
         };
     }
 
     private static Function<Side, Rank> pawnVertical() {
         return side -> {
             if (side.isBlack()) {
-                return Rank.SEVEN;
+                return domain.Rank.SEVEN;
             }
-            return Rank.TWO;
+            return domain.Rank.TWO;
         };
     }
 
-    public Rank vertical(Side side) {
+    public static boolean isBlackPawnRank(Position position) {
+        return position.isSameRank(PAWN.rank(Side.BLACK));
+    }
+
+    public static boolean isBlackPawnRank(Rank rank) {
+        return PAWN.rank(Side.BLACK) == rank;
+    }
+
+    public static boolean isWhitePawnRank(Rank rank) {
+        return PAWN.rank(Side.WHITE) == rank;
+    }
+
+//    public static boolean isWhitePawnInitPosition(Position current) {
+//    }
+
+    public static Rank blackPawnRank() {
+        return PAWN.rank(Side.BLACK);
+    }
+
+    public static Rank whitePawnRank() {
+        return PAWN.rank(Side.WHITE);
+    }
+
+    public Rank rank(Side side) {
         return vertical.apply(side);
     }
 
-    public List<File> getHorizontals() {
+    public List<File> files() {
         return files;
     }
 }

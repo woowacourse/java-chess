@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Map;
+
 public class Queen extends Piece {
 
     public Queen(Side side) {
@@ -12,7 +14,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target) {
+    public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return current.isDiagonal(target) || current.isSameFile(target) || current.isSameRank(target);
     }
 }

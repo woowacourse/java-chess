@@ -42,4 +42,12 @@ public enum Rank {
         int otherOrder = other.order;
         return Math.abs(order - otherOrder);
     }
+
+    public boolean isBigger(Rank other) {
+        return order > other.order;
+    }
+
+    public boolean isLess(Rank other) {
+        return order < other.order;
+    }
 }

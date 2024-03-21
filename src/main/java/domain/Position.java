@@ -17,7 +17,11 @@ public class Position {
     }
 
     public boolean isSameRank(Position other) {
-        return rank == other.rank;
+        return isSameRank(other.rank);
+    }
+
+    public boolean isSameRank(Rank otherRank) {
+        return rank == otherRank;
     }
 
     public boolean isDiagonal(Position other) {
@@ -54,22 +58,25 @@ public class Position {
 //        return isDiagonal(other) && hasOneFileGap(other);
 //    }
 
-    public boolean some(Position other) {
-        return (fileGap(other) == 2 && hasOneRankGap(other)) ||
-                (hasOneFileGap(other) && hasTwoRankGap(other));
-    }
+//    public boolean isRankIncreased (Position other) {
+//        return rank.
+//    }
 
 //    private boolean hasTwoRankGap(Position other) {
 //        return rankGap(other) == 2;
 //    }
+
+    public boolean hasOneDiagonalGap(Position other) {
+        return this.isDiagonal(other) && hasOneFileGap(other);
+    }
 
 
     public boolean hasTwoFileGap(Position other) {
         return file.confirmGap(other.file, 2);
     }
 
-    public boolean hasTwoRankGap(Position other) {
-        return rank.confirmGap(other.rank, 2);
+    public boolean hasOnlyTwoRankGap(Position other) {
+        return rank.confirmGap(other.rank, 2) && isSameFile(other);
     }
 
 
@@ -84,5 +91,26 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public boolean isRankIncreased(Position target) {
+        return target.rank.isBigger(rank);
+    }
+
+    public boolean isRankDecreased(Position target) {
+        return target.rank.isLess(rank);
+    }
+
+    public boolean isInitPosition() {
+        return this.rank == InitPosition.blackPawnRank();
+    }
+
+    public boolean isBlackPawnRank() {
+//        return InitPosition.isBlackPawnRank(rank);
+        return InitPosition.PAWN.rank(Side.BLACK) == this.rank;
+    }
+
+    public boolean isWhitePawnRank() {
+        return InitPosition.isWhitePawnRank(rank);
     }
 }

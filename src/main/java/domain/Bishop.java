@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Map;
+
 public class Bishop extends Piece {
 
     public Bishop(Side side) {
@@ -12,7 +14,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target) {
+    public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
         return current.isDiagonal(target);
     }
 }

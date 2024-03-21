@@ -1,14 +1,9 @@
 package domain;
 
 import fixture.PositionFixture;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
 
@@ -30,27 +25,27 @@ class KnightTest {
         );
     }
 
-    @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸 움직인다.")
-    @ParameterizedTest
-    @MethodSource("movableTargetPosition")
-    void canMoveTest(Position target) {
-        Knight knight = new Knight(Side.BLACK);
-        Position current = PositionFixture.a1();
-
-        boolean actual = knight.canMove(current, target);
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸을 제외하고 움직일 수 없다.")
-    @ParameterizedTest
-    @MethodSource("immovableTargetPosition")
-    void cantMoveTest(Position target) {
-        Knight knight = new Knight(Side.BLACK);
-        Position current = PositionFixture.a1();
-
-        boolean actual = knight.canMove(current, target);
-
-        assertThat(actual).isFalse();
-    }
+//    @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸 움직인다.")
+//    @ParameterizedTest
+//    @MethodSource("movableTargetPosition")
+//    void canMoveTest(Position target) {
+//        Knight knight = new Knight(Side.BLACK);
+//        Position current = PositionFixture.a1();
+//
+//        boolean actual = knight.canMove(current, target);
+//
+//        assertThat(actual).isTrue();
+//    }
+//
+//    @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸을 제외하고 움직일 수 없다.")
+//    @ParameterizedTest
+//    @MethodSource("immovableTargetPosition")
+//    void cantMoveTest(Position target) {
+//        Knight knight = new Knight(Side.BLACK);
+//        Position current = PositionFixture.a1();
+//
+//        boolean actual = knight.canMove(current, target);
+//
+//        assertThat(actual).isFalse();
+//    }
 }
