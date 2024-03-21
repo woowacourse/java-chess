@@ -19,7 +19,8 @@ import model.position.Route;
 
 public final class Queen extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(W, E, S, N, NW, SW, NE, SE);
-    public Queen(Color color){
+
+    public Queen(Color color) {
         super(color, movingPatterns);
     }
 

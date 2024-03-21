@@ -16,7 +16,8 @@ import model.position.Route;
 
 public final class Rook extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(W, E, N, S);
-    public Rook(Color color){
+
+    public Rook(Color color) {
         super(color, movingPatterns);
     }
 
