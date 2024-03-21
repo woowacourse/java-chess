@@ -51,7 +51,7 @@ public class Board {
         squares.put(source, Empty.getInstance());
     }
 
-    private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) {
+    private void validateMove(Movement movement, Piece sourcePiece, Piece targetPiece) { // TODO: 메서드 분리
         if (sourcePiece.isSameColorWith(targetPiece)) {
             throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
         }
