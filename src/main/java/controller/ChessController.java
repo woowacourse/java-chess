@@ -1,7 +1,5 @@
 package controller;
 
-//import domain.*;
-
 import domain.*;
 import dto.BoardDto;
 import dto.RequestDto;
@@ -45,13 +43,6 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             System.out.println("[오류] " + e.getMessage());
         }
-    }
-
-    private TeamColor defineTeam(boolean isWhiteTurn) {
-        if (isWhiteTurn) {
-            return TeamColor.WHITE;
-        }
-        return TeamColor.BLACK;
     }
 
     private void printStatus(Board board) {
