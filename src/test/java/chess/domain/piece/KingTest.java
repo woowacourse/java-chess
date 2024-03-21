@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test;
 class KingTest {
     @DisplayName("생성 테스트")
     @Test
-    public void create() {
+    void create() {
         assertThatCode(() -> new King(Color.BLACK)).doesNotThrowAnyException();
     }
 
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
-    public void givenKingMoveWhenMeetTeamMThenStop() {
+    void givenKingMoveWhenMeetTeamMThenStop() {
         King king = new King(Color.WHITE);
         Position currentKingPosition = new Position(File.E, Rank.ONE);
         Map<Position, Piece> board = Map.of(currentKingPosition, king,
@@ -39,7 +39,7 @@ class KingTest {
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
-    public void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
+    void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         King king = new King(Color.WHITE);
         Position currentKingPosition = new Position(File.E, Rank.ONE);
         Map<Position, Piece> board = Map.of(currentKingPosition, king,

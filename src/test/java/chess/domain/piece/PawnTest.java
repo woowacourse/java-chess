@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 class PawnTest {
     @DisplayName("화이트 폰은 북쪽으로만 전진할 수 있다.")
     @Test
-    public void blackPawnCanMoveToNorth() {
+    void blackPawnCanMoveToNorth() {
         Pawn pawn = Pawn.ofWhite();
         Position currentPosition = new Position(File.H, Rank.THREE);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
@@ -26,7 +26,7 @@ class PawnTest {
 
     @DisplayName("화이트 폰은 초기 위치에서는 북쪽으로 1칸 또는 2칸 전진할 수 있다.")
     @Test
-    public void whenInitialPositionThenCanMoveForwardTwoStep() {
+    void whenInitialPositionThenCanMoveForwardTwoStep() {
         Pawn pawn = Pawn.ofWhite();
         Position currentPosition = new Position(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
@@ -39,7 +39,7 @@ class PawnTest {
 
     @DisplayName("화이트 폰은 북쪽 방향의 대각선의 적 위치로 갈 수 있다.")
     @Test
-    public void canMoveDiagonalOfTheForwardDirectionWhenEnemyExists() {
+    void canMoveDiagonalOfTheForwardDirectionWhenEnemyExists() {
         Pawn pawn = Pawn.ofWhite();
         Position currentPosition = new Position(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(
