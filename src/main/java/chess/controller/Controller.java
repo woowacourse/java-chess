@@ -16,10 +16,14 @@ public class Controller {
         while (!command.isEnd()) {
             OutputView.printChessBoard(chessBoard.getChessBoard());
             command = Command.getProcessCommand(InputView.readCommand());
-            if(command.isMove()) {
-                List<String> positions = InputView.readPositions();
-                chessBoard.move(Position.of(positions.get(0)), Position.of(positions.get(1)));
-            }
+            processGame(command, chessBoard);
+        }
+    }
+
+    private void processGame(Command command, ChessBoard chessBoard) {
+        if(command.isMove()) {
+            List<String> positions = InputView.readPositions();
+            chessBoard.move(Position.of(positions.get(0)), Position.of(positions.get(1)));
         }
     }
 }
