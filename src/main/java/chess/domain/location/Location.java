@@ -5,7 +5,6 @@ import java.util.Objects;
 
 //TODO 캐싱
 public class Location {
-
     private static final IllegalArgumentException WRONG_LOCATION_INPUT_EXCEPTION
             = new IllegalArgumentException("잘못된 위치 입력입니다.");
     private static final int LOCATION_INPUT_LENGTH = 2;
