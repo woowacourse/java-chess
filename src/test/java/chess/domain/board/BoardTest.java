@@ -1,13 +1,16 @@
 package chess.domain.board;
 
+import chess.domain.piece.ColorType;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
+import chess.dto.BoardOutput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("체스판")
 public class BoardTest {
@@ -101,5 +104,23 @@ public class BoardTest {
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("체스판은 말을 이동할 때 도착지에 다른 색의 말이 있으면 말을 잡는다.")
+    @Test
+    void catchOpponent() {
+        // given
+        Board board = new Board();
+        board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
+        board.move(Square.of(File.h, Rank.SEVEN), Square.of(File.h, Rank.FIVE));
+
+        // when
+        board.move(Square.of(File.g, Rank.FOUR), Square.of(File.h, Rank.FIVE));
+
+        BoardOutput boardOutput = board.toBoardOutput();
+        Piece actual = boardOutput.board().get(Square.of(File.h, Rank.FIVE));
+
+        // then
+        assertThat(actual.isSameType(PieceType.PAWN.name()) && actual.isSameColor(new Piece(PieceType.PAWN, ColorType.WHITE))).isTrue();
     }
 }

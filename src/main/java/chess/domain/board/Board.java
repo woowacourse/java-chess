@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Square;
@@ -36,11 +37,20 @@ public class Board {
         checkCannotMove(source, destination, sourcePiece);
         checkPathBlocked(source, destination, sourcePiece);
 
-        // TODO: 만약 말을 잡을 수 있으면 잡는 코드 추가
-        board.replace(source, destinationPiece);
-        board.replace(destination, sourcePiece);
+        moveOrCatch(sourcePiece, destinationPiece, source, destination);
 
         turn.update();
+    }
+
+    private void moveOrCatch(Piece sourcePiece, Piece destinationPiece, Square source, Square destination) {
+        if (!destinationPiece.isEmpty()) {
+            board.replace(destination, sourcePiece);
+            board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
+            return;
+        }
+
+        board.replace(source, destinationPiece);
+        board.replace(destination, sourcePiece);
     }
 
     private void checkTurn(Piece sourcePiece) {
