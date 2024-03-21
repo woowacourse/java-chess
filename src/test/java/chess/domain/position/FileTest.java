@@ -39,4 +39,11 @@ class FileTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("서쪽으로 이동할 수 없습니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource({"A, H, 7", "H, A, -7", "C, D, 1", "D, C, -1"})
+    @DisplayName("두 파일의 차이를 알 수 있다.")
+    void calculateDifferenceTest(File before, File after, int expected) {
+        assertThat(before.calculateDifference(after)).isEqualTo(expected);
+    }
 }

@@ -39,4 +39,11 @@ class RankTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("남쪽으로 이동할 수 없습니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource({"ONE, EIGHT, 7", "EIGHT, ONE, -7", "THREE, FOUR, 1", "FOUR, THREE, -1"})
+    @DisplayName("두 랭크의 차이를 알 수 있다.")
+    void calculateDifferenceTest(Rank before, Rank after, int expected) {
+        assertThat(before.calculateDifference(after)).isEqualTo(expected);
+    }
 }
