@@ -3,14 +3,19 @@ package domain.piece;
 import domain.piece.info.Color;
 import domain.piece.info.Direction;
 import domain.piece.info.Type;
+import domain.piece.state.PawnInit;
+import domain.piece.state.PawnMoved;
+import domain.piece.state.State;
 import domain.strategy.MoveStrategy;
 import domain.strategy.PawnMoveStrategy;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private State state;
+
     public Pawn(final Color color, final Type type) {
         super(color, type);
+        this.state = new PawnInit();
     }
 
     @Override
@@ -20,11 +25,9 @@ public class Pawn extends Piece {
 
     @Override
     public List<Direction> movableDirections() {
-        return new ArrayList<>(List.of(
-                Direction.UP,
-                Direction.UP_RIGHT,
-                Direction.UP_LEFT
-        ));
+        final List<Direction> directions = this.state.movableDirection(color());
+        this.state = new PawnMoved();
+        return directions;
     }
 
     public static Pawn black() {
