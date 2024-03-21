@@ -16,7 +16,7 @@ public abstract class DiscreteMovementRule implements MovementRule {
     @Override
     public final List<Position> findPath(Position start, Position end) {
         if (!isMovable(start, end)) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
         return List.of(end);
     }
