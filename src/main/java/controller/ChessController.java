@@ -40,7 +40,7 @@ public class ChessController {
 
     private void doTurn(final Board board, Turn turn, final RequestDto requestDto) {
         try {
-            board.movePiece(turn.current(), requestDto.source().get(), requestDto.destination().get());
+            board.movePiece(turn.current(), requestDto.source(), requestDto.destination());
             turn.next();
         } catch (IllegalArgumentException e) {
             System.out.println("[오류] " + e.getMessage());
