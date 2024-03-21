@@ -21,9 +21,18 @@ public abstract class Piece {
         return this.point.equals(point);
     }
 
-    public boolean isEqualColor(final Color color) {
-        return this.color == color;
+    public boolean sameColor(final Piece piece) {
+        return this.color == piece.color;
     }
+
+    public boolean isBlack() {
+        return this.color == Color.BLACK;
+    }
+
+    public boolean isWhite() {
+        return this.color == Color.WHITE;
+    }
+
 
     public Point getPoint() {
         return this.point;

@@ -1,7 +1,6 @@
 package util;
 
 import domain.ChessBoard;
-import domain.piece.attribute.Color;
 import domain.Piece;
 import domain.PieceStatus;
 import domain.piece.attribute.point.Point;
@@ -34,7 +33,7 @@ public class BoardMapper {
 
     private static String convertPiece(Piece piece) {
         final var pieceName = convertStatus(piece.getStatus());
-        if (piece.isEqualColor(Color.WHITE)) {
+        if (piece.isWhite()) {
             return pieceName.toLowerCase();
         }
         return pieceName.toUpperCase();

@@ -30,7 +30,7 @@ public class Pawn extends Piece {
     }
 
     private boolean containDirection(Direction direction) {
-        if (this.isEqualColor(Color.BLACK)) {
+        if (this.isBlack()) {
             return blackList.contains(direction);
         }
         return whiteList.contains(direction);
