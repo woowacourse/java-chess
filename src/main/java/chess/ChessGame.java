@@ -16,13 +16,12 @@ public class ChessGame {
     private final Map<GameCommand, CommandExecutor> commands = Map.of(
             GameCommand.MOVE, args -> move(args.get(1), args.get(2)),
             GameCommand.START, args -> start(),
-            GameCommand.END, args -> end()
-    );
-
+            GameCommand.END, args -> end());
+    private final Board board = BoardFactory.createInitialBoard();
     private GameState gameState = new ReadyState();
 
     public void run() {
-        Board board = BoardFactory.createInitialBoard();
+
         while (gameState.isPlaying()) {
             executeCommand();
         }
@@ -38,9 +37,8 @@ public class ChessGame {
     private void move(String inputSource, String inputTarget) {
         Position source = Position.convert(inputSource);
         Position target = Position.convert(inputTarget);
-        System.out.println(source + " " + target);
         OutputView.printGameStartMessage();
-        gameState = gameState.move();
+        gameState = gameState.move(board, source, target);
     }
 
     private void start() {

@@ -1,6 +1,8 @@
 package chess.domain.state;
 
+import chess.domain.Board;
 import chess.domain.Color;
+import chess.domain.position.Position;
 
 public class MoveState implements GameState {
     private final Color color;
@@ -15,8 +17,10 @@ public class MoveState implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState move(Board board, Position source, Position target) {
+        board.move(source, target, color);
         Color nextTurnColor = color.getOpposite();
+
         return new MoveState(nextTurnColor);
     }
 

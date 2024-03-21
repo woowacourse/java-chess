@@ -1,6 +1,8 @@
 package chess.domain.state;
 
+import chess.domain.Board;
 import chess.domain.Color;
+import chess.domain.position.Position;
 
 public class StartState implements GameState {
     private static final Color START_COLOR = Color.WHITE;
@@ -11,7 +13,7 @@ public class StartState implements GameState {
     }
 
     @Override
-    public GameState move() {
+    public GameState move(Board board, Position source, Position target) {
         return new MoveState(START_COLOR);
     }
 
