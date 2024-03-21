@@ -50,7 +50,7 @@ public class Board {
     private void validateIsMovablePosition(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         Set<Position> movablePositions = sourcePiece.calculateMovablePositions(sourcePosition, this);
         if (!movablePositions.contains(targetPosition)) {
-            throw new IllegalStateException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
