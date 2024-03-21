@@ -62,12 +62,23 @@ public class Board {
         Piece targetPiece = findPiece(target);
 
         validatePiecesPosition(sourcePiece, targetPiece);
+        validateTurn(sourcePiece);
         validatePieceCanMove(sourcePiece, targetPiece, source, target);
         validatePieceRoute(sourcePiece, source, target);
 
         board.put(target, sourcePiece);
         board.put(source, Piece.from(PieceType.NONE));
         turnCount++;
+    }
+
+    private void validateTurn(Piece sourcePiece) {
+        boolean isEnemy = sourcePiece.isEnemy(turnCount);
+        if (isEnemy && sourcePiece.isWhite()) {
+            throw new IllegalArgumentException("지금은 Black 차례입니다.");
+        }
+        if (isEnemy && sourcePiece.isBlack()) {
+            throw new IllegalArgumentException("지금은 White 차례입니다.");
+        }
     }
 
     private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {

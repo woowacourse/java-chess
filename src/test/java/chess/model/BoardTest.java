@@ -31,6 +31,25 @@ class BoardTest {
         assertThat(boardDto).hasToString(expected);
     }
 
+    @DisplayName("White 차례에 Black 기물 이동 시 예외가 발생한다.")
+    @Test
+    void notBlackTurn() {
+        Board board = Board.createInitialBoard();
+        assertThatThrownBy(() -> board.move("b7", "b6"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("지금은 White 차례입니다.");
+    }
+
+    @DisplayName("Black 차례에 White 기물 이동 시 예외가 발생한다.")
+    @Test
+    void notWhiteTurn() {
+        Board board = Board.createInitialBoard();
+        board.move("b2", "b4");
+        assertThatThrownBy(() -> board.move("b4", "b5"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("지금은 Black 차례입니다.");
+    }
+
     @DisplayName("이동 시 source 위치에 기물이 없으면 예외가 발생한다")
     @Test
     void pieceNotExistsOnSourceCoordinate() {

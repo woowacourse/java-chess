@@ -46,16 +46,24 @@ public abstract class Piece implements MoveStrategy {
         return target.getColumn() - source.getColumn();
     }
 
-    public boolean isNone() {
-        return type == NONE;
-    }
-
     public boolean isEnemy(int turnCount) {
         return !type.isSameColor(turnCount);
     }
 
     public boolean isAlly(int turnCount) {
         return type.isSameColor(turnCount);
+    }
+
+    public boolean isWhite() {
+        return type.isWhite();
+    }
+
+    public boolean isBlack() {
+        return type.isBlack();
+    }
+
+    public boolean isNone() {
+        return type == NONE;
     }
 
     public boolean isPawn() {
