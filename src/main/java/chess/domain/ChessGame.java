@@ -20,7 +20,7 @@ public class ChessGame {
 
     public List<Position> generateMovablePositions(Position position) {
         Piece piece = board.findPieceByPosition(position);
-        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position); // TODO Map<Direction, List<Position>> 객체 감싸기
+        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position);
         if (piece.isPawn()) {
             return generateValidPositionsWithPawn(expectedAllPositions, piece);
         }
@@ -46,7 +46,6 @@ public class ChessGame {
         return result;
     }
 
-    // 상대 기물이 있을 때만 추가
     private void addObstaclePosition(List<Position> result, Queue<Position> expectedPositions, Piece piece) {
         Position last = expectedPositions.poll();
         if (last != null && board.hasPiece(last) && !board.findPieceByPosition(last).isSameTeam(piece)) {
@@ -54,7 +53,7 @@ public class ChessGame {
         }
     }
 
-    private boolean isNotEmpty(Queue<Position> expectedPositions) { // TODO 메서드명 변경
+    private boolean isNotEmpty(Queue<Position> expectedPositions) {
         return !expectedPositions.isEmpty();
     }
 

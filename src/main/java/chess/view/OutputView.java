@@ -14,7 +14,7 @@ public class OutputView {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printBoard(Board board) { // TODO DTO 로 바꾸기
+    public void printBoard(Board board) {
         List<StringBuilder> result = new ArrayList<>();
         result.add(new StringBuilder("........"));
         result.add(new StringBuilder("........"));
