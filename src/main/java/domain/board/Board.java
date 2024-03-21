@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, Piece> squares;
+    private final Map<Position, Piece> board;
 
-    private Board(Map<Position, Piece> squares) {
-        this.squares = squares;
+    private Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public static Board generatedBy(BoardGenerator boardGenerator) {
@@ -18,10 +18,10 @@ public class Board {
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
-        Piece piece = squares.get(sourcePosition);
+        Piece piece = board.get(sourcePosition);
         validate(sourcePosition, targetPosition);
-        squares.remove(sourcePosition);
-        squares.put(targetPosition, piece);
+        board.remove(sourcePosition);
+        board.put(targetPosition, piece);
     }
 
     private void validate(Position sourcePosition, Position targetPosition) {
@@ -52,7 +52,7 @@ public class Board {
     }
 
     private void validatePieceCanMove(Position sourcePosition, Position targetPosition) {
-        Piece piece = squares.get(sourcePosition);
+        Piece piece = board.get(sourcePosition);
         if (piece.canMove(sourcePosition, targetPosition)) {
             return;
         }
@@ -81,7 +81,7 @@ public class Board {
     }
 
     private void validateWhenPieceIsPawn(Position sourcePosition, Position targetPosition) {
-        Piece piece = squares.get(sourcePosition);
+        Piece piece = board.get(sourcePosition);
         if (piece instanceof Pawn) {
             validatePawnStraightCapture(sourcePosition, targetPosition);
             validatePawnDiagonalMove(sourcePosition, targetPosition);
@@ -110,18 +110,18 @@ public class Board {
     }
 
     private boolean isPieceAt(Position position) {
-        return squares.containsKey(position);
+        return board.containsKey(position);
     }
 
     private boolean isNoPieceAt(Position position) {
-        return !squares.containsKey(position);
+        return !board.containsKey(position);
     }
 
     private Color findPieceColorAt(Position position) {
         if (isNoPieceAt(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
-        if (squares.get(position).isWhite()) {
+        if (board.get(position).isWhite()) {
             return Color.WHITE;
         }
         return Color.BLACK;
@@ -131,6 +131,6 @@ public class Board {
         if (isNoPieceAt(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
-        return squares.get(position);
+        return board.get(position);
     }
 }
