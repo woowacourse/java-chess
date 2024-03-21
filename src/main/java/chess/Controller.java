@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.Scanner;
+import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.view.InputView;
@@ -18,36 +18,53 @@ class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        Board board = new Board();
-        if (inputView.readStartCommand()) {
-            play(board);
-        }
+        play(new Board());
     }
 
     private void play(Board board) {
-        while (true) {
-            outputView.printBoard(board);
-            Scanner scanner = new Scanner(System.in);
-
-            String s = scanner.nextLine();
-            String[] split = s.split(" ");
-
-            String source = split[0];
-            String target = split[1];
-
-            String[] sourceInput = source.split(",");
-            int moveStartRank = Integer.parseInt(sourceInput[0]);
-            char moveStartFile = sourceInput[1].toCharArray()[0];
-
-            String[] targetInput = target.split(",");
-            int moveTargetRank = Integer.parseInt(targetInput[0]);
-            char moveTargetFile = targetInput[1].toCharArray()[0];
-
-            try {
-                board.move(new Coordinate(moveStartRank, (char) moveStartFile), new Coordinate(moveTargetRank, (char) moveTargetFile));
-            } catch (Exception e) {
-                System.out.println("[ERROR] : " + e.getMessage());
-            }
+        String command = inputView.readCommand();
+        if (command.equals("start")) {
+            outputView.printStartMessage();
+            playChess(board);
+            return;
         }
+
+        if (command.equals("end")) {
+            return;
+        }
+
+        throw new IllegalArgumentException("잘못된 입력입니다.");
+    }
+
+    private void playChess(Board board) {
+        outputView.printBoard(board);
+        String read = inputView.readCommand();
+        if (read.startsWith("move ")) {
+            List<Coordinate> coordinates = parseToCoordinates(read);
+            board.move(coordinates.get(0), coordinates.get(1));
+            playChess(board);
+            return;
+        }
+
+        if (read.equals("end")) {
+            return;
+        }
+
+        throw new IllegalArgumentException("잘못된 입력입니다.");
+    }
+
+    private List<Coordinate> parseToCoordinates(String read) {
+        String[] moveCommand = read.split("move ");
+        String[] coordinates = moveCommand[1].split(" ");
+        if (coordinates.length != 2) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+
+        return List.of(parseToCoordinate(coordinates[0]), parseToCoordinate(coordinates[1]));
+    }
+
+    private Coordinate parseToCoordinate(String input) {
+        String[] split = input.split("");
+        return new Coordinate(Integer.parseInt(split[1]), split[0].charAt(0));
     }
 }
