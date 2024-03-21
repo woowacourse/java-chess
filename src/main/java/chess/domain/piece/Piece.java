@@ -18,6 +18,10 @@ public abstract class Piece {
 
     public abstract Set<Square> movableSquaresFrom(final Square source);
 
+    public boolean isAllyOf(Piece other) {
+        return color == other.color;
+    }
+
     public Color getColor() {
         return color;
     }
