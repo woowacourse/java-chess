@@ -21,13 +21,6 @@ public enum File {
         this.command = command;
     }
 
-    public static File from(String command) {
-        return Arrays.stream(values())
-                .filter(file -> file.command.equals(command))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File입니다."));
-    }
-
     public static File from(int value) {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)

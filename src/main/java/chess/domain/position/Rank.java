@@ -21,13 +21,6 @@ public enum Rank {
         this.command = command;
     }
 
-    public static Rank from(String command) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.command.equals(command))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank입니다."));
-    }
-
     public static Rank from(int value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
