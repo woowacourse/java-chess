@@ -41,7 +41,8 @@ public class Piece {
 
     private void removeKillableDestinationObstacle(final Position source, final Map<Position, Piece> pieces,
                                                    final List<Position> obstacles) {
-        if (obstacles.contains(source) && pieces.get(source).isNotSameColor(color)) {
+        if (obstacles.contains(source)
+                && pieces.getOrDefault(source, new Piece(PieceType.EMPTY, Color.NONE)).isNotSameColor(color)) {
             obstacles.remove(source);
         }
     }
@@ -55,8 +56,9 @@ public class Piece {
 
     private boolean isPawnBlockedOnRankMove(final Position source, final Position target,
                                             final Map<Position, Piece> pieces) {
+        Piece piece = pieces.get(target);
         return pieceType == PieceType.PAWN && isRankMove(source, target)
-                && pieces.getOrDefault(target, new Piece(PieceType.EMPTY, Color.NONE)).isNotEmpty();
+                && piece.isNotEmpty();
     }
 
     private boolean isRankMove(final Position source, final Position target) {
