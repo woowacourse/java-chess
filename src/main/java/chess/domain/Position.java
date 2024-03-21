@@ -69,7 +69,7 @@ public class Position {
         return Position.of(row + rowDifference, column + columnDifference);
     }
 
-    public List<Position> findNearbyPosition(Piece piece) {
+    public List<Position> findAllMovablePosition(Piece piece) {
         return positions.stream()
                 .filter(position -> piece.isMovable(this, position))
                 .toList();

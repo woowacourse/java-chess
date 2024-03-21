@@ -9,6 +9,8 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.Map;
@@ -75,23 +77,48 @@ public class BoardTest {
     @Test
     void checkmate() {
         Board board = new Board(Map.of(
-                Position.of(8, 1), new King(Team.WHITE, true),
-                Position.of(7, 1), new Knight(Team.WHITE, true),
-                Position.of(8, 2), new Pawn(Team.WHITE, true),
-                Position.of(6, 3), new Bishop(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE, true),
+                Position.of(2, 8), new Pawn(Team.WHITE, true),
+                Position.of(1, 6), new Queen(Team.BLACK, true)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isTrue();
     }
 
-    @DisplayName("왕이 체크된 상태에서 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
+    @DisplayName("더블 체크인 경우, 왕이 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
     @Test
-    void checkmate2() {
+    void checkmateWhenDoubleCheck() {
         Board board = new Board(Map.of(
-                Position.of(8, 1), new King(Team.WHITE, true),
-                Position.of(7, 1), new Knight(Team.WHITE, true),
-                Position.of(8, 2), new Pawn(Team.WHITE, true),
-                Position.of(7, 2), new Bishop(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE, true),
+                Position.of(1, 7), new Pawn(Team.WHITE, true),
+                Position.of(4, 5), new Queen(Team.BLACK, true),
+                Position.of(4, 8), new Rook(Team.BLACK, true)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isTrue();
+    }
+
+    @DisplayName("체크된 상태에서 왕이 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
+    @Test
+    void isNotCheckmateKingAttackAttackPiece() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE, true),
+                Position.of(1, 7), new Knight(Team.WHITE, true),
+                Position.of(2, 8), new Pawn(Team.WHITE, true),
+                Position.of(2, 7), new Bishop(Team.BLACK, true)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
+    }
+
+    @DisplayName("체크된 상태에서 체크하는 경로를 막을 수 있으면, 체크메이트가 아니다.")
+    @Test
+    void isNotCheckmatePieceBlockAttackRoute() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE, true),
+                Position.of(1, 7), new Pawn(Team.WHITE, true),
+                Position.of(2, 8), new Pawn(Team.WHITE, true),
+                Position.of(3, 6), new Bishop(Team.BLACK, true)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();
