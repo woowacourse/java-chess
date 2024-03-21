@@ -9,7 +9,6 @@ import domain.position.Position;
 import java.util.List;
 
 public final class King extends Piece {
-
     private static final List<Direction> KING_DIRECTION = List.of(Direction.TOP, Direction.DOWN, Direction.RIGHT, Direction.LEFT, Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
 
     public King(PieceColor color) {

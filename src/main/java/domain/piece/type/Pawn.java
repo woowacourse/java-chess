@@ -10,7 +10,6 @@ import domain.position.Position;
 import java.util.List;
 
 public final class Pawn extends Piece {
-
     private static final List<Direction> BLACK_DIRECTION = List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
     private static final List<Direction> WHITE_DIRECTION = List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
 
