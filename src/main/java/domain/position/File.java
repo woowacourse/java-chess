@@ -1,6 +1,8 @@
 package domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum File {
@@ -18,9 +20,12 @@ public enum File {
         List<File> files = Arrays.stream(values()).toList();
         int sourceIndex = files.indexOf(this);
         int targetIndex = files.indexOf(target);
-        int minIndex = Math.min(sourceIndex, targetIndex);
-        int maxIndex = Math.max(sourceIndex, targetIndex);
-        return files.subList(minIndex + 1, maxIndex);
+        if (sourceIndex < targetIndex) {
+            return files.subList(sourceIndex + 1, targetIndex);
+        }
+        List<File> betweenFiles = new ArrayList<>(files.subList(targetIndex + 1, sourceIndex));
+        Collections.reverse(betweenFiles);
+        return betweenFiles;
     }
 
     public boolean isSame(File target) {

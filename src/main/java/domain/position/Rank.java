@@ -1,6 +1,8 @@
 package domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum Rank {
@@ -25,9 +27,12 @@ public enum Rank {
         List<Rank> ranks = Arrays.stream(values()).toList();
         int sourceIndex = ranks.indexOf(this);
         int targetIndex = ranks.indexOf(target);
-        int minIndex = Math.min(sourceIndex, targetIndex);
-        int maxIndex = Math.max(sourceIndex, targetIndex);
-        return ranks.subList(minIndex + 1, maxIndex);
+        if (sourceIndex < targetIndex) {
+            return ranks.subList(sourceIndex + 1, targetIndex);
+        }
+        List<Rank> betweenRanks = new ArrayList<>(ranks.subList(targetIndex + 1, sourceIndex));
+        Collections.reverse(betweenRanks);
+        return Collections.unmodifiableList(betweenRanks);
     }
 
     public boolean isSame(Rank rank) {
