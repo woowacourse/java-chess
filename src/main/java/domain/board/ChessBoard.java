@@ -1,39 +1,36 @@
 package domain.board;
 
-import domain.piece.Type;
-import java.util.ArrayList;
+import domain.piece.Empty;
+import domain.piece.Piece;
+import domain.position.Position;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class ChessBoard {
-    private final List<List<Type>> board;
+    private final Map<Position, Piece> board;
 
-    private ChessBoard(List<List<Type>> board) {
-        this.board = board;
+    public ChessBoard(Map<Position, Piece> board) {
+        this.board = new HashMap<>(board);
     }
 
-    public static ChessBoard createEmptyBoard() {
-        List<List<Type>> board = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            board.add(createEmptyLine());
+    public void move(Position resource, Position target) {
+        List<Position> positions = resource.route(target);
+        if (positions.stream().anyMatch(board::containsKey)) {
+            throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
         }
-        return new ChessBoard(board);
+        Piece resourcePiece = findByPosition(resource);
+        resourcePiece.validateMovement(resource, target, findByPosition(target));
+        board.remove(resource);
+        board.put(target, resourcePiece);
     }
 
-    private static List<Type> createEmptyLine() {
-        List<Type> types = new ArrayList<>();
-        for (int j = 0; j < 8; j++) {
-            types.add(Type.EMPTY);
-        }
-        return types;
+    private Piece findByPosition(Position position) {
+        return board.getOrDefault(position, Empty.getInstance());
     }
 
-    public void fillPieces(Map<Position, Type> pieces) {
-        for (Entry<Position, Type> entry : pieces.entrySet()) {
-            Position position = entry.getKey();
-            Type type = entry.getValue();
-            board.get(position.getRow()).set(position.getColumn(), type);
-        }
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
