@@ -6,7 +6,7 @@ import java.util.List;
 public class OutputView {
 
     public static void printBoard(BoardDto boardDto) {
-        List<List<String>> rawBoard = boardDto.getBoard();
+        List<List<String>> rawBoard = boardDto.board();
 
         for (int i = 7; i >= 0; i--) {
             StringBuilder stringBuilder = new StringBuilder();
