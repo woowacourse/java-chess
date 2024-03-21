@@ -1,41 +1,43 @@
-import java.util.Arrays;
+import static domain.EndCommand.*;
+
 import java.util.List;
 
 import domain.ChessGame;
+import domain.Command;
 import domain.Piece;
 import domain.Position;
 import view.InputView;
 import view.OutputView;
 
-//Todo: 메서드 분리, 클래스 분리
 public class Application {
 	public static void main(String[] args) {
-		OutputView outputView = new OutputView();
-		InputView inputView = new InputView();
-
-		outputView.printGuide();
-		String startOrEnd = inputView.readStartOrEnd();
-		if (startOrEnd.equals("end")) {
+		OutputView.printGuide();
+		Command startOrEnd = InputView.readStartOrEnd();
+		if (isEndCommand(startOrEnd)) {
 			return;
 		}
 		ChessGame chessGame = new ChessGame();
 		List<Piece> piecesOnBoard = chessGame.getPiecesOnBoard();
-		outputView.printChessBoard(piecesOnBoard);
-		String endOrMove = inputView.readEndOrMove();
-		while (endOrMove.startsWith("move")) {
-			playGame(outputView, endOrMove, chessGame);
-			endOrMove = inputView.readEndOrMove();
+		OutputView.printChessBoard(piecesOnBoard);
+
+		Command endOrMove = InputView.readEndOrMove();
+		while (!isEndCommand(endOrMove)) {
+			playGame(endOrMove, chessGame);
+			endOrMove = InputView.readEndOrMove();
 		}
 	}
 
-	private static void playGame(OutputView outputView, String endOrMove, ChessGame chessGame) {
-		List<Position> positions = Arrays.stream(endOrMove.split(" ")).skip(1)
-			.map(String::toUpperCase)
-			.map(Position::valueOf)
-			.toList();
-		chessGame.move(positions.get(0), positions.get(1));
+	private static boolean isEndCommand(Command startOrEnd) {
+		return startOrEnd.equals(END_COMMAND);
+	}
+
+	private static void playGame(Command moveCommand, ChessGame chessGame) {
+		List<Position> options = moveCommand.getOptions();
+		Position from = options.get(0);
+		Position to = options.get(1);
+		chessGame.move(from, to);
 
 		List<Piece> piecesOnBoard = chessGame.getPiecesOnBoard();
-		outputView.printChessBoard(piecesOnBoard);
+		OutputView.printChessBoard(piecesOnBoard);
 	}
 }
