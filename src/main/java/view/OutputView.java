@@ -42,18 +42,25 @@ public class OutputView {
         System.out.printf(START_OR_END_MESSAGE);
     }
 
-    public void printPieceStatus(final PieceMover mover) {
-        for (int row = 8; row >= 1; row--) {
-            for (int column = 0; column < 8; column++) {
-                Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
-                if (mover.hasPiece(square)) {
-                    Piece piece = mover.findPieceBySquare(square);
-                    System.out.print(pieceSymbol.get(piece.getPieceType()));
-                } else {
-                    System.out.print(".");
-                }
-            }
+    public void printSquareStatus(final PieceMover mover) {
+        for (int rank = 8; rank >= 1; rank--) {
+            printSquareByFile(mover, rank);
             System.out.println();
         }
+    }
+
+    private void printSquareByFile(PieceMover mover, int row) {
+        for (int file = 0; file < 8; file++) {
+            Square square = new Square(new Position(new File((char) ('a' + file)), new Rank(row)));
+            System.out.print(generateSymbol(mover, square));
+        }
+    }
+
+    public String generateSymbol(PieceMover mover, Square square) {
+        if (mover.hasPiece(square)) {
+            Piece piece = mover.findPieceBySquare(square);
+            return pieceSymbol.get(piece.getPieceType());
+        }
+        return ".";
     }
 }

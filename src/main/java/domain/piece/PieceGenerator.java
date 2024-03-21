@@ -20,21 +20,25 @@ import java.util.stream.IntStream;
 public class PieceGenerator {
     private static final List<PieceRole> BACK = List.of(
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
-    private static final List<PieceRole> FRONT_BLACK = Collections.nCopies(8, new Pawn(Color.BLACK));
-
-    private static final List<PieceRole> FRONT_WHITE = Collections.nCopies(8, new Pawn(Color.WHITE));
+    public static final int CHESS_BOARD_SIZE = 8;
+    private static final List<PieceRole> FRONT_BLACK = Collections.nCopies(CHESS_BOARD_SIZE, new Pawn(Color.BLACK));
+    private static final List<PieceRole> FRONT_WHITE = Collections.nCopies(CHESS_BOARD_SIZE, new Pawn(Color.WHITE));
 
     private PieceGenerator() {
     }
 
     public static void generate(final PieceMover mover) {
-        for (int row = 8; row >= 1; row--) {
+        for (int row = CHESS_BOARD_SIZE; row >= 1; row--) {
             List<Piece> pieces = generateRankPieces(row);
-            for (int column = 0; column < pieces.size(); column++) {
-                Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
-                Piece piece = pieces.get(column);
-                mover.add(square, piece);
-            }
+            initializeSquares(mover, pieces, row);
+        }
+    }
+
+    private static void initializeSquares(PieceMover mover, List<Piece> pieces, int row) {
+        for (int column = 0; column < pieces.size(); column++) {
+            Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
+            Piece piece = pieces.get(column);
+            mover.add(square, piece);
         }
     }
 

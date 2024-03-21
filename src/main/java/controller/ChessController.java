@@ -23,7 +23,6 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-        // TODO: START 이전에 MOVE가 들어오면 예외 처리한다.
     public void run() {
         PieceMover mover = new PieceMover();
         PieceGenerator.generate(mover);
@@ -32,7 +31,7 @@ public class ChessController {
         List<String> input = inputView.enterAnything();
         ChessCommand command = ChessCommand.from(input.get(0));
         while (command != ChessCommand.END) {
-            outputView.printPieceStatus(mover);
+            outputView.printSquareStatus(mover);
             input = inputView.enterAnything();
             command = ChessCommand.from(input.get(0));
 
