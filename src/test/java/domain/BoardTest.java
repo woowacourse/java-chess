@@ -3,7 +3,6 @@ package domain;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import domain.strategy.PawnMoveStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +11,7 @@ import java.util.Map;
 
 import static domain.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
 
@@ -25,52 +25,14 @@ class BoardTest {
         assertThat(board).isNotNull();
     }
 
-//    @DisplayName("기물을 이동시킨다.")
-//    @Test
-//    void movePieceTest() {
-//        // Given
-//        Piece piece = new Piece(PieceType.WHITE_BISHOP, new ContinuousMoveStrategy(diagonalVectors(), 8));
-//        Position source = new Position(File.B, Rank.TWO);
-//        Position destination = new Position(File.D, Rank.FOUR);
-//        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece));
-//        Board board = new Board(piecePositions);
-//
-//        // When
-//        board.movePiece(WHITE, source, destination);
-//
-//        // Then
-//        assertThat(piecePositions.containsKey(destination)).isTrue();
-//        assertThat(piecePositions.containsKey(source)).isFalse();
-//    }
-
-//    @DisplayName("기물을 이동시킨다.")
-//    @Test
-//    void movePieceTest() {
-//        // Given
-//        Piece piece = new Piece(PieceType.WHITE_KNIGHT, new KnightMoveStrategy());
-//        Position source = new Position(File.B, Rank.TWO);
-//        Position destination = new Position(File.C, Rank.FOUR);
-//        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece));
-//        Board board = new Board(piecePositions);
-//
-//        // When
-//        board.movePiece(WHITE, source, destination);
-//
-//        // Then
-//        assertThat(piecePositions.containsKey(destination)).isTrue();
-//        assertThat(piecePositions.containsKey(source)).isFalse();
-//    }
-
-    @DisplayName("기물을 이동시킨다.")
+    @DisplayName("기물의 이동 목적지가 비어있으면 이동시킬 수 있다.")
     @Test
-    void movePieceTest() {
+    void movePieceToEmptySpaceTest() {
         // Given
-        Piece piece = new Piece(PieceType.WHITE_PAWN, new PawnMoveStrategy(WHITE));
-        Position source = new Position(File.C, Rank.TWO);
-        Position destination = new Position(File.D, Rank.THREE);
-
-
-        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece, destination, new Piece(PieceType.BLACK_KING, null)));
+        Piece piece = PieceFactory.create(PieceType.WHITE_BISHOP);
+        Position source = new Position(File.B, Rank.TWO);
+        Position destination = new Position(File.D, Rank.FOUR);
+        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece));
         Board board = new Board(piecePositions);
 
         // When
@@ -79,5 +41,47 @@ class BoardTest {
         // Then
         assertThat(piecePositions.containsKey(destination)).isTrue();
         assertThat(piecePositions.containsKey(source)).isFalse();
+    }
+
+    @DisplayName("기물의 이동 목적지에 다른 색의 기물이 있으면 이동시킬 수 있다.")
+    @Test
+    void movePieceToEnemySpaceTest() {
+        // Given
+        Piece piece = PieceFactory.create(PieceType.WHITE_KNIGHT);
+        Piece enemy = PieceFactory.create(PieceType.BLACK_KING);
+        Position source = new Position(File.B, Rank.TWO);
+        Position destination = new Position(File.C, Rank.FOUR);
+        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(
+                source, piece,
+                destination, enemy
+        ));
+        Board board = new Board(piecePositions);
+
+        // When
+        board.movePiece(WHITE, source, destination);
+
+        // Then
+        assertThat(piecePositions.containsKey(destination)).isTrue();
+        assertThat(piecePositions.containsKey(source)).isFalse();
+    }
+
+    @DisplayName("기물의 이동 목적지에 같은 색의 기물이 있으면 이동시킬 수 없다.")
+    @Test
+    void notMovePieceTest() {
+        // Given
+        Piece piece = PieceFactory.create(PieceType.WHITE_KNIGHT);
+        Piece other = PieceFactory.create(PieceType.WHITE_ROOK);
+        Position source = new Position(File.B, Rank.TWO);
+        Position destination = new Position(File.C, Rank.FOUR);
+        Map<Position, Piece> piecePositions = new HashMap<>(Map.of(
+                source, piece,
+                destination, other
+        ));
+        Board board = new Board(piecePositions);
+
+        // When & Then
+        assertThatThrownBy(() -> board.movePiece(WHITE, source, destination))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 위치에 아군 기물이 존재합니다.");
     }
 }
