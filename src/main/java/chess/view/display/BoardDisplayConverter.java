@@ -22,7 +22,7 @@ public class BoardDisplayConverter {
     private RankDisplay convertNotationRankOf(Rank rank, Map<Position, Piece> pieces) {
         List<PieceDisplay> pieceDisplays = new ArrayList<>();
         Arrays.stream(File.values())
-                .map(file -> new Position(file, rank))
+                .map(file -> Position.of(file, rank))
                 .map(position -> pieces.getOrDefault(position, null))
                 .map(PieceDisplay::getNotationByPiece)
                 .forEach(pieceDisplays::add);

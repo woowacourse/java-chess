@@ -8,7 +8,9 @@ import chess.piece.InitPawn;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
 import chess.piece.Rook;
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +23,8 @@ class BoardTest {
     void emptySourcePositionTest() {
         // given
         Board board = new Board(Map.of());
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("a", 2);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.TWO);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -34,12 +36,12 @@ class BoardTest {
     void allyPieceOnDestinationTest() {
         // given
         Map<Position, Piece> pieces = Map.of(
-                Position.of("a", 1), new Rook(Color.WHITE),
-                Position.of("a", 2), new Rook(Color.WHITE)
+                Position.of(File.A, Rank.ONE), new Rook(Color.WHITE),
+                Position.of(File.A, Rank.TWO), new Rook(Color.WHITE)
         );
         Board board = new Board(pieces);
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("a", 2);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.TWO);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -51,10 +53,10 @@ class BoardTest {
     void replaceInitPawnTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 2), new InitPawn(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.TWO), new InitPawn(Color.WHITE));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 2);
-        Position destination = Position.of("a", 3);
+        Position source = Position.of(File.A, Rank.TWO);
+        Position destination = Position.of(File.A, Rank.THREE);
         // when
         board.move(source, destination);
         // then
@@ -66,11 +68,11 @@ class BoardTest {
     void pawnAttackableTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 2), new InitPawn(Color.WHITE));
-        pieces.put(Position.of("a", 3), new MovedPawn(Color.BLACK));
+        pieces.put(Position.of(File.A, Rank.TWO), new InitPawn(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.THREE), new MovedPawn(Color.BLACK));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 2);
-        Position destination = Position.of("a", 3);
+        Position source = Position.of(File.A, Rank.TWO);
+        Position destination = Position.of(File.A, Rank.THREE);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -82,11 +84,11 @@ class BoardTest {
     void pieceOnRouteTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 1), new Rook(Color.WHITE));
-        pieces.put(Position.of("a", 4), new Rook(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.TWO), new Rook(Color.WHITE));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("a", 8);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.EIGHT);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -98,10 +100,10 @@ class BoardTest {
     void invalidMoveTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 1), new Rook(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("b", 3);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.B, Rank.THREE);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -113,10 +115,10 @@ class BoardTest {
     void moveTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 1), new Rook(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("a", 2);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.TWO);
         // when
         board.move(source, destination);
         // then
@@ -129,11 +131,11 @@ class BoardTest {
     void attackTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(Position.of("a", 1), new Rook(Color.WHITE));
-        pieces.put(Position.of("a", 2), new Rook(Color.BLACK));
+        pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+        pieces.put(Position.of(File.A, Rank.TWO), new Rook(Color.BLACK));
         Board board = new Board(pieces);
-        Position source = Position.of("a", 1);
-        Position destination = Position.of("a", 2);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.TWO);
         // when
         board.move(source, destination);
         // then

@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Direction;
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,13 +20,13 @@ class RookTest {
     void rookMoveTest() {
         // given
         Rook rook = new Rook(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(rook.isMovable(source, Position.of("d", 8))).isTrue(),
-                () -> assertThat(rook.isMovable(source, Position.of("d", 1))).isTrue(),
-                () -> assertThat(rook.isMovable(source, Position.of("a", 4))).isTrue(),
-                () -> assertThat(rook.isMovable(source, Position.of("h", 4))).isTrue()
+                () -> assertThat(rook.isMovable(source, Position.of(File.D, Rank.EIGHT))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of(File.D, Rank.ONE))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of(File.A, Rank.FOUR))).isTrue(),
+                () -> assertThat(rook.isMovable(source, Position.of(File.H, Rank.FOUR))).isTrue()
         );
     }
 
@@ -34,7 +36,7 @@ class RookTest {
     void rookInvalidMoveTest(Direction direction) {
         // given
         Rook rook = new Rook(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         Position destination = direction.nextPosition(source);
         // when, then
         assertThat(rook.isMovable(source, destination)).isFalse();

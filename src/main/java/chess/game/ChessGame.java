@@ -2,7 +2,9 @@ package chess.game;
 
 import chess.board.Board;
 import chess.board.BoardInitializer;
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -60,6 +62,8 @@ public class ChessGame {
 
     private Position readPosition() {
         PositionDto positionDto = inputView.readPosition();
-        return Position.of(positionDto.fileName(), positionDto.rankNumber());
+        File file = File.from(positionDto.fileName());
+        Rank rank = Rank.from(positionDto.rankNumber());
+        return Position.of(file, rank);
     }
 }

@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.position.Direction;
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,13 +20,13 @@ class BishopTest {
     void bishopMoveTest() {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(bishop.isMovable(source, Position.of("f", 6))).isTrue(),
-                () -> assertThat(bishop.isMovable(source, Position.of("b", 2))).isTrue(),
-                () -> assertThat(bishop.isMovable(source, Position.of("f", 2))).isTrue(),
-                () -> assertThat(bishop.isMovable(source, Position.of("b", 6))).isTrue()
+                () -> assertThat(bishop.isMovable(source, Position.of(File.F, Rank.SIX))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of(File.B, Rank.TWO))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of(File.F, Rank.TWO))).isTrue(),
+                () -> assertThat(bishop.isMovable(source, Position.of(File.B, Rank.SIX))).isTrue()
         );
     }
 
@@ -33,9 +35,9 @@ class BishopTest {
     void bishopMaxUnitTest() {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
-        Position source = Position.of("a", 1);
+        Position source = Position.of(File.A, Rank.ONE);
         // when, then
-        assertThat(bishop.isMovable(source, Position.of("h", 8))).isTrue();
+        assertThat(bishop.isMovable(source, Position.of(File.H, Rank.EIGHT))).isTrue();
     }
 
     @ParameterizedTest
@@ -44,7 +46,7 @@ class BishopTest {
     void bishopInvalidMoveTest(Direction direction) {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         Position destination = direction.nextPosition(source);
         // when, then
         assertThat(bishop.isMovable(source, destination)).isFalse();

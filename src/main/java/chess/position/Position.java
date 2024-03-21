@@ -1,24 +1,48 @@
 package chess.position;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
+    private static final Map<String, Position> POSITION_POOL;
+
+    static {
+        POSITION_POOL = new HashMap<>();
+        for (File file : File.values()) {
+            putAllRankPositionToPool(file);
+        }
+    }
+
+    private static void putAllRankPositionToPool(File file) {
+        for (Rank rank : Rank.values()) {
+            POSITION_POOL.put(toKey(file, rank), new Position(file, rank));
+        }
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
+    }
+
     private final File file;
+
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(String fileName, int rankNumber) {
-        return new Position(File.from(fileName), Rank.from(rankNumber));
+    public static Position of(File file, Rank rank) {
+        return POSITION_POOL.get(toKey(file, rank));
     }
 
     public Position createPositionByDifferencesOf(int fileDifference, int rankDifference) {
-        return new Position(file.createFileByDifferenceOf(fileDifference),
-                rank.createRankByDifferenceOf(rankDifference));
+        return Position.of(
+                file.createFileByDifferenceOf(fileDifference),
+                rank.createRankByDifferenceOf(rankDifference)
+        );
     }
 
     public boolean isOnSameRank(Position other) {

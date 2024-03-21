@@ -3,7 +3,9 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +17,13 @@ class PawnTest {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        Position position = Position.of("d", 4);
+        Position position = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(whitePawn.isAttackable(position, Position.of("c", 5))).isTrue(),
-                () -> assertThat(whitePawn.isAttackable(position, Position.of("e", 5))).isTrue(),
-                () -> assertThat(blackPawn.isAttackable(position, Position.of("c", 3))).isTrue(),
-                () -> assertThat(blackPawn.isAttackable(position, Position.of("e", 3))).isTrue()
+                () -> assertThat(whitePawn.isAttackable(position, Position.of(File.C, Rank.FIVE))).isTrue(),
+                () -> assertThat(whitePawn.isAttackable(position, Position.of(File.E, Rank.FIVE))).isTrue(),
+                () -> assertThat(blackPawn.isAttackable(position, Position.of(File.C, Rank.THREE))).isTrue(),
+                () -> assertThat(blackPawn.isAttackable(position, Position.of(File.E, Rank.THREE))).isTrue()
         );
     }
 }
