@@ -10,14 +10,16 @@ import java.util.function.Supplier;
 
 public final class ChessGame {
 
-    private boolean isRunning = true;
+    private static final int COMMAND_INDEX = 0;
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
 
     public void run() {
         InputView.printGameIntro();
         Board board = null;
-        while (isRunning) {
+        do {
             board = executeGame(board);
-        }
+        } while (isRunning(board));
     }
 
     private Board executeGame(Board board) {
@@ -26,10 +28,9 @@ public final class ChessGame {
 
     private Board executeCommand(Board board) {
         List<String> commands = InputView.askGameCommands();
-        Command command = Command.findCommand(commands.get(0));
+        Command command = Command.findCommand(commands.get(COMMAND_INDEX));
         if (command.isEnd()) {
-            isRunning = false;
-            return board;
+            return null;
         }
         if (command.isStart()) {
             return executeStart();
@@ -48,9 +49,15 @@ public final class ChessGame {
     }
 
     private void executeMove(List<String> commands, Board board) {
-        board.move(commands.get(1), commands.get(2));
+        String source = commands.get(SOURCE_INDEX);
+        String target = commands.get(TARGET_INDEX);
+        board.move(source, target);
         BoardDto boardDto = BoardDto.from(board);
         OutputView.printChessBoard(boardDto);
+    }
+
+    private boolean isRunning(Board board) {
+        return board != null;
     }
 
     private <T> T retryOnException(Supplier<T> operation) {

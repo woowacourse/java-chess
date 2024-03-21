@@ -70,6 +70,10 @@ public abstract class Piece implements MoveStrategy {
         return type.isBlack();
     }
 
+    public boolean isExist() {
+        return type != NONE;
+    }
+
     public boolean isNone() {
         return type == NONE;
     }
