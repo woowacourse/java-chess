@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class BoardTest {
+class BoardTest {
     @Test
     void 보드는_64개의_칸으로_구성한다() {
         // given

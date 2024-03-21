@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class PositionTest {
+class PositionTest {
     @ParameterizedTest
     @CsvSource(value = {"0,0", "9,9", "1,9"})
     void x와_y가_범위_내_값이_아니면_예외가_발생한다(int x, int y) {

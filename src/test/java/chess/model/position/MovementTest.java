@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
-public class MovementTest {
+class MovementTest {
     @Test
     void 출발지와_도착지가_같으면_예외가_발생한다() {
         assertThatThrownBy(() -> new Movement(Position.of(1, 1), Position.of(1, 1)))
