@@ -1,4 +1,4 @@
-package position;
+package domain.position;
 
 import java.util.Objects;
 
@@ -24,12 +24,12 @@ public class Position {
         }
     }
 
-    public int getPosition() {
-        return position;
-    }
-
     public Position copied() {
         return new Position(position);
+    }
+
+    public boolean isSame(int otherPosition) {
+        return position == otherPosition;
     }
 
     @Override
