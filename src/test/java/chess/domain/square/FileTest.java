@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import chess.domain.square.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

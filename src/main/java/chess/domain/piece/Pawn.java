@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.PieceColor;
-import chess.domain.PieceType;
-import chess.domain.Square;
-import chess.domain.Rank;
+import chess.domain.square.Square;
+import chess.domain.square.Rank;
 
 public class Pawn extends Piece {
 

@@ -1,7 +1,10 @@
-package chess.domain;
+package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.PieceColor;
-import chess.domain.PieceType;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 
 public enum PieceMapper {
 

@@ -1,11 +1,6 @@
 package chess.view;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-
 import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public enum Command {
     START("start"),

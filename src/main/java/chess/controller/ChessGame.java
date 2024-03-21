@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Square;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.square.Square;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

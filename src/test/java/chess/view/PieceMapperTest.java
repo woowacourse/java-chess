@@ -2,8 +2,8 @@ package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.PieceColor;
-import chess.domain.PieceType;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

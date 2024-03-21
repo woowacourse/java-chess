@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.Square;
+import chess.domain.square.Square;
 
 import java.util.Arrays;
 import java.util.Map;
