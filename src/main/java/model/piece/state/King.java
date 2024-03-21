@@ -14,9 +14,13 @@ import java.util.List;
 import java.util.Set;
 import model.Position;
 import model.direction.MovingPattern;
+import model.piece.Color;
 
-public final class King implements Role {
-    private final List<MovingPattern> movingPatterns = List.of(N, NE, E, SE, S, SW, W, NW);
+public final class King extends Role {
+    private static final List<MovingPattern> movingPatterns = List.of(N, NE, E, SE, S, SW, W, NW);
+    public King(Color color){
+        super(color, movingPatterns);
+    }
 
     @Override
     public Set<Position> possiblePositions(Position position) {

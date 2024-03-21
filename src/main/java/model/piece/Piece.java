@@ -3,11 +3,9 @@ package model.piece;
 import model.piece.state.Role;
 
 public class Piece {
-    private Color color;
     private Role role;
 
-    public Piece(Color color, Role role) {
-        this.color = color;
+    public Piece(Role role) {
         this.role = role;
     }
 
@@ -15,7 +13,7 @@ public class Piece {
         return role;
     }
 
-    public Color getColor(){
-        return color;
+    public Color color() {
+        return role.getColor();
     }
 }

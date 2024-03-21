@@ -11,9 +11,13 @@ import java.util.List;
 import java.util.Set;
 import model.Position;
 import model.direction.MovingPattern;
+import model.piece.Color;
 
-public final class Rook implements Role {
-    private final List<MovingPattern> movingPatterns = List.of(W, E, N, S);
+public final class Rook extends Role {
+    private static final List<MovingPattern> movingPatterns = List.of(W, E, N, S);
+    public Rook(Color color){
+        super(color, movingPatterns);
+    }
 
     @Override
     public Set<Position> possiblePositions(Position position) {

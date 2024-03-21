@@ -10,9 +10,14 @@ import java.util.List;
 import java.util.Set;
 import model.Position;
 import model.direction.MovingPattern;
+import model.piece.Color;
 
-public final class Bishop implements Role {
-    private final List<MovingPattern> movingPatterns = List.of(NW, SW, NE, SE);
+public final class Bishop extends Role {
+    private static final List<MovingPattern> movingPatterns = List.of(NW, SW, NE, SE);
+
+    public Bishop(Color color){
+        super(color, movingPatterns);
+    }
 
     @Override
     public Set<Position> possiblePositions(Position position) {
