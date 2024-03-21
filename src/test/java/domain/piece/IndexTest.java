@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,25 @@ class IndexTest {
         int x = 7;
         int y = 7;
         assertThat(new Index(x, y).isInBoundary()).isTrue();
+    }
+
+    @Test
+    @DisplayName("인덱스가 방향으로 이동한다.")
+    void move_index_by_direction() {
+        final var sut = new Index(4, 5);
+
+        final var result = sut.move(Direction.UP);
+
+        assertThat(result).isEqualTo(new Index(5, 5));
+    }
+
+    @Test
+    @DisplayName("인덱스가 주어진 횟수만큼 방향으로 이동한다.")
+    void move_index_by_direction_with_count() {
+        final var sut = new Index(4, 5);
+
+        final var result = sut.move(Direction.LEFT, 3);
+
+        assertThat(result).isEqualTo(new Index(4, 2));
     }
 }
