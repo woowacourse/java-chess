@@ -20,6 +20,10 @@ public abstract class Piece {
 
     protected abstract boolean canMovable(Moving moving);
 
+    public Set<Position> getAttackRoute(Moving moving) {
+        return getRoute(moving);
+    }
+
     public Camp getCamp() {
         return camp;
     }
