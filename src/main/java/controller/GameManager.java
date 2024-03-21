@@ -2,6 +2,8 @@ package controller;
 
 import domain.Chess;
 import domain.command.Command;
+import domain.position.Position;
+import domain.position.PositionGenerator;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -30,7 +32,10 @@ public class GameManager {
         if (command.isEnd()) {
             return;
         }
-        chess.play(rawCommand);
+        PositionGenerator positionGenerator = new PositionGenerator();
+        Position sourcePosition = positionGenerator.generate(rawCommand.get(1));
+        Position targetPosition = positionGenerator.generate(rawCommand.get(2));
+        chess.play(sourcePosition, targetPosition);
         outputView.printBoard(chess.getBoard());
         manage(chess);
     }
