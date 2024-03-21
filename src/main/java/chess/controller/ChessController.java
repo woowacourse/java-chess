@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandType;
+import chess.domain.Turn;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
 import chess.domain.position.Path;
@@ -29,11 +30,14 @@ public class ChessController {
     }
 
     // TODO: 하위 타입 캐스팅 로직 개선
+    // TODO: 게임을 진행하는 로직(ex: turn 관리)을 ChessGame으로 분리
     private void startGame() {
         ChessBoard chessBoard = makeChessBoard();
         Command command = inputView.readCommand();
+        Turn turn = new Turn(Color.WHITE);
+
         while (command.type() != CommandType.END) {
-            tryProcess(command, chessBoard);
+            tryProcess(command, chessBoard, turn);
             command = inputView.readCommand();
         }
     }
@@ -46,16 +50,17 @@ public class ChessController {
         return chessBoard;
     }
 
-    private void tryProcess(Command command, ChessBoard chessBoard) {
+    private void tryProcess(Command command, ChessBoard chessBoard, Turn turn) {
         if (command.type() == CommandType.MOVE) {
-            processTurn(command, chessBoard);
+            processTurn(command, chessBoard, turn);
+            turn.change();
         }
     }
 
-    private void processTurn(Command command, ChessBoard chessBoard) {
+    private void processTurn(Command command, ChessBoard chessBoard, Turn turn) {
         MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
         Path path = makePath(moveArgumentDto);
-        chessBoard.move(path, Color.WHITE);
+        chessBoard.move(path, turn.getCurrentTurn());
 
         outputView.printChessBoard(chessBoard.getSquares());
     }
