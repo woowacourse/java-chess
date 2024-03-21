@@ -26,16 +26,7 @@
 - [x] 이동 결과를 출력한다.
 
 ## 리팩토링 목록
-- [ ] RNBQKBNR
-  PP.PPPPP
-  ..P.....
-  .p......
-  ........
-  ........
-  p.pppppp
-  rnbqkbnr
-  move c6 b5
-  Exception in thread "main" java.lang.IllegalArgumentException: [ERROR] 전략상 이동할 수 없는 위치입니다.
+
 
 ## 체스 말 이동 규칙
 
