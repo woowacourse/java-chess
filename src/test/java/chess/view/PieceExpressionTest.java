@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

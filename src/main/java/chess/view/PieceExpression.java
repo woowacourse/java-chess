@@ -1,5 +1,8 @@
 package chess.view;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -8,9 +11,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Map;
-
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
 
 public class PieceExpression {
 

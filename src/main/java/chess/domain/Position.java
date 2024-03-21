@@ -12,7 +12,6 @@ public class Position {
     private final int rank;
 
     static {
-        // TODO: 상수 분리
         for (char i = 'a'; i <= 'h'; i++) {
             for (int j = 1; j <= 8; j++) {
                 CACHE.put(toKey(i, j), new Position(i, j));
@@ -27,7 +26,7 @@ public class Position {
 
     public static Position of(final char file, final int rank) {
         Position position = CACHE.get(toKey(file, rank));
-        if(position == null) {
+        if (position == null) {
             throw new IllegalArgumentException("[ERROR] 범위를 벗어난 위치입니다.");
         }
 

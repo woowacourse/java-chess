@@ -1,8 +1,8 @@
 package chess.view;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
 import java.util.Collections;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -20,13 +20,13 @@ class ChessBoardExpressionTest {
         String actualExpression = ChessBoardExpression.toExpression(pieces);
 
         String expectedExpression = "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator()
-                                    + "kkkkkkkk" + System.lineSeparator();
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator()
+                + "kkkkkkkk" + System.lineSeparator();
         Assertions.assertThat(actualExpression).isEqualTo(expectedExpression);
     }
 }

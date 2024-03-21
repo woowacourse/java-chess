@@ -21,10 +21,10 @@ public class Pawn extends Piece {
     }
 
     private void initDirections() {
-        if(color == Color.BLACK) {
+        if (color == Color.BLACK) {
             this.directions.add(Direction.DOWN);
         }
-        if(color == Color.WHITE) {
+        if (color == Color.WHITE) {
             this.directions.add(Direction.UP);
         }
     }

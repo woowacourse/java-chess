@@ -1,6 +1,7 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.Direction;
 import java.util.stream.Stream;

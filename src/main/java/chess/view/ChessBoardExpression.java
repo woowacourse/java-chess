@@ -8,7 +8,7 @@ public class ChessBoardExpression {
 
     private static final int WIDTH = 8;
     private static final int HEIGHT = 8;
-    
+
     public static String toExpression(final List<Piece> piece) {
         List<String> pieceExpressions = toPieceExpression(piece);
         StringBuilder stringBuilder = new StringBuilder();

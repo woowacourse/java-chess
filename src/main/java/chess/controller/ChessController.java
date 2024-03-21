@@ -6,11 +6,8 @@ import chess.domain.Position;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-// TODO: 이름 고민 - er??
 public class ChessController {
 
     private final InputView inputView;

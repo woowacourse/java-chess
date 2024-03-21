@@ -51,7 +51,7 @@ public class DirectionTest {
 
     @Test
     @DisplayName("주어진 좌표에 대응하는 방향이 없으면 예외를 발생시킨다.")
-    void findDirectionByDeltaFail(){
+    void findDirectionByDeltaFail() {
         assertThatCode(() -> Direction.find(2, 3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 존재하지 않는 이동 방향입니다.");
