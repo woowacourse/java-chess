@@ -18,7 +18,7 @@ public class Column {
         position.moveBy(distance);
     }
 
-    public int getColumnMinus(Column column) {
+    public int getColumnDifference(Column column) {
         return position.getMinusPosition(column.position);
     }
 

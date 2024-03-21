@@ -22,7 +22,7 @@ public class Row {
         return position.getPosition();
     }
 
-    public int getRowMinus(Row row) {
+    public int getRowDifference(Row row) {
         return position.getMinusPosition(row.position);
     }
 

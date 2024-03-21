@@ -15,11 +15,11 @@ public class Coordinate {
     }
 
     public int checkRow(Coordinate coordinate) {
-        return row.getRowMinus(coordinate.row);
+        return row.getRowDifference(coordinate.row);
     }
 
     public int checkColumn(Coordinate coordinate) {
-        return column.getColumnMinus(coordinate.column);
+        return column.getColumnDifference(coordinate.column);
     }
 
     public int getRowValue() {
