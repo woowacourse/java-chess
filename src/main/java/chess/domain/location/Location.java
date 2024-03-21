@@ -3,10 +3,12 @@ package chess.domain.location;
 import chess.domain.board.Direction;
 import java.util.Objects;
 
+//TODO 캐싱
 public class Location {
 
     private static final IllegalArgumentException WRONG_LOCATION_INPUT_EXCEPTION
             = new IllegalArgumentException("잘못된 위치 입력입니다.");
+    private static final int LOCATION_INPUT_LENGTH = 2;
 
     private final Column column;
     private final Row row;
@@ -22,16 +24,11 @@ public class Location {
         return new Location(movedColumn, movedRow);
     }
 
-    //TODO 예쁘게 바꾸기
-    //TODO 캐싱
-
     public static Location of(String input) {
         try {
             validateInput(input);
-            String columnInput = input.substring(0, 1);
-            Column column = Column.of(columnInput);
-            String rowInput = input.substring(1, 2);
-            Row row = Row.of(rowInput);
+            Column column = Column.of(input.substring(0, 1));
+            Row row = Row.of(input.substring(1, LOCATION_INPUT_LENGTH));
             return new Location(column, row);
         } catch (IllegalArgumentException exception) {
             throw WRONG_LOCATION_INPUT_EXCEPTION;
@@ -42,8 +39,7 @@ public class Location {
         if (input == null || input.isBlank()) {
             throw WRONG_LOCATION_INPUT_EXCEPTION;
         }
-        //TODO 상수 처리
-        if (input.length() != 2) {
+        if (input.length() != LOCATION_INPUT_LENGTH) {
             throw WRONG_LOCATION_INPUT_EXCEPTION;
         }
     }

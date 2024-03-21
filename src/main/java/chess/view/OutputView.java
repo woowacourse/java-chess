@@ -37,7 +37,6 @@ public class OutputView {
                 .forEach(System.out::print);
     }
 
-    //TODO 네이밍
     private String convertPieceToString(Piece piece) {
         if (piece == null) {
             return ".";

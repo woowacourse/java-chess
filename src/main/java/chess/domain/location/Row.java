@@ -15,17 +15,21 @@ public enum Row {
 
     private static final Row[] ROWS = new Row[]
             {ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT};
-    private final int index;
+    private final int rank;
 
-    Row(int index) {
-        this.index = index;
+    Row(int rank) {
+        this.rank = rank;
     }
 
     public static Row of(String input) {
         return Arrays.stream(values())
-                .filter(row -> row.isNumber(input))
+                .filter(row -> row.isRank(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Row 입력입니다."));
+    }
+
+    private boolean isRank(String input) {
+        return rank == Integer.parseInt(input);
     }
 
     public Row move(Direction direction) {
@@ -39,7 +43,7 @@ public enum Row {
     }
 
     private Row previous() {
-        int ordinalIndex = this.index - 1;
+        int ordinalIndex = this.rank - 1;
         try {
             return ROWS[ordinalIndex - 1];
         } catch (IndexOutOfBoundsException exception) {
@@ -48,20 +52,15 @@ public enum Row {
     }
 
     private Row next() {
-        int ordinalIndex = this.index - 1;
+        int ordinalIndex = this.rank - 1;
         try {
             return ROWS[ordinalIndex + 1];
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
     }
-    //TODO 네이밍 고민
-
-    private boolean isNumber(String input) {
-        return index == Integer.parseInt(input);
-    }
 
     public int calculateDistance(Row other) {
-        return other.index - this.index;
+        return other.rank - this.rank;
     }
 }

@@ -149,7 +149,7 @@ class PathTest {
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
             ));
 
-            assertThat(path.canReach()).isTrue();
+            assertThat(path.hasNoAllyAtTarget()).isTrue();
         }
 
         @DisplayName("목적지에 적 기물이 있으면 도달할 수 있다.")
@@ -160,7 +160,7 @@ class PathTest {
                     new Step(Direction.DOWN_LEFT, SquareState.ENEMY)
             ));
 
-            assertThat(path.canReach()).isTrue();
+            assertThat(path.hasNoAllyAtTarget()).isTrue();
         }
 
 
@@ -172,7 +172,7 @@ class PathTest {
                     new Step(Direction.DOWN_LEFT, SquareState.ALLY)
             ));
 
-            assertThat(path.canReach()).isFalse();
+            assertThat(path.hasNoAllyAtTarget()).isFalse();
         }
     }
 }

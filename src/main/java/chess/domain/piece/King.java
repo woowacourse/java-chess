@@ -12,6 +12,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Path path) {
-        return path.isSizeOf(MAX_MOVE_DISTANCE) && path.canReach();
+        return path.isSizeOf(MAX_MOVE_DISTANCE) && path.hasNoAllyAtTarget();
     }
 }

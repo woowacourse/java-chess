@@ -53,21 +53,19 @@ class WhitePawnTest {
             assertThat(WHITE_PAWN.canMove(path)).isTrue();
         }
 
-        //TODO 테스트 이름 변경
         @DisplayName("움직인 적 없는 화이트 폰은 위로 두 번 이동할 수 있다.")
         @Test
-        void blackPawnDownDownDirectionTest() {
+        void neverMovedWhitePawn_U_U_Test() {
             Path path = new Path(List.of(
                     new Step(Direction.UP, SquareState.EMPTY),
                     new Step(Direction.UP, SquareState.EMPTY)
             ));
             assertThat(WHITE_PAWN.canMove(path)).isTrue();
         }
-        //TODO 테스트 이름 변경
 
         @DisplayName("움직인 적 있는 화이트 폰은 위로 두 번 이동할 수 없다.")
         @Test
-        void blackPawnDownDownDirectionTest2() {
+        void movedWhitePawn_U_U_Test() {
             Path path = new Path(List.of(
                     new Step(Direction.UP, SquareState.EMPTY),
                     new Step(Direction.UP, SquareState.EMPTY)

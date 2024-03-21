@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Path {
@@ -21,7 +20,6 @@ public class Path {
         }
     }
 
-    //TODO 정팩매 이름 찾아
     public static Path of(List<Direction> directions, List<SquareState> squareStates) {
         validateStepSize(directions, squareStates);
         List<Step> steps = new ArrayList<>();
@@ -59,28 +57,28 @@ public class Path {
                 .anyMatch(Step::isOrthogonal);
     }
 
-    //TODO 네이밍 고민
     public boolean hasPiecePathExcludedTarget() {
         return !isEmptyPathExcludedTarget();
     }
 
-    //TODO targetStep으로 빼기
     private boolean isEmptyPathExcludedTarget() {
-        return steps.subList(0, steps.size() - 1)
+        return createPathExcludedTarget()
                 .stream()
                 .allMatch(Step::isEmpty);
     }
 
-    //TODO 중간에 기물이 위치해있다는 이름으로 변경
-    //TODO 마지막 위치는 확인 안하도록 변경
+    private List<Step> createPathExcludedTarget() {
+        return steps.subList(0, findTargetIndex());
+    }
+
+
     public boolean isAllEmpty() {
         return steps.stream()
                 .allMatch(Step::isEmpty);
     }
 
-    //TODO 목적지를 확인한다는 느낌으로 네이밍 변경
-    public boolean canReach() {
-        Step lastStep = steps.get(steps.size() - 1);
+    public boolean hasNoAllyAtTarget() {
+        Step lastStep = steps.get(findTargetIndex());
         return lastStep.isEmpty() || lastStep.isEnemy();
     }
 
@@ -90,11 +88,15 @@ public class Path {
     }
 
     public boolean isTargetHasEnemy() {
-        return steps.get(steps.size() - 1).isEnemy();
+        return steps.get(findTargetIndex()).isEnemy();
     }
 
     public boolean isDownside() {
         return steps.stream()
                 .allMatch((Step::isDownside));
+    }
+
+    private int findTargetIndex() {
+        return steps.size() - 1;
     }
 }

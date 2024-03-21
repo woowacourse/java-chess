@@ -15,6 +15,6 @@ public class Bishop extends Piece {
         if (path.containsOrthogonal()) {
             return false;
         }
-        return path.canReach() && path.categoryNumOf(1);
+        return path.hasNoAllyAtTarget() && path.categoryNumOf(1);
     }
 }

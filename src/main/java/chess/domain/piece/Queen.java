@@ -12,7 +12,7 @@ public class Queen extends Piece {
         if (path.hasPiecePathExcludedTarget()) {
             return false;
         }
-        return path.canReach() && path.categoryNumOf(1);
+        return path.hasNoAllyAtTarget() && path.categoryNumOf(1);
     }
 }
 

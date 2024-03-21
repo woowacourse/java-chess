@@ -83,7 +83,6 @@ public class Board {
     }
 
     public void tryMove(Location source, Location target) {
-        //TODO 더 마음에 드는 변수명을 고민해보기
         Piece sourcePiece = findPieceAt(source);
         Path path = createPath(source, target);
         if (sourcePiece.canMove(path)) {
