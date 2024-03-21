@@ -3,17 +3,23 @@ package chess.domain.square;
 import java.util.Arrays;
 
 public enum File {
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7),
     ;
 
     private static final String INVALID_FILE = "일치하지 않은 파일 입니다.";
+
+    private final int index;
+
+    File(int index) {
+        this.index = index;
+    }
 
     public static File from(final String file) {
         return Arrays.stream(File.values())
@@ -23,13 +29,17 @@ public enum File {
     }
 
     public File move(final int fileMoveStep) {
-        return indexOf(this.ordinal() + fileMoveStep);
+        return indexOf(this.index + fileMoveStep);
     }
 
     private File indexOf(final int index) {
         return Arrays.stream(values())
-                .filter(file -> file.ordinal() == index)
+                .filter(file -> file.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
+    }
+
+    public int index() {
+        return index;
     }
 }

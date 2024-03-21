@@ -48,11 +48,11 @@ public class Square {
     }
 
     public int getFileIndex() {
-        return file.ordinal();
+        return file.index();
     }
 
     public int getRankIndex() {
-        return rank.ordinal();
+        return rank.index();
     }
 
     @Override

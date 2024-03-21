@@ -15,14 +15,14 @@ class FileTest {
     void file() {
         //given & when & then
         assertAll(
-                () -> assertThat(File.A.ordinal()).isEqualTo(0),
-                () -> assertThat(File.B.ordinal()).isEqualTo(1),
-                () -> assertThat(File.C.ordinal()).isEqualTo(2),
-                () -> assertThat(File.D.ordinal()).isEqualTo(3),
-                () -> assertThat(File.E.ordinal()).isEqualTo(4),
-                () -> assertThat(File.F.ordinal()).isEqualTo(5),
-                () -> assertThat(File.G.ordinal()).isEqualTo(6),
-                () -> assertThat(File.H.ordinal()).isEqualTo(7),
+                () -> assertThat(File.A.index()).isEqualTo(0),
+                () -> assertThat(File.B.index()).isEqualTo(1),
+                () -> assertThat(File.C.index()).isEqualTo(2),
+                () -> assertThat(File.D.index()).isEqualTo(3),
+                () -> assertThat(File.E.index()).isEqualTo(4),
+                () -> assertThat(File.F.index()).isEqualTo(5),
+                () -> assertThat(File.G.index()).isEqualTo(6),
+                () -> assertThat(File.H.index()).isEqualTo(7),
                 () -> assertThat(File.values()).hasSize(8)
         );
     }

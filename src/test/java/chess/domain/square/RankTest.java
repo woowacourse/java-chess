@@ -15,14 +15,14 @@ class RankTest {
     void rank() {
         //given & when & then
         assertAll(
-                () -> assertThat(Rank.ONE.ordinal()).isEqualTo(0),
-                () -> assertThat(Rank.TWO.ordinal()).isEqualTo(1),
-                () -> assertThat(Rank.THREE.ordinal()).isEqualTo(2),
-                () -> assertThat(Rank.FOUR.ordinal()).isEqualTo(3),
-                () -> assertThat(Rank.FIVE.ordinal()).isEqualTo(4),
-                () -> assertThat(Rank.SIX.ordinal()).isEqualTo(5),
-                () -> assertThat(Rank.SEVEN.ordinal()).isEqualTo(6),
-                () -> assertThat(Rank.EIGHT.ordinal()).isEqualTo(7),
+                () -> assertThat(Rank.ONE.index()).isEqualTo(0),
+                () -> assertThat(Rank.TWO.index()).isEqualTo(1),
+                () -> assertThat(Rank.THREE.index()).isEqualTo(2),
+                () -> assertThat(Rank.FOUR.index()).isEqualTo(3),
+                () -> assertThat(Rank.FIVE.index()).isEqualTo(4),
+                () -> assertThat(Rank.SIX.index()).isEqualTo(5),
+                () -> assertThat(Rank.SEVEN.index()).isEqualTo(6),
+                () -> assertThat(Rank.EIGHT.index()).isEqualTo(7),
                 () -> assertThat(Rank.values()).hasSize(8)
         );
     }
