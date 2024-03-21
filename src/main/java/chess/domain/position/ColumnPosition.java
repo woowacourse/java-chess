@@ -35,6 +35,10 @@ public class ColumnPosition {
         }
     }
 
+    public int getColumnNumber() {
+        return columnNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

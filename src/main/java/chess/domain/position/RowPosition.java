@@ -41,6 +41,10 @@ public class RowPosition {
         }
     }
 
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

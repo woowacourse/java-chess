@@ -31,6 +31,7 @@ public class ChessBoard {
             Piece piece = findPieceByPosition(start);
             board.remove(start);
             board.put(destination, piece);
+            return;
         }
         throw new IllegalArgumentException();
     }
@@ -48,11 +49,6 @@ public class ChessBoard {
                 return true;
             }
         }
-
-        //폰
-        //폰 <- 일반 행마법이니? => true (도착지에 기물이 없는지 확인인)
-        //                    => false <- killPassing이니? => true (도착지에 상대기물인지 판단)
-        // 이건 오류
 
         if (piece instanceof SlidingPiece) {
             List<Position> path = ((SlidingPiece) piece).searchPath(start, destination);

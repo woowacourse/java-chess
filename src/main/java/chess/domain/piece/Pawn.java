@@ -15,7 +15,7 @@ public class Pawn extends Piece {
         if (isForward(start, destination) && start.squaredDistanceWith(destination) == 1) {
             return true;
         }
-        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 2 && start.isStraightWith(
+        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 4 && start.isStraightWith(
                 destination) && start.rowIs(teamInitialPawnRow())) {
             return true;
         }

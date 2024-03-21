@@ -62,13 +62,6 @@ public class Position {
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
 
-    //isDirectionRight(Position start, Position target)
-//isDirectionLeft(Position start, Position target)
-//isDirectionRight(Position start, Position target)
-//isDirectionRight(Position start, Position target)
-//isDirectionRight(Position start, Position target)
-//isDirectionRight(Position start, Position target)
-
     public boolean rowIs(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);
     }
@@ -84,20 +77,23 @@ public class Position {
         int nextRowStep = 1;
         int nextColumnStep = 1;
 
-        if (this.rowPosition.isLowerThan(target.rowPosition)) {
+        if (this.rowPosition.isHigherThan(target.rowPosition)) {
             nextRowStep = -1;
         }
 
         if (this.columnPosition.isRight(target.columnPosition)) {
             nextColumnStep = -1;
         }
-
+        Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
         while (true) {
-            Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
+
+            System.out.println("nextRowPosition = " + nextPosition.getRowPosition().getRowNumber());
+            System.out.println("nextColPosition = " + nextPosition.getColumnPosition().getColumnNumber());
             if (nextPosition.equals(target)) {
                 break;
             }
             path.add(nextPosition);
+            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
         }
         return path;
     }
@@ -129,18 +125,27 @@ public class Position {
             nextColumnStep = -1;
         }
 
+        Position nextPosition = movePosition(nextRowStep, nextColumnStep);
         while (true) {
-            Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
             if (nextPosition.equals(target)) {
                 break;
             }
             path.add(nextPosition);
+            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
         }
         return path;
     }
 
     private Position movePosition(int rowMove, int columnMove) {
         return Position.of(rowPosition.move(rowMove), columnPosition.move(columnMove));
+    }
+
+    public RowPosition getRowPosition() {
+        return rowPosition;
+    }
+
+    public ColumnPosition getColumnPosition() {
+        return columnPosition;
     }
 
     @Override
