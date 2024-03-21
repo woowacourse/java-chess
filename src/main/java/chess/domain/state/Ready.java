@@ -10,7 +10,6 @@ public class Ready implements GameState {
         this.chessBoard = chessBoard;
     }
 
-
     @Override
     public GameState play(List<String> inputCommand) {
         String command = inputCommand.get(0);

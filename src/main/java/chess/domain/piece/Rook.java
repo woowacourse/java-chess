@@ -14,7 +14,7 @@ public class Rook implements Piece {
     }
 
     @Override
-    public String getType() {
+    public String identifyType() {
         return ROOK.name();
     }
 

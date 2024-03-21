@@ -14,7 +14,7 @@ public class Knight implements Piece {
     }
 
     @Override
-    public String getType() {
+    public String identifyType() {
         return KNIGHT.name();
     }
 

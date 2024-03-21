@@ -14,7 +14,7 @@ public class King implements Piece {
     }
 
     @Override
-    public String getType() {
+    public String identifyType() {
         return KING.name();
     }
 

@@ -20,7 +20,7 @@ public enum PieceSymbol {
 
     public static String convertToSymbol(Piece piece) {
         String name = Arrays.stream(values())
-                .filter(pieceSymbol -> piece.getType() == pieceSymbol.name())
+                .filter(pieceSymbol -> piece.identifyType() == pieceSymbol.name())
                 .findFirst()
                 .orElseThrow()
                 .symbol;
@@ -28,7 +28,6 @@ public enum PieceSymbol {
         if (piece.isBlack()) {
             return name.toUpperCase();
         }
-
         return name;
     }
 

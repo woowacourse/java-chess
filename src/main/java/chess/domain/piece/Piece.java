@@ -4,13 +4,13 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public interface Piece {
-    String getType();
+    String identifyType();
 
     boolean isBlack();
 
     boolean canMove(Position source, Position target, Color color);
 
-    Color getColor();
-
     List<Position> searchPath(Position source, Position target);
+
+    Color getColor();
 }

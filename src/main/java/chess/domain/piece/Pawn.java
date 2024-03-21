@@ -14,7 +14,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public String getType() {
+    public String identifyType() {
         return PAWN.name();
     }
 
@@ -36,7 +36,6 @@ public class Pawn implements Piece {
 
     @Override
     public List<Position> searchPath(Position source, Position target) {
-
         int rankDiff = source.calculateRankDifference(target);
         List<Position> path = new ArrayList<>();
 
@@ -44,8 +43,12 @@ public class Pawn implements Piece {
             source = source.move(0, rankDiff / 2);
             path.add(source);
         }
-
         return path;
+    }
+
+    @Override
+    public Color getColor() {
+        return color;
     }
 
     private boolean checkBlack(Position source, Position target, Color color) {
@@ -78,10 +81,5 @@ public class Pawn implements Piece {
             return (rankDiff == 1 || rankDiff == 2) && (fileDiff == 0);
         }
         return rankDiff == 1 && fileDiff == 0;
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }

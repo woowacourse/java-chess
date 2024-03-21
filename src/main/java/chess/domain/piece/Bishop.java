@@ -13,10 +13,12 @@ public class Bishop implements Piece {
         this.color = color;
     }
 
-    public String getType() {
+    @Override
+    public String identifyType() {
         return BISHOP.name();
     }
 
+    @Override
     public boolean isBlack() {
         return color == Color.BLACK;
     }
