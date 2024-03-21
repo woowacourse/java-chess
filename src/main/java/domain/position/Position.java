@@ -13,9 +13,9 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position(final Position position) {
-        this.file = position.getFile();
-        this.rank = position.getRank();
+    public Position(final Position other) {
+        this.file = other.file;
+        this.rank = other.rank;
     }
 
     public void move(final Direction direction) {
@@ -25,16 +25,8 @@ public class Position {
         rank = rank.add(dRank);
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
     public DirectionVector subtract(Position target) {
-        return new DirectionVector(file.subtract(target.getFile()), rank.subtract(target.getRank()));
+        return new DirectionVector(file.subtract(target.file), rank.subtract(target.rank));
     }
 
     @Override

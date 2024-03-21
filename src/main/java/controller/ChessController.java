@@ -1,7 +1,7 @@
 package controller;
 
 import domain.chessboard.Square;
-import domain.game.PieceMover;
+import domain.game.ChessBoard;
 import domain.piece.PieceGenerator;
 import domain.position.File;
 import domain.position.Position;
@@ -24,7 +24,7 @@ public class ChessController {
     }
 
     public void run() {
-        PieceMover mover = new PieceMover();
+        ChessBoard mover = new ChessBoard();
         PieceGenerator.generate(mover);
 
         outputView.printCommandMessage();

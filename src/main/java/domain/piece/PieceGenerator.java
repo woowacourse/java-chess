@@ -1,7 +1,7 @@
 package domain.piece;
 
 import domain.chessboard.Square;
-import domain.game.PieceMover;
+import domain.game.ChessBoard;
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
@@ -28,17 +28,18 @@ public class PieceGenerator {
             .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
             .toList();
 
+
     private PieceGenerator() {
     }
 
-    public static void generate(final PieceMover mover) {
+    public static void generate(final ChessBoard mover) {
         for (int row = CHESS_BOARD_SIZE; row >= 1; row--) {
             List<Piece> pieces = generateRankPieces(row);
             initializeSquares(mover, pieces, row);
         }
     }
 
-    private static void initializeSquares(PieceMover mover, List<Piece> pieces, int row) {
+    private static void initializeSquares(ChessBoard mover, List<Piece> pieces, int row) {
         for (int column = 0; column < pieces.size(); column++) {
             Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
             Piece piece = pieces.get(column);

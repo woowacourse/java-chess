@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PieceMoverTest {
+class ChessBoardTest {
 
     @DisplayName("source에 위치한 piece를 target으로 이동한다.")
     @Test
@@ -23,14 +23,14 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        PieceMover pieceMover = new PieceMover();
+        ChessBoard chessBoard = new ChessBoard();
 
         Piece piece = new Piece(new King(), Color.BLACK);
-        pieceMover.add(sourceSquare, piece);
+        chessBoard.add(sourceSquare, piece);
 
-        pieceMover.move(sourceSquare, targetSquare);
+        chessBoard.move(sourceSquare, targetSquare);
 
-        Piece findPiece = pieceMover.findPieceBySquare(targetSquare);
+        Piece findPiece = chessBoard.findPieceBySquare(targetSquare);
         Assertions.assertThat(findPiece).isEqualTo(piece);
     }
 
@@ -42,9 +42,9 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        PieceMover pieceMover = new PieceMover();
+        ChessBoard chessBoard = new ChessBoard();
 
-        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -59,11 +59,11 @@ class PieceMoverTest {
         Piece sourcePiece = new Piece(new King(), Color.BLACK);
         Piece targetPiece = new Piece(new Queen(), Color.BLACK);
 
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
-        pieceMover.add(targetSquare, targetPiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
+        chessBoard.add(targetSquare, targetPiece);
 
-        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -76,10 +76,10 @@ class PieceMoverTest {
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
         Piece sourcePiece = new Piece(new King(), Color.BLACK);
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
 
-        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -94,11 +94,11 @@ class PieceMoverTest {
         Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
-        pieceMover.add(targetSquare, targetPiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
+        chessBoard.add(targetSquare, targetPiece);
 
-        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -113,13 +113,13 @@ class PieceMoverTest {
         Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
-        pieceMover.add(targetSquare, targetPiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
+        chessBoard.add(targetSquare, targetPiece);
 
-        pieceMover.move(sourceSquare, targetSquare);
+        chessBoard.move(sourceSquare, targetSquare);
 
-        Piece findPiece = pieceMover.findPieceBySquare(targetSquare);
+        Piece findPiece = chessBoard.findPieceBySquare(targetSquare);
 
         Assertions.assertThat(findPiece).isEqualTo(sourcePiece);
     }
@@ -139,12 +139,12 @@ class PieceMoverTest {
         Piece targetPiece = new Piece(new Rook(), Color.WHITE);
         Piece blockPiece =  new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
-        pieceMover.add(targetSquare, targetPiece);
-        pieceMover.add(blockSquare, blockPiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
+        chessBoard.add(targetSquare, targetPiece);
+        chessBoard.add(blockSquare, blockPiece);
 
-        Assertions.assertThatThrownBy(() -> pieceMover.move(sourceSquare, targetSquare))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(sourceSquare, targetSquare))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -163,11 +163,11 @@ class PieceMoverTest {
         Piece targetPiece = new Piece(new Knight(), Color.WHITE);
         Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
-        PieceMover pieceMover = new PieceMover();
-        pieceMover.add(sourceSquare, sourcePiece);
-        pieceMover.add(targetSquare, targetPiece);
-        pieceMover.add(blockSquare, blockPiece);
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.add(sourceSquare, sourcePiece);
+        chessBoard.add(targetSquare, targetPiece);
+        chessBoard.add(blockSquare, blockPiece);
 
-        Assertions.assertThat(pieceMover.findPieceBySquare(targetSquare)).isEqualTo(sourcePiece);
+        Assertions.assertThat(chessBoard.findPieceBySquare(targetSquare)).isEqualTo(sourcePiece);
     }
 }

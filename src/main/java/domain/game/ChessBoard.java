@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PieceMover {
+public class ChessBoard {
 
     private final Map<Square, Piece> pieceBySquare;
 
-    public PieceMover() {
+    public ChessBoard() {
         this.pieceBySquare = new HashMap<>();
     }
 

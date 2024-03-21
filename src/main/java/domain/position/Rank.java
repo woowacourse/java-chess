@@ -10,16 +10,16 @@ public class Rank {
         this.number = number;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public int subtract(Rank target) {
         return number - target.getNumber();
     }
 
     public Rank add(final int movement) {
         return new Rank(number + movement);
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override
