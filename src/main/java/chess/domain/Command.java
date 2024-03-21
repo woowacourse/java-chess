@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum Command {
 
     START("start"),
+    MOVE("move"),
     END("end");
 
     private final String expression;
@@ -21,6 +22,10 @@ public enum Command {
     }
 
     private boolean isExpressionMatch(String expression) {
-        return this.expression.equals(expression);
+        return expression.startsWith(this.expression);
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
