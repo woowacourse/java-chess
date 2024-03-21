@@ -19,14 +19,14 @@ public final class Rook extends Piece {
     @Override
     public boolean isMovable(Position source, Position target) {
         Direction direction = source.findDirectionTo(target);
-        return isMovableDirection(direction) && isMovableDistance(source, target, direction);
+        return isMovableDirection(direction) && isMovableDistance(source, target);
     }
 
     private boolean isMovableDirection(Direction direction) {
         return ROOK_DIRECTION.contains(direction);
     }
 
-    private boolean isMovableDistance(Position source, Position target, Direction direction) {
+    private boolean isMovableDistance(Position source, Position target) {
         int distance = source.calculateDistanceTo(target);
         return distance > 0;
     }
