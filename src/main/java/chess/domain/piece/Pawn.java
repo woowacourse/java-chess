@@ -19,16 +19,7 @@ public class Pawn extends ChessPiece {
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
         }
-        if (isDisturbed) {
-            return this;
-        }
-
-        int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
-
-        if (diffX == 0 && isOtherPieceExist) {
-            return this;
-        }
-        if (diffX == 1 && (!isOtherPieceExist || isSameTeam)) {
+        if (isAbleToMove(currentPosition, newPosition, isDisturbed, isOtherPieceExist, isSameTeam)) {
             return this;
         }
 
@@ -46,5 +37,19 @@ public class Pawn extends ChessPiece {
             return new WhitePawnNotFirstMoveStrategy();
         }
         return new BlackPawnNotFirstMoveStrategy();
+    }
+
+    private boolean isAbleToMove(Position currentPosition, Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
+        int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
+        if (isDisturbed) {
+            return true;
+        }
+        if (diffX == 0 && isOtherPieceExist) {
+            return true;
+        }
+        if (diffX == 1 && (!isOtherPieceExist || isSameTeam)) {
+            return true;
+        }
+        return false;
     }
 }
