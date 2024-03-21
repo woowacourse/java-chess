@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -10,6 +11,10 @@ public class Position {
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public Position createWithSameRank(File file) {
+        return new Position(file, this.rank);
     }
 
     public boolean isSameFile(Position other) {
@@ -76,22 +81,13 @@ public class Position {
     }
 
     public boolean hasOnlyTwoRankGap(Position other) {
-        return rank.confirmGap(other.rank, 2) && isSameFile(other);
+        return hasTwoRankGap(other) && isSameFile(other);
     }
 
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Position position = (Position) object;
-        return Objects.equals(file, position.file) && Objects.equals(rank, position.rank);
+    public boolean hasTwoRankGap(Position other) {
+        return rank.confirmGap(other.rank, 2);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
 
     public boolean isRankIncreased(Position target) {
         return target.rank.isBigger(rank);
@@ -106,11 +102,35 @@ public class Position {
     }
 
     public boolean isBlackPawnRank() {
-//        return InitPosition.isBlackPawnRank(rank);
         return InitPosition.PAWN.rank(Side.BLACK) == this.rank;
     }
 
     public boolean isWhitePawnRank() {
         return InitPosition.isWhitePawnRank(rank);
+    }
+
+    public List<File> findBetweenFile(Position target) {
+        return file.findBetween(target.file);
+    }
+
+    public List<Rank> findBetweenRank(Position target) {
+        return rank.findBetween(target.rank);
+    }
+
+    public Position createWithSameFile(Rank rank) {
+        return new Position(this.file, rank);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Position position = (Position) object;
+        return Objects.equals(file, position.file) && Objects.equals(rank, position.rank);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

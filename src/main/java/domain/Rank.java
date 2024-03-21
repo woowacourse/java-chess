@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Rank {
 
@@ -49,5 +50,18 @@ public enum Rank {
 
     public boolean isLess(Rank other) {
         return order < other.order;
+    }
+
+    public List<Rank> findBetween(Rank target) {
+        if (this.order > target.order) {
+            return getRanks(target, this);
+        }
+        return getRanks(this, target);
+    }
+
+    private List<Rank> getRanks(Rank a, Rank b) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.order > a.order && rank.order < b.order)
+                .toList();
     }
 }

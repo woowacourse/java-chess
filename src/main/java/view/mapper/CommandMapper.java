@@ -8,6 +8,7 @@ public enum CommandMapper {
 
     START("start", Command.START),
     END("end", Command.END),
+    MOVE("move", Command.MOVE),
     ;
 
     private final String input;

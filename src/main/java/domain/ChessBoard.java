@@ -1,10 +1,8 @@
 package domain;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -39,6 +37,70 @@ public class ChessBoard {
 
     public boolean hasPiece(Position position) {
         return board.containsKey(position);
+    }
+
+    public void move(Position current, Position target) {
+        if (current.equals(target)) {
+            throw new IllegalArgumentException("source 위치와 target 위치가 같습니다.");
+        }
+        if (!board.containsKey(current)) {
+            throw new IllegalArgumentException("기물이 존재하지 않습니다.");
+        }
+        Map<Position, Piece> piecesOnPath = collectPiecesOnPath(current, target);
+
+        Piece piece = board.get(current);
+        boolean canPieceMove = piece.canMove(current, target, piecesOnPath);
+
+        if (canPieceMove) {
+            board.remove(current);
+            board.put(target, piece);
+        }
+    }
+
+    private Map<Position, Piece> collectPiecesOnPath(Position current, Position target) {
+        if (current.isDiagonal(target)) { // 대각
+            List<File> files = current.findBetweenFile(target);
+            List<Rank> ranks = current.findBetweenRank(target);
+
+            List<Position> path = new ArrayList<>();
+            for (int i = 0; i < files.size(); i++) {
+                path.add(new Position(files.get(i), ranks.get(i)));
+            }
+
+            return makePiecesOnPath(target, path);
+        }
+
+        if (current.isSameRank(target)) { // 수평
+            List<File> files = current.findBetweenFile(target);
+
+            List<Position> path = files.stream()
+                    .map(current::createWithSameRank)
+                    .toList();
+
+            return makePiecesOnPath(target, path);
+        }
+
+        if (current.isSameFile(target)) { // 수직
+            List<Rank> files = current.findBetweenRank(target);
+
+            List<Position> path = files.stream()
+                    .map(current::createWithSameFile)
+                    .toList();
+
+            return makePiecesOnPath(target, path);
+        }
+
+        return new LinkedHashMap<>();
+    }
+
+    private Map<Position, Piece> makePiecesOnPath(Position target, List<Position> positions) {
+        Map<Position, Piece> pieces = board.entrySet().stream()
+                .filter(entry -> positions.contains(entry.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        if (board.containsKey(target)) {
+            pieces.put(target, board.get(target));
+        }
+        return pieces;
     }
 
     public Piece piece(Position position) {

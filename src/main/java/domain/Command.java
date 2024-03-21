@@ -4,5 +4,6 @@ public enum Command {
 
     START,
     END,
+    MOVE,
     ;
 }

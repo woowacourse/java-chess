@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum File {
 
@@ -41,5 +42,18 @@ public enum File {
     public int gap(File other) {
         int otherOrder = other.order;
         return Math.abs(order - otherOrder);
+    }
+
+    public List<File> findBetween(File target) {
+        if (this.order > target.order) {
+            return getFiles(target, this);
+        }
+        return getFiles(this, target);
+    }
+
+    private List<File> getFiles(File a, File b) {
+        return Arrays.stream(values())
+                .filter(file -> file.order > a.order && file.order < b.order)
+                .toList();
     }
 }
