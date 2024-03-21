@@ -18,5 +18,6 @@ public class OutputView {
     public void printBoard(Map<Position, PieceType> board) {
         List<String> lines = PieceDisplay.makeBoardDisplay(board);
         lines.forEach(System.out::println);
+        System.out.println();
     }
 }
