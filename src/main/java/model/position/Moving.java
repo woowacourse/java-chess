@@ -1,6 +1,8 @@
 package model.position;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 // 클래스로 변경
 public record Moving(Position currentPosition, Position nextPosition) {
@@ -38,7 +40,21 @@ public record Moving(Position currentPosition, Position nextPosition) {
         return Objects.equals(currentPosition, nextPosition);
     }
 
-    public int findIndex() {
+    public Set<Position> route() {
+        int currentRow = currentPosition.getRowIndex();
+        int currentColumn = currentPosition.getColumnIndex();
+        int index = findIndex();
+
+        Set<Position> result = new HashSet<>();
+        for (int i = 1; i < distance(); i++) {
+            Row row = Row.from(currentRow + (i * dRow[index]));
+            Column column = Column.from(currentColumn + (i * dColumn[index]));
+            result.add(new Position(column, row));
+        }
+        return result;
+    }
+
+    private int findIndex() {
         int currentRow = currentPosition.getRowIndex();
         int currentColumn = currentPosition.getColumnIndex();
 
@@ -74,5 +90,14 @@ public record Moving(Position currentPosition, Position nextPosition) {
         }
 
         throw new IllegalArgumentException("인덱스 없음");
+    }
+
+    private int distance() {
+        int currentRow = currentPosition.getRowIndex();
+        int currentColumn = currentPosition.getColumnIndex();
+
+        int nextRow = nextPosition.getRowIndex();
+        int nextColumn = nextPosition.getColumnIndex();
+        return Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
     }
 }

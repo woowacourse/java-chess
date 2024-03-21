@@ -1,16 +1,10 @@
 package model.piece;
 
-import static model.position.Moving.dColumn;
-import static model.position.Moving.dRow;
-
-import java.util.HashSet;
 import java.util.Set;
 import model.Camp;
 import model.PieceType;
-import model.position.Column;
 import model.position.Moving;
 import model.position.Position;
-import model.position.Row;
 
 public class Bishop extends Piece {
 
@@ -20,25 +14,10 @@ public class Bishop extends Piece {
 
     @Override
     public Set<Position> getMoveRoute(Moving moving) {
-
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("이동 불가");
         }
-        Position currentPosition = moving.currentPosition();
-        Position nextPosition = moving.nextPosition();
-
-        Set<Position> route = new HashSet<>();
-        int currentRow = currentPosition.getRowIndex();
-        int currentColumn = currentPosition.getColumnIndex();
-        int nextRow = nextPosition.getRowIndex();
-        int d = Math.abs(currentRow - nextRow);
-        int index = moving.findIndex();
-        for (int i = 1; i < d; i++) {
-            Row row = Row.from(currentRow + (i * dRow[index]));
-            Column column = Column.from(currentColumn + (i * dColumn[index]));
-            route.add(new Position(column, row));
-        }
-        return route;
+        return moving.route();
     }
 
     @Override
