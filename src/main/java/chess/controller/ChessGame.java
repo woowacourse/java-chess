@@ -28,31 +28,33 @@ public class ChessGame {
     private void start() {
         Board board = new InitialBoardGenerator().create();
         GameStatus gameStatus = new GameStatus();
+        showBoard(board);
         while (gameStatus.isRunning()) {
-            play(board);
-            control(gameStatus);
-            move(board);
+            playTurn(gameStatus, board);
         }
     }
 
-    private void play(Board board) {
+    private void showBoard(Board board) {
         BoardDTO boardDTO = new BoardDTO(board);
         outputView.printBoard(boardDTO);
     }
 
-    private void move(Board board) {
-        PositionDTO sourcePositionDTO = inputView.askPosition();
-        PositionDTO targetPositionDTO = inputView.askPosition();
-        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
-    }
-
-    private void control(GameStatus gameStatus) {
+    private void playTurn(GameStatus gameStatus, Board board) {
         Command command = inputView.askCommand();
         if (command == Command.START) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
         }
         if (command == Command.END) {
             gameStatus.stop();
+            return;
         }
+        move(board);
+        showBoard(board);
+    }
+
+    private void move(Board board) {
+        PositionDTO sourcePositionDTO = inputView.askPosition();
+        PositionDTO targetPositionDTO = inputView.askPosition();
+        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
     }
 }
