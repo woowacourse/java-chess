@@ -74,7 +74,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 1);
         positionPiece.put(sourcePosition, King.of(Color.BLACK));
         Position targetPosition = Position.of('a', 3);
-        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(targetPosition, null);
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 

@@ -24,20 +24,17 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
-        // 소스 위치에 해당하는 피스를 찾는다.
-        // 현재는 Piece 대신 piece을 사용
         Piece piece = chessBoard.get(source);
 
         // TODO: direction을 찾는 행위를 ChessBoard에서 하는게 이상하지 않나?
         //      List<Direction> 을 일급 컬렉션으로 포장해서 아래 direction을 찾는 메서드를 만들어주고, PieceAbstract에 넣어주면?
-
-        // Position을 통해 Direction 구하기
         Direction direction = source.calculateDirection(target);
 
         // 방향 검증
-        if (!piece.canMoveInTargetDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
-        }
+        validateDirection(piece, direction);
+
+        // 아군이 이동하려는 위치에 있는지 검증
+        validateNotAlly(source, target);
 
         // "한칸씩" 움직여서 뭐 있는지 검증
         Position nextPosition = source.moveTowardDirection(direction);
@@ -58,13 +55,20 @@ public class ChessBoard {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 존재합니다.");
         }
 
-        // 여기까지 도달했다면 다음 위치가 목적지이지만, 해당 위치에 기물이 존재하는 경우
-        if(chessBoard.get(source).isAlly(chessBoard.get(nextPosition))) {
-            throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
-        }
-
         // 여기까지 도달했다면 다음 위치에 상대팀이 있거나, 다음 위치가 원래 비어있던 경우
         chessBoard.put(target, piece);
         chessBoard.put(source, null);
+    }
+
+    private void validateNotAlly(Position source, Position target) {
+        if(chessBoard.get(source).isAlly(chessBoard.get(target))) {
+            throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
+        }
+    }
+
+    private void validateDirection(final Piece piece, final Direction direction) {
+        if (!piece.canMoveInTargetDirection(direction)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+        }
     }
 }
