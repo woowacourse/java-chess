@@ -48,9 +48,13 @@ public class ChessGame {
 
     private void addObstaclePosition(List<Position> result, Queue<Position> expectedPositions, Piece piece) {
         Position last = expectedPositions.poll();
-        if (last != null && board.hasPiece(last) && !board.findPieceByPosition(last).isSameTeam(piece)) {
+        if (isEnemyPiece(piece, last)) {
             result.add(last);
         }
+    }
+
+    private boolean isEnemyPiece(Piece piece, Position last) {
+        return last != null && board.hasPiece(last) && !board.findPieceByPosition(last).isSameTeam(piece);
     }
 
     private boolean isNotEmpty(Queue<Position> expectedPositions) {
@@ -99,25 +103,10 @@ public class ChessGame {
     }
 
     public void movePiece(List<Position> positions, Position from, Position to) {
-        Piece fromPiece = board.findPieceByPosition(from);
-        Position toPosition = getToPosition(positions, to);
-        if (board.hasPiece(toPosition)) {
-            Piece toPiece = board.findPieceByPosition(toPosition);
-            validateIsSameTeam(fromPiece, toPiece);
+        if (positions.contains(to)) {
+            board.movePiece(from, to);
+            return;
         }
-        board.movePiece(from, to);
-    }
-
-    private Position getToPosition(List<Position> positions, Position to) {
-        return positions.stream()
-                .filter(position -> position.equals(to))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다."));
-    }
-
-    private void validateIsSameTeam(Piece fromPiece, Piece toPiece) {
-        if (fromPiece.isSameTeam(toPiece)) {
-            throw new RuntimeException("같은 팀 기물 위치로 이동시킬 수 없습니다.");
-        }
+        throw new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다.");
     }
 }
