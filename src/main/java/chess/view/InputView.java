@@ -1,6 +1,9 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -12,6 +15,12 @@ public class InputView {
                 GameStartCommand.START, GameStartCommand.END));
 
         return GameStartCommand.map(rawInput);
+    }
+
+    public List<String> readPositions() {
+        String rawInput = read("");
+        return Arrays.stream(rawInput.split(" "))
+                .collect(Collectors.toList());
     }
 
     private String read(final String message) {
