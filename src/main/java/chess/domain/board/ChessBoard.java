@@ -25,19 +25,22 @@ public class ChessBoard {
         return BoardStatus.from(board);
     }
 
-    public void move(String from, String to) {
+    public void move(String from, String to, Turn turn) {
         Position source = new Position(from);
         Position target = new Position(to);
 
-        validate(source, target);
+        validate(source, target, turn);
 
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.remove(source);
+
+        turn.next();
     }
 
-    private void validate(Position source, Position target) {
+    private void validate(Position source, Position target, Turn turn) {
         validatePosition(source, target);
+        validateTurn(source, turn);
         validateTarget(source, target);
         validateMovement(source, target);
         validatePath(source, target);
@@ -46,6 +49,13 @@ public class ChessBoard {
     private void validatePosition(Position source, Position target) {
         if (!isExist(source) || isSamePosition(source, target)) {
             throw new IllegalArgumentException("입력하신 이동 위치가 올바르지 않습니다.");
+        }
+    }
+
+    private void validateTurn(Position source, Turn turn) {
+        Piece sourcePiece = board.get(source);
+        if (!turn.isTurn(sourcePiece.color())) {
+            throw new IllegalArgumentException("해당 색의 차례가 아닙니다.");
         }
     }
 

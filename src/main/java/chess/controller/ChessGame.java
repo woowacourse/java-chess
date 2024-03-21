@@ -19,6 +19,7 @@ public class ChessGame {
     public void start() {
         outputView.printGameStartMessage();
 
+        Turn turn = new Turn();
         CommandInfo commandInfo = inputView.readCommand();
         ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance());
 
@@ -34,7 +35,7 @@ public class ChessGame {
                 throw new IllegalArgumentException("게임 도중 start 명령어를 입력할 수 없습니다.");
             }
             if (commandInfo.command().isMove()) {
-                chessBoard.move(commandInfo.source().get(), commandInfo.target().get());
+                chessBoard.move(commandInfo.source().get(), commandInfo.target().get(), turn);
             }
         }
         // 게임 종료
