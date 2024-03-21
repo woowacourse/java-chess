@@ -18,4 +18,8 @@ public class OutputView {
         String chessBoardExpression = ChessBoardExpression.toExpression(pieces);
         System.out.println(chessBoardExpression);
     }
+
+    public void printErrorMessage(final String message) {
+        System.out.println(message);
+    }
 }
