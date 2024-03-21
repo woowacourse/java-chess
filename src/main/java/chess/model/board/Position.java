@@ -44,4 +44,20 @@ public class Position {
     public static List<Position> values() {
         return List.copyOf(POSITION_CACHE.values());
     }
+
+    public int getFileGap(Position other) {
+        return other.file - file;
+    }
+
+    public int getRankGap(Position other) {
+        return other.rank - rank;
+    }
+
+    public Position move(int fileChange, int rankChange) {
+        return Position.from(file + fileChange, rank + rankChange);
+    }
+
+    public boolean isRankEquals(int rank) {
+        return this.rank == rank;
+    }
 }

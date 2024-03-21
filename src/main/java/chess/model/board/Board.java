@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class Board {
 
     public Board(Map<Position, Piece> squares) {
         this.squares = new HashMap<>(squares);
-        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Piece.EMPTY));
+        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Empty.getInstance()));
     }
 
     public List<String> getSignatures() {

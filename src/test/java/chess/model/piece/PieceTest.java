@@ -38,7 +38,8 @@ public class PieceTest {
     void 비숍은_대각선으로_원하는_만큼_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Bishop.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Bishop.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -46,7 +47,8 @@ public class PieceTest {
     void 비숏은_대각선이_아닌_방향으로_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Bishop.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Bishop.from(Color.BLACK).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -54,7 +56,8 @@ public class PieceTest {
     void 록은_직선으로_원하는_만큼_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Rook.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Rook.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -62,7 +65,8 @@ public class PieceTest {
     void 록은_직선이_아닌_방향으로_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Rook.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Rook.from(Color.BLACK).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -70,7 +74,8 @@ public class PieceTest {
     void 퀸은_직선과_대각선으로_원하는_만큼_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Queen.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Queen.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -79,7 +84,8 @@ public class PieceTest {
             int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Knight.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Knight.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -88,7 +94,8 @@ public class PieceTest {
             int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Knight.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Knight.from(Color.BLACK).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -96,7 +103,17 @@ public class PieceTest {
     void 화이트_폰은_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.WHITE).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"2,7,1,8", "2,2,3,3", "4,7,5,8", "3,4,4,5"})
+    void 화이트_폰은_대각선으로_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
+        Position source = Position.from(sourceFile, sourceRank);
+        Position destination = Position.from(destinationFile, destinationRank);
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -104,7 +121,8 @@ public class PieceTest {
     void 화이트_폰은_옆이나_뒤로는_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.WHITE).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -112,7 +130,8 @@ public class PieceTest {
     void 화이트_폰은_시작_위치에서_두_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.WHITE).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -120,7 +139,8 @@ public class PieceTest {
     void 화이트_폰은_시작_위치가_아닐_땐_두_칸_앞으로_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.WHITE).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -128,7 +148,17 @@ public class PieceTest {
     void 블랙_폰은_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1,8,2,7", "3,3,2,2", "5,8,4,7", "4,5,3,4"})
+    void 블랙_폰은_대각선으로_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
+        Position source = Position.from(sourceFile, sourceRank);
+        Position destination = Position.from(destinationFile, destinationRank);
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -136,7 +166,8 @@ public class PieceTest {
     void 블랙_폰은_옆이나_뒤로는_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -144,7 +175,8 @@ public class PieceTest {
     void 블랙_폰은_시작_위치에서_두_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -152,7 +184,8 @@ public class PieceTest {
     void 블랙_폰은_시작_위치가_아닐_땐_두_칸_앞으로_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(Pawn.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isFalse();
     }
 
     @ParameterizedTest
@@ -160,7 +193,8 @@ public class PieceTest {
     void 킹은_어느_방향이로든_한_칸_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(King.from(Color.BLACK).canMove(source, destination)).isTrue();
+        Movement movement = new Movement(source, destination);
+        assertThat(King.from(Color.BLACK).isValid(movement)).isTrue();
     }
 
     @ParameterizedTest
@@ -168,6 +202,7 @@ public class PieceTest {
     void 킹은_한_칸_이상_움직일_수_없다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.from(sourceFile, sourceRank);
         Position destination = Position.from(destinationFile, destinationRank);
-        assertThat(King.from(Color.BLACK).canMove(source, destination)).isFalse();
+        Movement movement = new Movement(source, destination);
+        assertThat(King.from(Color.BLACK).isValid(movement)).isFalse();
     }
 }
