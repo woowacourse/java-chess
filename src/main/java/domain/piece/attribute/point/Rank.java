@@ -32,13 +32,4 @@ public enum Rank {
         return values()[ordinalIndex];
     }
 
-    public Rank next() {
-        return values()[this.ordinal() + 1];
-    }
-
-    public Rank prev() {
-        return values()[this.ordinal() - 1];
-    }
-
-
 }

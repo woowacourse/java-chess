@@ -11,14 +11,6 @@ public enum File {
     H('h');
     private char value;
 
-    public File next() {
-        return values()[this.ordinal() + 1];
-    }
-
-    public File prev() {
-        return values()[this.ordinal() - 1];
-    }
-
     public static boolean isInBoundary(int index) {
         return index >= 0 && index < values().length;
     }
