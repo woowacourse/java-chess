@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public class Rook extends Piece {
     private static final Piece BLACK_ROOK = new Rook(Color.BLACK);
     private static final Piece WHITE_ROOK = new Rook(Color.WHITE);

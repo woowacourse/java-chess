@@ -2,7 +2,8 @@ package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.board.Position;
+import chess.model.position.Movement;
+import chess.model.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

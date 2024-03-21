@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public abstract class Piece {
     private final Color color;
     private final Type type;

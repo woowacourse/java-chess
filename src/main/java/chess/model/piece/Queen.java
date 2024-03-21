@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public class Queen extends Piece {
     private static final Piece BLACK_QUEEN = new Queen(Color.BLACK);
     private static final Piece WHITE_QUEEN = new Queen(Color.WHITE);

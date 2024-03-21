@@ -1,9 +1,8 @@
-package chess.model.piece;
+package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.board.Position;
 import org.junit.jupiter.api.Test;
 
 public class MovementTest {

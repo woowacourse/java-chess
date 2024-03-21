@@ -3,6 +3,7 @@ package chess.model.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;

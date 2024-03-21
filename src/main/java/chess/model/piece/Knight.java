@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public class Knight extends Piece {
     private static final int LONG_MOVE_DISTANCE = 2;
     private static final int SHORT_MOVE_DISTANCE = 1;

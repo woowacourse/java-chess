@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public class Empty extends Piece {
     private static final Piece INSTANCE = new Empty();
 

@@ -8,6 +8,7 @@ import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.Queen;
 import chess.model.piece.Rook;
+import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 

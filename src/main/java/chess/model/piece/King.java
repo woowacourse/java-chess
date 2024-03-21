@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.position.Movement;
+
 public class King extends Piece {
     private static final int MAX_MOVE_DISTANCE = 1;
     private static final Piece BLACK_KING = new King(Color.BLACK);

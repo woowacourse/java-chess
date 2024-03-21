@@ -1,4 +1,4 @@
-package chess.model.board;
+package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -1,5 +1,6 @@
-package chess.model.board;
+package chess.model.position;
 
+import chess.model.board.Board;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,5 @@
-package chess.model.piece;
+package chess.model.position;
 
-import chess.model.board.Position;
 import java.util.ArrayList;
 import java.util.List;
 
