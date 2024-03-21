@@ -2,6 +2,7 @@ package domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import domain.piece.Bishop;
 import domain.piece.Color;
@@ -64,8 +65,12 @@ class BoardTest {
         ));
 
         board.move(sourcePosition, targetPosition);
-        assertThat(board.getSquares().get(sourcePosition)).isNull();
-        assertThat(board.getSquares().get(targetPosition)).isEqualTo(knight);
+        assertAll(
+            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
+        );
     }
 
     @Test
@@ -79,8 +84,12 @@ class BoardTest {
         ));
 
         board.move(sourcePosition, targetPosition);
-        assertThat(board.getSquares().get(sourcePosition)).isNull();
-        assertThat(board.getSquares().get(targetPosition)).isEqualTo(king);
+        assertAll(
+            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
+        );
     }
 
     @Test
@@ -225,8 +234,12 @@ class BoardTest {
 
         board.move(sourcePosition, targetPosition);
 
-        assertThat(board.getSquares().get(sourcePosition)).isNull();
-        assertThat(board.getSquares().get(targetPosition)).isEqualTo(pawn);
+        assertAll(
+            () -> assertThatThrownBy(() -> board.findPieceAt(sourcePosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 말이 없습니다."),
+            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(pawn)
+        );
     }
 
     @Test

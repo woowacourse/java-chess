@@ -1,9 +1,10 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(8), new Rank(1));
-        Assertions.assertThat(rook.canMove(position1, position2)).isTrue();
+        assertThat(rook.canMove(position1, position2)).isTrue();
     }
 
     @Test
@@ -24,7 +25,7 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(1), new Rank(8));
-        Assertions.assertThat(rook.canMove(position1, position2)).isTrue();
+        assertThat(rook.canMove(position1, position2)).isTrue();
     }
 
     @Test
@@ -33,7 +34,7 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(8), new Rank(8));
-        Assertions.assertThat(rook.canMove(position1, position2)).isFalse();
+        assertThat(rook.canMove(position1, position2)).isFalse();
     }
 
     @Test
@@ -42,6 +43,6 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(1), new Rank(1));
-        Assertions.assertThat(rook.canMove(position1, position2)).isFalse();
+        assertThat(rook.canMove(position1, position2)).isFalse();
     }
 }

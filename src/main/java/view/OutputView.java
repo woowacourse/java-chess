@@ -1,5 +1,6 @@
 package view;
 
+import domain.board.Board;
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
@@ -10,7 +11,6 @@ import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import java.util.Map;
 
 public class OutputView {
 
@@ -25,16 +25,16 @@ public class OutputView {
         System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE_COMMAND, MOVE_COMMAND);
     }
 
-    public void printBoard(Map<Position, Piece> board) {
+    public void printBoard(Board board) {
         for (int rank = 8; rank >= 1; rank--) {
             printOneRank(board, rank);
         }
         System.out.println();
     }
 
-    private void printOneRank(Map<Position, Piece> board, int rank) {
+    private void printOneRank(Board board, int rank) {
         for (int file = 1; file <= 8; file++) {
-            Piece piece = board.get(new Position(new File(file), new Rank(rank)));
+            Piece piece = board.findPieceAt(new Position(new File(file), new Rank(rank)));
             System.out.print(pieceToString(piece));
         }
         System.out.println();

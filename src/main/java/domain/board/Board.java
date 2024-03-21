@@ -130,8 +130,10 @@ public class Board {
         return Color.BLACK;
     }
 
-    // TODO: getter 사용을 지양하는 방법을 고민
-    public Map<Position, Piece> getSquares() {
-        return squares;
+    public Piece findPieceAt(Position position) {
+        if (isNoPieceAt(position)) {
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+        }
+        return squares.get(position);
     }
 }

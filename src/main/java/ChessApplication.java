@@ -19,7 +19,7 @@ public class ChessApplication {
         outputView.printStartMessage();
         String command = inputView.readCommand();
         if (command.equals(START_COMMAND)) {
-            outputView.printBoard(Board.generatedBy(new InitialBoardGenerator()).getSquares());
+            outputView.printBoard(Board.generatedBy(new InitialBoardGenerator()));
 
             boolean isEnd = false;
             while (!isEnd) {
@@ -30,7 +30,7 @@ public class ChessApplication {
                 if (gameCommand.startsWith(MOVE_COMMAND)) {
                     MovePositionDto movePositionDto = MovePositionDto.from(gameCommand);
                     Board board = controller.move(movePositionDto);
-                    outputView.printBoard(board.getSquares());
+                    outputView.printBoard(board);
                 }
             }
         }

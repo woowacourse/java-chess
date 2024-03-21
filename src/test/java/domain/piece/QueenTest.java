@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +52,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(7), new Rank(8));
-        Assertions.assertThat(queen.canMove(position1, position2)).isFalse();
+        assertThat(queen.canMove(position1, position2)).isFalse();
     }
 
     @Test
@@ -62,7 +61,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(8), new Rank(1));
-        Assertions.assertThat(queen.canMove(position1, position2)).isTrue();
+        assertThat(queen.canMove(position1, position2)).isTrue();
     }
 
     @Test
@@ -71,7 +70,7 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(1), new Rank(8));
-        Assertions.assertThat(queen.canMove(position1, position2)).isTrue();
+        assertThat(queen.canMove(position1, position2)).isTrue();
     }
 
     @Test
@@ -80,6 +79,6 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(1), new Rank(1));
-        Assertions.assertThat(queen.canMove(position1, position2)).isFalse();
+        assertThat(queen.canMove(position1, position2)).isFalse();
     }
 }

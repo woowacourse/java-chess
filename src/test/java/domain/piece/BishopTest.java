@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -53,7 +52,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(7), new Rank(8));
-        Assertions.assertThat(bishop.canMove(position1, position2)).isFalse();
+        assertThat(bishop.canMove(position1, position2)).isFalse();
     }
 
     @Test
@@ -62,6 +61,6 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE);
         Position position1 = new Position(new File(1), new Rank(1));
         Position position2 = new Position(new File(1), new Rank(1));
-        Assertions.assertThat(bishop.canMove(position1, position2)).isFalse();
+        assertThat(bishop.canMove(position1, position2)).isFalse();
     }
 }
