@@ -17,8 +17,11 @@ public class Pawn extends Piece {
             boolean isColumnNeutral = columnDifference == 0;
             return isRowUp && isColumnNeutral;
         }
-        boolean isRowDown = rowDifference == 1;
-        boolean isColumnNeutral = columnDifference == 0;
-        return isRowDown && isColumnNeutral;
+        if (type.isBlack()) {
+            boolean isRowDown = rowDifference == 1;
+            boolean isColumnNeutral = columnDifference == 0;
+            return isRowDown && isColumnNeutral;
+        }
+        return false;
     }
 }
