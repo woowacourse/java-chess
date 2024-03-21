@@ -1,10 +1,10 @@
 package view;
 
-import static domain.EndCommand.END_COMMAND;
-import static domain.StartCommand.START_COMMAND;
+import static domain.chess.game.EndCommand.END_COMMAND;
+import static domain.chess.game.StartCommand.START_COMMAND;
 
-import domain.Command;
-import domain.MoveCommand;
+import domain.chess.game.Command;
+import domain.chess.game.MoveCommand;
 import java.util.Scanner;
 
 public class InputView {

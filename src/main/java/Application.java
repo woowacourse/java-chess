@@ -1,9 +1,9 @@
-import static domain.EndCommand.END_COMMAND;
+import static domain.chess.game.EndCommand.END_COMMAND;
 
-import domain.ChessGame;
-import domain.Command;
-import domain.Piece;
 import domain.Position;
+import domain.chess.game.ChessGame;
+import domain.chess.game.Command;
+import domain.chess.piece.Piece;
 import java.util.List;
 import view.InputView;
 import view.OutputView;

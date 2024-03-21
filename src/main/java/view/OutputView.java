@@ -1,8 +1,8 @@
 package view;
 
-import domain.Piece;
-import domain.PieceType;
-import domain.Team;
+import domain.chess.piece.Piece;
+import domain.chess.piece.PieceType;
+import domain.chess.piece.Team;
 import java.util.ArrayList;
 import java.util.List;
 

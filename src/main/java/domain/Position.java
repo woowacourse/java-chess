@@ -32,7 +32,7 @@ public enum Position {
                 .orElseThrow();
     }
 
-    List<Position> route(Position targetPosition) {
+    public List<Position> route(Position targetPosition) {
         validateIsNotSelf(targetPosition);
         int absRowDistance = Math.abs(rowDistance(targetPosition));
         int absColDistance = Math.abs(columnDistance(targetPosition));
@@ -102,31 +102,31 @@ public enum Position {
         }
     }
 
-    int rowDistance(Position targetPosition) {
+    public int rowDistance(Position targetPosition) {
         return targetPosition.row - row;
     }
 
-    int columnDistance(Position targetPosition) {
+    public int columnDistance(Position targetPosition) {
         return targetPosition.column - column;
     }
 
-    boolean isOtherRow(Position targetPosition) {
+    public boolean isOtherRow(Position targetPosition) {
         return targetPosition.row != row;
     }
 
-    boolean isSameColumn(Position targetPosition) {
+    public boolean isSameColumn(Position targetPosition) {
         return targetPosition.column == column;
     }
 
-    boolean isOtherColumn(Position targetPosition) {
+    public boolean isOtherColumn(Position targetPosition) {
         return targetPosition.column != column;
     }
 
-    int getColumn() {
+    public int getColumn() {
         return column;
     }
 
-    int getRow() {
+    public int getRow() {
         return row;
     }
 }
