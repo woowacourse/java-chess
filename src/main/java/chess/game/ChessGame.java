@@ -47,12 +47,10 @@ public class ChessGame {
         if (command.isStart()) {
             throw new IllegalArgumentException("이미 시작된 게임입니다.");
         }
-        if (command.isMove()) {
-            Position source = readPosition();
-            Position destination = readPosition();
-            board.move(source, destination);
-            printBoard(converter, board);
-        }
+        Position source = readPosition();
+        Position destination = readPosition();
+        board.move(source, destination);
+        printBoard(converter, board);
     }
 
     private void printBoard(BoardDisplayConverter converter, Board board) {
