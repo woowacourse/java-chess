@@ -122,7 +122,7 @@ class PositionTest {
 
     @DisplayName("수평상의 거리차이가 같다.")
     @Test
-    void isSameHorizonalDifference() {
+    void isSameHorizontalDifference() {
         // given
         final Position currentPosition = new Position('d', 5);
         final Position otherPosition = new Position('b', 5);
@@ -136,7 +136,7 @@ class PositionTest {
 
     @DisplayName("수평상의 거리차이가 다르다.")
     @Test
-    void isNotSameHorizonalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
+    void isNotSameHorizontalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
         // given
         final Position currentPosition = new Position('d', 5);
         final Position otherPosition = new Position('a', 5);
