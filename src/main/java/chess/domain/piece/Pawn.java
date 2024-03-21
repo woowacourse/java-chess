@@ -8,6 +8,7 @@ import chess.domain.position.RankDifference;
 
 public class Pawn extends Piece {
 
+    private boolean isMoved = false;
     private final Rule catchRule;
 
     public Pawn(Color color) {
@@ -22,6 +23,13 @@ public class Pawn extends Piece {
         return (fileDifference, rankDifference) -> rankDifference.equals(new RankDifference(-1));
     }
 
+    private Rule decideFirstMoveRule(Color color) {
+        if (color == Color.WHITE) {
+            return (fileDifference, rankDifference) -> rankDifference.equals(new RankDifference(2));
+        }
+        return (fileDifference, rankDifference) -> rankDifference.equals(new RankDifference(-2));
+    }
+
     private Rule decideCatchRule(Color color) {
         if (color == Color.WHITE) {
             return (fileDifference, rankDifference) ->
@@ -32,6 +40,19 @@ public class Pawn extends Piece {
         return (fileDifference, rankDifference) ->
                 rankDifference.equals(new RankDifference(-1)) &&
                         (fileDifference.equals(new FileDifference(-1)) || fileDifference.equals(new FileDifference(1)));
+    }
+
+    @Override
+    public boolean isMovable(Position from, Position to) {
+        PositionDifference positionDifference = from.calculateDifferenceTo(to);
+        if (!isMoved) {
+            isMoved = true;
+            if (super.isSameColor(Color.BLACK)) {
+                return positionDifference.isObeyRule(decideFirstMoveRule(Color.BLACK)) || super.isMovable(from, to);
+            }
+            return positionDifference.isObeyRule(decideFirstMoveRule(Color.WHITE)) || super.isMovable(from, to);
+        }
+        return super.isMovable(from, to);
     }
 
     @Override
