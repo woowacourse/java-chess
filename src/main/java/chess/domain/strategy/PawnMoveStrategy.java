@@ -1,6 +1,5 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.blank.Blank;
 import chess.domain.color.Color;
 import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.Piece;
@@ -21,14 +20,17 @@ public class PawnMoveStrategy extends MoveStrategy {
         checkTurnOf(currentPiece, turnColor);
         Piece destinationPiece = board.get(to);
         validateMovable(to, currentPiece);
-        if (!currentPiece.isCaptureMove(to) && destinationPiece.pieceType() != PieceType.NONE) {
+        validateWithCapture(to, currentPiece, destinationPiece);
+        updateBoard(from, to, currentPiece);
+    }
+
+    private void validateWithCapture(Position to, Pawn currentPiece, Piece destinationPiece) {
+        if (!currentPiece.isCaptureMove(to) && destinationPiece.pieceType() != PieceType.BLANK) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
         if (currentPiece.isCaptureMove(to) && !currentPiece.isOppositeColor(destinationPiece)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
-        board.replace(to, currentPiece.update(to));
-        board.replace(from, new Blank(from));
     }
 
     private void validateMovable(Position to, Pawn currentPiece) {

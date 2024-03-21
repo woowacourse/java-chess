@@ -19,7 +19,7 @@ public abstract class MoveStrategy {
 
     public MoveStrategy changeStrategy(Position from) {
         PieceType pieceType = board.get(from).pieceType();
-        if (pieceType == PieceType.NONE) {
+        if (pieceType == PieceType.BLANK) {
             return new BlankMoveStrategy(board);
         }
         if (pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN) {
@@ -39,7 +39,12 @@ public abstract class MoveStrategy {
     protected boolean isAllBlankCourses(Set<Position> movablePositions) {
         return movablePositions.stream()
                 .map(board::get)
-                .allMatch(piece -> piece instanceof Blank);
+                .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
+    }
+
+    protected void updateBoard(Position from, Position to, Piece currentPiece) {
+        board.replace(to, currentPiece.update(to));
+        board.replace(from, new Blank(from));
     }
 
     public Map<Position, PieceType> collectBoard() {

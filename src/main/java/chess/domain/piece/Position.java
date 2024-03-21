@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Position {
+    public static final int MINIMUM_POSITION = 1;
+    public static final int MAXIMUM_POSITION = 8;
+
     private final int x;
     private final int y;
 
@@ -21,13 +24,13 @@ public class Position {
     }
 
     private void validateColumn(int x) {
-        if (x < 1 || x > 8) {
+        if (x < MINIMUM_POSITION || x > MAXIMUM_POSITION) {
             throw new IllegalArgumentException("올바르지 않은 열입니다.");
         }
     }
 
     private void validateRow(int y) {
-        if (y < 1 || y > 8) {
+        if (y < MINIMUM_POSITION || y > MAXIMUM_POSITION) {
             throw new IllegalArgumentException("올바르지 않은 행입니다.");
         }
     }
@@ -42,23 +45,34 @@ public class Position {
     private boolean isInRange(Direction direction) {
         int newX = direction.getDx() + x;
         int newY = direction.getDy() + y;
-        return newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8;
+        return isLocationInRange(newX) && isLocationInRange(newY);
+    }
+
+    private boolean isLocationInRange(int location) {
+        return location >= MINIMUM_POSITION && location <= MAXIMUM_POSITION;
     }
 
     public Direction findDirectionTo(Position destination) {
         int dx = destination.x - this.x;
         int dy = destination.y - this.y;
 
-        if (Math.abs(dx) == Math.abs(dy) || (dx + dy != 0 && dx * dy == 0)) {
-            if (dx != 0) {
-                dx = dx / Math.abs(dx);
-            }
-            if (dy != 0) {
-                dy = dy / Math.abs(dy);
-            }
+        if (isInEightDirection(dx, dy)) {
+            dx = calculateMoved(dx);
+            dy = calculateMoved(dy);
             return Direction.findDirection(dx, dy);
         }
         throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+    }
+
+    private boolean isInEightDirection(int dx, int dy) {
+        return Math.abs(dx) == Math.abs(dy) || (dx + dy != 0 && dx * dy == 0);
+    }
+
+    private int calculateMoved(int dx) {
+        if (dx != 0) {
+            dx = dx / Math.abs(dx);
+        }
+        return dx;
     }
 
     public Set<Position> findCourses(Direction direction, Position other) {
