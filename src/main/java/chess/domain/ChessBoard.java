@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.Rank;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.type.King;
 import chess.domain.piece.type.Night;
@@ -24,10 +25,10 @@ public class ChessBoard {
     public static ChessBoard init() {
         final Set<Piece> pieces = new HashSet<>();
 
-        pieces.addAll((createPieceWithoutPawn(Color.BLACK, 8)));
-        pieces.addAll((createPawn(Color.BLACK, 7)));
-        pieces.addAll((createPawn(Color.WHITE, 2)));
-        pieces.addAll((createPieceWithoutPawn(Color.WHITE, 1)));
+        pieces.addAll((createPieceWithoutPawn(Color.BLACK, Rank.EIGHT.getNumber())));
+        pieces.addAll((createPawn(Color.BLACK, Rank.SEVEN.getNumber())));
+        pieces.addAll((createPawn(Color.WHITE, Rank.TWO.getNumber())));
+        pieces.addAll((createPieceWithoutPawn(Color.WHITE, Rank.ONE.getNumber())));
 
         return new ChessBoard(pieces);
     }
@@ -54,7 +55,7 @@ public class ChessBoard {
                 new Rook(color, new Position('h', rank)));
     }
 
-    public Piece findBy(final Position other) {
+    Piece findBy(final Position other) {
         return pieces.stream()
                 .filter(piece -> piece.isPosition(other))
                 .findFirst()
@@ -89,6 +90,11 @@ public class ChessBoard {
         return currentPiece instanceof Pawn && canCatch(currentPiece, nextPosition);
     }
 
+    private boolean canCatch(final Piece currentPiece, final Position nextPosition) {
+        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, 1) &&
+                currentPiece.isOtherColor(findBy(nextPosition));
+    }
+
     private void catchPiece(final Position nextPosition, final Piece currentPiece) {
         pieces.remove(findBy(nextPosition));
         currentPiece.move(nextPosition);
@@ -106,6 +112,11 @@ public class ChessBoard {
         }
     }
 
+    private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
+        final Set<Position> route = currentPiece.getRoute(nextPosition);
+        return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
+    }
+
     private void checkColor(final Piece currentPiece, final Piece targetPiece) {
         if (!currentPiece.isOtherColor(targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
@@ -118,16 +129,6 @@ public class ChessBoard {
 
     private boolean isTargetEmpty(final Position other) {
         return !isTargetExist(other);
-    }
-
-    private boolean canCatch(final Piece currentPiece, final Position nextPosition) {
-        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, 1) &&
-                currentPiece.isOtherColor(findBy(nextPosition));
-    }
-
-    private boolean existInWay(final Piece currentPiece, final Position nextPosition) {
-        final Set<Position> route = currentPiece.getRoute(nextPosition);
-        return pieces.stream().anyMatch(piece -> route.contains(piece.getPosition()));
     }
 
     public Set<Piece> getPieces() {
