@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.movement.KingMovement;
+import chess.domain.movement.discrete.KingMovement;
 import java.util.List;
 
 public final class King extends Piece {

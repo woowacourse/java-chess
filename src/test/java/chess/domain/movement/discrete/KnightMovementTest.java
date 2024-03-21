@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.discrete;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,38 +10,38 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class KingMovementTest {
+class KnightMovementTest {
 
     @ParameterizedTest
-    @CsvSource({"D, FIVE", "E, FIVE", "E, FOUR", "E, THREE", "D, THREE", "C, THREE", "C, FOUR", "C, FIVE"})
+    @CsvSource({"B, FIVE", "C, SIX", "E, SIX", "F, FIVE", "B, THREE", "C, TWO", "E, TWO", "F, THREE"})
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest(File file, Rank rank) {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        KingMovement kingMovement = new KingMovement();
+        KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(kingMovement.isMovable(start, end)).isTrue();
+        assertThat(knightMovement.isMovable(start, end)).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource({"B, SIX", "F, SIX", "B, TWO", "F, TWO"})
+    @CsvSource({"C, FIVE", "B, SIX", "F, SIX", "E, FIVE", "C, THREE", "B, TWO", "F, TWO", "E, THREE"})
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest_false(File file, Rank rank) {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        KingMovement kingMovement = new KingMovement();
+        KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(kingMovement.isMovable(start, end)).isFalse();
+        assertThat(knightMovement.isMovable(start, end)).isFalse();
     }
 
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
         Position start = new Position(File.D, Rank.FOUR);
-        Position end = new Position(File.D, Rank.FIVE);
-        KingMovement kingMovement = new KingMovement();
+        Position end = new Position(File.B, Rank.FIVE);
+        KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(kingMovement.findPath(start, end))
+        assertThat(knightMovement.findPath(start, end))
                 .containsExactly(end);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.discrete;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,38 +10,37 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class KnightMovementTest {
+class WhitePawnDefaultMovementTest {
 
-    @ParameterizedTest
-    @CsvSource({"B, FIVE", "C, SIX", "E, SIX", "F, FIVE", "B, THREE", "C, TWO", "E, TWO", "F, THREE"})
+    @Test
     @DisplayName("이동 가능한지 확인한다.")
-    void isMovableTest(File file, Rank rank) {
+    void isMovableTest() {
         Position start = new Position(File.D, Rank.FOUR);
-        Position end = new Position(file, rank);
-        KnightMovement knightMovement = new KnightMovement();
+        Position end = new Position(File.D, Rank.FIVE);
+        WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
 
-        assertThat(knightMovement.isMovable(start, end)).isTrue();
+        assertThat(whitePawnDefaultMovement.isMovable(start, end)).isTrue();
     }
 
     @ParameterizedTest
-    @CsvSource({"C, FIVE", "B, SIX", "F, SIX", "E, FIVE", "C, THREE", "B, TWO", "F, TWO", "E, THREE"})
+    @CsvSource({"B, SIX", "F, SIX", "D, THREE", "D, SIX"})
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest_false(File file, Rank rank) {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        KnightMovement knightMovement = new KnightMovement();
+        WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
 
-        assertThat(knightMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnDefaultMovement.isMovable(start, end)).isFalse();
     }
 
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
         Position start = new Position(File.D, Rank.FOUR);
-        Position end = new Position(File.B, Rank.FIVE);
-        KnightMovement knightMovement = new KnightMovement();
+        Position end = new Position(File.D, Rank.FIVE);
+        WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
 
-        assertThat(knightMovement.findPath(start, end))
+        assertThat(whitePawnDefaultMovement.findPath(start, end))
                 .containsExactly(end);
     }
 }
