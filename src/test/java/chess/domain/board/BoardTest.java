@@ -7,6 +7,7 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.BoardOutput;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,13 @@ import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("체스판")
 public class BoardTest {
+
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = new Board();
+    }
 
     @DisplayName("체스판을 생성한다.")
     @Test
@@ -26,7 +34,6 @@ public class BoardTest {
     @Test
     void checkPieceSameColor() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.a, Rank.EIGHT);
         Square destination = Square.of(File.a, Rank.SEVEN);
 
@@ -38,7 +45,6 @@ public class BoardTest {
     @Test
     void move() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.a, Rank.TWO);
         Square destination = Square.of(File.a, Rank.THREE);
 
@@ -50,7 +56,6 @@ public class BoardTest {
     @Test
     void checkPathBlocked() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.a, Rank.EIGHT);
         Square destination = Square.of(File.a, Rank.FIVE);
 
@@ -62,7 +67,6 @@ public class BoardTest {
     @Test
     void checkPathNotBlocked() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.a, Rank.TWO);
         Square destination = Square.of(File.a, Rank.FOUR);
 
@@ -74,7 +78,6 @@ public class BoardTest {
     @Test
     void checkCannotMove() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.b, Rank.EIGHT);
         Square destination = Square.of(File.c, Rank.THREE);
 
@@ -86,7 +89,6 @@ public class BoardTest {
     @Test
     void checkCanMove() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.b, Rank.ONE);
         Square destination = Square.of(File.c, Rank.THREE);
 
@@ -98,7 +100,6 @@ public class BoardTest {
     @Test
     void checkTurn() {
         // given
-        Board board = new Board();
         Square source = Square.of(File.b, Rank.SEVEN);
         Square destination = Square.of(File.c, Rank.SIX);
 
@@ -110,7 +111,6 @@ public class BoardTest {
     @Test
     void catchOpponent() {
         // given
-        Board board = new Board();
         board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
         board.move(Square.of(File.h, Rank.SEVEN), Square.of(File.h, Rank.FIVE));
 
@@ -130,7 +130,6 @@ public class BoardTest {
     @Test
     void pawnStraightCatch() {
         // given
-        Board board = new Board();
         board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
         board.move(Square.of(File.g, Rank.SEVEN), Square.of(File.g, Rank.FIVE));
 
