@@ -13,7 +13,17 @@ public class Position {
     }
 
     public static Position from(String command) {
+        validate(command);
         return new Position(Column.from(command.charAt(0)), Row.from(command.charAt(1)));
+    }
+
+    private static void validate(final String command) {
+        if (command == null || command.isBlank()) {
+            throw new IllegalArgumentException("공백이 입력되었습니다."); //TODO 예외 메시지 수정
+        }
+        if (command.length() != 2) {
+            throw new IllegalArgumentException("유효하지 않은 길이의 명령입니다.");
+        }
     }
 
     public int getRowIndex() {
