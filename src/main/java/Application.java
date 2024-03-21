@@ -43,7 +43,7 @@ public class Application {
                 throw new IllegalArgumentException("start하고 시작하세요");
             }
             outputView.printGameBoard(GameBoardDto.from(gameBoard));
-            System.out.println("현재 턴: " + camp.toString() + "\n");
+            System.out.printf("현재 턴: %s%n%n", camp.toString());
         }
     }
 }
