@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.piece.Bishop;
 import domain.piece.Color;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -58,7 +59,7 @@ public class InitialBoardGenerator implements BoardGenerator {
     }
 
     private void placeKings(Map<Position, Piece> board) {
-        board.put(new Position(new File(5), new Rank(8)), new Queen(Color.BLACK));
-        board.put(new Position(new File(5), new Rank(1)), new Queen(Color.WHITE));
+        board.put(new Position(new File(5), new Rank(8)), new King(Color.BLACK));
+        board.put(new Position(new File(5), new Rank(1)), new King(Color.WHITE));
     }
 }
