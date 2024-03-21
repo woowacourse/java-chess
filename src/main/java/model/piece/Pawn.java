@@ -33,18 +33,18 @@ public class Pawn extends Piece {
         int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
 
-        if (dColumn != 0) {
+        if (Math.abs(dColumn) > 1) {
             return false;
         }
 
         if (Camp.BLACK == camp) {
-            if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && (dRow == -1 || dRow == -2)) {
+            if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
                 return true;
             }
             return dRow == -1;
         }
 
-        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && (dRow == 1 || dRow == 2)) {
+        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
             return true;
         }
         return dRow == 1;
