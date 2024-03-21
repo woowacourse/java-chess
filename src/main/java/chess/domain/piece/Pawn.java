@@ -13,12 +13,8 @@ public class Pawn extends ChessPiece {
         super(pieceInfo, moveStrategy);
     }
 
-    // TODO: 리팩터링 필요
     @Override
-    public Pawn move(Position newPosition,
-                     boolean isDisturbed,
-                     boolean isOtherPieceExist,
-                     boolean isSameTeam) {
+    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
@@ -29,15 +25,11 @@ public class Pawn extends ChessPiece {
 
         int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
 
-        if (diffX == 0) {
-            if (isOtherPieceExist) {
-                return this;
-            }
+        if (diffX == 0 && isOtherPieceExist) {
+            return this;
         }
-        if (diffX == 1) {
-            if (!isOtherPieceExist || isSameTeam) {
-                return this;
-            }
+        if (diffX == 1 && (!isOtherPieceExist || isSameTeam)) {
+            return this;
         }
 
         PieceInfo newPieceInfo = pieceInfo.renewPosition(newPosition);

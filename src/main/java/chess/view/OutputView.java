@@ -5,7 +5,6 @@ import java.util.List;
 
 public class OutputView {
 
-    // TODO: 인덴트 줄이기
     public static void printBoard(BoardDto boardDto) {
         List<List<String>> rawBoard = boardDto.getBoard();
 
@@ -23,8 +22,8 @@ public class OutputView {
     }
 
     public static void printCommandGuideMessage() {
-        System.out.println("> 게임 시작 : start"
-                + "> 게임 종료 : end"
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.printf("> 게임 시작 : start%n"
+                + "> 게임 종료 : end%n"
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
     }
 }
