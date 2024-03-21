@@ -63,7 +63,7 @@ class PawnTest {
             assertThat(blackCanMove).isTrue();
         }
 
-        @DisplayName("상대 기물이 있을 경우 대각선으로 공격할 수 있다")
+        @DisplayName("대각선에 상대 기물이 있을 경우 대각선으로 움직일 수 있다")
         @Test
         void canAttack() {
             //given
@@ -114,23 +114,23 @@ class PawnTest {
             assertThat(blackCanMove).isFalse();
         }
 
-        @DisplayName("상대 기물이 없을 경우 공격할 수 없다")
+        @DisplayName("정면에 기물이 있을 경우 움직일 수 없다")
         @Test
         void canNotAttack() {
             //given
-            Square whiteSource = Square.from("a2");
-            Square whiteDestination = Square.from("b3");
+            Square whiteSource = Square.from("a3");
+            Square whiteDestination = Square.from("a4");
             Piece whitePawn = new Pawn(Color.WHITE);
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("c6");
+            Square blackDestination = Square.from("d6");
             Piece blackPawn = new Pawn(Color.BLACK);
             Movement blackMovement = new Movement(blackSource, blackDestination);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
-            boolean blackCanMove = blackPawn.canMove(blackMovement, null);
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new Pawn(Color.BLACK));
+            boolean blackCanMove = blackPawn.canMove(blackMovement, new Pawn(Color.WHITE));
 
             //then
             assertThat(whiteCanMove).isFalse();
