@@ -14,17 +14,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Board board) {
-        return board.isNotExistPiece(target) &&
-                differenceFile(source, target) == 1 && differenceRank(source, target) == 2 ||
-                differenceFile(source, target) == 2 && differenceRank(source, target) == 1;
-    }
-
-    private int differenceFile(Position source, Position target) {
-        return Math.abs(source.file().compareTo(target.file()));
-    }
-
-    private int differenceRank(Position source, Position target) {
-        return Math.abs(source.rank().compareTo(target.rank()));
+    public boolean canMove(Position source, Position target) {
+        return getDeltaFile(source.file(), target.file()) == 1 && getDeltaRank(source.rank(), target.rank()) == 2 ||
+                getDeltaFile(source.file(), target.file()) == 2 && getDeltaRank(source.rank(), target.rank()) == 1;
     }
 }

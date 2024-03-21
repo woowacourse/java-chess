@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.PieceColor;
 import chess.domain.PieceType;
 import chess.domain.Position;
@@ -13,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Board board) {
+    public boolean canMove(Position source, Position target) {
         // TODO: 순서 의존에 대해 생각 해보기
         if (isBackward(source, target)) {
             return false;
@@ -36,9 +35,5 @@ public class Pawn extends Piece {
             return position.rank() == Rank.SEVEN;
         }
         return position.rank() == Rank.TWO;
-    }
-
-    private int getDeltaRank(Rank source, Rank target) {
-        return Math.abs(source.get() - target.get());
     }
 }
