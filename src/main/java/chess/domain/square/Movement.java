@@ -1,6 +1,5 @@
 package chess.domain.square;
 
-import chess.domain.square.Square;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;

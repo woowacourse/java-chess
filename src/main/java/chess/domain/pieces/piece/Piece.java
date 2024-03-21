@@ -1,6 +1,7 @@
 package chess.domain.pieces.piece;
 
 import chess.domain.square.Movement;
+
 import java.util.Objects;
 
 public abstract class Piece {

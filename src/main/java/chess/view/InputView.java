@@ -1,10 +1,11 @@
 package chess.view;
 
+import chess.dto.MoveRequest;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class InputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
@@ -39,14 +40,13 @@ public class InputView {
         }
     }
 
-    public List<String> readMovement() {
+    public MoveRequest readMovement() {
         String input = scanner.nextLine();
         List<String> splitInput = Arrays.stream(input.split(MOVE_COMMAND_DELIMITER))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .toList();
         validateMoveCommand(splitInput.get(0));
-        splitInput.remove(0);
-        return splitInput;
+        return new MoveRequest(splitInput.get(1), splitInput.get(2));
     }
 
     private void validateMoveCommand(final String command) {

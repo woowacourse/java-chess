@@ -1,9 +1,9 @@
 package chess.domain.pieces;
 
-import chess.domain.square.Movement;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.pieces.piece.Type;
+import chess.domain.square.Movement;
 
 public class Queen extends Piece {
 

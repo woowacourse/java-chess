@@ -5,8 +5,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.pieces.piece.Color;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
-import chess.view.InputView;
-import chess.view.OutputView;
+
 import java.util.List;
 
 public class Game {
@@ -21,12 +20,12 @@ public class Game {
     }
 
     public void movePiece(final String source, final String destination) {
-            Square from = Square.from(source);
-            Square to = Square.from(destination);
-            validateTurn(from);
-            board.move(from, to);
-            exchangeTurn();
-        }
+        Square from = Square.from(source);
+        Square to = Square.from(destination);
+        validateTurn(from);
+        board.move(from, to);
+        exchangeTurn();
+    }
 
     private void validateTurn(final Square square) {
         if (!board.checkTurn(square, turn)) {
@@ -38,7 +37,7 @@ public class Game {
         turn = turn.exchangeTurn();
     }
 
-    public List<PieceResponse> getBoardStatus(){
+    public List<PieceResponse> getBoardStatus() {
         return board.createBoardStatus();
     }
 }
