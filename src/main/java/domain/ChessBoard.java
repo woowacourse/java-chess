@@ -15,7 +15,7 @@ class ChessBoard {
     private Team currentTeam = WHITE;
 
     ChessBoard() {
-        piecesOnBoard = new ArrayList<>(INITIAL_PIECES);
+        this(INITIAL_PIECES.toArray(new Piece[]{}));
     }
 
     ChessBoard(Piece... pieces) {
