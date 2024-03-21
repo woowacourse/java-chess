@@ -18,10 +18,15 @@ public class InputView {
         return input;
     }
 
-    public List<String> readMoveArguments() {
+    public GameArguments readMoveArguments() {
         String input = scanner.nextLine();
-        return Arrays.stream(input.split(" "))
+        List<String> inputs = Arrays.stream(input.split(" "))
                 .toList();
+        GameCommand moveCommand = GameCommand.createMoveCommand(inputs.get(0));
+        if (moveCommand.isEnd()) {
+            return new GameArguments(moveCommand, null);
+        }
+        return new GameArguments(moveCommand, MoveArguments.from(inputs));
     }
 
     private void validateInput(String command) {

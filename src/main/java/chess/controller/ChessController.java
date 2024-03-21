@@ -3,11 +3,13 @@ package chess.controller;
 import chess.model.ChessBoard;
 import chess.model.ChessBoardInitializer;
 import chess.model.ChessPosition;
-import chess.model.GameCommand;
+import chess.view.GameArguments;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.MoveArguments;
 import chess.view.OutputView;
-import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 public class ChessController {
     private final InputView inputView;
@@ -19,24 +21,68 @@ public class ChessController {
     }
 
     public void run() {
-        GameCommand gameCommand = GameCommand.createFirstGameCommand(inputView.readGameCommand());
+        GameCommand gameCommand = retryOnException(this::getFirstGameCommand);
         if (gameCommand.isEnd()) {
             return;
         }
         ChessBoardInitializer initializer = new ChessBoardInitializer();
         ChessBoard chessBoard = new ChessBoard(initializer.create());
         outputView.printChessBoard(chessBoard);
-        while (!gameCommand.isEnd()) {
-            List<String> inputs = inputView.readMoveArguments();
-            gameCommand = GameCommand.createMoveCommand(inputs.get(0));
+        retryOnException(() -> playChess(chessBoard));
+    }
+
+    private GameCommand getFirstGameCommand() {
+        return GameCommand.createFirstGameCommand(inputView.readGameCommand());
+    }
+
+    private void playChess(ChessBoard chessBoard) {
+        while (true) {
+            GameArguments gameArguments = inputView.readMoveArguments();
+            GameCommand gameCommand = gameArguments.gameCommand();
             if (gameCommand.isEnd()) {
-                return;
+                break;
             }
-            MoveArguments moveArguments = MoveArguments.from(inputs);
+            MoveArguments moveArguments = gameArguments.moveArguments();
             ChessPosition source = moveArguments.createSourcePosition();
             ChessPosition target = moveArguments.createTargetPosition();
             chessBoard.move(source, target);
             outputView.printChessBoard(chessBoard);
+        }
+    }
+
+    private <T> T retryOnException(Supplier<T> retryOperation) {
+        boolean retry = true;
+        T result = null;
+        while (retry) {
+            result = tryOperation(retryOperation);
+            retry = Objects.isNull(result);
+        }
+        return result;
+    }
+
+    private void retryOnException(Runnable retryOperation) {
+        boolean retry = true;
+        while (retry) {
+            retry = tryOperation(retryOperation);
+        }
+    }
+
+    private <T> T tryOperation(Supplier<T> operation) {
+        try {
+            return operation.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return null;
+        }
+    }
+
+    private boolean tryOperation(Runnable operation) {
+        try {
+            operation.run();
+            return false;
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return true;
         }
     }
 }
