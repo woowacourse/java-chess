@@ -65,6 +65,14 @@ public class Piece {
         return pieceType != PieceType.EMPTY;
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
