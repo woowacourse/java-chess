@@ -2,6 +2,7 @@ package domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -190,6 +191,27 @@ public class PositionTest {
             Position target = new Position(File.A, Rank.THREE);
 
             assertThat(source.isForwardStraight(target)).isFalse();
+        }
+    }
+
+    @Nested
+    class BetweenPositionsTest {
+
+        @Test
+        @DisplayName("두 위치 사이에 존재하는 위치들을 반환한다.")
+        void findBetweenStraightPositions() {
+            Position source = new Position(File.D, Rank.FOUR);
+            Position target = new Position(File.H, Rank.FOUR);
+
+            List<Position> positions = source.findBetweenStraightPositions(target);
+
+            assertThat(positions).containsExactly(
+                    new Position(File.D, Rank.FOUR),
+                    new Position(File.E, Rank.FOUR),
+                    new Position(File.F, Rank.FOUR),
+                    new Position(File.G, Rank.FOUR),
+                    new Position(File.H, Rank.FOUR)
+            );
         }
     }
 }
