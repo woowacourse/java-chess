@@ -1,4 +1,4 @@
-package chess.domain.controller;
+package chess.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
