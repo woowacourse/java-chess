@@ -1,8 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.player.Player;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class Board {
     }
 
     private void movePiece(Point currentPoint, Point destination, Piece currentPiece) {
-        board.put(currentPoint, null);
+        board.put(currentPoint, new Empty(Team.EMPTY));
         board.put(destination, currentPiece);
     }
 
@@ -49,7 +51,7 @@ public class Board {
 
     private void validateDestination(Player player, Point destination) {
         Piece nextPiece = board.get(destination);
-        if (nextPiece != null && player.isMyPiece(nextPiece)) {
+        if (!nextPiece.equals(new Empty(Team.EMPTY)) && player.isMyPiece(nextPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
         }
     }
@@ -58,7 +60,7 @@ public class Board {
         Direction route = currentPoint.findRoute(destination);
         Point nextPoint = currentPoint.add(route.file(), route.rank());
         while (!nextPoint.equals(destination)) {
-            if (board.get(nextPoint) != null) {
+            if (!board.get(nextPoint).equals(new Empty(Team.EMPTY))) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
             nextPoint = nextPoint.add(route.file(), route.rank());
@@ -69,12 +71,12 @@ public class Board {
     private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
         if (currentPiece instanceof Pawn) {
             if (currentPoint.isDiagonal(destination)) {
-                if (board.get(destination) == null) {
+                if (board.get(destination).equals(new Empty(Team.EMPTY))) {
                     throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
                 }
             }
             if (currentPoint.isStraight(destination)) {
-                if (board.get(destination) != null) {
+                if (!board.get(destination).equals(new Empty(Team.EMPTY))) {
                     throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
                 }
             }

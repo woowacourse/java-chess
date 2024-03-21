@@ -2,8 +2,10 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,7 @@ class ChessGameTest {
         Point destination = new Point('b', 3);
         chessGame.move(departure, destination);
 
-        assertThat(board.get(departure)).isNull();
+        assertThat(board.get(departure)).isEqualTo(new Empty(Team.EMPTY));
         assertThat(board.get(destination)).isInstanceOf(Pawn.class);
     }
 }

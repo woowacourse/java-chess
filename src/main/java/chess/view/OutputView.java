@@ -8,16 +8,13 @@ public class OutputView {
 
     private static final String ERROR_SUFFIX = "[ERROR]";
 
+    // TODO
     public void printBoard(Map<Point, Piece> board) {
         StringBuilder builder = new StringBuilder();
 
         for (int rank = 8; rank > 0; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
                 Piece piece = board.get(new Point(file, rank));
-                if (piece == null) {
-                    builder.append(".");
-                    continue;
-                }
                 builder.append(piece.getName());
             }
             builder.append(System.lineSeparator());

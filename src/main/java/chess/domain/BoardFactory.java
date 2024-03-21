@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -81,7 +82,7 @@ public class BoardFactory {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), null);
+            line.put(new Point(c, rank), new Empty(Team.EMPTY));
         }
         return line;
     }
