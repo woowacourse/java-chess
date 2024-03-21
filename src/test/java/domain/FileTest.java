@@ -33,7 +33,7 @@ class FileTest {
 
     @DisplayName("source order가 작을 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
     @Test
-    void findBetween1Test() {
+    void findBetweenAscTest() {
         File currentFile = File.A;
         File targetFile = File.D;
 
@@ -44,7 +44,7 @@ class FileTest {
 
     @DisplayName("source order가 클 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
     @Test
-    void findBetween2Test() {
+    void findBetweenDescTest() {
         File currentFile = File.D;
         File targetFile = File.A;
 

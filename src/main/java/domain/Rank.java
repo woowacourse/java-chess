@@ -1,7 +1,10 @@
 package domain;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -54,12 +57,24 @@ public enum Rank {
 
     public List<Rank> findBetween(Rank target) {
         if (this.order > target.order) {
-            return Arrays.stream(values())
-                    .filter(rank -> rank.order < this.order && rank.order > target.order)
-                    .toList();
+            return makeBetween(targetToCurrent(target));
         }
+        List<Rank> files = makeBetween(currentToTarget(target));
+        Collections.reverse(files);
+        return files;
+    }
+
+    private List<Rank> makeBetween(Predicate<Rank> predicate) {
         return Arrays.stream(values())
-                .filter(rank -> rank.order > this.order && rank.order < target.order)
-                .toList();
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
+
+    private Predicate<Rank> targetToCurrent(Rank target) {
+        return rank -> rank.order < this.order && rank.order > target.order;
+    }
+
+    private Predicate<Rank> currentToTarget(Rank target) {
+        return rank -> rank.order > this.order && rank.order < target.order;
     }
 }
