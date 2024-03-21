@@ -23,29 +23,34 @@ public class Board {
         validateIsSamePosition(sourcePosition, targetPosition);
         validateSourceIsEmpty(sourcePiece);
         validateIsNotMyTurn(color, sourcePiece);
+        validateIsMovablePosition(sourcePosition, targetPosition, sourcePiece);
 
-        Set<Position> movablePositions = sourcePiece.calculateMovablePositions(sourcePosition, this);
-        if (movablePositions.contains(targetPosition)) {
-            pieces.put(targetPosition, sourcePiece);
-            pieces.remove(sourcePosition);
-        }
+        pieces.put(targetPosition, sourcePiece);
+        pieces.remove(sourcePosition);
     }
 
-    private static void validateIsSamePosition(Position sourcePosition, Position targetPosition) {
+    private void validateIsSamePosition(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("같은 위치를 선택할 수 없습니다.");
         }
     }
 
-    private static void validateSourceIsEmpty(Piece sourcePiece) {
+    private void validateSourceIsEmpty(Piece sourcePiece) {
         if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("선택한 기물이 존재하지 않습니다.");
         }
     }
 
-    private static void validateIsNotMyTurn(Color color, Piece sourcePiece) {
+    private void validateIsNotMyTurn(Color color, Piece sourcePiece) {
         if (!sourcePiece.isSameColor(color)) {
             throw new IllegalArgumentException("선택한 위치의 기물은 내 말이 아닙니다.");
+        }
+    }
+
+    private void validateIsMovablePosition(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+        Set<Position> movablePositions = sourcePiece.calculateMovablePositions(sourcePosition, this);
+        if (!movablePositions.contains(targetPosition)) {
+            throw new IllegalStateException("이동할 수 없는 위치입니다.");
         }
     }
 
