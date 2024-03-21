@@ -11,6 +11,10 @@ public enum Command {
         return this != START;
     }
 
+    public boolean isStart() {
+        return this == START;
+    }
+
     public boolean isEnd() {
         return this == END;
     }

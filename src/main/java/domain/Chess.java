@@ -17,9 +17,6 @@ public class Chess {
             board.displacePieceByPosition(sourcePosition);
         }
     }
-    // TODO: bug 해결
-    // 1) 앞에 장애물이 있는지 판단하는 것
-    // 2) 블랙 폰이 안 움직이는 현상 (전진이 반대 방향이라서)
 
     public Board getBoard() {
         return board;

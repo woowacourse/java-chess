@@ -33,6 +33,10 @@ public class OutputView {
         return fileIndex % 8 == 7;
     }
 
+    public void printError(String errorMessage) {
+        System.out.println(errorMessage);
+    }
+
     private enum PieceOutput {
 
         BISHOP(Type.BISHOP, "B"),

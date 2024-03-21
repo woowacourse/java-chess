@@ -4,6 +4,7 @@ import domain.Chess;
 import domain.command.Command;
 import domain.position.Position;
 import domain.position.PositionGenerator;
+import java.util.Arrays;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -16,8 +17,8 @@ public class GameManager {
 
     public void start() {
         outputView.printStartNotice();
-        List<String> rawCommand = inputView.readCommand();
-        Command command = CommandInput.asCommand(rawCommand.get(0));
+        String rawCommand = requestCommand();
+        Command command = CommandInput.asCommand(rawCommand);
         if (command.isNotStart()) {
             return;
         }
@@ -27,16 +28,34 @@ public class GameManager {
     }
 
     private void manage(Chess chess) {
-        List<String> rawCommand = inputView.readCommand();
-        Command command = CommandInput.asCommand(rawCommand.get(0));
+        String rawCommand = requestCommand();
+        Command command = CommandInput.asCommand(rawCommand);
+        if (command.isStart()) {
+            start();
+            return;
+        }
         if (command.isEnd()) {
             return;
         }
-        PositionGenerator positionGenerator = new PositionGenerator();
-        Position sourcePosition = positionGenerator.generate(rawCommand.get(1));
-        Position targetPosition = positionGenerator.generate(rawCommand.get(2));
-        chess.play(sourcePosition, targetPosition);
+        List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
+        playChess(chess, moveCommands);
         outputView.printBoard(chess.getBoard());
         manage(chess);
+    }
+
+    private void playChess(Chess chess, List<String> moveTokens) {
+        PositionGenerator positionGenerator = new PositionGenerator();
+        Position sourcePosition = positionGenerator.generate(moveTokens.get(1));
+        Position targetPosition = positionGenerator.generate(moveTokens.get(2));
+        chess.play(sourcePosition, targetPosition);
+    }
+
+    private String requestCommand() {
+        try {
+            return inputView.readCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return requestCommand();
+        }
     }
 }

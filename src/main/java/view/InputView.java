@@ -1,14 +1,15 @@
 package view;
 
-import java.util.List;
 import java.util.Scanner;
+import view.mapper.CommandInput;
 
 public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public List<String> readCommand() {
-        String input = scanner.nextLine();
-        return List.of(input.split(" "));
+    public String readCommand() {
+        String rawCommand = scanner.nextLine();
+        CommandInput.validateCommand(rawCommand);
+        return rawCommand;
     }
 }
