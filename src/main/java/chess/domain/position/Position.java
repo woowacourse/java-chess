@@ -30,7 +30,7 @@ public class Position {
 
     // TODO : 리팩터링
     public Direction findDirectionTo(Position target) {
-        if (file.value() == target.file.value() && rank.index() < target.rank.index()) {
+        if (file.index() == target.file.index() && rank.index() < target.rank.index()) {
             return Direction.TOP;
         }
         if (file.index() == target.file.index() && rank.index() > target.rank.index()) {
