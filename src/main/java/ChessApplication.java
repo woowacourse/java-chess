@@ -1,5 +1,6 @@
 import controller.ChessController;
 import domain.board.Board;
+import domain.piece.Color;
 import view.InputView;
 import view.OutputView;
 import view.dto.MovePositionDto;
@@ -19,19 +20,19 @@ public class ChessApplication {
         String command = inputView.readCommand();
         if (command.equals(START_COMMAND)) {
             outputView.printBoard(controller.getBoard());
-            startTurn();
+            startTurn(Color.WHITE);
         }
     }
 
-    private static void startTurn() {
+    private static void startTurn(Color color) {
         String gameCommand = inputView.readCommand();
         if (gameCommand.equals(END_COMMAND)) {
             return;
         }
         if (gameCommand.startsWith(MOVE_COMMAND)) {
-            Board board = controller.move(MovePositionDto.from(gameCommand));
+            Board board = controller.move(MovePositionDto.from(gameCommand, color));
             outputView.printBoard(board);
         }
-        startTurn();
+        startTurn(Color.nextColorOf(color));
     }
 }

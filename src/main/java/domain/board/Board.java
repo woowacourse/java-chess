@@ -17,31 +17,40 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
+    public void move(Position sourcePosition, Position targetPosition, Color color) {
         Piece piece = board.get(sourcePosition);
-        validate(sourcePosition, targetPosition);
+        validate(sourcePosition, targetPosition, color);
         board.remove(sourcePosition);
         board.put(targetPosition, piece);
     }
 
-    private void validate(Position sourcePosition, Position targetPosition) {
-        validateSamePosition(sourcePosition, targetPosition);
+    private void validate(Position sourcePosition, Position targetPosition, Color color) {
         validateNoPieceToMove(sourcePosition);
+        validateTurn(sourcePosition, color);
+        validateSamePosition(sourcePosition, targetPosition);
         validateOwnPieceExistAtTargetPosition(sourcePosition, targetPosition);
         validatePieceCanMove(sourcePosition, targetPosition);
         validateWhenStraightOrDiagonalMove(sourcePosition, targetPosition);
         validateWhenPieceIsPawn(sourcePosition, targetPosition);
     }
 
-    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
-        }
-    }
-
     private void validateNoPieceToMove(Position sourcePosition) {
         if (isNoPieceAt(sourcePosition)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
+        }
+    }
+
+    private void validateTurn(Position sourcePosition, Color color) {
+        Piece piece = board.get(sourcePosition);
+        if (piece.hasColorOf(color)) {
+            return;
+        }
+        throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
+    }
+
+    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
         }
     }
 

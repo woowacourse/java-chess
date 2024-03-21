@@ -25,7 +25,7 @@ class BoardTest {
         Position sourcePosition = Position.of(4, 4);
         Position targetPosition = Position.of(4, 5);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("source 위치에 말이 없습니다.");
     }
@@ -37,7 +37,7 @@ class BoardTest {
         Position sourcePosition = Position.of(1, 1);
         Position targetPosition = Position.of(1, 2);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("한 칸에 말이 2개 존재할 수 없습니다.");
     }
@@ -49,7 +49,7 @@ class BoardTest {
         Position sourcePosition = Position.of(1, 1);
         Position targetPosition = Position.of(1, 1);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
     }
@@ -64,7 +64,7 @@ class BoardTest {
             Map.of(sourcePosition, knight)
         ));
 
-        board.move(sourcePosition, targetPosition);
+        board.move(sourcePosition, targetPosition, Color.WHITE);
         assertAll(
             () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
@@ -81,7 +81,7 @@ class BoardTest {
             Map.of(sourcePosition, king)
         ));
 
-        board.move(sourcePosition, targetPosition);
+        board.move(sourcePosition, targetPosition, Color.WHITE);
         assertAll(
             () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
@@ -98,7 +98,7 @@ class BoardTest {
             Map.of(sourcePosition, knight)
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("말의 규칙에 맞지 않는 이동입니다.");
     }
@@ -120,7 +120,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
@@ -142,7 +142,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
@@ -164,7 +164,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
@@ -186,7 +186,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
@@ -207,7 +207,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("직진으로 잡을 수 없습니다.");
     }
@@ -228,7 +228,7 @@ class BoardTest {
             )
         ));
 
-        board.move(sourcePosition, targetPosition);
+        board.move(sourcePosition, targetPosition, Color.WHITE);
 
         assertAll(
             () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
@@ -250,7 +250,7 @@ class BoardTest {
             )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition))
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
     }

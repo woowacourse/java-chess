@@ -9,7 +9,7 @@ public class ChessController {
     private final Board board = Board.generatedBy(new InitialBoardGenerator());
 
     public Board move(MovePositionDto movePositionDto) {
-        board.move(movePositionDto.sourcePosition(), movePositionDto.targetPosition());
+        board.move(movePositionDto.sourcePosition(), movePositionDto.targetPosition(), movePositionDto.color());
         return board;
     }
 

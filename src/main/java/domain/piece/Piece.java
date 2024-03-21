@@ -15,4 +15,8 @@ public abstract class Piece {
     public boolean isWhite() {
         return color == Color.WHITE;
     }
+
+    public boolean hasColorOf(Color color) {
+        return this.color == color;
+    }
 }
