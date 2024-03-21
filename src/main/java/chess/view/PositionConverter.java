@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public class PositionConverter {
     private static final String REGEX = "^[a-h][1-8]$";
+    public static final int ROW_INDEX = 1;
+    public static final int COLUMN_INDEX = 0;
 
     private PositionConverter() {
     }
@@ -14,8 +16,8 @@ public class PositionConverter {
             throw new IllegalArgumentException("잘못된 명령어입니다.");
         }
 
-        int row = value.charAt(1) - '0';
-        int column = value.charAt(0) - 'a' + 1;
+        int row = value.charAt(ROW_INDEX) - '0';
+        int column = value.charAt(COLUMN_INDEX) - 'a' + 1;
 
         return Position.of(row, column);
     }

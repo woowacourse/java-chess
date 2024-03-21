@@ -49,20 +49,12 @@ public class Position {
         }
     }
 
-    public static boolean isColumnOutOfRange(int column) {
-        return column < MIN_COLUMN || column > MAX_COLUMN;
-    }
-
-    public static boolean isRowOutOfRange(int row) {
+    private static boolean isRowOutOfRange(int row) {
         return row < MIN_ROW || row > MAX_ROW;
     }
 
-    public int calculateRowDifference(Position newPosition) {
-        return newPosition.row - row;
-    }
-
-    public int calculateColumnDifference(Position newPosition) {
-        return newPosition.column - column;
+    private static boolean isColumnOutOfRange(int column) {
+        return column < MIN_COLUMN || column > MAX_COLUMN;
     }
 
     public Position move(int rowDifference, int columnDifference) {
@@ -73,6 +65,14 @@ public class Position {
         return positions.stream()
                 .filter(position -> piece.isMovable(this, position))
                 .toList();
+    }
+
+    public int calculateRowDifference(Position newPosition) {
+        return newPosition.row - row;
+    }
+
+    public int calculateColumnDifference(Position newPosition) {
+        return newPosition.column - column;
     }
 
     @Override

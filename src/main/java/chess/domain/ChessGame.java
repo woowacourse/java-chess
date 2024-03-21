@@ -21,9 +21,7 @@ public class ChessGame {
         board.validateSameTeamByPosition(positions.get(0), currentTeam);
         board.move(positions.get(0), positions.get(1));
         consumer.accept(board.mapPositionToCharacter());
-
         validateCheck(currentTeam, runnable);
-
         currentTeam = currentTeam.opponent();
     }
 
@@ -31,7 +29,6 @@ public class ChessGame {
         if (board.isChecked(currentTeam.opponent())) {
             runnable.run();
         }
-
         if (board.isChecked(currentTeam)) {
             throw new IllegalArgumentException("체크 상태를 벗어나지 않았습니다.");
         }

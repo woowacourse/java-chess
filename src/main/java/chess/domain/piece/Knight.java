@@ -16,14 +16,16 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.KNIGHT);
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Knight(team, false);
+        }
+        return this;
     }
 
     @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
-        return differenceList.containsAll(MOVE_DIFFERENCES);
+    public Character findCharacter() {
+        return Character.findCharacter(team, Kind.KNIGHT);
     }
 
     @Override
@@ -32,10 +34,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Piece move() {
-        if (hasNotMoved) {
-            return new Knight(team, false);
-        }
-        return this;
+    protected boolean isMovable(int rowDifference, int columnDifference) {
+        List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
+        return differenceList.containsAll(MOVE_DIFFERENCES);
     }
 }

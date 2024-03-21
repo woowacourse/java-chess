@@ -14,12 +14,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BoardFactory {
+    private BoardFactory() {
+    }
+
     public static Map<Position, Piece> generateStartBoard() {
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.putAll(createEdgeRow(8, Team.BLACK));
-        pieces.putAll(createPawn(7, Team.BLACK));
         pieces.putAll(createPawn(2, Team.WHITE));
+        pieces.putAll(createPawn(7, Team.BLACK));
         pieces.putAll(createEdgeRow(1, Team.WHITE));
+        pieces.putAll(createEdgeRow(8, Team.BLACK));
         return pieces;
     }
 

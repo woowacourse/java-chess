@@ -15,13 +15,16 @@ public class King extends Piece {
     }
 
     @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.KING);
+    public Piece move() {
+        if (hasNotMoved) {
+            return new King(team, false);
+        }
+        return this;
     }
 
     @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
+    public Character findCharacter() {
+        return Character.findCharacter(team, Kind.KING);
     }
 
     @Override
@@ -30,10 +33,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Piece move() {
-        if (hasNotMoved) {
-            return new King(team, false);
-        }
-        return this;
+    protected boolean isMovable(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
     }
 }

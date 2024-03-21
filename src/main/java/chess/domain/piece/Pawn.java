@@ -20,30 +20,16 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Pawn(team, false);
+        }
+        return this;
+    }
+
+    @Override
     public Character findCharacter() {
         return Character.findCharacter(team, Kind.PAWN);
-    }
-
-    @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        if (columnDifference != 0) {
-            return false;
-        }
-
-        if (team == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == WHITE_START_MOVEMENT);
-        }
-        return rowDifference == BLACK_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == BLACK_START_MOVEMENT);
-    }
-
-    @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        List<Position> positions = new ArrayList<>();
-        if (Math.abs(rowDifference) == WHITE_START_MOVEMENT) {
-            positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
-            return positions;
-        }
-        return new ArrayList<>();
     }
 
     @Override
@@ -62,18 +48,31 @@ public class Pawn extends Piece {
     }
 
     @Override
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+        List<Position> positions = new ArrayList<>();
+        if (Math.abs(rowDifference) == WHITE_START_MOVEMENT) {
+            positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
+            return positions;
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    protected boolean isMovable(int rowDifference, int columnDifference) {
+        if (columnDifference != 0) {
+            return false;
+        }
+        if (team == Team.WHITE) {
+            return rowDifference == WHITE_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == WHITE_START_MOVEMENT);
+        }
+        return rowDifference == BLACK_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == BLACK_START_MOVEMENT);
+    }
+
+    @Override
     protected boolean isAttackable(int rowDifference, int columnDifference) {
         if (team == Team.WHITE) {
             return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
         }
         return rowDifference == BLACK_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
-    }
-
-    @Override
-    public Piece move() {
-        if (hasNotMoved) {
-            return new Pawn(team, false);
-        }
-        return this;
     }
 }

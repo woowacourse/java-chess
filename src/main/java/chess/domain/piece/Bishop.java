@@ -13,22 +13,25 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public Piece move() {
+        if (hasNotMoved) {
+            return new Bishop(team, false);
+        }
+        return this;
+    }
+
+    @Override
     public Character findCharacter() {
         return Character.findCharacter(team, Kind.BISHOP);
     }
 
     @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == Math.abs(columnDifference);
-    }
-
-    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        List<Position> positions = new ArrayList<>();
         int absoluteDifference = Math.abs(rowDifference);
         int rowSign = rowDifference / absoluteDifference;
         int columnSign = columnDifference / absoluteDifference;
 
+        List<Position> positions = new ArrayList<>();
         for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
             positions.add(position.move(rowSign * movement, columnSign * movement));
         }
@@ -36,10 +39,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Piece move() {
-        if (hasNotMoved) {
-            return new Bishop(team, false);
-        }
-        return this;
+    protected boolean isMovable(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 }

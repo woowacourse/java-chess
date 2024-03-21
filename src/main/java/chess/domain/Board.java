@@ -55,6 +55,11 @@ public class Board {
         }
     }
 
+    public boolean isChecked(Team team) {
+        Position kingPosition = getKingPosition(team);
+        return isBeingAttacked(team, kingPosition);
+    }
+
     public boolean isCheckmate(Team attackedTeam) {
         Position kingPosition = getKingPosition(attackedTeam);
         Piece king = pieces.get(kingPosition);
@@ -75,16 +80,15 @@ public class Board {
         return isCheckAndImmovable && isNotBlockable;
     }
 
-    private boolean isNotBlockable(Team attackedTeam, Position position, Position kingPosition) {
-        List<Position> attackRoutePositions
-                = pieces.get(position).findBetweenPositionsWhenAttack(position, kingPosition);
-
+    private Position getKingPosition(Team team) {
+        Character character = Character.findCharacter(team, Kind.KING);
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam) && !entry.getKey().equals(kingPosition))
-                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
-                        .stream()
-                        .anyMatch(attackRoutePositions::contains));
+                .filter(entry -> entry.getValue().findCharacter() == character)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(
+                        "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
+                .getKey();
     }
 
     private boolean isCheckAndImmovable(Team attackedTeam, Position kingPosition, Piece king) {
@@ -92,11 +96,6 @@ public class Board {
                 .filter(position -> !pieces.containsKey(position) ||
                         (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
                 .allMatch(position -> isBeingAttacked(attackedTeam, position));
-    }
-
-    public boolean isChecked(Team team) {
-        Position kingPosition = getKingPosition(team);
-        return isBeingAttacked(team, kingPosition);
     }
 
     private boolean isBeingAttacked(Team team, Position position) {
@@ -110,17 +109,6 @@ public class Board {
                 .filter(entry -> isAttacking(entry.getValue(), entry.getKey(), position))
                 .map(Entry::getKey)
                 .toList();
-    }
-
-    private Position getKingPosition(Team team) {
-        Character character = Character.findCharacter(team, Kind.KING);
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().findCharacter() == character)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException(
-                        "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
-                .getKey();
     }
 
     private boolean isAttacking(Piece thisPiece, Position thisPosition, Position attackPosition) {
@@ -137,6 +125,18 @@ public class Board {
             return thisPiece.findBetweenPositionsWhenAttack(oldPosition, newPosition);
         }
         return thisPiece.findBetweenPositions(oldPosition, newPosition);
+    }
+
+    private boolean isNotBlockable(Team attackedTeam, Position position, Position kingPosition) {
+        List<Position> attackRoutePositions
+                = pieces.get(position).findBetweenPositionsWhenAttack(position, kingPosition);
+
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam) && !entry.getKey().equals(kingPosition))
+                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
+                        .stream()
+                        .anyMatch(attackRoutePositions::contains));
     }
 
     public Map<Position, Character> mapPositionToCharacter() {
