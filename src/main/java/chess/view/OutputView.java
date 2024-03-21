@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class OutputView {
 
+    private static final String ERROR_SUFFIX = "[ERROR]";
+
     public void printBoard(Map<Point, Piece> board) {
         StringBuilder builder = new StringBuilder();
 
@@ -26,10 +28,14 @@ public class OutputView {
 
     public void printGameStart() {
         System.out.print("""
-> 체스 게임을 시작합니다.
-> 게임 시작 : start
-> 게임 종료 : end
-> 게임 이동 : move source위치 target위치 - 예. move b2 b3        
-        """);
+                > 체스 게임을 시작합니다.
+                > 게임 시작 : start
+                > 게임 종료 : end
+                > 게임 이동 : move source위치 target위치 - 예. move b2 b3        
+                        """);
+    }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.printf("%s %s%n", ERROR_SUFFIX, errorMessage);
     }
 }
