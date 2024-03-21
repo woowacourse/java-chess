@@ -13,9 +13,9 @@ class PositionTest {
     @DisplayName("동등성을 올바르게 판단한다.")
     void equalsTest() {
         // given
-        Position position = Position.of("a", 1);
+        Position position = Position.of(File.A, Rank.ONE);
         // when, then
-        assertThat(position).isEqualTo(Position.of("a", 1));
+        assertThat(position).isEqualTo(Position.of(File.A, Rank.ONE));
     }
 
     @ParameterizedTest
@@ -24,8 +24,8 @@ class PositionTest {
     void horizontalPositionTest(String sourceFileName, int sourceRankNumber,
                                 String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnSameRank(destination)).isTrue();
     }
@@ -36,8 +36,8 @@ class PositionTest {
     void invalidHorizontalPositionTest(String sourceFileName, int sourceRankNumber,
                                        String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnSameRank(destination)).isFalse();
     }
@@ -48,8 +48,8 @@ class PositionTest {
     void verticalPositionTest(String sourceFileName, int sourceRankNumber,
                               String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnSameFile(destination)).isTrue();
     }
@@ -60,8 +60,8 @@ class PositionTest {
     void invalidVerticalPositionTest(String sourceFileName, int sourceRankNumber,
                                      String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnSameFile(destination)).isFalse();
     }
@@ -72,8 +72,8 @@ class PositionTest {
     void positiveSlopeDiagonalPositionTest(String sourceFileName, int sourceRankNumber,
                                            String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnPositiveSlopeDiagonal(destination)).isTrue();
     }
@@ -84,8 +84,8 @@ class PositionTest {
     void invalidPositiveSlopeDiagonalPositionTest(String sourceFileName, int sourceRankNumber,
                                                   String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnPositiveSlopeDiagonal(destination)).isFalse();
     }
@@ -96,8 +96,8 @@ class PositionTest {
     void negativeSlopeDiagonalPositionTest(String sourceFileName, int sourceRankNumber,
                                            String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnNegativeSlopeDiagonal(destination)).isTrue();
     }
@@ -108,8 +108,8 @@ class PositionTest {
     void invalidNegativeSlopeDiagonalPositionTest(String sourceFileName, int sourceRankNumber,
                                                   String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of(sourceFileName, sourceRankNumber);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnNegativeSlopeDiagonal(destination)).isFalse();
     }
@@ -119,8 +119,8 @@ class PositionTest {
     @DisplayName("두 위치가 나이트가 이동 가능한 경우를 올바르게 판단한다.")
     void knightPositionTest(String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of("e", 4);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = Position.of(File.E, Rank.FOUR);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnKnightRoute(destination)).isTrue();
     }
@@ -130,9 +130,13 @@ class PositionTest {
     @DisplayName("두 위치가 나이트가 이동 불가능한 경우를 올바르게 판단한다.")
     void invalidKnightPositionTest(String destinationFileName, int destinationFileNumber) {
         // given
-        Position source = Position.of("e", 4);
-        Position destination = Position.of(destinationFileName, destinationFileNumber);
+        Position source = Position.of(File.E, Rank.FOUR);
+        Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
         // when, then
         assertThat(source.isOnKnightRoute(destination)).isFalse();
+    }
+
+    private Position createPositionByNameAndNumber(String fileName, int rankNumber) {
+        return Position.of(File.from(fileName), Rank.from(rankNumber));
     }
 }

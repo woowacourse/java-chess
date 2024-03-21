@@ -3,7 +3,9 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,17 +16,17 @@ class KingTest {
     void kingMoveTest() {
         // given
         King king = new King(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(king.isMovable(source, Position.of("d", 5))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("e", 5))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("e", 4))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("e", 3))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("d", 3))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("c", 3))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("c", 4))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of("c", 5))).isTrue()
+                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.FIVE))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FIVE))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FOUR))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.THREE))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.THREE))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.THREE))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FOUR))).isTrue(),
+                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FIVE))).isTrue()
         );
     }
 
@@ -33,8 +35,8 @@ class KingTest {
     void kingMaxUnitTest() {
         // given
         King king = new King(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         // when, then
-        assertThat(king.isMovable(source, Position.of("d", 6))).isFalse();
+        assertThat(king.isMovable(source, Position.of(File.D, Rank.SIX))).isFalse();
     }
 }

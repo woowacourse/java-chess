@@ -3,7 +3,9 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.position.File;
 import chess.position.Position;
+import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,17 +16,17 @@ class QueenTest {
     void queenMoveTest() {
         // given
         Queen queen = new Queen(Color.WHITE);
-        Position source = Position.of("d", 4);
+        Position source = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(queen.isMovable(source, Position.of("d", 8))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("d", 1))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("a", 4))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("h", 4))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("f", 6))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("b", 2))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("f", 2))).isTrue(),
-                () -> assertThat(queen.isMovable(source, Position.of("b", 6))).isTrue()
+                () -> assertThat(queen.isMovable(source, Position.of(File.D, Rank.EIGHT))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.D, Rank.ONE))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.A, Rank.FOUR))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.H, Rank.FOUR))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.F, Rank.SIX))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.B, Rank.TWO))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.F, Rank.TWO))).isTrue(),
+                () -> assertThat(queen.isMovable(source, Position.of(File.B, Rank.SIX))).isTrue()
         );
     }
 }
