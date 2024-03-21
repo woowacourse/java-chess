@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
-    @DisplayName("제자리 이동은 못한다.")
+    @DisplayName("제자리 이동은 불가능하다.")
     @Test
     void moveSamePlace() {
         // given
@@ -25,7 +25,7 @@ class ChessBoardTest {
                 .hasMessage("갈 수 없는 경로입니다.");
     }
 
-    @DisplayName("갈 수 없는 경로는 못간다.")
+    @DisplayName("기물이 이동할 수 없는 경로 이동은 불가능하다 : 폰 3칸")
     @Test
     void emptyPath() {
         // given
@@ -40,7 +40,7 @@ class ChessBoardTest {
                 .hasMessage("갈 수 없는 경로입니다.");
     }
 
-    @DisplayName("Source 위치에 말이 없으면 안된다.")
+    @DisplayName("Source 위치에 말이 없으면 이동이 불가능하다.")
     @Test
     void noPieceInSource() {
         // given
@@ -55,7 +55,7 @@ class ChessBoardTest {
                 .hasMessage("해당 위치에 기물이 없습니다.");
     }
 
-    @DisplayName("경로에 다른 기물이 있으면 못간다.")
+    @DisplayName("경로에 다른 기물이 있으면 이동이 불가능하다.")
     @Test
     void blockingPiece() {
         // given
@@ -71,7 +71,7 @@ class ChessBoardTest {
     }
 
 
-    @DisplayName("기물을 움직인다.")
+    @DisplayName("기물을 움직인다 : 폰 2칸")
     @Test
     void movePawn() {
         // given
@@ -95,7 +95,7 @@ class ChessBoardTest {
     }
 
 
-    @DisplayName("상대방 기물을 잡는다.")
+    @DisplayName("상대방 기물을 잡는다 : 폰 to 폰")
     @Test
     void killEnemy() {
         // given
@@ -126,7 +126,7 @@ class ChessBoardTest {
 
     @DisplayName("자기 기물이 아닌 것을 움직일 수 없다.")
     @Test
-    void myTurn() {
+    void myCamp() {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
@@ -141,7 +141,7 @@ class ChessBoardTest {
 
     @DisplayName("폰은 대각선으로만 공격할 수 있다.")
     @Test
-    void canAttack() {
+    void pawnAttack() {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 

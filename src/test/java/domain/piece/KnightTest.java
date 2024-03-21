@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
-    @DisplayName("나이트는 8방으로 움직일 수 있다.")
+    @DisplayName("나이트는 2칸,1칸을 조합한 정해진 8방향으로 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArguments")
     void canMove(final Square source, final Square target, final boolean expected) {

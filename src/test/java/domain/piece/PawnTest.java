@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
-    @DisplayName("폰 움직임")
+    @DisplayName("폰은 앞으로 1칸 움직일 수 있다. 단, 초기 위치에서 2칸 이동을 허용한다.")
     @ParameterizedTest
     @MethodSource(value = "squareArgumentsMove")
     void canMove(final Camp color, final Square source, final Square target, final boolean result) {
@@ -40,7 +40,7 @@ class PawnTest {
         );
     }
 
-    @DisplayName("폰 공격")
+    @DisplayName("폰은 대각선 방향으로 공격할 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArgumentsAttack")
     void canAttack(final Camp color, final Square source, final Square target, final boolean result) {
