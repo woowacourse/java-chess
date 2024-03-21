@@ -31,25 +31,34 @@ public class Piece {
                 .filter(entry -> entry.getValue().isNotEmpty())
                 .map(Entry::getKey)
                 .collect(Collectors.toList());
-        if (obstacles.contains(to) && pieces.get(to).isNotSameColor(color)) {
-            obstacles.remove(to);
-        }
 
-        if (isPawnCondition(from, to, pieces)) {
-            obstacles.add(to);
-        }
+        removeKillableDestinationObstacle(to, pieces, obstacles);
+        addObstacleBlockedOnRankMove(from, to, pieces, obstacles);
         return obstacles;
     }
 
-    private boolean isPawnCondition(final Position from, final Position to, final Map<Position, Piece> pieces) {
-        return pieceType == PieceType.PAWN && isRowDirection(from, to) && pieces.getOrDefault(to,
-                new Piece(PieceType.EMPTY, Color.NONE)).isNotEmpty();
+    private void removeKillableDestinationObstacle(final Position to, final Map<Position, Piece> pieces,
+                                                   final List<Position> obstacles) {
+        if (obstacles.contains(to) && pieces.get(to).isNotSameColor(color)) {
+            obstacles.remove(to);
+        }
     }
 
-    // TODO: 의미있는 이름으로 변경
-    private boolean isRowDirection(final Position from, final Position to) {
-        return from.file() == to.file() && (Math.abs(from.rank() - to.rank()) == 1
-                || Math.abs(from.rank() - to.rank()) == 2);
+    private void addObstacleBlockedOnRankMove(final Position from, final Position to,
+                                              final Map<Position, Piece> pieces, final List<Position> obstacles) {
+        if (isPawnBlockedOnRankMove(from, to, pieces)) {
+            obstacles.add(to);
+        }
+    }
+
+    private boolean isPawnBlockedOnRankMove(final Position from, final Position to, final Map<Position, Piece> pieces) {
+        return pieceType == PieceType.PAWN && isRankMove(from, to)
+                && pieces.getOrDefault(to, new Piece(PieceType.EMPTY, Color.NONE)).isNotEmpty();
+    }
+
+    private boolean isRankMove(final Position from, final Position to) {
+        return from.file() == to.file()
+                && (Math.abs(from.rank() - to.rank()) == 1 || Math.abs(from.rank() - to.rank()) == 2);
     }
 
     private boolean existEnemy(final Position to, final Map<Position, Piece> pieces) {
