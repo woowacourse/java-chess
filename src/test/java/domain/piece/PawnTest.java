@@ -1,18 +1,18 @@
-package piece;
+package domain.piece;
 
-import coordinate.Coordinate;
+import domain.coordinate.Coordinate;
+import domain.position.Column;
+import domain.position.Row;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import position.Column;
-import position.Row;
 
 class PawnTest {
 
-    @DisplayName("좌표값에서 갈 수 있는 경로를 가져온다.")
+    @DisplayName("폰의 움직임 방향을 가져온다")
     @Test
-    void getPath() {
+    void getPawnDirection() {
         Coordinate coordinate = new Coordinate(new Row(0), new Column(1));
         Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(1));
 
