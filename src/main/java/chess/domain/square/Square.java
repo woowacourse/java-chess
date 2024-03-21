@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Square {
-    private static final String SQUARE_DELIMITER = "";
 
     private static final ConcurrentHashMap<String, Square> squareCache = new ConcurrentHashMap<>();
     private final File file;
@@ -17,7 +16,7 @@ public class Square {
 
     public static Square from(final String square) {
         return squareCache.computeIfAbsent(square, s -> {
-            String[] splitSquare = s.split(SQUARE_DELIMITER);
+            String[] splitSquare = s.split("");
             File file = File.from(splitSquare[0]);
             Rank rank = Rank.from(splitSquare[1]);
             return new Square(file, rank);
@@ -41,11 +40,11 @@ public class Square {
     private String generateSquareKey(final int fileMoveStep, final int rankMoveStep) {
         int newFileIndex = Math.max(0, Math.min(7, getFileIndex() + fileMoveStep));
         int newRankIndex = Math.max(0, Math.min(7, getRankIndex() + rankMoveStep));
-        return File.values()[newFileIndex].toString() + SQUARE_DELIMITER + Rank.values()[newRankIndex].toString();
+        return File.values()[newFileIndex].toString() + Rank.values()[newRankIndex].toString();
     }
 
     private static String generateSquareKey(final File file, final Rank rank) {
-        return file.toString() + SQUARE_DELIMITER + rank.toString();
+        return file.toString() + rank.toString();
     }
 
     public int getFileIndex() {
