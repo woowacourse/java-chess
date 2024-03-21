@@ -3,7 +3,6 @@ package chess.controller;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.piece.Position;
-import chess.view.Column;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.ArrayList;
