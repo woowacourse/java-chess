@@ -1,6 +1,6 @@
 package controller;
 
-import domain.*;
+import domain.GameCommand;
 import domain.game.Board;
 import domain.game.BoardInitializer;
 import domain.game.Turn;
