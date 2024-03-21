@@ -21,7 +21,16 @@ public class ChessGame {
     private GameState gameState = new ReadyState();
 
     public void run() {
+        try {
+            playChess();
+        } catch (RuntimeException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void playChess() {
         OutputView.printGameStartMessage();
+
         while (gameState.isPlaying()) {
             executeCommand();
         }

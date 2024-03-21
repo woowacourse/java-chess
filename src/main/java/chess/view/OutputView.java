@@ -10,8 +10,13 @@ public class OutputView {
     private static final int MAX_ROW = 8;
     private static final int MAX_COLUMN = 8;
     private static final String EMPTY_SQUARE = "•";
+    private static final String ERROR_PREFIX = "[ERROR]";
 
     private OutputView() {
+    }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.printf("%s %s%s", ERROR_PREFIX, errorMessage, NEW_LINE);
     }
 
     public static void printGameStartMessage() {
