@@ -1,5 +1,8 @@
 package chess.domain;
 
+import java.util.Deque;
+import java.util.Map;
+
 public class Piece {
 
     private final PieceType pieceType;
@@ -14,7 +17,15 @@ public class Piece {
         return pieceType;
     }
 
+    public boolean isSameTeam(Piece piece) {
+        return this.color == piece.color;
+    }
+
     public boolean isBlack() {
-        return color == Color.BLACK;
+        return this.color == Color.BLACK;
+    }
+
+    public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
+        return pieceType.calculateAllDirectionPositions(currentPosition);
     }
 }

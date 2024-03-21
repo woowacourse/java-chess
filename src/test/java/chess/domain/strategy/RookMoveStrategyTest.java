@@ -6,6 +6,7 @@ import chess.domain.Column;
 import chess.domain.Direction;
 import chess.domain.Row;
 import chess.domain.Position;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -20,7 +21,7 @@ class RookMoveStrategyTest {
         Position position = new Position(Row.RANK1, Column.a);
         RookMoveStrategy rookMoveStrategy = new RookMoveStrategy();
 
-        Map<Direction, List<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(
@@ -53,7 +54,7 @@ class RookMoveStrategyTest {
         Position position = new Position(Row.RANK4, Column.d);
         RookMoveStrategy rookMoveStrategy = new RookMoveStrategy();
 
-        Map<Direction, List<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Deque<Position>> directionListMap = rookMoveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(

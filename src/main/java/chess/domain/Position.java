@@ -36,6 +36,10 @@ public class Position {
         return row.isNextInRange(rowDistance) && column.isNextInRange(columnDistance);
     }
 
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+
     public int getRowIndex() {
         return column.getIndex();
     }

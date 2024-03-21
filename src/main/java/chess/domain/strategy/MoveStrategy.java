@@ -2,9 +2,9 @@ package chess.domain.strategy;
 
 import chess.domain.Direction;
 import chess.domain.Position;
-import java.util.List;
+import java.util.Deque;
 import java.util.Map;
 
 public interface MoveStrategy {
-    Map<Direction, List<Position>> generateMovablePositions(Position position);
+    Map<Direction, Deque<Position>> generateMovablePositions(Position position);
 }

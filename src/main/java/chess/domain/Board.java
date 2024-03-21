@@ -12,6 +12,10 @@ public class Board {
         initialize();
     }
 
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
+    }
+
     private void initialize() {
         initializeBlackTeam();
         initializeWhiteTeam();
@@ -23,7 +27,7 @@ public class Board {
     }
 
     private void initializeWhiteTeam() {
-        initializePawn(Row.RANK2, Color.WHITE);
+        // TODO initializePawn(Row.RANK2, Color.WHITE);
         initializeHighValuePiece(Row.RANK1, Color.WHITE);
     }
 
@@ -55,5 +59,26 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public void movePiece(Position from, Position to) {
+        Piece piece = board.get(from);
+        board.put(to, piece);
+        board.remove(from);
+    }
+
+    public Piece findPieceByPosition(Position position) {
+        if (hasPiece(position)) {
+            return board.get(position);
+        }
+        throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+    }
+
+    public boolean hasPiece(Position position) {
+        return board.containsKey(position);
+    }
+
+    public boolean isEmptySpace(Position position) {
+        return !hasPiece(position);
     }
 }
