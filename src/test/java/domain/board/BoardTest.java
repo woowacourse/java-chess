@@ -53,4 +53,26 @@ public class BoardTest {
         Piece expected = new Piece(Type.NONE, Color.NONE);
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("해당 위치에 다른 기물이 있는 경우 참을 반환한다.")
+    void isBlocked_True() {
+        Position source = new Position(File.A, Rank.ONE);
+        Position target = new Position(File.A, Rank.THREE);
+
+        boolean actual = board.isBlocked(source, target);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("해당 위치에 다른 기물이 없는 경우 거짓을 반환한다.")
+    void isBlocked_False() {
+        Position source = new Position(File.A, Rank.TWO);
+        Position target = new Position(File.A, Rank.THREE);
+
+        boolean actual = board.isBlocked(source, target);
+
+        assertThat(actual).isFalse();
+    }
 }

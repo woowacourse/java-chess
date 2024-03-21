@@ -36,4 +36,11 @@ public class Board {
     public void displacePieceByPosition(Position position) {
         squares.replace(position, new Piece(Type.NONE, Color.NONE));
     }
+
+    public boolean isBlocked(Position source, Position target) {
+        List<Position> betweenPositions = source.findBetweenStraightPositions(target);
+        return betweenPositions.stream()
+                .map(this::findPieceByPosition)
+                .anyMatch(betweenPiece -> !betweenPiece.isSameType(Type.NONE));
+    }
 }
