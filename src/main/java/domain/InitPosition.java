@@ -39,27 +39,8 @@ public enum InitPosition {
         };
     }
 
-    public static boolean isBlackPawnRank(Position position) {
-        return position.isSameRank(PAWN.rank(Side.BLACK));
-    }
-
-    public static boolean isBlackPawnRank(Rank rank) {
-        return PAWN.rank(Side.BLACK) == rank;
-    }
-
     public static boolean isWhitePawnRank(Rank rank) {
         return PAWN.rank(Side.WHITE) == rank;
-    }
-
-//    public static boolean isWhitePawnInitPosition(Position current) {
-//    }
-
-    public static Rank blackPawnRank() {
-        return PAWN.rank(Side.BLACK);
-    }
-
-    public static Rank whitePawnRank() {
-        return PAWN.rank(Side.WHITE);
     }
 
     public Rank rank(Side side) {

@@ -43,38 +43,17 @@ public class Position {
         return rank.gap(otherRank);
     }
 
-//    public boolean hasOnlyOneRankGap(Position other) {
-//        return hasOneRankGap(other) && isSameFile(other);
-//    }
-
     public boolean hasOneRankGap(Position other) {
         return rankGap(other) == 1;
     }
-
-//    public boolean hasOnlyOneFileGap(Position other) {
-//        return hasOneFileGap(other) && isSameRank(other);
-//    }
 
     public boolean hasOneFileGap(Position other) {
         return fileGap(other) == 1;
     }
 
-//    public boolean hasOnlyOneDiagonalGap(Position other) {
-//        return isDiagonal(other) && hasOneFileGap(other);
-//    }
-
-//    public boolean isRankIncreased (Position other) {
-//        return rank.
-//    }
-
-//    private boolean hasTwoRankGap(Position other) {
-//        return rankGap(other) == 2;
-//    }
-
     public boolean hasOneDiagonalGap(Position other) {
         return this.isDiagonal(other) && hasOneFileGap(other);
     }
-
 
     public boolean hasTwoFileGap(Position other) {
         return file.confirmGap(other.file, 2);
@@ -88,17 +67,12 @@ public class Position {
         return rank.confirmGap(other.rank, 2);
     }
 
-
     public boolean isRankIncreased(Position target) {
         return target.rank.isBigger(rank);
     }
 
     public boolean isRankDecreased(Position target) {
         return target.rank.isLess(rank);
-    }
-
-    public boolean isInitPosition() {
-        return this.rank == InitPosition.blackPawnRank();
     }
 
     public boolean isBlackPawnRank() {

@@ -10,10 +10,6 @@ public enum Side {
         return this == BLACK;
     }
 
-    public boolean isWhite() {
-        return this == WHITE;
-    }
-
     public Side opponent() {
         if (this.isBlack()) {
             return WHITE;
