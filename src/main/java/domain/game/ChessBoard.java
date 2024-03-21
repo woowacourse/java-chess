@@ -48,7 +48,7 @@ public class ChessBoard {
 
         if (pieceBySquare.containsKey(targetSquare)) {
             Piece targetPiece = pieceBySquare.get(targetSquare);
-            return sourcePiece.isEqualColor(targetPiece.getColor());
+            return sourcePiece.isEqualColor(targetPiece.color());
         }
         return false;
     }
