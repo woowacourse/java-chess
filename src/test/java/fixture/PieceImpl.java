@@ -14,4 +14,9 @@ public class PieceImpl extends Piece {
     public PieceStatus getStatus() {
         throw new UnsupportedOperationException("사용할 수 없습니다.");
     }
+
+    @Override
+    public boolean canMove(final Point point) {
+        throw new UnsupportedOperationException("사용할 수 없습니다.");
+    }
 }

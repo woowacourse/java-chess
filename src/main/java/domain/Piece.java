@@ -5,7 +5,7 @@ import domain.piece.attribute.point.Point;
 
 import java.util.Objects;
 
-public abstract class Piece {
+public abstract class Piece implements Movable {
 
     protected final Point point;
     protected final Color color;
