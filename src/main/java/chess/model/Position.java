@@ -11,6 +11,7 @@ public class Position {
     private static final char MIN_ROW = '1';
     private static final int COLUMN_INDEX = 0;
     private static final int ROW_INDEX = 1;
+
     private final int row;
     private final int column;
 
