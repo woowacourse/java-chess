@@ -70,7 +70,7 @@ public class Board {
     }
 
     private void checkIsEmpty(final Square square) {
-        if (pieces.get(square) != null) {
+        if (!pieces.containsKey(square)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }
