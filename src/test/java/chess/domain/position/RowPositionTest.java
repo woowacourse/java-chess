@@ -50,8 +50,8 @@ class RowPositionTest {
     @DisplayName("행 번호가 더 높은지 확인할 수 있다")
     @Test
     void should_CheckIsHigherThanOtherRowNumber() {
-        RowPosition higherPosition = new RowPosition(0);
-        RowPosition lowerPosition = new RowPosition(1);
+        RowPosition lowerPosition = new RowPosition(0);
+        RowPosition higherPosition = new RowPosition(1);
 
         assertAll(
                 () -> assertThat(higherPosition.isHigherThan(lowerPosition)).isTrue(),
@@ -62,8 +62,8 @@ class RowPositionTest {
     @DisplayName("행 번호가 더 낮은지 확인할 수 있다")
     @Test
     void should_CheckIsLowerThanOtherRowNumber() {
-        RowPosition higherPosition = new RowPosition(1);
-        RowPosition lowerPosition = new RowPosition(0);
+        RowPosition lowerPosition = new RowPosition(1);
+        RowPosition higherPosition = new RowPosition(0);
 
         assertAll(
                 () -> assertThat(higherPosition.isLowerThan(lowerPosition)).isTrue(),
