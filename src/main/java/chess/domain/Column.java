@@ -31,6 +31,13 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 Column 가 없습니다."));
     }
 
+    public static Column findByName(String value) {
+        return Arrays.stream(values())
+                .filter(column -> column.name.equals(value))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 Column 이 없습니다."));
+    }
+
     public boolean isNextInRange(int distance) {
         int nextIndex = index + distance;
         return a.index <= nextIndex && nextIndex <= h.index;
