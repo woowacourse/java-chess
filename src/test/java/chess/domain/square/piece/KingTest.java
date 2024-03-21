@@ -70,12 +70,14 @@ class KingTest {
     @Test
     void canStraightAttackTest() {
         // given
-        Piece piece = King.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = King.from(Color.WHITE);
+        Piece attackedPiece = King.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.SECOND, File.A), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -83,12 +85,16 @@ class KingTest {
     @Test
     void canDiagonalAttackTest() {
         // given
-        Piece piece = King.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = King.from(Color.WHITE);
+        Piece attackedPiece = King.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.SECOND, File.B), attackedPiece);
+
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -96,12 +102,16 @@ class KingTest {
     @Test
     void canNotAttackTest() {
         // given
-        Piece piece = King.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = King.from(Color.WHITE);
+        Piece attackedPiece = King.from(Color.BLACK);
+
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.THIRD, File.A), attackedPiece);
+
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 }

@@ -54,33 +54,18 @@ public class RookTest {
                 .isFalse();
     }
 
-    @DisplayName("경로에 장애물이 있으면 공격할 수 없다.")
-    @Test
-    void canNotMoveWithObstacleTest() {
-        // given
-        Piece piece = Rook.from(Color.WHITE);
-        Piece obstacle = Rook.from(Color.BLACK);
-
-        board.put(new Position(Rank.FIRST, File.A), piece);
-        board.put(new Position(Rank.FIRST, File.B), obstacle);
-
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
-
-        // when
-        assertThat(piece.canMove(path, board))
-                .isFalse();
-    }
-
     @DisplayName("룩은 직선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
     @Test
     void canAttackTest() {
         // given
-        Piece piece = Rook.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Rook.from(Color.WHITE);
+        Piece attackedPiece = Rook.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -88,29 +73,33 @@ public class RookTest {
     @Test
     void canNotAttackInvalidPathTest() {
         // given
-        Piece piece = Rook.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Rook.from(Color.WHITE);
+        Piece attackedPiece = Rook.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.SECOND, File.B), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 
     @DisplayName("경로에 장애물이 있으면 공격할 수 없다.")
     @Test
-    void canNotAttackWithObstacleTest() {
+    void canNotMoveWithObstacleTest() {
         // given
-        Piece piece = Rook.from(Color.WHITE);
+        Piece attackerPiece = Rook.from(Color.WHITE);
+        Piece attackedPiece = Rook.from(Color.BLACK);
         Piece obstacle = Rook.from(Color.BLACK);
 
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.FIRST, File.C), attackedPiece);
         board.put(new Position(Rank.FIRST, File.B), obstacle);
 
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 }

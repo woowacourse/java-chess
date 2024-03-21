@@ -104,12 +104,14 @@ public class QueenTest {
     @Test
     void canStraightAttackTest() {
         // given
-        Piece piece = Queen.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Queen.from(Color.WHITE);
+        Piece attackedPiece = Queen.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -117,12 +119,14 @@ public class QueenTest {
     @Test
     void canDiagonalAttackTest() {
         // given
-        Piece piece = Queen.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Queen.from(Color.WHITE);
+        Piece attackedPiece = Queen.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.THIRD, File.C), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -130,12 +134,14 @@ public class QueenTest {
     @Test
     void canNotAttackInvalidPathTest() {
         // given
-        Piece piece = Queen.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Queen.from(Color.WHITE);
+        Piece attackedPiece = Queen.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.SECOND, File.C), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 
@@ -143,16 +149,18 @@ public class QueenTest {
     @Test
     void canNotAttackStraightWithObstacleTest() {
         // given
-        Piece piece = Queen.from(Color.WHITE);
+        Piece attackerPiece = Queen.from(Color.WHITE);
+        Piece attackedPiece = Queen.from(Color.BLACK);
         Piece obstacle = Queen.from(Color.BLACK);
 
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.FIRST, File.C), attackedPiece);
         board.put(new Position(Rank.FIRST, File.B), obstacle);
 
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 
@@ -160,16 +168,18 @@ public class QueenTest {
     @Test
     void canNotAttackDiagonalWithObstacleTest() {
         // given
-        Piece piece = Queen.from(Color.WHITE);
+        Piece attackerPiece = Queen.from(Color.WHITE);
+        Piece attackedPiece = Queen.from(Color.BLACK);
         Piece obstacle = Queen.from(Color.BLACK);
 
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.THIRD, File.C), attackedPiece);
         board.put(new Position(Rank.SECOND, File.B), obstacle);
 
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 }

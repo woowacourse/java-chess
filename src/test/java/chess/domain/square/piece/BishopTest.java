@@ -74,12 +74,14 @@ class BishopTest {
     @Test
     void canAttackTest() {
         // given
-        Piece piece = Bishop.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Bishop.from(Color.WHITE);
+        Piece attackedPiece = Bishop.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.THIRD, File.C), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isTrue();
     }
 
@@ -87,12 +89,14 @@ class BishopTest {
     @Test
     void canNotAttackInvalidPathTest() {
         // given
-        Piece piece = Bishop.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        Piece attackerPiece = Bishop.from(Color.WHITE);
+        Piece attackedPiece = Bishop.from(Color.BLACK);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
+        board.put(new Position(Rank.FIRST, File.C), attackedPiece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 
@@ -100,16 +104,18 @@ class BishopTest {
     @Test
     void canNotAttackWithObstacleTest() {
         // given
-        Piece piece = Bishop.from(Color.WHITE);
+        Piece attackerPiece = Bishop.from(Color.WHITE);
+        Piece attackedPiece = Bishop.from(Color.BLACK);
         Piece obstacle = Bishop.from(Color.BLACK);
 
-        board.put(new Position(Rank.FIRST, File.A), piece);
+        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.SECOND, File.B), obstacle);
+        board.put(new Position(Rank.THIRD, File.C), attackedPiece);
 
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canAttack(path, board))
+        assertThat(attackerPiece.canAttack(path, board))
                 .isFalse();
     }
 }
