@@ -29,50 +29,50 @@ class QueenMoveStrategyTest {
     @Test
     @DisplayName("퀸이 D2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
-        Position position = new Position(Row.RANK2, Column.d);
+        Position position = new Position(Row.RANK2, Column.D);
         QueenMoveStrategy queenMoveStrategy = new QueenMoveStrategy();
 
         Map<Direction, Deque<Position>> directionListMap = queenMoveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(
-                        new Position(Row.RANK3, Column.d),
-                        new Position(Row.RANK4, Column.d),
-                        new Position(Row.RANK5, Column.d),
-                        new Position(Row.RANK6, Column.d),
-                        new Position(Row.RANK7, Column.d),
-                        new Position(Row.RANK8, Column.d)
+                        new Position(Row.RANK3, Column.D),
+                        new Position(Row.RANK4, Column.D),
+                        new Position(Row.RANK5, Column.D),
+                        new Position(Row.RANK6, Column.D),
+                        new Position(Row.RANK7, Column.D),
+                        new Position(Row.RANK8, Column.D)
                 ),
                 () -> assertThat(directionListMap.get(Direction.NE)).containsExactly(
-                        new Position(Row.RANK3, Column.e),
-                        new Position(Row.RANK4, Column.f),
-                        new Position(Row.RANK5, Column.g),
-                        new Position(Row.RANK6, Column.h)
+                        new Position(Row.RANK3, Column.E),
+                        new Position(Row.RANK4, Column.F),
+                        new Position(Row.RANK5, Column.G),
+                        new Position(Row.RANK6, Column.H)
                 ),
                 () -> assertThat(directionListMap.get(Direction.E)).containsExactly(
-                        new Position(Row.RANK2, Column.e),
-                        new Position(Row.RANK2, Column.f),
-                        new Position(Row.RANK2, Column.g),
-                        new Position(Row.RANK2, Column.h)
+                        new Position(Row.RANK2, Column.E),
+                        new Position(Row.RANK2, Column.F),
+                        new Position(Row.RANK2, Column.G),
+                        new Position(Row.RANK2, Column.H)
                         ),
                 () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(
-                        new Position(Row.RANK1, Column.e)
+                        new Position(Row.RANK1, Column.E)
                 ),
                 () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                        new Position(Row.RANK1, Column.d)
+                        new Position(Row.RANK1, Column.D)
                 ),
                 () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(
-                        new Position(Row.RANK1, Column.c)
+                        new Position(Row.RANK1, Column.C)
                 ),
                 () -> assertThat(directionListMap.get(Direction.W)).containsExactly(
-                        new Position(Row.RANK2, Column.c),
-                        new Position(Row.RANK2, Column.b),
-                        new Position(Row.RANK2, Column.a)
+                        new Position(Row.RANK2, Column.C),
+                        new Position(Row.RANK2, Column.B),
+                        new Position(Row.RANK2, Column.A)
                         ),
                 () -> assertThat(directionListMap.get(Direction.NW)).containsExactly(
-                        new Position(Row.RANK3, Column.c),
-                        new Position(Row.RANK4, Column.b),
-                        new Position(Row.RANK5, Column.a)
+                        new Position(Row.RANK3, Column.C),
+                        new Position(Row.RANK4, Column.B),
+                        new Position(Row.RANK5, Column.A)
                 )
         );
     }

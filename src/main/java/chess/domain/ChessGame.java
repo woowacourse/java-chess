@@ -1,6 +1,5 @@
 package chess.domain;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -105,10 +104,12 @@ public class ChessGame {
         Position toPosition = positions.stream()
                 .filter(position -> position.equals(to))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 이동시킬 수 없습니다."));
-        Piece toPiece = board.findPieceByPosition(toPosition);
-        if (fromPiece.isSameTeam(toPiece)) {
-            throw new RuntimeException("같은 팀 기물 위치로 이동시킬 수 없습니다.");
+                .orElseThrow(() -> new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다."));
+        if (board.hasPiece(toPosition)) {
+            Piece toPiece = board.findPieceByPosition(toPosition);
+            if (fromPiece.isSameTeam(toPiece)) {
+                throw new RuntimeException("같은 팀 기물 위치로 이동시킬 수 없습니다.");
+            }
         }
         board.movePiece(from, to);
     }

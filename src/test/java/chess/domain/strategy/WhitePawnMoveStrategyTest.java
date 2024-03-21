@@ -33,17 +33,17 @@ class WhitePawnMoveStrategyTest {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
         Map<Direction, Deque<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
-                new Position(Row.RANK2, Column.g));
+                new Position(Row.RANK2, Column.G));
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(
-                        new Position(Row.RANK3, Column.g),
-                        new Position(Row.RANK4, Column.g)),
+                        new Position(Row.RANK3, Column.G),
+                        new Position(Row.RANK4, Column.G)),
                 () -> assertThat(directionListMap.get(Direction.S)).isNull(),
                 () -> assertThat(directionListMap.get(Direction.E)).isNull(),
                 () -> assertThat(directionListMap.get(Direction.W)).isNull(),
-                () -> assertThat(directionListMap.get(Direction.NE)).containsExactly(new Position(Row.RANK3, Column.h)),
-                () -> assertThat(directionListMap.get(Direction.NW)).containsExactly(new Position(Row.RANK3, Column.f))
+                () -> assertThat(directionListMap.get(Direction.NE)).containsExactly(new Position(Row.RANK3, Column.H)),
+                () -> assertThat(directionListMap.get(Direction.NW)).containsExactly(new Position(Row.RANK3, Column.F))
         );
     }
 
@@ -65,11 +65,11 @@ class WhitePawnMoveStrategyTest {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
         Map<Direction, Deque<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
-                new Position(Row.RANK3, Column.h));
+                new Position(Row.RANK3, Column.H));
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(
-                        new Position(Row.RANK4, Column.h)
+                        new Position(Row.RANK4, Column.H)
                 ))
         ;
     }

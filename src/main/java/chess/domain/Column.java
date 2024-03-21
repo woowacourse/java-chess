@@ -3,20 +3,18 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Column {
-    a("a", 0),
-    b("b", 1),
-    c("c", 2),
-    d("d", 3),
-    e("e", 4),
-    f("f", 5),
-    g("g", 6),
-    h("h", 7);
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7);
 
-    private String name;
-    private int index;
+    private final int index;
 
-    Column(String name, int index) {
-        this.name = name;
+    Column(int index) {
         this.index = index;
     }
 
@@ -31,15 +29,8 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 Column 가 없습니다."));
     }
 
-    public static Column findByName(String value) {
-        return Arrays.stream(values())
-                .filter(column -> column.name.equals(value))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 Column 이 없습니다."));
-    }
-
     public boolean isNextInRange(int distance) {
         int nextIndex = index + distance;
-        return a.index <= nextIndex && nextIndex <= h.index;
+        return A.index <= nextIndex && nextIndex <= H.index;
     }
 }

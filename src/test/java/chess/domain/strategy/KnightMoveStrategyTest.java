@@ -28,31 +28,31 @@ public class KnightMoveStrategyTest {
     @Test
     @DisplayName("나이트가 D2 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
-        Position position = new Position(Row.RANK2, Column.d);
+        Position position = new Position(Row.RANK2, Column.D);
         KnightMoveStrategy knightMoveStrategy = new KnightMoveStrategy();
 
         Map<Direction, Deque<Position>> directionListMap = knightMoveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.NNE)).containsExactly(
-                        new Position(Row.RANK4, Column.e)
+                        new Position(Row.RANK4, Column.E)
                 ),
                 () -> assertThat(directionListMap.get(Direction.ENE)).containsExactly(
-                        new Position(Row.RANK3, Column.f)
+                        new Position(Row.RANK3, Column.F)
                 ),
                 () -> assertThat(directionListMap.get(Direction.ESE)).containsExactly(
-                        new Position(Row.RANK1, Column.f)
+                        new Position(Row.RANK1, Column.F)
                 ),
                 () -> assertThat(directionListMap.get(Direction.SSE)).isEmpty(),
                 () -> assertThat(directionListMap.get(Direction.SSW)).isEmpty(),
                 () -> assertThat(directionListMap.get(Direction.WSW)).containsExactly(
-                        new Position(Row.RANK1, Column.b)
+                        new Position(Row.RANK1, Column.B)
                 ),
                 () -> assertThat(directionListMap.get(Direction.WNW)).containsExactly(
-                        new Position(Row.RANK3, Column.b)
+                        new Position(Row.RANK3, Column.B)
                 ),
                 () -> assertThat(directionListMap.get(Direction.NNW)).containsExactly(
-                        new Position(Row.RANK4, Column.c)
+                        new Position(Row.RANK4, Column.C)
                 )
         );
     }

@@ -12,7 +12,7 @@ public class Position {
         this.row = row;
         this.column = column;
     }
-    
+
     public Position calculateNextPosition(Direction direction, int weight) {
         int rowDistance = direction.calculateRowDistance(weight);
         int columnDistance = direction.calculateColumnDistance(weight);
@@ -41,11 +41,11 @@ public class Position {
     }
 
     public int getRowIndex() {
-        return column.getIndex();
+        return row.getIndex();
     }
 
     public int getColumnIndex() {
-        return row.getIndex();
+        return column.getIndex();
     }
 
     @Override

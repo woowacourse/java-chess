@@ -9,9 +9,7 @@ import chess.domain.PieceType;
 import chess.domain.Position;
 import chess.domain.Row;
 import java.util.Deque;
-import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,17 +33,17 @@ class BlackPawnMoveStrategyTest {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
         Map<Direction, Deque<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
-                new Position(Row.RANK7, Column.g));
+                new Position(Row.RANK7, Column.G));
 
         assertAll(
             () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                    new Position(Row.RANK6, Column.g),
-                    new Position(Row.RANK5, Column.g)),
+                    new Position(Row.RANK6, Column.G),
+                    new Position(Row.RANK5, Column.G)),
             () -> assertThat(directionListMap.get(Direction.N)).isNull(),
             () -> assertThat(directionListMap.get(Direction.E)).isNull(),
             () -> assertThat(directionListMap.get(Direction.W)).isNull(),
-            () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.RANK6, Column.h)),
-            () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.RANK6, Column.f))
+            () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.RANK6, Column.H)),
+            () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.RANK6, Column.F))
         );
     }
 
@@ -67,11 +65,11 @@ class BlackPawnMoveStrategyTest {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
         Map<Direction, Deque<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
-                new Position(Row.RANK6, Column.h));
+                new Position(Row.RANK6, Column.H));
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                        new Position(Row.RANK5, Column.h)
+                        new Position(Row.RANK5, Column.H)
                 ))
         ;
     }

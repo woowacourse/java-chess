@@ -10,7 +10,7 @@ public class PositionTest {
     @Test
     @DisplayName("포지션 생성 테스트")
     void constructTest() {
-        Position position = new Position(Row.RANK3, Column.h);
+        Position position = new Position(Row.RANK3, Column.H);
 
         Assertions.assertThat(position).isNotNull();
     }
