@@ -1,8 +1,8 @@
 package domain.piece;
 
 import domain.Camp;
+import domain.ChessVector;
 import domain.Square;
-import domain.SquareVector;
 import java.util.Objects;
 
 public class Queen extends Piece {
@@ -14,11 +14,9 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final int x = target.subtractFile(source);
-        final int y = target.subtractRank(source);
-        final SquareVector squareVector = new SquareVector(x, y);
+        final ChessVector chessVector = target.calculateVector(source);
 
-        return squareVector.isDiagonal() || squareVector.isHorizontalOrVertical();
+        return chessVector.isDiagonal() || chessVector.isHorizontalOrVertical();
     }
 
 

@@ -7,13 +7,21 @@ public abstract class Piece {
 
     protected final Camp camp;
 
-    public Piece(final Camp camp) {
+    protected Piece(final Camp camp) {
         this.camp = camp;
     }
 
-    public abstract boolean canMove(Square source, Square target);
+    public boolean canNotMove(final Square source, final Square target) {
+        return !canMove(source, target);
+    }
 
-    public boolean canAttack(final Square source, final Square target) {
+    protected abstract boolean canMove(Square source, Square target);
+
+    public boolean canNotAttack(final Square source, final Square target) {
+        return !canAttack(source, target);
+    }
+
+    protected boolean canAttack(final Square source, final Square target) {
         return canMove(source, target);
     }
 

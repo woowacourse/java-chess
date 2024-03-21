@@ -4,6 +4,9 @@ import java.util.Objects;
 
 public class Square {
 
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+
     private final Rank rank;
     private final File file;
 
@@ -13,22 +16,24 @@ public class Square {
     }
 
     public static Square from(final String input) {
-        final String file = String.valueOf(input.charAt(0));
-        final String rank = String.valueOf(input.charAt(1));
+        final String file = String.valueOf(input.charAt(FILE_INDEX));
+        final String rank = String.valueOf(input.charAt(RANK_INDEX));
 
         return new Square(Rank.from(rank), File.from(file));
     }
 
-    public Square next(final int rankDirection, final int fileDirection) {
-        return new Square(rank.move(rankDirection), file.move(fileDirection));
+    public ChessVector calculateVector(final Square other) {
+        final int rankSub = this.rank.subtract(other.rank);
+        final int fileSub = this.file.subtract(other.file);
+
+        return new ChessVector(fileSub, rankSub);
     }
 
-    public int subtractRank(final Square other) {
-        return this.rank.subtract(other.rank);
-    }
+    public Square next(final ChessVector chessVector) {
+        final Rank newRank = this.rank.move(chessVector.y());
+        final File newFile = this.file.move(chessVector.x());
 
-    public int subtractFile(final Square other) {
-        return this.file.subtract(other.file);
+        return new Square(newRank, newFile);
     }
 
     public boolean isRank(final Rank rank) {

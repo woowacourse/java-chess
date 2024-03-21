@@ -3,7 +3,7 @@ package domain;
 public enum Camp {
     WHITE, BLACK;
 
-    public Camp toggle() {
+    public Camp turnAlternation() {
         if (this == WHITE) {
             return BLACK;
         }

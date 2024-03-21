@@ -1,18 +1,14 @@
 package domain;
 
-public record SquareVector(int x, int y) {
+public record ChessVector(int x, int y) {
 
-    public static SquareVector of(final Square source, final Square target) {
-        return new SquareVector(target.subtractFile(source), target.subtractRank(source));
-    }
-
-    public SquareVector scaleDown() {
+    public ChessVector scaleDown() {
         final int gcd = findAbsGCD();
 
         if (gcd == 0) {
-            return new SquareVector(0, 0);
+            return new ChessVector(0, 0);
         }
-        return new SquareVector(x / gcd, y / gcd);
+        return new ChessVector(x / gcd, y / gcd);
     }
 
     private int findAbsGCD() {
@@ -27,7 +23,7 @@ public record SquareVector(int x, int y) {
         return num1;
     }
 
-    public int divide(final SquareVector other) {
+    public int divide(final ChessVector other) {
         if (this.x * other.y != this.y * other.x) {
             throw new IllegalArgumentException();
         }

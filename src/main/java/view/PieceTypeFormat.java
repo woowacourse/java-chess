@@ -25,6 +25,8 @@ public enum PieceTypeFormat {
     WHITE_KING("k", new King(Camp.WHITE)),
     ;
 
+    static final String EMPTY_PIECE = ".";
+
     private final String format;
     private final Piece piece;
 

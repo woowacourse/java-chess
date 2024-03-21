@@ -1,16 +1,16 @@
 package domain.piece;
 
 import domain.Camp;
+import domain.ChessVector;
 import domain.Square;
-import domain.SquareVector;
 import java.util.List;
 import java.util.Objects;
 
 public class Knight extends Piece {
 
-    private static final List<SquareVector> SQUARE_VECTORS = List.of(
-            new SquareVector(1, 2), new SquareVector(1, -2), new SquareVector(-1, 2), new SquareVector(-1, -2),
-            new SquareVector(2, 1), new SquareVector(2, -1), new SquareVector(-2, 1), new SquareVector(-2, -1));
+    private static final List<ChessVector> SQUARE_VECTORS = List.of(
+            new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
+            new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
 
     public Knight(final Camp color) {
         super(color);
@@ -18,12 +18,10 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final int x = target.subtractFile(source);
-        final int y = target.subtractRank(source);
-        final SquareVector squareVector = new SquareVector(x, y);
+        final ChessVector chessVector = target.calculateVector(source);
 
         return SQUARE_VECTORS.stream()
-                .anyMatch(vector -> vector.equals(squareVector));
+                .anyMatch(vector -> vector.equals(chessVector));
     }
 
     @Override

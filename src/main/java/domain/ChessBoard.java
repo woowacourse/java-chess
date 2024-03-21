@@ -12,42 +12,34 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class ChessTable {
+public class ChessBoard {
 
     private static final Map<File, Piece> BLACK_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Camp.BLACK),
-            File.B, new Knight(Camp.BLACK),
-            File.C, new Bishop(Camp.BLACK),
-            File.D, new Queen(Camp.BLACK),
-            File.E, new King(Camp.BLACK),
-            File.F, new Bishop(Camp.BLACK),
-            File.G, new Knight(Camp.BLACK),
-            File.H, new Rook(Camp.BLACK)
+            File.A, new Rook(Camp.BLACK), File.B, new Knight(Camp.BLACK),
+            File.C, new Bishop(Camp.BLACK), File.D, new Queen(Camp.BLACK),
+            File.E, new King(Camp.BLACK), File.F, new Bishop(Camp.BLACK),
+            File.G, new Knight(Camp.BLACK), File.H, new Rook(Camp.BLACK)
     );
     private static final Map<File, Piece> WHITE_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Camp.WHITE),
-            File.B, new Knight(Camp.WHITE),
-            File.C, new Bishop(Camp.WHITE),
-            File.D, new Queen(Camp.WHITE),
-            File.E, new King(Camp.WHITE),
-            File.F, new Bishop(Camp.WHITE),
-            File.G, new Knight(Camp.WHITE),
-            File.H, new Rook(Camp.WHITE)
+            File.A, new Rook(Camp.WHITE), File.B, new Knight(Camp.WHITE),
+            File.C, new Bishop(Camp.WHITE), File.D, new Queen(Camp.WHITE),
+            File.E, new King(Camp.WHITE), File.F, new Bishop(Camp.WHITE),
+            File.G, new Knight(Camp.WHITE), File.H, new Rook(Camp.WHITE)
     );
 
     private final Map<Square, Piece> pieceSquares;
     private Camp camp;
 
-    public ChessTable() {
+    public ChessBoard() {
         this.pieceSquares = new HashMap<>();
     }
 
-    public ChessTable(final Map<Square, Piece> pieceSquares) {
+    private ChessBoard(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
         this.camp = Camp.WHITE;
     }
 
-    public static ChessTable create() {
+    public static ChessBoard create() {
         final Map<Square, Piece> chessTable = new HashMap<>();
 
         for (final File file : File.values()) {
@@ -57,7 +49,7 @@ public class ChessTable {
             chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
 
-        return new ChessTable(chessTable);
+        return new ChessBoard(chessTable);
     }
 
     public void move(final Square source, final Square target) {
@@ -77,7 +69,7 @@ public class ChessTable {
 
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
-        camp = camp.toggle();
+        camp = camp.turnAlternation();
     }
 
     private void validateEmptySource(final Square source) {
@@ -97,31 +89,33 @@ public class ChessTable {
         if (targetPiece.isSameCamp(sourcePiece)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
-        if (!sourcePiece.canAttack(source, target)) {
+        if (sourcePiece.canNotAttack(source, target)) {
             throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
         }
     }
 
     private void validateMove(final Square source, final Square target, final Piece sourcePiece) {
-        if (!sourcePiece.canMove(source, target)) {
+        if (sourcePiece.canNotMove(source, target)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
     }
 
     private void validateBlocking(final Square source, final Square target) {
-
-        final SquareVector squareVector = SquareVector.of(source, target);
-        final SquareVector direction = squareVector.scaleDown();
-        final int count = squareVector.divide(direction);
-
-        final boolean isBlocking = Stream.iterate(source.next(direction.y(), direction.x()),
-                        i -> i.next(direction.y(), direction.x()))
-                .limit(count - 1)
-                .anyMatch(pieceSquares::containsKey);
-
-        if (isBlocking) {
+        if (isBlocked(source, target)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
+    }
+
+    private boolean isBlocked(final Square source, final Square target) {
+        final ChessVector chessVector = target.calculateVector(source);
+
+        final ChessVector direction = chessVector.scaleDown();
+        final long count = chessVector.divide(direction);
+
+        return Stream.iterate(source.next(direction), square -> square.next(direction))
+                .limit(count)
+                .filter(square -> !square.equals(target))
+                .anyMatch(pieceSquares::containsKey);
     }
 
     public Map<Square, Piece> getPieceSquares() {
