@@ -23,56 +23,57 @@ public class Board {
     private final Map<Location, Piece> board;
 
     public Board() {
-        this.board = new HashMap<>();
-        initialSetting();
+        this.board = initialBoard();
     }
 
-    private void initialSetting() {
-        initialPawnSetting();
-        initialRookSetting();
-        initialKnightSetting();
-        initialBishopSetting();
-        initialQueenSetting();
-        initialKingSetting();
+    private Map<Location, Piece> initialBoard() {
+        Map<Location, Piece> initialBoard = new HashMap<>();
+        initialPawnSetting(initialBoard);
+        initialRookSetting(initialBoard);
+        initialKnightSetting(initialBoard);
+        initialBishopSetting(initialBoard);
+        initialQueenSetting(initialBoard);
+        initialKingSetting(initialBoard);
+        return initialBoard;
     }
 
-
-    private void initialPawnSetting() {
+    private void initialPawnSetting(Map<Location, Piece> board) {
         for (Column value : Column.values()) {
             board.put(new Location(value, Row.TWO), new WhitePawn(Color.WHITE));
         }
+
         for (Column value : Column.values()) {
             board.put(new Location(value, Row.SEVEN), new BlackPawn(Color.BLACK));
         }
     }
 
-    private void initialRookSetting() {
+    private void initialRookSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.A, Row.ONE), new Rook(Color.WHITE));
         board.put(new Location(Column.A, Row.EIGHT), new Rook(Color.BLACK));
         board.put(new Location(Column.H, Row.ONE), new Rook(Color.WHITE));
         board.put(new Location(Column.H, Row.EIGHT), new Rook(Color.BLACK));
     }
 
-    private void initialKnightSetting() {
+    private void initialKnightSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.B, Row.ONE), new Knight(Color.WHITE));
         board.put(new Location(Column.B, Row.EIGHT), new Knight(Color.BLACK));
         board.put(new Location(Column.G, Row.ONE), new Knight(Color.WHITE));
         board.put(new Location(Column.G, Row.EIGHT), new Knight(Color.BLACK));
     }
 
-    private void initialBishopSetting() {
+    private void initialBishopSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.C, Row.ONE), new Bishop(Color.WHITE));
         board.put(new Location(Column.C, Row.EIGHT), new Bishop(Color.BLACK));
         board.put(new Location(Column.F, Row.ONE), new Bishop(Color.WHITE));
         board.put(new Location(Column.F, Row.EIGHT), new Bishop(Color.BLACK));
     }
 
-    private void initialQueenSetting() {
+    private void initialQueenSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.D, Row.ONE), new Queen(Color.WHITE));
         board.put(new Location(Column.D, Row.EIGHT), new Queen(Color.BLACK));
     }
 
-    private void initialKingSetting() {
+    private void initialKingSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.E, Row.ONE), new King(Color.WHITE));
         board.put(new Location(Column.E, Row.EIGHT), new King(Color.BLACK));
     }
