@@ -1,6 +1,8 @@
 package chess.board;
 
 import chess.piece.Piece;
+import chess.position.Direction;
+import chess.position.Position;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

@@ -2,7 +2,7 @@ package chess.game;
 
 import chess.board.Board;
 import chess.board.BoardInitializer;
-import chess.board.Position;
+import chess.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

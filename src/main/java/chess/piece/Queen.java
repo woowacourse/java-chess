@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.board.Direction;
+import chess.position.Direction;
 import java.util.List;
 
 public class Queen extends Piece {

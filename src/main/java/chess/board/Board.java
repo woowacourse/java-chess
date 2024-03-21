@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
+import chess.position.Position;
 import java.util.Collections;
 import java.util.Map;
 

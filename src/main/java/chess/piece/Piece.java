@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.board.Direction;
-import chess.board.Position;
+import chess.position.Direction;
+import chess.position.Position;
 import java.util.List;
 import java.util.stream.Stream;
 

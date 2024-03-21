@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.piece.Color;
 import chess.piece.Piece;
 import chess.piece.Rook;
+import chess.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

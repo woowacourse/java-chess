@@ -1,4 +1,4 @@
-package chess.board;
+package chess.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,9 +1,9 @@
 package chess.view.display;
 
-import chess.board.File;
-import chess.board.Position;
-import chess.board.Rank;
 import chess.piece.Piece;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

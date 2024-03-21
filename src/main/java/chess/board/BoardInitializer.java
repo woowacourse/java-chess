@@ -8,6 +8,9 @@ import chess.piece.Knight;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.position.File;
+import chess.position.Position;
+import chess.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 

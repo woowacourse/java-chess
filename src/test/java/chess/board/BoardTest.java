@@ -8,6 +8,7 @@ import chess.piece.InitPawn;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
 import chess.piece.Rook;
+import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

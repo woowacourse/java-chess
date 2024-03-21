@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.board.Position;
+import chess.position.Position;
 import java.util.List;
 
 public class Knight extends Piece {
