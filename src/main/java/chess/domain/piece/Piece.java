@@ -17,7 +17,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    protected abstract Set<Position> calculateMovablePositions(Position currentPosition, Board board);
+    public abstract Set<Position> calculateMovablePositions(Position currentPosition, Board board);
 
     public boolean isWhite() {
         return color.isWhite();

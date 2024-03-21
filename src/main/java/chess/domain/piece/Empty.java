@@ -12,7 +12,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
+    public Set<Position> calculateMovablePositions(Position currentPosition, Board board) {
         throw new UnsupportedOperationException("비어 있는 칸은 움직일 수 없습니다.");
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
-    private final Map<GameCommand, CommandExecutor> COMMANDS = Map.of(
+    private final Map<GameCommand, CommandExecutor> commands = Map.of(
             GameCommand.MOVE, args -> move(args.get(1), args.get(2)),
             GameCommand.START, args -> start(),
             GameCommand.END, args -> end()
@@ -32,7 +32,7 @@ public class ChessGame {
     private void executeCommand() {
         List<String> inputCommand = InputView.readGameCommand();
         GameCommand gameCommand = GameCommand.from(inputCommand);
-        COMMANDS.get(gameCommand).execute(inputCommand);
+        commands.get(gameCommand).execute(inputCommand);
     }
 
     private void move(String inputSource, String inputTarget) {
