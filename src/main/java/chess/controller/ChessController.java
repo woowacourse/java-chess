@@ -43,11 +43,15 @@ public class ChessController {
                 break;
             }
             MoveArguments moveArguments = gameArguments.moveArguments();
-            ChessPosition source = moveArguments.createSourcePosition();
-            ChessPosition target = moveArguments.createTargetPosition();
-            chessBoard.move(source, target);
-            outputView.printChessBoard(chessBoard);
+            move(chessBoard, moveArguments);
         }
+    }
+
+    private void move(ChessBoard chessBoard, MoveArguments moveArguments) {
+        ChessPosition source = moveArguments.createSourcePosition();
+        ChessPosition target = moveArguments.createTargetPosition();
+        chessBoard.move(source, target);
+        outputView.printChessBoard(chessBoard);
     }
 
     private <T> T retryOnException(Supplier<T> retryOperation) {
