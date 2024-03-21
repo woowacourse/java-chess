@@ -30,7 +30,7 @@ public class MessageResolver {
 
     private String resolveSquareMessage(ChessBoard chessBoard, Position position) {
         if (chessBoard.hasPiece(position)) {
-            Piece piece = chessBoard.piece(position);
+            Piece piece = chessBoard.findPiece(position);
             return PieceMapper.toSymbol(piece);
         }
         return EMPTY;
