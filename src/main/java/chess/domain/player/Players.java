@@ -1,6 +1,5 @@
 package chess.domain.player;
 
-import chess.domain.piece.Team;
 import java.util.List;
 
 public class Players {

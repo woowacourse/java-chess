@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Point;
-import java.util.List;
-import java.util.Optional;
 
 public final class Knight extends Piece {
 
