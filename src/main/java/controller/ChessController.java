@@ -28,6 +28,7 @@ public class ChessController {
         outputView.printHeader();
         ChessTable chessTable = new ChessTable();
 
+//        play(chessTable);
         while (true) {
             final List<String> input = inputView.readCommand();
             final String command = input.get(COMMAND_INDEX);
@@ -50,5 +51,29 @@ public class ChessController {
         }
     }
 
-
+//    private void play(ChessTable chessTable) {
+//        try {
+//            final List<String> input = inputView.readCommand();
+//            final String command = input.get(COMMAND_INDEX);
+//
+//            if (END_COMMAND.equals(command)) {
+//                return;
+//            }
+//            if (START_COMMAND.equals(command)) {
+//                chessTable = ChessTable.create();
+//                outputView.printChessTable(chessTable.getPieceSquares());
+//            }
+//            if (MOVE_COMMAND.equals(command)) {
+//                final Square source = Square.from(input.get(MOVE_SOURCE_INDEX));
+//                final Square target = Square.from(input.get(MOVE_TARGET_INDEX));
+//
+//                chessTable.move(source, target);
+//                outputView.printChessTable(chessTable.getPieceSquares());
+//            }
+//        } catch (final IllegalArgumentException e) {
+//            outputView.printError(e.getMessage());
+//        }
+//
+//        play(chessTable);
+//    }
 }

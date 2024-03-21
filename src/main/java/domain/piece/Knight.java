@@ -1,34 +1,29 @@
 package domain.piece;
 
-import domain.Color;
+import domain.Camp;
 import domain.Square;
-import domain.Vector;
+import domain.SquareVector;
 import java.util.List;
 
 public class Knight extends Piece {
 
-    private static final List<Vector> vectors = List.of(
-            new Vector(1, 2), new Vector(1, -2), new Vector(-1, 2), new Vector(-1, -2),
-            new Vector(2, 1), new Vector(2, -1), new Vector(-2, 1), new Vector(-2, -1));
+    private static final List<SquareVector> SQUARE_VECTORS = List.of(
+            new SquareVector(1, 2), new SquareVector(1, -2), new SquareVector(-1, 2), new SquareVector(-1, -2),
+            new SquareVector(2, 1), new SquareVector(2, -1), new SquareVector(-2, 1), new SquareVector(-2, -1));
     private static final PieceType PIECE_TYPE = PieceType.KNIGHT;
 
-    public Knight(final Color color) {
+    public Knight(final Camp color) {
         super(color);
     }
 
     @Override
-    public List<Square> calculatePath(final Square source, final Square target) {
-        final Vector targetVector = Vector.of(source, target);
+    public boolean canMove(final Square source, final Square target) {
+        final SquareVector targetSquareVector = SquareVector.of(source, target);
 
-        final boolean canMove = vectors.stream()
-                .anyMatch(vector -> vector.equals(targetVector));
-
-        if (canMove) {
-            return List.of(target);
-        }
-
-        return List.of();
+        return SQUARE_VECTORS.stream()
+                .anyMatch(vector -> vector.equals(targetSquareVector));
     }
+
 
     @Override
     public PieceType getPieceType() {

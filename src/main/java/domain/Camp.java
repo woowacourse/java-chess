@@ -1,9 +1,9 @@
 package domain;
 
-public enum Color {
+public enum Camp {
     WHITE, BLACK;
 
-    public Color toggle() {
+    public Camp toggle() {
         if (this == WHITE) {
             return BLACK;
         }

@@ -29,7 +29,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("랭크가 없습니다."));
     }
 
-    public int subtrack(final Rank other) {
+    public int subtract(final Rank other) {
         return this.index - other.index;
     }
 

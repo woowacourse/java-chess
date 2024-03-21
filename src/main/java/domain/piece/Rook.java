@@ -1,33 +1,21 @@
 package domain.piece;
 
-import domain.Color;
+import domain.Camp;
 import domain.Square;
-import domain.Vector;
-import java.util.List;
-import java.util.stream.Stream;
+import domain.SquareVector;
 
 public class Rook extends Piece {
 
     private static final PieceType PIECE_TYPE = PieceType.ROOK;
 
-    public Rook(final Color color) {
+    public Rook(final Camp color) {
         super(color);
     }
 
     @Override
-    public List<Square> calculatePath(final Square source, final Square target) {
-        final Vector vector = Vector.of(source, target);
-
-        if (vector.isHorizontalOrVertical()) {
-            final Vector direction = vector.normalizedVector();
-            final int size = vector.maxAxiosSize();
-
-            return Stream.iterate(source.next(direction.y(), direction.x()), i -> i.next(direction.y(), direction.x()))
-                    .limit(size)
-                    .toList();
-        }
-
-        return List.of();
+    public boolean canMove(final Square source, final Square target) {
+        final SquareVector squareVector = SquareVector.of(source, target);
+        return squareVector.isHorizontalOrVertical();
     }
 
     @Override

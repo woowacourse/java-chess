@@ -5,39 +5,38 @@ import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.PieceType;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class ChessTable {
 
     private static final Map<File, Piece> BLACK_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Color.BLACK),
-            File.B, new Knight(Color.BLACK),
-            File.C, new Bishop(Color.BLACK),
-            File.D, new Queen(Color.BLACK),
-            File.E, new King(Color.BLACK),
-            File.F, new Bishop(Color.BLACK),
-            File.G, new Knight(Color.BLACK),
-            File.H, new Rook(Color.BLACK)
+            File.A, new Rook(Camp.BLACK),
+            File.B, new Knight(Camp.BLACK),
+            File.C, new Bishop(Camp.BLACK),
+            File.D, new Queen(Camp.BLACK),
+            File.E, new King(Camp.BLACK),
+            File.F, new Bishop(Camp.BLACK),
+            File.G, new Knight(Camp.BLACK),
+            File.H, new Rook(Camp.BLACK)
     );
     private static final Map<File, Piece> WHITE_PIECE_TYPE_ORDERS = Map.of(
-            File.A, new Rook(Color.WHITE),
-            File.B, new Knight(Color.WHITE),
-            File.C, new Bishop(Color.WHITE),
-            File.D, new Queen(Color.WHITE),
-            File.E, new King(Color.WHITE),
-            File.F, new Bishop(Color.WHITE),
-            File.G, new Knight(Color.WHITE),
-            File.H, new Rook(Color.WHITE)
+            File.A, new Rook(Camp.WHITE),
+            File.B, new Knight(Camp.WHITE),
+            File.C, new Bishop(Camp.WHITE),
+            File.D, new Queen(Camp.WHITE),
+            File.E, new King(Camp.WHITE),
+            File.F, new Bishop(Camp.WHITE),
+            File.G, new Knight(Camp.WHITE),
+            File.H, new Rook(Camp.WHITE)
     );
 
     private final Map<Square, Piece> pieceSquares;
-    private Color color;
+    private Camp camp;
 
     public ChessTable() {
         this.pieceSquares = new HashMap<>();
@@ -45,15 +44,15 @@ public class ChessTable {
 
     public ChessTable(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
-        this.color = Color.WHITE;
+        this.camp = Camp.WHITE;
     }
 
     public static ChessTable create() {
         final Map<Square, Piece> chessTable = new HashMap<>();
 
         for (final File file : File.values()) {
-            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Color.BLACK));
-            chessTable.put(new Square(Rank.TWO, file), new Pawn(Color.WHITE));
+            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Camp.BLACK));
+            chessTable.put(new Square(Rank.TWO, file), new Pawn(Camp.WHITE));
             chessTable.put(new Square(Rank.EIGHT, file), BLACK_PIECE_TYPE_ORDERS.get(file));
             chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
@@ -62,47 +61,67 @@ public class ChessTable {
     }
 
     public void move(final Square source, final Square target) {
-        if (!pieceSquares.containsKey(source)) {
-            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
-        }
+        validateEmptySource(source);
 
         final Piece sourcePiece = pieceSquares.get(source);
 
-        if (sourcePiece.getColor() != color) {
-            throw new IllegalArgumentException("자기 말이 아닙니다.");
-        }
+        validateCamp(sourcePiece);
 
         if (pieceSquares.containsKey(target)) {
-            final Piece targetPiece = pieceSquares.get(target);
-            if (targetPiece.getColor() == sourcePiece.getColor()) {
-                throw new IllegalArgumentException("갈 수 없는 경로입니다.");
-            }
-
-        }
-        final List<Square> path = sourcePiece.calculatePath(source, target);
-
-        if (path.isEmpty()) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            validateAttack(source, target, sourcePiece);
+        } else {
+            validateMove(source, target, sourcePiece);
         }
 
-        if (sourcePiece.getPieceType() == PieceType.PAWN) {
-            if (pieceSquares.containsKey(target) && (Math.abs(source.getFile().subtract(target.getFile())) != 1)) {
-                throw new IllegalArgumentException();
-            }
-            if (!pieceSquares.containsKey(target) && (Math.abs(source.getFile().subtract(target.getFile())) == 1)) {
-                throw new IllegalArgumentException();
-            }
-        }
-
-        for (final Square square : path) {
-            if (!square.equals(target) && pieceSquares.containsKey(square)) {
-                throw new IllegalArgumentException("갈 수 없는 경로입니다.");
-            }
-        }
+        validateBlocking(source, target);
 
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
-        color = color.toggle();
+        camp = camp.toggle();
+    }
+
+    private void validateEmptySource(final Square source) {
+        if (!pieceSquares.containsKey(source)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+    }
+
+    private void validateCamp(final Piece sourcePiece) {
+        if (sourcePiece.getCamp() != camp) {
+            throw new IllegalArgumentException("자기 말이 아닙니다.");
+        }
+    }
+
+    private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
+        final Piece targetPiece = pieceSquares.get(target);
+        if (targetPiece.getCamp() == sourcePiece.getCamp()) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+        }
+        if (!sourcePiece.canAttack(source, target)) {
+            throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
+        }
+    }
+
+    private void validateMove(final Square source, final Square target, final Piece sourcePiece) {
+        if (!sourcePiece.canMove(source, target)) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+        }
+    }
+
+    private void validateBlocking(final Square source, final Square target) {
+        final SquareVector squareVector = SquareVector.of(source, target);
+        final SquareVector direction = squareVector.scaleDown();
+        final int count = squareVector.divide(direction);
+
+        final Square next = source.next(direction.y(), direction.x());
+        final boolean isBlocking = Stream.iterate(source.next(direction.y(), direction.x()),
+                        i -> i.next(direction.y(), direction.x()))
+                .limit(count - 1)
+                .anyMatch(pieceSquares::containsKey);
+
+        if (isBlocking) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+        }
     }
 
     public Map<Square, Piece> getPieceSquares() {

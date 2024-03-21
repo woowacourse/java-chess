@@ -1,22 +1,25 @@
 package domain.piece;
 
-import domain.Color;
+import domain.Camp;
 import domain.Square;
-import java.util.List;
 
 public abstract class Piece {
 
-    protected final Color color;
+    protected final Camp camp;
 
-    public Piece(final Color color) {
-        this.color = color;
+    public Piece(final Camp camp) {
+        this.camp = camp;
     }
 
-    public abstract List<Square> calculatePath(Square source, Square target);
+    public abstract boolean canMove(Square source, Square target);
+
+    public boolean canAttack(final Square source, final Square target) {
+        return canMove(source, target);
+    }
 
     public abstract PieceType getPieceType();
 
-    public Color getColor() {
-        return color;
+    public Camp getCamp() {
+        return camp;
     }
 }
