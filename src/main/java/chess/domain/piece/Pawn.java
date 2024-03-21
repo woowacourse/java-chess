@@ -28,8 +28,9 @@ public class Pawn extends ChessPiece {
         return PieceType.PAWN;
     }
 
-    private boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
-                                  boolean isSameTeam) {
+    @Override
+    public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                 boolean isSameTeam) {
         Position currentPosition = pieceInfo.getPosition();
         int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
 

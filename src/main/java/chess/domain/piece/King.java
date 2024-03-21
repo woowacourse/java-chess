@@ -12,7 +12,7 @@ public class King extends ChessPiece {
 
     @Override
     public King move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
-        if (isMoveInvalid(newPosition, isSameTeamExist)) {
+        if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeamExist)) {
             return this;
         }
 
@@ -25,7 +25,9 @@ public class King extends ChessPiece {
         return PieceType.KING;
     }
 
-    private boolean isMoveInvalid(Position newPosition, boolean isSameTeamExist) {
+    @Override
+    public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                 boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
 
         return !moveStrategy.canMove(currentPosition, newPosition) || isSameTeamExist;

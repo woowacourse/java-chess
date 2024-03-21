@@ -12,7 +12,7 @@ public class Bishop extends ChessPiece {
 
     @Override
     public Bishop move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
-        if (isMoveInvalid(newPosition, isDisturbed, isSameTeamExist)) {
+        if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeamExist)) {
             return this;
         }
 
@@ -25,7 +25,9 @@ public class Bishop extends ChessPiece {
         return PieceType.BISHOP;
     }
 
-    private boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isSameTeamExist) {
+    @Override
+    public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                 boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
 
         return !moveStrategy.canMove(currentPosition, newPosition) || isDisturbed || isSameTeamExist;

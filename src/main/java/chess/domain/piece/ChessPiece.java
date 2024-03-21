@@ -24,6 +24,10 @@ public abstract class ChessPiece implements Piece {
                                     boolean isSameTeamExist);
 
     @Override
+    public abstract boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                          boolean isSameTeam);
+
+    @Override
     public abstract PieceType getType();
 
     @Override

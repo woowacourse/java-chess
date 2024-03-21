@@ -17,6 +17,12 @@ public class EmptyPiece extends ChessPiece {
     }
 
     @Override
+    public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                                 boolean isSameTeam) {
+        return true;
+    }
+
+    @Override
     public PieceType getType() {
         return PieceType.EMPTY;
     }
