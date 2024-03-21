@@ -69,6 +69,7 @@ public class ChessBoard {
         final Piece currentPiece = findBy(currentPosition);
         if (canCatchByPawn(nextPosition, currentPiece)) {
             catchPiece(nextPosition, currentPiece);
+            return;
         }
 
         checkStrategy(nextPosition, currentPiece);
