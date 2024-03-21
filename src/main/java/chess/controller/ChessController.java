@@ -3,10 +3,12 @@ package chess.controller;
 import chess.domain.ChessBoard;
 import chess.domain.ChessBoardFactory;
 import chess.domain.Position;
-import chess.view.GameStartCommand;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 // TODO: 이름 고민 - er??
 public class ChessController {
@@ -21,27 +23,43 @@ public class ChessController {
 
     public void run() {
         final ChessBoard chessBoard = ChessBoardFactory.makeChessBoard();
+        outputView.printCommandInformation();
+        GameCommand gameCommand = inputView.readGameCommand();
 
-        GameStartCommand gameStartCommand = inputView.readGameStartCommand();
-        if (GameStartCommand.START.equals(gameStartCommand)) {
+        if (GameCommand.START.equals(gameCommand)) {
             outputView.printChessBoard(chessBoard);
+            repeat(chessBoard, this::startGame);
         }
-        
-        // TODO: 검증
-        List<String> positions = inputView.readPositions();
-        String rawSourcePosition = positions.get(0);
-        String rawTargetPosition = positions.get(1);
+    }
 
-        char sourceFile = rawSourcePosition.substring(0, 1).charAt(0);
-        int sourceRank = Integer.parseInt(rawSourcePosition.substring(1, 2));
-        Position source = Position.of(sourceFile, sourceRank);
+    private void startGame(final ChessBoard chessBoard) {
+        GameCommand gameCommand = inputView.readGameCommand();
 
-        char targetFile = rawTargetPosition.substring(0, 1).charAt(0);
-        int targetRank = Integer.parseInt(rawTargetPosition.substring(1, 2));
-        Position target = Position.of(targetFile, targetRank);
+        do {
+            if (GameCommand.MOVE.equals(gameCommand)) {
+                Position source = readPosition();
+                Position target = readPosition();
+                chessBoard.move(source, target);
+                outputView.printChessBoard(chessBoard);
+            }
+        } while (inputView.readGameCommand() != GameCommand.END);
+    }
 
-        chessBoard.move(source, target);
+    private Position readPosition() {
+        String position = inputView.readPosition();
 
-        outputView.printChessBoard(chessBoard);
+        char file = position.substring(0, 1).charAt(0);
+        int rank = Integer.parseInt(position.substring(1, 2));
+
+        return Position.of(file, rank);
+    }
+
+    private void repeat(final ChessBoard chessBoard, final Consumer<ChessBoard> consumer) {
+        try {
+            consumer.accept(chessBoard);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            repeat(chessBoard, consumer);
+        }
     }
 }
