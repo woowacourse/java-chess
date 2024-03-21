@@ -45,14 +45,9 @@ public class BoardFactoryTest {
         expected.put(Square.of(File.g, Rank.ONE), new Piece(PieceType.KNIGHT, ColorType.WHITE));
         expected.put(Square.of(File.h, Rank.ONE), new Piece(PieceType.ROOK, ColorType.WHITE));
 
-        expected.put(Square.of(File.a, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.b, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.c, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.d, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.e, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.f, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.g, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
-        expected.put(Square.of(File.h, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        for (File file : File.values()) {
+            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+        }
 
         expected.put(Square.of(File.a, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
         expected.put(Square.of(File.b, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
@@ -63,14 +58,9 @@ public class BoardFactoryTest {
         expected.put(Square.of(File.g, Rank.EIGHT), new Piece(PieceType.KNIGHT, ColorType.BLACK));
         expected.put(Square.of(File.h, Rank.EIGHT), new Piece(PieceType.ROOK, ColorType.BLACK));
 
-        expected.put(Square.of(File.a, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.b, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.c, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.d, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.e, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.f, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.g, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
-        expected.put(Square.of(File.h, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        for (File file : File.values()) {
+            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+        }
 
         for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
             for (File file : File.values()) {

@@ -120,6 +120,7 @@ public class Board {
 
         if (destinationPiece.isNotEmpty()) {
             board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
+            board.replace(destination, sourcePiece);
             return;
         }
 
