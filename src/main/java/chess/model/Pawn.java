@@ -42,7 +42,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveForwardWith(Distance distance, int displacement) {
-        return distance.isForward() && distance.hasSame(displacement);
+        return distance.isForward(side) && distance.hasSame(displacement);
     }
 
     @Override

@@ -12,9 +12,12 @@ public class Distance {
         this.rankDifference = rankDifference;
     }
 
-    public boolean isForward() {
+    public boolean isForward(Side side) {
         if (fileDifference != 0) {
             return false;
+        }
+        if (side.isUpperSide()) {
+            return rankDifference < 0;
         }
         return rankDifference > 0;
     }
