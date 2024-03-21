@@ -17,13 +17,19 @@ public abstract class SlidingPiece extends Piece {
     protected Set<Square> movableSquaresOf(final Set<Direction> directions, final Square source) {
         Set<Square> squares = new HashSet<>();
         for (final Direction direction : directions) {
-            Optional<Square> next = source.move(direction);
-            while (next.isPresent()) {
-                Square square = next.get();
-                squares.add(square);
-                next = square.move(direction);
-            }
+            squares.addAll(squaresOf(direction, source));
         }
         return Collections.unmodifiableSet(squares);
+    }
+
+    private Set<Square> squaresOf(final Direction direction, final Square source) {
+        Set<Square> squares = new HashSet<>();
+        Optional<Square> next = source.move(direction);
+        while (next.isPresent()) {
+            Square square = next.get();
+            squares.add(square);
+            next = square.move(direction);
+        }
+        return squares;
     }
 }
