@@ -9,35 +9,35 @@ public enum Direction {
     POSITIVE_FILE_POSITIVE_RANK(
             (source, destination) -> source.hasLowerFileThan(destination) &&
                     source.isOnPositiveSlopeDiagonal(destination),
-            position -> position.calculatePositionBy(1, 1)),
+            position -> position.createPositionByDifferencesOf(1, 1)),
     NEGATIVE_FILE_NEGATIVE_RANK(
             (source, destination) -> source.hasHigherFileThan(destination) &&
                     source.isOnPositiveSlopeDiagonal(destination),
-            position -> position.calculatePositionBy(-1, -1)),
+            position -> position.createPositionByDifferencesOf(-1, -1)),
     NEGATIVE_FILE_POSITIVE_RANK(
             (source, destination) -> source.hasHigherFileThan(destination) &&
                     source.isOnNegativeSlopeDiagonal(destination),
-            position -> position.calculatePositionBy(-1, 1)),
+            position -> position.createPositionByDifferencesOf(-1, 1)),
     POSITIVE_FILE_NEGATIVE_RANK(
             (source, destination) -> source.hasLowerFileThan(destination) &&
                     source.isOnNegativeSlopeDiagonal(destination),
-            position -> position.calculatePositionBy(1, -1)),
+            position -> position.createPositionByDifferencesOf(1, -1)),
     SAME_FILE_POSITIVE_RANK(
             (source, destination) -> source.isOnSameFile(destination) &&
                     source.hasLowerRankThan(destination),
-            position -> position.calculatePositionBy(0, 1)),
+            position -> position.createPositionByDifferencesOf(0, 1)),
     SAME_FILE_NEGATIVE_RANK(
             (source, destination) -> source.isOnSameFile(destination) &&
                     source.hasHigherRankThan(destination),
-            position -> position.calculatePositionBy(0, -1)),
+            position -> position.createPositionByDifferencesOf(0, -1)),
     POSITIVE_FILE_SAME_RANK(
             (source, destination) -> source.isOnSameRank(destination) &&
                     source.hasLowerFileThan(destination),
-            position -> position.calculatePositionBy(1, 0)),
+            position -> position.createPositionByDifferencesOf(1, 0)),
     NEGATIVE_FILE_SAME_RANK(
             (source, destination) -> source.isOnSameRank(destination) &&
                     source.hasHigherFileThan(destination),
-            position -> position.calculatePositionBy(-1, 0)),
+            position -> position.createPositionByDifferencesOf(-1, 0)),
     KNIGHT(Position::isOnKnightRoute, UnaryOperator.identity()),
     ;
 

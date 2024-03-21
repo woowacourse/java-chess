@@ -20,7 +20,7 @@ public enum PieceDisplay {
     WHITE_KNIGHT(PieceType.KNIGHT, Color.WHITE, "n"),
     WHITE_BISHOP(PieceType.BISHOP, Color.WHITE, "b"),
     WHITE_PAWN(PieceType.PAWN, Color.WHITE, "p"),
-    EMPTY(null, null, ".");;
+    EMPTY(null, null, ".");
 
     private final PieceAttributes pieceAttributes;
     private final String notation;

@@ -31,7 +31,7 @@ public enum File {
         return number - other.number;
     }
 
-    public File add(int fileDifference) {
+    public File createFileByDifferenceOf(int fileDifference) {
         return Arrays.stream(values())
                 .filter(file -> file.number == number + fileDifference)
                 .findFirst()

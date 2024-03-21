@@ -16,8 +16,9 @@ public class Position {
         return new Position(File.from(fileName), Rank.from(rankNumber));
     }
 
-    public Position calculatePositionBy(int fileDifference, int rankDifference) {
-        return new Position(file.add(fileDifference), rank.add(rankDifference));
+    public Position createPositionByDifferencesOf(int fileDifference, int rankDifference) {
+        return new Position(file.createFileByDifferenceOf(fileDifference),
+                rank.createRankByDifferenceOf(rankDifference));
     }
 
     public boolean isOnSameRank(Position other) {

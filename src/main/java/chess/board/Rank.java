@@ -31,7 +31,7 @@ public enum Rank {
         return number - other.number;
     }
 
-    public Rank add(int rankDifference) {
+    public Rank createRankByDifferenceOf(int rankDifference) {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == number + rankDifference)
                 .findFirst()
