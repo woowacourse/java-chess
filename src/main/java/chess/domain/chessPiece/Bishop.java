@@ -37,7 +37,7 @@ public class Bishop extends Piece{
         int rowDistance = source.calculateRowDistance(target);
         int columnDistance = source.calculateColumnDistance(target);
         if(rowDistance!=columnDistance){
-            throw new IllegalArgumentException("x");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 

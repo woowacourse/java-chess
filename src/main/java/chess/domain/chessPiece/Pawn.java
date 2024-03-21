@@ -34,7 +34,7 @@ public class Pawn extends Piece {
     @Override
     protected void validateMovingRule(Position source, Position target) {
         if (!isMovable(source, target)) {
-            throw new IllegalArgumentException("x");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 

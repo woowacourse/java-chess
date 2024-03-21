@@ -28,7 +28,7 @@ public class Knight extends Piece {
         int colDistance = source.calculateColumnDistance(target);
 
         if (!(rowDistance == 2 && colDistance == 1 || rowDistance == 1 && colDistance == 2)) {
-            throw new IllegalArgumentException("x");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 

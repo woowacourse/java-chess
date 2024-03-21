@@ -35,7 +35,7 @@ public class King extends Piece {
         int rowDistance = source.calculateRowDistance(target);
         int columnDistance = source.calculateColumnDistance(target);
         if (rowDistance != 1 && columnDistance != 1) {
-            throw new IllegalArgumentException("이동불가");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 

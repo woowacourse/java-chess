@@ -33,7 +33,7 @@ public class Queen extends Piece {
         int rowDistance = source.calculateRowDistance(target);
         int columnDistance = source.calculateColumnDistance(target);
         if(source.isDifferentRow(target)&&source.isDifferentColumn(target)&&rowDistance!=columnDistance){
-            throw new IllegalArgumentException("x");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
