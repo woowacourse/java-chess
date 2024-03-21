@@ -25,10 +25,6 @@ public enum KnightDirection {
         return this.row == row && this.col == col;
     }
 
-    public static List<KnightDirection> asList() {
-        return Arrays.stream(values()).toList();
-    }
-
     public static boolean isExist(int row, int col) {
         return Arrays.stream(values())
                 .anyMatch(knightDirection -> knightDirection.hasPosition(row, col));
