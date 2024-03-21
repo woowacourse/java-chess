@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.dto.BoardDTO;
+import chess.dto.PositionDTO;
 import chess.model.board.Board;
 import chess.model.board.InitialBoardGenerator;
 import chess.view.Command;
@@ -30,12 +31,19 @@ public class ChessGame {
         while (gameStatus.isRunning()) {
             play(board);
             control(gameStatus);
+            move(board);
         }
     }
 
     private void play(Board board) {
         BoardDTO boardDTO = new BoardDTO(board);
         outputView.printBoard(boardDTO);
+    }
+
+    private void move(Board board) {
+        PositionDTO sourcePositionDTO = inputView.askPosition();
+        PositionDTO targetPositionDTO = inputView.askPosition();
+        board.move(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
     }
 
     private void control(GameStatus gameStatus) {

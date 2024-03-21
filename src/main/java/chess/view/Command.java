@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum Command {
     START("start"),
+    MOVE("move"),
     END("end");
 
     private final String input;
