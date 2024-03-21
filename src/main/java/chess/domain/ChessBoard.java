@@ -11,11 +11,9 @@ public class ChessBoard {
         this.spaces = spaceGenerator.generateSpaces();
     }
 
-    public void move(String from, String to) {
-        Position fromPosition = Position.of(from);
-        Position toPosition = Position.of(to);
-        Space fromSpace = findSpace(fromPosition);
-        Space toSpace = findSpace(toPosition);
+    public void move(Position from, Position to) {
+        Space fromSpace = findSpace(from);
+        Space toSpace = findSpace(to);
 
         fromSpace.movePiece(toSpace, spaces);
     }

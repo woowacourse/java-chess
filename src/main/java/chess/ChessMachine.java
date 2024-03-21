@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.ChessBoard;
 import chess.domain.ChessSpaceGenerator;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class ChessMachine {
@@ -28,11 +29,11 @@ public class ChessMachine {
         while (true) {
             List<String> fromTo = inputView.getMoveCommand();
 
-            if (fromTo.size() != 2) {
+            if (!fromTo.get(0).equals("move")) {
                 break;
             }
 
-            chessBoard.move(fromTo.get(0), fromTo.get(1));
+            chessBoard.move(Position.of(fromTo.get(1)), Position.of(fromTo.get(2)));
             outputView.printChessBoard(chessBoard);
         }
     }

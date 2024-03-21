@@ -13,7 +13,6 @@ public class InputView {
     }
 
     public List<String> getMoveCommand() {
-        List<String> moveCommand = Arrays.stream(scanner.nextLine().split(" ")).toList();
-        return moveCommand.subList(1, moveCommand.size());
+        return Arrays.stream(scanner.nextLine().split(" ")).toList();
     }
 }
