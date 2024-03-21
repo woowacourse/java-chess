@@ -5,7 +5,7 @@ import static domain.PieceType.KNIGHT;
 
 import java.util.Optional;
 
-class Knight extends AbstractCatchOnMovePiece {
+final class Knight extends AbstractCatchOnMovePiece {
 
     Knight(Position position, Team team) {
         super(position, team);

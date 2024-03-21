@@ -5,7 +5,7 @@ import static domain.PieceType.KING;
 
 import java.util.Optional;
 
-class King extends AbstractCatchOnMovePiece {
+final class King extends AbstractCatchOnMovePiece {
     King(Position position, Team team) {
         super(position, team);
     }
