@@ -6,8 +6,8 @@ import static chess.domain.piece.PieceType.KNIGHT;
 import static chess.domain.piece.PieceType.PAWN;
 import static chess.domain.piece.PieceType.QUEEN;
 import static chess.domain.piece.PieceType.ROOK;
-import static chess.domain.piece.Team.BLACK;
-import static chess.domain.piece.Team.WHITE;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.*;
 
 import chess.domain.piece.Piece;

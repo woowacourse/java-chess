@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static chess.domain.piece.PieceType.*;
-import static chess.domain.piece.Team.BLACK;
-import static chess.domain.piece.Team.WHITE;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 public class PieceExpression {
 

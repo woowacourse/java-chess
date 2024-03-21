@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static chess.domain.piece.PieceType.KING;
-import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Color.BLACK;
 
 class PieceTest {
 

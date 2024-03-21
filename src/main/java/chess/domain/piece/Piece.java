@@ -10,29 +10,29 @@ public class Piece {
     private static final Map<String, Piece> CACHE = new HashMap<>();
 
     private final PieceType pieceType;
-    private final Team team;
+    private final Color color;
 
     static {
         for (final PieceType pieceType : PieceType.values()) {
-            for (Team team : Team.values()) {
-                CACHE.put(toKey(pieceType, team), new Piece(pieceType, team));
+            for (Color color : Color.values()) {
+                CACHE.put(toKey(pieceType, color), new Piece(pieceType, color));
             }
         }
     }
 
     // TODO: private로 변경
-    public Piece(final PieceType pieceType, final Team team) {
+    public Piece(final PieceType pieceType, final Color color) {
         this.pieceType = pieceType;
-        this.team = team;
+        this.color = color;
     }
 
     // TODO: 각 인자로 null이 올 수 없도록 검증 추가 필요
-    public static Piece of(final PieceType pieceType, final Team team) {
-        return CACHE.get(toKey(pieceType, team));
+    public static Piece of(final PieceType pieceType, final Color color) {
+        return CACHE.get(toKey(pieceType, color));
     }
 
-    private static String toKey(final PieceType pieceType, final Team team) {
-        return pieceType.name() + team.name();
+    private static String toKey(final PieceType pieceType, final Color color) {
+        return pieceType.name() + color.name();
     }
 
     @Override
@@ -40,11 +40,11 @@ public class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return pieceType == piece.pieceType && team == piece.team;
+        return pieceType == piece.pieceType && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceType, team);
+        return Objects.hash(pieceType, color);
     }
 }
