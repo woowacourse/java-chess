@@ -30,13 +30,8 @@ public class ChessBoardMaker {
     private static final List<Square> EIGHTH_RANK = List.of(
             Rook.from(Color.BLACK), Knight.from(Color.BLACK), Bishop.from(Color.BLACK), Queen.from(Color.BLACK),
             King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
-    // TODO: 폰을 매번 새로 생성하도록 변경
-    private static final List<Square> SEVENTH_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Pawn.createOnStart(Color.BLACK)));
     private static final List<Square> EMPTY_RANK = new ArrayList<>(
             Collections.nCopies(FILE_SIZE, Empty.getInstance()));
-    private static final List<Square> SECOND_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Pawn.createOnStart(Color.WHITE)));
     private static final List<Square> FIRST_RANK = List.of(
             Rook.from(Color.WHITE), Knight.from(Color.WHITE), Bishop.from(Color.WHITE), Queen.from(Color.WHITE),
             King.from(Color.WHITE), Bishop.from(Color.WHITE), Knight.from(Color.WHITE), Rook.from(Color.WHITE));
@@ -49,12 +44,21 @@ public class ChessBoardMaker {
     private Queue<Square> makeOrderedSquares() {
         Queue<Square> orderedSquares = new ArrayDeque<>();
         orderedSquares.addAll(EIGHTH_RANK);
-        orderedSquares.addAll(SEVENTH_RANK);
+        orderedSquares.addAll(makePawns(Color.BLACK));
         orderedSquares.addAll(makeEmptyRanks());
-        orderedSquares.addAll(SECOND_RANK);
+        orderedSquares.addAll(makePawns(Color.WHITE));
         orderedSquares.addAll(FIRST_RANK);
 
         return orderedSquares;
+    }
+
+    private List<Square> makePawns(Color color) {
+        List<Square> squares = new ArrayList<>();
+        for (int file = 0; file < FILE_SIZE; file++) {
+            squares.add(Pawn.createOnStart(color));
+        }
+
+        return squares;
     }
 
     private List<Square> makeEmptyRanks() {
