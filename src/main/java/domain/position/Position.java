@@ -1,7 +1,7 @@
 package domain.position;
 
 import domain.game.Direction;
-import domain.game.Gap;
+import domain.game.DirectionVector;
 import java.util.Objects;
 
 public class Position {
@@ -19,10 +19,22 @@ public class Position {
     }
 
     public void move(final Direction direction) {
-        int dFile = direction.getFileUnit();
-        int dRank = direction.getRankUnit();
+        int dFile = direction.getFileStepSize();
+        int dRank = direction.getRankStepSize();
         file = file.add(dFile);
         rank = rank.add(dRank);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public DirectionVector subtract(Position target) {
+        return new DirectionVector(file.subtract(target.getFile()), rank.subtract(target.getRank()));
     }
 
     @Override
@@ -41,17 +53,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
-
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Gap subtract(Position target) {
-        return new Gap(file.subtract(target.getFile()), rank.subtract(target.getRank()));
-    }
-
 }

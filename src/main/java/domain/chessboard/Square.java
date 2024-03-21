@@ -10,6 +10,10 @@ public class Square {
         this.position = position;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -25,9 +29,5 @@ public class Square {
     @Override
     public int hashCode() {
         return Objects.hash(position);
-    }
-
-    public Position getPosition() {
-        return position;
     }
 }

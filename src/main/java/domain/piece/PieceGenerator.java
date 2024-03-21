@@ -60,6 +60,5 @@ public class PieceGenerator {
                         new Piece(new PieceType(pieceRoles.get(column), color),
                                 new Position(
                                         new File((char) ('a' + column)), new Rank(row)))).toList();
-
     }
 }

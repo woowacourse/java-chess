@@ -15,18 +15,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class Knight implements PieceRole {
+    public static final int MAX_MOVEMENT = 1;
     private final List<Movable> routes;
 
     public Knight() {
         routes = List.of(
-                new Movable(1, DOWN_LEFT),
-                new Movable(1, DOWN_RIGHT),
-                new Movable(1, LEFT_DOWN),
-                new Movable(1, LEFT_UP),
-                new Movable(1, RIGHT_DOWN),
-                new Movable(1, RIGHT_UP),
-                new Movable(1, UP_LEFT),
-                new Movable(1, UP_RIGHT)
+                new Movable(MAX_MOVEMENT, DOWN_LEFT),
+                new Movable(MAX_MOVEMENT, DOWN_RIGHT),
+                new Movable(MAX_MOVEMENT, LEFT_DOWN),
+                new Movable(MAX_MOVEMENT, LEFT_UP),
+                new Movable(MAX_MOVEMENT, RIGHT_DOWN),
+                new Movable(MAX_MOVEMENT, RIGHT_UP),
+                new Movable(MAX_MOVEMENT, UP_LEFT),
+                new Movable(MAX_MOVEMENT, UP_RIGHT)
         );
     }
 

@@ -10,6 +10,18 @@ public class File {
         this.letter = letter;
     }
 
+    public char getLetter() {
+        return letter;
+    }
+
+    public int subtract(File target) {
+        return letter - target.getLetter();
+    }
+
+    public File add(final int movement) {
+        return new File((char) ((int) letter + movement));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -25,17 +37,5 @@ public class File {
     @Override
     public int hashCode() {
         return Objects.hash(letter);
-    }
-
-    public char getLetter() {
-        return letter;
-    }
-
-    public int subtract(File target) {
-        return letter - target.getLetter();
-    }
-
-    public File add(final int movement) {
-        return new File((char) ((int) letter + movement));
     }
 }

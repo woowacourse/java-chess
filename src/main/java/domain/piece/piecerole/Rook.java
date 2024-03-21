@@ -11,14 +11,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rook implements PieceRole {
+    public static final int MAX_MOVEMENT = 7;
+
     private final List<Movable> routes;
 
     public Rook() {
         routes = List.of(
-                new Movable(7, NORTH),
-                new Movable(7, EAST),
-                new Movable(7, SOUTH),
-                new Movable(7, WEST)
+                new Movable(MAX_MOVEMENT, NORTH),
+                new Movable(MAX_MOVEMENT, EAST),
+                new Movable(MAX_MOVEMENT, SOUTH),
+                new Movable(MAX_MOVEMENT, WEST)
         );
     }
 

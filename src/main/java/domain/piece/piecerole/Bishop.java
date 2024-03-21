@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class Bishop implements PieceRole {
+    public static final int MAX_MOVEMENT = 7;
     private final List<Movable> routes;
 
     public Bishop() {
         routes = List.of(
-                new Movable(7, NORTH_EAST),
-                new Movable(7, NORTH_WEST),
-                new Movable(7, SOUTH_EAST),
-                new Movable(7, SOUTH_WEST)
+                new Movable(MAX_MOVEMENT, NORTH_EAST),
+                new Movable(MAX_MOVEMENT, NORTH_WEST),
+                new Movable(MAX_MOVEMENT, SOUTH_EAST),
+                new Movable(MAX_MOVEMENT, SOUTH_WEST)
         );
     }
 

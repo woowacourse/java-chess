@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class King implements PieceRole {
-
+    public static final int MAX_MOVEMENT = 1;
     private final List<Movable> routes;
 
     public King() {
         routes = List.of(
-                new Movable(1, NORTH),
-                new Movable(1, EAST),
-                new Movable(1, SOUTH),
-                new Movable(1, WEST)
+                new Movable(MAX_MOVEMENT, NORTH),
+                new Movable(MAX_MOVEMENT, EAST),
+                new Movable(MAX_MOVEMENT, SOUTH),
+                new Movable(MAX_MOVEMENT, WEST)
         );
     }
 

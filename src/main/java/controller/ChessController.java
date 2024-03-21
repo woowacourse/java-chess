@@ -20,7 +20,6 @@ public class ChessController {
     private final OutputView outputView;
     public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
-
         this.outputView = outputView;
     }
 

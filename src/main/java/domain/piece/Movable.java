@@ -30,6 +30,10 @@ public class Movable {
         return false;
     }
 
+    public void decreaseMaxMovement() {
+        maxMovement--;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -45,9 +49,5 @@ public class Movable {
     @Override
     public int hashCode() {
         return Objects.hash(direction);
-    }
-
-    public void decreaseMaxMovement() {
-        maxMovement--;
     }
 }

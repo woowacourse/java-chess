@@ -1,6 +1,6 @@
 package domain.position;
 
-import domain.game.Gap;
+import domain.game.DirectionVector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class PositionTest {
         Position source = new Position(new File('b'), new Rank(1));
         Position target = new Position(new File('c'), new Rank(2));
 
-        Assertions.assertThat(source.subtract(target)).isEqualTo(new Gap(-1, -1));
+        Assertions.assertThat(source.subtract(target)).isEqualTo(new DirectionVector(-1, -1));
     }
 
 }

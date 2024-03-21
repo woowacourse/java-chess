@@ -14,6 +14,14 @@ public class Rank {
         return number;
     }
 
+    public int subtract(Rank target) {
+        return number - target.getNumber();
+    }
+
+    public Rank add(final int movement) {
+        return new Rank(number + movement);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -29,13 +37,5 @@ public class Rank {
     @Override
     public int hashCode() {
         return Objects.hash(number);
-    }
-
-    public int subtract(Rank target) {
-        return number - target.getNumber();
-    }
-
-    public Rank add(final int movement) {
-        return new Rank(number + movement);
     }
 }
