@@ -11,20 +11,35 @@ public class Pawn extends Piece {
         super(color, position);
     }
 
-    @Override
-    public boolean canMoveTo(final Position target) {
-        if (isInitPosition()) {
-           return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
-        }
-        return this.position.isForwardWithDistance(target, 1);
-    }
-
-    @Override
-    public Set<Position> getRoute(Position target) {
-        return this.position.getForwardVerticalMiddlePositions(target);
-    }
 
     private boolean isInitPosition() {
         return this.position.isTwoRank(); //TODO 네이밍 고려
+    }
+
+    @Override
+    public boolean canMoveTo(final Position target) {
+        if (color.equals(Color.WHITE)) {
+            if (this.position.isTwoRank()) {
+                return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
+            }
+            return this.position.isForwardWithDistance(target, 1);
+        }
+
+        if (this.position.isSevenRank()) {
+            return this.position.isForwardWithDistance(target, -2) || this.position.isForwardWithDistance(target, -1);
+        }
+        return this.position.isForwardWithDistance(target, -1);
+    }
+
+    //    @Override
+//    public boolean canMoveTo(final Position target) {
+//        if (isInitPosition()) {
+//           return this.position.isForwardWithDistance(target, 2) || this.position.isForwardWithDistance(target, 1);
+//        }
+//        return this.position.isForwardWithDistance(target, 1);
+//    }
+    @Override
+    public Set<Position> getRoute(Position target) {
+        return this.position.getForwardVerticalMiddlePositions(target);
     }
 }

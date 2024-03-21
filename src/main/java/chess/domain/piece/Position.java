@@ -42,6 +42,10 @@ public class Position {
         return isDiagonalWith(target) && this.file.getDistance(target.file) == distance;
     }
 
+    public boolean isSevenRank() {
+        return this.rank.equals(Rank.SEVEN);
+    }
+
     public boolean isTwoRank() {
         return this.rank.equals(Rank.TWO);
     }

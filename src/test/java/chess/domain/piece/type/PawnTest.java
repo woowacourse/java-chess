@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
@@ -11,14 +10,27 @@ import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
-    @DisplayName("폰은 처음에는 앞으로 두칸도 이동할 수 있다.")
+    @DisplayName("화이트폰은 처음에는 앞으로 두칸도 이동할 수 있다.")
     @Test
-    void canMoveTwoStepAtFirst() {
+    void canWhiteMoveTwoStepAtFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 2));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 2));
 
         // when
         boolean canMove = pawn.canMoveTo(new Position('d', 4));
+
+        // then
+        assertThat(canMove).isTrue();
+    }
+
+    @DisplayName("블랙폰은 처음에는 앞으로 두칸도 이동할 수 있다.")
+    @Test
+    void canBlackMoveTwoStepAtFirst() {
+        // given
+        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 7));
+
+        // when
+        boolean canMove = pawn.canMoveTo(new Position('d', 5));
 
         // then
         assertThat(canMove).isTrue();
@@ -28,7 +40,7 @@ class PawnTest {
     @Test
     void canNotMoveTwoStepAtNotFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 4));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 4));
 
         // when
         boolean canMove = pawn.canMoveTo(new Position('d', 6));
@@ -41,7 +53,7 @@ class PawnTest {
     @Test
     void canMoveForwardOneStep() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 5));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
 
         // when
         boolean canMove = pawn.canMoveTo(new Position('d', 6));
@@ -54,7 +66,7 @@ class PawnTest {
     @Test
     void canNotMoveForwardOverOneStep() { // TODO: 한칸인데 뒤로가는 경우 추가
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('d', 5));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position('d', 5));
 
         // when
         boolean canMove = pawn.canMoveTo(new Position('d', 8));
@@ -67,7 +79,7 @@ class PawnTest {
     @Test
     void getRouteLeft() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position('a', 2));
+        final Pawn pawn = new Pawn(Color.WHITE, new Position('a', 2));
 
         // when
         Set<Position> positions = pawn.getRoute(new Position('a', 4));
