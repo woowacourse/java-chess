@@ -76,10 +76,10 @@ public class Board {
     }
 
     public List<PieceResponse> createBoardStatus() {
-        List<PieceResponse> responses = new ArrayList<>();
+        List<PieceResponse> boardStatus = new ArrayList<>();
         for (Entry<Square, Piece> positionToPiece : pieces.entrySet()) {
-            responses.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
+            boardStatus.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
         }
-        return responses;
+        return boardStatus;
     }
 }
