@@ -18,6 +18,16 @@ public abstract class Role {
         this.movingPatterns = new ArrayList<>(movingPatternList);
     }
 
+    public void checkSameCamp(Role role) {
+        if (this.color == role.color){
+            throw new IllegalArgumentException("같은 진영의 기물이 목적 지점에 위치합니다.");
+        }
+    }
+
+    public boolean isOccupied(){
+        return true;
+    }
+
     protected abstract Set<Route> possibleRoutes(Position position);
 
     public Route findRoute(Position source, Position destination) {

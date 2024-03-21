@@ -15,4 +15,9 @@ public final class Square extends Role {
     public Set<Route> possibleRoutes(Position position) {
         return Set.of(new Route(List.of(position)));
     }
+
+    @Override
+    public boolean isOccupied(){
+        return false;
+    }
 }
