@@ -27,7 +27,7 @@ public class PieceMover {
         pawnMoveValidate(sourceSquare, targetSquare, findPiece);
         moveValidateExceptKnight(sourceSquare, targetSquare, findPiece);
 
-        if (findPiece.canMove(sourceSquare, targetSquare)) {
+        if (findPiece.canMove(sourceSquare.getPosition(), targetSquare.getPosition())) {
             update(sourceSquare, targetSquare, findPiece);
         }
     }
@@ -82,7 +82,9 @@ public class PieceMover {
         diagonals.stream()
                 .filter(diagonal -> hasNotPieceAtDiagonal(direction, targetSquare, diagonal))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("대각선에 다른 기물이 없으면 이동할 수 없습니다."));
+                .ifPresent(dir -> {
+                    throw new IllegalStateException("대각선으로 이동할 수 없습니다.");
+                });
     }
 
     private boolean hasNotPieceAtDiagonal(Direction direction, Square targetSquare, Direction diagonal) {
@@ -122,7 +124,7 @@ public class PieceMover {
 
         if (pieceBySquare.containsKey(targetSquare)) {
             Piece targetPiece = pieceBySquare.get(targetSquare);
-            return sourcePiece.isEqualColor(targetPiece);
+            return sourcePiece.isEqualColor(targetPiece.getColor());
         }
         return false;
     }

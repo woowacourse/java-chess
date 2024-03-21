@@ -13,16 +13,20 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class PieceGenerator {
+    private static final int CHESS_BOARD_SIZE = 8;
     private static final List<PieceRole> BACK = List.of(
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
-    public static final int CHESS_BOARD_SIZE = 8;
-    private static final List<PieceRole> FRONT_BLACK = Collections.nCopies(CHESS_BOARD_SIZE, new Pawn(Color.BLACK));
-    private static final List<PieceRole> FRONT_WHITE = Collections.nCopies(CHESS_BOARD_SIZE, new Pawn(Color.WHITE));
+    private static final List<PieceRole> FRONT_BLACK = IntStream.range(1, CHESS_BOARD_SIZE)
+            .mapToObj(number -> (PieceRole) new Pawn(Color.BLACK))
+            .toList();
+
+    private static final List<PieceRole> FRONT_WHITE = IntStream.range(1, CHESS_BOARD_SIZE)
+            .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
+            .toList();
 
     private PieceGenerator() {
     }
@@ -44,25 +48,22 @@ public class PieceGenerator {
 
     public static List<Piece> generateRankPieces(final int row) {
         if (row == 8) {
-            return generateListPiece(BACK, Color.BLACK, row);
+            return generateListPiece(BACK, Color.BLACK);
         }
         if (row == 7) {
-            return generateListPiece(FRONT_BLACK, Color.BLACK, row);
+            return generateListPiece(FRONT_BLACK, Color.BLACK);
         }
         if (row == 2) {
-            return generateListPiece(FRONT_WHITE, Color.WHITE, row);
+            return generateListPiece(FRONT_WHITE, Color.WHITE);
         }
         if (row == 1) {
-            return generateListPiece(BACK, Color.WHITE, row);
+            return generateListPiece(BACK, Color.WHITE);
         }
         return new ArrayList<>();
     }
 
-    private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color, final int row) {
-        return IntStream.range(0, pieceRoles.size())
-                .mapToObj(column ->
-                        new Piece(new PieceType(pieceRoles.get(column), color),
-                                new Position(
-                                        new File((char) ('a' + column)), new Rank(row)))).toList();
+    private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color) {
+        return pieceRoles.stream()
+                .map(pieceRole -> new Piece(pieceRole, color)).toList();
     }
 }

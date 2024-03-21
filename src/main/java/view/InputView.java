@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);

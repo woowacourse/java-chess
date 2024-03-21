@@ -19,7 +19,7 @@ public class File {
     }
 
     public File add(final int movement) {
-        return new File((char) ((int) letter + movement));
+        return new File((char) (letter + movement));
     }
 
     @Override

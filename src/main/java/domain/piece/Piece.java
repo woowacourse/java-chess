@@ -1,69 +1,58 @@
 package domain.piece;
 
-import domain.chessboard.Square;
+import domain.piece.piecerole.Knight;
+import domain.piece.piecerole.Pawn;
+import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
 import java.util.Objects;
 
 public class Piece {
-    private final PieceType pieceType;
-    private Position position;
+    private final PieceRole pieceRole;
+    private final Color color;
 
-    public Piece(final PieceType pieceType, final Position position) {
-        this.pieceType = pieceType;
-        this.position = position;
+    public Piece(final PieceRole pieceRole, final Color color) {
+        this.pieceRole = pieceRole;
+        this.color = color;
     }
 
-    // TODO: setter 해결하기
-    public void move(final Position target) {
-        this.position = target;
+    public boolean isEqualColor(final Color target) {
+        return this.color == target;
     }
 
-    public boolean isEqualPosition(final Position target) {
-        return target.equals(position);
-    }
-
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
-    public boolean isEqualColor(final Piece target) {
-        return pieceType.isEqualColor(target.getColor());
-    }
-
-    public boolean isEqualColor(final Color color) {
-        return pieceType.isEqualColor(color);
-    }
-
-    private Color getColor() {
-        return pieceType.getColor();
-    }
-
-    public boolean canMove(final Square source, final Square target) {
-        return pieceType.canMove(source.getPosition(), target.getPosition());
+    public boolean canMove(final Position source, final Position target) {
+        return pieceRole.canMove(source, target);
     }
 
     public boolean isPawn() {
-        return pieceType.isPawn();
+        return pieceRole instanceof Pawn;
     }
 
     public boolean isNotKnight() {
-        return pieceType.isNotKnight();
+        return !(pieceRole instanceof Knight);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public PieceRole getPieceRole() {
+        return pieceRole;
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Piece piece = (Piece) o;
-        return Objects.equals(pieceType, piece.pieceType);
+        Piece pieceType = (Piece) o;
+        return pieceRole.equals(pieceType.getPieceRole()) && color == pieceType.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceType);
+        return Objects.hash(pieceRole, color);
     }
 }

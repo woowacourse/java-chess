@@ -3,7 +3,6 @@ package domain.game;
 import domain.chessboard.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.PieceType;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
@@ -26,7 +25,7 @@ class PieceMoverTest {
 
         PieceMover pieceMover = new PieceMover();
 
-        Piece piece = new Piece(new PieceType(new King(), Color.BLACK), sourcePosition);
+        Piece piece = new Piece(new King(), Color.BLACK);
         pieceMover.add(sourceSquare, piece);
 
         pieceMover.move(sourceSquare, targetSquare);
@@ -57,8 +56,8 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new King(), Color.BLACK), sourcePosition);
-        Piece targetPiece = new Piece(new PieceType(new Queen(), Color.BLACK), targetPosition);
+        Piece sourcePiece = new Piece(new King(), Color.BLACK);
+        Piece targetPiece = new Piece(new Queen(), Color.BLACK);
 
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
@@ -76,7 +75,7 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new King(), Color.BLACK), sourcePosition);
+        Piece sourcePiece = new Piece(new King(), Color.BLACK);
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
 
@@ -92,8 +91,8 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new Pawn(Color.WHITE), Color.WHITE), sourcePosition);
-        Piece targetPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), targetPosition);
+        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
+        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
@@ -111,8 +110,8 @@ class PieceMoverTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new Pawn(Color.WHITE), Color.WHITE), sourcePosition);
-        Piece targetPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), targetPosition);
+        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
+        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
@@ -136,9 +135,9 @@ class PieceMoverTest {
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
         Square blockSquare = SquareFixture.generateSquare(blockPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new Rook(), Color.WHITE), sourcePosition);
-        Piece targetPiece = new Piece(new PieceType(new Rook(), Color.WHITE), targetPosition);
-        Piece blockPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), blockPosition);
+        Piece sourcePiece = new Piece(new Rook(), Color.WHITE);
+        Piece targetPiece = new Piece(new Rook(), Color.WHITE);
+        Piece blockPiece =  new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
@@ -160,9 +159,9 @@ class PieceMoverTest {
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
         Square blockSquare = SquareFixture.generateSquare(blockPosition);
 
-        Piece sourcePiece = new Piece(new PieceType(new Knight(), Color.WHITE), sourcePosition);
-        Piece targetPiece = new Piece(new PieceType(new Knight(), Color.WHITE), targetPosition);
-        Piece blockPiece = new Piece(new PieceType(new Pawn(Color.BLACK), Color.BLACK), blockPosition);
+        Piece sourcePiece = new Piece(new Knight(), Color.WHITE);
+        Piece targetPiece = new Piece(new Knight(), Color.WHITE);
+        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
 
         PieceMover pieceMover = new PieceMover();
         pieceMover.add(sourceSquare, sourcePiece);
