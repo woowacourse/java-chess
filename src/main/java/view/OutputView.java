@@ -1,6 +1,7 @@
 package view;
 
 import dto.GameBoardDto;
+import model.Camp;
 
 public class OutputView {
 
@@ -21,5 +22,9 @@ public class OutputView {
 
     public void printException(final Exception exception) {
         System.out.printf("[ERROR] %s%n", exception.getMessage());
+    }
+
+    public void printCurrentCame(final Camp camp) {
+        System.out.printf("현재 턴: %s%n%n", camp.toString());
     }
 }

@@ -1,4 +1,3 @@
-import controller.InputController;
 import dto.GameBoardDto;
 import java.util.List;
 import java.util.Scanner;
@@ -11,12 +10,13 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
+
+    private static final InputView inputView = new InputView(new Scanner(System.in));
+    private static final OutputView outputView = new OutputView();
+
     public static void main(String[] args) {
         GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
-        InputView inputView = new InputView(new Scanner(System.in));
-        OutputView outputView = new OutputView();
-        InputController inputController = new InputController(inputView, outputView);
         outputView.printStartMessage();
         Camp camp = Camp.WHITE;
         boolean start = false;
@@ -27,23 +27,32 @@ public class Application {
             if (command == Command.START && start) {
                 throw new IllegalArgumentException("이미 게임이 진행중입니다.");
             }
-            if (command == Command.START && !start) {
+
+            if (command == Command.START) {
                 start = true;
             }
-            if (command == Command.MOVE && start) {
-                List<String> cmd = List.of(input.split(" ")); // TODO 문자로 위치가 주어졌을 때 위치 찾는 테스트 추가하기
-                Moving moving = new Moving(Position.from(cmd.get(1)), Position.from(cmd.get(2)));
+
+            if (!start) {
+                throw new IllegalArgumentException("start하고 시작하세요");
+            }
+
+            if (command == Command.MOVE) {
+                Moving moving = getMoving(input);
                 gameBoard.move(moving, camp);
                 camp = camp.toggle();
             }
             if (command == Command.END) {
                 break;
             }
-            if (!start) {
-                throw new IllegalArgumentException("start하고 시작하세요");
-            }
+
             outputView.printGameBoard(GameBoardDto.from(gameBoard));
-            System.out.printf("현재 턴: %s%n%n", camp.toString());
+            outputView.printCurrentCame(camp);
+
         }
+    }
+
+    private static Moving getMoving(final String input) {
+        List<String> cmd = List.of(input.split(" "));
+        return new Moving(Position.from(cmd.get(1)), Position.from(cmd.get(2)));
     }
 }
