@@ -25,9 +25,8 @@ public class KnightDirection implements Direction {
 
     private List<Position> getPossiblePosition(final Position position) {
         return points.stream()
-                .filter(point -> point.x + position.rank() > 0 && point.x + position.rank() < 9)
-                .filter(point -> point.y + position.file() > 0 && point.y + position.file() < 9)
-                .map(point -> new Position(point.y + position.file(), point.x + position.rank()))
+                .filter(position::isNextPositionInRange)
+                .map(point -> new Position(point.x + position.file(), point.y + position.rank()))
                 .toList();
     }
 }
