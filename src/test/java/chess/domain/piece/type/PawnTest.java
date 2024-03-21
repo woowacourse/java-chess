@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Position;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -60,5 +61,20 @@ class PawnTest {
 
         // then
         assertThat(canMove).isFalse();
+    }
+
+    @DisplayName("처음 시도시 도착 지점이 두칸 앞일 때 위치들을 반환한다.")
+    @Test
+    void getRouteLeft() {
+        // given
+        final Pawn pawn = new Pawn(Color.BLACK, new Position('a', 2));
+
+        // when
+        Set<Position> positions = pawn.getRoute(new Position('a', 4));
+
+        // then
+        assertThat(positions).containsExactlyInAnyOrder(
+                new Position('a', 3)
+        );
     }
 }

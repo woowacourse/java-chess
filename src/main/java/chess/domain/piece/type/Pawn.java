@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Position> getRoute(Position target) {
-        return null;
+        return this.position.getForwardVerticalMiddlePositions(target);
     }
 
     private boolean isInitPosition() {

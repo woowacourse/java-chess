@@ -67,12 +67,25 @@ public class ChessBoard {
     public void move(final Position currentPosition, final Position nextPosition) {
         final Piece currentPiece = findBy(currentPosition);
 
+        if (currentPiece instanceof Pawn) {
+            if (canCatch(currentPiece, nextPosition)) {
+
+            }
+
+            return;
+        }
+
         if (!currentPiece.canMoveTo(nextPosition)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
         }
         if (existInWay(currentPiece, nextPosition)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치로 이동할 수 없습니다.");
         }
+    }
+
+    private boolean canCatch(final Piece currentPiece, final Position nextPosition) {
+        return currentPiece.getPosition().isDiagonalWithDistance(nextPosition, 1) &&
+        currentPiece.isOtherColor(findBy(nextPosition));
     }
 
     private boolean exist(final Position other) {

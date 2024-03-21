@@ -19,6 +19,10 @@ public abstract class Piece {
         return position;
     }
 
+    public boolean isOtherColor(final Piece other) {
+        return this.color != other.color;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
