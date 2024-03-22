@@ -32,10 +32,11 @@ public abstract class MultiStepPiece extends Piece {
             return;
         }
 
-        movablePositions.add(position);
+        movablePositions.add(nextPosition);
 
-        if (!piece.isEmpty()) {
-            addMoves(board, direction, position, movablePositions);
+        if (piece.isEmpty()) {
+            addMoves(board, direction, nextPosition, movablePositions);
         }
+
     }
 }
