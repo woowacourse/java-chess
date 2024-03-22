@@ -36,11 +36,10 @@ public class ChessBoardInitializer {
     }
 
     private Rank convertSpecialPieceRankWithSide(Side side) {
-        Rank rank = Rank.ONE;
         if (side == Side.BLACK) {
-            rank = Rank.EIGHT;
+            return Rank.EIGHT;
         }
-        return rank;
+        return Rank.ONE;
     }
 
     private Map<ChessPosition, Piece> createPawns(Side side) {
@@ -58,10 +57,9 @@ public class ChessBoardInitializer {
     }
 
     private Rank convertPawnRanksWithSide(Side side) {
-        Rank rank = Rank.TWO;
         if (side == Side.BLACK) {
-            rank = Rank.SEVEN;
+            return Rank.SEVEN;
         }
-        return rank;
+        return Rank.TWO;
     }
 }
