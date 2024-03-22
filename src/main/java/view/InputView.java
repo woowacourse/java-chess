@@ -15,14 +15,28 @@ public class InputView {
                 > 게임 종료 : end
                 > 게임 이동 : move source위치 target위치 - 예. move b2 b3%n""");
 
-        final String input = SCANNER.nextLine();
-        return CommandFormat.createStartCommand(input);
+        return readStartOrEnd();
+    }
+
+    private ChessCommand readStartOrEnd() {
+        try {
+            final String input = SCANNER.nextLine();
+            return CommandFormat.createStartCommand(input);
+        } catch (final IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return readStartOrEnd();
+        }
     }
 
     public ChessCommand readMoveCommand() {
         System.out.println();
 
-        final String input = SCANNER.nextLine();
-        return CommandFormat.createMoveCommand(input);
+        try {
+            final String input = SCANNER.nextLine();
+            return CommandFormat.createMoveCommand(input);
+        } catch (final IllegalArgumentException e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return readMoveCommand();
+        }
     }
 }
