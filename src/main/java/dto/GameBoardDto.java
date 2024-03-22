@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 import model.GameBoard;
 import model.piece.Piece;
-import model.position.Column;
+import model.position.File;
 import model.position.Position;
-import model.position.Row;
+import model.position.Rank;
 import view.message.PieceType;
 
 public class GameBoardDto {
@@ -26,7 +26,7 @@ public class GameBoardDto {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Position position = new Position(Column.from(j), Row.from(i));
+                Position position = new Position(File.from(j), Rank.from(i));
                 tmp.get(i).set(j, convertToString(pieceOfPosition, position));
             }
         }
@@ -48,15 +48,15 @@ public class GameBoardDto {
     private static List<List<String>> paddingGuideLine(List<List<String>> board) {
         List<List<String>> result = new ArrayList<>();
         for (int i = 0; i < board.size(); i++) {
-            List<String> row = board.get(i);
-            row.add("   " + (board.size() - i));
-            result.add(row);
+            List<String> rank = board.get(i);
+            rank.add("   " + (board.size() - i));
+            result.add(rank);
         }
         result.add(new ArrayList<>());
-        List<String> columnInfo = new ArrayList<>();
-        Arrays.stream(Column.values())
-                .forEach(column -> columnInfo.add(column.getValue()));
-        result.add(columnInfo);
+        List<String> fileInfo = new ArrayList<>();
+        Arrays.stream(File.values())
+                .forEach(file -> fileInfo.add(file.getValue()));
+        result.add(fileInfo);
         return result;
     }
 

@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Column column;
-    private final Row row;
+    private final File file;
+    private final Rank rank;
 
-    public Position(Column column, Row row) {
-        this.column = column;
-        this.row = row;
+    public Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     public static Position from(String command) {
         validate(command);
-        return new Position(Column.from(command.charAt(0)), Row.from(command.charAt(1)));
+        return new Position(File.from(command.charAt(0)), Rank.from(command.charAt(1)));
     }
 
     private static void validate(final String command) {
@@ -28,21 +28,21 @@ public class Position {
         }
     }
 
-    public int getRowIndex() {
-        return row.getIndex();
+    public int getRankIndex() {
+        return rank.getIndex();
     }
 
-    public int getColumnIndex() {
-        return column.getIndex();
+    public int getFileIndex() {
+        return file.getIndex();
     }
 
-    public Column getColumn() {
-        return column;
+    public File getFile() {
+        return file;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(rank, file);
     }
 
     @Override
@@ -53,11 +53,11 @@ public class Position {
         if (!(target instanceof Position position)) {
             return false;
         }
-        return Objects.equals(row, position.row) && Objects.equals(column, position.column);
+        return Objects.equals(rank, position.rank) && Objects.equals(file, position.file);
     }
 
     @Override
     public String toString() {
-        return column.getValue() + row.getValue() + "  (" + row.getIndex() + ", " + column.getIndex() + ")";
+        return file.getValue() + rank.getValue() + "  (" + rank.getIndex() + ", " + file.getIndex() + ")";
     }
 }

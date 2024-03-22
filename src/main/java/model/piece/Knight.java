@@ -24,15 +24,16 @@ public class Knight extends Piece {
 
     @Override
     protected boolean canMovable(final Moving moving) {
-        final Position currentPosition = moving.getCurrentPosition();
-        final Position nextPosition = moving.getNextPosition();
-
         if (moving.isNotMoved()) {
             return false;
         }
-        final int dRow = Math.abs(currentPosition.getRowIndex() - nextPosition.getRowIndex());
-        final int dColumn = Math.abs(currentPosition.getColumnIndex() - nextPosition.getColumnIndex());
-        return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
+
+        final int differenceRank = Math.abs(currentPosition.getRankIndex() - nextPosition.getRankIndex());
+        final int differenceFile = Math.abs(currentPosition.getFileIndex() - nextPosition.getFileIndex());
+
+        return differenceRank + differenceFile == 3 && differenceRank != 0 && differenceFile != 0;
     }
 
     @Override

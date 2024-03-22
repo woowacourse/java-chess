@@ -16,25 +16,25 @@ import model.piece.Pawn;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.piece.Rook;
-import model.position.Column;
+import model.position.File;
 import model.position.Moving;
 import model.position.Position;
-import model.position.Row;
+import model.position.Rank;
 
 public class GameBoard {
 
     // TODO 처음에 각 기물들을 배치해두는 것이 좋을까 아니면 빈 Map 두고 메서드 실행하면 추가하는게 좋을지 고민하기
-    private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
+    private static final Map<File, Function<Camp, Piece>> initPosition = new EnumMap<>(File.class);
 
     static {
-        initPosition.put(Column.A, Rook::new);
-        initPosition.put(Column.B, Knight::new);
-        initPosition.put(Column.C, Bishop::new);
-        initPosition.put(Column.D, Queen::new);
-        initPosition.put(Column.E, King::new);
-        initPosition.put(Column.F, Bishop::new);
-        initPosition.put(Column.G, Knight::new);
-        initPosition.put(Column.H, Rook::new);
+        initPosition.put(File.A, Rook::new);
+        initPosition.put(File.B, Knight::new);
+        initPosition.put(File.C, Bishop::new);
+        initPosition.put(File.D, Queen::new);
+        initPosition.put(File.E, King::new);
+        initPosition.put(File.F, Bishop::new);
+        initPosition.put(File.G, Knight::new);
+        initPosition.put(File.H, Rook::new);
     }
 
     private final Map<Position, Piece> board;
@@ -47,21 +47,21 @@ public class GameBoard {
     }
 
     public void setting() {
-        settingExceptPawn(Camp.BLACK, Row.EIGHT);
-        settingPawn(Camp.BLACK, Row.SEVEN);
-        settingPawn(Camp.WHITE, Row.TWO);
-        settingExceptPawn(Camp.WHITE, Row.ONE);
+        settingExceptPawn(Camp.BLACK, Rank.EIGHT);
+        settingPawn(Camp.BLACK, Rank.SEVEN);
+        settingPawn(Camp.WHITE, Rank.TWO);
+        settingExceptPawn(Camp.WHITE, Rank.ONE);
     }
 
-    private void settingExceptPawn(final Camp camp, Row row) {
-        for (Column column : Column.values()) {
-            board.put(new Position(column, row), initPosition.get(column).apply(camp));
+    private void settingExceptPawn(final Camp camp, Rank rank) {
+        for (File file : File.values()) {
+            board.put(new Position(file, rank), initPosition.get(file).apply(camp));
         }
     }
 
-    private void settingPawn(final Camp camp, final Row row) {
-        for (Column column : Column.values()) {
-            board.put(new Position(column, row), new Pawn(camp));
+    private void settingPawn(final Camp camp, final Rank rank) {
+        for (File file : File.values()) {
+            board.put(new Position(file, rank), new Pawn(camp));
         }
     }
 

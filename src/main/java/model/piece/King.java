@@ -24,19 +24,19 @@ public class King extends Piece {
 
     @Override
     protected boolean canMovable(final Moving moving) {
-        final Position currentPosition = moving.getCurrentPosition();
-        final Position nextPosition = moving.getNextPosition();
-
         if (moving.isNotMoved()) {
             return false;
         }
-        final int currentRow = currentPosition.getRowIndex();
-        final int currentColumn = currentPosition.getColumnIndex();
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
 
-        final int nextRow = nextPosition.getRowIndex();
-        final int nextColumn = nextPosition.getColumnIndex();
+        final int currentRank = currentPosition.getRankIndex();
+        final int currentFile = currentPosition.getFileIndex();
 
-        return Math.abs(nextRow - currentRow) <= 1 && Math.abs(nextColumn - currentColumn) <= 1;
+        final int nextRank = nextPosition.getRankIndex();
+        final int nextFile = nextPosition.getFileIndex();
+
+        return Math.abs(nextRank - currentRank) <= 1 && Math.abs(nextFile - currentFile) <= 1;
     }
 
     @Override

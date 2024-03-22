@@ -6,7 +6,7 @@ import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import model.position.Row;
+import model.position.Rank;
 import view.message.PieceType;
 
 public class Pawn extends Piece {
@@ -17,12 +17,13 @@ public class Pawn extends Piece {
 
     @Override
     public Set<Position> getMoveRoute(final Moving moving) {
-        final Position currentPosition = moving.getCurrentPosition();
-        final Position nextPosition = moving.getNextPosition();
         if (!canMovable(moving)) {
             throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
         }
-        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
+        final Position currentPosition = moving.getCurrentPosition();
+        final Position nextPosition = moving.getNextPosition();
+
+        if (Math.abs(nextPosition.getRankIndex() - currentPosition.getRankIndex()) == 1) {
             return Set.of();
         }
         return getTwoStraightRoute(currentPosition);
@@ -30,9 +31,9 @@ public class Pawn extends Piece {
 
     private Set<Position> getTwoStraightRoute(final Position currentPosition) {
         if (Camp.BLACK == camp) {
-            return Set.of(new Position(currentPosition.getColumn(), Row.SIX));
+            return Set.of(new Position(currentPosition.getFile(), Rank.SIX));
         }
-        return Set.of(new Position(currentPosition.getColumn(), Row.THREE));
+        return Set.of(new Position(currentPosition.getFile(), Rank.THREE));
     }
 
     @Override
@@ -42,29 +43,31 @@ public class Pawn extends Piece {
         }
         final Position currentPosition = moving.getCurrentPosition();
         final Position nextPosition = moving.getNextPosition();
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
-        return isStraight(currentPosition, dColumn, dRow);
+
+        final int differenceRank = currentPosition.getRankIndex() - nextPosition.getRankIndex();
+        final int differenceFile = currentPosition.getFileIndex() - nextPosition.getFileIndex();
+
+        return isStraight(currentPosition, differenceRank, differenceFile);
     }
 
-    private boolean isStraight(final Position currentPosition, final int dColumn, final int dRow) {
-        if (dColumn != 0) {
+    private boolean isStraight(final Position currentPosition, final int differenceRank, final int differenceFile) {
+        if (differenceFile != 0) {
             return false;
         }
         if (Camp.BLACK == camp) {
-            return isBlackTwoStraight(currentPosition, dRow);
+            return isBlackTwoStraight(currentPosition, differenceRank);
         }
-        if (Row.TWO.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
+        if (Rank.TWO.getIndex() == currentPosition.getRankIndex() && differenceRank == 2) {
             return true;
         }
-        return dRow == 1;
+        return differenceRank == 1;
     }
 
-    private boolean isBlackTwoStraight(final Position currentPosition, final int dRow) {
-        if (Row.SEVEN.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
+    private boolean isBlackTwoStraight(final Position currentPosition, final int differenceRank) {
+        if (Rank.SEVEN.getIndex() == currentPosition.getRankIndex() && differenceRank == -2) {
             return true;
         }
-        return dRow == -1;
+        return differenceRank == -1;
     }
 
     @Override
@@ -81,19 +84,21 @@ public class Pawn extends Piece {
         }
         final Position currentPosition = moving.getCurrentPosition();
         final Position nextPosition = moving.getNextPosition();
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
-        return isDiagonal(dColumn, dRow);
+
+        final int differenceRank = currentPosition.getRankIndex() - nextPosition.getRankIndex();
+        final int differenceFile = currentPosition.getFileIndex() - nextPosition.getFileIndex();
+
+        return isDiagonal(differenceRank, differenceFile);
     }
 
-    private boolean isDiagonal(final int dColumn, final int dRow) {
-        if (Math.abs(dColumn) != 1) {
+    private boolean isDiagonal(final int differenceRank, final int differenceFile) {
+        if (Math.abs(differenceFile) != 1) {
             return false;
         }
         if (Camp.BLACK == camp) {
-            return dRow == -1;
+            return differenceRank == -1;
         }
-        return dRow == 1;
+        return differenceRank == 1;
     }
 
     @Override

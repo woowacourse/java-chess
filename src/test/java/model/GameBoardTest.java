@@ -62,7 +62,7 @@ class GameBoardTest {
         }
 
         for (Entry<Position, Piece> entry : board.entrySet()) {
-            res[entry.getKey().getRowIndex()][entry.getKey().getColumnIndex()] = entry.getValue()
+            res[entry.getKey().getRankIndex()][entry.getKey().getFileIndex()] = entry.getValue()
                     .toString();
         }
 

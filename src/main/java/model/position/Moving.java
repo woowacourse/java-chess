@@ -1,7 +1,7 @@
 package model.position;
 
-import static model.position.Direction.dColumn;
-import static model.position.Direction.dRow;
+import static model.position.Direction.DIRECTION_FILE;
+import static model.position.Direction.DIRECTION_RANK;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -17,27 +17,27 @@ public class Moving {
     }
 
     public boolean isHorizontal() {
-        final int currentRow = currentPosition.getRowIndex();
-        final int nextRow = nextPosition.getRowIndex();
+        final int currentRank = currentPosition.getRankIndex();
+        final int nextRank = nextPosition.getRankIndex();
 
-        return currentRow == nextRow;
+        return currentRank == nextRank;
     }
 
     public boolean isVertical() {
-        final int currentColumn = currentPosition.getColumnIndex();
-        final int nextColumn = nextPosition.getColumnIndex();
+        final int currentFile = currentPosition.getFileIndex();
+        final int nextFile = nextPosition.getFileIndex();
 
-        return currentColumn == nextColumn;
+        return currentFile == nextFile;
     }
 
     public boolean isDiagonal() {
-        final int currentRow = currentPosition.getRowIndex();
-        final int currentColumn = currentPosition.getColumnIndex();
+        final int currentRank = currentPosition.getRankIndex();
+        final int currentFile = currentPosition.getFileIndex();
 
-        final int nextRow = nextPosition.getRowIndex();
-        final int nextColumn = nextPosition.getColumnIndex();
+        final int nextRank = nextPosition.getRankIndex();
+        final int nextFile = nextPosition.getFileIndex();
 
-        return Math.abs(currentRow - nextRow) == Math.abs(currentColumn - nextColumn);
+        return Math.abs(currentRank - nextRank) == Math.abs(currentFile - nextFile);
     }
 
     public boolean isNotMoved() {
@@ -45,27 +45,27 @@ public class Moving {
     }
 
     public Set<Position> route() {
-        final int currentRow = currentPosition.getRowIndex();
-        final int currentColumn = currentPosition.getColumnIndex();
+        final int currentRank = currentPosition.getRankIndex();
+        final int currentFile = currentPosition.getFileIndex();
         final int index = Direction.from(currentPosition, nextPosition).getIndex();
 
         Set<Position> result = new HashSet<>();
         for (int i = 1; i < distance(); i++) {
-            Row row = Row.from(currentRow + (i * dRow[index]));
-            Column column = Column.from(currentColumn + (i * dColumn[index]));
-            result.add(new Position(column, row));
+            Rank rank = Rank.from(currentRank + (i * DIRECTION_RANK[index]));
+            File file = File.from(currentFile + (i * DIRECTION_FILE[index]));
+            result.add(new Position(file, rank));
         }
         return result;
     }
 
     private int distance() {
-        final int currentRow = currentPosition.getRowIndex();
-        final int currentColumn = currentPosition.getColumnIndex();
+        final int currentRank = currentPosition.getRankIndex();
+        final int currentFile = currentPosition.getFileIndex();
 
-        final int nextRow = nextPosition.getRowIndex();
-        final int nextColumn = nextPosition.getColumnIndex();
+        final int nextRank = nextPosition.getRankIndex();
+        final int nextFile = nextPosition.getFileIndex();
 
-        return Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
+        return Math.max(Math.abs(currentRank - nextRank), Math.abs(currentFile - nextFile));
     }
 
     public Position getCurrentPosition() {

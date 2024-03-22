@@ -4,7 +4,7 @@ import constant.ErrorCode;
 import exception.InvalidPositionException;
 import java.util.Arrays;
 
-public enum Column {
+public enum File {
 
     A("a", 0),
     B("b", 1),
@@ -19,21 +19,21 @@ public enum Column {
     private final String value;
     private final int index;
 
-    Column(final String value, final int index) {
+    File(final String value, final int index) {
         this.value = value;
         this.index = index;
     }
 
-    public static Column from(char input) {
+    public static File from(char input) {
         return Arrays.stream(values())
-                .filter(column -> column.value.equals(String.valueOf(input)))
+                .filter(file -> file.value.equals(String.valueOf(input)))
                 .findFirst()
                 .orElseThrow(() -> new InvalidPositionException(ErrorCode.INVALID_POSITION));
     }
 
-    public static Column from(int targetIndex) {
+    public static File from(int targetIndex) {
         return Arrays.stream(values())
-                .filter(column -> column.index == targetIndex)
+                .filter(file -> file.index == targetIndex)
                 .findFirst()
                 .orElseThrow(() -> new IndexOutOfBoundsException("인덱스 범위 초과"));
     }
