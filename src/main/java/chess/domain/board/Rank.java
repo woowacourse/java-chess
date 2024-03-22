@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class Rank {
+public class Rank {
 
     private static final Map<Integer, Rank> CACHE = new HashMap<>();
     private final int value;
