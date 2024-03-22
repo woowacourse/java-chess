@@ -31,12 +31,26 @@ public class Position {
         return Math.max(calculateRankGap(target), calculateFileGap(target)) == 1;
     }
 
+    public boolean isDistanceAt(final Position target, final int distance) {
+        return calculateRankGap(target) + calculateFileGap(target) == distance;
+    }
+
+    private void validateSamePosition(final Position target) {
+        if (this.equals(target)) {
+            throw new IllegalArgumentException("동일한 위치입니다.");
+        }
+    }
+
     public boolean isUpperRankThan(final Position target) {
         return this.rank.isUpperThan(target.rank);
     }
 
     public boolean isLowerRankThan(final Position target) {
         return this.rank.isLowerThan(target.rank);
+    }
+
+    public boolean isAtSameRank(final Rank rank) {
+        return this.rank.isSame(rank);
     }
 
     boolean isVertical(final Position target) {
@@ -49,22 +63,12 @@ public class Position {
         return calculateFileGap(target) > 0 && calculateRankGap(target) == 0;
     }
 
-    private void validateSamePosition(final Position target) {
-        if (this.equals(target)) {
-            throw new IllegalArgumentException("동일한 위치입니다.");
-        }
-    }
-
-    public int calculateRankGap(final Position target) {
+    int calculateRankGap(final Position target) {
         return Math.abs(rank.subtract(target.rank));
     }
 
-    public int calculateFileGap(final Position target) {
+    int calculateFileGap(final Position target) {
         return Math.abs(file.subtract(target.file));
-    }
-
-    public boolean isAtSameRank(final Rank rank) {
-        return this.rank.isSame(rank);
     }
 
     public Rank rank() {
@@ -90,9 +94,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public boolean isDistanceAt(final Position target, final int distance) {
-        return calculateRankGap(target) + calculateFileGap(target) == distance;
     }
 }

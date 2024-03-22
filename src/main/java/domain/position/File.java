@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public enum File {
     A("a", 0),
     B("b", 1),
@@ -24,24 +27,22 @@ public enum File {
         this.order = order;
     }
 
-    public static File fromName(String name) {
+    public static File fromName(final String name) {
         return Arrays.stream(values())
                 .filter(file -> file.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("rejected value: %s - 존재하지 않은 file입니다.", name)));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 file입니다."));
     }
 
-    public static File fromOrder(int order) {
+    public static File fromOrder(final int order) {
         return Arrays.stream(values())
                 .filter(file -> file.order == order)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("rejected value: %d - 존재하지 않은 file입니다.", order)));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 file입니다."));
     }
 
     public List<File> between(final File file) {
-        final List<File> files = IntStream.range(Math.min(this.order, file.order), Math.max(this.order, file.order))
+        final List<File> files = IntStream.range(min(this.order, file.order), max(this.order, file.order))
                 .skip(1)
                 .mapToObj(File::fromOrder)
                 .collect(Collectors.toList());
@@ -55,7 +56,7 @@ public enum File {
         return this.order > file.order;
     }
 
-    public int subtract(File file) {
+    int subtract(final File file) {
         return this.order - file.order;
     }
 
