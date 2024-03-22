@@ -1,9 +1,14 @@
 package chess.domain;
 
+import chess.view.ColumnMapper;
+import chess.view.RowMapper;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Position {
+
+    private static final int INPUT_COLUMN_INDEX = 0;
+    private static final int INPUT_ROW_INDEX = 1;
 
     private final Row row;
     private final Column column;
@@ -11,6 +16,12 @@ public class Position {
     public Position(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+
+    public static Position from(String positionValue) {
+        Row row = RowMapper.findByInputValue(positionValue.split("")[INPUT_ROW_INDEX]);
+        Column column = ColumnMapper.findByInputValue(positionValue.split("")[INPUT_COLUMN_INDEX]);
+        return new Position(row, column);
     }
 
     public Position calculateNextPosition(Direction direction, int weight) {
