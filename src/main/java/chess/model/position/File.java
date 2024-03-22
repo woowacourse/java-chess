@@ -31,7 +31,7 @@ public enum File {
         return new Difference(this.coordinate - other.coordinate);
     }
 
-    public File findNextFile(int offset) {
+    public File calculateNextFile(int offset) {
         int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)

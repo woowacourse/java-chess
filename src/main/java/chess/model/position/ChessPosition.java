@@ -23,12 +23,12 @@ public class ChessPosition {
         return rank.isPawnInitialRank(side);
     }
 
-    public File findNextFile(int offset) {
-        return file.findNextFile(offset);
+    public File calculateNextFile(int offset) {
+        return file.calculateNextFile(offset);
     }
 
-    public Rank findNextRank(int offset) {
-        return rank.findNextRank(offset);
+    public Rank calculateNextRank(int offset) {
+        return rank.calculateNextRank(offset);
     }
 
     public File getFile() {

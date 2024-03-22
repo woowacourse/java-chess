@@ -27,7 +27,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
-    public Rank findNextRank(int offset) {
+    public Rank calculateNextRank(int offset) {
         int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)

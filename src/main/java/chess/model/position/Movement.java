@@ -86,8 +86,8 @@ public class Movement {
         List<ChessPosition> path = new ArrayList<>();
         ChessPosition prevPosition = source;
         while (path.size() < pathLength) {
-            File nextFile = prevPosition.findNextFile(fileOffset);
-            Rank nextRank = prevPosition.findNextRank(rankOffset);
+            File nextFile = prevPosition.calculateNextFile(fileOffset);
+            Rank nextRank = prevPosition.calculateNextRank(rankOffset);
             prevPosition = new ChessPosition(nextFile, nextRank);
             path.add(prevPosition);
         }
