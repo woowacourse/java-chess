@@ -51,7 +51,7 @@ public class ChessBoard {
 
         final Piece sourcePiece = pieceSquares.get(source);
 
-        validateCamp(sourcePiece);
+        validateTeam(sourcePiece);
 
         if (pieceSquares.containsKey(target)) {
             validateAttack(source, target, sourcePiece);
@@ -72,15 +72,15 @@ public class ChessBoard {
         }
     }
 
-    private void validateCamp(final Piece sourcePiece) {
-        if (sourcePiece.isOppositeCamp(team)) {
+    private void validateTeam(final Piece sourcePiece) {
+        if (sourcePiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
         }
     }
 
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
         final Piece targetPiece = pieceSquares.get(target);
-        if (targetPiece.isSameCamp(sourcePiece)) {
+        if (targetPiece.isSameTeam(sourcePiece)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
         if (sourcePiece.canNotAttack(source, target)) {
