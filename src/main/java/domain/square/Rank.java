@@ -1,4 +1,4 @@
-package domain;
+package domain.square;
 
 import java.util.Arrays;
 

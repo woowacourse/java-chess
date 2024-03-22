@@ -1,7 +1,7 @@
 package domain.command;
 
 import domain.ChessBoard;
-import domain.Square;
+import domain.square.Square;
 
 public class MoveCommand implements ChessCommand {
 

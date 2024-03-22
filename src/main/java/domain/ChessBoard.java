@@ -1,6 +1,9 @@
 package domain;
 
 import domain.piece.*;
+import domain.square.File;
+import domain.square.Rank;
+import domain.square.Square;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,10 +29,6 @@ public class ChessBoard {
 
     private final Map<Square, Piece> pieceSquares;
     private Team team;
-
-    public ChessBoard() {
-        this.pieceSquares = new HashMap<>();
-    }
 
     private ChessBoard(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;

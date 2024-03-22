@@ -1,9 +1,9 @@
 package domain.piece;
 
 import domain.ChessVector;
-import domain.Rank;
-import domain.Square;
 import domain.Team;
+import domain.square.Rank;
+import domain.square.Square;
 
 import java.util.List;
 import java.util.Objects;

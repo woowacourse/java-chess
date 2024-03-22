@@ -1,16 +1,17 @@
 package domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import domain.File;
-import domain.Rank;
-import domain.Square;
 import domain.Team;
-import java.util.stream.Stream;
+import domain.square.File;
+import domain.square.Rank;
+import domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
 

@@ -1,4 +1,6 @@
-package domain;
+package domain.square;
+
+import domain.ChessVector;
 
 import java.util.Objects;
 

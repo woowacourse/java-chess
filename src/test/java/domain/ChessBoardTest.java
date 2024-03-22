@@ -1,6 +1,9 @@
 package domain;
 
 import domain.piece.Piece;
+import domain.square.File;
+import domain.square.Rank;
+import domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

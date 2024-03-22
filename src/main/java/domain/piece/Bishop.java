@@ -1,8 +1,8 @@
 package domain.piece;
 
 import domain.ChessVector;
-import domain.Square;
 import domain.Team;
+import domain.square.Square;
 
 import java.util.Objects;
 

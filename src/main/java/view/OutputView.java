@@ -1,9 +1,9 @@
 package view;
 
-import domain.File;
-import domain.Rank;
-import domain.Square;
 import domain.piece.Piece;
+import domain.square.File;
+import domain.square.Rank;
+import domain.square.Square;
 
 import java.util.Arrays;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.Square;
 import domain.Team;
+import domain.square.Square;
 
 public abstract class Piece {
 
