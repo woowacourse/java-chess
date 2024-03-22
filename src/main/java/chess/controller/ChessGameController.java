@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChessGameController {
-    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^move\\s+([a-h][1-8]\\s+[a-h][1-8])$");
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^move\\s+(\\w\\d\\s+\\w\\d)$");
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -74,8 +74,8 @@ public class ChessGameController {
     }
 
     private Position parsePosition(String rawPosition) {
-        int departureColumn = File.findColumn(String.valueOf(rawPosition.charAt(0)));
-        int departureRank = parseRank(String.valueOf(rawPosition.charAt(1)));
+        int departureColumn = File.findFile(String.valueOf(rawPosition.charAt(0)));
+        int departureRank = Rank.findRank(String.valueOf(rawPosition.charAt(1)));
         return new Position(departureColumn, departureRank);
     }
 
@@ -86,13 +86,5 @@ public class ChessGameController {
             return List.of(matcher.group(1).split("\\s+"));
         }
         throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
-    }
-
-    private int parseRank(String rawRank) {
-        try {
-            return Integer.parseInt(rawRank);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("올바른 명령어를 입력해주세요.");
-        }
     }
 }
