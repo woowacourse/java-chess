@@ -13,12 +13,12 @@ import chess.view.RowMapper;
 import java.util.List;
 
 public class ChessGameController {
-    public static final int COMMEND_INDEX = 0;
-    public static final int MOVE_COMMEND_FORMAT_SIZE = 3;
-    public static final int MOVE_FROM_INDEX = 1;
-    public static final int MOVE_TO_INDEX = 2;
-    public static final int INPUT_COLUMN_INDEX = 0;
-    public static final int INPUT_ROW_INDEX = 1;
+    private static final int COMMEND_INDEX = 0;
+    private static final int MOVE_COMMEND_FORMAT_SIZE = 3;
+    private static final int MOVE_FROM_INDEX = 1;
+    private static final int MOVE_TO_INDEX = 2;
+    private static final int INPUT_COLUMN_INDEX = 0;
+    private static final int INPUT_ROW_INDEX = 1;
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
