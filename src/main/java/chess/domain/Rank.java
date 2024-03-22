@@ -1,60 +1,59 @@
 package chess.domain;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class Rank {
+public enum Rank {
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
 
-    private static final int MINIMUM_RANK = 1;
-    private static final int MAXIMUM_RANK = 8;
+    private static final Map<Integer, Rank> CACHED_RANK = Arrays.stream(values())
+            .collect(Collectors.toMap(rank -> rank.position, Function.identity()));
 
-    private final int rank;
+    private final int position;
 
-    public Rank(int rank) {
-        validateRange(rank);
-        this.rank = rank;
+    Rank(final int position) {
+        this.position = position;
     }
 
-    private void validateRange(int rank) {
-        if (isOutOfRange(rank)) {
-            throw new IllegalArgumentException(
-                    String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", MINIMUM_RANK, MAXIMUM_RANK));
+    public static Rank from(final int position) {
+        if (CACHED_RANK.containsKey(position)) {
+            return CACHED_RANK.get(position);
         }
+        throw new IllegalArgumentException("세로 위치의 범위를 벗어났습니다. 입력된 세로 위치 = " + position);
     }
 
-    private boolean isOutOfRange(int rank) {
-        return rank < MINIMUM_RANK || rank > MAXIMUM_RANK;
+    public Rank move(final int distanceToMove) {
+        final int movedPosition = addPositionTo(distanceToMove);
+        return from(movedPosition);
     }
 
-    public int distance(Rank rank) {
-        return this.rank - rank.rank;
+    public boolean canMove(final int distanceToMove) {
+        final int movedPosition = addPositionTo(distanceToMove);
+        return CACHED_RANK.containsKey(movedPosition);
     }
 
-    public boolean isFirstRank() {
-        return rank == 2 || rank == 7;
+    private int addPositionTo(final int distanceToMove) {
+        return position + distanceToMove;
     }
 
-    public Rank add(int directionOfRank) {
-        return new Rank(rank + directionOfRank);
+    public int calculateDistanceFrom(final Rank rank) {
+        return rank.subtractPosition(position);
     }
 
-    public boolean addable(int addRank) {
-        return !isOutOfRange(this.rank + addRank);
+    private int subtractPosition(final int position) {
+        return this.position - position;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Rank rank1 = (Rank) o;
-        return rank == rank1.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank);
+    public boolean isFirstPositionOfPawn() {
+        return this == TWO || this == SEVEN;
     }
 }

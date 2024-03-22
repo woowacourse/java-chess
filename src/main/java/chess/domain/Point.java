@@ -14,16 +14,31 @@ public class Point {
     }
 
     public Point(char file, int rank) {
-        this(new File(file), new Rank(rank));
+        this(new File(file), Rank.from(rank));
     }
 
     public Point(String point) {
-        this(new File(point.charAt(0)), new Rank(point.charAt(1) - '0'));
+        this(new File(point.charAt(0)), Rank.from(point.charAt(1) - '0'));
+    }
+
+    public Direction findRoute(Point destination) {
+        int fileDistance = destination.file.distance(this.file);
+        int rankDistance = rank.calculateDistanceFrom(destination.rank);
+        int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
+        int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
+
+        if (fileDistance == 0 || rankDistance == 0) {
+            return Direction.of(unitFile, unitRank);
+        }
+        if (isDiagonal(destination)) {
+            return Direction.of(unitFile, unitRank);
+        }
+        return Direction.of(fileDistance, rankDistance);
     }
 
     public boolean isDiagonal(Point point) {
         int fileDistance = this.file.distance(point.file);
-        int rankDistance = this.rank.distance(point.rank);
+        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         if (this.equals(point) || rankDistance == 0) {
             return false;
         }
@@ -42,7 +57,7 @@ public class Point {
             return false;
         }
         int fileDistance = this.file.distance(point.file);
-        int rankDistance = this.rank.distance(point.rank);
+        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         int distance = getDistance(fileDistance, rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
             return distance == 2;
@@ -56,50 +71,31 @@ public class Point {
 
     public int multiplyAxis(Point point) {
         int fileDistance = this.file.distance(point.file);
-        int rankDistance = this.rank.distance(point.rank);
+        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         return fileDistance * rankDistance;
     }
 
     public boolean isInitialPointOfPawn() {
-        return rank.isFirstRank();
+        return rank.isFirstPositionOfPawn();
     }
 
-    public Point add(int directionOfFile, int directionOfRank) {
+    public Point add(int directionOfFile, int distanceToMove) {
         File addedFile = file.add(directionOfFile);
-        Rank addedRank = rank.add(directionOfRank);
+        Rank addedRank = rank.move(distanceToMove);
 
         return new Point(addedFile, addedRank);
     }
 
-    public boolean addable(int addFile, int addRank) {
-        return file.addable(addFile) && rank.addable(addRank);
-    }
-
-    public Direction findRoute(Point point) {
-        int fileDistance = point.file.distance(this.file);
-        int rankDistance = point.rank.distance(this.rank);
-        int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
-        int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
-
-        if (fileDistance == 0 || rankDistance == 0) {
-            return Direction.of(unitFile, unitRank);
-        }
-        if (isDiagonal(point)) {
-            return Direction.of(unitFile, unitRank);
-        }
-        return Direction.of(fileDistance, rankDistance);
+    public boolean addable(int addFile, int distanceToMove) {
+        return file.addable(addFile) && rank.canMove(distanceToMove);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Point point = (Point) o;
-        return Objects.equals(file, point.file) && Objects.equals(rank, point.rank);
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Point point = (Point) o;
+        return Objects.equals(file, point.file) && rank == point.rank;
     }
 
     @Override
