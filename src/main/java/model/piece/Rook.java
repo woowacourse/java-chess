@@ -6,7 +6,7 @@ import model.position.Position;
 
 import java.util.Set;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
 
     public Rook(final Camp camp) {
         super(camp, new PieceName("r"));

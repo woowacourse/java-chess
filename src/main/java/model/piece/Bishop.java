@@ -6,7 +6,7 @@ import model.position.Position;
 
 import java.util.Set;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
 
     public Bishop(final Camp camp) {
         super(camp, new PieceName("b"));
