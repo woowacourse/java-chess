@@ -41,13 +41,13 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 File입니다"));
     }
 
-    public static File of(String name) {
+    public static File of(char name) {
         return Arrays.stream(values())
-                .filter(file -> file.name().equals(name))
+                .filter(file -> file.name().equals(String.valueOf(name)))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new IllegalArgumentException("유효하지 않은 File입니다"));
     }
 }

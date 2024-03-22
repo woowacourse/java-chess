@@ -55,10 +55,8 @@ public class Position {
         return positions;
     }
 
-    public static Position of(String positionName) {
-        String fileName = positionName.substring(0, 1);
-        String rankName = positionName.substring(1, 2);
-        return new Position(File.of(fileName), Rank.of(rankName));
+    public static Position fromCoordinate(Coordinate coordinate) {
+        return new Position(coordinate.file(), coordinate.rank());
     }
 
     @Override

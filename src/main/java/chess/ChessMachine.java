@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessSpaceGenerator;
+import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -49,9 +50,15 @@ public class ChessMachine {
             }
 
             if (command.equals(MOVE_COMMAND)) {
-                chessBoard.move(Position.of(fromTo.get(1)), Position.of(fromTo.get(2)));
-                outputView.printChessBoard(chessBoard);
+                move(chessBoard, fromTo.get(1), fromTo.get(2));
             }
         }
+    }
+
+    private void move(ChessBoard chessBoard, String from, String to) {
+        chessBoard.move(
+                Position.fromCoordinate(Coordinate.of(from)),
+                Position.fromCoordinate(Coordinate.of(to)));
+        outputView.printChessBoard(chessBoard);
     }
 }

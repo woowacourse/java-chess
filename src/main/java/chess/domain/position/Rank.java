@@ -42,10 +42,10 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 Rank입니다"));
     }
 
-    public static Rank of(String name) {
-        return of(Integer.parseInt(name));
+    public static Rank of(char name) {
+        return of(name - '0');
     }
 }
