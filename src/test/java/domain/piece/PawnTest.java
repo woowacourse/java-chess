@@ -18,7 +18,7 @@ class PawnTest {
         void 직선_방향으로_한_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatCode(() -> whitePawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -39,7 +39,7 @@ class PawnTest {
         void 초기_위치_일_때_직선_방향으로_두_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.TWO);
             Position target = new Position(File.D, Rank.FOUR);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatCode(() -> whitePawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -49,7 +49,7 @@ class PawnTest {
         void 초기_위치가_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -70,7 +70,7 @@ class PawnTest {
         void 대각선_방향에_적이_없을_때_이동할_경우_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.E, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -92,7 +92,7 @@ class PawnTest {
         void 뒤로_이동하려고_하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.THREE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -103,7 +103,7 @@ class PawnTest {
         void L자_방향으로_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.F, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -114,7 +114,7 @@ class PawnTest {
         void 정의되지_않은_방향으로_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.A, Rank.EIGHT);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -141,7 +141,7 @@ class PawnTest {
         void 직선_방향으로_한_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.FIVE);
             Position target = new Position(File.D, Rank.FOUR);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatCode(() -> blackPawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -162,7 +162,7 @@ class PawnTest {
         void 초기_위치_일_때_직선_방향으로_두_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.SEVEN);
             Position target = new Position(File.D, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatCode(() -> blackPawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -172,7 +172,7 @@ class PawnTest {
         void 초기_위치가_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.SIX);
             Position target = new Position(File.D, Rank.FOUR);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -193,7 +193,7 @@ class PawnTest {
         void 대각선_방향에_적이_없을_때_이동할_경우_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.E, Rank.THREE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -215,7 +215,7 @@ class PawnTest {
         void 뒤로_이동하려고_하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.FIVE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -226,7 +226,7 @@ class PawnTest {
         void L자_방향으로_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FIVE);
             Position target = new Position(File.B, Rank.FOUR);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
@@ -237,7 +237,7 @@ class PawnTest {
         void 정의되지_않은_방향으로_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FIVE);
             Position target = new Position(File.G, Rank.ONE);
-            Piece other = Empty.getInstance();
+            Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)

@@ -23,7 +23,7 @@ public class ChessBoard {
     }
 
     private Piece findByPosition(Position position) {
-        return board.getOrDefault(position, Empty.getInstance());
+        return board.getOrDefault(position, Empty.create());
     }
 
     private void validateEmptyPaths(Position source, Position target) {
