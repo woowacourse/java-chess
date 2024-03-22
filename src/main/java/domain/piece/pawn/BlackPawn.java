@@ -1,16 +1,17 @@
-package domain.piece;
+package domain.piece.pawn;
 
+import domain.piece.Color;
 import domain.position.Position;
 import domain.position.Rank;
 
 public class BlackPawn extends Pawn {
     @Override
-    boolean isMovedBack(Position source, Position target) {
+    protected boolean isMovedBack(Position source, Position target) {
         return source.isLowerRankThan(target);
     }
 
     @Override
-    Rank initialRank() {
+    protected Rank initialRank() {
         return Rank.SEVEN;
     }
 

@@ -1,14 +1,14 @@
 package domain.board;
 
-import domain.piece.Bishop;
-import domain.piece.BlackPawn;
 import domain.piece.Color;
-import domain.piece.King;
-import domain.piece.Knight;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import domain.piece.WhitePawn;
+import domain.piece.nonpawn.Bishop;
+import domain.piece.nonpawn.King;
+import domain.piece.nonpawn.Knight;
+import domain.piece.nonpawn.Queen;
+import domain.piece.nonpawn.Rook;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

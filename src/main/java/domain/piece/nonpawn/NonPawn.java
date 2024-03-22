@@ -1,8 +1,10 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
+import domain.piece.Color;
+import domain.piece.Piece;
 import domain.position.Position;
 
-public abstract class NonPawn implements Piece { // todo 같은 색 기물 잡는거 테스트
+public abstract class NonPawn implements Piece { // todo 같은 색 기물 존재 테스트
     private final Color color;
 
     protected NonPawn(Color color) {
@@ -19,7 +21,7 @@ public abstract class NonPawn implements Piece { // todo 같은 색 기물 잡�
 
     private void validateDifferentColorFromOtherPiece(Piece other) {
         if (this.color() == other.color()) {
-            throw new IllegalArgumentException("같은 색의 기물을 잡을 수 없습니다.");
+            throw new IllegalArgumentException("같은 색의 기물이 존재합니다.");
         }
     }
 

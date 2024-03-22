@@ -3,6 +3,8 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -32,7 +34,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이동 칸에 다른 기물이 있으면 이동할 수 없습니다.");
+                    .hasMessageContaining("이동하려는 칸에 기물이 존재합니다.");
         }
 
         @Test
@@ -144,7 +146,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이동 칸에 다른 기물이 있으면 이동할 수 없습니다.");
+                    .hasMessageContaining("이동하려는 칸에 기물이 존재합니다.");
         }
 
         @Test

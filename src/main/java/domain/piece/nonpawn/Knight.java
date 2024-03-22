@@ -1,5 +1,7 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
+import domain.piece.Color;
+import domain.piece.Type;
 import domain.position.Position;
 
 public class Knight extends NonPawn {

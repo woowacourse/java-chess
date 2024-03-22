@@ -9,11 +9,11 @@ public enum Color {
         return this == BLACK;
     }
 
-    boolean isNeutrality() {
+    public boolean isNeutrality() {
         return this == NEUTRALITY;
     }
 
-    Color opposite() {
+    public Color opposite() {
         if (this == WHITE) {
             return BLACK;
         }

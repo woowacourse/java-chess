@@ -3,10 +3,10 @@ package domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.BlackPawn;
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.Queen;
+import domain.piece.nonpawn.Queen;
+import domain.piece.pawn.BlackPawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

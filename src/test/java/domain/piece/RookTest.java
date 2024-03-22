@@ -3,6 +3,7 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.piece.nonpawn.Rook;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

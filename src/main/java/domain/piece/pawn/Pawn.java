@@ -1,5 +1,7 @@
-package domain.piece;
+package domain.piece.pawn;
 
+import domain.piece.Piece;
+import domain.piece.Type;
 import domain.position.Position;
 import domain.position.Rank;
 
@@ -55,7 +57,7 @@ public abstract class Pawn implements Piece {
 
     private void validateNeutralityPiece(Piece other) {
         if (!other.color().isNeutrality()) {
-            throw new IllegalArgumentException("이동 칸에 다른 기물이 있으면 이동할 수 없습니다.");
+            throw new IllegalArgumentException("이동하려는 칸에 기물이 존재합니다.");
         }
     }
 
@@ -67,9 +69,9 @@ public abstract class Pawn implements Piece {
         }
     }
 
-    abstract boolean isMovedBack(Position source, Position target);
+    protected abstract boolean isMovedBack(Position source, Position target);
 
-    abstract Rank initialRank();
+    protected abstract Rank initialRank();
 
     @Override
     public Type type() {
