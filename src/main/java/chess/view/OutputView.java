@@ -13,6 +13,17 @@ import java.util.Optional;
 public class OutputView {
 
     private static final String SQUARE_FORMAT = ".";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+
+    private OutputView() {
+    }
+
+    public static void printStartMessage() {
+        System.out.printf("%s 체스 게임을 시작합니다. %s", ">", LINE_SEPARATOR);
+        System.out.printf("%s 게임 시작 %s start %s", ">", ":", LINE_SEPARATOR);
+        System.out.printf("%s 게임 종료 %s end %s", ">", ":", LINE_SEPARATOR);
+        System.out.printf("%s 게임 이동 %s move source위치 target위치 - 예. move b2 b3 %s", ">", ":", LINE_SEPARATOR);
+    }
 
     public static void printChessBoard(ChessBoardDto chessBoardDto) {
         Map<Square, Optional<ChessPieceDto>> chessBoard = chessBoardDto.chessBoard();
@@ -56,5 +67,9 @@ public class OutputView {
         if (chessPieceDto == null) {
             System.out.print(SQUARE_FORMAT);
         }
+    }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }
