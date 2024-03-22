@@ -49,24 +49,27 @@ public class ChessBoard {
     }
 
     public void move(final Square source, final Square target) {
-        validateEmptySource(source);
-        validateSameSquare(source, target);
+        validateMove(source, target);
 
         final Piece sourcePiece = pieceSquares.get(source);
+        pieceSquares.put(target, sourcePiece);
+        pieceSquares.remove(source);
 
-        validateTeam(sourcePiece);
+        team = team.turn();
+    }
+
+    private void validateMove(final Square source, final Square target) {
+        validateEmptySource(source);
+        validateSameSquare(source, target);
+        validateTeam(source);
 
         if (pieceSquares.containsKey(target)) {
-            validateAttack(source, target, sourcePiece);
+            validateAttack(source, target);
         } else {
-            validateMove(source, target, sourcePiece);
+            validateDirection(source, target);
         }
 
         validateBlocking(source, target);
-
-        pieceSquares.put(target, sourcePiece);
-        pieceSquares.remove(source);
-        team = team.turn();
     }
 
     private void validateEmptySource(final Square source) {
@@ -81,23 +84,27 @@ public class ChessBoard {
         }
     }
 
-    private void validateTeam(final Piece sourcePiece) {
+    private void validateTeam(final Square source) {
+        final Piece sourcePiece = pieceSquares.get(source);
         if (sourcePiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
         }
     }
 
-    private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
-        final Piece targetPiece = pieceSquares.get(target);
+    private void validateAttack(final Square source, final Square target) {
+        final Piece sourcePiece = pieceSquares.get(source);
         if (sourcePiece.canNotAttack(source, target)) {
             throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
         }
+
+        final Piece targetPiece = pieceSquares.get(target);
         if (targetPiece.isSameTeam(sourcePiece)) {
             throw new IllegalArgumentException("같은 팀을 공격할 수 없습니다.");
         }
     }
 
-    private void validateMove(final Square source, final Square target, final Piece sourcePiece) {
+    private void validateDirection(final Square source, final Square target) {
+        final Piece sourcePiece = pieceSquares.get(source);
         if (sourcePiece.canNotMove(source, target)) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
