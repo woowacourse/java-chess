@@ -49,8 +49,6 @@ class WhitePawnTest {
                 .withMessage("이동할 수 없습니다.");
     }
 
-
-
     @Test
     @DisplayName("(2, 2)일 때 (2, 1)으로는 이동할 수 없다.")
     void findMovablePositionsByInvalidDestinationDown() {
