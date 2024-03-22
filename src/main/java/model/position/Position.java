@@ -43,9 +43,4 @@ public class Position {
         }
         return Objects.equals(row, position.row) && Objects.equals(column, position.column);
     }
-
-    @Override
-    public String toString() {
-        return column.getValue() + row.getValue() + "  (" + row.getIndex() + ", " + column.getIndex() + ")";
-    }
 }

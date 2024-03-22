@@ -8,6 +8,8 @@ import model.position.Row;
 
 public final class BlackPawn extends Pawn {
 
+    private static final int BLACK_PAWN_ONE_STRAIGHT = 1;
+
     public BlackPawn() {
         super(Camp.BLACK);
     }
@@ -19,7 +21,7 @@ public final class BlackPawn extends Pawn {
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
-        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
+        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == BLACK_PAWN_ONE_STRAIGHT) {
             return Set.of();
         }
         return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
@@ -36,15 +38,15 @@ public final class BlackPawn extends Pawn {
     }
 
     private boolean isPawnStraight(final Position currentPosition, final Position nextPosition) {
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final int dRow = nextPosition.getRowIndex() - currentPosition.getRowIndex();
+        final int dColumn = nextPosition.getColumnIndex() - currentPosition.getColumnIndex();
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
+        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
             return true;
         }
-        return dRow == -1;
+        return dRow == 1;
     }
 
     @Override
@@ -65,11 +67,11 @@ public final class BlackPawn extends Pawn {
     }
 
     private boolean isPawnDiagonal(final Position currentPosition, final Position nextPosition) {
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final int dRow = nextPosition.getRowIndex() - currentPosition.getRowIndex();
+        final int dColumn = nextPosition.getColumnIndex() - currentPosition.getColumnIndex();
         if (Math.abs(dColumn) != 1) {
             return false;
         }
-        return dRow == -1;
+        return dRow == 1;
     }
 }

@@ -27,8 +27,8 @@ public final class Knight extends Piece {
         if (moving.isNotMoved()) {
             return false;
         }
-        final int dRow = Math.abs(currentPosition.getRowIndex() - nextPosition.getRowIndex());
-        final int dColumn = Math.abs(currentPosition.getColumnIndex() - nextPosition.getColumnIndex());
+        final int dRow = Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex());
+        final int dColumn = Math.abs(nextPosition.getColumnIndex() - currentPosition.getColumnIndex());
         return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
     }
 }

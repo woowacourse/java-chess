@@ -36,15 +36,15 @@ public final class WhitePawn extends Pawn {
     }
 
     private boolean isPawnStraight(final Position currentPosition, final Position nextPosition) {
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final int dRow = nextPosition.getRowIndex() - currentPosition.getRowIndex();
+        final int dColumn = nextPosition.getColumnIndex() - currentPosition.getColumnIndex();
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
+        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
             return true;
         }
-        return dRow == 1;
+        return dRow == -1;
     }
 
     @Override
@@ -65,11 +65,11 @@ public final class WhitePawn extends Pawn {
     }
 
     private static boolean isPawnDiagonal(final Position currentPosition, final Position nextPosition) {
-        final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
-        final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
+        final int dRow = nextPosition.getRowIndex() - currentPosition.getRowIndex();
+        final int dColumn = nextPosition.getColumnIndex() - currentPosition.getColumnIndex();
         if (Math.abs(dColumn) != 1) {
             return false;
         }
-        return dRow == 1;
+        return dRow == -1;
     }
 }

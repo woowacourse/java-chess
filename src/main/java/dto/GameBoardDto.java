@@ -11,6 +11,8 @@ import model.position.Row;
 
 public class GameBoardDto {
 
+    private static final String EMPTY_POSITION = ".";
+
     private final String value;
 
     private GameBoardDto(final String value) {
@@ -34,7 +36,7 @@ public class GameBoardDto {
             final Piece piece = squarePieces.get(square);
             return piece.getName();
         }
-        return ".";
+        return EMPTY_POSITION;
     }
 
     public String getValue() {

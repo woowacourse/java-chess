@@ -38,7 +38,7 @@ public class Moving {
         final int nextRow = nextPosition.getRowIndex();
         final int nextColumn = nextPosition.getColumnIndex();
 
-        return Math.abs(currentRow - nextRow) == Math.abs(currentColumn - nextColumn);
+        return Math.abs(nextRow - currentRow) == Math.abs(nextColumn - currentColumn);
     }
 
     public boolean isNotMoved() {
@@ -66,7 +66,7 @@ public class Moving {
         final int nextRow = nextPosition.getRowIndex();
         final int nextColumn = nextPosition.getColumnIndex();
 
-        return Math.max(Math.abs(currentRow - nextRow), Math.abs(currentColumn - nextColumn));
+        return Math.max(Math.abs(nextRow - currentRow), Math.abs(nextColumn - currentColumn));
     }
 
     public Position getCurrentPosition() {
@@ -92,12 +92,5 @@ public class Moving {
     @Override
     public int hashCode() {
         return Objects.hash(currentPosition, nextPosition);
-    }
-
-    @Override
-    public String toString() {
-        return "Moving[" +
-                "currentPosition=" + currentPosition + ", " +
-                "nextPosition=" + nextPosition + ']';
     }
 }
