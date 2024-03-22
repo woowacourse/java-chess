@@ -22,8 +22,27 @@ public class Board {
         pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
     }
 
-    public void placePiece(Position currentPosition, Piece piece) {
-        board.put(currentPosition, piece);
+    public void movePieceAndRenewBoard(Position source, Position target) {
+        Piece piece = board.get(source);
+
+        Piece movedPiece = movePiece(source, target, piece);
+
+        PieceInfo pieceInfo = movedPiece.getPieceInfo();
+        board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
+        board.put(pieceInfo.getPosition(), movedPiece);
+    }
+
+    public boolean isSameTeamFromPosition(Position position, Team team) {
+        Piece piece = board.get(position);
+
+        return piece.isSameTeam(team);
+    }
+
+    private Piece movePiece(Position source, Position target, Piece piece) {
+        return piece.move(target,
+                checkObstacleInRange(source, target),
+                checkPieceExist(target),
+                checkSameTeamPieceExist(piece.getTeam(), target));
     }
 
     public boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
@@ -46,27 +65,8 @@ public class Board {
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    public boolean isSameTeamFromPosition(Position position, Team team) {
-        Piece piece = board.get(position);
-
-        return piece.isSameTeam(team);
-    }
-
-    public void movePieceAndRenewBoard(Position source, Position target) {
-        Piece piece = board.get(source);
-
-        Piece movedPiece = movePiece(source, target, piece);
-
-        PieceInfo pieceInfo = movedPiece.getPieceInfo();
-        board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
-        board.put(pieceInfo.getPosition(), movedPiece);
-    }
-
-    private Piece movePiece(Position source, Position target, Piece piece) {
-        return piece.move(target,
-                checkObstacleInRange(source, target),
-                checkPieceExist(target),
-                checkSameTeamPieceExist(piece.getTeam(), target));
+    public void placePiece(Position currentPosition, Piece piece) {
+        board.put(currentPosition, piece);
     }
 
     public Map<Position, Piece> getBoard() {
