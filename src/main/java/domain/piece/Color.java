@@ -5,15 +5,21 @@ public enum Color {
     BLACK,
     NEUTRALITY;
 
-    public boolean isWhite() {
-        return this == WHITE;
-    }
-
     public boolean isBlack() {
         return this == BLACK;
     }
 
-    public boolean isNeutrality() {
+    boolean isNeutrality() {
         return this == NEUTRALITY;
+    }
+
+    Color opposite() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return NEUTRALITY;
     }
 }

@@ -2,31 +2,22 @@ package domain.piece;
 
 import domain.position.Position;
 
-public class Queen extends AbstractPiece {
+public class Queen extends NonPawn {
     public Queen(Color color) {
         super(color);
     }
 
     @Override
-    public void validateMovement(Position source, Position target, Piece other) {
-        if (this.color() == other.color()) {
-            throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
+    protected void validateDirection(Position source, Position target) {
+        if (source.isStraightDirectionTo(target) || source.isDiagonalDirectionTo(target)) {
+            return;
         }
+        throw new IllegalArgumentException("Queen은 대각선 또는 직선 방향으로 이동해야 합니다.");
+    }
 
-        int rankGap = source.calculateRankGap(target);
-        int fileGap = source.calculateFileGap(target);
-        if (rankGap == 0 && fileGap == 0) {
-            throw new IllegalArgumentException(String.format("%s은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.",
-                    this.getClass().getSimpleName()));
-        }
-        if ((rankGap == 0 && fileGap > 0) || (rankGap > 0 && fileGap == 0)) {
-            return;
-        }
-        if (rankGap == fileGap) {
-            return;
-        }
-        throw new IllegalArgumentException(String.format("%s은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.",
-                this.getClass().getSimpleName()));
+    @Override
+    protected void validateMoveCount(Position source, Position target) {
+        // 거리 제한 없음
     }
 
     @Override

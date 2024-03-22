@@ -14,7 +14,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public List<Position> route(Position target) {
+    public List<Position> route(Position target) { // todo direction 삭제하면서 리팩토링
         Direction direction = this.getDirection(target);
         List<Position> positions = new ArrayList<>();
         Position current = this.next(direction);
@@ -26,34 +26,54 @@ public class Position {
     }
 
     private Direction getDirection(Position target) {
-        validateSamePosition(target);
+        validateDifferentPosition(target);
         int rankDiff = target.rank.subtract(this.rank);
         int fileDiff = target.file.subtract(this.file);
         return Direction.of(rankDiff, fileDiff);
     }
 
-    private void validateSamePosition(Position target) {
+    public void validateDifferentPosition(Position target) {
         if (this.equals(target)) {
-            throw new IllegalArgumentException("동일한 위치입니다.");
+            throw new IllegalArgumentException("같은 칸입니다.");
         }
     }
 
-    public Position next(Direction direction) {
+    public Position next(Direction direction) { // todo 삭제
         File nextFile = file.next(direction.fileDiff());
         Rank nextRank = rank.next(direction.rankDiff());
         return new Position(nextFile, nextRank);
     }
 
-    public int calculateRankGap(Position target) {
-        return Math.abs(rank.subtract(target.rank));
+    public boolean isStraightDirectionTo(Position target) {
+        validateDifferentPosition(target);
+        return calculateFileGap(target) == 0 || calculateRankGap(target) == 0;
     }
 
-    public int calculateFileGap(Position target) {
-        return Math.abs(file.subtract(target.file));
+    public boolean isDiagonalDirectionTo(Position target) {
+        validateDifferentPosition(target);
+        return calculateFileGap(target) == calculateRankGap(target);
+    }
+
+    public boolean isKnightDirectionTo(Position target) {
+        validateDifferentPosition(target);
+        return calculateFileGap(target) * calculateRankGap(target) == 2;
+    }
+
+    public boolean isVerticalDirectionTo(Position target) {
+        validateDifferentPosition(target);
+        return calculateFileGap(target) == 0;
     }
 
     public int calculateDistance(Position target) {
         return Math.max(calculateRankGap(target), calculateFileGap(target));
+    }
+
+    private int calculateRankGap(Position target) {
+        return Math.abs(rank.subtract(target.rank));
+    }
+
+    private int calculateFileGap(Position target) {
+        return Math.abs(file.subtract(target.file));
     }
 
     public boolean isUpperRankThan(Position target) {
@@ -64,18 +84,8 @@ public class Position {
         return this.rank.isLowerThan(target.rank);
     }
 
-    public boolean isStraight(Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) == 0;
-    }
-
-    public boolean isDiagonal(Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) == calculateRankGap(target);
-    }
-
-    public boolean isAtSameRank(Rank rank) {
-        return this.rank.isSame(rank);
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
     }
 
     public Rank rank() {

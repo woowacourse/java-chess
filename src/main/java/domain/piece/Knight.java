@@ -2,23 +2,27 @@ package domain.piece;
 
 import domain.position.Position;
 
-public class Knight extends AbstractPiece {
+public class Knight extends NonPawn {
+    private static final int MOVE_COUNT_LIMIT = 2;
+
     public Knight(Color color) {
         super(color);
     }
 
     @Override
-    public void validateMovement(Position source, Position target, Piece other) {
-        if (this.color() == other.color()) {
-            throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
+    protected void validateDirection(Position source, Position target) {
+        if (!source.isKnightDirectionTo(target)) {
+            throw new IllegalArgumentException("Knight는 L자 방향으로 이동해야 합니다.");
         }
-        int rankGap = source.calculateRankGap(target);
-        int fileGap = source.calculateFileGap(target);
-        if (rankGap * fileGap == 2) {
-            return;
+    }
+
+    @Override
+    protected void validateMoveCount(Position source, Position target) {
+        int moveCount = source.calculateDistance(target);
+        if (moveCount != MOVE_COUNT_LIMIT) {
+            throw new IllegalArgumentException(
+                    String.format("Knight는 한 번에 %d칸 이동할 수 있습니다.", MOVE_COUNT_LIMIT));
         }
-        throw new IllegalArgumentException(String.format("%s은 L자 방향으로만 이동할 수 있습니다.",
-                this.getClass().getSimpleName()));
     }
 
     @Override

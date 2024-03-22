@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class PawnTest {
     @Nested
     class 화이트_폰 {
-        private final Piece whitePawn = new Pawn(Color.WHITE);
+        private final Piece whitePawn = new WhitePawn();
 
         @Test
         void 직선_방향으로_한_칸_이동할_수_있다() {
@@ -28,15 +28,15 @@ class PawnTest {
         void 앞이_빈_공간이_아니면_직선_방향으로_이동할_수_없다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.FIVE);
-            Piece other = new Pawn(Color.BLACK);
+            Piece other = new BlackPawn();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
+                    .hasMessageContaining("이동 칸에 다른 기물이 있으면 이동할 수 없습니다.");
         }
 
         @Test
-        void 초기_위치_일_때_직선_방향으로_두_칸_이동할_수_있다() {
+        void 초기_칸일_때_직선_방향으로_두_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.TWO);
             Position target = new Position(File.D, Rank.FOUR);
             Piece other = Empty.create();
@@ -46,21 +46,21 @@ class PawnTest {
         }
 
         @Test
-        void 초기_위치가_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
+        void 초기_칸이_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.create();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
+                    .hasMessageContaining("한 번에 1칸 이동할 수 있습니다.");
         }
 
         @Test
         void 대각선_방향에_적이_있으면_이동할_수_있다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.E, Rank.FIVE);
-            Piece other = new Pawn(Color.BLACK);
+            Piece other = new BlackPawn();
 
             assertThatCode(() -> whitePawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -74,18 +74,18 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
+                    .hasMessageContaining("대각선 방향으로 이동은 상대 기물이 있을 때만 가능합니다.");
         }
 
         @Test
         void 대각선_방향으로_두_칸_이동할_경우_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.F, Rank.SIX);
-            Piece other = new Pawn(Color.BLACK);
+            Piece other = new BlackPawn();
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
+                    .hasMessageContaining("한 번에 1칸 이동할 수 있습니다.");
         }
 
         @Test
@@ -96,7 +96,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 뒤로 이동할 수 없습니다.");
+                    .hasMessageContaining("뒤로 이동할 수 없습니다.");
         }
 
         @Test
@@ -107,7 +107,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
+                    .hasMessageContaining("대각선 또는 앞으로 이동해야 합니다.");
         }
 
         @Test
@@ -118,24 +118,13 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
-        }
-
-        @Test
-        void 같은_팀의_말을_잡으면_예외가_발생한다() {
-            Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(File.E, Rank.FIVE);
-            Piece other = new Pawn(Color.WHITE);
-
-            assertThatThrownBy(() -> whitePawn.validateMovement(source, target, other))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
+                    .hasMessageContaining("대각선 또는 앞으로 이동해야 합니다.");
         }
     }
 
     @Nested
     class 블랙_폰 {
-        private final Piece blackPawn = new Pawn(Color.BLACK);
+        private final Piece blackPawn = new BlackPawn();
 
         @Test
         void 직선_방향으로_한_칸_이동할_수_있다() {
@@ -151,15 +140,15 @@ class PawnTest {
         void 앞이_빈_공간이_아니면_직선_방향으로_이동할_수_없다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.THREE);
-            Piece other = new Pawn(Color.WHITE);
+            Piece other = new WhitePawn();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
+                    .hasMessageContaining("이동 칸에 다른 기물이 있으면 이동할 수 없습니다.");
         }
 
         @Test
-        void 초기_위치_일_때_직선_방향으로_두_칸_이동할_수_있다() {
+        void 초기_칸일_때_직선_방향으로_두_칸_이동할_수_있다() {
             Position source = new Position(File.D, Rank.SEVEN);
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.create();
@@ -169,21 +158,21 @@ class PawnTest {
         }
 
         @Test
-        void 초기_위치가_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
+        void 초기_칸이_아닐_때_직선_방향으로_두_칸_이동하면_예외가_발생한다() {
             Position source = new Position(File.D, Rank.SIX);
             Position target = new Position(File.D, Rank.FOUR);
             Piece other = Empty.create();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
+                    .hasMessageContaining("한 번에 1칸 이동할 수 있습니다.");
         }
 
         @Test
         void 대각선_방향에_적이_있으면_이동할_수_있다() {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.E, Rank.THREE);
-            Piece other = new Pawn(Color.WHITE);
+            Piece other = new WhitePawn();
 
             assertThatCode(() -> blackPawn.validateMovement(source, target, other))
                     .doesNotThrowAnyException();
@@ -197,18 +186,18 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
+                    .hasMessageContaining("대각선 방향으로 이동은 상대 기물이 있을 때만 가능합니다.");
         }
 
         @Test
         void 대각선_방향으로_두_칸_이동할_경우_예외가_발생한다() {
             Position source = new Position(File.D, Rank.FIVE);
             Position target = new Position(File.F, Rank.THREE);
-            Piece other = new Pawn(Color.WHITE);
+            Piece other = new WhitePawn();
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
+                    .hasMessageContaining("한 번에 1칸 이동할 수 있습니다.");
         }
 
         @Test
@@ -219,7 +208,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 뒤로 이동할 수 없습니다.");
+                    .hasMessageContaining("뒤로 이동할 수 없습니다.");
         }
 
         @Test
@@ -230,7 +219,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
+                    .hasMessageContaining("대각선 또는 앞으로 이동해야 합니다.");
         }
 
         @Test
@@ -241,18 +230,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
-        }
-
-        @Test
-        void 같은_팀의_말을_잡으면_예외가_발생한다() {
-            Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(File.E, Rank.THREE);
-            Piece other = new Pawn(Color.BLACK);
-
-            assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
+                    .hasMessageContaining("대각선 또는 앞으로 이동해야 합니다.");
         }
     }
 }
