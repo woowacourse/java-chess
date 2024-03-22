@@ -28,8 +28,7 @@ public class Board {
         final MoveStrategy strategy = currentPiece.strategy();
         final List<Position> movablePositions = strategy.movablePositions(source, directions, this);
 
-        final boolean targetMovable = movablePositions.stream()
-                .anyMatch(position -> position.equals(target));
+        final boolean targetMovable = movablePositions.stream().anyMatch(position -> position.equals(target));
         validateMovablePosition(targetMovable);
         updateBoard(source, target, currentPiece);
         switchTurn();
@@ -47,19 +46,13 @@ public class Board {
 
     private void updateBoard(final Position source, final Position target, final Piece currentPiece) {
         if (squares.get(target).isNotNone()) {
-            validateSameColor(target, currentPiece);
+            squares.get(target).isSameColor(currentPiece);
             squares.remove(target);
             squares.put(target, currentPiece);
             squares.put(source, new None(Color.NONE, Type.NONE));
         }
         squares.put(target, currentPiece);
         squares.put(source, new None(Color.NONE, Type.NONE));
-    }
-
-    private void validateSameColor(final Position target, final Piece currentPiece) {
-        if (squares.get(target).color() == currentPiece.color()) {
-            throw new IllegalArgumentException("같은 팀의 말이 있습니다.");
-        }
     }
 
     public Map<Position, Piece> squares() {

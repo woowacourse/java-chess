@@ -23,6 +23,10 @@ public abstract class Piece {
         return this.color != color;
     }
 
+    public void isSameColor(final Piece piece) {
+        this.color.isSameColor(piece.color);
+    }
+
     public abstract MoveStrategy strategy();
 
     public boolean isNotNone() {

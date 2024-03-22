@@ -28,6 +28,8 @@ public class Position {
                 Rank.of(rankIndex() + direction.rank()));
     }
 
+
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
