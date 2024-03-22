@@ -21,11 +21,11 @@ class RouteTest {
         Route initialRoute = new Route(Direction.N, wholePositions);
 
         List<Position> subPositions = new ArrayList<>();
-        for (int rank = 1; rank < 4; rank++) {
+        for (int rank = 1; rank <= 4; rank++) {
             subPositions.add(Position.of(1, rank));
         }
 
-        Route subRoute = initialRoute.subRoute(Position.of(1, 4));
+        Route subRoute = initialRoute.directRouteTo(Position.of(1, 4));
 
         assertEquals(subPositions, subRoute.getPositions());
     }

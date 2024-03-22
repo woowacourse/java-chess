@@ -35,21 +35,25 @@ class BishopTest {
         Route expectedRouteNE = new Route(NE, List.of(
                 Position.of(5, 5),
                 Position.of(6, 6),
-                Position.of(7, 7)
+                Position.of(7, 7),
+                Position.of(8, 8)
         ));
 
         Route expectedRouteNW = new Route(NW, List.of(
                 Position.of(3, 5),
-                Position.of(2, 6)
+                Position.of(2, 6),
+                Position.of(1, 7)
         ));
 
         Route expectedRouteSE = new Route(SE, List.of(
                 Position.of(5, 3),
-                Position.of(6, 2)
+                Position.of(6, 2),
+                Position.of(7, 1)
         ));
 
         Route expectedRouteSW = new Route(SW, List.of(
-                Position.of(3, 3)
+                Position.of(3, 3),
+                Position.of(2, 2)
         ));
 
         Route actualRouteNE = bishop.findDirectRoute(initialPosition, destNE);

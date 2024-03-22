@@ -1,13 +1,13 @@
 package model.piece.state;
 
+import static model.direction.Direction.E;
 import static model.direction.Direction.N;
 import static model.direction.Direction.NE;
 import static model.direction.Direction.NW;
-import static model.direction.Direction.E;
-import static model.direction.Direction.W;
 import static model.direction.Direction.S;
 import static model.direction.Direction.SE;
 import static model.direction.Direction.SW;
+import static model.direction.Direction.W;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,14 +46,14 @@ class KingTest {
         Route actualRouteW = king.findDirectRoute(initialPosition, destW);
         Route actualRouteNW = king.findDirectRoute(initialPosition, destNW);
 
-        Route expectedRouteN = new Route(N, List.of());
-        Route expectedRouteNE = new Route(NE, List.of());
-        Route expectedRouteE = new Route(E, List.of());
-        Route expectedRouteSE = new Route(SE, List.of());
-        Route expectedRouteS = new Route(S, List.of());
-        Route expectedRouteSW = new Route(SW, List.of());
-        Route expectedRouteW = new Route(W, List.of());
-        Route expectedRouteNW = new Route(NW, List.of());
+        Route expectedRouteN = new Route(N, List.of(Position.of(4, 5)));
+        Route expectedRouteNE = new Route(NE, List.of(Position.of(5, 5)));
+        Route expectedRouteE = new Route(E, List.of(Position.of(5, 4)));
+        Route expectedRouteSE = new Route(SE, List.of(Position.of(5, 3)));
+        Route expectedRouteS = new Route(S, List.of(Position.of(4, 3)));
+        Route expectedRouteSW = new Route(SW, List.of(Position.of(3, 3)));
+        Route expectedRouteW = new Route(W, List.of(Position.of(3, 4)));
+        Route expectedRouteNW = new Route(NW, List.of(Position.of(3, 5)));
 
         assertAll(() -> {
             assertEquals(expectedRouteN, actualRouteN);

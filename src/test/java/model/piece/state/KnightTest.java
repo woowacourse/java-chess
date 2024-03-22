@@ -46,14 +46,14 @@ class KnightTest {
         Route actualRoute7 = knight.findDirectRoute(initialPosition, dest7);
         Route actualRoute8 = knight.findDirectRoute(initialPosition, dest8);
 
-        Route expectedRoute1 = new Route(NNE, List.of());
-        Route expectedRoute2 = new Route(NNW, List.of());
-        Route expectedRoute3 = new Route(SSE, List.of());
-        Route expectedRoute4 = new Route(SSW, List.of());
-        Route expectedRoute5 = new Route(EEN, List.of());
-        Route expectedRoute6 = new Route(EES, List.of());
-        Route expectedRoute7 = new Route(WWN, List.of());
-        Route expectedRoute8 = new Route(WWS, List.of());
+        Route expectedRoute1 = new Route(NNE, List.of(Position.of(5, 6)));
+        Route expectedRoute2 = new Route(NNW, List.of(Position.of(3, 6)));
+        Route expectedRoute3 = new Route(SSE, List.of(Position.of(5, 2)));
+        Route expectedRoute4 = new Route(SSW, List.of(Position.of(3, 2)));
+        Route expectedRoute5 = new Route(EEN, List.of(Position.of(6, 5)));
+        Route expectedRoute6 = new Route(EES, List.of(Position.of(6, 3)));
+        Route expectedRoute7 = new Route(WWN, List.of(Position.of(2, 5)));
+        Route expectedRoute8 = new Route(WWS, List.of(Position.of(2, 3)));
 
         assertAll( () -> {
             assertEquals(expectedRoute1, actualRoute1);

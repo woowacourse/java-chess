@@ -33,10 +33,10 @@ class PawnTest {
         Route actualRoute3 = pawn.findDirectRoute(initialPosition, destination3);
         Route actualRoute4 = pawn.findDirectRoute(initialPosition, destination4);
 
-        Route expectedRoutes1 = new Route(N, List.of(Position.of(5, 3)));
-        Route expectedRoutes2 = new Route(N, List.of());
-        Route expectedRoutes3 = new Route(NE, List.of());
-        Route expectedRoutes4 = new Route(NW, List.of());
+        Route expectedRoutes1 = new Route(N, List.of(Position.of(5, 3), Position.of(5, 4)));
+        Route expectedRoutes2 = new Route(N, List.of(Position.of(5, 3)));
+        Route expectedRoutes3 = new Route(NE, List.of(Position.of(6, 3)));
+        Route expectedRoutes4 = new Route(NW, List.of(Position.of(4, 3)));
 
         assertAll(() -> {
             assertEquals(expectedRoutes1, actualRoute1);
@@ -61,10 +61,10 @@ class PawnTest {
         Route actualRoute3 = pawn.findDirectRoute(initialPosition, destination3);
         Route actualRoute4 = pawn.findDirectRoute(initialPosition, destination4);
 
-        Route expectedRoutes1 = new Route(S, List.of(Position.of(5, 6)));
-        Route expectedRoutes2 = new Route(S, List.of());
-        Route expectedRoutes3 = new Route(SE, List.of());
-        Route expectedRoutes4 = new Route(SW, List.of());
+        Route expectedRoutes1 = new Route(S, List.of(Position.of(5, 6), Position.of(5, 5)));
+        Route expectedRoutes2 = new Route(S, List.of(Position.of(5, 6)));
+        Route expectedRoutes3 = new Route(SE, List.of(Position.of(6, 6)));
+        Route expectedRoutes4 = new Route(SW, List.of(Position.of(4, 6)));
 
         assertAll(() -> {
             assertEquals(expectedRoutes1, actualRoute1);
@@ -88,9 +88,9 @@ class PawnTest {
         Route actualRoute2 = pawn.findDirectRoute(initialPosition, destination2);
         Route actualRoute3 = pawn.findDirectRoute(initialPosition, destination3);
 
-        Route expectedRoutes1 = new Route(N, List.of());
-        Route expectedRoutes2 = new Route(NE, List.of());
-        Route expectedRoutes3 = new Route(NW, List.of());
+        Route expectedRoutes1 = new Route(N, List.of(Position.of(5, 4)));
+        Route expectedRoutes2 = new Route(NE, List.of(Position.of(6, 4)));
+        Route expectedRoutes3 = new Route(NW, List.of(Position.of(4, 4)));
 
         assertAll(() -> {
             assertEquals(expectedRoutes1, actualRoute1);
@@ -112,9 +112,9 @@ class PawnTest {
         Route actualRoute2 = pawn.findDirectRoute(initialPosition, destination2);
         Route actualRoute3 = pawn.findDirectRoute(initialPosition, destination3);
 
-        Route expectedRoutes1 = new Route(S, List.of());
-        Route expectedRoutes2 = new Route(SE, List.of());
-        Route expectedRoutes3 = new Route(SW, List.of());
+        Route expectedRoutes1 = new Route(S, List.of(Position.of(5, 5)));
+        Route expectedRoutes2 = new Route(SE, List.of(Position.of(6, 5)));
+        Route expectedRoutes3 = new Route(SW, List.of(Position.of(4, 5)));
 
         assertAll(() -> {
             assertEquals(expectedRoutes1, actualRoute1);

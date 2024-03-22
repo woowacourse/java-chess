@@ -25,7 +25,7 @@ public abstract class Role {
     public Route findDirectRoute(Position source, Position destination) {
         return findAllPossibleRoutes(source).stream()
                 .filter(route -> route.contains(destination))
-                .map(route -> route.subRoute(destination))
+                .map(route -> route.directRouteTo(destination))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }

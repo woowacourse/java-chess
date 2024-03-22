@@ -14,10 +14,17 @@ public class InfoMapper {
                 .entrySet()
                 .stream()
                 .map(entry -> new PieceInfo(
-                        entry.getKey().file(),
-                        entry.getKey().rank(),
-                        entry.getValue().getRole().getClass().getSimpleName(),
-                        entry.getValue().color().name())
+                        entry.getKey()
+                                .file(),
+                        entry.getKey()
+                                .rank(),
+                        entry.getValue()
+                                .getRole()
+                                .getClass()
+                                .getSimpleName(),
+                        entry.getValue()
+                                .getColor()
+                                .name())
                 )
                 .toList();
     }

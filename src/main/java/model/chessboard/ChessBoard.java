@@ -32,7 +32,7 @@ public class ChessBoard {
                 .toList();
     }
 
-    private void checkTurn(PieceHolder source) {        
+    private void checkTurn(PieceHolder source) {
         if (!source.isSameColor(currentTurnColor)) {
             throw new IllegalArgumentException("상대 턴입니다.");
         }

@@ -22,8 +22,8 @@ public class Route {
         return positions.contains(position);
     }
 
-    public Route subRoute(Position target) {
-        List<Position> subList = positions.subList(0, positions.indexOf(target));
+    public Route directRouteTo(Position destination) {
+        List<Position> subList = positions.subList(0, positions.indexOf(destination) + 1);
         return new Route(direction, subList);
     }
 

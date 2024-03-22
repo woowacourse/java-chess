@@ -49,37 +49,45 @@ class QueenTest {
         Route expectedRouteN = new Route(N, List.of(
                 Position.of(4, 5),
                 Position.of(4, 6),
-                Position.of(4, 7)
+                Position.of(4, 7),
+                Position.of(4, 8)
         ));
         Route expectedRouteS = new Route(S, List.of(
                 Position.of(4, 3),
-                Position.of(4, 2)
+                Position.of(4, 2),
+                destS = Position.of(4, 1)
         ));
         Route expectedRouteE = new Route(E, List.of(
                 Position.of(5, 4),
                 Position.of(6, 4),
-                Position.of(7, 4)
+                Position.of(7, 4),
+                Position.of(8, 4)
         ));
         Route expectedRouteW = new Route(W, List.of(
                 Position.of(3, 4),
-                Position.of(2, 4)
+                Position.of(2, 4),
+                Position.of(1, 4)
         ));
         Route expectedRouteNE = new Route(NE, List.of(
                 Position.of(5, 5),
                 Position.of(6, 6),
-                Position.of(7, 7)
+                Position.of(7, 7),
+                Position.of(8, 8)
         ));
         Route expectedRouteNW = new Route(NW, List.of(
                 Position.of(3, 5),
-                Position.of(2, 6)
+                Position.of(2, 6),
+                Position.of(1, 7)
         ));
         Route expectedRouteSE = new Route(SE, List.of(
                 Position.of(5, 3),
-                Position.of(6, 2)
+                Position.of(6, 2),
+                Position.of(7, 1)
         ));
         Route expectedRouteSW = new Route(SW, List.of(
                 Position.of(3, 3),
-                Position.of(2, 2)
+                Position.of(2, 2),
+                Position.of(1, 1)
         ));
 
         assertAll(() -> {

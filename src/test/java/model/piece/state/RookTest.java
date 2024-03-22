@@ -42,20 +42,24 @@ class RookTest {
         Route expectedRouteN = new Route(N, List.of(
                 Position.of(4, 5),
                 Position.of(4, 6),
-                Position.of(4, 7)
+                Position.of(4, 7),
+                Position.of(4, 8)
         ));
         Route expectedRouteS = new Route(S, List.of(
                 Position.of(4, 3),
-                Position.of(4, 2)
+                Position.of(4, 2),
+                Position.of(4, 1)
         ));
         Route expectedRouteE = new Route(E, List.of(
                 Position.of(5, 4),
                 Position.of(6, 4),
-                Position.of(7, 4)
+                Position.of(7, 4),
+                Position.of(8, 4)
         ));
         Route expectedRouteW = new Route(W, List.of(
                 Position.of(3, 4),
-                Position.of(2, 4)
+                Position.of(2, 4),
+                Position.of(1, 4)
         ));
 
         assertAll(() -> {
