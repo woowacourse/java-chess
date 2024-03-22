@@ -9,7 +9,6 @@ public class InputView {
     private static final String END_COMMAND = "end";
     private static final Pattern MOVE_REGEX = Pattern.compile("^move [a-h][1-8] [a-h][1-8]$");
 
-
     private final Scanner scanner = new Scanner(System.in);
 
     public String readCommand() {
