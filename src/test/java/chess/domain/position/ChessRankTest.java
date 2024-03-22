@@ -41,7 +41,14 @@ class ChessRankTest {
         // given
         ChessRank start = ChessRank.ONE;
         ChessRank end = ChessRank.EIGHT;
-        List<ChessRank> expected = List.of(ChessRank.TWO, ChessRank.THREE, ChessRank.FOUR, ChessRank.FIVE, ChessRank.SIX, ChessRank.SEVEN);
+        List<ChessRank> expected = List.of(
+                ChessRank.TWO,
+                ChessRank.THREE,
+                ChessRank.FOUR,
+                ChessRank.FIVE,
+                ChessRank.SIX,
+                ChessRank.SEVEN
+        );
 
         // when
         List<ChessRank> rankBetween = ChessRank.findBetween(start, end);
