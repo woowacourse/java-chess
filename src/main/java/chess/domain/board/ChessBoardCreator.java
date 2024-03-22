@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ChessBoardCreator {
-    // TODO 리플렉션에서 인스턴스 재사용으로 생각해보기
     private static final Map<Piece, List<Position>> INITIAL_BLACK_PIECES_ARRANGEMENT = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
@@ -61,15 +60,18 @@ public class ChessBoardCreator {
 
     public ChessBoard create() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        INITIAL_BLACK_PIECES_ARRANGEMENT.entrySet().stream()
-                .map(entry -> mapPositionToPiece(entry.getKey(), entry.getValue()))
-                .forEach(positionPiece::putAll);
-        INITIAL_WHITE_PIECES_ARRANGEMENT.entrySet().stream()
-                .map(entry -> mapPositionToPiece(entry.getKey(), entry.getValue()))
-                .forEach(positionPiece::putAll);
+        positionPiece.putAll(initializePiecesArrangeMent(INITIAL_BLACK_PIECES_ARRANGEMENT));
+        positionPiece.putAll(initializePiecesArrangeMent(INITIAL_WHITE_PIECES_ARRANGEMENT));
         return new ChessBoard(positionPiece);
     }
 
+    Map<Position, Piece> initializePiecesArrangeMent(Map<Piece, List<Position>> arrangeMent){
+        Map<Position, Piece> positionPiece = new HashMap<>();
+        arrangeMent.entrySet().stream()
+                .map(piecePositions -> mapPositionToPiece(piecePositions.getKey(), piecePositions.getValue()))
+                .forEach(positionPiece::putAll);
+        return positionPiece;
+    }
 
     //TODO: 의미 있는 메서드명 생각해보기
     private Map<Position, Piece> mapPositionToPiece(Piece pieceType, List<Position> positions) {
