@@ -18,7 +18,7 @@ public class ChessBoard {
     public void movePiece(Position source, Position target) {
         Piece sourcePiece = findByPosition(source);
         sourcePiece.validateMovement(source, target, findByPosition(target));
-        validateEmptyPaths(source, target);
+        validatePathClear(source, target);
         moveToTargetPosition(source, target);
     }
 
@@ -26,9 +26,9 @@ public class ChessBoard {
         return board.getOrDefault(position, Empty.create());
     }
 
-    private void validateEmptyPaths(Position source, Position target) {
-        List<Position> paths = source.route(target);
-        if (paths.stream().anyMatch(board::containsKey)) {
+    private void validatePathClear(Position source, Position target) {
+        List<Position> path = source.findPathTo(target);
+        if (path.stream().anyMatch(board::containsKey)) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
         }
     }

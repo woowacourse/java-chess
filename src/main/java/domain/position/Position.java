@@ -1,9 +1,9 @@
 package domain.position;
 
-import domain.movement.Direction;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Position {
     private final File file;
@@ -14,34 +14,48 @@ public class Position {
         this.rank = rank;
     }
 
-    public List<Position> route(Position target) { // todo direction 삭제하면서 리팩토링
-        Direction direction = this.getDirection(target);
-        List<Position> positions = new ArrayList<>();
-        Position current = this.next(direction);
-        while (!current.equals(target)) {
-            positions.add(current);
-            current = current.next(direction);
+    public List<Position> findPathTo(Position target) {
+        List<File> files = file.findFilesBetween(target.file);
+        List<Rank> ranks = rank.findRanksBetween(target.rank);
+
+        if (isStraightDirectionTo(target)) {
+            return generateStraightPath(files, ranks);
         }
-        return positions;
+        if (isDiagonalDirectionTo(target)) {
+            return generateDiagonalPath(files, ranks);
+        }
+        return Collections.emptyList();
     }
 
-    private Direction getDirection(Position target) {
-        validateDifferentPosition(target);
-        int rankDiff = target.rank.subtract(this.rank);
-        int fileDiff = target.file.subtract(this.file);
-        return Direction.of(rankDiff, fileDiff);
+    private List<Position> generateStraightPath(List<File> files, List<Rank> ranks) {
+        if (files.isEmpty()) {
+            return generateVerticalPath(ranks);
+        }
+        return generateHorizontalPath(files);
+    }
+
+    private List<Position> generateVerticalPath(List<Rank> ranks) {
+        return ranks.stream()
+                .map(rank -> new Position(this.file, rank))
+                .toList();
+    }
+
+    private List<Position> generateHorizontalPath(List<File> files) {
+        return files.stream()
+                .map(file -> new Position(file, this.rank))
+                .toList();
+    }
+
+    private List<Position> generateDiagonalPath(List<File> files, List<Rank> ranks) {
+        return IntStream.range(0, files.size())
+                .mapToObj(i -> new Position(files.get(i), ranks.get(i)))
+                .toList();
     }
 
     public void validateDifferentPosition(Position target) {
         if (this.equals(target)) {
             throw new IllegalArgumentException("같은 칸입니다.");
         }
-    }
-
-    public Position next(Direction direction) { // todo 삭제
-        File nextFile = file.next(direction.fileDiff());
-        Rank nextRank = rank.next(direction.rankDiff());
-        return new Position(nextFile, nextRank);
     }
 
     public boolean isStraightDirectionTo(Position target) {
@@ -69,11 +83,11 @@ public class Position {
     }
 
     private int calculateRankGap(Position target) {
-        return Math.abs(rank.subtract(target.rank));
+        return Math.abs(this.rank.subtract(target.rank));
     }
 
     private int calculateFileGap(Position target) {
-        return Math.abs(file.subtract(target.file));
+        return Math.abs(this.file.subtract(target.file));
     }
 
     public boolean isUpperRankThan(Position target) {

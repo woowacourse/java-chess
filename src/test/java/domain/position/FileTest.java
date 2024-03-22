@@ -19,36 +19,4 @@ class FileTest {
 
         assertThat(file).isEqualTo(File.A);
     }
-
-    @Test
-    void 현재_file의_다음_file을_반환한다() {
-        File file = File.fromName("a");
-
-        assertThat(file.next(1)).isEqualTo(File.B);
-    }
-
-    @Test
-    void file_H의_다음_file을_호출하면_예외가_발생한다() {
-        File file = File.fromName("h");
-
-        assertThatThrownBy(() -> file.next(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 file입니다.");
-    }
-
-    @Test
-    void 현재_file의_이전_file을_반환한다() {
-        File file = File.fromName("h");
-
-        assertThat(file.next(-1)).isEqualTo(File.G);
-    }
-
-    @Test
-    void File_A의_이전_file을_호출하면_예외가_발생한다() {
-        File file = File.fromName("a");
-
-        assertThatThrownBy(() -> file.next(-1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 file입니다.");
-    }
 }

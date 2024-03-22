@@ -1,7 +1,6 @@
 package domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.F, Rank.EIGHT);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.F, Rank.SIX),
@@ -25,7 +24,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.H, Rank.SEVEN);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(1);
         assertThat(positions).containsExactly(new Position(File.G, Rank.SIX));
     }
@@ -35,7 +34,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.G, Rank.FIVE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -44,7 +43,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.H, Rank.THREE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(1);
         assertThat(positions).containsExactly(new Position(File.G, Rank.FOUR));
     }
@@ -54,7 +53,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.F, Rank.TWO);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.F, Rank.FOUR),
@@ -67,7 +66,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.C, Rank.TWO);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.E, Rank.FOUR),
@@ -80,7 +79,7 @@ class PositionTest {
         Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.C, Rank.FIVE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.E, Rank.FIVE),
@@ -93,7 +92,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.A, Rank.EIGHT);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(3);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.D, Rank.FIVE),
@@ -107,7 +106,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.D, Rank.SIX);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -116,7 +115,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.F, Rank.SIX);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -125,7 +124,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.G, Rank.FIVE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -134,7 +133,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.G, Rank.THREE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -143,7 +142,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.F, Rank.TWO);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -152,7 +151,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.D, Rank.TWO);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -161,7 +160,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.C, Rank.THREE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
     }
 
@@ -170,17 +169,7 @@ class PositionTest {
         Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.C, Rank.FIVE);
 
-        List<Position> positions = source.route(target);
+        List<Position> positions = source.findPathTo(target);
         assertThat(positions).hasSize(0);
-    }
-
-    @Test
-    void LEFT_LEFT_LEFT_UP_방향으로_이동하면_예외가_발생한다() {
-        Position source = new Position(File.E, Rank.FOUR);
-        Position target = new Position(File.B, Rank.FIVE);
-
-        assertThatThrownBy(() -> source.route(target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바르지 않은 방향입니다.");
     }
 }

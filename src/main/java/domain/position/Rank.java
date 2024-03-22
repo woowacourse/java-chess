@@ -1,6 +1,9 @@
 package domain.position;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
 
 public enum Rank {
     EIGHT(8),
@@ -11,6 +14,8 @@ public enum Rank {
     THREE(3),
     TWO(2),
     ONE(1);
+
+    private static final int DISCARDING_COUNT_FROM_FRONT = 1;
 
     private final int number;
 
@@ -26,15 +31,19 @@ public enum Rank {
                         String.format("rejected value: %d - 존재하지 않은 rank입니다.", number)));
     }
 
-    public Rank next(int diff) {
-        return fromNumber(this.number + diff);
+    public List<Rank> findRanksBetween(Rank other) {
+        return IntStream.range(Math.min(this.number, other.number), Math.max(this.number, other.number))
+                .skip(DISCARDING_COUNT_FROM_FRONT)
+                .mapToObj(Rank::fromNumber)
+                .sorted(comparator(other))
+                .toList();
     }
 
-    public Rank prev() {
-        if (this == Rank.ONE) {
-            throw new IllegalArgumentException("범위를 벗어난 rank입니다.");
+    private Comparator<Rank> comparator(Rank other) {
+        if (this.isUpperThan(other)) {
+            return (r1, r2) -> r2.number - r1.number;
         }
-        return fromNumber(this.number - 1);
+        return Comparator.comparingInt(r -> r.number);
     }
 
     int subtract(Rank rank) {
@@ -47,10 +56,6 @@ public enum Rank {
 
     boolean isLowerThan(Rank rank) {
         return this.number < rank.number;
-    }
-
-    boolean isSame(Rank rank) {
-        return this.number == rank.number;
     }
 
     public int number() {
