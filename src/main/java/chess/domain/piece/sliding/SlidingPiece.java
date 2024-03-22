@@ -24,6 +24,10 @@ public abstract class SlidingPiece extends Piece {
         }
         return position.findCourses(direction, destination);
     }
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
 
     @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {

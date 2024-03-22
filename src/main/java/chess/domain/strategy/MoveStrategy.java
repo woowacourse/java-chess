@@ -33,7 +33,7 @@ public abstract class MoveStrategy {
     protected boolean isAllBlankCourses(Set<Position> path) {
         return path.stream()
                 .map(board::get)
-                .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
+                .allMatch(Piece::isBlank);
     }
 
     protected void updateBoard(Position from, Position to, Piece currentPiece) {

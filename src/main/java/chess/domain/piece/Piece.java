@@ -34,5 +34,7 @@ public abstract class Piece {
 
     public abstract MoveStrategy strategy(Map<Position, Piece> board);
 
+    public abstract boolean isBlank();
+
     public abstract PieceType pieceType();
 }

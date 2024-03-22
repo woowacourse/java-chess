@@ -30,6 +30,11 @@ public abstract class Pawn extends Piece {
     public abstract boolean isCaptureMove(Position destination);
 
     @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {
         return new PawnMoveStrategy(board);
     }

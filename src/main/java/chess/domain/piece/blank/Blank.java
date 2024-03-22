@@ -30,6 +30,11 @@ public class Blank extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
     public PieceType pieceType() {
         return PieceType.BLANK;
     }

@@ -27,6 +27,11 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {
         return new GeneralMoveStrategy(board);
     }
