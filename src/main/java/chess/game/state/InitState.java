@@ -1,0 +1,24 @@
+package chess.game.state;
+
+public class InitState implements GameState {
+
+    @Override
+    public GameState start() {
+        return new WhiteTurn();
+    }
+
+    @Override
+    public GameState proceedTurn(TurnAction action) {
+        throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
+    }
+
+    @Override
+    public GameState terminate() {
+        return new Terminated();
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+}

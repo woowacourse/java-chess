@@ -8,10 +8,10 @@ public class OutputView {
 
     public void printInitMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작: " + Command.START.getValue());
-        System.out.println("> 게임 종료: " + Command.END.getValue());
-        System.out.print("> 게임 이동 : " + Command.MOVE.getValue() + " source위치 target위치, ");
-        System.out.println("예. " + Command.MOVE.getValue() + " b2 b3");
+        System.out.println("> 게임 시작: " + Command.START.getText());
+        System.out.println("> 게임 종료: " + Command.END.getText());
+        System.out.print("> 게임 이동 : " + Command.MOVE.getText() + " source위치 target위치, ");
+        System.out.println("예. " + Command.MOVE.getText() + " b2 b3");
     }
 
     public void printBoard(List<RankDisplay> rankDisplays) {

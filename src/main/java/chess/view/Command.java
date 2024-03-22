@@ -9,15 +9,15 @@ public enum Command {
     MOVE("move"),
     ;
 
-    private final String value;
+    private final String text;
 
-    Command(String value) {
-        this.value = value;
+    Command(String text) {
+        this.text = text;
     }
 
     public static Command from(String input) {
         return Arrays.stream(values())
-                .filter(command -> command.value.equalsIgnoreCase(input))
+                .filter(command -> command.text.equalsIgnoreCase(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
@@ -34,7 +34,7 @@ public enum Command {
         return this == MOVE;
     }
 
-    public String getValue() {
-        return value;
+    public String getText() {
+        return text;
     }
 }
