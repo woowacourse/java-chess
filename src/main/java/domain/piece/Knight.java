@@ -1,5 +1,14 @@
 package domain.piece;
 
+import static domain.piece.info.Direction.DOWN_DOWN_LEFT;
+import static domain.piece.info.Direction.DOWN_DOWN_RIGHT;
+import static domain.piece.info.Direction.DOWN_LEFT_LEFT;
+import static domain.piece.info.Direction.DOWN_RIGHT_RIGHT;
+import static domain.piece.info.Direction.UP_LEFT_LEFT;
+import static domain.piece.info.Direction.UP_RIGHT_RIGHT;
+import static domain.piece.info.Direction.UP_UP_LEFT;
+import static domain.piece.info.Direction.UP_UP_RIGHT;
+
 import domain.piece.info.Color;
 import domain.piece.info.Direction;
 import domain.piece.info.Type;
@@ -21,14 +30,8 @@ public class Knight extends Piece {
     @Override
     public List<Direction> movableDirections() {
         return new ArrayList<>(List.of(
-                Direction.UP_UP_LEFT,
-                Direction.UP_UP_RIGHT,
-                Direction.UP_LEFT_LEFT,
-                Direction.UP_RIGHT_RIGHT,
-                Direction.DOWN_DOWN_LEFT,
-                Direction.DOWN_DOWN_RIGHT,
-                Direction.DOWN_LEFT_LEFT,
-                Direction.DOWN_RIGHT_RIGHT
+                UP_UP_LEFT, UP_UP_RIGHT, UP_LEFT_LEFT, UP_RIGHT_RIGHT,
+                DOWN_DOWN_LEFT, DOWN_DOWN_RIGHT, DOWN_LEFT_LEFT, DOWN_RIGHT_RIGHT
         ));
     }
 

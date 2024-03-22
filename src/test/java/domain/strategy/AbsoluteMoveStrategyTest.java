@@ -24,9 +24,9 @@ class AbsoluteMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece knight = new Knight(Color.WHITE, Type.KNIGHT);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new AbsoluteMoveStrategy().movablePositions(position,
-                knight.movableDirections(),
-                board);
+        final MoveStrategy strategy = knight.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, knight.movableDirections(), board);
 
         assertThat(positions).hasSize(8);
     }
@@ -37,8 +37,9 @@ class AbsoluteMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece king = new King(Color.WHITE, Type.KING);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new AbsoluteMoveStrategy().movablePositions(position, king.movableDirections(),
-                board);
+        final MoveStrategy strategy = king.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, king.movableDirections(), board);
 
         assertThat(positions).hasSize(8);
     }

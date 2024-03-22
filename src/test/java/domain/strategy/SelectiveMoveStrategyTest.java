@@ -23,9 +23,10 @@ class SelectiveMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece rook = new Rook(Color.WHITE, Type.ROOK);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
-                rook.movableDirections(),
-                board);
+        final MoveStrategy strategy = rook.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, rook.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(14);
     }
 
@@ -35,9 +36,10 @@ class SelectiveMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece bishop = new Bishop(Color.WHITE, Type.BISHOP);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
-                bishop.movableDirections(),
-                board);
+        final MoveStrategy strategy = bishop.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, bishop.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(13);
     }
 
@@ -47,9 +49,10 @@ class SelectiveMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece queen = new Queen(Color.WHITE, Type.QUEEN);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
-                queen.movableDirections(),
-                board);
+        final MoveStrategy strategy = queen.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, queen.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(27);
     }
 

@@ -21,8 +21,10 @@ class PawnMoveStrategyTest {
         final Position position = new Position(File.of(4), Rank.of(5));
         final Piece pawn = new Pawn(Color.WHITE, Type.PAWN);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
-                board);
+        final MoveStrategy strategy = pawn.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(2);
     }
 
@@ -32,8 +34,10 @@ class PawnMoveStrategyTest {
         final Position position = new Position(File.of(0), Rank.of(1));
         final Piece pawn = new Pawn(Color.WHITE, Type.PAWN);
         final Board board = new Board(BoardInitiator.init());
-        final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
-                board);
+        final MoveStrategy strategy = pawn.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(2);
     }
 
@@ -44,8 +48,10 @@ class PawnMoveStrategyTest {
         final Piece pawn = new Pawn(Color.BLACK, Type.PAWN);
         final Board board = new Board(BoardInitiator.init());
         pawn.movableDirections();
-        final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
-                board);
+        final MoveStrategy strategy = pawn.strategy();
+
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+
         Assertions.assertThat(positions).hasSize(1);
     }
 }

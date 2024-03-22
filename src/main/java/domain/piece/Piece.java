@@ -15,6 +15,10 @@ public abstract class Piece {
         this.type = type;
     }
 
+    public abstract MoveStrategy strategy();
+
+    public abstract List<Direction> movableDirections();
+
     public boolean isWhite() {
         return color == Color.WHITE;
     }
@@ -23,13 +27,13 @@ public abstract class Piece {
         return this.color != color;
     }
 
-    public abstract MoveStrategy strategy();
+    public void isSameColor(final Color color) {
+        this.color.isSameColor(color);
+    }
 
     public boolean isNotNone() {
         return type != Type.NONE;
     }
-
-    public abstract List<Direction> movableDirections();
 
     public Type type() {
         return type;

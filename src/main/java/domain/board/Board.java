@@ -45,7 +45,7 @@ public class Board {
     private void updateBoard(final Position source, final Position target, final Piece currentPiece) {
         Piece targetPiece = squares.get(target);
         if (targetPiece.isNotNone()) {
-            Color.isSame(targetPiece, currentPiece);
+            currentPiece.isSameColor(targetPiece.color());
             squares.remove(target);
             squares.put(target, currentPiece);
             squares.put(source, new None(Color.NONE, Type.NONE));
