@@ -27,8 +27,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("Source 위치의 기물을 Target 위치로 이동한다.")
     void move() {
-        ChessPosition source = new ChessPosition(File.B, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.B, Rank.FOUR);
+        ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.B, Rank.FOUR);
         chessBoard.move(source, target);
 
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
@@ -41,8 +41,8 @@ class ChessBoardTest {
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
     void moveNullSource() {
         // given
-        ChessPosition source = new ChessPosition(File.H, Rank.SEVEN);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
+        ChessPosition source = ChessPosition.of(File.H, Rank.SEVEN);
+        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -53,8 +53,8 @@ class ChessBoardTest {
     @DisplayName("경로가 비어있다면 예외가 발생한다.")
     void moveWhenPathEmpty() {
         // given
-        ChessPosition source = new ChessPosition(File.A, Rank.ONE);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
+        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
+        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -65,8 +65,8 @@ class ChessBoardTest {
     @DisplayName("이동 경로에 기물이 존재한다면 예외가 발생한다.")
     void moveWhenPathContainsPiece() {
         // given
-        ChessPosition source = new ChessPosition(File.A, Rank.ONE);
-        ChessPosition target = new ChessPosition(File.A, Rank.SIX);
+        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
+        ChessPosition target = ChessPosition.of(File.A, Rank.SIX);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))

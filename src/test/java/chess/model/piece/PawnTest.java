@@ -21,8 +21,8 @@ class PawnTest {
     @DisplayName("초기 위치에 있는 Pawn이 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPathInitialPosition(ChessPosition target, List<ChessPosition> expected) {
         // given
-        ChessPosition source = new ChessPosition(File.B, Rank.TWO);
-        Pawn pawn = new Pawn(Side.WHITE);
+        ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
+        Pawn pawn = Pawn.from(Side.WHITE);
 
         // when
         List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
@@ -35,41 +35,41 @@ class PawnTest {
     @DisplayName("초기 위치가 아닌 Pawn이 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPath() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.THREE);
-        ChessPosition target = new ChessPosition(File.C, Rank.FOUR);
-        Pawn pawn = new Pawn(Side.WHITE);
+        ChessPosition source = ChessPosition.of(File.C, Rank.THREE);
+        ChessPosition target = ChessPosition.of(File.C, Rank.FOUR);
+        Pawn pawn = Pawn.from(Side.WHITE);
 
         // when
         List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEqualTo(List.of(new ChessPosition(File.C, Rank.FOUR)));
+        assertThat(path).isEqualTo(List.of(ChessPosition.of(File.C, Rank.FOUR)));
     }
 
     @Test
     @DisplayName("Pawn의 대각선에 적 기물이 있다면 움직이는 경로를 찾는다.")
     void findPathCatchEnemy() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.THREE);
-        ChessPosition target = new ChessPosition(File.D, Rank.FOUR);
-        Pawn pawn = new Pawn(Side.WHITE);
-        Pawn targetPiece = new Pawn(Side.BLACK);
+        ChessPosition source = ChessPosition.of(File.C, Rank.THREE);
+        ChessPosition target = ChessPosition.of(File.D, Rank.FOUR);
+        Pawn pawn = Pawn.from(Side.WHITE);
+        Pawn targetPiece = Pawn.from(Side.BLACK);
 
         // when
         List<ChessPosition> path = pawn.findPath(source, target, targetPiece);
 
         // then
-        assertThat(path).isEqualTo(List.of(new ChessPosition(File.D, Rank.FOUR)));
+        assertThat(path).isEqualTo(List.of(ChessPosition.of(File.D, Rank.FOUR)));
     }
 
     @Test
     @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
     void findPathWhenInvalidTarget() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.D, Rank.THREE);
-        Rook targetPiece = new Rook(Side.WHITE);
-        Pawn pawn = new Pawn(Side.WHITE);
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
+        Rook targetPiece = Rook.from(Side.WHITE);
+        Pawn pawn = Pawn.from(Side.WHITE);
 
         //when //then
         assertThatThrownBy(() -> pawn.findPath(source, target, targetPiece))
@@ -80,9 +80,9 @@ class PawnTest {
     @DisplayName("Pawn 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.H, Rank.THREE);
-        Pawn pawn = new Pawn(Side.BLACK);
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.H, Rank.THREE);
+        Pawn pawn = Pawn.from(Side.BLACK);
 
         // when
         List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
@@ -94,16 +94,16 @@ class PawnTest {
     private static Stream<Arguments> provideTargetPositionAndResultInInitialPosition() {
         return Stream.of(
                 Arguments.arguments(
-                        new ChessPosition(File.B, Rank.THREE),
+                        ChessPosition.of(File.B, Rank.THREE),
                         List.of(
-                                new ChessPosition(File.B, Rank.THREE)
+                                ChessPosition.of(File.B, Rank.THREE)
                         )
                 ),
                 Arguments.arguments(
-                        new ChessPosition(File.B, Rank.FOUR),
+                        ChessPosition.of(File.B, Rank.FOUR),
                         List.of(
-                                new ChessPosition(File.B, Rank.THREE),
-                                new ChessPosition(File.B, Rank.FOUR)
+                                ChessPosition.of(File.B, Rank.THREE),
+                                ChessPosition.of(File.B, Rank.FOUR)
                         )
                 )
         );

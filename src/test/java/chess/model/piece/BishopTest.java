@@ -22,8 +22,8 @@ class BishopTest {
     @DisplayName("Bishop이 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        Bishop bishop = new Bishop(Side.WHITE);
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        Bishop bishop = Bishop.from(Side.WHITE);
 
         // when
         List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
@@ -36,10 +36,10 @@ class BishopTest {
     @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
     void findPathWhenInvalidTarget() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.D, Rank.THREE);
-        Bishop bishop = new Bishop(Side.WHITE);
-        Pawn targetPiece = new Pawn(Side.WHITE);
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
+        Bishop bishop = Bishop.from(Side.WHITE);
+        Pawn targetPiece = Pawn.from(Side.WHITE);
 
         // when // then
         assertThatThrownBy(() -> bishop.findPath(source, target, targetPiece))
@@ -50,9 +50,9 @@ class BishopTest {
     @DisplayName("Bishop 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
-        Bishop bishop = new Bishop(Side.BLACK);
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+        Bishop bishop = Bishop.from(Side.BLACK);
 
         // when
         List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
@@ -64,42 +64,42 @@ class BishopTest {
     private static Stream<Arguments> provideTargetPositionAndResult() {
         return Stream.of(
                 Arguments.of(
-                        new ChessPosition(File.D, Rank.THREE),
+                        ChessPosition.of(File.D, Rank.THREE),
                         List.of(
-                                new ChessPosition(File.D, Rank.THREE)
+                                ChessPosition.of(File.D, Rank.THREE)
                         )
                 ),
                 Arguments.of(
-                        new ChessPosition(File.D, Rank.ONE),
+                        ChessPosition.of(File.D, Rank.ONE),
                         List.of(
-                                new ChessPosition(File.D, Rank.ONE)
+                                ChessPosition.of(File.D, Rank.ONE)
                         )
                 ),
                 Arguments.of(
-                        new ChessPosition(File.B, Rank.THREE),
+                        ChessPosition.of(File.B, Rank.THREE),
                         List.of(
-                                new ChessPosition(File.B, Rank.THREE)
+                                ChessPosition.of(File.B, Rank.THREE)
                         )
                 ),
                 Arguments.of(
-                        new ChessPosition(File.B, Rank.ONE),
+                        ChessPosition.of(File.B, Rank.ONE),
                         List.of(
-                                new ChessPosition(File.B, Rank.ONE)
+                                ChessPosition.of(File.B, Rank.ONE)
                         )
                 ),
                 Arguments.of(
-                        new ChessPosition(File.A, Rank.FOUR),
+                        ChessPosition.of(File.A, Rank.FOUR),
                         List.of(
-                                new ChessPosition(File.B, Rank.THREE),
-                                new ChessPosition(File.A, Rank.FOUR)
+                                ChessPosition.of(File.B, Rank.THREE),
+                                ChessPosition.of(File.A, Rank.FOUR)
                         )
                 ),
                 Arguments.of(
-                        new ChessPosition(File.F, Rank.FIVE),
+                        ChessPosition.of(File.F, Rank.FIVE),
                         List.of(
-                                new ChessPosition(File.D, Rank.THREE),
-                                new ChessPosition(File.E, Rank.FOUR),
-                                new ChessPosition(File.F, Rank.FIVE)
+                                ChessPosition.of(File.D, Rank.THREE),
+                                ChessPosition.of(File.E, Rank.FOUR),
+                                ChessPosition.of(File.F, Rank.FIVE)
                         )
                 )
         );

@@ -50,10 +50,10 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
     }
 
     public ChessPosition createSourcePosition() {
-        return new ChessPosition(File.from(sourceFile), Rank.from(sourceRank));
+        return ChessPosition.of(File.from(sourceFile), Rank.from(sourceRank));
     }
 
     public ChessPosition createTargetPosition() {
-        return new ChessPosition(File.from(targetFile), Rank.from(targetRank));
+        return ChessPosition.of(File.from(targetFile), Rank.from(targetRank));
     }
 }

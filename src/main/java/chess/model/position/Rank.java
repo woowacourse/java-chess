@@ -36,7 +36,7 @@ public enum Rank {
     }
 
     public Difference minus(Rank other) {
-        return new Difference(this.coordinate - other.coordinate);
+        return Difference.from(this.coordinate - other.coordinate);
     }
 
     public static int length() {

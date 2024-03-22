@@ -14,7 +14,7 @@ class DifferenceTest {
     void validateDifference(int difference) {
         // whe & then
         assertThatThrownBy(
-                () -> new Difference(difference)
+                () -> Difference.from(difference)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 

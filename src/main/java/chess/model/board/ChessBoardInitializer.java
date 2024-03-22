@@ -25,14 +25,14 @@ public class ChessBoardInitializer {
     private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
         Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
-                new ChessPosition(File.A, rank), new Rook(side),
-                new ChessPosition(File.B, rank), new Knight(side),
-                new ChessPosition(File.C, rank), new Bishop(side),
-                new ChessPosition(File.D, rank), new Queen(side),
-                new ChessPosition(File.E, rank), new King(side),
-                new ChessPosition(File.F, rank), new Bishop(side),
-                new ChessPosition(File.G, rank), new Knight(side),
-                new ChessPosition(File.H, rank), new Rook(side)
+                ChessPosition.of(File.A, rank), Rook.from(side),
+                ChessPosition.of(File.B, rank), Knight.from(side),
+                ChessPosition.of(File.C, rank), Bishop.from(side),
+                ChessPosition.of(File.D, rank), Queen.from(side),
+                ChessPosition.of(File.E, rank), King.from(side),
+                ChessPosition.of(File.F, rank), Bishop.from(side),
+                ChessPosition.of(File.G, rank), Knight.from(side),
+                ChessPosition.of(File.H, rank), Rook.from(side)
         );
     }
 
@@ -46,14 +46,14 @@ public class ChessBoardInitializer {
     private Map<ChessPosition, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
         return Map.of(
-                new ChessPosition(File.A, rank), new Pawn(side),
-                new ChessPosition(File.B, rank), new Pawn(side),
-                new ChessPosition(File.C, rank), new Pawn(side),
-                new ChessPosition(File.D, rank), new Pawn(side),
-                new ChessPosition(File.E, rank), new Pawn(side),
-                new ChessPosition(File.F, rank), new Pawn(side),
-                new ChessPosition(File.G, rank), new Pawn(side),
-                new ChessPosition(File.H, rank), new Pawn(side)
+                ChessPosition.of(File.A, rank), Pawn.from(side),
+                ChessPosition.of(File.B, rank), Pawn.from(side),
+                ChessPosition.of(File.C, rank), Pawn.from(side),
+                ChessPosition.of(File.D, rank), Pawn.from(side),
+                ChessPosition.of(File.E, rank), Pawn.from(side),
+                ChessPosition.of(File.F, rank), Pawn.from(side),
+                ChessPosition.of(File.G, rank), Pawn.from(side),
+                ChessPosition.of(File.H, rank), Pawn.from(side)
         );
     }
 
@@ -75,7 +75,7 @@ public class ChessBoardInitializer {
     public Map<ChessPosition, Piece> createBlanksInRank(int rankCoordinate) {
         Map<ChessPosition, Piece> blanks = new HashMap<>();
         for (File file : File.values()) {
-            blanks.put(new ChessPosition(file, Rank.from(rankCoordinate)), Blank.INSTANCE);
+            blanks.put(ChessPosition.of(file, Rank.from(rankCoordinate)), Blank.INSTANCE);
         }
         return blanks;
     }

@@ -1,16 +1,24 @@
 package chess.model.position;
 
-import chess.model.piece.Side;
-
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class ChessPosition {
     private final File file;
     private final Rank rank;
 
-    public ChessPosition(File file, Rank rank) {
+    private ChessPosition(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static ChessPosition of(File file, Rank rank) {
+        String key = file.name() + rank.name();
+        return ChessPositionCache.CACHE.get(key);
     }
 
     public Movement calculateMovement(ChessPosition other) {
@@ -48,5 +56,18 @@ public class ChessPosition {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    private static class ChessPositionCache {
+        static final Map<String, ChessPosition> CACHE = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> new ChessPosition(file, rank))
+                ).collect(toMap(
+                        chessPosition -> chessPosition.getFile().name() + chessPosition.getRank().name(),
+                        identity())
+                );
+
+        private ChessPositionCache() {
+        }
     }
 }

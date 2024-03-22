@@ -28,7 +28,7 @@ public enum File {
     }
 
     public Difference minus(File other) {
-        return new Difference(this.coordinate - other.coordinate);
+        return Difference.from(this.coordinate - other.coordinate);
     }
 
     public File calculateNextFile(int offset) {

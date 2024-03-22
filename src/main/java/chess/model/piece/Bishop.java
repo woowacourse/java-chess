@@ -3,12 +3,23 @@ package chess.model.piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
 
 public class Bishop extends Piece {
+    private static final Map<Side, Bishop> CACHE = Arrays.stream(Side.values())
+            .collect(Collectors.toMap(identity(), Bishop::new));
 
-    public Bishop(Side side) {
+    private Bishop(Side side) {
         super(side);
+    }
+
+    public static Bishop from(Side side) {
+        return CACHE.get(side);
     }
 
     @Override

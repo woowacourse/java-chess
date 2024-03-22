@@ -3,12 +3,23 @@ package chess.model.piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.function.Function.identity;
 
 public class Queen extends Piece {
+    private static final Map<Side, Queen> CACHE = Arrays.stream(Side.values())
+            .collect(Collectors.toMap(identity(), Queen::new));
 
-    public Queen(Side side) {
+    private Queen(Side side) {
         super(side);
+    }
+
+    public static Queen from(Side side) {
+        return CACHE.get(side);
     }
 
     @Override
