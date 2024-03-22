@@ -8,7 +8,7 @@ import static domain.PieceType.PAWN;
 import java.util.List;
 import java.util.Optional;
 
-final class Pawn extends AbstractPiece {
+final class Pawn extends Piece {
 
     private final Position initialPosition;
 

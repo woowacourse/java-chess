@@ -6,7 +6,7 @@ import static domain.PieceMoveResult.SUCCESS;
 
 import java.util.Optional;
 
-abstract class AbstractCatchOnMovePiece extends AbstractPiece {
+abstract class AbstractCatchOnMovePiece extends Piece {
     AbstractCatchOnMovePiece(Position position, Team team) {
         super(position, team);
     }
