@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.position.Difference;
+import chess.domain.piece.rule.BishopMoveRule;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
 
     public Bishop(Color color) {
-        super(color, Difference::hasSameDistance);
+        super(color, BishopMoveRule.instance());
     }
 
     @Override
