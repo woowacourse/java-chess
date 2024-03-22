@@ -1,29 +1,6 @@
 package domain.game;
 
-import static domain.game.TeamColor.BLACK;
-import static domain.game.TeamColor.WHITE;
-
 public enum PieceType {
-    BLACK_PAWN(BLACK),
-    BLACK_ROOK(BLACK),
-    BLACK_KNIGHT(BLACK),
-    BLACK_BISHOP(BLACK),
-    BLACK_QUEEN(BLACK),
-    BLACK_KING(BLACK),
-    WHITE_PAWN(WHITE),
-    WHITE_ROOK(WHITE),
-    WHITE_KNIGHT(WHITE),
-    WHITE_BISHOP(WHITE),
-    WHITE_QUEEN(WHITE),
-    WHITE_KING(WHITE);
-
-    private final TeamColor teamColor;
-
-    PieceType(final TeamColor teamColor) {
-        this.teamColor = teamColor;
-    }
-
-    public boolean hasColor(TeamColor teamColor) {
-        return this.teamColor.equals(teamColor);
-    }
+    BLACK_PAWN, BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING,
+    WHITE_PAWN, WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING
 }

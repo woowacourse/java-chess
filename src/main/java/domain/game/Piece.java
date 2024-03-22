@@ -19,7 +19,7 @@ public class Piece {
     }
 
     public boolean hasColor(final TeamColor teamColor) {
-        return pieceType.hasColor(teamColor);
+        return teamColor.contains(pieceType);
     }
 
     public boolean isMovable(final Position source, final Position destination, final Set<Position> piecePositions) {
