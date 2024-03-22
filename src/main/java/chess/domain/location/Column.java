@@ -22,7 +22,7 @@ public enum Column {
 
     public static Column of(String input) {
         return Arrays.stream(values())
-                .filter(column -> column.isName(input))
+                .filter(column -> column.equalName(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Column 입력입니다."));
     }
@@ -55,7 +55,7 @@ public enum Column {
         }
     }
 
-    private boolean isName(String name) {
+    private boolean equalName(String name) {
         return this.name().equalsIgnoreCase(name);
     }
 
