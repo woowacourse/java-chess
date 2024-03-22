@@ -13,7 +13,7 @@ public final class Square extends Role {
 
     @Override
     public Set<Route> possibleRoutes(Position position) {
-        return Set.of(new Route(List.of(position)));
+        throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
     }
 
     @Override

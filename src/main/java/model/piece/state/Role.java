@@ -11,16 +11,16 @@ import model.position.Route;
 
 public abstract class Role {
     protected Color color;
-    private List<MovingPattern> movingPatterns;
+    private final List<MovingPattern> movingPatterns;
 
     protected Role(Color color, List<MovingPattern> movingPatternList) {
         this.color = color;
         this.movingPatterns = new ArrayList<>(movingPatternList);
     }
 
-    public void checkSameCamp(Role role) {
-        if (this.color == role.color) {
-            throw new IllegalArgumentException("같은 진영의 기물이 목적 지점에 위치합니다.");
+    public void checkSameColor(Color color) {
+        if (this.color == color) {
+            throw new IllegalArgumentException("목표 지점에 같은 색깔의 말이 존재합니다.");
         }
     }
 
@@ -28,7 +28,7 @@ public abstract class Role {
         return true;
     }
 
-    public Route findRoute(Position source, Position destination) {
+    public Route findDirectRoute(Position source, Position destination) {
         return possibleRoutes(source).stream()
                 .filter(route -> route.contains(destination))
                 .map(route -> route.subRoute(destination))

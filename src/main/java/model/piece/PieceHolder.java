@@ -13,7 +13,7 @@ public class PieceHolder {
     }
 
     public Route findRoute(Position source, Position destination) {
-        return this.role.findRoute(source, destination);
+        return this.role.findDirectRoute(source, destination);
     }
 
     public boolean isOccupied() {
@@ -21,12 +21,16 @@ public class PieceHolder {
     }
 
     public void changeRoleTo(PieceHolder source) {
-        this.role.checkSameCamp(source.role);
+        checkSameColor(source.color());
         this.role = source.role;
     }
 
     public void leave() {
         this.role = new Square();
+    }
+
+    public void checkSameColor(Color color) {
+        this.role.checkSameColor(color);
     }
 
     public Role getRole() {
