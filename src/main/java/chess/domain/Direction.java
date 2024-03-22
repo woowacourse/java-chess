@@ -12,7 +12,8 @@ public enum Direction {
     TOP_LEFT,
     DOWN_RIGHT,
     DOWN_LEFT,
-    TOP;
+    TOP,
+    ;
 
     public static Direction of(final Position source, final Position target) {
         if (source.indexOfFile() == target.indexOfFile()) {

@@ -21,7 +21,8 @@ public enum PieceType {
     WHITE_KING("k", PieceColor.WHITE, KingMovementStrategy.getInstance()),
     BLACK_KING("K", PieceColor.BLACK, KingMovementStrategy.getInstance()),
     WHITE_QUEEN("q", PieceColor.WHITE, QueenMovementStrategy.getInstance()),
-    BLACK_QUEEN("Q", PieceColor.BLACK, QueenMovementStrategy.getInstance());
+    BLACK_QUEEN("Q", PieceColor.BLACK, QueenMovementStrategy.getInstance()),
+    ;
 
     private final String name;
     private final PieceColor color;

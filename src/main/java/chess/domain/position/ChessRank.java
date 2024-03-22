@@ -12,7 +12,8 @@ public enum ChessRank {
     FIVE("5", 4),
     SIX("6", 5),
     SEVEN("7", 6),
-    EIGHT("8", 7);
+    EIGHT("8", 7),
+    ;
 
     private final String value;
     private final int index;
