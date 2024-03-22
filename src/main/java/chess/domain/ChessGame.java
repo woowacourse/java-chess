@@ -13,17 +13,17 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public Map<Position, Character> movePiece(Positions positions, Runnable runnable) {
+    public Map<Position, Character> movePiece(Positions positions, Runnable printCheck) {
         board.validateSameTeamByPosition(positions.source(), currentTeam);
         board.move(positions);
-        validateCheck(runnable);
+        validateCheck(printCheck);
         currentTeam = currentTeam.opponent();
         return board.mapPositionToCharacter();
     }
 
-    private void validateCheck(Runnable runnable) {
+    private void validateCheck(Runnable printCheck) {
         if (board.isChecked(currentTeam.opponent())) {
-            runnable.run();
+            printCheck.run();
         }
         if (board.isChecked(currentTeam)) {
             throw new IllegalArgumentException("체크 상태를 벗어나지 않았습니다.");
