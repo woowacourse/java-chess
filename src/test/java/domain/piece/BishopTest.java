@@ -18,8 +18,10 @@ class BishopTest {
     @DisplayName("비숍은 대각선으로 여러칸 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArguments")
-    void canMove(final Square source, final Square target, final boolean expected) {
+    void canMove(final Square target, final boolean expected) {
+        // given
         final Bishop bishop = new Bishop(Team.BLACK);
+        final Square source = new Square(File.D, Rank.FOUR);
 
         // when
         final boolean canMove = bishop.canMove(source, target);
@@ -30,13 +32,13 @@ class BishopTest {
 
     static Stream<Arguments> squareArguments() {
         return Stream.of(
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.EIGHT, File.H), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.ONE, File.A), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.SEVEN, File.A), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.ONE, File.G), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.TWO, File.G), false),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.THREE, File.G), false),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), false));
+                Arguments.of(new Square(File.H, Rank.EIGHT), true),
+                Arguments.of(new Square(File.A, Rank.ONE), true),
+                Arguments.of(new Square(File.A, Rank.SEVEN), true),
+                Arguments.of(new Square(File.G, Rank.ONE), true),
+                Arguments.of(new Square(File.G, Rank.TWO), false),
+                Arguments.of(new Square(File.G, Rank.THREE), false),
+                Arguments.of(new Square(File.G, Rank.FIVE), false));
     }
 
 }

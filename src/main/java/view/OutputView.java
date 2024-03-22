@@ -13,16 +13,20 @@ public class OutputView {
 
     public void printChessTable(final Map<Square, Piece> squarePieces) {
         final String board = Arrays.stream(Rank.values())
-                .map(rank -> Arrays.stream(File.values())
-                        .map(file -> createRank(squarePieces, rank, file))
-                        .collect(Collectors.joining())
-                ).collect(Collectors.joining("\n"));
+                .map(rank -> createOneRank(squarePieces, rank))
+                .collect(Collectors.joining("\n"));
 
         System.out.println(board);
     }
 
-    private static String createRank(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
-        final Square square = new Square(rank, file);
+    private String createOneRank(final Map<Square, Piece> squarePieces, final Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> createOnePiece(squarePieces, rank, file))
+                .collect(Collectors.joining());
+    }
+
+    private String createOnePiece(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
+        final Square square = new Square(file, rank);
 
         if (squarePieces.containsKey(square)) {
             final Piece piece = squarePieces.get(square);
@@ -33,6 +37,6 @@ public class OutputView {
     }
 
     public void printError(final String message) {
-        System.out.println(message);
+        System.out.println("[ERROR] " + message);
     }
 }

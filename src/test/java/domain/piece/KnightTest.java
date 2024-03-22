@@ -18,8 +18,10 @@ class KnightTest {
     @DisplayName("나이트는 8방으로 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArguments")
-    void canMove(final Square source, final Square target, final boolean expected) {
+    void canMove(final Square target, final boolean expected) {
+        // given
         final Knight knight = new Knight(Team.BLACK);
+        final Square source = new Square(File.D, Rank.FOUR);
 
         // when
         final boolean canMove = knight.canMove(source, target);
@@ -30,16 +32,16 @@ class KnightTest {
 
     static Stream<Arguments> squareArguments() {
         return Stream.of(
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.TWO, File.E), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.TWO, File.C), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.THREE, File.B), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.B), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.SIX, File.C), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.SIX, File.E), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.F), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.THREE, File.F), true),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FOUR, File.C), false),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.THREE, File.G), false),
-                Arguments.of(new Square(Rank.FOUR, File.D), new Square(Rank.FIVE, File.G), false));
+                Arguments.of(new Square(File.E, Rank.TWO), true),
+                Arguments.of(new Square(File.C, Rank.TWO), true),
+                Arguments.of(new Square(File.B, Rank.THREE), true),
+                Arguments.of(new Square(File.B, Rank.FIVE), true),
+                Arguments.of(new Square(File.C, Rank.SIX), true),
+                Arguments.of(new Square(File.E, Rank.SIX), true),
+                Arguments.of(new Square(File.F, Rank.FIVE), true),
+                Arguments.of(new Square(File.F, Rank.THREE), true),
+                Arguments.of(new Square(File.C, Rank.FOUR), false),
+                Arguments.of(new Square(File.G, Rank.THREE), false),
+                Arguments.of(new Square(File.G, Rank.FIVE), false));
     }
 }
