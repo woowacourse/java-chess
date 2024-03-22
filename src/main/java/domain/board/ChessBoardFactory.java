@@ -12,40 +12,40 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ChessBoardFactory {
-    private static final List<Piece> specialPieces = List.of(
-            new Rook(Color.BLACK),
-            new Knight(Color.BLACK),
-            new Bishop(Color.BLACK),
-            new Queen(Color.BLACK),
-            new King(Color.BLACK),
-            new Bishop(Color.BLACK),
-            new Knight(Color.BLACK),
-            new Rook(Color.BLACK),
-            new Rook(Color.WHITE),
-            new Knight(Color.WHITE),
-            new Bishop(Color.WHITE),
-            new Queen(Color.WHITE),
-            new King(Color.WHITE),
-            new Bishop(Color.WHITE),
-            new Knight(Color.WHITE),
-            new Rook(Color.WHITE)
-    );
+    private static final Map<Color, Rank> NON_PAWN_RANKS = Map.of(
+            Color.BLACK, Rank.EIGHT,
+            Color.WHITE, Rank.ONE);
+    private static final Map<Color, Rank> PAWN_RANKS = Map.of(
+            Color.BLACK, Rank.SEVEN,
+            Color.WHITE, Rank.TWO);
+    private static final Map<File, Function<Color, Piece>> INITIAL_FILE_PIECES = Map.of(
+            File.A, Rook::new,
+            File.B, Knight::new,
+            File.C, Bishop::new,
+            File.D, Queen::new,
+            File.E, King::new,
+            File.F, Bishop::new,
+            File.G, Knight::new,
+            File.H, Rook::new);
 
     private ChessBoardFactory() {
     }
 
     public static ChessBoard createInitialChessBoard() {
-        Map<Position, Piece> pieceMap = new HashMap<>();
-        for (int order = 0; order < 8; order++) {
-            pieceMap.put(new Position(File.fromOrder(order), Rank.EIGHT), specialPieces.get(order));
-            pieceMap.put(new Position(File.fromOrder(order), Rank.SEVEN), new Pawn(Color.BLACK));
-            pieceMap.put(new Position(File.fromOrder(order), Rank.TWO), new Pawn(Color.WHITE));
-            pieceMap.put(new Position(File.fromOrder(order), Rank.ONE), specialPieces.get(order + 8));
+        Map<Position, Piece> positionPiece = new HashMap<>();
+        INITIAL_FILE_PIECES.forEach((file, pieceGenerator) -> {
+            positionPiece.put(new Position(file, NON_PAWN_RANKS.get(Color.BLACK)), pieceGenerator.apply(Color.BLACK));
+            positionPiece.put(new Position(file, NON_PAWN_RANKS.get(Color.WHITE)), pieceGenerator.apply(Color.WHITE));
+        });
+
+        for (File file : File.values()) {
+            positionPiece.put(new Position(file, PAWN_RANKS.get(Color.BLACK)), new Pawn(Color.BLACK));
+            positionPiece.put(new Position(file, PAWN_RANKS.get(Color.WHITE)), new Pawn(Color.WHITE));
         }
-        return new ChessBoard(pieceMap);
+        return new ChessBoard(positionPiece);
     }
 }
