@@ -5,18 +5,17 @@ import domain.piece.Type;
 import domain.position.Position;
 
 public class Bishop extends NonPawnPiece {
-    public Bishop(Color color) {
+    public Bishop(final Color color) {
         super(color);
     }
 
     @Override
-    protected void validateMovement(final Position resource, final Position target) {
-        if (resource.isDiagonalAt(target)) {
+    protected void validateDirection(final Position source, final Position target) {
+        if (source.isDiagonalAt(target)) {
             return;
         }
 
-        throw new IllegalArgumentException(String.format("%s은 대각선 방향으로만 이동할 수 있습니다.",
-                this.getClass().getSimpleName()));
+        throw new IllegalArgumentException("비숍은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Override

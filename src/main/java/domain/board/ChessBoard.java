@@ -17,7 +17,6 @@ public class ChessBoard {
         this.board = new HashMap<>(board);
     }
 
-    // todo: movePiece로 메서드명 변경
     public void move(final Position source, final Position target) {
         validateEmptyRoute(source, target);
         validateLegalMove(source, target);

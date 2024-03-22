@@ -21,7 +21,7 @@ class RookTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> rook.validate(resource, target, other))
+        assertThatCode(() -> rook.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +31,7 @@ class RookTest {
         Position target = new Position(File.A, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> rook.validate(resource, target, other))
+        assertThatCode(() -> rook.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -41,9 +41,9 @@ class RookTest {
         Position target = new Position(File.G, Rank.SEVEN);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> rook.validate(resource, target, other))
+        assertThatThrownBy(() -> rook.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Rook은 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("룩은 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -52,9 +52,9 @@ class RookTest {
         Position target = new Position(File.F, Rank.THREE);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> rook.validate(resource, target, other))
+        assertThatThrownBy(() -> rook.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Rook은 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("은 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -63,9 +63,9 @@ class RookTest {
         Position target = new Position(File.A, Rank.TWO);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> rook.validate(resource, target, other))
+        assertThatThrownBy(() -> rook.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Rook은 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("은 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -74,7 +74,7 @@ class RookTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> rook.validate(resource, target, other))
+        assertThatCode(() -> rook.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -84,7 +84,7 @@ class RookTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> rook.validate(resource, target, other))
+        assertThatThrownBy(() -> rook.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동일한 위치입니다.");
     }
@@ -95,7 +95,7 @@ class RookTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new WhitePawn();
 
-        assertThatThrownBy(() -> rook.validate(resource, target, other))
+        assertThatThrownBy(() -> rook.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

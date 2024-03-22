@@ -15,12 +15,13 @@ public abstract class PawnPiece implements Piece {
         this.color = color;
     }
 
-    public final void validate(final Position source, final Position target, final Piece other) {
+    public final void validateMovement(final Position source, final Position target, final Piece other) {
         validateColorDifference(other);
         validateForwardMovement(source, target);
         if (isPawnMovement(source, target, other)) {
             return;
         }
+
         throw new IllegalArgumentException("잘못된 방향으로 이동하고 있습니다.");
     }
 
@@ -61,7 +62,7 @@ public abstract class PawnPiece implements Piece {
         if (nonPieceExist(other)) {
             return false;
         }
-        return !this.color().equals(other.color());
+        return this.color() != other.color();
     }
 
     @Override

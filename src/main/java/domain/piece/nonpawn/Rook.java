@@ -5,18 +5,17 @@ import domain.piece.Type;
 import domain.position.Position;
 
 public class Rook extends NonPawnPiece {
-    public Rook(Color color) {
+    public Rook(final Color color) {
         super(color);
     }
 
     @Override
-    protected void validateMovement(Position resource, Position target) {
-        if (resource.isStraightAt(target)) {
+    protected void validateDirection(final Position source, final Position target) {
+        if (source.isStraightAt(target)) {
             return;
         }
 
-        throw new IllegalArgumentException(String.format("%s은 수평, 수직 방향으로만 이동할 수 있습니다.",
-                this.getClass().getSimpleName()));
+        throw new IllegalArgumentException("룩은 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Override

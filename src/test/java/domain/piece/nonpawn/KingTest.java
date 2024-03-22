@@ -21,7 +21,7 @@ class KingTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> king.validate(resource, target, other))
+        assertThatCode(() -> king.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -31,9 +31,9 @@ class KingTest {
         Position target = new Position(File.F, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> king.validate(resource, target, other))
+        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("King은 한 번에 1칸만 이동할 수 있습니다");
+                .hasMessageContaining("킹은 한 번에 1칸만 이동할 수 있습니다");
     }
 
     @Test
@@ -42,7 +42,7 @@ class KingTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> king.validate(resource, target, other))
+        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동일한 위치입니다.");
     }
@@ -53,7 +53,7 @@ class KingTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new WhitePawn();
 
-        assertThatThrownBy(() -> king.validate(resource, target, other))
+        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

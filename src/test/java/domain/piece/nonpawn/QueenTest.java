@@ -21,7 +21,7 @@ class QueenTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> queen.validate(resource, target, other))
+        assertThatCode(() -> queen.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +31,7 @@ class QueenTest {
         Position target = new Position(File.G, Rank.SEVEN);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> queen.validate(resource, target, other))
+        assertThatCode(() -> queen.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
 
     }
@@ -42,9 +42,9 @@ class QueenTest {
         Position target = new Position(File.F, Rank.THREE);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> queen.validate(resource, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Queen은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -53,9 +53,9 @@ class QueenTest {
         Position target = new Position(File.A, Rank.TWO);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> queen.validate(resource, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Queen은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("퀸은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -64,7 +64,7 @@ class QueenTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> queen.validate(resource, target, other))
+        assertThatCode(() -> queen.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -74,7 +74,7 @@ class QueenTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> queen.validate(resource, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동일한 위치입니다.");
     }
@@ -85,7 +85,7 @@ class QueenTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new WhitePawn();
 
-        assertThatThrownBy(() -> queen.validate(resource, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

@@ -21,7 +21,7 @@ class BishopTest {
         Position target = new Position(File.G, Rank.SEVEN);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> bishop.validate(resource, target, other))
+        assertThatCode(() -> bishop.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -31,9 +31,9 @@ class BishopTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+        assertThatThrownBy(() -> bishop.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("비숍은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -42,9 +42,9 @@ class BishopTest {
         Position target = new Position(File.F, Rank.THREE);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+        assertThatThrownBy(() -> bishop.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("비숍은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -53,9 +53,9 @@ class BishopTest {
         Position target = new Position(File.A, Rank.TWO);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+        assertThatThrownBy(() -> bishop.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("비숍은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -64,7 +64,7 @@ class BishopTest {
         Position target = new Position(File.H, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> bishop.validate(resource, target, other))
+        assertThatCode(() -> bishop.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -74,7 +74,7 @@ class BishopTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+        assertThatThrownBy(() -> bishop.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동일한 위치입니다.");
     }
@@ -85,7 +85,7 @@ class BishopTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new WhitePawn();
 
-        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+        assertThatThrownBy(() -> bishop.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

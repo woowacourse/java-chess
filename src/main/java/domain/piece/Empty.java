@@ -13,8 +13,8 @@ public class Empty implements Piece {
     }
 
     @Override
-    public void validate(Position resource, Position target, Piece other) {
-        throw new UnsupportedOperationException("Empty는 움직일 수 없습니다."); // todo 메시지 수정
+    public void validateMovement(final Position resource, final Position target, final Piece other) {
+        throw new UnsupportedOperationException("Empty는 움직일 수 없습니다.");
     }
 
     @Override

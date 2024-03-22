@@ -1,16 +1,18 @@
 package domain.board;
 
-import domain.piece.Bishop;
 import domain.piece.Color;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.nonpawn.Bishop;
+import domain.piece.nonpawn.King;
+import domain.piece.nonpawn.Knight;
+import domain.piece.nonpawn.Queen;
+import domain.piece.nonpawn.Rook;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +44,8 @@ public class ChessBoardFactory {
         Map<Position, Piece> pieceMap = new HashMap<>();
         for (int order = 0; order < 8; order++) {
             pieceMap.put(new Position(File.fromOrder(order), Rank.EIGHT), specialPieces.get(order));
-            pieceMap.put(new Position(File.fromOrder(order), Rank.SEVEN), new Pawn(Color.BLACK));
-            pieceMap.put(new Position(File.fromOrder(order), Rank.TWO), new Pawn(Color.WHITE));
+            pieceMap.put(new Position(File.fromOrder(order), Rank.SEVEN), new BlackPawn());
+            pieceMap.put(new Position(File.fromOrder(order), Rank.TWO), new WhitePawn());
             pieceMap.put(new Position(File.fromOrder(order), Rank.ONE), specialPieces.get(order + 8));
         }
         return new ChessBoard(pieceMap);

@@ -1,9 +1,10 @@
 package domain.board;
 
 import domain.piece.Color;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
+import domain.piece.nonpawn.Queen;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -20,7 +21,7 @@ class ChessBoardTest {
         Position resource = new Position(File.F, Rank.FOUR);
         Position target = new Position(File.F, Rank.EIGHT);
         Map<Position, Piece> pieceMap = Map.of(resource, new Queen(Color.WHITE),
-                new Position(File.F, Rank.FIVE), new Pawn(Color.BLACK));
+                new Position(File.F, Rank.FIVE), new BlackPawn());
         ChessBoard board = new ChessBoard(pieceMap);
 
         assertThatThrownBy(() -> board.move(resource, target))
@@ -45,9 +46,9 @@ class ChessBoardTest {
     @Test
     void 기물을_잡는다() {
         Position resource = new Position(File.F, Rank.FOUR);
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = new WhitePawn();
         Position target = new Position(File.G, Rank.FIVE);
-        Map<Position, Piece> pieceMap = Map.of(resource, piece, target, new Pawn(Color.BLACK));
+        Map<Position, Piece> pieceMap = Map.of(resource, piece, target, new BlackPawn());
         ChessBoard board = new ChessBoard(pieceMap);
 
         board.move(resource, target);

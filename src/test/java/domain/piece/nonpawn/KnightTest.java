@@ -21,7 +21,7 @@ class KnightTest {
         Position target = new Position(File.F, Rank.THREE);
         Piece other = new BlackPawn();
 
-        assertThatCode(() -> knight.validate(resource, target, other))
+        assertThatCode(() -> knight.validateMovement(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -31,9 +31,9 @@ class KnightTest {
         Position target = new Position(File.G, Rank.SEVEN);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> knight.validate(resource, target, other))
+        assertThatThrownBy(() -> knight.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Knight은 L자 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("나이트는 L자 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -42,9 +42,9 @@ class KnightTest {
         Position target = new Position(File.D, Rank.EIGHT);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> knight.validate(resource, target, other))
+        assertThatThrownBy(() -> knight.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Knight은 L자 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("나이트는 L자 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -53,9 +53,9 @@ class KnightTest {
         Position target = new Position(File.A, Rank.TWO);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> knight.validate(resource, target, other))
+        assertThatThrownBy(() -> knight.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Knight은 L자 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("나이트는 L자 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -64,7 +64,7 @@ class KnightTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new BlackPawn();
 
-        assertThatThrownBy(() -> knight.validate(resource, target, other))
+        assertThatThrownBy(() -> knight.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동일한 위치입니다.");
     }
@@ -75,7 +75,7 @@ class KnightTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new WhitePawn();
 
-        assertThatThrownBy(() -> knight.validate(resource, target, other))
+        assertThatThrownBy(() -> knight.validateMovement(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }
