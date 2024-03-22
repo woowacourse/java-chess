@@ -36,7 +36,7 @@ public class ChessBoard {
     private void initPiece(InitPosition initPosition, Side side, Supplier<Piece> pieceSupplier) {
         List<File> files = initPosition.files();
         Rank rank = initPosition.rank(side);
-        files.forEach(file -> board.put(new Position(file, rank), pieceSupplier.get()));
+        files.forEach(file -> board.put(Position.valueOf(file, rank), pieceSupplier.get()));
     }
 
     public boolean hasPiece(Position position) {
@@ -93,7 +93,7 @@ public class ChessBoard {
         List<Rank> ranks = current.findBetweenRank(target);
 
         List<Position> path = IntStream.range(0, files.size())
-                .mapToObj(i -> new Position(files.get(i), ranks.get(i)))
+                .mapToObj(i -> Position.valueOf(files.get(i), ranks.get(i)))
                 .toList();
 
         return makePiecesOnPath(target, path);

@@ -37,7 +37,7 @@ public class InputView {
             File file = FileMapper.from(position.substring(0, 1));
             Rank rank = RankMapper.from(position.substring(1, 2));
 
-            return new Position(file, rank);
+            return Position.valueOf(file, rank);
         }
         throw new IllegalArgumentException();
     }

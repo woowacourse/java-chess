@@ -15,28 +15,27 @@ class RookTest {
 
     private static Stream<Arguments> movableTargetPosition() {
         return Stream.of(
-                Arguments.arguments(File.C, Rank.FOUR),
-                Arguments.arguments(File.D, Rank.FIVE),
-                Arguments.arguments(File.B, Rank.FOUR),
-                Arguments.arguments(File.D, Rank.SIX)
+                Arguments.arguments(PositionFixture.c4()),
+                Arguments.arguments(PositionFixture.d5()),
+                Arguments.arguments(PositionFixture.b4()),
+                Arguments.arguments(PositionFixture.d6())
         );
     }
 
     private static Stream<Arguments> immovableTargetPosition() {
         return Stream.of(
-                Arguments.arguments(File.C, Rank.FIVE),
-                Arguments.arguments(File.E, Rank.FIVE)
+                Arguments.arguments(PositionFixture.c5()),
+                Arguments.arguments(PositionFixture.e5())
         );
     }
 
     @DisplayName("룩은 수직 또는 수평 방향으로 임의의 칸 수만큼 움직인다.")
     @ParameterizedTest
     @MethodSource("movableTargetPosition")
-    void canMoveTest(File targetFile, Rank targetRank) {
+    void canMoveTest(Position target) {
         Rook rook = new Rook(Side.BLACK);
 
         Position current = PositionFixture.d4();
-        Position target = new Position(targetFile, targetRank);
 
         boolean actual = rook.canMove(current, target, new LinkedHashMap<>());
 
@@ -46,11 +45,10 @@ class RookTest {
     @DisplayName("룩은 대각선 방향으로 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("immovableTargetPosition")
-    void cantMoveTest(File targetFile, Rank targetRank) {
+    void cantMoveTest(Position target) {
         Rook rook = new Rook(Side.BLACK);
 
         Position current = PositionFixture.d4();
-        Position target = new Position(targetFile, targetRank);
 
         boolean actual = rook.canMove(current, target, new LinkedHashMap<>());
 

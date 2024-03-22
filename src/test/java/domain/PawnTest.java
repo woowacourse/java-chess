@@ -1,5 +1,6 @@
 package domain;
 
+import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,12 +20,12 @@ public class PawnTest {
     @DisplayName("폰은 공격할 때는 한 칸 대각선으로 전진한다.")
     @Test
     void canMoveOneSquareDiagonalWhenAttackTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a2();
         Position target = PositionFixture.b3();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(target, new Pawn(Side.BLACK));
+            put(target, PieceFixture.blackPawn());
         }};
 
         boolean actual = pawn.canMove(current, target, pieces);
@@ -35,12 +36,12 @@ public class PawnTest {
     @DisplayName("폰은 공격할 때는 두 칸 이상 대각선으로 전진할 수 없다.")
     @Test
     void cantMoveTwoSquareDiagonalWhenAttackTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a2();
         Position target = PositionFixture.c4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(target, new Pawn(Side.BLACK));
+            put(target, PieceFixture.blackPawn());
         }};
 
         boolean actual = pawn.canMove(current, target, pieces);
@@ -51,12 +52,12 @@ public class PawnTest {
     @DisplayName("폰은 한 칸 전진으로 공격할 수 없다.")
     @Test
     void cantMoveOneSquareForwardWhenAttackTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a2();
         Position target = PositionFixture.a3();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(target, new Pawn(Side.BLACK));
+            put(target, PieceFixture.blackPawn());
         }};
 
         boolean actual = pawn.canMove(current, target, pieces);
@@ -67,12 +68,12 @@ public class PawnTest {
     @DisplayName("폰은 두 칸 전진으로 공격할 수 없다.")
     @Test
     void cantMoveTwoSquareForwardWhenAttackTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a2();
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(target, new Pawn(Side.BLACK));
+            put(target, PieceFixture.blackPawn());
         }};
 
         boolean actual = pawn.canMove(current, target, pieces);
@@ -83,7 +84,7 @@ public class PawnTest {
     @DisplayName("폰은 초기화 위치 외에서는 한 칸 전진한다.")
     @Test
     void canMoveForwardOneSquareTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a3();
         Position target = PositionFixture.a4();
 
@@ -95,7 +96,7 @@ public class PawnTest {
     @DisplayName("폰은 초기화 위치 외에서는 두 칸 이상 전진할 수 없다.")
     @Test
     void cantMoveForwardTwoSquareTest() {
-        Pawn pawn = new Pawn(Side.WHITE);
+        Pawn pawn = PieceFixture.whitePawn();
         Position current = PositionFixture.a3();
         Position target = PositionFixture.a5();
 
@@ -111,7 +112,7 @@ public class PawnTest {
         @DisplayName("폰은 초기화 위치에서 한 칸 앞으로 전진한다.")
         @Test
         void canMoveOneSquareForwardTest() {
-            Pawn pawn = new Pawn(Side.WHITE);
+            Pawn pawn = PieceFixture.whitePawn();
             Position current = PositionFixture.a2();
             Position target = PositionFixture.a3();
 
@@ -123,7 +124,7 @@ public class PawnTest {
         @DisplayName("폰은 초기화 위치에서 두 칸 앞으로 전진한다.")
         @Test
         void canMoveTwoSquareForwardTest() {
-            Pawn pawn = new Pawn(Side.WHITE);
+            Pawn pawn = PieceFixture.whitePawn();
             Position current = PositionFixture.a2();
             Position target = PositionFixture.a4();
 
@@ -139,15 +140,15 @@ public class PawnTest {
 
         private static Stream<Arguments> NonReversiblePosition() {
             return Stream.of(
-                    Arguments.arguments(Side.BLACK, PositionFixture.a7(), PositionFixture.a8()),
-                    Arguments.arguments(Side.WHITE, PositionFixture.a2(), PositionFixture.a1())
+                    Arguments.arguments(PieceFixture.blackPawn(), PositionFixture.a7(), PositionFixture.a8()),
+                    Arguments.arguments(PieceFixture.whitePawn(), PositionFixture.a2(), PositionFixture.a1())
             );
         }
 
         @DisplayName("폰은 수평 방향으로 움직일 수 없다.")
         @Test
         void cantMoveSideTest() {
-            Pawn pawn = new Pawn(Side.WHITE);
+            Pawn pawn = PieceFixture.whitePawn();
             Position current = PositionFixture.a2();
             Position target = PositionFixture.b2();
 
@@ -159,8 +160,7 @@ public class PawnTest {
         @DisplayName("폰은 후진할 수 없다.")
         @ParameterizedTest
         @MethodSource("NonReversiblePosition")
-        void cantReverseMoveTest(Side side, Position current, Position target) {
-            Pawn pawn = new Pawn(side);
+        void cantReverseMoveTest(Pawn pawn, Position current, Position target) {
 
             boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
 
@@ -170,7 +170,7 @@ public class PawnTest {
         @DisplayName("폰은 공격할 때가 아니면 대각선 방향으로 움직일 수 없다.")
         @Test
         void cantMoveDiagonalTest() {
-            Pawn pawn = new Pawn(Side.WHITE);
+            Pawn pawn = PieceFixture.whitePawn();
             Position current = PositionFixture.a2();
             Position target = PositionFixture.b3();
 

@@ -20,7 +20,7 @@ public class MessageResolver {
     private StringBuilder resolveRankMessage(Rank rank, ChessBoard chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int horizontal = 1; horizontal <= File.max(); horizontal++) {
-            Position position = new Position(File.find(horizontal), rank);
+            Position position = Position.valueOf(File.find(horizontal), rank);
             String square = resolveSquareMessage(chessBoard, position);
             stringBuilder.append(square);
         }

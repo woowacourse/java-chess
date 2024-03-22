@@ -1,20 +1,34 @@
 package domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Position {
 
+    private static final List<Position> CACHE = Arrays.stream(File.values())
+            .flatMap(file -> Arrays.stream(Rank.values())
+                    .map(rank -> new Position(file, rank)))
+            .toList();
+
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
+    public static Position valueOf(File file, Rank rank) {
+        return CACHE.stream()
+                .filter(position -> position.file.equals(file))
+                .filter(position -> position.rank.equals(rank))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("a1 ~ h8 사이로 입력해주세요."));
+    }
+
     public Position createWithSameRank(File file) {
-        return new Position(file, this.rank);
+        return valueOf(file, this.rank);
     }
 
     public boolean isSameFile(Position other) {
@@ -90,7 +104,7 @@ public class Position {
     }
 
     public Position createWithSameFile(Rank rank) {
-        return new Position(this.file, rank);
+        return valueOf(this.file, rank);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package domain;
 
+import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ public class PieceTest {
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(target, new Pawn(Side.BLACK));
+            put(target, PieceFixture.blackPawn());
         }};
 
         Assertions.assertThatThrownBy(() -> piece.checkBlockingPiece(target, pieces))
@@ -43,7 +44,7 @@ public class PieceTest {
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
-            put(new Position(File.A, Rank.TWO), new Pawn(Side.BLACK));
+            put(PositionFixture.a2(), PieceFixture.blackPawn());
         }};
 
         Assertions.assertThatThrownBy(() -> piece.checkBlockingPiece(target, pieces))

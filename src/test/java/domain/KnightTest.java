@@ -31,6 +31,7 @@ class KnightTest {
         );
     }
 
+
     @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸 움직인다.")
     @ParameterizedTest
     @MethodSource("movableTargetPosition")
