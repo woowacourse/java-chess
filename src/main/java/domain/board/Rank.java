@@ -53,10 +53,4 @@ public final class Rank {
     public int hashCode() {
         return Objects.hash(value);
     }
-
-    @Override
-    public String toString() {
-        return "Rank[" +
-            "value=" + value + ']';
-    }
 }
