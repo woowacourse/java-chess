@@ -19,8 +19,6 @@ public class OutputView {
     public static final String EMPTY_PIECE = ".";
     private static final String NEW_LINE = System.lineSeparator();
 
-    private final OutputConvertor outputConvertor = new OutputConvertor();
-
     public void printWelcomeMessage() {
         System.out.println("""
                 > 체스 게임을 시작합니다.
@@ -68,7 +66,7 @@ public class OutputView {
     private void buildStrings(final String[][] strings, final Position position, final PieceType pieceType) {
         int row = position.rowIndex();
         int col = position.columnIndex();
-        strings[row][col] = pad(outputConvertor.convertPieceTypeToString(pieceType), PIECE_CHAR_PAD_SIZE);
+        strings[row][col] = pad(OutputConvertor.convertPieceTypeToString(pieceType), PIECE_CHAR_PAD_SIZE);
     }
 
     private String pad(String origin, int padSize) {

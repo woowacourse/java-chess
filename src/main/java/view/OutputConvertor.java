@@ -7,6 +7,9 @@ import java.util.Map;
 import static domain.game.PieceType.*;
 
 public class OutputConvertor {
+    private OutputConvertor() {
+    }
+
     private static final Map<PieceType, String> pieceFormat = Map.ofEntries(
             Map.entry(BLACK_ROOK, "R"),
             Map.entry(BLACK_KNIGHT, "N"),
@@ -22,7 +25,10 @@ public class OutputConvertor {
             Map.entry(WHITE_PAWN, "p")
     );
 
-    public String convertPieceTypeToString(final PieceType pieceType) {
+    public static String convertPieceTypeToString(final PieceType pieceType) {
+        if (!pieceFormat.containsKey(pieceType)) {
+            throw new IllegalArgumentException("해당 타입에 대한 변환 값이 정의되어 있지 않습니다.");
+        }
         return pieceFormat.get(pieceType);
     }
 }
