@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.position.Position;
 
 public class EndState implements GameState {
+
     @Override
     public GameState start() {
         throw new UnsupportedOperationException("종료 상태에서는 시작할 수 없습니다.");

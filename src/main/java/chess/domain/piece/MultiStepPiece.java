@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class MultiStepPiece extends Piece {
+
     protected MultiStepPiece(Color color, PieceType pieceType, Set<Direction> directions) {
         super(color, pieceType, directions);
     }
