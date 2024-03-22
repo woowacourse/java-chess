@@ -15,7 +15,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+    public boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
         return false;
     }
 

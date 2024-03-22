@@ -15,15 +15,15 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract boolean isRuleBroken(Position current, Position target, MovePath movePath);
+    public abstract boolean hasFollowedRule(Position current, Position target, MovePath movePath);
 
     public void checkValidMove(Position source, Position target, MovePath movePath) {
         checkDifferentPosition(source, target);
         checkNoAllyPieceAtTarget(movePath.targetPiece());
         checkNoPathPieces(movePath);
 
-        if (isRuleBroken(source, target, movePath)) {
-            throw new IllegalArgumentException("이동 규칙을 어겼습니다.");
+        if (hasViolatedRule(source, target, movePath)) {
+            throw new IllegalArgumentException("이동 규칙을 어기면 이동할 수 없습니다.");
         }
     }
 
@@ -43,6 +43,10 @@ public abstract class Piece {
         if (movePath.notAllPathPiecesEmpty()) {
             throw new IllegalArgumentException("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없습니다.");
         }
+    }
+
+    private boolean hasViolatedRule(Position source, Position target, MovePath movePath) {
+        return !hasFollowedRule(source, target, movePath);
     }
 
     public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {

@@ -6,7 +6,7 @@ import domain.Rank;
 
 public class PositionFixture {
 
-    public static Position d4() {
+    public static Position D4() {
         return new Position(File.D, Rank.FOUR);
     }
 
@@ -34,27 +34,27 @@ public class PositionFixture {
         return new Position(File.A, Rank.EIGHT);
     }
 
-    public static Position b1() {
+    public static Position B1() {
         return new Position(File.B, Rank.ONE);
     }
 
-    public static Position b2() {
+    public static Position B2() {
         return new Position(File.B, Rank.TWO);
     }
 
-    public static Position b3() {
+    public static Position B3() {
         return new Position(File.B, Rank.THREE);
     }
 
-    public static Position c1() {
+    public static Position C1() {
         return new Position(File.C, Rank.ONE);
     }
 
-    public static Position c2() {
+    public static Position C2() {
         return new Position(File.C, Rank.TWO);
     }
 
-    public static Position c3() {
+    public static Position C3() {
         return new Position(File.C, Rank.THREE);
     }
 
