@@ -1,6 +1,6 @@
 package dto;
 
-import model.GameBoard;
+import model.ChessGame;
 import model.piece.Piece;
 import model.position.Position;
 
@@ -17,9 +17,9 @@ public class GameBoardDto {
         this.value = value;
     }
 
-    public static GameBoardDto from(final GameBoard gameBoard) {
+    public static GameBoardDto from(final ChessGame chessGame) {
         List<List<String>> tmp = createEmptyBoard();
-        Map<Position, Piece> board = gameBoard.getBoard();
+        Map<Position, Piece> board = chessGame.getBoard();
 
         for (Entry<Position, Piece> entry : board.entrySet()) {
             tmp.get(entry.getKey().getRowIndex()).set(entry.getKey().getColumnIndex(), entry.getValue().getName());

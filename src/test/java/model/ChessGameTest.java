@@ -12,16 +12,16 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
 
-class GameBoardTest {
+class ChessGameTest {
 
     @Test
     @DisplayName("초기에는 32개의 기물이 생성된다.")
     void initPieces() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
         //then
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
         Assertions.assertThat(board.keySet()).hasSize(32);
     }
 
@@ -29,9 +29,9 @@ class GameBoardTest {
     @DisplayName("기물들의 시작 위치를 확인한다.")
     void checkInitialPosition() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
         final StringBuilder stringBuilder = new StringBuilder();
 
         String[][] res = new String[8][8];
@@ -69,26 +69,26 @@ class GameBoardTest {
     @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
     void blankPosition() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
         final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
     @Test
     void routeContainPiece() {
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
         board.put(Position.from("e3"), new Queen(Camp.WHITE));
 
         final Moving moving = new Moving(Position.from("e2"), Position.from("e4"));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있습니다.");
     }
@@ -96,14 +96,14 @@ class GameBoardTest {
     @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
     @Test
     void targetPositionIsEqualCamp() {
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
         board.put(Position.from("e4"), new Queen(Camp.WHITE));
 
         final Moving moving = new Moving(Position.from("e2"), Position.from("e4"));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 불가");
     }
@@ -112,13 +112,13 @@ class GameBoardTest {
     @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
     void invalidTurn() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessGame chessGame = new ChessGame();
 
         //when
         final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
 
         //then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 이동 가능합니다.");
     }

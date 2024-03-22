@@ -2,7 +2,7 @@ package controller;
 
 import dto.GameBoardDto;
 import model.Camp;
-import model.GameBoard;
+import model.ChessGame;
 import model.menu.ChessStatus;
 import model.menu.Init;
 import view.OutputView;
@@ -19,21 +19,21 @@ public class ChessController {
     }
 
     public void run() {
-        GameBoard gameBoard = new GameBoard();
+        ChessGame chessGame = new ChessGame();
         outputView.printStartMessage();
-        play(gameBoard);
+        play(chessGame);
     }
 
-    private void play(final GameBoard gameBoard) {
+    private void play(final ChessGame chessGame) {
         ChessStatus currentChessStatus = new Init();
         while (currentChessStatus.isRunning()) {
-            currentChessStatus = currentChessStatus.play(inputController.getCommand(), gameBoard);
-            printCurrentStatus(gameBoard, gameBoard.getCamp());
+            currentChessStatus = currentChessStatus.play(inputController.getCommand(), chessGame);
+            printCurrentStatus(chessGame, chessGame.getCamp());
         }
     }
 
-    private void printCurrentStatus(final GameBoard gameBoard, final Camp camp) {
-        outputView.printGameBoard(GameBoardDto.from(gameBoard));
+    private void printCurrentStatus(final ChessGame chessGame, final Camp camp) {
+        outputView.printGameBoard(GameBoardDto.from(chessGame));
         outputView.printCurrentCame(camp);
     }
 }

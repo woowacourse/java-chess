@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-public class GameBoard {
+public class ChessGame {
 
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
 
@@ -32,7 +32,7 @@ public class GameBoard {
     private final Map<Position, Piece> board;
 
 
-    public GameBoard() {
+    public ChessGame() {
         this.board = new HashMap<>();
         this.camp = Camp.WHITE;
         setting();
