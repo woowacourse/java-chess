@@ -6,23 +6,16 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight implements Piece {
+public class Knight extends Piece {
     private static final int TWO_SQUARES = 2;
 
-    private final Color color;
-
     public Knight(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
     public String identifyType() {
         return KNIGHT.name();
-    }
-
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
     }
 
     @Override
@@ -39,10 +32,5 @@ public class Knight implements Piece {
     @Override
     public List<Position> searchPath(Position source, Position target) {
         return new ArrayList<>();
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }

@@ -3,14 +3,24 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 import java.util.List;
 
-public interface Piece {
-    String identifyType();
+public abstract class Piece {
+    protected final Color color;
 
-    boolean isBlack();
+    public Piece(Color color) {
+        this.color = color;
+    }
 
-    boolean canMove(Position source, Position target, Color color);
+    public abstract String identifyType();
 
-    List<Position> searchPath(Position source, Position target);
+    public abstract boolean canMove(Position source, Position target, Color color);
 
-    Color getColor();
+    public abstract List<Position> searchPath(Position source, Position target);
+
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

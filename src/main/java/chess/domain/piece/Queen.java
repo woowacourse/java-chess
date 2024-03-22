@@ -6,24 +6,17 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen implements Piece {
+public class Queen extends Piece {
     private static final int STAY = 0;
     private static final int ONE_SQUARE = 1;
 
-    private final Color color;
-
     public Queen(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
     public String identifyType() {
         return QUEEN.name();
-    }
-
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
     }
 
     @Override
@@ -68,10 +61,5 @@ public class Queen implements Piece {
             path.add(source);
         }
         return path;
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }

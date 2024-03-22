@@ -6,23 +6,16 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bishop implements Piece {
+public class Bishop extends Piece {
     private static final int ONE_SQUARE = 1;
 
-    private final Color color;
-
     public Bishop(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
     public String identifyType() {
         return BISHOP.name();
-    }
-
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
     }
 
     @Override
@@ -49,10 +42,5 @@ public class Bishop implements Piece {
             path.add(source);
         }
         return path;
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }
