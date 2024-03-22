@@ -1,6 +1,6 @@
 package chess;
 
-import chess.game.ChessGame;
+import chess.controller.ChessGameController;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -9,7 +9,7 @@ public class ChessApplication {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        ChessGame chessGame = new ChessGame(inputView, outputView);
-        chessGame.run();
+        ChessGameController chessGameController = new ChessGameController(inputView, outputView);
+        chessGameController.run();
     }
 }

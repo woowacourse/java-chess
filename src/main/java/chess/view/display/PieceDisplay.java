@@ -1,9 +1,9 @@
 package chess.view.display;
 
-import chess.piece.Color;
-import chess.piece.Piece;
-import chess.piece.PieceAttributes;
-import chess.piece.PieceType;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceAttributes;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 
 public enum PieceDisplay {
