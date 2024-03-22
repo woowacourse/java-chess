@@ -88,19 +88,6 @@ public class Position {
         return rank.index();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
-
     public Set<Position> findBetween(Position target) {
         Set<Position> positions = new HashSet<>();
         List<ChessRank> betweenRanks = findRankBetween(this.rank, target.rank);
@@ -151,5 +138,18 @@ public class Position {
             files.add(ChessFile.findByIndex(index));
         }
         return files;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }
