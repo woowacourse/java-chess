@@ -1,22 +1,22 @@
-package chess;
+package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.ChessGame;
+import chess.domain.command.CommandCondition;
 import chess.domain.command.CommandExecutor;
 import chess.domain.command.GameCommand;
-import chess.domain.position.Position;
-import chess.domain.state.GameState;
-import chess.domain.state.ReadyState;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChessGame {
+public class ChessController {
     private final Map<GameCommand, CommandExecutor> commands = new EnumMap<>(GameCommand.class);
-    private final Board board = BoardFactory.createInitialBoard();
-    private GameState gameState = new ReadyState();
+    private final ChessGame chessGame;
+
+    public ChessController(ChessGame chessGame) {
+        this.chessGame = chessGame;
+    }
 
     public void run() {
         registerCommands();
@@ -24,7 +24,7 @@ public class ChessGame {
     }
 
     private void registerCommands() {
-        commands.put(GameCommand.MOVE, args -> move(args.get(1), args.get(2)));
+        commands.put(GameCommand.MOVE, this::move);
         commands.put(GameCommand.START, args -> start());
         commands.put(GameCommand.END, args -> end());
     }
@@ -32,31 +32,35 @@ public class ChessGame {
     private void playChess() {
         OutputView.printGameStartMessage();
 
-        while (gameState.isPlaying()) {
+        while (chessGame.isPlaying()) {
             retryOnException(this::executeCommand);
         }
     }
 
     private void executeCommand() {
         List<String> inputCommand = InputView.readGameCommand();
-        GameCommand gameCommand = GameCommand.from(inputCommand);
-        commands.get(gameCommand).execute(inputCommand);
+        CommandCondition commandCondition = CommandCondition.of(inputCommand);
+        GameCommand gameCommand = GameCommand.from(commandCondition);
+
+        commands.get(gameCommand).execute(commandCondition);
     }
 
     private void start() {
-        gameState = gameState.start();
-        OutputView.printChessBoard(board);
+        chessGame.start();
+
+        OutputView.printChessBoard(chessGame.getBoard());
     }
 
-    private void move(String inputSource, String inputTarget) {
-        Position source = Position.convert(inputSource);
-        Position target = Position.convert(inputTarget);
-        gameState = gameState.move(board, source, target);
-        OutputView.printChessBoard(board);
+    private void move(CommandCondition commandCondition) {
+        String source = commandCondition.getSource();
+        String target = commandCondition.getTarget();
+        chessGame.movePiece(source, target);
+
+        OutputView.printChessBoard(chessGame.getBoard());
     }
 
     private void end() {
-        gameState = gameState.end();
+        chessGame.end();
     }
 
     private void retryOnException(Runnable runnable) {
