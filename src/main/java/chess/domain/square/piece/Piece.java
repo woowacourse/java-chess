@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece implements Square {
-    public final Color color;
+    private final Color color;
 
     public Piece(Color color) {
         this.color = color;

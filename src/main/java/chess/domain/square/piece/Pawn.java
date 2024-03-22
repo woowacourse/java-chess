@@ -29,7 +29,7 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isValidMovePath(Path path) {
-        if (color == Color.BLACK) {
+        if (isColor(Color.BLACK)) {
             return path.isDown(maxDistance());
         }
         return path.isUp(maxDistance());
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isValidAttackPath(Path path) {
-        if (color == Color.BLACK) {
+        if (isColor(Color.BLACK)) {
             return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
         }
         return path.subtractRank() == ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
