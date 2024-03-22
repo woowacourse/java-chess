@@ -23,7 +23,7 @@ class BoardTest {
     void findPieceByPosition() {
         Board board = BoardFactory.createInitialBoard();
 
-        Piece findPiece = board.findPieceByPosition(new Position(File.A, Rank.ONE));
+        Piece findPiece = board.findPieceByPosition(Position.from(File.A, Rank.ONE));
 
         assertThat(findPiece).isEqualTo(new Rook(Color.WHITE));
     }
@@ -33,7 +33,7 @@ class BoardTest {
     void findPieceByPosition_Empty() {
         Board board = BoardFactory.createInitialBoard();
 
-        Piece findPiece = board.findPieceByPosition(new Position(File.A, Rank.THREE));
+        Piece findPiece = board.findPieceByPosition(Position.from(File.A, Rank.THREE));
 
         assertThat(findPiece).isEqualTo(new Empty());
     }
@@ -45,7 +45,7 @@ class BoardTest {
         @Test
         void samePosition() {
             Board board = BoardFactory.createInitialBoard();
-            Position position = new Position(File.A, Rank.ONE);
+            Position position = Position.from(File.A, Rank.ONE);
 
             assertThatThrownBy(
                     () -> board.move(position, position, Color.WHITE))
@@ -56,8 +56,8 @@ class BoardTest {
         @Test
         void emptyPiece() {
             Board board = BoardFactory.createInitialBoard();
-            Position sourcePosition = new Position(File.A, Rank.THREE);
-            Position targetPosition = new Position(File.A, Rank.FOUR);
+            Position sourcePosition = Position.from(File.A, Rank.THREE);
+            Position targetPosition = Position.from(File.A, Rank.FOUR);
 
             assertThatThrownBy(
                     () -> board.move(sourcePosition, targetPosition, Color.WHITE))
@@ -69,8 +69,8 @@ class BoardTest {
         void notMyTurn() {
             Color turn = Color.BLACK;
             Board board = BoardFactory.createInitialBoard();
-            Position sourcePosition = new Position(File.A, Rank.ONE);
-            Position targetPosition = new Position(File.A, Rank.TWO);
+            Position sourcePosition = Position.from(File.A, Rank.ONE);
+            Position targetPosition = Position.from(File.A, Rank.TWO);
 
             assertThatThrownBy(
                     () -> board.move(sourcePosition, targetPosition, turn))
@@ -81,8 +81,8 @@ class BoardTest {
         @Test
         void notMovablePosition() {
             Board board = BoardFactory.createInitialBoard();
-            Position sourcePosition = new Position(File.A, Rank.ONE);
-            Position targetPosition = new Position(File.A, Rank.FOUR);
+            Position sourcePosition = Position.from(File.A, Rank.ONE);
+            Position targetPosition = Position.from(File.A, Rank.FOUR);
 
             assertThatThrownBy(
                     () -> board.move(sourcePosition, targetPosition, Color.WHITE))
@@ -92,8 +92,8 @@ class BoardTest {
         @DisplayName("상대 진영 기물 위치로 이동했을 경우 제거하고 이동한다")
         @Test
         void whenMoveToEnemyPiece() {
-            Position knightSourcePosition = new Position(File.D, Rank.THREE);
-            Position knightTargetPosition = new Position(File.E, Rank.FIVE);
+            Position knightSourcePosition = Position.from(File.D, Rank.THREE);
+            Position knightTargetPosition = Position.from(File.E, Rank.FIVE);
 
             Map<Position, Piece> pieces = new HashMap<>();
             pieces.put(knightSourcePosition, new Knight(Color.WHITE));

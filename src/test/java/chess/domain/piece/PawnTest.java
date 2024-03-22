@@ -16,84 +16,84 @@ class PawnTest {
     @Test
     void blackPawnCanMoveToNorth() {
         Pawn pawn = Pawn.ofWhite();
-        Position currentPosition = new Position(File.H, Rank.THREE);
+        Position currentPosition = Position.from(File.H, Rank.THREE);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
-        assertThat(movablePositions).isEqualTo(Set.of(new Position(File.H, Rank.FOUR)));
+        assertThat(movablePositions).isEqualTo(Set.of(Position.from(File.H, Rank.FOUR)));
     }
 
     @DisplayName("블랙 폰은 남쪽으로만 전진할 수 있다.")
     @Test
     void whitePawnCanMoveToSouth() {
         Pawn pawn = Pawn.ofBlack();
-        Position currentPosition = new Position(File.H, Rank.THREE);
+        Position currentPosition = Position.from(File.H, Rank.THREE);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
-        assertThat(movablePositions).isEqualTo(Set.of(new Position(File.H, Rank.TWO)));
+        assertThat(movablePositions).isEqualTo(Set.of(Position.from(File.H, Rank.TWO)));
     }
 
     @DisplayName("화이트 폰은 초기 위치에서는 북쪽으로 1칸 또는 2칸 전진할 수 있다.")
     @Test
     void whenInitialPositionThenCanMoveForwardTwoStep() {
         Pawn pawn = Pawn.ofWhite();
-        Position currentPosition = new Position(File.H, Rank.TWO);
+        Position currentPosition = Position.from(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.H, Rank.THREE), new Position(File.H, Rank.FOUR)));
+                Set.of(Position.from(File.H, Rank.THREE), Position.from(File.H, Rank.FOUR)));
     }
 
     @DisplayName("블랙 폰은 초기 위치에서는 남쪽으로 1칸 또는 2칸 전진할 수 있다.")
     @Test
     void whenInitialPositionThenCanMoveForwardTwoStepBlack() {
         Pawn pawn = Pawn.ofBlack();
-        Position currentPosition = new Position(File.H, Rank.SEVEN);
+        Position currentPosition = Position.from(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.H, Rank.SIX), new Position(File.H, Rank.FIVE)));
+                Set.of(Position.from(File.H, Rank.SIX), Position.from(File.H, Rank.FIVE)));
     }
 
     @DisplayName("화이트 폰은 초기 위치에서 방해물이 있을 시 건너 뛸 수 없다")
     @Test
     void whenInitialPositionThenCantMoveForward() {
         Pawn pawn = Pawn.ofWhite();
-        Position currentPosition = new Position(File.H, Rank.TWO);
+        Position currentPosition = Position.from(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                new Position(File.H, Rank.THREE), Pawn.ofBlack(),
-                new Position(File.G, Rank.THREE), Pawn.ofBlack()
+                Position.from(File.H, Rank.THREE), Pawn.ofBlack(),
+                Position.from(File.G, Rank.THREE), Pawn.ofBlack()
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.G, Rank.THREE)));
+                Set.of(Position.from(File.G, Rank.THREE)));
     }
 
     @DisplayName("블랙 폰은 초기 위치에서 방해물이 있을 시 건너 뛸 수 없다")
     @Test
     void whenInitialPositionThenCantMoveForwardBlack() {
         Pawn pawn = Pawn.ofBlack();
-        Position currentPosition = new Position(File.H, Rank.SEVEN);
+        Position currentPosition = Position.from(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                new Position(File.H, Rank.SIX), Pawn.ofWhite(),
-                new Position(File.G, Rank.SIX), Pawn.ofWhite()
+                Position.from(File.H, Rank.SIX), Pawn.ofWhite(),
+                Position.from(File.G, Rank.SIX), Pawn.ofWhite()
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.G, Rank.SIX)));
+                Set.of(Position.from(File.G, Rank.SIX)));
     }
 
 
@@ -101,16 +101,16 @@ class PawnTest {
     @Test
     void canMoveDiagonalOfTheForwardDirectionWhenEnemyExists() {
         Pawn pawn = Pawn.ofWhite();
-        Position currentPosition = new Position(File.H, Rank.TWO);
+        Position currentPosition = Position.from(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                new Position(File.G, Rank.THREE), Pawn.ofBlack()
+                Position.from(File.G, Rank.THREE), Pawn.ofBlack()
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
-        assertThat(movablePositions).isEqualTo(Set.of(new Position(File.H, Rank.THREE),
-                new Position(File.H, Rank.FOUR), new Position(File.G, Rank.THREE))
+        assertThat(movablePositions).isEqualTo(Set.of(Position.from(File.H, Rank.THREE),
+                Position.from(File.H, Rank.FOUR), Position.from(File.G, Rank.THREE))
         );
     }
 
@@ -118,16 +118,16 @@ class PawnTest {
     @Test
     void canMoveDiagonalOfTheForwardDirectionWhenEnemyExistsBlack() {
         Pawn pawn = Pawn.ofBlack();
-        Position currentPosition = new Position(File.H, Rank.SEVEN);
+        Position currentPosition = Position.from(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                new Position(File.G, Rank.SIX), Pawn.ofWhite()
+                Position.from(File.G, Rank.SIX), Pawn.ofWhite()
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
 
-        assertThat(movablePositions).isEqualTo(Set.of(new Position(File.H, Rank.SIX),
-                new Position(File.H, Rank.FIVE), new Position(File.G, Rank.SIX))
+        assertThat(movablePositions).isEqualTo(Set.of(Position.from(File.H, Rank.SIX),
+                Position.from(File.H, Rank.FIVE), Position.from(File.G, Rank.SIX))
         );
     }
 }

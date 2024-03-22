@@ -25,32 +25,32 @@ class KingTest {
     @Test
     void givenKingMoveWhenMeetTeamMThenStop() {
         King king = new King(Color.WHITE);
-        Position currentKingPosition = new Position(File.E, Rank.ONE);
+        Position currentKingPosition = Position.from(File.E, Rank.ONE);
         Map<Position, Piece> board = Map.of(currentKingPosition, king,
-                new Position(File.F, Rank.TWO), Pawn.ofWhite(),
-                new Position(File.D, Rank.ONE), new Queen(Color.WHITE));
+                Position.from(File.F, Rank.TWO), Pawn.ofWhite(),
+                Position.from(File.D, Rank.ONE), new Queen(Color.WHITE));
 
         Set<Position> movablePositions = king.calculateMovablePositions(currentKingPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.D, Rank.TWO), new Position(File.E, Rank.TWO),
-                        new Position(File.F, Rank.ONE)));
+                Set.of(Position.from(File.D, Rank.TWO), Position.from(File.E, Rank.TWO),
+                        Position.from(File.F, Rank.ONE)));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         King king = new King(Color.WHITE);
-        Position currentKingPosition = new Position(File.E, Rank.ONE);
+        Position currentKingPosition = Position.from(File.E, Rank.ONE);
         Map<Position, Piece> board = Map.of(currentKingPosition, king,
-                new Position(File.F, Rank.TWO), Pawn.ofWhite(),
-                new Position(File.D, Rank.ONE), new Queen(Color.WHITE),
-                new Position(File.D, Rank.TWO), Pawn.ofBlack());
+                Position.from(File.F, Rank.TWO), Pawn.ofWhite(),
+                Position.from(File.D, Rank.ONE), new Queen(Color.WHITE),
+                Position.from(File.D, Rank.TWO), Pawn.ofBlack());
 
         Set<Position> movablePositions = king.calculateMovablePositions(currentKingPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.D, Rank.TWO), new Position(File.E, Rank.TWO),
-                        new Position(File.F, Rank.ONE)));
+                Set.of(Position.from(File.D, Rank.TWO), Position.from(File.E, Rank.TWO),
+                        Position.from(File.F, Rank.ONE)));
     }
 }

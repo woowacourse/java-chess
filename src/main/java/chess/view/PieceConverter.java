@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Map;
 
 public class PieceConverter {

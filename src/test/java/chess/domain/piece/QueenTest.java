@@ -25,50 +25,50 @@ class QueenTest {
     @Test
     void givenQueenMoveWhenMeetTeamMThenStop() {
         Queen queen = new Queen(Color.WHITE);
-        Position currentQueenPosition = new Position(File.G, Rank.SEVEN);
+        Position currentQueenPosition = Position.from(File.G, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,
-                new Position(File.E, Rank.SEVEN), Pawn.ofWhite(),
-                new Position(File.F, Rank.SIX), Pawn.ofWhite(),
-                new Position(File.G, Rank.FIVE), Pawn.ofWhite()
+                Position.from(File.E, Rank.SEVEN), Pawn.ofWhite(),
+                Position.from(File.F, Rank.SIX), Pawn.ofWhite(),
+                Position.from(File.G, Rank.FIVE), Pawn.ofWhite()
         );
 
         Set<Position> movablePositions = queen.calculateMovablePositions(currentQueenPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.G, Rank.SIX),
-                        new Position(File.G, Rank.EIGHT),
-                        new Position(File.H, Rank.SIX),
-                        new Position(File.H, Rank.SEVEN),
-                        new Position(File.H, Rank.EIGHT),
-                        new Position(File.F, Rank.EIGHT),
-                        new Position(File.F, Rank.SEVEN)));
+                Set.of(Position.from(File.G, Rank.SIX),
+                        Position.from(File.G, Rank.EIGHT),
+                        Position.from(File.H, Rank.SIX),
+                        Position.from(File.H, Rank.SEVEN),
+                        Position.from(File.H, Rank.EIGHT),
+                        Position.from(File.F, Rank.EIGHT),
+                        Position.from(File.F, Rank.SEVEN)));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenQueenMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Queen queen = new Queen(Color.WHITE);
-        Position currentQueenPosition = new Position(File.G, Rank.SEVEN);
+        Position currentQueenPosition = Position.from(File.G, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,
-                new Position(File.E, Rank.SEVEN), Pawn.ofBlack(),
-                new Position(File.F, Rank.SIX), Pawn.ofBlack(),
-                new Position(File.G, Rank.FIVE), Pawn.ofBlack()
+                Position.from(File.E, Rank.SEVEN), Pawn.ofBlack(),
+                Position.from(File.F, Rank.SIX), Pawn.ofBlack(),
+                Position.from(File.G, Rank.FIVE), Pawn.ofBlack()
         );
 
         Set<Position> movablePositions = queen.calculateMovablePositions(currentQueenPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(new Position(File.G, Rank.SIX),
-                        new Position(File.G, Rank.EIGHT),
-                        new Position(File.H, Rank.SIX),
-                        new Position(File.H, Rank.SEVEN),
-                        new Position(File.H, Rank.EIGHT),
-                        new Position(File.F, Rank.EIGHT),
-                        new Position(File.F, Rank.SEVEN),
-                        new Position(File.E, Rank.SEVEN),
-                        new Position(File.F, Rank.SIX),
-                        new Position(File.G, Rank.FIVE)));
+                Set.of(Position.from(File.G, Rank.SIX),
+                        Position.from(File.G, Rank.EIGHT),
+                        Position.from(File.H, Rank.SIX),
+                        Position.from(File.H, Rank.SEVEN),
+                        Position.from(File.H, Rank.EIGHT),
+                        Position.from(File.F, Rank.EIGHT),
+                        Position.from(File.F, Rank.SEVEN),
+                        Position.from(File.E, Rank.SEVEN),
+                        Position.from(File.F, Rank.SIX),
+                        Position.from(File.G, Rank.FIVE)));
     }
 }

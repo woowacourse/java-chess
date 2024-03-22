@@ -55,8 +55,8 @@ public class ChessGame {
     }
 
     private void move(CommandCondition commandCondition) {
-        Position source = Position.convert(commandCondition.getSource());
-        Position target = Position.convert(commandCondition.getTarget());
+        Position source = Position.from(commandCondition.getSource());
+        Position target = Position.from(commandCondition.getTarget());
         gameState = gameState.move(board, source, target);
         OutputView.printChessBoard(board);
     }

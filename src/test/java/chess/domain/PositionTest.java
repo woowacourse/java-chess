@@ -18,8 +18,8 @@ class PositionTest {
     @DisplayName("방향에 따른 다음 위치를 결정한다")
     @Test
     void nextPosition() {
-        Position position = new Position(File.A, Rank.ONE);
-        Position nextPosition = new Position(File.A, Rank.TWO);
+        Position position = Position.from(File.A, Rank.ONE);
+        Position nextPosition = Position.from(File.A, Rank.TWO);
 
         assertThat(position.next(Direction.NORTH)).isEqualTo(nextPosition);
     }
@@ -42,7 +42,7 @@ class PositionTest {
     @DisplayName("다음 방향으로 갈 수 있는지 알 수 있다.")
     @Test
     void canMoveNext() {
-        Position position = new Position(File.A, Rank.ONE);
+        Position position = Position.from(File.A, Rank.ONE);
 
         assertThat(position.canMoveNext(Direction.NORTH)).isTrue();
     }
@@ -51,25 +51,25 @@ class PositionTest {
     @Test
     void convert() {
         String source = "a1";
-        Position position = Position.convert(source);
+        Position position = Position.from(source);
 
-        assertThat(position).isEqualTo(new Position(File.A, Rank.ONE));
+        assertThat(position).isEqualTo(Position.from(File.A, Rank.ONE));
     }
 
     @DisplayName("잘못된 문자열을 받으면 Position으로 변환할 수 없다.")
     @Test
     void convertFail() {
         String source = "pobi";
-        assertThatThrownBy(() -> Position.convert(source))
+        assertThatThrownBy(() -> Position.from(source))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Stream<Arguments> nextPositionFailArguments() {
         return Stream.of(
-                Arguments.arguments(new Position(File.A, Rank.ONE), Direction.SOUTH,
-                        new Position(File.A, Rank.EIGHT), Direction.NORTH,
-                        new Position(File.H, Rank.ONE), Direction.SOUTH_EAST,
-                        new Position(File.H, Rank.EIGHT), Direction.NORTH_EAST
+                Arguments.arguments(Position.from(File.A, Rank.ONE), Direction.SOUTH,
+                        Position.from(File.A, Rank.EIGHT), Direction.NORTH,
+                        Position.from(File.H, Rank.ONE), Direction.SOUTH_EAST,
+                        Position.from(File.H, Rank.EIGHT), Direction.NORTH_EAST
                 )
         );
     }
