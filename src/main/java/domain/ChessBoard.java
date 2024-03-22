@@ -30,7 +30,7 @@ class ChessBoard {
         PieceMoveResult moveResult = piece.move(to, new PiecesOnChessBoard(piecesOnBoard));
         removePieceIfCaught(to, moveResult);
         changeCurrentTeamIfNotFail(moveResult);
-        return moveResult.toBoolean();
+        return moveResult.isMoved();
     }
 
     private boolean isEmptyPosition(Position from) {

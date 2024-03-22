@@ -3,7 +3,7 @@ package domain;
 enum PieceMoveResult {
 	SUCCESS, FAILURE, CATCH;
 
-	boolean toBoolean() {
+	boolean isMoved() {
 		return !this.equals(FAILURE);
 	}
 }
