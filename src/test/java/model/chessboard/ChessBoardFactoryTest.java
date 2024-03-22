@@ -1,11 +1,10 @@
-package model;
+package model.chessboard;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.Map;
-import model.chessboard.ChessBoardFactory;
 import model.piece.PieceHolder;
 import model.piece.state.King;
 import model.piece.state.Pawn;

@@ -1,4 +1,4 @@
-package model;
+package model.position;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
