@@ -1,17 +1,14 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.MovePositionDto;
 
 public class ChessApplication {
-
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
-    private static final String MOVE_COMMAND = "move";
 
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
@@ -19,21 +16,22 @@ public class ChessApplication {
 
     public static void main(String[] args) {
         outputView.printStartMessage();
-        String command = inputView.readCommand();
-        if (command.equals(START_COMMAND)) {
+        Command command = inputView.readGameCommand();
+        if (command.isStart()) {
             outputView.printBoard(controller.getBoard());
             startTurn(Color.WHITE);
         }
     }
 
     private static void startTurn(Color color) {
-        String gameCommand = inputView.readCommand();
-        if (gameCommand.equals(END_COMMAND)) {
+        Command command = inputView.readGameCommand();
+        if (command.isEnd()) {
             return;
         }
-        if (gameCommand.startsWith(MOVE_COMMAND)) {
-            Board board = controller.move(MovePositionDto.from(gameCommand, color));
-            outputView.printBoard(board);
+        if (command.isMove()) {
+            Position source = inputView.resolvePosition(command.sourcePosition());
+            Position target = inputView.resolvePosition(command.targetPosition());
+            outputView.printBoard(controller.move(new MovePositionDto(source, target, color)));
         }
         startTurn(Color.nextColorOf(color));
     }

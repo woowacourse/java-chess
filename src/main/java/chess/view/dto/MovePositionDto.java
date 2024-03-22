@@ -2,19 +2,7 @@ package chess.view.dto;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
-import chess.view.FileResolver;
 
 public record MovePositionDto(Position sourcePosition, Position targetPosition, Color color) {
 
-    public static MovePositionDto from(String command, Color color) {
-        String sourcePositionText = command.split(" ")[1];
-        String targetPositionText = command.split(" ")[2];
-        return new MovePositionDto(resolvePosition(sourcePositionText), resolvePosition(targetPositionText), color);
-    }
-
-    private static Position resolvePosition(String positionText) {
-        int sourceFile = FileResolver.resolveFile(positionText.charAt(0));
-        int sourceRank = Character.getNumericValue(positionText.charAt(1));
-        return Position.of(sourceFile, sourceRank);
-    }
 }
