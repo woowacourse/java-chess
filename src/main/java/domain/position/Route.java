@@ -53,7 +53,8 @@ public class Route {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Route::new));
     }
 
-    List<Position> getRoute() {
+    // todo: 닫을 수 있지 않을까, 또는 지울 수 있지 않을까
+    public List<Position> getRoute() {
         return positions;
     }
 }

@@ -3,6 +3,8 @@ package domain.board;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.position.Position;
+import domain.position.Route;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -11,22 +13,38 @@ import java.util.Map;
 public class ChessBoard {
     private final Map<Position, Piece> board;
 
-    public ChessBoard(Map<Position, Piece> board) {
+    public ChessBoard(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
-    public void move(Position resource, Position target) {
-        List<Position> positions = resource.route(target);
-        if (positions.stream().anyMatch(board::containsKey)) {
-            throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
-        }
-        Piece resourcePiece = findByPosition(resource);
-        resourcePiece.validateMovement(resource, target, findByPosition(target));
-        board.remove(resource);
-        board.put(target, resourcePiece);
+    // todo: movePiece로 메서드명 변경
+    public void move(final Position source, final Position target) {
+        validateEmptyRoute(source, target);
+        validateLegalMove(source, target);
+        movePiece(source, target);
     }
 
-    private Piece findByPosition(Position position) {
+    private void validateEmptyRoute(final Position source, final Position target) {
+        final Route route = Route.create(source, target);
+        final List<Position> positions = route.getRoute();
+        final boolean isPieceExist = positions.stream().anyMatch(board::containsKey);
+        if (isPieceExist) {
+            throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateLegalMove(final Position source, final Position target) {
+        final Piece resourcePiece = findByPosition(source);
+        resourcePiece.validateMovement(source, target, findByPosition(target));
+    }
+
+    private void movePiece(final Position source, final Position target) {
+        final Piece piece = findByPosition(source);
+        board.remove(source);
+        board.put(target, piece);
+    }
+
+    private Piece findByPosition(final Position position) {
         return board.getOrDefault(position, Empty.getInstance());
     }
 
