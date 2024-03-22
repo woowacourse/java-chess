@@ -1,6 +1,8 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum ChessRank {
     ONE("1", 0),
@@ -28,18 +30,32 @@ public enum ChessRank {
         return EIGHT.index();
     }
 
+    public static List<ChessRank> findBetween(ChessRank start, ChessRank end) {
+        List<ChessRank> ranks = new ArrayList<>();
+        if (start.index() < end.index()) {
+            for (int index = start.index() + 1; index < end.index(); index++) {
+                ranks.add(findByIndex(index));
+            }
+            return ranks;
+        }
+        for (int index = start.index() - 1; index > end.index(); index--) {
+            ranks.add(findByIndex(index));
+        }
+        return ranks;
+    }
+
+    private static ChessRank findByIndex(int rankIndex) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == rankIndex)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
+    }
+
     public static ChessRank findByValue(String rankValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(rankValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 값입니다."));
-    }
-
-    public static ChessRank findByIndex(int rankIndex) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.index == rankIndex)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
     }
 
     public String value() {

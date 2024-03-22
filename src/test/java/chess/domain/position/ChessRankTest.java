@@ -1,8 +1,9 @@
 package chess.domain.position;
 
-import chess.domain.position.ChessRank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,5 +33,20 @@ class ChessRankTest {
         assertThatThrownBy(() -> ChessRank.findByValue(rankValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("체스 랭크 범위에 해당하지 않는 값입니다.");
+    }
+
+    @DisplayName("랭크와 랭크 사이의 랭크들을 조회한다.")
+    @Test
+    void findRankBetween() {
+        // given
+        ChessRank start = ChessRank.ONE;
+        ChessRank end = ChessRank.EIGHT;
+        List<ChessRank> expected = List.of(ChessRank.TWO, ChessRank.THREE, ChessRank.FOUR, ChessRank.FIVE, ChessRank.SIX, ChessRank.SEVEN);
+
+        // when
+        List<ChessRank> rankBetween = ChessRank.findBetween(start, end);
+
+        // then
+        assertThat(expected).containsAll(rankBetween);
     }
 }

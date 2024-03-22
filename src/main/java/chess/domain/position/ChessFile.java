@@ -1,6 +1,8 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum ChessFile {
     A("a", 0),
@@ -24,18 +26,32 @@ public enum ChessFile {
         return H.index;
     }
 
+    public static List<ChessFile> findBetween(final ChessFile start, final ChessFile end) {
+        List<ChessFile> files = new ArrayList<>();
+        if (start.index() < end.index()) {
+            for (int index = start.index() + 1; index < end.index(); index++) {
+                files.add(ChessFile.findByIndex(index));
+            }
+            return files;
+        }
+        for (int index = start.index() - 1; index > end.index(); index--) {
+            files.add(ChessFile.findByIndex(index));
+        }
+        return files;
+    }
+
+    private static ChessFile findByIndex(int fileIndex) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == fileIndex)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("체스 파일 범위에 해당하지 않는 인덱스입니다."));
+    }
+
     public static ChessFile findByValue(String fileValue) {
         return Arrays.stream(values())
                 .filter(file -> file.value.equals(fileValue))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 파일 범위에 해당하지 않는 값입니다."));
-    }
-
-    public static ChessFile findByIndex(int fileIndex) {
-        return Arrays.stream(values())
-                .filter(file -> file.index == fileIndex)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스 파일 범위에 해당하지 않는 인덱스입니다."));
     }
 
     public int index() {
