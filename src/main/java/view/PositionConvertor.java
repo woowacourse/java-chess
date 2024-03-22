@@ -10,6 +10,9 @@ import static domain.position.File.*;
 import static domain.position.Rank.*;
 
 public class PositionConvertor {
+    private PositionConvertor() {
+    }
+
     private static final Map<String, File> files = Map.of(
             "a", A,
             "b", B,
@@ -33,6 +36,12 @@ public class PositionConvertor {
 
     public static Position convertPosition(String positionString) {
         String[] split = positionString.split("");
+        String file = split[0];
+        String rank = split[1];
+
+        if (!files.containsKey(file) || !ranks.containsKey(rank)) {
+            throw  new IllegalArgumentException("잘못된 위치입니다.");
+        }
         return new Position(files.get(split[0]), ranks.get(split[1]));
     }
 }
