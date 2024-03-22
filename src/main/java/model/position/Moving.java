@@ -1,11 +1,11 @@
 package model.position;
 
+import static model.position.Direction.dColumn;
+import static model.position.Direction.dRow;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
-import static model.position.Direction.dColumn;
-import static model.position.Direction.dRow;
 
 public class Moving {
 
