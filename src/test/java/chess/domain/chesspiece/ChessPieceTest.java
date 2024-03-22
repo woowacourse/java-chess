@@ -2,10 +2,6 @@ package chess.domain.chesspiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.chesspiece.Camp;
-import chess.domain.chesspiece.ChessPiece;
-import chess.domain.chesspiece.ChessPieceProperty;
-import chess.domain.chesspiece.ChessPieceType;
 import chess.domain.chesspiece.movestrategy.BishopMoveStrategy;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -22,7 +18,7 @@ class ChessPieceTest {
         ChessPiece chessPiece = new ChessPiece(camp, chessPieceProperty);
 
         //when
-        boolean isBlackCamp = chessPiece.isBlackCamp();
+        boolean isBlackCamp = chessPiece.getCamp().equals(Camp.BLACK);
 
         //then
         assertThat(isBlackCamp).isTrue();
@@ -36,7 +32,7 @@ class ChessPieceTest {
         ChessPiece chessPiece = new ChessPiece(camp, chessPieceProperty);
 
         //when
-        boolean isBlackCamp = chessPiece.isBlackCamp();
+        boolean isBlackCamp = chessPiece.getCamp().equals(Camp.BLACK);
 
         //then
         assertThat(isBlackCamp).isFalse();
@@ -50,7 +46,7 @@ class ChessPieceTest {
         ChessPiece chessPiece = new ChessPiece(camp, chessPieceProperty);
 
         //when
-        boolean isWhiteCamp = chessPiece.isWhiteCamp();
+        boolean isWhiteCamp = chessPiece.getCamp().equals(Camp.WHITE);
 
         //then
         assertThat(isWhiteCamp).isTrue();
@@ -64,7 +60,7 @@ class ChessPieceTest {
         ChessPiece chessPiece = new ChessPiece(camp, chessPieceProperty);
 
         //when
-        boolean isWhiteCamp = chessPiece.isWhiteCamp();
+        boolean isWhiteCamp = chessPiece.getCamp().equals(Camp.WHITE);
 
         //then
         assertThat(isWhiteCamp).isFalse();

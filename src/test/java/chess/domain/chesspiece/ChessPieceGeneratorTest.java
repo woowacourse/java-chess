@@ -1,12 +1,9 @@
 package chess.domain.chesspiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.chessboard.Numbering;
-import chess.domain.chesspiece.ChessPiece;
-import chess.domain.chesspiece.ChessPieceGenerator;
-import chess.domain.chesspiece.ChessPieceType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -25,7 +22,7 @@ class ChessPieceGeneratorTest {
         //when
         ChessPiece chessPiece = chessPieceGenerator.generate(chessPieceType, blackCampNumber);
         ChessPieceType generatedChessPieceType = chessPiece.getChessPieceType();
-        boolean isBlackCamp = chessPiece.isBlackCamp();
+        boolean isBlackCamp = chessPiece.getCamp().equals(Camp.BLACK);
 
         //then
         assertAll(
