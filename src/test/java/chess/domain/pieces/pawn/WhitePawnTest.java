@@ -1,10 +1,11 @@
-package chess.domain.pieces;
+package chess.domain.pieces.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,14 @@ class WhitePawnTest {
 
     @DisplayName("움직일 수 있는 경우")
     @Nested
-    class Movable {
+    class CanMove {
+
+        Piece whitePawn;
+
+        @BeforeEach
+        void setUp() {
+            whitePawn = new WhitePawn();
+        }
 
         @DisplayName("시작위치에서는 2칸 전진할 수 있다")
         @Test
@@ -22,7 +30,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("a4");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when
@@ -38,7 +45,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a3");
             Square whiteDestination = Square.from("a4");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when
@@ -54,7 +60,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("b3");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when
@@ -67,7 +72,14 @@ class WhitePawnTest {
 
     @DisplayName("움직일 수 없는 경우")
     @Nested
-    class Immovable {
+    class CanNotMove {
+
+        Piece whitePawn;
+
+        @BeforeEach
+        void setUp() {
+            whitePawn = new WhitePawn();
+        }
 
         @DisplayName("시작위치가 아닌 경우 2칸 이동할 수 없다")
         @Test
@@ -75,7 +87,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a3");
             Square whiteDestination = Square.from("a5");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when
@@ -91,7 +102,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("b3");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when
@@ -107,7 +117,6 @@ class WhitePawnTest {
             //given
             Square whiteSource = Square.from("a2");
             Square whiteDestination = Square.from("a3");
-            Piece whitePawn = new WhitePawn();
             Movement whiteMovement = new Movement(whiteSource, whiteDestination);
 
             //when

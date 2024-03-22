@@ -1,12 +1,12 @@
 package chess.domain.board;
 
 import chess.domain.pieces.Bishop;
-import chess.domain.pieces.BlackPawn;
 import chess.domain.pieces.King;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
-import chess.domain.pieces.WhitePawn;
+import chess.domain.pieces.pawn.BlackPawn;
+import chess.domain.pieces.pawn.WhitePawn;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.File;

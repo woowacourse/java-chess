@@ -6,43 +6,156 @@ import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("나이트")
 class KnightTest {
 
-    @DisplayName("움직일 수 있다")
-    @Test
-    void canMove() {
-        //given
-        Square source = Square.from("b1");
-        Square destination = Square.from("c3");
+    @Nested
+    @DisplayName("나이트가 움직일 수 있는 경우")
+    class CanMove {
 
-        Piece knight = new Knight(Color.WHITE);
-        Movement movement = new Movement(source, destination);
+        Piece knight;
 
-        //when
-        boolean canMove = knight.canMove(movement, null);
+        @BeforeEach
+        void setUp() {
+            knight = new Knight(Color.WHITE);
+        }
 
-        //then
-        assertThat(canMove).isTrue();
+        @DisplayName("오른쪽 위 대각선으로 두 칸, 한 칸 이동할 수 있다")
+        @Test
+        void canMoveUpRight() {
+            //given
+            Square source = Square.from("e4");
+            Square destination = Square.from("f6");
+
+            //when
+            Movement movement = new Movement(source, destination);
+
+            //then
+            assertThat(knight.canMove(movement, null)).isTrue();
+        }
+
+        @DisplayName("오른쪽 아래 대각선으로 두 칸, 한 칸 이동할 수 있다")
+        @Test
+        void canMoveDownRight() {
+            //given
+            Square source = Square.from("e4");
+            Square destination = Square.from("f2");
+
+            //when
+            Movement movement = new Movement(source, destination);
+
+            //then
+            assertThat(knight.canMove(movement, null)).isTrue();
+        }
+
+        @DisplayName("왼쪽 위 대각선으로 두 칸, 한 칸 이동할 수 있다")
+        @Test
+        void canMoveUpLeft() {
+            //given
+            Square source = Square.from("e4");
+            Square destination = Square.from("d6");
+
+            //when
+            Movement movement = new Movement(source, destination);
+
+            //then
+            assertThat(knight.canMove(movement, null)).isTrue();
+        }
+
+        @DisplayName("왼쪽 아래 대각선으로 두 칸, 한 칸 이동할 수 있다")
+        @Test
+        void canMoveDownLeft() {
+            //given
+            Square source = Square.from("e4");
+            Square destination = Square.from("d2");
+
+            //when
+            Movement movement = new Movement(source, destination);
+
+            //then
+            assertThat(knight.canMove(movement, null)).isTrue();
+        }
+
+        @DisplayName("오른쪽으로 두 칸, 한 칸 위아래로 이동할 수 있다")
+        @Test
+        void canMoveRightUpAndDown() {
+            //given
+            Square source = Square.from("e4");
+            Square destination1 = Square.from("g5");
+            Square destination2 = Square.from("g3");
+
+            //when
+            Movement movement1 = new Movement(source, destination1);
+            Movement movement2 = new Movement(source, destination2);
+
+            //then
+            assertThat(knight.canMove(movement1, null)).isTrue();
+            assertThat(knight.canMove(movement2, null)).isTrue();
+        }
+
+        @DisplayName("왼쪽으로 두 칸, 한 칸 위아래로 이동할 수 있다")
+        @Test
+        void canMoveLeftUpAndDown() {
+            //given
+            Square source = Square.from("e4");
+            Square destination1 = Square.from("c5");
+            Square destination2 = Square.from("c3");
+
+            //when
+            Movement movement1 = new Movement(source, destination1);
+            Movement movement2 = new Movement(source, destination2);
+
+            //then
+            assertThat(knight.canMove(movement1, null)).isTrue();
+            assertThat(knight.canMove(movement2, null)).isTrue();
+        }
     }
 
-    @DisplayName("움직일 수 없다.")
-    @Test
-    void canNotMove() {
-        //given
-        Square source = Square.from("b1");
-        Square destination = Square.from("b3");
+    @Nested
+    @DisplayName("나이트가 움직일 수 없는 경우")
+    class CanNotMove {
 
-        Piece knight = new Knight(Color.WHITE);
-        Movement movement = new Movement(source, destination);
+        Piece knight;
 
-        //when
-        boolean canMove = knight.canMove(movement, null);
+        @BeforeEach
+        void setUp() {
+            knight = new Knight(Color.WHITE);
+        }
 
-        //then
-        assertThat(canMove).isFalse();
+        @DisplayName("대각선 방향으로 이동할 수 없다")
+        @Test
+        void canNotMoveDiagonally() {
+            //given
+            Square source = Square.from("e4");
+            Square destination = Square.from("d5");
+
+            //when
+            Movement movement = new Movement(source, destination);
+
+            //then
+            assertThat(knight.canMove(movement, null)).isFalse();
+        }
+
+        @DisplayName("수평 또는 수직 방향으로 이동할 수 없다")
+        @Test
+        void canNotMoveHorizontallyOrVertically() {
+            //given
+            Square source = Square.from("e4");
+            Square destination1 = Square.from("e6");
+            Square destination2 = Square.from("g4");
+
+            //when
+            Movement movement1 = new Movement(source, destination1);
+            Movement movement2 = new Movement(source, destination2);
+
+            //then
+            assertThat(knight.canMove(movement1, null)).isFalse();
+            assertThat(knight.canMove(movement2, null)).isFalse();
+        }
     }
 }

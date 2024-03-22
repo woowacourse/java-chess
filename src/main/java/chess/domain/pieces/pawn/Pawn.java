@@ -1,18 +1,21 @@
-package chess.domain.pieces;
+package chess.domain.pieces.pawn;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.pieces.piece.Type;
 import chess.domain.square.Movement;
 
-public class BlackPawn extends Piece {
+public abstract class Pawn extends Piece {
 
-    private static final int INITIAL_BLACK_PAWN_RANK = 6;
-    private static final int DEFAULT_BLACK_PAWN_MOVE = -1;
-    private static final int INITIAL_BLACK_PAWN_MOVE = -2;
+    protected final int initialRank;
+    protected final int defaultMove;
+    protected final int initialMove;
 
-    public BlackPawn() {
-        super(Color.BLACK, Type.PAWN);
+    public Pawn(final Color color, final int initialRank, final int defaultMove, final int initialMove) {
+        super(color, Type.PAWN);
+        this.initialRank = initialRank;
+        this.defaultMove = defaultMove;
+        this.initialMove = initialMove;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class BlackPawn extends Piece {
     }
 
     private boolean isAttack(final Movement movement) {
-        return movement.isDiagonal() && movement.getRankDifference() == DEFAULT_BLACK_PAWN_MOVE;
+        return movement.isDiagonal() && movement.getRankDifference() == defaultMove;
     }
 
     private boolean isMove(final Movement movement) {
@@ -39,14 +42,15 @@ public class BlackPawn extends Piece {
     }
 
     private boolean isInitialSquare(final Movement movement) {
-        return movement.getSourceRankIndex() == INITIAL_BLACK_PAWN_RANK;
+        return movement.getSourceRankIndex() == initialRank;
     }
 
     private boolean isFirstMove(final Movement movement) {
-        return movement.isCross() && movement.getRankDifference() == INITIAL_BLACK_PAWN_MOVE;
+        return movement.isCross() && movement.getRankDifference() == initialMove;
     }
 
     private boolean isDefaultMove(final Movement movement) {
-        return movement.isCross() && movement.getRankDifference() == DEFAULT_BLACK_PAWN_MOVE;
+        return movement.isCross() && movement.getRankDifference() == defaultMove;
     }
 }
+

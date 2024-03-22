@@ -1,4 +1,4 @@
-package chess.domain.pieces;
+package chess.domain.pieces.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,7 +14,7 @@ class BlackPawnTest {
 
     @DisplayName("움직일 수 있는 경우")
     @Nested
-    class Movable {
+    class CanMove {
 
         @DisplayName("시작위치에서는 2칸 전진할 수 있다")
         @Test
@@ -67,7 +67,7 @@ class BlackPawnTest {
 
     @DisplayName("움직일 수 없는 경우")
     @Nested
-    class Immovable {
+    class CanNotMove {
 
         @DisplayName("시작위치가 아닌 경우 2칸 이동할 수 없다")
         @Test

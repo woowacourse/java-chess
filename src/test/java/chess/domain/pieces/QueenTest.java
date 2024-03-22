@@ -6,11 +6,19 @@ import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("퀸")
 class QueenTest {
+
+    Piece queen;
+
+    @BeforeEach
+    void setUp() {
+        queen = new Queen(Color.WHITE);
+    }
 
     @DisplayName("움직일 수 있다")
     @Test
@@ -22,7 +30,6 @@ class QueenTest {
         Square diagonalSource = Square.from("d1");
         Square diagonalDestination = Square.from("b3");
 
-        Piece queen = new Queen(Color.WHITE);
         Movement crossMovement = new Movement(crossSource, crossDestination);
         Movement diagonalMovement = new Movement(diagonalSource, diagonalDestination);
 
@@ -33,5 +40,20 @@ class QueenTest {
         //then
         assertThat(canCrossMove).isTrue();
         assertThat(canDiagonalMove).isTrue();
+    }
+
+    @DisplayName("움직일 수 없다.")
+    @Test
+    void canNotMove() {
+        //given
+        Square source = Square.from("d1");
+        Square destination = Square.from("f4");
+        Movement movement = new Movement(source, destination);
+
+        //when
+        boolean canMove = queen.canMove(movement, null);
+
+        //then
+        assertThat(canMove).isFalse();
     }
 }
