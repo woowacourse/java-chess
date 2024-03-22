@@ -3,13 +3,12 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.piece.Direction;
-import chess.domain.piece.Position;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PositionTest {
@@ -49,11 +48,54 @@ class PositionTest {
 
     @Test
     @DisplayName("현재 위치가 (1, 1)이고, Direction이 UP, RIGHT이면 (2, 1), (1, 2)로 이동할 수 있다.")
-    void findPathToMovableDirections() {
+    void findMovableDirections() {
         Position position = new Position(1, 1);
 
         assertThat(position.findMovablePositions(Set.of(Direction.UP, Direction.RIGHT)))
                 .containsExactly(new Position(2, 1), new Position(1, 2));
+    }
+
+    @ParameterizedTest(name = "[{index}] 현재 위치가 (4, 4)일 때, 방향이 {0}이면 ({1}, {2})로 이동할 수 있다.")
+    @CsvSource(value = {"UP,4,5", "DOWN,4,3", "LEFT,3,4", "RIGHT,5,4", "LEFT_UP,3,5", "RIGHT_UP,5,5", "LEFT_DOWN,3,3",
+            "RIGHT_DOWN,5,3"})
+    @DisplayName("현재 위치에서 전달 된 방향으로 이동시 좌표를 전달한다. - 8 방향")
+    void findMovablePositionsByEightDirection(Direction direction, int x, int y) {
+        Position position = new Position(4, 4);
+
+        assertThat(position.findMovablePositions(Set.of(direction)))
+                .containsExactlyInAnyOrder(new Position(x, y));
+    }
+
+    @ParameterizedTest(name = "[{index}] 현재 위치가 (4, 4)일 때, 방향이 {0}이면 ({1}, {2})로 이동할 수 있다.")
+    @CsvSource(value = {"UP_UP,4,6", "DOWN_DOWN,4,2"})
+    @DisplayName("현재 위치에서 전달 된 방향으로 이동시 좌표를 전달한다. - 상, 하 2칸 이동")
+    void findMovablePositionsByPawnDirection(Direction direction, int x, int y) {
+        Position position = new Position(4, 4);
+
+        assertThat(position.findMovablePositions(Set.of(direction)))
+                .containsExactlyInAnyOrder(new Position(x, y));
+    }
+
+    @ParameterizedTest(name = "[{index}] 현재 위치가 (4, 4)일 때, 방향이 {0}이면 ({1}, {2})로 이동할 수 있다.")
+    @CsvSource(value = {"UP_UP_LEFT,3,6", "UP_UP_RIGHT,5,6", "DOWN_DOWN_LEFT,3,2", "UP_LEFT_LEFT,2,5",
+            "DOWN_LEFT_LEFT,2,3", "UP_RIGHT_RIGHT,6,5", "DOWN_RIGHT_RIGHT,6,3"})
+    @DisplayName("현재 위치에서 전달 된 방향으로 이동시 좌표를 전달한다. - 나이트 이동")
+    void findMovablePositionsByKnightDirection(Direction direction, int x, int y) {
+        Position position = new Position(4, 4);
+
+        assertThat(position.findMovablePositions(Set.of(direction)))
+                .containsExactlyInAnyOrder(new Position(x, y));
+    }
+
+    @Test
+    @DisplayName("여러 방향을 전달하면 이동시 가능한 좌표를 모두 전달한다.")
+    void findMovablePositionsByManyDirections() {
+        Position position = new Position(4, 4);
+        Set<Direction> directions = Set.of(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT);
+
+        assertThat(position.findMovablePositions(directions))
+                .containsExactlyInAnyOrder(new Position(4, 5), new Position(4, 3), new Position(3, 4),
+                        new Position(5, 4));
     }
 
     @Test
