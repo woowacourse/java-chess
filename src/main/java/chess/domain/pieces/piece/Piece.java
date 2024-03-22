@@ -21,10 +21,6 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
-    public boolean isSameColor(final Color color) {
-        return this.color.equals(color);
-    }
-
     public Color color() {
         return color;
     }

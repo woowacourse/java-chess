@@ -2,7 +2,6 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.pieces.piece.Color;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
 import java.util.List;
@@ -11,10 +10,10 @@ public class Game {
 
     private static final String INVALID_TURN = "헤당 색의 턴이 아닙니다.";
     private final Board board;
-    private Color turn;
+    private final Turn turn;
 
     public Game() {
-        this.turn = Color.WHITE;
+        this.turn = new Turn();
         this.board = BoardFactory.createBoard();
     }
 
@@ -23,17 +22,13 @@ public class Game {
         Square to = Square.from(destination);
         validateTurn(from);
         board.move(from, to);
-        exchangeTurn();
+        turn.next();
     }
 
     private void validateTurn(final Square square) {
         if (!board.checkTurn(square, turn)) {
             throw new IllegalArgumentException(INVALID_TURN);
         }
-    }
-
-    private void exchangeTurn() {
-        turn = turn.exchangeTurn();
     }
 
     public List<PieceResponse> getBoardStatus() {

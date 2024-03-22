@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.pieces.piece.Color;
+import chess.domain.game.Turn;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
@@ -71,10 +71,10 @@ public class Board {
         }
     }
 
-    public boolean checkTurn(final Square square, final Color turn) {
+    public boolean checkTurn(final Square square, final Turn turn) {
         Piece piece = pieces.get(square);
         validateSourcePiece(piece);
-        return piece.isSameColor(turn);
+        return turn.isTurn(piece.color());
     }
 
     public List<PieceResponse> createBoardStatus() {

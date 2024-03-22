@@ -9,8 +9,8 @@ public enum Color {
         return this.name().equals(color);
     }
 
-    public Color exchangeTurn() {
-        if (this.equals(Color.WHITE)) {
+    public Color reverse() {
+        if (this.equals(WHITE)) {
             return BLACK;
         }
         return WHITE;
