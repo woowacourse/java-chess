@@ -15,7 +15,7 @@ public abstract class Difference {
     }
 
     public boolean hasSameDistance(Difference otherDifference) {
-        return Math.abs(difference) == Math.abs(otherDifference.difference);
+        return otherDifference.hasDistance(difference);
     }
 
     @Override
