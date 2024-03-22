@@ -3,6 +3,7 @@ package chess.view;
 import chess.model.board.ChessBoard;
 import chess.model.position.ChessPosition;
 import chess.model.piece.Piece;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +24,13 @@ public class OutputView {
         System.out.println(text);
     }
 
-    private String convertChessBoardTextInOneLine(List<List<String>> result) {
-        return result.stream()
-                .map(strings -> String.join("", strings))
-                .collect(Collectors.joining(System.lineSeparator()));
+    private void initializeChessBoard(List<List<String>> result) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            List<String> strings = IntStream.range(0, BOARD_SIZE)
+                    .mapToObj(index -> NONE)
+                    .collect(Collectors.toList());
+            result.add(strings);
+        }
     }
 
     private void changeNoneToPiece(Map<ChessPosition, Piece> board, List<List<String>> result) {
@@ -38,17 +42,14 @@ public class OutputView {
         }
     }
 
-    private void initializeChessBoard(List<List<String>> result) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            List<String> strings = IntStream.range(0, BOARD_SIZE)
-                    .mapToObj(index -> NONE)
-                    .collect(Collectors.toList());
-            result.add(strings);
-        }
-    }
-
     private String getPieceText(Entry<ChessPosition, Piece> entry) {
         return entry.getValue().getText();
+    }
+
+    private String convertChessBoardTextInOneLine(List<List<String>> result) {
+        return result.stream()
+                .map(strings -> String.join("", strings))
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     public void printException(String message) {

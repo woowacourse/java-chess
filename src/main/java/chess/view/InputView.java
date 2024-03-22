@@ -18,6 +18,12 @@ public class InputView {
         return input;
     }
 
+    private void validateInput(String command) {
+        if (Objects.isNull(command) || command.isBlank()) {
+            throw new IllegalArgumentException("입력값은 공백일 수 없습니다.");
+        }
+    }
+
     public GameArguments readMoveArguments() {
         String input = scanner.nextLine();
         List<String> inputs = Arrays.stream(input.split(" "))
@@ -27,11 +33,5 @@ public class InputView {
             return new GameArguments(moveCommand, null);
         }
         return new GameArguments(moveCommand, MoveArguments.from(inputs));
-    }
-
-    private void validateInput(String command) {
-        if (Objects.isNull(command) || command.isBlank()) {
-            throw new IllegalArgumentException("입력값은 공백일 수 없습니다.");
-        }
     }
 }

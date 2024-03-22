@@ -38,15 +38,15 @@ public class Distance {
         return fileDifference == 0 || rankDifference == 0;
     }
 
+    private boolean isNotMoved() {
+        return fileDifference == 0 && rankDifference == 0;
+    }
+
     public boolean hasSame(int displacement) {
         if (isCrossMovement() || isDiagonalMovement()) {
             return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
         }
         return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
-    }
-
-    private boolean isNotMoved() {
-        return fileDifference == 0 && rankDifference == 0;
     }
 
     public List<ChessPosition> findPath(ChessPosition source) {
@@ -62,17 +62,6 @@ public class Distance {
         return path;
     }
 
-    private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
-                         List<ChessPosition> path) {
-        ChessPosition prevPosition = source;
-        while (repeatCount-- > 0) {
-            File nextFile = prevPosition.findNextFile(fileOffset);
-            Rank nextRank = prevPosition.findNextRank(rankOffset);
-            prevPosition = new ChessPosition(nextFile, nextRank);
-            path.add(prevPosition);
-        }
-    }
-
     private int calculateIncrement(int difference) {
         return Integer.compare(difference, 0);
     }
@@ -82,6 +71,17 @@ public class Distance {
             return Math.abs(rankDifference);
         }
         return Math.abs(fileDifference);
+    }
+
+    private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
+                         List<ChessPosition> path) {
+        ChessPosition prevPosition = source;
+        while (repeatCount-- > 0) {
+            File nextFile = prevPosition.findNextFile(fileOffset);
+            Rank nextRank = prevPosition.findNextRank(rankOffset);
+            prevPosition = new ChessPosition(nextFile, nextRank);
+            path.add(prevPosition);
+        }
     }
 
     public int getFileDifference() {

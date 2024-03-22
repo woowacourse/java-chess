@@ -8,6 +8,7 @@ import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.MoveArguments;
 import chess.view.OutputView;
+
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -64,19 +65,19 @@ public class ChessController {
         return result;
     }
 
-    private void retryOnException(Runnable retryOperation) {
-        boolean retry = true;
-        while (retry) {
-            retry = tryOperation(retryOperation);
-        }
-    }
-
     private <T> T tryOperation(Supplier<T> operation) {
         try {
             return operation.get();
         } catch (IllegalArgumentException e) {
             outputView.printException(e.getMessage());
             return null;
+        }
+    }
+
+    private void retryOnException(Runnable retryOperation) {
+        boolean retry = true;
+        while (retry) {
+            retry = tryOperation(retryOperation);
         }
     }
 
