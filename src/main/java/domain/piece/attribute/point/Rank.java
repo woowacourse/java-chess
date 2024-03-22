@@ -1,5 +1,7 @@
 package domain.piece.attribute.point;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(1),
     TWO(2),
@@ -16,12 +18,10 @@ public enum Rank {
     }
 
     public static Rank from(final int value) {
-        for (final Rank rank : Rank.values()) {
-            if (rank.value == value) {
-                return rank;
-            }
-        }
-        throw new IllegalArgumentException(String.format("%d는 랭크에 존재하지 않습니다.", value));
+        return Arrays.stream(values())
+                     .filter(rank -> rank.value == value)
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException(String.format("%d는 랭크에 존재하지 않습니다.", value)));
     }
 
     public static boolean isInBoundary(final int index) {

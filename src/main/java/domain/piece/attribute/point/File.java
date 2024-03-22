@@ -1,5 +1,7 @@
 package domain.piece.attribute.point;
 
+import java.util.Arrays;
+
 public enum File {
     A('a'),
     B('b'),
@@ -20,12 +22,10 @@ public enum File {
     }
 
     public static File from(final char value) {
-        for (final File file : File.values()) {
-            if (file.value == value) {
-                return file;
-            }
-        }
-        throw new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value));
+        return Arrays.stream(values())
+                     .filter(file -> file.value == value)
+                     .findAny()
+                     .orElseThrow(() -> new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value)));
     }
 
     public static File findByIndex(final int ordinalIndex) {
