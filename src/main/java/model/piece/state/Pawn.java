@@ -43,6 +43,6 @@ public final class Pawn extends Role {
             movedPosition = movedPosition.getNextPosition(direction);
             sequentialPositions.add(movedPosition);
         }
-        return new Route(sequentialPositions);
+        return new Route(direction, sequentialPositions);
     }
 }

@@ -24,10 +24,6 @@ public abstract class Role {
         }
     }
 
-    public boolean isOccupied() {
-        return true;
-    }
-
     public Route findDirectRoute(Position source, Position destination) {
         return possibleRoutes(source).stream()
                 .filter(route -> route.contains(destination))
@@ -36,7 +32,7 @@ public abstract class Role {
                 .orElseThrow(() ->  new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
-    public Set<Route> possibleRoutes(Position position) {
+    private Set<Route> possibleRoutes(Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
         for (Direction direction : directions) {
             possibleRoutes.add(findMovingPatternRoute(direction, position));
@@ -44,13 +40,10 @@ public abstract class Role {
         return possibleRoutes;
     }
 
-    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
-        List<Position> sequentialPositions = new ArrayList<>();
-        while (movedPosition.isAvailablePosition(direction)) {
-            movedPosition = movedPosition.getNextPosition(direction);
-            sequentialPositions.add(movedPosition);
-        }
-        return new Route(sequentialPositions);
+    protected abstract Route findMovingPatternRoute(Direction direction, Position movedPosition);
+
+    public boolean isOccupied() {
+        return true;
     }
 
     public Color getColor() {

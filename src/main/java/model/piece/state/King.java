@@ -9,14 +9,11 @@ import static model.direction.Direction.SE;
 import static model.direction.Direction.SW;
 import static model.direction.Direction.W;
 
-import java.util.ArrayList;
 import java.util.List;
 import model.direction.Direction;
 import model.piece.Color;
-import model.position.Position;
-import model.position.Route;
 
-public final class King extends Role {
+public final class King extends SingleShiftRole {
     private static final List<Direction> DIRECTIONS = List.of(N, NE, E, SE, S, SW, W, NW);
 
     private King(Color color) {
@@ -25,15 +22,5 @@ public final class King extends Role {
 
     public static King from(Color color) {
         return new King(color);
-    }
-
-    @Override
-    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
-        List<Position> sequentialPositions = new ArrayList<>();
-        if (movedPosition.isAvailablePosition(direction)) {
-            movedPosition = movedPosition.getNextPosition(direction);
-            sequentialPositions.add(movedPosition);
-        }
-        return new Route(sequentialPositions);
     }
 }

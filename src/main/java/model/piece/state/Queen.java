@@ -13,7 +13,7 @@ import java.util.List;
 import model.direction.Direction;
 import model.piece.Color;
 
-public final class Queen extends Role {
+public final class Queen extends MultiShiftRole {
     private static final List<Direction> DIRECTIONS = List.of(W, E, S, N, NW, SW, NE, SE);
 
     private Queen(Color color) {

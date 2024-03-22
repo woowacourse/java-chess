@@ -10,7 +10,7 @@ import java.util.List;
 import model.direction.Direction;
 import model.piece.Color;
 
-public final class Rook extends Role {
+public final class Rook extends MultiShiftRole {
     private static final List<Direction> DIRECTIONS = List.of(W, E, N, S);
 
     private Rook(Color color) {

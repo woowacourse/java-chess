@@ -9,7 +9,7 @@ import java.util.List;
 import model.direction.Direction;
 import model.piece.Color;
 
-public final class Bishop extends Role {
+public final class Bishop extends MultiShiftRole {
     private static final List<Direction> DIRECTIONS = List.of(NW, SW, NE, SE);
 
     private Bishop(Color color) {

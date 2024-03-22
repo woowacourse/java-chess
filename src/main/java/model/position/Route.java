@@ -3,11 +3,14 @@ package model.position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.direction.Direction;
 
 public class Route {
+    private final Direction direction;
     private final List<Position> positions;
 
-    public Route(final List<Position> positions) {
+    public Route(final Direction direction, final List<Position> positions) {
+        this.direction = direction;
         this.positions = new ArrayList<>(positions);
     }
 
@@ -21,7 +24,7 @@ public class Route {
 
     public Route subRoute(Position target) {
         List<Position> subList = positions.subList(0, positions.indexOf(target));
-        return new Route(subList);
+        return new Route(direction, subList);
     }
 
     @Override
@@ -32,11 +35,11 @@ public class Route {
         if (!(o instanceof Route route)) {
             return false;
         }
-        return Objects.equals(positions, route.positions);
+        return direction == route.direction && Objects.equals(positions, route.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(positions);
+        return Objects.hash(direction, positions);
     }
 }
