@@ -75,4 +75,8 @@ public class Space {
     public boolean doesNotHavePiece() {
         return piece.isSameColor(new EmptyPiece());
     }
+
+    public boolean isValidTurn(Turn turn) {
+        return turn.isValidTurn(piece);
+    }
 }

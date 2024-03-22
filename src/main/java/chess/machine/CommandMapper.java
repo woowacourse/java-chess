@@ -1,0 +1,34 @@
+package chess.machine;
+
+import java.util.Arrays;
+import java.util.function.Function;
+
+public class CommandMapper {
+
+    public Command inputToCommand(String input) {
+        return CommandMatcher.getCommandFunction(input)
+                .apply(input);
+    }
+
+    private enum CommandMatcher {
+        START(Start::of, "start"),
+        MOVE(Move::of, "move"),
+        STOP(End::of, "end");
+
+        private final Function<String, ? extends Command> commandFunction;
+        private final String inputCommand;
+
+        CommandMatcher(Function<String, ? extends Command> commandFunction, String inputCommand) {
+            this.commandFunction = commandFunction;
+            this.inputCommand = inputCommand;
+        }
+
+        private static Function<String, ? extends Command> getCommandFunction(String inputCommand) {
+            return Arrays.stream(values())
+                    .filter(value -> inputCommand.contains(value.inputCommand))
+                    .map(value -> value.commandFunction)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Command 입력입니다"));
+        }
+    }
+}

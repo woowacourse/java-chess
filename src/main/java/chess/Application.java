@@ -1,5 +1,6 @@
 package chess;
 
+import chess.machine.ChessMachine;
 import chess.view.InputView;
 import chess.view.OutputView;
 
