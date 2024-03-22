@@ -9,11 +9,15 @@ public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
 
     protected final Team team;
-    protected final boolean hasNotMoved;
+    protected final boolean hasMoved;
 
-    public Piece(Team team, boolean hasNotMoved) {
+    public Piece(Team team) {
+        this(team, false);
+    }
+
+    protected Piece(Team team, boolean hasMoved) {
         this.team = team;
-        this.hasNotMoved = hasNotMoved;
+        this.hasMoved = hasMoved;
     }
 
     public abstract Piece move();

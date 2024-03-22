@@ -9,16 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-    public Queen(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+
+    public Queen(Team team) {
+        this(team, false);
+    }
+
+    private Queen(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new Queen(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new Queen(team, true);
     }
 
     @Override

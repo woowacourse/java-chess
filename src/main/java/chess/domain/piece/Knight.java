@@ -11,16 +11,21 @@ import java.util.Set;
 public class Knight extends Piece {
     private static final Set<Integer> MOVE_DIFFERENCES = Set.of(1, 2);
 
-    public Knight(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+
+    public Knight(Team team) {
+        this(team, false);
+    }
+
+    private Knight(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new Knight(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new Knight(team, true);
     }
 
     @Override

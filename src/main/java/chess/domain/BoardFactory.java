@@ -27,21 +27,21 @@ public class BoardFactory {
     private static Map<Position, Piece> createPawnRow(int row, Team team) {
         Map<Position, Piece> pawnRow = new HashMap<>();
         for (int column = 1; column <= 8; column++) {
-            pawnRow.put(Position.of(row, column), new Pawn(team, true));
+            pawnRow.put(Position.of(row, column), new Pawn(team));
         }
         return pawnRow;
     }
 
     private static Map<Position, Piece> createEdgeRow(int row, Team team) {
         return new HashMap<>(Map.of(
-                Position.of(row, 1), new Rook(team, true),
-                Position.of(row, 2), new Knight(team, true),
-                Position.of(row, 3), new Bishop(team, true),
-                Position.of(row, 4), new Queen(team, true),
-                Position.of(row, 5), new King(team, true),
-                Position.of(row, 6), new Bishop(team, true),
-                Position.of(row, 7), new Knight(team, true),
-                Position.of(row, 8), new Rook(team, true)
+                Position.of(row, 1), new Rook(team),
+                Position.of(row, 2), new Knight(team),
+                Position.of(row, 3), new Bishop(team),
+                Position.of(row, 4), new Queen(team),
+                Position.of(row, 5), new King(team),
+                Position.of(row, 6), new Bishop(team),
+                Position.of(row, 7), new Knight(team),
+                Position.of(row, 8), new Rook(team)
         ));
     }
 }

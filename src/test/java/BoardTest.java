@@ -77,9 +77,9 @@ public class BoardTest {
     @Test
     void checkmate() {
         Board board = new Board(Map.of(
-                Position.of(1, 8), new King(Team.WHITE, true),
-                Position.of(2, 8), new Pawn(Team.WHITE, true),
-                Position.of(1, 6), new Queen(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(1, 6), new Queen(Team.BLACK)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isTrue();
@@ -89,10 +89,10 @@ public class BoardTest {
     @Test
     void checkmateWhenDoubleCheck() {
         Board board = new Board(Map.of(
-                Position.of(1, 8), new King(Team.WHITE, true),
-                Position.of(1, 7), new Pawn(Team.WHITE, true),
-                Position.of(4, 5), new Queen(Team.BLACK, true),
-                Position.of(4, 8), new Rook(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 7), new Pawn(Team.WHITE),
+                Position.of(4, 5), new Queen(Team.BLACK),
+                Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isTrue();
@@ -102,10 +102,10 @@ public class BoardTest {
     @Test
     void isNotCheckmateKingAttackAttackPiece() {
         Board board = new Board(Map.of(
-                Position.of(1, 8), new King(Team.WHITE, true),
-                Position.of(1, 7), new Knight(Team.WHITE, true),
-                Position.of(2, 8), new Pawn(Team.WHITE, true),
-                Position.of(2, 7), new Bishop(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 7), new Knight(Team.WHITE),
+                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(2, 7), new Bishop(Team.BLACK)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();
@@ -115,10 +115,10 @@ public class BoardTest {
     @Test
     void isNotCheckmatePieceBlockAttackRoute() {
         Board board = new Board(Map.of(
-                Position.of(1, 8), new King(Team.WHITE, true),
-                Position.of(1, 7), new Pawn(Team.WHITE, true),
-                Position.of(2, 8), new Pawn(Team.WHITE, true),
-                Position.of(3, 6), new Bishop(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 7), new Pawn(Team.WHITE),
+                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(3, 6), new Bishop(Team.BLACK)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();
@@ -128,10 +128,10 @@ public class BoardTest {
     @Test
     void isNotCheckmateAttackingAttackPiece() {
         Board board = new Board(Map.of(
-                Position.of(1, 8), new King(Team.WHITE, true),
-                Position.of(1, 7), new Pawn(Team.WHITE, true),
-                Position.of(2, 7), new Knight(Team.WHITE, true),
-                Position.of(4, 8), new Rook(Team.BLACK, true)
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 7), new Pawn(Team.WHITE),
+                Position.of(2, 7), new Knight(Team.WHITE),
+                Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();

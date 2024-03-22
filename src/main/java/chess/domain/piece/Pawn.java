@@ -15,16 +15,21 @@ public class Pawn extends Piece {
     public static final int BLACK_START_MOVEMENT = -2;
     public static final int ATTACK_COLUMN_MOVEMENT = 1;
 
-    public Pawn(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+
+    public Pawn(Team team) {
+        this(team, false);
+    }
+
+    private Pawn(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new Pawn(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new Pawn(team, true);
     }
 
     @Override
@@ -63,9 +68,9 @@ public class Pawn extends Piece {
             return false;
         }
         if (team == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == WHITE_START_MOVEMENT);
+            return rowDifference == WHITE_NORMAL_MOVEMENT || (!hasMoved && rowDifference == WHITE_START_MOVEMENT);
         }
-        return rowDifference == BLACK_NORMAL_MOVEMENT || (hasNotMoved && rowDifference == BLACK_START_MOVEMENT);
+        return rowDifference == BLACK_NORMAL_MOVEMENT || (!hasMoved && rowDifference == BLACK_START_MOVEMENT);
     }
 
     @Override

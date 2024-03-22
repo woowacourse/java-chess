@@ -16,14 +16,14 @@ class KingTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_KING", "WHITE,WHITE_KING"})
     void findCharacter(Team team, Character character) {
-        assertThat(new King(team, true).findCharacter())
+        assertThat(new King(team).findCharacter())
                 .isEqualTo(character);
     }
 
     @DisplayName("킹은 한칸 초과하여 움직인 경우, 예외가 발생한다.")
     @Test
     void kingMoveOverOne() {
-        assertThatThrownBy(() -> new King(Team.WHITE, true)
+        assertThatThrownBy(() -> new King(Team.WHITE)
                 .findBetweenPositions(Position.of(1, 1), Position.of(3, 3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
@@ -32,7 +32,7 @@ class KingTest {
     @DisplayName("두 위치 사이의 킹이 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPosition() {
-        assertThat(new King(Team.WHITE, true)
+        assertThat(new King(Team.WHITE)
                 .findBetweenPositions(Position.of(3, 3), Position.of(2, 2)))
                 .isEmpty();
     }

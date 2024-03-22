@@ -9,16 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    public Rook(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+    public Rook(Team team) {
+        this(team, false);
+    }
+
+    private Rook(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new Rook(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new Rook(team, true);
     }
 
     @Override

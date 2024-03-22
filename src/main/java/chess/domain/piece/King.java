@@ -10,16 +10,21 @@ import java.util.List;
 public class King extends Piece {
     private static final int MAX_MOVE_DIFFERENCE = 1;
 
-    public King(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+
+    public King(Team team) {
+        this(team, false);
+    }
+
+    private King(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new King(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new King(team, true);
     }
 
     @Override

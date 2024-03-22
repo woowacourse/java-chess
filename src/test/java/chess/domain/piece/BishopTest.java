@@ -16,14 +16,14 @@ class BishopTest {
     @ParameterizedTest
     @CsvSource(value = {"BLACK,BLACK_BISHOP", "WHITE,WHITE_BISHOP"})
     void findCharacter(Team team, Character character) {
-        assertThat(new Bishop(team, true).findCharacter())
+        assertThat(new Bishop(team).findCharacter())
                 .isEqualTo(character);
     }
 
     @DisplayName("비숍은 대각선이 아닌 경우, 예외가 발생한다.")
     @Test
     void bishopMoveOverDiagonalLine() {
-        assertThatThrownBy(() -> new Bishop(Team.WHITE, true)
+        assertThatThrownBy(() -> new Bishop(Team.WHITE)
                 .findBetweenPositions(Position.of(4, 4), Position.of(1, 4)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
@@ -32,7 +32,7 @@ class BishopTest {
     @DisplayName("두 위치 사이의 비숍이 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPosition() {
-        assertThat(new Bishop(Team.WHITE, true)
+        assertThat(new Bishop(Team.WHITE)
                 .findBetweenPositions(Position.of(4, 4), Position.of(7, 7)))
                 .containsExactly(Position.of(5, 5), Position.of(6, 6));
     }
@@ -40,7 +40,7 @@ class BishopTest {
     @DisplayName("두 위치 사이의 비숍이 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPositionMinus() {
-        assertThat(new Bishop(Team.WHITE, true)
+        assertThat(new Bishop(Team.WHITE)
                 .findBetweenPositions(Position.of(4, 4), Position.of(1, 1)))
                 .containsExactly(Position.of(3, 3), Position.of(2, 2));
     }

@@ -8,16 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
-    public Bishop(Team team, boolean hasNotMoved) {
-        super(team, hasNotMoved);
+    public Bishop(Team team) {
+        this(team, false);
+    }
+
+    private Bishop(Team team, boolean hasMoved) {
+        super(team, hasMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasNotMoved) {
-            return new Bishop(team, false);
+        if (hasMoved) {
+            return this;
         }
-        return this;
+        return new Bishop(team, true);
     }
 
     @Override
