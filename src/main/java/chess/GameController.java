@@ -8,6 +8,8 @@ import chess.view.OutputView;
 public class GameController {
     private static final InputView INPUT_VIEW = new InputView();
     private static final OutputView OUTPUT_VIEW = new OutputView();
+    private static final String END_COMMAND = "end";
+    private static final String START_COMMAND = "start";
 
     private Board board = null;
 
@@ -28,10 +30,10 @@ public class GameController {
     private void playTurn() {
         while (true) {
             String command = INPUT_VIEW.readCommand();
-            if ("end".equalsIgnoreCase(command)) {
+            if (END_COMMAND.equalsIgnoreCase(command)) {
                 return;
             }
-            if ("start".equalsIgnoreCase(command)) {
+            if (START_COMMAND.equalsIgnoreCase(command)) {
                 createBoard();
                 continue;
             }
