@@ -33,12 +33,12 @@ public class ChessBoardGenerator implements BoardGenerator {
     private Map<Position, Piece> createBlackFirstLine(ChessRank chessRank) {
         Map<Position, Piece> firstLine = new HashMap<>();
         firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.BLACK_ROOK));
-        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
-        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
+        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
+        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
         firstLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.BLACK_QUEEN));
         firstLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.BLACK_KING));
-        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
-        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
+        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
+        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
         firstLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.BLACK_ROOK));
 
         return firstLine;
@@ -47,12 +47,12 @@ public class ChessBoardGenerator implements BoardGenerator {
     private Map<Position, Piece> createWhiteFirstLine(ChessRank chessRank) {
         Map<Position, Piece> firstLine = new HashMap<>();
         firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.WHITE_ROOK));
-        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
-        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
+        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
+        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
         firstLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.WHITE_QUEEN));
         firstLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.WHITE_KING));
-        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
-        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
+        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
+        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
         firstLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.WHITE_ROOK));
 
         return firstLine;

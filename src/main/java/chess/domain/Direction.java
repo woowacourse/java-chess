@@ -14,33 +14,52 @@ public enum Direction {
     DOWN_LEFT,
     TOP;
 
-    // TODO : 리팩터링
     public static Direction of(final Position source, final Position target) {
         if (source.indexOfFile() == target.indexOfFile()) {
-            if (source.indexOfRank() < target.indexOfRank()) {
-                return Direction.TOP;
-            }
-            return DOWN;
+            return calculateTD(source, target);
         }
         if (source.indexOfRank() == target.indexOfRank()) {
-            if (source.indexOfFile() > target.indexOfFile()) {
-                return Direction.LEFT;
-            }
-            return Direction.RIGHT;
+            return calculateLR(source, target);
         }
-        if (source.indexOfRank() < target.indexOfRank() && source.calculateFileDistanceTo(target) == source.calculateRankDistanceTo(target)) {
-            if (source.indexOfFile() < target.indexOfFile()) {
-                return Direction.TOP_RIGHT;
-            }
-            return Direction.TOP_LEFT;
-        }
-        if (source.indexOfRank() > target.indexOfRank() && source.calculateFileDistanceTo(target) == source.calculateRankDistanceTo(target)) {
-            if (source.indexOfFile() < target.indexOfFile()) {
-                return Direction.DOWN_RIGHT;
-            }
-            return Direction.DOWN_LEFT;
+        if (source.calculateFileDistanceTo(target) == source.calculateRankDistanceTo(target)) {
+            return calculateDiagonal(source, target);
         }
         throw new IllegalArgumentException("올바르지 않은 방향입니다.");
+    }
+
+    private static Direction calculateDiagonal(final Position source, final Position target) {
+        if (source.indexOfRank() < target.indexOfRank()) {
+            return calculateTRTL(source, target);
+        }
+        return calculateDRDL(source, target);
+    }
+
+    private static Direction calculateDRDL(final Position source, final Position target) {
+        if (source.indexOfFile() < target.indexOfFile()) {
+            return Direction.DOWN_RIGHT;
+        }
+        return Direction.DOWN_LEFT;
+    }
+
+    private static Direction calculateTRTL(final Position source, final Position target) {
+        if (source.indexOfFile() < target.indexOfFile()) {
+            return Direction.TOP_RIGHT;
+        }
+        return Direction.TOP_LEFT;
+    }
+
+    private static Direction calculateLR(final Position source, final Position target) {
+        if (source.indexOfFile() > target.indexOfFile()) {
+            return Direction.LEFT;
+        }
+        return Direction.RIGHT;
+    }
+
+    private static Direction calculateTD(final Position source, final Position target) {
+        if (source.indexOfRank() < target.indexOfRank()) {
+            return Direction.TOP;
+        }
+        return DOWN;
     }
 
     public static boolean isDiagonal(final Position source, final Position target) {
