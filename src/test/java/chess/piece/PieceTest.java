@@ -1,11 +1,11 @@
 package chess.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
 

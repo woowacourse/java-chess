@@ -1,9 +1,5 @@
 package chess.chessBoard;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.view.PieceSign;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
@@ -13,9 +9,14 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
+import chess.view.PieceSign;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SpaceTest {
 

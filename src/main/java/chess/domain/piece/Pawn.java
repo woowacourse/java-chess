@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.position.FileDifference;
+import chess.domain.position.Position;
 import chess.domain.position.PositionDifference;
 import chess.domain.position.RankDifference;
 

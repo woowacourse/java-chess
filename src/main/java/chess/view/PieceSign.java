@@ -1,25 +1,16 @@
 package chess.view;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 
 public enum PieceSign {
 
-    EMPTY(EmptyPiece.class,"."),
+    EMPTY(EmptyPiece.class, "."),
     PAWN(Pawn.class, "p"),
     ROOK(Rook.class, "r"),
     KNIGHT(Knight.class, "n"),
     BISHOP(Bishop.class, "b"),
     QUEEN(Queen.class, "q"),
-    KING(King.class, "k")
-    ;
+    KING(King.class, "k");
 
     private final Class<? extends Piece> pieceClass;
     private final String sign;
@@ -32,7 +23,7 @@ public enum PieceSign {
     public static String findSign(Piece piece) {
         for (PieceSign value : values()) {
             if (piece.getClass() == value.pieceClass) {
-                if(piece.isSameColor(Color.BLACK)){
+                if (piece.isSameColor(Color.BLACK)) {
                     return value.sign.toUpperCase();
                 }
                 return value.sign;
