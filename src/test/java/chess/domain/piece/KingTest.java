@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,14 +17,14 @@ class KingTest {
     @BeforeEach
     void setUp() {
         king = new King(Color.WHITE);
-        source = Positions.of(File.E, Rank.ONE);
+        source = Position.of(File.E, Rank.ONE);
     }
 
     @DisplayName("킹은 상하좌우로 한 칸 움직일 수 있다.")
     @Test
     void canMove() {
         // given
-        Position target = Positions.of(File.D, Rank.ONE);
+        Position target = Position.of(File.D, Rank.ONE);
         Color color = Color.NONE;
 
         // when
@@ -39,7 +38,7 @@ class KingTest {
     @Test
     void canMoveDiagonal() {
         // given
-        Position target = Positions.of(File.D, Rank.TWO);
+        Position target = Position.of(File.D, Rank.TWO);
         Color color = Color.NONE;
 
         // when
@@ -53,7 +52,7 @@ class KingTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Position target = Positions.of(File.D, Rank.TWO);
+        Position target = Position.of(File.D, Rank.TWO);
         Color color = Color.WHITE;
 
         // when
@@ -67,7 +66,7 @@ class KingTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Position target = Positions.of(File.B, Rank.THREE);
+        Position target = Position.of(File.B, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -81,7 +80,7 @@ class KingTest {
     @Test
     void makePath() {
         // given
-        Position target = Positions.of(File.D, Rank.TWO);
+        Position target = Position.of(File.D, Rank.TWO);
 
         // when
         List<Position> movingPath = king.searchPath(source, target);

@@ -8,7 +8,6 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -37,8 +36,8 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialBoard();
 
-        Position source = Positions.of(File.B, Rank.ONE);
-        Position target = Positions.of(File.C, Rank.THREE);
+        Position source = Position.of(File.B, Rank.ONE);
+        Position target = Position.of(File.C, Rank.THREE);
 
         // when
         chessBoard.move(source, target);
@@ -63,8 +62,8 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialBoard();
 
-        Position source = Positions.of(File.B, Rank.ONE);
-        Position target = Positions.of(File.C, Rank.EIGHT);
+        Position source = Position.of(File.B, Rank.ONE);
+        Position target = Position.of(File.C, Rank.EIGHT);
 
         // when, then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -78,8 +77,8 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.initialBoard();
 
-        Position source = Positions.of(File.B, Rank.THREE);
-        Position target = Positions.of(File.B, Rank.FOUR);
+        Position source = Position.of(File.B, Rank.THREE);
+        Position target = Position.of(File.B, Rank.FOUR);
 
         // when, then
         assertThatThrownBy(() -> chessBoard.move(source, target))

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,14 +17,14 @@ class QueenTest {
     @BeforeEach
     void setUp() {
         queen = new Queen(Color.WHITE);
-        source = Positions.of(File.D, Rank.ONE);
+        source = Position.of(File.D, Rank.ONE);
     }
 
     @DisplayName("퀸은 상하좌우로 움직일 수 있다.")
     @Test
     void canMove() {
         // given
-        Position target = Positions.of(File.E, Rank.ONE);
+        Position target = Position.of(File.E, Rank.ONE);
         Color color = Color.NONE;
 
         // when
@@ -39,7 +38,7 @@ class QueenTest {
     @Test
     void canMoveDiagonal() {
         // given
-        Position target = Positions.of(File.E, Rank.TWO);
+        Position target = Position.of(File.E, Rank.TWO);
         Color color = Color.NONE;
 
         // when
@@ -53,7 +52,7 @@ class QueenTest {
     @Test
     void canNotMoveWithSameColor() {
         // given
-        Position target = Positions.of(File.E, Rank.TWO);
+        Position target = Position.of(File.E, Rank.TWO);
         Color color = Color.WHITE;
 
         // when
@@ -67,7 +66,7 @@ class QueenTest {
     @Test
     void canNotMoveInvalidPath() {
         // given
-        Position target = Positions.of(File.E, Rank.THREE);
+        Position target = Position.of(File.E, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -81,41 +80,41 @@ class QueenTest {
     @Test
     void makePathDiagonal() {
         // given
-        Position target = Positions.of(File.G, Rank.FOUR);
+        Position target = Position.of(File.G, Rank.FOUR);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(Positions.of(File.E, Rank.TWO)
-                , Positions.of(File.F, Rank.THREE));
+        assertThat(movingPath).contains(Position.of(File.E, Rank.TWO)
+                , Position.of(File.F, Rank.THREE));
     }
 
     @DisplayName("수직으로 이동한 퀸의 이동 경로를 반환한다.")
     @Test
     void makePathVertical() {
         // given
-        Position target = Positions.of(File.D, Rank.FOUR);
+        Position target = Position.of(File.D, Rank.FOUR);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(Positions.of(File.D, Rank.TWO)
-                , Positions.of(File.D, Rank.THREE));
+        assertThat(movingPath).contains(Position.of(File.D, Rank.TWO)
+                , Position.of(File.D, Rank.THREE));
     }
 
     @DisplayName("수평으로 이동한 퀸의 이동 경로를 반환한다.")
     @Test
     void makePathHorizon() {
         // given
-        Position target = Positions.of(File.G, Rank.ONE);
+        Position target = Position.of(File.G, Rank.ONE);
 
         // when
         List<Position> movingPath = queen.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(Positions.of(File.E, Rank.ONE)
-                , Positions.of(File.F, Rank.ONE));
+        assertThat(movingPath).contains(Position.of(File.E, Rank.ONE)
+                , Position.of(File.F, Rank.ONE));
     }
 }

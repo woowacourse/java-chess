@@ -10,7 +10,6 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import chess.dto.ChessBoardDto;
 import java.util.LinkedHashMap;
@@ -71,18 +70,18 @@ public class ChessBoard {
 
     private void initializePawnRank(Rank rank, Color color) {
         for (File file : File.values()) {
-            chessBoard.put(Positions.of(file, rank), new Pawn(color));
+            chessBoard.put(Position.of(file, rank), new Pawn(color));
         }
     }
 
     private void initializeEdgeRank(Rank rank, Color color) {
-        chessBoard.put(Positions.of(File.A, rank), new Rook(color));
-        chessBoard.put(Positions.of(File.B, rank), new Knight(color));
-        chessBoard.put(Positions.of(File.C, rank), new Bishop(color));
-        chessBoard.put(Positions.of(File.D, rank), new Queen(color));
-        chessBoard.put(Positions.of(File.E, rank), new King(color));
-        chessBoard.put(Positions.of(File.F, rank), new Bishop(color));
-        chessBoard.put(Positions.of(File.G, rank), new Knight(color));
-        chessBoard.put(Positions.of(File.H, rank), new Rook(color));
+        chessBoard.put(Position.of(File.A, rank), new Rook(color));
+        chessBoard.put(Position.of(File.B, rank), new Knight(color));
+        chessBoard.put(Position.of(File.C, rank), new Bishop(color));
+        chessBoard.put(Position.of(File.D, rank), new Queen(color));
+        chessBoard.put(Position.of(File.E, rank), new King(color));
+        chessBoard.put(Position.of(File.F, rank), new Bishop(color));
+        chessBoard.put(Position.of(File.G, rank), new Knight(color));
+        chessBoard.put(Position.of(File.H, rank), new Rook(color));
     }
 }

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +20,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SEVEN);
-        Position target = Positions.of(File.C, Rank.SIX);
+        Position source = Position.of(File.C, Rank.SEVEN);
+        Position target = Position.of(File.C, Rank.SIX);
         Color color = Color.NONE;
 
         // when
@@ -38,8 +37,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SEVEN);
-        Position target = Positions.of(File.C, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SEVEN);
+        Position target = Position.of(File.C, Rank.FIVE);
         Color color = Color.NONE;
 
         // when
@@ -55,8 +54,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.C, Rank.FOUR);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.C, Rank.FOUR);
         Color color = Color.NONE;
 
         // when
@@ -73,8 +72,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.C, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.C, Rank.FIVE);
 
         // when
         boolean canMove = pawn.canMove(source, target, targetColor);
@@ -89,8 +88,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.B, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.B, Rank.FIVE);
         Color color = Color.WHITE;
 
         // when
@@ -106,8 +105,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.B, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.B, Rank.FIVE);
         Color color = Color.NONE;
 
         // when
@@ -123,8 +122,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.C, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.C, Rank.FIVE);
 
         // when
         List<Position> movingPath = pawn.searchPath(source, target);
@@ -139,14 +138,14 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Position source = Positions.of(File.C, Rank.SEVEN);
-        Position target = Positions.of(File.C, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.SEVEN);
+        Position target = Position.of(File.C, Rank.FIVE);
 
         // when
         List<Position> movingPath = pawn.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(Positions.of(File.C, Rank.SIX));
+        assertThat(movingPath).contains(Position.of(File.C, Rank.SIX));
     }
 
     @DisplayName("화이트이면서 첫 이동이면 한칸을 위로 이동할 수 있다.")
@@ -155,8 +154,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.TWO);
-        Position target = Positions.of(File.C, Rank.THREE);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.THREE);
         Color color = Color.NONE;
 
         // when
@@ -172,8 +171,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.TWO);
-        Position target = Positions.of(File.C, Rank.FOUR);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.FOUR);
         Color color = Color.NONE;
 
         // when
@@ -189,8 +188,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.THREE);
-        Position target = Positions.of(File.C, Rank.FIVE);
+        Position source = Position.of(File.C, Rank.THREE);
+        Position target = Position.of(File.C, Rank.FIVE);
         Color color = Color.NONE;
 
         // when
@@ -206,8 +205,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.C, Rank.SEVEN);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.C, Rank.SEVEN);
         Color color = Color.BLACK;
 
         // when
@@ -223,8 +222,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.B, Rank.SEVEN);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.B, Rank.SEVEN);
         Color color = Color.BLACK;
 
         // when
@@ -240,8 +239,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.SIX);
-        Position target = Positions.of(File.B, Rank.SEVEN);
+        Position source = Position.of(File.C, Rank.SIX);
+        Position target = Position.of(File.B, Rank.SEVEN);
         Color color = Color.NONE;
 
         // when
@@ -257,8 +256,8 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.THREE);
-        Position target = Positions.of(File.B, Rank.FOUR);
+        Position source = Position.of(File.C, Rank.THREE);
+        Position target = Position.of(File.B, Rank.FOUR);
 
         // when
         List<Position> movingPath = pawn.searchPath(source, target);
@@ -273,13 +272,13 @@ class PawnTest {
         // given
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Position source = Positions.of(File.C, Rank.TWO);
-        Position target = Positions.of(File.C, Rank.FOUR);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.C, Rank.FOUR);
 
         // when
         List<Position> movingPath = pawn.searchPath(source, target);
 
         // then
-        assertThat(movingPath).contains(Positions.of(File.C, Rank.THREE));
+        assertThat(movingPath).contains(Position.of(File.C, Rank.THREE));
     }
 }

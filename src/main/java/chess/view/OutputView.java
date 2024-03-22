@@ -3,7 +3,6 @@ package chess.view;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import chess.domain.position.Rank;
 import chess.dto.ChessBoardDto;
 import java.util.Map;
@@ -42,7 +41,7 @@ public class OutputView {
     }
 
     private void printEachPiece(Map<Position, Piece> chessBoard, Rank rank, File file) {
-        Position position = Positions.of(file, rank);
+        Position position = Position.of(file, rank);
         if (chessBoard.containsKey(position)) {
             Piece piece = chessBoard.get(position);
             System.out.print(PieceSymbol.convertToSymbol(piece));

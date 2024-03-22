@@ -1,15 +1,46 @@
 package chess.domain.position;
 
 import chess.domain.piece.Color;
+import chess.view.FileSymbol;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
+    private static final Map<String, Position> CACHE;
+
+    static {
+        CACHE = new HashMap<>();
+        Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Position(file, rank)))
+                .forEach(position -> CACHE.put(toKey(position.file, position.rank), position));
+    }
+
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position of(File file, Rank rank) {
+        return CACHE.get(toKey(file, rank));
+    }
+
+    public static Position from(String positionSymbol) {
+        String fileValue = positionSymbol.substring(0, 1);
+        String rankValue = positionSymbol.substring(1, 2);
+
+        File file = File.convertToFile(FileSymbol.convertToFileSymbol(fileValue));
+        Rank rank = Rank.convertToRank(rankValue);
+
+        return new Position(file, rank);
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 
     public boolean findPosition(File file, Rank rank) {
@@ -28,7 +59,7 @@ public class Position {
         File movedFile = file.move(fileUnit);
         Rank movedRank = rank.move(rankUnit);
 
-        return Positions.of(movedFile, movedRank);
+        return new Position(movedFile, movedRank);
     }
 
     public boolean isPawnFirstTry(Color color) {
