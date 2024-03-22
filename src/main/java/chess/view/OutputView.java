@@ -49,7 +49,7 @@ public class OutputView {
         board.getPieces().forEach((position, piece) -> {
             int file = position.getFile() - 1;
             int rank = position.getRank() - 1;
-            String pieceDisplay = PieceConverter.convert(piece);
+            String pieceDisplay = PieceDisplay.convert(piece);
             boardDisplays.get(MAX_ROW - rank - 1).set(file, pieceDisplay);
         });
     }
