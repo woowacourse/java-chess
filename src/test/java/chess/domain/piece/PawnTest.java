@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PawnTest {
+
     @DisplayName("화이트 폰은 북쪽으로만 전진할 수 있다.")
     @Test
     void blackPawnCanMoveToNorth() {

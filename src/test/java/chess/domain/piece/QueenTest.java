@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.Board;
 import chess.domain.Color;
@@ -14,12 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class QueenTest {
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Queen(Color.BLACK))
-                .doesNotThrowAnyException();
-    }
 
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
