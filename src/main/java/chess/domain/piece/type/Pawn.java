@@ -1,12 +1,12 @@
 package chess.domain.piece.type;
 
 import chess.domain.Direction;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceNamePattern;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public final class Pawn extends Piece {
         if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.TOP) {
             return (distance == 1 || distance == 2);
         }
-        if (!color.isWhite() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
+        if (color.isBlack() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
             return (distance == 1 || distance == 2);
         }
         return distance == 1;
