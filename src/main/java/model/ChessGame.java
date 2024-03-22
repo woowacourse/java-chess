@@ -16,8 +16,6 @@ public class ChessGame {
 
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
 
-    private Camp camp;
-
     static {
         initPosition.put(Column.A, Rook::new);
         initPosition.put(Column.B, Knight::new);
@@ -29,8 +27,10 @@ public class ChessGame {
         initPosition.put(Column.H, Rook::new);
     }
 
+
     private final Map<Position, Piece> board;
 
+    private Camp camp;
 
     public ChessGame() {
         this.board = new HashMap<>();
