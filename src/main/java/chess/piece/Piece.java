@@ -39,6 +39,14 @@ public abstract class Piece {
         return isMovable(source, destination);
     }
 
+    public boolean isNotMovable(Position source, Position destination) {
+        return !isMovable(source, destination);
+    }
+
+    public boolean isNotAttackable(Position source, Position destination) {
+        return !isAttackable(source, destination);
+    }
+
     public boolean isInitPawn() {
         return false;
     }

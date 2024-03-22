@@ -54,13 +54,13 @@ public class Board {
             return;
         }
 
-        if (!piece.isMovable(source, destination)) {
+        if (piece.isNotMovable(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
 
     private void validateAttackable(Position source, Position destination, Piece piece) {
-        if (!piece.isAttackable(source, destination)) {
+        if (piece.isNotAttackable(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
