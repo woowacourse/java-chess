@@ -6,13 +6,13 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class GameController {
-    private static final InputView inputView = new InputView();
-    private static final OutputView outputView = new OutputView();
+    private static final InputView INPUT_VIEW = new InputView();
+    private static final OutputView OUTPUT_VIEW = new OutputView();
 
     private Board board = null;
 
     public void run() {
-        outputView.printGameStart();
+        OUTPUT_VIEW.printGameStart();
         play();
     }
 
@@ -20,14 +20,14 @@ public class GameController {
         try {
             playTurn();
         } catch (RuntimeException exception) {
-            outputView.printException(exception);
+            OUTPUT_VIEW.printException(exception);
             play();
         }
     }
 
     private void playTurn() {
         while (true) {
-            String command = inputView.readCommand();
+            String command = INPUT_VIEW.readCommand();
             if ("end".equalsIgnoreCase(command)) {
                 return;
             }
@@ -47,11 +47,11 @@ public class GameController {
         Location source = Location.of(commands[1]);
         Location target = Location.of(commands[2]);
         board.tryMove(source, target);
-        outputView.printBoard(board.getBoard());
+        OUTPUT_VIEW.printBoard(board.getBoard());
     }
 
     private void createBoard() {
         board = new Board();
-        outputView.printBoard(board.getBoard());
+        OUTPUT_VIEW.printBoard(board.getBoard());
     }
 }
