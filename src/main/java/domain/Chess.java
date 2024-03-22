@@ -11,11 +11,16 @@ public class Chess {
     public void play(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
-        if (sourcePiece.isDifferentColor(targetPiece) && sourcePiece.canMove(sourcePosition, targetPosition)
-                && board.isNotBlocked(sourcePosition, targetPosition)) {
+        if (canMove(sourcePosition, targetPosition, sourcePiece, targetPiece)) {
             board.placePieceByPosition(sourcePiece, targetPosition);
             board.displacePieceByPosition(sourcePosition);
         }
+    }
+
+    private boolean canMove(Position sourcePosition, Position targetPosition, Piece sourcePiece, Piece targetPiece) {
+        return sourcePiece.isDifferentColor(targetPiece)
+                && sourcePiece.canMove(sourcePosition, targetPosition)
+                && board.isNotBlocked(sourcePosition, targetPosition);
     }
 
     public Board getBoard() {
