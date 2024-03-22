@@ -78,7 +78,8 @@ public class Board {
         boolean isNotBlockable = isNotBlockable(attackedTeam, new Positions(attackingPiecePosition, kingPosition));
 
         // 나를 공격하는 유닛을 공격할 수 없는 경우
-        boolean cannotAttackAttackingPiece = !isBeingAttacked(attackedTeam.opponent(), attackingPiecePosition);
+        boolean cannotAttackAttackingPiece
+                = cannotAttackAttackingPiece(attackedTeam.opponent(), attackingPiecePosition);
 
         // 자신이 공격받고 있는데 움직일 데도 없음, 나를 공격하는 유닛의 경로를 막을 수 없음
         return isCheckAndImmovable && isNotBlockable && cannotAttackAttackingPiece;
@@ -144,6 +145,18 @@ public class Board {
                 .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
                         .stream()
                         .anyMatch(attackRoutePositions::contains));
+    }
+
+    private boolean cannotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent()))
+                .filter(entry -> entry.getKey() != attackingPosition)
+                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
+                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)))
+                .map(Entry::getKey)
+                .toList()
+                .isEmpty();
     }
 
     public Map<Position, Character> mapPositionToCharacter() {
