@@ -7,11 +7,11 @@ import java.util.List;
 
 import static java.util.Collections.unmodifiableList;
 
-public class Distance {
+public class Movement {
     private final int fileDifference;
     private final int rankDifference;
 
-    public Distance(int fileDifference, int rankDifference) {
+    public Movement(int fileDifference, int rankDifference) {
         this.fileDifference = fileDifference;
         this.rankDifference = rankDifference;
     }

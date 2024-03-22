@@ -1,7 +1,7 @@
 package chess.model.piece;
 
 import chess.model.position.ChessPosition;
-import chess.model.position.Distance;
+import chess.model.position.Movement;
 
 import java.util.List;
 
@@ -22,14 +22,14 @@ public class Queen extends Piece {
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
-        Distance distance = target.calculateDistance(source);
-        if (canMove(distance)) {
-            return distance.findPath(source);
+        Movement movement = target.calculateMovement(source);
+        if (canMove(movement)) {
+            return movement.findPath(source);
         }
         return List.of();
     }
 
-    private boolean canMove(Distance distance) {
-        return distance.isCrossMovement() || distance.isDiagonalMovement();
+    private boolean canMove(Movement movement) {
+        return movement.isCrossMovement() || movement.isDiagonalMovement();
     }
 }

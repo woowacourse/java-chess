@@ -13,10 +13,10 @@ public class ChessPosition {
         this.rank = rank;
     }
 
-    public Distance calculateDistance(ChessPosition other) {
+    public Movement calculateMovement(ChessPosition other) {
         int fileDifference = file.minus(other.file);
         int rankDifference = rank.minus(other.rank);
-        return new Distance(fileDifference, rankDifference);
+        return new Movement(fileDifference, rankDifference);
     }
 
     public boolean isPawnInitialPosition(Side side) {

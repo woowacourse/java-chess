@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class DistanceTest {
+class MovementTest {
 
     @ParameterizedTest
     @CsvSource(value = {"1,1,true", "1,-1,true", "0,1,false"})
     @DisplayName("대각선에 있는지 판단한다.")
     void isDiagonalMovement(int givenFile, int givenRank, boolean expected) {
         // when
-        Distance distance = new Distance(givenFile, givenRank);
-        boolean result = distance.isDiagonalMovement();
+        Movement movement = new Movement(givenFile, givenRank);
+        boolean result = movement.isDiagonalMovement();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -29,8 +29,8 @@ class DistanceTest {
         int givenRank = 0;
 
         // when
-        Distance distance = new Distance(givenFile, givenRank);
-        boolean result = distance.isDiagonalMovement();
+        Movement movement = new Movement(givenFile, givenRank);
+        boolean result = movement.isDiagonalMovement();
 
         // then
         assertThat(result).isFalse();
@@ -41,8 +41,8 @@ class DistanceTest {
     @DisplayName("십자가 움직임인지 판단한다.")
     void isCrossMovement(int givenFile, int givenRank, boolean expected) {
         // when
-        Distance distance = new Distance(givenFile, givenRank);
-        boolean result = distance.isCrossMovement();
+        Movement movement = new Movement(givenFile, givenRank);
+        boolean result = movement.isCrossMovement();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -56,8 +56,8 @@ class DistanceTest {
         int givenRank = 0;
 
         // when
-        Distance distance = new Distance(givenFile, givenRank);
-        boolean result = distance.isCrossMovement();
+        Movement movement = new Movement(givenFile, givenRank);
+        boolean result = movement.isCrossMovement();
 
         // then
         assertThat(result).isFalse();
@@ -68,8 +68,8 @@ class DistanceTest {
     @DisplayName("같은 변위인지 판단한다.")
     void hasSame(int displacement, int fileDiff, int rankDiff, boolean expected) {
         // when
-        Distance distance = new Distance(fileDiff, rankDiff);
-        boolean result = distance.hasSame(displacement);
+        Movement movement = new Movement(fileDiff, rankDiff);
+        boolean result = movement.hasSame(displacement);
 
         // then
         assertThat(result).isEqualTo(expected);

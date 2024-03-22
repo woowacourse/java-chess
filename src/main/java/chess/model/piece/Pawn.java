@@ -1,7 +1,7 @@
 package chess.model.piece;
 
 import chess.model.position.ChessPosition;
-import chess.model.position.Distance;
+import chess.model.position.Movement;
 
 import java.util.List;
 
@@ -24,37 +24,37 @@ public class Pawn extends Piece {
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
-        Distance distance = target.calculateDistance(source);
-        validateForwardPath(source, targetPiece, distance);
-        if (canCrossMove(source, distance) || canDiagonalMove(targetPiece, distance)) {
-            return distance.findPath(source);
+        Movement movement = target.calculateMovement(source);
+        validateForwardPath(source, targetPiece, movement);
+        if (canCrossMove(source, movement) || canDiagonalMove(targetPiece, movement)) {
+            return movement.findPath(source);
         }
         return List.of();
     }
 
-    private void validateForwardPath(ChessPosition source, Piece targetPiece, Distance distance) {
-        if (targetPiece != null && canCrossMove(source, distance)) {
+    private void validateForwardPath(ChessPosition source, Piece targetPiece, Movement movement) {
+        if (targetPiece != null && canCrossMove(source, movement)) {
             throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 전진할 수 없습니다.");
         }
     }
 
-    private boolean canCrossMove(ChessPosition source, Distance distance) {
+    private boolean canCrossMove(ChessPosition source, Movement movement) {
         if (source.isPawnInitialPosition(side)) {
-            return canMoveForwardWith(distance, DISPLACEMENT) ||
-                    canMoveForwardWith(distance, INITIAL_SPECIAL_DISPLACEMENT);
+            return canMoveForwardWith(movement, DISPLACEMENT) ||
+                    canMoveForwardWith(movement, INITIAL_SPECIAL_DISPLACEMENT);
         }
-        return canMoveForwardWith(distance, DISPLACEMENT);
+        return canMoveForwardWith(movement, DISPLACEMENT);
     }
 
-    private boolean canMoveForwardWith(Distance distance, int displacement) {
-        return distance.isForward(side) && distance.hasSame(displacement);
+    private boolean canMoveForwardWith(Movement movement, int displacement) {
+        return movement.isForward(side) && movement.hasSame(displacement);
     }
 
-    private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
-        return isPossibleDiagonal(distance) && targetPiece != null && !isSameSide(targetPiece);
+    private boolean canDiagonalMove(Piece targetPiece, Movement movement) {
+        return isPossibleDiagonal(movement) && targetPiece != null && !isSameSide(targetPiece);
     }
 
-    private boolean isPossibleDiagonal(Distance distance) {
-        return distance.isDiagonalMovement() && distance.hasSame(DISPLACEMENT);
+    private boolean isPossibleDiagonal(Movement movement) {
+        return movement.isDiagonalMovement() && movement.hasSame(DISPLACEMENT);
     }
 }

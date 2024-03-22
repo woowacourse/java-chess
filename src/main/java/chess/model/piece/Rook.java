@@ -1,7 +1,7 @@
 package chess.model.piece;
 
 import chess.model.position.ChessPosition;
-import chess.model.position.Distance;
+import chess.model.position.Movement;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class Rook extends Piece {
     @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
-        Distance distance = target.calculateDistance(source);
-        if (distance.isCrossMovement()) {
-            return distance.findPath(source);
+        Movement movement = target.calculateMovement(source);
+        if (movement.isCrossMovement()) {
+            return movement.findPath(source);
         }
         return List.of();
     }
