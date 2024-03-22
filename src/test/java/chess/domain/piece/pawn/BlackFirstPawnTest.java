@@ -48,7 +48,8 @@ class BlackFirstPawnTest {
         );
     }
 
-    @DisplayName("(2,7)일 때 (2, 1)로는 이동할 수 없다.")
+    @Test
+    @DisplayName("(2, 7)일 때 (2, 1)로는 이동할 수 없다.")
     void findPathToInvalidFarDestination() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn();
         Position destination = new Position(2, 1);
