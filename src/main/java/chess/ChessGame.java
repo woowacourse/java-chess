@@ -19,12 +19,8 @@ public class ChessGame {
     private GameState gameState = new ReadyState();
 
     public void run() {
-        try {
-            registerCommands();
-            playChess();
-        } catch (RuntimeException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
+        registerCommands();
+        playChess();
     }
 
     private void registerCommands() {
@@ -37,7 +33,7 @@ public class ChessGame {
         OutputView.printGameStartMessage();
 
         while (gameState.isPlaying()) {
-            executeCommand();
+            retryOnException(this::executeCommand);
         }
     }
 
@@ -61,5 +57,14 @@ public class ChessGame {
 
     private void end() {
         gameState = gameState.end();
+    }
+
+    private void retryOnException(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (RuntimeException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            retryOnException(runnable);
+        }
     }
 }
