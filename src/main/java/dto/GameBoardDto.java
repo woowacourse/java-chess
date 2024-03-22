@@ -2,8 +2,11 @@ package dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import model.GameBoard;
 import model.piece.Piece;
 import model.position.File;
@@ -37,7 +40,6 @@ public class GameBoardDto {
         return new GameBoardDto(result);
     }
 
-
     private static String convertToString(Map<Position, Piece> board, Position position) {
         if (board.containsKey(position)) {
             return PieceType.from(board.get(position)).getValue();
@@ -53,23 +55,17 @@ public class GameBoardDto {
             result.add(rank);
         }
         result.add(new ArrayList<>());
-        List<String> fileInfo = new ArrayList<>();
-        Arrays.stream(File.values())
-                .forEach(file -> fileInfo.add(file.getValue()));
+        List<String> fileInfo = Arrays.stream(File.values())
+                .map(File::getValue)
+                .toList();
         result.add(fileInfo);
         return result;
     }
 
     private static List<List<String>> createEmptyBoard() {
-        List<List<String>> tmp = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            List<String> line = new ArrayList<>();
-            for (int j = 0; j < 8; j++) {
-                line.add("");
-            }
-            tmp.add(line);
-        }
-        return tmp;
+        return IntStream.range(0, 8)
+                .mapToObj(i -> new ArrayList<>(Collections.nCopies(8, "")))
+                .collect(Collectors.toList());
     }
 
     public List<String> getValue() {
