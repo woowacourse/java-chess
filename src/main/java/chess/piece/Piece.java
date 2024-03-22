@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public abstract class Piece {
 
-    protected final Color color;
+    private final Color color;
     private final List<Direction> directions;
 
     protected Piece(Color color, List<Direction> directions) {
@@ -21,11 +21,11 @@ public abstract class Piece {
                 isReachable(source, destination, direction);
     }
 
-    protected boolean matchesDirection(Direction direction) {
+    private boolean matchesDirection(Direction direction) {
         return directions.contains(direction);
     }
 
-    protected boolean isReachable(Position source, Position destination, Direction direction) {
+    private boolean isReachable(Position source, Position destination, Direction direction) {
         int distance = (int) Stream.iterate(source,
                         position -> position.isNotEquals(destination),
                         direction::nextPosition)
