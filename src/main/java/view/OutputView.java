@@ -13,9 +13,7 @@ public class OutputView {
     }
 
     public void printGameBoard(GameBoardDto gameBoardDto) {
-        for (String line : gameBoardDto.getValue()) {
-            System.out.println(line);
-        }
+        System.out.println(gameBoardDto.getValue());
     }
 
     public void printException(final Exception exception) {

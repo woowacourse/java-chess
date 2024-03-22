@@ -25,10 +25,10 @@ public class ChessController {
     }
 
     private void play(final ChessGame chessGame) {
-        ChessStatus currentChessStatus = new Init();
+        ChessStatus currentChessStatus = Init.gameSetting(inputController.getCommand());
         while (currentChessStatus.isRunning()) {
-            currentChessStatus = currentChessStatus.play(inputController.getCommand(), chessGame);
             printCurrentStatus(chessGame, chessGame.getCamp());
+            currentChessStatus = currentChessStatus.play(inputController.getCommand(), chessGame);
         }
     }
 

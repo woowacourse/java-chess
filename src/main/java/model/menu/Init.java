@@ -1,14 +1,12 @@
 package model.menu;
 
 import model.Command;
-import model.ChessGame;
 
 import java.util.List;
 
-public class Init implements ChessStatus {
+public class Init {
 
-    @Override
-    public ChessStatus play(List<String> input, ChessGame chessGame) {
+    public static ChessStatus gameSetting(List<String> input) {
         Command command = Command.from(input.get(0));
         if (command == Command.START) {
             return new Running();
@@ -17,10 +15,5 @@ public class Init implements ChessStatus {
             return new End();
         }
         throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 }
