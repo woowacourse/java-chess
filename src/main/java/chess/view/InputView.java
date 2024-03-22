@@ -1,6 +1,7 @@
 package chess.view;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputView {
@@ -15,7 +16,8 @@ public class InputView {
 
     public PositionDto readPosition() {
         String input = readToken().strip();
-        if (!POSITION_PATTERN.matcher(input).matches()) {
+        Matcher matcher = POSITION_PATTERN.matcher(input);
+        if (!matcher.matches()) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
         return new PositionDto(
