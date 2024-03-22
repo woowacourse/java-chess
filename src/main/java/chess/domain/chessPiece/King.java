@@ -1,11 +1,6 @@
 package chess.domain.chessPiece;
 
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static chess.domain.chessPiece.Role.*;
 
@@ -16,21 +11,6 @@ public class King extends Piece {
     }
 
     //TODO : 리팩토링
-    @Override
-    public List<Position> getRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-        validateMovingRule(source, target);
-
-        Direction direction = Direction.findDirection(source, target);
-        Position movingPosition = direction.move(source);
-
-        while (!movingPosition.equals(target)) {
-            route.add(movingPosition);
-            movingPosition = direction.move(movingPosition);
-        }
-        return Collections.unmodifiableList(route);
-    }
-
     @Override
     protected void validateMovingRule(Position source, Position target) {
         int rowDistance = source.calculateRowDistance(target);
