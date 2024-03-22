@@ -13,9 +13,13 @@ public class Position {
 
     static {
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                POOL.put(toKey(file, rank), new Position(file, rank));
-            }
+            generateFilePositions(file);
+        }
+    }
+
+    private static void generateFilePositions(File file) {
+        for (Rank rank : Rank.values()) {
+            POOL.put(toKey(file, rank), new Position(file, rank));
         }
     }
 
