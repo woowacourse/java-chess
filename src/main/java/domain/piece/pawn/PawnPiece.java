@@ -2,6 +2,7 @@ package domain.piece.pawn;
 
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.piece.Type;
 
 public abstract class PawnPiece implements Piece {
     private final Color color;
@@ -11,8 +12,12 @@ public abstract class PawnPiece implements Piece {
     }
 
     @Override
-    public Color getColor() {
+    public Color color() {
         return color;
     }
 
+    @Override
+    public final Type type() {
+        return Type.PAWN;
+    }
 }

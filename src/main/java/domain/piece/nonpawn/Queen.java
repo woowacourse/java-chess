@@ -20,7 +20,7 @@ public class Queen extends NonPawnPiece {
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         return Type.QUEEN;
     }
 }

@@ -55,8 +55,8 @@ public class OutputView {
     }
 
     private String pieceDisplay(Piece piece) {
-        String pieceName = PIECE_DISPLAY.get(piece.getType());
-        if (piece.getColor().isBlack()) {
+        String pieceName = PIECE_DISPLAY.get(piece.type());
+        if (piece.color().isBlack()) {
             return pieceName.toUpperCase();
         }
         return pieceName;

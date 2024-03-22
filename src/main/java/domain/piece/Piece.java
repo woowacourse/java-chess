@@ -6,7 +6,7 @@ import domain.position.Position;
 public interface Piece {
     void validate(Position resource, Position target, Piece other);
 
-    Color getColor();
+    Color color();
 
-    Type getType();
+    Type type();
 }

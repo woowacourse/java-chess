@@ -18,7 +18,7 @@ public abstract class NonPawnPiece implements Piece {
     }
 
     private void validateColorDifference(final Piece other) {
-        if (this.getColor().equals(other.getColor())) {
+        if (this.color().equals(other.color())) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
     }
@@ -26,7 +26,7 @@ public abstract class NonPawnPiece implements Piece {
     protected abstract void validateMovement(final Position resource, final Position target);
 
     @Override
-    public Color getColor() {
+    public Color color() {
         return color;
     }
 }

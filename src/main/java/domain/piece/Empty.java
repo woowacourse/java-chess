@@ -18,12 +18,12 @@ public class Empty implements Piece {
     }
 
     @Override
-    public Color getColor() {
+    public Color color() {
         return Color.NEUTRALITY;
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         throw new UnsupportedOperationException("Empty는 타입이 없습니다.");
     }
 }
