@@ -24,8 +24,9 @@ public class ContinuousMoveStrategy implements MoveStrategy {
             return false;
         }
 
-        List<Position> movePaths = Stream.iterate(source, position -> position.add(optimalVector))
-                .takeWhile(position -> isContinuable(position, destination, piecePositions))
+        List<Position> movePaths = Stream.iterate(source,
+                        position -> isContinuable(position, destination, piecePositions),
+                        position -> position.add(optimalVector))
                 .limit(moveBound)
                 .toList();
 
