@@ -30,7 +30,7 @@ public abstract class SingleStepPiece extends Piece {
         position = position.next(direction);
         Piece findPiece = board.findPieceByPosition(position);
 
-        if (!isSameColor(findPiece)) {
+        if (isNotSameColor(findPiece)) {
             movablePositions.add(position);
         }
     }

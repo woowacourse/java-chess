@@ -28,8 +28,8 @@ public abstract class Piece {
         return getPieceType() == PieceType.NONE;
     }
 
-    public boolean isSameColor(Piece otherPiece) {
-        return color.isSame(otherPiece.color);
+    public boolean isNotSameColor(Piece otherPiece) {
+        return !color.isSame(otherPiece.color);
     }
 
     public boolean isSameColor(Color other) {

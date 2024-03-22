@@ -22,19 +22,28 @@ public abstract class MultiStepPiece extends Piece {
     }
 
     private void addMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
-        while (position.canMoveNext(direction)) {
-            position = position.next(direction);
-            Piece findPiece = board.findPieceByPosition(position);
+        if (position.canMoveNext(direction)) {
+            Position nextPosition = position.next(direction);
+            Piece findPiece = board.findPieceByPosition(nextPosition);
 
-            if (isSameColor(findPiece)) {
-                break;
-            }
+            addPositionIfValid(board, direction, movablePositions, findPiece, nextPosition);
+        }
+    }
 
-            movablePositions.add(position);
+    private void addPositionIfValid(Board board, Direction direction, Set<Position> movablePositions, Piece findPiece,
+                                    Position nextPosition) {
+        if (isNotSameColor(findPiece)) {
+            movablePositions.add(nextPosition);
 
-            if (!findPiece.isEmpty()) {
-                break;
-            }
+            addMovesIfPieceEmpty(board, direction, movablePositions, findPiece, nextPosition);
+        }
+    }
+
+    private void addMovesIfPieceEmpty(Board board, Direction direction, Set<Position> movablePositions,
+                                      Piece findPiece,
+                                      Position nextPosition) {
+        if (findPiece.isEmpty()) {
+            addMoves(board, direction, nextPosition, movablePositions);
         }
     }
 }

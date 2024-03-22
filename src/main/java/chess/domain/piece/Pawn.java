@@ -69,7 +69,7 @@ public class Pawn extends Piece {
             position = position.next(direction);
             Piece piece = board.findPieceByPosition(position);
 
-            if (!isSameColor(piece) && !piece.isEmpty()) {
+            if (isNotSameColor(piece) && !piece.isEmpty()) {
                 movablePositions.add(position);
             }
         }
