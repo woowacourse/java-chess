@@ -8,8 +8,7 @@ public class Rook extends Piece {
     private static final int MAX_UNIT_MOVE = 7;
 
     public Rook(Color color) {
-        super(PieceType.ROOK,
-                color,
+        super(color,
                 List.of(
                         Direction.POSITIVE_FILE_SAME_RANK,
                         Direction.NEGATIVE_FILE_SAME_RANK,

@@ -8,8 +8,7 @@ public class Bishop extends Piece {
     private static final int MAX_UNIT_MOVE = 7;
 
     public Bishop(Color color) {
-        super(PieceType.BISHOP,
-                color,
+        super(color,
                 List.of(
                         Direction.POSITIVE_FILE_POSITIVE_RANK,
                         Direction.POSITIVE_FILE_NEGATIVE_RANK,

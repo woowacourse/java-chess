@@ -7,11 +7,11 @@ import java.util.stream.Stream;
 
 public abstract class Piece {
 
-    private final PieceAttributes pieceAttributes;
+    protected final Color color;
     private final List<Direction> directions;
 
-    protected Piece(PieceType pieceType, Color color, List<Direction> directions) {
-        this.pieceAttributes = new PieceAttributes(pieceType, color);
+    protected Piece(Color color, List<Direction> directions) {
+        this.color = color;
         this.directions = directions;
     }
 
@@ -44,7 +44,7 @@ public abstract class Piece {
     }
 
     public boolean hasSameColorWith(Piece piece) {
-        return pieceAttributes.hasSameColorOf(piece.getColor());
+        return color == piece.color;
     }
 
     public boolean hasDifferentColorWith(Piece piece) {
@@ -52,14 +52,10 @@ public abstract class Piece {
     }
 
     public boolean hasColorOf(Color color) {
-        return pieceAttributes.hasSameColorOf(color);
-    }
-
-    public boolean hasAttributesOf(PieceAttributes pieceAttributes) {
-        return this.pieceAttributes.equals(pieceAttributes);
+        return this.color == color;
     }
 
     public Color getColor() {
-        return pieceAttributes.getColor();
+        return color;
     }
 }

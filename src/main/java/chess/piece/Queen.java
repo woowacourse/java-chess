@@ -8,8 +8,7 @@ public class Queen extends Piece {
     private static final int MAX_UNIT_MOVE = 7;
 
     public Queen(Color color) {
-        super(PieceType.QUEEN,
-                color,
+        super(color,
                 List.of(
                         Direction.POSITIVE_FILE_POSITIVE_RANK,
                         Direction.POSITIVE_FILE_NEGATIVE_RANK,

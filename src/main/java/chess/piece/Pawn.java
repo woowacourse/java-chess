@@ -22,7 +22,7 @@ public abstract class Pawn extends Piece {
     );
 
     protected Pawn(Color color) {
-        super(PieceType.PAWN, color, getPawnDirectionByColor(color));
+        super(color, getPawnDirectionByColor(color));
     }
 
     private static List<Direction> getPawnDirectionByColor(Color color) {
@@ -35,7 +35,7 @@ public abstract class Pawn extends Piece {
     @Override
     public boolean isAttackable(Position source, Position destination) {
         Direction direction = Direction.calculateBetween(source, destination);
-        if (hasColorOf(Color.WHITE)) {
+        if (color == Color.WHITE) {
             return WHITE_PAWN_ATTACK_DIRECTION.contains(direction);
         }
         return BLACK_PAWN_ATTACK_DIRECTION.contains(direction);

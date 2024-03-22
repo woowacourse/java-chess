@@ -8,7 +8,7 @@ public class Knight extends Piece {
     private static final int MAX_UNIT_MOVE = 1;
 
     public Knight(Color color) {
-        super(PieceType.KNIGHT, color, List.of());
+        super(color, List.of());
     }
 
     @Override

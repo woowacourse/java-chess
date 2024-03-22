@@ -8,8 +8,7 @@ public class King extends Piece {
     private static final int MAX_UNIT_MOVE = 1;
 
     public King(Color color) {
-        super(PieceType.KING,
-                color,
+        super(color,
                 List.of(
                         Direction.POSITIVE_FILE_POSITIVE_RANK,
                         Direction.POSITIVE_FILE_NEGATIVE_RANK,
