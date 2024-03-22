@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toMap;
@@ -52,5 +53,22 @@ public class Row {
 
     public int compare(Row row) {
         return Integer.compare(row.value, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Row row = (Row) o;
+        return value == row.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
