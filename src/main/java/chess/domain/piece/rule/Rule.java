@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.rule;
 
 import chess.domain.position.FileDifference;
 import chess.domain.position.RankDifference;

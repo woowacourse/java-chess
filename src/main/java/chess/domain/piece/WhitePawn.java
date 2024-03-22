@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.rule.Rule;
 import chess.domain.piece.rule.WhitePawnCatchRule;
 import chess.domain.piece.rule.WhitePawnMoveRule;
 import chess.domain.position.Position;

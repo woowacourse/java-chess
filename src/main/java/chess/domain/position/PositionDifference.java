@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.piece.Rule;
+import chess.domain.piece.rule.Rule;
 
 public class PositionDifference {
 

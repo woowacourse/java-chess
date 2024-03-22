@@ -1,6 +1,5 @@
 package chess.domain.piece.rule;
 
-import chess.domain.piece.Rule;
 import chess.domain.position.FileDifference;
 import chess.domain.position.RankDifference;
 
