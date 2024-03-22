@@ -24,12 +24,8 @@ public class Space {
 
     public void movePiece(Space targetSpace, List<Space> spaces) {
         validateClearRoute(targetSpace, spaces);
-        if (!piece.isMovable(position, targetSpace.position)) {
-            throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
-        }
-        if (piece.isSameColor(targetSpace.piece)) {
-            throw new IllegalArgumentException("해당 위치에 피스가 이미 있습니다.");
-        }
+        validateIsMovableSpace(targetSpace);
+        validateSameColorOnSpace(targetSpace);
         if (piece.isCatchable(position, targetSpace.position) || targetSpace.doesNotHavePiece()) {
             targetSpace.piece = piece;
             piece = new EmptyPiece();
@@ -53,6 +49,18 @@ public class Space {
     private void validateRouteHasPiece(Position route, Space space) {
         if (space.position.equals(route) && space.hasPiece()) {
             throw new IllegalArgumentException("루트에 피스가 있습니다.");
+        }
+    }
+
+    private void validateIsMovableSpace(Space targetSpace) {
+        if (!piece.isMovable(position, targetSpace.position)) {
+            throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
+        }
+    }
+
+    private void validateSameColorOnSpace(Space targetSpace) {
+        if (piece.isSameColor(targetSpace.piece)) {
+            throw new IllegalArgumentException("해당 위치에 피스가 이미 있습니다.");
         }
     }
 
