@@ -15,29 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class KingTest {
 
     static Stream<Arguments> canKingMoveAllDirectionOneStepArguments() {
-        return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("d3")),
-                Arguments.arguments(Position.of("d4"), Position.of("e4")),
-                Arguments.arguments(Position.of("d4"), Position.of("d5")),
-                Arguments.arguments(Position.of("d4"), Position.of("c4")),
-                Arguments.arguments(Position.of("d4"), Position.of("e5")),
-                Arguments.arguments(Position.of("d4"), Position.of("c5")),
-                Arguments.arguments(Position.of("d4"), Position.of("e3")),
-                Arguments.arguments(Position.of("d4"), Position.of("c3"))
-        );
+        return Stream.of(Arguments.arguments(Position.of("d4"), Position.of("d3")), Arguments.arguments(Position.of("d4"), Position.of("e4")), Arguments.arguments(Position.of("d4"), Position.of("d5")), Arguments.arguments(Position.of("d4"), Position.of("c4")), Arguments.arguments(Position.of("d4"), Position.of("e5")), Arguments.arguments(Position.of("d4"), Position.of("c5")), Arguments.arguments(Position.of("d4"), Position.of("e3")), Arguments.arguments(Position.of("d4"), Position.of("c3")));
     }
 
     static Stream<Arguments> cannotKingMoveAllDirectionMoreThanTwoStepArguments() {
-        return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("d2")),
-                Arguments.arguments(Position.of("d4"), Position.of("f4")),
-                Arguments.arguments(Position.of("d4"), Position.of("d6")),
-                Arguments.arguments(Position.of("d4"), Position.of("b4")),
-                Arguments.arguments(Position.of("d4"), Position.of("f6")),
-                Arguments.arguments(Position.of("d4"), Position.of("b6")),
-                Arguments.arguments(Position.of("d4"), Position.of("f2")),
-                Arguments.arguments(Position.of("d4"), Position.of("b2"))
-        );
+        return Stream.of(Arguments.arguments(Position.of("d4"), Position.of("d2")), Arguments.arguments(Position.of("d4"), Position.of("f4")), Arguments.arguments(Position.of("d4"), Position.of("d6")), Arguments.arguments(Position.of("d4"), Position.of("b4")), Arguments.arguments(Position.of("d4"), Position.of("f6")), Arguments.arguments(Position.of("d4"), Position.of("b6")), Arguments.arguments(Position.of("d4"), Position.of("f2")), Arguments.arguments(Position.of("d4"), Position.of("b2")));
     }
 
     @DisplayName("킹은 모든 방향으로 한 칸 움직일 수 있다.")

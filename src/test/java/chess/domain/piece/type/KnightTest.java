@@ -67,5 +67,4 @@ class KnightTest {
         // then
         assertThat(result).isFalse();
     }
-
 }
