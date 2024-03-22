@@ -19,7 +19,7 @@ class BlackPawnTest {
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(final Moving moving) {
+    void invalidMoveRoute(final Moving moving) {
         final Pawn blackPawn = new BlackPawn();
 
         assertAll(
@@ -56,6 +56,47 @@ class BlackPawnTest {
                 Arguments.of(new Moving(from("a7"), from("a5")), Set.of(from("a6"))),
                 Arguments.of(new Moving(from("a7"), from("a6")), Set.of()),
                 Arguments.of(new Moving(from("a6"), from("a5")), Set.of())
+        );
+    }
+
+    @DisplayName("공격할 수 없는 경로면 예외를 발생시킨다.")
+    @ParameterizedTest
+    @MethodSource("cantAttackableParameterProvider")
+    void invalidAttackRoute(final Moving moving) {
+        final Pawn blackPawn = new BlackPawn();
+
+        assertAll(
+                () -> assertThatThrownBy(() -> blackPawn.getAttackRoute(moving))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("해당 기물이 이동할 수 없는 위치입니다.")
+        );
+
+    }
+
+    static Stream<Arguments> cantAttackableParameterProvider() {
+        return Stream.of(
+                Arguments.of(new Moving(from("a6"), from("a5"))),
+                Arguments.of(new Moving(from("a7"), from("b8"))),
+                Arguments.of(new Moving(from("a7"), from("b5")))
+        );
+    }
+
+    @DisplayName("이동할 수 있다면 경로를 반환한다.")
+    @ParameterizedTest
+    @MethodSource("canAttackableParameterProvider")
+    void canAttackable(final Moving moving, final Set<Position> expected) {
+        final Pawn blackPawn = new BlackPawn();
+
+        assertAll(
+                () -> assertThat(blackPawn.getAttackRoute(moving)).isEqualTo(expected)
+        );
+    }
+
+    static Stream<Arguments> canAttackableParameterProvider() {
+        return Stream.of(
+                Arguments.of(new Moving(from("a7"), from("b6")), Set.of()),
+                Arguments.of(new Moving(from("d6"), from("c5")), Set.of()),
+                Arguments.of(new Moving(from("f2"), from("e1")), Set.of())
         );
     }
 }
