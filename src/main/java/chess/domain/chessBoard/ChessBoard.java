@@ -18,7 +18,7 @@ public class ChessBoard {
     private ChessBoard(Map<Column, Line> chessBoard) {
         this.chessBoard = chessBoard;
     }
-
+    //TODO: 한칸 생각해보기
     public static ChessBoard initializeChessBoard() {
         Map<Column, Line> board = new LinkedHashMap<>();
         board.put(Column.valueOf("8"), new Line(List.of(new Rook(BLACK), new Knight(BLACK), new Bishop(BLACK), new Queen(BLACK), new King(BLACK), new Bishop(BLACK), new Knight(BLACK), new Rook(BLACK))));
@@ -41,9 +41,8 @@ public class ChessBoard {
         Piece piece = findChessPiece(source);
         piece.getRoute(source, target)
                 .forEach(this::checkObstacle);
-
-        if (piece.isPawn() && Direction.findUpDown(source, target)) {
-            checkObstacle(target);
+        if (piece.isPawn()) {
+            checkPawnStrategy(source, target);
         }
         checkTeam(target, piece);
         chessBoard.put(source.getColumn(), getUpdate(source, new Empty()));
@@ -57,6 +56,15 @@ public class ChessBoard {
         }
     }
 
+    private void checkPawnStrategy(Position source, Position target) {
+        if (Direction.isUpDown(source, target)) {
+            checkObstacle(target);
+        }
+        if (Direction.isDiagonal(source, target) && findChessPiece(target).isEmpty()) {
+            throw new IllegalArgumentException("공격 대상이 없습니다.");
+        }
+    }
+
     private void checkTeam(Position target, Piece piece) {
         Piece targetPiece = findChessPiece(target);
         if (piece.isTeam(targetPiece)) {
@@ -67,7 +75,6 @@ public class ChessBoard {
     private Line getUpdate(Position source, Piece piece) {
         return chessBoard.get(source.getColumn()).update(source.getRow(), piece);
     }
-
 
     private Piece findChessPiece(Position source) {
         Column column = source.getColumn();

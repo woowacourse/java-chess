@@ -4,8 +4,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.BLACK_PAWN;
-import static chess.domain.chessPiece.Role.WHITE_PAWN;
+import static chess.domain.chessPiece.Role.*;
 
 public abstract class Piece {
     protected Team team;
@@ -26,5 +25,9 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return getRole() == BLACK_PAWN || getRole() == WHITE_PAWN;
+    }
+
+    public boolean isEmpty() {
+        return getRole() == EMPTY;
     }
 }

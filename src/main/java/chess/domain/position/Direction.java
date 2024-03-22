@@ -31,9 +31,14 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 방향입니다."));
     }
 
-    public static boolean findUpDown(Position source, Position target) {
+    public static boolean isUpDown(Position source, Position target) {
         Direction direction = findDirection(source, target);
         return direction == UP || direction == DOWN;
+    }
+
+    public static boolean isDiagonal(Position source, Position target) {
+        Direction direction = findDirection(source, target);
+        return direction == UP_RIGHT || direction == UP_LEFT || direction == DOWN_LEFT || direction == DOWN_RIGHT;
     }
 
     public Position move(Position source) {
