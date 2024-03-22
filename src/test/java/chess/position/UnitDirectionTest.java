@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class UnitDirectionTest {
 
-
     @Test
     @DisplayName("두 위치가 주어지면, 단위 방향을 반환한다.")
     void createFromPositionsTest() {
@@ -19,6 +18,18 @@ class UnitDirectionTest {
         UnitDirection unitDirection = UnitDirection.differencesBetween(source, destination);
         // then
         assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 1));
+    }
+
+    @Test
+    @DisplayName("음의 변화량을 가진 단위 반향을 올바르게 생성한다.")
+    void negativeDifferenceTest() {
+        // given
+        Position source = Position.of(File.D, Rank.FOUR);
+        Position destination = Position.of(File.A, Rank.ONE);
+        // when
+        UnitDirection unitDirection = UnitDirection.differencesBetween(source, destination);
+        // then
+        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(-1, -1));
     }
 
     @Test
