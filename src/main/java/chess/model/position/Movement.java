@@ -20,7 +20,7 @@ public class Movement {
         if (!fileDifference.isZero()) {
             return false;
         }
-        if (side.isUpperSide()) {
+        if (side.isBlack()) {
             return rankDifference.isNegative();
         }
         return rankDifference.isPositive();

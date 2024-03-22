@@ -8,7 +8,7 @@ public enum Side {
         return this.equals(WHITE);
     }
 
-    public boolean isUpperSide() {
+    public boolean isBlack() {
         return this.equals(BLACK);
     }
 }
