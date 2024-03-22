@@ -1,9 +1,5 @@
-package domain;
+package domain.position;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
-import domain.position.UnitVector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,14 +21,14 @@ class PositionTest {
         assertThat(position.file()).isEqualTo(file);
     }
 
-    @DisplayName("백터 값을 전달하면 새로운 위치의 Position을 반환한다.")
+    @DisplayName("이동 방향을 전달하면 새로운 위치의 Position을 반환한다.")
     @Test
     void addPositionTest() {
         // Given
         Position position = new Position(File.D, Rank.TWO);
 
         // When
-        Position newPosition = position.add(UnitVector.UP_RIGHT);
+        Position newPosition = position.next(CommonMovementDirection.UP_RIGHT);
 
         // Then
         assertThat(newPosition.file()).isEqualTo(File.E);

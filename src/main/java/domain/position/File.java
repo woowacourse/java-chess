@@ -18,14 +18,14 @@ public enum File {
         this.index = index;
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     public static File of(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.getIndex() == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스입니다."));
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 }

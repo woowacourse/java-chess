@@ -1,6 +1,6 @@
 package domain;
 
-import domain.position.UnitVector;
+import domain.position.CommonMovementDirection;
 import domain.strategy.ContinuousMoveStrategy;
 import domain.strategy.KnightMoveStrategy;
 import domain.strategy.MoveStrategy;
@@ -16,10 +16,10 @@ public class PieceFactory {
     private static final MoveStrategy whitePawnStrategy = new PawnMoveStrategy(TeamColor.WHITE);
     private static final MoveStrategy blackPawnStrategy = new PawnMoveStrategy(TeamColor.BLACK);
     private static final MoveStrategy knightStrategy = new KnightMoveStrategy();
-    private static final MoveStrategy rookStrategy = new ContinuousMoveStrategy(UnitVector.orthogonalVectors(), MAXIMUM_MOVE_BOUND);
-    private static final MoveStrategy bishopStrategy = new ContinuousMoveStrategy(UnitVector.diagonalVectors(), MAXIMUM_MOVE_BOUND);
-    private static final MoveStrategy queenStrategy = new ContinuousMoveStrategy(UnitVector.omnidirectionalVectors(), MAXIMUM_MOVE_BOUND);
-    private static final MoveStrategy kingStrategy = new ContinuousMoveStrategy(UnitVector.omnidirectionalVectors(), KING_MAXIMUM_MOVE_BOUND);
+    private static final MoveStrategy rookStrategy = new ContinuousMoveStrategy(CommonMovementDirection.orthogonalVectors(), MAXIMUM_MOVE_BOUND);
+    private static final MoveStrategy bishopStrategy = new ContinuousMoveStrategy(CommonMovementDirection.diagonalVectors(), MAXIMUM_MOVE_BOUND);
+    private static final MoveStrategy queenStrategy = new ContinuousMoveStrategy(CommonMovementDirection.omnidirectionalVectors(), MAXIMUM_MOVE_BOUND);
+    private static final MoveStrategy kingStrategy = new ContinuousMoveStrategy(CommonMovementDirection.omnidirectionalVectors(), KING_MAXIMUM_MOVE_BOUND);
 
     private static final Map<PieceType, MoveStrategy> moveStrategies = Map.ofEntries(
             Map.entry(BLACK_PAWN, blackPawnStrategy),

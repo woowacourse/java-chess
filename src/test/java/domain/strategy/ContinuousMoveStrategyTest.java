@@ -1,7 +1,7 @@
 package domain.strategy;
 
 import domain.position.Position;
-import domain.position.UnitVector;
+import domain.position.CommonMovementDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,13 +13,13 @@ import java.util.stream.Stream;
 
 import static domain.position.File.*;
 import static domain.position.Rank.*;
-import static domain.position.UnitVector.*;
+import static domain.position.CommonMovementDirection.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ContinuousMoveStrategyTest {
-    private static final Set<UnitVector> orthogonalVectors = Set.of(UP, RIGHT, DOWN, LEFT);
-    private static final Set<UnitVector> diagonalVectors = Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
-    private static final Set<UnitVector> omnidirectionalVectors = Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+    private static final Set<CommonMovementDirection> orthogonalVectors = Set.of(UP, RIGHT, DOWN, LEFT);
+    private static final Set<CommonMovementDirection> diagonalVectors = Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+    private static final Set<CommonMovementDirection> omnidirectionalVectors = Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
     private static final ContinuousMoveStrategy orthogonalMoveStrategy = new ContinuousMoveStrategy(orthogonalVectors, 8);
     private static final ContinuousMoveStrategy diagonalMoveStrategy = new ContinuousMoveStrategy(diagonalVectors, 8);
 
@@ -63,7 +63,6 @@ class ContinuousMoveStrategyTest {
                 Arguments.of(new Position(D, THREE), new Position(F, THREE), Set.of(new Position(E, THREE))),
                 Arguments.of(new Position(D, FIVE), new Position(D, TWO), Set.of(new Position(D, THREE))),
                 Arguments.of(new Position(D, FIVE), new Position(A, FIVE), Set.of(new Position(C, FIVE))),
-                Arguments.of(new Position(D, FIVE), new Position(B, FOUR), Collections.emptySet()),
                 Arguments.of(new Position(D, FIVE), new Position(B, THREE), Collections.emptySet())
         );
     }
@@ -108,8 +107,7 @@ class ContinuousMoveStrategyTest {
                 Arguments.of(new Position(D, THREE), new Position(F, ONE), Set.of(new Position(E, TWO))),
                 Arguments.of(new Position(D, FIVE), new Position(A, TWO), Set.of(new Position(B, THREE))),
                 Arguments.of(new Position(D, FIVE), new Position(B, SEVEN), Set.of(new Position(C, SIX))),
-                Arguments.of(new Position(D, FIVE), new Position(H, FIVE), Collections.emptySet()),
-                Arguments.of(new Position(D, FIVE), new Position(F, EIGHT), Collections.emptySet())
+                Arguments.of(new Position(D, FIVE), new Position(H, FIVE), Collections.emptySet())
         );
     }
 

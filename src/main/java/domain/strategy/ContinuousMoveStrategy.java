@@ -1,30 +1,30 @@
 package domain.strategy;
 
 import domain.position.Position;
-import domain.position.UnitVector;
+import domain.position.CommonMovementDirection;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public class ContinuousMoveStrategy implements MoveStrategy {
-    private final Set<UnitVector> acceptableVectors;
+    private final Set<CommonMovementDirection> acceptableVectors;
     private final int moveBound;
 
-    public ContinuousMoveStrategy(Set<UnitVector> acceptableVectors, int moveBound) {
+    public ContinuousMoveStrategy(Set<CommonMovementDirection> acceptableVectors, int moveBound) {
         this.acceptableVectors = acceptableVectors;
         this.moveBound = moveBound;
     }
 
     @Override
     public boolean isMovable(final Position source, final Position destination, final Set<Position> piecePositions) {
-        UnitVector optimalVector = findOptimalVector(source, destination);
+        CommonMovementDirection optimalVector = findOptimalVector(source, destination);
 
         if (!acceptableVectors.contains(optimalVector)) {
             return false;
         }
 
-        List<Position> movePaths = Stream.iterate(source, position -> position.add(optimalVector))
+        List<Position> movePaths = Stream.iterate(source, position -> position.next(optimalVector))
                 .takeWhile(position -> isContinuable(position, destination, piecePositions))
                 .limit(moveBound)
                 .toList();
@@ -38,15 +38,15 @@ public class ContinuousMoveStrategy implements MoveStrategy {
         return !isReachedDestination && !isOtherPieceExist;
     }
 
-    private boolean isReachable(final Position destination, final UnitVector optimalVector, final List<Position> movePaths) {
-        Position finalPosition = movePaths.get(movePaths.size() - 1).add(optimalVector);
+    private boolean isReachable(final Position destination, final CommonMovementDirection optimalVector, final List<Position> movePaths) {
+        Position finalPosition = movePaths.get(movePaths.size() - 1).next(optimalVector);
         return finalPosition.equals(destination);
     }
 
-    private UnitVector findOptimalVector(final Position source, final Position destination) {
+    private CommonMovementDirection findOptimalVector(final Position source, final Position destination) {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
 
-        return UnitVector.of(rowDiff, colDiff);
+        return CommonMovementDirection.find(source, destination);
     }
 }
