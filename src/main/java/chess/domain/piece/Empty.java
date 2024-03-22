@@ -6,8 +6,17 @@ public class Empty extends Piece {
 
     private static final String NAME = ".";
 
-    public Empty(Team team) {
+    private static Empty empty;
+
+    private Empty(Team team) {
         super(NAME, team);
+    }
+
+    public static Empty getEmpty() {
+        if (empty == null) {
+            empty = Empty.getEmpty();
+        }
+        return empty;
     }
 
     @Override

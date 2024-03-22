@@ -75,19 +75,21 @@ public class Point {
         return file.addable(addFile) && rank.addable(addRank);
     }
 
-    public Direction findRoute(Point point) {
+    public Direction findUnitDirection(Point point) {
         int fileDistance = point.file.distance(this.file);
         int rankDistance = point.rank.distance(this.rank);
-        int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
-        int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
 
-        if (fileDistance == 0 || rankDistance == 0) {
-            return Direction.of(unitFile, unitRank);
+        if (multiplyAxis(point) == 2) {
+            return Direction.of(fileDistance, rankDistance);
         }
-        if (isDiagonal(point)) {
-            return Direction.of(unitFile, unitRank);
+        return Direction.of(unitDistance(fileDistance), unitDistance(rankDistance));
+    }
+
+    private int unitDistance(int distance) {
+        if (distance == 0) {
+            return 0;
         }
-        return Direction.of(fileDistance, rankDistance);
+        return distance / Math.abs(distance);
     }
 
     @Override

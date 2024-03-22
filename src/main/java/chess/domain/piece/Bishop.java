@@ -15,5 +15,3 @@ public final class Bishop extends Piece {
         return currentPoint.isDiagonal(nextPoint);
     }
 }
-
-

@@ -4,7 +4,6 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import chess.domain.player.Player;
 import java.util.Map;
 
@@ -25,7 +24,7 @@ public class Board {
     }
 
     private void movePiece(Point currentPoint, Point destination, Piece currentPiece) {
-        board.put(currentPoint, new Empty(Team.EMPTY));
+        board.put(currentPoint, Empty.getEmpty());
         board.put(destination, currentPiece);
     }
 
@@ -51,19 +50,20 @@ public class Board {
 
     private void validateDestination(Player player, Point destination) {
         Piece nextPiece = board.get(destination);
-        if (!nextPiece.equals(new Empty(Team.EMPTY)) && player.isMyPiece(nextPiece)) {
+        if (!nextPiece.equals(Empty.getEmpty()) && player.isMyPiece(nextPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
         }
     }
 
     private void validateMovableRoute(Point currentPoint, Point destination) {
-        Direction route = currentPoint.findRoute(destination);
-        Point nextPoint = currentPoint.add(route.file(), route.rank());
+        Direction unitDirection = currentPoint.findUnitDirection(destination);
+
+        Point nextPoint = currentPoint.add(unitDirection.file(), unitDirection.rank());
         while (!nextPoint.equals(destination)) {
-            if (!board.get(nextPoint).equals(new Empty(Team.EMPTY))) {
+            if (!Empty.getEmpty().equals(board.get(nextPoint))) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
-            nextPoint = nextPoint.add(route.file(), route.rank());
+            nextPoint = nextPoint.add(unitDirection.file(), unitDirection.rank());
         }
     }
 
@@ -71,12 +71,12 @@ public class Board {
     private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
         if (currentPiece instanceof Pawn) {
             if (currentPoint.isDiagonal(destination)) {
-                if (board.get(destination).equals(new Empty(Team.EMPTY))) {
+                if (board.get(destination).equals(Empty.getEmpty())) {
                     throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
                 }
             }
             if (currentPoint.isStraight(destination)) {
-                if (!board.get(destination).equals(new Empty(Team.EMPTY))) {
+                if (!board.get(destination).equals(Empty.getEmpty())) {
                     throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
                 }
             }
