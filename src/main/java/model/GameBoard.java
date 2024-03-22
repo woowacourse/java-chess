@@ -38,10 +38,12 @@ public class GameBoard {
     }
 
     private final Map<Position, Piece> board;
+    private Camp camp;
 
 
     public GameBoard() {
         this.board = new HashMap<>();
+        this.camp = Camp.WHITE;
     }
 
     public void setting() {
@@ -63,13 +65,14 @@ public class GameBoard {
         }
     }
 
-    public void move(Moving moving, Camp camp) {
+    public void move(Moving moving) {
         validate(camp, moving);
 
         //TODO 여기 테스트 보충
         Piece piece = board.get(moving.getCurrentPosition());
         board.put(moving.getNextPosition(), piece);
         board.remove(moving.getCurrentPosition());
+        camp = camp.toggle();
     }
 
     private void validate(Camp camp, Moving moving) {
@@ -107,5 +110,9 @@ public class GameBoard {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public Camp getCamp() {
+        return camp;
     }
 }

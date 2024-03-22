@@ -22,7 +22,7 @@ public class OutputView {
         System.out.printf("[ERROR] %s%n", exception.getMessage());
     }
 
-    public void printCurrentCame(final Camp camp) {
+    public void printCurrentCamp(final Camp camp) {
         System.out.printf("현재 턴: %s%n%n", camp.toString());
     }
 }
