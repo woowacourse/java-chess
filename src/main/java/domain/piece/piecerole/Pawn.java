@@ -15,21 +15,21 @@ public class Pawn implements PieceRole {
         count = 1;
         if (color == Color.BLACK) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(count), Direction.SOUTH),
-                    new Movable(getMaxMovement(count), Direction.SOUTH_EAST),
-                    new Movable(getMaxMovement(count), Direction.SOUTH_WEST)
+                    new Movable(getMaxStepSize(count), Direction.SOUTH),
+                    new Movable(getMaxStepSize(count), Direction.SOUTH_EAST),
+                    new Movable(getMaxStepSize(count), Direction.SOUTH_WEST)
             );
         }
         if (color == Color.WHITE) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(count), Direction.NORTH),
-                    new Movable(getMaxMovement(count), Direction.NORTH_EAST),
-                    new Movable(getMaxMovement(count), Direction.NORTH_WEST)
+                    new Movable(getMaxStepSize(count), Direction.NORTH),
+                    new Movable(getMaxStepSize(count), Direction.NORTH_EAST),
+                    new Movable(getMaxStepSize(count), Direction.NORTH_WEST)
             );
         }
     }
 
-    protected int getMaxMovement(final int count) {
+    protected int getMaxStepSize(final int count) {
         if (count == 1) {
             return 2;
         }
@@ -42,7 +42,7 @@ public class Pawn implements PieceRole {
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
         if (count == 1) {
             for (Movable movable : routes) {
-                movable.decreaseMaxMovement();
+                movable.decreaseMaxStepSize();
             }
             count++;
         }
