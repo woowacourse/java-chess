@@ -11,33 +11,60 @@ import java.util.stream.IntStream;
 
 public class ChessBoardCreator {
     // TODO 리플렉션에서 인스턴스 재사용으로 생각해보기
-    private static final Map<Class<? extends Piece>, List<Position>> INITIAL_PIECE_ARRANGEMENT = new HashMap<>() {
+    private static final Map<Piece, List<Position>> INITIAL_BLACK_PIECES_ARRANGEMENT = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
-            put(Rook.class, rookPositions);
+            put(new Rook(Team.BLACK), rookPositions);
 
             List<Position> knightPositions = List.of(Position.of(0, 1), Position.of(0, 6));
-            put(Knight.class, knightPositions);
+            put(new Knight(Team.BLACK), knightPositions);
 
             List<Position> bishopPositions = List.of(Position.of(0, 2), Position.of(0, 5));
-            put(Bishop.class, bishopPositions);
+            put(new Bishop(Team.BLACK), bishopPositions);
 
             List<Position> queenPositions = List.of(Position.of(0, 3));
-            put(Queen.class, queenPositions);
+            put(new Queen(Team.BLACK), queenPositions);
 
             List<Position> kingPositions = List.of(Position.of(0, 4));
-            put(King.class, kingPositions);
+            put(new King(Team.BLACK), kingPositions);
 
             List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
                     .mapToObj(col -> Position.of(1, col))
                     .toList();
-            put(Pawn.class, pawnPositions);
+            put(new Pawn(Team.BLACK), pawnPositions);
+        }
+    };
+
+    private static final Map<Piece, List<Position>> INITIAL_WHITE_PIECES_ARRANGEMENT = new HashMap<>() {
+        {
+            List<Position> rookPositions = List.of(Position.of(7, 0), Position.of(7, 7));
+            put(new Rook(Team.WHITE), rookPositions);
+
+            List<Position> knightPositions = List.of(Position.of(7, 1), Position.of(7, 6));
+            put(new Knight(Team.WHITE), knightPositions);
+
+            List<Position> bishopPositions = List.of(Position.of(7, 2), Position.of(7, 5));
+            put(new Bishop(Team.WHITE), bishopPositions);
+
+            List<Position> queenPositions = List.of(Position.of(7, 3));
+            put(new Queen(Team.WHITE), queenPositions);
+
+            List<Position> kingPositions = List.of(Position.of(7, 4));
+            put(new King(Team.WHITE), kingPositions);
+
+            List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
+                    .mapToObj(col -> Position.of(6, col))
+                    .toList();
+            put(new Pawn(Team.WHITE), pawnPositions);
         }
     };
 
     public ChessBoard create() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        INITIAL_PIECE_ARRANGEMENT.entrySet().stream()
+        INITIAL_BLACK_PIECES_ARRANGEMENT.entrySet().stream()
+                .map(entry -> mapPositionToPiece(entry.getKey(), entry.getValue()))
+                .forEach(positionPiece::putAll);
+        INITIAL_WHITE_PIECES_ARRANGEMENT.entrySet().stream()
                 .map(entry -> mapPositionToPiece(entry.getKey(), entry.getValue()))
                 .forEach(positionPiece::putAll);
         return new ChessBoard(positionPiece);
@@ -45,23 +72,9 @@ public class ChessBoardCreator {
 
 
     //TODO: 의미 있는 메서드명 생각해보기
-    private Map<Position, Piece> mapPositionToPiece(Class<? extends Piece> pieceType, List<Position> positions) {
+    private Map<Position, Piece> mapPositionToPiece(Piece pieceType, List<Position> positions) {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        positions.forEach(position -> {
-            positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
-            positionPiece.put(position.verticalReversePosition(), createPieceInstance(pieceType, Team.WHITE));
-        });
+        positions.forEach(position -> positionPiece.put(position, pieceType));
         return positionPiece;
-    }
-
-    // TODO 사용자에게 보여줄 에러메시지
-    private Piece createPieceInstance(Class<? extends Piece> clazz, Team team) {
-        try {
-            return clazz.getDeclaredConstructor(Team.class)
-                    .newInstance(team);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("[INTERNAL ERROR] 기물을 생성하여 배치하는 리플렉션에서 오류가 발생했습니다 ");
-        }
     }
 }
