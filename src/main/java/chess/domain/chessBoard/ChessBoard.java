@@ -1,5 +1,6 @@
 package chess.domain.chessBoard;
 
+import chess.domain.chessBoard.generator.SpaceGenerator;
 import chess.domain.position.Position;
 
 import java.util.List;

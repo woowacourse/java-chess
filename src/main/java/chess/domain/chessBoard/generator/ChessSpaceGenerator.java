@@ -1,5 +1,6 @@
-package chess.domain.chessBoard;
+package chess.domain.chessBoard.generator;
 
+import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;

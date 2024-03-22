@@ -1,5 +1,6 @@
 package chess.domain.chessBoard;
 
+import chess.domain.chessBoard.generator.ChessSpaceGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

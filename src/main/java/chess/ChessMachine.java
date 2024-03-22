@@ -1,7 +1,7 @@
 package chess;
 
 import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.ChessSpaceGenerator;
+import chess.domain.chessBoard.generator.ChessSpaceGenerator;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
 import chess.view.InputView;
