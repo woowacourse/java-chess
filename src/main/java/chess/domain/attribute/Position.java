@@ -7,38 +7,38 @@ import java.util.Optional;
 
 import chess.domain.chessboard.attribute.Direction;
 
-public class Square {
+public class Position {
 
-    private static final Map<String, Square> SQUARES = new HashMap<>();
+    private static final Map<String, Position> POSITIONS = new HashMap<>();
 
     private final File file;
     private final Rank rank;
 
-    private Square(final File file, final Rank rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Square of(final String square) {
-        return of(File.of(square.charAt(0)), Rank.of(square.charAt(1)));
+    public static Position of(final String position) {
+        return of(File.of(position.charAt(0)), Rank.of(position.charAt(1)));
     }
 
-    public static Square of(final File file, final Rank rank) {
-        if (SQUARES.isEmpty()) {
-            initializeSquares();
+    public static Position of(final File file, final Rank rank) {
+        if (POSITIONS.isEmpty()) {
+            initializePositions();
         }
-        return SQUARES.get(keyOf(file, rank));
+        return POSITIONS.get(keyOf(file, rank));
     }
 
-    private static void initializeSquares() {
+    private static void initializePositions() {
         for (final Rank rank : Rank.values()) {
-            putSquares(rank);
+            putPositions(rank);
         }
     }
 
-    private static void putSquares(final Rank rank) {
+    private static void putPositions(final Rank rank) {
         for (final File file : File.values()) {
-            SQUARES.put(keyOf(file, rank), new Square(file, rank));
+            POSITIONS.put(keyOf(file, rank), new Position(file, rank));
         }
     }
 
@@ -50,13 +50,21 @@ public class Square {
         return File.isInRange(column) && Rank.isInRange(row);
     }
 
-    public Optional<Square> move(final Direction direction) {
+    public Optional<Position> moveTo(final Direction direction) {
         int row = rank.toRow() + direction.getRow();
         int column = file.toColumn() + direction.getColumn();
         if (isInRange(column, row)) {
-            return Optional.of(Square.of(File.of(column), Rank.of(row)));
+            return Optional.of(Position.of(File.of(column), Rank.of(row)));
         }
         return Optional.empty();
+    }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
     }
 
     @Override
@@ -64,7 +72,7 @@ public class Square {
         if (this == object) {
             return true;
         }
-        return object instanceof Square other
+        return object instanceof Position other
                 && rank == other.rank
                 && file == other.file;
     }
@@ -76,7 +84,7 @@ public class Square {
 
     @Override
     public String toString() {
-        return "Square{" +
+        return "Position{" +
                 "file=" + file +
                 ", rank=" + rank +
                 '}';

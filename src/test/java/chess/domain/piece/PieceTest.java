@@ -22,182 +22,182 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.attribute.File;
 import chess.domain.attribute.Rank;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 
 class PieceTest {
 
-    private static Stream<Arguments> movableSquaresOfKing() {
+    private static Stream<Arguments> movablePositionsOfKing() {
         return Stream.of(
                 Arguments.of(
                         new King(WHITE),
-                        Square.of(File.startKingFile(), Rank.startRankOf(WHITE)),
+                        Position.of(File.startKingFile(), Rank.startRankOf(WHITE)),
                         Set.of(
-                                Square.of(File.D, Rank.ONE),
-                                Square.of(File.F, Rank.ONE),
-                                Square.of(File.D, Rank.TWO),
-                                Square.of(File.E, Rank.TWO),
-                                Square.of(File.F, Rank.TWO)
+                                Position.of(File.D, Rank.ONE),
+                                Position.of(File.F, Rank.ONE),
+                                Position.of(File.D, Rank.TWO),
+                                Position.of(File.E, Rank.TWO),
+                                Position.of(File.F, Rank.TWO)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfQueen() {
+    private static Stream<Arguments> movablePositionsOfQueen() {
         return Stream.of(
                 Arguments.of(
                         new Queen(WHITE),
-                        Square.of(File.D, Rank.FIVE),
+                        Position.of(File.D, Rank.FIVE),
                         Set.of(
-                                Square.of(File.D, EIGHT),
-                                Square.of(File.D, SEVEN),
-                                Square.of(File.D, SIX),
-                                Square.of(File.D, FOUR),
-                                Square.of(File.D, THREE),
-                                Square.of(File.D, TWO),
-                                Square.of(File.D, ONE),
-                                Square.of(File.A, FIVE),
-                                Square.of(File.B, FIVE),
-                                Square.of(File.C, FIVE),
-                                Square.of(File.E, FIVE),
-                                Square.of(File.F, FIVE),
-                                Square.of(File.G, FIVE),
-                                Square.of(File.H, FIVE),
-                                Square.of(File.A, EIGHT),
-                                Square.of(File.A, TWO),
-                                Square.of(File.B, SEVEN),
-                                Square.of(File.B, THREE),
-                                Square.of(File.C, SIX),
-                                Square.of(File.C, FOUR),
-                                Square.of(File.E, SIX),
-                                Square.of(File.E, FOUR),
-                                Square.of(File.F, SEVEN),
-                                Square.of(File.F, THREE),
-                                Square.of(File.G, EIGHT),
-                                Square.of(File.G, TWO),
-                                Square.of(File.H, ONE)
+                                Position.of(File.D, EIGHT),
+                                Position.of(File.D, SEVEN),
+                                Position.of(File.D, SIX),
+                                Position.of(File.D, FOUR),
+                                Position.of(File.D, THREE),
+                                Position.of(File.D, TWO),
+                                Position.of(File.D, ONE),
+                                Position.of(File.A, FIVE),
+                                Position.of(File.B, FIVE),
+                                Position.of(File.C, FIVE),
+                                Position.of(File.E, FIVE),
+                                Position.of(File.F, FIVE),
+                                Position.of(File.G, FIVE),
+                                Position.of(File.H, FIVE),
+                                Position.of(File.A, EIGHT),
+                                Position.of(File.A, TWO),
+                                Position.of(File.B, SEVEN),
+                                Position.of(File.B, THREE),
+                                Position.of(File.C, SIX),
+                                Position.of(File.C, FOUR),
+                                Position.of(File.E, SIX),
+                                Position.of(File.E, FOUR),
+                                Position.of(File.F, SEVEN),
+                                Position.of(File.F, THREE),
+                                Position.of(File.G, EIGHT),
+                                Position.of(File.G, TWO),
+                                Position.of(File.H, ONE)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfBishop() {
+    private static Stream<Arguments> movablePositionsOfBishop() {
         return Stream.of(
                 Arguments.of(
                         new Bishop(WHITE),
-                        Square.of(File.D, FIVE),
+                        Position.of(File.D, FIVE),
                         Set.of(
-                                Square.of(File.A, EIGHT),
-                                Square.of(File.A, TWO),
-                                Square.of(File.B, SEVEN),
-                                Square.of(File.B, THREE),
-                                Square.of(File.C, SIX),
-                                Square.of(File.C, FOUR),
-                                Square.of(File.E, SIX),
-                                Square.of(File.E, FOUR),
-                                Square.of(File.F, SEVEN),
-                                Square.of(File.F, THREE),
-                                Square.of(File.G, EIGHT),
-                                Square.of(File.G, TWO),
-                                Square.of(File.H, ONE)
+                                Position.of(File.A, EIGHT),
+                                Position.of(File.A, TWO),
+                                Position.of(File.B, SEVEN),
+                                Position.of(File.B, THREE),
+                                Position.of(File.C, SIX),
+                                Position.of(File.C, FOUR),
+                                Position.of(File.E, SIX),
+                                Position.of(File.E, FOUR),
+                                Position.of(File.F, SEVEN),
+                                Position.of(File.F, THREE),
+                                Position.of(File.G, EIGHT),
+                                Position.of(File.G, TWO),
+                                Position.of(File.H, ONE)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfKnight() {
+    private static Stream<Arguments> movablePositionsOfKnight() {
         return Stream.of(
                 Arguments.of(
                         new Knight(WHITE),
-                        Square.of(File.startKnightFileOf(0), Rank.startRankOf(WHITE)),
+                        Position.of(File.startKnightFileOf(0), Rank.startRankOf(WHITE)),
                         Set.of(
-                                Square.of(File.A, Rank.THREE),
-                                Square.of(File.C, Rank.THREE),
-                                Square.of(File.D, Rank.TWO)
+                                Position.of(File.A, Rank.THREE),
+                                Position.of(File.C, Rank.THREE),
+                                Position.of(File.D, Rank.TWO)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfRook() {
+    private static Stream<Arguments> movablePositionsOfRook() {
         return Stream.of(
                 Arguments.of(
                         new Rook(WHITE),
-                        Square.of(File.D, FIVE),
+                        Position.of(File.D, FIVE),
                         Set.of(
-                                Square.of(File.D, EIGHT),
-                                Square.of(File.D, SEVEN),
-                                Square.of(File.D, SIX),
-                                Square.of(File.D, FOUR),
-                                Square.of(File.D, THREE),
-                                Square.of(File.D, TWO),
-                                Square.of(File.D, ONE),
-                                Square.of(File.A, FIVE),
-                                Square.of(File.B, FIVE),
-                                Square.of(File.C, FIVE),
-                                Square.of(File.E, FIVE),
-                                Square.of(File.F, FIVE),
-                                Square.of(File.G, FIVE),
-                                Square.of(File.H, FIVE)
+                                Position.of(File.D, EIGHT),
+                                Position.of(File.D, SEVEN),
+                                Position.of(File.D, SIX),
+                                Position.of(File.D, FOUR),
+                                Position.of(File.D, THREE),
+                                Position.of(File.D, TWO),
+                                Position.of(File.D, ONE),
+                                Position.of(File.A, FIVE),
+                                Position.of(File.B, FIVE),
+                                Position.of(File.C, FIVE),
+                                Position.of(File.E, FIVE),
+                                Position.of(File.F, FIVE),
+                                Position.of(File.G, FIVE),
+                                Position.of(File.H, FIVE)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfStartingPawn() {
+    private static Stream<Arguments> movablePositionsOfStartingPawn() {
         return Stream.of(
                 Arguments.of(
                         new StartingPawn(WHITE),
-                        Square.of(File.startPawnFileOf(0), Rank.startPawnRankOf(WHITE)),
+                        Position.of(File.startPawnFileOf(0), Rank.startPawnRankOf(WHITE)),
                         Set.of(
-                                Square.of(File.A, Rank.THREE),
-                                Square.of(File.A, Rank.FOUR),
-                                Square.of(File.B, Rank.THREE)
+                                Position.of(File.A, Rank.THREE),
+                                Position.of(File.A, Rank.FOUR),
+                                Position.of(File.B, Rank.THREE)
                         )
                 ),
                 Arguments.of(
                         new StartingPawn(WHITE),
-                        Square.of(File.startPawnFileOf(1), Rank.startPawnRankOf(WHITE)),
+                        Position.of(File.startPawnFileOf(1), Rank.startPawnRankOf(WHITE)),
                         Set.of(
-                                Square.of(File.A, Rank.THREE),
-                                Square.of(File.B, Rank.THREE),
-                                Square.of(File.C, Rank.THREE),
-                                Square.of(File.B, Rank.FOUR)
+                                Position.of(File.A, Rank.THREE),
+                                Position.of(File.B, Rank.THREE),
+                                Position.of(File.C, Rank.THREE),
+                                Position.of(File.B, Rank.FOUR)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquaresOfPawn() {
+    private static Stream<Arguments> movablePositionsOfPawn() {
         return Stream.of(
                 Arguments.of(
                         new Pawn(WHITE),
-                        Square.of(File.B, Rank.THREE),
+                        Position.of(File.B, Rank.THREE),
                         Set.of(
-                                Square.of(File.A, Rank.FOUR),
-                                Square.of(File.B, Rank.FOUR),
-                                Square.of(File.C, Rank.FOUR)
+                                Position.of(File.A, Rank.FOUR),
+                                Position.of(File.B, Rank.FOUR),
+                                Position.of(File.C, Rank.FOUR)
                         )
                 )
         );
     }
 
-    private static Stream<Arguments> movableSquares() {
+    private static Stream<Arguments> movablePositions() {
         return Stream.of(
-                movableSquaresOfKing(),
-                movableSquaresOfQueen(),
-                movableSquaresOfBishop(),
-                movableSquaresOfRook(),
-                movableSquaresOfKnight(),
-                movableSquaresOfStartingPawn(),
-                movableSquaresOfPawn()
+                movablePositionsOfKing(),
+                movablePositionsOfQueen(),
+                movablePositionsOfBishop(),
+                movablePositionsOfRook(),
+                movablePositionsOfKnight(),
+                movablePositionsOfStartingPawn(),
+                movablePositionsOfPawn()
         ).flatMap(stream -> stream);
     }
 
     @DisplayName("기물이 이동할 수 있는 칸을 찾는다.")
     @MethodSource
     @ParameterizedTest
-    void movableSquares(Piece piece, Square currentSquare, Set<Square> expected) {
-        Set<Square> actual = piece.movableSquaresFrom(currentSquare);
+    void movablePositions(Piece piece, Position currentPosition, Set<Position> expected) {
+        Set<Position> actual = piece.movablePositionsFrom(currentPosition);
         assertThat(actual).isEqualTo(expected);
     }
 }

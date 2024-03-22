@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.domain.attribute.Color;
 import chess.domain.attribute.File;
 import chess.domain.attribute.Rank;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -33,53 +33,53 @@ class ChessboardTest {
         Chessboard chessBoard = Chessboard.create();
         assertThat(chessBoard.getChessboard())
                 .contains(
-                        entry(Square.of(File.E, Rank.ONE), new King(Color.WHITE)),
-                        entry(Square.of(File.E, Rank.EIGHT), new King(Color.BLACK)),
-                        entry(Square.of(File.D, Rank.ONE), new Queen(Color.WHITE)),
-                        entry(Square.of(File.D, Rank.EIGHT), new Queen(Color.BLACK)),
-                        entry(Square.of(File.C, Rank.ONE), new Bishop(Color.WHITE)),
-                        entry(Square.of(File.F, Rank.ONE), new Bishop(Color.WHITE)),
-                        entry(Square.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK)),
-                        entry(Square.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK)),
-                        entry(Square.of(File.B, Rank.ONE), new Knight(Color.WHITE)),
-                        entry(Square.of(File.G, Rank.ONE), new Knight(Color.WHITE)),
-                        entry(Square.of(File.B, Rank.EIGHT), new Knight(Color.BLACK)),
-                        entry(Square.of(File.G, Rank.EIGHT), new Knight(Color.BLACK)),
-                        entry(Square.of(File.A, Rank.ONE), new Rook(Color.WHITE)),
-                        entry(Square.of(File.H, Rank.ONE), new Rook(Color.WHITE)),
-                        entry(Square.of(File.A, Rank.EIGHT), new Rook(Color.BLACK)),
-                        entry(Square.of(File.H, Rank.EIGHT), new Rook(Color.BLACK)),
-                        entry(Square.of(File.A, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.B, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.C, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.D, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.E, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.F, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.G, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.H, Rank.TWO), new StartingPawn(Color.WHITE)),
-                        entry(Square.of(File.A, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.B, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.C, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.D, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.E, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.F, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.G, Rank.SEVEN), new StartingPawn(Color.BLACK)),
-                        entry(Square.of(File.H, Rank.SEVEN), new StartingPawn(Color.BLACK))
+                        entry(Position.of(File.E, Rank.ONE), new King(Color.WHITE)),
+                        entry(Position.of(File.E, Rank.EIGHT), new King(Color.BLACK)),
+                        entry(Position.of(File.D, Rank.ONE), new Queen(Color.WHITE)),
+                        entry(Position.of(File.D, Rank.EIGHT), new Queen(Color.BLACK)),
+                        entry(Position.of(File.C, Rank.ONE), new Bishop(Color.WHITE)),
+                        entry(Position.of(File.F, Rank.ONE), new Bishop(Color.WHITE)),
+                        entry(Position.of(File.C, Rank.EIGHT), new Bishop(Color.BLACK)),
+                        entry(Position.of(File.F, Rank.EIGHT), new Bishop(Color.BLACK)),
+                        entry(Position.of(File.B, Rank.ONE), new Knight(Color.WHITE)),
+                        entry(Position.of(File.G, Rank.ONE), new Knight(Color.WHITE)),
+                        entry(Position.of(File.B, Rank.EIGHT), new Knight(Color.BLACK)),
+                        entry(Position.of(File.G, Rank.EIGHT), new Knight(Color.BLACK)),
+                        entry(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE)),
+                        entry(Position.of(File.H, Rank.ONE), new Rook(Color.WHITE)),
+                        entry(Position.of(File.A, Rank.EIGHT), new Rook(Color.BLACK)),
+                        entry(Position.of(File.H, Rank.EIGHT), new Rook(Color.BLACK)),
+                        entry(Position.of(File.A, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.B, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.C, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.D, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.E, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.F, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.G, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.H, Rank.TWO), new StartingPawn(Color.WHITE)),
+                        entry(Position.of(File.A, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.B, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.C, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.D, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.E, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.F, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.G, Rank.SEVEN), new StartingPawn(Color.BLACK)),
+                        entry(Position.of(File.H, Rank.SEVEN), new StartingPawn(Color.BLACK))
                 );
     }
 
     private static Stream<Arguments> move() {
         return Stream.of(
-                Arguments.of(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.THREE), PieceType.PAWN),
-                Arguments.of(Square.of(File.A, Rank.TWO), Square.of(File.A, Rank.FOUR), PieceType.PAWN),
-                Arguments.of(Square.of(File.B, Rank.ONE), Square.of(File.C, Rank.THREE), PieceType.KNIGHT)
+                Arguments.of(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.THREE), PieceType.PAWN),
+                Arguments.of(Position.of(File.A, Rank.TWO), Position.of(File.A, Rank.FOUR), PieceType.PAWN),
+                Arguments.of(Position.of(File.B, Rank.ONE), Position.of(File.C, Rank.THREE), PieceType.KNIGHT)
         );
     }
 
     @DisplayName("a2의 기물을 a3로 이동한다.")
     @MethodSource
     @ParameterizedTest
-    void move(Square source, Square target, PieceType pieceType) {
+    void move(Position source, Position target, PieceType pieceType) {
         Chessboard chessBoard = Chessboard.create();
         chessBoard.move(source, target);
 
@@ -88,23 +88,23 @@ class ChessboardTest {
 
     @DisplayName("서로 다른 색의 기물이 있는 곳은 이동할 수 있다.")
     @Test
-    void canMoveToSquareOfDifferentColorPiece() {
+    void canMoveToPositionOfDifferentColorPiece() {
         Chessboard chessBoard = Chessboard.create();
-        chessBoard.move(Square.of(File.G, Rank.ONE), Square.of(File.F, Rank.THREE));
-        chessBoard.move(Square.of(File.F, Rank.THREE), Square.of(File.G, Rank.FIVE));
-        chessBoard.move(Square.of(File.G, Rank.FIVE), Square.of(File.F, Rank.SEVEN));
+        chessBoard.move(Position.of(File.G, Rank.ONE), Position.of(File.F, Rank.THREE));
+        chessBoard.move(Position.of(File.F, Rank.THREE), Position.of(File.G, Rank.FIVE));
+        chessBoard.move(Position.of(File.G, Rank.FIVE), Position.of(File.F, Rank.SEVEN));
 
-        assertThat(chessBoard.pieceOf(Square.of(File.F, Rank.SEVEN)).getPieceType())
+        assertThat(chessBoard.pieceOf(Position.of(File.F, Rank.SEVEN)).getPieceType())
                 .isEqualTo(PieceType.KNIGHT);
     }
 
     @DisplayName("서로 같은 색의 기물이 있는 곳은 이동할 수 없다.")
     @Test
-    void cannotMoveToSquareOfSameColorPiece() {
+    void cannotMoveToPositionOfSameColorPiece() {
         Chessboard chessBoard = Chessboard.create();
-        chessBoard.move(Square.of(File.G, Rank.ONE), Square.of(File.E, Rank.TWO));
+        chessBoard.move(Position.of(File.G, Rank.ONE), Position.of(File.E, Rank.TWO));
 
-        assertThat(chessBoard.getChessboard().get(Square.of(File.E, Rank.TWO)).getPieceType())
+        assertThat(chessBoard.getChessboard().get(Position.of(File.E, Rank.TWO)).getPieceType())
                 .isEqualTo(PieceType.PAWN);
     }
 
@@ -113,7 +113,7 @@ class ChessboardTest {
     void cannotMoveException() {
         Chessboard chessBoard = Chessboard.create();
 
-        assertThatThrownBy(() -> chessBoard.move(Square.of(File.E, Rank.ONE), Square.of(File.E, Rank.TWO)))
+        assertThatThrownBy(() -> chessBoard.move(Position.of(File.E, Rank.ONE), Position.of(File.E, Rank.TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -122,7 +122,7 @@ class ChessboardTest {
     void cannotMoveExceptionRook() {
         Chessboard chessBoard = Chessboard.create();
 
-        assertThatThrownBy(() -> chessBoard.move(Square.of(File.A, Rank.ONE), Square.of(File.A, Rank.TWO)))
+        assertThatThrownBy(() -> chessBoard.move(Position.of(File.A, Rank.ONE), Position.of(File.A, Rank.TWO)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -130,12 +130,12 @@ class ChessboardTest {
     @Test
     void pawnAttackOnlyByDiagonal() {
         Chessboard chessBoard = Chessboard.create();
-        chessBoard.move(Square.of(File.C, Rank.TWO), Square.of(File.C, Rank.THREE));
-        chessBoard.move(Square.of(File.C, Rank.THREE), Square.of(File.C, Rank.FOUR));
-        chessBoard.move(Square.of(File.C, Rank.FOUR), Square.of(File.C, Rank.FIVE));
-        chessBoard.move(Square.of(File.C, Rank.FIVE), Square.of(File.C, Rank.SIX));
+        chessBoard.move(Position.of(File.C, Rank.TWO), Position.of(File.C, Rank.THREE));
+        chessBoard.move(Position.of(File.C, Rank.THREE), Position.of(File.C, Rank.FOUR));
+        chessBoard.move(Position.of(File.C, Rank.FOUR), Position.of(File.C, Rank.FIVE));
+        chessBoard.move(Position.of(File.C, Rank.FIVE), Position.of(File.C, Rank.SIX));
 
-        chessBoard.move(Square.of(File.C, Rank.SIX), Square.of(File.C, Rank.FIVE));
+        chessBoard.move(Position.of(File.C, Rank.SIX), Position.of(File.C, Rank.FIVE));
 
     }
 }

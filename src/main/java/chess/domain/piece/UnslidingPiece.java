@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 import chess.domain.chessboard.attribute.Direction;
 
 public abstract class UnslidingPiece extends Piece {
@@ -13,10 +13,10 @@ public abstract class UnslidingPiece extends Piece {
         super(color, pieceType);
     }
 
-    protected Optional<Square> movableSquare(final Collection<Direction> directions, final Square source) {
+    protected Optional<Position> movablePosition(final Collection<Direction> directions, final Position source) {
         return directions.stream()
                 .reduce(Optional.of(source),
-                        (square, direction) -> square.flatMap(presentSquare -> presentSquare.move(direction)),
+                        (position, direction) -> position.flatMap(presentPosition -> presentPosition.moveTo(direction)),
                         (current, next) -> next);
     }
 }

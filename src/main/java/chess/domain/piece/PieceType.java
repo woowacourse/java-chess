@@ -12,26 +12,26 @@ import static chess.domain.attribute.Rank.startRankOf;
 import java.util.function.BiFunction;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 
 public enum PieceType {
-    KING(1, (color, index) -> Square.of(startKingFile(), startRankOf(color))),
-    QUEEN(1, (color, index) -> Square.of(startQueenFile(), startRankOf(color))),
-    BISHOP(2, (color, index) -> Square.of(startBishopFileOf(index), startRankOf(color))),
-    KNIGHT(2, (color, index) -> Square.of(startKnightFileOf(index), startRankOf(color))),
-    ROOK(2, (color, index) -> Square.of(startRookFileOf(index), startRankOf(color))),
-    PAWN(8, (color, index) -> Square.of(startPawnFileOf(index), startPawnRankOf(color)));
+    KING(1, (color, index) -> Position.of(startKingFile(), startRankOf(color))),
+    QUEEN(1, (color, index) -> Position.of(startQueenFile(), startRankOf(color))),
+    BISHOP(2, (color, index) -> Position.of(startBishopFileOf(index), startRankOf(color))),
+    KNIGHT(2, (color, index) -> Position.of(startKnightFileOf(index), startRankOf(color))),
+    ROOK(2, (color, index) -> Position.of(startRookFileOf(index), startRankOf(color))),
+    PAWN(8, (color, index) -> Position.of(startPawnFileOf(index), startPawnRankOf(color)));
 
     private final int count;
-    private final BiFunction<Color, Integer, Square> startSquare;
+    private final BiFunction<Color, Integer, Position> startPosition;
 
-    PieceType(final int count, final BiFunction<Color, Integer, Square> startSquare) {
+    PieceType(final int count, final BiFunction<Color, Integer, Position> startPosition) {
         this.count = count;
-        this.startSquare = startSquare;
+        this.startPosition = startPosition;
     }
 
-    public Square startSquareOf(final Color color, final int index) {
-        return startSquare.apply(color, index);
+    public Position startPositionOf(final Color color, final int index) {
+        return startPosition.apply(color, index);
     }
 
     public int getCount() {

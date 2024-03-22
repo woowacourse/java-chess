@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 
 public abstract class Piece {
 
@@ -16,7 +16,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public abstract Set<Square> movableSquaresFrom(final Square source);
+    public abstract Set<Position> movablePositionsFrom(final Position source);
 
     public boolean isAllyOf(Piece other) {
         return color == other.color;

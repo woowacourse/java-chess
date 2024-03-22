@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
+import chess.domain.attribute.Position;
 import chess.domain.chessboard.attribute.Direction;
 
 public abstract class SlidingPiece extends Piece {
@@ -15,22 +15,22 @@ public abstract class SlidingPiece extends Piece {
         super(color, pieceType);
     }
 
-    protected Set<Square> movableSquaresOf(final Set<Direction> directions, final Square source) {
-        Set<Square> squares = new HashSet<>();
+    protected Set<Position> movablePositionsOf(final Set<Direction> directions, final Position source) {
+        Set<Position> positions = new HashSet<>();
         for (final Direction direction : directions) {
-            squares.addAll(squaresOf(direction, source));
+            positions.addAll(positionsOf(direction, source));
         }
-        return Collections.unmodifiableSet(squares);
+        return Collections.unmodifiableSet(positions);
     }
 
-    private Set<Square> squaresOf(final Direction direction, final Square source) {
-        Set<Square> squares = new HashSet<>();
-        Optional<Square> next = source.move(direction);
+    private Set<Position> positionsOf(final Direction direction, final Position source) {
+        Set<Position> positions = new HashSet<>();
+        Optional<Position> next = source.moveTo(direction);
         while (next.isPresent()) {
-            Square square = next.get();
-            squares.add(square);
-            next = square.move(direction);
+            Position position = next.get();
+            positions.add(position);
+            next = position.moveTo(direction);
         }
-        return squares;
+        return positions;
     }
 }
