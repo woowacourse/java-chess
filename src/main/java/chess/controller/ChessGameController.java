@@ -11,7 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChessGameController {
-    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^move\\s+(\\w\\d\\s+\\w\\d)$");
+    private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
+    private static final String END_COMMAND = "end";
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -31,7 +34,7 @@ public class ChessGameController {
 
     private boolean isNotStartCommand() {
         String command = inputView.readCommand().trim();
-        return !command.equals("start");
+        return !command.equals(START_COMMAND);
     }
 
     private void startChessGame() {
@@ -57,13 +60,13 @@ public class ChessGameController {
     }
 
     private void validateIllegalGameCommand(String command) {
-        if (!command.startsWith("move") && !command.equals("end")) {
+        if (!command.startsWith(MOVE_COMMAND) && !command.equals(END_COMMAND)) {
             throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
     }
 
     private void tryOneRound(ChessGame chessGame, String command) {
-        if (command.startsWith("move")) {
+        if (command.startsWith(MOVE_COMMAND)) {
             movePiece(chessGame, command);
         }
     }
