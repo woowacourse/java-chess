@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
@@ -25,6 +25,7 @@ public class GameController {
         }
     }
 
+    //TODO 뎁스 줄이기
     private void playTurn() {
         while (true) {
             String command = inputView.readCommand();
@@ -44,9 +45,8 @@ public class GameController {
             throw new IllegalStateException("아직 게임이 시작되지 않았습니다.");
         }
         String[] commands = command.split(" ");
-        Location source = Location.of(commands[1]);
-        Location target = Location.of(commands[2]);
-        board.tryMove(source, target);
+        MoveCommand moveCommand = new MoveCommand(commands[1], commands[2]);
+        board.tryMove(moveCommand);
         outputView.printBoard(board.getBoard());
     }
 

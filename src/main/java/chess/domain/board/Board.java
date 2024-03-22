@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.controller.MoveCommand;
 import chess.domain.location.Column;
 import chess.domain.location.Location;
 import chess.domain.location.Row;
@@ -82,24 +83,24 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public void tryMove(Location source, Location target) {
-        Piece sourcePiece = findPieceAt(source);
-        Path path = createPath(source, target);
+    public void tryMove(MoveCommand moveCommand) {
+        Piece sourcePiece = findPieceAt(moveCommand.getSource());
+        Path path = createPath(moveCommand);
         if (sourcePiece.canMove(path)) {
-            move(source, target, sourcePiece);
+            move(moveCommand, sourcePiece);
             return;
         }
         throw new IllegalArgumentException("유효하지 않은 움직임입니다.");
     }
 
-    private void move(Location source, Location target, Piece movingPiece) {
-        board.remove(source);
-        board.put(target, movingPiece);
+    private void move(MoveCommand moveCommand, Piece movingPiece) {
+        board.remove(moveCommand.getSource());
+        board.put(moveCommand.getTarget(), movingPiece);
     }
 
-    private Path createPath(Location source, Location target) {
-        List<Direction> directions = Direction.createDirections(source, target);
-        List<SquareState> squareStates = createPathState(source, directions);
+    private Path createPath(MoveCommand moveCommand) {
+        List<Direction> directions = Direction.createDirections(moveCommand.getSource(), moveCommand.getTarget());
+        List<SquareState> squareStates = createPathState(moveCommand.getSource(), directions);
         return Path.of(directions, squareStates);
     }
 
