@@ -1,8 +1,6 @@
 package chess.position;
 
 import java.util.Arrays;
-import java.util.function.BiPredicate;
-import java.util.function.UnaryOperator;
 
 public enum Direction {
 
@@ -38,25 +36,25 @@ public enum Direction {
             (source, destination) -> source.isOnSameRank(destination) &&
                     source.hasHigherFileThan(destination),
             position -> position.createPositionByDifferencesOf(-1, 0)),
-    KNIGHT(Position::isOnKnightRoute, UnaryOperator.identity()),
+    KNIGHT(Position::isOnKnightRoute, position -> position),
     ;
 
-    private final BiPredicate<Position, Position> predicate;
-    private final UnaryOperator<Position> nextPositionGenerator;
+    private final DirectionMatcher matcher;
+    private final NextPositionGenerator nextPositionGenerator;
 
-    Direction(BiPredicate<Position, Position> predicate, UnaryOperator<Position> nextPositionGenerator) {
-        this.predicate = predicate;
+    Direction(DirectionMatcher matcher, NextPositionGenerator nextPositionGenerator) {
+        this.matcher = matcher;
         this.nextPositionGenerator = nextPositionGenerator;
     }
 
     public static Direction calculateBetween(Position source, Position destination) {
         return Arrays.stream(values())
-                .filter(direction -> direction.predicate.test(source, destination))
+                .filter(direction -> direction.matcher.matches(source, destination))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 방향입니다."));
     }
 
     public Position nextPosition(Position position) {
-        return nextPositionGenerator.apply(position);
+        return nextPositionGenerator.generate(position);
     }
 }
