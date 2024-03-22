@@ -21,7 +21,7 @@ class InitTest {
         assertThat(Init.gameSetting(List.of("end"))).isInstanceOf(End.class);
     }
 
-    @DisplayName("초기 상태에서 start, end 외에 다른 명령어를 입력하면 예외가 발생한다.")
+    @DisplayName("초기 상태에서 Move명령어를 입력하면 예외가 발생한다.")
     @Test
     void invalidGameSetting() {
         assertThatThrownBy(() -> Init.gameSetting(List.of("move", "a2", "a4")))
