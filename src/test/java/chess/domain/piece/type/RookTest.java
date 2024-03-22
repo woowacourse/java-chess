@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +37,7 @@ class RookTest {
     @MethodSource("canRookMoveCrossArguments")
     void canRookMoveDirection(Position source, Position target) {
         // given
-        Piece rook = new Rook(PieceColor.BLACK);
+        Piece rook = new Piece(PieceType.BLACK_ROOK);
 
         // when
         boolean result = rook.isInMovableRange(source, target);
@@ -51,7 +51,7 @@ class RookTest {
     @MethodSource("cannotRookMoveDiagonalArguments")
     void cannotRookMoveDiagonal(Position source, Position target) {
         // given
-        Piece rook = new Rook(PieceColor.BLACK);
+        Piece rook = new Piece(PieceType.BLACK_ROOK);
 
         // when
         boolean result = rook.isInMovableRange(source, target);

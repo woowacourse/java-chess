@@ -12,13 +12,7 @@ public enum PieceNamePattern {
         this.namingPattern = namingPattern;
     }
 
-    public static String apply(PieceColor color, String name) {
-        if (color == PieceColor.WHITE) {
-            return WHITE.namingPattern.apply(name);
-        }
-        if (color == PieceColor.BLACK) {
-            return BLACK.namingPattern.apply(name);
-        }
-        throw new IllegalArgumentException("존재하지 않는 컬러입니다.");
+    public String apply(String name) {
+        return namingPattern.apply(name);
     }
 }

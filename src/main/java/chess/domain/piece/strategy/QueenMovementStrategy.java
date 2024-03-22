@@ -1,24 +1,25 @@
-package chess.domain.piece.type;
+package chess.domain.piece.strategy;
 
 import chess.domain.Direction;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceNamePattern;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 import java.util.List;
 
-public final class Queen extends Piece {
+public class QueenMovementStrategy implements MovementStrategy {
     private static final List<Direction> QUEEN_DIRECTION = List.of(Direction.TOP, Direction.DOWN, Direction.RIGHT, Direction.LEFT,
             Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
 
-    public Queen(PieceColor color) {
-        super(PieceNamePattern.apply(color, "q"), color, PieceType.QUEEN);
+    private QueenMovementStrategy() {
+    }
+
+    public static final QueenMovementStrategy INSTANCE = new QueenMovementStrategy();
+
+    public static QueenMovementStrategy getInstance() {
+        return INSTANCE;
     }
 
     @Override
-    public boolean isInMovableRange(Position source, Position target) {
+    public boolean isMovable(Position source, Position target) {
         Direction direction = Direction.of(source, target);
         return isMovableDirection(direction) && isMovableDistance(source, target);
     }

@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class PawnTest {
     @Test
     void canBlackPawnMoveOneStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.BLACK);
+        Piece pawn = new Piece(PieceType.BLACK_PAWN);
         Position source = Position.of("a6");
         Position target = Position.of("a5");
 
@@ -29,7 +29,7 @@ class PawnTest {
     @Test
     void canWhitePawnMoveOneStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece pawn = new Piece(PieceType.WHITE_PAWN);
         Position source = Position.of("a2");
         Position target = Position.of("a3");
 
@@ -44,7 +44,7 @@ class PawnTest {
     @Test
     void canBlackPawnMoveTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.BLACK);
+        Piece pawn = new Piece(PieceType.BLACK_PAWN);
         Position source = Position.of("a7");
         Position target = Position.of("a5");
 
@@ -59,7 +59,7 @@ class PawnTest {
     @Test
     void canWhitePawnMoveTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece pawn = new Piece(PieceType.WHITE_PAWN);
         Position source = Position.of("a2");
         Position target = Position.of("a4");
 
@@ -74,7 +74,7 @@ class PawnTest {
     @Test
     void cannotBlackPawnMoveTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.BLACK);
+        Piece pawn = new Piece(PieceType.BLACK_PAWN);
         Position source = Position.of("a6");
         Position target = Position.of("a4");
 
@@ -89,7 +89,7 @@ class PawnTest {
     @Test
     void cannotWhitePawnMoveTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece pawn = new Piece(PieceType.WHITE_PAWN);
         Position source = Position.of("a3");
         Position target = Position.of("a5");
 
@@ -104,7 +104,7 @@ class PawnTest {
     @Test
     void canWhitePawnMoveDiagonalOneStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece pawn = new Piece(PieceType.WHITE_PAWN);
         Position source = Position.of("a3");
         Position target = Position.of("b4");
 
@@ -119,7 +119,7 @@ class PawnTest {
     @Test
     void canBlackPawnMoveDiagonalOneStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.BLACK);
+        Piece pawn = new Piece(PieceType.BLACK_PAWN);
         Position source = Position.of("b7");
         Position target = Position.of("a6");
 
@@ -134,7 +134,7 @@ class PawnTest {
     @Test
     void cannotWhitePawnMoveDiagonalTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.WHITE);
+        Piece pawn = new Piece(PieceType.WHITE_PAWN);
         Position source = Position.of("a2");
         Position target = Position.of("c4");
 
@@ -149,7 +149,7 @@ class PawnTest {
     @Test
     void cannotBlackPawnMoveDiagonalTwoStep() {
         // given
-        Piece pawn = new Pawn(PieceColor.BLACK);
+        Piece pawn = new Piece(PieceType.BLACK_PAWN);
         Position source = Position.of("a7");
         Position target = Position.of("c5");
 

@@ -1,9 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.type.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,20 +13,20 @@ class PieceTest {
 
     static Stream<Arguments> isSamePieceTypeArguments() {
         return Stream.of(
-                Arguments.arguments(PieceType.PAWN, true),
-                Arguments.arguments(PieceType.KING, false)
+                Arguments.arguments(PieceType.BLACK_PAWN, PieceType.BLACK_PAWN, true),
+                Arguments.arguments(PieceType.BLACK_KING, PieceType.BLACK_PAWN, false)
         );
     }
 
     @DisplayName("기물의 타입이 주어진 타입과 같은지 판별한다.")
     @ParameterizedTest
     @MethodSource("isSamePieceTypeArguments")
-    void isSamePieceType(PieceType pieceType, boolean expected) {
+    void isSamePieceType(PieceType pieceType1, PieceType pieceType2, boolean expected) {
         // given
-        Piece piece = new Pawn(PieceColor.BLACK);
+        Piece piece = new Piece(pieceType1);
 
         // when
-        boolean result = piece.isType(pieceType);
+        boolean result = piece.isType(pieceType2);
 
         // then
         assertThat(result).isEqualTo(expected);

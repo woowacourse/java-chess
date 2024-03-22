@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,12 +27,12 @@ class QueenTest {
         );
     }
 
-    @DisplayName("킹은 모든 방향으로 한 칸 움직일 수 있다.")
+    @DisplayName("퀸은 모든 방향으로 원하는 만큼 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource("cannotQueenMoveAllDirectionArguments")
     void canQueenMoveAllDirection(Position source, Position target) {
         // given
-        Piece queen = new Queen(PieceColor.BLACK);
+        Piece queen = new Piece(PieceType.WHITE_QUEEN);
 
         // when
         boolean result = queen.isInMovableRange(source, target);

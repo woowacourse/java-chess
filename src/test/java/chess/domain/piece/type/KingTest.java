@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,7 +45,7 @@ class KingTest {
     @MethodSource("canKingMoveAllDirectionOneStepArguments")
     void canKingMoveAllDirectionOneStep(Position source, Position target) {
         // given
-        Piece king = new King(PieceColor.BLACK);
+        Piece king = new Piece(PieceType.BLACK_KING);
 
         // when
         boolean result = king.isInMovableRange(source, target);
@@ -59,7 +59,7 @@ class KingTest {
     @MethodSource("cannotKingMoveAllDirectionMoreThanTwoStepArguments")
     void cannotKingMoveAllDirectionMoreThanTwoStep(Position source, Position target) {
         // given
-        Piece king = new King(PieceColor.BLACK);
+        Piece king = new Piece(PieceType.BLACK_KING);
 
         // when
         boolean result = king.isInMovableRange(source, target);

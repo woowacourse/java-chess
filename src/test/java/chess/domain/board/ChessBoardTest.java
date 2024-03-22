@@ -3,10 +3,7 @@ package chess.domain.board;
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Rook;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.dto.BoardStatus;
 import chess.dto.PieceInfo;
@@ -55,7 +52,7 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -72,8 +69,8 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
-        board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -90,7 +87,7 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -107,7 +104,7 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -124,8 +121,8 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Rook(PieceColor.WHITE));
-        board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_ROOK));
+        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -142,8 +139,8 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Knight(PieceColor.WHITE));
-        board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_KNIGHT));
+        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -156,12 +153,12 @@ public class ChessBoardTest {
     @Test
     void canPawnMoveDiagonal() {
         // given
-        PieceInfo expected = PieceInfo.of(Position.of("c3"), new Pawn(PieceColor.WHITE));
+        PieceInfo expected = PieceInfo.of(Position.of("c3"), new Piece(PieceType.WHITE_PAWN));
 
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
-        board.put(Position.of("c3"), new King(PieceColor.BLACK));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of("c3"), new Piece(PieceType.BLACK_KING));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -180,7 +177,7 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -197,8 +194,8 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
-        board.put(Position.of("b3"), new Pawn(PieceColor.BLACK));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of("b3"), new Piece(PieceType.BLACK_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
@@ -215,8 +212,8 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
-        board.put(Position.of("a1"), new Rook(PieceColor.WHITE));
+        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of("a1"), new Piece(PieceType.WHITE_ROOK));
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
         Turn turn = new Turn(PieceColor.WHITE);

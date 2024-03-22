@@ -1,22 +1,22 @@
 package chess.domain.piece;
 
+import chess.domain.piece.strategy.MovementStrategy;
 import chess.domain.position.Position;
 
-public abstract class Piece {
-    protected final String name;
-    protected final PieceColor color;
+public class Piece {
     protected final PieceType type;
 
-    public Piece(final String name, final PieceColor color, PieceType type) {
-        this.name = name;
-        this.color = color;
+    public Piece(PieceType type) {
         this.type = type;
     }
 
-    public abstract boolean isInMovableRange(final Position source, final Position target);
+    public boolean isInMovableRange(final Position source, final Position target) {
+        MovementStrategy movementStrategy = type.movementStrategy();
+        return movementStrategy.isMovable(source, target);
+    }
 
     public boolean isColor(final PieceColor color) {
-        return this.color == color;
+        return this.type.color() == color;
     }
 
     public boolean isType(PieceType pieceType) {
@@ -24,10 +24,10 @@ public abstract class Piece {
     }
 
     public String name() {
-        return name;
+        return type.pieceName();
     }
 
     public PieceColor color() {
-        return color;
+        return type.color();
     }
 }

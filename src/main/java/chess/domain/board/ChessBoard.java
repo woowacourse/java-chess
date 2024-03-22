@@ -75,7 +75,7 @@ public class ChessBoard {
         if (!sourcePiece.isInMovableRange(source, target)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
         }
-        if (sourcePiece.isType(PieceType.PAWN)) {
+        if (PieceType.isPawn(sourcePiece)) {
             if (Direction.isDiagonal(source, target) && !isExist(target)) {
                 throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
             }
@@ -91,7 +91,7 @@ public class ChessBoard {
 
     private void validatePath(Position source, Position target) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isType(PieceType.KNIGHT)) {
+        if (!PieceType.isKnight(sourcePiece)) {
             Set<Position> positions = source.findBetween(target);
             for (Position position : positions) {
                 if (isExist(position)) {

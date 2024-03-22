@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -45,7 +45,7 @@ class KnightTest {
     @MethodSource("canKnightMoveL_ShapeDirectionArguments")
     void canKnightMoveL_ShapeDirection(Position source, Position target) {
         // given
-        Piece knight = new Knight(PieceColor.BLACK);
+        Piece knight = new Piece(PieceType.BLACK_KNIGHT);
 
         // when
         boolean result = knight.isInMovableRange(source, target);
@@ -59,7 +59,7 @@ class KnightTest {
     @MethodSource("cannotKnightMoveExceptL_ShapeDirectionArguments")
     void cannotKnightMoveExceptL_ShapeDirection(Position source, Position target) {
         // given
-        Piece knight = new Knight(PieceColor.BLACK);
+        Piece knight = new Piece(PieceType.BLACK_KNIGHT);
 
         // when
         boolean result = knight.isInMovableRange(source, target);

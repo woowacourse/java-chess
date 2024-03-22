@@ -1,12 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Knight;
-import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,17 +22,23 @@ public class ChessBoardGeneratorTest {
         // then
         assertThat(pieces).hasSize(32);
 
-        assertThat(countPiece(pieces, Pawn.class)).isEqualTo(16);
-        assertThat(countPiece(pieces, Rook.class)).isEqualTo(4);
-        assertThat(countPiece(pieces, Knight.class)).isEqualTo(4);
-        assertThat(countPiece(pieces, Bishop.class)).isEqualTo(4);
-        assertThat(countPiece(pieces, King.class)).isEqualTo(2);
-        assertThat(countPiece(pieces, Queen.class)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.WHITE_PAWN)).isEqualTo(8);
+        assertThat(countPiece(pieces, PieceType.BLACK_PAWN)).isEqualTo(8);
+        assertThat(countPiece(pieces, PieceType.WHITE_ROOK)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.BLACK_ROOK)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.WHITE_KNIGHT)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.BLACK_KNIGHT)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.WHITE_BISHOP)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.BLACK_BISHOP)).isEqualTo(2);
+        assertThat(countPiece(pieces, PieceType.WHITE_KING)).isEqualTo(1);
+        assertThat(countPiece(pieces, PieceType.BLACK_KING)).isEqualTo(1);
+        assertThat(countPiece(pieces, PieceType.WHITE_QUEEN)).isEqualTo(1);
+        assertThat(countPiece(pieces, PieceType.BLACK_QUEEN)).isEqualTo(1);
     }
 
-    private int countPiece(Map<Position, Piece> pieces, Class<? extends Piece> pieceClass) {
+    private int countPiece(Map<Position, Piece> pieces, PieceType type) {
         return (int) pieces.values().stream()
-                .filter(pieceClass::isInstance)
+                .filter(piece -> piece.isType(type))
                 .count();
     }
 }
