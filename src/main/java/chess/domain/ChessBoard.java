@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.File;
 import chess.domain.piece.Piece;
@@ -92,8 +93,9 @@ public class ChessBoard {
         if (!isPieceExist(targetPosition)) {
             return false;
         }
-        return currentPiece.getPosition().isDiagonalWithDistance(targetPosition, Pawn.DEFAULT_STEP) &&
-                !currentPiece.isMySide(findPieceBy(targetPosition));
+
+        return ((currentPiece.getPosition().isDiagonalWith(targetPosition) && currentPiece.getPosition().getRankDistance(targetPosition) == Pawn.DEFAULT_STEP))
+                && !currentPiece.isMySide(findPieceBy(targetPosition));
     }
 
     private boolean isPieceExist(final Position input) {

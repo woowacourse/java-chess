@@ -18,10 +18,6 @@ public class Position {
         this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
     }
 
-    public boolean isStraightWith(final Position target) {
-        return isVerticalWith(target) || isHorizontalWith(target);
-    }
-
     public boolean isVerticalWith(final Position target) {
         return this.file == target.file && this.rank != target.rank;
     }
@@ -34,64 +30,24 @@ public class Position {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
     }
 
-    public boolean isVerticalWithDistance(final Position target, final int distance) {
-        return this.rank.getDistance(target.rank) == distance;
+    public boolean isDownWith(final Position target) {
+        return target.rank.isBigger(this.rank);
     }
 
-    public boolean isHorizontalWithDistance(final Position target, final int distance) {
-        return this.file.getDistance(target.file) == distance;
-    }
-
-    public boolean isDiagonalWithDistance(final Position target, final int distance) {
-        return isDiagonalWith(target) && this.file.getDistance(target.file) == distance;
-    }
-
-    public boolean isForwardWithDistance(final Position target, final int distance) {
-        return target.rank.minus(this.rank) == distance;
+    public boolean isLeftWith(final Position target) {
+        return target.file.isBigger(this.file);
     }
 
     public boolean isRightDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+        return isDiagonalWith(target)
                 && ((target.file.isBigger(this.file) && target.rank.isBigger(this.rank))
                 || (this.file.isBigger(target.file) && this.rank.isBigger(target.rank)));
     }
 
     public boolean isLeftDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank)
+        return isDiagonalWith(target)
                 && ((this.file.isBigger(target.file) && target.rank.isBigger(this.rank))
                 || (target.file.isBigger(this.file) && this.rank.isBigger(target.rank)));
-    }
-
-    public Set<Position> getVerticalMiddlePositions(final Position target) {
-        Position start = this;
-        Position end = target;
-
-        if (this.rank.getIndex() > target.rank.getIndex()) {
-            start = target;
-            end = this;
-        }
-
-        final Set<Position> positions = new HashSet<>();
-        for (int rankIndex = start.rank.getIndex() + 1; rankIndex < end.rank.getIndex(); rankIndex++) {
-            positions.add(new Position(start.file, Rank.from(rankIndex)));
-        }
-        return positions;
-    }
-
-    public Set<Position> getHorizontalMiddlePositions(final Position target) {
-        Position start = this;
-        Position end = target;
-
-        if (this.file.getIndex() > target.file.getIndex()) {
-            start = target;
-            end = this;
-        }
-
-        final Set<Position> positions = new HashSet<>();
-        for (int fileIndex = start.file.getIndex() + 1; fileIndex < end.file.getIndex(); fileIndex++) {
-            positions.add(new Position(File.fromIndex(fileIndex), start.rank));
-        }
-        return positions;
     }
 
     public Set<Position> getRightDiagonalMiddlePositions(final Position target) {
@@ -140,12 +96,16 @@ public class Position {
         return positions;
     }
 
-    public boolean isSevenRank() {
-        return this.rank.equals(Rank.SEVEN);
+    public int getRankDistance(final Position target) {
+        return this.rank.getDistance(target.rank);
     }
 
-    public boolean isTwoRank() {
-        return this.rank.equals(Rank.TWO);
+    public int getFileDistance(final Position target) {
+        return this.file.getDistance(target.file);
+    }
+
+    public boolean isRank(final Rank rank) {
+        return this.rank.equals(rank);
     }
 
     public File getFile() {
@@ -171,5 +131,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
+    }
+
+    public Position up() {
+        return new Position(this.file, this.rank.up());
+    }
+
+    public Position right() {
+        return new Position(this.file.right(), this.rank);
     }
 }

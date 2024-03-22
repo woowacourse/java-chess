@@ -29,7 +29,6 @@ class PieceTest {
         // when
         final boolean isPosition = pawn.isPosition(new Position(File.B, Rank.THREE));
 
-
         // then
         Assertions.assertThat(isPosition).isFalse();
     }

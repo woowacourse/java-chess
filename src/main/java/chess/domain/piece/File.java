@@ -46,4 +46,8 @@ public enum File {
     public int getIndex() {
         return index;
     }
+
+    public File right() {
+        return fromIndex(this.index + 1);
+    }
 }

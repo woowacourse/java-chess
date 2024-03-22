@@ -16,8 +16,9 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.isDiagonalWithDistance(target, DEFAULT_STEP) || this.position.isHorizontalWithDistance(target,
-                DEFAULT_STEP) || this.position.isVerticalWithDistance(target, DEFAULT_STEP));
+        return (this.position.isVerticalWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP)
+                || (this.position.isHorizontalWith(target) && this.position.getFileDistance(target) == DEFAULT_STEP)
+                || (this.position.isDiagonalWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
     }
 
     @Override

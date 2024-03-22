@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -14,17 +15,17 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return this.position.isStraightWith(target);
+        return this.position.isVerticalWith(target) || this.position.isHorizontalWith(target);
     }
 
     @Override
     public Set<Position> getRoute(final Position target) {
         if (this.position.isVerticalWith(target)) {
-            return this.position.getVerticalMiddlePositions(target);
+            return RouteCalculator.getVerticalMiddlePositions(this.position, target);
         }
 
         if (this.position.isHorizontalWith(target)) {
-            return this.position.getHorizontalMiddlePositions(target);
+            return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
         }
 
         return new HashSet<>();

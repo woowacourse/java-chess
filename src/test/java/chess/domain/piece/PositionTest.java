@@ -18,43 +18,6 @@ class PositionTest {
         Assertions.assertThat(positionB_TWO).isEqualTo(new Position(File.B, Rank.TWO));
     }
 
-    @DisplayName("직선(상하좌우)으로 이동할 수 있다.")
-    @Test
-    void canMoveStraight() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position targetPositionUp = new Position(File.D, Rank.EIGHT);
-        final Position targetPositionDown = new Position(File.D, Rank.ONE);
-        final Position targetPositionLeft = new Position(File.A, Rank.FIVE);
-        final Position targetPositionRight = new Position(File.H, Rank.FIVE);
-
-        // when
-        final boolean resultUp = currentPosition.isStraightWith(targetPositionUp);
-        final boolean resultDown = currentPosition.isStraightWith(targetPositionDown);
-        final boolean resultLeft = currentPosition.isStraightWith(targetPositionLeft);
-        final boolean resultRight = currentPosition.isStraightWith(targetPositionRight);
-
-        // then
-        Assertions.assertThat(resultUp).isTrue();
-        Assertions.assertThat(resultDown).isTrue();
-        Assertions.assertThat(resultLeft).isTrue();
-        Assertions.assertThat(resultRight).isTrue();
-    }
-
-    @DisplayName("직선(상하좌우)으로 이동할 수 없다.")
-    @Test
-    void canNotMoveStraight() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position notMovablePosition = new Position(File.A, Rank.ONE);
-
-        // when
-        final boolean result = currentPosition.isStraightWith(notMovablePosition);
-
-        // then
-        Assertions.assertThat(result).isFalse();
-    }
-
     @DisplayName("대각선으로 이동할 수 있다.")
     @Test
     void canMoveDiagonal() {
@@ -87,90 +50,6 @@ class PositionTest {
 
         // when
         final boolean result = currentPosition.isDiagonalWith(notMovablePosition);
-
-        // then
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @DisplayName("수직상의 거리차이가 같다.")
-    @Test
-    void isSameVerticalDifference() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.D, Rank.SEVEN);
-
-        // when
-        final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
-
-        // then
-        Assertions.assertThat(result).isTrue();
-    }
-
-    @DisplayName("수직상의 거리차이가 다르다.")
-    @Test
-    void isNotSameVerticalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.D, Rank.SIX);
-
-        // when
-        final boolean result = currentPosition.isVerticalWithDistance(otherPosition, 2);
-
-        // then
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @DisplayName("수평상의 거리차이가 같다.")
-    @Test
-    void isSameHorizontalDifference() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.B, Rank.FIVE);
-
-        // when
-        final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
-
-        // then
-        Assertions.assertThat(result).isTrue();
-    }
-
-    @DisplayName("수평상의 거리차이가 다르다.")
-    @Test
-    void isNotSameHorizontalDifference() { // TODO: 거리 안맞는 경우 + 수직이 아닌 경우들도 추가하기
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.A, Rank.FIVE);
-
-        // when
-        final boolean result = currentPosition.isHorizontalWithDistance(otherPosition, 2);
-
-        // then
-        Assertions.assertThat(result).isFalse();
-    }
-
-    @DisplayName("대각선상의 거리차이가 같다.")
-    @Test
-    void isSameDiagonalDifference() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.B, Rank.SEVEN);
-
-        // when
-        final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 2);
-
-        // then
-        Assertions.assertThat(result).isTrue();
-    }
-
-    @DisplayName("대각선상의 거리차이가 같지 않다.")
-    @Test
-    void isNotSameDiagonalDifference() {
-        // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
-        final Position otherPosition = new Position(File.B, Rank.SEVEN);
-
-        // when
-        final boolean result = currentPosition.isDiagonalWithDistance(otherPosition, 1);
 
         // then
         Assertions.assertThat(result).isFalse();

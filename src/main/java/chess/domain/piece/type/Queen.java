@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -14,7 +15,9 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return this.position.isStraightWith(target) || this.position.isDiagonalWith(target);
+        return this.position.isVerticalWith(target)
+                || this.position.isHorizontalWith(target)
+                || this.position.isDiagonalWith(target);
     }
 
     @Override
@@ -26,10 +29,10 @@ public class Queen extends Piece {
             return this.position.getLeftDiagonalMiddlePositions(target);
         }
         if (this.position.isVerticalWith(target)) {
-            return this.position.getVerticalMiddlePositions(target);
+            return RouteCalculator.getVerticalMiddlePositions(this.position, target);
         }
         if (this.position.isHorizontalWith(target)) {
-            return this.position.getHorizontalMiddlePositions(target);
+            return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
         }
         return new HashSet<>();
     }
