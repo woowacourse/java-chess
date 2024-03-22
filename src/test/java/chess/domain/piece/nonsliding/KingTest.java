@@ -13,6 +13,16 @@ import org.junit.jupiter.api.Test;
 class KingTest {
 
     @Test
+    @DisplayName("킹은 이동 가능한 위치인 경우 중간 경로가 없으므로 빈 값을 반환한다.")
+    void findPathTo() {
+        King king = new King(Color.WHITE);
+        Position departure = new Position(1, 1);
+        Position destination = new Position(1, 2);
+
+        assertThat(king.findPathTo(departure, destination)).hasSize(0);
+    }
+
+    @Test
     @DisplayName("(1, 1)일 때 (1, 3)으로는 이동할 수 없다.")
     void findPathToInvalidDestination() {
         King king = new King(Color.WHITE);
