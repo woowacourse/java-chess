@@ -49,23 +49,23 @@ public class BoardFactory {
     }
 
     private Piece decideType(File file, Piece piece, Rank rank) {
-        if (file.equals(File.a) || file.equals(File.h)) {
+        if (file.equals(File.A) || file.equals(File.H)) {
             return decideColorType(rank, PieceType.ROOK);
         }
 
-        if (file.equals(File.b) || file.equals(File.g)) {
+        if (file.equals(File.B) || file.equals(File.G)) {
             return decideColorType(rank, PieceType.KNIGHT);
         }
 
-        if (file.equals(File.c) || file.equals(File.f)) {
+        if (file.equals(File.C) || file.equals(File.F)) {
             return decideColorType(rank, PieceType.BISHOP);
         }
 
-        if (file.equals(File.d)) {
+        if (file.equals(File.D)) {
             return decideColorType(rank, PieceType.QUEEN);
         }
 
-        if (file.equals(File.e)) {
+        if (file.equals(File.E)) {
             return decideColorType(rank, PieceType.KING);
         }
 

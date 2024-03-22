@@ -27,8 +27,8 @@ public class KingMoveStrategyTest {
     @Test
     void horizontalMove() {
         // given
-        Square source = Square.of(File.e, Rank.EIGHT);
-        Square destination = Square.of(File.f, Rank.EIGHT);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.F, Rank.EIGHT);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -42,8 +42,8 @@ public class KingMoveStrategyTest {
     @Test
     void verticalMove() {
         // given
-        Square source = Square.of(File.e, Rank.EIGHT);
-        Square destination = Square.of(File.e, Rank.SEVEN);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.E, Rank.SEVEN);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -57,8 +57,8 @@ public class KingMoveStrategyTest {
     @Test
     void diagonalMove() {
         // given
-        Square source = Square.of(File.e, Rank.EIGHT);
-        Square destination = Square.of(File.d, Rank.SEVEN);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.D, Rank.SEVEN);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -72,8 +72,8 @@ public class KingMoveStrategyTest {
     @Test
     void cannotMove() {
         // given
-        Square source = Square.of(File.e, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.SIX);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.C, Rank.SIX);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when

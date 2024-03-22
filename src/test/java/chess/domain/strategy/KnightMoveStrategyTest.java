@@ -27,8 +27,8 @@ class KnightMoveStrategyTest {
     @Test
     void knightCorrectDestination() {
         // given
-        Square source = Square.of(File.b, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.SIX);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square destination = Square.of(File.C, Rank.SIX);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -42,8 +42,8 @@ class KnightMoveStrategyTest {
     @Test
     void knightInCorrectDestination() {
         // given
-        Square source = Square.of(File.b, Rank.EIGHT);
-        Square destination = Square.of(File.b, Rank.SIX);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square destination = Square.of(File.B, Rank.SIX);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when

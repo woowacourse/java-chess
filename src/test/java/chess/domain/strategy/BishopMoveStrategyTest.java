@@ -27,8 +27,8 @@ class BishopMoveStrategyTest {
     @Test
     void bishopCorrectDestination() {
         // given
-        Square source = Square.of(File.e, Rank.SIX);
-        Square destination = Square.of(File.h, Rank.THREE);
+        Square source = Square.of(File.E, Rank.SIX);
+        Square destination = Square.of(File.H, Rank.THREE);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -42,8 +42,8 @@ class BishopMoveStrategyTest {
     @Test
     void bishopInCorrectDestination() {
         // given
-        Square source = Square.of(File.c, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.THREE);
+        Square source = Square.of(File.C, Rank.EIGHT);
+        Square destination = Square.of(File.C, Rank.THREE);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when

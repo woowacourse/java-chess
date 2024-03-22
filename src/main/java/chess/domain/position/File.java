@@ -5,14 +5,14 @@ import java.util.List;
 
 public enum File {
 
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
     ;
 
     private static final String OUT_OF_RANGE_ERROR = "더 이상 이동할 수 없습니다.";

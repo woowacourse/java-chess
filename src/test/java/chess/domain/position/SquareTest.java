@@ -14,21 +14,21 @@ public class SquareTest {
     @Test
     void createPosition() {
         // when & then
-        assertThatCode(() -> Square.of(File.a, Rank.THREE)).doesNotThrowAnyException();
+        assertThatCode(() -> Square.of(File.A, Rank.THREE)).doesNotThrowAnyException();
     }
 
     @DisplayName("위치는 인덱스만큼 수직 이동한 위치를 반환한다.")
     @Test
     void moveVerticalByIndex() {
         // given
-        Square square = Square.of(File.a, Rank.TWO);
+        Square square = Square.of(File.A, Rank.TWO);
         int index = 3;
 
         // when
         Square actual = square.moveVertical(index);
 
         // then
-        assertThat(actual).isEqualTo(Square.of(File.a, Rank.FIVE));
+        assertThat(actual).isEqualTo(Square.of(File.A, Rank.FIVE));
     }
 
     @DisplayName("폰의 위치가 첫 위치인지 확인한다.")
@@ -36,7 +36,7 @@ public class SquareTest {
     @EnumSource(mode = EnumSource.Mode.INCLUDE, names = {"TWO", "SEVEN"})
     void checkPawnStartSquare(Rank rank) {
         // given
-        Square square = Square.of(File.a, rank);
+        Square square = Square.of(File.A, rank);
 
         // when
         boolean actual = square.isPawnStartSquare();
@@ -49,21 +49,21 @@ public class SquareTest {
     @Test
     void moveHorizontalByIndex() {
         // given
-        Square square = Square.of(File.b, Rank.FOUR);
+        Square square = Square.of(File.B, Rank.FOUR);
         int index = 2;
 
         // when
         Square actual = square.moveHorizontal(index);
 
         // then
-        assertThat(actual).isEqualTo(Square.of(File.d, Rank.FOUR));
+        assertThat(actual).isEqualTo(Square.of(File.D, Rank.FOUR));
     }
 
     @DisplayName("위치는 인덱스만큼 대각 이동한 위치를 반환한다.")
     @Test
     void moveDiagonalByIndex() {
         // given
-        Square square = Square.of(File.b, Rank.THREE);
+        Square square = Square.of(File.B, Rank.THREE);
         int verticalIndex = 1;
         int horizontalIndex = 2;
 
@@ -71,6 +71,6 @@ public class SquareTest {
         Square actual = square.moveDiagonal(horizontalIndex, verticalIndex);
 
         // then
-        assertThat(actual).isEqualTo(Square.of(File.d, Rank.FOUR));
+        assertThat(actual).isEqualTo(Square.of(File.D, Rank.FOUR));
     }
 }

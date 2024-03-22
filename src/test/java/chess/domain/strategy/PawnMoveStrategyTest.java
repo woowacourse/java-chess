@@ -27,8 +27,8 @@ public class PawnMoveStrategyTest {
     @Test
     void pawnCorrectDestination() {
         // given
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.a, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.A, Rank.FOUR);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -42,8 +42,8 @@ public class PawnMoveStrategyTest {
     @Test
     void pawnInCorrectDestination() {
         // given
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.c, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.C, Rank.FOUR);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -57,8 +57,8 @@ public class PawnMoveStrategyTest {
     @Test
     void moveOneDiagonal() {
         // given
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.b, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.B, Rank.FOUR);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when

@@ -26,7 +26,7 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.PAWN;
-            source = Square.of(File.a, Rank.SEVEN);
+            source = Square.of(File.A, Rank.SEVEN);
             board = new Board();
         }
 
@@ -34,7 +34,7 @@ class PieceTypeTest {
         @Test
         void pawnCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.SIX);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -48,7 +48,7 @@ class PieceTypeTest {
         @Test
         void pawnCanFirstMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
+            Square destination = Square.of(File.A, Rank.FIVE);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -62,8 +62,8 @@ class PieceTypeTest {
         @Test
         void pawnCannotFirstMove() {
             // given
-            source = Square.of(File.a, Rank.SIX);
-            Square destination = Square.of(File.a, Rank.FOUR);
+            source = Square.of(File.A, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.FOUR);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -81,7 +81,7 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.KNIGHT;
-            source = Square.of(File.b, Rank.EIGHT);
+            source = Square.of(File.B, Rank.EIGHT);
             board = new Board();
         }
 
@@ -89,7 +89,7 @@ class PieceTypeTest {
         @Test
         void knightWhiteCanMove() {
             // given
-            Square destination = Square.of(File.c, Rank.SIX);
+            Square destination = Square.of(File.C, Rank.SIX);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -114,8 +114,8 @@ class PieceTypeTest {
         @Test
         void knightWhiteCanMove() {
             // given
-            source = Square.of(File.e, Rank.THREE);
-            Square destination = Square.of(File.b, Rank.SIX);
+            source = Square.of(File.E, Rank.THREE);
+            Square destination = Square.of(File.B, Rank.SIX);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -140,8 +140,8 @@ class PieceTypeTest {
         @Test
         void rookVerticalCanMove() {
             // given
-            source = Square.of(File.a, Rank.SIX);
-            Square destination = Square.of(File.a, Rank.TWO);
+            source = Square.of(File.A, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.TWO);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -155,8 +155,8 @@ class PieceTypeTest {
         @Test
         void rookHorizontalCanMove() {
             // given
-            source = Square.of(File.a, Rank.SIX);
-            Square destination = Square.of(File.h, Rank.SIX);
+            source = Square.of(File.A, Rank.SIX);
+            Square destination = Square.of(File.H, Rank.SIX);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -181,8 +181,8 @@ class PieceTypeTest {
         @Test
         void queenVerticalCanMove() {
             // given
-            source = Square.of(File.d, Rank.SIX);
-            Square destination = Square.of(File.d, Rank.THREE);
+            source = Square.of(File.D, Rank.SIX);
+            Square destination = Square.of(File.D, Rank.THREE);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -196,8 +196,8 @@ class PieceTypeTest {
         @Test
         void queenHorizontalCanMove() {
             // given
-            source = Square.of(File.d, Rank.SIX);
-            Square destination = Square.of(File.a, Rank.SIX);
+            source = Square.of(File.D, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.SIX);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -211,8 +211,8 @@ class PieceTypeTest {
         @Test
         void queenWhiteCanMove() {
             // given
-            source = Square.of(File.d, Rank.SIX);
-            Square destination = Square.of(File.g, Rank.THREE);
+            source = Square.of(File.D, Rank.SIX);
+            Square destination = Square.of(File.G, Rank.THREE);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -230,7 +230,7 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.KING;
-            source = Square.of(File.e, Rank.EIGHT);
+            source = Square.of(File.E, Rank.EIGHT);
             board = new Board();
         }
 
@@ -238,7 +238,7 @@ class PieceTypeTest {
         @Test
         void kingVerticalMove() {
             // given
-            Square destination = Square.of(File.e, Rank.SEVEN);
+            Square destination = Square.of(File.E, Rank.SEVEN);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -252,7 +252,7 @@ class PieceTypeTest {
         @Test
         void kingHorizontalMove() {
             // given
-            Square destination = Square.of(File.d, Rank.EIGHT);
+            Square destination = Square.of(File.D, Rank.EIGHT);
             Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
@@ -266,7 +266,7 @@ class PieceTypeTest {
         @Test
         void queenWhiteCanMove() {
             // given
-            Square destination = Square.of(File.f, Rank.SEVEN);
+            Square destination = Square.of(File.F, Rank.SEVEN);
             Piece destinationPiece = board.findPieceBySquare(destination);
             // when
             boolean actual = type.canMove(source, destination, board);

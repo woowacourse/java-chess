@@ -27,8 +27,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookHorizontalDestination() {
         // given
-        Square source = Square.of(File.a, Rank.SIX);
-        Square destination = Square.of(File.h, Rank.SIX);
+        Square source = Square.of(File.A, Rank.SIX);
+        Square destination = Square.of(File.H, Rank.SIX);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -42,8 +42,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookVerticalDestination() {
         // given
-        Square source = Square.of(File.a, Rank.FIVE);
-        Square destination = Square.of(File.a, Rank.TWO);
+        Square source = Square.of(File.A, Rank.FIVE);
+        Square destination = Square.of(File.A, Rank.TWO);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
@@ -57,8 +57,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookInCorrectDestination() {
         // given
-        Square source = Square.of(File.a, Rank.FIVE);
-        Square destination = Square.of(File.b, Rank.TWO);
+        Square source = Square.of(File.A, Rank.FIVE);
+        Square destination = Square.of(File.B, Rank.TWO);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when

@@ -14,7 +14,6 @@ public enum Rank {
     FIVE(5),
     SIX(6),
     SEVEN(7),
-
     EIGHT(8),
     ;
 
