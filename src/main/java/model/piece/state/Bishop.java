@@ -1,19 +1,19 @@
 package model.piece.state;
 
-import static model.direction.MovingPattern.NE;
-import static model.direction.MovingPattern.NW;
-import static model.direction.MovingPattern.SE;
-import static model.direction.MovingPattern.SW;
+import static model.direction.Direction.NE;
+import static model.direction.Direction.NW;
+import static model.direction.Direction.SE;
+import static model.direction.Direction.SW;
 
 import java.util.List;
-import model.direction.MovingPattern;
+import model.direction.Direction;
 import model.piece.Color;
 
 public final class Bishop extends Role {
-    private static final List<MovingPattern> movingPatterns = List.of(NW, SW, NE, SE);
+    private static final List<Direction> DIRECTIONS = List.of(NW, SW, NE, SE);
 
     private Bishop(Color color) {
-        super(color, movingPatterns);
+        super(color, DIRECTIONS);
     }
 
     public static Bishop from(Color color) {

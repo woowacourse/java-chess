@@ -1,23 +1,23 @@
 package model.piece.state;
 
-import static model.direction.MovingPattern.E;
-import static model.direction.MovingPattern.N;
-import static model.direction.MovingPattern.NE;
-import static model.direction.MovingPattern.NW;
-import static model.direction.MovingPattern.S;
-import static model.direction.MovingPattern.SE;
-import static model.direction.MovingPattern.SW;
-import static model.direction.MovingPattern.W;
+import static model.direction.Direction.E;
+import static model.direction.Direction.N;
+import static model.direction.Direction.NE;
+import static model.direction.Direction.NW;
+import static model.direction.Direction.S;
+import static model.direction.Direction.SE;
+import static model.direction.Direction.SW;
+import static model.direction.Direction.W;
 
 import java.util.List;
-import model.direction.MovingPattern;
+import model.direction.Direction;
 import model.piece.Color;
 
 public final class Queen extends Role {
-    private static final List<MovingPattern> movingPatterns = List.of(W, E, S, N, NW, SW, NE, SE);
+    private static final List<Direction> DIRECTIONS = List.of(W, E, S, N, NW, SW, NE, SE);
 
     private Queen(Color color) {
-        super(color, movingPatterns);
+        super(color, DIRECTIONS);
     }
 
     public static Queen from(Color color) {

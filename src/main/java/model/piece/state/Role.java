@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.direction.MovingPattern;
+import model.direction.Direction;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
 
 public abstract class Role {
     protected Color color;
-    private final List<MovingPattern> movingPatterns;
+    private final List<Direction> directions;
 
-    protected Role(Color color, List<MovingPattern> movingPatternList) {
+    protected Role(Color color, List<Direction> directionList) {
         this.color = color;
-        this.movingPatterns = new ArrayList<>(movingPatternList);
+        this.directions = new ArrayList<>(directionList);
     }
 
     public void checkSameColor(Color color) {
@@ -38,16 +38,16 @@ public abstract class Role {
 
     public Set<Route> possibleRoutes(Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
-        for (MovingPattern movingPattern : movingPatterns) {
-            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
+        for (Direction direction : directions) {
+            possibleRoutes.add(findMovingPatternRoute(direction, position));
         }
         return possibleRoutes;
     }
 
-    protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
+    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();
-        while (movedPosition.isAvailablePosition(movingPattern)) {
-            movedPosition = movedPosition.getNextPosition(movingPattern);
+        while (movedPosition.isAvailablePosition(direction)) {
+            movedPosition = movedPosition.getNextPosition(direction);
             sequentialPositions.add(movedPosition);
         }
         return new Route(sequentialPositions);

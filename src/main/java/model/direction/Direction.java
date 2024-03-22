@@ -1,6 +1,6 @@
 package model.direction;
 
-public enum MovingPattern {
+public enum Direction {
     N(0, 1),
     S(0, -1),
     E(1, 0),
@@ -21,7 +21,7 @@ public enum MovingPattern {
     private final int fileDifferential;
     private final int rankDifferential;
 
-    MovingPattern(int fileDifferential, int rankDifferential) {
+    Direction(int fileDifferential, int rankDifferential) {
         this.fileDifferential = fileDifferential;
         this.rankDifferential = rankDifferential;
     }

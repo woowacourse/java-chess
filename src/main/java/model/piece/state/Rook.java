@@ -1,20 +1,20 @@
 package model.piece.state;
 
 
-import static model.direction.MovingPattern.E;
-import static model.direction.MovingPattern.N;
-import static model.direction.MovingPattern.S;
-import static model.direction.MovingPattern.W;
+import static model.direction.Direction.E;
+import static model.direction.Direction.N;
+import static model.direction.Direction.S;
+import static model.direction.Direction.W;
 
 import java.util.List;
-import model.direction.MovingPattern;
+import model.direction.Direction;
 import model.piece.Color;
 
 public final class Rook extends Role {
-    private static final List<MovingPattern> movingPatterns = List.of(W, E, N, S);
+    private static final List<Direction> DIRECTIONS = List.of(W, E, N, S);
 
     private Rook(Color color) {
-        super(color, movingPatterns);
+        super(color, DIRECTIONS);
     }
 
     public static Rook from(Color color) {

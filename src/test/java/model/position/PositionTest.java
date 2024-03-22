@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import model.direction.MovingPattern;
-import model.position.Position;
+import model.direction.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,14 +23,14 @@ class PositionTest {
         Position position = Position.of(1, 1);
 
         assertAll( () -> {
-            assertTrue(position.isAvailablePosition(MovingPattern.N));
-            assertTrue(position.isAvailablePosition(MovingPattern.NE));
-            assertTrue(position.isAvailablePosition(MovingPattern.E));
-            assertFalse(position.isAvailablePosition(MovingPattern.NW));
-            assertFalse(position.isAvailablePosition(MovingPattern.W));
-            assertFalse(position.isAvailablePosition(MovingPattern.SW));
-            assertFalse(position.isAvailablePosition(MovingPattern.S));
-            assertFalse(position.isAvailablePosition(MovingPattern.SE));
+            assertTrue(position.isAvailablePosition(Direction.N));
+            assertTrue(position.isAvailablePosition(Direction.NE));
+            assertTrue(position.isAvailablePosition(Direction.E));
+            assertFalse(position.isAvailablePosition(Direction.NW));
+            assertFalse(position.isAvailablePosition(Direction.W));
+            assertFalse(position.isAvailablePosition(Direction.SW));
+            assertFalse(position.isAvailablePosition(Direction.S));
+            assertFalse(position.isAvailablePosition(Direction.SE));
         });
     }
 }
