@@ -41,31 +41,11 @@ public class OutputView {
         if (piece == null) {
             return ".";
         }
-        String s = getPieceString(piece);
+        String pieceName = piece.getName();
         if (piece.isBlack()) {
-            return s.toUpperCase();
+            return pieceName.toUpperCase();
         }
-        return s.toLowerCase();
-    }
-
-    private String getPieceString(Piece piece) {
-
-        if (piece instanceof King) {
-            return "k";
-        }
-        if (piece instanceof Queen) {
-            return "q";
-        }
-        if (piece instanceof Rook) {
-            return "r";
-        }
-        if (piece instanceof Knight) {
-            return "n";
-        }
-        if (piece instanceof Bishop) {
-            return "b";
-        }
-        return "p";
+        return pieceName.toLowerCase();
     }
 
     public void printException(RuntimeException exception) {

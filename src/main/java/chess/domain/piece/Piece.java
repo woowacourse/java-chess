@@ -1,12 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.board.Route;
+import java.util.NavigableMap;
 
 public abstract class Piece {
     private final Color color;
+    private final String name;
 
-    protected Piece(Color color) {
+    protected Piece(Color color, String name) {
         this.color = color;
+        this.name = name;
     }
 
     public abstract boolean canMove(Route route);
@@ -17,5 +20,9 @@ public abstract class Piece {
 
     public boolean isAllyPiece(Piece other) {
         return this.color == other.color;
+    }
+
+    public String getName() {
+        return name;
     }
 }

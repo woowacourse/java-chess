@@ -3,12 +3,15 @@ package chess.domain.piece;
 import chess.domain.board.Route;
 
 public abstract class Pawn extends Piece {
+
+    public static final String PAWN_NAME = "P";
+
     abstract boolean isBackward(Route route);
 
     private boolean moved = false;
 
     protected Pawn(Color color) {
-        super(color);
+        super(color, PAWN_NAME);
     }
 
     @Override
