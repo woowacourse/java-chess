@@ -12,7 +12,6 @@ public class ChessController {
     private final InputController inputController;
     private final OutputView outputView;
 
-
     public ChessController(final InputController inputController, final OutputView outputView) {
         this.inputController = inputController;
         this.outputView = outputView;
