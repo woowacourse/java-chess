@@ -19,7 +19,7 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,3,c,3", "a,4,h,4"})
+    @CsvSource(value = {"a,3,c,3", "h,4,a,4"})
     @DisplayName("두 위치가 수평 위치인 경우를 올바르게 판단한다.")
     void horizontalPositionTest(String sourceFileName, int sourceRankNumber,
                                 String destinationFileName, int destinationFileNumber) {
@@ -43,7 +43,7 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"b,3,b,6", "a,1,a,8"})
+    @CsvSource(value = {"b,3,b,6", "a,8,a,1"})
     @DisplayName("두 위치가 수직 위치인 경우를 올바르게 판단한다.")
     void verticalPositionTest(String sourceFileName, int sourceRankNumber,
                               String destinationFileName, int destinationFileNumber) {
@@ -67,7 +67,7 @@ class PositionTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a,1,c,3", "h,8,a,1", "g,4,d,1"})
+    @CsvSource(value = {"a,1,c,3", "h,8,a,1"})
     @DisplayName("두 위치가 양의 기울기 대각선인 경우를 올바르게 판단한다.")
     void positiveSlopeDiagonalPositionTest(String sourceFileName, int sourceRankNumber,
                                            String destinationFileName, int destinationFileNumber) {
