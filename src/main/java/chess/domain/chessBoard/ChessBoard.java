@@ -19,12 +19,10 @@ public class ChessBoard {
     }
 
     private Space findSpace(Position position) {
-        for (Space space : spaces) {
-            if (space.isSamePosition(position)) {
-                return space;
-            }
-        }
-        throw new IllegalArgumentException("해당하는 Space가 없습니다");
+        return spaces.stream()
+                .filter(space -> space.isSamePosition(position))
+                .findFirst()
+                .orElseThrow(() ->new IllegalArgumentException("해당하는 Space가 없습니다"));
     }
 
     public List<String> showBoard() {
