@@ -23,12 +23,10 @@ public class ChessPosition {
         return this.rank == rank;
     }
 
-    public File calculateNextFile(int offset) {
-        return file.calculateNextFile(offset);
-    }
-
-    public Rank calculateNextRank(int offset) {
-        return rank.calculateNextRank(offset);
+    public ChessPosition calculateNextPosition(int fileOffset, int rankOffset) {
+        File nextFile = file.calculateNextFile(fileOffset);
+        Rank nextRank = rank.calculateNextRank(rankOffset);
+        return new ChessPosition(nextFile, nextRank);
     }
 
     public File getFile() {
