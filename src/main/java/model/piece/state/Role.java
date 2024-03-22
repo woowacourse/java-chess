@@ -18,10 +18,8 @@ public abstract class Role {
         this.shiftPattern = shiftPattern;
     }
 
-    public void checkSameColor(Color color) {
-        if (this.color == color) {
-            throw new IllegalArgumentException("목표 지점에 같은 색깔의 말이 존재합니다.");
-        }
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     public Route findDirectRoute(Position source, Position destination) {
@@ -42,6 +40,15 @@ public abstract class Role {
     }
 
     protected abstract Route findRouteByDirection(Direction direction, Position source);
+
+    public void traversalRoles(List<Role> rolesInRoute) {
+        rolesInRoute.stream()
+                .filter(Role::isOccupied)
+                .findAny()
+                .ifPresent(role -> {
+                    throw new IllegalArgumentException("경로에 기물이 위치하여 이동할 수 없습니다.");
+                });
+    }
 
     public boolean isOccupied() {
         return true;

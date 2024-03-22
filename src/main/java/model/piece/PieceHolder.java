@@ -1,5 +1,6 @@
 package model.piece;
 
+import java.util.List;
 import model.piece.state.Role;
 import model.piece.state.Square;
 import model.position.Position;
@@ -16,28 +17,35 @@ public class PieceHolder {
         return this.role.findDirectRoute(source, destination);
     }
 
-    public boolean isOccupied() {
-        return role.isOccupied();
+    public void progressMoveToDestination(List<PieceHolder> pieceHoldersInRoute, PieceHolder destination) {
+        List<Role> rolesInRoute = pieceHoldersInRoute.stream()
+                .map(pieceHolder -> pieceHolder.role)
+                .toList();
+        this.role.traversalRoles(rolesInRoute);
+        destination.changeRoleTo(role);
+        leave();
     }
 
-    public void changeRoleTo(PieceHolder source) {
-        checkSameColor(source.color());
-        this.role = source.role;
+    private void changeRoleTo(Role sourceRole) {
+        if (isSameColor(sourceRole.getColor())) {
+            throw new IllegalArgumentException("해당 위치에 같은 색의 기물이 존재합니다.");
+        }
+        this.role = sourceRole;
     }
 
-    public void leave() {
+    private void leave() {
         this.role = new Square();
     }
 
-    public void checkSameColor(Color color) {
-        this.role.checkSameColor(color);
+    public boolean isSameColor(Color color) {
+        return this.role.isSameColor(color);
     }
 
     public Role getRole() {
         return role;
     }
 
-    public Color color() {
+    public Color getColor() {
         return role.getColor();
     }
 }

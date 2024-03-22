@@ -1,5 +1,6 @@
 package model.chessboard;
 
+import java.util.List;
 import java.util.Map;
 import model.piece.Color;
 import model.piece.PieceHolder;
@@ -8,40 +9,37 @@ import model.position.Route;
 
 public class ChessBoard {
     private final Map<Position, PieceHolder> chessBoard;
-    private Color lastMovedColor;
+    private Color currentTurnColor;
 
     public ChessBoard() {
         this.chessBoard = ChessBoardFactory.create();
-        lastMovedColor = Color.BLACK;
+        currentTurnColor = Color.WHITE;
     }
 
     public void move(Position source, Position destination) {
         PieceHolder sourcePieceHolder = chessBoard.get(source);
-        validateCurrentTurn(sourcePieceHolder);
+        checkTurn(sourcePieceHolder);
         PieceHolder destinationPieceHolder = chessBoard.get(destination);
         Route route = sourcePieceHolder.findRoute(source, destination);
-        validateMovingRoute(route);
-        destinationPieceHolder.changeRoleTo(sourcePieceHolder);
-        sourcePieceHolder.leave();
+        sourcePieceHolder.progressMoveToDestination(pieceHoldersInRoute(route), destinationPieceHolder);
+        changeTurn();
     }
 
-    private void validateMovingRoute(Route route) {
-        route.getPositions()
+    private List<PieceHolder> pieceHoldersInRoute(Route route) {
+        return route.getPositions()
                 .stream()
-                .filter(position -> chessBoard.get(position)
-                        .isOccupied())
-                .findFirst()
-                .ifPresent(position -> {
-                    throw new IllegalArgumentException("경로에 기물이 위치하여 이동할 수 없습니다.");
-                });
+                .map(chessBoard::get)
+                .toList();
     }
 
-    private void validateCurrentTurn(PieceHolder source) {
-        try {
-            source.checkSameColor(lastMovedColor);
-        } catch (Exception e) {
+    private void checkTurn(PieceHolder source) {        
+        if (!source.isSameColor(currentTurnColor)) {
             throw new IllegalArgumentException("상대 턴입니다.");
         }
+    }
+
+    private void changeTurn(){
+        currentTurnColor = currentTurnColor.next();
     }
 
     public Map<Position, PieceHolder> getChessBoard() {
