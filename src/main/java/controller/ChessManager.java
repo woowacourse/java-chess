@@ -1,8 +1,8 @@
 package controller;
 
-import domain.ChessBoard;
+import domain.board.ChessBoard;
 import domain.Command;
-import domain.Position;
+import domain.position.Position;
 import domain.Turn;
 import view.InputView;
 import view.OutputView;

@@ -1,4 +1,9 @@
-package domain;
+package domain.board;
+
+import domain.Side;
+import domain.piece.*;
+import domain.position.InitPosition;
+import domain.position.Position;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

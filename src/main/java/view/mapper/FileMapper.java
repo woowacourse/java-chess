@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.File;
+import domain.board.File;
 
 import java.util.Arrays;
 

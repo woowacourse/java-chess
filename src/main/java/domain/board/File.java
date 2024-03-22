@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import java.util.Arrays;
 import java.util.Collections;

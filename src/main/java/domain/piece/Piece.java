@@ -1,4 +1,7 @@
-package domain;
+package domain.piece;
+
+import domain.position.Position;
+import domain.Side;
 
 import java.util.List;
 import java.util.Map;

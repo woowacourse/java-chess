@@ -1,4 +1,8 @@
-package domain;
+package domain.position;
+
+import domain.Side;
+import domain.board.File;
+import domain.board.Rank;
 
 import java.util.List;
 import java.util.function.Function;
@@ -24,18 +28,18 @@ public enum InitPosition {
     private static Function<Side, Rank> majorPieceVertical() {
         return side -> {
             if (side.isBlack()) {
-                return domain.Rank.EIGHT;
+                return Rank.EIGHT;
             }
-            return domain.Rank.ONE;
+            return Rank.ONE;
         };
     }
 
     private static Function<Side, Rank> pawnVertical() {
         return side -> {
             if (side.isBlack()) {
-                return domain.Rank.SEVEN;
+                return Rank.SEVEN;
             }
-            return domain.Rank.TWO;
+            return Rank.TWO;
         };
     }
 

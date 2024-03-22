@@ -1,5 +1,7 @@
-package domain;
+package domain.piece;
 
+import domain.position.Position;
+import domain.Side;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

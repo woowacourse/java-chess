@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.Rank;
+import domain.board.Rank;
 
 import java.util.Arrays;
 

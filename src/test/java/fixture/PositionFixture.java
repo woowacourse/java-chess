@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.File;
-import domain.Position;
-import domain.Rank;
+import domain.board.File;
+import domain.position.Position;
+import domain.board.Rank;
 
 public class PositionFixture {
 

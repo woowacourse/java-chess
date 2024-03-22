@@ -1,5 +1,7 @@
-package domain;
+package domain.piece;
 
+import domain.position.Position;
+import domain.Side;
 import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;

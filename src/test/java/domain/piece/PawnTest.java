@@ -1,5 +1,6 @@
-package domain;
+package domain.piece;
 
+import domain.position.Position;
 import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;

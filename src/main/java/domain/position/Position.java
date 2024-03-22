@@ -1,4 +1,7 @@
-package domain;
+package domain.position;
+
+import domain.board.File;
+import domain.board.Rank;
 
 import java.util.Arrays;
 import java.util.List;

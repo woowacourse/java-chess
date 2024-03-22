@@ -1,6 +1,7 @@
 package fixture;
 
 import domain.*;
+import domain.piece.*;
 
 public class PieceFixture {
 

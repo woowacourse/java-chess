@@ -1,5 +1,6 @@
-package domain;
+package domain.board;
 
+import domain.board.ChessBoard;
 import fixture.PieceFixture;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.BeforeEach;
