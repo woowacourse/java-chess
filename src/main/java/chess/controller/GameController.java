@@ -1,4 +1,4 @@
-package chess;
+package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
