@@ -35,8 +35,8 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
-    public int minus(Rank other) {
-        return this.coordinate - other.coordinate;
+    public Difference minus(Rank other) {
+        return new Difference(this.coordinate - other.coordinate);
     }
 
     public boolean isPawnInitialRank(Side side) {

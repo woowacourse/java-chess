@@ -27,8 +27,8 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 이름입니다."));
     }
 
-    public int minus(File other) {
-        return this.coordinate - other.coordinate;
+    public Difference minus(File other) {
+        return new Difference(this.coordinate - other.coordinate);
     }
 
     public File findNextFile(int offset) {

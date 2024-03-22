@@ -5,54 +5,43 @@ import chess.model.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.abs;
 import static java.util.Collections.unmodifiableList;
 
 public class Movement {
-    private static final int MAX_DIFFERENCE = Rank.length() - 1;
+    private final Difference fileDifference;
+    private final Difference rankDifference;
 
-    private final int fileDifference;
-    private final int rankDifference;
-
-    public Movement(int fileDifference, int rankDifference) {
-        validateDifference(fileDifference);
-        validateDifference(rankDifference);
+    public Movement(Difference fileDifference, Difference rankDifference) {
         this.fileDifference = fileDifference;
         this.rankDifference = rankDifference;
     }
 
-    private void validateDifference(int difference) {
-        if (abs(difference) > MAX_DIFFERENCE) {
-            throw new IllegalArgumentException("File 혹은 Rank의 좌표차 절댓값은 " + MAX_DIFFERENCE + " 이하입니다.");
-        }
-    }
-
     public boolean isForward(Side side) {
-        if (fileDifference != 0) {
+        if (!fileDifference.isZero()) {
             return false;
         }
         if (side.isUpperSide()) {
-            return rankDifference < 0;
+            return rankDifference.isNegative();
         }
-        return rankDifference > 0;
+        return rankDifference.isPositive();
     }
 
     public boolean isDiagonal() {
         if (isNotMoved()) {
             return false;
         }
-        return abs(fileDifference) == abs(rankDifference);
+        return fileDifference.absoluteValue() == rankDifference.absoluteValue();
     }
 
     public boolean isOrthogonal() {
         if (isNotMoved()) {
             return false;
         }
-        return fileDifference == 0 || rankDifference == 0;
+        return fileDifference.isZero() || rankDifference.isZero();
     }
 
     private boolean isNotMoved() {
-        return fileDifference == 0 && rankDifference == 0;
+        return fileDifference.isZero() && rankDifference.isZero();
     }
 
     public boolean hasLengthOf(int displacement) {
@@ -64,12 +53,12 @@ public class Movement {
             return 0;
         }
         if (!isOrthogonal() && !isDiagonal()) {
-            return abs(fileDifference) + abs(rankDifference);
+            return fileDifference.plusByAbsoluteValue(rankDifference);
         }
-        if (fileDifference == 0) {
-            return abs(rankDifference);
+        if (fileDifference.isZero()) {
+            return rankDifference.absoluteValue();
         }
-        return abs(fileDifference);
+        return fileDifference.absoluteValue();
     }
 
     public List<ChessPosition> findStraightPath(ChessPosition source) {
@@ -83,8 +72,14 @@ public class Movement {
         return makePath(source, pathLength, fileOffset, rankOffset);
     }
 
-    private int calculateIncrement(int difference) {
-        return Integer.compare(difference, 0);
+    private int calculateIncrement(Difference difference) {
+        if (difference.isNegative()) {
+            return -1;
+        }
+        if (difference.isZero()) {
+            return 0;
+        }
+        return 1;
     }
 
     private List<ChessPosition> makePath(ChessPosition source, int pathLength, int fileOffset, int rankOffset) {
@@ -97,13 +92,5 @@ public class Movement {
             path.add(prevPosition);
         }
         return unmodifiableList(path);
-    }
-
-    public int getFileDifference() {
-        return fileDifference;
-    }
-
-    public int getRankDifference() {
-        return rankDifference;
     }
 }

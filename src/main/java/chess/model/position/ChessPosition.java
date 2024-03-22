@@ -14,8 +14,8 @@ public class ChessPosition {
     }
 
     public Movement calculateMovement(ChessPosition other) {
-        int fileDifference = file.minus(other.file);
-        int rankDifference = rank.minus(other.rank);
+        Difference fileDifference = file.minus(other.file);
+        Difference rankDifference = rank.minus(other.rank);
         return new Movement(fileDifference, rankDifference);
     }
 
