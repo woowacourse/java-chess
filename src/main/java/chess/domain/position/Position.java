@@ -46,6 +46,10 @@ public class Position {
     }
 
     public Position next(Direction direction) {
+        if (!canMoveNext(direction)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+
         int x = direction.getX();
         int y = direction.getY();
 
