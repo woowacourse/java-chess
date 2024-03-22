@@ -1,15 +1,15 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.ChessVector;
 import domain.Square;
+import domain.Team;
 
 import java.util.Objects;
 
 public class King extends Piece {
     public static final int KING_MOVEMENT_DISTANCE = 1;
 
-    public King(final Camp color) {
+    public King(final Team color) {
         super(color);
     }
 
@@ -28,11 +28,11 @@ public class King extends Piece {
         if (!(o instanceof final King piece)) {
             return false;
         }
-        return this.camp == piece.camp;
+        return this.team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, King.class);
+        return Objects.hash(team, King.class);
     }
 }

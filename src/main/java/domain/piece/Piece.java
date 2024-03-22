@@ -1,13 +1,13 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.Square;
+import domain.Team;
 
 public abstract class Piece {
-    protected final Camp camp;
+    protected final Team team;
 
-    protected Piece(final Camp camp) {
-        this.camp = camp;
+    protected Piece(final Team team) {
+        this.team = team;
     }
 
     public boolean canNotMove(final Square source, final Square target) {
@@ -25,11 +25,11 @@ public abstract class Piece {
     }
 
     public boolean isSameCamp(final Piece other) {
-        return this.camp == other.camp;
+        return this.team == other.team;
     }
 
-    public boolean isOppositeCamp(final Camp other) {
-        return camp != other;
+    public boolean isOppositeCamp(final Team other) {
+        return team != other;
     }
 
     public abstract boolean equals(final Object o);

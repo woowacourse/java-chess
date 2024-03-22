@@ -1,9 +1,9 @@
 package domain;
 
-public enum Camp {
+public enum Team {
     WHITE, BLACK;
 
-    public Camp turnAlternation() {
+    public Team turn() {
         if (this == WHITE) {
             return BLACK;
         }

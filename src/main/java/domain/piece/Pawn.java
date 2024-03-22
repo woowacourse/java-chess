@@ -1,9 +1,9 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.ChessVector;
 import domain.Rank;
 import domain.Square;
+import domain.Team;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class Pawn extends Piece {
     private static final ChessVector BLACK_MOVE_SQUARE_VECTOR = new ChessVector(0, -1);
     private static final ChessVector WHITE_MOVE_SQUARE_VECTOR = new ChessVector(0, 1);
 
-    public Pawn(final Camp color) {
+    public Pawn(final Team color) {
         super(color);
     }
 
@@ -30,7 +30,7 @@ public class Pawn extends Piece {
         ChessVector startChessVector = BLACK_START_SQUARE_VECTOR;
         ChessVector moveChessVector = BLACK_MOVE_SQUARE_VECTOR;
 
-        if (camp == Camp.WHITE) {
+        if (team == Team.WHITE) {
             rank = Rank.TWO;
             startChessVector = WHITE_START_SQUARE_VECTOR;
             moveChessVector = WHITE_MOVE_SQUARE_VECTOR;
@@ -46,7 +46,7 @@ public class Pawn extends Piece {
 
         List<ChessVector> attackChessVectors = BLACK_ATTACK_SQUARE_VECTORS;
 
-        if (camp == Camp.WHITE) {
+        if (team == Team.WHITE) {
             attackChessVectors = WHITE_ATTACK_SQUARE_VECTORS;
         }
 
@@ -61,11 +61,11 @@ public class Pawn extends Piece {
         if (!(o instanceof final Pawn piece)) {
             return false;
         }
-        return this.camp == piece.camp;
+        return this.team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, Pawn.class);
+        return Objects.hash(team, Pawn.class);
     }
 }

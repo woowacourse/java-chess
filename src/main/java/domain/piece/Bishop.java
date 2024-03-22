@@ -1,13 +1,13 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.ChessVector;
 import domain.Square;
+import domain.Team;
 
 import java.util.Objects;
 
 public class Bishop extends Piece {
-    public Bishop(final Camp color) {
+    public Bishop(final Team color) {
         super(color);
     }
 
@@ -26,11 +26,11 @@ public class Bishop extends Piece {
         if (!(o instanceof final Bishop piece)) {
             return false;
         }
-        return this.camp == piece.camp;
+        return this.team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, Bishop.class);
+        return Objects.hash(team, Bishop.class);
     }
 }

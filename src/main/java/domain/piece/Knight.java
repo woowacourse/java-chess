@@ -1,8 +1,8 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.ChessVector;
 import domain.Square;
+import domain.Team;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +12,7 @@ public class Knight extends Piece {
             new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
             new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
 
-    public Knight(final Camp color) {
+    public Knight(final Team color) {
         super(color);
     }
 
@@ -33,11 +33,11 @@ public class Knight extends Piece {
         if (!(o instanceof final Knight piece)) {
             return false;
         }
-        return this.camp == piece.camp;
+        return this.team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(camp, Knight.class);
+        return Objects.hash(team, Knight.class);
     }
 }

@@ -1,9 +1,9 @@
 package domain.piece;
 
-import domain.Camp;
 import domain.File;
 import domain.Rank;
 import domain.Square;
+import domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,7 +18,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource(value = "squareArguments")
     void canMove(final Square source, final Square target, final boolean expected) {
-        final Rook rook = new Rook(Camp.BLACK);
+        final Rook rook = new Rook(Team.BLACK);
 
         // when
         final boolean canMove = rook.canMove(source, target);
