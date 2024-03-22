@@ -8,11 +8,11 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public String getCommand() {
+    public String readCommand() {
         return scanner.nextLine();
     }
 
-    public List<String> getMoveCommand() {
+    public List<String> readMoveCommand() {
         return Arrays.stream(scanner.nextLine().split(" ")).toList();
     }
 }

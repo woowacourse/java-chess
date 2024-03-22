@@ -36,14 +36,14 @@ public class ChessMachine {
     }
 
     private void validateFirstCommand() {
-        if (!inputView.getCommand().equals(START_COMMAND)) {
+        if (!inputView.readCommand().equals(START_COMMAND)) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
 
     private void playChess(ChessBoard chessBoard) {
         while (true) {
-            List<String> fromTo = inputView.getMoveCommand();
+            List<String> fromTo = inputView.readMoveCommand();
             String command = fromTo.get(0);
             if (command.equals(END_COMMAND)) {
                 break;
