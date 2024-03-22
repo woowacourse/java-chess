@@ -19,9 +19,8 @@ public class ChessBoard {
     public void move(Position source, Position destination) {
         PieceHolder sourcePieceHolder = chessBoard.get(source);
         checkTurn(sourcePieceHolder);
-        PieceHolder destinationPieceHolder = chessBoard.get(destination);
         Route route = sourcePieceHolder.findRoute(source, destination);
-        sourcePieceHolder.progressMoveToDestination(pieceHoldersInRoute(route), destinationPieceHolder);
+        sourcePieceHolder.progressMoveToDestination(pieceHoldersInRoute(route));
         changeTurn();
     }
 

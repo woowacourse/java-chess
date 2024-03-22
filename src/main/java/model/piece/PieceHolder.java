@@ -1,6 +1,9 @@
 package model.piece;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 import model.piece.state.Role;
 import model.piece.state.Square;
 import model.position.Position;
@@ -17,19 +20,18 @@ public class PieceHolder {
         return this.role.findDirectRoute(source, destination);
     }
 
-    public void progressMoveToDestination(List<PieceHolder> pieceHoldersInRoute, PieceHolder destination) {
+    public void progressMoveToDestination(List<PieceHolder> pieceHoldersInRoute) {
+        Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
+        PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
         List<Role> rolesInRoute = pieceHoldersInRoute.stream()
                 .map(pieceHolder -> pieceHolder.role)
                 .toList();
-        this.role.traversalRoles(rolesInRoute);
+        this.role.traversalRoles(rolesInRoute, destination.role);
         destination.changeRoleTo(role);
         leave();
     }
 
     private void changeRoleTo(Role sourceRole) {
-        if (isSameColor(sourceRole.getColor())) {
-            throw new IllegalArgumentException("해당 위치에 같은 색의 기물이 존재합니다.");
-        }
         this.role = sourceRole;
     }
 

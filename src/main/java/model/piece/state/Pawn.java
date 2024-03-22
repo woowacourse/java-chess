@@ -14,9 +14,11 @@ import model.position.Route;
 public final class Pawn extends SingleShiftRole {
     private static final int INITIAL_WHITE_PAWN_RANK = 2;
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
+    private boolean isTryToTake;
 
     private Pawn(Color color, ShiftPattern shiftPattern) {
         super(color, shiftPattern);
+        isTryToTake = false;
     }
 
     public static Pawn from(Color color) {
@@ -27,17 +29,53 @@ public final class Pawn extends SingleShiftRole {
     }
 
     @Override
+    public Route findDirectRoute(Position source, Position destination) {
+        Route directRoute = findAllPossibleRoutes(source).stream()
+                .filter(route -> route.contains(destination))
+                .map(route -> route.directRouteTo(destination))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
+        updatePawnAction(directRoute.getDirection());
+        return directRoute;
+    }
+
+    private void updatePawnAction(Direction direction) {
+        if (direction == N || direction == S) {
+            isTryToTake = false;
+            return;
+        }
+        isTryToTake = true;
+    }
+
+    @Override
     protected Route findRouteByDirection(Direction direction, Position source) {
         List<Position> sequentialPositions = new ArrayList<>();
-        if ((source.rank() == INITIAL_WHITE_PAWN_RANK && direction == N) || (
-                source.rank() == INITIAL_BLACK_PAWN_RANK && direction == S)) {
-            source = source.getNextPosition(direction);
-            sequentialPositions.add(source);
-        }
+        source = doubleShift(direction, source, sequentialPositions);
+        singleShift(direction, source, sequentialPositions);
+        return new Route(direction, sequentialPositions);
+    }
+
+    private void singleShift(Direction direction, Position source, List<Position> sequentialPositions) {
         if (source.isAvailablePosition(direction)) {
             source = source.getNextPosition(direction);
             sequentialPositions.add(source);
         }
-        return new Route(direction, sequentialPositions);
+    }
+
+    private Position doubleShift(Direction direction, Position source, List<Position> sequentialPositions) {
+        if ((source.rank() == INITIAL_WHITE_PAWN_RANK && direction == N) || (source.rank() == INITIAL_BLACK_PAWN_RANK
+                && direction == S)) {
+            source = source.getNextPosition(direction);
+            sequentialPositions.add(source);
+        }
+        return source;
+    }
+
+    @Override
+    public void traversalRoles(List<Role> rolesInRoute, Role destinationRole) {
+        if (isTryToTake != destinationRole.isOccupied()) {
+            throw new IllegalArgumentException("해당 Pawn이 이동할 수 없는 좌표입니다");
+        }
+        isTryToTake = false;
     }
 }

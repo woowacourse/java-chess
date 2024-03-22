@@ -27,6 +27,10 @@ public class Route {
         return new Route(direction, subList);
     }
 
+    public Direction getDirection(){
+        return direction;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

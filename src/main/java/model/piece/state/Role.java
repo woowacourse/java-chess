@@ -30,7 +30,7 @@ public abstract class Role {
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
-    private Set<Route> findAllPossibleRoutes(Position source) {
+    protected Set<Route> findAllPossibleRoutes(Position source) {
         Set<Route> possibleRoutes = new HashSet<>();
         List<Direction> directions = shiftPattern.directions();
         for (Direction direction : directions) {
@@ -41,7 +41,10 @@ public abstract class Role {
 
     protected abstract Route findRouteByDirection(Direction direction, Position source);
 
-    public void traversalRoles(List<Role> rolesInRoute) {
+    public void traversalRoles(List<Role> rolesInRoute, Role destinationRole) {
+        if (destinationRole.isSameColor(this.color)){
+            throw new IllegalArgumentException("목적지에 같은 색깔의 기물이 위치하여 이동할 수 없습니다.");
+        }
         rolesInRoute.stream()
                 .filter(Role::isOccupied)
                 .findAny()
