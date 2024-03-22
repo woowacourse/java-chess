@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.Board;
 import chess.domain.BoardFactory;
-import chess.domain.CommandCondition;
+import chess.domain.command.CommandCondition;
 import chess.domain.command.CommandExecutor;
 import chess.domain.command.GameCommand;
 import chess.domain.position.Position;
