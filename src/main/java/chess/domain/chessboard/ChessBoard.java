@@ -5,6 +5,7 @@ import chess.dto.ChessBoardDto;
 import chess.dto.ChessPieceDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 
 public class ChessBoard {
@@ -22,10 +23,12 @@ public class ChessBoard {
     }
 
     public Optional<ChessPiece> findChessPieceOnSquare(Square findSquare) {
-        return board.keySet().stream()
-                .filter(square -> square == findSquare)
-                .map(board::get)
-                .findFirst().orElse(null);
+        return board.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(findSquare))
+                .map(Entry::getValue)
+                .findFirst()
+                .orElse(Optional.empty());
     }
 
     public Square findForwardSquare(Square square) {
