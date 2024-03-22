@@ -1,7 +1,5 @@
 package domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import domain.board.Board;
 import domain.board.BoardInitiator;
 import domain.board.Position;
@@ -28,7 +26,7 @@ class SelectiveMoveStrategyTest {
         final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
                 rook.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(14);
+        Assertions.assertThat(positions).hasSize(14);
     }
 
     @Test
@@ -40,7 +38,7 @@ class SelectiveMoveStrategyTest {
         final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
                 bishop.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(13);
+        Assertions.assertThat(positions).hasSize(13);
     }
 
     @Test
@@ -52,7 +50,7 @@ class SelectiveMoveStrategyTest {
         final List<Position> positions = new SelectiveMoveStrategy().movablePositions(position,
                 queen.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(27);
+        Assertions.assertThat(positions).hasSize(27);
     }
 
 }

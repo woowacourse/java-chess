@@ -1,7 +1,5 @@
 package domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import domain.board.Board;
 import domain.board.BoardInitiator;
 import domain.board.Position;
@@ -25,7 +23,7 @@ class PawnMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(2);
+        Assertions.assertThat(positions).hasSize(2);
     }
 
     @Test
@@ -36,7 +34,7 @@ class PawnMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(2);
+        Assertions.assertThat(positions).hasSize(2);
     }
 
     @Test
@@ -48,6 +46,6 @@ class PawnMoveStrategyTest {
         pawn.movableDirections();
         final List<Position> positions = new PawnMoveStrategy().movablePositions(position, pawn.movableDirections(),
                 board);
-        Assertions.assertThat(positions.size()).isEqualTo(1);
+        Assertions.assertThat(positions).hasSize(1);
     }
 }

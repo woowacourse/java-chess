@@ -28,7 +28,7 @@ class AbsoluteMoveStrategyTest {
                 knight.movableDirections(),
                 board);
 
-        assertThat(positions.size()).isEqualTo(8);
+        assertThat(positions).hasSize(8);
     }
 
     @Test
@@ -40,6 +40,6 @@ class AbsoluteMoveStrategyTest {
         final List<Position> positions = new AbsoluteMoveStrategy().movablePositions(position, king.movableDirections(),
                 board);
 
-        assertThat(positions.size()).isEqualTo(8);
+        assertThat(positions).hasSize(8);
     }
 }
