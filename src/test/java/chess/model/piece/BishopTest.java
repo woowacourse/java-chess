@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
 
-    @DisplayName("Bishop이 대각선 이동이면 canMove true를 반환하고, 아니면 false를 반환한다")
+    @DisplayName("Bishop이 대각선 이동이면 움직일 수 있다")
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void bishopCanMove(Position source, Position target, boolean expected) {

@@ -56,7 +56,7 @@ class PawnTest {
         assertThat(canMove).isEqualTo(true);
     }
 
-    @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
+    @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 움직일 수 있다")
     @Test
     void blackPawnCanInitialMove() {
         Piece piece = new Pawn(BLACK_PAWN);
@@ -66,7 +66,7 @@ class PawnTest {
         assertThat(canMove).isEqualTo(true);
     }
 
-    @DisplayName("White Pawn이 전방 대각선 1칸 공격이면 canAttack true를 반환하고, 아니면 false를 반환한다")
+    @DisplayName("White Pawn이 전방 대각선 1칸 공격이면 움직일 수 있다")
     @ParameterizedTest
     @MethodSource("provideWhitePawnAttackMovePosition")
     void whitePawnCanDiagonalMove(Position source, Position target, boolean expected) {
@@ -82,7 +82,7 @@ class PawnTest {
         );
     }
 
-    @DisplayName("Black Pawn이 전방 대각선 1칸 공격이면 canAttack true를 반환하고, 아니면 false를 반환한다")
+    @DisplayName("Black Pawn이 전방 대각선 1칸 공격이면 움직일 수 있다")
     @ParameterizedTest
     @MethodSource("provideBlackPawnAttackMovePosition")
     void blackPawnCanDiagonalMove(Position source, Position target, boolean expected) {
