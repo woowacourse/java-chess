@@ -32,7 +32,7 @@ public enum CommandMapper {
                 .filter(command -> command.input.equals(input))
                 .findFirst()
                 .map(it -> it.command)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("입력값이 명령어 목록에 없습니다."));
     }
 
     public static Command toMoveCommand(String input) {
