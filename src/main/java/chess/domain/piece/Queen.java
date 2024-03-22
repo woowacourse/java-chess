@@ -9,8 +9,6 @@ public class Queen extends Piece {
             Map.entry(Color.WHITE, new Queen(Color.WHITE))
     );
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Queen(final Color color) {
         super(color);
         initDirections();
@@ -33,6 +31,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }

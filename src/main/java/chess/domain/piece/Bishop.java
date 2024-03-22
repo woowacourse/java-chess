@@ -9,8 +9,6 @@ public class Bishop extends Piece {
             Map.entry(Color.WHITE, new Bishop(Color.WHITE))
     );
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Bishop(final Color color) {
         super(color);
         initDirections();
@@ -29,6 +27,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }

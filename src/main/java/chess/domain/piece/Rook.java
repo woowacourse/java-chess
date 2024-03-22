@@ -9,8 +9,6 @@ public class Rook extends Piece {
             Map.entry(Color.WHITE, new Rook(Color.WHITE))
     );
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Rook(final Color color) {
         super(color);
         initDirections();
@@ -30,6 +28,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }

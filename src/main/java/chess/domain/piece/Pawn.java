@@ -9,8 +9,6 @@ public class Pawn extends Piece {
             Map.entry(Color.WHITE, new Pawn(Color.WHITE))
     );
 
-    private final boolean canMoveMoreThenOnce = false;
-
     private Pawn(final Color color) {
         super(color);
         initDirections();
@@ -31,6 +29,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return false;
     }
 }
