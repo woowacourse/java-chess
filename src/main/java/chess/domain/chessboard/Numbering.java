@@ -1,7 +1,5 @@
 package chess.domain.chessboard;
 
-import static chess.domain.chessboard.Lettering.findLettering;
-
 import java.util.Arrays;
 
 public enum Numbering {

@@ -23,7 +23,7 @@ public enum Lettering {
         return Arrays.stream(Lettering.values())
                 .filter(lettering -> lettering.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 넘버링 값이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 레터링 값이 아닙니다."));
     }
 
     public static Lettering findNextLettering(Lettering lettering) {
