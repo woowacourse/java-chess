@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessController {
-    private final Map<GameCommand, CommandExecutor> commands = new EnumMap<>(GameCommand.class);
+    private final Map<GameCommand, CommandExecutor> commands;
     private final ChessGame chessGame;
 
     public ChessController(ChessGame chessGame) {
+        this.commands = new EnumMap<>(GameCommand.class);
         this.chessGame = chessGame;
     }
 
