@@ -18,11 +18,8 @@ public class ChessBoardTest {
     @DisplayName("체스보드가 생성되면 32개의 말이 셋팅된다")
     @Test
     void initialBoard() {
-        // given
-        ChessBoard chessBoard = new ChessBoard();
-
         // when
-        chessBoard.initialBoard();
+        ChessBoard chessBoard = new ChessBoard();
 
         // then
         assertThat(chessBoard).extracting("chessBoard")
@@ -34,7 +31,6 @@ public class ChessBoardTest {
     public void move() throws NoSuchFieldException, IllegalAccessException {
         // given
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialBoard();
 
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.THREE);
@@ -60,7 +56,6 @@ public class ChessBoardTest {
     void moveInvalidTarget() {
         // given
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialBoard();
 
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.EIGHT);
@@ -75,7 +70,6 @@ public class ChessBoardTest {
     void moveInvalidSource() {
         // given
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialBoard();
 
         Position source = Position.of(File.B, Rank.THREE);
         Position target = Position.of(File.B, Rank.FOUR);

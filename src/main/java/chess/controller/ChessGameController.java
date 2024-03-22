@@ -14,17 +14,11 @@ public class ChessGameController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        ChessBoard chessBoard = generateChessBoard();
+        ChessBoard chessBoard = new ChessBoard();
         GameState gameState = new Ready(chessBoard);
         outputView.printStartMessage();
 
         playGame(gameState, chessBoard);
-    }
-
-    private ChessBoard generateChessBoard() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialBoard();
-        return chessBoard;
     }
 
     private void playGame(GameState gameState, ChessBoard chessBoard) {

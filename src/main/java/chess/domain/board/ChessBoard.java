@@ -19,9 +19,6 @@ public class ChessBoard {
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
 
     public ChessBoard() {
-    }
-
-    public void initialBoard() {
         initializeBlackPieces();
         initializeWhitePieces();
     }

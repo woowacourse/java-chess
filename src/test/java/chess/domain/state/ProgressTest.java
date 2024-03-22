@@ -25,7 +25,6 @@ class ProgressTest {
     void playWithCommandMove() {
         // given
         ChessBoard chessBoard = new ChessBoard();
-        chessBoard.initialBoard();
         Progress progress = new Progress(chessBoard);
 
         // when
