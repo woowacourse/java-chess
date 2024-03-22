@@ -14,8 +14,16 @@ public final class ChessGame {
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    public ChessGame(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
     public void run() {
-        InputView.printGameIntro();
+        inputView.printGameIntro();
         Board board = null;
         do {
             board = executeGame(board);
@@ -27,7 +35,7 @@ public final class ChessGame {
     }
 
     private Board executeCommand(Board board) {
-        List<String> commands = InputView.askGameCommands();
+        List<String> commands = inputView.askGameCommands();
         Command command = Command.findCommand(commands.get(COMMAND_INDEX));
         if (command.isEnd()) {
             return null;
@@ -44,7 +52,7 @@ public final class ChessGame {
     private Board executeStart() {
         Board board = Board.createInitialBoard();
         BoardDto boardDto = BoardDto.from(board);
-        OutputView.printChessBoard(boardDto);
+        outputView.printChessBoard(boardDto);
         return board;
     }
 
@@ -53,7 +61,7 @@ public final class ChessGame {
         String target = commands.get(TARGET_INDEX);
         board.move(source, target);
         BoardDto boardDto = BoardDto.from(board);
-        OutputView.printChessBoard(boardDto);
+        outputView.printChessBoard(boardDto);
     }
 
     private boolean isRunning(Board board) {
@@ -64,7 +72,7 @@ public final class ChessGame {
         try {
             return operation.get();
         } catch (IllegalArgumentException e) {
-            OutputView.printException(e);
+            outputView.printException(e);
             return retryOnException(operation);
         }
     }
