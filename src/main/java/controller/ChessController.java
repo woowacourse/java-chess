@@ -14,7 +14,8 @@ import view.OutputView;
 
 public class ChessController {
 
-    public static final String REGEX_FORMAT = "^[a-h][1-8]$";
+    private static final String MOVE_COMMAND_REGEX_FORMAT = "^[a-h][1-8]$";
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(MOVE_COMMAND_REGEX_FORMAT);
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -70,6 +71,6 @@ public class ChessController {
     }
 
     private boolean isNotValidCoordinateInput(final String input) {
-        return !Pattern.compile(REGEX_FORMAT).matcher(input).matches();
+        return MOVE_COMMAND_PATTERN.matcher(input).matches();
     }
 }
