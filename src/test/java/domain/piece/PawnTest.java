@@ -27,16 +27,16 @@ class PawnTest {
 
     static Stream<Arguments> squareArgumentsMove() {
         return Stream.of(
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.D), true),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.FOUR, File.D), true),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.C), false),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.E), false),
-                Arguments.of(Team.WHITE, new Square(Rank.THREE, File.D), new Square(Rank.FIVE, File.D), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.D), true),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.FIVE, File.D), true),
-                Arguments.of(Team.BLACK, new Square(Rank.SIX, File.D), new Square(Rank.FOUR, File.D), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.C), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.E), false)
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.THREE), true),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.FOUR), true),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.C, Rank.THREE), false),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.E, Rank.THREE), false),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.THREE), new Square(File.D, Rank.FIVE), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.SIX), true),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FIVE), true),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SIX), new Square(File.D, Rank.FOUR), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.C, Rank.SIX), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.E, Rank.SIX), false)
         );
     }
 
@@ -53,16 +53,16 @@ class PawnTest {
 
     static Stream<Arguments> squareArgumentsAttack() {
         return Stream.of(
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.D), false),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.FOUR, File.D), false),
-                Arguments.of(Team.WHITE, new Square(Rank.THREE, File.D), new Square(Rank.FIVE, File.E), false),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.C), true),
-                Arguments.of(Team.WHITE, new Square(Rank.TWO, File.D), new Square(Rank.THREE, File.E), true),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.D), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.FIVE, File.D), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SIX, File.D), new Square(Rank.FOUR, File.D), false),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.C), true),
-                Arguments.of(Team.BLACK, new Square(Rank.SEVEN, File.D), new Square(Rank.SIX, File.E), true)
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.THREE), false),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.FOUR), false),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.THREE), new Square(File.E, Rank.FIVE), false),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.C, Rank.THREE), true),
+                Arguments.of(Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.E, Rank.THREE), true),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.SIX), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FIVE), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SIX), new Square(File.D, Rank.FOUR), false),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.C, Rank.SIX), true),
+                Arguments.of(Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.E, Rank.SIX), true)
         );
     }
 }

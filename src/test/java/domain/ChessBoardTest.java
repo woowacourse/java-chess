@@ -17,7 +17,7 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.TWO, File.A);
+        final Square source = new Square(File.A, Rank.TWO);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, source))
@@ -31,8 +31,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.TWO, File.A);
-        final Square target = new Square(Rank.FIVE, File.A);
+        final Square source = new Square(File.A, Rank.TWO);
+        final Square target = new Square(File.A, Rank.FIVE);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -46,8 +46,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.THREE, File.A);
-        final Square target = new Square(Rank.FOUR, File.A);
+        final Square source = new Square(File.A, Rank.THREE);
+        final Square target = new Square(File.A, Rank.FOUR);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -61,8 +61,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.ONE, File.A);
-        final Square target = new Square(Rank.EIGHT, File.A);
+        final Square source = new Square(File.A, Rank.ONE);
+        final Square target = new Square(File.A, Rank.EIGHT);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -77,8 +77,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.TWO, File.D);
-        final Square target = new Square(Rank.FOUR, File.D);
+        final Square source = new Square(File.D, Rank.TWO);
+        final Square target = new Square(File.D, Rank.FOUR);
 
         final Piece sourcePiece = chessBoard.getPieceSquares().get(source);
 
@@ -101,14 +101,14 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square whiteSource = new Square(Rank.TWO, File.D);
-        final Square whiteTarget = new Square(Rank.FOUR, File.D);
+        final Square whiteSource = new Square(File.D, Rank.TWO);
+        final Square whiteTarget = new Square(File.D, Rank.FOUR);
         final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
 
         chessBoard.move(whiteSource, whiteTarget);
 
-        final Square blackSource = new Square(Rank.SEVEN, File.E);
-        final Square blackTarget = new Square(Rank.FIVE, File.E);
+        final Square blackSource = new Square(File.E, Rank.SEVEN);
+        final Square blackTarget = new Square(File.E, Rank.FIVE);
         final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 
@@ -130,8 +130,8 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square source = new Square(Rank.SEVEN, File.A);
-        final Square target = new Square(Rank.SIX, File.A);
+        final Square source = new Square(File.A, Rank.SEVEN);
+        final Square target = new Square(File.A, Rank.SIX);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
@@ -145,14 +145,14 @@ class ChessBoardTest {
         // given
         final ChessBoard chessBoard = ChessBoard.create();
 
-        final Square whiteSource = new Square(Rank.TWO, File.D);
-        final Square whiteTarget = new Square(Rank.FOUR, File.D);
+        final Square whiteSource = new Square(File.D, Rank.TWO);
+        final Square whiteTarget = new Square(File.D, Rank.FOUR);
         final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
 
         chessBoard.move(whiteSource, whiteTarget);
 
-        final Square blackSource = new Square(Rank.SEVEN, File.D);
-        final Square blackTarget = new Square(Rank.FIVE, File.D);
+        final Square blackSource = new Square(File.D, Rank.SEVEN);
+        final Square blackTarget = new Square(File.D, Rank.FIVE);
         final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 

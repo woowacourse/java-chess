@@ -29,7 +29,7 @@ public class OutputView {
     }
 
     private static String createRank(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
-        final Square square = new Square(rank, file);
+        final Square square = new Square(file, rank);
 
         if (squarePieces.containsKey(square)) {
             final Piece piece = squarePieces.get(square);

@@ -50,7 +50,7 @@ public class ChessController {
 
     private Square readSquare() {
         final MoveCommand moveCommand = MoveCommand.fromInput(inputView.readMoveCommand());
-        return new Square(Rank.from(moveCommand.rank()), File.from(moveCommand.file()));
+        return new Square(File.from(moveCommand.file()), Rank.from(moveCommand.rank()));
     }
 
     private static void validateGameState(final ChessBoard chessBoard) {

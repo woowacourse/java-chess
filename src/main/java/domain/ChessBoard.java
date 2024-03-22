@@ -37,10 +37,10 @@ public class ChessBoard {
         final Map<Square, Piece> chessTable = new HashMap<>();
 
         for (final File file : File.values()) {
-            chessTable.put(new Square(Rank.SEVEN, file), new Pawn(Team.BLACK));
-            chessTable.put(new Square(Rank.TWO, file), new Pawn(Team.WHITE));
-            chessTable.put(new Square(Rank.EIGHT, file), BLACK_PIECE_TYPE_ORDERS.get(file));
-            chessTable.put(new Square(Rank.ONE, file), WHITE_PIECE_TYPE_ORDERS.get(file));
+            chessTable.put(new Square(file, Rank.SEVEN), new Pawn(Team.BLACK));
+            chessTable.put(new Square(file, Rank.TWO), new Pawn(Team.WHITE));
+            chessTable.put(new Square(file, Rank.EIGHT), BLACK_PIECE_TYPE_ORDERS.get(file));
+            chessTable.put(new Square(file, Rank.ONE), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
 
         return new ChessBoard(chessTable);

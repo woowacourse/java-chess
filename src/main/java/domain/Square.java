@@ -3,13 +3,10 @@ package domain;
 import java.util.Objects;
 
 public class Square {
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
-
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Square(final Rank rank, final File file) {
+    public Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -25,7 +22,7 @@ public class Square {
         final Rank newRank = this.rank.move(chessVector.y());
         final File newFile = this.file.move(chessVector.x());
 
-        return new Square(newRank, newFile);
+        return new Square(newFile, newRank);
     }
 
     public boolean isRank(final Rank rank) {
