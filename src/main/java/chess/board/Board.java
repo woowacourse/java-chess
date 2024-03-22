@@ -71,7 +71,7 @@ public class Board {
         }
     }
 
-    public void replacePiece(Position source, Position destination, Piece piece) {
+    private void replacePiece(Position source, Position destination, Piece piece) {
         pieces.remove(source);
         if (piece.isInitPawn()) {
             pieces.put(destination, new MovedPawn(piece.getColor()));
