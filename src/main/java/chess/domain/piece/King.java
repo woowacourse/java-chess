@@ -1,15 +1,13 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.KING;
+import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
-    private static final int ONE_SQUARE = 1;
-
-
     public King(Color color) {
         super(color);
     }

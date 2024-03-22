@@ -1,15 +1,14 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.ROOK;
+import static chess.utils.Constant.ONE_SQUARE;
+import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final int STAY = 0;
-    private static final int ONE_SQUARE = 1;
-
     public Rook(Color color) {
         super(color);
     }
@@ -26,7 +25,7 @@ public class Rook extends Piece {
         }
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
-        return Math.abs(rankDiff) == STAY || Math.abs(fileDiff) == STAY;
+        return Math.abs(rankDiff) == ZERO_SQUARE || Math.abs(fileDiff) == ZERO_SQUARE;
     }
 
     @Override
@@ -34,12 +33,12 @@ public class Rook extends Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        if (Math.abs(rankDiff) > STAY) {
+        if (Math.abs(rankDiff) > ZERO_SQUARE) {
             int rankUnit = rankDiff / Math.abs(rankDiff);
 
             List<Position> path = new ArrayList<>();
             for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
-                source = source.move(STAY, rankUnit);
+                source = source.move(ZERO_SQUARE, rankUnit);
                 path.add(source);
             }
             return path;
@@ -49,7 +48,7 @@ public class Rook extends Piece {
 
         List<Position> path = new ArrayList<>();
         for (int i = Math.abs(fileDiff); i != ONE_SQUARE; i--) {
-            source = source.move(fileUnit, STAY);
+            source = source.move(fileUnit, ZERO_SQUARE);
             path.add(source);
         }
         return path;

@@ -1,14 +1,13 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.KNIGHT;
+import static chess.utils.Constant.TWO_SQUARE;
 
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
-    private static final int TWO_SQUARES = 2;
-
     public Knight(Color color) {
         super(color);
     }
@@ -26,7 +25,7 @@ public class Knight extends Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
-        return Math.abs(rankDiff) * Math.abs(fileDiff) == TWO_SQUARES;
+        return Math.abs(rankDiff) * Math.abs(fileDiff) == TWO_SQUARE;
     }
 
     @Override

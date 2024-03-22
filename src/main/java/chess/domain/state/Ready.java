@@ -1,11 +1,11 @@
 package chess.domain.state;
 
+import static chess.utils.Constant.START_COMMAND;
+
 import chess.domain.board.ChessBoard;
 import java.util.List;
 
 public class Ready implements GameState {
-    private static final String START_COMMAND = "start";
-
     private final ChessBoard chessBoard;
 
     public Ready(ChessBoard chessBoard) {

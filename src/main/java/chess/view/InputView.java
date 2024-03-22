@@ -1,13 +1,15 @@
 package chess.view;
 
+import static chess.utils.Constant.END_COMMAND;
+import static chess.utils.Constant.MOVE_COMMAND;
+import static chess.utils.Constant.START_COMMAND;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
-    private static final String MOVE_COMMAND_FORMAT = "^move [a-h][1-8] [a-h][1-8]$";
+    private static final String MOVE_COMMAND_FORMAT = "^" + MOVE_COMMAND + " [a-h][1-8] [a-h][1-8]$";
     private static final String DELIMITER = " ";
 
     private final Scanner scanner = new Scanner(System.in);

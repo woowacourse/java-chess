@@ -1,16 +1,15 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.PAWN;
+import static chess.utils.Constant.ONE_SQUARE;
+import static chess.utils.Constant.TWO_SQUARE;
+import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private static final int STAY = 0;
-    private static final int ONE_SQUARE = 1;
-    private static final int TWO_SQUARES = 2;
-
     public Pawn(Color color) {
         super(color);
     }
@@ -36,8 +35,8 @@ public class Pawn extends Piece {
         int rankDiff = source.calculateRankDifference(target);
         List<Position> path = new ArrayList<>();
 
-        if (Math.abs(rankDiff) == TWO_SQUARES) {
-            source = source.move(STAY, rankDiff / TWO_SQUARES);
+        if (Math.abs(rankDiff) == TWO_SQUARE) {
+            source = source.move(ZERO_SQUARE, rankDiff / TWO_SQUARE);
             path.add(source);
         }
         return path;
@@ -54,9 +53,9 @@ public class Pawn extends Piece {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARES) && (fileDiff == STAY);
+            return (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARE) && (fileDiff == ZERO_SQUARE);
         }
-        return rankDiff == -ONE_SQUARE && fileDiff == STAY;
+        return rankDiff == -ONE_SQUARE && fileDiff == ZERO_SQUARE;
     }
 
     private boolean checkWhite(Position source, Position target, Color color) {
@@ -70,8 +69,8 @@ public class Pawn extends Piece {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARES) && (fileDiff == STAY);
+            return (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARE) && (fileDiff == ZERO_SQUARE);
         }
-        return rankDiff == ONE_SQUARE && fileDiff == STAY;
+        return rankDiff == ONE_SQUARE && fileDiff == ZERO_SQUARE;
     }
 }

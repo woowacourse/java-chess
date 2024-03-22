@@ -1,14 +1,14 @@
 package chess.domain.state;
 
+import static chess.utils.Constant.END_COMMAND;
+import static chess.utils.Constant.MOVE_COMMAND;
+import static chess.utils.Constant.START_COMMAND;
+
 import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 import java.util.List;
 
 public class Progress implements GameState {
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
-
     private final ChessBoard chessBoard;
 
     public Progress(ChessBoard chessBoard) {

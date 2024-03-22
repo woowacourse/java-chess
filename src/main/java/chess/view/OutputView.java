@@ -1,5 +1,9 @@
 package chess.view;
 
+import static chess.utils.Constant.END_COMMAND;
+import static chess.utils.Constant.MOVE_COMMAND;
+import static chess.utils.Constant.START_COMMAND;
+
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -14,9 +18,9 @@ public class OutputView {
     public void printStartMessage() {
         System.out.println(
                 "> 체스 게임을 시작합니다." + NEW_LINE
-                        + "> 게임 시작 : start" + NEW_LINE
-                        + "> 게임 종료 : end" + NEW_LINE
-                        + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3"
+                        + "> 게임 시작 : " + START_COMMAND + NEW_LINE
+                        + "> 게임 종료 : " + END_COMMAND + NEW_LINE
+                        + "> 게임 이동 : " + MOVE_COMMAND + " source위치 target위치 - 예. " + MOVE_COMMAND + " b2 b3"
         );
     }
 
