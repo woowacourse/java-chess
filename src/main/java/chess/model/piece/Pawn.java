@@ -44,11 +44,10 @@ public class Pawn extends Piece {
         if (!movement.isSameFile()) {
             return false;
         }
-        int rankGap = movement.getRankGap();
-        if (rankGap == validRankDirection) {
+        int rankDistance = movement.getRankDistance();
+        if (rankDistance == COMMON_RANK_DISTANCE) {
             return true;
         }
-        int rankDistance = movement.getRankDistance();
         return rankDistance == START_JUMP_DISTANCE && movement.isSourceRankMatch(startRank);
     }
 }
