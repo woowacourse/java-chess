@@ -1,8 +1,8 @@
 package domain.piece;
 
+import domain.MovePath;
 import domain.Position;
 import domain.Side;
-import java.util.Map;
 
 public class Empty extends Piece {
 
@@ -11,7 +11,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
         return false;
     }
 

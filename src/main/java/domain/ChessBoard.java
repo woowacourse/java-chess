@@ -66,14 +66,16 @@ public class ChessBoard {
     }
 
     private Piece findMovablePiece(Position current, Position target) {
-        Map<Position, Piece> piecesOnPath = findPiecesOnPath(current, target);
-
-        Piece piece = board.get(current);
-        boolean canPieceMove = piece.isRuleBroken(current, target, piecesOnPath);
-        if (!canPieceMove) {
-            throw new IllegalArgumentException("이동할 수 없는 target 입니다.");
-        }
-        return piece;
+        // MovePath로 수정해야 함
+//        Map<Position, Piece> piecesOnPath = findPiecesOnPath(current, target);
+//
+//        Piece piece = board.get(current);
+//        boolean canPieceMove = piece.isRuleBroken(current, target, piecesOnPath);
+//        if (!canPieceMove) {
+//            throw new IllegalArgumentException("이동할 수 없는 target 입니다.");
+//        }
+//        return piece;
+        throw new IllegalArgumentException("");
     }
 
     private Map<Position, Piece> findPiecesOnPath(Position current, Position target) {

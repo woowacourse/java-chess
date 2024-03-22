@@ -15,12 +15,16 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces);
+    public abstract boolean isRuleBroken(Position current, Position target, MovePath movePath);
 
     public void checkValidMove(Position source, Position target, MovePath movePath) {
         checkDifferentPosition(source, target);
         checkNoAllyPieceAtTarget(movePath.targetPiece());
         checkNoPathPieces(movePath);
+
+        if (isRuleBroken(source, target, movePath)) {
+            throw new IllegalArgumentException("이동 규칙을 어겼습니다.");
+        }
     }
 
     private void checkDifferentPosition(Position source, Position target) {

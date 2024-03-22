@@ -15,8 +15,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
-        return current.isSameRank(target) || current.isSameFile(target);
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+        return false;
     }
+
+//    @Override
+//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+//        checkBlockingPiece(target, pieces);
+//        return current.isSameRank(target) || current.isSameFile(target);
+//    }
 }

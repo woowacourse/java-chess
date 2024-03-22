@@ -1,7 +1,6 @@
 package domain;
 
 import domain.piece.Piece;
-import java.util.Map;
 
 public class Bishop extends Piece {
 
@@ -10,13 +9,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isBishop() {
-        return true;
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+        return false;
     }
 
+//    @Override
+//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+//        checkBlockingPiece(target, pieces);
+//        return current.isDiagonal(target);
+//    }
+
     @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
-        return current.isDiagonal(target);
+    public boolean isBishop() {
+        return true;
     }
 }

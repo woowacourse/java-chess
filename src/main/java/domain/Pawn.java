@@ -15,23 +15,28 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
-
-        if (current.isSameRank(target) || isReverseMove(current, target)) {
-            return false;
-        }
-        if (current.isSameFile(target) && pieces.containsKey(target)) {
-            return false;
-        }
-        if (isInitPosition(current) && current.hasOnlyTwoRankGap(target)) {
-            return true;
-        }
-        if (current.hasOneDiagonalGap(target) && hasOpponentAtTarget(target, pieces)) {
-            return true;
-        }
-        return current.hasOneRankGap(target) && current.isSameFile(target);
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+        return false;
     }
+
+//    @Override
+//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+//        checkBlockingPiece(target, pieces);
+//
+//        if (current.isSameRank(target) || isReverseMove(current, target)) {
+//            return false;
+//        }
+//        if (current.isSameFile(target) && pieces.containsKey(target)) {
+//            return false;
+//        }
+//        if (isInitPosition(current) && current.hasOnlyTwoRankGap(target)) {
+//            return true;
+//        }
+//        if (current.hasOneDiagonalGap(target) && hasOpponentAtTarget(target, pieces)) {
+//            return true;
+//        }
+//        return current.hasOneRankGap(target) && current.isSameFile(target);
+//    }
 
     private boolean isReverseMove(Position current, Position target) {
         if (isBlack()) {

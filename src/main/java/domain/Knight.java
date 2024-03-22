@@ -15,9 +15,14 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
-        return (current.hasTwoFileGap(target) && current.hasOneRankGap(target)) ||
-                (current.hasOneFileGap(target) && current.hasTwoRankGap(target));
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+        return false;
     }
+
+//    @Override
+//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+//        checkBlockingPiece(target, pieces);
+//        return (current.hasTwoFileGap(target) && current.hasOneRankGap(target)) ||
+//                (current.hasOneFileGap(target) && current.hasTwoRankGap(target));
+//    }
 }

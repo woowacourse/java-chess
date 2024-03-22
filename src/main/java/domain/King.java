@@ -10,17 +10,22 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
+        return false;
+    }
+
+    @Override
     public boolean isKing() {
         return true;
     }
 
-    @Override
-    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-        checkBlockingPiece(target, pieces);
-        return hasOnlyOneFileGap(current, target) ||
-                hasOnlyOneRankGap(current, target) ||
-                hasOnlyOneDiagonalGap(current, target);
-    }
+//    @Override
+//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
+//        checkBlockingPiece(target, pieces);
+//        return hasOnlyOneFileGap(current, target) ||
+//                hasOnlyOneRankGap(current, target) ||
+//                hasOnlyOneDiagonalGap(current, target);
+//    }
 
     private boolean hasOnlyOneFileGap(Position current, Position target) {
         return current.hasOneFileGap(target) &&
