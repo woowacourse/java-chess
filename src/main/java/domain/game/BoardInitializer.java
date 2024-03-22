@@ -13,7 +13,7 @@ import static domain.position.File.*;
 import static domain.position.Rank.*;
 
 public class BoardInitializer {
-    private  BoardInitializer() {
+    private BoardInitializer() {
     }
 
     private static final Map<PieceType, List<Position>> pieceInitialPositions = Map.ofEntries(
