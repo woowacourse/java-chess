@@ -2,6 +2,7 @@ package chess.position;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -24,5 +25,28 @@ class RankTest {
         Assertions.assertThatThrownBy(() -> rank.createRankByDifferenceOf(difference))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("행 범위를 벗어납니다.");
+    }
+
+
+    @Test
+    @DisplayName("주어진 간격만큼 차이나는 행을 올바르게 생성한다.")
+    void createRankByDifferenceTest() {
+        // given
+        Rank rank = Rank.from(1);
+        // when
+        Rank actual = rank.createRankByDifferenceOf(5);
+        // then
+        Assertions.assertThat(actual).isEqualTo(Rank.from(6));
+    }
+
+    @Test
+    @DisplayName("행의 차이를 계산한다.")
+    void subtractTest() {
+        // given
+        Rank rank = Rank.from(1);
+        // when
+        int actual = rank.subtract(Rank.from(2));
+        // then
+        Assertions.assertThat(actual).isEqualTo(-1);
     }
 }
