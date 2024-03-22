@@ -1,10 +1,14 @@
 package chess.domain.chessBoard;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -22,7 +26,7 @@ class SpaceTest {
     @Test
     @DisplayName("피스를 움직이면 이동하려는 위치에 해당피스가 있다")
     void should_move_piece() {
-        Piece piece1 = new Pawn(Color.WHITE);
+        Piece piece1 = new Rook(Color.WHITE);
         Piece piece2 = new EmptyPiece();
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
@@ -35,7 +39,7 @@ class SpaceTest {
     @Test
     @DisplayName("피스를 움직이면 이동하려는 위치에 해당피스가 있다")
     void should_be_empty_starting_space_when_move() {
-        Piece piece1 = new Pawn(Color.WHITE);
+        Piece piece1 = new King(Color.WHITE);
         Piece piece2 = new EmptyPiece();
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
@@ -48,7 +52,7 @@ class SpaceTest {
     @Test
     @DisplayName("각 피스의 이동 규칙을 위반한 이동은 할 수 없다")
     void should_not_move_when_violate_move_rule() {
-        Piece piece1 = new Pawn(Color.BLACK);
+        Piece piece1 = new Bishop(Color.BLACK);
         Piece piece2 = new EmptyPiece();
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
@@ -69,8 +73,8 @@ class SpaceTest {
     @Test
     @DisplayName("이동할 위치에 나의 말이 있으면 이동할 수 없다")
     void should_not_move_when_target_space_has_same_color_piece() {
-        Piece piece1 = new Pawn(Color.WHITE);
-        Piece piece2 = new Pawn(Color.WHITE);
+        Piece piece1 = new WhitePawn();
+        Piece piece2 = new WhitePawn();
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
 
@@ -82,8 +86,8 @@ class SpaceTest {
     @Test
     @DisplayName("이동할 위치에 상대 말이 있고 잡을 수 있으면 이동할 수 있다")
     void should_move_when_target_space_has_other_color_piece_and_catchable() {
-        Piece piece1 = new Pawn(Color.WHITE);
-        Piece piece2 = new Pawn(Color.BLACK);
+        Piece piece1 = new WhitePawn();
+        Piece piece2 = new BlackPawn();
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.b, Rank.TWO));
 
@@ -96,7 +100,7 @@ class SpaceTest {
     @DisplayName("이동경로에 피스가 있으면 움직일 수 없다")
     void should_not_move_when_route_has_piece() {
         Piece piece1 = new Rook(Color.WHITE);
-        Piece piece2 = new Pawn(Color.BLACK);
+        Piece piece2 = new Knight(Color.BLACK);
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
         Space space3 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));

@@ -1,13 +1,14 @@
 package chess.domain.chessBoard;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,18 @@ public class PieceGenerator {
         );
     }
 
-    public static List<Piece> makePawnPieces(Color color, int amount) {
+    public static List<Piece> makeWhitePawnPieces(int amount) {
         List<Piece> pieces = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
-            pieces.add(new Pawn(color));
+            pieces.add(new WhitePawn());
+        }
+        return pieces;
+    }
+
+    public static List<Piece> makeBlackPawnPieces(int amount) {
+        List<Piece> pieces = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            pieces.add(new BlackPawn());
         }
         return pieces;
     }

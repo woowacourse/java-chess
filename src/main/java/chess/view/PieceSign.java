@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
@@ -17,7 +16,6 @@ import java.util.Arrays;
 public enum PieceSign {
 
     EMPTY(EmptyPiece.class, "."),
-    PAWN(Pawn.class, "p"),
     BLACK_PAWN(BlackPawn.class, "P"),
     WHITE_PAWN(WhitePawn.class, "p"),
     ROOK(Rook.class, "r"),

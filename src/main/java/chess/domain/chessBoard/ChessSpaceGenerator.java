@@ -26,7 +26,7 @@ public class ChessSpaceGenerator implements SpaceGenerator {
     private List<Space> makeBlackSpaces() {
         List<Space> spaces = new ArrayList<>();
         List<Piece> specialBlackPieces = PieceGenerator.makeSpecialPieces(Color.BLACK);
-        List<Piece> pawnPieces = PieceGenerator.makePawnPieces(Color.BLACK, File.values().length);
+        List<Piece> pawnPieces = PieceGenerator.makeBlackPawnPieces(File.values().length);
         for (int i = 0; i < 8; i++) {
             spaces.add(new Space(specialBlackPieces.get(i), new Position(File.of(i + 1), Rank.EIGHT)));
         }
@@ -49,7 +49,7 @@ public class ChessSpaceGenerator implements SpaceGenerator {
     private List<Space> makeWhiteSpaces() {
         List<Space> spaces = new ArrayList<>();
         List<Piece> specialWhitePieces = PieceGenerator.makeSpecialPieces(Color.WHITE);
-        List<Piece> pawnPieces = PieceGenerator.makePawnPieces(Color.WHITE, File.values().length);
+        List<Piece> pawnPieces = PieceGenerator.makeWhitePawnPieces(File.values().length);
         for (int i = 0; i < File.values().length; i++) {
             spaces.add(new Space(pawnPieces.get(i), new Position(File.of(i + 1), Rank.TWO)));
         }

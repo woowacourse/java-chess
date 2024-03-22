@@ -17,7 +17,7 @@ public class PawnTest {
     @Test
     @DisplayName("첫 이동은 두 칸 움직일 수 있다.")
     void should_move_two_space_when_first_move() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = new WhitePawn();
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
@@ -29,7 +29,7 @@ public class PawnTest {
     @Test
     @DisplayName("두번째 이동부터는 두 칸 움직일 수 없다.")
     void should_not_move_two_space_when_second_move() {
-        Piece piece = new Pawn(Color.WHITE);
+        Piece piece = new WhitePawn();
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
         Space space3 = new Space(new EmptyPiece(), new Position(File.a, Rank.FIVE));
