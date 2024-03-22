@@ -22,7 +22,7 @@ public class Empty implements Square {
     }
 
     @Override
-    public void move() {
+    public void recognizeMoved() {
     }
 
     @Override

@@ -24,9 +24,9 @@ public class ChessBoard {
         validateIsFriendly(startSquare);
         validateCanMove(startSquare, path);
 
-        startSquare.move();
         squares.put(path.getTargetPosition(), startSquare);
         squares.put(path.getStartPosition(), Empty.getInstance());
+        startSquare.recognizeMoved();
 
         currentTurn.change();
     }

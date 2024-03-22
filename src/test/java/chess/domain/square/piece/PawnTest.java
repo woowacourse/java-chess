@@ -49,7 +49,7 @@ class PawnTest {
     void blackCanNotMoveTwoStraightTest() {
         // given
         Piece piece = Pawn.createOnStart(Color.BLACK);
-        piece.move();
+        piece.recognizeMoved();
         board.put(new Position(Rank.EIGHTH, File.A), piece);
         Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
 
@@ -111,7 +111,7 @@ class PawnTest {
     void whiteCanNotMoveTwoStraightTest() {
         // given
         Piece piece = Pawn.createOnStart(Color.WHITE);
-        piece.move();
+        piece.recognizeMoved();
         board.put(new Position(Rank.SECOND, File.A), piece);
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 

@@ -61,7 +61,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move() {
+    public void recognizeMoved() {
         isMoved = true;
     }
 
