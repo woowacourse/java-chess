@@ -36,7 +36,7 @@ class InitStateTest {
         // given
         InitState initState = new InitState();
         // when, then
-        assertThatThrownBy(() -> initState.proceedTurn(() -> {}))
+        assertThatThrownBy(() -> initState.proceedTurn((color) -> {}))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("게임이 시작되지 않았습니다.");
     }
@@ -49,6 +49,6 @@ class InitStateTest {
         // when
         GameState actual = initState.terminate();
         // then
-        assertThat(actual).isInstanceOf(Terminated.class);
+        assertThat(actual).isInstanceOf(TerminatedState.class);
     }
 }

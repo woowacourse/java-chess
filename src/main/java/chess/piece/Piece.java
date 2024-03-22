@@ -63,6 +63,10 @@ public abstract class Piece {
         return this.color == color;
     }
 
+    public boolean hasOpponentColorOf(Color currentTurnColor) {
+        return color != currentTurnColor;
+    }
+
     public Color getColor() {
         return color;
     }

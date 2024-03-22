@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.piece.Color;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
 import chess.position.Position;
@@ -14,11 +15,12 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void move(Position source, Position destination) {
+    public void move(Position source, Position destination, Color currentTurnColor) {
         validatePosition(source, destination);
         validateNoPiecesBetween(source, destination);
 
         Piece piece = pieces.get(source);
+        validateTurn(piece, currentTurnColor);
         validateMovable(source, destination, piece);
         replacePiece(source, destination, piece);
     }
@@ -45,6 +47,12 @@ public class Board {
         Path path = Path.createExcludingBothEnds(source, destination);
         if (path.hasPieceOnRoute(pieces)) {
             throw new IllegalArgumentException("경로에 기물이 있습니다.");
+        }
+    }
+
+    private void validateTurn(Piece piece, Color currentTurnColor) {
+        if (piece.hasOpponentColorOf(currentTurnColor)) {
+            throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
         }
     }
 

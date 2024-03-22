@@ -1,6 +1,6 @@
 package chess.game.state;
 
-public class Terminated implements GameState {
+public class TerminatedState implements GameState {
 
     private static final String TERMINATED_ERROR_MESSAGE = "게임이 이미 종료되었습니다.";
 

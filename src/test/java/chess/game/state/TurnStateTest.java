@@ -52,7 +52,7 @@ class TurnStateTest {
             // when
             GameState actual = state.terminate();
             // then
-            assertThat(actual).isInstanceOf(Terminated.class);
+            assertThat(actual).isInstanceOf(TerminatedState.class);
         }
     }
 }

@@ -9,7 +9,7 @@ public abstract class TurnState implements GameState {
 
     @Override
     public final GameState terminate() {
-        return new Terminated();
+        return new TerminatedState();
     }
 
     @Override

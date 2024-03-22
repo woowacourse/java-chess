@@ -7,19 +7,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class TerminatedTest {
+class TerminatedStateTest {
 
     @Nested
     @DisplayName("게임이 종료됐을 때 ")
-    class OnTerminated {
+    class OnTerminatedState {
 
         @Test
         @DisplayName("진행 현황을 올바르게 반환한다.")
         void isPlayingTest() {
             // given
-            Terminated terminated = new Terminated();
+            TerminatedState terminatedState = new TerminatedState();
             // when
-            boolean actual = terminated.isPlaying();
+            boolean actual = terminatedState.isPlaying();
             // then
             assertThat(actual).isFalse();
         }
@@ -28,16 +28,16 @@ class TerminatedTest {
         @DisplayName("모든 명령은 예외를 발생한다.")
         void startTest() {
             // given
-            Terminated terminated = new Terminated();
+            TerminatedState terminatedState = new TerminatedState();
             // when, then
             assertAll(
-                () -> assertThatThrownBy(terminated::start)
+                () -> assertThatThrownBy(terminatedState::start)
                     .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("게임이 이미 종료되었습니다."),
-                () -> assertThatThrownBy(() -> terminated.proceedTurn(() -> {}))
+                () -> assertThatThrownBy(() -> terminatedState.proceedTurn((color) -> {}))
                     .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("게임이 이미 종료되었습니다."),
-                () -> assertThatThrownBy(terminated::terminate)
+                () -> assertThatThrownBy(terminatedState::terminate)
                     .isInstanceOf(UnsupportedOperationException.class)
                     .hasMessage("게임이 이미 종료되었습니다.")
             );

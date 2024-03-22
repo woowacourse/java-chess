@@ -26,7 +26,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when, then
-        assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("출발 칸에 기물이 없습니다.");
     }
@@ -44,7 +44,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when, then
-        assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("도착 칸에 자신의 기물이 있습니다.");
     }
@@ -60,7 +60,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.TWO);
         Position destination = Position.of(File.A, Rank.THREE);
         // when
-        board.move(source, destination);
+        board.move(source, destination, Color.WHITE);
         // then
         assertThat(board.pieces().get(destination)).isInstanceOf(MovedPawn.class);
     }
@@ -77,7 +77,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.TWO);
         Position destination = Position.of(File.A, Rank.THREE);
         // when, then
-        assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 경로입니다.");
     }
@@ -94,7 +94,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.EIGHT);
         // when, then
-        assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로에 기물이 있습니다.");
     }
@@ -110,7 +110,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.B, Rank.THREE);
         // when, then
-        assertThatThrownBy(() -> board.move(source, destination))
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 경로입니다.");
     }
@@ -126,7 +126,7 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when
-        board.move(source, destination);
+        board.move(source, destination, Color.WHITE);
         // then
         assertThat(board.pieces().containsKey(source)).isFalse();
         assertThat(board.pieces().get(destination)).isInstanceOf(Rook.class);
@@ -144,11 +144,27 @@ class BoardTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when
-        board.move(source, destination);
+        board.move(source, destination, Color.WHITE);
         // then
         Piece actual = board.pieces().get(destination);
         assertThat(board.pieces().containsKey(source)).isFalse();
         assertThat(actual).isInstanceOf(Rook.class);
         assertThat(actual.hasColorOf(Color.WHITE)).isTrue();
+    }
+    
+    @Test
+    @DisplayName("상대방의 말을 움직이면, 예외를 발생한다.")
+    void moveOpponentPieceTest() {
+        // given
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.BLACK));
+        Board board = new Board(pieces);
+
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.A, Rank.TWO);
+        // when, then
+        assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상대방의 말을 움직일 수 없습니다.");
     }
 }

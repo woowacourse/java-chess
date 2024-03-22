@@ -14,7 +14,7 @@ public class InitState implements GameState {
 
     @Override
     public GameState terminate() {
-        return new Terminated();
+        return new TerminatedState();
     }
 
     @Override

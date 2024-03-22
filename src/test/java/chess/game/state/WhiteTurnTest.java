@@ -13,7 +13,7 @@ class WhiteTurnTest {
         // given
         WhiteTurn whiteTurn = new WhiteTurn();
         // when
-        GameState actual = whiteTurn.proceedTurn(() -> {});
+        GameState actual = whiteTurn.proceedTurn((color) -> {});
         // then
         assertThat(actual).isInstanceOf(BlackTurn.class);
     }
