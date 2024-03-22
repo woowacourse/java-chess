@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Square;
 import chess.domain.strategy.*;
 
@@ -11,7 +12,7 @@ public enum PieceType {
     BISHOP(new BishopMoveStrategy()),
     KNIGHT(new KnightMoveStrategy()),
     PAWN(new PawnMoveStrategy()),
-    EMPTY(new PawnMoveStrategy()),
+    EMPTY(new EmptyMoveStrategy()),
     ;
 
     private final MoveStrategy moveStrategy;
@@ -20,7 +21,7 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
     }
 
-    public boolean canMove(Square source, Square destination, ColorType colorType) {
-        return moveStrategy.check(source, destination, colorType);
+    public boolean canMove(Square source, Square destination, Board board) {
+        return moveStrategy.check(source, destination, board);
     }
 }

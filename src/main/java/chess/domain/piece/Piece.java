@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.Square;
 
 public class Piece {
@@ -36,7 +37,7 @@ public class Piece {
         return !pieceType.equals(PieceType.EMPTY);
     }
 
-    public boolean canMove(Square source, Square destination) {
-        return pieceType.canMove(source, destination, colorType);
+    public boolean canMove(Square source, Square destination, Board board) {
+        return pieceType.canMove(source, destination, board);
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.ColorType;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -14,10 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PawnMoveStrategyTest {
 
     private MoveStrategy moveStrategy;
+    private Board board;
 
     @BeforeEach
     void setUp() {
         moveStrategy = new PawnMoveStrategy();
+        board = new Board();
     }
 
     @DisplayName("폰은 올바른 위치가 입력되면 이동 가능을 반환한다.")
@@ -26,10 +29,10 @@ public class PawnMoveStrategyTest {
         // given
         Square source = Square.of(File.a, Rank.THREE);
         Square destination = Square.of(File.a, Rank.FOUR);
-        ColorType colorType = ColorType.WHITE;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -41,10 +44,10 @@ public class PawnMoveStrategyTest {
         // given
         Square source = Square.of(File.a, Rank.THREE);
         Square destination = Square.of(File.c, Rank.FOUR);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();
@@ -56,10 +59,10 @@ public class PawnMoveStrategyTest {
         // given
         Square source = Square.of(File.a, Rank.THREE);
         Square destination = Square.of(File.b, Rank.FOUR);
-        ColorType colorType = ColorType.WHITE;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();

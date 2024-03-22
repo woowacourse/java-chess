@@ -1,6 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.ColorType;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -14,10 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class KingMoveStrategyTest {
 
     private MoveStrategy moveStrategy;
+    private Board board;
 
     @BeforeEach
     void setUp() {
         moveStrategy = new KingMoveStrategy();
+        board = new Board();
     }
 
     @DisplayName("킹은 수평 1칸 이동 위치가 들어오면 이동 가능을 반환한다.")
@@ -26,10 +29,10 @@ public class KingMoveStrategyTest {
         // given
         Square source = Square.of(File.e, Rank.EIGHT);
         Square destination = Square.of(File.f, Rank.EIGHT);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -41,10 +44,10 @@ public class KingMoveStrategyTest {
         // given
         Square source = Square.of(File.e, Rank.EIGHT);
         Square destination = Square.of(File.e, Rank.SEVEN);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -56,10 +59,10 @@ public class KingMoveStrategyTest {
         // given
         Square source = Square.of(File.e, Rank.EIGHT);
         Square destination = Square.of(File.d, Rank.SEVEN);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -71,10 +74,10 @@ public class KingMoveStrategyTest {
         // given
         Square source = Square.of(File.e, Rank.EIGHT);
         Square destination = Square.of(File.c, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();

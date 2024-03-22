@@ -1,6 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.ColorType;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -14,10 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class KnightMoveStrategyTest {
 
     private MoveStrategy moveStrategy;
+    private Board board;
 
     @BeforeEach
     void setUp() {
         moveStrategy = new KnightMoveStrategy();
+        board = new Board();
     }
 
     @DisplayName("나이트는 올바른 위치가 들어오면 이동 가능을 반환한다.")
@@ -26,10 +29,10 @@ class KnightMoveStrategyTest {
         // given
         Square source = Square.of(File.b, Rank.EIGHT);
         Square destination = Square.of(File.c, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -41,10 +44,10 @@ class KnightMoveStrategyTest {
         // given
         Square source = Square.of(File.b, Rank.EIGHT);
         Square destination = Square.of(File.b, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();

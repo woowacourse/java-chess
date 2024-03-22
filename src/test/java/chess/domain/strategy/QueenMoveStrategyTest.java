@@ -1,6 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.piece.ColorType;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -9,16 +10,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("퀸 움직임 전략")
 class QueenMoveStrategyTest {
 
     private MoveStrategy moveStrategy;
+    private Board board;
 
     @BeforeEach
     void setUp() {
         moveStrategy = new QueenMoveStrategy();
+        board = new Board();
     }
 
     @DisplayName("퀸은 수평 이동이 들어오면 이동 가능을 반환한다.")
@@ -27,10 +29,10 @@ class QueenMoveStrategyTest {
         // given
         Square source = Square.of(File.d, Rank.SIX);
         Square destination = Square.of(File.h, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -40,12 +42,12 @@ class QueenMoveStrategyTest {
     @Test
     void verticalMove() {
         // given
-        Square source = Square.of(File.d, Rank.EIGHT);
-        Square destination = Square.of(File.d, Rank.ONE);
-        ColorType colorType = ColorType.BLACK;
+        Square source = Square.of(File.d, Rank.SIX);
+        Square destination = Square.of(File.d, Rank.THREE);
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -55,12 +57,12 @@ class QueenMoveStrategyTest {
     @Test
     void diagonalMove() {
         // given
-        Square source = Square.of(File.d, Rank.EIGHT);
-        Square destination = Square.of(File.b, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Square source = Square.of(File.d, Rank.SIX);
+        Square destination = Square.of(File.g, Rank.THREE);
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -72,10 +74,10 @@ class QueenMoveStrategyTest {
         // given
         Square source = Square.of(File.d, Rank.EIGHT);
         Square destination = Square.of(File.c, Rank.SIX);
-        ColorType colorType = ColorType.BLACK;
+        Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, colorType);
+        boolean actual = moveStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();

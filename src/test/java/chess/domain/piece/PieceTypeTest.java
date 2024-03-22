@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
@@ -16,6 +17,7 @@ class PieceTypeTest {
 
     private PieceType type;
     private Square source;
+    private Board board;
 
     @DisplayName("폰")
     @Nested
@@ -25,6 +27,7 @@ class PieceTypeTest {
         void setUp() {
             type = PieceType.PAWN;
             source = Square.of(File.a, Rank.SEVEN);
+            board = new Board();
         }
 
         @DisplayName("폰은 한 칸 전진할 수 있다.")
@@ -32,10 +35,10 @@ class PieceTypeTest {
         void pawnCanMove() {
             // given
             Square destination = Square.of(File.a, Rank.SIX);
-            ColorType colorType = ColorType.BLACK;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -46,10 +49,10 @@ class PieceTypeTest {
         void pawnCanFirstMove() {
             // given
             Square destination = Square.of(File.a, Rank.FIVE);
-            ColorType colorType = ColorType.BLACK;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -61,10 +64,10 @@ class PieceTypeTest {
             // given
             source = Square.of(File.a, Rank.SIX);
             Square destination = Square.of(File.a, Rank.FOUR);
-            ColorType colorType = ColorType.BLACK;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isFalse();
@@ -79,6 +82,7 @@ class PieceTypeTest {
         void setUp() {
             type = PieceType.KNIGHT;
             source = Square.of(File.b, Rank.EIGHT);
+            board = new Board();
         }
 
         @DisplayName("나이트는 주어진 규칙에 따라 움직일 수 있다.")
@@ -86,10 +90,10 @@ class PieceTypeTest {
         void knightWhiteCanMove() {
             // given
             Square destination = Square.of(File.c, Rank.SIX);
-            ColorType colorType = ColorType.WHITE;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -103,18 +107,19 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.BISHOP;
-            source = Square.of(File.c, Rank.EIGHT);
+            board = new Board();
         }
 
         @DisplayName("비숍은 대각선 방향으로 움직일 수 있다.")
         @Test
         void knightWhiteCanMove() {
             // given
-            Square destination = Square.of(File.f, Rank.FIVE);
-            ColorType colorType = ColorType.WHITE;
+            source = Square.of(File.e, Rank.THREE);
+            Square destination = Square.of(File.b, Rank.SIX);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -128,18 +133,19 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.ROOK;
-            source = Square.of(File.a, Rank.EIGHT);
+            board = new Board();
         }
 
         @DisplayName("룩은 수직 방향으로 움직일 수 있다.")
         @Test
         void rookVerticalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
-            ColorType colorType = ColorType.BLACK;
+            source = Square.of(File.a, Rank.SIX);
+            Square destination = Square.of(File.a, Rank.TWO);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -149,11 +155,12 @@ class PieceTypeTest {
         @Test
         void rookHorizontalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
-            ColorType colorType = ColorType.BLACK;
+            source = Square.of(File.a, Rank.SIX);
+            Square destination = Square.of(File.h, Rank.SIX);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -167,18 +174,19 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.QUEEN;
-            source = Square.of(File.d, Rank.EIGHT);
+            board = new Board();
         }
 
         @DisplayName("퀸은 수직 방향으로 움직일 수 있다.")
         @Test
         void queenVerticalCanMove() {
             // given
-            Square destination = Square.of(File.d, Rank.FIVE);
-            ColorType colorType = ColorType.BLACK;
+            source = Square.of(File.d, Rank.SIX);
+            Square destination = Square.of(File.d, Rank.THREE);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -188,11 +196,12 @@ class PieceTypeTest {
         @Test
         void queenHorizontalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.EIGHT);
-            ColorType colorType = ColorType.BLACK;
+            source = Square.of(File.d, Rank.SIX);
+            Square destination = Square.of(File.a, Rank.SIX);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -202,11 +211,12 @@ class PieceTypeTest {
         @Test
         void queenWhiteCanMove() {
             // given
-            Square destination = Square.of(File.h, Rank.FOUR);
-            ColorType colorType = ColorType.BLACK;
+            source = Square.of(File.d, Rank.SIX);
+            Square destination = Square.of(File.g, Rank.THREE);
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -221,6 +231,7 @@ class PieceTypeTest {
         void setUp() {
             type = PieceType.KING;
             source = Square.of(File.e, Rank.EIGHT);
+            board = new Board();
         }
 
         @DisplayName("킹은 수직 1칸 이동할 수 있다.")
@@ -228,10 +239,10 @@ class PieceTypeTest {
         void kingVerticalMove() {
             // given
             Square destination = Square.of(File.e, Rank.SEVEN);
-            ColorType colorType = ColorType.BLACK;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -242,10 +253,10 @@ class PieceTypeTest {
         void kingHorizontalMove() {
             // given
             Square destination = Square.of(File.d, Rank.EIGHT);
-            ColorType colorType = ColorType.BLACK;
+            Piece destinationPiece = board.findPieceBySquare(destination);
 
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
@@ -256,10 +267,9 @@ class PieceTypeTest {
         void queenWhiteCanMove() {
             // given
             Square destination = Square.of(File.f, Rank.SEVEN);
-            ColorType colorType = ColorType.BLACK;
-
+            Piece destinationPiece = board.findPieceBySquare(destination);
             // when
-            boolean actual = type.canMove(source, destination, colorType);
+            boolean actual = type.canMove(source, destination, board);
 
             // then
             assertThat(actual).isTrue();
