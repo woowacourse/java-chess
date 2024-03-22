@@ -54,9 +54,8 @@ public class ChessBoard {
         }
         // TODO: targetSquare를 받을 필요 없이 Empty를 그대로 넣도록 바꾸고, moveWithAttack과 추상화할 수 있을지 고민하기
         startSquare.move();
-        Square targetSquare = squares.get(path.getTargetPosition());
         squares.put(path.getTargetPosition(), startSquare);
-        squares.put(path.getStartPosition(), targetSquare);
+        squares.put(path.getStartPosition(), Empty.getInstance());
         currentTurn.change();
     }
 
