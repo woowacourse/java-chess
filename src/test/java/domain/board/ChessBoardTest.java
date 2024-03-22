@@ -1,8 +1,5 @@
 package domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -10,9 +7,12 @@ import domain.piece.Queen;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import java.util.Map;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
     @Test
@@ -37,8 +37,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(pieceMap);
 
         board.move(resource, target);
-        assertThat(board).extracting("board")
-                .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
+        assertThat(board.getBoard())
                 .containsEntry(target, piece)
                 .doesNotContainKey(resource);
     }
@@ -52,8 +51,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(pieceMap);
 
         board.move(resource, target);
-        assertThat(board).extracting("board")
-                .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
+        assertThat(board.getBoard())
                 .containsEntry(target, piece)
                 .doesNotContainKey(resource);
     }
