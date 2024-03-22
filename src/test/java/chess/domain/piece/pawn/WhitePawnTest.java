@@ -30,10 +30,10 @@ class WhitePawnTest {
 
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whitePawn.findPathTo(new Position(2, 2), new Position(1, 2)))
+                        .isThrownBy(() -> whitePawn.findPath(new Position(2, 2), new Position(1, 2)))
                         .withMessage("이동할 수 없습니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whitePawn.findPathTo(new Position(2, 2), new Position(3, 2)))
+                        .isThrownBy(() -> whitePawn.findPath(new Position(2, 2), new Position(3, 2)))
                         .withMessage("이동할 수 없습니다.")
         );
     }
@@ -45,7 +45,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 4);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findPathTo(new Position(2, 2), destination))
+                .isThrownBy(() -> whitePawn.findPath(new Position(2, 2), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -58,7 +58,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 1);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findPathTo(new Position(2, 2), destination))
+                .isThrownBy(() -> whitePawn.findPath(new Position(2, 2), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -69,7 +69,7 @@ class WhitePawnTest {
         Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whitePawn.findPathTo(new Position(2, 2), destination))
+                .isThrownBy(() -> whitePawn.findPath(new Position(2, 2), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

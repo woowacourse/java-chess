@@ -15,8 +15,8 @@ class BishopTest {
     @DisplayName("대각선 이동시 중간경로를 찾는다.")
     void findPathToDiagonal() {
         Bishop bishop = new Bishop(Color.WHITE);
-        Set<Position> movablePositions = bishop.findPathTo(new Position(1, 1), new Position(4, 4));
-        assertThat(movablePositions)
+        Set<Position> path = bishop.findPath(new Position(1, 1), new Position(4, 4));
+        assertThat(path)
                 .containsExactlyInAnyOrder(new Position(2, 2), new Position(3, 3));
     }
 
@@ -25,7 +25,7 @@ class BishopTest {
     void findPathToInvalidDestination() {
         Bishop bishop = new Bishop(Color.WHITE);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> bishop.findPathTo(new Position(1, 1), new Position(2, 1)))
+                .isThrownBy(() -> bishop.findPath(new Position(1, 1), new Position(2, 1)))
                 .withMessage("이동할 수 없습니다.");
     }
 }

@@ -18,7 +18,7 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public Set<Position> findPathTo(Position thisPosition, Position destination) {
+    public Set<Position> findPath(Position thisPosition, Position destination) {
         Set<Position> movable = thisPosition.findMovablePositions(directions);
 
         if (!movable.contains(destination)) {

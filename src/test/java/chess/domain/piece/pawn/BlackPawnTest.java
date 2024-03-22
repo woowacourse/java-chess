@@ -30,7 +30,7 @@ class BlackPawnTest {
         Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> blackPawn.findPathTo(new Position(2, 7), destination))
+                .isThrownBy(() -> blackPawn.findPath(new Position(2, 7), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -41,7 +41,7 @@ class BlackPawnTest {
         Position destination = new Position(2, 8);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> blackPawn.findPathTo(new Position(2, 7), destination))
+                .isThrownBy(() -> blackPawn.findPath(new Position(2, 7), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

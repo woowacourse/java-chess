@@ -17,7 +17,7 @@ public abstract class SlidingPiece extends Piece {
         this.directions = directions;
     }
 
-    public Set<Position> findPathTo(Position thisPosition, Position destination) {
+    public Set<Position> findPath(Position thisPosition, Position destination) {
         Direction direction = thisPosition.findDirectionTo(destination);
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");

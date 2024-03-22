@@ -29,7 +29,7 @@ class BlackFirstPawnTest {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn();
         Position destination = new Position(2, 5);
 
-        assertThat(blackFirstPawn.findPathTo(new Position(2, 7), destination)).containsExactly(new Position(2, 6));
+        assertThat(blackFirstPawn.findPath(new Position(2, 7), destination)).containsExactly(new Position(2, 6));
     }
 
 
@@ -40,10 +40,10 @@ class BlackFirstPawnTest {
 
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> blackFirstPawn.findPathTo(new Position(2, 7), new Position(1, 7)))
+                        .isThrownBy(() -> blackFirstPawn.findPath(new Position(2, 7), new Position(1, 7)))
                         .withMessage("이동할 수 없습니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> blackFirstPawn.findPathTo(new Position(2, 7), new Position(3, 7)))
+                        .isThrownBy(() -> blackFirstPawn.findPath(new Position(2, 7), new Position(3, 7)))
                         .withMessage("이동할 수 없습니다.")
         );
     }
@@ -54,7 +54,7 @@ class BlackFirstPawnTest {
         Position destination = new Position(2, 1);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> blackFirstPawn.findPathTo(new Position(2, 7), destination))
+                .isThrownBy(() -> blackFirstPawn.findPath(new Position(2, 7), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 

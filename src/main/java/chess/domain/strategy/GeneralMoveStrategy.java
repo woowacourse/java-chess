@@ -18,7 +18,7 @@ public class GeneralMoveStrategy extends MoveStrategy {
         Piece currentPiece = board.get(from);
         checkTurnOf(currentPiece, turnColor);
         Piece destinationPiece = board.get(to);
-        Set<Position> pathToDestination = currentPiece.findPathTo(from, to);
+        Set<Position> pathToDestination = currentPiece.findPath(from, to);
         validateMovable(turnColor, pathToDestination, destinationPiece);
         updateBoard(from, to, currentPiece);
     }

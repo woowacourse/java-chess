@@ -15,7 +15,7 @@ class RookTest {
     @DisplayName("오른쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsRight() {
         Rook rook = new Rook(Color.WHITE);
-        Set<Position> movablePositions = rook.findPathTo(new Position(1, 1), new Position(4, 1));
+        Set<Position> movablePositions = rook.findPath(new Position(1, 1), new Position(4, 1));
         assertThat(movablePositions)
                 .containsExactlyInAnyOrder(new Position(2, 1), new Position(3, 1));
     }
@@ -24,7 +24,7 @@ class RookTest {
     @DisplayName("위쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsUp() {
         Rook rook = new Rook(Color.WHITE);
-        Set<Position> movablePositions = rook.findPathTo(new Position(1, 1), new Position(1, 4));
+        Set<Position> movablePositions = rook.findPath(new Position(1, 1), new Position(1, 4));
         assertThat(movablePositions)
                 .containsExactlyInAnyOrder(new Position(1, 2), new Position(1, 3));
     }
@@ -34,7 +34,7 @@ class RookTest {
     void findPathToInvalidDestination() {
         Rook rook = new Rook(Color.WHITE);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> rook.findPathTo(new Position(1, 1), new Position(2, 2)))
+                .isThrownBy(() -> rook.findPath(new Position(1, 1), new Position(2, 2)))
                 .withMessage("이동할 수 없습니다.");
     }
 }

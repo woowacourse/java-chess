@@ -13,7 +13,7 @@ class BlankTest {
     void moveBlank() {
         Blank blank = new Blank();
 
-        assertThatThrownBy(() -> blank.findPathTo(new Position(1, 1), new Position(1, 2)))
+        assertThatThrownBy(() -> blank.findPath(new Position(1, 1), new Position(1, 2)))
                 .hasMessage("해당 위치에 말이 없습니다.");
     }
 }

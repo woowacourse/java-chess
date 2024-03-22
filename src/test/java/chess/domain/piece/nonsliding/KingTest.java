@@ -14,12 +14,12 @@ class KingTest {
 
     @Test
     @DisplayName("킹은 이동 가능한 위치인 경우 중간 경로가 없으므로 빈 값을 반환한다.")
-    void findPathTo() {
+    void findPath() {
         King king = new King(Color.WHITE);
         Position departure = new Position(1, 1);
         Position destination = new Position(1, 2);
 
-        assertThat(king.findPathTo(departure, destination)).hasSize(0);
+        assertThat(king.findPath(departure, destination)).hasSize(0);
     }
 
     @Test
@@ -29,7 +29,7 @@ class KingTest {
         Position destination = new Position(1, 3);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> king.findPathTo(new Position(1, 1), destination))
+                .isThrownBy(() -> king.findPath(new Position(1, 1), destination))
                 .withMessage("이동할 수 없습니다.");
     }
 
