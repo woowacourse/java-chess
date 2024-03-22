@@ -1,27 +1,28 @@
 package chess.domain.position;
 
-import chess.view.FileSymbol;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum File {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+    A(1, "a"),
+    B(2, "b"),
+    C(3, "c"),
+    D(4, "d"),
+    E(5, "e"),
+    F(6, "f"),
+    G(7, "g"),
+    H(8, "h");
 
     private final int file;
+    private final String fileSymbol;
 
-    File(int file) {
+    File(int file, String fileSymbol) {
         this.file = file;
+        this.fileSymbol = fileSymbol;
     }
 
-    public static File convertToFile(FileSymbol fileSymbol) {
-        return Arrays.stream(File.values()).filter(start -> start.name().equals(fileSymbol.name()))
+    public static File convertToFile(String fileSymbol) {
+        return Arrays.stream(File.values()).filter(start -> start.fileSymbol.equals(fileSymbol))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("올바르지 않은 file 값입니다."));
     }

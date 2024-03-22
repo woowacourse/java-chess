@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.domain.piece.Color;
-import chess.view.FileSymbol;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class Position {
         String fileValue = positionSymbol.substring(0, 1);
         int rankValue = convertToRankValue(positionSymbol.substring(1, 2));
 
-        File file = File.convertToFile(FileSymbol.convertToFileSymbol(fileValue));
+        File file = File.convertToFile(fileValue);
         Rank rank = Rank.convertToRank(rankValue);
 
         return new Position(file, rank);
