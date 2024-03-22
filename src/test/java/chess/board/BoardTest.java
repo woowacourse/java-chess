@@ -40,6 +40,7 @@ class BoardTest {
                 Position.of(File.A, Rank.TWO), new Rook(Color.WHITE)
         );
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when, then
@@ -55,6 +56,7 @@ class BoardTest {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.of(File.A, Rank.TWO), new InitPawn(Color.WHITE));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.TWO);
         Position destination = Position.of(File.A, Rank.THREE);
         // when
@@ -71,6 +73,7 @@ class BoardTest {
         pieces.put(Position.of(File.A, Rank.TWO), new InitPawn(Color.WHITE));
         pieces.put(Position.of(File.A, Rank.THREE), new MovedPawn(Color.BLACK));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.TWO);
         Position destination = Position.of(File.A, Rank.THREE);
         // when, then
@@ -87,6 +90,7 @@ class BoardTest {
         pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         pieces.put(Position.of(File.A, Rank.TWO), new Rook(Color.WHITE));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.EIGHT);
         // when, then
@@ -102,6 +106,7 @@ class BoardTest {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.B, Rank.THREE);
         // when, then
@@ -117,6 +122,7 @@ class BoardTest {
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when
@@ -134,6 +140,7 @@ class BoardTest {
         pieces.put(Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
         pieces.put(Position.of(File.A, Rank.TWO), new Rook(Color.BLACK));
         Board board = new Board(pieces);
+
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.TWO);
         // when
