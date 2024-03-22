@@ -14,15 +14,19 @@ public class Piece {
     }
 
     public boolean isSameType(Type type) {
-        return this.type == type;
+        return this.type.isSame(type);
     }
 
     public boolean isWhite() {
-        return color == Color.WHITE;
+        return color.isWhite();
     }
 
     private boolean isBlack() {
-        return color == Color.BLACK;
+        return color.isBlack();
+    }
+
+    public boolean isDifferentColor(Piece targetPiece) {
+        return color != targetPiece.color;
     }
 
     public boolean canMove(Position source, Position target) {
@@ -30,10 +34,6 @@ public class Piece {
             return source.isForwardStraight(target, true) || source.canAttackDiagonal(target, true);
         }
         return type.canMove(source, target);
-    }
-
-    public boolean isDifferentColor(Piece targetPiece) {
-        return color != targetPiece.color;
     }
 
     @Override

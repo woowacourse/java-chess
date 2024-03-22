@@ -23,4 +23,8 @@ public enum Type {
     public boolean canMove(Position source, Position target) {
         return tactic.test(source, target);
     }
+
+    public boolean isSame(Type type) {
+        return this == type;
+    }
 }
