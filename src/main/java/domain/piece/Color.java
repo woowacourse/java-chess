@@ -13,13 +13,13 @@ public enum Color {
         return this == NEUTRALITY;
     }
 
-    public Color opposite() {
+    public boolean isOppositeColor(Color other) {
         if (this == WHITE) {
-            return BLACK;
+            return other == BLACK;
         }
         if (this == BLACK) {
-            return WHITE;
+            return other == WHITE;
         }
-        return NEUTRALITY;
+        return false;
     }
 }

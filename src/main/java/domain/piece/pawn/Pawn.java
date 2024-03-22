@@ -64,7 +64,7 @@ public abstract class Pawn implements Piece {
     private void validateDiagonalDirection(Position source, Position target, Piece other) {
         int moveCount = source.calculateDistance(target);
         validateDefaultMoveCount(moveCount);
-        if (this.color().opposite() != other.color()) {
+        if (!color().isOppositeColor(other.color())) {
             throw new IllegalArgumentException("대각선 방향으로 이동은 상대 기물이 있을 때만 가능합니다.");
         }
     }
