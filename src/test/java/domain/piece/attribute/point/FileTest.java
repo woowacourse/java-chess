@@ -24,10 +24,12 @@ class FileTest {
                 Arguments.of(File.H, 'h')
         );
     }
+
     @ParameterizedTest
     @MethodSource("maskingValues")
     @DisplayName("파일은 가지고 있는 값에 따라 생성 인스턴스가 바뀐다.")
-    void generate_different_instance_from_character(File file,char text) {
-        Assertions.assertThat(File.from(text)).isEqualTo(file);
+    void generate_different_instance_from_character(final File file, final char text) {
+        Assertions.assertThat(File.from(text))
+                  .isEqualTo(file);
     }
 }

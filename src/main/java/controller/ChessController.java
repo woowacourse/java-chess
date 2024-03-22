@@ -12,7 +12,7 @@ public class ChessController {
     public void start() {
         ChessBoard chessBoard = null;
         while (true) {
-            ChessCommand chessCommand = InputView.inputChessCommand();
+            final ChessCommand chessCommand = InputView.inputChessCommand();
             if (chessCommand == ChessCommand.END) {
                 break;
             }
@@ -26,7 +26,7 @@ public class ChessController {
         }
     }
 
-    private void pieceMove(ChessBoard chessBoard) {
+    private void pieceMove(final ChessBoard chessBoard) {
         final var source = InputView.inputChessPoint();
         final var destination = InputView.inputChessPoint();
         chessBoard.move(new RouteDto(source, destination));

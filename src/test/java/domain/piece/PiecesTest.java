@@ -253,6 +253,8 @@ class PiecesTest {
         assertThat(result).isFalse();
     }
 
+
+
     @Test
     @DisplayName("기물을 해당 좌표로 이동시킨다.")
     void move_piece_to_point() {

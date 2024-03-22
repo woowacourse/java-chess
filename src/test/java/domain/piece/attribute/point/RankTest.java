@@ -30,7 +30,7 @@ class RankTest {
     @ParameterizedTest
     @MethodSource("maskingValues")
     @DisplayName("랭크는 가지고 있는 값에 따라 생성 인스턴스가 바뀐다.")
-    void generate_different_instance_from_integer(Rank rank, int number) {
+    void generate_different_instance_from_integer(final Rank rank, final int number) {
         Assertions.assertThat(Rank.from(number)).isEqualTo(rank);
     }
 

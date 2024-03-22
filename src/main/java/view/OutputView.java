@@ -13,7 +13,7 @@ public class OutputView {
         }
     }
 
-    private static void printHorizontalLine(final BoardDto boardDto, int vertical) {
+    private static void printHorizontalLine(final BoardDto boardDto, final int vertical) {
         final StringBuilder sb = new StringBuilder();
         for (int horizontal = 0; horizontal < BoardDto.HORIZONTAL_END_INDEX; horizontal++) {
             sb.append(boardDto.getWithVerticalAndHorizontal(vertical, horizontal));

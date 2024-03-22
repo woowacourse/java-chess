@@ -22,6 +22,7 @@ public class Pieces {
         if (!piece.canMove(endPoint)) {
             return false;
         }
+
         return switch (piece.getStatus()) {
             case BISHOP, ROOK, QUEEN -> !(hasAnyPiece(piece.getPoint(), endPoint) && !isFriend(piece, endPoint));
             case KING, KNIGHT -> !isFriend(piece, endPoint);
@@ -42,7 +43,7 @@ public class Pieces {
     }
 
     public Map<Point, Piece> toMap() {
-        Map<Point, Piece> map = new HashMap<>();
+        final Map<Point, Piece> map = new HashMap<>();
 
         for (final Piece piece : value) {
             map.put(piece.getPoint(), piece);
@@ -50,16 +51,16 @@ public class Pieces {
         return map;
     }
 
-    private boolean isFriend(Piece piece, Point point) {
-        Optional<Piece> optionalPiece = findPieceWithPoint(point);
+    private boolean isFriend(final Piece piece, final Point point) {
+        final Optional<Piece> optionalPiece = findPieceWithPoint(point);
         if (optionalPiece.isEmpty()) {
             return false;
         }
-        Piece toPiece = optionalPiece.get();
+        final Piece toPiece = optionalPiece.get();
         return piece.sameColor(toPiece);
     }
 
-    private boolean hasAnyPiece(Point startPoint, Point endPoint) {
+    private boolean hasAnyPiece(final Point startPoint, final Point endPoint) {
         final var list = startPoint.toIndex()
                                    .findMovePath(startPoint.calculate(endPoint), endPoint.toIndex());
 
@@ -69,7 +70,7 @@ public class Pieces {
     }
 
 
-    private boolean isInPiece(Point endPoint) {
+    private boolean isInPiece(final Point endPoint) {
         return this.findPieceWithPoint(endPoint)
                    .isPresent();
     }

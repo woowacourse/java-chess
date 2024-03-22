@@ -12,8 +12,8 @@ public enum ChessCommand {
         this.commandText = commandText;
     }
 
-    public static ChessCommand from(final String commandText){
-        for (ChessCommand value : values()) {
+    public static ChessCommand from(final String commandText) {
+        for (final ChessCommand value : values()) {
             if (value.commandText.equals(commandText)) {
                 return value;
             }

@@ -9,7 +9,7 @@ public enum File {
     F('f'),
     G('g'),
     H('h');
-    private char value;
+    private final char value;
 
     public static boolean isInBoundary(final int index) {
         return index >= 0 && index < values().length;

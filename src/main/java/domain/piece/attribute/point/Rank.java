@@ -9,7 +9,7 @@ public enum Rank {
     SIX(6),
     SEVEN(7),
     EIGHT(8);
-    private int value;
+    private final int value;
 
     Rank(final int value) {
         this.value = value;

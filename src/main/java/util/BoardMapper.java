@@ -20,7 +20,7 @@ public class BoardMapper {
     }
 
     private static Map<PointDto, String> convertMap(final Map<Point, Piece> chessMap) {
-        Map<PointDto, String> convertedMap = new HashMap<>();
+        final Map<PointDto, String> convertedMap = new HashMap<>();
         for (final var entry : chessMap.entrySet()) {
             convertedMap.put(convertPoint(entry.getKey()), convertPiece(entry.getValue()));
         }

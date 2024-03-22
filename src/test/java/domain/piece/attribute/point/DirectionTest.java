@@ -32,7 +32,7 @@ class DirectionTest {
     @ParameterizedTest(name = "{0} 방향이면 {1} 포인트가 {2} 로 이동한다.")
     @MethodSource("maskingParam")
     @DisplayName("방향에 따라 이동한다.")
-    void move_direction(Direction direction, Index actualPoint, Index expectedPoint) {
+    void move_direction(final Direction direction, final Index actualPoint, final Index expectedPoint) {
         assertThat(direction.move(actualPoint)).isEqualTo(expectedPoint);
     }
 
@@ -40,14 +40,14 @@ class DirectionTest {
     @DisplayName("방향이 세로 방향(위,아래) 방향이면 참을 반환 한다.")
     void true_if_direction_is_up_or_down() {
 
-        Set<Direction> set = EnumSet.of(Direction.UP, Direction.DOWN);
+        final Set<Direction> set = EnumSet.of(Direction.UP, Direction.DOWN);
         set.forEach(direction -> assertThat(direction.isStraight()).isTrue());
     }
 
     @Test
     @DisplayName("그 외의 방향이면 거짓을 반환 한다.")
     void false_if_direction_otherwise() {
-        Set<Direction> set = EnumSet.allOf(Direction.class);
+        final Set<Direction> set = EnumSet.allOf(Direction.class);
         set.remove(Direction.UP);
         set.remove(Direction.DOWN);
 

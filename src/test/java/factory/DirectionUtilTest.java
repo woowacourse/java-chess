@@ -15,10 +15,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Up 방향인지 판단한다")
     void select_up_direction_by_points_position() {
-        Point point1 = new Point(File.A, Rank.ONE);
-        Point point2 = new Point(File.A, Rank.TWO);
+        final Point point1 = new Point(File.A, Rank.ONE);
+        final Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP);
     }
@@ -27,10 +27,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Down 방향인지 판단한다")
     void select_down_direction_by_points_position() {
-        Point point1 = new Point(File.A, Rank.TWO);
-        Point point2 = new Point(File.A, Rank.ONE);
+        final Point point1 = new Point(File.A, Rank.TWO);
+        final Point point2 = new Point(File.A, Rank.ONE);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN);
     }
@@ -38,10 +38,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Left 방향인지 판단한다")
     void select_left_direction_by_points_position() {
-        Point point1 = new Point(File.B, Rank.TWO);
-        Point point2 = new Point(File.A, Rank.TWO);
+        final Point point1 = new Point(File.B, Rank.TWO);
+        final Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.LEFT);
     }
@@ -49,10 +49,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Right 방향인지 판단한다")
     void select_right_direction_by_points_position() {
-        Point point1 = new Point(File.A, Rank.TWO);
-        Point point2 = new Point(File.C, Rank.TWO);
+        final Point point1 = new Point(File.A, Rank.TWO);
+        final Point point2 = new Point(File.C, Rank.TWO);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.RIGHT);
     }
@@ -60,10 +60,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Up_right 방향인지 판단한다")
     void select_up_right_direction_by_points_position() {
-        Point point1 = new Point(File.A, Rank.TWO);
-        Point point2 = new Point(File.D, Rank.FIVE);
+        final Point point1 = new Point(File.A, Rank.TWO);
+        final Point point2 = new Point(File.D, Rank.FIVE);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP_RIGHT);
     }
@@ -71,10 +71,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Up_left 방향인지 판단한다")
     void select_up_left_direction_by_points_position() {
-        Point point1 = new Point(File.C, Rank.TWO);
-        Point point2 = new Point(File.A, Rank.FOUR);
+        final Point point1 = new Point(File.C, Rank.TWO);
+        final Point point2 = new Point(File.A, Rank.FOUR);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.UP_LEFT);
     }
@@ -82,10 +82,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Down_right 방향인지 판단한다")
     void select_down_right_direction_by_points_position() {
-        Point point1 = new Point(File.A, Rank.FOUR);
-        Point point2 = new Point(File.C, Rank.TWO);
+        final Point point1 = new Point(File.A, Rank.FOUR);
+        final Point point2 = new Point(File.C, Rank.TWO);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN_RIGHT);
     }
@@ -93,10 +93,10 @@ class DirectionUtilTest {
     @Test
     @DisplayName("두 좌표 위치를 토대로 Down_left 방향인지 판단한다")
     void select_down_left_direction_by_points_position() {
-        Point point1 = new Point(File.C, Rank.FOUR);
-        Point point2 = new Point(File.A, Rank.TWO);
+        final Point point1 = new Point(File.C, Rank.FOUR);
+        final Point point2 = new Point(File.A, Rank.TWO);
 
-        Direction direction = DirectionUtil.determineDirection(point1, point2);
+        final Direction direction = DirectionUtil.determineDirection(point1, point2);
 
         assertThat(direction).isEqualTo(Direction.DOWN_LEFT);
     }
@@ -104,8 +104,8 @@ class DirectionUtilTest {
     @Test
     @DisplayName("위 경우를 모두 만족하지 않으면 예외를 발생한다.")
     void throw_exception_when_not_all_condition_satisfy() {
-        Point point1 = new Point(File.A, Rank.ONE);
-        Point point2 = new Point(File.F, Rank.SEVEN);
+        final Point point1 = new Point(File.A, Rank.ONE);
+        final Point point2 = new Point(File.F, Rank.SEVEN);
 
         assertThatThrownBy(() -> DirectionUtil.determineDirection(point1, point2))
                 .isInstanceOf(IllegalArgumentException.class);

@@ -11,12 +11,12 @@ import java.util.List;
 import static domain.piece.attribute.point.Direction.*;
 
 public class Pawn extends Piece {
-    private static List<Direction> blackList = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
-    private static List<Direction> whiteList = List.of(UP, UP_LEFT, UP_RIGHT);
+    private static final List<Direction> blackList = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+    private static final List<Direction> whiteList = List.of(UP, UP_LEFT, UP_RIGHT);
     private static final int DOUBLE_COUNT = 2;
     private static final int SINGLE_COUNT = 1;
 
-    private boolean flag = false;
+    private final boolean flag = false;
 
     public Pawn(final Point point, final Color color) {
         super(point, color);
@@ -47,7 +47,7 @@ public class Pawn extends Piece {
 
     private boolean doubleCase(final Point point, final Direction direction) {
         if (specialCase(direction)) {
-            Index index = this.point.toIndex();
+            final Index index = this.point.toIndex();
             return Point.fromIndex(index.move(direction, DOUBLE_COUNT))
                         .equals(point);
         }

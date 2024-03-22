@@ -29,7 +29,7 @@ class ChessBoardTest {
 
         final var point2 = new Point(File.F, Rank.ONE);
         final var color2 = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point1, color1), new PieceImpl(point2, color2));
+        final List<Piece> pieceList = List.of(new PieceImpl(point1, color1), new PieceImpl(point2, color2));
         final var pieces = new Pieces(pieceList);
 
         final var sut = new ChessBoard(pieces);
@@ -42,7 +42,7 @@ class ChessBoardTest {
     void find_piece_with_point() {
         final var point = new Point(File.F, Rank.ONE);
         final var color = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point, color));
+        final List<Piece> pieceList = List.of(new PieceImpl(point, color));
         final var pieces = new Pieces(pieceList);
         final var sut = new ChessBoard(pieces);
 
@@ -56,7 +56,7 @@ class ChessBoardTest {
     void throw_exception_when_not_exist_point() {
         final var point = new Point(File.F, Rank.ONE);
         final var color = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point, color));
+        final List<Piece> pieceList = List.of(new PieceImpl(point, color));
         final var pieces = new Pieces(pieceList);
         final var sut = new ChessBoard(pieces);
         final var notExistedPoint = new Point(File.D, Rank.FOUR);
@@ -77,12 +77,12 @@ class ChessBoardTest {
                                 .toList();
 
 
-        List<PieceStatus> pieceList = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
-        List<PieceStatus> pawnList = IntStream.range(0, 8)
-                                              .mapToObj(it -> PAWN)
-                                              .toList();
+        final List<PieceStatus> pieceList = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
+        final List<PieceStatus> pawnList = IntStream.range(0, 8)
+                                                    .mapToObj(it -> PAWN)
+                                                    .toList();
 
-        List<List<PieceStatus>> expected = List.of(pieceList, pawnList, pawnList, pieceList);
+        final List<List<PieceStatus>> expected = List.of(pieceList, pawnList, pawnList, pieceList);
         assertThat(result).isEqualTo(expected);
     }
 

@@ -34,7 +34,7 @@ class PointTest {
     @ParameterizedTest
     @ValueSource(strings = {"b22", "c", "b3c4", ""})
     @DisplayName("2글자가 아닌 문자열을 통해 포인트를 만들 시 예외를 발생시킨다.")
-    void throw_exception_when_string_length_is_not_two(String invalidValue) {
+    void throw_exception_when_string_length_is_not_two(final String invalidValue) {
         assertThatThrownBy(() -> Point.from(invalidValue))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -42,7 +42,7 @@ class PointTest {
     @ParameterizedTest
     @ValueSource(strings = {"z3", "i9", "i1", "k0"})
     @DisplayName("파일 문자가 a~h를 벗어나거나 , 랭크 문자가 1~8 을 벗어나면 예외를 발생시킨다.")
-    void throw_exception_when_file_or_rank_char_out_of_range(String invalidValue) {
+    void throw_exception_when_file_or_rank_char_out_of_range(final String invalidValue) {
         assertThatThrownBy(() -> Point.from(invalidValue))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -50,7 +50,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 자신의 인덱스를 알려준다.")
     void get_index_by_point() {
-        Point point = Point.from("e5");
+        final Point point = Point.from("e5");
 
         final var sut = point.toIndex();
 

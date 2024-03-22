@@ -11,17 +11,16 @@ public enum Direction {
     DOWN_LEFT(index -> new Index(index.prevVertical(), index.prevHorizontal())),
     LEFT(index -> new Index(index.vertical(), index.prevHorizontal())),
     UP_LEFT(index -> new Index(index.nextVertical(), index.prevHorizontal()));
-    private UnaryOperator<Index> function;
+    private final UnaryOperator<Index> function;
 
     Direction(final UnaryOperator<Index> function) {
         this.function = function;
     }
 
-    public Index move(Index index) {
+    public Index move(final Index index) {
         return function.apply(index);
     }
 
-    // TODO : PAWN 에서 사용하기 위함 + 함수명이 Straight 일시 왼쪽 오른쪽 선도 생각 가능
     public boolean isStraight() {
         return this == UP || this == DOWN;
     }
