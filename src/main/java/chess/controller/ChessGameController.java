@@ -1,14 +1,12 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
 import chess.domain.Color;
-import chess.domain.Position;
 import chess.view.Commend;
 import chess.view.CommendDto;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessGameController {
 
@@ -19,7 +17,7 @@ public class ChessGameController {
 
     private void process() {
         boolean isRunning = true;
-        ChessGame chessGame = new ChessGame(new Board());
+        ChessGame chessGame = new ChessGame(BoardInitializer.initialize());
         Color turnColor = Color.BLACK;
         while (isRunning) {
             isRunning = processGame(chessGame, turnColor);

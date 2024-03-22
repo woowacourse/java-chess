@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 class BoardTest {
 
     @Test
-    @DisplayName("보드 생성 시 32개의 기물이 초기화된다.")
+    @DisplayName("보드 생성기로 보드 생성 시 32개의 기물이 초기화된다.")
     void printMap() {
-        Board board = new Board();
+        Board board = BoardInitializer.initialize();
 
         Map<Position, Piece> boardMap = board.getBoard();
 

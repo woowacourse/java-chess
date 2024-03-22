@@ -9,51 +9,14 @@ public class Board {
 
     public Board() {
         this.board = new HashMap<>();
-        initialize();
     }
 
     public Board(Map<Position, Piece> board) {
         this.board = board;
     }
 
-    private void initialize() {
-        initializeBlackTeam();
-        initializeWhiteTeam();
-    }
-
-    private void initializeBlackTeam() {
-        initializePawn(Row.RANK7, Color.BLACK);
-        initializeHighValuePiece(Row.RANK8, Color.BLACK);
-    }
-
-    private void initializeWhiteTeam() {
-        initializePawn(Row.RANK2, Color.WHITE);
-        initializeHighValuePiece(Row.RANK1, Color.WHITE);
-    }
-
-    private void initializePawn(Row row, Color color) {
-        for (Column column : Column.values()) {
-            Position position = new Position(row, column);
-            if (color == Color.WHITE) {
-                board.put(position, new Piece(PieceType.WHITE_PAWN, color));
-                continue;
-            }
-            board.put(position, new Piece(PieceType.BLACK_PAWN, color));
-        }
-    }
-
-    private void initializeHighValuePiece(Row row, Color color) {
-        board.put(new Position(row, Column.A), new Piece(PieceType.ROOK, color));
-        board.put(new Position(row, Column.H), new Piece(PieceType.ROOK, color));
-
-        board.put(new Position(row, Column.B), new Piece(PieceType.KNIGHT, color));
-        board.put(new Position(row, Column.G), new Piece(PieceType.KNIGHT, color));
-
-        board.put(new Position(row, Column.C), new Piece(PieceType.BISHOP, color));
-        board.put(new Position(row, Column.F), new Piece(PieceType.BISHOP, color));
-
-        board.put(new Position(row, Column.D), new Piece(PieceType.QUEEN, color));
-        board.put(new Position(row, Column.E), new Piece(PieceType.KING, color));
+    public void putPiece(Position position, Piece piece) {
+        board.put(position, piece);
     }
 
     public void movePiece(Position from, Position to) {
