@@ -53,8 +53,7 @@ public class Pawn extends Piece {
             attackChessVectors = WHITE_ATTACK_VECTORS;
         }
 
-        return attackChessVectors.stream()
-                .anyMatch(attackVector -> attackVector.equals(chessVector));
+        return attackChessVectors.contains(chessVector);
     }
 
     @Override

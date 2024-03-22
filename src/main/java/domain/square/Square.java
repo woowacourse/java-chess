@@ -19,7 +19,7 @@ public class Square {
 
     public static Square from(final String input) {
         final String file = String.valueOf(input.charAt(FILE_INDEX));
-        final String rank = String.valueOf(input.charAt(RANK_INDEX));
+        final int rank = input.charAt(RANK_INDEX) - '0';
 
         return new Square(Rank.from(rank), File.from(file));
     }

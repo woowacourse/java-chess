@@ -89,11 +89,11 @@ public class ChessBoard {
 
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
         final Piece targetPiece = pieceSquares.get(target);
-        if (targetPiece.isSameTeam(sourcePiece)) {
-            throw new IllegalArgumentException("같은 팀을 공격할 수 없습니다.");
-        }
         if (sourcePiece.canNotAttack(source, target)) {
             throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
+        }
+        if (targetPiece.isSameTeam(sourcePiece)) {
+            throw new IllegalArgumentException("같은 팀을 공격할 수 없습니다.");
         }
     }
 

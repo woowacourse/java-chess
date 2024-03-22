@@ -43,7 +43,6 @@ public class ChessController {
             outputView.printError(e.getMessage());
             play(chessBoard);
         }
-
     }
 
     private ChessCommand readMoveCommand() {

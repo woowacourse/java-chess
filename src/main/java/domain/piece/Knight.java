@@ -21,8 +21,7 @@ public class Knight extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        return CHESS_VECTORS.stream()
-                .anyMatch(vector -> vector.equals(chessVector));
+        return CHESS_VECTORS.contains(chessVector);
     }
 
     @Override

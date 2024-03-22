@@ -5,7 +5,7 @@ import domain.piece.*;
 
 import java.util.Arrays;
 
-public enum PieceTypeFormat {
+public enum PieceFormat {
     BLACK_PAWN("P", new Pawn(Team.BLACK)),
     BLACK_KNIGHT("N", new Knight(Team.BLACK)),
     BLACK_ROOK("R", new Rook(Team.BLACK)),
@@ -24,7 +24,7 @@ public enum PieceTypeFormat {
     private final String format;
     private final Piece piece;
 
-    PieceTypeFormat(final String format, final Piece piece) {
+    PieceFormat(final String format, final Piece piece) {
         this.format = format;
         this.piece = piece;
     }

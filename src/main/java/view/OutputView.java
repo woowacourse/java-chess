@@ -26,10 +26,10 @@ public class OutputView {
 
         if (squarePieces.containsKey(square)) {
             final Piece piece = squarePieces.get(square);
-            return PieceTypeFormat.findFormat(piece);
+            return PieceFormat.findFormat(piece);
         }
 
-        return PieceTypeFormat.EMPTY_PIECE;
+        return PieceFormat.EMPTY_PIECE;
     }
 
     public void printError(final String message) {
