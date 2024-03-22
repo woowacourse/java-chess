@@ -35,7 +35,7 @@ public class ChessController {
         if (command.isMove()) {
             Position source = generatePosition(commands[1]);
             Position target = generatePosition(commands[2]);
-            board.move(source, target);
+            board.movePiece(source, target);
         }
     }
 

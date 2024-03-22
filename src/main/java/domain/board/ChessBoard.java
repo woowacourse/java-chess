@@ -15,19 +15,26 @@ public class ChessBoard {
         this.board = new HashMap<>(board);
     }
 
-    public void move(Position source, Position target) {
-        List<Position> positions = source.route(target);
-        if (positions.stream().anyMatch(board::containsKey)) {
-            throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
-        }
+    public void movePiece(Position source, Position target) {
         Piece sourcePiece = findByPosition(source);
-        sourcePiece.validateMovement(source, target, findByPosition(target)); // todo 위로 이동
-        board.remove(source);
-        board.put(target, sourcePiece);
+        sourcePiece.validateMovement(source, target, findByPosition(target));
+        validateEmptyPaths(source, target);
+        moveToTargetPosition(source, target);
     }
 
     private Piece findByPosition(Position position) {
         return board.getOrDefault(position, Empty.getInstance());
+    }
+
+    private void validateEmptyPaths(Position source, Position target) {
+        List<Position> paths = source.route(target);
+        if (paths.stream().anyMatch(board::containsKey)) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 존재합니다.");
+        }
+    }
+
+    private void moveToTargetPosition(Position source, Position target) {
+        board.put(target, board.remove(source));
     }
 
     public Map<Position, Piece> getBoard() {

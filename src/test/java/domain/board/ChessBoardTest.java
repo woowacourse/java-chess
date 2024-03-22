@@ -11,7 +11,6 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import java.util.Map;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
@@ -23,9 +22,9 @@ class ChessBoardTest {
                 new Position(File.F, Rank.FIVE), new Pawn(Color.BLACK));
         ChessBoard board = new ChessBoard(pieceMap);
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("중간에 말이 있어서 이동할 수 없습니다.");
+                .hasMessageContaining("이동 경로에 다른 기물이 존재합니다.");
     }
 
     @Test
@@ -36,10 +35,8 @@ class ChessBoardTest {
         Map<Position, Piece> pieceMap = Map.of(source, piece);
         ChessBoard board = new ChessBoard(pieceMap);
 
-        board.move(source, target);
-        assertThat(board).extracting("board")
-                .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
-                .containsEntry(target, piece)
+        board.movePiece(source, target);
+        assertThat(board.getBoard()).containsEntry(target, piece)
                 .doesNotContainKey(source);
     }
 
@@ -51,10 +48,8 @@ class ChessBoardTest {
         Map<Position, Piece> pieceMap = Map.of(source, piece, target, new Pawn(Color.BLACK));
         ChessBoard board = new ChessBoard(pieceMap);
 
-        board.move(source, target);
-        assertThat(board).extracting("board")
-                .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
-                .containsEntry(target, piece)
+        board.movePiece(source, target);
+        assertThat(board.getBoard()).containsEntry(target, piece)
                 .doesNotContainKey(source);
     }
 }
