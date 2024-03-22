@@ -1,9 +1,11 @@
 package domain.position;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.junit.jupiter.api.Test;
 
 class RankTest {
     @Test
@@ -21,34 +23,26 @@ class RankTest {
     }
 
     @Test
-    void 현재_rank의_다음_rank를_반환한다() {
-        Rank rank = Rank.fromNumber(1);
+    void ONE와_EIGHT_사이에_존재하는_rank_목록을_반환한다() {
+        Rank source = Rank.ONE;
+        Rank target = Rank.EIGHT;
 
-        assertThat(rank.next(1)).isEqualTo(Rank.TWO);
+        List<Rank> betweenRanks = source.between(target);
+
+        assertThat(betweenRanks).containsExactlyElementsOf(List.of(
+                Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN
+        ));
     }
 
     @Test
-    void rank_8의_다음_rank를_호출하면_예외가_발생한다() {
-        Rank rank = Rank.fromNumber(8);
+    void EIGHT와_ONE_사이에_존재하는_rank_목록을_반환한다() {
+        Rank source = Rank.EIGHT;
+        Rank target = Rank.ONE;
 
-        assertThatThrownBy(() -> rank.next(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 rank입니다.");
-    }
+        List<Rank> betweenRanks = source.between(target);
 
-    @Test
-    void 현재_rank의_이전_rank를_반환한다() {
-        Rank rank = Rank.fromNumber(8);
-
-        assertThat(rank.next(-1)).isEqualTo(Rank.SEVEN);
-    }
-
-    @Test
-    void rank_1의_이전_rank를_호출하면_예외가_발생한다() {
-        Rank rank = Rank.fromNumber(1);
-
-        assertThatThrownBy(() -> rank.next(-1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("존재하지 않은 rank입니다.");
+        assertThat(betweenRanks).containsExactlyElementsOf(List.of(
+                Rank.SEVEN, Rank.SIX, Rank.FIVE, Rank.FOUR, Rank.THREE, Rank.TWO
+        ));
     }
 }
