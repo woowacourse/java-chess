@@ -26,7 +26,7 @@ public class PawnMoveStrategy extends MoveStrategy {
     }
 
     private void validateWithCapture(Position from, Position to, Pawn currentPiece, Piece destinationPiece) {
-        if (!currentPiece.isCaptureMove(from, to) && destinationPiece.pieceType() != PieceType.BLANK) {
+        if (!currentPiece.isCaptureMove(from, to) && !destinationPiece.isBlank()) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
         if (currentPiece.isCaptureMove(from, to) && !currentPiece.isOppositeColor(destinationPiece)) {
