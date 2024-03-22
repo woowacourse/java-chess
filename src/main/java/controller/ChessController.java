@@ -6,6 +6,7 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import java.util.List;
+import java.util.regex.Pattern;
 import view.ChessCommand;
 import view.InputView;
 import view.OutputView;
@@ -13,6 +14,8 @@ import view.OutputView;
 public class ChessController {
 
     private static final String MOVE_COMMAND_REGEX_FORMAT = "^[a-h][1-8]";
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(MOVE_COMMAND_REGEX_FORMAT);
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -66,6 +69,6 @@ public class ChessController {
     }
 
     private boolean isNotValidCoordinateInput(final String input) {
-        return !input.matches(MOVE_COMMAND_REGEX_FORMAT);
+        return !MOVE_COMMAND_PATTERN.matcher(input).matches();
     }
 }
