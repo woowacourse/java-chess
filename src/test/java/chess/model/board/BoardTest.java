@@ -1,23 +1,28 @@
 package chess.model.board;
 
+import chess.model.piece.Color;
+import chess.model.piece.Type;
+import chess.model.position.Movement;
+import chess.model.position.Position;
+import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.piece.Color;
-import chess.model.position.Movement;
-import chess.model.position.Position;
-import java.util.HashMap;
-import java.util.List;
-import org.junit.jupiter.api.Test;
-
 class BoardTest {
     @Test
-    void 보드는_64개의_칸으로_구성한다() {
+    void 보드는_기물이_없는_위치에_Empty를_둔다() {
         // given
-        Board board = new Board(new HashMap<>());
+        Board board = new Board(Map.of());
 
         // when, then
-        assertThat(board.getSignatures().size()).isEqualTo(64);
+        for (int file = Board.MIN_LENGTH; file < Board.MAX_LENGTH; file++) {
+            for (int rank = Board.MIN_LENGTH; rank < Board.MAX_LENGTH; rank++) {
+                assertThat(board.getPiece(file, rank).isEmpty()).isTrue();
+            }
+        }
     }
 
     @Test
@@ -36,21 +41,12 @@ class BoardTest {
         // given
         Board board = new InitialBoardGenerator().create();
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
+
+        // when
         board.move(movement, Color.WHITE);
 
-        // when, then
-        List<String> boardLines = board.getLines().stream()
-                .map(line -> String.join("", line))
-                .toList();
-        assertThat(boardLines).containsExactly(
-                "RNBQKBNR",
-                "PPPPPPPP",
-                "........",
-                "........",
-                "........",
-                ".p......",
-                "p.pppppp",
-                "rnbqkbnr"
-        );
+        // then
+        assertThat(board.getPiece(2, 3).isType(Type.PAWN)).isTrue();
+        assertThat(board.getPiece(2, 2).isEmpty()).isTrue();
     }
 }
