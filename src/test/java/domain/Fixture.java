@@ -1,8 +1,24 @@
 package domain;
 
+import static domain.position.UnitVector.DOWN;
+import static domain.position.UnitVector.DOWN_LEFT;
+import static domain.position.UnitVector.DOWN_RIGHT;
+import static domain.position.UnitVector.LEFT;
+import static domain.position.UnitVector.RIGHT;
+import static domain.position.UnitVector.UP;
+import static domain.position.UnitVector.UP_LEFT;
+import static domain.position.UnitVector.UP_RIGHT;
+
+import domain.game.TeamColor;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
+import domain.position.UnitVector;
+import domain.strategy.ContinuousMoveStrategy;
+import domain.strategy.KnightMoveStrategy;
+import domain.strategy.MoveStrategy;
+import domain.strategy.PawnMoveStrategy;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class Fixture {
@@ -82,5 +98,21 @@ public class Fixture {
         public static final Position H7 = new Position(File.H, Rank.SEVEN);
         public static final Position H8 = new Position(File.H, Rank.EIGHT);
 
+    }
+
+    public static class Vectors {
+        public static final Set<UnitVector> ORTHOGONAL_VECTORS = Set.of(UP, RIGHT, DOWN, LEFT);
+        public static final Set<UnitVector> DIAGONAL_VECTORS = Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+        public static final Set<UnitVector> OMNIDIRECTIONAL_VECTORS = Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+    }
+
+    public static class Strategies {
+        public static final MoveStrategy KING_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.OMNIDIRECTIONAL_VECTORS, 1);
+        public static final MoveStrategy QUEEN_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.OMNIDIRECTIONAL_VECTORS, 8);
+        public static final MoveStrategy BISHOP_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.DIAGONAL_VECTORS, 8);
+        public static final MoveStrategy ROOK_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.ORTHOGONAL_VECTORS, 8);
+        public static final MoveStrategy KNIGHT_MOVE_STRATEGY = new KnightMoveStrategy();
+        public static final MoveStrategy WHITE_PAWN_MOVE_STRATEGY = new PawnMoveStrategy(TeamColor.WHITE);
+        public static final MoveStrategy BLACK_PAWN_MOVE_STRATEGY = new PawnMoveStrategy(TeamColor.BLACK);
     }
 }
