@@ -11,6 +11,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardFactory {
@@ -39,49 +40,33 @@ public class BoardFactory {
         return pawns;
     }
 
-    private static Map<Position, Rook> createInitialRooks() {
-        Map<Position, Rook> rooks = new HashMap<>();
-        rooks.put(Position.of(File.A, Rank.ONE), Rook.WHITE);
-        rooks.put(Position.of(File.H, Rank.ONE), Rook.WHITE);
-        rooks.put(Position.of(File.A, Rank.EIGHT), Rook.BLACK);
-        rooks.put(Position.of(File.H, Rank.EIGHT), Rook.BLACK);
+    private static <T> Map<Position, T> createSpecialPieces(List<File> files, T whitePiece, T blackPiece) {
+        Map<Position, T> specialPieces = new HashMap<>();
+        for (File file : files) {
+            specialPieces.put(Position.of(file, Rank.ONE), whitePiece);
+            specialPieces.put(Position.of(file, Rank.EIGHT), blackPiece);
+        }
 
-        return rooks;
+        return specialPieces;
+    }
+
+    private static Map<Position, Rook> createInitialRooks() {
+        return createSpecialPieces(List.of(File.A, File.H), Rook.WHITE, Rook.BLACK);
     }
 
     private static Map<Position, Knight> createInitialKnights() {
-        Map<Position, Knight> knights = new HashMap<>();
-        knights.put(Position.of(File.B, Rank.ONE), Knight.WHITE);
-        knights.put(Position.of(File.G, Rank.ONE), Knight.WHITE);
-        knights.put(Position.of(File.B, Rank.EIGHT), Knight.BLACK);
-        knights.put(Position.of(File.G, Rank.EIGHT), Knight.BLACK);
-
-        return knights;
+        return createSpecialPieces(List.of(File.B, File.G), Knight.WHITE, Knight.BLACK);
     }
 
     private static Map<Position, Bishop> createInitialBishops() {
-        Map<Position, Bishop> bishops = new HashMap<>();
-        bishops.put(Position.of(File.C, Rank.ONE), Bishop.WHITE);
-        bishops.put(Position.of(File.F, Rank.ONE), Bishop.WHITE);
-        bishops.put(Position.of(File.C, Rank.EIGHT), Bishop.BLACK);
-        bishops.put(Position.of(File.F, Rank.EIGHT), Bishop.BLACK);
-
-        return bishops;
+        return createSpecialPieces(List.of(File.C, File.F), Bishop.WHITE, Bishop.BLACK);
     }
 
     private static Map<Position, Queen> createInitialQueens() {
-        Map<Position, Queen> queens = new HashMap<>();
-        queens.put(Position.of(File.D, Rank.ONE), Queen.WHITE);
-        queens.put(Position.of(File.D, Rank.EIGHT), Queen.BLACK);
-
-        return queens;
+        return createSpecialPieces(List.of(File.D), Queen.WHITE, Queen.BLACK);
     }
 
     private static Map<Position, King> createInitialKings() {
-        Map<Position, King> kings = new HashMap<>();
-        kings.put(Position.of(File.E, Rank.ONE), King.WHITE);
-        kings.put(Position.of(File.E, Rank.EIGHT), King.BLACK);
-
-        return kings;
+        return createSpecialPieces(List.of(File.E), King.WHITE, King.BLACK);
     }
 }
