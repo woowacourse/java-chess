@@ -6,13 +6,14 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public class Row {
-    private final int value;
     private static final Map<Integer, Row> CACHE = IntStream.rangeClosed(0, 7)
             .boxed()
             .collect(toMap(
                     i -> i,
                     Row::new
             ));
+
+    private final int value;
 
     private Row(int value) {
         this.value = value;
@@ -34,7 +35,7 @@ public class Row {
 
     private static void validateAlphabet(String value) {
         char row = value.charAt(0);
-        if (row < 'a' || row > 'h') {
+        if (!CACHE.containsKey(row - 'a')) {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
     }

@@ -9,10 +9,11 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public class Column {
-    private final int value;
     private static final Map<Integer, Column> CACHE = IntStream.rangeClosed(0, 7)
             .boxed()
             .collect(toMap(Function.identity(), Column::new));
+
+    private final int value;
 
     private Column(int value) {
         this.value = value;
@@ -33,7 +34,7 @@ public class Column {
     }
 
     private static void validateInRange(int value) {
-        if (value < 1 || value > 8) {
+        if(!CACHE.containsKey(value - 1)) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
