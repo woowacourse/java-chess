@@ -1,16 +1,16 @@
 package domain;
 
+import domain.piece.Piece;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.piece.Piece;
-import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 class ChessBoardTest {
-
 
     @DisplayName("제자리 이동은 못한다.")
     @Test
@@ -23,7 +23,7 @@ class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, source))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("갈 수 없는 경로입니다.");
+                .hasMessage("제자리 이동은 불가합니다.");
     }
 
     @DisplayName("기물에 맞지 않는 움직임으로 갈 수 없다.")
@@ -38,7 +38,7 @@ class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("갈 수 없는 경로입니다.");
+                .hasMessage("움직일 수 없는 경로입니다.");
     }
 
     @DisplayName("Source 위치에 말이 없으면 안된다.")
@@ -68,7 +68,7 @@ class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("갈 수 없는 경로입니다.");
+                .hasMessage("기물에 가로막혀 갈 수 없는 경로입니다.");
     }
 
 

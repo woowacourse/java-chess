@@ -3,14 +3,15 @@ package domain.piece;
 import domain.ChessVector;
 import domain.Square;
 import domain.Team;
+
 import java.util.Objects;
 
 public class King extends Piece {
 
     private static final int MOVE_DISTANCE = 1;
 
-    public King(final Team color) {
-        super(color);
+    public King(final Team team) {
+        super(team);
     }
 
     @Override

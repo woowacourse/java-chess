@@ -3,12 +3,13 @@ package domain.piece;
 import domain.ChessVector;
 import domain.Square;
 import domain.Team;
+
 import java.util.Objects;
 
 public class Rook extends Piece {
 
-    public Rook(final Team color) {
-        super(color);
+    public Rook(final Team team) {
+        super(team);
     }
 
     @Override

@@ -4,6 +4,7 @@ import domain.ChessVector;
 import domain.Rank;
 import domain.Square;
 import domain.Team;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -18,8 +19,8 @@ public class Pawn extends Piece {
     private static final ChessVector BLACK_MOVE_VECTOR = new ChessVector(0, -1);
     private static final ChessVector WHITE_MOVE_VECTOR = new ChessVector(0, 1);
 
-    public Pawn(final Team color) {
-        super(color);
+    public Pawn(final Team team) {
+        super(team);
     }
 
     @Override

@@ -1,12 +1,7 @@
 package domain;
 
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +54,8 @@ public class ChessBoard {
 
         final Piece sourcePiece = pieceSquares.get(source);
 
-        validateCamp(sourcePiece);
+        validateSameSquare(source, target);
+        validateTeam(sourcePiece);
 
         if (pieceSquares.containsKey(target)) {
             validateAttack(source, target, sourcePiece);
@@ -74,13 +70,19 @@ public class ChessBoard {
         team = team.turn();
     }
 
+    private void validateSameSquare(final Square source, final Square target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("제자리 이동은 불가합니다.");
+        }
+    }
+
     private void validateEmptySource(final Square source) {
         if (!pieceSquares.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
     }
 
-    private void validateCamp(final Piece sourcePiece) {
+    private void validateTeam(final Piece sourcePiece) {
         if (sourcePiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
         }
@@ -89,7 +91,7 @@ public class ChessBoard {
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
         final Piece targetPiece = pieceSquares.get(target);
         if (targetPiece.isSameTeam(sourcePiece)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            throw new IllegalArgumentException("같은 팀을 공격할 수 없습니다.");
         }
         if (sourcePiece.canNotAttack(source, target)) {
             throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
@@ -98,13 +100,13 @@ public class ChessBoard {
 
     private void validateMove(final Square source, final Square target, final Piece sourcePiece) {
         if (sourcePiece.canNotMove(source, target)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
     }
 
     private void validateBlocking(final Square source, final Square target) {
         if (isBlocked(source, target)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
+            throw new IllegalArgumentException("기물에 가로막혀 갈 수 없는 경로입니다.");
         }
     }
 
