@@ -75,7 +75,8 @@ class ChessGameTest {
 
         //when & then
         Assertions.assertThatThrownBy(() -> chessGame.move(moving))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치에 기물이 없습니다.");
     }
 
     @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
@@ -99,13 +100,13 @@ class ChessGameTest {
         final ChessGame chessGame = new ChessGame();
 
         final Map<Position, Piece> board = chessGame.getBoard();
-        board.put(Position.from("e4"), new Queen(Camp.WHITE));
+        board.put(Position.from("f3"), new Queen(Camp.WHITE));
 
-        final Moving moving = new Moving(Position.from("e2"), Position.from("e4"));
+        final Moving moving = new Moving(Position.from("g1"), Position.from("f3"));
 
         Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 불가");
+                .hasMessage("도착 지점에 같은 진영의 기물이 있습니다.");
     }
 
     @Test
