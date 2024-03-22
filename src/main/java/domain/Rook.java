@@ -1,7 +1,6 @@
 package domain;
 
 import domain.piece.Piece;
-import java.util.Map;
 
 public class Rook extends Piece {
 
@@ -10,18 +9,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isRook() {
-        return true;
+    public boolean hasFollowedRule(Position source, Position target, MovePath movePath) {
+        return source.isSameFile(target) || source.isSameRank(target);
     }
 
     @Override
-    public boolean isRuleBroken(Position current, Position target, MovePath movePath) {
-        return false;
+    public boolean isRook() {
+        return true;
     }
-
-//    @Override
-//    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
-//        checkBlockingPiece(target, pieces);
-//        return current.isSameRank(target) || current.isSameFile(target);
-//    }
 }
