@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class InputView {
 
+    public static final String START_COMMAND = "start";
     private static final String INVALID_COMMAND_ERROR = "잘못된 명령어 입력입니다. 'end' 혹은 'move source 위치 target 위치'로 입력해주세요.";
     private static final String COMMAND_SEPARATOR = " ";
-    private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
     private static final String CHESS_GAME_TITLE = String.format("> 체스 게임을 시작합니다.\n" +
@@ -36,10 +36,6 @@ public class InputView {
         if (!List.of(START_COMMAND, END_COMMAND).contains(command)) {
             throw new IllegalArgumentException(COMMAND_ERROR_MESSAGE);
         }
-    }
-
-    public boolean isStartCommand(String command) {
-        return command.equals(START_COMMAND);
     }
 
     public List<String> readCommand() {

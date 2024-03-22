@@ -28,13 +28,17 @@ public class ChessGame {
     public void play() {
         String progressCommand = RetryUtil.retryUntilNoException(inputView::readProgressCommand);
 
-        if (!inputView.isStartCommand(progressCommand)) {
+        if (!isStartCommand(progressCommand)) {
             return;
         }
 
         Board board = initBoard();
 
         playUntilEnd(board);
+    }
+
+    private boolean isStartCommand(String progressCommand) {
+        return progressCommand.equals(InputView.START_COMMAND);
     }
 
     private Board initBoard() {
