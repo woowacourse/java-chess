@@ -1,7 +1,7 @@
 package fixture;
 
 import domain.MovePath;
-import domain.PathPieces;
+import domain.Path;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class MovePathFixture {
 
     public static MovePath noPieces() {
-        return new MovePath(new PathPieces(), new Empty());
+        return new MovePath(new Path(), new Empty());
     }
 
     public static MovePath hasPathPieces(Piece... pieces) {
@@ -17,6 +17,6 @@ public class MovePathFixture {
     }
 
     public static MovePath hasTargetPiece(Piece target) {
-        return new MovePath(new PathPieces(), target);
+        return new MovePath(new Path(), target);
     }
 }

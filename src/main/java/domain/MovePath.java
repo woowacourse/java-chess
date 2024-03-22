@@ -5,23 +5,25 @@ import java.util.List;
 
 public class MovePath {
 
-    private final PathPieces pathPieces;
+    private final Path path;
     private final Piece targetPiece;
 
-    public MovePath(PathPieces pathPieces, Piece targetPiece) {
-        this.pathPieces = pathPieces;
+    public MovePath(Path path, Piece targetPiece) {
+        this.path = path;
         this.targetPiece = targetPiece;
     }
 
     public static MovePath create(List<Piece> pathPieces, Piece targetPiece) {
-        return new MovePath(new PathPieces(pathPieces), targetPiece);
-    }
-
-    public boolean notAllPathPiecesEmpty() {
-        return pathPieces.notAllEmpty();
+        return null;
+//        return new MovePath(new Path(pathPieces), targetPiece);
     }
 
     public Piece targetPiece() {
         return targetPiece;
+    }
+
+    public boolean notAllPathPiecesEmpty() {
+        return true;
+//        return path.notAllEmpty();
     }
 }

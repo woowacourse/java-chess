@@ -93,8 +93,8 @@ public class ChessBoard {
     }
 
     private Map<Position, Piece> makePiecesOnDiagonalPath(Position current, Position target) {
-        List<File> files = current.findBetweenFile(target);
-        List<Rank> ranks = current.findBetweenRank(target);
+        List<File> files = current.findBetweenFiles(target);
+        List<Rank> ranks = current.findBetweenRanks(target);
 
         List<Position> path = IntStream.range(0, files.size())
                 .mapToObj(i -> new Position(files.get(i), ranks.get(i)))
@@ -104,7 +104,7 @@ public class ChessBoard {
     }
 
     private Map<Position, Piece> makePiecesOnHorizontalPath(Position current, Position target) {
-        List<File> files = current.findBetweenFile(target);
+        List<File> files = current.findBetweenFiles(target);
 
         List<Position> path = files.stream()
                 .map(current::createWithSameRank)
@@ -114,7 +114,7 @@ public class ChessBoard {
     }
 
     private Map<Position, Piece> makePiecesOnVerticalPath(Position current, Position target) {
-        List<Rank> files = current.findBetweenRank(target);
+        List<Rank> files = current.findBetweenRanks(target);
 
         List<Position> path = files.stream()
                 .map(current::createWithSameFile)

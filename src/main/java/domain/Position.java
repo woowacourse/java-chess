@@ -13,6 +13,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public Position createWithSameFile(Rank rank) {
+        return new Position(this.file, rank);
+    }
+
     public Position createWithSameRank(File file) {
         return new Position(file, this.rank);
     }
@@ -83,16 +87,12 @@ public class Position {
         return InitPosition.isWhitePawnRank(rank);
     }
 
-    public List<File> findBetweenFile(Position target) {
+    public List<File> findBetweenFiles(Position target) {
         return file.findBetween(target.file);
     }
 
-    public List<Rank> findBetweenRank(Position target) {
+    public List<Rank> findBetweenRanks(Position target) {
         return rank.findBetween(target.rank);
-    }
-
-    public Position createWithSameFile(Rank rank) {
-        return new Position(this.file, rank);
     }
 
     @Override
