@@ -29,12 +29,12 @@ public class InputView {
         );
     }
 
-    private String readToken() {
-        return scanner.next();
-    }
-
     public Command readCommand() {
         String input = readToken();
         return Command.from(input);
+    }
+
+    private String readToken() {
+        return scanner.next();
     }
 }

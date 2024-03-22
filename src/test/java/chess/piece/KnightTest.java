@@ -14,22 +14,22 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightTest {
 
-        @Test
-        @DisplayName("나이트는 두 칸 전진한 뒤, 전진한 방향의 90도 좌/우 한 칸으로 이동할 수 있다")
-        void knightMoveTest() {
-            // given
-            Knight knight = new Knight(Color.WHITE);
-            Position source = Position.of(File.D, Rank.FOUR);
-            // when, then
-            Assertions.assertAll(
-                    () -> assertThat(knight.isMovable(source, Position.of(File.F, Rank.FIVE))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.B, Rank.FIVE))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.F, Rank.THREE))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.B, Rank.THREE))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.E, Rank.SIX))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.C, Rank.SIX))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.E, Rank.TWO))).isTrue(),
-                    () -> assertThat(knight.isMovable(source, Position.of(File.C, Rank.TWO))).isTrue()
+    @Test
+    @DisplayName("나이트는 두 칸 전진한 뒤, 전진한 방향의 90도 좌/우 한 칸으로 이동할 수 있다")
+    void knightMoveTest() {
+        // given
+        Knight knight = new Knight(Color.WHITE);
+        Position source = Position.of(File.D, Rank.FOUR);
+        // when, then
+        Assertions.assertAll(
+                () -> assertThat(knight.isMovable(source, Position.of(File.F, Rank.FIVE))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.B, Rank.FIVE))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.F, Rank.THREE))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.B, Rank.THREE))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.E, Rank.SIX))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.C, Rank.SIX))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.E, Rank.TWO))).isTrue(),
+                () -> assertThat(knight.isMovable(source, Position.of(File.C, Rank.TWO))).isTrue()
         );
     }
 

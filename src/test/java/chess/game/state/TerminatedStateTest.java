@@ -1,7 +1,8 @@
 package chess.game.state;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,15 +32,15 @@ class TerminatedStateTest {
             TerminatedState terminatedState = new TerminatedState();
             // when, then
             assertAll(
-                () -> assertThatThrownBy(terminatedState::start)
-                    .isInstanceOf(UnsupportedOperationException.class)
-                    .hasMessage("게임이 이미 종료되었습니다."),
-                () -> assertThatThrownBy(() -> terminatedState.proceedTurn((color) -> {}))
-                    .isInstanceOf(UnsupportedOperationException.class)
-                    .hasMessage("게임이 이미 종료되었습니다."),
-                () -> assertThatThrownBy(terminatedState::terminate)
-                    .isInstanceOf(UnsupportedOperationException.class)
-                    .hasMessage("게임이 이미 종료되었습니다.")
+                    () -> assertThatThrownBy(terminatedState::start)
+                            .isInstanceOf(UnsupportedOperationException.class)
+                            .hasMessage("게임이 이미 종료되었습니다."),
+                    () -> assertThatThrownBy(() -> terminatedState.proceedTurn((color) -> {}))
+                            .isInstanceOf(UnsupportedOperationException.class)
+                            .hasMessage("게임이 이미 종료되었습니다."),
+                    () -> assertThatThrownBy(terminatedState::terminate)
+                            .isInstanceOf(UnsupportedOperationException.class)
+                            .hasMessage("게임이 이미 종료되었습니다.")
             );
         }
     }

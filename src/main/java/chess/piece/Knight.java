@@ -11,14 +11,14 @@ public class Knight extends Piece {
         super(color,
                 MAX_UNIT_MOVE,
                 Set.of(
-                UnitDirection.differencesOf(2, 1),
-                UnitDirection.differencesOf(2, -1),
-                UnitDirection.differencesOf(-2, 1),
-                UnitDirection.differencesOf(-2, -1),
-                UnitDirection.differencesOf(1, 2),
-                UnitDirection.differencesOf(1, -2),
-                UnitDirection.differencesOf(-1, 2),
-                UnitDirection.differencesOf(-1, -2)
-        ));
+                        UnitDirection.differencesOf(2, 1),
+                        UnitDirection.differencesOf(2, -1),
+                        UnitDirection.differencesOf(-2, 1),
+                        UnitDirection.differencesOf(-2, -1),
+                        UnitDirection.differencesOf(1, 2),
+                        UnitDirection.differencesOf(1, -2),
+                        UnitDirection.differencesOf(-1, 2),
+                        UnitDirection.differencesOf(-1, -2)
+                ));
     }
 }

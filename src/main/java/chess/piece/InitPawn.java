@@ -5,7 +5,7 @@ public class InitPawn extends Pawn {
     private static final int MAX_UNIT_MOVE = 2;
 
     public InitPawn(Color color) {
-        super(color,MAX_UNIT_MOVE);
+        super(color, MAX_UNIT_MOVE);
     }
 
     @Override

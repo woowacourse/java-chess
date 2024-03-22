@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public enum PieceDisplay {
 
-    BLACK_KING( King.class, Color.BLACK, "K"),
+    BLACK_KING(King.class, Color.BLACK, "K"),
     BLACK_QUEEN(Queen.class, Color.BLACK, "Q"),
     BLACK_ROOK(Rook.class, Color.BLACK, "R"),
     BLACK_KNIGHT(Knight.class, Color.BLACK, "N"),

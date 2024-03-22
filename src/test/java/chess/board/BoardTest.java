@@ -151,7 +151,7 @@ class BoardTest {
         assertThat(actual).isInstanceOf(Rook.class);
         assertThat(actual.hasColorOf(Color.WHITE)).isTrue();
     }
-    
+
     @Test
     @DisplayName("상대방의 말을 움직이면, 예외를 발생한다.")
     void moveOpponentPieceTest() {

@@ -36,10 +36,10 @@ class UnitDirectionTest {
     @DisplayName("File/Rank 차이가 0으로 생성하는 경우, 예외를 발생한다.")
     void invalidDifferencesTest() {
         assertThatThrownBy(() -> UnitDirection.differencesOf(0, 0))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("단위 이동은 한 칸 이상 이동해야 합니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("단위 이동은 한 칸 이상 이동해야 합니다.");
     }
-    
+
     @Test
     @DisplayName("수직 단위 방향을 올바르게 계산한다.")
     void verticalUnitDirectionTest() {
