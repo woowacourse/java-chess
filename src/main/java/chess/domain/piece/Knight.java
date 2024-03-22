@@ -9,6 +9,7 @@ import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 
 public class Knight extends UnslidingPiece {
+
     public Knight(final Color color) {
         super(color, PieceType.KNIGHT);
     }

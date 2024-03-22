@@ -99,6 +99,7 @@ public class  Chessboard {
             chessboard.put(target, tempPiece);
         }
     }
+
     private boolean isOccupied(final Square square) {
         return chessboard.containsKey(square);
     }

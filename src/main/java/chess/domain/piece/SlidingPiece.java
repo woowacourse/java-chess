@@ -10,6 +10,7 @@ import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 
 public abstract class SlidingPiece extends Piece {
+
     protected SlidingPiece(final Color color, final PieceType pieceType) {
         super(color, pieceType);
     }

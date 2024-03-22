@@ -7,6 +7,7 @@ import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 
 public class Rook extends SlidingPiece {
+
     public Rook(final Color color) {
         super(color, PieceType.ROOK);
     }

@@ -9,6 +9,7 @@ import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 
 public class Pawn extends AbstractPawn {
+
     public Pawn(final Color color) {
         super(color);
     }
