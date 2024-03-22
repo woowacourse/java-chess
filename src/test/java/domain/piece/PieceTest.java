@@ -17,4 +17,18 @@ class PieceTest {
 
         assertThat(rook.isWhite()).isTrue();
     }
+
+    @Test
+    @DisplayName("기물은 자신의 색상 정보를 제공한다.")
+    void pieceColor() {
+        final Piece piece = new Rook(Color.WHITE, Type.ROOK);
+        assertThat(piece.color()).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("기물은 자신의 모양 정보를 제공한다.")
+    void pieceShape() {
+        final Piece piece = new Rook(Color.WHITE, Type.ROOK);
+        assertThat(piece.type()).isEqualTo(Type.ROOK);
+    }
 }

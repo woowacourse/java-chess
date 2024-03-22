@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private Color color;
+    private Color turn;
     private final Map<Position, Piece> squares;
 
     public Board(final Map<Position, Piece> squares) {
-        this.color = Color.WHITE;
+        this.turn = Color.WHITE;
         this.squares = squares;
     }
 
     public void move(final Position source, final Position target) {
         final Piece currentPiece = squares.get(source);
-        if (currentPiece.isNotSameColor(color)) {
+        if (currentPiece.isNotSameColor(turn)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
         final List<Direction> directions = currentPiece.movableDirections();
@@ -32,7 +32,11 @@ public class Board {
                 .anyMatch(position -> position.equals(target));
         validateMovablePosition(targetMovable);
         updateBoard(source, target, currentPiece);
-        color = Color.opposite(color);
+        switchTurn();
+    }
+
+    private void switchTurn() {
+        turn = turn.reverse();
     }
 
     private void validateMovablePosition(final boolean targetMovable) {

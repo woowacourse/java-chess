@@ -5,8 +5,8 @@ public enum Color {
     WHITE,
     NONE;
 
-    public static Color opposite(final Color color) {
-        if (color.equals(BLACK)) {
+    public Color reverse() {
+        if (this.equals(BLACK)) {
             return WHITE;
         }
         return BLACK;
