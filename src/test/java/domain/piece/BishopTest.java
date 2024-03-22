@@ -16,9 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BishopTest {
     @DisplayName("비숍은 대각선으로 여러칸 움직일 수 있다.")
     @ParameterizedTest
-    @MethodSource(value = "squareArguments")
-    void canMove(final Square source, final Square target, final boolean expected) {
+    @MethodSource(value = "canMoveArguments")
+    void canMove(final Square target, final boolean expected) {
+        // given
         final Bishop bishop = new Bishop(Team.BLACK);
+        final Square source = new Square(File.D, Rank.FOUR);
 
         // when
         final boolean canMove = bishop.canMove(source, target);
@@ -27,15 +29,37 @@ class BishopTest {
         assertThat(canMove).isEqualTo(expected);
     }
 
-    static Stream<Arguments> squareArguments() {
+    static Stream<Arguments> canMoveArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.H, Rank.EIGHT), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.A, Rank.ONE), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.A, Rank.SEVEN), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.ONE), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.TWO), false),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.THREE), false),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.FIVE), false));
+                Arguments.of(new Square(File.H, Rank.EIGHT), true),
+                Arguments.of(new Square(File.A, Rank.ONE), true),
+                Arguments.of(new Square(File.A, Rank.SEVEN), true),
+                Arguments.of(new Square(File.G, Rank.ONE), true),
+                Arguments.of(new Square(File.G, Rank.TWO), false),
+                Arguments.of(new Square(File.G, Rank.THREE), false),
+                Arguments.of(new Square(File.G, Rank.FIVE), false));
     }
 
+    @DisplayName("비숍은 상하좌우로 이동할 수 없다.")
+    @ParameterizedTest
+    @MethodSource("canNotMoveArguments")
+    void canNotMove(final Square target, final boolean expected) {
+        // given
+        final Bishop bishop = new Bishop(Team.BLACK);
+        final Square source = new Square(File.D, Rank.FOUR);
+
+        // when
+        final boolean canMove = bishop.canMove(source, target);
+
+        // then
+        assertThat(canMove).isEqualTo(expected);
+    }
+
+    static Stream<Arguments> canNotMoveArguments() {
+        return Stream.of(
+                Arguments.of(new Square(File.D, Rank.EIGHT), false),
+                Arguments.of(new Square(File.D, Rank.ONE), false),
+                Arguments.of(new Square(File.G, Rank.FOUR), false),
+                Arguments.of(new Square(File.A, Rank.FOUR), false));
+    }
 }
