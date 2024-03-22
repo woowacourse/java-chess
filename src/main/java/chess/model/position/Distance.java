@@ -5,6 +5,8 @@ import chess.model.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.unmodifiableList;
+
 public class Distance {
     private final int fileDifference;
     private final int rankDifference;
@@ -55,33 +57,32 @@ public class Distance {
         }
         int fileOffset = calculateIncrement(fileDifference);
         int rankOffset = calculateIncrement(rankDifference);
-        int repeatCount = calculateRepeatCount();
+        int pathLength = calculatePathLength();
 
-        List<ChessPosition> path = new ArrayList<>();
-        addPath(source, repeatCount, fileOffset, rankOffset, path);
-        return path;
+        return makePath(source, pathLength, fileOffset, rankOffset);
     }
 
     private int calculateIncrement(int difference) {
         return Integer.compare(difference, 0);
     }
 
-    private int calculateRepeatCount() {
+    private int calculatePathLength() {
         if (fileDifference == 0) {
             return Math.abs(rankDifference);
         }
         return Math.abs(fileDifference);
     }
 
-    private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
-                         List<ChessPosition> path) {
+    private List<ChessPosition> makePath(ChessPosition source, int pathLength, int fileOffset, int rankOffset) {
+        List<ChessPosition> path = new ArrayList<>();
         ChessPosition prevPosition = source;
-        while (repeatCount-- > 0) {
+        while (path.size() < pathLength) {
             File nextFile = prevPosition.findNextFile(fileOffset);
             Rank nextRank = prevPosition.findNextRank(rankOffset);
             prevPosition = new ChessPosition(nextFile, nextRank);
             path.add(prevPosition);
         }
+        return unmodifiableList(path);
     }
 
     public int getFileDifference() {
