@@ -1,13 +1,8 @@
 package view;
 
 import domain.Team;
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.*;
+
 import java.util.Arrays;
 
 public enum PieceTypeFormat {
@@ -22,8 +17,7 @@ public enum PieceTypeFormat {
     WHITE_ROOK("r", new Rook(Team.WHITE)),
     WHITE_BISHOP("b", new Bishop(Team.WHITE)),
     WHITE_QUEEN("q", new Queen(Team.WHITE)),
-    WHITE_KING("k", new King(Team.WHITE)),
-    ;
+    WHITE_KING("k", new King(Team.WHITE));
 
     static final String EMPTY_PIECE = ".";
 

@@ -70,21 +70,21 @@ public class ChessBoard {
         team = team.turn();
     }
 
-    private void validateSameSquare(final Square source, final Square target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("제자리 이동은 불가합니다.");
-        }
-    }
-
     private void validateEmptySource(final Square source) {
         if (!pieceSquares.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
     }
 
+    private void validateSameSquare(final Square source, final Square target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("제자리 이동은 불가합니다.");
+        }
+    }
+
     private void validateTeam(final Piece sourcePiece) {
         if (sourcePiece.isOppositeTeam(team)) {
-            throw new IllegalArgumentException("자기 말이 아닙니다.");
+            throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
         }
     }
 
