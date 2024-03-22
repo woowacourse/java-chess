@@ -8,7 +8,8 @@ public class RookMoveRule implements Rule {
 
     private static final RookMoveRule instance = new RookMoveRule();
 
-    private RookMoveRule() {}
+    private RookMoveRule() {
+    }
 
     public static RookMoveRule instance() {
         return instance;
