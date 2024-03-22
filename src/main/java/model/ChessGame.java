@@ -27,7 +27,6 @@ public class ChessGame {
         initPosition.put(Column.H, Rook::new);
     }
 
-
     private final Map<Position, Piece> board;
 
     private Camp camp;

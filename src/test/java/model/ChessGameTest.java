@@ -14,21 +14,18 @@ import java.util.Map.Entry;
 
 class ChessGameTest {
 
-    @Test
     @DisplayName("초기에는 32개의 기물이 생성된다.")
+    @Test
     void initPieces() {
-        //given
         final ChessGame chessGame = new ChessGame();
 
-        //then
         final Map<Position, Piece> board = chessGame.getBoard();
         Assertions.assertThat(board.keySet()).hasSize(32);
     }
 
-    @Test
     @DisplayName("기물들의 시작 위치를 확인한다.")
+    @Test
     void checkInitialPosition() {
-        //given
         final ChessGame chessGame = new ChessGame();
 
         final Map<Position, Piece> board = chessGame.getBoard();
@@ -61,19 +58,16 @@ class ChessGameTest {
                 + "[p, p, p, p, p, p, p, p]%n"
                 + "[r, n, b, q, k, b, n, r]%n");
 
-        //then
         Assertions.assertThat(stringBuilder.toString()).hasToString(expected);
     }
 
-    @Test
     @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
+    @Test
     void blankPosition() {
-        //given
         final ChessGame chessGame = new ChessGame();
 
         final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
-        //when & then
         Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 기물이 없습니다.");
@@ -109,16 +103,13 @@ class ChessGameTest {
                 .hasMessage("도착 지점에 같은 진영의 기물이 있습니다.");
     }
 
-    @Test
     @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
+    @Test
     void invalidTurn() {
-        //given
         final ChessGame chessGame = new ChessGame();
 
-        //when
         final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
 
-        //then
         Assertions.assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 이동 가능합니다.");
