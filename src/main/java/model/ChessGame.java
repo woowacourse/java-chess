@@ -58,7 +58,7 @@ public class ChessGame {
     }
 
     public void move(Moving moving) {
-        validate(camp, moving);
+        validate(moving);
 
         Piece piece = board.get(moving.getCurrentPosition());
         board.put(moving.getNextPosition(), piece);
@@ -66,26 +66,41 @@ public class ChessGame {
         camp = camp.toggle();
     }
 
-    private void validate(Camp camp, Moving moving) {
+    private void validate(Moving moving) {
         Position currentPosition = moving.getCurrentPosition();
+        validateCurrentPositionIsEmpty(currentPosition);
+
+        Piece piece = board.get(currentPosition);
+        validateOtherCamp(piece);
+
+        Set<Position> positions = getRoute(moving, piece);
+        validateRouteIsContainPiece(positions);
+
+        Piece target = board.get(moving.getNextPosition());
+        validateTargetIsSameCamp(target, piece);
+    }
+
+    private void validateCurrentPositionIsEmpty(Position currentPosition) {
         if (!board.containsKey(currentPosition)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
+    }
 
-        Piece piece = board.get(currentPosition);
+    private void validateOtherCamp(Piece piece) {
         if (!piece.isSameCamp(camp)) {
             throw new IllegalArgumentException("자신의 기물만 이동 가능합니다.");
         }
+    }
 
-        Set<Position> positions = getRoute(moving, piece);
-
+    private void validateRouteIsContainPiece(Set<Position> positions) {
         for (Position position : positions) {
             if (board.containsKey(position)) {
                 throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
             }
         }
+    }
 
-        Piece target = board.get(moving.getNextPosition());
+    private void validateTargetIsSameCamp(Piece target, Piece piece) {
         if (target != null && target.isSameCamp(piece.getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
         }
