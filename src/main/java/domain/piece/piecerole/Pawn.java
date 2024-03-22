@@ -9,28 +9,28 @@ import java.util.Objects;
 
 public class Pawn implements PieceRole {
     protected List<Movable> routes;
-    protected int count;
+    protected int moveCount;
 
     public Pawn(final Color color) {
-        count = 1;
+        moveCount = 1;
         if (color == Color.BLACK) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(count), Direction.SOUTH),
-                    new Movable(getMaxMovement(count), Direction.SOUTH_EAST),
-                    new Movable(getMaxMovement(count), Direction.SOUTH_WEST)
+                    new Movable(getMaxMovement(moveCount), Direction.SOUTH),
+                    new Movable(getMaxMovement(moveCount), Direction.SOUTH_EAST),
+                    new Movable(getMaxMovement(moveCount), Direction.SOUTH_WEST)
             );
         }
         if (color == Color.WHITE) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(count), Direction.NORTH),
-                    new Movable(getMaxMovement(count), Direction.NORTH_EAST),
-                    new Movable(getMaxMovement(count), Direction.NORTH_WEST)
+                    new Movable(getMaxMovement(moveCount), Direction.NORTH),
+                    new Movable(getMaxMovement(moveCount), Direction.NORTH_EAST),
+                    new Movable(getMaxMovement(moveCount), Direction.NORTH_WEST)
             );
         }
     }
 
-    protected int getMaxMovement(final int count) {
-        if (count == 1) {
+    protected int getMaxMovement(final int moveCount) {
+        if (moveCount == 1) {
             return 2;
         }
         return 1;
@@ -40,11 +40,11 @@ public class Pawn implements PieceRole {
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
         boolean canMove = routes.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
-        if (count == 1) {
+        if (moveCount == 1) {
             for (Movable movable : routes) {
                 movable.decreaseMaxMovement();
             }
-            count++;
+            moveCount++;
         }
         return canMove;
     }
