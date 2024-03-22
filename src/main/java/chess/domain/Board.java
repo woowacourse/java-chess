@@ -22,10 +22,6 @@ public class Board {
         pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
     }
 
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
     public void placePiece(Position currentPosition, Piece piece) {
         board.put(currentPosition, piece);
     }
@@ -52,6 +48,7 @@ public class Board {
 
     public boolean isSameTeamFromPosition(Position position, Team team) {
         Piece piece = board.get(position);
+
         return piece.isSameTeam(team);
     }
 
@@ -70,5 +67,9 @@ public class Board {
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
                 checkSameTeamPieceExist(piece.getTeam(), target));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
     }
 }
