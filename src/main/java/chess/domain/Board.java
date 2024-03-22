@@ -153,10 +153,7 @@ public class Board {
                 .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent()))
                 .filter(entry -> entry.getKey() != attackingPosition)
                 .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
-                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)))
-                .map(Entry::getKey)
-                .toList()
-                .isEmpty();
+                .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
     }
 
     public Map<Position, Character> mapPositionToCharacter() {
