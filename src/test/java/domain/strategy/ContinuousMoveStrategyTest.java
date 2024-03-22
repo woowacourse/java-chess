@@ -11,9 +11,8 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static domain.position.File.*;
-import static domain.position.Rank.*;
 import static domain.position.UnitVector.*;
+import static domain.Fixture.Positions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ContinuousMoveStrategyTest {
@@ -39,10 +38,10 @@ class ContinuousMoveStrategyTest {
 
     private static Stream<Arguments> orthogonalValidMove() {
         return Stream.of(
-                Arguments.of(new Position(B, THREE), new Position(B, SEVEN)),
-                Arguments.of(new Position(D, THREE), new Position(F, THREE)),
-                Arguments.of(new Position(D, FIVE), new Position(D, TWO)),
-                Arguments.of(new Position(D, FIVE), new Position(A, FIVE))
+                Arguments.of(B3, B7),
+                Arguments.of(D3, F3),
+                Arguments.of(D5, D2),
+                Arguments.of(D5, A5)
         );
     }
 
@@ -59,12 +58,12 @@ class ContinuousMoveStrategyTest {
 
     private static Stream<Arguments> orthogonalInvalidMove() {
         return Stream.of(
-                Arguments.of(new Position(B, THREE), new Position(B, SEVEN), Set.of(new Position(B, FIVE))),
-                Arguments.of(new Position(D, THREE), new Position(F, THREE), Set.of(new Position(E, THREE))),
-                Arguments.of(new Position(D, FIVE), new Position(D, TWO), Set.of(new Position(D, THREE))),
-                Arguments.of(new Position(D, FIVE), new Position(A, FIVE), Set.of(new Position(C, FIVE))),
-                Arguments.of(new Position(D, FIVE), new Position(B, FOUR), Collections.emptySet()),
-                Arguments.of(new Position(D, FIVE), new Position(B, THREE), Collections.emptySet())
+                Arguments.of(B3, B7, Set.of(B5)),
+                Arguments.of(D3, F3, Set.of(E3)),
+                Arguments.of(D5, D2, Set.of(D3)),
+                Arguments.of(D5, A5, Set.of(C5)),
+                Arguments.of(D5, B4, Collections.emptySet()),
+                Arguments.of(D5, B3, Collections.emptySet())
         );
     }
 
@@ -84,10 +83,10 @@ class ContinuousMoveStrategyTest {
 
     private static Stream<Arguments> diagonalValidMove() {
         return Stream.of(
-                Arguments.of(new Position(B, THREE), new Position(F, SEVEN)),
-                Arguments.of(new Position(D, THREE), new Position(F, ONE)),
-                Arguments.of(new Position(D, FIVE), new Position(A, TWO)),
-                Arguments.of(new Position(D, FIVE), new Position(C, SIX))
+                Arguments.of(B3, F7),
+                Arguments.of(D3, F1),
+                Arguments.of(D5, A2),
+                Arguments.of(D5, C6)
         );
     }
 
@@ -104,12 +103,12 @@ class ContinuousMoveStrategyTest {
 
     private static Stream<Arguments> diagonalInvalidMove() {
         return Stream.of(
-                Arguments.of(new Position(B, THREE), new Position(F, SEVEN), Set.of(new Position(D, FIVE))),
-                Arguments.of(new Position(D, THREE), new Position(F, ONE), Set.of(new Position(E, TWO))),
-                Arguments.of(new Position(D, FIVE), new Position(A, TWO), Set.of(new Position(B, THREE))),
-                Arguments.of(new Position(D, FIVE), new Position(B, SEVEN), Set.of(new Position(C, SIX))),
-                Arguments.of(new Position(D, FIVE), new Position(H, FIVE), Collections.emptySet()),
-                Arguments.of(new Position(D, FIVE), new Position(F, EIGHT), Collections.emptySet())
+                Arguments.of(B3, F3, Set.of(D5)),
+                Arguments.of(D3, F1, Set.of(E2)),
+                Arguments.of(D5, A2, Set.of(B3)),
+                Arguments.of(D5, B7, Set.of(C6)),
+                Arguments.of(D5, H5, Collections.emptySet()),
+                Arguments.of(D5, F8, Collections.emptySet())
         );
     }
 
@@ -128,12 +127,12 @@ class ContinuousMoveStrategyTest {
 
     private static Stream<Arguments> boundedMove() {
         return Stream.of(
-                Arguments.of(new Position(D, FIVE), new Position(F, SEVEN), 1),
-                Arguments.of(new Position(D, FIVE), new Position(G, EIGHT), 2),
-                Arguments.of(new Position(A, EIGHT), new Position(E, FOUR), 3),
-                Arguments.of(new Position(A, EIGHT), new Position(A, THREE), 4),
-                Arguments.of(new Position(A, EIGHT), new Position(H, ONE), 5),
-                Arguments.of(new Position(A, EIGHT), new Position(H, EIGHT), 6)
+                Arguments.of(D5, F3, 1),
+                Arguments.of(D5, G8, 2),
+                Arguments.of(A8, E4, 3),
+                Arguments.of(A8, A3, 4),
+                Arguments.of(A8, H1, 5),
+                Arguments.of(A8, H8, 6)
         );
     }
 }

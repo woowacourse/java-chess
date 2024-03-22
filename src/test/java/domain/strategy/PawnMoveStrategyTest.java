@@ -1,9 +1,7 @@
 package domain.strategy;
 
 import domain.game.TeamColor;
-import domain.position.File;
 import domain.position.Position;
-import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static domain.Fixture.Positions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnMoveStrategyTest {
@@ -24,7 +23,7 @@ class PawnMoveStrategyTest {
     void isMovableTest(TeamColor teamColor, Position source, Position destination) {
         // Given
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(teamColor);
-        Set<Position> otherPositions = Set.of(new Position(File.D, Rank.FIVE), new Position(File.B, Rank.FOUR));
+        Set<Position> otherPositions = Set.of(D5, B4);
 
         // When
         boolean movable = pawnMoveStrategy.isMovable(source, destination, otherPositions);
@@ -35,12 +34,12 @@ class PawnMoveStrategyTest {
 
     private static Stream<Arguments> isMovableCase() {
         return Stream.of(
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.TWO), new Position(File.C, Rank.FOUR)),
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.C, Rank.FIVE)),
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.D, Rank.FIVE)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.SEVEN), new Position(File.C, Rank.FIVE)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.C, Rank.FOUR)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.B, Rank.FOUR))
+                Arguments.of(TeamColor.WHITE, C2, C4),
+                Arguments.of(TeamColor.WHITE, C4, C5),
+                Arguments.of(TeamColor.WHITE, C4, D5),
+                Arguments.of(TeamColor.BLACK, C7, C5),
+                Arguments.of(TeamColor.BLACK, C5, C4),
+                Arguments.of(TeamColor.BLACK, C5, B4)
         );
     }
 
@@ -61,14 +60,14 @@ class PawnMoveStrategyTest {
 
     private static Stream<Arguments> isNotMovableCase() {
         return Stream.of(
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.C, Rank.SIX)),
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.C, Rank.THREE)),
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.D, Rank.FOUR)),
-                Arguments.of(TeamColor.WHITE, new Position(File.C, Rank.FOUR), new Position(File.B, Rank.FIVE)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.SIX), new Position(File.C, Rank.FOUR)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.C, Rank.SIX)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.B, Rank.FIVE)),
-                Arguments.of(TeamColor.BLACK, new Position(File.C, Rank.FIVE), new Position(File.B, Rank.FOUR))
+                Arguments.of(TeamColor.WHITE, C4, C6),
+                Arguments.of(TeamColor.WHITE, C4, C3),
+                Arguments.of(TeamColor.WHITE, C4, D4),
+                Arguments.of(TeamColor.WHITE, C4, B5),
+                Arguments.of(TeamColor.BLACK, C6, C4),
+                Arguments.of(TeamColor.BLACK, C5, C6),
+                Arguments.of(TeamColor.BLACK, C5, B5),
+                Arguments.of(TeamColor.BLACK, C5, B4)
         );
     }
 
@@ -77,8 +76,8 @@ class PawnMoveStrategyTest {
     void isNotMovableToStraight() {
         // Given
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(TeamColor.WHITE);
-        Position source = new Position(File.B, Rank.TWO);
-        Position destination = new Position(File.B, Rank.THREE);
+        Position source = B2;
+        Position destination = B3;
         Set<Position> otherPositions = new HashSet<>(Set.of(destination));
 
         // When

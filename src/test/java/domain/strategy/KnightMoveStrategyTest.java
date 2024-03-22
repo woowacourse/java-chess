@@ -1,13 +1,12 @@
 package domain.strategy;
 
-import domain.position.File;
 import domain.position.Position;
-import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
+import static domain.Fixture.Positions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightMoveStrategyTest {
@@ -16,9 +15,9 @@ class KnightMoveStrategyTest {
     @Test
     void isMovableTest() {
         // Given
-        Position source = new Position(File.C, Rank.TWO);
-        Position destination = new Position(File.D, Rank.FOUR);
-        Set<Position> otherPositions = Set.of(new Position(File.C, Rank.THREE));
+        Position source = C2;
+        Position destination = D4;
+        Set<Position> otherPositions = Set.of(C3);
         KnightMoveStrategy knightMoveStrategy = new KnightMoveStrategy();
 
         // When
@@ -32,9 +31,9 @@ class KnightMoveStrategyTest {
     @Test
     void isNotMovableTest() {
         // Given
-        Position source = new Position(File.C, Rank.TWO);
-        Position destination = new Position(File.G, Rank.FIVE);
-        Set<Position> otherPositions = Set.of(new Position(File.C, Rank.THREE));
+        Position source = C2;
+        Position destination = G5;
+        Set<Position> otherPositions = Set.of(C3);
         KnightMoveStrategy knightMoveStrategy = new KnightMoveStrategy();
 
         // When

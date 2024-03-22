@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static domain.Fixture.Positions.*;
 import static domain.game.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
-
     @DisplayName("기물의 시작 위치를 배치한 Board 인스턴스를 생성한다.")
     @Test
     void createBoard() {
@@ -30,7 +30,7 @@ class BoardTest {
     void movePieceToEmptySpaceTest() {
         // Given
         Piece piece = PieceFactory.create(PieceType.WHITE_BISHOP);
-        Position source = new Position(File.B, Rank.TWO);
+        Position source = B2;
         Position destination = new Position(File.D, Rank.FOUR);
         Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece));
         Board board = new Board(piecePositions);
@@ -49,8 +49,8 @@ class BoardTest {
         // Given
         Piece piece = PieceFactory.create(PieceType.WHITE_KNIGHT);
         Piece enemy = PieceFactory.create(PieceType.BLACK_KING);
-        Position source = new Position(File.B, Rank.TWO);
-        Position destination = new Position(File.C, Rank.FOUR);
+        Position source = B2;
+        Position destination = C4;
         Map<Position, Piece> piecePositions = new HashMap<>(Map.of(
                 source, piece,
                 destination, enemy
@@ -71,8 +71,8 @@ class BoardTest {
         // Given
         Piece piece = PieceFactory.create(PieceType.WHITE_KNIGHT);
         Piece other = PieceFactory.create(PieceType.WHITE_ROOK);
-        Position source = new Position(File.B, Rank.TWO);
-        Position destination = new Position(File.C, Rank.FOUR);
+        Position source = B2;
+        Position destination = C4;
         Map<Position, Piece> piecePositions = new HashMap<>(Map.of(
                 source, piece,
                 destination, other

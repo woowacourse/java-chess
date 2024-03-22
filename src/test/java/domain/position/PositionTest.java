@@ -3,6 +3,7 @@ package domain.position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static domain.Fixture.Positions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
@@ -25,7 +26,7 @@ class PositionTest {
     @Test
     void addPositionTest() {
         // Given
-        Position position = new Position(File.D, Rank.TWO);
+        Position position = D2;
 
         // When
         Position newPosition = position.add(UnitVector.UP_RIGHT);
