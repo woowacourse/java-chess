@@ -13,6 +13,16 @@ import org.junit.jupiter.api.Test;
 class KnightTest {
 
     @Test
+    @DisplayName("나이트는 이동 가능한 위치인 경우 건너 뛰기가 가능하여 중간 경로가 없으므로 빈 값을 반환한다.")
+    void findPathTo() {
+        Knight knight = new Knight(Color.WHITE);
+        Position departure = new Position(1, 1);
+        Position destination = new Position(2, 3);
+
+        assertThat(knight.findPathTo(departure, destination)).hasSize(0);
+    }
+
+    @Test
     @DisplayName("(1, 1)일 때 (1, 3)으로는 이동할 수 없다.")
     void findPathToInvalidDestination() {
         Knight knight = new Knight(Color.WHITE);
