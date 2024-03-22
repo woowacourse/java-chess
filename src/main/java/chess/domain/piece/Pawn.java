@@ -55,23 +55,26 @@ public class Pawn extends Piece {
     private void addMultipleForwardMoves(Board board, Direction direction, Set<Position> movablePositions,
                                          int currentRank,
                                          Position nextPosition) {
-        if (isStartingPosition(direction, currentRank)) {
-            Position nextNextPosition = nextPosition.next(direction);
-            Piece secondPiece = board.findPieceByPosition(nextNextPosition);
-            if (secondPiece.isEmpty()) {
-                movablePositions.add(nextNextPosition);
-            }
+        if (!isStartingPosition(direction, currentRank)) {
+            return;
+        }
+
+        Position nextNextPosition = nextPosition.next(direction);
+        Piece secondPiece = board.findPieceByPosition(nextNextPosition);
+        if (secondPiece.isEmpty()) {
+            movablePositions.add(nextNextPosition);
         }
     }
 
     private void addDiagonalMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
-        if (direction.isDiagonal()) {
-            position = position.next(direction);
-            Piece piece = board.findPieceByPosition(position);
+        if (!direction.isDiagonal()) {
+            return;
+        }
 
-            if (isNotSameColor(piece) && !piece.isEmpty()) {
-                movablePositions.add(position);
-            }
+        Position nextPosition = position.next(direction);
+        Piece findPiece = board.findPieceByPosition(nextPosition);
+        if (isNotSameColor(findPiece) && !findPiece.isEmpty()) {
+            movablePositions.add(nextPosition);
         }
     }
 
