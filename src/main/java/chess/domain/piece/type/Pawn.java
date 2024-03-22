@@ -36,7 +36,7 @@ public final class Pawn extends Piece {
         if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.TOP) {
             return (distance == 1 || distance == 2);
         }
-        if (!color.isWhite() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
+        if (color.isBlack() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
             return (distance == 1 || distance == 2);
         }
         return distance == 1;
