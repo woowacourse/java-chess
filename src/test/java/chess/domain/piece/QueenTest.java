@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -17,7 +16,7 @@ class QueenTest {
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenQueenMoveWhenMeetTeamMThenStop() {
-        Queen queen = new Queen(Color.WHITE);
+        Queen queen = Queen.WHITE;
         Position currentQueenPosition = Position.from(File.G, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,
@@ -41,7 +40,7 @@ class QueenTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenQueenMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Queen queen = new Queen(Color.WHITE);
+        Queen queen = Queen.WHITE;
         Position currentQueenPosition = Position.from(File.G, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,

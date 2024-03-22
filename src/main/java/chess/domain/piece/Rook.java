@@ -4,8 +4,10 @@ import chess.domain.Color;
 import chess.domain.Direction;
 
 public class Rook extends MultiStepPiece {
+    public static final Rook WHITE = new Rook(Color.WHITE);
+    public static final Rook BLACK = new Rook(Color.BLACK);
 
-    public Rook(Color color) {
+    private Rook(Color color) {
         super(color, PieceType.ROOK, Direction.STRAIGHT);
     }
 }

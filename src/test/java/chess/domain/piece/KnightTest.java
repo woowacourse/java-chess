@@ -4,7 +4,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -18,12 +17,12 @@ class KnightTest {
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetTeamMThenStop() {
-        Knight knight = new Knight(Color.WHITE);
+        Knight knight = Knight.WHITE;
         Position currentKingPosition = Position.from(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
                 Position.from(File.A, Rank.FIVE), Pawn.ofWhite(),
-                Position.from(File.B, Rank.SIX), new Queen(Color.WHITE),
-                Position.from(File.C, Rank.THREE), new Queen(Color.WHITE)
+                Position.from(File.B, Rank.SIX), Queen.WHITE,
+                Position.from(File.C, Rank.THREE), Queen.WHITE
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));
@@ -36,12 +35,12 @@ class KnightTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Knight knight = new Knight(Color.WHITE);
+        Knight knight = Knight.WHITE;
         Position currentKingPosition = Position.from(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
                 Position.from(File.A, Rank.FIVE), Pawn.ofBlack(),
-                Position.from(File.B, Rank.SIX), new Queen(Color.WHITE),
-                Position.from(File.C, Rank.THREE), new Queen(Color.BLACK)
+                Position.from(File.B, Rank.SIX), Queen.WHITE,
+                Position.from(File.C, Rank.THREE), Queen.BLACK
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));

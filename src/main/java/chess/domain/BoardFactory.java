@@ -42,46 +42,46 @@ public class BoardFactory {
 
     private static Map<Position, Rook> createInitialRooks() {
         Map<Position, Rook> rooks = new HashMap<>();
-        rooks.put(Position.from(File.A, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Position.from(File.H, Rank.ONE), new Rook(Color.WHITE));
-        rooks.put(Position.from(File.A, Rank.EIGHT), new Rook(Color.BLACK));
-        rooks.put(Position.from(File.H, Rank.EIGHT), new Rook(Color.BLACK));
+        rooks.put(Position.from(File.A, Rank.ONE), Rook.WHITE);
+        rooks.put(Position.from(File.H, Rank.ONE), Rook.WHITE);
+        rooks.put(Position.from(File.A, Rank.EIGHT), Rook.BLACK);
+        rooks.put(Position.from(File.H, Rank.EIGHT), Rook.BLACK);
 
         return rooks;
     }
 
     private static Map<Position, Knight> createInitialKnights() {
         Map<Position, Knight> knights = new HashMap<>();
-        knights.put(Position.from(File.B, Rank.ONE), new Knight(Color.WHITE));
-        knights.put(Position.from(File.G, Rank.ONE), new Knight(Color.WHITE));
-        knights.put(Position.from(File.B, Rank.EIGHT), new Knight(Color.BLACK));
-        knights.put(Position.from(File.G, Rank.EIGHT), new Knight(Color.BLACK));
+        knights.put(Position.from(File.B, Rank.ONE), Knight.WHITE);
+        knights.put(Position.from(File.G, Rank.ONE), Knight.WHITE);
+        knights.put(Position.from(File.B, Rank.EIGHT), Knight.BLACK);
+        knights.put(Position.from(File.G, Rank.EIGHT), Knight.BLACK);
 
         return knights;
     }
 
     private static Map<Position, Bishop> createInitialBishops() {
         Map<Position, Bishop> bishops = new HashMap<>();
-        bishops.put(Position.from(File.C, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Position.from(File.F, Rank.ONE), new Bishop(Color.WHITE));
-        bishops.put(Position.from(File.C, Rank.EIGHT), new Bishop(Color.BLACK));
-        bishops.put(Position.from(File.F, Rank.EIGHT), new Bishop(Color.BLACK));
+        bishops.put(Position.from(File.C, Rank.ONE), Bishop.WHITE);
+        bishops.put(Position.from(File.F, Rank.ONE), Bishop.WHITE);
+        bishops.put(Position.from(File.C, Rank.EIGHT), Bishop.BLACK);
+        bishops.put(Position.from(File.F, Rank.EIGHT), Bishop.BLACK);
 
         return bishops;
     }
 
     private static Map<Position, Queen> createInitialQueens() {
         Map<Position, Queen> queens = new HashMap<>();
-        queens.put(Position.from(File.D, Rank.ONE), new Queen(Color.WHITE));
-        queens.put(Position.from(File.D, Rank.EIGHT), new Queen(Color.BLACK));
+        queens.put(Position.from(File.D, Rank.ONE), Queen.WHITE);
+        queens.put(Position.from(File.D, Rank.EIGHT), Queen.BLACK);
 
         return queens;
     }
 
     private static Map<Position, King> createInitialKings() {
         Map<Position, King> kings = new HashMap<>();
-        kings.put(Position.from(File.E, Rank.ONE), new King(Color.WHITE));
-        kings.put(Position.from(File.E, Rank.EIGHT), new King(Color.BLACK));
+        kings.put(Position.from(File.E, Rank.ONE), King.WHITE);
+        kings.put(Position.from(File.E, Rank.EIGHT), King.BLACK);
 
         return kings;
     }

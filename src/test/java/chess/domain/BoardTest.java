@@ -25,7 +25,7 @@ class BoardTest {
 
         Piece findPiece = board.findPieceByPosition(Position.from(File.A, Rank.ONE));
 
-        assertThat(findPiece).isEqualTo(new Rook(Color.WHITE));
+        assertThat(findPiece).isEqualTo(Rook.WHITE);
     }
 
     @DisplayName("해당 위치에 기물이 없으면 Empty를 반환한다")
@@ -96,14 +96,14 @@ class BoardTest {
             Position knightTargetPosition = Position.from(File.E, Rank.FIVE);
 
             Map<Position, Piece> pieces = new HashMap<>();
-            pieces.put(knightSourcePosition, new Knight(Color.WHITE));
-            pieces.put(knightTargetPosition, new Rook(Color.BLACK));
+            pieces.put(knightSourcePosition, Knight.WHITE);
+            pieces.put(knightTargetPosition, Rook.BLACK);
 
             Board board = new Board(pieces);
 
             board.move(knightSourcePosition, knightTargetPosition, Color.WHITE);
 
-            assertThat(pieces).containsEntry(knightTargetPosition, new Knight(Color.WHITE));
+            assertThat(pieces).containsEntry(knightTargetPosition, Knight.WHITE);
         }
     }
 }
