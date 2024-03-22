@@ -1,12 +1,5 @@
 package model.piece;
 
-import static model.position.Position.from;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
-import java.util.Set;
-import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
@@ -14,6 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.Set;
+import java.util.stream.Stream;
+
+import static model.position.Position.from;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RookTest {
 
@@ -54,10 +55,14 @@ class RookTest {
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(from("a8"), from("a2")),
-                        Set.of(from("a3"), from("a4"), from("a5"), from("a6"), from("a7"))),
-                Arguments.of(new Moving(from("h8"), from("d8")), Set.of(from("g8"), from("f8"), from("e8"))),
-                Arguments.of(new Moving(from("c3"), from("c1")), Set.of(from("c2"))),
-                Arguments.of(new Moving(from("g2"), from("g6")), Set.of(from("g3"), from("g4"), from("g5")))
+                        Set.of(from("a3"), from("a4"), from("a5"),
+                                from("a6"), from("a7"))),
+                Arguments.of(new Moving(from("h8"), from("d8")),
+                        Set.of(from("g8"), from("f8"), from("e8"))),
+                Arguments.of(new Moving(from("c3"), from("c1")),
+                        Set.of(from("c2"))),
+                Arguments.of(new Moving(from("g2"), from("g6")),
+                        Set.of(from("g3"), from("g4"), from("g5")))
         );
     }
 }

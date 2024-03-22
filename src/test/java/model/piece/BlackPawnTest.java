@@ -7,23 +7,25 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
+import static model.position.Position.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class PawnTest {
+class BlackPawnTest {
 
     @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
     @ParameterizedTest
     @MethodSource("cantMovableParameterProvider")
     void invalidRoute(final Moving moving) {
-        final Pawn pawn = new BlackPawn();
+        final Pawn blackPawn = new BlackPawn();
 
         assertAll(
-                () -> assertThat(pawn.canMovable(moving)).isFalse(),
-                () -> assertThatThrownBy(() -> pawn.getMoveRoute(moving))
+                () -> assertThat(blackPawn.canMovable(moving)).isFalse(),
+                () -> assertThatThrownBy(() -> blackPawn.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
         );
 
@@ -31,25 +33,29 @@ class PawnTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("a6"), Position.from("a4"))),
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a4"))),
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a8")))
+                Arguments.of(new Moving(from("a6"), from("a4"))),
+                Arguments.of(new Moving(from("a7"), from("a4"))),
+                Arguments.of(new Moving(from("a7"), from("a8")))
         );
     }
 
     @DisplayName("이동할 수 있다면 경로를 반환한다.")
     @ParameterizedTest
     @MethodSource("canMovableParameterProvider")
-    void canMovable(final Moving moving) {
-        final Pawn pawn = new BlackPawn();
+    void canMovable(final Moving moving, final Set<Position> expected) {
+        final Pawn blackPawn = new BlackPawn();
 
-        assertThat(pawn.canMovable(moving)).isTrue();
+        assertAll(
+                () -> assertThat(blackPawn.canMovable(moving)).isTrue(),
+                () -> assertThat(blackPawn.getMoveRoute(moving)).isEqualTo(expected)
+        );
     }
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a5"))),
-                Arguments.of(new Moving(Position.from("a6"), Position.from("a5")))
+                Arguments.of(new Moving(from("a7"), from("a5")), Set.of(from("a6"))),
+                Arguments.of(new Moving(from("a7"), from("a6")), Set.of()),
+                Arguments.of(new Moving(from("a6"), from("a5")), Set.of())
         );
     }
 }
