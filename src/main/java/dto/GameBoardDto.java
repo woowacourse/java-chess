@@ -1,13 +1,13 @@
 package dto;
 
+import model.GameBoard;
+import model.piece.Piece;
+import model.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.GameBoard;
-import view.message.PieceType;
-import model.piece.Piece;
-import model.position.Position;
 
 public class GameBoardDto {
 
@@ -22,7 +22,7 @@ public class GameBoardDto {
         Map<Position, Piece> board = gameBoard.getBoard();
 
         for (Entry<Position, Piece> entry : board.entrySet()) {
-            tmp.get(entry.getKey().getRowIndex()).set(entry.getKey().getColumnIndex(), PieceType.from(entry.getValue()).getValue());
+            tmp.get(entry.getKey().getRowIndex()).set(entry.getKey().getColumnIndex(), entry.getValue().getName());
         }
 
         List<String> result = new ArrayList<>();

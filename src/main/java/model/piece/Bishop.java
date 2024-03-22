@@ -1,15 +1,15 @@
 package model.piece;
 
-import java.util.Set;
 import model.Camp;
-import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
+
+import java.util.Set;
 
 public class Bishop extends Piece {
 
     public Bishop(final Camp camp) {
-        super(camp);
+        super(camp, new PieceName("b"));
     }
 
     @Override
@@ -30,6 +30,6 @@ public class Bishop extends Piece {
 
     @Override
     public String toString() {
-        return PieceType.from(this).getValue();
+        return getName();
     }
 }

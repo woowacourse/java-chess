@@ -1,16 +1,16 @@
 package model.piece;
 
-import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
-import view.message.PieceType;
+
+import java.util.Set;
 
 public class Pawn extends Piece {
 
     public Pawn(final Camp camp) {
-        super(camp);
+        super(camp, new PieceName("p"));
     }
 
     @Override
@@ -96,6 +96,6 @@ public class Pawn extends Piece {
 
     @Override
     public String toString() {
-        return PieceType.from(this).getValue();
+        return getName();
     }
 }

@@ -1,15 +1,15 @@
 package model.piece;
 
-import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import view.message.PieceType;
+
+import java.util.Set;
 
 public class King extends Piece {
 
     public King(final Camp camp) {
-        super(camp);
+        super(camp, new PieceName("k"));
     }
 
     @Override
@@ -39,6 +39,6 @@ public class King extends Piece {
 
     @Override
     public String toString() {
-        return PieceType.from(this).getValue();
+        return getName();
     }
 }

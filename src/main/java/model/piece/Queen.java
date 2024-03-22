@@ -1,15 +1,15 @@
 package model.piece;
 
-import java.util.Set;
 import model.Camp;
-import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
+
+import java.util.Set;
 
 public class Queen extends Piece {
 
     public Queen(final Camp camp) {
-        super(camp);
+        super(camp, new PieceName("q"));
     }
 
     @Override
@@ -30,6 +30,6 @@ public class Queen extends Piece {
 
     @Override
     public String toString() {
-        return PieceType.from(this).getValue();
+        return getName();
     }
 }
