@@ -44,10 +44,13 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
+    // TODO : 가독성 개선
     private static boolean isSameDirection(final Direction direction, final Vector vector) {
         for (int step = MIN_BOARD_DISTANCE; step <= MAX_BOARD_DISTANCE; step++) {
-            if (canReach(findDistance(direction.fileVector, step), vector.file()) && canReach(
-                    findDistance(direction.rankVector, step), vector.rank())) {
+            int fileVector = direction.fileVector;
+            int rankVector = direction.rankVector;
+
+            if (canReach(findDistance(fileVector, step), vector.file()) && canReach(findDistance(rankVector, step), vector.rank())) {
                 return true;
             }
         }
