@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.view.CommendDto;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -11,6 +12,13 @@ public class ChessGame {
     public final Board board;
     public ChessGame(Board board) {
         this.board = board;
+    }
+
+    public void handleMove(CommendDto commendDto, Color currentTurn) {
+        Position from = Position.from(commendDto.from());
+        Position to = Position.from(commendDto.to());
+        List<Position> movablePositions = generateMovablePositions(from, currentTurn);
+        movePiece(movablePositions, from, to);
     }
 
     public List<Position> generateMovablePositions(Position fromPosition, Color currentTurn) {

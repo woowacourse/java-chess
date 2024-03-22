@@ -52,12 +52,7 @@ public class ChessGameController {
     }
 
     private void handleMoveCommend(ChessGame chessGame, CommendDto commendDto, Color currentTurn) {
-        Position from = Position.from(commendDto.from());
-        Position to = Position.from(commendDto.to());
-
-        List<Position> movablePositions = chessGame.generateMovablePositions(from, currentTurn);
-        chessGame.movePiece(movablePositions, from, to);
-
+        chessGame.handleMove(commendDto, currentTurn);
         OutputView.printBoard(chessGame.getBoard());
     }
 }
