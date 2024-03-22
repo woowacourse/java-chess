@@ -1,8 +1,5 @@
 package chess.view;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public enum GameCommand {
 
     START("start"),
@@ -27,11 +24,7 @@ public enum GameCommand {
             return MOVE;
         }
 
-        String candidates = Arrays.stream(values())
-                .map(GameCommand::toString)
-                .collect(Collectors.joining(", "));
-
-        throw new IllegalArgumentException(String.format("[ERROR] %s만 입력할 수 있습니다.", candidates));
+        throw new IllegalArgumentException("[ERROR] start, end, move만 입력할 수 있습니다.");
     }
 
     @Override
