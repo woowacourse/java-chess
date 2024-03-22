@@ -27,16 +27,7 @@ public class King extends Piece {
         if (moving.isNotMoved()) {
             return false;
         }
-        final Position currentPosition = moving.getCurrentPosition();
-        final Position nextPosition = moving.getNextPosition();
-
-        final int currentRank = currentPosition.getRankIndex();
-        final int currentFile = currentPosition.getFileIndex();
-
-        final int nextRank = nextPosition.getRankIndex();
-        final int nextFile = nextPosition.getFileIndex();
-
-        return Math.abs(nextRank - currentRank) <= 1 && Math.abs(nextFile - currentFile) <= 1;
+        return moving.isAdjacent();
     }
 
     @Override

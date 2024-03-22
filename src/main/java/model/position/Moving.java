@@ -44,6 +44,16 @@ public class Moving {
         return Objects.equals(currentPosition, nextPosition);
     }
 
+    public boolean isAdjacent() {
+        final int currentRank = currentPosition.getRankIndex();
+        final int currentFile = currentPosition.getFileIndex();
+
+        final int nextRank = nextPosition.getRankIndex();
+        final int nextFile = nextPosition.getFileIndex();
+
+        return Math.abs(nextRank - currentRank) <= 1 && Math.abs(nextFile - currentFile) <= 1;
+    }
+
     public Set<Position> route() {
         final int currentRank = currentPosition.getRankIndex();
         final int currentFile = currentPosition.getFileIndex();
