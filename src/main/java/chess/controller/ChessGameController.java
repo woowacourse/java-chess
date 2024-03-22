@@ -32,15 +32,12 @@ public class ChessGameController {
 
     private GameState playEachTurn(GameState gameState) {
         List<String> command = inputView.readCommand();
-        gameState = gameState.play(command);
-        return gameState;
+        return gameState.play(command);
     }
 
-
     private void printChessBoardInProgress(GameState gameState, ChessBoard chessBoard) {
-        ChessBoardDto chessBoardDto;
         if (!gameState.isEnd()) {
-            chessBoardDto = chessBoard.convertToDto();
+            ChessBoardDto chessBoardDto = chessBoard.convertToDto();
             outputView.printChessBoard(chessBoardDto);
         }
     }
