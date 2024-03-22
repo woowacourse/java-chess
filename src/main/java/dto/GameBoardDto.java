@@ -1,14 +1,13 @@
 package dto;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 import model.ChessGame;
 import model.piece.Piece;
 import model.position.Column;
 import model.position.Position;
 import model.position.Row;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GameBoardDto {
 
@@ -24,7 +23,7 @@ public class GameBoardDto {
                 .map(row -> Arrays.stream(Column.values())
                         .map(column -> createRow(board, column, row))
                         .collect(Collectors.joining())
-                ).collect(Collectors.joining("\n"));
+                ).collect(Collectors.joining(System.lineSeparator()));
         return new GameBoardDto(chessBoard);
     }
 
