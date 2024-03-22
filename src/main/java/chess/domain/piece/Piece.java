@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Position;
@@ -16,8 +18,14 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public boolean isAllyOf(final Piece other) {
-        return color == other.color;
+    protected static Set<Piece> initialPiecesOf(
+            final Set<Position> initialPositions,
+            final Color color,
+            final BiFunction<Color, Position, Piece> pieceConstructor
+    ) {
+        return initialPositions.stream()
+                .map(position -> pieceConstructor.apply(color, position))
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     public Color color() {

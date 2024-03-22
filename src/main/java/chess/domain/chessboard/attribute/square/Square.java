@@ -8,12 +8,16 @@ public class Square {
 
     private final Piece piece;
 
-    public Square() {
-        piece = null;
+    private Square(final Piece piece) {
+        this.piece = piece;
     }
 
-    public Square(final Piece piece) {
-        this.piece = piece;
+    public static Square empty() {
+        return new Square(null);
+    }
+
+    public static Square from(final Piece piece) {
+        return new Square(piece);
     }
 
     public Optional<Piece> piece() {

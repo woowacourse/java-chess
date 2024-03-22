@@ -23,6 +23,10 @@ public class Position {
         return of(File.of(position.charAt(0)), Rank.of(position.charAt(1)));
     }
 
+    public static Position of(final Rank rank, final File file) {
+        return of(file, rank);
+    }
+
     public static Position of(final File file, final Rank rank) {
         if (POSITIONS.isEmpty()) {
             initializePositions();
