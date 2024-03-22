@@ -12,7 +12,7 @@ public abstract class Piece {
     private final Color color;
     private final PieceType pieceType;
 
-    public Piece(Color color, PieceType pieceType, Set<Direction> directions) {
+    protected Piece(Color color, PieceType pieceType, Set<Direction> directions) {
         this.color = color;
         this.pieceType = pieceType;
         this.directions = directions;
