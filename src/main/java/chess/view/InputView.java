@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.dto.MoveRequest;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

@@ -31,6 +31,10 @@ public class Square {
         return squareCache.computeIfAbsent(squareKey, k -> new Square(file, rank));
     }
 
+    private static String generateSquareKey(final File file, final Rank rank) {
+        return file.name() + rank.name();
+    }
+
     public Square move(final int fileMoveStep, final int rankMoveStep) {
         String newSquareKey = generateSquareKey(fileMoveStep, rankMoveStep);
         return squareCache.computeIfAbsent(newSquareKey, k -> {
@@ -44,10 +48,6 @@ public class Square {
         int newFileIndex = Math.max(MIN_BOARD_INDEX, Math.min(MAX_BOARD_INDEX, getFileIndex() + fileMoveStep));
         int newRankIndex = Math.max(MIN_BOARD_INDEX, Math.min(MAX_BOARD_INDEX, getRankIndex() + rankMoveStep));
         return File.values()[newFileIndex].name() + Rank.values()[newRankIndex].name();
-    }
-
-    private static String generateSquareKey(final File file, final Rank rank) {
-        return file.name() + rank.name();
     }
 
     public int getFileIndex() {

@@ -1,10 +1,9 @@
-package chess;
-
-import chess.domain.game.Game;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+package chess.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("게임")
 class GameTest {

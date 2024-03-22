@@ -5,14 +5,13 @@ import chess.domain.board.BoardFactory;
 import chess.domain.pieces.piece.Color;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
-
 import java.util.List;
 
 public class Game {
 
     private static final String INVALID_TURN = "헤당 색의 턴이 아닙니다.";
-    private Color turn;
     private final Board board;
+    private Color turn;
 
     public Game() {
         this.turn = Color.WHITE;
