@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandType;
-import chess.domain.Turn;
+import chess.domain.CurrentTurn;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
 import chess.domain.position.Path;
@@ -38,41 +38,39 @@ public class ChessController {
     // TODO: 게임을 진행하는 로직(ex: turn 관리)을 ChessGame으로 분리
     private void startGame() {
         ChessBoard chessBoard = makeChessBoard();
-        Turn turn = new Turn(Color.WHITE);
 
-        ExceptionRetryHandler.handle(() -> tryProcessUntilValid(chessBoard, turn));
+        ExceptionRetryHandler.handle(() -> tryProcessUntilValid(chessBoard));
     }
 
     private ChessBoard makeChessBoard() {
         ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
-        ChessBoard chessBoard = chessBoardMaker.make();
+        ChessBoard chessBoard = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
 
-        outputView.printChessBoard(chessBoard.getSquares());
+        outputView.printChessBoard(chessBoard.squares());
         return chessBoard;
     }
 
-    private void tryProcessUntilValid(ChessBoard chessBoard, Turn turn) {
+    private void tryProcessUntilValid(ChessBoard chessBoard) {
         Command command = inputView.readCommand();
 
         while (command.type() != CommandType.END) {
-            tryProcess(command, chessBoard, turn);
+            tryProcess(command, chessBoard);
             command = inputView.readCommand();
         }
     }
 
-    private void tryProcess(Command command, ChessBoard chessBoard, Turn turn) {
+    private void tryProcess(Command command, ChessBoard chessBoard) {
         if (command.type() == CommandType.MOVE) {
-            processTurn(command, chessBoard, turn);
-            turn.change();
+            processTurn(command, chessBoard);
         }
     }
 
-    private void processTurn(Command command, ChessBoard chessBoard, Turn turn) {
+    private void processTurn(Command command, ChessBoard chessBoard) {
         MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
         Path path = makePath(moveArgumentDto);
-        chessBoard.move(path, turn.getCurrentTurn());
+        chessBoard.move(path);
 
-        outputView.printChessBoard(chessBoard.getSquares());
+        outputView.printChessBoard(chessBoard.squares());
     }
 
     private static Path makePath(MoveArgumentDto moveArgumentDto) {

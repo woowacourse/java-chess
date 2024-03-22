@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.CurrentTurn;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
@@ -36,12 +37,11 @@ public class ChessBoardTest {
     @Test
     void startEmptyExceptionTest() {
         // given
-        ChessBoard chessBoard = new ChessBoard(squares);
+        ChessBoard chessBoard = new ChessBoard(squares, new CurrentTurn(Color.WHITE));
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
-        Color currentTurn = Color.BLACK;
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(path, currentTurn))
+        assertThatThrownBy(() -> chessBoard.move(path))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작 위치에 아군 체스말이 존재해야 합니다.");
     }
@@ -51,15 +51,15 @@ public class ChessBoardTest {
     void movePieceTest() {
         // given
         squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        ChessBoard chessBoard = new ChessBoard(squares);
+        ChessBoard chessBoard = new ChessBoard(squares, new CurrentTurn(Color.WHITE));
         Map<Position, Square> expected = provideEmptyBoard();
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
-        assertThat(chessBoard.getSquares()).isEqualTo(expected);
+        assertThat(chessBoard.squares()).isEqualTo(expected);
     }
 
     @DisplayName("target이 체스말인 경우 공격한다.")
@@ -68,15 +68,15 @@ public class ChessBoardTest {
         // given
         squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
         squares.put(new Position(Rank.FIRST, File.B), Queen.from(Color.BLACK));
-        ChessBoard chessBoard = new ChessBoard(squares);
+        ChessBoard chessBoard = new ChessBoard(squares, new CurrentTurn(Color.WHITE));
         Map<Position, Square> expected = provideEmptyBoard();
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
-        assertThat(chessBoard.getSquares()).isEqualTo(expected);
+        assertThat(chessBoard.squares()).isEqualTo(expected);
     }
 
 
