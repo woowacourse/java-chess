@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import exception.InvalidMovingException;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
@@ -28,7 +29,7 @@ class PawnTest {
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isFalse(),
                 () -> assertThatThrownBy(() -> pawn.getMoveRoute(moving))
-                        .isInstanceOf(IllegalArgumentException.class)
+                        .isInstanceOf(InvalidMovingException.class)
         );
 
     }

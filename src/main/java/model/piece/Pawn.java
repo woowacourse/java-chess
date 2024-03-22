@@ -1,5 +1,7 @@
 package model.piece;
 
+import constant.ErrorCode;
+import exception.InvalidMovingException;
 import java.util.Set;
 import model.Camp;
 import model.position.Moving;
@@ -18,7 +20,7 @@ public class Pawn extends Piece {
         final Position currentPosition = moving.getCurrentPosition();
         final Position nextPosition = moving.getNextPosition();
         if (!canMovable(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+            throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
         }
         if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
             return Set.of();
@@ -68,7 +70,7 @@ public class Pawn extends Piece {
     @Override
     public Set<Position> getAttackRoute(final Moving moving) {
         if (!canAttack(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+            throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
         }
         return Set.of();
     }

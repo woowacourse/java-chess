@@ -1,5 +1,7 @@
 package view.message;
 
+import constant.ErrorCode;
+import exception.NoMessageException;
 import java.util.Arrays;
 import model.Camp;
 import model.piece.Bishop;
@@ -36,7 +38,7 @@ public enum PieceType {
         return Arrays.stream(values())
                 .filter(pieceType -> pieceType.piece.equals(target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 피스는 존재하지 않습니다."));
+                .orElseThrow(() -> new NoMessageException(ErrorCode.NO_MESSAGE)); // TODO 해당하는 값이 없음
     }
 
     public String getValue() {

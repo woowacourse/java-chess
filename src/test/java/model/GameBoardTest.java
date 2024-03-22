@@ -1,5 +1,17 @@
 package model;
 
+import static model.Fixtures.A6;
+import static model.Fixtures.A7;
+import static model.Fixtures.E4;
+import static model.Fixtures.E5;
+import static model.Fixtures.E6;
+import static model.Fixtures.E7;
+import static model.Fixtures.F6;
+import static model.Fixtures.G8;
+
+import exception.InvalidTurnException;
+import exception.PieceDoesNotExistException;
+import exception.PieceExistInRouteException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -77,11 +89,11 @@ class GameBoardTest {
         final GameBoard gameBoard = new GameBoard();
         gameBoard.setting();
 
-        final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
+        final Moving moving = new Moving(E4, E5);
 
         //when & then
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(PieceDoesNotExistException.class);
     }
 
     @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
@@ -91,14 +103,15 @@ class GameBoardTest {
         gameBoard.setting();
 
         final Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(Position.from("e6"), new Queen(Camp.BLACK));
+        board.put(E6, new Queen(Camp.BLACK));
 
-        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(E7, E5);
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 경로에 다른 기물이 있습니다.");
+                .isInstanceOf(PieceExistInRouteException.class);
     }
+
+    //TODO 폰 테스트 필히 추가
 
     @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
     @Test
@@ -107,13 +120,12 @@ class GameBoardTest {
         gameBoard.setting();
 
         final Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(Position.from("e5"), new Queen(Camp.BLACK));
+        board.put(F6, new Queen(Camp.BLACK));
 
-        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(G8, F6);
 
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 불가");
+                .isInstanceOf(PieceExistInRouteException.class);
     }
 
     @Test
@@ -124,11 +136,10 @@ class GameBoardTest {
         gameBoard.setting();
 
         //when
-        final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
+        final Moving moving = new Moving(A7, A6);
 
         //then
         Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("자신의 기물만 이동 가능합니다.");
+                .isInstanceOf(InvalidTurnException.class);
     }
 }

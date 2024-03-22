@@ -1,10 +1,12 @@
 package model.piece;
 
+import constant.ErrorCode;
+import exception.InvalidMovingException;
 import java.util.Set;
 import model.Camp;
-import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
+import view.message.PieceType;
 
 public class Rook extends Piece {
 
@@ -14,10 +16,10 @@ public class Rook extends Piece {
 
     @Override
     public Set<Position> getMoveRoute(final Moving moving) {
-        if (!canMovable(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+        if (canMovable(moving)) {
+            return moving.route();
         }
-        return moving.route();
+        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
     }
 
     @Override

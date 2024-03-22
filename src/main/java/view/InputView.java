@@ -1,5 +1,7 @@
 package view;
 
+import constant.ErrorCode;
+import exception.InvalidInputException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +21,7 @@ public class InputView {
 
     private void validate(String value) {
         if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("유효하지 않은 입력입니다.");
+            throw new InvalidInputException(ErrorCode.INVALID_INPUT);
         }
     }
 }

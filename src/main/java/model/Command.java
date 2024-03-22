@@ -1,5 +1,7 @@
 package model;
 
+import constant.ErrorCode;
+import exception.InvalidCommandException;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -20,7 +22,7 @@ public enum Command {
         boolean match = Arrays.stream(values())
                 .anyMatch(command -> Pattern.compile(command.value).matcher(input).matches());
         if (!match) {
-            throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
+            throw new InvalidCommandException(ErrorCode.INVALID_COMMAND);
         }
     }
 
@@ -28,6 +30,6 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> Pattern.compile(command.value).matcher(value).matches())
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하였습니다."));
+                .orElseThrow(() -> new InvalidCommandException(ErrorCode.INVALID_COMMAND));
     }
 }

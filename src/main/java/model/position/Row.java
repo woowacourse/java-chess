@@ -1,5 +1,7 @@
 package model.position;
 
+import constant.ErrorCode;
+import exception.InvalidPositionException;
 import java.util.Arrays;
 
 public enum Row {
@@ -25,7 +27,7 @@ public enum Row {
         return Arrays.stream(values())
                 .filter(row -> row.value.equals(String.valueOf(input)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 row값을 입력했습니다."));
+                .orElseThrow(() -> new InvalidPositionException(ErrorCode.INVALID_POSITION));
     }
 
     public static Row from(int targetIndex) {

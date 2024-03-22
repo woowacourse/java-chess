@@ -1,5 +1,9 @@
 package model;
 
+import constant.ErrorCode;
+import exception.InvalidTurnException;
+import exception.PieceDoesNotExistException;
+import exception.PieceExistInRouteException;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,26 +75,26 @@ public class GameBoard {
     private void validate(Camp camp, Moving moving) {
         Position currentPosition = moving.getCurrentPosition();
         if (!board.containsKey(currentPosition)) {
-            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+            throw new PieceDoesNotExistException(ErrorCode.PIECE_DOES_NOT_EXIST_POSITION);  //TODO ("해당 위치에 기물이 없습니다.");
         }
 
         Piece piece = board.get(currentPosition);
         if (!piece.isSameCamp(camp)) {
-            throw new IllegalArgumentException("자신의 기물만 이동 가능합니다.");
+            throw new InvalidTurnException(ErrorCode.INVALID_CAMP_PIECE); // TODO ("자신의 기물만 이동 가능합니다.");
         }
 
         Set<Position> positions = getRoute(moving, piece);
 
         for (Position position : positions) {
             if (board.containsKey(position)) {
-                throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
+                throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE); // TODO ("이동 경로에 다른 기물이 있습니다.");
             }
         }
 
         // TODO 테스트 보충
         Piece target = board.get(moving.getNextPosition());
         if (target != null && target.isSameCamp(piece.getCamp())) {
-            throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
+            throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE); // TODO 도착 지점에 같은 진영의 기물이 있습니다.
         }
     }
 

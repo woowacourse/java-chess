@@ -1,5 +1,7 @@
 package model.piece;
 
+import constant.ErrorCode;
+import exception.InvalidMovingException;
 import java.util.Set;
 import model.Camp;
 import model.position.Moving;
@@ -14,10 +16,10 @@ public class King extends Piece {
 
     @Override
     public Set<Position> getMoveRoute(final Moving moving) {
-        if (!canMovable(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+        if (canMovable(moving)) {
+            return Set.of();
         }
-        return Set.of();
+        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
     }
 
     @Override

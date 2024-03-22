@@ -1,10 +1,12 @@
 package model.piece;
 
+import constant.ErrorCode;
+import exception.InvalidMovingException;
 import java.util.Set;
 import model.Camp;
-import view.message.PieceType;
 import model.position.Moving;
 import model.position.Position;
+import view.message.PieceType;
 
 public class Knight extends Piece {
 
@@ -17,7 +19,7 @@ public class Knight extends Piece {
         if (canMovable(moving)) {
             return Set.of();
         }
-        throw new IllegalArgumentException("이동 불가");
+        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
     }
 
     @Override

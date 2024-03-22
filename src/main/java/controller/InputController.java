@@ -1,5 +1,6 @@
 package controller;
 
+import exception.CustomException;
 import java.util.Collections;
 import java.util.List;
 import model.Command;
@@ -27,7 +28,7 @@ public class InputController {
     private List<String> readCommand() {
         try {
             return readLine();
-        } catch (IllegalArgumentException exception) {
+        } catch (CustomException exception) {
             outputView.printException(exception);
         }
         return Collections.emptyList();

@@ -1,5 +1,7 @@
 package model.position;
 
+import constant.ErrorCode;
+import exception.InvalidPositionException;
 import java.util.Objects;
 
 public class Position {
@@ -19,10 +21,10 @@ public class Position {
 
     private static void validate(final String command) {
         if (command == null || command.isBlank()) {
-            throw new IllegalArgumentException("공백이 입력되었습니다."); //TODO 예외 메시지 수정
+            throw new InvalidPositionException(ErrorCode.INVALID_POSITION);
         }
         if (command.length() != 2) {
-            throw new IllegalArgumentException("유효하지 않은 길이의 명령입니다.");
+            throw new InvalidPositionException(ErrorCode.INVALID_POSITION);
         }
     }
 

@@ -1,6 +1,8 @@
 package controller;
 
+import constant.ErrorCode;
 import dto.GameBoardDto;
+import exception.InvalidStatusException;
 import java.util.List;
 import model.Camp;
 import model.Command;
@@ -37,7 +39,7 @@ public class ChessController {
             isStart = checkStart(command, isStart);
 
             if (!isStart) {
-                throw new IllegalArgumentException("시작되지 않은 게임입니다.");
+                throw new InvalidStatusException(ErrorCode.INVALID_STATUS); // TODO 시작하지 않았는데 진행
             }
             if (command == Command.MOVE) {
                 Moving moving = getMoving(input.get(1), input.get(2));
@@ -57,7 +59,7 @@ public class ChessController {
 
     private boolean checkStart(final Command command, boolean isStart) {
         if (command == Command.START && isStart) {
-            throw new IllegalArgumentException("이미 게임이 진행중입니다.");
+            throw new InvalidStatusException(ErrorCode.INVALID_STATUS); //TODO 시작인데 재시작
         }
         if (command == Command.START) {
             isStart = true;

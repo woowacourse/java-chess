@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import exception.InvalidMovingException;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
@@ -41,7 +42,7 @@ class KingTest {
         assertAll(
                 () -> assertThat(king.canMovable(moving)).isFalse(),
                 () -> assertThatThrownBy(() -> king.getMoveRoute(moving))
-                        .isInstanceOf(IllegalArgumentException.class)
+                        .isInstanceOf(InvalidMovingException.class)
         );
     }
 

@@ -1,7 +1,7 @@
 package model.piece;
 
-import static model.Fixtures.A3;
 import static model.Fixtures.A2;
+import static model.Fixtures.A3;
 import static model.Fixtures.A4;
 import static model.Fixtures.A5;
 import static model.Fixtures.A6;
@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import exception.InvalidMovingException;
 import java.util.Set;
 import java.util.stream.Stream;
 import model.Camp;
@@ -51,7 +52,7 @@ class RookTest {
         assertAll(
                 () -> assertThat(rook.canMovable(moving)).isFalse(),
                 () -> assertThatThrownBy(() -> rook.getMoveRoute(moving))
-                        .isInstanceOf(IllegalArgumentException.class)
+                        .isInstanceOf(InvalidMovingException.class)
         );
     }
 

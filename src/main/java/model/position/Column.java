@@ -1,5 +1,7 @@
 package model.position;
 
+import constant.ErrorCode;
+import exception.InvalidPositionException;
 import java.util.Arrays;
 
 public enum Column {
@@ -26,7 +28,7 @@ public enum Column {
         return Arrays.stream(values())
                 .filter(column -> column.value.equals(String.valueOf(input)))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 column값을 입력했습니다."));
+                .orElseThrow(() -> new InvalidPositionException(ErrorCode.INVALID_POSITION));
     }
 
     public static Column from(int targetIndex) {

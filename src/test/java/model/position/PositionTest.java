@@ -2,6 +2,7 @@ package model.position;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.InvalidPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EmptySource;
@@ -17,6 +18,6 @@ class PositionTest {
     @ValueSource(strings = {"aa1", "abb", "h", "11", "aa33", "a1.", ".a1"})
     void invalidPosition(String value) {
         assertThatThrownBy(() -> Position.from(value))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidPositionException.class);
     }
 }
