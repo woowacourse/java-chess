@@ -48,6 +48,9 @@ public class Board {
     }
 
     private void validateReachability(Position source, Position destination, Piece piece) {
+        if (source.equals(destination)) {
+            throw new IllegalArgumentException("출발지와 도착지가 동일합니다.");
+        }
         if (!piece.isMovable(source, destination, generatePiecePositions(source))) {
             throw new IllegalArgumentException("이동 위치까지 이동할 수 없습니다.");
         }
