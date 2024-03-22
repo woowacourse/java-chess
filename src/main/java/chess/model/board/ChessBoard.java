@@ -28,7 +28,7 @@ public class ChessBoard {
 
     private void validateSourceIsNull(Piece sourcePiece) {
         if (sourcePiece == null) {
-            throw new IllegalArgumentException("Source에 기물이 존재하지 않습니다.");
+            throw new IllegalArgumentException("소스 위치에 기물이 존재하지 않습니다.");
         }
     }
 

@@ -23,7 +23,7 @@ public class Movement {
 
     private void validateDifference(int difference) {
         if (abs(difference) > MAX_DIFFERENCE) {
-            throw new IllegalArgumentException("File 혹은 Rank의 좌표차 절댓값는 " + MAX_DIFFERENCE + " 이하입니다.");
+            throw new IllegalArgumentException("File 혹은 Rank의 좌표차 절댓값은 " + MAX_DIFFERENCE + " 이하입니다.");
         }
     }
 
