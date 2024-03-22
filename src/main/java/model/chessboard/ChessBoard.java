@@ -28,7 +28,7 @@ public class ChessBoard {
                         .isOccupied())
                 .findFirst()
                 .ifPresent(position -> {
-                    throw new IllegalArgumentException("목적 지점에 기물이 위치하여 이동할 수 없습니다.");
+                    throw new IllegalArgumentException("경로에 기물이 위치하여 이동할 수 없습니다.");
                 });
     }
 

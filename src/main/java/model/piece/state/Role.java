@@ -37,7 +37,7 @@ public abstract class Role {
 
     protected abstract Set<Route> possibleRoutes(Position position);
 
-    protected Route getRoute(MovingPattern movingPattern, Position movedPosition) {
+    protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();
         while (movedPosition.isAvailablePosition(movingPattern)) {
             movedPosition = movedPosition.getNextPosition(movingPattern);

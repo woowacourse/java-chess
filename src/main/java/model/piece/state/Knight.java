@@ -28,13 +28,13 @@ public final class Knight extends Role {
     public Set<Route> possibleRoutes(Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
         for (MovingPattern movingPattern : movingPatterns) {
-            possibleRoutes.add(getRoute(movingPattern, position));
+            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
         }
         return possibleRoutes;
     }
 
     @Override
-    protected Route getRoute(MovingPattern movingPattern, Position movedPosition) {
+    protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();
         if (movedPosition.isAvailablePosition(movingPattern)) {
             movedPosition = movedPosition.getNextPosition(movingPattern);

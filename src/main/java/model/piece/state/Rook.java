@@ -25,7 +25,7 @@ public final class Rook extends Role {
     public Set<Route> possibleRoutes(Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
         for (MovingPattern movingPattern : movingPatterns) {
-            possibleRoutes.add(getRoute(movingPattern, position));
+            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
         }
         return possibleRoutes;
     }
