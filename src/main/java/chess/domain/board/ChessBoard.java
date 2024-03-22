@@ -11,7 +11,6 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.dto.ChessBoardDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,10 +22,6 @@ public class ChessBoard {
         initializeWhitePieces();
     }
 
-    public ChessBoardDto convertToDto() {
-        return new ChessBoardDto(chessBoard);
-    }
-
     public void move(Position source, Position target) {
         if (!canMove(source, target)) {
             throw new IllegalArgumentException("올바르지 않은 이동입니다.");
@@ -34,6 +29,10 @@ public class ChessBoard {
         Piece sourcePiece = chessBoard.get(source);
         chessBoard.put(target, sourcePiece);
         chessBoard.remove(source);
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard;
     }
 
     private boolean canMove(Position source, Position target) {

@@ -37,7 +37,7 @@ public class ChessGameController {
 
     private void printChessBoardInProgress(GameState gameState, ChessBoard chessBoard) {
         if (!gameState.isEnd()) {
-            ChessBoardDto chessBoardDto = chessBoard.convertToDto();
+            ChessBoardDto chessBoardDto = new ChessBoardDto(chessBoard);
             outputView.printChessBoard(chessBoardDto);
         }
     }
