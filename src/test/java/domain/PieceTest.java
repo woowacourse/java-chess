@@ -28,8 +28,8 @@ public class PieceTest {
     @DisplayName("source 위치와 target 위치가 같으면 이동할 수 없다.")
     @Test
     void checkDifferentPosition() {
-        Position source = A1();
-        Position target = A1();
+        Position source = A1;
+        Position target = A1;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.noPieces()))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,8 +39,8 @@ public class PieceTest {
     @DisplayName("target 위치에 같은 색의 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoSameColorPieceAtTarget() {
-        Position source = A1();
-        Position target = A2();
+        Position source = A1;
+        Position target = A2;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE))))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -50,8 +50,8 @@ public class PieceTest {
     @DisplayName("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoPathPieces() {
-        Position source = A1();
-        Position target = A3();
+        Position source = A1;
+        Position target = A3;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.hasPathPieces(new Rook(Side.BLACK))))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -68,7 +68,7 @@ public class PieceTest {
             }
         };
 
-        assertThatThrownBy(() -> piece.checkValidMove(A1(), A2(), MovePathFixture.noPieces()))
+        assertThatThrownBy(() -> piece.checkValidMove(A1, A2, MovePathFixture.noPieces()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 어기면 이동할 수 없습니다.");
     }

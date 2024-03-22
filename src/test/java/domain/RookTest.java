@@ -29,10 +29,10 @@ class RookTest {
      */
     private static Stream<Arguments> movableTargetPosition() {
         return Stream.of(
-                Arguments.arguments(A2()),
-                Arguments.arguments(A3()),
-                Arguments.arguments(B1()),
-                Arguments.arguments(C1())
+                Arguments.arguments(A2),
+                Arguments.arguments(A3),
+                Arguments.arguments(B1),
+                Arguments.arguments(C1)
         );
     }
 
@@ -44,10 +44,10 @@ class RookTest {
      */
     private static Stream<Arguments> immovableTargetPosition() {
         return Stream.of(
-                Arguments.arguments(B2()),
-                Arguments.arguments(C2()),
-                Arguments.arguments(B3()),
-                Arguments.arguments(C3())
+                Arguments.arguments(B2),
+                Arguments.arguments(C2),
+                Arguments.arguments(B3),
+                Arguments.arguments(C3)
         );
     }
 
@@ -56,7 +56,7 @@ class RookTest {
     @MethodSource("movableTargetPosition")
     void canMoveTest(Position target) {
         Rook rook = new Rook(Side.WHITE);
-        Position source = A1();
+        Position source = A1;
 
         boolean actual = rook.hasFollowedRule(source, target, MovePathFixture.noPieces());
 
@@ -68,7 +68,7 @@ class RookTest {
     @MethodSource("immovableTargetPosition")
     void cantMoveTest(Position target) {
         Rook rook = new Rook(Side.BLACK);
-        Position source = A1();
+        Position source = A1;
 
         boolean actual = rook.hasFollowedRule(source, target, MovePathFixture.noPieces());
 

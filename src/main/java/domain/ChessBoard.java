@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Knight;
 import domain.piece.Piece;
 import java.util.Arrays;
 import java.util.LinkedHashMap;

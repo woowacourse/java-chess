@@ -35,7 +35,7 @@ class BishopTest {
     void canMoveTest(File targetFile, Rank targetRank) {
         Bishop bishop = new Bishop(Side.BLACK);
 
-        Position current = PositionFixture.D4();
+        Position current = PositionFixture.D4;
         Position target = new Position(targetFile, targetRank);
 
 //        boolean actual = bishop.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -49,7 +49,7 @@ class BishopTest {
     void cantMoveTest(File targetFile, Rank targetRank) {
         Bishop bishop = new Bishop(Side.BLACK);
 
-        Position current = PositionFixture.D4();
+        Position current = PositionFixture.D4;
         Position target = new Position(targetFile, targetRank);
 
 //        boolean actual = bishop.isRuleBroken(current, target, new LinkedHashMap<>());

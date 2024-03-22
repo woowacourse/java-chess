@@ -17,7 +17,7 @@ public class TurnTest {
 
         Turn turn = new Turn();
 
-        assertThatThrownBy(() -> turn.check(chessBoard, PositionFixture.a7()))
+        assertThatThrownBy(() -> turn.check(chessBoard, PositionFixture.A7))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -29,7 +29,7 @@ public class TurnTest {
 
         Turn turn = new Turn();
 
-        assertThatCode(() -> turn.check(chessBoard, PositionFixture.A2()))
+        assertThatCode(() -> turn.check(chessBoard, PositionFixture.A2))
                 .doesNotThrowAnyException();
     }
 
@@ -43,7 +43,7 @@ public class TurnTest {
 
         turn.end();
 
-        assertThatCode(() -> turn.check(chessBoard, PositionFixture.a7()))
+        assertThatCode(() -> turn.check(chessBoard, PositionFixture.A7))
                 .doesNotThrowAnyException();
     }
 }

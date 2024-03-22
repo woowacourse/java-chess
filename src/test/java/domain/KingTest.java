@@ -37,7 +37,7 @@ public class KingTest {
     void canMoveTest(File targetFile, Rank targetRank) {
         King king = new King(Side.BLACK);
 
-        Position current = PositionFixture.D4();
+        Position current = PositionFixture.D4;
         Position target = new Position(targetFile, targetRank);
 
 //        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -51,7 +51,7 @@ public class KingTest {
     void cantMoveTest(File targetFile, Rank targetRank) {
         King king = new King(Side.BLACK);
 
-        Position current = PositionFixture.D4();
+        Position current = PositionFixture.D4;
         Position target = new Position(targetFile, targetRank);
 
 //        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());

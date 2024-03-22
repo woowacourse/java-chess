@@ -32,7 +32,7 @@ public class QueenTest {
     void canMoveTest(File targetFile, Rank targetRank) {
         Queen queen = new Queen(Side.BLACK);
 
-        Position current = PositionFixture.D4();
+        Position current = PositionFixture.D4;
         Position target = new Position(targetFile, targetRank);
 
 //        boolean actual = queen.isRuleBroken(current, target, new LinkedHashMap<>());

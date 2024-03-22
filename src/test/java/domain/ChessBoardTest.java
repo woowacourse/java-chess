@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Knight;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
