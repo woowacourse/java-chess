@@ -22,34 +22,35 @@ public enum Direction {
     KNIGHT_DOWN_RIGHT(1, -2),
     ;
 
-    private final int x;
-    private final int y;
+    private final int file;
+    private final int rank;
 
-    Direction(int x, int y) {
-        this.x = x;
-        this.y = y;
+    Direction(int file, int rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Direction find(final int dx, final int dy) {
+    public static Direction find(final int fileDifference, final int rankDifference) {
         return Arrays.stream(values())
-                .filter(direction -> direction.isSameGradiant(dx, dy) && direction.isSameSign(dx, dy))
+                .filter(direction -> direction.isSameGradiant(fileDifference, rankDifference)
+                        && direction.isSameSign(fileDifference, rankDifference))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다."));
     }
 
-    public int calculateNextX(final int currentX) {
-        return currentX + this.x;
+    public int calculateNextFile(final int currentFile) {
+        return currentFile + this.file;
     }
 
-    public int calculateNextY(final int currentY) {
-        return currentY + this.y;
+    public int calculateNextRank(final int currentRank) {
+        return currentRank + this.rank;
     }
 
-    private boolean isSameGradiant(int dx, int dy) {
-        return (double) this.x / this.y == (double) dx / dy;
+    private boolean isSameGradiant(int fileDifference, int rankDifference) {
+        return (double) this.file / this.rank == (double) fileDifference / rankDifference;
     }
 
-    private boolean isSameSign(int dx, int dy) {
-        return this.x * dx >= 0 && this.y * dy >= 0;
+    private boolean isSameSign(int fileDifference, int rankDifference) {
+        return this.file * fileDifference >= 0 && this.rank * rankDifference >= 0;
     }
 }

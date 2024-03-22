@@ -26,8 +26,8 @@ public class DirectionTest {
         int currentX = 1;
         int currentY = 1;
 
-        int nextX = direction.calculateNextX(currentX);
-        int nextY = direction.calculateNextY(currentY);
+        int nextX = direction.calculateNextFile(currentX);
+        int nextY = direction.calculateNextRank(currentY);
 
         assertThat(nextX).isEqualTo(currentX + directionX);
         assertThat(nextY).isEqualTo(currentY + directionY);

@@ -26,9 +26,9 @@ public class ChessBoardExpression {
     }
 
     private static String makeLineExpression(final int lineNumber, final List<String> pieceExpressions) {
-        int startIdx = lineNumber * WIDTH;
-        int endIdx = lineNumber * WIDTH + HEIGHT;
-        List<String> pieceExpressionsOnLine = pieceExpressions.subList(startIdx, endIdx);
+        int startIndex = lineNumber * WIDTH;
+        int endIndex = lineNumber * WIDTH + HEIGHT;
+        List<String> pieceExpressionsOnLine = pieceExpressions.subList(startIndex, endIndex);
 
         return pieceExpressionsOnLine.stream()
                 .collect(Collectors.joining("", "", System.lineSeparator()));

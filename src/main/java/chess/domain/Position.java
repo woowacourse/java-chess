@@ -38,15 +38,15 @@ public class Position {
     }
 
     public Position moveTowardDirection(final Direction direction) {
-        char x = (char) direction.calculateNextX(this.file);
-        int y = direction.calculateNextY(this.rank);
-        return Position.of(x, y);
+        char file = (char) direction.calculateNextFile(this.file);
+        int rank = direction.calculateNextRank(this.rank);
+        return Position.of(file, rank);
     }
 
     public Direction calculateDirection(final Position target) {
-        int dx = target.file - this.file;
-        int dy = target.rank - this.rank;
+        int fileDifference = target.file - this.file;
+        int rankDifference = target.rank - this.rank;
 
-        return Direction.find(dx, dy);
+        return Direction.find(fileDifference, rankDifference);
     }
 }
