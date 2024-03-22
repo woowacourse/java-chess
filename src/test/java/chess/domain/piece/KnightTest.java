@@ -55,6 +55,19 @@ public class KnightTest {
     }
 
     @Test
+    @DisplayName("제자리 이동 할 수 없다")
+    void should_not_move_same_position() {
+        Piece piece = new Knight(Color.WHITE);
+
+        Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.ONE));
+
+        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 규칙을 위반한 움직임입니다.");
+    }
+
+    @Test
     @DisplayName("이동할 위치에 상대 말이 있고 잡을 수 있으면 이동할 수 있다")
     void should_move_when_target_space_has_other_color_piece_and_catchable() {
         Piece piece1 = new Knight(Color.WHITE);

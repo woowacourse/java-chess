@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
@@ -23,6 +24,19 @@ class RookTest {
         space1.movePiece(space2, List.of(space1, space2));
 
         assertThat(space2.pieceCharacter()).isEqualTo("r");
+    }
+
+    @Test
+    @DisplayName("제자리 이동 할 수 없다")
+    void should_not_move_same_position() {
+        Piece piece = new Rook(Color.WHITE);
+
+        Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.ONE));
+
+        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
 
     @Test

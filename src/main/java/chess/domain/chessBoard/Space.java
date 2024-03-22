@@ -23,8 +23,8 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace, List<Space> spaces) {
-        validateClearRoute(targetSpace, spaces);
         validateIsMovableSpace(targetSpace);
+        validateClearRoute(targetSpace, spaces);
         validateSameColorOnSpace(targetSpace);
         if (piece.isCatchable(position, targetSpace.position) || targetSpace.doesNotHavePiece()) {
             targetSpace.piece = piece;
