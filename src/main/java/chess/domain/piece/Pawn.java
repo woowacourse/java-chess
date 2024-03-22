@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.Calculator;
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
@@ -38,11 +39,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findBetweenPositionsWhenAttack(Position sourcePosition, Position targetPosition) {
-        int rowDifference = sourcePosition.calculateRowDifference(targetPosition);
-        int columnDifference = sourcePosition.calculateColumnDifference(targetPosition);
+    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
+        int rowDifference = positions.calculateRowDifference();
+        int columnDifference = positions.calculateColumnDifference();
         validateAttackable(rowDifference, columnDifference);
-        return findBetweenPositions(sourcePosition, rowDifference, columnDifference);
+        return findBetweenPositions(positions.source(), rowDifference, columnDifference);
     }
 
     private void validateAttackable(int rowDifference, int columnDifference) {

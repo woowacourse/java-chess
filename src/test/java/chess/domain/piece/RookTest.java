@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,9 @@ class RookTest {
     @Test
     void rookMoveOverLine() {
         assertThatThrownBy(() -> new Rook(Team.WHITE)
-                .findBetweenPositions(Position.of(1, 1), Position.of(2, 2)))
+                .findBetweenPositions(new Positions(
+                        Position.of(1, 1),
+                        Position.of(2, 2))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -33,7 +36,9 @@ class RookTest {
     @Test
     void betweenPosition() {
         assertThat(new Rook(Team.WHITE)
-                .findBetweenPositions(Position.of(4, 4), Position.of(4, 7)))
+                .findBetweenPositions(new Positions(
+                        Position.of(4, 4),
+                        Position.of(4, 7))))
                 .containsExactly(Position.of(4, 5), Position.of(4, 6));
     }
 
@@ -41,7 +46,9 @@ class RookTest {
     @Test
     void betweenPositionMinus() {
         assertThat(new Rook(Team.WHITE)
-                .findBetweenPositions(Position.of(4, 4), Position.of(1, 4)))
+                .findBetweenPositions(new Positions(
+                        Position.of(4, 4),
+                        Position.of(1, 4))))
                 .containsExactly(Position.of(3, 4), Position.of(2, 4));
     }
 

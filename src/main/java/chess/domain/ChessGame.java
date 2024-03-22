@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -14,9 +13,9 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public Map<Position, Character> movePiece(List<Position> positions, Runnable runnable) {
-        board.validateSameTeamByPosition(positions.get(0), currentTeam);
-        board.move(positions.get(0), positions.get(1));
+    public Map<Position, Character> movePiece(Positions positions, Runnable runnable) {
+        board.validateSameTeamByPosition(positions.source(), currentTeam);
+        board.move(positions);
         validateCheck(runnable);
         currentTeam = currentTeam.opponent();
         return board.mapPositionToCharacter();

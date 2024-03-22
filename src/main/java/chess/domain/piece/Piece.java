@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.List;
@@ -28,37 +29,31 @@ public abstract class Piece {
         return isMovable(rowDifference, columnDifference);
     }
 
-    public boolean isMovable(Position sourcePosition, Position targetPosition) {
-        int rowDifference = sourcePosition.calculateRowDifference(targetPosition);
-        int columnDifference = sourcePosition.calculateColumnDifference(targetPosition);
-
-        return isMovable(rowDifference, columnDifference);
+    public boolean isMovable(Positions positions) {
+        return isMovable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
-    public List<Position> findBetweenPositionsWhenAttack(Position sourcePosition, Position targetPosition) {
-        return findBetweenPositions(sourcePosition, targetPosition);
+    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
+        return findBetweenPositions(positions);
     }
 
-    public List<Position> findBetweenPositions(Position sourcePosition, Position targetPosition) {
-        validateMovable(sourcePosition, targetPosition);
-        int rowDifference = sourcePosition.calculateRowDifference(targetPosition);
-        int columnDifference = sourcePosition.calculateColumnDifference(targetPosition);
+    public List<Position> findBetweenPositions(Positions positions) {
+        validateMovable(positions);
+        int rowDifference = positions.calculateRowDifference();
+        int columnDifference = positions.calculateColumnDifference();
 
-        return findBetweenPositions(sourcePosition, rowDifference, columnDifference);
+        return findBetweenPositions(positions.source(), rowDifference, columnDifference);
     }
 
-    private void validateMovable(Position sourcePosition, Position targetPosition) {
-        if (!sourcePosition.equals(targetPosition) && isMovable(sourcePosition, targetPosition)) {
+    private void validateMovable(Positions positions) {
+        if (isMovable(positions)) {
             return;
         }
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
     }
 
-    public boolean isAttacking(Position sourcePosition, Position targetPosition) {
-        int rowDifference = sourcePosition.calculateRowDifference(targetPosition);
-        int columnDifference = sourcePosition.calculateColumnDifference(targetPosition);
-
-        return !sourcePosition.equals(targetPosition) && isAttackable(rowDifference, columnDifference);
+    public boolean isAttacking(Positions positions) {
+        return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
     public boolean isOppositeTeamWith(Team team) {

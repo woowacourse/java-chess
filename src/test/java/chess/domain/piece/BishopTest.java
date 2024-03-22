@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,9 @@ class BishopTest {
     @Test
     void bishopMoveOverDiagonalLine() {
         assertThatThrownBy(() -> new Bishop(Team.WHITE)
-                .findBetweenPositions(Position.of(4, 4), Position.of(1, 4)))
+                .findBetweenPositions(new Positions(
+                        Position.of(4, 4),
+                        Position.of(1, 4))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -33,7 +36,9 @@ class BishopTest {
     @Test
     void betweenPosition() {
         assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(Position.of(4, 4), Position.of(7, 7)))
+                .findBetweenPositions(new Positions(
+                        Position.of(4, 4),
+                        Position.of(7, 7))))
                 .containsExactly(Position.of(5, 5), Position.of(6, 6));
     }
 
@@ -41,7 +46,9 @@ class BishopTest {
     @Test
     void betweenPositionMinus() {
         assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(Position.of(4, 4), Position.of(1, 1)))
+                .findBetweenPositions(new Positions(
+                        Position.of(4, 4),
+                        Position.of(1, 1))))
                 .containsExactly(Position.of(3, 3), Position.of(2, 2));
     }
 }

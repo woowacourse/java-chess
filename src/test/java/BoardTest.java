@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -22,7 +23,9 @@ public class BoardTest {
     @Test
     void movePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        board.move(Position.of(2, 1), Position.of(3, 1));
+        board.move(new Positions(
+                Position.of(2, 1),
+                Position.of(3, 1)));
 
         assertThat(board.mapPositionToCharacter()).containsEntry(Position.of(3, 1), Character.WHITE_PAWN);
     }
@@ -50,7 +53,9 @@ public class BoardTest {
     @Test
     void invalidSourcePositionMovePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(Position.of(3, 1), Position.of(2, 2)))
+        assertThatThrownBy(() -> board.move(new Positions(
+                Position.of(3, 1),
+                Position.of(2, 2))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
     }
@@ -59,7 +64,9 @@ public class BoardTest {
     @Test
     void betweenPositionHasPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(Position.of(1, 3), Position.of(3, 5)))
+        assertThatThrownBy(() -> board.move(new Positions(
+                Position.of(1, 3),
+                Position.of(3, 5))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동을 가로막는 기물이 존재합니다.");
     }
@@ -68,7 +75,9 @@ public class BoardTest {
     @Test
     void targetPositionHasTeamPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(Position.of(1, 1), Position.of(1, 2)))
+        assertThatThrownBy(() -> board.move(new Positions(
+                Position.of(1, 1),
+                Position.of(1, 2))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치에 아군 기물이 존재합니다.");
     }

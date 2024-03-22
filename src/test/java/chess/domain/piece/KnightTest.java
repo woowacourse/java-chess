@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,9 @@ class KnightTest {
     @Test
     void knightMoveOverDayHieroglyph() {
         assertThatThrownBy(() -> new Knight(Team.WHITE)
-                .findBetweenPositions(Position.of(1, 1), Position.of(3, 3)))
+                .findBetweenPositions(new Positions(
+                        Position.of(1, 1),
+                        Position.of(3, 3))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
@@ -33,7 +36,9 @@ class KnightTest {
     @Test
     void betweenPosition() {
         assertThat(new Knight(Team.WHITE)
-                .findBetweenPositions(Position.of(3, 3), Position.of(2, 1)))
+                .findBetweenPositions(new Positions(
+                        Position.of(3, 3),
+                        Position.of(2, 1))))
                 .isEmpty();
     }
 }

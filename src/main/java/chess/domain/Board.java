@@ -23,15 +23,15 @@ public class Board {
         }
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
-        validatePieceExistsOnPosition(sourcePosition);
+    public void move(Positions positions) {
+        validatePieceExistsOnPosition(positions.source());
 
-        Piece thisPiece = pieces.get(sourcePosition);
-        validateSameTeamPieceExistsOnTargetPosition(targetPosition, thisPiece);
-        validateBlockingPieceExists(thisPiece, sourcePosition, targetPosition);
+        Piece thisPiece = pieces.get(positions.source());
+        validateSameTeamPieceExistsOnTargetPosition(positions.target(), thisPiece);
+        validateBlockingPieceExists(thisPiece, positions);
 
-        pieces.put(targetPosition, thisPiece.move());
-        pieces.remove(sourcePosition);
+        pieces.put(positions.target(), thisPiece.move());
+        pieces.remove(positions.source());
     }
 
     private void validatePieceExistsOnPosition(Position position) {
@@ -46,8 +46,8 @@ public class Board {
         }
     }
 
-    private void validateBlockingPieceExists(Piece thisPiece, Position sourcePosition, Position targetPosition) {
-        List<Position> betweenPositions = findBetweenPositions(thisPiece, sourcePosition, targetPosition);
+    private void validateBlockingPieceExists(Piece thisPiece, Positions positions) {
+        List<Position> betweenPositions = findBetweenPositions(thisPiece, positions);
 
         if (betweenPositions.stream()
                 .anyMatch(pieces::containsKey)) {
@@ -75,7 +75,7 @@ public class Board {
         Position attackingPiecePosition = attackingPiecePositions.get(0);
 
         // 나를 공격하는 유닛의 경로를 막을 수 없는 경우
-        boolean isNotBlockable = isNotBlockable(attackedTeam, attackingPiecePosition, kingPosition);
+        boolean isNotBlockable = isNotBlockable(attackedTeam, new Positions(attackingPiecePosition, kingPosition));
 
         // 나를 공격하는 유닛을 공격할 수 없는 경우
         boolean cannotAttackAttackingPiece = !isBeingAttacked(attackedTeam.opponent(), attackingPiecePosition);
@@ -96,9 +96,10 @@ public class Board {
     }
 
     private boolean isCheckAndImmovable(Team attackedTeam, Position kingPosition, Piece king) {
-        return kingPosition.findAllMovablePosition(king).stream()
-                .filter(position -> !pieces.containsKey(position) ||
-                        (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
+        return kingPosition.findAllMovablePosition(king)
+                .stream()
+                .filter(position -> !pieces.containsKey(position)
+                        || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
                 .allMatch(position -> isBeingAttacked(attackedTeam, position));
     }
 
@@ -109,35 +110,37 @@ public class Board {
     private List<Position> findAttackingPiecePositions(Team team, Position position) {
         return pieces.entrySet()
                 .stream()
+                .filter(entry -> entry.getKey() != position)
                 .filter(entry -> entry.getValue().isOppositeTeamWith(team))
-                .filter(entry -> isAttacking(entry.getValue(), entry.getKey(), position))
+                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
                 .map(Entry::getKey)
                 .toList();
     }
 
-    private boolean isAttacking(Piece thisPiece, Position thisPosition, Position attackPosition) {
-        if (thisPiece.isAttacking(thisPosition, attackPosition)) {
-            List<Position> betweenPositions = findBetweenPositions(thisPiece, thisPosition, attackPosition);
+    private boolean isAttacking(Piece thisPiece, Positions positions) {
+        if (thisPiece.isAttacking(positions)) {
+            List<Position> betweenPositions = findBetweenPositions(thisPiece, positions);
             return betweenPositions.stream()
                     .noneMatch(pieces::containsKey);
         }
         return false;
     }
 
-    private List<Position> findBetweenPositions(Piece thisPiece, Position sourcePosition, Position targetPosition) {
-        if (pieces.containsKey(targetPosition)) {
-            return thisPiece.findBetweenPositionsWhenAttack(sourcePosition, targetPosition);
+    private List<Position> findBetweenPositions(Piece thisPiece, Positions positions) {
+        if (pieces.containsKey(positions.target())) {
+            return thisPiece.findBetweenPositionsWhenAttack(positions);
         }
-        return thisPiece.findBetweenPositions(sourcePosition, targetPosition);
+        return thisPiece.findBetweenPositions(positions);
     }
 
-    private boolean isNotBlockable(Team attackedTeam, Position position, Position kingPosition) {
+    private boolean isNotBlockable(Team attackedTeam, Positions positions) {
         List<Position> attackRoutePositions
-                = pieces.get(position).findBetweenPositionsWhenAttack(position, kingPosition);
+                = pieces.get(positions.source()).findBetweenPositionsWhenAttack(positions);
 
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam) && !entry.getKey().equals(kingPosition))
+                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam)
+                        && !entry.getKey().equals(positions.target()))
                 .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
                         .stream()
                         .anyMatch(attackRoutePositions::contains));

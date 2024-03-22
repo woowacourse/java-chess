@@ -63,7 +63,8 @@ public class Position {
 
     public List<Position> findAllMovablePosition(Piece piece) {
         return positions.stream()
-                .filter(position -> piece.isMovable(this, position))
+                .filter(position -> position != this)
+                .filter(position -> piece.isMovable(new Positions(this, position)))
                 .toList();
     }
 

@@ -1,8 +1,6 @@
 package chess.view;
 
-import chess.domain.Position;
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.Positions;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -22,23 +20,22 @@ public class InputView {
         }
     }
 
-    public static List<Position> inputNextCommand() {
-        String input = SCANNER.nextLine();
-        StringTokenizer inputTokenizer = new StringTokenizer(input);
-        String commandValue = inputTokenizer.nextToken();
+    public static boolean inputNextMove() {
+        String commandValue = SCANNER.next();
         return switch (Command.find(commandValue)) {
             case START -> throw new IllegalArgumentException("게임이 시작한 이후, 다시 게임을 시작할 수 없습니다.");
-            case END -> new ArrayList<>();
-            case MOVE -> findSourceAndTargetPositions(inputTokenizer);
+            case END -> false;
+            case MOVE -> true;
         };
     }
 
-    public static List<Position> findSourceAndTargetPositions(StringTokenizer inputTokenizer) {
-        List<Position> positions = new ArrayList<>();
+    public static Positions inputPositions() {
+        StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
         if (inputTokenizer.countTokens() == 2) {
-            positions.add(PositionConverter.generate(inputTokenizer.nextToken()));
-            positions.add(PositionConverter.generate(inputTokenizer.nextToken()));
+            return new Positions(
+                    PositionConverter.generate(inputTokenizer.nextToken()),
+                    PositionConverter.generate(inputTokenizer.nextToken()));
         }
-        return positions;
+        throw new IllegalArgumentException("잘못된 명령어입니다.");
     }
 }
