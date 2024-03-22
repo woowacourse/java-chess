@@ -32,20 +32,14 @@ public class ChessGame {
             return;
         }
 
-        Board board = initBoard();
+        Board board = new Board();
+        printBoardOutput(board);
 
         playUntilEnd(board);
     }
 
     private boolean isStartCommand(String progressCommand) {
         return progressCommand.equals(InputView.START_COMMAND);
-    }
-
-    private Board initBoard() {
-        Board board = new Board();
-        printBoardOutput(board);
-
-        return board;
     }
 
     private void playUntilEnd(Board board) {
