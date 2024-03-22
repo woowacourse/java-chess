@@ -15,7 +15,7 @@ public enum Command {
         return this == START;
     }
 
-    public boolean isEnd() {
-        return this == END;
+    public boolean isMove() {
+        return this == START;
     }
 }

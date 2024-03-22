@@ -4,11 +4,12 @@ import domain.Chess;
 import domain.command.Command;
 import domain.position.Position;
 import domain.position.PositionGenerator;
-import java.util.Arrays;
-import java.util.List;
 import view.InputView;
 import view.OutputView;
 import view.mapper.CommandInput;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GameManager {
 
@@ -30,17 +31,23 @@ public class GameManager {
     private void manage(Chess chess) {
         String rawCommand = requestCommand();
         Command command = CommandInput.asCommand(rawCommand);
-        if (command.isStart()) {
-            start();
-            return;
-        }
-        if (command.isEnd()) {
+        if (isNotMove(command)) {
             return;
         }
         List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
         playChess(chess, moveCommands);
         outputView.printBoard(chess.getBoard());
         manage(chess);
+    }
+
+    private boolean isNotMove(Command command) {
+        if (command.isMove()) {
+            return false;
+        }
+        if (command.isStart()) {
+            start();
+        }
+        return true;
     }
 
     private void playChess(Chess chess, List<String> moveTokens) {
