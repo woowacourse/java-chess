@@ -3,9 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.fixture.PositionFixture;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -16,50 +15,50 @@ class QueenTest {
     @Test
     void givenQueenMoveWhenMeetTeamMThenStop() {
         Queen queen = Queen.WHITE;
-        Position currentQueenPosition = Position.of(File.G, Rank.SEVEN);
+        Position currentQueenPosition = PositionFixture.G7;
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,
-                Position.of(File.E, Rank.SEVEN), Pawn.WHITE,
-                Position.of(File.F, Rank.SIX), Pawn.WHITE,
-                Position.of(File.G, Rank.FIVE), Pawn.WHITE
+                PositionFixture.E7, Pawn.WHITE,
+                PositionFixture.F6, Pawn.WHITE,
+                PositionFixture.G5, Pawn.WHITE
         );
 
         Set<Position> movablePositions = queen.calculateMovablePositions(currentQueenPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.G, Rank.SIX),
-                        Position.of(File.G, Rank.EIGHT),
-                        Position.of(File.H, Rank.SIX),
-                        Position.of(File.H, Rank.SEVEN),
-                        Position.of(File.H, Rank.EIGHT),
-                        Position.of(File.F, Rank.EIGHT),
-                        Position.of(File.F, Rank.SEVEN)));
+                Set.of(PositionFixture.G6,
+                        PositionFixture.G8,
+                        PositionFixture.H6,
+                        PositionFixture.H7,
+                        PositionFixture.H8,
+                        PositionFixture.F8,
+                        PositionFixture.F7));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenQueenMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Queen queen = Queen.WHITE;
-        Position currentQueenPosition = Position.of(File.G, Rank.SEVEN);
+        Position currentQueenPosition = PositionFixture.G7;
         Map<Position, Piece> board = Map.of(
                 currentQueenPosition, queen,
-                Position.of(File.E, Rank.SEVEN), Pawn.BLACK,
-                Position.of(File.F, Rank.SIX), Pawn.BLACK,
-                Position.of(File.G, Rank.FIVE), Pawn.BLACK
+                PositionFixture.E7, Pawn.BLACK,
+                PositionFixture.F6, Pawn.BLACK,
+                PositionFixture.G5, Pawn.BLACK
         );
 
         Set<Position> movablePositions = queen.calculateMovablePositions(currentQueenPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.G, Rank.SIX),
-                        Position.of(File.G, Rank.EIGHT),
-                        Position.of(File.H, Rank.SIX),
-                        Position.of(File.H, Rank.SEVEN),
-                        Position.of(File.H, Rank.EIGHT),
-                        Position.of(File.F, Rank.EIGHT),
-                        Position.of(File.F, Rank.SEVEN),
-                        Position.of(File.E, Rank.SEVEN),
-                        Position.of(File.F, Rank.SIX),
-                        Position.of(File.G, Rank.FIVE)));
+                Set.of(PositionFixture.G6,
+                        PositionFixture.G8,
+                        PositionFixture.H6,
+                        PositionFixture.H7,
+                        PositionFixture.H8,
+                        PositionFixture.F8,
+                        PositionFixture.F7,
+                        PositionFixture.E7,
+                        PositionFixture.F6,
+                        PositionFixture.G5));
     }
 }

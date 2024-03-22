@@ -3,9 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.fixture.PositionFixture;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -16,34 +15,33 @@ class BishopTest {
     @Test
     void givenBishopMoveWhenMeetTeamMThenStop() {
         Bishop bishop = Bishop.WHITE;
-        Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
+        Position currentBishopPosition = PositionFixture.A4;
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                Position.of(File.B, Rank.THREE), Bishop.WHITE,
-                Position.of(File.C, Rank.SIX), Knight.WHITE
+                PositionFixture.B3, Bishop.WHITE,
+                PositionFixture.C6, Knight.WHITE
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.B, Rank.FIVE)));
+                Set.of(PositionFixture.B5));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenBishopMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Bishop bishop = Bishop.WHITE;
-        Position currentBishopPosition = Position.of(File.A, Rank.FOUR);
+        Position currentBishopPosition = PositionFixture.A4;
         Map<Position, Piece> board = Map.of(
                 currentBishopPosition, bishop,
-                Position.of(File.B, Rank.THREE), Bishop.BLACK,
-                Position.of(File.C, Rank.SIX), Knight.BLACK
+                PositionFixture.B3, Bishop.BLACK,
+                PositionFixture.C6, Knight.BLACK
         );
 
         Set<Position> movablePositions = bishop.calculateMovablePositions(currentBishopPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.B, Rank.FIVE), Position.of(File.C, Rank.SIX),
-                        Position.of(File.B, Rank.THREE)));
+                Set.of(PositionFixture.B5, PositionFixture.C6, PositionFixture.B3));
     }
 }

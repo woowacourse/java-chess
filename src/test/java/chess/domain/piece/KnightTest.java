@@ -4,9 +4,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Board;
-import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.Rank;
+import chess.fixture.PositionFixture;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
@@ -17,36 +16,33 @@ class KnightTest {
     @Test
     void givenKingMoveWhenMeetTeamMThenStop() {
         Knight knight = Knight.WHITE;
-        Position currentKingPosition = Position.of(File.A, Rank.FOUR);
+        Position currentKingPosition = PositionFixture.A4;
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                Position.of(File.A, Rank.FIVE), Pawn.WHITE,
-                Position.of(File.B, Rank.SIX), Queen.WHITE,
-                Position.of(File.C, Rank.THREE), Queen.WHITE
+                PositionFixture.A5, Pawn.WHITE,
+                PositionFixture.B6, Queen.WHITE,
+                PositionFixture.C3, Queen.WHITE
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.C, Rank.FIVE),
-                        Position.of(File.B, Rank.TWO)));
+                Set.of(PositionFixture.C5, PositionFixture.B2));
     }
 
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
         Knight knight = Knight.WHITE;
-        Position currentKingPosition = Position.of(File.A, Rank.FOUR);
+        Position currentKingPosition = PositionFixture.A4;
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                Position.of(File.A, Rank.FIVE), Pawn.BLACK,
-                Position.of(File.B, Rank.SIX), Queen.WHITE,
-                Position.of(File.C, Rank.THREE), Queen.BLACK
+                PositionFixture.A5, Pawn.BLACK,
+                PositionFixture.B6, Queen.WHITE,
+                PositionFixture.C3, Queen.BLACK
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));
 
         assertThat(movablePositions).isEqualTo(
-                Set.of(Position.of(File.C, Rank.FIVE),
-                        Position.of(File.B, Rank.TWO),
-                        Position.of(File.C, Rank.THREE)));
+                Set.of(PositionFixture.C5, PositionFixture.B2, PositionFixture.C3));
     }
 }
