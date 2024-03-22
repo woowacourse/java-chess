@@ -19,7 +19,7 @@ public class ChessApplication {
         Command command = inputView.readGameCommand();
         if (command.isStart()) {
             outputView.printBoard(controller.getBoard());
-            startTurn(Color.WHITE);
+            retryWhenError(() -> startTurn(Color.WHITE));
         }
     }
 
@@ -34,5 +34,14 @@ public class ChessApplication {
             outputView.printBoard(controller.move(new MovePositionDto(source, target, color)));
         }
         startTurn(Color.nextColorOf(color));
+    }
+
+    private static void retryWhenError(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException exception) {
+            outputView.printMessage(exception.getMessage());
+            retryWhenError(runnable);
+        }
     }
 }

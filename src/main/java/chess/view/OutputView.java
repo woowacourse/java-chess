@@ -23,6 +23,11 @@ public class OutputView {
         System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE_COMMAND, MOVE_COMMAND);
     }
 
+    public void printMessage(String message) {
+        System.out.println(message);
+        System.out.println();
+    }
+
     public void printBoard(Board board) {
         for (int rank = 8; rank >= 1; rank--) {
             printOneRank(board, rank);
