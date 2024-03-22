@@ -23,8 +23,8 @@ public class Rook extends Piece {
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Movement movement = target.calculateMovement(source);
-        if (movement.isCrossMovement()) {
-            return movement.findPath(source);
+        if (movement.isOrthogonal()) {
+            return movement.findStraightPath(source);
         }
         return List.of();
     }

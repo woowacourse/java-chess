@@ -24,12 +24,12 @@ public class Queen extends Piece {
         checkValidTargetPiece(targetPiece);
         Movement movement = target.calculateMovement(source);
         if (canMove(movement)) {
-            return movement.findPath(source);
+            return movement.findStraightPath(source);
         }
         return List.of();
     }
 
     private boolean canMove(Movement movement) {
-        return movement.isCrossMovement() || movement.isDiagonalMovement();
+        return movement.isOrthogonal() || movement.isDiagonal();
     }
 }

@@ -27,7 +27,7 @@ public class Pawn extends Piece {
         Movement movement = target.calculateMovement(source);
         validateForwardPath(source, targetPiece, movement);
         if (canCrossMove(source, movement) || canDiagonalMove(targetPiece, movement)) {
-            return movement.findPath(source);
+            return movement.findStraightPath(source);
         }
         return List.of();
     }
@@ -47,7 +47,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveForwardWith(Movement movement, int displacement) {
-        return movement.isForward(side) && movement.hasSame(displacement);
+        return movement.isForward(side) && movement.hasLengthOf(displacement);
     }
 
     private boolean canDiagonalMove(Piece targetPiece, Movement movement) {
@@ -55,6 +55,6 @@ public class Pawn extends Piece {
     }
 
     private boolean isPossibleDiagonal(Movement movement) {
-        return movement.isDiagonalMovement() && movement.hasSame(DISPLACEMENT);
+        return movement.isDiagonal() && movement.hasLengthOf(DISPLACEMENT);
     }
 }

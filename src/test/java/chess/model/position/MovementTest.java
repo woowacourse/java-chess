@@ -12,10 +12,10 @@ class MovementTest {
     @ParameterizedTest
     @CsvSource(value = {"1,1,true", "1,-1,true", "0,1,false"})
     @DisplayName("대각선에 있는지 판단한다.")
-    void isDiagonalMovement(int givenFile, int givenRank, boolean expected) {
+    void isDiagonal(int givenFile, int givenRank, boolean expected) {
         // when
         Movement movement = new Movement(givenFile, givenRank);
-        boolean result = movement.isDiagonalMovement();
+        boolean result = movement.isDiagonal();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -23,14 +23,14 @@ class MovementTest {
 
     @Test
     @DisplayName("제자리에 있으면 대각선 움직임이 아니다.")
-    void isDiagonalMovementWhenStay() {
+    void isDiagonalWhenStay() {
         // given
         int givenFile = 0;
         int givenRank = 0;
 
         // when
         Movement movement = new Movement(givenFile, givenRank);
-        boolean result = movement.isDiagonalMovement();
+        boolean result = movement.isDiagonal();
 
         // then
         assertThat(result).isFalse();
@@ -39,10 +39,10 @@ class MovementTest {
     @ParameterizedTest
     @CsvSource(value = {"0,1,true", "0,4,true", "1,0,true", "-5,0,true", "2,4,false"})
     @DisplayName("십자가 움직임인지 판단한다.")
-    void isCrossMovement(int givenFile, int givenRank, boolean expected) {
+    void isCross(int givenFile, int givenRank, boolean expected) {
         // when
         Movement movement = new Movement(givenFile, givenRank);
-        boolean result = movement.isCrossMovement();
+        boolean result = movement.isOrthogonal();
 
         // then
         assertThat(result).isEqualTo(expected);
@@ -50,14 +50,14 @@ class MovementTest {
 
     @Test
     @DisplayName("제자리에 있으면 대각선 움직임이 아니다.")
-    void isCrossMovementWhenStay() {
+    void isCrossWhenStay() {
         // given
         int givenFile = 0;
         int givenRank = 0;
 
         // when
         Movement movement = new Movement(givenFile, givenRank);
-        boolean result = movement.isCrossMovement();
+        boolean result = movement.isOrthogonal();
 
         // then
         assertThat(result).isFalse();
@@ -66,10 +66,10 @@ class MovementTest {
     @ParameterizedTest
     @CsvSource(value = {"3,3,0,true", "2,2,-2,true", "1,0,5,false", "4,1,-1,false", "3,3,5,false"})
     @DisplayName("같은 변위인지 판단한다.")
-    void hasSame(int displacement, int fileDiff, int rankDiff, boolean expected) {
+    void hasSameLengthOf(int displacement, int fileDiff, int rankDiff, boolean expected) {
         // when
         Movement movement = new Movement(fileDiff, rankDiff);
-        boolean result = movement.hasSame(displacement);
+        boolean result = movement.hasLengthOf(displacement);
 
         // then
         assertThat(result).isEqualTo(expected);

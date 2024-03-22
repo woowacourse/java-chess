@@ -5,6 +5,7 @@ import chess.model.piece.Side;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
 import static java.util.Collections.unmodifiableList;
 
 public class Movement {
@@ -26,14 +27,14 @@ public class Movement {
         return rankDifference > 0;
     }
 
-    public boolean isDiagonalMovement() {
+    public boolean isDiagonal() {
         if (isNotMoved()) {
             return false;
         }
-        return Math.abs(fileDifference) == Math.abs(rankDifference);
+        return abs(fileDifference) == abs(rankDifference);
     }
 
-    public boolean isCrossMovement() {
+    public boolean isOrthogonal() {
         if (isNotMoved()) {
             return false;
         }
@@ -44,33 +45,36 @@ public class Movement {
         return fileDifference == 0 && rankDifference == 0;
     }
 
-    public boolean hasSame(int displacement) {
-        if (isCrossMovement() || isDiagonalMovement()) {
-            return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
-        }
-        return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
+    public boolean hasLengthOf(int displacement) {
+        return calculateLength() == displacement;
     }
 
-    public List<ChessPosition> findPath(ChessPosition source) {
-        if (!isDiagonalMovement() && !isCrossMovement()) {
+    private int calculateLength() {
+        if (isNotMoved()) {
+            return 0;
+        }
+        if (!isOrthogonal() && !isDiagonal()) {
+            return abs(fileDifference) + abs(rankDifference);
+        }
+        if (fileDifference == 0) {
+            return abs(rankDifference);
+        }
+        return abs(fileDifference);
+    }
+
+    public List<ChessPosition> findStraightPath(ChessPosition source) {
+        if (!isDiagonal() && !isOrthogonal()) {
             return List.of();
         }
         int fileOffset = calculateIncrement(fileDifference);
         int rankOffset = calculateIncrement(rankDifference);
-        int pathLength = calculatePathLength();
+        int pathLength = calculateLength();
 
         return makePath(source, pathLength, fileOffset, rankOffset);
     }
 
     private int calculateIncrement(int difference) {
         return Integer.compare(difference, 0);
-    }
-
-    private int calculatePathLength() {
-        if (fileDifference == 0) {
-            return Math.abs(rankDifference);
-        }
-        return Math.abs(fileDifference);
     }
 
     private List<ChessPosition> makePath(ChessPosition source, int pathLength, int fileOffset, int rankOffset) {

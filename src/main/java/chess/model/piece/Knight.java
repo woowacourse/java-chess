@@ -31,9 +31,9 @@ public class Knight extends Piece {
     }
 
     private boolean canMove(Movement movement) {
-        if (movement.isCrossMovement() || movement.isDiagonalMovement()) {
+        if (movement.isOrthogonal() || movement.isDiagonal()) {
             return false;
         }
-        return movement.hasSame(DISPLACEMENT);
+        return movement.hasLengthOf(DISPLACEMENT);
     }
 }
