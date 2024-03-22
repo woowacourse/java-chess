@@ -1,5 +1,6 @@
 package chess.domain.chessPiece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -8,8 +9,11 @@ import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chessPiece.Team.WHITE;
 
 public class Pawn extends Piece {
+    private static Column WHITE_PAWN_START_COLUMN = Column.valueOf("2");
+    private static Column BLACK_PAWN_START_COLUMN = Column.valueOf("7");
 
     public Pawn(Team team) {
         super(team);
@@ -45,7 +49,14 @@ public class Pawn extends Piece {
 
     private boolean moveForwardTwice(Position source, Position target) {
         int columnDistance = source.calculatePawnColumnDistance(target, team);
-        return source.isPawnStartPosition(team) && source.isSameRow(target) && columnDistance == 2;
+        return isStartPosition(source) && source.isSameRow(target) && columnDistance == 2;
+    }
+
+    private boolean isStartPosition(Position source) {
+        if(team == WHITE) {
+            return source.getColumn() == WHITE_PAWN_START_COLUMN;
+        }
+        return source.getColumn() == BLACK_PAWN_START_COLUMN;
     }
 
     private boolean moveForward(Position source, Position target) {

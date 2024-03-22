@@ -45,14 +45,6 @@ public class Column {
         return CACHE.get(this.value + columnDirection);
     }
 
-
-    public boolean isPawnStartPosition(Team team) {
-        if (team.isWhite()) {
-            return value == 1;
-        }
-        return value == 6;
-    }
-
     public int subtractColumn(Column column) {
         return this.value - column.value;
     }

@@ -76,9 +76,6 @@ public class Position {
         return !isSameColumn(target);
     }
 
-    public boolean isPawnStartPosition(Team team) {
-        return column.isPawnStartPosition(team);
-    }
 
     public int compareRow(Position target) {
         return row.compare(target.row);
