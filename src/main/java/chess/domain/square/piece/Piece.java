@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece implements Square {
-    public final Color color;
+    private final Color color;
 
     public Piece(Color color) {
         this.color = color;
@@ -35,7 +35,7 @@ public abstract class Piece implements Square {
 
     // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
     // TODO: 체스보드가 검증하도록 변경
-    private final boolean isEnemyAttack(Path path, Map<Position, Square> board) {
+    private boolean isEnemyAttack(Path path, Map<Position, Square> board) {
         Piece endPiece = (Piece) board.get(path.getTargetPosition());
 
         return color != endPiece.color;

@@ -10,8 +10,8 @@ public class Knight extends Piece {
     private static final Map<Color, Knight> KNIGHT_POOL = Map.of(
             Color.WHITE, new Knight(Color.WHITE),
             Color.BLACK, new Knight(Color.BLACK));
-    public static final int MIN_MOVABLE_DIFF = 1;
-    public static final int MAX_MOVABLE_DIFF = 2;
+    private static final int MIN_MOVABLE_DIFF = 1;
+    private static final int MAX_MOVABLE_DIFF = 2;
 
     private Knight(Color color) {
         super(color);
