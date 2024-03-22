@@ -14,11 +14,7 @@ public class ChessBoard {
     private final Map<Position, Piece> board;
 
     public ChessBoard(final ChessBoardGenerator chessBoardGenerator) {
-        this(chessBoardGenerator.generate());
-    }
-
-    public ChessBoard(final Map<Position, Piece> board) {
-        this.board = new HashMap<>(board);
+        this.board = new HashMap<>(chessBoardGenerator.generate());
     }
 
     public BoardStatus status() {
@@ -55,7 +51,7 @@ public class ChessBoard {
     private void validateTurn(Position source, Turn turn) {
         Piece sourcePiece = board.get(source);
         if (!turn.hasTurn(sourcePiece.color())) {
-            throw new IllegalArgumentException(String.format("%s의 차례가 아닙니다.",sourcePiece.color()));
+            throw new IllegalArgumentException(String.format("%s의 차례가 아닙니다.", sourcePiece.color()));
         }
     }
 
