@@ -34,17 +34,17 @@ public class ChessGameController {
     private void playOneTurn(ChessGame chessGame, List<String> commands) {
         String command = commands.get(0);
         if (command.equals(START.getCommandType())) {
-            playOneTurnForStart(chessGame);
+            start(chessGame);
             return;
         }
-        playOneTurnForMove(chessGame, commands);
+        move(chessGame, commands);
     }
 
-    private void playOneTurnForStart(ChessGame chessGame) {
+    private void start(ChessGame chessGame) {
         OutputView.printBoard(BoardDto.of(chessGame.start()));
     }
 
-    private void playOneTurnForMove(ChessGame chessGame, List<String> commands) {
+    private void move(ChessGame chessGame, List<String> commands) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
         OutputView.printBoard(BoardDto.of(chessGame.move(source, target)));
