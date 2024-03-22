@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class Pawn extends Piece {
     private static final List<Direction> BLACK_DIRECTION = List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
-    private static final List<Direction> WHITE_DIRECTION = List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
+    private static final List<Direction> WHITE_DIRECTION = List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT);
 
     public Pawn(PieceColor color) {
         super(color, PieceType.PAWN);
@@ -33,7 +33,7 @@ public final class Pawn extends Piece {
     private boolean isMovableDistance(Position source, Position target, Direction direction) {
         int distance = source.calculateDistanceTo(target);
 
-        if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.TOP) {
+        if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.UP) {
             return (distance == 1 || distance == 2);
         }
         if (color.isBlack() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {

@@ -17,12 +17,12 @@ public class PositionTest {
 
     static Stream<Arguments> findTargetDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of("b2"), Position.of("b3"), Direction.TOP),
+                Arguments.arguments(Position.of("b2"), Position.of("b3"), Direction.UP),
                 Arguments.arguments(Position.of("b2"), Position.of("b1"), Direction.DOWN),
                 Arguments.arguments(Position.of("b2"), Position.of("a2"), Direction.LEFT),
                 Arguments.arguments(Position.of("b2"), Position.of("c2"), Direction.RIGHT),
-                Arguments.arguments(Position.of("b2"), Position.of("c3"), Direction.TOP_RIGHT),
-                Arguments.arguments(Position.of("b2"), Position.of("a3"), Direction.TOP_LEFT),
+                Arguments.arguments(Position.of("b2"), Position.of("c3"), Direction.UP_RIGHT),
+                Arguments.arguments(Position.of("b2"), Position.of("a3"), Direction.UP_LEFT),
                 Arguments.arguments(Position.of("b2"), Position.of("c1"), Direction.DOWN_RIGHT),
                 Arguments.arguments(Position.of("b2"), Position.of("a1"), Direction.DOWN_LEFT)
         );

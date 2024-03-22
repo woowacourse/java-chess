@@ -26,7 +26,7 @@ public class Position {
     // TODO : 리팩터링
     public Direction findDirectionTo(Position target) {
         if (file.index() == target.file.index() && rank.index() < target.rank.index()) {
-            return Direction.TOP;
+            return Direction.UP;
         }
         if (file.index() == target.file.index() && rank.index() > target.rank.index()) {
             return Direction.DOWN;
@@ -38,10 +38,10 @@ public class Position {
             return Direction.RIGHT;
         }
         if (file.index() < target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.TOP_RIGHT;
+            return Direction.UP_RIGHT;
         }
         if (file.index() > target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.TOP_LEFT;
+            return Direction.UP_LEFT;
         }
         if (file.index() < target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
             return Direction.DOWN_RIGHT;

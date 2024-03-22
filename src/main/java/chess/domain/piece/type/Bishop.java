@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public final class Bishop extends Piece {
-    private static final List<Direction> BISHOP_DIRECTION = List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
+    private static final List<Direction> BISHOP_DIRECTION = Direction.diagonal();
 
     public Bishop(PieceColor color) {
         super(color, PieceType.BISHOP);

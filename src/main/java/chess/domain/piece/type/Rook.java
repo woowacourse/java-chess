@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public final class Rook extends Piece {
-    private static final List<Direction> ROOK_DIRECTION = List.of(Direction.TOP, Direction.DOWN, Direction.RIGHT, Direction.LEFT);
+    private static final List<Direction> ROOK_DIRECTION = Direction.cross();
 
     public Rook(PieceColor color) {
         super(color, PieceType.ROOK);
