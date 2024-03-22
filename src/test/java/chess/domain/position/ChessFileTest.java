@@ -35,18 +35,18 @@ class ChessFileTest {
                 .hasMessage("체스 파일 범위에 해당하지 않는 값입니다.");
     }
 
-    @DisplayName("랭크와 랭크 사이의 랭크들을 조회한다.")
+    @DisplayName("파일과 파일 사이의 파일들을 조회한다.")
     @Test
-    void findRankBetween() {
+    void findFileBetween() {
         // given
         ChessFile start = ChessFile.A;
         ChessFile end = ChessFile.H;
         List<ChessFile> expected = List.of(ChessFile.B, ChessFile.C, ChessFile.D, ChessFile.E, ChessFile.F, ChessFile.G);
 
         // when
-        List<ChessFile> rankBetween = ChessFile.findBetween(start, end);
+        List<ChessFile> fileBetween = ChessFile.findBetween(start, end);
 
         // then
-        assertThat(expected).containsAll(rankBetween);
+        assertThat(expected).containsAll(fileBetween);
     }
 }
