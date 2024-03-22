@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,7 @@ public class PieceTest {
     void sameSideAtTargetPositionTest() {
         Piece piece = new Piece(Side.BLACK) {
             @Override
-            public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+            public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
                 return false;
             }
         };
@@ -35,7 +36,7 @@ public class PieceTest {
     void pieceExistsOnPathTest() {
         Piece piece = new Piece(Side.BLACK) {
             @Override
-            public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+            public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
                 return false;
             }
         };

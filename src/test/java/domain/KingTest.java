@@ -40,7 +40,7 @@ public class KingTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = king.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }
@@ -54,7 +54,7 @@ public class KingTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = king.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isFalse();
     }

@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import java.util.Map;
 
 public class Bishop extends Piece {
@@ -14,7 +15,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
         checkBlockingPiece(target, pieces);
         return current.isDiagonal(target);
     }

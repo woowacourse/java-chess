@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.Piece;
+import domain.piece.Piece;
 
 import java.util.Arrays;
 import java.util.function.Function;

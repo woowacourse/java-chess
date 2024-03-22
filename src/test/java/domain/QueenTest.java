@@ -35,7 +35,7 @@ public class QueenTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = queen.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = queen.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }

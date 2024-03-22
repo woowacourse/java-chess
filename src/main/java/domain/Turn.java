@@ -1,5 +1,7 @@
 package domain;
 
+import domain.piece.Piece;
+
 public class Turn {
 
     private Side side = Side.WHITE;

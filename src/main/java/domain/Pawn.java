@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import java.util.Map;
 
 public class Pawn extends Piece {
@@ -14,7 +15,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position current, Position target, Map<Position, Piece> pieces) {
+    public boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces) {
         checkBlockingPiece(target, pieces);
 
         if (current.isSameRank(target) || isReverseMove(current, target)) {

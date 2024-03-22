@@ -38,7 +38,7 @@ class RookTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = rook.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = rook.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }
@@ -52,7 +52,7 @@ class RookTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = rook.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = rook.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isFalse();
     }

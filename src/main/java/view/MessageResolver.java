@@ -1,6 +1,7 @@
 package view;
 
 import domain.*;
+import domain.piece.Piece;
 import view.mapper.PieceMapper;
 
 public class MessageResolver {

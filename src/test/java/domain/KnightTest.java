@@ -38,7 +38,7 @@ class KnightTest {
         Knight knight = new Knight(Side.BLACK);
         Position current = PositionFixture.a1();
 
-        boolean actual = knight.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = knight.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }
@@ -50,7 +50,7 @@ class KnightTest {
         Knight knight = new Knight(Side.BLACK);
         Position current = PositionFixture.a1();
 
-        boolean actual = knight.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = knight.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isFalse();
     }

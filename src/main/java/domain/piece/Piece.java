@@ -1,5 +1,7 @@
-package domain;
+package domain.piece;
 
+import domain.Position;
+import domain.Side;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -10,6 +12,23 @@ public abstract class Piece {
 
     public Piece(Side side) {
         this.side = side;
+    }
+
+    public abstract boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces);
+
+    public void checkValidMove(Position source, Position target, Map<Position, Piece> pieces) {
+        checkDifferentPosition(source, target);
+
+
+        if (isRuleBroken(source, target, pieces)) {
+            throw new IllegalArgumentException("이동 규칙을 어겼습니다.");
+        }
+    }
+
+    private void checkDifferentPosition(Position source, Position target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("source 위치와 target 위치가 같으면 이동할 수 없습니다.");
+        }
     }
 
     public boolean isRook() {
@@ -59,8 +78,6 @@ public abstract class Piece {
                 .filter(key -> key != target)
                 .toList();
     }
-
-    public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
 
     @Override
     public boolean equals(Object object) {

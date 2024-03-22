@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -68,7 +69,7 @@ public class ChessBoard {
         Map<Position, Piece> piecesOnPath = findPiecesOnPath(current, target);
 
         Piece piece = board.get(current);
-        boolean canPieceMove = piece.canMove(current, target, piecesOnPath);
+        boolean canPieceMove = piece.isRuleBroken(current, target, piecesOnPath);
         if (!canPieceMove) {
             throw new IllegalArgumentException("이동할 수 없는 target 입니다.");
         }

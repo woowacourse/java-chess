@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,7 +28,7 @@ public class PawnTest {
             put(target, new Pawn(Side.BLACK));
         }};
 
-        boolean actual = pawn.canMove(current, target, pieces);
+        boolean actual = pawn.isRuleBroken(current, target, pieces);
 
         assertThat(actual).isTrue();
     }
@@ -43,7 +44,7 @@ public class PawnTest {
             put(target, new Pawn(Side.BLACK));
         }};
 
-        boolean actual = pawn.canMove(current, target, pieces);
+        boolean actual = pawn.isRuleBroken(current, target, pieces);
 
         assertThat(actual).isFalse();
     }
@@ -59,7 +60,7 @@ public class PawnTest {
             put(target, new Pawn(Side.BLACK));
         }};
 
-        boolean actual = pawn.canMove(current, target, pieces);
+        boolean actual = pawn.isRuleBroken(current, target, pieces);
 
         assertThat(actual).isFalse();
     }
@@ -75,7 +76,7 @@ public class PawnTest {
             put(target, new Pawn(Side.BLACK));
         }};
 
-        boolean actual = pawn.canMove(current, target, pieces);
+        boolean actual = pawn.isRuleBroken(current, target, pieces);
 
         assertThat(actual).isFalse();
     }
@@ -87,7 +88,7 @@ public class PawnTest {
         Position current = PositionFixture.a3();
         Position target = PositionFixture.a4();
 
-        boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }
@@ -99,7 +100,7 @@ public class PawnTest {
         Position current = PositionFixture.a3();
         Position target = PositionFixture.a5();
 
-        boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isFalse();
     }
@@ -115,7 +116,7 @@ public class PawnTest {
             Position current = PositionFixture.a2();
             Position target = PositionFixture.a3();
 
-            boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+            boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
             assertThat(actual).isTrue();
         }
@@ -127,7 +128,7 @@ public class PawnTest {
             Position current = PositionFixture.a2();
             Position target = PositionFixture.a4();
 
-            boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+            boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
             assertThat(actual).isTrue();
         }
@@ -151,7 +152,7 @@ public class PawnTest {
             Position current = PositionFixture.a2();
             Position target = PositionFixture.b2();
 
-            boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+            boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
             assertThat(actual).isFalse();
         }
@@ -162,7 +163,7 @@ public class PawnTest {
         void cantReverseMoveTest(Side side, Position current, Position target) {
             Pawn pawn = new Pawn(side);
 
-            boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+            boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
             assertThat(actual).isFalse();
         }
@@ -174,7 +175,7 @@ public class PawnTest {
             Position current = PositionFixture.a2();
             Position target = PositionFixture.b3();
 
-            boolean actual = pawn.canMove(current, target, new LinkedHashMap<>());
+            boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
             assertThat(actual).isFalse();
         }

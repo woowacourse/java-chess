@@ -38,7 +38,7 @@ class BishopTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = bishop.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = bishop.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isTrue();
     }
@@ -52,7 +52,7 @@ class BishopTest {
         Position current = PositionFixture.d4();
         Position target = new Position(targetFile, targetRank);
 
-        boolean actual = bishop.canMove(current, target, new LinkedHashMap<>());
+        boolean actual = bishop.isRuleBroken(current, target, new LinkedHashMap<>());
 
         assertThat(actual).isFalse();
     }
