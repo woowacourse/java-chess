@@ -50,7 +50,7 @@ class MovementTest {
     @ParameterizedTest
     @CsvSource(value = {"0,1,true", "0,4,true", "1,0,true", "-5,0,true", "2,4,false"})
     @DisplayName("십자가 움직임인지 판단한다.")
-    void isCross(int fileDifference, int rankDifference, boolean expected) {
+    void isOrthogonal(int fileDifference, int rankDifference, boolean expected) {
         // when
         Movement movement = new Movement(new Difference(fileDifference), new Difference(rankDifference));
         boolean result = movement.isOrthogonal();
@@ -61,7 +61,7 @@ class MovementTest {
 
     @Test
     @DisplayName("제자리에 있으면 대각선 움직임이 아니다.")
-    void isCrossWhenStay() {
+    void isOrthogonalWhenStay() {
         // given
         int fileDifference = 0;
         int rankDifference = 0;
