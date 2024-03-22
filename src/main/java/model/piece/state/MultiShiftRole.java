@@ -14,11 +14,11 @@ public abstract class MultiShiftRole extends Role {
     }
 
     @Override
-    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
+    protected Route findRouteByDirection(Direction direction, Position source) {
         List<Position> sequentialPositions = new ArrayList<>();
-        while (movedPosition.isAvailablePosition(direction)) {
-            movedPosition = movedPosition.getNextPosition(direction);
-            sequentialPositions.add(movedPosition);
+        while (source.isAvailablePosition(direction)) {
+            source = source.getNextPosition(direction);
+            sequentialPositions.add(source);
         }
         return new Route(direction, sequentialPositions);
     }

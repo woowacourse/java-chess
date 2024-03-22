@@ -12,7 +12,7 @@ public final class Square extends Role {
     }
 
     @Override
-    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
+    protected Route findRouteByDirection(Direction direction, Position source) {
         throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
     }
 

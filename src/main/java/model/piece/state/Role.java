@@ -25,23 +25,23 @@ public abstract class Role {
     }
 
     public Route findDirectRoute(Position source, Position destination) {
-        return possibleRoutes(source).stream()
+        return findAllPossibleRoutes(source).stream()
                 .filter(route -> route.contains(destination))
                 .map(route -> route.subRoute(destination))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
-    private Set<Route> possibleRoutes(Position position) {
+    private Set<Route> findAllPossibleRoutes(Position source) {
         Set<Route> possibleRoutes = new HashSet<>();
         List<Direction> directions = shiftPattern.directions();
         for (Direction direction : directions) {
-            possibleRoutes.add(findMovingPatternRoute(direction, position));
+            possibleRoutes.add(findRouteByDirection(direction, source));
         }
         return possibleRoutes;
     }
 
-    protected abstract Route findMovingPatternRoute(Direction direction, Position movedPosition);
+    protected abstract Route findRouteByDirection(Direction direction, Position source);
 
     public boolean isOccupied() {
         return true;

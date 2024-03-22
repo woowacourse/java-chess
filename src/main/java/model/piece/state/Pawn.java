@@ -11,7 +11,7 @@ import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
 
-public final class Pawn extends Role {
+public final class Pawn extends SingleShiftRole {
     private static final int INITIAL_WHITE_PAWN_RANK = 2;
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
 
@@ -27,16 +27,16 @@ public final class Pawn extends Role {
     }
 
     @Override
-    protected Route findMovingPatternRoute(Direction direction, Position movedPosition) {
+    protected Route findRouteByDirection(Direction direction, Position source) {
         List<Position> sequentialPositions = new ArrayList<>();
-        if ((movedPosition.rank() == INITIAL_WHITE_PAWN_RANK && direction == N) || (
-                movedPosition.rank() == INITIAL_BLACK_PAWN_RANK && direction == S)) {
-            movedPosition = movedPosition.getNextPosition(direction);
-            sequentialPositions.add(movedPosition);
+        if ((source.rank() == INITIAL_WHITE_PAWN_RANK && direction == N) || (
+                source.rank() == INITIAL_BLACK_PAWN_RANK && direction == S)) {
+            source = source.getNextPosition(direction);
+            sequentialPositions.add(source);
         }
-        if (movedPosition.isAvailablePosition(direction)) {
-            movedPosition = movedPosition.getNextPosition(direction);
-            sequentialPositions.add(movedPosition);
+        if (source.isAvailablePosition(direction)) {
+            source = source.getNextPosition(direction);
+            sequentialPositions.add(source);
         }
         return new Route(direction, sequentialPositions);
     }
