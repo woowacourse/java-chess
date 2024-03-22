@@ -2,13 +2,12 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceNamePattern;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 public final class Knight extends Piece {
     public Knight(PieceColor color) {
-        super(PieceNamePattern.apply(color, "n"), color, PieceType.KNIGHT);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override

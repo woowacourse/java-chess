@@ -17,8 +17,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> command.text.equals(text))
                 .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("존재하지 않는 명령어 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어 입니다."));
     }
 
     public boolean isStart() {

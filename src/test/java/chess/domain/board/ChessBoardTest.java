@@ -16,9 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ChessBoardTest {
@@ -44,8 +42,8 @@ public class ChessBoardTest {
         List<PieceInfo> pieceInfos = boardStatus.pieceInfos();
 
         assertAll(
-                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 2, "p"))).isTrue(),
-                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 1, "p"))).isFalse()
+                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 2, "PAWN", "WHITE"))).isTrue(),
+                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 1, "PAWN", "WHITE"))).isFalse()
         );
     }
 

@@ -1,12 +1,11 @@
 package chess.domain.piece.type;
 
 import chess.domain.Direction;
-import chess.domain.piece.PieceNamePattern;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public final class Pawn extends Piece {
     private static final List<Direction> WHITE_DIRECTION = List.of(Direction.TOP, Direction.TOP_LEFT, Direction.TOP_RIGHT);
 
     public Pawn(PieceColor color) {
-        super(PieceNamePattern.apply(color, "p"), color, PieceType.PAWN);
+        super(color, PieceType.PAWN);
     }
 
     @Override

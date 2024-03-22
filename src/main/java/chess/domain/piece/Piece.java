@@ -3,12 +3,10 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public abstract class Piece {
-    protected final String name;
     protected final PieceColor color;
     protected final PieceType type;
 
-    public Piece(final String name, final PieceColor color, PieceType type) {
-        this.name = name;
+    public Piece(final PieceColor color, PieceType type) {
         this.color = color;
         this.type = type;
     }
@@ -23,8 +21,8 @@ public abstract class Piece {
         return this.type == pieceType;
     }
 
-    public String name() {
-        return name;
+    public PieceType type() {
+        return type;
     }
 
     public PieceColor color() {

@@ -1,11 +1,10 @@
 package chess.domain.piece.type;
 
 import chess.domain.Direction;
-import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceNamePattern;
+import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public final class Rook extends Piece {
     private static final List<Direction> ROOK_DIRECTION = List.of(Direction.TOP, Direction.DOWN, Direction.RIGHT, Direction.LEFT);
 
     public Rook(PieceColor color) {
-        super(PieceNamePattern.apply(color, "r"), color, PieceType.ROOK);
+        super(color, PieceType.ROOK);
     }
 
     @Override

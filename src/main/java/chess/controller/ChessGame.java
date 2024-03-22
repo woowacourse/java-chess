@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.Turn;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.dto.BoardStatus;
 import chess.dto.CommandInfo;
@@ -39,6 +39,5 @@ public class ChessGame {
                 chessBoard.move(commandInfo.source().get(), commandInfo.target().get(), turn);
             }
         }
-        // 게임 종료
     }
 }

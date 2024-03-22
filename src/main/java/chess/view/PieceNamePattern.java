@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.view;
 
 import java.util.function.Function;
 
@@ -12,11 +12,11 @@ public enum PieceNamePattern {
         this.namingPattern = namingPattern;
     }
 
-    public static String apply(PieceColor color, String name) {
-        if (color == PieceColor.WHITE) {
+    public static String apply(PieceColorView color, String name) {
+        if (color == PieceColorView.WHITE) {
             return WHITE.namingPattern.apply(name);
         }
-        if (color == PieceColor.BLACK) {
+        if (color == PieceColorView.BLACK) {
             return BLACK.namingPattern.apply(name);
         }
         throw new IllegalArgumentException("존재하지 않는 컬러입니다.");

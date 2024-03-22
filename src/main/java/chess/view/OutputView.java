@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.dto.PieceInfo;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.dto.BoardStatus;
+import chess.dto.PieceInfo;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
@@ -49,7 +49,10 @@ public class OutputView {
 
     private void applyBoardStatus(final BoardStatus status, final String[][] board) {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
-            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = pieceInfo.name();
+            PieceColorView color = PieceColorView.find(pieceInfo.pieceColor());
+            String name = PieceTypeView.findViewName(pieceInfo.pieceType());
+            String pieceName = PieceNamePattern.apply(color, name);
+            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = pieceName;
         }
     }
 

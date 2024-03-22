@@ -3,7 +3,6 @@ package chess.domain.piece.type;
 import chess.domain.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceNamePattern;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
@@ -13,7 +12,7 @@ public final class Bishop extends Piece {
     private static final List<Direction> BISHOP_DIRECTION = List.of(Direction.TOP_LEFT, Direction.TOP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
 
     public Bishop(PieceColor color) {
-        super(PieceNamePattern.apply(color, "b"), color, PieceType.BISHOP);
+        super(color, PieceType.BISHOP);
     }
 
     @Override
