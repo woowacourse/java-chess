@@ -16,6 +16,22 @@ public enum File {
         return Math.abs(sourceIndex - targetIndex);
     }
 
+
+    public boolean isRight(File target) {
+        return forwardDistance(target) < 0;
+    }
+
+    public boolean isLeft(File target) {
+        return forwardDistance(target) > 0;
+    }
+
+    private int forwardDistance(File target) {
+        List<File> files = Arrays.stream(values()).toList();
+        int sourceIndex = files.indexOf(this);
+        int targetIndex = files.indexOf(target);
+        return sourceIndex - targetIndex;
+    }
+
     public List<File> betweenFiles(File target) {
         List<File> files = Arrays.stream(values()).toList();
         int sourceIndex = files.indexOf(this);

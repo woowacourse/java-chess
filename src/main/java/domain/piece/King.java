@@ -10,7 +10,7 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return source.isNeighbor(target);
+        return source.isLegalRankStep(target, 0, 1) && source.isLegalFileStep(target, 0, 1);
     }
 
     @Override

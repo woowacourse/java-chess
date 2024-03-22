@@ -16,7 +16,15 @@ public enum Rank {
         return Math.abs(sourceIndex - targetIndex);
     }
 
-    public int forwardDistance(Rank target) {
+    public boolean isUp(Rank target) {
+        return forwardDistance(target) > 0;
+    }
+
+    public boolean isDown(Rank target) {
+        return forwardDistance(target) < 0;
+    }
+
+    private int forwardDistance(Rank target) {
         List<Rank> ranks = Arrays.stream(values()).toList();
         int sourceIndex = ranks.indexOf(this);
         int targetIndex = ranks.indexOf(target);

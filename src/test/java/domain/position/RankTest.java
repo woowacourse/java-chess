@@ -20,17 +20,6 @@ class RankTest {
     }
 
     @Test
-    @DisplayName("두 랭크 사이의 전방 거리를 구한다.")
-    void forwardDistance_Ranks() {
-        Rank source = Rank.ONE;
-        Rank target = Rank.FIVE;
-
-        int distance = source.forwardDistance(target);
-
-        assertThat(distance).isEqualTo(4);
-    }
-
-    @Test
     @DisplayName("두 랭크 사이의 모든 랭크를 반환한다.")
     void betweenRanks() {
         Rank source = Rank.ONE;

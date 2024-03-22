@@ -49,6 +49,78 @@ public class PositionTest {
 
             assertThat(source.isDiagonal(target)).isFalse();
         }
+
+        @Test
+        @DisplayName("두 위치가 오른쪽 위 대각선에 존재하면 참을 반환한다.")
+        void isRightUp_True() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.C, Rank.THREE);
+
+            assertThat(source.isRightUp(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 오른쪽 위 대각선에 존재하지 않으면 거짓을 반환한다.")
+        void isRightUp_False() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.B, Rank.THREE);
+
+            assertThat(source.isRightUp(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("두 위치가 왼쪽 위 대각선에 존재하면 참을 반환한다.")
+        void isLeftUp_True() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.A, Rank.THREE);
+
+            assertThat(source.isLeftUp(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 왼쪽 위 대각선에 존재하지 않으면 거짓을 반환한다.")
+        void isLeftUp_False() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.B, Rank.THREE);
+
+            assertThat(source.isLeftUp(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("두 위치가 오른쪽 아래 대각선에 존재하면 참을 반환한다.")
+        void isRightDown_True() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.C, Rank.ONE);
+
+            assertThat(source.isRightDown(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 오른쪽 아래 대각선에 존재하지 않으면 거짓을 반환한다.")
+        void isRightDown_False() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.B, Rank.THREE);
+
+            assertThat(source.isRightDown(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("두 위치가 왼쪽 아래 대각선에 존재하면 참을 반환한다.")
+        void isLeftDown_True() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.A, Rank.ONE);
+
+            assertThat(source.isLeftDown(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("두 위치가 왼쪽 아래 대각선에 존재하지 않으면 거짓을 반환한다.")
+        void isLeftDown_False() {
+            Position source = new Position(File.B, Rank.TWO);
+            Position target = new Position(File.B, Rank.THREE);
+
+            assertThat(source.isLeftDown(target)).isFalse();
+        }
     }
 
     @Nested
@@ -90,125 +162,81 @@ public class PositionTest {
 
             assertThat(source.isStraight(target)).isFalse();
         }
-    }
-
-    @Nested
-    class StraightDiagonalPositionTest {
-
-        private static Stream<Arguments> provideFileAndRank() {
-            return Stream.of(
-                    Arguments.of(File.B, Rank.THREE),
-                    Arguments.of(File.B, Rank.FIVE),
-                    Arguments.of(File.C, Rank.TWO),
-                    Arguments.of(File.C, Rank.SIX),
-                    Arguments.of(File.E, Rank.TWO),
-                    Arguments.of(File.E, Rank.SIX),
-                    Arguments.of(File.F, Rank.THREE),
-                    Arguments.of(File.F, Rank.FIVE)
-            );
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideFileAndRank")
-        @DisplayName("두 위치가 한 칸 직선 한 칸 대각선에 존재하면 참을 반환한다.")
-        void isStraightDiagonal_True(File file, Rank rank) {
-            Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(file, rank);
-
-            assertThat(source.isStraightDiagonal(target)).isTrue();
-        }
 
         @Test
-        @DisplayName("두 위치가 한 칸 직선 한 칸 대각선에 존재하지 않으면 거짓을 반환한다.")
-        void isStraightDiagonal_False() {
-            Position source = new Position(File.D, Rank.FOUR);
+        @DisplayName("방향이 위를 가리키면 참을 반환한다.")
+        void isUp_True() {
+            Position source = new Position(File.A, Rank.TWO);
             Position target = new Position(File.A, Rank.THREE);
 
-            assertThat(source.isStraightDiagonal(target)).isFalse();
-        }
-    }
-
-    @Nested
-    class EveryDirectionPositionTest {
-
-        private static Stream<Arguments> provideFileAndRank() {
-            return Stream.of(
-                    Arguments.of(File.C, Rank.THREE),
-                    Arguments.of(File.C, Rank.FOUR),
-                    Arguments.of(File.C, Rank.FIVE),
-                    Arguments.of(File.D, Rank.THREE),
-                    Arguments.of(File.D, Rank.FIVE),
-                    Arguments.of(File.E, Rank.THREE),
-                    Arguments.of(File.E, Rank.FOUR),
-                    Arguments.of(File.E, Rank.FIVE)
-            );
-        }
-
-        @ParameterizedTest
-        @MethodSource("provideFileAndRank")
-        @DisplayName("두 위치가 모든 방향 한 칸 내에 존재하면 참을 반환한다.")
-        void isNeighbor_True(File file, Rank rank) {
-            Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(file, rank);
-
-            assertThat(source.isNeighbor(target)).isTrue();
+            assertThat(source.isUp(target)).isTrue();
         }
 
         @Test
-        @DisplayName("두 위치가 모든 방향 한 칸 내에 존재하지 않으면 거짓을 반환한다.")
-        void isNeighbor_False() {
-            Position source = new Position(File.D, Rank.FOUR);
+        @DisplayName("방향이 위를 가리키지 않으면 거짓을 반환한다.")
+        void isUp_False() {
+            Position source = new Position(File.A, Rank.THREE);
+            Position target = new Position(File.A, Rank.TWO);
+
+            assertThat(source.isUp(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("방향이 아래를 가리키면 참을 반환한다.")
+        void isDown_True() {
+            Position source = new Position(File.A, Rank.THREE);
+            Position target = new Position(File.A, Rank.TWO);
+
+            assertThat(source.isDown(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("방향이 아래를 가리지 않으면 거짓을 반환한다.")
+        void isDown_False() {
+            Position source = new Position(File.A, Rank.TWO);
             Position target = new Position(File.A, Rank.THREE);
 
-            assertThat(source.isNeighbor(target)).isFalse();
+            assertThat(source.isDown(target)).isFalse();
         }
     }
 
     @Nested
-    class ForwardPositionTest {
+    class StepsTest {
 
-        private static Stream<Arguments> provideFileAndRank() {
-            return Stream.of(
-                    Arguments.of(File.D, Rank.THREE),
-                    Arguments.of(File.D, Rank.FOUR)
-            );
-        }
+        @Test
+        @DisplayName("허용하는 랭크 차이라면 참을 반환한다.")
+        void isLegalRankStep_True() {
+            Position source = new Position(File.A, Rank.TWO);
+            Position target = new Position(File.A, Rank.SEVEN);
 
-        @ParameterizedTest
-        @MethodSource("provideFileAndRank")
-        @DisplayName("처음에 두 위치가 한 칸 또는 두 칸 앞에 존재하면 참을 반환한다.")
-        void isForwardStraight_First_True(File file, Rank rank) {
-            Position source = new Position(File.D, Rank.TWO);
-            Position target = new Position(file, rank);
-
-            assertThat(source.firstMoveOfWhitePawn(target)).isTrue();
+            assertThat(source.isLegalRankStep(target, 5)).isTrue();
         }
 
         @Test
-        @DisplayName("처음에 두 위치가 한 칸 또는 두 칸 앞에 존재하지 않으면 거짓을 반환한다.")
-        void isForwardStraight_First_False() {
-            Position source = new Position(File.D, Rank.FOUR);
-            Position target = new Position(File.D, Rank.EIGHT);
+        @DisplayName("허용하지 않는 랭크 차이라면 거짓을 반환한다.")
+        void isLegalRankStep_False() {
+            Position source = new Position(File.A, Rank.ONE);
+            Position target = new Position(File.A, Rank.SEVEN);
 
-            assertThat(source.firstMoveOfWhitePawn(target)).isFalse();
+            assertThat(source.isLegalRankStep(target, 5)).isFalse();
         }
 
         @Test
-        @DisplayName("처음이 아닐 때 두 위치가 한 칸 앞에 존재하면 참을 반환한다.")
-        void isForwardStraight_NotFirst_True() {
-            Position source = new Position(File.D, Rank.THREE);
-            Position target = new Position(File.D, Rank.FOUR);
+        @DisplayName("허용하는 파일 차이라면 참을 반환한다.")
+        void isLegalFileStep_True() {
+            Position source = new Position(File.A, Rank.TWO);
+            Position target = new Position(File.F, Rank.SEVEN);
 
-            assertThat(source.notFirstMoveOfWhitePawn(target)).isTrue();
+            assertThat(source.isLegalFileStep(target, 5)).isTrue();
         }
 
         @Test
-        @DisplayName("처음이 아닐 때 두 위치가 한 칸 앞에 존재하지 않으면 거짓을 반환한다.")
-        void isForwardStraight_NotFirst_False() {
-            Position source = new Position(File.D, Rank.THREE);
-            Position target = new Position(File.D, Rank.FIVE);
+        @DisplayName("허용하지 않는 파일 차이라면 거짓을 반환한다.")
+        void isLegalFileStep_False() {
+            Position source = new Position(File.A, Rank.TWO);
+            Position target = new Position(File.E, Rank.SEVEN);
 
-            assertThat(source.notFirstMoveOfWhitePawn(target)).isFalse();
+            assertThat(source.isLegalFileStep(target, 5)).isFalse();
         }
     }
 
