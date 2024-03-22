@@ -17,11 +17,11 @@ import model.position.Route;
 public final class Pawn extends Role {
     private static final List<MovingPattern> whiteMovingPatterns = List.of(N, NE, NW);
     private static final List<MovingPattern> blackMovingPatterns = List.of(S, SE, SW);
-    private boolean isInitialMove;
+    private static final int INITIAL_WHITE_PAWN_RANK = 2;
+    private static final int INITIAL_BLACK_PAWN_RANK = 7;
 
     private Pawn(Color color, List<MovingPattern> movingPatterns) {
         super(color, movingPatterns);
-        this.isInitialMove = true;
     }
 
     public static Pawn from(Color color) {
@@ -34,14 +34,14 @@ public final class Pawn extends Role {
     @Override
     protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();
-        if (movedPosition.isAvailablePosition(movingPattern)) {
+        if ((movedPosition.rank() == INITIAL_WHITE_PAWN_RANK && movingPattern == N) || (
+                movedPosition.rank() == INITIAL_BLACK_PAWN_RANK && movingPattern == S)) {
             movedPosition = movedPosition.getNextPosition(movingPattern);
             sequentialPositions.add(movedPosition);
         }
-        if (isInitialMove && (movingPattern == N || movingPattern == S)) {
+        if (movedPosition.isAvailablePosition(movingPattern)) {
             movedPosition = movedPosition.getNextPosition(movingPattern);
             sequentialPositions.add(movedPosition);
-            isInitialMove = false;
         }
         return new Route(sequentialPositions);
     }
