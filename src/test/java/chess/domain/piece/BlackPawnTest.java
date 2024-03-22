@@ -15,7 +15,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class BlackPawnTest {
-    /*
     private BlackPawn BLACK_PAWN;
 
     @BeforeEach
@@ -26,10 +25,9 @@ class BlackPawnTest {
     @DisplayName("폰은 한 방향으로만 이동할 수 있다.")
     @Test
     void tooManyDirectionTest() {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.LEFT, SquareState.EMPTY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(Direction.DOWN, Direction.LEFT),
+                List.of(SquareState.EMPTY, SquareState.EMPTY));
         assertThat(BLACK_PAWN.canMove(manyDirectionRoute))
                 .isFalse();
     }
@@ -37,10 +35,10 @@ class BlackPawnTest {
     @DisplayName("경로 중간에 기물이 위치한다면 움직일 수 없다.")
     @Test
     void pathHasPieceTest() {
-        Route notEmptyRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.ALLY),
-                new Step(Direction.DOWN, SquareState.ENEMY)
-        ));
+        Route notEmptyRoute = new Route(
+                List.of(Direction.DOWN, Direction.DOWN),
+                List.of(SquareState.ALLY, SquareState.ENEMY)
+        );
 
         assertThat(BLACK_PAWN.canMove(notEmptyRoute))
                 .isFalse();
@@ -50,9 +48,10 @@ class BlackPawnTest {
     @ParameterizedTest
     @EnumSource(Direction.class)
     void allyLocatedAtTargetTest(Direction direction) {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(direction, SquareState.ALLY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(direction),
+                List.of(SquareState.ALLY)
+        );
 
         assertThat(BLACK_PAWN.canMove(manyDirectionRoute))
                 .isFalse();
@@ -61,11 +60,10 @@ class BlackPawnTest {
     @DisplayName("최대 2칸까지 움직일 수 있다.")
     @Test
     void maxDistanceMoveTest() {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
+        );
 
         assertThat(BLACK_PAWN.canMove(manyDirectionRoute))
                 .isFalse();
@@ -77,9 +75,10 @@ class BlackPawnTest {
         @DisplayName("블랙 폰은 위로 이동할 수 없다")
         @Test
         void blackPawnUpDirectionTest() {
-            Route route = new Route(List.of(
-                    new Step(Direction.UP, SquareState.EMPTY)
-            ));
+            Route route = new Route(
+                    List.of(Direction.UP),
+                    List.of(SquareState.EMPTY)
+            );
 
             assertThat(BLACK_PAWN.canMove(route)).isFalse();
         }
@@ -88,38 +87,40 @@ class BlackPawnTest {
         @ParameterizedTest
         @EnumSource(value = Direction.class, names = {"UP_LEFT", "UP_RIGHT"})
         void blackPawnUpDirectionTest(Direction direction) {
-            Route route = new Route(List.of(
-                    new Step(direction, SquareState.ENEMY)
-            ));
+            Route route = new Route(
+                    List.of(direction),
+                    List.of(SquareState.ENEMY)
+            );
             assertThat(BLACK_PAWN.canMove(route)).isFalse();
         }
 
         @DisplayName("블랙 폰은 아래로 이동할 수 있다.")
         @Test
         void blackPawnDownDirectionTest() {
-            Route route = new Route(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY)
-            ));
+            Route route = new Route(
+                    List.of(Direction.DOWN),
+                    List.of(SquareState.EMPTY)
+            );
             assertThat(BLACK_PAWN.canMove(route)).isTrue();
         }
 
         @DisplayName("움직인 적 없는 블랙 폰은 아래로 두 번 이동할 수 있다.")
         @Test
         void neverMovedBlackPawn_D_D_Test() {
-            Route route = new Route(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
-            ));
+            Route route = new Route(
+                    List.of(Direction.DOWN, Direction.DOWN),
+                    List.of(SquareState.EMPTY, SquareState.EMPTY)
+            );
             assertThat(BLACK_PAWN.canMove(route)).isTrue();
         }
 
         @DisplayName("움직인 적 있는 블랙 폰은 아래로 두 번 이동할 수 없다.")
         @Test
         void movedBlackPawn_D_D_Test() {
-            Route route = new Route(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
-            ));
+            Route route = new Route(
+                    List.of(Direction.DOWN, Direction.DOWN),
+                    List.of(SquareState.EMPTY, SquareState.EMPTY)
+            );
             BLACK_PAWN.canMove(route);
             assertThat(BLACK_PAWN.canMove(route)).isFalse();
         }
@@ -128,11 +129,11 @@ class BlackPawnTest {
         @ParameterizedTest
         @EnumSource(value = Direction.class, names = {"DOWN_LEFT", "DOWN_RIGHT"})
         void blackPawnDownDirectionTest(Direction direction) {
-            Route route = new Route(List.of(
-                    new Step(direction, SquareState.ENEMY)
-            ));
+            Route route = new Route(
+                    List.of(direction),
+                    List.of(SquareState.ENEMY)
+            );
             assertThat(BLACK_PAWN.canMove(route)).isTrue();
         }
     }
-     */
 }
