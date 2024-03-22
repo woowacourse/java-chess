@@ -2,11 +2,10 @@ package model.piece.state;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import model.position.Position;
 import model.piece.Color;
+import model.position.Position;
 import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +17,7 @@ class KingTest {
     @EnumSource(Color.class)
     @DisplayName("King의 현재 위치에서 이동할 수 있는 Position을 반환한다.")
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
-        Role king = new King(color);
+        Role king = King.from(color);
         Position initialPosition = Position.of(4, 4);
         Set<Route> routes = king.possibleRoutes(initialPosition);
 

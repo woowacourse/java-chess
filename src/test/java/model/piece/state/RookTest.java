@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Set;
-import model.position.Position;
 import model.piece.Color;
+import model.position.Position;
 import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +17,7 @@ class RookTest {
     @EnumSource(Color.class)
     @DisplayName("Rook의 현재 위치에서 이동할 수 있는 Position을 반환한다.")
     void possiblePositions_ReturnPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
-        Role rook = new Rook(color);
+        Role rook = Rook.from(color);
         Position initialPosition = Position.of(4, 4);
         Set<Route> routes = rook.possibleRoutes(initialPosition);
 

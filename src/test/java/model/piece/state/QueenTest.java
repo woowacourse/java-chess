@@ -17,7 +17,7 @@ class QueenTest {
     @EnumSource(Color.class)
     @DisplayName("Queen의 현재 위치에서 이동할 수 있는 Position을 반환한다.")
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
-        Role queen = new Queen(color);
+        Role queen = Queen.from(color);
         Position initialPosition = Position.of(4, 4);
         Set<Route> routes = queen.possibleRoutes(initialPosition);
 

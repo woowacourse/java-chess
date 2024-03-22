@@ -1,41 +1,45 @@
 package model.piece.state;
 
 import static model.direction.MovingPattern.N;
+import static model.direction.MovingPattern.NE;
+import static model.direction.MovingPattern.NW;
 import static model.direction.MovingPattern.S;
+import static model.direction.MovingPattern.SE;
+import static model.direction.MovingPattern.SW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import model.position.Position;
-import model.position.Route;
 import model.direction.MovingPattern;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 
 public final class Pawn extends Role {
-    private static final List<MovingPattern> movingPatterns = List.of(N, S);
+    private static final List<MovingPattern> whiteMovingPatterns = List.of(N, NE, NW);
+    private static final List<MovingPattern> blackMovingPatterns = List.of(S, SE, SW);
     private boolean isInitialMove;
 
-    public Pawn(Color color) {
+    private Pawn(Color color, List<MovingPattern> movingPatterns) {
         super(color, movingPatterns);
         this.isInitialMove = true;
     }
 
-    @Override
-    public Set<Route> possibleRoutes(Position position) {
+    public static Pawn from(Color color) {
         if (color == Color.WHITE) {
-            return possiblePawnMovingPostions(N, position);
+            return new Pawn(color, whiteMovingPatterns);
         }
-        return possiblePawnMovingPostions(S, position);
+        return new Pawn(color, blackMovingPatterns);
     }
 
-    private Set<Route> possiblePawnMovingPostions(MovingPattern movingPattern, Position position) {
-        List<Position> positions = new ArrayList<>();
-        Position nextPosition = position.getNextPosition(movingPattern);
-        positions.add(nextPosition);
-        if (isInitialMove) {
-            Position doubleMovePosition = nextPosition.getNextPosition(movingPattern);
-            positions.add(doubleMovePosition);
+    @Override
+    protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
+        List<Position> sequentialPositions = new ArrayList<>();
+        movedPosition = movedPosition.getNextPosition(movingPattern);
+        sequentialPositions.add(movedPosition);
+        if (isInitialMove && (movingPattern == N || movingPattern == S)) {
+            movedPosition = movedPosition.getNextPosition(movingPattern);
+            sequentialPositions.add(movedPosition);
         }
-        return Set.of(new Route(positions));
+        return new Route(sequentialPositions);
     }
 }

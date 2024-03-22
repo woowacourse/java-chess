@@ -10,27 +10,21 @@ import static model.direction.MovingPattern.SW;
 import static model.direction.MovingPattern.W;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import model.position.Position;
-import model.position.Route;
 import model.direction.MovingPattern;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 
 public final class King extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(N, NE, E, SE, S, SW, W, NW);
-    public King(Color color){
+
+    private King(Color color) {
         super(color, movingPatterns);
     }
 
-    @Override
-    public Set<Route> possibleRoutes(Position position) {
-        Set<Route> possibleRoutes = new HashSet<>();
-        for (MovingPattern movingPattern : movingPatterns) {
-            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
-        }
-        return possibleRoutes;
+    public static King from(Color color) {
+        return new King(color);
     }
 
     @Override

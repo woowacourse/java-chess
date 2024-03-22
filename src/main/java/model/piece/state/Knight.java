@@ -10,27 +10,21 @@ import static model.direction.MovingPattern.WWN;
 import static model.direction.MovingPattern.WWS;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import model.position.Position;
-import model.position.Route;
 import model.direction.MovingPattern;
 import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
 
 public final class Knight extends Role {
     private static final List<MovingPattern> movingPatterns = List.of(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-    public Knight(Color color){
+
+    private Knight(Color color) {
         super(color, movingPatterns);
     }
 
-    @Override
-    public Set<Route> possibleRoutes(Position position) {
-        Set<Route> possibleRoutes = new HashSet<>();
-        for (MovingPattern movingPattern : movingPatterns) {
-            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
-        }
-        return possibleRoutes;
+    public static Knight from(Color color) {
+        return new Knight(color);
     }
 
     @Override

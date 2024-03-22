@@ -72,20 +72,20 @@ public class ChessBoardFactory {
     }
 
     private static List<Role> generateColoredPieces(Color color) {
-        return List.of(new Rook(color), new Knight(color), new Bishop(color));
+        return List.of(Rook.from(color), Knight.from(color), Bishop.from(color));
     }
 
     private static void initKingQueen() {
-        chessBoard.put(Position.of(FILE_D, RANK_ONE), new PieceHolder(new Queen(WHITE)));
-        chessBoard.put(Position.of(FILE_E, RANK_ONE), new PieceHolder(new King(WHITE)));
-        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new PieceHolder(new Queen(BLACK)));
-        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new PieceHolder(new King(BLACK)));
+        chessBoard.put(Position.of(FILE_D, RANK_ONE), new PieceHolder(Queen.from(WHITE)));
+        chessBoard.put(Position.of(FILE_E, RANK_ONE), new PieceHolder(King.from(WHITE)));
+        chessBoard.put(Position.of(FILE_D, RANK_EIGHT), new PieceHolder(Queen.from(BLACK)));
+        chessBoard.put(Position.of(FILE_E, RANK_EIGHT), new PieceHolder(King.from(BLACK)));
     }
 
     private static void initPawn() {
         for (int file = 1; file <= 8; file++) {
-            chessBoard.put(Position.of(file, RANK_TWO), new PieceHolder(new Pawn(WHITE)));
-            chessBoard.put(Position.of(file, RANK_SEVEN), new PieceHolder(new Pawn(BLACK)));
+            chessBoard.put(Position.of(file, RANK_TWO), new PieceHolder(Pawn.from(WHITE)));
+            chessBoard.put(Position.of(file, RANK_SEVEN), new PieceHolder(Pawn.from(BLACK)));
         }
     }
 

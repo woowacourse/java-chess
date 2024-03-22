@@ -17,7 +17,7 @@ class KnightTest {
     @EnumSource(Color.class)
     @DisplayName("Knight의 현재 위치에서 이동할 수 있는 Position을 반환한다.")
     void possiblePositions_ReturnsPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
-        Role knight = new Knight(color);
+        Role knight = Knight.from(color);
         Position initialPosition = Position.of(4, 4);
         Set<Route> routes = knight.possibleRoutes(initialPosition);
 
@@ -29,8 +29,7 @@ class KnightTest {
                 // EE_
                 new Route(List.of(Position.of(5, 6))), new Route(List.of(Position.of(3, 6))),
                 // WW_
-                new Route(List.of(Position.of(5, 2))), new Route(List.of(Position.of(3, 2)))
-        );
+                new Route(List.of(Position.of(5, 2))), new Route(List.of(Position.of(3, 2))));
 
         assertEquals(expectedRoutes, routes);
     }

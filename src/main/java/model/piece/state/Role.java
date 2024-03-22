@@ -1,6 +1,7 @@
 package model.piece.state;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import model.direction.MovingPattern;
@@ -35,7 +36,13 @@ public abstract class Role {
                 .orElseThrow(() ->  new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
-    protected abstract Set<Route> possibleRoutes(Position position);
+    public Set<Route> possibleRoutes(Position position) {
+        Set<Route> possibleRoutes = new HashSet<>();
+        for (MovingPattern movingPattern : movingPatterns) {
+            possibleRoutes.add(findMovingPatternRoute(movingPattern, position));
+        }
+        return possibleRoutes;
+    }
 
     protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();

@@ -17,7 +17,7 @@ class BishopTest {
     @EnumSource(Color.class)
     @DisplayName("Bishop의 현재 위치에서 이동할 수 있는 Position을 반환한다.")
     void possiblePositions_ReturnPossiblePositions_WhenCurrentPositionIsGiven(Color color) {
-        Role bishop = new Bishop(color);
+        Role bishop = Bishop.from(color);
         Position initialPosition = Position.of(4, 4);
         Set<Route> routes = bishop.possibleRoutes(initialPosition);
 
