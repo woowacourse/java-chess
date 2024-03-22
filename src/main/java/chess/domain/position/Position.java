@@ -31,12 +31,20 @@ public class Position {
 
     public static Position from(String positionSymbol) {
         String fileValue = positionSymbol.substring(0, 1);
-        String rankValue = positionSymbol.substring(1, 2);
+        int rankValue = convertToRankValue(positionSymbol.substring(1, 2));
 
         File file = File.convertToFile(FileSymbol.convertToFileSymbol(fileValue));
         Rank rank = Rank.convertToRank(rankValue);
 
         return new Position(file, rank);
+    }
+
+    private static int convertToRankValue(String rankValue) {
+        try {
+            return Integer.parseInt(rankValue);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("적절하지 않은 위치입니다.");
+        }
     }
 
     private static String toKey(File file, Rank rank) {

@@ -19,8 +19,8 @@ public enum Rank {
         this.rank = rank;
     }
 
-    public static Rank convertToRank(String i) {
-        return Arrays.stream(Rank.values()).filter(start -> start.rank == Integer.parseInt(i))
+    public static Rank convertToRank(int rankValue) {
+        return Arrays.stream(Rank.values()).filter(start -> start.rank == rankValue)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("올바르지 않은 rank 값입니다."));
     }
@@ -31,8 +31,6 @@ public enum Rank {
 
     public Rank move(int moveUnit) {
         int destination = rank + moveUnit;
-        return Arrays.stream(Rank.values()).filter(m -> m.rank == destination)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 rank 값입니다."));
+        return convertToRank(destination);
     }
 }
