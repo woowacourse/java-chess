@@ -17,10 +17,9 @@ import java.util.Map;
 public class BoardFactory {
 
     private BoardFactory() {
-
     }
 
-    public static Board startGame() {
+    public static Board createInitialBoard() {
         Map<Position, Piece> map = new HashMap<>();
         initializePawn(map);
         initializeKnight(map);
