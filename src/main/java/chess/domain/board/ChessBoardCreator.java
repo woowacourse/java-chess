@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ChessBoardCreator {
+    // TODO 리플렉션에서 인스턴스 재사용으로 생각해보기
     private static final Map<Class<? extends Piece>, List<Position>> INITIAL_PIECE_ARRANGEMENT = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
@@ -59,6 +60,7 @@ public class ChessBoardCreator {
         return positionPiece;
     }
 
+    // TODO 사용자에게 보여줄 에러메시지
     private Piece createPieceInstance(Class<? extends Piece> clazz, Team team) {
         try {
             return clazz.getDeclaredConstructor(Team.class)

@@ -30,7 +30,7 @@ public class ChessGameController {
         }
 
         ChessBoard chessBoard = initializeChessBoard();
-
+        // TODO end 명령어 이외에는 종료되지 않도록
         while (true) {
             String inputCommand = inputView.readGameCommand();
             GameExecutionCommand gameCommand = from(inputCommand);

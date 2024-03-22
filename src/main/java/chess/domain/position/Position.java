@@ -62,7 +62,7 @@ public class Position {
         int colInterval = columnPosition.intervalWith(target.columnPosition);
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
-
+    // TODO 메서드 라인 수 개선
     public boolean rowIs(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);
     }

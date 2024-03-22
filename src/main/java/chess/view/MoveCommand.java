@@ -15,6 +15,7 @@ public class MoveCommand {
         this.destination = destination;
     }
 
+    // TODO 공백에 의미 부여하기
     public static MoveCommand of(String input) {
         List<String> command = List.of(input.split(" "));
         String start = command.get(START_INDEX);
@@ -22,6 +23,7 @@ public class MoveCommand {
         return new MoveCommand(makePosition(start), makePosition(destination));
     }
 
+    // TODO 매직넘버들의 의미 부여하기
     private static Position makePosition(String input) {
         int rowNumber = 8 - (input.charAt(1) - '0');
         int columnNumber = input.charAt(0) - 'a';
