@@ -1,7 +1,5 @@
-package chess.chessBoard;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.ChessSpaceGenerator;
-import chess.domain.chessBoard.Space;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
 import chess.domain.chessBoard.Space;
-import chess.domain.piece.Color;
-import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

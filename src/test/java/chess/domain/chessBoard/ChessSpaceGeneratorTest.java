@@ -1,8 +1,5 @@
-package chess.chessBoard;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.ChessSpaceGenerator;
-import chess.domain.chessBoard.Space;
-import chess.domain.chessBoard.SpaceGenerator;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

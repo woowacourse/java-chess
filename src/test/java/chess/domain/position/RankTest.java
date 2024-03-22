@@ -1,7 +1,5 @@
-package chess.position;
+package chess.domain.position;
 
-import chess.domain.position.Rank;
-import chess.domain.position.RankDifference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
