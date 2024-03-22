@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
 
@@ -22,12 +23,11 @@ public class ChessBoard {
         List<ChessPosition> path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
         validatePathIsEmpty(path);
         validatePathContainsPiece(path);
-        board.remove(sourcePosition);
-        board.put(targetPosition, sourcePiece);
+        replacePiece(sourcePiece, sourcePosition, targetPosition);
     }
 
     private void validateSourceIsNull(Piece sourcePiece) {
-        if (sourcePiece == null) {
+        if (sourcePiece.equals(Blank.INSTANCE)) {
             throw new IllegalArgumentException("소스 위치에 기물이 존재하지 않습니다.");
         }
     }
@@ -47,9 +47,14 @@ public class ChessBoard {
     }
 
     private void validatePathContainsPiece(Piece found) {
-        if (found != null) {
+        if (!found.equals(Blank.INSTANCE)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재하여 움직일 수 없습니다.");
         }
+    }
+
+    private void replacePiece(Piece sourcePiece, ChessPosition sourcePosition, ChessPosition targetPosition) {
+        board.put(sourcePosition, Blank.INSTANCE);
+        board.put(targetPosition, sourcePiece);
     }
 
     public Map<ChessPosition, Piece> getBoard() {

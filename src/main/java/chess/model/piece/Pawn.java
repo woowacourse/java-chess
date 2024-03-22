@@ -34,7 +34,7 @@ public class Pawn extends Piece {
     }
 
     private void validateForwardPath(ChessPosition source, Piece targetPiece, Movement movement) {
-        if (targetPiece != null && canCrossMove(source, movement)) {
+        if (!targetPiece.equals(Blank.INSTANCE) && canCrossMove(source, movement)) {
             throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 전진할 수 없습니다.");
         }
     }
@@ -59,7 +59,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canDiagonalMove(Piece targetPiece, Movement movement) {
-        return isPossibleDiagonal(movement) && targetPiece != null && !isSameSide(targetPiece);
+        return isPossibleDiagonal(movement) && !targetPiece.equals(Blank.INSTANCE) && !isSameSide(targetPiece);
     }
 
     private boolean isPossibleDiagonal(Movement movement) {

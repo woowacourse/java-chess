@@ -18,6 +18,7 @@ public class ChessBoardInitializer {
         board.putAll(createPawns(Side.BLACK));
         board.putAll(createSpecialPieces(Side.WHITE));
         board.putAll(createPawns(Side.WHITE));
+        board.putAll(createBlanks());
         return board;
     }
 
@@ -61,5 +62,21 @@ public class ChessBoardInitializer {
             return Rank.SEVEN;
         }
         return Rank.TWO;
+    }
+
+    public Map<ChessPosition, Piece> createBlanks() {
+        Map<ChessPosition, Piece> blanks = new HashMap<>();
+        for (int rankCoordinate = 3; rankCoordinate <= 6; rankCoordinate++) {
+            blanks.putAll(createBlanksInRank(rankCoordinate));
+        }
+        return blanks;
+    }
+
+    public Map<ChessPosition, Piece> createBlanksInRank(int rankCoordinate) {
+        Map<ChessPosition, Piece> blanks = new HashMap<>();
+        for (File file : File.values()) {
+            blanks.put(new ChessPosition(file, Rank.from(rankCoordinate)), Blank.INSTANCE);
+        }
+        return blanks;
     }
 }

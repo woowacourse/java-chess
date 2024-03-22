@@ -3,6 +3,7 @@ package chess.model.piece;
 import chess.model.position.ChessPosition;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     protected final Side side;
@@ -19,8 +20,21 @@ public abstract class Piece {
     }
 
     protected final void checkValidTargetPiece(Piece other) {
-        if (other != null && isSameSide(other)) {
+        if (!other.equals(Blank.INSTANCE) && isSameSide(other)) {
             throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return side == piece.side;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(side);
     }
 }

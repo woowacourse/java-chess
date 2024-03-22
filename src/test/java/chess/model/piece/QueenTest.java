@@ -25,7 +25,7 @@ class QueenTest {
         Queen queen = new Queen(Side.WHITE);
 
         // when
-        List<ChessPosition> path = queen.findPath(source, target, null);
+        List<ChessPosition> path = queen.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -54,7 +54,7 @@ class QueenTest {
         Queen queen = new Queen(Side.BLACK);
 
         // when
-        List<ChessPosition> path = queen.findPath(source, target, null);
+        List<ChessPosition> path = queen.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEmpty();

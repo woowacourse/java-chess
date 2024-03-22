@@ -21,6 +21,6 @@ class ChessBoardInitializerTest {
         Map<ChessPosition, Piece> chessBoard = initializer.create();
 
         // then
-        assertThat(chessBoard).hasSize(32);
+        assertThat(chessBoard).hasSize(64);
     }
 }

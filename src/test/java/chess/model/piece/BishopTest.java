@@ -26,7 +26,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Side.WHITE);
 
         // when
-        List<ChessPosition> path = bishop.findPath(source, target, null);
+        List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -55,7 +55,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Side.BLACK);
 
         // when
-        List<ChessPosition> path = bishop.findPath(source, target, null);
+        List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEmpty();

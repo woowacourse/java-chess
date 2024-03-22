@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
@@ -19,7 +20,8 @@ class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard(new ChessBoardInitializer().create());
+        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
+        chessBoard = new ChessBoard(chessBoardInitializer.create());
     }
 
     @Test
@@ -31,15 +33,18 @@ class ChessBoardTest {
 
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
 
-        assertThat(board.get(source)).isNull();
-        assertThat(board.get(target)).isNotNull();
+        assertThat(board).containsEntry(source, Blank.INSTANCE);
+        assertThat(board).doesNotContainEntry(target, Blank.INSTANCE);
     }
 
     @Test
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
     void moveNullSource() {
-        ChessPosition source = null;
+        // given
+        ChessPosition source = new ChessPosition(File.H, Rank.SEVEN);
         ChessPosition target = new ChessPosition(File.D, Rank.TWO);
+
+        // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -47,8 +52,11 @@ class ChessBoardTest {
     @Test
     @DisplayName("경로가 비어있다면 예외가 발생한다.")
     void moveWhenPathEmpty() {
+        // given
         ChessPosition source = new ChessPosition(File.A, Rank.ONE);
         ChessPosition target = new ChessPosition(File.D, Rank.TWO);
+
+        // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -56,8 +64,11 @@ class ChessBoardTest {
     @Test
     @DisplayName("이동 경로에 기물이 존재한다면 예외가 발생한다.")
     void moveWhenPathContainsPiece() {
+        // given
         ChessPosition source = new ChessPosition(File.A, Rank.ONE);
         ChessPosition target = new ChessPosition(File.A, Rank.SIX);
+
+        // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }

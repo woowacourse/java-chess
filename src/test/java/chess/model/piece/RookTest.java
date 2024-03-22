@@ -25,7 +25,7 @@ class RookTest {
         Rook rook = new Rook(Side.WHITE);
 
         // when
-        List<ChessPosition> path = rook.findPath(source, target, null);
+        List<ChessPosition> path = rook.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -54,7 +54,7 @@ class RookTest {
         Rook rook = new Rook(Side.BLACK);
 
         // when
-        List<ChessPosition> path = rook.findPath(source, target, null);
+        List<ChessPosition> path = rook.findPath(source, target, Blank.INSTANCE);
 
         // then
         assertThat(path).isEmpty();
