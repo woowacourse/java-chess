@@ -50,13 +50,7 @@ public class Column {
     }
 
     public int compare(Column column) {
-        if(value > column.value) {
-            return -1;
-        }
-        if(value == column.value) {
-            return 0;
-        }
-        return 1;
+        return Integer.compare(column.value, value);
     }
 
     public int getValue() {

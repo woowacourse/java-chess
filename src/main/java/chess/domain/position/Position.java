@@ -56,11 +56,11 @@ public class Position {
     }
 
 
-    public int compareRow(Position target) {
+    public int findRowDirection(Position target) {
         return row.compare(target.row);
     }
 
-    public int compareColumn(Position target) {
+    public int findColumnDirection(Position target) {
         return column.compare(target.column);
     }
 

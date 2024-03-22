@@ -22,8 +22,8 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position source, Position target) {
-        int rowDirection = source.compareRow(target);
-        int columnDirection = source.compareColumn(target);
+        int rowDirection = source.findRowDirection(target);
+        int columnDirection = source.findColumnDirection(target);
 
         return Arrays.stream(values())
                 .filter(value -> value.rowDirection == rowDirection && value.columnDirection == columnDirection)
