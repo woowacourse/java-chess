@@ -13,10 +13,10 @@ public class Running implements GameStatus {
     @Override
     public GameStatus play(final List<String> command, final GameBoard gameBoard) {
         Command cmd = Command.from(command.get(0));
-        if (cmd == Command.END) {
+        if (cmd == Command.END && command.size() == 1) {
             return new End();
         }
-        if (cmd == Command.MOVE) {
+        if (cmd == Command.MOVE && command.size() == 3) {
             Moving moving = new Moving(Position.from(command.get(1)), Position.from(command.get(2)));
             gameBoard.move(moving);
             return new Running();
