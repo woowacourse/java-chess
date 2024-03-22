@@ -2,20 +2,24 @@ package domain.piece;
 
 import domain.position.Position;
 
-public class Empty extends AbstractPiece {
-    private static final Empty instance = new Empty();
+public class Empty implements Piece {
+    private static final Empty INSTANCE = new Empty();
 
     private Empty() {
-        super(Color.NEUTRALITY);
     }
 
     public static Empty getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     @Override
-    public void validateMovement(Position resource, Position target, Piece other) {
+    public void validate(Position resource, Position target, Piece other) {
         throw new UnsupportedOperationException("Empty는 움직일 수 없습니다."); // todo 메시지 수정
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.NEUTRALITY;
     }
 
     @Override

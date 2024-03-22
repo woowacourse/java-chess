@@ -11,32 +11,32 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean isStraightAt(final Position target) {
+        validateSamePosition(target);
+        return calculateFileGap(target) == 0 || calculateRankGap(target) == 0;
+    }
+
+    public boolean isDiagonalAt(final Position target) {
+        validateSamePosition(target);
+        return calculateFileGap(target) == calculateRankGap(target);
+    }
+
+    public boolean isKnightPositionAt(final Position target) {
+        validateSamePosition(target);
+        return calculateRankGap(target) * calculateFileGap(target) == 2;
+    }
+
+    public boolean isAdjacentAt(final Position target) {
+        validateSamePosition(target);
+        return Math.max(calculateRankGap(target), calculateFileGap(target)) == 1;
+    }
+
     public boolean isUpperRankThan(final Position target) {
         return this.rank.isUpperThan(target.rank);
     }
 
     public boolean isLowerRankThan(final Position target) {
         return this.rank.isLowerThan(target.rank);
-    }
-
-    public boolean isStraight(final Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) == 0;
-    }
-
-    public boolean isDiagonal(final Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) == calculateRankGap(target);
-    }
-
-    boolean isLShape(final Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) * calculateRankGap(target) == 2;
-    }
-
-    boolean isAdjacent(final Position target) {
-        validateSamePosition(target);
-        return calculateFileGap(target) == 0 && calculateRankGap(target) == 0;
     }
 
     boolean isVertical(final Position target) {

@@ -12,6 +12,24 @@ class RouteTest {
     @Nested
     class 경로_생성 {
         @Test
+        void 인접한_UP_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.F, Rank.FIVE);
+            Position target = new Position(File.F, Rank.SIX);
+
+            Route route = Route.create(resource, target);
+            assertThat(route.getRoute()).hasSize(0);
+        }
+
+        @Test
+        void 인접한_LEFT_방향으로_이동하는_경로를_반환한다() {
+            Position resource = new Position(File.F, Rank.FIVE);
+            Position target = new Position(File.E, Rank.FIVE);
+
+            Route route = Route.create(resource, target);
+            assertThat(route.getRoute()).hasSize(0);
+        }
+
+        @Test
         void UP_방향으로_이동하는_경로를_반환한다() {
             Position resource = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.EIGHT);
@@ -42,8 +60,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.FIVE);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -120,8 +137,7 @@ class RouteTest {
             Position target = new Position(File.D, Rank.SIX);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -130,8 +146,7 @@ class RouteTest {
             Position target = new Position(File.F, Rank.SIX);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -140,8 +155,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.FIVE);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -150,8 +164,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.THREE);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -160,8 +173,7 @@ class RouteTest {
             Position target = new Position(File.F, Rank.TWO);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -170,8 +182,7 @@ class RouteTest {
             Position target = new Position(File.D, Rank.TWO);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -180,8 +191,7 @@ class RouteTest {
             Position target = new Position(File.C, Rank.THREE);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
@@ -190,8 +200,7 @@ class RouteTest {
             Position target = new Position(File.C, Rank.FIVE);
 
             Route route = Route.create(resource, target);
-            assertThat(route.getRoute())
-                    .hasSize(0);
+            assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test

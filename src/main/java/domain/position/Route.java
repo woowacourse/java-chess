@@ -12,10 +12,10 @@ public class Route {
     }
 
     public static Route create(final Position source, final Position target) {
-        if (source.isLShape(target) || source.isAdjacent(target)) {
+        if (source.isKnightPositionAt(target) || source.isAdjacentAt(target)) {
             return createEmptyRoute();
         }
-        if (source.isDiagonal(target)) {
+        if (source.isDiagonalAt(target)) {
             return createDiagonalRoute(source, target);
         }
         if (source.isVertical(target)) {

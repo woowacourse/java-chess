@@ -1,25 +1,18 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import domain.piece.Color;
+import domain.piece.Piece;
+import domain.piece.pawn.Pawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import org.junit.jupiter.api.Test;
 
-class QueenTest {
-    private final Piece queen = new Queen(Color.WHITE);
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-    @Test
-    void 직선_방향으로_이동할_수_있다() {
-        Position resource = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.D, Rank.EIGHT);
-        Piece other = new Pawn(Color.BLACK);
-
-        assertThatCode(() -> queen.validateMovement(resource, target, other))
-                .doesNotThrowAnyException();
-    }
+class BishopTest {
+    private final Piece bishop = new Bishop(Color.WHITE);
 
     @Test
     void 대각선_방향으로_이동할_수_있다() {
@@ -27,9 +20,19 @@ class QueenTest {
         Position target = new Position(File.G, Rank.SEVEN);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatCode(() -> queen.validateMovement(resource, target, other))
+        assertThatCode(() -> bishop.validate(resource, target, other))
                 .doesNotThrowAnyException();
+    }
 
+    @Test
+    void 직선_방향으로_이동하면_예외가_발생한다() {
+        Position resource = new Position(File.D, Rank.FOUR);
+        Position target = new Position(File.D, Rank.EIGHT);
+        Piece other = new Pawn(Color.BLACK);
+
+        assertThatThrownBy(() -> bishop.validate(resource, target, other))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -38,9 +41,9 @@ class QueenTest {
         Position target = new Position(File.F, Rank.THREE);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Queen은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
@@ -49,18 +52,18 @@ class QueenTest {
         Position target = new Position(File.A, Rank.TWO);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Queen은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("Bishop은 대각선 방향으로만 이동할 수 있습니다.");
     }
 
     @Test
     void 거리에_상관없이_이동할_수_있다() {
         Position resource = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.D, Rank.EIGHT);
+        Position target = new Position(File.H, Rank.EIGHT);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatCode(() -> queen.validateMovement(resource, target, other))
+        assertThatCode(() -> bishop.validate(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -70,9 +73,9 @@ class QueenTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Queen은 대각선, 수평, 수직 방향으로만 이동할 수 있습니다.");
+                .hasMessageContaining("동일한 위치입니다.");
     }
 
     @Test
@@ -81,7 +84,7 @@ class QueenTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> queen.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

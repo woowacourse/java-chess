@@ -1,19 +1,20 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
+import domain.piece.Color;
+import domain.piece.Type;
 import domain.position.Position;
 
-public class Knight extends AbstractColorValidatablePiece {
+public class Knight extends NonPawnPiece {
     public Knight(Color color) {
         super(color);
     }
 
     @Override
-    public void validatePieceMovement(final Position resource, final Position target) {
-        int rankGap = resource.calculateRankGap(target);
-        int fileGap = resource.calculateFileGap(target);
-        if (rankGap * fileGap == 2) {
+    protected void validateMovement(final Position resource, final Position target) {
+        if (resource.isKnightPositionAt(target)) {
             return;
         }
+
         throw new IllegalArgumentException(String.format("%s은 L자 방향으로만 이동할 수 있습니다.",
                 this.getClass().getSimpleName()));
     }

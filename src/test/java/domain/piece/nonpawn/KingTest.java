@@ -1,12 +1,15 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import domain.piece.Color;
+import domain.piece.Piece;
+import domain.piece.pawn.Pawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
     private final Piece king = new King(Color.WHITE);
@@ -17,7 +20,7 @@ class KingTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatCode(() -> king.validateMovement(resource, target, other))
+        assertThatCode(() -> king.validate(resource, target, other))
                 .doesNotThrowAnyException();
     }
 
@@ -27,7 +30,7 @@ class KingTest {
         Position target = new Position(File.F, Rank.FOUR);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> king.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("King은 한 번에 1칸만 이동할 수 있습니다");
     }
@@ -38,9 +41,9 @@ class KingTest {
         Position target = new Position(File.D, Rank.FOUR);
         Piece other = new Pawn(Color.BLACK);
 
-        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> king.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("King은 한 번에 1칸만 이동할 수 있습니다.");
+                .hasMessageContaining("동일한 위치입니다.");
     }
 
     @Test
@@ -49,7 +52,7 @@ class KingTest {
         Position target = new Position(File.E, Rank.FIVE);
         Piece other = new Pawn(Color.WHITE);
 
-        assertThatThrownBy(() -> king.validateMovement(resource, target, other))
+        assertThatThrownBy(() -> king.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
     }

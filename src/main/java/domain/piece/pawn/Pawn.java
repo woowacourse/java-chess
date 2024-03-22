@@ -1,18 +1,24 @@
-package domain.piece;
+package domain.piece.pawn;
 
+import domain.piece.Color;
+import domain.piece.Piece;
+import domain.piece.Type;
 import domain.position.Position;
 import domain.position.Rank;
+
 import java.util.Map;
 
-public class Pawn extends AbstractPiece {
-    private static final Map<Color, Rank> INITIAL_RANK = Map.of(Color.WHITE, Rank.TWO, Color.BLACK, Rank.SEVEN);
+public class Pawn extends PawnPiece {
+    private static final Map<Color, Rank> INITIAL_RANK = Map.of(
+            Color.WHITE, Rank.TWO,
+            Color.BLACK, Rank.SEVEN);
 
     public Pawn(Color color) {
         super(color);
     }
 
     @Override
-    public void validateMovement(Position resource, Position target, Piece other) {
+    public void validate(Position resource, Position target, Piece other) {
         if (getColor().isWhite()) {
             validateWhiteMovement(resource, target, other);
             return;
@@ -44,12 +50,12 @@ public class Pawn extends AbstractPiece {
     private void validateCommon(Position resource, Position target, Piece other) { // todo 메서드명 변경
         int moveCount = resource.calculateDistance(target);
 
-        if (resource.isStraight(target)) {
+        if (resource.isStraightAt(target)) {
             validateMovementTwice(resource, moveCount);
             validateEmpty(other);
             return;
         }
-        if (resource.isDiagonal(target)) {
+        if (resource.isDiagonalAt(target)) {
             validateMovementOnce(moveCount);
             validateDifferentColor(other);
             return;

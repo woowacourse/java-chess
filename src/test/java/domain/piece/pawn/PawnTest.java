@@ -1,13 +1,16 @@
-package domain.piece;
+package domain.piece.pawn;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import domain.piece.Color;
+import domain.piece.Empty;
+import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
     @Nested
@@ -20,7 +23,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatCode(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatCode(() -> whitePawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -30,7 +33,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = new Pawn(Color.BLACK);
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
         }
@@ -41,7 +44,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FOUR);
             Piece other = Empty.getInstance();
 
-            assertThatCode(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatCode(() -> whitePawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -51,7 +54,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
         }
@@ -62,7 +65,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.FIVE);
             Piece other = new Pawn(Color.BLACK);
 
-            assertThatCode(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatCode(() -> whitePawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -72,7 +75,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
         }
@@ -83,7 +86,7 @@ class PawnTest {
             Position target = new Position(File.F, Rank.SIX);
             Piece other = new Pawn(Color.BLACK);
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
         }
@@ -94,7 +97,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.THREE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰은 뒤로 이동할 수 없습니다.");
         }
@@ -105,7 +108,7 @@ class PawnTest {
             Position target = new Position(File.F, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
         }
@@ -116,7 +119,7 @@ class PawnTest {
             Position target = new Position(File.A, Rank.EIGHT);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
         }
@@ -127,7 +130,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.FIVE);
             Piece other = new Pawn(Color.WHITE);
 
-            assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> whitePawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
         }
@@ -143,7 +146,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FOUR);
             Piece other = Empty.getInstance();
 
-            assertThatCode(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatCode(() -> blackPawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -153,7 +156,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.THREE);
             Piece other = new Pawn(Color.WHITE);
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
         }
@@ -164,7 +167,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatCode(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatCode(() -> blackPawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -174,7 +177,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FOUR);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
         }
@@ -185,7 +188,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.THREE);
             Piece other = new Pawn(Color.WHITE);
 
-            assertThatCode(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatCode(() -> blackPawn.validate(resource, target, other))
                     .doesNotThrowAnyException();
         }
 
@@ -195,7 +198,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.THREE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
         }
@@ -206,7 +209,7 @@ class PawnTest {
             Position target = new Position(File.F, Rank.THREE);
             Piece other = new Pawn(Color.WHITE);
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
         }
@@ -217,7 +220,7 @@ class PawnTest {
             Position target = new Position(File.D, Rank.FIVE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("폰은 뒤로 이동할 수 없습니다.");
         }
@@ -228,7 +231,7 @@ class PawnTest {
             Position target = new Position(File.B, Rank.FOUR);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
         }
@@ -239,7 +242,7 @@ class PawnTest {
             Position target = new Position(File.G, Rank.ONE);
             Piece other = Empty.getInstance();
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("잘못된 방향으로 이동하고 있습니다.");
         }
@@ -250,7 +253,7 @@ class PawnTest {
             Position target = new Position(File.E, Rank.THREE);
             Piece other = new Pawn(Color.BLACK);
 
-            assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
+            assertThatThrownBy(() -> blackPawn.validate(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("같은 팀의 말을 잡을 수 없습니다.");
         }
