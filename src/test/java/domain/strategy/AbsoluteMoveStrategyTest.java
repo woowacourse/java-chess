@@ -1,24 +1,18 @@
 package domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.board.Board;
 import domain.board.BoardInitiator;
 import domain.board.Position;
-import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
 import domain.piece.info.Color;
-import domain.piece.info.Direction;
 import domain.piece.info.File;
 import domain.piece.info.Rank;
 import domain.piece.info.Type;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +28,7 @@ class AbsoluteMoveStrategyTest {
                 knight.movableDirections(),
                 board);
 
-        Assertions.assertThat(positions.size()).isEqualTo(8);
+        assertThat(positions.size()).isEqualTo(8);
     }
 
     @Test
@@ -46,6 +40,6 @@ class AbsoluteMoveStrategyTest {
         final List<Position> positions = new AbsoluteMoveStrategy().movablePositions(position, king.movableDirections(),
                 board);
 
-        Assertions.assertThat(positions.size()).isEqualTo(8);
+        assertThat(positions.size()).isEqualTo(8);
     }
 }

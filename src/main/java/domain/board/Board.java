@@ -10,40 +10,42 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private Color color;
+    private Color turn;
     private final Map<Position, Piece> squares;
 
     public Board(final Map<Position, Piece> squares) {
-        this.color = Color.WHITE;
+        this.turn = Color.WHITE;
         this.squares = squares;
     }
 
-    public void move(final Position source, final Position target) {
+    public void moveByPosition(final Position source, final Position target) {
         final Piece currentPiece = squares.get(source);
-        if (currentPiece.isNotSameColor(color)) {
-            throw new IllegalArgumentException("현재 차례가 아닙니다.");
-        }
+        validateTurnOfPiece(currentPiece);
         final List<Direction> directions = currentPiece.movableDirections();
 
-        final MoveStrategy strategy = currentPiece.strategy();
-        final List<Position> movablePositions = strategy.movablePositions(source, directions, this);
+        final List<Position> movablePositions = findMovablePositions(source, currentPiece, directions);
+        target.isMovable(movablePositions);
 
-        final boolean targetMovable = movablePositions.stream()
-                .anyMatch(position -> position.equals(target));
-        validateMovablePosition(targetMovable);
         updateBoard(source, target, currentPiece);
-        color = Color.opposite(color);
+        turn = Color.opposite(turn);
     }
 
-    private void validateMovablePosition(final boolean targetMovable) {
-        if (!targetMovable) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+    private List<Position> findMovablePositions(final Position source, final Piece currentPiece,
+                                                final List<Direction> directions) {
+        final MoveStrategy strategy = currentPiece.strategy();
+        return strategy.movablePositions(source, directions, this);
+    }
+
+    private void validateTurnOfPiece(final Piece currentPiece) {
+        if (currentPiece.isNotSameColor(turn)) {
+            throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
     }
 
     private void updateBoard(final Position source, final Position target, final Piece currentPiece) {
-        if (squares.get(target).isNotNone()) {
-            validateSameColor(target, currentPiece);
+        Piece targetPiece = squares.get(target);
+        if (targetPiece.isNotNone()) {
+            Color.isSame(targetPiece, currentPiece);
             squares.remove(target);
             squares.put(target, currentPiece);
             squares.put(source, new None(Color.NONE, Type.NONE));
@@ -52,10 +54,8 @@ public class Board {
         squares.put(source, new None(Color.NONE, Type.NONE));
     }
 
-    private void validateSameColor(final Position target, final Piece currentPiece) {
-        if (squares.get(target).color() == currentPiece.color()) {
-            throw new IllegalArgumentException("같은 팀의 말이 있습니다.");
-        }
+    public Piece findPieceByPosition(final Position position) {
+        return squares.get(position);
     }
 
     public Map<Position, Piece> squares() {

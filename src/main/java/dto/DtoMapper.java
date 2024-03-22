@@ -15,23 +15,23 @@ public class DtoMapper {
     private DtoMapper() {
     }
 
-    public static List<Piece> map(final Board board, final int rank) {
-        final Map<Position, Piece> squares = board.squares();
-        return squares.entrySet().stream()
-                .filter(entry -> entry.getKey().rankIndex() == rank)
-                .sorted(Comparator.comparingInt(entry -> entry.getKey().fileIndex()))
-                .map(Entry::getValue)
-                .toList();
-    }
-
-    public static RankInfo getPieceShapeOfRank(final Board board, final int rank) {
-        final List<Piece> pieces = map(board, rank);
+    public static RankInfo getPieceShapeOn(final Board board, final int rank) {
+        final List<Piece> pieces = getPiecesOn(board, rank);
         final List<String> pieceShapes = new ArrayList<>();
 
         for (final Piece piece : pieces) {
             addByPieceColor(piece, pieceShapes);
         }
         return new RankInfo(pieceShapes);
+    }
+
+    private static List<Piece> getPiecesOn(final Board board, final int rank) {
+        final Map<Position, Piece> squares = board.squares();
+        return squares.entrySet().stream()
+                .filter(entry -> entry.getKey().rankIndex() == rank)
+                .sorted(Comparator.comparingInt(entry -> entry.getKey().fileIndex()))
+                .map(Entry::getValue)
+                .toList();
     }
 
     private static void addByPieceColor(final Piece piece, final List<String> pieceShapes) {

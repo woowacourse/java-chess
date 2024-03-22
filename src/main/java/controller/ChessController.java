@@ -8,8 +8,6 @@ import static view.Command.START;
 import domain.board.Board;
 import domain.board.BoardInitiator;
 import domain.board.Position;
-import domain.piece.info.File;
-import domain.piece.info.Rank;
 import dto.DtoMapper;
 import dto.RankInfo;
 import java.util.ArrayList;
@@ -29,9 +27,9 @@ public class ChessController {
 
         String command = InputView.inputCommand();
         readyForStartCommand(command);
-        OutputView.printChessBoard(createPieceInfo(board));
+        OutputView.printChessBoard(createRankInfo(board));
 
-        move(board);
+        movePiecesByCommandOn(board);
     }
 
     private void readyForStartCommand(String command) {
@@ -41,7 +39,7 @@ public class ChessController {
         }
     }
 
-    private void move(final Board board) {
+    private void movePiecesByCommandOn(final Board board) {
         String command;
         command = InputView.inputCommand();
         while (MOVE.equals(Command.of(command))) {
@@ -63,44 +61,31 @@ public class ChessController {
         final String[] splitCommand = command.split(DELIMITER);
         moveByCommand(board, splitCommand);
 
-        OutputView.printChessBoard(createPieceInfo(board));
+        OutputView.printChessBoard(createRankInfo(board));
         command = InputView.inputCommand();
         return command;
     }
 
     private void moveByCommand(final Board board, final String[] splitCommand) {
-        Position sourcePosition = null;
-        Position targetPosition = null;
         if (splitCommand.length != 1) {
-            final String source = splitCommand[SOURCE_POSITION];
-            sourcePosition = createPosition(source);
-
-            final String target = splitCommand[TARGET_POSITION];
-            targetPosition = createPosition(target);
+            move(splitCommand, board);
         }
-        board.move(sourcePosition, targetPosition);
     }
 
-    private Position createPosition(final String positionValue) {
-        final File file = convertToFile(positionValue);
-        final Rank rank = convertToRank(positionValue);
-        return new Position(file, rank);
+    public void move(final String[] splitCommand, final Board board) {
+        final String source = splitCommand[SOURCE_POSITION];
+        final Position sourcePosition = Position.createPosition(source);
+
+        final String target = splitCommand[TARGET_POSITION];
+        final Position targetPosition = Position.createPosition(target);
+
+        board.moveByPosition(sourcePosition, targetPosition);
     }
 
-    private File convertToFile(final String positionValue) {
-        final String fileName = String.valueOf(positionValue.charAt(0)).toUpperCase();
-        return File.of(fileName);
-    }
-
-    private Rank convertToRank(final String positionValue) {
-        final int rankNumber = Integer.parseInt(String.valueOf(positionValue.charAt(1))) - 1;
-        return Rank.of(rankNumber);
-    }
-
-    private List<RankInfo> createPieceInfo(final Board board) {
+    private List<RankInfo> createRankInfo(final Board board) {
         final List<RankInfo> rankInfos = new ArrayList<>();
         for (int rank = BOARD_UPPER_BOUND.value(); rank >= BOARD_LOWER_BOUND.value(); rank--) {
-            final RankInfo pieceShapeOfRank = DtoMapper.getPieceShapeOfRank(board, rank);
+            final RankInfo pieceShapeOfRank = DtoMapper.getPieceShapeOn(board, rank);
             rankInfos.add(pieceShapeOfRank);
         }
         return rankInfos;

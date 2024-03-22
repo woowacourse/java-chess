@@ -1,8 +1,5 @@
 package domain.board;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 import domain.piece.Piece;
 import domain.piece.info.File;
 import domain.piece.info.Rank;
@@ -20,7 +17,7 @@ class BoardTest {
         final Position next = new Position(File.of(0), Rank.of(2));
         final Piece sourcePiece = board.squares().get(source);
 
-        board.move(source, next);
+        board.moveByPosition(source, next);
         final Piece nextPiece = board.squares().get(next);
 
         Assertions.assertThat(sourcePiece).isEqualTo(nextPiece);
@@ -33,6 +30,7 @@ class BoardTest {
         final Position source = new Position(File.of(0), Rank.of(0));
         final Position next = new Position(File.of(0), Rank.of(1));
 
-        Assertions.assertThatThrownBy(() -> board.move(source, next)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> board.moveByPosition(source, next))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

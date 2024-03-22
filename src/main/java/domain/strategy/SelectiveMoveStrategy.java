@@ -33,7 +33,7 @@ public class SelectiveMoveStrategy implements MoveStrategy {
 
     private boolean isNotPieceOnNextPosition(final Board board, final Position position,
                                              final List<Position> positions) {
-        final Piece piece = board.squares().get(position);
+        final Piece piece = board.findPieceByPosition(position);
         if (piece.isNotNone()) {
             positions.add(position);
             return false;
