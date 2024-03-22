@@ -18,11 +18,9 @@ public class InitialBoardGenerator implements BoardGenerator {
         squares.put(Position.of(6, 8), Bishop.from(Color.BLACK));
         squares.put(Position.of(7, 8), Knight.from(Color.BLACK));
         squares.put(Position.of(8, 8), Rook.from(Color.BLACK));
-        for (int x = 1; x <= 8; x++) {
-            squares.put(Position.of(x, 7), Pawn.from(Color.BLACK));
-        }
-        for (int x = 1; x <= 8; x++) {
-            squares.put(Position.of(x, 2), Pawn.from(Color.WHITE));
+        for (int file = Board.MIN_LENGTH; file <= Board.MAX_LENGTH; file++) {
+            squares.put(Position.of(file, 7), Pawn.from(Color.BLACK));
+            squares.put(Position.of(file, 2), Pawn.from(Color.WHITE));
         }
         squares.put(Position.of(1, 1), Rook.from(Color.WHITE));
         squares.put(Position.of(2, 1), Knight.from(Color.WHITE));
