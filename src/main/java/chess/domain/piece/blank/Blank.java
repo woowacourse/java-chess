@@ -20,11 +20,6 @@ public class Blank extends Piece {
     }
 
     @Override
-    public MoveStrategy strategy(Map<Position, Piece> board) {
-        return new BlankMoveStrategy(board);
-    }
-
-    @Override
     public boolean isBlank() {
         return true;
     }
@@ -32,5 +27,10 @@ public class Blank extends Piece {
     @Override
     public PieceType pieceType() {
         return PieceType.BLANK;
+    }
+
+    @Override
+    public MoveStrategy strategy(Map<Position, Piece> board) {
+        return new BlankMoveStrategy(board);
     }
 }
