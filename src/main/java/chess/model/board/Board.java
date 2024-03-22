@@ -6,11 +6,10 @@ import chess.model.piece.Piece;
 import chess.model.piece.Type;
 import chess.model.position.Movement;
 import chess.model.position.Position;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class Board {
     public static final int MAX_LENGTH = 8;
@@ -24,24 +23,9 @@ public class Board {
         ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Empty.getInstance()));
     }
 
-    public List<String> getSignatures() {
-        return squares.values().stream()
-                .map(Piece::getSignature)
-                .toList();
-    }
-
-    public List<List<String>> getLines() {
-        List<List<String>> lines = new ArrayList<>();
-        for (int rank = MAX_LENGTH; rank >= MIN_LENGTH; rank--) {
-            lines.add(getLine(rank));
-        }
-        return lines;
-    }
-
-    private List<String> getLine(int lineIndex) {
-        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
-                .mapToObj(file -> squares.get(Position.of(file, lineIndex)).getSignature())
-                .toList();
+    public Piece getPiece(int file, int rank) {
+        Position position = Position.of(file, rank);
+        return squares.get(position);
     }
 
     public void move(Movement movement, Color color) {

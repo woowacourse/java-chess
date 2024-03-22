@@ -9,6 +9,7 @@ import chess.model.position.Movement;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -43,7 +44,7 @@ public class ChessGame {
     }
 
     private void showBoard(Board board) {
-        BoardDTO boardDTO = new BoardDTO(board);
+        BoardDTO boardDTO = BoardDTO.from(board);
         outputView.printBoard(boardDTO);
     }
 

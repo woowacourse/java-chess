@@ -1,7 +1,8 @@
 package chess.view;
 
 import chess.dto.BoardDTO;
-import chess.dto.LineDTO;
+import chess.dto.RankDTO;
+
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -14,7 +15,7 @@ public class OutputView {
 
     public void printBoard(BoardDTO boardDTO) {
         String board = boardDTO.board().stream()
-                .map(LineDTO::line)
+                .map(RankDTO::line)
                 .map(line -> String.join("", line))
                 .collect(Collectors.joining(System.lineSeparator()));
         System.out.println(board);
