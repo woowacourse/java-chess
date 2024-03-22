@@ -1,12 +1,14 @@
 package chess;
 
-import chess.controller.ChessGameController;
+import chess.controller.ChessGame;
 import chess.view.InputView;
-import chess.view.OutputView;
+import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        ChessGameController chessGameController = new ChessGameController(new InputView(), new OutputView());
-        chessGameController.start();
+        try (Scanner scanner = new Scanner(System.in)) {
+            ChessGame chessGame = new ChessGame(new InputView(scanner));
+            chessGame.start();
+        }
     }
 }

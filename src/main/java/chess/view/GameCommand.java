@@ -20,7 +20,7 @@ public enum GameCommand {
         return Arrays.stream(GameCommand.values())
                 .filter(gameCommand -> gameCommand.consoleCommand.equals(input))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 명령어 입니다."));
     }
 
     public String getHelperMessage() {

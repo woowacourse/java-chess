@@ -15,7 +15,7 @@ public class OutputView {
     private static final int MINIMUM_RANK_RANGE = 1;
     private static final int MAXIMUM_RANK_RANGE = 8;
 
-    public void printInitialMessage() {
+    public static void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         String commandMessage = Arrays.stream(GameCommand.values())
                 .map(gameCommand -> "> %s".formatted(gameCommand.getHelperMessage()))
@@ -24,7 +24,7 @@ public class OutputView {
         System.out.println(commandMessage);
     }
 
-    public void printBoard(final Board board) {
+    public static void printBoard(final Board board) {
         Map<Position, Piece> positions = board.getBoard();
         for (int rank = MAXIMUM_RANK_RANGE; rank >= MINIMUM_RANK_RANGE; rank--) {
             printRankLine(positions, rank);
@@ -32,7 +32,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printRankLine(final Map<Position, Piece> positions, final int rank) {
+    private static void printRankLine(final Map<Position, Piece> positions, final int rank) {
         String rankLine = IntStream.rangeClosed(MINIMUM_FILE_RANGE, MAXIMUM_FILE_RANGE)
                 .boxed()
                 .map(file -> positions.get(new Position(file, rank)))
