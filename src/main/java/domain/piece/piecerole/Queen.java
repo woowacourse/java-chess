@@ -2,7 +2,11 @@ package domain.piece.piecerole;
 
 import static domain.game.Direction.EAST;
 import static domain.game.Direction.NORTH;
+import static domain.game.Direction.NORTH_EAST;
+import static domain.game.Direction.NORTH_WEST;
 import static domain.game.Direction.SOUTH;
+import static domain.game.Direction.SOUTH_EAST;
+import static domain.game.Direction.SOUTH_WEST;
 import static domain.game.Direction.WEST;
 
 import domain.game.Movable;
@@ -20,7 +24,12 @@ public class Queen implements PieceRole {
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),
                 new Movable(MAX_MOVEMENT, SOUTH),
-                new Movable(MAX_MOVEMENT, WEST)
+                new Movable(MAX_MOVEMENT, WEST),
+                new Movable(MAX_MOVEMENT, NORTH_EAST),
+                new Movable(MAX_MOVEMENT, NORTH_WEST),
+                new Movable(MAX_MOVEMENT, SOUTH_EAST),
+                new Movable(MAX_MOVEMENT, SOUTH_WEST)
+
         );
     }
 
