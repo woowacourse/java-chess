@@ -3,9 +3,9 @@ package domain.game;
 import domain.position.Position;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
@@ -48,15 +48,15 @@ public class Board {
     }
 
     private void validateReachability(Position source, Position destination, Piece piece) {
-        if (!piece.isMovable(source, destination, parseOtherPiecePositions(source))) {
+        if (!piece.isMovable(source, destination, generatePiecePositions(source))) {
             throw new IllegalArgumentException("이동 위치까지 이동할 수 없습니다.");
         }
     }
 
-    private Set<Position> parseOtherPiecePositions(final Position source) {
-        Set<Position> positions = new HashSet<>(chessBoard.keySet());
-        positions.remove(source);
-        return positions;
+    private Set<Position> generatePiecePositions(final Position excluded) {
+        return chessBoard.keySet().stream()
+                .filter(key -> !key.equals(excluded))
+                .collect(Collectors.toSet());
     }
 
     private void validateDestinationPiece(TeamColor teamColor, Position destination) {
