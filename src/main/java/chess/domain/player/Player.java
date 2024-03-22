@@ -5,7 +5,6 @@ import chess.domain.piece.Team;
 
 public class Player {
 
-
     private final Team team;
 
     public Player(Team team) {
