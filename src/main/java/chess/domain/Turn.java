@@ -14,11 +14,7 @@ public class Turn {
     }
 
     public void next() {
-        if (turn.isWhite()) {
-            turn = PieceColor.BLACK;
-            return;
-        }
-        turn = PieceColor.WHITE;
+        turn = turn.reverse();
     }
 
     public boolean isTurn(PieceColor color) {

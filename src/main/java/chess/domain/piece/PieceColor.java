@@ -7,4 +7,11 @@ public enum PieceColor {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public PieceColor reverse() {
+        if(this==WHITE){
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
