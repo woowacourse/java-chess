@@ -16,18 +16,18 @@ public enum Command {
         this.value = value;
     }
 
+    public static Command from(String value) {
+        return Arrays.stream(values())
+                .filter(command -> Pattern.compile(command.value).matcher(value).matches())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하였습니다."));
+    }
+
     public static void validate(String input) {
         boolean match = Arrays.stream(values())
                 .anyMatch(command -> Pattern.compile(command.value).matcher(input).matches());
         if (!match) {
             throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
         }
-    }
-
-    public static Command from(String value) {
-        return Arrays.stream(values())
-                .filter(command -> Pattern.compile(command.value).matcher(value).matches())
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어를 입력하였습니다."));
     }
 }
