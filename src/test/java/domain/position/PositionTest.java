@@ -181,7 +181,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.TWO);
             Position target = new Position(file, rank);
 
-            assertThat(source.isForwardStraight(target, false)).isTrue();
+            assertThat(source.firstMoveOfWhitePawn(target)).isTrue();
         }
 
         @Test
@@ -190,7 +190,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.EIGHT);
 
-            assertThat(source.isForwardStraight(target, false)).isFalse();
+            assertThat(source.firstMoveOfWhitePawn(target)).isFalse();
         }
 
         @Test
@@ -199,7 +199,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FOUR);
 
-            assertThat(source.isForwardStraight(target, false)).isTrue();
+            assertThat(source.notFirstMoveOfWhitePawn(target)).isTrue();
         }
 
         @Test
@@ -208,7 +208,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FIVE);
 
-            assertThat(source.isForwardStraight(target, false)).isFalse();
+            assertThat(source.notFirstMoveOfWhitePawn(target)).isFalse();
         }
     }
 

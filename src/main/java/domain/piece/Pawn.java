@@ -20,7 +20,7 @@ public class Pawn extends Piece {
         if (isBlack()) {
             return source.notFirstMoveOfBlackPawn(target) || source.canAttackDiagonalOfBlack(target);
         }
-        return source.notFistMoveOfWhitePawn(target) || source.canAttackDiagonalOfWhite(target);
+        return source.notFirstMoveOfWhitePawn(target) || source.canAttackDiagonalOfWhite(target);
     }
 
     @Override
