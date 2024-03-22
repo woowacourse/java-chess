@@ -12,14 +12,13 @@ import org.junit.jupiter.api.Test;
 class RookTest {
     private static final Rook ROOK = new Rook(Color.BLACK);
 
-    /*
     @DisplayName("한 방향으로 이루어지지 않은 경로로 움직일 수 없다.")
     @Test
     void tooManyDirectionTest() {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.UP, SquareState.EMPTY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(Direction.DOWN, Direction.UP),
+                List.of(SquareState.EMPTY, SquareState.EMPTY)
+        );
 
         Assertions.assertThat(ROOK.canMove(manyDirectionRoute))
                 .isFalse();
@@ -28,11 +27,10 @@ class RookTest {
     @DisplayName("경로 중간에 기물이 위치한다면 움직일 수 없다.")
     @Test
     void pathHasPieceTest() {
-        Route notEmptyRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ALLY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
-        ));
+        Route notEmptyRoute = new Route(
+                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN),
+                List.of(SquareState.EMPTY, SquareState.ALLY, SquareState.EMPTY)
+        );
 
         Assertions.assertThat(ROOK.canMove(notEmptyRoute))
                 .isFalse();
@@ -41,11 +39,10 @@ class RookTest {
     @DisplayName("목적지에 아군이 존재한다면 움직일 수 없다.")
     @Test
     void allyLocatedAtTargetTest() {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ALLY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.ALLY)
+        );
 
         Assertions.assertThat(ROOK.canMove(manyDirectionRoute))
                 .isFalse();
@@ -54,11 +51,10 @@ class RookTest {
     @DisplayName("대각선 방향으로 움직일 수 없다.")
     @Test
     void canNotMoveDiagonalTest() {
-        Route diagonalDirectionRoute = new Route(List.of(
-                new Step(Direction.UP_RIGHT, SquareState.EMPTY),
-                new Step(Direction.UP_RIGHT, SquareState.EMPTY),
-                new Step(Direction.UP_RIGHT, SquareState.EMPTY)
-        ));
+        Route diagonalDirectionRoute = new Route(
+                List.of(Direction.UP_RIGHT, Direction.UP_RIGHT, Direction.UP_RIGHT),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
+        );
 
         Assertions.assertThat(ROOK.canMove(diagonalDirectionRoute))
                 .isFalse();
@@ -67,18 +63,12 @@ class RookTest {
     @DisplayName("최대 7칸까지 움직일 수 있다.")
     @Test
     void maxDistanceMoveTest() {
-        Route manyDirectionRoute = new Route(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ENEMY)
-        ));
+        Route manyDirectionRoute = new Route(
+                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
+        );
 
         Assertions.assertThat(ROOK.canMove(manyDirectionRoute))
                 .isTrue();
     }
-     */
 }
