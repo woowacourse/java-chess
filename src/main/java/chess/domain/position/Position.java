@@ -50,7 +50,6 @@ public class Position {
 
     private static String toKey(File file, Rank rank) {
         return file.getCommand() + rank.getCommand();
-
     }
 
     @Override

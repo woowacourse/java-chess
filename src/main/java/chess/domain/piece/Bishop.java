@@ -4,18 +4,18 @@ import chess.domain.Color;
 import chess.domain.Direction;
 
 public class Bishop extends MultiStepPiece {
-    private static final Bishop blackBishop = new Bishop(Color.BLACK);
-    private static final Bishop whiteBishop = new Bishop(Color.WHITE);
+    private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
+    private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
 
     private Bishop(Color color) {
         super(color, PieceType.BISHOP, Direction.ofDiagonal());
     }
 
     public static Bishop ofBlack() {
-        return blackBishop;
+        return BLACK_BISHOP;
     }
 
     public static Bishop ofWhite() {
-        return whiteBishop;
+        return WHITE_BISHOP;
     }
 }
