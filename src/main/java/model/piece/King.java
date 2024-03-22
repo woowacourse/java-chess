@@ -1,10 +1,9 @@
 package model.piece;
 
+import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-
-import java.util.Set;
 
 public final class King extends Piece {
 
@@ -15,7 +14,7 @@ public final class King extends Piece {
     @Override
     public Set<Position> getMoveRoute(final Moving moving) {
         if (!canMovable(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
         return Set.of();
     }

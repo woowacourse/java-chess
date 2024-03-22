@@ -1,11 +1,10 @@
 package model.piece;
 
+import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
-
-import java.util.Set;
 
 public final class BlackPawn extends Pawn {
 
@@ -18,7 +17,7 @@ public final class BlackPawn extends Pawn {
         final Position currentPosition = moving.getCurrentPosition();
         final Position nextPosition = moving.getNextPosition();
         if (!canMovable(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
         if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
             return Set.of();
@@ -51,7 +50,7 @@ public final class BlackPawn extends Pawn {
     @Override
     public Set<Position> getAttackRoute(final Moving moving) {
         if (!canAttack(moving)) {
-            throw new IllegalArgumentException("이동 불가");
+            throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
         return Set.of();
     }

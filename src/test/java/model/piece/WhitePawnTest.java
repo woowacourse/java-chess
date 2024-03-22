@@ -26,6 +26,7 @@ class WhitePawnTest {
                 () -> assertThat(whitePawn.canMovable(moving)).isFalse(),
                 () -> assertThatThrownBy(() -> whitePawn.getMoveRoute(moving))
                         .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("해당 기물이 이동할 수 없는 위치입니다.")
         );
 
     }
