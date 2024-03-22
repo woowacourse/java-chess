@@ -3,8 +3,10 @@ package chess.domain.piece.nonsliding;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
+import chess.domain.strategy.GeneralMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class NonSlidingPiece extends Piece {
@@ -24,5 +26,8 @@ public abstract class NonSlidingPiece extends Piece {
         return Set.of();
     }
 
-    public abstract PieceType pieceType();
+    @Override
+    public MoveStrategy strategy(Map<Position, Piece> board) {
+        return new GeneralMoveStrategy(board);
+    }
 }

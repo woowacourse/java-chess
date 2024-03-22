@@ -4,6 +4,9 @@ import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.PawnMoveStrategy;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Pawn extends Piece {
@@ -25,4 +28,9 @@ public abstract class Pawn extends Piece {
     }
 
     public abstract boolean isCaptureMove(Position destination);
+
+    @Override
+    public MoveStrategy strategy(Map<Position, Piece> board) {
+        return new PawnMoveStrategy(board);
+    }
 }

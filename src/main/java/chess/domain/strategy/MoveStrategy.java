@@ -18,14 +18,8 @@ public abstract class MoveStrategy {
     }
 
     public MoveStrategy changeStrategy(Position from) {
-        PieceType pieceType = board.get(from).pieceType();
-        if (pieceType == PieceType.BLANK) {
-            return new BlankMoveStrategy(board);
-        }
-        if (pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN) {
-            return new PawnMoveStrategy(board);
-        }
-        return new GeneralMoveStrategy(board);
+        Piece selectedPiece = board.get(from);
+        return selectedPiece.strategy(board);
     }
 
     public abstract void move(Color turnColor, Position from, Position to);

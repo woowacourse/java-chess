@@ -3,8 +3,10 @@ package chess.domain.piece.sliding;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
+import chess.domain.strategy.GeneralMoveStrategy;
+import chess.domain.strategy.MoveStrategy;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class SlidingPiece extends Piece {
@@ -23,5 +25,8 @@ public abstract class SlidingPiece extends Piece {
         return position.findCourses(direction, destination);
     }
 
-    public abstract PieceType pieceType();
+    @Override
+    public MoveStrategy strategy(Map<Position, Piece> board) {
+        return new GeneralMoveStrategy(board);
+    }
 }

@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.color.Color;
+import chess.domain.strategy.MoveStrategy;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class Piece {
@@ -29,6 +31,8 @@ public abstract class Piece {
     }
 
     public abstract Piece update(Position destination);
+
+    public abstract MoveStrategy strategy(Map<Position, Piece> board);
 
     public abstract PieceType pieceType();
 }
