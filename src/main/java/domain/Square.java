@@ -14,13 +14,6 @@ public class Square {
         this.rank = rank;
     }
 
-    public static Square from(final String input) {
-        final String file = String.valueOf(input.charAt(FILE_INDEX));
-        final String rank = String.valueOf(input.charAt(RANK_INDEX));
-
-        return new Square(Rank.from(rank), File.from(file));
-    }
-
     public ChessVector calculateVector(final Square other) {
         final int rankSub = this.rank.subtract(other.rank);
         final int fileSub = this.file.subtract(other.file);

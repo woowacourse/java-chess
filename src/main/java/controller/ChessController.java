@@ -1,20 +1,11 @@
 package controller;
 
-import domain.ChessBoard;
-import domain.Square;
+import domain.*;
 import view.InputView;
+import view.Menu;
 import view.OutputView;
 
-import java.util.List;
-
-import static view.InputView.*;
-
 public class ChessController {
-    public static final int COMMAND_INDEX = 0;
-    public static final int MOVE_SOURCE_INDEX = 1;
-    public static final int MOVE_TARGET_INDEX = 2;
-    public static final int MOVE_COMMAND_SIZE = 3;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -26,52 +17,45 @@ public class ChessController {
     public void run() {
         outputView.printHeader();
         ChessBoard chessBoard = new ChessBoard();
-
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
             try {
-                final List<String> input = inputView.readCommand();
-                final String command = input.get(COMMAND_INDEX);
+                final Menu menu = inputView.readMenu();
 
-                if (START_COMMAND.equals(command)) {
-                    chessBoard = init();
-                    continue;
+                if (menu.isStart()) {
+                    chessBoard = ChessBoard.create();
+                    outputView.printChessTable(chessBoard.getPieceSquares());
                 }
-                if (MOVE_COMMAND.equals(command)) {
-                    play(input, chessBoard);
-                    continue;
+                if (menu.isEnd()) {
+                    break;
                 }
-                if (END_COMMAND.equals(command)) {
-                    isRunning = false;
-                    continue;
+                if (menu.isMove()) {
+                    play(chessBoard);
                 }
-                throw new IllegalArgumentException("잘못된 커맨드 입니다.");
-            } catch (final IllegalArgumentException e) {
+            } catch (final Exception e) {
                 outputView.printError(e.getMessage());
             }
         }
     }
 
-    private ChessBoard init() {
-        final ChessBoard chessBoard = ChessBoard.create();
-        outputView.printChessTable(chessBoard.getPieceSquares());
+    private void play(final ChessBoard chessBoard) {
+        validateGameState(chessBoard);
 
-        return chessBoard;
-    }
-
-    private void play(final List<String> input, final ChessBoard chessBoard) {
-        validateMoveCommend(input);
-        final Square source = Square.from(input.get(MOVE_SOURCE_INDEX));
-        final Square target = Square.from(input.get(MOVE_TARGET_INDEX));
+        final Square source = readSquare();
+        final Square target = readSquare();
 
         chessBoard.move(source, target);
 
         outputView.printChessTable(chessBoard.getPieceSquares());
     }
 
-    private void validateMoveCommend(final List<String> input) {
-        if (input.size() != MOVE_COMMAND_SIZE) {
-            throw new IllegalArgumentException("잘못된 move 커맨드 입니다.");
+    private Square readSquare() {
+        final MoveCommand moveCommand = MoveCommand.fromInput(inputView.readMoveCommand());
+        return new Square(Rank.from(moveCommand.rank()), File.from(moveCommand.file()));
+    }
+
+    private static void validateGameState(final ChessBoard chessBoard) {
+        if (chessBoard.getPieceSquares().isEmpty()) {
+            throw new IllegalStateException("게임을 시작해주세요.");
         }
     }
 }

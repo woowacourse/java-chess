@@ -18,11 +18,7 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank from(final String input) {
-        return Rank.from(Integer.parseInt(input));
-    }
-
-    private static Rank from(final int index) {
+    public static Rank from(final int index) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == index)
                 .findFirst()
