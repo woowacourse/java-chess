@@ -2,7 +2,7 @@ package chess.controller;
 
 import java.util.Arrays;
 
-public enum Column {
+public enum File {
     A("a", 1),
     B("b", 2),
     C("c", 3),
@@ -12,17 +12,17 @@ public enum Column {
     G("g", 7),
     H("h", 8);
 
-    private final String columnInput;
+    private final String rawFile;
     private final int value;
 
-    Column(String columnInput, int value) {
-        this.columnInput = columnInput;
+    File(String rawFile, int value) {
+        this.rawFile = rawFile;
         this.value = value;
     }
 
-    public static int findColumn(String input) {
-        return Arrays.stream(Column.values())
-                .filter(column -> column.columnInput.equals(input))
+    public static int findFile(String input) {
+        return Arrays.stream(File.values())
+                .filter(file -> file.rawFile.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 열입니다."))
                 .value;
