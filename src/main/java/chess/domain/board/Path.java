@@ -20,41 +20,41 @@ public class Path {
         }
     }
 
-    public static Path of(List<Direction> directions, List<SquareState> squareStates) {
-        validateStepSize(directions, squareStates);
+    public static Path of(List<Direction> directions, List<LocationState> locationStates) {
+        validateStepSize(directions, locationStates);
         List<Step> steps = new ArrayList<>();
         for (int i = 0; i < directions.size(); i++) {
-            steps.add(new Step(directions.get(i), squareStates.get(i)));
+            steps.add(new Step(directions.get(i), locationStates.get(i)));
         }
         return new Path(steps);
     }
 
-    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
-        if (directions.size() != squareStates.size()) {
+    private static void validateStepSize(List<Direction> directions, List<LocationState> locationStates) {
+        if (directions.size() != locationStates.size()) {
             throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
         }
     }
 
 
-    public boolean isSizeOf(int size) {
-        return steps.size() == size;
+    public boolean isDistanceOf(int distance) {
+        return steps.size() == distance;
     }
 
-    public boolean categoryNumOf(int categorySize) {
+    public boolean hasCountOfDirection(int countOfDirection) {
         return steps.stream()
                 .map(Step::getDirection)
                 .distinct()
-                .count() == categorySize;
+                .count() == countOfDirection;
     }
 
-    public boolean containsDiagonal() {
+    public boolean containsDiagonalDirection() {
         return steps.stream()
-                .anyMatch(Step::isDiagonal);
+                .anyMatch(Step::isDiagonalDirection);
     }
 
-    public boolean containsOrthogonal() {
+    public boolean containsOrthogonalDirection() {
         return steps.stream()
-                .anyMatch(Step::isOrthogonal);
+                .anyMatch(Step::isOrthogonalDirection);
     }
 
     public boolean hasPiecePathExcludedTarget() {
@@ -67,32 +67,31 @@ public class Path {
         return steps.subList(0, findTargetIndex());
     }
 
-
     public boolean isAllEmpty() {
         return steps.stream()
                 .allMatch(Step::isEmpty);
     }
 
-    public boolean hasNoAllyAtTarget() {
+    public boolean isEnemyAtTarget() {
+        return steps.get(findTargetIndex()).hasEnemy();
+    }
+
+    public boolean isNotAllyAtTarget() {
         Step lastStep = steps.get(findTargetIndex());
-        return lastStep.isEmpty() || lastStep.isEnemy();
-    }
-
-    public boolean isUpside() {
-        return steps.stream()
-                .allMatch((Step::isUpside));
-    }
-
-    public boolean isTargetHasEnemy() {
-        return steps.get(findTargetIndex()).isEnemy();
-    }
-
-    public boolean isDownside() {
-        return steps.stream()
-                .allMatch((Step::isDownside));
+        return lastStep.isEmpty() || lastStep.hasEnemy();
     }
 
     private int findTargetIndex() {
         return steps.size() - 1;
+    }
+
+    public boolean isUpside() {
+        return steps.stream()
+                .allMatch(Step::isUpside);
+    }
+
+    public boolean isDownside() {
+        return steps.stream()
+                .allMatch(Step::isDownside);
     }
 }

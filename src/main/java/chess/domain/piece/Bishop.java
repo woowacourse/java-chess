@@ -12,9 +12,9 @@ public class Bishop extends Piece {
         if (path.hasPiecePathExcludedTarget()) {
             return false;
         }
-        if (path.containsOrthogonal()) {
+        if (path.containsOrthogonalDirection()) {
             return false;
         }
-        return path.hasNoAllyAtTarget() && path.categoryNumOf(1);
+        return path.isNotAllyAtTarget() && path.hasCountOfDirection(1);
     }
 }

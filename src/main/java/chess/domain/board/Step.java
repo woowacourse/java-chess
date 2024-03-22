@@ -2,22 +2,22 @@ package chess.domain.board;
 
 public class Step {
     private final Direction direction;
-    private final SquareState squareState;
+    private final LocationState locationState;
 
-    public Step(Direction direction, SquareState squareState) {
+    public Step(Direction direction, LocationState locationState) {
         this.direction = direction;
-        this.squareState = squareState;
+        this.locationState = locationState;
     }
 
     public Direction getDirection() {
         return direction;
     }
 
-    public boolean isDiagonal() {
+    public boolean isDiagonalDirection() {
         return direction.isDiagonal();
     }
 
-    public boolean isOrthogonal() {
+    public boolean isOrthogonalDirection() {
         return direction.isOrthogonal();
     }
 
@@ -26,11 +26,11 @@ public class Step {
     }
 
     public boolean isEmpty() {
-        return squareState.isEmpty();
+        return locationState.isEmpty();
     }
 
-    public boolean isEnemy() {
-        return squareState.isEnemy();
+    public boolean hasEnemy() {
+        return locationState.isEnemy();
     }
 
     public boolean isUpside() {

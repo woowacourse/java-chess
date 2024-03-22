@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-public enum SquareState {
+public enum LocationState {
     EMPTY, ALLY, ENEMY;
 
     public boolean isEmpty() {

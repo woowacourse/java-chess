@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
-import chess.domain.board.SquareState;
+import chess.domain.board.LocationState;
 import chess.domain.board.Step;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,8 +16,8 @@ class BishopTest {
     @Test
     void tooManyDirectionTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY)
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(BISHOP.canMove(manyDirectionPath))
@@ -28,9 +28,9 @@ class BishopTest {
     @Test
     void pathHasPieceTest() {
         Path notEmptyPath = new Path(List.of(
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.ALLY),
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.ALLY),
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(BISHOP.canMove(notEmptyPath))
@@ -41,9 +41,9 @@ class BishopTest {
     @Test
     void allyLocatedAtTargetTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.ALLY)
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.ALLY)
         ));
 
         Assertions.assertThat(BISHOP.canMove(manyDirectionPath))
@@ -54,9 +54,9 @@ class BishopTest {
     @Test
     void canNotMoveDiagonalTest() {
         Path diagonalDirectionPath = new Path(List.of(
-                new Step(Direction.UP, SquareState.EMPTY),
-                new Step(Direction.UP, SquareState.EMPTY),
-                new Step(Direction.UP, SquareState.EMPTY)
+                new Step(Direction.UP, LocationState.EMPTY),
+                new Step(Direction.UP, LocationState.EMPTY),
+                new Step(Direction.UP, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(BISHOP.canMove(diagonalDirectionPath))
@@ -67,13 +67,13 @@ class BishopTest {
     @Test
     void maxDistanceMoveTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
-                new Step(Direction.DOWN_RIGHT, SquareState.ENEMY)
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.EMPTY),
+                new Step(Direction.DOWN_RIGHT, LocationState.ENEMY)
         ));
 
         Assertions.assertThat(BISHOP.canMove(manyDirectionPath))

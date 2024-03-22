@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
-import chess.domain.board.SquareState;
+import chess.domain.board.LocationState;
 import chess.domain.board.Step;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class BlackPawnTest {
         @Test
         void blackPawnUpDirectionTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.UP, SquareState.EMPTY)
+                    new Step(Direction.UP, LocationState.EMPTY)
             ));
 
             assertThat(BLACK_PAWN.canMove(path)).isFalse();
@@ -40,7 +40,7 @@ class BlackPawnTest {
         @EnumSource(value = Direction.class, names = {"UP_LEFT", "UP_RIGHT"})
         void blackPawnUpDirectionTest(Direction direction) {
             Path path = new Path(List.of(
-                    new Step(direction, SquareState.ENEMY)
+                    new Step(direction, LocationState.ENEMY)
             ));
             assertThat(BLACK_PAWN.canMove(path)).isFalse();
         }
@@ -49,7 +49,7 @@ class BlackPawnTest {
         @Test
         void blackPawnDownDirectionTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY)
+                    new Step(Direction.DOWN, LocationState.EMPTY)
             ));
             assertThat(BLACK_PAWN.canMove(path)).isTrue();
         }
@@ -58,8 +58,8 @@ class BlackPawnTest {
         @Test
         void neverMovedBlackPawn_D_D_Test() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
+                    new Step(Direction.DOWN, LocationState.EMPTY),
+                    new Step(Direction.DOWN, LocationState.EMPTY)
             ));
             assertThat(BLACK_PAWN.canMove(path)).isTrue();
         }
@@ -68,8 +68,8 @@ class BlackPawnTest {
         @Test
         void movedBlackPawn_D_D_Test() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
+                    new Step(Direction.DOWN, LocationState.EMPTY),
+                    new Step(Direction.DOWN, LocationState.EMPTY)
             ));
             BLACK_PAWN.canMove(path);
             assertThat(BLACK_PAWN.canMove(path)).isFalse();
@@ -80,7 +80,7 @@ class BlackPawnTest {
         @EnumSource(value = Direction.class, names = {"DOWN_LEFT", "DOWN_RIGHT"})
         void blackPawnDownDirectionTest(Direction direction) {
             Path path = new Path(List.of(
-                    new Step(direction, SquareState.ENEMY)
+                    new Step(direction, LocationState.ENEMY)
             ));
             assertThat(BLACK_PAWN.canMove(path)).isTrue();
         }
@@ -90,8 +90,8 @@ class BlackPawnTest {
     @Test
     void tooManyDirectionTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.LEFT, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.LEFT, LocationState.EMPTY)
         ));
         assertThat(BLACK_PAWN.canMove(manyDirectionPath))
                 .isFalse();
@@ -101,8 +101,8 @@ class BlackPawnTest {
     @Test
     void pathHasPieceTest() {
         Path notEmptyPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.ALLY),
-                new Step(Direction.DOWN, SquareState.ENEMY)
+                new Step(Direction.DOWN, LocationState.ALLY),
+                new Step(Direction.DOWN, LocationState.ENEMY)
         ));
 
         assertThat(BLACK_PAWN.canMove(notEmptyPath))
@@ -114,7 +114,7 @@ class BlackPawnTest {
     @EnumSource(Direction.class)
     void allyLocatedAtTargetTest(Direction direction) {
         Path manyDirectionPath = new Path(List.of(
-                new Step(direction, SquareState.ALLY)
+                new Step(direction, LocationState.ALLY)
         ));
 
         assertThat(BLACK_PAWN.canMove(manyDirectionPath))
@@ -125,9 +125,9 @@ class BlackPawnTest {
     @Test
     void maxDistanceMoveTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY)
         ));
 
         assertThat(BLACK_PAWN.canMove(manyDirectionPath))

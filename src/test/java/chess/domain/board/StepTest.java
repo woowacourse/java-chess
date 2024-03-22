@@ -14,8 +14,8 @@ class StepTest {
     @ParameterizedTest
     @EnumSource(value = Direction.class, names = {"UP", "RIGHT", "DOWN", "LEFT"})
     void isOrthogonalTest(Direction direction) {
-        Step step = new Step(direction, SquareState.EMPTY);
-        assertThat(step.isOrthogonal()).isTrue();
+        Step step = new Step(direction, LocationState.EMPTY);
+        assertThat(step.isOrthogonalDirection()).isTrue();
     }
 
 
@@ -25,14 +25,14 @@ class StepTest {
             names = {"UP", "RIGHT", "DOWN", "LEFT"},
             mode = Mode.EXCLUDE)
     void isDiagonalTest(Direction direction) {
-        Step step = new Step(direction, SquareState.EMPTY);
-        assertThat(step.isDiagonal()).isTrue();
+        Step step = new Step(direction, LocationState.EMPTY);
+        assertThat(step.isDiagonalDirection()).isTrue();
     }
 
     @DisplayName("경로가 비었는지 확인할 수 있다.")
     @ParameterizedTest
     @CsvSource({"EMPTY, true", "ENEMY, false", "ALLY, false"})
-    void isEmptyTest(SquareState state, boolean expected) {
+    void isEmptyTest(LocationState state, boolean expected) {
         Step step = new Step(Direction.DOWN, state);
         assertThat(step.isEmpty()).isEqualTo(expected);
     }
@@ -40,9 +40,9 @@ class StepTest {
     @DisplayName("경로에 적이 있는지 확인할 수 있다.")
     @ParameterizedTest
     @CsvSource({"EMPTY, false", "ENEMY, true", "ALLY, false"})
-    void isEnemyTest(SquareState state, boolean expected) {
+    void isEnemyTest(LocationState state, boolean expected) {
         Step step = new Step(Direction.DOWN, state);
-        assertThat(step.isEnemy()).isEqualTo(expected);
+        assertThat(step.hasEnemy()).isEqualTo(expected);
     }
 }
 

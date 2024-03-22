@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
-import chess.domain.board.SquareState;
+import chess.domain.board.LocationState;
 import chess.domain.board.Step;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -17,8 +17,8 @@ class QueenTest {
     @Test
     void tooManyDirectionTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.UP, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.UP, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(QUEEN.canMove(manyDirectionPath))
@@ -29,9 +29,9 @@ class QueenTest {
     @Test
     void pathHasPieceTest() {
         Path notEmptyPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ALLY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.ALLY),
+                new Step(Direction.DOWN, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(QUEEN.canMove(notEmptyPath))
@@ -42,9 +42,9 @@ class QueenTest {
     @Test
     void allyLocatedAtTargetTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ALLY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.ALLY)
         ));
 
         Assertions.assertThat(QUEEN.canMove(manyDirectionPath))
@@ -55,13 +55,13 @@ class QueenTest {
     @Test
     void maxDistanceMoveTest() {
         Path manyDirectionPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.ENEMY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.ENEMY)
         ));
 
         Assertions.assertThat(QUEEN.canMove(manyDirectionPath))

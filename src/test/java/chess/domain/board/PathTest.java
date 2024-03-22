@@ -15,14 +15,14 @@ class PathTest {
     void pathMaxLengthTest() {
         assertThatThrownBy(
                 () -> new Path(List.of(
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY),
-                        new Step(Direction.DOWN, SquareState.EMPTY)
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY),
+                        new Step(Direction.DOWN, LocationState.EMPTY)
                 )))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로의 길이는 7칸을 넘을 수 없습니다.");
@@ -40,23 +40,23 @@ class PathTest {
     @Test
     void isSizeOfTest() {
         Path path = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY)
         ));
 
-        assertThat(path.isSizeOf(2)).isTrue();
+        assertThat(path.isDistanceOf(2)).isTrue();
     }
 
     @DisplayName("방향의 종류 개수를 판별할 수 있다.")
     @Test
     void categoryNumOfTest() {
         Path path = new Path(List.of(
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY)
         ));
 
-        assertThat(path.categoryNumOf(2)).isTrue();
+        assertThat(path.hasCountOfDirection(2)).isTrue();
     }
 
     @DisplayName("대각선을 포함하고 있는지 확인할 수 있다.")
@@ -67,23 +67,23 @@ class PathTest {
         @Test
         void containsTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN, LocationState.EMPTY)
             ));
 
-            assertThat(path.containsDiagonal()).isTrue();
+            assertThat(path.containsDiagonalDirection()).isTrue();
         }
 
         @DisplayName("대각선을 포함하고 있지 않다면 거짓을 반환한다.")
         @Test
         void notContainsTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN, SquareState.EMPTY),
-                    new Step(Direction.UP, SquareState.EMPTY)
+                    new Step(Direction.DOWN, LocationState.EMPTY),
+                    new Step(Direction.UP, LocationState.EMPTY)
             ));
 
-            assertThat(path.containsDiagonal()).isFalse();
+            assertThat(path.containsDiagonalDirection()).isFalse();
         }
     }
 
@@ -94,21 +94,21 @@ class PathTest {
         @Test
         void containsTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN, SquareState.EMPTY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN, LocationState.EMPTY)
             ));
-            assertThat(path.containsOrthogonal()).isTrue();
+            assertThat(path.containsOrthogonalDirection()).isTrue();
         }
 
         @DisplayName("수직 또는 수평선을 포함하고 있지 않다면 거짓을 반환한다.")
         @Test
         void notContainsTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
             ));
-            assertThat(path.containsOrthogonal()).isFalse();
+            assertThat(path.containsOrthogonalDirection()).isFalse();
         }
     }
 
@@ -119,8 +119,8 @@ class PathTest {
         @Test
         void emptyTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
             ));
             assertThat(path.isAllEmpty()).isTrue();
         }
@@ -129,8 +129,8 @@ class PathTest {
         @Test
         void notEmptyTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.ALLY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.ALLY)
             ));
 
             assertThat(path.isAllEmpty()).isFalse();
@@ -145,22 +145,22 @@ class PathTest {
         @Test
         void emptyTargetTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isTrue();
+            assertThat(path.isNotAllyAtTarget()).isTrue();
         }
 
         @DisplayName("목적지에 적 기물이 있으면 도달할 수 있다.")
         @Test
         void enemyTargetTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.ENEMY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.ENEMY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isTrue();
+            assertThat(path.isNotAllyAtTarget()).isTrue();
         }
 
 
@@ -168,11 +168,11 @@ class PathTest {
         @Test
         void allyTargetTest() {
             Path path = new Path(List.of(
-                    new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
-                    new Step(Direction.DOWN_LEFT, SquareState.ALLY)
+                    new Step(Direction.DOWN_LEFT, LocationState.EMPTY),
+                    new Step(Direction.DOWN_LEFT, LocationState.ALLY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isFalse();
+            assertThat(path.isNotAllyAtTarget()).isFalse();
         }
     }
 }

@@ -15,7 +15,7 @@ public abstract class Piece {
         return this.color == Color.BLACK;
     }
 
-    public boolean isAllyPiece(Piece other) {
+    public boolean isAlly(Piece other) {
         return this.color == other.color;
     }
 }

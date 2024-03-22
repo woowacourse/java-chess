@@ -23,17 +23,17 @@ public abstract class Pawn extends Piece {
         if (isNotGeneralMove(path)) {
             return false;
         }
-        if (path.containsDiagonal()) {
-            return path.isSizeOf(1) && path.isTargetHasEnemy();
+        if (path.containsDiagonalDirection()) {
+            return path.isDistanceOf(1) && path.isEnemyAtTarget();
         }
-        if (path.isSizeOf(2)) {
+        if (path.isDistanceOf(2)) {
             return path.isAllEmpty() && isFirstMove();
         }
-        return path.isSizeOf(1) && path.isAllEmpty();
+        return path.isDistanceOf(1) && path.isAllEmpty();
     }
 
     private boolean isNotGeneralMove(Path path) {
-        if (!path.categoryNumOf(1)) {
+        if (!path.hasCountOfDirection(1)) {
             return true;
         }
         return isBackward(path);

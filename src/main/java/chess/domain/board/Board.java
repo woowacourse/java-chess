@@ -99,29 +99,29 @@ public class Board {
 
     private Path createPath(Location source, Location target) {
         List<Direction> directions = Direction.createDirections(source, target);
-        List<SquareState> squareStates = createPathState(source, directions);
-        return Path.of(directions, squareStates);
+        List<LocationState> locationStates = createPathState(source, directions);
+        return Path.of(directions, locationStates);
     }
 
-    private List<SquareState> createPathState(Location current, List<Direction> directions) {
+    private List<LocationState> createPathState(Location current, List<Direction> directions) {
         Piece movingPiece = findPieceAt(current);
-        List<SquareState> squareStates = new ArrayList<>();
+        List<LocationState> locationStates = new ArrayList<>();
         for (Direction direction : directions) {
             current = current.move(direction);
-            squareStates.add(findSquareStates(movingPiece, current));
+            locationStates.add(findLocationStates(movingPiece, current));
         }
-        return squareStates;
+        return locationStates;
     }
 
-    private SquareState findSquareStates(Piece movingPiece, Location current) {
+    private LocationState findLocationStates(Piece movingPiece, Location current) {
         Piece locatedPiece = board.get(current);
         if (locatedPiece == null) {
-            return SquareState.EMPTY;
+            return LocationState.EMPTY;
         }
-        if (movingPiece.isAllyPiece(locatedPiece)) {
-            return SquareState.ALLY;
+        if (movingPiece.isAlly(locatedPiece)) {
+            return LocationState.ALLY;
         }
-        return SquareState.ENEMY;
+        return LocationState.ENEMY;
     }
 
     private Piece findPieceAt(Location source) {

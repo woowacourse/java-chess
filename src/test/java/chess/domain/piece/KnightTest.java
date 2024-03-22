@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
-import chess.domain.board.SquareState;
+import chess.domain.board.LocationState;
 import chess.domain.board.Step;
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -16,8 +16,8 @@ class KnightTest {
     @Test
     void orthogonalDirectionTest() {
         Path orthogonalPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.UP, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.UP, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(KNIGHT.canMove(orthogonalPath))
@@ -28,8 +28,8 @@ class KnightTest {
     @Test
     void pathHasPieceTest() {
         Path notEmptyPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.ALLY),
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.ALLY),
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(KNIGHT.canMove(notEmptyPath))
@@ -40,8 +40,8 @@ class KnightTest {
     @Test
     void allyLocatedAtTargetTest() {
         Path allyTargetPath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.ALLY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.ALLY)
         ));
 
         Assertions.assertThat(KNIGHT.canMove(allyTargetPath))
@@ -52,9 +52,9 @@ class KnightTest {
     @Test
     void maxDistanceMoveTest() {
         Path wrongDistancePath = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN_LEFT, LocationState.EMPTY)
         ));
 
         Assertions.assertThat(KNIGHT.canMove(wrongDistancePath))

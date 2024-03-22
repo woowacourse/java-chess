@@ -12,9 +12,9 @@ public class Rook extends Piece {
         if (path.hasPiecePathExcludedTarget()) {
             return false;
         }
-        if (path.containsDiagonal()) {
+        if (path.containsDiagonalDirection()) {
             return false;
         }
-        return path.hasNoAllyAtTarget() && path.categoryNumOf(1);
+        return path.isNotAllyAtTarget() && path.hasCountOfDirection(1);
     }
 }

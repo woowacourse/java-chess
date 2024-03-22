@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Path;
-import chess.domain.board.SquareState;
+import chess.domain.board.LocationState;
 import chess.domain.board.Step;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ class KingTest {
     @EnumSource(Direction.class)
     void canMoveTest(Direction direction) {
         Path path = new Path(List.of(
-                new Step(direction, SquareState.EMPTY)
+                new Step(direction, LocationState.EMPTY)
         ));
 
         assertThat(KING.canMove(path)).isTrue();
@@ -31,7 +31,7 @@ class KingTest {
     @EnumSource(Direction.class)
     void allyLocatedAtTargetTest(Direction direction) {
         Path path = new Path(List.of(
-                new Step(direction, SquareState.ALLY)
+                new Step(direction, LocationState.ALLY)
         ));
 
         assertThat(KING.canMove(path)).isFalse();
@@ -42,7 +42,7 @@ class KingTest {
     @EnumSource(Direction.class)
     void enemyLocatedAtTargetTest(Direction direction) {
         Path path = new Path(List.of(
-                new Step(direction, SquareState.ENEMY)
+                new Step(direction, LocationState.ENEMY)
         ));
 
         assertThat(KING.canMove(path)).isTrue();
@@ -52,8 +52,8 @@ class KingTest {
     @Test
     void tooLongPathTest() {
         Path path = new Path(List.of(
-                new Step(Direction.DOWN, SquareState.EMPTY),
-                new Step(Direction.DOWN, SquareState.EMPTY)
+                new Step(Direction.DOWN, LocationState.EMPTY),
+                new Step(Direction.DOWN, LocationState.EMPTY)
         ));
 
         assertThat(KING.canMove(path)).isFalse();
