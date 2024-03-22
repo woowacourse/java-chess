@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.MovePath;
 import domain.Position;
 import domain.Side;
 import java.util.List;
@@ -16,18 +17,37 @@ public abstract class Piece {
 
     public abstract boolean isRuleBroken(Position current, Position target, Map<Position, Piece> pieces);
 
-    public void checkValidMove(Position source, Position target, Map<Position, Piece> pieces) {
+    public void checkValidMove(Position source, Position target, MovePath movePath) {
         checkDifferentPosition(source, target);
-
-
-        if (isRuleBroken(source, target, pieces)) {
-            throw new IllegalArgumentException("이동 규칙을 어겼습니다.");
-        }
+        checkNoAllyPieceAtTarget(movePath.targetPiece());
+        checkNoPathPieces(movePath);
     }
 
     private void checkDifferentPosition(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException("source 위치와 target 위치가 같으면 이동할 수 없습니다.");
+        }
+    }
+
+    private void checkNoAllyPieceAtTarget(Piece targetPiece) {
+        if (targetPiece.isAlly(side)) {
+            throw new IllegalArgumentException("target 위치에 같은 색의 기물이 존재하면 이동할 수 없습니다.");
+        }
+    }
+
+    private void checkNoPathPieces(MovePath movePath) {
+        if (movePath.notAllPathPiecesEmpty()) {
+            throw new IllegalArgumentException("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없습니다.");
+        }
+    }
+
+    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
+        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
+            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
+        }
+        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
+        if (!positionsExceptTarget.isEmpty()) {
+            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
         }
     }
 
@@ -55,22 +75,24 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
     public boolean isBlack() {
         return side.isBlack();
     }
 
-    public boolean isOpponent(Piece other) {
-        return side != other.side;
+    public boolean isAlly(Side otherSide) {
+        return side == otherSide;
     }
 
-    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
-            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
-        }
-        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
-        if (!positionsExceptTarget.isEmpty()) {
-            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
-        }
+    public boolean isOpponent(Piece other) {
+        return side != other.side;
     }
 
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
@@ -90,9 +112,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(side);
-    }
-
-    public boolean isSameSide(Side other) {
-        return side == other;
     }
 }

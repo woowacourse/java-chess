@@ -29,7 +29,7 @@ public class TurnTest {
 
         Turn turn = new Turn();
 
-        assertThatCode(() -> turn.check(chessBoard, PositionFixture.a2()))
+        assertThatCode(() -> turn.check(chessBoard, PositionFixture.A2()))
                 .doesNotThrowAnyException();
     }
 

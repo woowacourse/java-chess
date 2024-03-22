@@ -10,15 +10,15 @@ public class PositionFixture {
         return new Position(File.D, Rank.FOUR);
     }
 
-    public static Position a1() {
+    public static Position A1() {
         return new Position(File.A, Rank.ONE);
     }
 
-    public static Position a2() {
+    public static Position A2() {
         return new Position(File.A, Rank.TWO);
     }
 
-    public static Position a3() {
+    public static Position A3() {
         return new Position(File.A, Rank.THREE);
     }
 

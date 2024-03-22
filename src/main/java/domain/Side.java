@@ -4,6 +4,7 @@ public enum Side {
 
     BLACK,
     WHITE,
+    EMPTY,
     ;
 
     public boolean isBlack() {
@@ -15,5 +16,9 @@ public enum Side {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public boolean isSame(Side side) {
+        return this == side;
     }
 }

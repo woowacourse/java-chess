@@ -22,8 +22,8 @@ class KnightTest {
 
     private static Stream<Arguments> immovableTargetPosition() {
         return Stream.of(
-                Arguments.arguments(PositionFixture.a2()),
-                Arguments.arguments(PositionFixture.a3()),
+                Arguments.arguments(PositionFixture.A2()),
+                Arguments.arguments(PositionFixture.A3()),
                 Arguments.arguments(PositionFixture.b1()),
                 Arguments.arguments(PositionFixture.b2()),
                 Arguments.arguments(PositionFixture.c1()),
@@ -36,7 +36,7 @@ class KnightTest {
     @MethodSource("movableTargetPosition")
     void canMoveTest(Position target) {
         Knight knight = new Knight(Side.BLACK);
-        Position current = PositionFixture.a1();
+        Position current = PositionFixture.A1();
 
         boolean actual = knight.isRuleBroken(current, target, new LinkedHashMap<>());
 
@@ -48,7 +48,7 @@ class KnightTest {
     @MethodSource("immovableTargetPosition")
     void cantMoveTest(Position target) {
         Knight knight = new Knight(Side.BLACK);
-        Position current = PositionFixture.a1();
+        Position current = PositionFixture.A1();
 
         boolean actual = knight.isRuleBroken(current, target, new LinkedHashMap<>());
 

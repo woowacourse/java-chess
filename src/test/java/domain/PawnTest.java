@@ -21,7 +21,7 @@ public class PawnTest {
     @Test
     void canMoveOneSquareDiagonalWhenAttackTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a2();
+        Position current = PositionFixture.A2();
         Position target = PositionFixture.b3();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
@@ -37,7 +37,7 @@ public class PawnTest {
     @Test
     void cantMoveTwoSquareDiagonalWhenAttackTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a2();
+        Position current = PositionFixture.A2();
         Position target = PositionFixture.c4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
@@ -53,8 +53,8 @@ public class PawnTest {
     @Test
     void cantMoveOneSquareForwardWhenAttackTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a2();
-        Position target = PositionFixture.a3();
+        Position current = PositionFixture.A2();
+        Position target = PositionFixture.A3();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
             put(target, new Pawn(Side.BLACK));
@@ -69,7 +69,7 @@ public class PawnTest {
     @Test
     void cantMoveTwoSquareForwardWhenAttackTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a2();
+        Position current = PositionFixture.A2();
         Position target = PositionFixture.a4();
 
         Map<Position, Piece> pieces = new LinkedHashMap<>() {{
@@ -85,7 +85,7 @@ public class PawnTest {
     @Test
     void canMoveForwardOneSquareTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a3();
+        Position current = PositionFixture.A3();
         Position target = PositionFixture.a4();
 
         boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -97,7 +97,7 @@ public class PawnTest {
     @Test
     void cantMoveForwardTwoSquareTest() {
         Pawn pawn = new Pawn(Side.WHITE);
-        Position current = PositionFixture.a3();
+        Position current = PositionFixture.A3();
         Position target = PositionFixture.a5();
 
         boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -113,8 +113,8 @@ public class PawnTest {
         @Test
         void canMoveOneSquareForwardTest() {
             Pawn pawn = new Pawn(Side.WHITE);
-            Position current = PositionFixture.a2();
-            Position target = PositionFixture.a3();
+            Position current = PositionFixture.A2();
+            Position target = PositionFixture.A3();
 
             boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
 
@@ -125,7 +125,7 @@ public class PawnTest {
         @Test
         void canMoveTwoSquareForwardTest() {
             Pawn pawn = new Pawn(Side.WHITE);
-            Position current = PositionFixture.a2();
+            Position current = PositionFixture.A2();
             Position target = PositionFixture.a4();
 
             boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -141,7 +141,7 @@ public class PawnTest {
         private static Stream<Arguments> NonReversiblePosition() {
             return Stream.of(
                     Arguments.arguments(Side.BLACK, PositionFixture.a7(), PositionFixture.a8()),
-                    Arguments.arguments(Side.WHITE, PositionFixture.a2(), PositionFixture.a1())
+                    Arguments.arguments(Side.WHITE, PositionFixture.A2(), PositionFixture.A1())
             );
         }
 
@@ -149,7 +149,7 @@ public class PawnTest {
         @Test
         void cantMoveSideTest() {
             Pawn pawn = new Pawn(Side.WHITE);
-            Position current = PositionFixture.a2();
+            Position current = PositionFixture.A2();
             Position target = PositionFixture.b2();
 
             boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
@@ -172,7 +172,7 @@ public class PawnTest {
         @Test
         void cantMoveDiagonalTest() {
             Pawn pawn = new Pawn(Side.WHITE);
-            Position current = PositionFixture.a2();
+            Position current = PositionFixture.A2();
             Position target = PositionFixture.b3();
 
             boolean actual = pawn.isRuleBroken(current, target, new LinkedHashMap<>());
