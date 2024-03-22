@@ -58,13 +58,9 @@ public class Path {
     }
 
     public boolean hasPiecePathExcludedTarget() {
-        return !isEmptyPathExcludedTarget();
-    }
-
-    private boolean isEmptyPathExcludedTarget() {
         return createPathExcludedTarget()
                 .stream()
-                .allMatch(Step::isEmpty);
+                .anyMatch(Step::hasPiece);
     }
 
     private List<Step> createPathExcludedTarget() {

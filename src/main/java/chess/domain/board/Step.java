@@ -21,6 +21,10 @@ public class Step {
         return direction.isOrthogonal();
     }
 
+    public boolean hasPiece() {
+        return !isEmpty();
+    }
+
     public boolean isEmpty() {
         return squareState.isEmpty();
     }
