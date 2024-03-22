@@ -3,37 +3,24 @@ package domain.piece;
 import domain.position.Position;
 import java.util.Objects;
 
-public class Piece {
+public abstract class Piece {
 
-    private final Type type;
-    private final Color color;
+    protected final Color color; // TODO: 접근제어자 열어도 괜찮을까?
 
-    public Piece(Type type, Color color) {
-        this.type = type;
+    public Piece(Color color) {
         this.color = color;
     }
 
-    public boolean isSameType(Type type) {
-        return this.type.isSame(type);
-    }
+    public abstract boolean canMove(Position source, Position target);
 
-    public boolean isWhite() {
-        return color.isWhite();
-    }
+    public abstract String display(); // TODO: view 로직 분리
 
-    private boolean isBlack() {
+    public boolean isBlack() {
         return color.isBlack();
     }
 
     public boolean isDifferentColor(Piece targetPiece) {
         return color != targetPiece.color;
-    }
-
-    public boolean canMove(Position source, Position target) {
-        if (isBlack() && isSameType(Type.PAWN)) {
-            return source.isForwardStraight(target, true) || source.canAttackDiagonal(target, true);
-        }
-        return type.canMove(source, target);
     }
 
     @Override
@@ -45,11 +32,11 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return type == piece.type && color == piece.color;
+        return color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, color);
+        return Objects.hash(color);
     }
 }

@@ -1,8 +1,8 @@
 package domain.board;
 
 import domain.piece.Color;
+import domain.piece.None;
 import domain.piece.Piece;
-import domain.piece.Type;
 import domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Board {
     }
 
     public void displacePieceByPosition(Position position) {
-        squares.replace(position, new Piece(Type.NONE, Color.NONE));
+        squares.replace(position, new None(Color.NONE));
     }
 
     public boolean isNotBlocked(Position source, Position target) {
@@ -48,6 +48,6 @@ public class Board {
         }
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)
-                .allMatch(betweenPiece -> betweenPiece.isSameType(Type.NONE));
-    }
+                .allMatch(betweenPiece -> betweenPiece.getClass().equals(None.class));
+    } // TODO: getClass 제거
 }

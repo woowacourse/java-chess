@@ -14,6 +14,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public boolean hasRank(Rank rank) {
+        return this.rank.isSame(rank);
+    }
+
     public boolean isDiagonal(Position target) {
         int fileDistance = file.distance(target.file);
         int rankDistance = rank.distance(target.rank);
@@ -51,16 +55,25 @@ public class Position {
         return notFirstMove(target, isBlack);
     }
 
-    public boolean canAttackDiagonal(Position target, boolean isBlack) {
-        int rankDistance = rank.forwardDistance(target.rank);
-        int fileDistance = file.distance(target.file);
+    public boolean firstMove(Position target, boolean isBlack) {
+        int forwardDistance = rank.forwardDistance(target.rank);
         if (isBlack) {
-            return rankDistance == -1 || fileDistance == 1;
+            return (forwardDistance == -1 || forwardDistance == -2) && file.isSame(target.file);
         }
-        return rankDistance == 1 || fileDistance == 1;
+        return (forwardDistance == 1 || forwardDistance == 2) && file.isSame(target.file);
     }
 
-    private boolean notFirstMove(Position target, boolean isBlack) {
+    public boolean firstMoveOfBlackPawn(Position target) {
+        int forwardDistance = rank.forwardDistance(target.rank);
+        return (forwardDistance == -1 || forwardDistance == -2) && file.isSame(target.file);
+    }
+
+    public boolean firstMoveOfWhitePawn(Position target) {
+        int forwardDistance = rank.forwardDistance(target.rank);
+        return (forwardDistance == 1 || forwardDistance == 2) && file.isSame(target.file);
+    }
+
+    public boolean notFirstMove(Position target, boolean isBlack) {
         int forwardDistance = rank.forwardDistance(target.rank);
         if (isBlack) {
             return forwardDistance == -1 && file.isSame(target.file);
@@ -68,12 +81,26 @@ public class Position {
         return forwardDistance == 1 && file.isSame(target.file);
     }
 
-    private boolean firstMove(Position target, boolean isBlack) {
+    public boolean notFirstMoveOfBlackPawn(Position target) {
         int forwardDistance = rank.forwardDistance(target.rank);
-        if (isBlack) {
-            return (forwardDistance == -1 || forwardDistance == -2) && file.isSame(target.file);
-        }
-        return (forwardDistance == 1 || forwardDistance == 2) && file.isSame(target.file);
+        return forwardDistance == -1 && file.isSame(target.file);
+    }
+
+    public boolean notFistMoveOfWhitePawn(Position target) {
+        int forwardDistance = rank.forwardDistance(target.rank);
+        return forwardDistance == 1 && file.isSame(target.file);
+    }
+
+    public boolean canAttackDiagonalOfBlack(Position target) {
+        int rankDistance = rank.forwardDistance(target.rank);
+        int fileDistance = file.distance(target.file);
+        return rankDistance == -1 || fileDistance == 1;
+    }
+
+    public boolean canAttackDiagonalOfWhite(Position target) {
+        int rankDistance = rank.forwardDistance(target.rank);
+        int fileDistance = file.distance(target.file);
+        return rankDistance == 1 || fileDistance == 1;
     }
 
     public List<Position> findBetweenStraightPositions(Position target) {
