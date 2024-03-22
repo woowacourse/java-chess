@@ -1,8 +1,6 @@
 package chess.domain;
 
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum Direction {
     NORTH(0, 1),
@@ -25,6 +23,21 @@ public enum Direction {
     WEST_WEST_SOUTH(-2, -1),
     ;
 
+    public static final Set<Direction> BLACK_PAWN = Set.of(SOUTH, SOUTH_WEST, SOUTH_EAST);
+    public static final Set<Direction> WHITE_PAWN = Set.of(NORTH, NORTH_WEST, NORTH_EAST);
+    public static final Set<Direction> STRAIGHT = Set.of(NORTH, SOUTH, WEST, EAST);
+    public static final Set<Direction> DIAGONAL = Set.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
+    public static final Set<Direction> ALL = Set.of(
+            NORTH, SOUTH, WEST, EAST,
+            NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
+    );
+    public static final Set<Direction> KNIGHT = Set.of(
+            NORTH_NORTH_EAST, NORTH_NORTH_WEST,
+            SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST,
+            EAST_EAST_NORTH, EAST_EAST_SOUTH,
+            WEST_WEST_NORTH, WEST_WEST_SOUTH
+    );
+
     private final int x;
     private final int y;
 
@@ -33,35 +46,8 @@ public enum Direction {
         this.y = y;
     }
 
-    public static Set<Direction> ofStraight() {
-        return Set.of(NORTH, SOUTH, WEST, EAST);
-    }
-
-    public static Set<Direction> ofDiagonal() {
-        return Set.of(NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST);
-    }
-
-    public static Set<Direction> ofAll() {
-        return Stream.concat(ofStraight().stream(), ofDiagonal().stream())
-                .collect(Collectors.toSet());
-    }
-
-    public static Set<Direction> ofKnight() {
-        return Set.of(NORTH_NORTH_EAST, NORTH_NORTH_WEST, SOUTH_SOUTH_EAST,
-                SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH,
-                WEST_WEST_NORTH, WEST_WEST_SOUTH);
-    }
-
-    public static Set<Direction> ofBlackPawn() {
-        return Set.of(Direction.SOUTH, Direction.SOUTH_WEST, Direction.SOUTH_EAST);
-    }
-
-    public static Set<Direction> ofWhitePawn() {
-        return Set.of(Direction.NORTH, Direction.NORTH_WEST, Direction.NORTH_EAST);
-    }
-
     public boolean isDiagonal() {
-        return ofDiagonal().contains(this);
+        return DIAGONAL.contains(this);
     }
 
     public int getX() {

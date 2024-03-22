@@ -16,12 +16,12 @@ public class Pawn extends Piece {
     }
 
     public static Pawn ofBlack() {
-        Set<Direction> directions = Direction.ofBlackPawn();
+        Set<Direction> directions = Direction.BLACK_PAWN;
         return new Pawn(Color.BLACK, directions);
     }
 
     public static Pawn ofWhite() {
-        Set<Direction> directions = Direction.ofWhitePawn();
+        Set<Direction> directions = Direction.WHITE_PAWN;
         return new Pawn(Color.WHITE, directions);
     }
 

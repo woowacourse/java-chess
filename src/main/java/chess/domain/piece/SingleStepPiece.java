@@ -21,16 +21,15 @@ public abstract class SingleStepPiece extends Piece {
         return movablePositions;
     }
 
-    private void addMoves(Position currentPosition, Board board, Direction direction, Set<Position> movablePositions) {
-        Position position = currentPosition;
+    private void addMoves(Position position, Board board, Direction direction, Set<Position> movablePositions) {
         if (!position.canMoveNext(direction)) {
             return;
         }
 
         position = position.next(direction);
-        Piece piece = board.findPieceByPosition(position);
+        Piece findPiece = board.findPieceByPosition(position);
 
-        if (!isSameColor(piece)) {
+        if (!isSameColor(findPiece)) {
             movablePositions.add(position);
         }
     }

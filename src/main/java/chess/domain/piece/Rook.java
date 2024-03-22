@@ -6,6 +6,6 @@ import chess.domain.Direction;
 public class Rook extends MultiStepPiece {
 
     public Rook(Color color) {
-        super(color, PieceType.ROOK, Direction.ofStraight());
+        super(color, PieceType.ROOK, Direction.STRAIGHT);
     }
 }

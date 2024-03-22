@@ -6,6 +6,6 @@ import chess.domain.Direction;
 public class King extends SingleStepPiece {
 
     public King(Color color) {
-        super(color, PieceType.KING, Direction.ofAll());
+        super(color, PieceType.KING, Direction.ALL);
     }
 }
