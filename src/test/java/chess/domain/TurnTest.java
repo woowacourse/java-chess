@@ -20,5 +20,4 @@ class TurnTest {
         //then
         assertThat(turn.isTurn(PieceColor.WHITE)).isTrue();
     }
-
 }
