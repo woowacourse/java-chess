@@ -66,13 +66,11 @@ public class ChessGame {
     }
 
     private static void repeatUntilValidCommand(Runnable runnable) {
-        while (true) {
-            try {
-                runnable.run();
-                break;
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        try {
+            runnable.run();
+        } catch (RuntimeException e) {
+            OutputView.printErrorMessage(e.getMessage());
+            repeatUntilValidCommand(runnable);
         }
     }
 }
