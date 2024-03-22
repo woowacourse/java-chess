@@ -1,9 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -14,12 +14,12 @@ public class Position {
     private static final List<Position> positions;
 
     static {
-        positions = IntStream.rangeClosed(MIN_COLUMN, MAX_COLUMN)
-                .boxed()
-                .flatMap(column -> IntStream.rangeClosed(MIN_ROW, MAX_ROW)
-                        .boxed()
-                        .map(row -> new Position(row, column)))
-                .toList();
+        positions = new ArrayList<>();
+        for (int row = MIN_ROW; row <= MAX_ROW; row++) {
+            for (int column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
+                positions.add(new Position(row, column));
+            }
+        }
     }
 
     private final int row;
