@@ -3,6 +3,7 @@ package chess.domain.strategy;
 import chess.domain.Direction;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
@@ -10,6 +11,8 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     private static final int PAWN_FORWARD_INDEX = 1;
     private static final int PAWN_FIRST_FORWARD_INDEX = 2;
+    private static final Rank WHITE_PAWN_FIRST_RANK = Rank.TWO;
+    private static final Rank BLACK_PAWN_FIRST_RANK = Rank.SEVEN;
     private static final String PAWN_CANNOT_CATCH_STRAIGHT_ERROR = "폰은 직선 경로로 상대 말을 잡을 수 없습니다.";
 
     private final PathFindStrategy pathFindStrategy;
@@ -32,7 +35,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         int forwardIndex = selectIndexByColor(PAWN_FORWARD_INDEX, sourcePiece.isBlack());
         int firstForwardIndex = selectIndexByColor(PAWN_FIRST_FORWARD_INDEX, sourcePiece.isBlack());
 
-        if (source.isPawnStartSquare()) {
+        if (isFirstRank(source)) {
             if (!pathFindStrategy.check(source, destination, board)) {
                 return false;
             }
@@ -41,6 +44,10 @@ public class PawnMoveStrategy implements MoveStrategy {
         }
 
         return pawnNormalMoveCondition(forwardIndex, diff);
+    }
+
+    private boolean isFirstRank(Square source) {
+        return source.isSameRank(WHITE_PAWN_FIRST_RANK) || source.isSameRank(BLACK_PAWN_FIRST_RANK);
     }
 
     private int selectIndexByColor(int index, boolean isBlack) {

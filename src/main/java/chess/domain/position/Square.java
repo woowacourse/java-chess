@@ -65,7 +65,7 @@ public class Square {
         return new SquareDifferent(rank.calculateDiff(another.rank), file.calculateDiff(another.file));
     }
 
-    public boolean isPawnStartSquare() {
-        return rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN);
+    public boolean isSameRank(Rank rank) {
+        return this.rank.equals(rank);
     }
 }

@@ -2,10 +2,9 @@ package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("위치")
 public class SquareTest {
@@ -31,15 +30,14 @@ public class SquareTest {
         assertThat(actual).isEqualTo(Square.of(File.A, Rank.FIVE));
     }
 
-    @DisplayName("폰의 위치가 첫 위치인지 확인한다.")
-    @ParameterizedTest
-    @EnumSource(mode = EnumSource.Mode.INCLUDE, names = {"TWO", "SEVEN"})
-    void checkPawnStartSquare(Rank rank) {
+    @DisplayName("위치가 주어진 랭크와 동일한 위치에 있는지 확인한다.")
+    @Test
+    void checkPawnStartSquare() {
         // given
-        Square square = Square.of(File.A, rank);
+        Square square = Square.of(File.A, Rank.TWO);
 
         // when
-        boolean actual = square.isPawnStartSquare();
+        boolean actual = square.isSameRank(Rank.TWO);
 
         // then
         assertThat(actual).isTrue();
