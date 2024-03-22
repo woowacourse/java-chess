@@ -5,9 +5,9 @@ import chess.domain.chessboard.Square;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PawnMoveStrategy implements MoveStrategy {
+public class PawnMoveStrategy extends MoveDirection implements MoveStrategy {
 
-    private Boolean isStartingPosition = true;
+    private boolean isStartingPosition = true;
 
     @Override
     public void move(ChessBoard chessBoard, Square startSquare, Square targetSquare) {
@@ -31,33 +31,22 @@ public class PawnMoveStrategy implements MoveStrategy {
         return moveRange;
     }
 
-    private void addForward(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
-        if (startSquare.isForwardMost()) {
-            return;
-        }
-
-        Square forwardSquare = chessBoard.findForwardSquare(startSquare);
-        if (chessBoard.findChessPieceOnSquare(forwardSquare).isEmpty()) {
-            moveRange.add(forwardSquare);
-        }
-    }
-
-    private void addLeftForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
+    @Override
+    void addLeftForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
         if (startSquare.isLeftMost() || startSquare.isForwardMost()) {
             return;
         }
-
         Square leftDiagonalSquare = chessBoard.findLeftForwardDiagonalSquare(startSquare);
         if (chessBoard.findChessPieceOnSquare(leftDiagonalSquare).isPresent()) {
             moveRange.add(leftDiagonalSquare);
         }
     }
 
-    private void addRightForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
+    @Override
+    void addRightForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
         if (startSquare.isRightMost() || startSquare.isForwardMost()) {
             return;
         }
-
         Square rightDiagonalSquare = chessBoard.findRightForwardDiagonalSquare(startSquare);
         if (chessBoard.findChessPieceOnSquare(rightDiagonalSquare).isPresent()) {
             moveRange.add(rightDiagonalSquare);
