@@ -51,10 +51,10 @@ public class ChessBoard {
 
     public void move(final Square source, final Square target) {
         validateEmptySource(source);
+        validateSameSquare(source, target);
 
         final Piece sourcePiece = pieceSquares.get(source);
 
-        validateSameSquare(source, target);
         validateTeam(sourcePiece);
 
         if (pieceSquares.containsKey(target)) {

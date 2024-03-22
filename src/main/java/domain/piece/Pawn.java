@@ -18,6 +18,8 @@ public class Pawn extends Piece {
     private static final ChessVector WHITE_START_VECTOR = new ChessVector(0, 2);
     private static final ChessVector BLACK_MOVE_VECTOR = new ChessVector(0, -1);
     private static final ChessVector WHITE_MOVE_VECTOR = new ChessVector(0, 1);
+    private static final Rank BLACK_START_RANK = Rank.SEVEN;
+    private static final Rank WHITE_START_RANK = Rank.TWO;
 
     public Pawn(final Team team) {
         super(team);
@@ -27,12 +29,12 @@ public class Pawn extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        Rank startRank = Rank.SEVEN;
+        Rank startRank = BLACK_START_RANK;
         ChessVector startChessVector = BLACK_START_VECTOR;
         ChessVector moveChessVector = BLACK_MOVE_VECTOR;
 
         if (team == Team.WHITE) {
-            startRank = Rank.TWO;
+            startRank = WHITE_START_RANK;
             startChessVector = WHITE_START_VECTOR;
             moveChessVector = WHITE_MOVE_VECTOR;
         }

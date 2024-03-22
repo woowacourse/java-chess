@@ -136,7 +136,7 @@ class ChessBoardTest {
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("자기 말이 아닙니다.");
+                .hasMessage("상대방의 말을 움직일 수 없습니다.");
     }
 
     @DisplayName("기물(폰)의 공격 동선이 아닌 경우 움직일 수 없다.")
