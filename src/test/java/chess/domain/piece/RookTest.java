@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.RookMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +27,7 @@ public class RookTest {
     @MethodSource("rookMoveTestParameters")
     void rookMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Rook rook = new Rook(pieceInfo, new RookMoveStrategy());
+        Rook rook = new Rook(pieceInfo);
         Rook movedRook = rook.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedRook.getPosition();

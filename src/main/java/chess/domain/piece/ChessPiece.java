@@ -10,7 +10,7 @@ public abstract class ChessPiece implements Piece {
     final PieceInfo pieceInfo;
     final MoveStrategy moveStrategy;
 
-    public ChessPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    protected ChessPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         this.pieceInfo = pieceInfo;
         this.moveStrategy = moveStrategy;
     }

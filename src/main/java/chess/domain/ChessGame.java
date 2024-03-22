@@ -13,7 +13,6 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> start() {
-        board.placeInitialPieces();
         turn = Team.WHITE;
         return board.getBoard();
     }

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Rook;
-import chess.domain.strategy.RookMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +26,8 @@ public class BoardTest {
         Position newPosition = Position.of("d8");
         Position obstaclePosition = Position.of("d6");
 
-        Rook rook = new Rook(new PieceInfo(currentPosition, Team.WHITE), new RookMoveStrategy());
-        Rook obstacleRook = new Rook(new PieceInfo(obstaclePosition, Team.WHITE), new RookMoveStrategy());
+        Rook rook = new Rook(new PieceInfo(currentPosition, Team.WHITE));
+        Rook obstacleRook = new Rook(new PieceInfo(obstaclePosition, Team.WHITE));
 
         Board board = new Board();
         board.placePiece(currentPosition, rook);
@@ -46,8 +45,8 @@ public class BoardTest {
         Position currentPosition = Position.of("d4");
         Team currentTeam = Team.WHITE;
 
-        Rook rook = new Rook(new PieceInfo(currentPosition, currentTeam), new RookMoveStrategy());
-        Rook otherRook = new Rook(new PieceInfo(otherPosition, otherTeam), new RookMoveStrategy());
+        Rook rook = new Rook(new PieceInfo(currentPosition, currentTeam));
+        Rook otherRook = new Rook(new PieceInfo(otherPosition, otherTeam));
 
         Board board = new Board();
         board.placePiece(currentPosition, rook);

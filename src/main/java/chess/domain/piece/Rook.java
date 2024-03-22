@@ -3,11 +3,16 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.RookMoveStrategy;
 
 public class Rook extends ChessPiece {
 
-    public Rook(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Rook(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
+    }
+
+    public Rook(PieceInfo pieceInfo) {
+        this(pieceInfo, new RookMoveStrategy());
     }
 
     @Override

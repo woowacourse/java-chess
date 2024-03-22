@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.WhitePawnFirstMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +35,7 @@ public class WhitePawnFirstMoveTest {
     @MethodSource("pawnStraightMoveTestParameters")
     void pawnStraightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Pawn whitePawnFirstMove = new Pawn(pieceInfo, new WhitePawnFirstMoveStrategy());
+        Pawn whitePawnFirstMove = new Pawn(pieceInfo);
         Pawn movedPawn = whitePawnFirstMove.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedPawn.getPosition();
@@ -50,7 +49,7 @@ public class WhitePawnFirstMoveTest {
     void pawnDiagonalMoveTest(Position currentPosition, Position newPosition, boolean isDisturbed,
                               boolean isOtherPieceExist, boolean isSameTeam, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Pawn whitePawnFirstMove = new Pawn(pieceInfo, new WhitePawnFirstMoveStrategy());
+        Pawn whitePawnFirstMove = new Pawn(pieceInfo);
         Pawn movedPawn = whitePawnFirstMove.move(newPosition, isDisturbed, isOtherPieceExist, isSameTeam);
 
         Position actualMovedPosition = movedPawn.getPosition();

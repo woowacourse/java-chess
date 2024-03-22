@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.BishopMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +27,7 @@ public class BishopTest {
     @MethodSource("bishopMoveTestParameters")
     void bishopMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Bishop bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
+        Bishop bishop = new Bishop(pieceInfo);
         Bishop movedBishop = bishop.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedBishop.getPosition();

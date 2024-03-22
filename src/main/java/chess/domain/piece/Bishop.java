@@ -2,12 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.PieceInfo;
 import chess.domain.Position;
+import chess.domain.strategy.BishopMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 
 public class Bishop extends ChessPiece {
 
-    public Bishop(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Bishop(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
+    }
+
+    public Bishop(PieceInfo pieceInfo) {
+        this(pieceInfo, new BishopMoveStrategy());
     }
 
     @Override

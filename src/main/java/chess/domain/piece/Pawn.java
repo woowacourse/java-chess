@@ -3,14 +3,23 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.BlackPawnNotFirstMoveStrategy;
-import chess.domain.strategy.MoveStrategy;
-import chess.domain.strategy.WhitePawnNotFirstMoveStrategy;
+import chess.domain.strategy.*;
 
 public class Pawn extends ChessPiece {
 
-    public Pawn(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Pawn(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
+    }
+
+    public Pawn(PieceInfo pieceInfo) {
+        this(pieceInfo, decidePawnMoveStrategy(pieceInfo));
+    }
+
+    private static MoveStrategy decidePawnMoveStrategy(PieceInfo pieceInfo) {
+        if (pieceInfo.getTeam() == Team.WHITE) {
+            return new WhitePawnFirstMoveStrategy();
+        }
+        return new BlackPawnFirstMoveStrategy();
     }
 
     @Override
@@ -19,7 +28,7 @@ public class Pawn extends ChessPiece {
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
         }
-        if (isAbleToMove(currentPosition, newPosition, isDisturbed, isOtherPieceExist, isSameTeam)) {
+        if (isUnableToMove(currentPosition, newPosition, isDisturbed, isOtherPieceExist, isSameTeam)) {
             return this;
         }
 
@@ -39,7 +48,7 @@ public class Pawn extends ChessPiece {
         return new BlackPawnNotFirstMoveStrategy();
     }
 
-    private boolean isAbleToMove(Position currentPosition, Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
+    private boolean isUnableToMove(Position currentPosition, Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
         int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
         if (isDisturbed) {
             return true;
@@ -47,9 +56,6 @@ public class Pawn extends ChessPiece {
         if (diffX == 0 && isOtherPieceExist) {
             return true;
         }
-        if (diffX == 1 && (!isOtherPieceExist || isSameTeam)) {
-            return true;
-        }
-        return false;
+        return diffX == 1 && (!isOtherPieceExist || isSameTeam);
     }
 }

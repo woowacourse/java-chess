@@ -3,11 +3,16 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.strategy.MoveStrategy;
+import chess.domain.strategy.QueenMoveStrategy;
 
 public class Queen extends ChessPiece {
 
-    public Queen(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Queen(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
+    }
+
+    public Queen(PieceInfo pieceInfo) {
+        this(pieceInfo, new QueenMoveStrategy());
     }
 
     @Override

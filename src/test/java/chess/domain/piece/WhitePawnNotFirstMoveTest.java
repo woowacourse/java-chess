@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.WhitePawnNotFirstMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +24,9 @@ public class WhitePawnNotFirstMoveTest {
     @ParameterizedTest
     @MethodSource("whitePawnMoveTestParameters")
     void pawnMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
-        PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Pawn whitePawnNotFirstMove = new Pawn(pieceInfo, new WhitePawnNotFirstMoveStrategy());
+        PieceInfo pieceInfo = new PieceInfo(Position.of("d3"), Team.WHITE);
+        Pawn whitePawnNotFirstMove = new Pawn(pieceInfo);
+        whitePawnNotFirstMove = whitePawnNotFirstMove.move(currentPosition, false, false, false);
         Pawn movedPawn = whitePawnNotFirstMove.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedPawn.getPosition();

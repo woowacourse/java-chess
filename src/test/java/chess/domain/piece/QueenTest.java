@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.QueenMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class QueenTest {
     @MethodSource("queenMoveTestParameters")
     void queenMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Queen queen = new Queen(pieceInfo, new QueenMoveStrategy());
+        Queen queen = new Queen(pieceInfo);
         Queen movedQueen = queen.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedQueen.getPosition();

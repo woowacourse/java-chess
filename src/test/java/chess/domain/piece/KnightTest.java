@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.KnightMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class KnightTest {
     @MethodSource("knightMoveTestParameters")
     void knightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Knight knight = new Knight(pieceInfo, new KnightMoveStrategy());
+        Knight knight = new Knight(pieceInfo);
         Knight movedKnight = knight.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedKnight.getPosition();

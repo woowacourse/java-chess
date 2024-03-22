@@ -2,12 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.PieceInfo;
 import chess.domain.Position;
+import chess.domain.strategy.KnightMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 
 public class Knight extends ChessPiece {
 
-    public Knight(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Knight(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
+    }
+
+    public Knight(PieceInfo pieceInfo) {
+        this(pieceInfo, new KnightMoveStrategy());
     }
 
     @Override

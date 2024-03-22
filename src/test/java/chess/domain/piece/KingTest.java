@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
-import chess.domain.strategy.KingMoveStrategy;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class KingTest {
     @MethodSource("kingCanMoveTestParameters")
     void kingMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        King king = new King(pieceInfo, new KingMoveStrategy());
+        King king = new King(pieceInfo);
         King movedKing = king.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedKing.getPosition();
