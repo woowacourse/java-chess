@@ -107,8 +107,9 @@ public class Board {
     private List<SquareState> createPathState(Location current, List<Direction> directions) {
         Piece movingPiece = findPieceAt(current);
         List<SquareState> squareStates = new ArrayList<>();
+        Location check = current;
         for (Direction direction : directions) {
-            current = current.move(direction);
+            check = check.move(direction);
             squareStates.add(findSquareStates(movingPiece, current));
         }
         return squareStates;
