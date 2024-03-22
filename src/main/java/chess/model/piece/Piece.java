@@ -14,11 +14,11 @@ public abstract class Piece {
     public abstract String getText();
     public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
-    protected boolean isSameSide(Piece other) {
+    protected final boolean isSameSide(Piece other) {
         return this.side == other.side;
     }
 
-    protected void checkValidTargetPiece(Piece other) {
+    protected final void checkValidTargetPiece(Piece other) {
         if (other != null && isSameSide(other)) {
             throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
