@@ -8,8 +8,6 @@ public enum GameCommand {
     END("end", 1),
     MOVE("move", 3);
 
-    private static final int COMMAND_INDEX = 0;
-
     private final String command;
     private final int argsCount;
 
@@ -18,19 +16,21 @@ public enum GameCommand {
         this.argsCount = argsCount;
     }
 
-    public static GameCommand from(List<String> inputCommand) {
+    public static GameCommand from(CommandCondition commandCondition) {
+        String command = commandCondition.command();
+        List<String> args = commandCondition.args();
+
         return Arrays.stream(values())
-                .filter(gameCommand -> isSameCommand(inputCommand, gameCommand) && isSameArgsCount(inputCommand,
-                        gameCommand))
+                .filter(gameCommand -> gameCommand.isSameCommand(command) && gameCommand.isSameArgsCount(args))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임 명령어입니다."));
     }
 
-    private static boolean isSameCommand(List<String> inputCommand, GameCommand gameCommand) {
-        return gameCommand.command.equals(inputCommand.get(COMMAND_INDEX));
+    private boolean isSameCommand(String command) {
+        return this.command.equals(command);
     }
 
-    private static boolean isSameArgsCount(List<String> inputCommand, GameCommand gameCommand) {
-        return inputCommand.size() == gameCommand.argsCount;
+    private boolean isSameArgsCount(List<String> args) {
+        return argsCount == args.size();
     }
 }
