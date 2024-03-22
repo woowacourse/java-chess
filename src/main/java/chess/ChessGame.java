@@ -1,4 +1,4 @@
-package chess.controller;
+package chess;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.Command;
@@ -8,7 +8,7 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public class Controller {
+public class ChessGame {
     public void run() {
         OutputView.printStartMessage();
         Command command = Command.getStartCommand(InputView.readCommand());
