@@ -146,6 +146,18 @@ public class BoardTest {
         assertThat(board.isCheckmate(Team.WHITE)).isFalse();
     }
 
+    @DisplayName("체크된 상태에서 왕만 공격 기물을 공격할 수 있으며, 공격 기물이 보호되고 있을 때 체크메이트이다.")
+    @Test
+    void isCheckmateKingAttackingProtectedAttackPiece() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 7), new Queen(Team.BLACK),
+                Position.of(2, 5), new Knight(Team.BLACK)
+        ));
+
+        assertThat(board.isCheckmate(Team.WHITE)).isTrue();
+    }
+
     @DisplayName("Board에서 위치와 Character를 알 수 있다.")
     @Test
     void mapPositionToCharacter() {
