@@ -63,10 +63,6 @@ public class Position {
         return Math.abs(file.subtract(target.file));
     }
 
-    public int calculateDistance(final Position target) {
-        return Math.max(calculateRankGap(target), calculateFileGap(target));
-    }
-
     public boolean isAtSameRank(final Rank rank) {
         return this.rank.isSame(rank);
     }
@@ -94,5 +90,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public boolean isDistanceAt(final Position target, final int distance) {
+        return calculateRankGap(target) + calculateFileGap(target) == distance;
     }
 }

@@ -2,7 +2,8 @@ package domain.piece.nonpawn;
 
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.pawn.Pawn;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -18,7 +19,7 @@ class BishopTest {
     void 대각선_방향으로_이동할_수_있다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.G, Rank.SEVEN);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatCode(() -> bishop.validate(resource, target, other))
                 .doesNotThrowAnyException();
@@ -28,7 +29,7 @@ class BishopTest {
     void 직선_방향으로_이동하면_예외가_발생한다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.D, Rank.EIGHT);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -39,7 +40,7 @@ class BishopTest {
     void L자_방향으로_이동하면_예외가_발생한다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.F, Rank.THREE);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -50,7 +51,7 @@ class BishopTest {
     void 정의되지_않은_방향으로_이동하면_예외가_발생한다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.A, Rank.TWO);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -61,7 +62,7 @@ class BishopTest {
     void 거리에_상관없이_이동할_수_있다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.H, Rank.EIGHT);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatCode(() -> bishop.validate(resource, target, other))
                 .doesNotThrowAnyException();
@@ -71,7 +72,7 @@ class BishopTest {
     void 이동하지_않으면_예외가_발생한다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.D, Rank.FOUR);
-        Piece other = new Pawn(Color.BLACK);
+        Piece other = new BlackPawn();
 
         assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -82,7 +83,7 @@ class BishopTest {
     void 같은_팀의_말을_잡으면_예외가_발생한다() {
         Position resource = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.E, Rank.FIVE);
-        Piece other = new Pawn(Color.WHITE);
+        Piece other = new WhitePawn();
 
         assertThatThrownBy(() -> bishop.validate(resource, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
