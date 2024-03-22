@@ -24,6 +24,7 @@ public class Pawn extends Piece {
             if (!currentPosition.canMoveNext(direction)) {
                 return;
             }
+
             addForwardMoves(board, direction, currentPosition, movablePositions);
             addDiagonalMoves(board, direction, currentPosition, movablePositions);
         });
@@ -35,12 +36,13 @@ public class Pawn extends Piece {
         if (direction.isDiagonal()) {
             return;
         }
-        int currentRank = position.getRank();
+
         Position nextPosition = position.next(direction);
         Piece firstPiece = board.findPieceByPosition(nextPosition);
+
         if (firstPiece.isEmpty()) {
             movablePositions.add(nextPosition);
-            addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
+            addMultipleForwardMoves(board, direction, movablePositions, position.getRank(), nextPosition);
         }
     }
 
@@ -50,8 +52,10 @@ public class Pawn extends Piece {
         if (!isStartingPosition(direction, currentRank)) {
             return;
         }
+
         Position nextNextPosition = nextPosition.next(direction);
         Piece secondPiece = board.findPieceByPosition(nextNextPosition);
+
         if (secondPiece.isEmpty()) {
             movablePositions.add(nextNextPosition);
         }
@@ -61,11 +65,12 @@ public class Pawn extends Piece {
         if (!direction.isDiagonal()) {
             return;
         }
-        position = position.next(direction);
-        Piece piece = board.findPieceByPosition(position);
+
+        Position nextPosition = position.next(direction);
+        Piece piece = board.findPieceByPosition(nextPosition);
 
         if (!isSameColor(piece) && !piece.isEmpty()) {
-            movablePositions.add(position);
+            movablePositions.add(nextPosition);
         }
     }
 
