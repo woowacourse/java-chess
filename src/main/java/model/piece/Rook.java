@@ -26,9 +26,4 @@ public final class Rook extends Piece {
         }
         return moving.isHorizontal() || moving.isVertical();
     }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

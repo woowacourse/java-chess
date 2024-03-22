@@ -26,9 +26,4 @@ public final class Queen extends Piece {
         }
         return moving.isDiagonal() || moving.isVertical() || moving.isHorizontal();
     }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

@@ -26,9 +26,4 @@ public final class Bishop extends Piece {
         }
         return moving.isDiagonal();
     }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

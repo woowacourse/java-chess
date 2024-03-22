@@ -31,9 +31,4 @@ public final class Knight extends Piece {
         final int dColumn = Math.abs(currentPosition.getColumnIndex() - nextPosition.getColumnIndex());
         return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
     }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }

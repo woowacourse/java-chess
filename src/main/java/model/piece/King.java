@@ -35,9 +35,4 @@ public final class King extends Piece {
 
         return Math.abs(nextRow - currentRow) <= 1 && Math.abs(nextColumn - currentColumn) <= 1;
     }
-
-    @Override
-    public String toString() {
-        return getName();
-    }
 }
