@@ -22,7 +22,7 @@ public class Board {
         Piece piece = pieces.get(source);
         validateTurn(piece, currentTurnColor);
         validateMovable(source, destination, piece);
-        replacePiece(source, destination, piece);
+        replacePiece(source, destination, piece, currentTurnColor);
     }
 
     private void validatePosition(Position source, Position destination) {
@@ -73,10 +73,10 @@ public class Board {
         }
     }
 
-    private void replacePiece(Position source, Position destination, Piece piece) {
+    private void replacePiece(Position source, Position destination, Piece piece, Color currentTurnColor) {
         pieces.remove(source);
         if (piece.isInitPawn()) {
-            pieces.put(destination, new MovedPawn(piece.getColor()));
+            pieces.put(destination, new MovedPawn(currentTurnColor));
             return;
         }
         pieces.put(destination, piece);
