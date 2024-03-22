@@ -20,13 +20,17 @@ public class Board {
     public void move(Position sourcePosition, Position targetPosition, Color color) {
         Piece sourcePiece = findPieceByPosition(sourcePosition);
 
-        validateIsSamePosition(sourcePosition, targetPosition);
-        validateSourceIsEmpty(sourcePiece);
-        validateIsNotMyTurn(color, sourcePiece);
-        validateIsMovablePosition(sourcePosition, targetPosition, sourcePiece);
+        validateMove(sourcePosition, targetPosition, color, sourcePiece);
 
         pieces.put(targetPosition, sourcePiece);
         pieces.remove(sourcePosition);
+    }
+
+    private void validateMove(Position sourcePosition, Position targetPosition, Color color, Piece sourcePiece) {
+        validateIsSamePosition(sourcePosition, targetPosition);
+        validateSourceIsEmpty(sourcePiece);
+        validateIsNotMyTurn(color, sourcePiece);
+        validateIsNotMovablePosition(sourcePosition, targetPosition, sourcePiece);
     }
 
     private void validateIsSamePosition(Position sourcePosition, Position targetPosition) {
@@ -47,7 +51,7 @@ public class Board {
         }
     }
 
-    private void validateIsMovablePosition(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
+    private void validateIsNotMovablePosition(Position sourcePosition, Position targetPosition, Piece sourcePiece) {
         Set<Position> movablePositions = sourcePiece.calculateMovablePositions(sourcePosition, this);
         if (!movablePositions.contains(targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
