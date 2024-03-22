@@ -1,7 +1,6 @@
 package controller;
 
 import domain.game.ChessBoard;
-import domain.game.Square;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -30,7 +29,7 @@ public class ChessController {
         outputView.printCommandMessage();
         ChessCommand command = enterCommand();
         while (command != ChessCommand.END) {
-            outputView.printSquareStatus(chessBoard);
+            outputView.printPositionStatus(chessBoard);
             List<String> input = inputView.enterChessCommand();
             command = ChessCommand.from(input.get(0));
 
@@ -46,7 +45,7 @@ public class ChessController {
     private void executeMoveCommand(final ChessBoard chessBoard, final List<String> input, final ChessCommand command) {
         if (command == ChessCommand.MOVE) {
             validateMoveCommand(input);
-            chessBoard.move(generateSquare(input.get(1)), generateSquare(input.get(2)));
+            chessBoard.move(generatePosition(input.get(1)), generatePosition(input.get(2)));
         }
     }
 
@@ -56,16 +55,16 @@ public class ChessController {
         }
     }
 
-    private Square generateSquare(final String coordinate) {
+    private Position generatePosition(final String coordinate) {
         if (isNotValidCoordinateInput(coordinate)) {
             throw new IllegalArgumentException("이동할 source와 target 정보를 다시 입력해주세요.");
         }
 
         List<String> coordinates = List.of(coordinate.split(""));
-        return new Square(new Position(
+        return new Position(
                 new File(coordinates.get(0).charAt(0)),
                 new Rank(Integer.parseInt(coordinates.get(1)))
-        ));
+        );
     }
 
     private boolean isNotValidCoordinateInput(final String input) {

@@ -1,7 +1,6 @@
 package view;
 
 import domain.game.ChessBoard;
-import domain.game.Square;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Bishop;
@@ -44,24 +43,24 @@ public class OutputView {
         System.out.printf(COMMAND_MESSAGE);
     }
 
-    public void printSquareStatus(final ChessBoard mover) {
+    public void printPositionStatus(final ChessBoard mover) {
         for (int rank = 8; rank >= 1; rank--) {
-            printSquareByFile(mover, rank);
+            printPositionByFile(mover, rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private void printSquareByFile(ChessBoard mover, int row) {
+    private void printPositionByFile(ChessBoard mover, int row) {
         for (int file = 0; file < 8; file++) {
-            Square square = new Square(new Position(new File((char) ('a' + file)), new Rank(row)));
+            Position square = new Position(new Position(new File((char) ('a' + file)), new Rank(row)));
             System.out.print(generateSymbol(mover, square));
         }
     }
 
-    public String generateSymbol(ChessBoard mover, Square square) {
+    public String generateSymbol(ChessBoard mover, Position square) {
         if (mover.hasPiece(square)) {
-            Piece piece = mover.findPieceBySquare(square);
+            Piece piece = mover.findPieceByPosition(square);
             return pieceSymbol.get(piece);
         }
         return ".";
