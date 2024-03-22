@@ -13,6 +13,10 @@ public abstract class Piece {
 
     public abstract boolean canMove(Position source, Position target);
 
+    public boolean canAttack(Position source, Position target) {
+        return canMove(source, target);
+    }
+
     public abstract String display(); // TODO: view 로직 분리
 
     public boolean isBlack() {
