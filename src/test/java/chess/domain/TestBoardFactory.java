@@ -22,7 +22,7 @@ public class TestBoardFactory {
     private void initLine(int x) {
         for (int y = 1; y <= 8; y++) {
             Position position = new Position(x, y);
-            board.put(position, new Blank(position));
+            board.put(position, new Blank());
         }
     }
 

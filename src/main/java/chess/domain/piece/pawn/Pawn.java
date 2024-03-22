@@ -12,27 +12,29 @@ import java.util.Set;
 public abstract class Pawn extends Piece {
     private final Set<Direction> directions;
 
-    protected Pawn(Position position, Color color, Set<Direction> directions) {
-        super(position, color);
+    protected Pawn(Color color, Set<Direction> directions) {
+        super(color);
         this.directions = directions;
     }
 
     @Override
-    public Set<Position> findPathTo(Position destination) {
-        Set<Position> movable = position.findMovablePositions(directions);
+    public Set<Position> findPathTo(Position thisPosition, Position destination) {
+        Set<Position> movable = thisPosition.findMovablePositions(directions);
 
         if (!movable.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.findCourses(position.findDirectionTo(destination), destination);
+        return thisPosition.findCourses(thisPosition.findDirectionTo(destination), destination);
     }
 
-    public abstract boolean isCaptureMove(Position destination);
+    public abstract boolean isCaptureMove(Position thisPosition, Position destination);
 
     @Override
     public boolean isBlank() {
         return false;
     }
+
+    public abstract Piece update();
 
     @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {

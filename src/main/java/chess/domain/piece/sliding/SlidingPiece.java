@@ -12,17 +12,17 @@ import java.util.Set;
 public abstract class SlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    public SlidingPiece(Position position, Color color, Set<Direction> directions) {
-        super(position, color);
+    public SlidingPiece(Color color, Set<Direction> directions) {
+        super(color);
         this.directions = directions;
     }
 
-    public Set<Position> findPathTo(Position destination) {
-        Direction direction = position.findDirectionTo(destination);
+    public Set<Position> findPathTo(Position thisPosition, Position destination) {
+        Direction direction = thisPosition.findDirectionTo(destination);
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.findCourses(direction, destination);
+        return thisPosition.findCourses(direction, destination);
     }
     @Override
     public boolean isBlank() {

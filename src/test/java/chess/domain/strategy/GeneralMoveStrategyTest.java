@@ -33,7 +33,7 @@ class GeneralMoveStrategyTest {
     @DisplayName("퀸은 여덟 방향으로 모두 이동할 수 있다.")
     void queenMove(int x, int y) {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Queen(new Position(4, 4), Color.WHITE)
+                new Position(4, 4), new Queen(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
@@ -47,7 +47,7 @@ class GeneralMoveStrategyTest {
     @DisplayName("비숍은 대각선 네방향으로 모두 이동할 수 있다.")
     void bishopMove(int x, int y) {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Bishop(new Position(4, 4), Color.WHITE)
+                new Position(4, 4), new Bishop(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
@@ -61,7 +61,7 @@ class GeneralMoveStrategyTest {
     @DisplayName("룩은 네방향으로 모두 이동할 수 있다.")
     void rookMove(int x, int y) {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Rook(new Position(4, 4), Color.WHITE)
+                new Position(4, 4), new Rook(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
@@ -75,7 +75,7 @@ class GeneralMoveStrategyTest {
     @DisplayName("나이트 이동")
     void knightMove(int x, int y) {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Knight(new Position(4, 4), Color.WHITE)
+                new Position(4, 4), new Knight(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
@@ -89,7 +89,7 @@ class GeneralMoveStrategyTest {
     @DisplayName("킹은 여덟 방향으로 한 칸씩만 이동할 수 있다.")
     void kingMove(int x, int y) {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new King(new Position(4, 4), Color.WHITE)
+                new Position(4, 4), new King(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
@@ -102,8 +102,8 @@ class GeneralMoveStrategyTest {
     @DisplayName("이동 경로에 다른 말이 있으면 이동할 수 없다.")
     void movePieceWhenHasOtherPiece() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Queen(new Position(4, 4), Color.WHITE),
-                new Position(4, 3), new Queen(new Position(4, 3), Color.BLACK))
+                new Position(4, 4), new Queen(Color.WHITE),
+                new Position(4, 3), new Queen(Color.BLACK))
         );
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
@@ -116,8 +116,8 @@ class GeneralMoveStrategyTest {
     @DisplayName("도착지에 같은색 말이 있으면 이동할 수 없다.")
     void movePieceWhenHasSameColorPieceInDestination() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Queen(new Position(4, 4), Color.WHITE),
-                new Position(4, 1), new King(new Position(4, 1), Color.WHITE))
+                new Position(4, 4), new Queen(Color.WHITE),
+                new Position(4, 1), new King(Color.WHITE))
         );
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
@@ -130,8 +130,8 @@ class GeneralMoveStrategyTest {
     @DisplayName("도착지에 다른색 말이 있으면 상대 말을 잡고 해당 위치로 이동할 수 있다.")
     void movePieceWhenHasOtherColorPieceInDestination() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new Queen(new Position(4, 4), Color.WHITE),
-                new Position(4, 1), new King(new Position(4, 1), Color.BLACK))
+                new Position(4, 4), new Queen(Color.WHITE),
+                new Position(4, 1), new King(Color.BLACK))
         );
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
         generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 1));
@@ -148,9 +148,9 @@ class GeneralMoveStrategyTest {
     @DisplayName("비숍 이동 테스트")
     Collection<DynamicTest> moveBishop() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(1, 1), new Bishop(new Position(1, 1), Color.WHITE),
-                new Position(4, 4), new BlackPawn(new Position(4, 4)),
-                new Position(1, 7), new Bishop(new Position(1, 7), Color.BLACK)
+                new Position(1, 1), new Bishop(Color.WHITE),
+                new Position(4, 4), new BlackPawn(),
+                new Position(1, 7), new Bishop(Color.BLACK)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
@@ -179,12 +179,12 @@ class GeneralMoveStrategyTest {
     @DisplayName("룩 이동 테스트")
     Collection<DynamicTest> moveRook() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(1, 1), new Rook(new Position(1, 1), Color.WHITE),
-                new Position(1, 8), new BlackPawn(new Position(1, 8)),
-                new Position(8, 8), new BlackPawn(new Position(8, 8)),
-                new Position(8, 1), new BlackPawn(new Position(8, 1)),
-                new Position(2, 1), new BlackPawn(new Position(2, 1))
-        ));
+                new Position(1, 1), new Rook(Color.WHITE),
+                new Position(1, 8), new BlackPawn(),
+                new Position(8, 8), new BlackPawn(),
+                new Position(8, 1), new BlackPawn(),
+                new Position(2, 1), new BlackPawn())
+        );
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
@@ -231,16 +231,16 @@ class GeneralMoveStrategyTest {
     @DisplayName("퀸 이동 테스트")
     Collection<DynamicTest> moveQueen() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(5, 2), new Queen(new Position(5, 2), Color.WHITE),
-                new Position(7, 4), new BlackPawn(new Position(7, 4)),
-                new Position(7, 5), new BlackPawn(new Position(7, 5)),
-                new Position(6, 6), new BlackPawn(new Position(6, 6)),
-                new Position(5, 6), new BlackPawn(new Position(5, 6)),
-                new Position(4, 5), new BlackPawn(new Position(4, 5)),
-                new Position(4, 4), new BlackPawn(new Position(4, 4)),
-                new Position(5, 3), new BlackPawn(new Position(5, 3)),
-                new Position(7, 3), new BlackPawn(new Position(7, 3))
-        ));
+                new Position(5, 2), new Queen(Color.WHITE),
+                new Position(7, 4), new BlackPawn(),
+                new Position(7, 5), new BlackPawn(),
+                new Position(6, 6), new BlackPawn(),
+                new Position(5, 6), new BlackPawn(),
+                new Position(4, 5), new BlackPawn(),
+                new Position(4, 4), new BlackPawn(),
+                new Position(5, 3), new BlackPawn(),
+                new Position(7, 3), new BlackPawn()
+                ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
@@ -324,16 +324,16 @@ class GeneralMoveStrategyTest {
     @DisplayName("나이트 이동 테스트")
     Collection<DynamicTest> moveKnight() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(5, 2), new Knight(new Position(5, 2), Color.WHITE),
-                new Position(7, 3), new BlackPawn(new Position(7, 3)),
-                new Position(8, 5), new BlackPawn(new Position(8, 5)),
-                new Position(7, 7), new BlackPawn(new Position(7, 7)),
-                new Position(5, 8), new BlackPawn(new Position(5, 8)),
-                new Position(4, 8), new Knight(new Position(4, 8), Color.WHITE),
-                new Position(2, 7), new BlackPawn(new Position(2, 7)),
-                new Position(1, 5), new BlackPawn(new Position(1, 5)),
-                new Position(2, 3), new BlackPawn(new Position(2, 3)),
-                new Position(4, 2), new BlackPawn(new Position(4, 2))
+                new Position(5, 2), new Knight(Color.WHITE),
+                new Position(7, 3), new BlackPawn(),
+                new Position(8, 5), new BlackPawn(),
+                new Position(7, 7), new BlackPawn(),
+                new Position(5, 8), new BlackPawn(),
+                new Position(4, 8), new Knight(Color.WHITE),
+                new Position(1, 5), new BlackPawn(),
+                new Position(2, 7), new BlackPawn(),
+                new Position(2, 3), new BlackPawn(),
+                new Position(4, 2), new BlackPawn()
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
@@ -417,14 +417,14 @@ class GeneralMoveStrategyTest {
     @DisplayName("킹 이동 테스트")
     Collection<DynamicTest> moveKing() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 4), new King(new Position(4, 4), Color.WHITE),
-                new Position(5, 3), new BlackPawn(new Position(5, 3)),
-                new Position(6, 4), new BlackPawn(new Position(6, 4)),
-                new Position(6, 5), new BlackPawn(new Position(6, 5)),
-                new Position(5, 6), new BlackPawn(new Position(5, 6)),
-                new Position(4, 6), new BlackPawn(new Position(4, 6)),
-                new Position(3, 5), new BlackPawn(new Position(3, 5)),
-                new Position(3, 4), new BlackPawn(new Position(3, 4))
+                new Position(4, 4), new King(Color.WHITE),
+                new Position(5, 3), new BlackPawn(),
+                new Position(6, 4), new BlackPawn(),
+                new Position(6, 5), new BlackPawn(),
+                new Position(5, 6), new BlackPawn(),
+                new Position(4, 6), new BlackPawn(),
+                new Position(3, 5), new BlackPawn(),
+                new Position(3, 4), new BlackPawn()
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 

@@ -12,13 +12,14 @@ import java.util.Set;
 public abstract class NonSlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    public NonSlidingPiece(Position position, Color color, Set<Direction> directions) {
-        super(position, color);
+    public NonSlidingPiece(Color color, Set<Direction> directions) {
+        super(color);
         this.directions = directions;
     }
 
-    public Set<Position> findPathTo(Position destination) {
-        Set<Position> movable = position.findMovablePositions(directions);
+    @Override
+    public Set<Position> findPathTo(Position thisPosition, Position destination) {
+        Set<Position> movable = thisPosition.findMovablePositions(directions);
 
         if (!movable.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");

@@ -14,8 +14,8 @@ class QueenTest {
     @Test
     @DisplayName("오른쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsRight() {
-        Queen queen = new Queen(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = queen.findPathTo(new Position(4, 1));
+        Queen queen = new Queen(Color.WHITE);
+        Set<Position> movablePositions = queen.findPathTo(new Position(1, 1), new Position(4, 1));
         assertThat(movablePositions)
                 .containsExactlyInAnyOrder(new Position(2, 1), new Position(3, 1));
     }
@@ -23,8 +23,8 @@ class QueenTest {
     @Test
     @DisplayName("위쪽으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsUp() {
-        Queen queen = new Queen(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = queen.findPathTo(new Position(1, 4));
+        Queen queen = new Queen(Color.WHITE);
+        Set<Position> movablePositions = queen.findPathTo(new Position(1, 1), new Position(1, 4));
         assertThat(movablePositions)
                 .containsExactlyInAnyOrder(new Position(1, 2), new Position(1, 3));
     }
@@ -32,8 +32,8 @@ class QueenTest {
     @Test
     @DisplayName("대각선으로 이동시 중간 경로를 찾는다.")
     void findMovablePositionsDiagonal() {
-        Queen queen = new Queen(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = queen.findPathTo(new Position(4, 4));
+        Queen queen = new Queen(Color.WHITE);
+        Set<Position> movablePositions = queen.findPathTo(new Position(1, 1), new Position(4, 4));
         assertThat(movablePositions)
                 .containsExactlyInAnyOrder(new Position(2, 2), new Position(3, 3));
     }
@@ -41,9 +41,9 @@ class QueenTest {
     @Test
     @DisplayName("여덟 방향이 아닌 방향으로 이동시 예외가 발생한다.")
     void findPathToInvalidDestination() {
-        Queen queen = new Queen(new Position(1, 1), Color.WHITE);
+        Queen queen = new Queen(Color.WHITE);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> queen.findPathTo(new Position(2, 4)))
+                .isThrownBy(() -> queen.findPathTo(new Position(1, 1), new Position(2, 4)))
                 .withMessage("이동할 수 없습니다.");
     }
 }

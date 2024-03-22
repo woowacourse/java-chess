@@ -4,6 +4,7 @@ import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
+import chess.domain.piece.blank.Blank;
 import chess.domain.piece.pawn.Pawn;
 import java.util.Map;
 import java.util.Set;
@@ -19,24 +20,29 @@ public class PawnMoveStrategy extends MoveStrategy {
         Pawn currentPiece = (Pawn) board.get(from);
         checkTurnOf(currentPiece, turnColor);
         Piece destinationPiece = board.get(to);
-        validateMovable(to, currentPiece);
-        validateWithCapture(to, currentPiece, destinationPiece);
+        validateMovable(from, to, currentPiece);
+        validateWithCapture(from, to, currentPiece, destinationPiece);
         updateBoard(from, to, currentPiece);
     }
 
-    private void validateWithCapture(Position to, Pawn currentPiece, Piece destinationPiece) {
-        if (!currentPiece.isCaptureMove(to) && destinationPiece.pieceType() != PieceType.BLANK) {
+    private void validateWithCapture(Position from, Position to, Pawn currentPiece, Piece destinationPiece) {
+        if (!currentPiece.isCaptureMove(from, to) && destinationPiece.pieceType() != PieceType.BLANK) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
-        if (currentPiece.isCaptureMove(to) && !currentPiece.isOppositeColor(destinationPiece)) {
+        if (currentPiece.isCaptureMove(from, to) && !currentPiece.isOppositeColor(destinationPiece)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
     }
 
-    private void validateMovable(Position to, Pawn currentPiece) {
-        Set<Position> pathToDestination = currentPiece.findPathTo(to);
+    private void validateMovable(Position from, Position to, Pawn currentPiece) {
+        Set<Position> pathToDestination = currentPiece.findPathTo(from, to);
         if (isNotAllBlankPath(pathToDestination)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
+    }
+
+    public void updateBoard(Position from, Position to, Pawn currentPiece) {
+        board.replace(to, currentPiece.update());
+        board.replace(from, new Blank());
     }
 }

@@ -36,11 +36,6 @@ public abstract class MoveStrategy {
                 .allMatch(Piece::isBlank);
     }
 
-    protected void updateBoard(Position from, Position to, Piece currentPiece) {
-        board.replace(to, currentPiece.update(to));
-        board.replace(from, new Blank(from));
-    }
-
     public Map<Position, PieceType> collectBoard() {
         return board.entrySet().stream()
                 .collect(Collectors.toMap(

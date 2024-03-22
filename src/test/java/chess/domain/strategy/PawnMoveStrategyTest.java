@@ -67,10 +67,10 @@ class PawnMoveStrategyTest {
     @DisplayName("흰색폰 이동 테스트")
     Collection<DynamicTest> moveWhitePawn() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 2), new WhiteFirstPawn(new Position(4, 2)),
-                new Position(3, 6), new BlackPawn(new Position(3, 6)),
-                new Position(4, 7), new BlackPawn(new Position(4, 7)),
-                new Position(4, 8), new BlackPawn(new Position(4, 8))
+                new Position(4, 2), new WhiteFirstPawn(),
+                new Position(3, 6), new BlackPawn(),
+                new Position(4, 7), new BlackPawn(),
+                new Position(4, 8), new BlackPawn()
         ));
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(board);
 
@@ -142,10 +142,10 @@ class PawnMoveStrategyTest {
     @DisplayName("검은색폰 이동 테스트")
     Collection<DynamicTest> moveBlackPawn() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
-                new Position(4, 7), new BlackFirstPawn(new Position(4, 7)),
-                new Position(3, 3), new WhitePawn(new Position(3, 3)),
-                new Position(4, 2), new WhitePawn(new Position(4, 2)),
-                new Position(4, 1), new WhitePawn(new Position(4, 1))
+                new Position(4, 7), new BlackFirstPawn(),
+                new Position(3, 3), new WhitePawn(),
+                new Position(4, 2), new WhitePawn(),
+                new Position(4, 1), new WhitePawn()
         ));
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(board);
 

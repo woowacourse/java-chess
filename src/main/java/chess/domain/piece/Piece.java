@@ -6,15 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Piece {
-    protected final Position position;
     protected final Color color;
 
-    protected Piece(Position position, Color color) {
-        this.position = position;
+    protected Piece(Color color) {
         this.color = color;
     }
 
-    public abstract Set<Position> findPathTo(Position destination);
+    public abstract Set<Position> findPathTo(Position thisPosition, Position destination);
+
 
     public boolean isSameColor(Color otherColor) {
         return color == otherColor;
@@ -29,8 +28,6 @@ public abstract class Piece {
         }
         return false;
     }
-
-    public abstract Piece update(Position destination);
 
     public abstract MoveStrategy strategy(Map<Position, Piece> board);
 
