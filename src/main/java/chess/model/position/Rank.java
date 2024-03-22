@@ -39,13 +39,6 @@ public enum Rank {
         return new Difference(this.coordinate - other.coordinate);
     }
 
-    public boolean isPawnInitialRank(Side side) {
-        if (side.isWhite()) {
-            return TWO.equals(this);
-        }
-        return SEVEN.equals(this);
-    }
-
     public static int length() {
         return values().length;
     }

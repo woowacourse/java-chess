@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
+import chess.model.position.Rank;
 
 import java.util.List;
 
@@ -39,11 +40,18 @@ public class Pawn extends Piece {
     }
 
     private boolean canCrossMove(ChessPosition source, Movement movement) {
-        if (source.isPawnInitialPosition(side)) {
+        if (isPawnInitialPosition(source)) {
             return canMoveForwardWith(movement, DISPLACEMENT) ||
                     canMoveForwardWith(movement, INITIAL_SPECIAL_DISPLACEMENT);
         }
         return canMoveForwardWith(movement, DISPLACEMENT);
+    }
+
+    private boolean isPawnInitialPosition(ChessPosition source) {
+        if (side.isWhite()) {
+            return source.hasRank(Rank.TWO);
+        }
+        return source.hasRank(Rank.SEVEN);
     }
 
     private boolean canMoveForwardWith(Movement movement, int displacement) {

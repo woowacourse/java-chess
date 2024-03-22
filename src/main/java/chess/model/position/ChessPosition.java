@@ -19,8 +19,8 @@ public class ChessPosition {
         return new Movement(fileDifference, rankDifference);
     }
 
-    public boolean isPawnInitialPosition(Side side) {
-        return rank.isPawnInitialRank(side);
+    public boolean hasRank(Rank rank) {
+        return this.rank == rank;
     }
 
     public File calculateNextFile(int offset) {
