@@ -8,7 +8,7 @@ public class Bishop extends MultiStepPiece {
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
 
     private Bishop(Color color) {
-        super(color, PieceType.BISHOP, Direction.ofDiagonal());
+        super(color, PieceType.BISHOP, Direction.ofDiagonal);
     }
 
     public static Bishop ofBlack() {

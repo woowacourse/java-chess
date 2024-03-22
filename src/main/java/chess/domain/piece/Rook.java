@@ -8,7 +8,7 @@ public class Rook extends MultiStepPiece {
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
 
     private Rook(Color color) {
-        super(color, PieceType.ROOK, Direction.ofStraight());
+        super(color, PieceType.ROOK, Direction.ofStraight);
     }
 
     public static Rook ofBlack() {

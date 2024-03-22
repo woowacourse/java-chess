@@ -8,7 +8,7 @@ public class Knight extends SingleStepPiece {
     private static final Knight WHITE_KNIGHT = new Knight(Color.WHITE);
 
     private Knight(Color color) {
-        super(color, PieceType.KNIGHT, Direction.ofKnight());
+        super(color, PieceType.KNIGHT, Direction.ofKnight);
     }
 
     public static Knight ofBlack() {

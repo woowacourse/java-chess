@@ -8,7 +8,7 @@ public class King extends SingleStepPiece {
     private static final King WHITE_KING = new King(Color.WHITE);
 
     private King(Color color) {
-        super(color, PieceType.KING, Direction.ofAll());
+        super(color, PieceType.KING, Direction.ofAll);
     }
 
     public static King ofBlack() {
