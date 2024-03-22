@@ -14,7 +14,7 @@ public class Empty extends AbstractPiece {
     }
 
     @Override
-    public void validateMovement(Position resource, Position target, Piece other) {
+    public void validateMovement(Position source, Position target, Piece other) {
         throw new UnsupportedOperationException("Empty는 움직일 수 없습니다."); // todo 메시지 수정
     }
 

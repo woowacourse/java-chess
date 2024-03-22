@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 class PositionTest {
     @Test
     void UP_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.F, Rank.EIGHT);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.F, Rank.SIX),
@@ -22,39 +22,39 @@ class PositionTest {
 
     @Test
     void UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.H, Rank.SEVEN);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(1);
         assertThat(positions).containsExactly(new Position(File.G, Rank.SIX));
     }
 
     @Test
     void RIGHT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.G, Rank.FIVE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.H, Rank.THREE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(1);
         assertThat(positions).containsExactly(new Position(File.G, Rank.FOUR));
     }
 
     @Test
     void DOWN_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.F, Rank.TWO);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.F, Rank.FOUR),
@@ -64,10 +64,10 @@ class PositionTest {
 
     @Test
     void DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.C, Rank.TWO);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.E, Rank.FOUR),
@@ -77,10 +77,10 @@ class PositionTest {
 
     @Test
     void LEFT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.F, Rank.FIVE);
+        Position source = new Position(File.F, Rank.FIVE);
         Position target = new Position(File.C, Rank.FIVE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(2);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.E, Rank.FIVE),
@@ -90,10 +90,10 @@ class PositionTest {
 
     @Test
     void UP_LEFT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.A, Rank.EIGHT);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(3);
         assertThat(positions).containsExactlyInAnyOrderElementsOf(List.of(
                 new Position(File.D, Rank.FIVE),
@@ -104,82 +104,82 @@ class PositionTest {
 
     @Test
     void UP_UP_LEFT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.D, Rank.SIX);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void UP_UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.F, Rank.SIX);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void RIGHT_RIGHT_UP_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.G, Rank.FIVE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void RIGHT_RIGHT_DOWN_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.G, Rank.THREE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void DOWN_DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.F, Rank.TWO);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void DOWN_DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.D, Rank.TWO);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void LEFT_LEFT_DOWN_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.C, Rank.THREE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void LEFT_LEFT_UP_방향으로_이동하는_경로를_반환한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.C, Rank.FIVE);
 
-        List<Position> positions = resource.route(target);
+        List<Position> positions = source.route(target);
         assertThat(positions).hasSize(0);
     }
 
     @Test
     void LEFT_LEFT_LEFT_UP_방향으로_이동하면_예외가_발생한다() {
-        Position resource = new Position(File.E, Rank.FOUR);
+        Position source = new Position(File.E, Rank.FOUR);
         Position target = new Position(File.B, Rank.FIVE);
 
-        assertThatThrownBy(() -> resource.route(target))
+        assertThatThrownBy(() -> source.route(target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 방향입니다.");
     }

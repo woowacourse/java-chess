@@ -8,12 +8,12 @@ public class Knight extends AbstractPiece {
     }
 
     @Override
-    public void validateMovement(Position resource, Position target, Piece other) {
+    public void validateMovement(Position source, Position target, Piece other) {
         if (this.getColor() == other.getColor()) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
-        int rankGap = resource.calculateRankGap(target);
-        int fileGap = resource.calculateFileGap(target);
+        int rankGap = source.calculateRankGap(target);
+        int fileGap = source.calculateFileGap(target);
         if (rankGap * fileGap == 2) {
             return;
         }

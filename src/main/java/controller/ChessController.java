@@ -33,17 +33,17 @@ public class ChessController {
 
     private void actMoveCommand(ChessBoard board, String[] commands, Command command) {
         if (command.isMove()) {
-            Position resource = generatePosition(commands[1]);
+            Position source = generatePosition(commands[1]);
             Position target = generatePosition(commands[2]);
-            board.move(resource, target);
+            board.move(source, target);
         }
     }
 
     private Position generatePosition(String position) {
-        String resourceFile = position.substring(0, 1);
-        String resourceRank = position.substring(1, 2);
-        File file = File.fromName(resourceFile);
-        Rank rank = Rank.fromNumber(Integer.parseInt(resourceRank));
+        String sourceFile = position.substring(0, 1);
+        String sourceRank = position.substring(1, 2);
+        File file = File.fromName(sourceFile);
+        Rank rank = Rank.fromNumber(Integer.parseInt(sourceRank));
         return new Position(file, rank);
     }
 }

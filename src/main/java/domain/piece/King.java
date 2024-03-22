@@ -10,9 +10,9 @@ public class King extends AbstractPiece {
     }
 
     @Override
-    public void validateMovement(Position resource, Position target, Piece other) {
-        int rankGap = resource.calculateRankGap(target);
-        int fileGap = resource.calculateFileGap(target);
+    public void validateMovement(Position source, Position target, Piece other) {
+        int rankGap = source.calculateRankGap(target);
+        int fileGap = source.calculateFileGap(target);
         if (Math.max(rankGap, fileGap) != DISTANCE_LIMIT_COUNT) {
             throw new IllegalArgumentException(String.format("%s은 한 번에 %d칸만 이동할 수 있습니다.",
                     this.getClass().getSimpleName(), DISTANCE_LIMIT_COUNT));

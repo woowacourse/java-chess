@@ -15,15 +15,15 @@ public class ChessBoard {
         this.board = new HashMap<>(board);
     }
 
-    public void move(Position resource, Position target) {
-        List<Position> positions = resource.route(target);
+    public void move(Position source, Position target) {
+        List<Position> positions = source.route(target);
         if (positions.stream().anyMatch(board::containsKey)) {
             throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
         }
-        Piece resourcePiece = findByPosition(resource);
-        resourcePiece.validateMovement(resource, target, findByPosition(target));
-        board.remove(resource);
-        board.put(target, resourcePiece);
+        Piece sourcePiece = findByPosition(source);
+        sourcePiece.validateMovement(source, target, findByPosition(target)); // todo 위로 이동
+        board.remove(source);
+        board.put(target, sourcePiece);
     }
 
     private Piece findByPosition(Position position) {

@@ -17,44 +17,44 @@ import org.junit.jupiter.api.Test;
 class ChessBoardTest {
     @Test
     void 기물을_움직일_때_중간에_다른_기물이_있으면_예외가_발생한다() {
-        Position resource = new Position(File.F, Rank.FOUR);
+        Position source = new Position(File.F, Rank.FOUR);
         Position target = new Position(File.F, Rank.EIGHT);
-        Map<Position, Piece> pieceMap = Map.of(resource, new Queen(Color.WHITE),
+        Map<Position, Piece> pieceMap = Map.of(source, new Queen(Color.WHITE),
                 new Position(File.F, Rank.FIVE), new Pawn(Color.BLACK));
         ChessBoard board = new ChessBoard(pieceMap);
 
-        assertThatThrownBy(() -> board.move(resource, target))
+        assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중간에 말이 있어서 이동할 수 없습니다.");
     }
 
     @Test
     void 기물을_움직일_때_중간에_다른_기물이_없으면_이동한다() {
-        Position resource = new Position(File.F, Rank.FOUR);
+        Position source = new Position(File.F, Rank.FOUR);
         Piece piece = new Queen(Color.WHITE);
         Position target = new Position(File.F, Rank.EIGHT);
-        Map<Position, Piece> pieceMap = Map.of(resource, piece);
+        Map<Position, Piece> pieceMap = Map.of(source, piece);
         ChessBoard board = new ChessBoard(pieceMap);
 
-        board.move(resource, target);
+        board.move(source, target);
         assertThat(board).extracting("board")
                 .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
                 .containsEntry(target, piece)
-                .doesNotContainKey(resource);
+                .doesNotContainKey(source);
     }
 
     @Test
     void 기물을_잡는다() {
-        Position resource = new Position(File.F, Rank.FOUR);
+        Position source = new Position(File.F, Rank.FOUR);
         Piece piece = new Pawn(Color.WHITE);
         Position target = new Position(File.G, Rank.FIVE);
-        Map<Position, Piece> pieceMap = Map.of(resource, piece, target, new Pawn(Color.BLACK));
+        Map<Position, Piece> pieceMap = Map.of(source, piece, target, new Pawn(Color.BLACK));
         ChessBoard board = new ChessBoard(pieceMap);
 
-        board.move(resource, target);
+        board.move(source, target);
         assertThat(board).extracting("board")
                 .asInstanceOf(InstanceOfAssertFactories.map(Position.class, Piece.class))
                 .containsEntry(target, piece)
-                .doesNotContainKey(resource);
+                .doesNotContainKey(source);
     }
 }
