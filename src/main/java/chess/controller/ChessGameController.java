@@ -23,46 +23,59 @@ public class ChessGameController {
 
     public void run() {
         outputView.printWelcomeMessage();
-        waitStartCommand();
-    }
-
-    private void waitStartCommand() {
-        String command = inputView.readCommand().trim();
-        if (command.equals("start")) {
-            final ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
-            outputView.printBoard(chessGame.collectBoard());
-            startChessGame(chessGame);
-            return;
+        while (isNotStartCommand()) {
+            outputView.printGuidanceForStart();
         }
-        outputView.printGuidanceForStart();
-        waitStartCommand();
+        startChessGame();
     }
 
-    private void startChessGame(ChessGame chessGame) {
+    private boolean isNotStartCommand() {
+        String command = inputView.readCommand().trim();
+        return !command.equals("start");
+    }
+
+    private void startChessGame() {
+        ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
+        outputView.printBoard(chessGame.collectBoard());
+
+        boolean canContinue = true;
+        while (canContinue) {
+            String command = readGameCommand();
+            tryOneRound(chessGame, command);
+            canContinue = canContinue(command);
+        }
+    }
+
+    private String readGameCommand() {
+        String command = inputView.readCommand().trim();
         try {
-            doOneRound(chessGame);
+            validateIllegalGameCommand(command);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
-        startChessGame(chessGame);
+        return command;
     }
 
-    private void doOneRound(ChessGame chessGame) {
-        String command = inputView.readCommand().trim();
-        if (command.equals("end")) {
-            System.exit(0);
+    private void validateIllegalGameCommand(String command) {
+        if (!command.startsWith("move") && !command.equals("end")) {
+            throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
+    }
+
+    private void tryOneRound(ChessGame chessGame, String command) {
         if (command.startsWith("move")) {
             movePiece(chessGame, command);
-            return;
         }
-        throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
     }
 
     private void movePiece(ChessGame chessGame, String command) {
-        List<Position> positions = readPositions(command);
-        chessGame.move(positions.get(0), positions.get(1));
-        outputView.printBoard(chessGame.collectBoard());
+        try {
+            List<Position> positions = readPositions(command);
+            chessGame.move(positions.get(0), positions.get(1));
+            outputView.printBoard(chessGame.collectBoard());
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private List<Position> readPositions(String command) {
@@ -86,5 +99,9 @@ public class ChessGameController {
             return List.of(matcher.group(1).split("\\s+"));
         }
         throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
+    }
+
+    private boolean canContinue(String command) {
+        return !command.equals("end");
     }
 }
