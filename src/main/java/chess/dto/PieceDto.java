@@ -12,7 +12,7 @@ public class PieceDto {
         this.isBlack = isBlack;
     }
 
-    public static PieceDto from(Piece piece) {
+    static PieceDto from(Piece piece) {
         PieceType type = PieceType.from(piece);
         boolean isBlackTeam = piece.isBlackTeam();
 

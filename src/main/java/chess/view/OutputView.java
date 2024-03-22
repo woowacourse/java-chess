@@ -3,10 +3,12 @@ package chess.view;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.dto.BoardDto;
 import chess.dto.PieceDto;
 import chess.dto.PieceType;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class OutputView {
 
@@ -28,31 +30,27 @@ public class OutputView {
                 > 게임 이동 : move source위치 target위치 - 예. move b2 b3""");
     }
 
-    public void printBoard(Map<Position, PieceDto> board) {
+    public void printBoard(BoardDto boardDto) {
         for (Rank rank : RANK_ORDER) {
-            printBoardOneLine(board, rank);
+            printBoardOneLine(boardDto, rank);
         }
         System.out.println();
     }
 
-    private void printBoardOneLine(Map<Position, PieceDto> board, Rank rank) {
+    private void printBoardOneLine(BoardDto boardDto, Rank rank) {
         for (File file : FILE_ORDER) {
-            PieceDto piece = board.get(new Position(file, rank));
-            printPiece(piece);
+            Optional<PieceDto> piece = boardDto.find(new Position(file, rank));
+            piece.ifPresentOrElse(this::printPiece, this::printEmptySpace);
         }
         System.out.println();
     }
 
-    private void printPiece(PieceDto piece) {
-        if (piece == null) {
-            System.out.print(EMPTY_SPACE);
+    private void printPiece(PieceDto pieceDto) {
+        if (pieceDto.isBlack()) {
+            printBlackPiece(pieceDto.type());
             return;
         }
-        if (piece.isBlack()) {
-            printBlackPiece(piece.type());
-            return;
-        }
-        printWhitePiece(piece.type());
+        printWhitePiece(pieceDto.type());
     }
 
     private void printBlackPiece(PieceType type) {
@@ -63,6 +61,10 @@ public class OutputView {
     private void printWhitePiece(PieceType type) {
         String display = PIECE_DISPLAY.get(type);
         System.out.print(display.toLowerCase());
+    }
+
+    private void printEmptySpace() {
+        System.out.print(EMPTY_SPACE);
     }
 
     public void printExceptionMessage(Exception exception) {
