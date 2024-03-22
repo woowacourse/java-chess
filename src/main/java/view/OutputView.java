@@ -1,7 +1,9 @@
 package view;
 
+import constant.ErrorCode;
 import dto.GameBoardDto;
 import model.Camp;
+import view.message.ErrorCodeMessage;
 
 public class OutputView {
 
@@ -18,8 +20,8 @@ public class OutputView {
         }
     }
 
-    public void printException(final Exception exception) {
-        System.out.printf("[ERROR] %s%n", exception.getMessage());
+    public void printException(final ErrorCode errorCode) {
+        System.out.printf("[ERROR] %s%n", ErrorCodeMessage.from(errorCode).getMessage());
     }
 
     public void printCurrentCamp(final Camp camp) {

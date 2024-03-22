@@ -37,7 +37,7 @@ public class ChessController {
         try {
             return Initialization.gameSetting(getCommand());
         } catch (CustomException exception) {
-            outputView.printException(exception);
+            outputView.printException(exception.getErrorCode());
             return initGame();
         }
     }
@@ -46,7 +46,7 @@ public class ChessController {
         try {
             return gameStatus.play(getCommand(), gameBoard);
         } catch (CustomException exception) {
-            outputView.printException(exception);
+            outputView.printException(exception.getErrorCode());
             return play(gameStatus, gameBoard);
         }
     }
@@ -68,7 +68,7 @@ public class ChessController {
         try {
             return readLine();
         } catch (CustomException exception) {
-            outputView.printException(exception);
+            outputView.printException(exception.getErrorCode());
         }
         return Collections.emptyList();
     }

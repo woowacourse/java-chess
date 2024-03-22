@@ -10,7 +10,7 @@ public enum ErrorCode {
     INVALID_MOVEMENT_RULE,
     PIECE_EXIST_IN_ROUTE,
     PIECE_DOES_NOT_EXIST_POSITION,
-    INVALID_CAMP_PIECE, // todo 다른 진영의 말 움직이려 할때 하는 예외 코드 네이밍 고민해보기
+    INVALID_CAMP_PIECE,
     NO_MESSAGE,
     ;
 

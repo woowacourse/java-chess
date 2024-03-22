@@ -1,8 +1,11 @@
 package view.message;
 
 import constant.ErrorCode;
-import exception.NoMessageException;
+import exception.MessageDoesNotExistException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import model.Camp;
 import model.piece.Bishop;
 import model.piece.King;
@@ -26,6 +29,9 @@ public enum PieceType {
     ROOK_BLACK(new Rook(Camp.BLACK), "R"),
     ROOK_WHITE(new Rook(Camp.WHITE), "r");
 
+    private static final Map<Piece, PieceType> SUIT_MESSAGE = Arrays.stream(values())
+            .collect(Collectors.toMap(PieceType::getPiece, Function.identity()));
+
     private final Piece piece;
     private final String value;
 
@@ -35,13 +41,17 @@ public enum PieceType {
     }
 
     public static PieceType from(Piece target) {
-        return Arrays.stream(values())
-                .filter(pieceType -> pieceType.piece.equals(target))
-                .findFirst()
-                .orElseThrow(() -> new NoMessageException(ErrorCode.NO_MESSAGE)); // TODO 해당하는 값이 없음
+        if (SUIT_MESSAGE.containsKey(target)) {
+            return SUIT_MESSAGE.get(target);
+        }
+        throw new MessageDoesNotExistException(ErrorCode.NO_MESSAGE);
     }
 
     public String getValue() {
         return value;
+    }
+
+    private Piece getPiece() {
+        return piece;
     }
 }
