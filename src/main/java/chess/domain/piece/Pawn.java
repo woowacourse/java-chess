@@ -38,11 +38,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findBetweenPositionsWhenAttack(Position oldPosition, Position newPosition) {
-        int rowDifference = oldPosition.calculateRowDifference(newPosition);
-        int columnDifference = oldPosition.calculateColumnDifference(newPosition);
+    public List<Position> findBetweenPositionsWhenAttack(Position sourcePosition, Position targetPosition) {
+        int rowDifference = sourcePosition.calculateRowDifference(targetPosition);
+        int columnDifference = sourcePosition.calculateColumnDifference(targetPosition);
         validateAttackable(rowDifference, columnDifference);
-        return findBetweenPositions(oldPosition, rowDifference, columnDifference);
+        return findBetweenPositions(sourcePosition, rowDifference, columnDifference);
     }
 
     private void validateAttackable(int rowDifference, int columnDifference) {

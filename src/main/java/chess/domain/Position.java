@@ -67,12 +67,12 @@ public class Position {
                 .toList();
     }
 
-    public int calculateRowDifference(Position newPosition) {
-        return newPosition.row - row;
+    public int calculateRowDifference(Position targetPosition) {
+        return targetPosition.row - row;
     }
 
-    public int calculateColumnDifference(Position newPosition) {
-        return newPosition.column - column;
+    public int calculateColumnDifference(Position targetPosition) {
+        return targetPosition.column - column;
     }
 
     @Override

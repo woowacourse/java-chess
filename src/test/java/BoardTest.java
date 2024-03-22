@@ -48,7 +48,7 @@ public class BoardTest {
 
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")
     @Test
-    void invalidOldPositionMovePiece() {
+    void invalidSourcePositionMovePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
         assertThatThrownBy(() -> board.move(Position.of(3, 1), Position.of(2, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -66,7 +66,7 @@ public class BoardTest {
 
     @DisplayName("해당 위치에 아군 기물이 있으면 예외가 발생한다.")
     @Test
-    void newPositionHasTeamPiece() {
+    void targetPositionHasTeamPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
         assertThatThrownBy(() -> board.move(Position.of(1, 1), Position.of(1, 2)))
                 .isInstanceOf(IllegalArgumentException.class)

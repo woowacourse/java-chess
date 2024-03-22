@@ -23,15 +23,15 @@ public class Board {
         }
     }
 
-    public void move(Position oldPosition, Position newPosition) {
-        validatePieceExistsOnPosition(oldPosition);
+    public void move(Position sourcePosition, Position targetPosition) {
+        validatePieceExistsOnPosition(sourcePosition);
 
-        Piece thisPiece = pieces.get(oldPosition);
-        validateSameTeamPieceExistsOnNewPosition(newPosition, thisPiece);
-        validateBlockingPieceExists(thisPiece, oldPosition, newPosition);
+        Piece thisPiece = pieces.get(sourcePosition);
+        validateSameTeamPieceExistsOnTargetPosition(targetPosition, thisPiece);
+        validateBlockingPieceExists(thisPiece, sourcePosition, targetPosition);
 
-        pieces.put(newPosition, thisPiece.move());
-        pieces.remove(oldPosition);
+        pieces.put(targetPosition, thisPiece.move());
+        pieces.remove(sourcePosition);
     }
 
     private void validatePieceExistsOnPosition(Position position) {
@@ -40,14 +40,14 @@ public class Board {
         }
     }
 
-    private void validateSameTeamPieceExistsOnNewPosition(Position newPosition, Piece thisPiece) {
-        if (pieces.containsKey(newPosition) && thisPiece.isSameTeamWith(pieces.get(newPosition))) {
+    private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece thisPiece) {
+        if (pieces.containsKey(targetPosition) && thisPiece.isSameTeamWith(pieces.get(targetPosition))) {
             throw new IllegalArgumentException("해당 위치에 아군 기물이 존재합니다.");
         }
     }
 
-    private void validateBlockingPieceExists(Piece thisPiece, Position oldPosition, Position newPosition) {
-        List<Position> betweenPositions = findBetweenPositions(thisPiece, oldPosition, newPosition);
+    private void validateBlockingPieceExists(Piece thisPiece, Position sourcePosition, Position targetPosition) {
+        List<Position> betweenPositions = findBetweenPositions(thisPiece, sourcePosition, targetPosition);
 
         if (betweenPositions.stream()
                 .anyMatch(pieces::containsKey)) {
@@ -124,11 +124,11 @@ public class Board {
         return false;
     }
 
-    private List<Position> findBetweenPositions(Piece thisPiece, Position oldPosition, Position newPosition) {
-        if (pieces.containsKey(newPosition)) {
-            return thisPiece.findBetweenPositionsWhenAttack(oldPosition, newPosition);
+    private List<Position> findBetweenPositions(Piece thisPiece, Position sourcePosition, Position targetPosition) {
+        if (pieces.containsKey(targetPosition)) {
+            return thisPiece.findBetweenPositionsWhenAttack(sourcePosition, targetPosition);
         }
-        return thisPiece.findBetweenPositions(oldPosition, newPosition);
+        return thisPiece.findBetweenPositions(sourcePosition, targetPosition);
     }
 
     private boolean isNotBlockable(Team attackedTeam, Position position, Position kingPosition) {

@@ -29,11 +29,11 @@ public class InputView {
         return switch (Command.find(commandValue)) {
             case START -> throw new IllegalArgumentException("게임이 시작한 이후, 다시 게임을 시작할 수 없습니다.");
             case END -> new ArrayList<>();
-            case MOVE -> findOldAndNewPositions(inputTokenizer);
+            case MOVE -> findSourceAndTargetPositions(inputTokenizer);
         };
     }
 
-    public static List<Position> findOldAndNewPositions(StringTokenizer inputTokenizer) {
+    public static List<Position> findSourceAndTargetPositions(StringTokenizer inputTokenizer) {
         List<Position> positions = new ArrayList<>();
         if (inputTokenizer.countTokens() == 2) {
             positions.add(PositionConverter.generate(inputTokenizer.nextToken()));
