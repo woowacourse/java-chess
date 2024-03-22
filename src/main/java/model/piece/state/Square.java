@@ -1,14 +1,14 @@
 package model.piece.state;
 
-import java.util.List;
 import model.direction.Direction;
+import model.direction.ShiftPattern;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
 
 public final class Square extends Role {
     public Square() {
-        super(Color.UN_COLORED, List.of());
+        super(Color.UN_COLORED, ShiftPattern.NONE);
     }
 
     @Override

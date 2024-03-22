@@ -1,19 +1,11 @@
 package model.piece.state;
 
-import static model.direction.Direction.NE;
-import static model.direction.Direction.NW;
-import static model.direction.Direction.SE;
-import static model.direction.Direction.SW;
-
-import java.util.List;
-import model.direction.Direction;
+import model.direction.ShiftPattern;
 import model.piece.Color;
 
 public final class Bishop extends MultiShiftRole {
-    private static final List<Direction> DIRECTIONS = List.of(NW, SW, NE, SE);
-
     private Bishop(Color color) {
-        super(color, DIRECTIONS);
+        super(color, ShiftPattern.BISHOP_PATTERN);
     }
 
     public static Bishop from(Color color) {

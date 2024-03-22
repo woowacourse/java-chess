@@ -1,21 +1,21 @@
 package model.piece.state;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import model.direction.Direction;
+import model.direction.ShiftPattern;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
 
 public abstract class Role {
     protected Color color;
-    private final List<Direction> directions;
+    private final ShiftPattern shiftPattern;
 
-    protected Role(Color color, List<Direction> directionList) {
+    protected Role(Color color, ShiftPattern shiftPattern) {
         this.color = color;
-        this.directions = new ArrayList<>(directionList);
+        this.shiftPattern = shiftPattern;
     }
 
     public void checkSameColor(Color color) {
@@ -29,11 +29,12 @@ public abstract class Role {
                 .filter(route -> route.contains(destination))
                 .map(route -> route.subRoute(destination))
                 .findAny()
-                .orElseThrow(() ->  new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
     private Set<Route> possibleRoutes(Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
+        List<Direction> directions = shiftPattern.directions();
         for (Direction direction : directions) {
             possibleRoutes.add(findMovingPatternRoute(direction, position));
         }
