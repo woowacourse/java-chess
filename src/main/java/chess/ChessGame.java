@@ -3,7 +3,7 @@ package chess;
 import chess.domain.chessboard.Chessboard;
 import chess.view.InputView;
 import chess.view.ResultView;
-import chess.view.command.Command;
+import chess.view.command.InitialCommand;
 import chess.view.command.MoveCommand;
 import chess.view.dto.ChessboardDto;
 
@@ -19,8 +19,8 @@ public class ChessGame {
 
     public void run() {
         resultView.printGameStartMessage();
-        String command = inputView.askCommand();
-        if (Command.isStart(command)) {
+        InitialCommand initialCommand = inputView.askCommand();
+        if (initialCommand.isStart()) {
             play();
         }
         resultView.printGameEnd();
@@ -33,12 +33,12 @@ public class ChessGame {
     }
 
     private void playByCommand(final Chessboard chessboard) {
-        String command = inputView.askCommand();
-        while (Command.isMove(command)) {
-            MoveCommand moveCommand = new MoveCommand(command);
-            chessboard.move(moveCommand.source(), moveCommand.target());
+        InitialCommand initialCommand = inputView.askCommand();
+        while (initialCommand.isMove()) {
+            MoveCommand moveCommand = initialCommand.toMoveCommand();
+            chessboard.move(moveCommand.getSource(), moveCommand.getTarget());
             resultView.printBoard(new ChessboardDto(chessboard));
-            command = inputView.askCommand();
+            initialCommand = inputView.askCommand();
         }
     }
 }

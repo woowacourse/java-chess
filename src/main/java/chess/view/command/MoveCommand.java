@@ -15,11 +15,11 @@ public class MoveCommand {
         this.target = Square.of(command.get(2));
     }
 
-    public Square source() {
+    public Square getSource() {
         return source;
     }
 
-    public Square target() {
+    public Square getTarget() {
         return target;
     }
 }

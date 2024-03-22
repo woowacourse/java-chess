@@ -1,6 +1,6 @@
 package chess.view;
 
-import static chess.view.command.Command.END;
+import static chess.view.command.CommandType.END;
 
 import java.util.List;
 

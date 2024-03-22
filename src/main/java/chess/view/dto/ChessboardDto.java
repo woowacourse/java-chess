@@ -1,6 +1,7 @@
 package chess.view.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,21 +19,21 @@ public class ChessboardDto {
         Map<Square, Piece> board = chessboard.getChessboard();
         this.chessboard = new ArrayList<>();
         for (final Rank rank : Rank.values()) {
-            List<String> squares = new ArrayList<>();
-            this.chessboard.add(squares);
-            addSquares(board, rank, squares);
+            this.chessboard.add(squaresOf(board, rank));
         }
     }
 
-    private void addSquares(final Map<Square, Piece> board, final Rank rank, final List<String> squares) {
+    private List<String> squaresOf(final Map<Square, Piece> board, final Rank rank) {
+        List<String> squares = new ArrayList<>();
         for (final File file : File.values()) {
             Square square = Square.of(file, rank);
             Piece piece = board.get(square);
             squares.add(PieceTypeDto.of(piece));
         }
+        return Collections.unmodifiableList(squares);
     }
 
     public List<List<String>> getChessboard() {
-        return chessboard;
+        return List.copyOf(chessboard);
     }
 }
