@@ -36,16 +36,16 @@ public class ChessBoard {
     }
 
     public static ChessBoard create() {
-        final Map<Square, Piece> chessTable = new HashMap<>();
+        final Map<Square, Piece> chessBoard = new HashMap<>();
 
         for (final File file : File.values()) {
-            chessTable.put(new Square(file, Rank.SEVEN), BLACK_PAWN);
-            chessTable.put(new Square(file, Rank.TWO), WHITE_PAWN);
-            chessTable.put(new Square(file, Rank.EIGHT), BLACK_PIECE_TYPE_ORDERS.get(file));
-            chessTable.put(new Square(file, Rank.ONE), WHITE_PIECE_TYPE_ORDERS.get(file));
+            chessBoard.put(new Square(file, Rank.SEVEN), BLACK_PAWN);
+            chessBoard.put(new Square(file, Rank.TWO), WHITE_PAWN);
+            chessBoard.put(new Square(file, Rank.EIGHT), BLACK_PIECE_TYPE_ORDERS.get(file));
+            chessBoard.put(new Square(file, Rank.ONE), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
 
-        return new ChessBoard(chessTable);
+        return new ChessBoard(chessBoard);
     }
 
     public void move(final Square source, final Square target) {
