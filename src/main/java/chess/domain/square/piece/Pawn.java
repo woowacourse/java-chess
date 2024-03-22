@@ -7,10 +7,10 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class Pawn extends Piece {
-    public static final int ATTACKABLE_FILE_DISTANCE = 1;
-    public static final int MOVED_MAX_DISTANCE = 1;
-    public static final int NOT_MOVED_MAX_DISTANCE = 2;
-    public static final int ATTACKABLE_RANK_DISTANCE = 1;
+    private static final int ATTACKABLE_FILE_DISTANCE = 1;
+    private static final int MOVED_MAX_DISTANCE = 1;
+    private static final int NOT_MOVED_MAX_DISTANCE = 2;
+    private static final int ATTACKABLE_RANK_DISTANCE = 1;
 
     private boolean isMoved;
 

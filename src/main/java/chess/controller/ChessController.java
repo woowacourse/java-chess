@@ -75,7 +75,7 @@ public class ChessController {
         outputView.printChessBoard(chessBoard.getSquares());
     }
 
-    private static Path makePath(MoveArgumentDto moveArgumentDto) {
+    private Path makePath(MoveArgumentDto moveArgumentDto) {
         return new Path(
                 new Position(moveArgumentDto.startRank(), moveArgumentDto.startFile()),
                 new Position(moveArgumentDto.endRank(), moveArgumentDto.endFile()));

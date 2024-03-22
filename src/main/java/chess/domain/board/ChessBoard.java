@@ -61,7 +61,7 @@ public class ChessBoard {
         }
     }
 
-    private static boolean isStartEnemy(Square startSquare, Color friendlyColor) {
+    private boolean isStartEnemy(Square startSquare, Color friendlyColor) {
         Piece startPiece = (Piece) startSquare;
         return !startPiece.isColor(friendlyColor);
     }
