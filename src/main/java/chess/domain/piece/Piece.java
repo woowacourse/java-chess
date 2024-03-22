@@ -5,10 +5,11 @@ import java.util.List;
 
 public abstract class Piece {
 
-    protected final List<Direction> directions = new ArrayList<>();
+    protected final List<Direction> directions;
     protected final Color color;
 
     protected Piece(final Color color) {
+        directions = new ArrayList<>();
         this.color = color;
     }
 
