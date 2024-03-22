@@ -5,10 +5,19 @@ import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
+
+import static java.util.Collections.unmodifiableMap;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class ChessBoardInitializer {
+    private static final int FIRST_BLANK_RANK_COORDINATE = 3;
+    private static final int LAST_BLANK_RANK_COORDINATE = 6;
+
     public ChessBoardInitializer() {
     }
 
@@ -19,7 +28,7 @@ public class ChessBoardInitializer {
         board.putAll(createSpecialPieces(Side.WHITE));
         board.putAll(createPawns(Side.WHITE));
         board.putAll(createBlanks());
-        return board;
+        return unmodifiableMap(board);
     }
 
     private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
@@ -45,16 +54,11 @@ public class ChessBoardInitializer {
 
     private Map<ChessPosition, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
-        return Map.of(
-                ChessPosition.of(File.A, rank), Pawn.from(side),
-                ChessPosition.of(File.B, rank), Pawn.from(side),
-                ChessPosition.of(File.C, rank), Pawn.from(side),
-                ChessPosition.of(File.D, rank), Pawn.from(side),
-                ChessPosition.of(File.E, rank), Pawn.from(side),
-                ChessPosition.of(File.F, rank), Pawn.from(side),
-                ChessPosition.of(File.G, rank), Pawn.from(side),
-                ChessPosition.of(File.H, rank), Pawn.from(side)
-        );
+        return Arrays.stream(File.values())
+                .collect(toMap(
+                        file -> ChessPosition.of(file, rank),
+                        file -> Pawn.from(side))
+                );
     }
 
     private Rank convertPawnRanksWithSide(Side side) {
@@ -65,18 +69,13 @@ public class ChessBoardInitializer {
     }
 
     public Map<ChessPosition, Piece> createBlanks() {
-        Map<ChessPosition, Piece> blanks = new HashMap<>();
-        for (int rankCoordinate = 3; rankCoordinate <= 6; rankCoordinate++) {
-            blanks.putAll(createBlanksInRank(rankCoordinate));
-        }
-        return blanks;
-    }
-
-    public Map<ChessPosition, Piece> createBlanksInRank(int rankCoordinate) {
-        Map<ChessPosition, Piece> blanks = new HashMap<>();
-        for (File file : File.values()) {
-            blanks.put(ChessPosition.of(file, Rank.from(rankCoordinate)), Blank.INSTANCE);
-        }
-        return blanks;
+        return IntStream.range(FIRST_BLANK_RANK_COORDINATE, LAST_BLANK_RANK_COORDINATE + 1)
+                .boxed()
+                .flatMap(rankCoordinate -> Arrays.stream(File.values())
+                        .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate)))
+                ).collect(toMap(
+                        identity(),
+                        chessPosition -> Blank.INSTANCE)
+                );
     }
 }
