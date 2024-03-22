@@ -1,11 +1,25 @@
 package chess.view;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
+
+import java.util.Arrays;
 
 public enum PieceSign {
 
     EMPTY(EmptyPiece.class, "."),
     PAWN(Pawn.class, "p"),
+    BLACK_PAWN(BlackPawn.class, "P"),
+    WHITE_PAWN(WhitePawn.class, "p"),
     ROOK(Rook.class, "r"),
     KNIGHT(Knight.class, "n"),
     BISHOP(Bishop.class, "b"),
@@ -21,14 +35,17 @@ public enum PieceSign {
     }
 
     public static String findSign(Piece piece) {
-        for (PieceSign value : values()) {
-            if (piece.getClass() == value.pieceClass) {
-                if (piece.isSameColor(Color.BLACK)) {
-                    return value.sign.toUpperCase();
-                }
-                return value.sign;
-            }
+        if (piece.isSameColor(Color.BLACK)) {
+            return findPieceSign(piece).toUpperCase();
         }
-        throw new IllegalArgumentException("존재하지 않는 piece입니다.");
+        return findPieceSign(piece);
+    }
+
+    private static String findPieceSign(Piece piece) {
+        return Arrays.stream(values())
+                .filter(value -> value.pieceClass == piece.getClass())
+                .map(value -> value.sign)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 piece입니다."));
     }
 }
