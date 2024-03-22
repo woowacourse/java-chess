@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
@@ -10,7 +11,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position start, Position destination) {
+    public boolean canMove(Position start, Position destination, ChessBoard board) {
         return start.squaredDistanceWith(destination) == L_SHAPE_DISTANCE;
     }
 }

@@ -1,17 +1,16 @@
 package chess.view;
 
-import static chess.view.GameExecutionCommand.END;
-import static chess.view.GameExecutionCommand.MOVE;
-import static chess.view.GameExecutionCommand.START;
-
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.position.ColumnPosition;
 import chess.domain.position.Position;
 import chess.domain.position.RowPosition;
+
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static chess.view.GameExecutionCommand.*;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();

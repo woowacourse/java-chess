@@ -1,14 +1,14 @@
 package chess.domain.position;
 
-import static chess.domain.position.ColumnPosition.MAX_NUMBER;
-import static chess.domain.position.ColumnPosition.MIN_NUMBER;
-import static java.util.stream.Collectors.toMap;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
+
+import static chess.domain.position.ColumnPosition.MAX_NUMBER;
+import static chess.domain.position.ColumnPosition.MIN_NUMBER;
+import static java.util.stream.Collectors.toMap;
 
 public class Position {
     //TODO: 풀 생성 과정 단순화 가능한지 고민해보기
@@ -35,7 +35,7 @@ public class Position {
     }
 
     private static String toKey(RowPosition rowPosition, ColumnPosition colPosition) {
-        return String.valueOf(rowPosition) + String.valueOf(colPosition);
+        return String.valueOf(rowPosition) + colPosition;
     }
 
     public Position verticalReversePosition() {
@@ -62,6 +62,7 @@ public class Position {
         int colInterval = columnPosition.intervalWith(target.columnPosition);
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
+
     // TODO 메서드 라인 수 개선
     public boolean rowIs(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);

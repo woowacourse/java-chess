@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.RowPosition;
@@ -11,7 +12,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean canMove(Position start, Position destination);
+    public abstract boolean canMove(Position start, Position destination, ChessBoard chessBoard);
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;

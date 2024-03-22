@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import static chess.domain.position.Direction.DOWN;
-import static chess.domain.position.Direction.UP;
-
 import chess.domain.position.Direction;
 import chess.domain.position.RowPosition;
+
+import static chess.domain.position.Direction.DOWN;
+import static chess.domain.position.Direction.UP;
 
 public enum Team {
     WHITE(UP, RowPosition.SIX),

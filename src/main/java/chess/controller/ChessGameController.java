@@ -1,10 +1,5 @@
 package chess.controller;
 
-import static chess.view.GameExecutionCommand.END;
-import static chess.view.GameExecutionCommand.MOVE;
-import static chess.view.GameExecutionCommand.START;
-import static chess.view.GameExecutionCommand.from;
-
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardCreator;
 import chess.domain.position.Position;
@@ -12,6 +7,8 @@ import chess.view.GameExecutionCommand;
 import chess.view.InputView;
 import chess.view.MoveCommand;
 import chess.view.OutputView;
+
+import static chess.view.GameExecutionCommand.*;
 
 public class ChessGameController {
     private final InputView inputView;

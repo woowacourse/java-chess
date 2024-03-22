@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.position.Position;
+
 import java.util.List;
 
 public class MoveCommand {
