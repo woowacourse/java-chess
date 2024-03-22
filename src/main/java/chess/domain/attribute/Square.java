@@ -19,15 +19,15 @@ public class Square {
         this.rank = rank;
     }
 
+    public static Square of(final String square) {
+        return of(File.of(square.charAt(0)), Rank.of(square.charAt(1)));
+    }
+
     public static Square of(final File file, final Rank rank) {
         if (SQUARES.isEmpty()) {
             initializeSquares();
         }
         return SQUARES.get(keyOf(file, rank));
-    }
-
-    public static Square of(final String square) {
-        return of(File.of(square.charAt(0)), Rank.of(square.charAt(1)));
     }
 
     private static void initializeSquares() {
@@ -51,8 +51,8 @@ public class Square {
     }
 
     public Optional<Square> move(final Direction direction) {
-        int row = rank.getValue() + direction.getRow();
-        int column = file.getColumn() + direction.getColumn();
+        int row = rank.toRow() + direction.getRow();
+        int column = file.toColumn() + direction.getColumn();
         if (isInRange(column, row)) {
             return Optional.of(Square.of(File.of(column), Rank.of(row)));
         }

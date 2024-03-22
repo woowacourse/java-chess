@@ -15,4 +15,13 @@ class FileTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("파일은 1~8 사이로 입력해주세요: " + column);
     }
+
+    @DisplayName("a~h 범위를 벗어나는 파일을 입력하면 예외가 발생한다.")
+    @ValueSource(strings = {"i", "j", "k", "l", "m", "n", "o", "p"})
+    @ParameterizedTest
+    void constructor(String value) {
+        assertThatThrownBy(() -> Rank.of(value))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("랭크는 1~8 사이로 입력해주세요: " + value);
+    }
 }

@@ -1,42 +1,33 @@
 package chess.domain.attribute;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 
 public enum Rank {
 
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
-    ONE(1)
-    ;
+    EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO, ONE;
 
     private static final int RANK_MAX = 8;
     private static final int RANK_MIN = 1;
 
-    private final int row;
-
-    Rank(final int row) {
-        this.row = row;
-    }
-
-    public static Rank of(final char row) {
-        return of(String.valueOf(row));
-    }
-
-    public static Rank of(final String row) {
-        return of(Integer.parseInt(row));
-    }
-
     public static Rank of(final int row) {
+        return of(row, rank -> row == rank.toRow());
+    }
+
+    public static Rank of(final char value) {
+        return of(String.valueOf(value));
+    }
+
+    public static Rank of(final String value) {
+        return of(value, rank -> value.equals(String.valueOf(RANK_MAX - rank.ordinal())));
+    }
+
+    private static <T> Rank of(final T value, final Predicate<Rank> predicate) {
         return Arrays.stream(values())
-                .filter(rank -> rank.row == row)
+                .filter(predicate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "랭크는 %d~%d 사이로 입력해주세요: %d".formatted(RANK_MIN, RANK_MAX, row)));
+                        "랭크는 %d~%d 사이로 입력해주세요: %s".formatted(RANK_MIN, RANK_MAX, String.valueOf(value))));
     }
 
     public static Rank startRankOf(final Color color) {
@@ -53,11 +44,11 @@ public enum Rank {
         return SEVEN;
     }
 
-    public static boolean isInRange(final int row) {
-        return RANK_MIN <= row && row <= RANK_MAX;
+    public static boolean isInRange(final int rank) {
+        return RANK_MIN <= rank && rank <= RANK_MAX;
     }
 
-    public int getValue() {
-        return row;
+    public int toRow() {
+        return ordinal();
     }
 }

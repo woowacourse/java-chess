@@ -4,47 +4,28 @@ import static chess.domain.piece.PieceType.PAWN;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 public enum File {
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8)
-    ;
+    A, B, C, D, E, F, G, H;
 
     private static final int FILE_MIN = 1;
     private static final int FILE_MAX = 8;
 
-    private final int column;
-
-    File(final int column) {
-        this.column = column;
-    }
-
-    public static File of(final char column) {
+    public static File of(final int column) {
         return of(String.valueOf(column));
     }
 
-    public static File of(final int column) {
-        return findByColumn(column, file -> file.column == column);
+    public static File of(final char value) {
+        return of(String.valueOf(value));
     }
 
-    public static File of(final String column) {
-        return findByColumn(column, file -> column.equalsIgnoreCase(file.name()));
-    }
-
-    private static <T> File findByColumn(final T column, final Predicate<File> predicate) {
+    public static File of(final String value) {
         return Arrays.stream(values())
-                .filter(predicate)
+                .filter(file -> value.equalsIgnoreCase(file.name()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "파일은 %d~%d 사이로 입력해주세요: %s".formatted(FILE_MIN, FILE_MAX, column)));
+                        "파일은 %d~%d 사이로 입력해주세요: %s".formatted(FILE_MIN, FILE_MAX, value)));
     }
 
     public static File startKingFile() {
@@ -100,11 +81,11 @@ public enum File {
         }
     }
 
-    public static boolean isInRange(final int column) {
-        return FILE_MIN <= column && column <= FILE_MAX;
+    public static boolean isInRange(final int file) {
+        return FILE_MIN <= file && file <= FILE_MAX;
     }
 
-    public int getColumn() {
-        return column;
+    public int toColumn() {
+        return ordinal();
     }
 }
