@@ -32,17 +32,18 @@ class ChessGameTest {
     @DisplayName("실제로 움직일 수 있는 위치를 모두 가져온다.")
     void generateMovablePositions() {
         Position targetPosition = new Position(Row.RANK5, Column.D);
+        Color currentTurn = Color.BLACK;
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
-                        targetPosition, new Piece(PieceType.ROOK, Color.BLACK),
-                        new Position(Row.RANK4, Column.D), new Piece(PieceType.ROOK, Color.WHITE),
-                        new Position(Row.RANK5, Column.E), new Piece(PieceType.ROOK, Color.WHITE),
-                        new Position(Row.RANK5, Column.B), new Piece(PieceType.KNIGHT, Color.WHITE),
-                        new Position(Row.RANK6, Column.D), new Piece(PieceType.BISHOP, Color.BLACK)
+                        targetPosition, new Piece(PieceType.ROOK, currentTurn),
+                        new Position(Row.RANK4, Column.D), new Piece(PieceType.ROOK, currentTurn.opposite()),
+                        new Position(Row.RANK5, Column.E), new Piece(PieceType.ROOK, currentTurn.opposite()),
+                        new Position(Row.RANK5, Column.B), new Piece(PieceType.KNIGHT, currentTurn.opposite()),
+                        new Position(Row.RANK6, Column.D), new Piece(PieceType.BISHOP, currentTurn)
                 )
         ));
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
 
         Assertions.assertThat(result).containsExactlyInAnyOrder(
                 new Position(Row.RANK4, Column.D),

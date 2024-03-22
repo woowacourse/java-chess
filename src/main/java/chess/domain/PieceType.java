@@ -12,6 +12,7 @@ import java.util.Deque;
 import java.util.Map;
 
 public enum PieceType {
+
     BLACK_PAWN(new BlackPawnMoveStrategy()),
     WHITE_PAWN(new WhitePawnMoveStrategy()),
     ROOK(new RookMoveStrategy()),

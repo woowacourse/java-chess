@@ -13,9 +13,12 @@ public class ChessGame {
         this.board = board;
     }
 
-    public List<Position> generateMovablePositions(Position position) {
-        Piece piece = board.findPieceByPosition(position);
-        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position);
+    public List<Position> generateMovablePositions(Position fromPosition, Color currentTurn) {
+        Piece piece = board.findPieceByPosition(fromPosition);
+        if (piece.isSameTeam(currentTurn.opposite())) {
+            throw new IllegalArgumentException("다른 팀의 기물을 움직일 수 없습니다.");
+        }
+        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(fromPosition);
         if (piece.isPawn()) {
             return generateValidPositionsWithPawn(expectedAllPositions, piece);
         }

@@ -21,6 +21,10 @@ public class Piece {
         return this.color == piece.color;
     }
 
+    public boolean isSameTeam(Color color) {
+        return this.color == color;
+    }
+
     public boolean isBlack() {
         return this.color == Color.BLACK;
     }

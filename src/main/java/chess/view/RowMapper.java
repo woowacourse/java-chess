@@ -4,6 +4,7 @@ import chess.domain.Row;
 import java.util.Arrays;
 
 public enum RowMapper {
+
     RANK1(Row.RANK1, "1"),
     RANK2(Row.RANK2, "2"),
     RANK3(Row.RANK3, "3"),

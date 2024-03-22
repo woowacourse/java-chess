@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.domain.Position;
 import chess.view.Commend;
 import chess.view.CommendDto;
@@ -19,12 +20,14 @@ public class ChessGameController {
     private void process() {
         boolean isRunning = true;
         ChessGame chessGame = new ChessGame(new Board());
+        Color turnColor = Color.BLACK;
         while (isRunning) {
-            isRunning = processGame(chessGame);
+            isRunning = processGame(chessGame, turnColor);
+            turnColor = turnColor.opposite();
         }
     }
 
-    private boolean processGame(ChessGame chessGame) {
+    private boolean processGame(ChessGame chessGame, Color currentTurn) {
         try {
             CommendDto commendDto = InputView.readCommend();
             Commend commend = commendDto.commend();
@@ -32,7 +35,7 @@ public class ChessGameController {
                 handleStartCommend(chessGame);
             }
             if (commend == Commend.MOVE) {
-                handleMoveCommend(chessGame, commendDto.from(), commendDto.to());
+                handleMoveCommend(chessGame, commendDto, currentTurn);
             }
             if (commend == Commend.END) {
                 return false;
@@ -40,7 +43,7 @@ public class ChessGameController {
             return true;
         } catch (IllegalArgumentException error) {
             OutputView.printError(error);
-            return processGame(chessGame);
+            return processGame(chessGame, currentTurn);
         }
     }
 
@@ -48,11 +51,11 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getBoard());
     }
 
-    private void handleMoveCommend(ChessGame chessGame, String fromValue, String toValue) {
-        Position from = Position.from(fromValue);
-        Position to = Position.from(toValue);
+    private void handleMoveCommend(ChessGame chessGame, CommendDto commendDto, Color currentTurn) {
+        Position from = Position.from(commendDto.from());
+        Position to = Position.from(commendDto.to());
 
-        List<Position> movablePositions = chessGame.generateMovablePositions(from);
+        List<Position> movablePositions = chessGame.generateMovablePositions(from, currentTurn);
         chessGame.movePiece(movablePositions, from, to);
 
         OutputView.printBoard(chessGame.getBoard());

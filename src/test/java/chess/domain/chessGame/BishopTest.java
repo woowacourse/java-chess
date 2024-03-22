@@ -32,15 +32,16 @@ public class BishopTest {
     @DisplayName("실제로 움직일 수 있는 위치를 모두 가져온다.")
     void generateMovablePositions() {
         Position targetPosition = new Position(Row.RANK1, Column.C);
+        Color currentTurn = Color.WHITE;
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
-                        targetPosition, new Piece(PieceType.BISHOP, Color.WHITE),
-                        new Position(Row.RANK2, Column.B), new Piece(PieceType.WHITE_PAWN, Color.WHITE),
-                        new Position(Row.RANK3, Column.E), new Piece(PieceType.BLACK_PAWN, Color.BLACK)
+                        targetPosition, new Piece(PieceType.BISHOP, currentTurn),
+                        new Position(Row.RANK2, Column.B), new Piece(PieceType.WHITE_PAWN, currentTurn),
+                        new Position(Row.RANK3, Column.E), new Piece(PieceType.BLACK_PAWN, currentTurn.opposite())
                 )
         ));
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
 
         assertThat(result).containsExactlyInAnyOrder(
                 new Position(Row.RANK2, Column.D),

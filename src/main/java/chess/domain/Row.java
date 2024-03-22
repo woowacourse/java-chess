@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Row {
+
     RANK1(7),
     RANK2(6),
     RANK3(5),

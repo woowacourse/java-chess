@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Arrays;
 
 public enum Commend {
+
     START("start"), END("end"), MOVE("move");
 
     private final String value;

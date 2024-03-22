@@ -4,6 +4,7 @@ import chess.domain.Column;
 import java.util.Arrays;
 
 public enum ColumnMapper {
+
     A(Column.A, "a"),
     B(Column.B, "b"),
     C(Column.C, "c"),
