@@ -13,7 +13,7 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public void validateMovement(Position source, Position target, Piece other) {
-        if (getColor().isWhite()) {
+        if (color().isWhite()) {
             validateWhiteMovement(source, target, other);
             return;
         }
@@ -62,7 +62,7 @@ public class Pawn extends AbstractPiece {
             throw new IllegalArgumentException("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
         }
         if (moveCount == 2) { // 2이면 초기 위치인지 확인
-            Rank initialRank = INITIAL_RANK.get(getColor());
+            Rank initialRank = INITIAL_RANK.get(color());
             if (!source.isAtSameRank(initialRank)) {
                 throw new IllegalArgumentException("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
             }
@@ -76,23 +76,23 @@ public class Pawn extends AbstractPiece {
     }
 
     private void validateEmpty(Piece other) {
-        if (!other.getColor().isNeutrality()) {
+        if (!other.color().isNeutrality()) {
             throw new IllegalArgumentException("앞에 말이 있어서 이동할 수 없습니다.");
         }
     }
 
     private void validateDifferentColor(Piece other) {
-        if (this.getColor() == other.getColor()) {
+        if (this.color() == other.color()) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
 
-        if (other.getColor().isNeutrality()) {
+        if (other.color().isNeutrality()) {
             throw new IllegalArgumentException("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
         }
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         return Type.PAWN;
     }
 }

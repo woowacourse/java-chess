@@ -17,13 +17,13 @@ public class King extends AbstractPiece {
             throw new IllegalArgumentException(String.format("%s은 한 번에 %d칸만 이동할 수 있습니다.",
                     this.getClass().getSimpleName(), DISTANCE_LIMIT_COUNT));
         }
-        if (this.getColor() == other.getColor()) {
+        if (this.color() == other.color()) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         return Type.KING;
     }
 }

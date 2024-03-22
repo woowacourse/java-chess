@@ -9,7 +9,7 @@ public class Bishop extends AbstractPiece {
 
     @Override
     public void validateMovement(Position source, Position target, Piece other) {
-        if (this.getColor() == other.getColor()) {
+        if (this.color() == other.color()) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
         int rankGap = source.calculateRankGap(target);
@@ -29,7 +29,7 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public Type getType() {
+    public Type type() {
         return Type.BISHOP;
     }
 }

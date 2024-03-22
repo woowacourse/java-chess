@@ -8,7 +8,7 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public Color getColor() {
+    public Color color() {
         return color;
     }
 }

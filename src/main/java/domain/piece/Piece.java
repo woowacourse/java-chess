@@ -5,7 +5,7 @@ import domain.position.Position;
 public interface Piece {
     void validateMovement(Position source, Position target, Piece other);
 
-    Color getColor();
+    Color color();
 
-    Type getType();
+    Type type();
 }
