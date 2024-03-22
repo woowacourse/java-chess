@@ -37,6 +37,5 @@ public abstract class MultiStepPiece extends Piece {
         if (piece.isEmpty()) {
             addMoves(board, direction, nextPosition, movablePositions);
         }
-
     }
 }
