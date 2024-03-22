@@ -12,6 +12,8 @@ public abstract class Piece {
         this.side = side;
     }
 
+    public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
+
     public boolean isRook() {
         return false;
     }
@@ -44,6 +46,10 @@ public abstract class Piece {
         return side != other.side;
     }
 
+    public boolean isSameSide(Side other) {
+        return side == other;
+    }
+
     public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
         if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
             throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
@@ -60,8 +66,6 @@ public abstract class Piece {
                 .toList();
     }
 
-    public abstract boolean canMove(Position current, Position target, Map<Position, Piece> pieces);
-
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -73,9 +77,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(side);
-    }
-
-    public boolean isSameSide(Side other) {
-        return side == other;
     }
 }

@@ -43,6 +43,10 @@ public enum InitPosition {
         return PAWN.rank(Side.WHITE) == rank;
     }
 
+    public static boolean isBlackPawnRank(Rank rank) {
+        return PAWN.rank(Side.BLACK) == rank;
+    }
+
     public Rank rank(Side side) {
         return vertical.apply(side);
     }

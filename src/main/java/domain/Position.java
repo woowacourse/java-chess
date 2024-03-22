@@ -34,37 +34,35 @@ public class Position {
     }
 
     private int fileGap(Position other) {
-        File otherFile = other.file;
-        return file.gap(otherFile);
+        return file.gap(other.file);
     }
 
     private int rankGap(Position other) {
-        Rank otherRank = other.rank;
-        return rank.gap(otherRank);
-    }
-
-    public boolean hasOneRankGap(Position other) {
-        return rankGap(other) == 1;
+        return rank.gap(other.rank);
     }
 
     public boolean hasOneFileGap(Position other) {
         return fileGap(other) == 1;
     }
 
-    public boolean hasOneDiagonalGap(Position other) {
-        return this.isDiagonal(other) && hasOneFileGap(other);
-    }
-
     public boolean hasTwoFileGap(Position other) {
         return file.confirmGap(other.file, 2);
+    }
+
+    public boolean hasOneRankGap(Position other) {
+        return rankGap(other) == 1;
+    }
+
+    public boolean hasTwoRankGap(Position other) {
+        return rank.confirmGap(other.rank, 2);
     }
 
     public boolean hasOnlyTwoRankGap(Position other) {
         return hasTwoRankGap(other) && isSameFile(other);
     }
 
-    public boolean hasTwoRankGap(Position other) {
-        return rank.confirmGap(other.rank, 2);
+    public boolean hasOneDiagonalGap(Position other) {
+        return this.isDiagonal(other) && hasOneFileGap(other);
     }
 
     public boolean isRankIncreased(Position target) {
@@ -76,7 +74,7 @@ public class Position {
     }
 
     public boolean isBlackPawnRank() {
-        return InitPosition.PAWN.rank(Side.BLACK) == this.rank;
+        return InitPosition.isBlackPawnRank(rank);
     }
 
     public boolean isWhitePawnRank() {

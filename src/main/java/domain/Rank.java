@@ -43,8 +43,7 @@ public enum Rank {
     }
 
     public int gap(Rank other) {
-        int otherOrder = other.order;
-        return Math.abs(order - otherOrder);
+        return Math.abs(order - other.order);
     }
 
     public boolean isBigger(Rank other) {
