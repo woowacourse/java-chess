@@ -9,7 +9,7 @@ import chess.view.OutputView;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ChessGame {
+public class ChessGameController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
