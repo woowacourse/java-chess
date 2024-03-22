@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class EndTest {
 
-    @DisplayName("게임을 종료한다.")
+    @DisplayName("End상태일 때 어떤 동작도 하지 않는다.")
     @Test
     void play() {
         ChessStatus end = new End();
