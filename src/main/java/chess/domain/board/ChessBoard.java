@@ -14,8 +14,8 @@ import java.util.Set;
 public class ChessBoard {
     private final Map<Position, Piece> board;
 
-    public ChessBoard(final ChessBoardGenerator chessBoardGenerator) {
-        this(chessBoardGenerator.generate());
+    public ChessBoard(final BoardGenerator boardGenerator) {
+        this(boardGenerator.generate());
     }
 
     public ChessBoard(final Map<Position, Piece> board) {
