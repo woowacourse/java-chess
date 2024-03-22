@@ -12,11 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    public static final int MAX_LENGTH = 8;
     public static final int MIN_LENGTH = 1;
+    public static final int MAX_LENGTH = 8;
+    private static final Color START_COLOR = Color.WHITE;
     private static final List<Position> ALL_POSITIONS = Position.values();
 
     private final Map<Position, Piece> squares;
+    private Color currentColor = START_COLOR;
 
     public Board(Map<Position, Piece> squares) {
         this.squares = new HashMap<>(squares);
@@ -28,15 +30,16 @@ public class Board {
         return squares.get(position);
     }
 
-    public void move(Movement movement, Color color) {
-        validateTurn(movement, color);
+    public void move(Movement movement) {
+        validateTurn(movement);
         validateMove(movement);
         updateSquare(movement);
+        currentColor = currentColor.getOpposite();
     }
 
-    private void validateTurn(Movement movement, Color color) {
+    private void validateTurn(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (!sourcePiece.hasColor(color)) {
+        if (!sourcePiece.hasColor(currentColor)) {
             throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
         }
     }

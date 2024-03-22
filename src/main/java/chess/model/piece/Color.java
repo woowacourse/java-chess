@@ -9,6 +9,9 @@ public enum Color {
         if (this == WHITE) {
             return BLACK;
         }
-        return WHITE;
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return NONE;
     }
 }

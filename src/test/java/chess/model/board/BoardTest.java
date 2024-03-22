@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.model.piece.Color;
 import chess.model.piece.Type;
 import chess.model.position.Movement;
 import chess.model.position.Position;
@@ -32,7 +31,7 @@ class BoardTest {
         Movement movement = new Movement(Position.of(1, 1), Position.of(1, 3));
 
         // when, then
-        assertThatThrownBy(() -> board.move(movement, Color.WHITE))
+        assertThatThrownBy(() -> board.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -43,7 +42,7 @@ class BoardTest {
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
 
         // when
-        board.move(movement, Color.WHITE);
+        board.move(movement);
 
         // then
         assertThat(board.getPiece(2, 3).isType(Type.PAWN)).isTrue();
