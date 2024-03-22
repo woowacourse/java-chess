@@ -40,9 +40,6 @@ public class Board {
     private void initialPawnSetting(Map<Location, Piece> board) {
         for (Column value : Column.values()) {
             board.put(new Location(value, Row.TWO), new WhitePawn());
-        }
-
-        for (Column value : Column.values()) {
             board.put(new Location(value, Row.SEVEN), new BlackPawn());
         }
     }
