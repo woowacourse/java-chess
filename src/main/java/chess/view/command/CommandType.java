@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public enum CommandType {
 
-    START("start", "^start"),
+    START("start", "^start$"),
     MOVE("move", "^move [a-h][1-8] [a-h][1-8]$"),
-    END("end", "^end")
+    END("end", "^end$")
     ;
 
     private final String message;
