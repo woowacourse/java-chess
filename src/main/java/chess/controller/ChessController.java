@@ -4,9 +4,11 @@ import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.Position;
+import chess.domain.piece.character.Character;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
     public void play() {
@@ -18,7 +20,8 @@ public class ChessController {
 
         List<Position> positions;
         while (!(positions = InputView.inputNextCommand()).isEmpty()) {
-            chessGame.movePiece(positions, OutputView::printChessBoard, OutputView::printCheck);
+            Map<Position, Character> chessBoard = chessGame.movePiece(positions, OutputView::printCheck);
+            OutputView.printChessBoard(chessBoard);
         }
     }
 }

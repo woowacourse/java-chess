@@ -4,7 +4,6 @@ import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessGame {
     private final Board board;
@@ -15,17 +14,15 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public void movePiece(List<Position> positions,
-                          Consumer<Map<Position, Character>> consumer,
-                          Runnable runnable) {
+    public Map<Position, Character> movePiece(List<Position> positions, Runnable runnable) {
         board.validateSameTeamByPosition(positions.get(0), currentTeam);
         board.move(positions.get(0), positions.get(1));
-        consumer.accept(board.mapPositionToCharacter());
-        validateCheck(currentTeam, runnable);
+        validateCheck(runnable);
         currentTeam = currentTeam.opponent();
+        return board.mapPositionToCharacter();
     }
 
-    private void validateCheck(Team currentTeam, Runnable runnable) {
+    private void validateCheck(Runnable runnable) {
         if (board.isChecked(currentTeam.opponent())) {
             runnable.run();
         }
