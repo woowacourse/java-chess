@@ -14,7 +14,7 @@ public abstract class SpecialPieceMoveStrategy implements MoveStrategy {
     private final List<Direction> directions;
     private final int defaultMaxMoveDistance;
 
-    public SpecialPieceMoveStrategy(List<Direction> directions, int defaultMaxMoveDistance) {
+    protected SpecialPieceMoveStrategy(List<Direction> directions, int defaultMaxMoveDistance) {
         this.directions = directions;
         this.defaultMaxMoveDistance = defaultMaxMoveDistance;
     }

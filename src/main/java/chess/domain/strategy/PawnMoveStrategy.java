@@ -18,7 +18,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
     private final Row startRow;
     private final Direction forwardDirection;
 
-    public PawnMoveStrategy(List<Direction> directions, Row startRow, Direction forwardDirection) {
+    protected PawnMoveStrategy(List<Direction> directions, Row startRow, Direction forwardDirection) {
         this.directions = directions;
         this.startRow = startRow;
         this.forwardDirection = forwardDirection;
