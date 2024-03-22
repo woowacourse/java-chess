@@ -167,7 +167,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -183,7 +183,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -199,7 +199,7 @@ class PawnTest {
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 
@@ -225,7 +225,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -240,7 +240,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -256,7 +256,7 @@ class PawnTest {
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 

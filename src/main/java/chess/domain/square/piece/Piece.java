@@ -15,7 +15,11 @@ public abstract class Piece implements Square {
     }
 
     @Override
-    public final boolean canMove(Path path, Map<Position, Square> board) {
+    public boolean canMove(Path path, Map<Position, Square> board) {
+        final Square targetSquare = board.get(path.getTargetPosition());
+        if (targetSquare.isColor(color)) {
+            return false;
+        }
         return isValidMovePath(path) && isNotObstructed(path, board);
     }
 
@@ -25,21 +29,6 @@ public abstract class Piece implements Square {
 
     // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
     public abstract void move();
-
-    @Override
-    public boolean canAttack(Path path, Map<Position, Square> board) {
-        return isValidAttackPath(path) && isNotObstructed(path, board) && isEnemyAttack(path, board);
-    }
-
-    protected abstract boolean isValidAttackPath(Path path);
-
-    // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
-    // TODO: 체스보드가 검증하도록 변경
-    private boolean isEnemyAttack(Path path, Map<Position, Square> board) {
-        Piece endPiece = (Piece) board.get(path.getTargetPosition());
-
-        return color != endPiece.color;
-    }
 
     @Override
     public boolean isColor(Color color) {

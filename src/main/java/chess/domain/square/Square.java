@@ -9,8 +9,6 @@ import java.util.Map;
 public interface Square {
     boolean canMove(Path path, Map<Position, Square> board);
 
-    boolean canAttack(Path path, Map<Position, Square> board);
-
     void move();
 
     boolean isColor(Color color);

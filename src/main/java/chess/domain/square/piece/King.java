@@ -33,9 +33,4 @@ public class King extends Piece {
     @Override
     public void move() {
     }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
-    }
 }

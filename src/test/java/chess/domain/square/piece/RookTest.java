@@ -65,7 +65,7 @@ public class RookTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
         // when
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -80,7 +80,7 @@ public class RookTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 

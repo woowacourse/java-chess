@@ -77,7 +77,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -94,7 +94,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -111,7 +111,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 }

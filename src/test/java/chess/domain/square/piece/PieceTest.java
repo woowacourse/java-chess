@@ -39,7 +39,7 @@ class PieceTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attacker.canAttack(path, board))
+        assertThat(attacker.canMove(path, board))
                 .isFalse();
     }
 }

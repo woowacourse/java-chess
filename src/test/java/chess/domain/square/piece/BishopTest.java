@@ -81,7 +81,7 @@ class BishopTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -96,7 +96,7 @@ class BishopTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 
@@ -115,7 +115,7 @@ class BishopTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 }

@@ -78,7 +78,7 @@ public class KnightTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -94,7 +94,7 @@ public class KnightTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isTrue();
     }
 
@@ -110,7 +110,7 @@ public class KnightTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
+        assertThat(attackerPiece.canMove(path, board))
                 .isFalse();
     }
 }

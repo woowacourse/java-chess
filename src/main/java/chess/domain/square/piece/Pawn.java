@@ -2,6 +2,7 @@ package chess.domain.square.piece;
 
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.square.Empty;
 import chess.domain.square.Square;
 
 import java.util.Map;
@@ -25,6 +26,18 @@ public class Pawn extends Piece {
 
     public static Pawn of(Color color, boolean isMoved) {
         return new Pawn(color, isMoved);
+    }
+
+    @Override
+    public boolean canMove(Path path, Map<Position, Square> board) {
+        final Square targetSquare = board.get(path.getTargetPosition());
+        if (targetSquare.isColor(getColor())) {
+            return false;
+        }
+        if (targetSquare == Empty.getInstance()) {
+            return isValidMovePath(path) && isNotObstructed(path, board);
+        }
+        return isValidAttackPath(path) && isNotObstructed(path, board);
     }
 
     @Override
@@ -52,8 +65,7 @@ public class Pawn extends Piece {
         isMoved = true;
     }
 
-    @Override
-    protected boolean isValidAttackPath(Path path) {
+    private boolean isValidAttackPath(Path path) {
         if (isColor(Color.BLACK)) {
             return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
         }

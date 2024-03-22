@@ -35,9 +35,4 @@ public class Knight extends Piece {
     @Override
     public void move() {
     }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
-    }
 }
