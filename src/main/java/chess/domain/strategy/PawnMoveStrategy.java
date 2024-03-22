@@ -2,7 +2,6 @@ package chess.domain.strategy;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
 import chess.domain.piece.blank.Blank;
 import chess.domain.piece.pawn.Pawn;
