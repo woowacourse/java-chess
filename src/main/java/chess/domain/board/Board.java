@@ -1,60 +1,41 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
-import chess.domain.piece.PieceType;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 public class Board {
+    private static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
+    private final Set<Piece> pieces;
 
-    static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
-    static final String ERROR_MOVE_NOT_AVAILABLE = "해당 위치로 기물을 이동할 수 없습니다.";
-    private final Map<Square, Piece> values;
-
-    public Board(Map<Square, Piece> values) {
-        this.values = new HashMap<>(values);
+    public Board(Set<Piece> pieces) {
+        this.pieces = new HashSet<>(pieces);
     }
 
-    public void move(final Square source, final Square target) {
-        Piece sourcePiece = values.get(source);
-
-        if (isNotExistPiece(source)) {
-            throw new IllegalArgumentException(ERROR_NOT_EXIST_PIECE);
-        }
-
-        if (!sourcePiece.canMove(source, target)) {
-            throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
-        }
-
-        if (sourcePiece.getType() != PieceType.KNIGHT && existObstacleOnPath(source, target)) {
-            throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
-        }
-
-        values.remove(source);
-        values.put(target, sourcePiece);
+    public void move(Position source, Position target) {
+        Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalStateException(ERROR_NOT_EXIST_PIECE));
+        removeTargetPieceIfAttacked(sourcePiece, target);
+        sourcePiece.move(target);
     }
 
-    private boolean existObstacleOnPath(final Square source, final Square target) {
-        List<Square> path = source.generatePath(target);
-        return path.stream().anyMatch(values::containsKey);
+    public Optional<Piece> findPiece(Position position) {
+        return pieces.stream()
+                .filter(piece -> piece.isLocated(position))
+                .findAny();
     }
 
-    public boolean isNotExistPiece(Square square) {
-        return !values.containsKey(square);
+    private void removeTargetPieceIfAttacked(Piece sourcePiece, Position targetPosition) {
+        findPiece(targetPosition).ifPresent(targetPiece -> {
+            if (sourcePiece.getColor() != targetPiece.getColor()) {
+                pieces.remove(targetPiece);
+            }
+        });
     }
 
-    public Map<Square, Piece> get() {
-        return values;
-    }
-
-    public boolean isExistPieceWithColor(Square square, Team team) {
-        if (values.containsKey(square)) {
-            return values.get(square).getColor() == team;
-        }
-        return false;
+    public Set<Piece> getPieces() {
+        return pieces;
     }
 }

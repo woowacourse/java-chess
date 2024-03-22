@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-public enum Team {
+public enum PieceColor {
 
     BLACK,
     WHITE;
 
-    public Team next() {
+    public PieceColor next() {
         if (this.equals(BLACK)) {
             return WHITE;
         }

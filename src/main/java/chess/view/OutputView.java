@@ -1,13 +1,12 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.Set;
 
 public class OutputView {
-
     private static final int BOARD_SIZE = 8;
     private static final char EMPTY_PIECE = '.';
     private static final String TITLE_START = "> 체스 게임을 시작합니다.%n" +
@@ -20,10 +19,13 @@ public class OutputView {
         System.out.printf(TITLE_START);
     }
 
-    public static void printInitialBoard(final Map<Square, Piece> board) {
-        char[][] result = generateEmptyBoard();
-        setPiecesOnBoard(board, result);
-        printBoard(result);
+    public static void printBoard(Set<Piece> pieces) {
+        char[][] board = generateEmptyBoard();
+        setPiecesOnBoard(board, pieces);
+        for (char[] line : board) {
+            System.out.println(line);
+        }
+        System.out.println();
     }
 
     private static char[][] generateEmptyBoard() {
@@ -34,19 +36,12 @@ public class OutputView {
         return emptyBoard;
     }
 
-    private static void setPiecesOnBoard(final Map<Square, Piece> board, final char[][] result) {
-        board.forEach(((square, piece) -> {
-            int col = square.file().get() - 1;
-            int row = square.rank().get() - 1;
-            result[row][col] = PieceMapper.map(piece.getType(), piece.getColor());
-        }));
-    }
-
-    private static void printBoard(final char[][] result) {
-        for (int i = result.length - 1; i >= 0; i--) {
-            System.out.println(String.copyValueOf(result[i]));
+    private static void setPiecesOnBoard(char[][] board, Set<Piece> pieces) {
+        for (Piece piece : pieces) {
+            Position position = piece.getPosition();
+            char pieceSymbol = PieceMapper.map(piece.getType(), piece.getColor());
+            board[position.getRow()][position.getColumn()] = pieceSymbol;
         }
-        System.out.println();
     }
 
     public static void printErrorMessage(String message) {

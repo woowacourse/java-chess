@@ -1,15 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 public class Rook extends Piece {
 
-    public Rook(Team color) {
-        super(PieceType.ROOK, color);
+    public Rook(PieceColor color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        return source.isSameRank(target) || source.isSameFile(target);
+    public void move(Position target) {
+
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.ROOK;
     }
 }

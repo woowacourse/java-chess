@@ -1,18 +1,22 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 public class King extends Piece {
 
     private static final int STEP_LIMIT = 1;
 
-    public King(Team color) {
-        super(PieceType.KING, color);
+    public King(PieceColor color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        return (source.calculateRankDiff(target.rank()) <= STEP_LIMIT &&
-                source.calculateFileDiff(target.file()) <= STEP_LIMIT);
+    public void move(Position target) {
+
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.KING;
     }
 }

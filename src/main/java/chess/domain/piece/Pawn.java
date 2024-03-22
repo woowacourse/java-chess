@@ -1,39 +1,37 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
-import chess.domain.square.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 public class Pawn extends Piece {
-
     private static final int FIRST_STEP_LIMIT = 2;
     private static final int STEP_LIMIT = 1;
 
-    public Pawn(Team color) {
-        super(PieceType.PAWN, color);
+    public Pawn(PieceColor color, Position position) {
+        super(color, position);
+    }
+
+    private boolean isBackward(Position source, Position target) {
+        if (getColor() == PieceColor.BLACK) {
+            return target.isLowerThan(source);
+        }
+        return target.isUpperThan(source);
+    }
+
+    private boolean isFirstStep(Position position) {
+        if (getColor() == PieceColor.BLACK) {
+            return position.isSameRow(Row.SEVEN);
+        }
+        return position.isSameRow(Row.TWO);
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        if (isBackward(source, target)) {
-            return false;
-        }
-        if (isFirstStep(source)) {
-            return source.calculateRankDiff(target.rank()) <= FIRST_STEP_LIMIT;
-        }
-        return source.calculateRankDiff(target.rank()) == STEP_LIMIT;
+    public void move(Position target) {
+
     }
 
-    private boolean isBackward(Square source, Square target) {
-        if (getColor() == Team.BLACK) {
-            return source.isLessRankThan(target);
-        }
-        return source.isGreaterRankThan(target);
-    }
-
-    private boolean isFirstStep(Square square) {
-        if (getColor() == Team.BLACK) {
-            return square.rank() == Rank.SEVEN;
-        }
-        return square.rank() == Rank.TWO;
+    @Override
+    public PieceType getType() {
+        return PieceType.PAWN;
     }
 }

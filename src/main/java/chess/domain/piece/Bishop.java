@@ -1,16 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 public class Bishop extends Piece {
-
-    public Bishop(Team color) {
-        super(PieceType.BISHOP, color);
+    public Bishop(PieceColor color, Position position) {
+        super(color, position);
     }
 
     @Override
-    public boolean canMove(Square source, Square target) {
-        return (source.calculateRankDiff(target.rank()) ==
-                source.calculateFileDiff(target.file()));
+    public void move(Position target) {
+
+    }
+
+    @Override
+    public PieceType getType() {
+        return PieceType.BISHOP;
     }
 }

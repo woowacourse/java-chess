@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.piece.Team;
+import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 
 public enum PieceMapper {
-
     KING('k'),
     QUEEN('q'),
     ROOK('r'),
@@ -18,8 +17,8 @@ public enum PieceMapper {
         this.name = name;
     }
 
-    public static char map(PieceType pieceType, Team team) {
-        if (team == Team.BLACK) {
+    public static char map(PieceType pieceType, PieceColor pieceColor) {
+        if (pieceColor == PieceColor.BLACK) {
             return Character.toUpperCase(valueOf(pieceType.name()).name);
         }
         return valueOf(pieceType.name()).name;

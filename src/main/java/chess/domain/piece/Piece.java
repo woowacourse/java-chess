@@ -1,25 +1,29 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 public abstract class Piece {
+    private final PieceColor color;
+    private final Position position;
 
-    // TODO: Type 필드 제거 후 Getter 추상화
-    private final PieceType type;
-    private final Team color;
-
-    public Piece(PieceType type, Team color) {
-        this.type = type;
+    public Piece(PieceColor color, Position position) {
         this.color = color;
+        this.position = position;
     }
 
-    public abstract boolean canMove(Square source, Square target);
+    public abstract void move(Position target);
 
-    public PieceType getType() {
-        return type;
+    public abstract PieceType getType();
+
+    public boolean isLocated(Position other) {
+        return position.equals(other);
     }
 
-    public Team getColor() {
+    public PieceColor getColor() {
         return color;
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }
