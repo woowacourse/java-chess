@@ -9,31 +9,43 @@ public class BoardInitializer {
     public static List<Piece> initialize() {
         List<Piece> board = new ArrayList<>();
 
-        board.add(new Rook(new PieceInfo(Position.of("a8"), Team.BLACK)));
-        board.add(new Rook(new PieceInfo(Position.of("h8"), Team.BLACK)));
-        board.add(new Rook(new PieceInfo(Position.of("a1"), Team.WHITE)));
-        board.add(new Rook(new PieceInfo(Position.of("h1"), Team.WHITE)));
-
-        board.add(new Knight(new PieceInfo(Position.of("b8"), Team.BLACK)));
-        board.add(new Knight(new PieceInfo(Position.of("g8"), Team.BLACK)));
-        board.add(new Knight(new PieceInfo(Position.of("b1"), Team.WHITE)));
-        board.add(new Knight(new PieceInfo(Position.of("g1"), Team.WHITE)));
-
-        board.add(new Bishop(new PieceInfo(Position.of("c8"), Team.BLACK)));
-        board.add(new Bishop(new PieceInfo(Position.of("f8"), Team.BLACK)));
-        board.add(new Bishop(new PieceInfo(Position.of("c1"), Team.WHITE)));
-        board.add(new Bishop(new PieceInfo(Position.of("f1"), Team.WHITE)));
-
-        board.add(new Queen(new PieceInfo(Position.of("d8"), Team.BLACK)));
-        board.add(new King(new PieceInfo(Position.of("e8"), Team.BLACK)));
-        board.add(new Queen(new PieceInfo(Position.of("d1"), Team.WHITE)));
-        board.add(new King(new PieceInfo(Position.of("e1"), Team.WHITE)));
-
+        makeRook(board);
+        makeKnight(board);
+        makeBishop(board);
+        makeQueenAndKing(board);
         makeWhitePawn(board);
         makeBlackPawn(board);
         makeEmptyPieces(board);
 
         return board;
+    }
+
+    private static void makeRook(List<Piece> board) {
+        board.add(new Rook(new PieceInfo(Position.of("a8"), Team.BLACK)));
+        board.add(new Rook(new PieceInfo(Position.of("h8"), Team.BLACK)));
+        board.add(new Rook(new PieceInfo(Position.of("a1"), Team.WHITE)));
+        board.add(new Rook(new PieceInfo(Position.of("h1"), Team.WHITE)));
+    }
+
+    private static void makeKnight(List<Piece> board) {
+        board.add(new Knight(new PieceInfo(Position.of("b8"), Team.BLACK)));
+        board.add(new Knight(new PieceInfo(Position.of("g8"), Team.BLACK)));
+        board.add(new Knight(new PieceInfo(Position.of("b1"), Team.WHITE)));
+        board.add(new Knight(new PieceInfo(Position.of("g1"), Team.WHITE)));
+    }
+
+    private static void makeBishop(List<Piece> board) {
+        board.add(new Bishop(new PieceInfo(Position.of("c8"), Team.BLACK)));
+        board.add(new Bishop(new PieceInfo(Position.of("f8"), Team.BLACK)));
+        board.add(new Bishop(new PieceInfo(Position.of("c1"), Team.WHITE)));
+        board.add(new Bishop(new PieceInfo(Position.of("f1"), Team.WHITE)));
+    }
+
+    private static void makeQueenAndKing(List<Piece> board) {
+        board.add(new Queen(new PieceInfo(Position.of("d8"), Team.BLACK)));
+        board.add(new King(new PieceInfo(Position.of("e8"), Team.BLACK)));
+        board.add(new Queen(new PieceInfo(Position.of("d1"), Team.WHITE)));
+        board.add(new King(new PieceInfo(Position.of("e1"), Team.WHITE)));
     }
 
     private static void makeWhitePawn(List<Piece> board) {
