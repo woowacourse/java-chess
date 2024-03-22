@@ -41,6 +41,7 @@ public abstract class Piece implements Square {
         return color != endPiece.color;
     }
 
+    @Override
     public boolean isColor(Color color) {
         return this.color == color;
     }

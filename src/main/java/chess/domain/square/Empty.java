@@ -3,6 +3,7 @@ package chess.domain.square;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 
+import chess.domain.square.piece.Color;
 import java.util.Map;
 
 public class Empty implements Square {
@@ -27,5 +28,10 @@ public class Empty implements Square {
 
     @Override
     public void move() {
+    }
+
+    @Override
+    public boolean isColor(final Color color) {
+        return false;
     }
 }
