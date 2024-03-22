@@ -7,8 +7,10 @@ import model.position.Position;
 
 public final class Queen extends Piece {
 
+    private static final String QUEEN_NAME = "q";
+
     public Queen(final Camp camp) {
-        super(camp, new PieceName("q"));
+        super(camp, new PieceName(QUEEN_NAME));
     }
 
     @Override
