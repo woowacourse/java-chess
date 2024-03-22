@@ -11,6 +11,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(Path path);
 
+    public abstract void move();
+
     public boolean isBlack() {
         return this.color == Color.BLACK;
     }

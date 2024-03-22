@@ -14,5 +14,9 @@ public class Queen extends Piece {
         }
         return path.isNotAllyAtTarget() && path.hasCountOfDirection(1);
     }
+
+    @Override
+    public void move() {
+    }
 }
 

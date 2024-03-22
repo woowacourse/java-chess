@@ -3,8 +3,8 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Path;
 import chess.domain.board.LocationState;
+import chess.domain.board.Path;
 import chess.domain.board.Step;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -66,12 +66,14 @@ class WhitePawnTest {
         @DisplayName("움직인 적 있는 화이트 폰은 위로 두 번 이동할 수 없다.")
         @Test
         void movedWhitePawn_U_U_Test() {
+            WhitePawn movedPawn = new WhitePawn();
+            movedPawn.move();
             Path path = new Path(List.of(
                     new Step(Direction.UP, LocationState.EMPTY),
                     new Step(Direction.UP, LocationState.EMPTY)
             ));
-            WHITE_PAWN.canMove(path);
-            assertThat(WHITE_PAWN.canMove(path)).isFalse();
+
+            assertThat(movedPawn.canMove(path)).isFalse();
         }
 
         @DisplayName("화이트 폰은 대각선 위로 이동할 수 없다.")

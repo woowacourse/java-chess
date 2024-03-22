@@ -14,12 +14,6 @@ public abstract class Pawn extends Piece {
 
     @Override
     public boolean canMove(Path path) {
-        boolean checkMove = checkMovable(path);
-        moved = true;
-        return checkMove;
-    }
-
-    private boolean checkMovable(Path path) {
         if (isNotGeneralMove(path)) {
             return false;
         }
@@ -41,5 +35,10 @@ public abstract class Pawn extends Piece {
 
     private boolean isFirstMove() {
         return !moved;
+    }
+
+    @Override
+    public void move() {
+        moved = true;
     }
 }

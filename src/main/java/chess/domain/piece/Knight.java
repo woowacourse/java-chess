@@ -14,4 +14,8 @@ public class Knight extends Piece {
                 && path.containsDiagonalDirection()
                 && path.containsOrthogonalDirection();
     }
+
+    @Override
+    public void move() {
+    }
 }
