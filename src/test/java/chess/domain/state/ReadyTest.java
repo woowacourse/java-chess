@@ -52,7 +52,7 @@ class ReadyTest {
 
         // when, then
         assertThatThrownBy(() -> ready.play(List.of("ash", "ella")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("Ready는 종료되지 않은 상태이다.")

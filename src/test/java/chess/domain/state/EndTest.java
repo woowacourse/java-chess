@@ -50,7 +50,7 @@ class EndTest {
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("ash", "ella")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 
     @DisplayName("End는 종료된 상태이다.")

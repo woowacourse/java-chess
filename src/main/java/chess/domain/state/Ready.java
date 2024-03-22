@@ -20,13 +20,7 @@ public class Ready implements GameState {
         if (START_COMMAND.equals(command)) {
             return new Progress(chessBoard);
         }
-        if (MOVE_COMMAND.equals(command)) {
-            throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
-        }
-        if (END_COMMAND.equals(command)) {
-            throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
-        }
-        throw new IllegalArgumentException("올바르지 않은 command입니다.");
+        throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
     }
 
     @Override
