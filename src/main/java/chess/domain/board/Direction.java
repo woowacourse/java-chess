@@ -1,9 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.location.Location;
-import java.util.ArrayList;
-import java.util.List;
-
 public enum Direction {
     UP(1, 0),
     UP_RIGHT(1, 1),
@@ -23,7 +19,7 @@ public enum Direction {
         this.horizontal = horizontal;
     }
 
-    private static Direction of(int verticalDistance, int horizontalDistance) {
+    public static Direction of(int verticalDistance, int horizontalDistance) {
         if (verticalDistance > 0) {
             return createUpsideDirection(horizontalDistance);
         }
@@ -58,30 +54,6 @@ public enum Direction {
             return LEFT;
         }
         return RIGHT;
-    }
-
-    public static List<Direction> createDirections(Location source, Location target) {
-        int verticalDistance = source.calculateVerticalDistance(target);
-        int horizontalDistance = source.calculateHorizontalDistance(target);
-        return Direction.createDirectionsByDistance(verticalDistance, horizontalDistance);
-    }
-
-    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
-        validateDistance(verticalDistance, horizontalDistance);
-        List<Direction> directions = new ArrayList<>();
-        while (verticalDistance != 0 || horizontalDistance != 0) {
-            Direction direction = of(verticalDistance, horizontalDistance);
-            directions.add(direction);
-            verticalDistance -= direction.vertical;
-            horizontalDistance -= direction.horizontal;
-        }
-        return directions;
-    }
-
-    private static void validateDistance(int verticalDistance, int horizontalDistance) {
-        if (verticalDistance == 0 && horizontalDistance == 0) {
-            throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
-        }
     }
 
     public boolean isOrthogonal() {

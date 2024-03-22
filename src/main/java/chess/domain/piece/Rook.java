@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 
 public class Rook extends Piece {
     public Rook(Color color) {
@@ -8,13 +8,13 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Path path) {
-        if (path.hasPiecePathExcludedTarget()) {
+    public boolean canMove(Route route) {
+        if (route.hasPiecePathExcludedTarget()) {
             return false;
         }
-        if (path.containsDiagonal()) {
+        if (route.containsDiagonal()) {
             return false;
         }
-        return path.hasNoAllyAtTarget() && path.categoryNumOf(1);
+        return route.hasNoAllyAtTarget() && route.categoryNumOf(1);
     }
 }

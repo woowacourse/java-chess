@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 import chess.domain.board.SquareState;
 import chess.domain.board.Step;
 import java.util.List;
@@ -15,58 +15,58 @@ class BishopTest {
     @DisplayName("한 방향으로 이루어지지 않은 경로로 움직일 수 없다.")
     @Test
     void tooManyDirectionTest() {
-        Path manyDirectionPath = new Path(List.of(
+        Route manyDirectionRoute = new Route(List.of(
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN_RIGHT, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(BISHOP.canMove(manyDirectionPath))
+        Assertions.assertThat(BISHOP.canMove(manyDirectionRoute))
                 .isFalse();
     }
 
     @DisplayName("경로 중간에 기물이 위치한다면 움직일 수 없다.")
     @Test
     void pathHasPieceTest() {
-        Path notEmptyPath = new Path(List.of(
+        Route notEmptyRoute = new Route(List.of(
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.ALLY),
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(BISHOP.canMove(notEmptyPath))
+        Assertions.assertThat(BISHOP.canMove(notEmptyRoute))
                 .isFalse();
     }
 
     @DisplayName("목적지에 아군이 존재한다면 움직일 수 없다.")
     @Test
     void allyLocatedAtTargetTest() {
-        Path manyDirectionPath = new Path(List.of(
+        Route manyDirectionRoute = new Route(List.of(
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.ALLY)
         ));
 
-        Assertions.assertThat(BISHOP.canMove(manyDirectionPath))
+        Assertions.assertThat(BISHOP.canMove(manyDirectionRoute))
                 .isFalse();
     }
 
     @DisplayName("수직 방향으로 움직일 수 없다.")
     @Test
     void canNotMoveDiagonalTest() {
-        Path diagonalDirectionPath = new Path(List.of(
+        Route diagonalDirectionRoute = new Route(List.of(
                 new Step(Direction.UP, SquareState.EMPTY),
                 new Step(Direction.UP, SquareState.EMPTY),
                 new Step(Direction.UP, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(BISHOP.canMove(diagonalDirectionPath))
+        Assertions.assertThat(BISHOP.canMove(diagonalDirectionRoute))
                 .isFalse();
     }
 
     @DisplayName("최대 7칸까지 움직일 수 있다.")
     @Test
     void maxDistanceMoveTest() {
-        Path manyDirectionPath = new Path(List.of(
+        Route manyDirectionRoute = new Route(List.of(
                 new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
                 new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
                 new Step(Direction.DOWN_RIGHT, SquareState.EMPTY),
@@ -76,7 +76,7 @@ class BishopTest {
                 new Step(Direction.DOWN_RIGHT, SquareState.ENEMY)
         ));
 
-        Assertions.assertThat(BISHOP.canMove(manyDirectionPath))
+        Assertions.assertThat(BISHOP.canMove(manyDirectionRoute))
                 .isTrue();
     }
 }

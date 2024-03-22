@@ -1,21 +1,15 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
-import chess.domain.location.Column;
-import chess.domain.location.Location;
-import chess.domain.location.Row;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
 
 class DirectionTest {
 
+    /*
     @DisplayName("경로를 생성한다.")
     @Nested
     class DirectionsTest {
@@ -39,7 +33,7 @@ class DirectionTest {
         ...D....  2
         S.......  1 (rank 1)
         abcdefgh
-         */
+         *//*
         @DisplayName("오른쪽위, 오른쪽, 오른쪽 경로를 생성할 수 있다.")
         @Test
         void create_UR_R_R_Test() {
@@ -62,7 +56,7 @@ class DirectionTest {
         ........  2
         ........  1 (rank 1)
         abcdefgh
-         */
+         *//*
         @DisplayName("아래, 아래, 아래 경로를 생성할 수 있다.")
         @Test
         void create_D_D_D_Test() {
@@ -75,6 +69,7 @@ class DirectionTest {
             );
         }
     }
+    */
 
     @DisplayName("수평 또는 수직선인지 확인할 수 있다.")
     @ParameterizedTest

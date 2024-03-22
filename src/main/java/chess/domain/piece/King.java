@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 
 public class King extends Piece {
 
@@ -11,7 +11,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Path path) {
-        return path.isSizeOf(MAX_MOVE_DISTANCE) && path.hasNoAllyAtTarget();
+    public boolean canMove(Route route) {
+        return route.isSizeOf(MAX_MOVE_DISTANCE) && route.hasNoAllyAtTarget();
     }
 }

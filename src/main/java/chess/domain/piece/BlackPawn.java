@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 
 public class BlackPawn extends Pawn {
     public BlackPawn() {
@@ -8,7 +8,7 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    boolean isBackward(Path path) {
-        return path.isUpside();
+    boolean isBackward(Route route) {
+        return route.isUpside();
     }
 }

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 
 public abstract class Piece {
     private final Color color;
@@ -9,7 +9,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(Path path);
+    public abstract boolean canMove(Route route);
 
     public boolean isBlack() {
         return this.color == Color.BLACK;

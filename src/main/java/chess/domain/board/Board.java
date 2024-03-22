@@ -85,8 +85,8 @@ public class Board {
 
     public void tryMove(MoveCommand moveCommand) {
         Piece sourcePiece = findPieceAt(moveCommand.getSource());
-        Path path = createPath(moveCommand);
-        if (sourcePiece.canMove(path)) {
+        Route route = createPath(moveCommand);
+        if (sourcePiece.canMove(route)) {
             move(moveCommand, sourcePiece);
             return;
         }
@@ -98,10 +98,10 @@ public class Board {
         board.put(moveCommand.getTarget(), movingPiece);
     }
 
-    private Path createPath(MoveCommand moveCommand) {
-        List<Direction> directions = Direction.createDirections(moveCommand.getSource(), moveCommand.getTarget());
+    private Route createPath(MoveCommand moveCommand) {
+        List<Direction> directions = Path.createDirections(moveCommand.getSource(), moveCommand.getTarget());
         List<SquareState> squareStates = createPathState(moveCommand.getSource(), directions);
-        return Path.of(directions, squareStates);
+        return Route.of(directions, squareStates);
     }
 
     private List<SquareState> createPathState(Location current, List<Direction> directions) {

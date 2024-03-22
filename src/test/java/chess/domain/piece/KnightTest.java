@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 import chess.domain.board.SquareState;
 import chess.domain.board.Step;
 import java.util.List;
@@ -15,49 +15,49 @@ class KnightTest {
     @DisplayName("직선과 대각선을 모두 포함하고 있지 않은 경로로 움직일 수 없다.")
     @Test
     void orthogonalDirectionTest() {
-        Path orthogonalPath = new Path(List.of(
+        Route orthogonalRoute = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.UP, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(KNIGHT.canMove(orthogonalPath))
+        Assertions.assertThat(KNIGHT.canMove(orthogonalRoute))
                 .isFalse();
     }
 
     @DisplayName("경로 중간에 기물이 위치해도 움직일 수 있다..")
     @Test
     void pathHasPieceTest() {
-        Path notEmptyPath = new Path(List.of(
+        Route notEmptyRoute = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.ALLY),
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(KNIGHT.canMove(notEmptyPath))
+        Assertions.assertThat(KNIGHT.canMove(notEmptyRoute))
                 .isTrue();
     }
 
     @DisplayName("목적지에 아군이 존재한다면 움직일 수 없다.")
     @Test
     void allyLocatedAtTargetTest() {
-        Path allyTargetPath = new Path(List.of(
+        Route allyTargetRoute = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.ALLY)
         ));
 
-        Assertions.assertThat(KNIGHT.canMove(allyTargetPath))
+        Assertions.assertThat(KNIGHT.canMove(allyTargetRoute))
                 .isFalse();
     }
 
     @DisplayName("2칸이 아닌 경로로 움직일 수 없다.")
     @Test
     void maxDistanceMoveTest() {
-        Path wrongDistancePath = new Path(List.of(
+        Route wrongDistanceRoute = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
         ));
 
-        Assertions.assertThat(KNIGHT.canMove(wrongDistancePath))
+        Assertions.assertThat(KNIGHT.canMove(wrongDistanceRoute))
                 .isFalse();
     }
 }

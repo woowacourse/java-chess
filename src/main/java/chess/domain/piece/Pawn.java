@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 
 public abstract class Pawn extends Piece {
-    abstract boolean isBackward(Path path);
+    abstract boolean isBackward(Route route);
 
     private boolean moved = false;
 
@@ -12,30 +12,30 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Path path) {
-        boolean checkMove = checkMovable(path);
+    public boolean canMove(Route route) {
+        boolean checkMove = checkMovable(route);
         moved = true;
         return checkMove;
     }
 
-    private boolean checkMovable(Path path) {
-        if (isNotGeneralMove(path)) {
+    private boolean checkMovable(Route route) {
+        if (isNotGeneralMove(route)) {
             return false;
         }
-        if (path.containsDiagonal()) {
-            return path.isSizeOf(1) && path.isTargetHasEnemy();
+        if (route.containsDiagonal()) {
+            return route.isSizeOf(1) && route.isTargetHasEnemy();
         }
-        if (path.isSizeOf(2)) {
-            return path.isAllEmpty() && isFirstMove();
+        if (route.isSizeOf(2)) {
+            return route.isAllEmpty() && isFirstMove();
         }
-        return path.isSizeOf(1) && path.isAllEmpty();
+        return route.isSizeOf(1) && route.isAllEmpty();
     }
 
-    private boolean isNotGeneralMove(Path path) {
-        if (!path.categoryNumOf(1)) {
+    private boolean isNotGeneralMove(Route route) {
+        if (!route.categoryNumOf(1)) {
             return true;
         }
-        return isBackward(path);
+        return isBackward(route);
     }
 
     private boolean isFirstMove() {

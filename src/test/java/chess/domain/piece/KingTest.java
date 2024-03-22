@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Direction;
-import chess.domain.board.Path;
+import chess.domain.board.Route;
 import chess.domain.board.SquareState;
 import chess.domain.board.Step;
 import java.util.List;
@@ -19,43 +19,43 @@ class KingTest {
     @ParameterizedTest
     @EnumSource(Direction.class)
     void canMoveTest(Direction direction) {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(direction, SquareState.EMPTY)
         ));
 
-        assertThat(KING.canMove(path)).isTrue();
+        assertThat(KING.canMove(route)).isTrue();
     }
 
     @DisplayName("경로의 끝에 아군이 있다면 움직일 수 없다.")
     @ParameterizedTest
     @EnumSource(Direction.class)
     void allyLocatedAtTargetTest(Direction direction) {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(direction, SquareState.ALLY)
         ));
 
-        assertThat(KING.canMove(path)).isFalse();
+        assertThat(KING.canMove(route)).isFalse();
     }
 
     @DisplayName("경로의 끝에 적군이 있다면 움직일 수 있다.")
     @ParameterizedTest
     @EnumSource(Direction.class)
     void enemyLocatedAtTargetTest(Direction direction) {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(direction, SquareState.ENEMY)
         ));
 
-        assertThat(KING.canMove(path)).isTrue();
+        assertThat(KING.canMove(route)).isTrue();
     }
 
     @DisplayName("두 칸 이상의 경로는 움직일 수 없다.")
     @Test
     void tooLongPathTest() {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.DOWN, SquareState.EMPTY)
         ));
 
-        assertThat(KING.canMove(path)).isFalse();
+        assertThat(KING.canMove(route)).isFalse();
     }
 }

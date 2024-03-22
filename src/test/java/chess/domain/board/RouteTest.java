@@ -9,12 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class PathTest {
+class RouteTest {
     @DisplayName("경로의 길이는 7칸을 넘을 수 없다.")
     @Test
     void pathMaxLengthTest() {
         assertThatThrownBy(
-                () -> new Path(List.of(
+                () -> new Route(List.of(
                         new Step(Direction.DOWN, SquareState.EMPTY),
                         new Step(Direction.DOWN, SquareState.EMPTY),
                         new Step(Direction.DOWN, SquareState.EMPTY),
@@ -31,7 +31,7 @@ class PathTest {
     @DisplayName("경로의 길이는 1칸 이상이어야 한다.")
     @Test
     void pathMinLengthTest() {
-        assertThatThrownBy(() -> new Path(Collections.emptyList()))
+        assertThatThrownBy(() -> new Route(Collections.emptyList()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("제자리 경로를 생성할 수 없습니다.");
     }
@@ -39,24 +39,24 @@ class PathTest {
     @DisplayName("경로의 길이를 판별할 수 있다.")
     @Test
     void isSizeOfTest() {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(Direction.DOWN, SquareState.EMPTY),
                 new Step(Direction.DOWN, SquareState.EMPTY)
         ));
 
-        assertThat(path.isSizeOf(2)).isTrue();
+        assertThat(route.isSizeOf(2)).isTrue();
     }
 
     @DisplayName("방향의 종류 개수를 판별할 수 있다.")
     @Test
     void categoryNumOfTest() {
-        Path path = new Path(List.of(
+        Route route = new Route(List.of(
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                 new Step(Direction.DOWN, SquareState.EMPTY)
         ));
 
-        assertThat(path.categoryNumOf(2)).isTrue();
+        assertThat(route.categoryNumOf(2)).isTrue();
     }
 
     @DisplayName("대각선을 포함하고 있는지 확인할 수 있다.")
@@ -66,24 +66,24 @@ class PathTest {
         @DisplayName("대각선을 포함하고 있다면 참을 반환한다.")
         @Test
         void containsTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN, SquareState.EMPTY)
             ));
 
-            assertThat(path.containsDiagonal()).isTrue();
+            assertThat(route.containsDiagonal()).isTrue();
         }
 
         @DisplayName("대각선을 포함하고 있지 않다면 거짓을 반환한다.")
         @Test
         void notContainsTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN, SquareState.EMPTY),
                     new Step(Direction.UP, SquareState.EMPTY)
             ));
 
-            assertThat(path.containsDiagonal()).isFalse();
+            assertThat(route.containsDiagonal()).isFalse();
         }
     }
 
@@ -93,22 +93,22 @@ class PathTest {
         @DisplayName("수직 또는 수평선을 포함하고 있다면 참을 반환한다.")
         @Test
         void containsTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN, SquareState.EMPTY)
             ));
-            assertThat(path.containsOrthogonal()).isTrue();
+            assertThat(route.containsOrthogonal()).isTrue();
         }
 
         @DisplayName("수직 또는 수평선을 포함하고 있지 않다면 거짓을 반환한다.")
         @Test
         void notContainsTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
             ));
-            assertThat(path.containsOrthogonal()).isFalse();
+            assertThat(route.containsOrthogonal()).isFalse();
         }
     }
 
@@ -118,22 +118,22 @@ class PathTest {
         @DisplayName("경로에 다른 기물이 없으면 참을 반환한다.")
         @Test
         void emptyTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
             ));
-            assertThat(path.isAllEmpty()).isTrue();
+            assertThat(route.isAllEmpty()).isTrue();
         }
 
         @DisplayName("경로에 다른 기물이 있으면 거짓을 반환한다.")
         @Test
         void notEmptyTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.ALLY)
             ));
 
-            assertThat(path.isAllEmpty()).isFalse();
+            assertThat(route.isAllEmpty()).isFalse();
         }
     }
 
@@ -144,35 +144,35 @@ class PathTest {
         @DisplayName("목적지가 비어있으면 도달할 수 있다.")
         @Test
         void emptyTargetTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isTrue();
+            assertThat(route.hasNoAllyAtTarget()).isTrue();
         }
 
         @DisplayName("목적지에 적 기물이 있으면 도달할 수 있다.")
         @Test
         void enemyTargetTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.ENEMY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isTrue();
+            assertThat(route.hasNoAllyAtTarget()).isTrue();
         }
 
 
         @DisplayName("목적지에 아군 기물이 있으면 도달할 수 없다.")
         @Test
         void allyTargetTest() {
-            Path path = new Path(List.of(
+            Route route = new Route(List.of(
                     new Step(Direction.DOWN_LEFT, SquareState.EMPTY),
                     new Step(Direction.DOWN_LEFT, SquareState.ALLY)
             ));
 
-            assertThat(path.hasNoAllyAtTarget()).isFalse();
+            assertThat(route.hasNoAllyAtTarget()).isFalse();
         }
     }
 }
