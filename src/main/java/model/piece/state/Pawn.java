@@ -34,11 +34,14 @@ public final class Pawn extends Role {
     @Override
     protected Route findMovingPatternRoute(MovingPattern movingPattern, Position movedPosition) {
         List<Position> sequentialPositions = new ArrayList<>();
-        movedPosition = movedPosition.getNextPosition(movingPattern);
-        sequentialPositions.add(movedPosition);
+        if (movedPosition.isAvailablePosition(movingPattern)) {
+            movedPosition = movedPosition.getNextPosition(movingPattern);
+            sequentialPositions.add(movedPosition);
+        }
         if (isInitialMove && (movingPattern == N || movingPattern == S)) {
             movedPosition = movedPosition.getNextPosition(movingPattern);
             sequentialPositions.add(movedPosition);
+            isInitialMove = false;
         }
         return new Route(sequentialPositions);
     }
