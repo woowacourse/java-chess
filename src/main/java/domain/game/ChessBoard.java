@@ -2,8 +2,8 @@ package domain.game;
 
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.piece.PieceGenerator;
 import domain.position.Position;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +12,7 @@ public class ChessBoard {
     private final Map<Square, Piece> pieceBySquare;
 
     public ChessBoard() {
-        this.pieceBySquare = new HashMap<>();
+        this.pieceBySquare = PieceGenerator.generate();
     }
 
     public void add(Square square, Piece piece) {
