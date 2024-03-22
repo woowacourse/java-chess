@@ -20,7 +20,7 @@ public enum Command {
         if (command.equals(END.value)) {
             return END;
         }
-        if (command.startsWith(MOVE.value)) {
+        if (command.equals(MOVE.value)) {
             return MOVE;
         }
         throw new IllegalArgumentException(UNSUPPORTED_COMMAND);

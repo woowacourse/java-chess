@@ -10,7 +10,7 @@ public class InputView {
     }
 
     public static String inputCommand() {
-        String command = scanner.nextLine();
+        String command = scanner.next();
         validateCommand(command);
         return command;
     }

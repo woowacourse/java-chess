@@ -12,14 +12,13 @@ import dto.DtoMapper;
 import dto.RankInfo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import view.Command;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    public static final String DELIMITER = " ";
-    public static final int SOURCE_POSITION = 1;
-    public static final int TARGET_POSITION = 2;
+    private static final Pattern VALID_POSITION_INPUT = Pattern.compile("[^a-h][^1-8]");
 
     public void start() {
         OutputView.printGameStartMessage();
@@ -40,16 +39,16 @@ public class ChessController {
     }
 
     private void movePiecesByCommandOn(final Board board) {
-        String command;
-        command = InputView.inputCommand();
+        String command = InputView.inputCommand();
         while (MOVE.equals(Command.of(command))) {
-            command = inputCommandUntilNoException(command, board);
+            command = inputCommandUntilNoException(board);
         }
     }
 
-    private String inputCommandUntilNoException(String command, final Board board) {
+    private String inputCommandUntilNoException(final Board board) {
+        String command;
         try {
-            command = nextCommand(command, board);
+            command = nextCommand(board);
         } catch (Exception e) {
             OutputView.printErrorMessage(e.getMessage());
             command = InputView.inputCommand();
@@ -57,26 +56,31 @@ public class ChessController {
         return command;
     }
 
-    private String nextCommand(String command, final Board board) {
-        final String[] splitCommand = command.split(DELIMITER);
-        moveByCommand(board, splitCommand);
+    private String nextCommand(final Board board) {
+        moveByCommand(board);
 
         OutputView.printChessBoard(createRankInfo(board));
-        command = InputView.inputCommand();
-        return command;
+        return InputView.inputCommand();
     }
 
-    private void moveByCommand(final Board board, final String[] splitCommand) {
-        if (splitCommand.length != 1) {
-            move(splitCommand, board);
+    private void moveByCommand(final Board board) {
+        final String source = InputView.inputCommand();
+        final String target = InputView.inputCommand();
+        validatePositionCommands(source, target);
+        move(source, target, board);
+    }
+
+    private void validatePositionCommands(final String source, final String target) {
+        if (Pattern.matches(VALID_POSITION_INPUT.pattern(), source)) {
+            throw new IllegalArgumentException("잘못된 시작 위치 입력입니다.");
+        }
+        if (Pattern.matches(VALID_POSITION_INPUT.pattern(), target)) {
+            throw new IllegalArgumentException("잘못된 목표 위치 입력입니다.");
         }
     }
 
-    public void move(final String[] splitCommand, final Board board) {
-        final String source = splitCommand[SOURCE_POSITION];
+    public void move(final String source, final String target, final Board board) {
         final Position sourcePosition = Position.createPosition(source);
-
-        final String target = splitCommand[TARGET_POSITION];
         final Position targetPosition = Position.createPosition(target);
 
         board.moveByPosition(sourcePosition, targetPosition);
