@@ -40,8 +40,8 @@ public class ChessGame {
 
     public void setting() {
         settingExceptPawn(Camp.BLACK, Row.EIGHTH);
-        settingPawn(Camp.BLACK, Row.SEVENTH);
-        settingPawn(Camp.WHITE, Row.SECOND);
+        settingBlackPawn();
+        settingWhitePawn();
         settingExceptPawn(Camp.WHITE, Row.FIRST);
     }
 
@@ -51,9 +51,15 @@ public class ChessGame {
         }
     }
 
-    private void settingPawn(final Camp camp, final Row row) {
+    private void settingBlackPawn() {
         for (Column column : Column.values()) {
-            board.put(new Position(column, row), new Pawn(camp));
+            board.put(new Position(column, Row.SEVENTH), new BlackPawn());
+        }
+    }
+
+    private void settingWhitePawn() {
+        for (Column column : Column.values()) {
+            board.put(new Position(column, Row.SECOND), new WhitePawn());
         }
     }
 
