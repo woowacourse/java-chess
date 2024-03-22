@@ -10,8 +10,6 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.character.Team;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BoardFactory {
     private BoardFactory() {
@@ -19,20 +17,19 @@ public class BoardFactory {
 
     public static Map<Position, Piece> generateStartBoard() {
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.putAll(createPawn(2, Team.WHITE));
-        pieces.putAll(createPawn(7, Team.BLACK));
+        pieces.putAll(createPawnRow(2, Team.WHITE));
+        pieces.putAll(createPawnRow(7, Team.BLACK));
         pieces.putAll(createEdgeRow(1, Team.WHITE));
         pieces.putAll(createEdgeRow(8, Team.BLACK));
         return pieces;
     }
 
-    private static Map<Position, Piece> createPawn(int row, Team team) {
-        return IntStream.rangeClosed(1, 8)
-                .boxed()
-                .collect(Collectors.toMap(
-                        column -> Position.of(row, column),
-                        column -> new Pawn(team, true)
-                ));
+    private static Map<Position, Piece> createPawnRow(int row, Team team) {
+        Map<Position, Piece> pawnRow = new HashMap<>();
+        for (int column = 1; column <= 8; column++) {
+            pawnRow.put(Position.of(row, column), new Pawn(team, true));
+        }
+        return pawnRow;
     }
 
     private static Map<Position, Piece> createEdgeRow(int row, Team team) {
