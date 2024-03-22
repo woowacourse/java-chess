@@ -40,14 +40,15 @@ public class Pawn extends Piece {
     }
 
     private void addForwardMoves(Board board, Direction direction, Position position, Set<Position> movablePositions) {
-        if (!direction.isDiagonal()) {
-            int currentRank = position.getRank();
-            Position nextPosition = position.next(direction);
-            Piece firstPiece = board.findPieceByPosition(nextPosition);
-            if (firstPiece.isEmpty()) {
-                movablePositions.add(nextPosition);
-                addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
-            }
+        if (direction.isDiagonal()) {
+            return;
+        }
+        int currentRank = position.getRank();
+        Position nextPosition = position.next(direction);
+        Piece firstPiece = board.findPieceByPosition(nextPosition);
+        if (firstPiece.isEmpty()) {
+            movablePositions.add(nextPosition);
+            addMultipleForwardMoves(board, direction, movablePositions, currentRank, nextPosition);
         }
     }
 
