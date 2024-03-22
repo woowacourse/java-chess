@@ -40,9 +40,8 @@ public class Column {
         }
     }
 
-    public Column update(int direction) {
-        int columnDirection = direction;
-        return CACHE.get(this.value + columnDirection);
+    public Column update(int value) {
+        return CACHE.get(this.value + value);
     }
 
     public int subtractColumn(Column column) {
@@ -51,10 +50,6 @@ public class Column {
 
     public int compare(Column column) {
         return Integer.compare(column.value, value);
-    }
-
-    public int getValue() {
-        return value;
     }
 
     @Override

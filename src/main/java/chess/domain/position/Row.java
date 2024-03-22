@@ -47,6 +47,10 @@ public class Row {
         }
     }
 
+    public int subtractRow(Row row) {
+        return this.value - row.value;
+    }
+
     public int compare(Row row) {
         return Integer.compare(row.value, value);
     }

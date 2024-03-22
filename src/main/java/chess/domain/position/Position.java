@@ -25,17 +25,14 @@ public class Position {
     }
 
     public int calculateRowDistance(Position target) {
-        return Math.abs(row.getValue() - target.row.getValue());
+        return Math.abs(row.subtractRow(target.row));
     }
 
     public int calculateColumnDistance(Position target) {
-        return Math.abs(column.getValue() - target.getColumn().getValue());
+        return Math.abs(subtractColumns(target));
     }
 
-    public int calculatePawnColumnDistance(Position target, Team team) {
-        if (team.isWhite()) {
-            return target.column.subtractColumn(column);
-        }
+    public int subtractColumns(Position target) {
         return column.subtractColumn(target.column);
     }
 

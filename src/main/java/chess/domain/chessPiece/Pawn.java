@@ -48,8 +48,16 @@ public class Pawn extends Piece {
     }
 
     private boolean moveForwardTwice(Position source, Position target) {
-        int columnDistance = source.calculatePawnColumnDistance(target, team);
+        int columnDistance = calculatePawnColumnDistance(source, target);
         return isStartPosition(source) && source.isSameRow(target) && columnDistance == 2;
+    }
+
+    private int calculatePawnColumnDistance(Position source, Position target) {
+        int columnDistance = source.subtractColumns(target);
+        if(team == WHITE) {
+            columnDistance *= -1;
+        }
+        return columnDistance;
     }
 
     private boolean isStartPosition(Position source) {
@@ -60,13 +68,13 @@ public class Pawn extends Piece {
     }
 
     private boolean moveForward(Position source, Position target) {
-        int columnDistance = source.calculatePawnColumnDistance(target, team);
+        int columnDistance = calculatePawnColumnDistance(source, target);
         return source.isSameRow(target) && columnDistance == 1;
     }
 
     private boolean attack(Position source, Position target) {
         int rowDistance = source.calculateRowDistance(target);
-        int colDistance = source.calculatePawnColumnDistance(target, team);
+        int colDistance = calculatePawnColumnDistance(source, target);
         return rowDistance == 1 && colDistance == 1;
     }
 
