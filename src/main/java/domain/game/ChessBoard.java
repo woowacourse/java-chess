@@ -115,18 +115,18 @@ public class ChessBoard {
         if (findPiece.isNotKnight()) {
             Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
 
-            Position here = new Position(sourceSquare.position());
-            here.move(direction);
-            checkPieceOnRoute(targetSquare, here, direction);
+            Position position = new Position(sourceSquare.position());
+            position.move(direction);
+            checkPieceOnRoute(targetSquare, position, direction);
         }
     }
 
-    private void checkPieceOnRoute(Square targetSquare, Position here, Direction direction) {
-        while (!here.equals(targetSquare.position())) {
-            if (pieceBySquare.containsKey(new Square(here))) {
+    private void checkPieceOnRoute(Square targetSquare, Position position, Direction direction) {
+        while (!position.equals(targetSquare.position())) {
+            if (pieceBySquare.containsKey(new Square(position))) {
                 throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
             }
-            here.move(direction);
+            position.move(direction);
         }
     }
 
