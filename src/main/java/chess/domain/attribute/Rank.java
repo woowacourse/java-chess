@@ -11,8 +11,7 @@ public enum Rank {
     FOUR(4),
     THREE(3),
     TWO(2),
-    ONE(1)
-    ;
+    ONE(1);
 
     private static final int RANK_MAX = 8;
     private static final int RANK_MIN = 1;

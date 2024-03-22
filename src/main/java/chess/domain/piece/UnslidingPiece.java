@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
-import java.util.Collection;
-import java.util.Optional;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
+import java.util.Collection;
+import java.util.Optional;
 
 public abstract class UnslidingPiece extends Piece {
     protected UnslidingPiece(final Color color, final PieceType pieceType) {

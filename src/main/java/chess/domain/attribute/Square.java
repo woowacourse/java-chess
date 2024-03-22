@@ -1,11 +1,10 @@
 package chess.domain.attribute;
 
+import chess.domain.chessboard.attribute.Direction;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
-import chess.domain.chessboard.attribute.Direction;
 
 public class Square {
 

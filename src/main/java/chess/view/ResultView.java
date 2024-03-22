@@ -2,9 +2,8 @@ package chess.view;
 
 import static chess.view.command.Command.END;
 
-import java.util.List;
-
 import chess.view.dto.ChessboardDto;
+import java.util.List;
 
 public class ResultView {
 

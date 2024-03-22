@@ -1,11 +1,10 @@
 package chess.domain.chessboard.attribute;
 
+import chess.domain.attribute.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import chess.domain.attribute.Color;
 
 public enum Direction {
     UP(1, 0),
@@ -15,8 +14,7 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(-1, 1),
     LEFT(0, -1),
-    RIGHT(0, 1)
-    ;
+    RIGHT(0, 1);
 
     private final int row;
     private final int column;

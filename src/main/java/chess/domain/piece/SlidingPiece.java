@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.attribute.Color;
+import chess.domain.attribute.Square;
+import chess.domain.chessboard.attribute.Direction;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
-import chess.domain.chessboard.attribute.Direction;
 
 public abstract class SlidingPiece extends Piece {
     protected SlidingPiece(final Color color, final PieceType pieceType) {

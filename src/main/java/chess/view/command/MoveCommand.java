@@ -1,8 +1,7 @@
 package chess.view.command;
 
-import java.util.List;
-
 import chess.domain.attribute.Square;
+import java.util.List;
 
 public class MoveCommand {
 

@@ -1,12 +1,11 @@
 package chess.domain.piece;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class King extends UnslidingPiece {
 

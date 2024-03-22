@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.attribute.Color;
+import chess.domain.attribute.Square;
+import chess.domain.chessboard.attribute.Direction;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Square;
-import chess.domain.chessboard.attribute.Direction;
 
 public class StartingPawn extends AbstractPawn {
 

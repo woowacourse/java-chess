@@ -3,11 +3,6 @@ package chess.domain.chessboard;
 import static chess.domain.attribute.Color.BLACK;
 import static chess.domain.attribute.Color.WHITE;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
 import chess.domain.piece.Bishop;
@@ -18,8 +13,12 @@ import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class  Chessboard {
+public class Chessboard {
 
     private final Map<Square, Piece> chessboard;
 
@@ -99,6 +98,7 @@ public class  Chessboard {
             chessboard.put(target, tempPiece);
         }
     }
+
     private boolean isOccupied(final Square square) {
         return chessboard.containsKey(square);
     }

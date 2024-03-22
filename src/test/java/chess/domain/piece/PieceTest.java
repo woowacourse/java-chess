@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import static chess.domain.attribute.Color.WHITE;
 import static chess.domain.attribute.Rank.EIGHT;
 import static chess.domain.attribute.Rank.FIVE;
@@ -11,18 +9,17 @@ import static chess.domain.attribute.Rank.SEVEN;
 import static chess.domain.attribute.Rank.SIX;
 import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
-
-import java.util.Set;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.attribute.File;
 import chess.domain.attribute.Rank;
 import chess.domain.attribute.Square;
+import java.util.Set;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PieceTest {
 

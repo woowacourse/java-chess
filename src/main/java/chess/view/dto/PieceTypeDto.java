@@ -2,11 +2,10 @@ package chess.view.dto;
 
 import static chess.domain.attribute.Color.BLACK;
 
-import java.util.Arrays;
-
 import chess.domain.attribute.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import java.util.Arrays;
 
 public enum PieceTypeDto {
 
@@ -15,8 +14,7 @@ public enum PieceTypeDto {
     BISHOP(PieceType.BISHOP, "b"),
     KNIGHT(PieceType.KNIGHT, "n"),
     ROOK(PieceType.ROOK, "r"),
-    PAWN(PieceType.PAWN, "p")
-    ;
+    PAWN(PieceType.PAWN, "p");
 
     private static final String EMPTY = ".";
 

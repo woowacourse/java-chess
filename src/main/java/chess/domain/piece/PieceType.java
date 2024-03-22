@@ -9,10 +9,9 @@ import static chess.domain.attribute.File.startRookFileOf;
 import static chess.domain.attribute.Rank.startPawnRankOf;
 import static chess.domain.attribute.Rank.startRankOf;
 
-import java.util.function.BiFunction;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
+import java.util.function.BiFunction;
 
 public enum PieceType {
     KING(1, (color, index) -> Square.of(startKingFile(), startRankOf(color))),

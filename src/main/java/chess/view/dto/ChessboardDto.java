@@ -1,14 +1,13 @@
 package chess.view.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import chess.domain.attribute.File;
 import chess.domain.attribute.Rank;
 import chess.domain.attribute.Square;
 import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.Piece;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ChessboardDto {
 

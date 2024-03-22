@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Objects;
-import java.util.Set;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
+import java.util.Objects;
+import java.util.Set;
 
 public abstract class Piece {
 

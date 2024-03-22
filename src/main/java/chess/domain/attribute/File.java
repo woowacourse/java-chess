@@ -15,8 +15,7 @@ public enum File {
     E(5),
     F(6),
     G(7),
-    H(8)
-    ;
+    H(8);
 
     private static final int FILE_MIN = 1;
     private static final int FILE_MAX = 8;

@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Set;
-
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
+import java.util.Set;
 
 public class Queen extends SlidingPiece {
     public Queen(final Color color) {
