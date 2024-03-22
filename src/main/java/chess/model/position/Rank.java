@@ -46,6 +46,10 @@ public enum Rank {
         return SEVEN.equals(this);
     }
 
+    public static int length() {
+        return values().length;
+    }
+
     public int getCoordinate() {
         return coordinate;
     }

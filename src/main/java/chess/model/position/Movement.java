@@ -9,12 +9,22 @@ import static java.lang.Math.abs;
 import static java.util.Collections.unmodifiableList;
 
 public class Movement {
+    private static final int MAX_DIFFERENCE = Rank.length() - 1;
+
     private final int fileDifference;
     private final int rankDifference;
 
     public Movement(int fileDifference, int rankDifference) {
+        validateDifference(fileDifference);
+        validateDifference(rankDifference);
         this.fileDifference = fileDifference;
         this.rankDifference = rankDifference;
+    }
+
+    private void validateDifference(int difference) {
+        if (abs(difference) > MAX_DIFFERENCE) {
+            throw new IllegalArgumentException("File 혹은 Rank의 좌표차 절댓값는 " + MAX_DIFFERENCE + " 이하입니다.");
+        }
     }
 
     public boolean isForward(Side side) {

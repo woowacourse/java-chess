@@ -1,6 +1,7 @@
 package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class MovementTest {
+
+    @ParameterizedTest
+    @CsvSource(value = {"8,8", "1,8", "8,-2"})
+    @DisplayName("File 혹은 Rank의 좌표차 절댓값이 7 초과이면 예외가 발생한다.")
+    void validateDifference(int fileDifference, int rankDifference) {
+        System.out.println(Rank.length());
+        // whe & then
+        assertThatThrownBy(
+                () -> new Movement(fileDifference, rankDifference)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 
     @ParameterizedTest
     @CsvSource(value = {"1,1,true", "1,-1,true", "0,1,false"})
