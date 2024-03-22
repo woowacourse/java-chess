@@ -13,13 +13,13 @@ import chess.view.OutputView;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ChessGame {
+public class ChessGameController {
     private static final Color START_COLOR = Color.WHITE;
 
     private final OutputView outputView;
     private final InputView inputView;
 
-    public ChessGame(OutputView outputView, InputView inputView) {
+    public ChessGameController(OutputView outputView, InputView inputView) {
         this.outputView = outputView;
         this.inputView = inputView;
     }
