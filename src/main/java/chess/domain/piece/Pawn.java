@@ -13,9 +13,9 @@ public abstract class Pawn extends Piece {
 
     @Override
     public boolean canMove(Route route) {
-        boolean checkMove = checkMovable(route);
-        moved = true;
-        return checkMove;
+        boolean movable = checkMovable(route);
+        checkMoved(movable);
+        return movable;
     }
 
     private boolean checkMovable(Route route) {
@@ -29,6 +29,12 @@ public abstract class Pawn extends Piece {
             return route.isAllEmpty() && isFirstMove();
         }
         return route.isSizeOf(1) && route.isAllEmpty();
+    }
+
+    private void checkMoved(boolean movable) {
+        if (movable) {
+            moved = true;
+        }
     }
 
     private boolean isNotGeneralMove(Route route) {
