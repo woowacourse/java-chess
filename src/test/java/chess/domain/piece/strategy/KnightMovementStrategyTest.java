@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class KnightTest {
+class KnightMovementStrategyTest {
 
     static Stream<Arguments> canKnightMoveL_ShapeDirectionArguments() {
         return Stream.of(
@@ -67,5 +67,4 @@ class KnightTest {
         // then
         assertThat(result).isFalse();
     }
-
 }

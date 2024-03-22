@@ -31,5 +31,4 @@ class PieceTest {
         // then
         assertThat(result).isEqualTo(expected);
     }
-
 }

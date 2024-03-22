@@ -1,4 +1,4 @@
-package chess.domain.piece.type;
+package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RookTest {
+class BishopMovementStrategyTest {
 
-    static Stream<Arguments> canRookMoveCrossArguments() {
+    static Stream<Arguments> cannotBishopMoveCrossArguments() {
         return Stream.of(
                 Arguments.arguments(Position.of("d4"), Position.of("d3")),
                 Arguments.arguments(Position.of("d4"), Position.of("h4")),
@@ -23,7 +23,7 @@ class RookTest {
         );
     }
 
-    static Stream<Arguments> cannotRookMoveDiagonalArguments() {
+    static Stream<Arguments> canBishopMoveDiagonalArguments() {
         return Stream.of(
                 Arguments.arguments(Position.of("d4"), Position.of("e5")),
                 Arguments.arguments(Position.of("d4"), Position.of("c5")),
@@ -32,32 +32,31 @@ class RookTest {
         );
     }
 
-    @DisplayName("룩은 상하좌우로 원하는 만큼 움직일 수 있다.")
+    @DisplayName("비숍은 상하좌우로 움직일 수 없다.")
     @ParameterizedTest
-    @MethodSource("canRookMoveCrossArguments")
-    void canRookMoveDirection(Position source, Position target) {
+    @MethodSource("cannotBishopMoveCrossArguments")
+    void cannotBishopMoveCross(Position source, Position target) {
         // given
-        Piece rook = new Piece(PieceType.BLACK_ROOK);
+        Piece bishop = new Piece(PieceType.BLACK_BISHOP);
 
         // when
-        boolean result = rook.isInMovableRange(source, target);
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @DisplayName("룩은 대각선으로 움직일 수 없다.")
-    @ParameterizedTest
-    @MethodSource("cannotRookMoveDiagonalArguments")
-    void cannotRookMoveDiagonal(Position source, Position target) {
-        // given
-        Piece rook = new Piece(PieceType.BLACK_ROOK);
-
-        // when
-        boolean result = rook.isInMovableRange(source, target);
+        boolean result = bishop.isInMovableRange(source, target);
 
         // then
         assertThat(result).isFalse();
     }
 
+    @DisplayName("비숍은 대각선으로 원하는 만큼 움직일 수 있다.")
+    @ParameterizedTest
+    @MethodSource("canBishopMoveDiagonalArguments")
+    void canBishopMoveDiagonal(Position source, Position target) {
+        // given
+        Piece bishop = new Piece(PieceType.BLACK_BISHOP);
+
+        // when
+        boolean result = bishop.isInMovableRange(source, target);
+
+        // then
+        assertThat(result).isTrue();
+    }
 }
