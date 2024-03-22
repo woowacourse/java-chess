@@ -34,7 +34,7 @@ public class Board {
         checkMovable(source, destination);
 
         moveOrCatch(source, destination);
-        turn.update();
+        turn.next();
     }
 
     private void checkMovable(Square source, Square destination) {

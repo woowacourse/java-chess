@@ -11,7 +11,7 @@ public class Turn {
         this.count = 1;
     }
 
-    public void update() {
+    public void next() {
         count++;
     }
 
