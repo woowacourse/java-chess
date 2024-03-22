@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.dto.PieceInfo;
 import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.dto.BoardStatus;
+import chess.dto.PieceInfo;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
@@ -20,23 +20,24 @@ public class OutputView {
     }
 
     public void printGameStartMessage() {
-        StringJoiner startMessageJoiner = new StringJoiner("%n");
+        StringJoiner startMessageJoiner = new StringJoiner(System.lineSeparator());
         startMessageJoiner.add("> 체스 게임을 시작합니다.");
         startMessageJoiner.add("> 게임 시작 : start");
         startMessageJoiner.add("> 게임 종료 : end");
         startMessageJoiner.add("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
-        System.out.println(String.format(startMessageJoiner.toString()));
+
+        System.out.println(startMessageJoiner);
     }
 
     public void printChessBoard(final BoardStatus status) {
         String[][] board = createInitBoard();
         applyBoardStatus(status, board);
 
-        StringJoiner boardJoiner = new StringJoiner("%n");
+        StringJoiner boardJoiner = new StringJoiner(System.lineSeparator());
         for (String[] line : board) {
             boardJoiner.add(createBoardLine(line));
         }
-        System.out.println(String.format(boardJoiner + System.lineSeparator()));
+        System.out.println(boardJoiner + System.lineSeparator());
     }
 
     private String[][] createInitBoard() {
