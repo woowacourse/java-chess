@@ -1,10 +1,13 @@
 package model.menu;
 
+import java.util.List;
 import model.Command;
 
-import java.util.List;
-
 public class Init {
+
+    private Init() {
+
+    }
 
     public static ChessStatus gameSetting(List<String> input) {
         Command command = Command.from(input.get(0));
