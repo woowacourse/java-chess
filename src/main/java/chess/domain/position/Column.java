@@ -49,10 +49,6 @@ public class Column {
         return this.value - column.value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public int compare(Column column) {
         if(value > column.value) {
             return -1;
@@ -61,6 +57,10 @@ public class Column {
             return 0;
         }
         return 1;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

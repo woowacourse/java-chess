@@ -33,10 +33,6 @@ public class ChessBoard {
         return new ChessBoard(board);
     }
 
-    public Map<Column, Line> getChessBoard() {
-        return Collections.unmodifiableMap(chessBoard);
-    }
-
     public void move(Position source, Position target) {
         Piece piece = findChessPiece(source);
         piece.getRoute(source, target)
@@ -74,5 +70,9 @@ public class ChessBoard {
         Row row = source.getRow();
         Line chessPieces = chessBoard.get(column);
         return chessPieces.getChessPiece(row);
+    }
+
+    public Map<Column, Line> getChessBoard() {
+        return Collections.unmodifiableMap(chessBoard);
     }
 }

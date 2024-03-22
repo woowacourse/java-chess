@@ -47,12 +47,12 @@ public class Row {
         }
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public int compare(Row row) {
         return Integer.compare(row.value, value);
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

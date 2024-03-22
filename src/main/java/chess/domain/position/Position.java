@@ -20,29 +20,8 @@ public class Position {
         return new Position(row, column);
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Column getColumn() {
-        return column;
-    }
-
     public Position move(int rowDirection, int columnDirection) {
         return new Position(row.update(rowDirection), column.update(columnDirection));
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Position position = (Position) object;
-        return row == position.row && column == position.column;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(row, column);
     }
 
     public int calculateRowDistance(Position target) {
@@ -83,5 +62,26 @@ public class Position {
 
     public int compareColumn(Position target) {
         return column.compare(target.column);
+    }
+
+    public Row getRow() {
+        return row;
+    }
+
+    public Column getColumn() {
+        return column;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Position position = (Position) object;
+        return row == position.row && column == position.column;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, column);
     }
 }

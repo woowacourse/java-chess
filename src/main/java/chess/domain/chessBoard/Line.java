@@ -14,17 +14,17 @@ public class Line {
         this.line = line;
     }
 
+    public Line update(Row row, Piece chessPiece) {
+        List<Piece> line = new ArrayList<>(this.line);
+        line.set(row.getValue(), chessPiece);
+        return new Line(line);
+    }
+
     public List<Piece> getLine() {
         return Collections.unmodifiableList(line);
     }
 
     public Piece getChessPiece(Row row) {
         return line.get(row.getValue());
-    }
-
-    public Line update(Row row, Piece chessPiece) {
-        List<Piece> line = new ArrayList<>(this.line);
-        line.set(row.getValue(), chessPiece);
-        return new Line(line);
     }
 }
