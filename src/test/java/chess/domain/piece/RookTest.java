@@ -15,12 +15,12 @@ class RookTest {
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenRookMoveWhenMeetTeamMThenStop() {
-        Rook rook = Rook.ofWhite();
+        Rook rook = Rook.WHITE;
         Position currentRookPosition = Position.of(File.A, Rank.ONE);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                Position.of(File.A, Rank.FOUR), Bishop.ofWhite(),
-                Position.of(File.E, Rank.ONE), Knight.ofWhite()
+                Position.of(File.A, Rank.FOUR), Bishop.WHITE,
+                Position.of(File.E, Rank.ONE), Knight.WHITE
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));
@@ -33,12 +33,12 @@ class RookTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenRookMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Rook rook = Rook.ofWhite();
+        Rook rook = Rook.WHITE;
         Position currentRookPosition = Position.of(File.H, Rank.EIGHT);
         Map<Position, Piece> board = Map.of(
                 currentRookPosition, rook,
-                Position.of(File.G, Rank.EIGHT), Bishop.ofBlack(),
-                Position.of(File.H, Rank.FIVE), Knight.ofBlack()
+                Position.of(File.G, Rank.EIGHT), Bishop.BLACK,
+                Position.of(File.H, Rank.FIVE), Knight.BLACK
         );
 
         Set<Position> movablePositions = rook.calculateMovablePositions(currentRookPosition, new Board(board));

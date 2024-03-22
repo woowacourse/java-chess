@@ -15,7 +15,7 @@ class PawnTest {
     @DisplayName("화이트 폰은 북쪽으로만 전진할 수 있다.")
     @Test
     void blackPawnCanMoveToNorth() {
-        Pawn pawn = Pawn.ofWhite();
+        Pawn pawn = Pawn.WHITE;
         Position currentPosition = Position.of(File.H, Rank.THREE);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
@@ -27,7 +27,7 @@ class PawnTest {
     @DisplayName("블랙 폰은 남쪽으로만 전진할 수 있다.")
     @Test
     void whitePawnCanMoveToSouth() {
-        Pawn pawn = Pawn.ofBlack();
+        Pawn pawn = Pawn.BLACK;
         Position currentPosition = Position.of(File.H, Rank.THREE);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
@@ -39,7 +39,7 @@ class PawnTest {
     @DisplayName("화이트 폰은 초기 위치에서는 북쪽으로 1칸 또는 2칸 전진할 수 있다.")
     @Test
     void whenInitialPositionThenCanMoveForwardTwoStep() {
-        Pawn pawn = Pawn.ofWhite();
+        Pawn pawn = Pawn.WHITE;
         Position currentPosition = Position.of(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
@@ -52,7 +52,7 @@ class PawnTest {
     @DisplayName("블랙 폰은 초기 위치에서는 남쪽으로 1칸 또는 2칸 전진할 수 있다.")
     @Test
     void whenInitialPositionThenCanMoveForwardTwoStepBlack() {
-        Pawn pawn = Pawn.ofBlack();
+        Pawn pawn = Pawn.BLACK;
         Position currentPosition = Position.of(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(currentPosition, pawn);
 
@@ -65,12 +65,12 @@ class PawnTest {
     @DisplayName("화이트 폰은 초기 위치에서 방해물이 있을 시 건너 뛸 수 없다")
     @Test
     void whenInitialPositionThenCantMoveForward() {
-        Pawn pawn = Pawn.ofWhite();
+        Pawn pawn = Pawn.WHITE;
         Position currentPosition = Position.of(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                Position.of(File.H, Rank.THREE), Pawn.ofBlack(),
-                Position.of(File.G, Rank.THREE), Pawn.ofBlack()
+                Position.of(File.H, Rank.THREE), Pawn.BLACK,
+                Position.of(File.G, Rank.THREE), Pawn.BLACK
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
@@ -82,12 +82,12 @@ class PawnTest {
     @DisplayName("블랙 폰은 초기 위치에서 방해물이 있을 시 건너 뛸 수 없다")
     @Test
     void whenInitialPositionThenCantMoveForwardBlack() {
-        Pawn pawn = Pawn.ofBlack();
+        Pawn pawn = Pawn.BLACK;
         Position currentPosition = Position.of(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                Position.of(File.H, Rank.SIX), Pawn.ofWhite(),
-                Position.of(File.G, Rank.SIX), Pawn.ofWhite()
+                Position.of(File.H, Rank.SIX), Pawn.WHITE,
+                Position.of(File.G, Rank.SIX), Pawn.WHITE
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
@@ -100,11 +100,11 @@ class PawnTest {
     @DisplayName("화이트 폰은 북쪽 방향의 대각선의 적 위치로 갈 수 있다.")
     @Test
     void canMoveDiagonalOfTheForwardDirectionWhenEnemyExists() {
-        Pawn pawn = Pawn.ofWhite();
+        Pawn pawn = Pawn.WHITE;
         Position currentPosition = Position.of(File.H, Rank.TWO);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                Position.of(File.G, Rank.THREE), Pawn.ofBlack()
+                Position.of(File.G, Rank.THREE), Pawn.BLACK
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));
@@ -117,11 +117,11 @@ class PawnTest {
     @DisplayName("블랙 폰은 남쪽 방향의 대각선의 적 위치로 갈 수 있다.")
     @Test
     void canMoveDiagonalOfTheForwardDirectionWhenEnemyExistsBlack() {
-        Pawn pawn = Pawn.ofBlack();
+        Pawn pawn = Pawn.BLACK;
         Position currentPosition = Position.of(File.H, Rank.SEVEN);
         Map<Position, Piece> board = Map.of(
                 currentPosition, pawn,
-                Position.of(File.G, Rank.SIX), Pawn.ofWhite()
+                Position.of(File.G, Rank.SIX), Pawn.WHITE
         );
 
         Set<Position> movablePositions = pawn.calculateMovablePositions(currentPosition, new Board(board));

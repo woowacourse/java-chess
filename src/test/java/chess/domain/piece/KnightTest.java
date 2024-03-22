@@ -16,12 +16,12 @@ class KnightTest {
     @DisplayName("아군을 만나기 직전까지만 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetTeamMThenStop() {
-        Knight knight = Knight.ofWhite();
+        Knight knight = Knight.WHITE;
         Position currentKingPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                Position.of(File.A, Rank.FIVE), Pawn.ofWhite(),
-                Position.of(File.B, Rank.SIX), Queen.ofWhite(),
-                Position.of(File.C, Rank.THREE), Queen.ofWhite()
+                Position.of(File.A, Rank.FIVE), Pawn.WHITE,
+                Position.of(File.B, Rank.SIX), Queen.WHITE,
+                Position.of(File.C, Rank.THREE), Queen.WHITE
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));
@@ -34,12 +34,12 @@ class KnightTest {
     @DisplayName("적군을 만난 위치까지 이동 가능하다.")
     @Test
     void givenKingMoveWhenMeetEnemyThenStopAtEnemyPosition() {
-        Knight knight = Knight.ofWhite();
+        Knight knight = Knight.WHITE;
         Position currentKingPosition = Position.of(File.A, Rank.FOUR);
         Map<Position, Piece> board = Map.of(currentKingPosition, knight,
-                Position.of(File.A, Rank.FIVE), Pawn.ofBlack(),
-                Position.of(File.B, Rank.SIX), Queen.ofWhite(),
-                Position.of(File.C, Rank.THREE), Queen.ofBlack()
+                Position.of(File.A, Rank.FIVE), Pawn.BLACK,
+                Position.of(File.B, Rank.SIX), Queen.WHITE,
+                Position.of(File.C, Rank.THREE), Queen.BLACK
         );
 
         Set<Position> movablePositions = knight.calculateMovablePositions(currentKingPosition, new Board(board));
