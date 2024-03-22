@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import static java.util.Collections.unmodifiableMap;
+
 public class ChessBoard {
     private final Map<ChessPosition, Piece> board;
 
@@ -39,8 +41,8 @@ public class ChessBoard {
     }
 
     private void validatePathContainsPiece(List<ChessPosition> path) {
-        int repeatCount = path.size() - 1;
-        IntStream.range(0, repeatCount)
+        int middlePathLength = path.size() - 1;
+        IntStream.range(0, middlePathLength)
                 .mapToObj(path::get)
                 .map(board::get)
                 .forEach(this::validatePathContainsPiece);
@@ -58,6 +60,6 @@ public class ChessBoard {
     }
 
     public Map<ChessPosition, Piece> getBoard() {
-        return board;
+        return unmodifiableMap(board);
     }
 }
