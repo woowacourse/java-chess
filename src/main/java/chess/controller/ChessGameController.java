@@ -22,30 +22,29 @@ public class ChessGameController {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
-    private final ChessGame chessGame = new ChessGame(new Board());
 
     public void run() {
         outputView.printStartMessage();
-        Board board = chessGame.getBoard();
-        process(board);
+        process();
     }
 
-    private void process(Board board) {
+    private void process() {
         boolean isRunning = true;
+        ChessGame chessGame = new ChessGame(new Board());
         while (isRunning) {
-            isRunning = processGame(board);
+            isRunning = processGame(chessGame);
         }
     }
 
-    private boolean processGame(Board board) {
+    private boolean processGame(ChessGame chessGame) {
         try {
             List<String> commendValues = inputView.readCommend();
             Commend commend = Commend.inputToCommend(commendValues.get(COMMEND_INDEX));
             if (commend == Commend.START) {
-                handleStartCommend(board);
+                handleStartCommend(chessGame);
             }
             if (commend == Commend.MOVE) {
-                handleMoveCommend(board, commendValues);
+                handleMoveCommend(chessGame, commendValues);
             }
             if (commend == Commend.END) {
                 return false;
@@ -53,16 +52,15 @@ public class ChessGameController {
             return true;
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
-            process(board);
-            return false;
+            return processGame(chessGame);
         }
     }
 
-    private void handleStartCommend(Board board) {
-        outputView.printBoard(board);
+    private void handleStartCommend(ChessGame chessGame) {
+        outputView.printBoard(chessGame.getBoard());
     }
 
-    private void handleMoveCommend(Board board, List<String> commendValues) {
+    private void handleMoveCommend(ChessGame chessGame, List<String> commendValues) {
         if (commendValues.size() != MOVE_COMMEND_FORMAT_SIZE) {
             throw new IllegalArgumentException("게임 이동 입력 형식이 올바르지 않습니다.");
         }
@@ -72,7 +70,7 @@ public class ChessGameController {
         List<Position> movablePositions = chessGame.generateMovablePositions(from);
         chessGame.movePiece(movablePositions, from, to);
 
-        outputView.printBoard(board);
+        outputView.printBoard(chessGame.getBoard());
     }
 
     private Position createPosition(List<String> commendValues, int moveFromIndex) {

@@ -9,11 +9,6 @@ import java.util.Queue;
 public class ChessGame {
 
     public final Board board;
-
-    public Board getBoard() {
-        return board;
-    }
-
     public ChessGame(Board board) {
         this.board = board;
     }
@@ -104,5 +99,9 @@ public class ChessGame {
             return;
         }
         throw new IllegalArgumentException("기물을 해당 위치로 이동시킬 수 없습니다.");
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
