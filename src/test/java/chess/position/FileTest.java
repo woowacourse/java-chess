@@ -16,6 +16,16 @@ class FileTest {
     void invalidFileNameTest(String fileName) {
         assertThatThrownBy(() -> File.from(fileName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 열 번호입니다.");
+                .hasMessage("존재하지 않는 열 번호입니다.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 8})
+    @DisplayName("범위를 넘어가도록 열을 계산하는 경우 예외를 발생한다.")
+    void fileOverflowTest(int difference) {
+        File file = File.from("a");
+        assertThatThrownBy(() -> file.createFileByDifferenceOf(difference))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("열 범위를 벗어납니다.");
     }
 }

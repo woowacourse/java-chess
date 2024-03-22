@@ -24,7 +24,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 행 번호입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행 번호입니다."));
     }
 
     public int subtract(Rank other) {
@@ -35,6 +35,6 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.number == number + rankDifference)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 행 번호입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("행 범위를 벗어납니다."));
     }
 }

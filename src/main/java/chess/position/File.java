@@ -24,7 +24,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.name().equalsIgnoreCase(fileName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 열 번호입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열 번호입니다."));
     }
 
     public int subtract(File other) {
@@ -35,6 +35,6 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.number == number + fileDifference)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 열 번호입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("열 범위를 벗어납니다."));
     }
 }
