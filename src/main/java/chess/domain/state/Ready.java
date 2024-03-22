@@ -17,13 +17,13 @@ public class Ready implements GameState {
     @Override
     public GameState play(List<String> inputCommand) {
         String command = inputCommand.get(0);
-        if (command.equals(START_COMMAND)) {
+        if (START_COMMAND.equals(command)) {
             return new Progress(chessBoard);
         }
-        if (command.equals(MOVE_COMMAND)) {
+        if (MOVE_COMMAND.equals(command)) {
             throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
         }
-        if (command.equals(END_COMMAND)) {
+        if (END_COMMAND.equals(command)) {
             throw new UnsupportedOperationException("게임이 시작되지 않았습니다.");
         }
         throw new IllegalArgumentException("올바르지 않은 command입니다.");
