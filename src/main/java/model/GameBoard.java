@@ -1,25 +1,22 @@
 package model;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-import model.piece.Bishop;
-import model.piece.King;
-import model.piece.Knight;
-import model.piece.Pawn;
-import model.piece.Piece;
-import model.piece.Queen;
-import model.piece.Rook;
+import model.piece.*;
 import model.position.Column;
 import model.position.Moving;
 import model.position.Position;
 import model.position.Row;
 
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+
 public class GameBoard {
 
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
+
+    private Camp camp;
 
     static {
         initPosition.put(Column.A, Rook::new);
@@ -37,6 +34,8 @@ public class GameBoard {
 
     public GameBoard() {
         this.board = new HashMap<>();
+        this.camp = Camp.WHITE;
+        setting();
     }
 
     public void setting() {
@@ -58,12 +57,13 @@ public class GameBoard {
         }
     }
 
-    public void move(Moving moving, Camp camp) {
+    public void move(Moving moving) {
         validate(camp, moving);
 
         Piece piece = board.get(moving.getCurrentPosition());
         board.put(moving.getNextPosition(), piece);
         board.remove(moving.getCurrentPosition());
+        camp = camp.toggle();
     }
 
     private void validate(Camp camp, Moving moving) {
@@ -100,5 +100,9 @@ public class GameBoard {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    public Camp getCamp() {
+        return camp;
     }
 }

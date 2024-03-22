@@ -1,8 +1,5 @@
 package model;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Map.Entry;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.position.Moving;
@@ -11,6 +8,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Map.Entry;
+
 class GameBoardTest {
 
     @Test
@@ -18,9 +19,6 @@ class GameBoardTest {
     void initPieces() {
         //given
         final GameBoard gameBoard = new GameBoard();
-
-        //when
-        gameBoard.setting();
 
         //then
         final Map<Position, Piece> board = gameBoard.getBoard();
@@ -32,9 +30,6 @@ class GameBoardTest {
     void checkInitialPosition() {
         //given
         final GameBoard gameBoard = new GameBoard();
-
-        //when
-        gameBoard.setting();
 
         final Map<Position, Piece> board = gameBoard.getBoard();
         final StringBuilder stringBuilder = new StringBuilder();
@@ -75,12 +70,11 @@ class GameBoardTest {
     void blankPosition() {
         //given
         final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
 
         final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
         //when & then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -88,14 +82,13 @@ class GameBoardTest {
     @Test
     void routeContainPiece() {
         final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
 
         final Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(Position.from("e6"), new Queen(Camp.BLACK));
+        board.put(Position.from("e3"), new Queen(Camp.WHITE));
 
-        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(Position.from("e2"), Position.from("e4"));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 기물이 있습니다.");
     }
@@ -104,14 +97,13 @@ class GameBoardTest {
     @Test
     void targetPositionIsEqualCamp() {
         final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
 
         final Map<Position, Piece> board = gameBoard.getBoard();
-        board.put(Position.from("e5"), new Queen(Camp.BLACK));
+        board.put(Position.from("e4"), new Queen(Camp.WHITE));
 
-        final Moving moving = new Moving(Position.from("e7"), Position.from("e5"));
+        final Moving moving = new Moving(Position.from("e2"), Position.from("e4"));
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.BLACK))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 불가");
     }
@@ -121,13 +113,12 @@ class GameBoardTest {
     void invalidTurn() {
         //given
         final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
 
         //when
         final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
 
         //then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving, Camp.WHITE))
+        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("자신의 기물만 이동 가능합니다.");
     }
