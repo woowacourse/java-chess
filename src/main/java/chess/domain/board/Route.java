@@ -6,18 +6,17 @@ import java.util.List;
 public class Route {
     private final List<Step> steps;
 
-    public Route(List<Step> steps) {
-        validatePathDistance(steps);
-        this.steps = steps;
+    public Route(List<Direction> directions, List<SquareState> squareStates) {
+        validateStepSize(directions, squareStates);
+        this.steps = createSteps(directions, squareStates);
     }
 
-    public static Route of(List<Direction> directions, List<SquareState> squareStates) {
-        validateStepSize(directions, squareStates);
+    private List<Step> createSteps(List<Direction> directions, List<SquareState> squareStates) {
         List<Step> steps = new ArrayList<>();
         for (int i = 0; i < directions.size(); i++) {
             steps.add(new Step(directions.get(i), squareStates.get(i)));
         }
-        return new Route(steps);
+        return steps;
     }
 
     private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {

@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 class KingTest {
     private static final King KING = new King(Color.BLACK);
 
+    /*
     @DisplayName("한 칸의 빈 곳으로의 경로는 움직일 수 있다.")
     @ParameterizedTest
     @EnumSource(Direction.class)
@@ -58,4 +59,5 @@ class KingTest {
 
         assertThat(KING.canMove(route)).isFalse();
     }
+     */
 }

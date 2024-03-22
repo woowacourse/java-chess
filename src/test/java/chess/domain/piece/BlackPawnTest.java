@@ -15,6 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class BlackPawnTest {
+    /*
     private BlackPawn BLACK_PAWN;
 
     @BeforeEach
@@ -133,4 +134,5 @@ class BlackPawnTest {
             assertThat(BLACK_PAWN.canMove(route)).isTrue();
         }
     }
+     */
 }

@@ -101,7 +101,7 @@ public class Board {
     private Route createPath(MoveCommand moveCommand) {
         List<Direction> directions = Path.createDirections(moveCommand.getSource(), moveCommand.getTarget());
         List<SquareState> squareStates = createPathState(moveCommand.getSource(), directions);
-        return Route.of(directions, squareStates);
+        return new Route(directions, squareStates);
     }
 
     private List<SquareState> createPathState(Location current, List<Direction> directions) {

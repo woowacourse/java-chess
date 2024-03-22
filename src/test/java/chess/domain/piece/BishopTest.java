@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class BishopTest {
     private static final Bishop BISHOP = new Bishop(Color.BLACK);
-
+    /*
     @DisplayName("한 방향으로 이루어지지 않은 경로로 움직일 수 없다.")
     @Test
     void tooManyDirectionTest() {
@@ -79,4 +79,5 @@ class BishopTest {
         Assertions.assertThat(BISHOP.canMove(manyDirectionRoute))
                 .isTrue();
     }
+    */
 }

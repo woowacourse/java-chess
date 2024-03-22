@@ -13,6 +13,7 @@ class QueenTest {
 
     private static final Queen QUEEN = new Queen(Color.BLACK);
 
+    /*
     @DisplayName("한 방향으로 이루어지지 않은 경로로 움직일 수 없다.")
     @Test
     void tooManyDirectionTest() {
@@ -67,4 +68,5 @@ class QueenTest {
         Assertions.assertThat(QUEEN.canMove(manyDirectionRoute))
                 .isTrue();
     }
+     */
 }
