@@ -2,6 +2,7 @@ package controller;
 
 import static constants.Bound.BOARD_LOWER_BOUND;
 import static constants.Bound.BOARD_UPPER_BOUND;
+import static view.Command.END;
 import static view.Command.MOVE;
 import static view.Command.START;
 
@@ -25,15 +26,31 @@ public class ChessController {
         final Board board = new Board(BoardInitiator.init());
 
         String command = InputView.inputCommand();
-        readyForStartCommand(command);
-        OutputView.printChessBoard(createRankInfo(board));
+        if (END.equals(Command.of(command))) {
+            return;
+        }
 
+        checkCommandIsStart(command, board);
         movePiecesByCommandOn(board);
     }
 
+    private void checkCommandIsStart(final String command, final Board board) {
+        readyForStartCommand(command);
+        OutputView.printChessBoard(createRankInfo(board));
+    }
+
     private void readyForStartCommand(String command) {
+        try {
+            inputUntilStartCommand(command);
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private static void inputUntilStartCommand(String command) {
         while (!START.equals(Command.of(command))) {
             OutputView.printErrorMessage("게임을 시작하려면 start를 입력해주세요.");
+            InputView.clearBuffer();
             command = InputView.inputCommand();
         }
     }

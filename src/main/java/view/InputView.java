@@ -20,4 +20,8 @@ public class InputView {
             throw new IllegalArgumentException(UNSUPPORTED_COMMAND);
         }
     }
+
+    public static void clearBuffer() {
+        scanner.nextLine();
+    }
 }
