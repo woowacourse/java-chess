@@ -22,18 +22,6 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
 
-    public boolean isStart() {
-        return this == START;
-    }
-
-    public boolean isEnd() {
-        return this == END;
-    }
-
-    public boolean isMove() {
-        return this == MOVE;
-    }
-
     public String getText() {
         return text;
     }
