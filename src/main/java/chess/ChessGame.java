@@ -7,6 +7,7 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.MoveCommand;
 import chess.util.RetryUtil;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceView;
@@ -28,20 +29,18 @@ public class ChessGame {
     public void play() {
         String progressCommand = RetryUtil.retryUntilNoException(inputView::readProgressCommand);
 
-        if (!inputView.isStartCommand(progressCommand)) {
+        if (!isStartCommand(progressCommand)) {
             return;
         }
 
-        Board board = initBoard();
+        Board board = new Board();
+        printBoardOutput(board);
 
         playUntilEnd(board);
     }
 
-    private Board initBoard() {
-        Board board = new Board();
-        printBoardOutput(board);
-
-        return board;
+    public boolean isStartCommand(String command) {
+        return command.equals(GameCommand.START.value());
     }
 
     private void playUntilEnd(Board board) {
