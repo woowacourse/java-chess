@@ -35,7 +35,7 @@ public final class BlackPawn extends Pawn {
         return isPawnStraight(currentPosition, nextPosition);
     }
 
-    private boolean isPawnStraight(Position currentPosition, Position nextPosition) {
+    private boolean isPawnStraight(final Position currentPosition, final Position nextPosition) {
         final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
         if (dColumn != 0) {
@@ -64,7 +64,7 @@ public final class BlackPawn extends Pawn {
         return isPawnDiagonal(currentPosition, nextPosition);
     }
 
-    private boolean isPawnDiagonal(Position currentPosition, Position nextPosition) {
+    private boolean isPawnDiagonal(final Position currentPosition, final Position nextPosition) {
         final int dRow = currentPosition.getRowIndex() - nextPosition.getRowIndex();
         final int dColumn = currentPosition.getColumnIndex() - nextPosition.getColumnIndex();
         if (Math.abs(dColumn) != 1) {

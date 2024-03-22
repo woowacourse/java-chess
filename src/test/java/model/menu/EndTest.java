@@ -13,9 +13,9 @@ class EndTest {
     @DisplayName("End상태일 때 어떤 동작도 하지 않는다.")
     @Test
     void play() {
-        ChessStatus end = new End();
-        List<String> input = List.of("start");
-        ChessGame chessGame = new ChessGame();
+        final ChessStatus end = new End();
+        final List<String> input = List.of("start");
+        final ChessGame chessGame = new ChessGame();
 
         assertThatThrownBy(() -> end.play(input, chessGame))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -25,7 +25,7 @@ class EndTest {
     @DisplayName("상태가 End일 때는 게임 진행 중이 아니다.")
     @Test
     void isRunning() {
-        ChessStatus end = new End();
+        final ChessStatus end = new End();
 
         assertThat(end.isRunning()).isFalse();
     }

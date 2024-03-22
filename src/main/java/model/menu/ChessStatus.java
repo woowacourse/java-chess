@@ -1,12 +1,11 @@
 package model.menu;
 
-import model.ChessGame;
-
 import java.util.List;
+import model.ChessGame;
 
 public interface ChessStatus {
 
-    ChessStatus play(List<String> command, ChessGame chessGame);
+    ChessStatus play(final List<String> command, final ChessGame chessGame);
 
     boolean isRunning();
 }

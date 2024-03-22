@@ -11,7 +11,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수평으로 이동하는 경우 true를 반환한다.")
     @Test
     void isHorizontal() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("f2"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("f2"));
 
         assertThat(moving.isHorizontal()).isTrue();
     }
@@ -19,7 +19,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수평으로 이동하지 않는 경우 false를 반환한다.")
     @Test
     void isNotHorizontal() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("f3"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("f3"));
 
         assertThat(moving.isHorizontal()).isFalse();
     }
@@ -27,7 +27,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수직으로 이동하는 경우 true를 반환한다.")
     @Test
     void isVertical() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("a5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("a5"));
 
         assertThat(moving.isVertical()).isTrue();
     }
@@ -35,7 +35,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수직으로 이동하지 않는 경우 false를 반환한다.")
     @Test
     void isNotVertical() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("b5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("b5"));
 
         assertThat(moving.isVertical()).isFalse();
     }
@@ -43,7 +43,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 대각선으로 이동하는 경우 true를 반환한다.")
     @Test
     void isDiagonal() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("d5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("d5"));
 
         assertThat(moving.isDiagonal()).isTrue();
     }
@@ -51,7 +51,7 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 대각선으로 이동하지 않는 경우 false를 반환한다.")
     @Test
     void isNotDiagonal() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("c5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("c5"));
 
         assertThat(moving.isDiagonal()).isFalse();
     }
@@ -59,7 +59,7 @@ class MovingTest {
     @DisplayName("현재 위치와 다음 위치가 동일한 경우 true를 반환한다.")
     @Test
     void isNotMoved() {
-        Moving moving = new Moving(Position.from("d5"), Position.from("d5"));
+        final Moving moving = new Moving(Position.from("d5"), Position.from("d5"));
 
         assertThat(moving.isNotMoved()).isTrue();
     }
@@ -67,7 +67,7 @@ class MovingTest {
     @DisplayName("현재 위치와 다음 위치가 동일하지 않는 경우 true를 반환한다.")
     @Test
     void isMoved() {
-        Moving moving = new Moving(Position.from("d5"), Position.from("d6"));
+        final Moving moving = new Moving(Position.from("d5"), Position.from("d6"));
 
         assertThat(moving.isNotMoved()).isFalse();
     }
@@ -75,9 +75,9 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수평으로 이동할 경우 이동 경로를 반환한다.")
     @Test
     void horizontalRoute() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("f2"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("f2"));
 
-        Set<Position> expected = Set.of(Position.from("b2"), Position.from("c2"), Position.from("d2"),
+        final Set<Position> expected = Set.of(Position.from("b2"), Position.from("c2"), Position.from("d2"),
                 Position.from("e2"));
 
         assertThat(moving.route()).isEqualTo(expected);
@@ -86,9 +86,9 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 수직으로 이동할 경우 이동 경로를 반환한다.")
     @Test
     void verticalRoute() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("a5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("a5"));
 
-        Set<Position> expected = Set.of(Position.from("a3"), Position.from("a4"));
+        final Set<Position> expected = Set.of(Position.from("a3"), Position.from("a4"));
 
         assertThat(moving.route()).isEqualTo(expected);
     }
@@ -96,9 +96,9 @@ class MovingTest {
     @DisplayName("현재 위치에서 다음 위치까지 대각선으로 이동할 경우 이동 경로를 반환한다.")
     @Test
     void diagonalRoute() {
-        Moving moving = new Moving(Position.from("a2"), Position.from("d5"));
+        final Moving moving = new Moving(Position.from("a2"), Position.from("d5"));
 
-        Set<Position> expected = Set.of(Position.from("b3"), Position.from("c4"));
+        final Set<Position> expected = Set.of(Position.from("b3"), Position.from("c4"));
 
         assertThat(moving.route()).isEqualTo(expected);
     }

@@ -1,18 +1,17 @@
 package model.piece;
 
+import java.util.Objects;
+import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-
-import java.util.Objects;
-import java.util.Set;
 
 public abstract class Piece {
 
     protected final Camp camp;
     protected final PieceName pieceName;
 
-    protected Piece(Camp camp, PieceName pieceName) {
+    protected Piece(final Camp camp, final PieceName pieceName) {
         this.camp = camp;
         this.pieceName = pieceName;
     }

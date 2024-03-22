@@ -13,9 +13,9 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 end를 입력하면 End를 반환한다")
     @Test
     void playEnd() {
-        ChessStatus running = new Running();
-        List<String> input = List.of("end");
-        ChessGame chessGame = new ChessGame();
+        final ChessStatus running = new Running();
+        final List<String> input = List.of("end");
+        final ChessGame chessGame = new ChessGame();
 
         assertThat(running.play(input, chessGame)).isInstanceOf(End.class);
     }
@@ -23,9 +23,9 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 Move명령어를 입력하면 Running을 반환한다")
     @Test
     void playMove() {
-        ChessStatus running = new Running();
-        List<String> input = List.of("move", "a2", "a4");
-        ChessGame chessGame = new ChessGame();
+        final ChessStatus running = new Running();
+        final List<String> input = List.of("move", "a2", "a4");
+        final ChessGame chessGame = new ChessGame();
 
         assertThat(running.play(input, chessGame)).isInstanceOf(Running.class);
     }
@@ -33,9 +33,9 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 start를 입력하면 예외를 발생시킨다.")
     @Test
     void play() {
-        ChessStatus running = new Running();
-        List<String> input = List.of("start");
-        ChessGame chessGame = new ChessGame();
+        final ChessStatus running = new Running();
+        final List<String> input = List.of("start");
+        final ChessGame chessGame = new ChessGame();
 
         assertThatThrownBy(() -> running.play(input, chessGame))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -45,7 +45,7 @@ class RunningTest {
     @DisplayName("상태가 Running일 때는 게임이 진행 중이다.")
     @Test
     void isRunning() {
-        ChessStatus running = new Running();
+        final ChessStatus running = new Running();
 
         assertThat(running.isRunning()).isTrue();
     }
