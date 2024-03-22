@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Ready implements GameState {
     private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
 
     private final ChessBoard chessBoard;
 
