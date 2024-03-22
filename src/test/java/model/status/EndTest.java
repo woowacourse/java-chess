@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.InvalidStatusException;
 import java.util.List;
-import model.GameBoard;
+import model.ChessBoard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,15 +15,15 @@ class EndTest {
     @DisplayName("종료 상태에서 play하면 예외가 발생한다.")
     void invalidPlay() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessBoard chessBoard = new ChessBoard();
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         final List<String> endCommand = List.of("end");
 
         //when
-        final GameStatus play = gameStatus.play(endCommand, gameBoard);
+        final GameStatus play = gameStatus.play(endCommand, chessBoard);
 
         //then
-        assertThatThrownBy(() -> play.play(endCommand, gameBoard))
+        assertThatThrownBy(() -> play.play(endCommand, chessBoard))
                 .isInstanceOf(InvalidStatusException.class);
     }
 

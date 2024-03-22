@@ -7,25 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import model.GameBoard;
+import model.ChessBoard;
 import model.piece.Piece;
 import model.position.File;
 import model.position.Position;
 import model.position.Rank;
 import view.message.PieceType;
 
-public class GameBoardDto {
+public class ChessBoardDto {
 
     private final List<String> value;
 
-    private GameBoardDto(final List<String> value) {
+    private ChessBoardDto(final List<String> value) {
         this.value = value;
     }
 
     // TODO 리팩터링 된건가?
-    public static GameBoardDto from(final GameBoard gameBoard) {
+    public static ChessBoardDto from(final ChessBoard chessBoard) {
         List<List<String>> tmp = createEmptyBoard();
-        Map<Position, Piece> pieceOfPosition = gameBoard.getBoard();
+        Map<Position, Piece> pieceOfPosition = chessBoard.getBoard();
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -37,7 +37,7 @@ public class GameBoardDto {
         List<String> result = paddingBoard.stream()
                 .map(list -> String.join("", list))
                 .toList();
-        return new GameBoardDto(result);
+        return new ChessBoardDto(result);
     }
 
     private static String convertToString(Map<Position, Piece> board, Position position) {

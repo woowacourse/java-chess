@@ -3,12 +3,12 @@ package model.status;
 import constant.ErrorCode;
 import exception.InvalidStatusException;
 import java.util.List;
-import model.GameBoard;
+import model.ChessBoard;
 
 public class End implements GameStatus {
 
     @Override
-    public GameStatus play(final List<String> command, final GameBoard gameBoard) {
+    public GameStatus play(final List<String> command, final ChessBoard chessBoard) {
         throw new InvalidStatusException(ErrorCode.INVALID_STATUS);
     }
 

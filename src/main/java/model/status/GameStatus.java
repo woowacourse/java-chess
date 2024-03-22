@@ -1,11 +1,11 @@
 package model.status;
 
 import java.util.List;
-import model.GameBoard;
+import model.ChessBoard;
 
 public interface GameStatus {
 
-    GameStatus play(List<String> command, GameBoard gameBoard);
+    GameStatus play(List<String> command, ChessBoard chessBoard);
 
     boolean isRunning();
 }

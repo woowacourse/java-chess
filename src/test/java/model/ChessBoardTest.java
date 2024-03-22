@@ -25,19 +25,19 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameBoardTest {
+class ChessBoardTest {
 
     @Test
     @DisplayName("초기에는 32개의 기물이 생성된다.")
     void initPieces() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessBoard chessBoard = new ChessBoard();
 
         //when
-        gameBoard.setting();
+        chessBoard.setting();
 
         //then
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessBoard.getBoard();
         Assertions.assertThat(board.keySet()).hasSize(32);
     }
 
@@ -45,12 +45,12 @@ class GameBoardTest {
     @DisplayName("기물들의 시작 위치를 확인한다.")
     void checkInitialPosition() {
         //given
-        final GameBoard gameBoard = new GameBoard();
+        final ChessBoard chessBoard = new ChessBoard();
 
         //when
-        gameBoard.setting();
+        chessBoard.setting();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessBoard.getBoard();
         final StringBuilder stringBuilder = new StringBuilder();
 
         String[][] res = new String[8][8];
@@ -88,13 +88,13 @@ class GameBoardTest {
     @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
     void blankPosition() {
         //given
-        final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
 
         final Moving moving = new Moving(E4, E5);
 
         //when & then
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(moving))
                 .isInstanceOf(PieceDoesNotExistException.class);
     }
 
@@ -102,17 +102,17 @@ class GameBoardTest {
     @Test
     void routeContainPiece() {
         //given
-        final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessBoard.getBoard();
         board.put(E6, new Queen(Camp.BLACK));
-        gameBoard.move(new Moving(A2, A3));
+        chessBoard.move(new Moving(A2, A3));
 
         //when && then
         final Moving moving = new Moving(E7, E5);
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(moving))
                 .isInstanceOf(PieceExistInRouteException.class);
     }
 
@@ -122,16 +122,16 @@ class GameBoardTest {
     @Test
     void targetPositionIsEqualCamp() {
         //given
-        final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
 
-        final Map<Position, Piece> board = gameBoard.getBoard();
+        final Map<Position, Piece> board = chessBoard.getBoard();
         board.put(F3, new Queen(Camp.WHITE));
 
         //when && then
         final Moving moving = new Moving(G1, F3);
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(moving))
                 .isInstanceOf(PieceExistInRouteException.class);
     }
 
@@ -139,13 +139,13 @@ class GameBoardTest {
     @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
     void invalidTurn() {
         //given
-        final GameBoard gameBoard = new GameBoard();
-        gameBoard.setting();
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
 
         //when && then
         final Moving moving = new Moving(A7, A6);
 
-        Assertions.assertThatThrownBy(() -> gameBoard.move(moving))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(moving))
                 .isInstanceOf(InvalidTurnException.class);
     }
 }

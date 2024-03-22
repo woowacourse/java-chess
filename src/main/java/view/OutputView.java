@@ -1,7 +1,7 @@
 package view;
 
 import constant.ErrorCode;
-import dto.GameBoardDto;
+import dto.ChessBoardDto;
 import model.Camp;
 import view.message.ErrorCodeMessage;
 
@@ -14,8 +14,8 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printGameBoard(GameBoardDto gameBoardDto) {
-        for (String line : gameBoardDto.getValue()) {
+    public void printChessBoard(ChessBoardDto chessBoardDto) {
+        for (String line : chessBoardDto.getValue()) {
             System.out.println(line);
         }
     }

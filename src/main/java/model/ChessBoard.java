@@ -21,7 +21,7 @@ import model.position.Moving;
 import model.position.Position;
 import model.position.Rank;
 
-public class GameBoard {
+public class ChessBoard {
 
     // TODO 처음에 각 기물들을 배치해두는 것이 좋을까 아니면 빈 Map 두고 메서드 실행하면 추가하는게 좋을지 고민하기
     private static final Map<File, Function<Camp, Piece>> initPosition = new EnumMap<>(File.class);
@@ -41,7 +41,7 @@ public class GameBoard {
     private Camp camp;
 
 
-    public GameBoard() {
+    public ChessBoard() {
         this.board = new HashMap<>();
         this.camp = Camp.WHITE;
     }
