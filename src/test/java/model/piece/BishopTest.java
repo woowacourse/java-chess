@@ -1,6 +1,23 @@
 package model.piece;
 
-import static model.position.Position.from;
+import static model.Fixtures.A3;
+import static model.Fixtures.A6;
+import static model.Fixtures.A8;
+import static model.Fixtures.B4;
+import static model.Fixtures.B5;
+import static model.Fixtures.C3;
+import static model.Fixtures.C4;
+import static model.Fixtures.C5;
+import static model.Fixtures.C8;
+import static model.Fixtures.D5;
+import static model.Fixtures.D6;
+import static model.Fixtures.D7;
+import static model.Fixtures.E6;
+import static model.Fixtures.E7;
+import static model.Fixtures.E8;
+import static model.Fixtures.F7;
+import static model.Fixtures.F8;
+import static model.Fixtures.G4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -32,10 +49,10 @@ class BishopTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(from("c8"), from("a8"))),
-                Arguments.of(new Moving(from("c8"), from("c3"))),
-                Arguments.of(new Moving(from("f8"), from("e8"))),
-                Arguments.of(new Moving(from("g4"), from("c3")))
+                Arguments.of(new Moving(C8, A8)),
+                Arguments.of(new Moving(C8, C3)),
+                Arguments.of(new Moving(F8, E8)),
+                Arguments.of(new Moving(G4, C3))
         );
     }
 
@@ -54,11 +71,10 @@ class BishopTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(from("c8"), from("e6")), Set.of(from("d7"))),
-                Arguments.of(new Moving(from("f8"), from("a3")),
-                        Set.of(from("e7"), from("d6"), from("c5"), from("b4"))),
-                Arguments.of(new Moving(from("c4"), from("a6")), Set.of(from("b5"))),
-                Arguments.of(new Moving(from("c4"), from("f7")), Set.of(from("d5"), from("e6")))
+                Arguments.of(new Moving(C8, E6), Set.of(D7)),
+                Arguments.of(new Moving(F8, A3), Set.of(E7, D6, C5, B4)),
+                Arguments.of(new Moving(C4, A6), Set.of(B5)),
+                Arguments.of(new Moving(C4, F7), Set.of(D5, E6))
         );
     }
 }

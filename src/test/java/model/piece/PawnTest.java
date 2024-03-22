@@ -1,5 +1,10 @@
 package model.piece;
 
+import static model.Fixtures.A4;
+import static model.Fixtures.A5;
+import static model.Fixtures.A6;
+import static model.Fixtures.A7;
+import static model.Fixtures.A8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -7,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
-import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -31,9 +35,9 @@ class PawnTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("a6"), Position.from("a4"))),
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a4"))),
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a8")))
+                Arguments.of(new Moving(A6, A4)),
+                Arguments.of(new Moving(A7, A4)),
+                Arguments.of(new Moving(A7, A8))
         );
     }
 
@@ -48,8 +52,8 @@ class PawnTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("a7"), Position.from("a5"))),
-                Arguments.of(new Moving(Position.from("a6"), Position.from("a5")))
+                Arguments.of(new Moving(A7, A5)),
+                Arguments.of(new Moving(A6, A5))
         );
     }
 }

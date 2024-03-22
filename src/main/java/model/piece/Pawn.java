@@ -28,9 +28,9 @@ public class Pawn extends Piece {
 
     private Set<Position> getTwoStraightRoute(final Position currentPosition) {
         if (Camp.BLACK == camp) {
-            return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
+            return Set.of(new Position(currentPosition.getColumn(), Row.SIX));
         }
-        return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
+        return Set.of(new Position(currentPosition.getColumn(), Row.THREE));
     }
 
     @Override
@@ -52,14 +52,14 @@ public class Pawn extends Piece {
         if (Camp.BLACK == camp) {
             return isBlackTwoStraight(currentPosition, dRow);
         }
-        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
+        if (Row.TWO.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
             return true;
         }
         return dRow == 1;
     }
 
     private boolean isBlackTwoStraight(final Position currentPosition, final int dRow) {
-        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
+        if (Row.SEVEN.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
             return true;
         }
         return dRow == -1;

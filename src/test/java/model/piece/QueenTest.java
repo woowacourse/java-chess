@@ -1,6 +1,36 @@
 package model.piece;
 
-import static model.position.Position.from;
+import static model.Fixtures.A2;
+import static model.Fixtures.A8;
+import static model.Fixtures.B3;
+import static model.Fixtures.B5;
+import static model.Fixtures.B6;
+import static model.Fixtures.B8;
+import static model.Fixtures.C5;
+import static model.Fixtures.C6;
+import static model.Fixtures.C7;
+import static model.Fixtures.C8;
+import static model.Fixtures.D1;
+import static model.Fixtures.D2;
+import static model.Fixtures.D3;
+import static model.Fixtures.D4;
+import static model.Fixtures.D5;
+import static model.Fixtures.D6;
+import static model.Fixtures.D7;
+import static model.Fixtures.D8;
+import static model.Fixtures.E4;
+import static model.Fixtures.E5;
+import static model.Fixtures.E6;
+import static model.Fixtures.E7;
+import static model.Fixtures.E8;
+import static model.Fixtures.F5;
+import static model.Fixtures.F6;
+import static model.Fixtures.F8;
+import static model.Fixtures.G6;
+import static model.Fixtures.G8;
+import static model.Fixtures.H1;
+import static model.Fixtures.H7;
+import static model.Fixtures.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -32,11 +62,11 @@ class QueenTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(from("b3"), from("b3"))),
-                Arguments.of(new Moving(from("d8"), from("e5"))),
-                Arguments.of(new Moving(from("d6"), from("a2"))),
-                Arguments.of(new Moving(from("b5"), from("a8"))),
-                Arguments.of(new Moving(from("h1"), from("c5")))
+                Arguments.of(new Moving(B3, B3)),
+                Arguments.of(new Moving(D8, E5)),
+                Arguments.of(new Moving(D6, A2)),
+                Arguments.of(new Moving(B5, A8)),
+                Arguments.of(new Moving(H1, C5))
         );
     }
 
@@ -54,23 +84,14 @@ class QueenTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(from("d8"), from("d1")),
-                        Set.of(from("d2"), from("d3"), from("d4"),
-                                from("d5"), from("d6"), from("d7"))),
-                Arguments.of(new Moving(from("d8"), from("a8")),
-                        Set.of(from("b8"), from("c8"))),
-                Arguments.of(new Moving(from("d8"), from("h8")),
-                        Set.of(from("e8"), from("f8"), from("g8"))),
-                Arguments.of(new Moving(from("d8"), from("b6")),
-                        Set.of(from("c7"))),
-                Arguments.of(new Moving(from("d8"), from("f6")),
-                        Set.of(from("e7"))),
-                Arguments.of(new Moving(from("e4"), from("e8")),
-                        Set.of(from("e5"), from("e6"), from("e7"))),
-                Arguments.of(new Moving(from("e4"), from("c6")),
-                        Set.of(from("d5"))),
-                Arguments.of(new Moving(from("e4"), from("h7")),
-                        Set.of(from("f5"), from("g6")))
-        );
+                Arguments.of(new Moving(D8, D1), Set.of(D2, D3, D4, D5, D6, D7)),
+                Arguments.of(new Moving(D8, A8), Set.of(B8, C8)),
+                Arguments.of(new Moving(D8, H8), Set.of(E8, F8, G8)),
+                Arguments.of(new Moving(D8, B6), Set.of(C7)),
+                Arguments.of(new Moving(D8, F6), Set.of(E7)),
+                Arguments.of(new Moving(E4, E8), Set.of(E5, E6, E7)),
+                Arguments.of(new Moving(E4, C6), Set.of(D5)),
+                Arguments.of(new Moving(E4, H7), Set.of(F5, G6)));
+
     }
 }

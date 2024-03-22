@@ -1,5 +1,19 @@
 package model.piece;
 
+import static model.Fixtures.A5;
+import static model.Fixtures.A8;
+import static model.Fixtures.B5;
+import static model.Fixtures.B6;
+import static model.Fixtures.B7;
+import static model.Fixtures.C4;
+import static model.Fixtures.C7;
+import static model.Fixtures.C8;
+import static model.Fixtures.D5;
+import static model.Fixtures.D6;
+import static model.Fixtures.E5;
+import static model.Fixtures.E8;
+import static model.Fixtures.F3;
+import static model.Fixtures.F7;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -7,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
-import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -30,9 +43,9 @@ class KnightTest {
 
     static Stream<Arguments> cantMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("d5"), Position.from("a5"))),
-                Arguments.of(new Moving(Position.from("a8"), Position.from("f3"))),
-                Arguments.of(new Moving(Position.from("a8"), Position.from("e5")))
+                Arguments.of(new Moving(D5, A5)),
+                Arguments.of(new Moving(A8, F3)),
+                Arguments.of(new Moving(A8, E5))
         );
     }
 
@@ -50,14 +63,14 @@ class KnightTest {
 
     static Stream<Arguments> canMovableParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(Position.from("a8"), Position.from("c7"))),
-                Arguments.of(new Moving(Position.from("a8"), Position.from("b6"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("c4"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("b5"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("b7"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("c8"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("e8"))),
-                Arguments.of(new Moving(Position.from("d6"), Position.from("f7")))
+                Arguments.of(new Moving(A8, C7)),
+                Arguments.of(new Moving(A8, B6)),
+                Arguments.of(new Moving(D6, C4)),
+                Arguments.of(new Moving(D6, B5)),
+                Arguments.of(new Moving(D6, B7)),
+                Arguments.of(new Moving(D6, C8)),
+                Arguments.of(new Moving(D6, E8)),
+                Arguments.of(new Moving(D6, F7))
         );
     }
 }

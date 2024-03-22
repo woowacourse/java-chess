@@ -41,10 +41,10 @@ public class GameBoard {
     }
 
     public void setting() {
-        settingExceptPawn(Camp.BLACK, Row.EIGHTH);
-        settingPawn(Camp.BLACK, Row.SEVENTH);
-        settingPawn(Camp.WHITE, Row.SECOND);
-        settingExceptPawn(Camp.WHITE, Row.FIRST);
+        settingExceptPawn(Camp.BLACK, Row.EIGHT);
+        settingPawn(Camp.BLACK, Row.SEVEN);
+        settingPawn(Camp.WHITE, Row.TWO);
+        settingExceptPawn(Camp.WHITE, Row.ONE);
     }
 
     private void settingExceptPawn(final Camp camp, Row row) {

@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 public enum Row {
 
-    FIRST("1", 7),
-    SECOND("2", 6),
-    THIRD("3", 5),
-    FOURTH("4", 4),
-    FIFTH("5", 3),
-    SIXTH("6", 2),
-    SEVENTH("7", 1),
-    EIGHTH("8", 0);
+    ONE("1", 7),
+    TWO("2", 6),
+    THREE("3", 5),
+    FOUR("4", 4),
+    FIVE("5", 3),
+    SIX("6", 2),
+    SEVEN("7", 1),
+    EIGHT("8", 0);
 
     private final String value;
     private final int index;

@@ -7,6 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+
+// TODO 여기도 fixture 쓸 수 있는 방법 고민해보기
 class MovingTest {
 
     @ParameterizedTest
