@@ -20,7 +20,7 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isInMovableRange(Position source, Position target) {
-        Direction direction = source.findDirectionTo(target);
+        Direction direction = Direction.of(source, target);
         return isMovableDirection(direction) && isMovableDistance(source, target, direction);
     }
 

@@ -86,7 +86,7 @@ public class PositionTest {
     @MethodSource("findTargetDirectionArguments")
     void findTargetDirection(Position source, Position target, Direction expectedDirection) {
         // when
-        Direction result = source.findDirectionTo(target);
+        Direction result = Direction.of(source, target);
 
         // then
         assertThat(result).isEqualTo(expectedDirection);
@@ -97,7 +97,7 @@ public class PositionTest {
     @MethodSource("findWrongDirectionArguments")
     void findWrongDirection(Position source, Position target) {
         // when & then
-        assertThatThrownBy(() -> source.findDirectionTo(target))
+        assertThatThrownBy(() -> Direction.of(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 방향입니다.");
     }

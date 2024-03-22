@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -25,35 +23,6 @@ public class Position {
                 ChessFile.findByValue(String.valueOf(position.charAt(0))),
                 ChessRank.findByValue(String.valueOf(position.charAt(1)))
         ));
-    }
-
-    // TODO : 리팩터링
-    public Direction findDirectionTo(Position target) {
-        if (file.index() == target.file.index() && rank.index() < target.rank.index()) {
-            return Direction.TOP;
-        }
-        if (file.index() == target.file.index() && rank.index() > target.rank.index()) {
-            return Direction.DOWN;
-        }
-        if (file.index() > target.file.index() && rank.index() == target.rank.index()) {
-            return Direction.LEFT;
-        }
-        if (file.index() < target.file.index() && rank.index() == target.rank.index()) {
-            return Direction.RIGHT;
-        }
-        if (file.index() < target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.TOP_RIGHT;
-        }
-        if (file.index() > target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.TOP_LEFT;
-        }
-        if (file.index() < target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.DOWN_RIGHT;
-        }
-        if (file.index() > target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.DOWN_LEFT;
-        }
-        throw new IllegalArgumentException("올바르지 않은 방향입니다.");
     }
 
     public boolean isRank(ChessRank rank) {

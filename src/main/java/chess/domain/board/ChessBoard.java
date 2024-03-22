@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Direction;
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -75,10 +76,10 @@ public class ChessBoard {
             throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
         }
         if (sourcePiece.isType(PieceType.PAWN)) {
-            if (source.findDirectionTo(target).isDiagonal() && !isExist(target)) {
+            if (Direction.isDiagonal(source, target) && !isExist(target)) {
                 throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
             }
-            if (source.findDirectionTo(target).isVertical() && isExist(target) && !isSameColor(board.get(source), board.get(target))) {
+            if (Direction.isVertical(source, target) && isExist(target) && !isSameColor(board.get(source), board.get(target))) {
                 throw new IllegalArgumentException("폰은 대각선으로만 공격할 수 있습니다.");
             }
         }
