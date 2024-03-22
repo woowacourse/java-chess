@@ -30,8 +30,8 @@ public abstract class MoveStrategy {
         }
     }
 
-    protected boolean isAllBlankCourses(Set<Position> path) {
-        return path.stream()
+    protected boolean isNotAllBlankPath(Set<Position> path) {
+        return !path.stream()
                 .map(board::get)
                 .allMatch(Piece::isBlank);
     }
