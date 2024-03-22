@@ -12,12 +12,12 @@ class TurnTest {
     @Test
     void nextTurn() {
         //given
-        Turn turn = new Turn(PieceColor.BLACK);
+        Turn turn = Turn.first();
 
         //when
         turn.next();
 
         //then
-        assertThat(turn.hasTurn(PieceColor.WHITE)).isTrue();
+        assertThat(turn.hasTurn(PieceColor.BLACK)).isTrue();
     }
 }

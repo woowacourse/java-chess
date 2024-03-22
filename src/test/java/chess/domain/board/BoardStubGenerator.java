@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardGeneratorStub implements BoardGenerator {
+public class BoardStubGenerator implements BoardGenerator {
     private Map<Position, Piece> board = new HashMap<>();
 
     @Override

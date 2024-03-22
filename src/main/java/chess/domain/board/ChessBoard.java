@@ -13,7 +13,7 @@ import java.util.Set;
 public class ChessBoard {
     private final Map<Position, Piece> board;
 
-    public ChessBoard(final ChessBoardGenerator chessBoardGenerator) {
+    public ChessBoard(final BoardGenerator chessBoardGenerator) {
         this.board = new HashMap<>(chessBoardGenerator.generate());
     }
 

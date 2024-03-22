@@ -9,7 +9,7 @@ public class Turn {
         return new Turn(PieceColor.WHITE);
     }
 
-    public Turn(PieceColor turn) {
+    private Turn(PieceColor turn) {
         this.turn = turn;
     }
 
