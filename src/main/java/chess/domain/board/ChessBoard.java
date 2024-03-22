@@ -54,7 +54,7 @@ public class ChessBoard {
 
     private void validateTurn(Position source, Turn turn) {
         Piece sourcePiece = board.get(source);
-        if (!turn.isTurn(sourcePiece.color())) {
+        if (!turn.hasTurn(sourcePiece.color())) {
             throw new IllegalArgumentException("해당 색의 차례가 아닙니다.");
         }
     }
