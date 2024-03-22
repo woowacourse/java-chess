@@ -18,6 +18,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource(value = "canMoveArguments")
     void canMove(final Square target, final boolean expected) {
+        // given
         final King king = new King(Team.BLACK);
         final Square source = new Square(File.D, Rank.FOUR);
 
@@ -46,6 +47,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource(value = "canNotArguments")
     void canNotMove(final Square target, final boolean expected) {
+        // given
         final King king = new King(Team.BLACK);
         final Square source = new Square(File.D, Rank.FOUR);
 
