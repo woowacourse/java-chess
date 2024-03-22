@@ -15,12 +15,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.File;
-import chess.domain.attribute.Rank;
 import chess.domain.attribute.Position;
+import chess.domain.attribute.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;
@@ -94,7 +93,7 @@ class ChessboardTest {
         chessBoard.move(Position.of(File.F, Rank.THREE), Position.of(File.G, Rank.FIVE));
         chessBoard.move(Position.of(File.G, Rank.FIVE), Position.of(File.F, Rank.SEVEN));
 
-        assertThat(chessBoard.pieceOf(Position.of(File.F, Rank.SEVEN)).getPieceType())
+        assertThat(chessBoard.pieceIn(Position.of(File.F, Rank.SEVEN)).getPieceType())
                 .isEqualTo(PieceType.KNIGHT);
     }
 

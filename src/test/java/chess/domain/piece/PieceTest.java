@@ -21,8 +21,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.attribute.File;
-import chess.domain.attribute.Rank;
 import chess.domain.attribute.Position;
+import chess.domain.attribute.Rank;
 
 class PieceTest {
 
@@ -197,7 +197,7 @@ class PieceTest {
     @MethodSource
     @ParameterizedTest
     void movablePositions(Piece piece, Position currentPosition, Set<Position> expected) {
-        Set<Position> actual = piece.movablePositionsFrom(currentPosition);
+        Set<Position> actual = piece.move(currentPosition);
         assertThat(actual).isEqualTo(expected);
     }
 }

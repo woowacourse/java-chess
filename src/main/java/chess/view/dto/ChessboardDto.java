@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.attribute.File;
-import chess.domain.attribute.Rank;
 import chess.domain.attribute.Position;
+import chess.domain.attribute.Rank;
 import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.Piece;
 

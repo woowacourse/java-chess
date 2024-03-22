@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 import chess.domain.attribute.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 
 public enum PieceTypeDto {
 

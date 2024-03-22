@@ -8,27 +8,27 @@ import chess.domain.attribute.Position;
 
 public abstract class Piece {
 
-    protected final Color color;
-    protected final PieceType pieceType;
+    private final Color color;
+    private final Position position;
 
-    protected Piece(final Color color, final PieceType pieceType) {
+    public Piece(final Color color, final Position position) {
         this.color = color;
-        this.pieceType = pieceType;
+        this.position = position;
     }
 
-    public abstract Set<Position> movablePositionsFrom(final Position source);
-
-    public boolean isAllyOf(Piece other) {
+    public boolean isAllyOf(final Piece other) {
         return color == other.color;
     }
 
-    public Color getColor() {
+    public Color color() {
         return color;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
+    public Position position() {
+        return position;
     }
+
+    public abstract Set<Position> move(final Position source, final Position target);
 
     @Override
     public boolean equals(final Object object) {
@@ -37,11 +37,11 @@ public abstract class Piece {
         }
         return object instanceof Piece other
                 && color == other.color
-                && pieceType == other.pieceType;
+                && position == other.position;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, pieceType);
+        return Objects.hash(color, position);
     }
 }
