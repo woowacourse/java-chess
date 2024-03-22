@@ -19,11 +19,6 @@ public class Board {
         validateNoPiecesBetween(source, destination);
 
         Piece piece = pieces.get(source);
-        if (hasEnemyPieceOn(destination, piece)) {
-            validateAttackable(source, destination, piece);
-            replacePiece(source, destination, piece);
-            return;
-        }
         validateMovable(source, destination, piece);
         replacePiece(source, destination, piece);
     }
@@ -34,15 +29,14 @@ public class Board {
     }
 
     private void validatePieceExistsAt(Position source) {
-        if (pieces.get(source) == null) {
+        if (hasNoPieceOn(source)) {
             throw new IllegalArgumentException("출발 칸에 기물이 없습니다.");
         }
     }
 
     private void validateAllyPieceNotOnDestination(Position source, Position destination) {
         Piece sourcePiece = pieces.get(source);
-        Piece destinationPiece = pieces.getOrDefault(destination, null);
-        if (destinationPiece != null && destinationPiece.hasSameColorWith(sourcePiece)) {
+        if (hasSameColorPieceOn(destination, sourcePiece)) {
             throw new IllegalArgumentException("도착 칸에 자신의 기물이 있습니다.");
         }
     }
@@ -54,19 +48,19 @@ public class Board {
         }
     }
 
-    private boolean hasEnemyPieceOn(Position destination, Piece piece) {
-        return pieces.containsKey(destination) &&
-                pieces.get(destination).hasDifferentColorWith(piece);
-    }
+    private void validateMovable(Position source, Position destination, Piece piece) {
+        if (hasDifferentColorPieceOn(destination, piece)) {
+            validateAttackable(source, destination, piece);
+            return;
+        }
 
-    private void validateAttackable(Position source, Position destination, Piece piece) {
-        if (!piece.isAttackable(source, destination)) {
+        if (!piece.isMovable(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
 
-    private void validateMovable(Position source, Position destination, Piece piece) {
-        if (!piece.isMovable(source, destination)) {
+    private void validateAttackable(Position source, Position destination, Piece piece) {
+        if (!piece.isAttackable(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
@@ -78,6 +72,26 @@ public class Board {
             return;
         }
         pieces.put(destination, piece);
+    }
+
+    private boolean hasNoPieceOn(Position position) {
+        return !pieces.containsKey(position);
+    }
+
+    private boolean hasSameColorPieceOn(Position position, Piece piece) {
+        if (hasNoPieceOn(position)) {
+            return false;
+        }
+        Piece pieceOnPosition = pieces.get(position);
+        return pieceOnPosition.hasSameColorWith(piece);
+    }
+
+    private boolean hasDifferentColorPieceOn(Position position, Piece piece) {
+        if (hasNoPieceOn(position)) {
+            return false;
+        }
+        Piece pieceOnPosition = pieces.get(position);
+        return pieceOnPosition.hasDifferentColorWith(piece);
     }
 
     public Map<Position, Piece> pieces() {
