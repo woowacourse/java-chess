@@ -24,6 +24,9 @@ public enum Direction {
     DOWN_RIGHT(1, -2),
     DOWN_LEFT(-1, -2);
 
+    private static final int MAX_BOARD_DISTANCE = 8;
+    private static final int MIN_BOARD_DISTANCE = 1;
+
     private final int fileVector;
     private final int rankVector;
 
@@ -42,7 +45,7 @@ public enum Direction {
     }
 
     private static boolean isSameDirection(final Direction direction, final Vector vector) {
-        for (int step = 1; step <= 8; step++) {
+        for (int step = MIN_BOARD_DISTANCE; step <= MAX_BOARD_DISTANCE; step++) {
             if (canReach(findDistance(direction.fileVector, step), vector.file()) && canReach(
                     findDistance(direction.rankVector, step), vector.rank())) {
                 return true;
