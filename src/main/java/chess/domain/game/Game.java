@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
-import chess.dto.PieceResponse;
-import java.util.List;
+import java.util.Map;
 
 public class Game {
 
@@ -31,7 +31,7 @@ public class Game {
         }
     }
 
-    public List<PieceResponse> getBoardStatus() {
-        return board.createBoardStatus();
+    public Map<Square, Piece> getBoardStatus() {
+        return board.getPieces();
     }
 }

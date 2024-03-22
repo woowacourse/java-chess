@@ -6,6 +6,7 @@ import chess.domain.square.Movement;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -83,5 +84,9 @@ public class Board {
             responses.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
         }
         return responses;
+    }
+
+    public Map<Square, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }
