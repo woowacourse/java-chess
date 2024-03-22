@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.position.Direction;
-import java.util.List;
+import chess.position.UnitDirection;
+import java.util.Set;
 
 public class Rook extends Piece {
 
@@ -9,17 +9,13 @@ public class Rook extends Piece {
 
     public Rook(Color color) {
         super(color,
-                List.of(
-                        Direction.POSITIVE_FILE_SAME_RANK,
-                        Direction.NEGATIVE_FILE_SAME_RANK,
-                        Direction.SAME_FILE_POSITIVE_RANK,
-                        Direction.SAME_FILE_NEGATIVE_RANK
+                MAX_UNIT_MOVE,
+                Set.of(
+                        UnitDirection.differencesOf(1, 0),
+                        UnitDirection.differencesOf(0, 1),
+                        UnitDirection.differencesOf(-1, 0),
+                        UnitDirection.differencesOf(0, -1)
                 )
         );
-    }
-
-    @Override
-    protected int getMaxUnitMove() {
-        return MAX_UNIT_MOVE;
     }
 }

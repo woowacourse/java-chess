@@ -3,13 +3,14 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.Direction;
+import chess.position.UnitDirection;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
 
@@ -41,13 +42,14 @@ class BishopTest {
     }
 
     @ParameterizedTest
-    @EnumSource(value = Direction.class, mode = Mode.MATCH_ANY, names = {".*SAME.*"})
+    @CsvSource(value = {"1,0", "0,-1"})
     @DisplayName("비숍이 움직일 수 없는 경우를 판단한다.")
-    void bishopInvalidMoveTest(Direction direction) {
+    void bishopInvalidMoveTest(int fileDifference, int rankDifference) {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
-        Position destination = direction.nextPosition(source);
+        UnitDirection unitDirection = UnitDirection.differencesOf(fileDifference, rankDifference);
+        Position destination = unitDirection.nextPosition(source);
         // when, then
         assertThat(bishop.isMovable(source, destination)).isFalse();
     }

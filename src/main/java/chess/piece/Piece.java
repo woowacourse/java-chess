@@ -1,39 +1,35 @@
 package chess.piece;
 
-import chess.position.Direction;
 import chess.position.Position;
-import java.util.List;
+import chess.position.UnitDirection;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Piece {
 
     private final Color color;
-    private final List<Direction> directions;
+    private final int maxUnitMove;
+    private final Set<UnitDirection> unitDirections;
 
-    protected Piece(Color color, List<Direction> directions) {
+    protected Piece(Color color, int maxUnitMove, Set<UnitDirection> unitDirections) {
         this.color = color;
-        this.directions = directions;
+        this.maxUnitMove = maxUnitMove;
+        this.unitDirections = unitDirections;
     }
 
     public boolean isMovable(Position source, Position destination) {
-        Direction direction = Direction.calculateBetween(source, destination);
-        return matchesDirection(direction) &&
+        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
+        return unitDirections.contains(direction) &&
                 isReachable(source, destination, direction);
     }
 
-    private boolean matchesDirection(Direction direction) {
-        return directions.contains(direction);
-    }
-
-    private boolean isReachable(Position source, Position destination, Direction direction) {
+    private boolean isReachable(Position source, Position destination, UnitDirection unitDirection) {
         int distance = (int) Stream.iterate(source,
                         position -> position.isNotEquals(destination),
-                        direction::nextPosition)
+                        unitDirection::nextPosition)
                 .count();
-        return distance <= getMaxUnitMove();
+        return distance <= maxUnitMove;
     }
-
-    protected abstract int getMaxUnitMove();
 
     public boolean isAttackable(Position source, Position destination) {
         return isMovable(source, destination);

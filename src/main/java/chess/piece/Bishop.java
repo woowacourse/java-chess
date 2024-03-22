@@ -1,7 +1,7 @@
 package chess.piece;
 
-import chess.position.Direction;
-import java.util.List;
+import chess.position.UnitDirection;
+import java.util.Set;
 
 public class Bishop extends Piece {
 
@@ -9,17 +9,13 @@ public class Bishop extends Piece {
 
     public Bishop(Color color) {
         super(color,
-                List.of(
-                        Direction.POSITIVE_FILE_POSITIVE_RANK,
-                        Direction.POSITIVE_FILE_NEGATIVE_RANK,
-                        Direction.NEGATIVE_FILE_POSITIVE_RANK,
-                        Direction.NEGATIVE_FILE_NEGATIVE_RANK
+                MAX_UNIT_MOVE,
+                Set.of(
+                        UnitDirection.differencesOf(1, 1),
+                        UnitDirection.differencesOf(1, -1),
+                        UnitDirection.differencesOf(-1, 1),
+                        UnitDirection.differencesOf(-1, -1)
                 )
         );
-    }
-
-    @Override
-    public int getMaxUnitMove() {
-        return MAX_UNIT_MOVE;
     }
 }

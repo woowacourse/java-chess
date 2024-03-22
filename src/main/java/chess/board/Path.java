@@ -1,9 +1,8 @@
 package chess.board;
 
 import chess.piece.Piece;
-import chess.position.Direction;
 import chess.position.Position;
-import java.util.Collections;
+import chess.position.UnitDirection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -17,19 +16,17 @@ public class Path {
     }
 
     public static Path createExcludingBothEnds(Position source, Position destination) {
-        Direction direction = Direction.calculateBetween(source, destination);
-        if (direction == Direction.KNIGHT) {
-            return new Path(Collections.emptyList());
-        }
+        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
         List<Position> positions = getPositionsBetween(source, destination, direction);
         return new Path(positions);
     }
 
-    private static List<Position> getPositionsBetween(Position source, Position destination, Direction direction) {
+    private static List<Position> getPositionsBetween(Position source, Position destination,
+                                                      UnitDirection unitDirection) {
         return Stream.iterate(
-                        direction.nextPosition(source),
+                        unitDirection.nextPosition(source),
                         position -> position.isNotEquals(destination),
-                        direction::nextPosition)
+                        unitDirection::nextPosition)
                 .toList();
     }
 

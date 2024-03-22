@@ -1,43 +1,43 @@
 package chess.piece;
 
-import chess.position.Direction;
 import chess.position.Position;
-import java.util.List;
+import chess.position.UnitDirection;
+import java.util.Set;
 
 public abstract class Pawn extends Piece {
 
-    private static final List<Direction> WHITE_PAWN_DIRECTION = List.of(
-            Direction.SAME_FILE_POSITIVE_RANK
+    private static final Set<UnitDirection> WHITE_PAWN_UNIT_DIRECTION = Set.of(
+            UnitDirection.differencesOf(0, 1)
     );
-    private static final List<Direction> WHITE_PAWN_ATTACK_DIRECTION = List.of(
-            Direction.POSITIVE_FILE_POSITIVE_RANK,
-            Direction.NEGATIVE_FILE_POSITIVE_RANK
+    private static final Set<UnitDirection> WHITE_PAWN_ATTACK_UNIT_DIRECTION = Set.of(
+            UnitDirection.differencesOf(1, 1),
+            UnitDirection.differencesOf(-1, 1)
     );
-    private static final List<Direction> BLACK_PAWN_DIRECTION = List.of(
-            Direction.SAME_FILE_NEGATIVE_RANK
+    private static final Set<UnitDirection> BLACK_PAWN_UNIT_DIRECTION = Set.of(
+            UnitDirection.differencesOf(0, -1)
     );
-    private static final List<Direction> BLACK_PAWN_ATTACK_DIRECTION = List.of(
-            Direction.POSITIVE_FILE_NEGATIVE_RANK,
-            Direction.NEGATIVE_FILE_NEGATIVE_RANK
+    private static final Set<UnitDirection> BLACK_PAWN_ATTACK_UNIT_DIRECTION = Set.of(
+            UnitDirection.differencesOf(1, -1),
+            UnitDirection.differencesOf(-1, -1)
     );
 
-    protected Pawn(Color color) {
-        super(color, getPawnDirectionByColor(color));
+    protected Pawn(Color color, int maxUnitMove) {
+        super(color, maxUnitMove, getPawnDirectionByColor(color));
     }
 
-    private static List<Direction> getPawnDirectionByColor(Color color) {
+    private static Set<UnitDirection> getPawnDirectionByColor(Color color) {
         if (color == Color.WHITE) {
-            return WHITE_PAWN_DIRECTION;
+            return WHITE_PAWN_UNIT_DIRECTION;
         }
-        return BLACK_PAWN_DIRECTION;
+        return BLACK_PAWN_UNIT_DIRECTION;
     }
 
     @Override
-    public boolean isAttackable(Position source, Position destination) {
-        Direction direction = Direction.calculateBetween(source, destination);
+    public final boolean isAttackable(Position source, Position destination) {
+        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
         if (hasColorOf(Color.WHITE)) {
-            return WHITE_PAWN_ATTACK_DIRECTION.contains(direction);
+            return WHITE_PAWN_ATTACK_UNIT_DIRECTION.contains(direction);
         }
-        return BLACK_PAWN_ATTACK_DIRECTION.contains(direction);
+        return BLACK_PAWN_ATTACK_UNIT_DIRECTION.contains(direction);
     }
 }
