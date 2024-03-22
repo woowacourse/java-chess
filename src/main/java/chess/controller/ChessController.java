@@ -39,38 +39,38 @@ public class ChessController {
     private void startGame() {
         ChessBoard chessBoard = makeChessBoard();
 
-        ExceptionRetryHandler.handle(() -> tryProcessUntilValid(chessBoard));
+        ExceptionRetryHandler.handle(() -> executeCommandsUntilEnd(chessBoard));
     }
 
     private ChessBoard makeChessBoard() {
         ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
         ChessBoard chessBoard = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
 
-        outputView.printChessBoard(chessBoard.squares());
+        outputView.printChessBoard(chessBoard.getSquares());
         return chessBoard;
     }
 
-    private void tryProcessUntilValid(ChessBoard chessBoard) {
+    private void executeCommandsUntilEnd(ChessBoard chessBoard) {
         Command command = inputView.readCommand();
 
         while (command.type() != CommandType.END) {
-            tryProcess(command, chessBoard);
+            executeCommand(command, chessBoard);
             command = inputView.readCommand();
         }
     }
 
-    private void tryProcess(Command command, ChessBoard chessBoard) {
+    private void executeCommand(Command command, ChessBoard chessBoard) {
         if (command.type() == CommandType.MOVE) {
-            processTurn(command, chessBoard);
+            movePlayerPiece(command, chessBoard);
         }
     }
 
-    private void processTurn(Command command, ChessBoard chessBoard) {
+    private void movePlayerPiece(Command command, ChessBoard chessBoard) {
         MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
         Path path = makePath(moveArgumentDto);
         chessBoard.move(path);
 
-        outputView.printChessBoard(chessBoard.squares());
+        outputView.printChessBoard(chessBoard.getSquares());
     }
 
     private static Path makePath(MoveArgumentDto moveArgumentDto) {

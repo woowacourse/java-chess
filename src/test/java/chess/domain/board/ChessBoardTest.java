@@ -59,7 +59,7 @@ public class ChessBoardTest {
         chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
-        assertThat(chessBoard.squares()).isEqualTo(expected);
+        assertThat(chessBoard.getSquares()).isEqualTo(expected);
     }
 
     @DisplayName("target이 체스말인 경우 공격한다.")
@@ -76,7 +76,7 @@ public class ChessBoardTest {
         chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
-        assertThat(chessBoard.squares()).isEqualTo(expected);
+        assertThat(chessBoard.getSquares()).isEqualTo(expected);
     }
 
 

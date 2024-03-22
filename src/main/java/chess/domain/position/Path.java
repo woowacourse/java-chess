@@ -7,19 +7,19 @@ import java.util.List;
 // TODO: 첵임을 줄이는 방안 고려하기
 public class Path {
     private final Position start;
-    private final Position end;
+    private final Position target;
 
-    public Path(Position start, Position end) {
+    public Path(Position start, Position target) {
         this.start = start;
-        this.end = end;
+        this.target = target;
     }
 
     public int calculateRankDistance() {
-        return start.calculateRankDistance(end);
+        return start.calculateRankDistance(target);
     }
 
     public int calculateFileDistance() {
-        return start.calculateFileDistance(end);
+        return start.calculateFileDistance(target);
     }
 
     public boolean isStraight() {
@@ -47,20 +47,20 @@ public class Path {
     }
 
     public int subtractRank() {
-        return end.subtractRank(start);
+        return target.subtractRank(start);
     }
 
     public int subtractFile() {
-        return end.subtractFile(start);
+        return target.subtractFile(start);
     }
 
     public boolean isDown(int maxDiff) {
-        int diff = start.getRankValue() - end.getRankValue();
+        int diff = start.getRankValue() - target.getRankValue();
         return isStraight() && diff <= maxDiff && diff > 0;
     }
 
     public boolean isUp(int maxDiff) {
-        int diff = end.getRankValue() - start.getRankValue();
+        int diff = target.getRankValue() - start.getRankValue();
         return isStraight() && diff <= maxDiff && diff > 0;
     }
 
@@ -72,8 +72,8 @@ public class Path {
     }
 
     private List<Position> findRankStraight() {
-        int maxRankValue = Math.max(start.getRankValue(), end.getRankValue()) - 1;
-        int minRankValue = Math.min(start.getRankValue(), end.getRankValue()) + 1;
+        int maxRankValue = Math.max(start.getRankValue(), target.getRankValue()) - 1;
+        int minRankValue = Math.min(start.getRankValue(), target.getRankValue()) + 1;
 
         List<Position> positions = new ArrayList<>();
         for (int rankValue = minRankValue; rankValue <= maxRankValue; rankValue++) {
@@ -84,8 +84,8 @@ public class Path {
     }
 
     private List<Position> findFileStraight() {
-        int maxFileValue = Math.max(start.getFileValue(), end.getFileValue()) - 1;
-        int minFileValue = Math.min(start.getFileValue(), end.getFileValue()) + 1;
+        int maxFileValue = Math.max(start.getFileValue(), target.getFileValue()) - 1;
+        int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
 
         List<Position> positions = new ArrayList<>();
         for (int fileValue = minFileValue; fileValue <= maxFileValue; fileValue++) {
@@ -103,12 +103,12 @@ public class Path {
     }
 
     private boolean isUphill() {
-        return (start.getFileValue() - end.getFileValue()) * (start.getRankValue() - end.getRankValue()) > 0;
+        return (start.getFileValue() - target.getFileValue()) * (start.getRankValue() - target.getRankValue()) > 0;
     }
 
     private List<Position> findUphill() {
-        int minRankValue = Math.min(start.getRankValue(), end.getRankValue()) + 1;
-        int minFileValue = Math.min(start.getFileValue(), end.getFileValue()) + 1;
+        int minRankValue = Math.min(start.getRankValue(), target.getRankValue()) + 1;
+        int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
         int distance = calculateFileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
@@ -119,8 +119,8 @@ public class Path {
     }
 
     private List<Position> findDownhill() {
-        int maxRankValue = Math.max(start.getRankValue(), end.getRankValue()) + 1;
-        int minFileValue = Math.min(start.getFileValue(), end.getFileValue()) + 1;
+        int maxRankValue = Math.max(start.getRankValue(), target.getRankValue()) + 1;
+        int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
         int distance = calculateFileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
@@ -134,15 +134,15 @@ public class Path {
     public String toString() {
         return "Path{" +
                 "start=" + start +
-                ", end=" + end +
+                ", end=" + target +
                 '}';
     }
 
-    public Position getStart() {
+    public Position getStartPosition() {
         return start;
     }
 
-    public Position getEnd() {
-        return end;
+    public Position getTargetPosition() {
+        return target;
     }
 }

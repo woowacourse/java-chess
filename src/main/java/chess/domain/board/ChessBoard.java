@@ -22,15 +22,15 @@ public class ChessBoard {
 
     public void move(Path path) {
         validateStartSquare(path);
-        if (squares.get(path.getEnd()) == Empty.getInstance()) {
-            tryExchange(path);
+        if (squares.get(path.getTargetPosition()) == Empty.getInstance()) {
+            moveWithoutAttack(path);
             return;
         }
-        tryAttack(path);
+        moveWithAttack(path);
     }
 
     private void validateStartSquare(Path path) {
-        Square startSquare = squares.get(path.getStart());
+        Square startSquare = squares.get(path.getStartPosition());
         if (isEmpty(startSquare) || isEnemy(startSquare)) {
             throw new IllegalArgumentException("시작 위치에 아군 체스말이 존재해야 합니다.");
         }
@@ -47,30 +47,31 @@ public class ChessBoard {
     }
 
     // TODO: 예외 로직 세분화
-    private void tryExchange(Path path) {
-        Square startSquare = squares.get(path.getStart());
+    private void moveWithoutAttack(Path path) {
+        Square startSquare = squares.get(path.getStartPosition());
         if (!startSquare.canMove(path, squares)) {
             throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
+        // TODO: targetSquare를 받을 필요 없이 Empty를 그대로 넣도록 바꾸고, moveWithAttack과 추상화할 수 있을지 고민하기
         startSquare.move();
-        Square tmp = squares.get(path.getEnd());
-        squares.put(path.getEnd(), startSquare);
-        squares.put(path.getStart(), tmp);
+        Square targetSquare = squares.get(path.getTargetPosition());
+        squares.put(path.getTargetPosition(), startSquare);
+        squares.put(path.getStartPosition(), targetSquare);
         currentTurn.change();
     }
 
-    private void tryAttack(Path path) {
-        Square startSquare = squares.get(path.getStart());
+    private void moveWithAttack(Path path) {
+        Square startSquare = squares.get(path.getStartPosition());
         if (!startSquare.canAttack(path, squares)) {
             throw new IllegalArgumentException("해당 위치를 공격할 수 없습니다.");
         }
         startSquare.move();
-        squares.put(path.getEnd(), startSquare);
-        squares.put(path.getStart(), Empty.getInstance());
+        squares.put(path.getTargetPosition(), startSquare);
+        squares.put(path.getStartPosition(), Empty.getInstance());
         currentTurn.change();
     }
 
-    public Map<Position, Square> squares() {
+    public Map<Position, Square> getSquares() {
         return Collections.unmodifiableMap(squares);
     }
 }
