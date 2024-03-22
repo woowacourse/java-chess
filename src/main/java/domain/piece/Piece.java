@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.position.Position;
+
 import java.util.Objects;
 
 public class Piece {
@@ -21,13 +22,9 @@ public class Piece {
         return color == Color.WHITE;
     }
 
-    private boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
     public boolean canMove(Position source, Position target) {
-        if (isBlack() && isSameType(Type.PAWN)) {
-            return source.isForwardStraight(target, true) || source.canAttackDiagonal(target, true);
+        if (isSameType(Type.PAWN)) {
+            return color.canMove(source, target) && type.canMove(source, target);
         }
         return type.canMove(source, target);
     }

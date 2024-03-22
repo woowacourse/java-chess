@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.position.Position;
+
 import java.util.function.BiPredicate;
 
 public enum Type {
@@ -8,7 +9,7 @@ public enum Type {
     BISHOP(Position::isDiagonal),
     KING(Position::isNeighbor),
     KNIGHT(Position::isStraightDiagonal),
-    PAWN((source, target) -> source.isForwardStraight(target, false) || source.canAttackDiagonal(target, false)),
+    PAWN((source, target) -> source.isForwardStraight(target) || source.canAttackDiagonal(target)),
     QUEEN((source, target) -> source.isDiagonal(target) || source.isStraight(target)),
     ROOK(Position::isStraight),
     NONE((source, target) -> false),

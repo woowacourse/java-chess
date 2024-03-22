@@ -6,12 +6,20 @@ import java.util.Objects;
 
 public class Position {
 
+    private static final int ZERO_STEP = 0;
+    private static final int ONE_STEP = 1;
+    private static final int TWO_STEP = 2;
+
     private final File file;
     private final Rank rank;
 
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public int rankDirection(Position target) {
+        return rank.forwardDistance(target.rank);
     }
 
     public boolean isDiagonal(Position target) {
@@ -27,7 +35,7 @@ public class Position {
     public boolean isStraightDiagonal(Position target) {
         int fileDistance = file.distance(target.file);
         int rankDistance = rank.distance(target.rank);
-        return (fileDistance == 1 && rankDistance == 2) || (fileDistance == 2 && rankDistance == 1);
+        return (isOneStep(fileDistance) && isTwoStep(rankDistance)) || (isTwoStep(fileDistance) && isOneStep(rankDistance));
     }
 
     public boolean isNeighbor(Position target) {
@@ -37,43 +45,29 @@ public class Position {
     }
 
     private boolean isDiagonalNeighbor(int fileDistance, int rankDistance) {
-        return fileDistance == 1 && rankDistance == 1;
+        return isOneStep(fileDistance) && isOneStep(rankDistance);
     }
 
     private boolean isStraightNeighbor(int fileDistance, int rankDistance) {
-        return (fileDistance == 0 && rankDistance == 1) || (fileDistance == 1 && rankDistance == 0);
+        return (isNoneStep(fileDistance) && isOneStep(rankDistance)) || (isOneStep(fileDistance) && isNoneStep(rankDistance));
     }
 
-    public boolean isForwardStraight(Position target, boolean isBlack) {
-        if (rank.isSame(Rank.TWO) || rank.isSame(Rank.SEVEN)) {
-            return firstMove(target, isBlack);
+    public boolean isForwardStraight(Position target) {
+        int forwardDistance = rank.distance(target.rank);
+        if (isFirstMove()) {
+            return (isOneStep(forwardDistance) || isTwoStep(forwardDistance)) && file.isSame(target.file);
         }
-        return notFirstMove(target, isBlack);
+        return isOneStep(forwardDistance) && file.isSame(target.file);
     }
 
-    public boolean canAttackDiagonal(Position target, boolean isBlack) {
-        int rankDistance = rank.forwardDistance(target.rank);
+    private boolean isFirstMove() {
+        return rank.isSame(Rank.TWO) || rank.isSame(Rank.SEVEN);
+    }
+
+    public boolean canAttackDiagonal(Position target) {
+        int rankDistance = rank.distance(target.rank);
         int fileDistance = file.distance(target.file);
-        if (isBlack) {
-            return rankDistance == -1 || fileDistance == 1;
-        }
-        return rankDistance == 1 || fileDistance == 1;
-    }
-
-    private boolean notFirstMove(Position target, boolean isBlack) {
-        int forwardDistance = rank.forwardDistance(target.rank);
-        if (isBlack) {
-            return forwardDistance == -1 && file.isSame(target.file);
-        }
-        return forwardDistance == 1 && file.isSame(target.file);
-    }
-
-    private boolean firstMove(Position target, boolean isBlack) {
-        int forwardDistance = rank.forwardDistance(target.rank);
-        if (isBlack) {
-            return (forwardDistance == -1 || forwardDistance == -2) && file.isSame(target.file);
-        }
-        return (forwardDistance == 1 || forwardDistance == 2) && file.isSame(target.file);
+        return isNoneStep(rankDistance) || isOneStep(fileDistance);
     }
 
     public List<Position> findBetweenStraightPositions(Position target) {
@@ -97,6 +91,18 @@ public class Position {
             positions.add(position);
         }
         return positions;
+    }
+
+    private boolean isNoneStep(int rankDistance) {
+        return rankDistance == ZERO_STEP;
+    }
+
+    private boolean isOneStep(int fileDistance) {
+        return fileDistance == ONE_STEP;
+    }
+
+    private boolean isTwoStep(int fileDistance) {
+        return fileDistance == TWO_STEP;
     }
 
     @Override

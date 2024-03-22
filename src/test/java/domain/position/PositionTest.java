@@ -1,15 +1,16 @@
 package domain.position;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Nested
 public class PositionTest {
@@ -181,7 +182,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.TWO);
             Position target = new Position(file, rank);
 
-            assertThat(source.isForwardStraight(target, false)).isTrue();
+            assertThat(source.isForwardStraight(target)).isTrue();
         }
 
         @Test
@@ -190,7 +191,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.FOUR);
             Position target = new Position(File.D, Rank.EIGHT);
 
-            assertThat(source.isForwardStraight(target, false)).isFalse();
+            assertThat(source.isForwardStraight(target)).isFalse();
         }
 
         @Test
@@ -199,7 +200,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FOUR);
 
-            assertThat(source.isForwardStraight(target, false)).isTrue();
+            assertThat(source.isForwardStraight(target)).isTrue();
         }
 
         @Test
@@ -208,7 +209,7 @@ public class PositionTest {
             Position source = new Position(File.D, Rank.THREE);
             Position target = new Position(File.D, Rank.FIVE);
 
-            assertThat(source.isForwardStraight(target, false)).isFalse();
+            assertThat(source.isForwardStraight(target)).isFalse();
         }
     }
 
