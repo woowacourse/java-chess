@@ -2,9 +2,11 @@ package chess.view;
 
 import chess.domain.chessBoard.ChessBoard;
 
+import java.util.List;
+
 public class OutputView {
 
-    private static final int CHESS_BOARD_WIDTH = 8;
+    private static final int CHESS_BOARD_LENGTH = 8;
 
     public void printStartGameMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -19,15 +21,11 @@ public class OutputView {
     }
 
     public void printChessBoard(ChessBoard chessBoard) {
-        int count = 0;
-        for (String sign : chessBoard.showBoard()) {
-            System.out.print(sign);
-            count++;
+        List<String> board = chessBoard.showBoard();
 
-            if (count == CHESS_BOARD_WIDTH) {
-                System.out.println();
-                count = 0;
-            }
+        for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
+            String boardLine = String.join("", board.subList(i * CHESS_BOARD_LENGTH, (i+1) * CHESS_BOARD_LENGTH));
+            System.out.println(boardLine);
         }
         System.out.println();
     }
