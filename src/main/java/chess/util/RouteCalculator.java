@@ -1,11 +1,13 @@
-package chess;
+package chess.util;
 
-import chess.domain.piece.File;
 import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
 import java.util.HashSet;
 import java.util.Set;
+
 public class RouteCalculator {
+
+    private RouteCalculator() {
+    }
 
     public static Set<Position> getVerticalMiddlePositions(final Position current, final Position target) {
         Position position = getLowerPosition(current, target);
@@ -47,47 +49,23 @@ public class RouteCalculator {
     }
 
     public static Set<Position> getRightDiagonalMiddlePositions(final Position current, final Position target) {
-        Position start = current;
-        Position end = target;
-
-        if (start.getRank().getIndex() > target.getRank().getIndex()) {
-            start = target;
-            end = current;
-        }
+        Position position = getLowerPosition(current, target);
 
         final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = start.getRank().getIndex() + 1;
-        int currentFileIndex = start.getFile().getIndex() + 1;
-        int targetRankIndex = end.getRank().getIndex();
-
-        while (currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex++;
-            currentRankIndex++;
+        for (int i = 0; i < current.getRankDistance(target) - 1; i++) {
+            position = position.upRight();
+            positions.add(position);
         }
         return positions;
     }
 
     public static Set<Position> getLeftDiagonalMiddlePositions(final Position current, final Position target) {
-        Position start = current;
-        Position end = target;
-
-        if (current.getRank().getIndex() > target.getRank().getIndex()) {
-            start = target;
-            end = current;
-        }
+        Position position = getLowerPosition(current, target);
 
         final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = start.getRank().getIndex() + 1;
-        int currentFileIndex = start.getFile().getIndex() - 1;
-        int targetRankIndex = end.getRank().getIndex();
-
-        while (currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex--;
-            currentRankIndex++;
+        for (int i = 0; i < current.getRankDistance(target) - 1; i++) {
+            position = position.upLeft();
+            positions.add(position);
         }
         return positions;
     }

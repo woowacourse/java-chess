@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -19,11 +20,15 @@ public class Bishop extends Piece {
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        if (this.position.isRightDiagonalWith(target)) {
-            return this.position.getRightDiagonalMiddlePositions(target);
+        if (this.position.isDiagonalWith(target) // TODO: 오른쪽 대각선, 아래는 왼쪽대각선 의미인데 복잡
+                && (this.position.isLeftWith(target) && this.position.isDownWith((target)))
+                || (this.position.isRightWith(target) && this.position.isUpWith(target))) {
+            return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
         }
-        if (this.position.isLeftDiagonalWith(target)) {
-            return this.position.getLeftDiagonalMiddlePositions(target);
+        if (this.position.isDiagonalWith(target)
+                && (this.position.isRightWith(target) && this.position.isDownWith(target))
+                || (this.position.isLeftWith(target) && this.position.isUpWith(target))) {
+            return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
         }
 
         return new HashSet<>();

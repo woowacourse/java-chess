@@ -26,6 +26,10 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
     }
 
+    public Rank up() {
+        return from(this.index + 1);
+    }
+
     public int getDistance(final Rank other) {
         return Math.abs(this.index - other.index);
     }
@@ -36,9 +40,5 @@ public enum Rank {
 
     public int getIndex() {
         return index;
-    }
-
-    public Rank up() {
-        return from(this.index + 1);
     }
 }

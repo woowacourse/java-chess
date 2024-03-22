@@ -35,6 +35,14 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }
 
+    public File right() {
+        return fromIndex(this.index + 1);
+    }
+
+    public File left() {
+        return fromIndex(this.index - 1);
+    }
+
     public int getDistance(final File other) {
         return Math.abs(this.index - other.index);
     }
@@ -45,9 +53,5 @@ public enum File {
 
     public int getIndex() {
         return index;
-    }
-
-    public File right() {
-        return fromIndex(this.index + 1);
     }
 }

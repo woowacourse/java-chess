@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import chess.RouteCalculator;
+import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;

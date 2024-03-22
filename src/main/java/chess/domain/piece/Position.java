@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Position {
 
@@ -30,70 +28,36 @@ public class Position {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
     }
 
+    public boolean isUpWith(final Position target) {
+        return this.rank.isBigger(target.rank);
+    }
+
     public boolean isDownWith(final Position target) {
-        return target.rank.isBigger(this.rank);
+        return !isUpWith(target);
+    }
+
+    public boolean isRightWith(final Position target) {
+        return this.file.isBigger(target.file);
     }
 
     public boolean isLeftWith(final Position target) {
-        return target.file.isBigger(this.file);
+        return !isRightWith(target);
     }
 
-    public boolean isRightDiagonalWith(final Position target) {
-        return isDiagonalWith(target)
-                && ((target.file.isBigger(this.file) && target.rank.isBigger(this.rank))
-                || (this.file.isBigger(target.file) && this.rank.isBigger(target.rank)));
+    public Position up() {
+        return new Position(this.file, this.rank.up());
     }
 
-    public boolean isLeftDiagonalWith(final Position target) {
-        return isDiagonalWith(target)
-                && ((this.file.isBigger(target.file) && target.rank.isBigger(this.rank))
-                || (target.file.isBigger(this.file) && this.rank.isBigger(target.rank)));
+    public Position right() {
+        return new Position(this.file.right(), this.rank);
     }
 
-    public Set<Position> getRightDiagonalMiddlePositions(final Position target) {
-        Position start = this;
-        Position end = target;
-
-        if (this.rank.getIndex() > target.rank.getIndex()) {
-            start = target;
-            end = this;
-        }
-
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = start.rank.getIndex() + 1;
-        int currentFileIndex = start.file.getIndex() + 1;
-        int targetRankIndex = end.rank.getIndex();
-
-        while (currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex++;
-            currentRankIndex++;
-        }
-        return positions;
+    public Position upRight() {
+        return new Position(this.file.right(), this.rank.up());
     }
 
-    public Set<Position> getLeftDiagonalMiddlePositions(Position target) {
-        Position start = this;
-        Position end = target;
-
-        if (this.rank.getIndex() > target.rank.getIndex()) {
-            start = target;
-            end = this;
-        }
-
-        final Set<Position> positions = new HashSet<>();
-
-        int currentRankIndex = start.rank.getIndex() + 1;
-        int currentFileIndex = start.file.getIndex() - 1;
-        int targetRankIndex = end.rank.getIndex();
-
-        while (currentRankIndex < targetRankIndex) {
-            positions.add(new Position(File.fromIndex(currentFileIndex), Rank.from(currentRankIndex)));
-            currentFileIndex--;
-            currentRankIndex++;
-        }
-        return positions;
+    public Position upLeft() {
+        return new Position(this.file.left(), this.rank.up());
     }
 
     public int getRankDistance(final Position target) {
@@ -131,13 +95,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    public Position up() {
-        return new Position(this.file, this.rank.up());
-    }
-
-    public Position right() {
-        return new Position(this.file.right(), this.rank);
     }
 }
