@@ -24,10 +24,10 @@ public class ChessBoard {
 
         Piece findPiece = pieceBySquare.get(sourceSquare);
         pawnMoveValidate(sourceSquare, targetSquare, findPiece);
-        moveValidateExceptKnight(sourceSquare, targetSquare, findPiece);
+        sameColorPieceOnRouteValidate(sourceSquare, targetSquare, findPiece);
 
         if (findPiece.canMove(sourceSquare.position(), targetSquare.position())) {
-            update(sourceSquare, targetSquare, findPiece);
+            updateChessBoardAfterMove(sourceSquare, targetSquare, findPiece);
         }
     }
 
@@ -111,7 +111,7 @@ public class ChessBoard {
         return direction == diagonal && !pieceBySquare.containsKey(targetSquare);
     }
 
-    private void moveValidateExceptKnight(Square sourceSquare, Square targetSquare, Piece findPiece) {
+    private void sameColorPieceOnRouteValidate(Square sourceSquare, Square targetSquare, Piece findPiece) {
         if (findPiece.isNotKnight()) {
             Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
 
@@ -130,7 +130,7 @@ public class ChessBoard {
         }
     }
 
-    private void update(Square sourceSquare, Square targetSquare, Piece findPiece) {
+    private void updateChessBoardAfterMove(Square sourceSquare, Square targetSquare, Piece findPiece) {
         if (pieceBySquare.containsKey(targetSquare)) {
             pieceBySquare.remove(targetSquare);
         }
