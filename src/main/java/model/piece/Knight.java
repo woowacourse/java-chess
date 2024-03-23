@@ -8,6 +8,7 @@ import model.position.Position;
 public final class Knight extends Piece {
 
     private static final String KNIGHT_NAME = "n";
+    private static final int KNIGHT_DELTA_DISTANCE = 3;
 
     public Knight(final Camp camp) {
         super(camp, new PieceName(KNIGHT_NAME));
@@ -31,6 +32,6 @@ public final class Knight extends Piece {
         }
         final int dRow = Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex());
         final int dColumn = Math.abs(nextPosition.getColumnIndex() - currentPosition.getColumnIndex());
-        return dRow + dColumn == 3 && dRow != 0 && dColumn != 0;
+        return dRow + dColumn == KNIGHT_DELTA_DISTANCE && dRow != 0 && dColumn != 0;
     }
 }

@@ -8,6 +8,7 @@ import model.position.Position;
 public final class King extends Piece {
 
     private static final String KING_NAME = "k";
+    private static final int KING_DELTA_DISTANCE = 1;
 
     public King(final Camp camp) {
         super(camp, new PieceName(KING_NAME));
@@ -35,6 +36,7 @@ public final class King extends Piece {
         final int nextRow = nextPosition.getRowIndex();
         final int nextColumn = nextPosition.getColumnIndex();
 
-        return Math.abs(nextRow - currentRow) <= 1 && Math.abs(nextColumn - currentColumn) <= 1;
+        return Math.abs(nextRow - currentRow) <= KING_DELTA_DISTANCE
+                && Math.abs(nextColumn - currentColumn) <= KING_DELTA_DISTANCE;
     }
 }

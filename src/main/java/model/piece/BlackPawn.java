@@ -8,7 +8,8 @@ import model.position.Row;
 
 public final class BlackPawn extends Pawn {
 
-    private static final int BLACK_PAWN_ONE_STRAIGHT = 1;
+    private static final int BLACK_PAWN_DELTA_ONE_ROW = 1;
+    private static final int BLACK_PAWN_DELTA_TWO_ROW = 2;
 
     public BlackPawn() {
         super(Camp.BLACK);
@@ -21,7 +22,7 @@ public final class BlackPawn extends Pawn {
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
-        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == BLACK_PAWN_ONE_STRAIGHT) {
+        if (nextPosition.getRowIndex() - currentPosition.getRowIndex() == BLACK_PAWN_DELTA_ONE_ROW) {
             return Set.of();
         }
         return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
@@ -43,10 +44,10 @@ public final class BlackPawn extends Pawn {
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == 2) {
+        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == BLACK_PAWN_DELTA_TWO_ROW) {
             return true;
         }
-        return dRow == 1;
+        return dRow == BLACK_PAWN_DELTA_ONE_ROW;
     }
 
     @Override
@@ -72,6 +73,6 @@ public final class BlackPawn extends Pawn {
         if (Math.abs(dColumn) != 1) {
             return false;
         }
-        return dRow == 1;
+        return dRow == BLACK_PAWN_DELTA_ONE_ROW;
     }
 }

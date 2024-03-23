@@ -8,6 +8,9 @@ import model.position.Row;
 
 public final class WhitePawn extends Pawn {
 
+    private static final int WHITE_PAWN_DELTA_ONE_ROW = -1;
+    private static final int WHITE_PAWN_DELTA_TWO_ROW = -2;
+
     public WhitePawn() {
         super(Camp.WHITE);
     }
@@ -19,7 +22,7 @@ public final class WhitePawn extends Pawn {
         if (!canMovable(moving)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 없는 위치입니다.");
         }
-        if (Math.abs(nextPosition.getRowIndex() - currentPosition.getRowIndex()) == 1) {
+        if (nextPosition.getRowIndex() - currentPosition.getRowIndex() == WHITE_PAWN_DELTA_ONE_ROW) {
             return Set.of();
         }
         return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
@@ -41,10 +44,10 @@ public final class WhitePawn extends Pawn {
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == -2) {
+        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == WHITE_PAWN_DELTA_TWO_ROW) {
             return true;
         }
-        return dRow == -1;
+        return dRow == WHITE_PAWN_DELTA_ONE_ROW;
     }
 
     @Override
@@ -70,6 +73,6 @@ public final class WhitePawn extends Pawn {
         if (Math.abs(dColumn) != 1) {
             return false;
         }
-        return dRow == -1;
+        return dRow == WHITE_PAWN_DELTA_ONE_ROW;
     }
 }
