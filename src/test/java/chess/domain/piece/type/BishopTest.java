@@ -32,7 +32,7 @@ class BishopTest {
         final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.SIX)); // 대각선 위
+        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.SIX)); // 바로 위
 
         // then
         assertThat(canMove).isFalse();

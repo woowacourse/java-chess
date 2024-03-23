@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.domain.Direction;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -27,26 +28,31 @@ public class Pawn extends Piece {
     }
 
     private boolean canWhiteMoveTo(final Position target) {
+        boolean isDownThanTarget = Direction.of(this.position, target).contains(Direction.DOWN);
+
         if (isInitPosition()) {
-            return (this.position.isDownWith(target) && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
+            return (isDownThanTarget && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
+                    || (isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP);
         }
-        return this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP;
+
+        return isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP;
     }
 
     private boolean canBlackMoveTo(final Position target) {
+        boolean isDownThanTarget = Direction.of(this.position, target).contains(Direction.DOWN);
+
         if (isInitPosition()) {
-            return (!this.position.isDownWith(target) && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (!this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
+            return (!isDownThanTarget && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
+                    || (!isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP);
         }
-        return !this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP;
+        return !isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP;
     }
 
     private boolean isInitPosition() {
         if (color.equals(Color.WHITE)) {
-            return this.position.isRank(INIT_WHITE_RANK);
+            return this.position.isSameRank(INIT_WHITE_RANK);
         }
-        return this.position.isRank(INIT_BLACK_RANK);
+        return this.position.isSameRank(INIT_BLACK_RANK);
     }
 
     @Override

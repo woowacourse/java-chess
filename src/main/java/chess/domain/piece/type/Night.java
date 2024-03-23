@@ -17,8 +17,11 @@ public class Night extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.getRankDistance(target) == DEFAULT_STEP_TWO && this.position.getFileDistance(target) == DEFAULT_STEP_ONE)
-                || (this.position.getRankDistance(target) == DEFAULT_STEP_ONE && this.position.getFileDistance(target) == DEFAULT_STEP_TWO);
+        int rankDistance = this.position.getRankDistance(target);
+        int fileDistance = this.position.getFileDistance(target);
+
+        return (rankDistance == DEFAULT_STEP_TWO && fileDistance == DEFAULT_STEP_ONE)
+                || (rankDistance == DEFAULT_STEP_ONE && fileDistance == DEFAULT_STEP_TWO);
     }
 
     @Override

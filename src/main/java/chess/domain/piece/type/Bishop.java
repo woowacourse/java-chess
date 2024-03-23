@@ -1,9 +1,10 @@
 package chess.domain.piece.type;
 
-import chess.util.RouteCalculator;
+import chess.domain.Path;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.util.RouteCalculator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,19 +16,18 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return this.position.isDiagonalWith(target);
+        Path path = Path.of(this.position, target);
+        return path == Path.RIGHT_DIAGONAL || path == Path.LEFT_DIAGONAL;
     }
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        if (this.position.isDiagonalWith(target) // TODO: 오른쪽 대각선, 아래는 왼쪽대각선 의미인데 복잡
-                && (this.position.isLeftWith(target) && this.position.isDownWith((target)))
-                || (this.position.isRightWith(target) && this.position.isUpWith(target))) {
+        Path path = Path.of(this.position, target);
+
+        if (path == Path.RIGHT_DIAGONAL) {
             return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
         }
-        if (this.position.isDiagonalWith(target)
-                && (this.position.isRightWith(target) && this.position.isDownWith(target))
-                || (this.position.isLeftWith(target) && this.position.isUpWith(target))) {
+        if (path == Path.LEFT_DIAGONAL) {
             return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
         }
 

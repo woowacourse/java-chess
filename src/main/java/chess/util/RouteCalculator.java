@@ -1,5 +1,6 @@
 package chess.util;
 
+import chess.domain.Direction;
 import chess.domain.piece.Position;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class RouteCalculator {
     }
 
     private static Position getLowerPosition(final Position current, final Position target) {
-        if (current.isDownWith(target)) {
+        if (Direction.of(current, target).contains(Direction.DOWN)) {
             return current;
         }
 
@@ -41,7 +42,7 @@ public class RouteCalculator {
     }
 
     private static Position getLefterPosition(final Position current, final Position target) {
-        if (current.isLeftWith(target)) {
+        if (Direction.of(current, target).contains(Direction.LEFT)) {
             return current;
         }
 

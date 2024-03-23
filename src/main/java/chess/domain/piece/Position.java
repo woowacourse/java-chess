@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Position {
 
-    private static final Set<Position> POSITIONS = cachePositions();
+    private static final Set<Position> ALL_POSITIONS = cachePositions();
 
     private final File file;
     private final Rank rank;
@@ -24,7 +24,7 @@ public class Position {
     }
 
     private static Position findPosition(final File file, final Rank rank) {
-        return POSITIONS.stream()
+        return ALL_POSITIONS.stream()
                 .filter(position -> position.equals(new Position(file, rank)))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 위치입니다."));
@@ -34,34 +34,6 @@ public class Position {
         String file = input.substring(0, 1);
         String rank = input.substring(1);
         return findPosition(File.fromSymbol(file), Rank.fromInput(rank));
-    }
-
-    public boolean isVerticalWith(final Position target) {
-        return this.file == target.file && this.rank != target.rank;
-    }
-
-    public boolean isHorizontalWith(final Position target) {
-        return this.file != target.file && this.rank == target.rank;
-    }
-
-    public boolean isDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
-    }
-
-    public boolean isUpWith(final Position target) {
-        return this.rank.isBigger(target.rank);
-    }
-
-    public boolean isDownWith(final Position target) {
-        return !isUpWith(target);
-    }
-
-    public boolean isRightWith(final Position target) {
-        return this.file.isBigger(target.file);
-    }
-
-    public boolean isLeftWith(final Position target) {
-        return !isRightWith(target);
     }
 
     public Position up() {
@@ -80,6 +52,10 @@ public class Position {
         return new Position(this.file.left(), this.rank.up());
     }
 
+    public boolean isDiagonalWith(final Position target) { // TODO: 애매
+        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
+    }
+
     public int getRankDistance(final Position target) {
         return this.rank.getDistance(target.rank);
     }
@@ -88,8 +64,24 @@ public class Position {
         return this.file.getDistance(target.file);
     }
 
-    public boolean isRank(final Rank rank) {
-        return this.rank.equals(rank);
+    public boolean isFileBigger(final Position target) {
+        return this.file.isBigger(target.file);
+    }
+
+    public boolean isRankBigger(final Position target) {
+        return this.rank.isBigger(target.rank);
+    }
+
+    public boolean isSameRank(final Rank rank) {
+        return this.rank == rank;
+    }
+
+    public boolean isSameRank(final Position target) {
+        return this.rank == target.rank;
+    }
+
+    public boolean isSameFile(final Position target) {
+        return this.file == target.file;
     }
 
     public File getFile() {

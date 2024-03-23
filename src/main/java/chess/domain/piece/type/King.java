@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.domain.Path;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -16,9 +17,17 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        return (this.position.isVerticalWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP)
-                || (this.position.isHorizontalWith(target) && this.position.getFileDistance(target) == DEFAULT_STEP)
-                || (this.position.isDiagonalWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
+        Path path = Path.of(this.position, target);
+        int rankDistance = this.position.getRankDistance(target);
+        int fileDistance = this.position.getFileDistance(target);
+
+        if (path == Path.VERTICAL && rankDistance == DEFAULT_STEP) {
+            return true;
+        }
+        if (path == Path.HORIZONTAL && fileDistance == DEFAULT_STEP) {
+            return true;
+        }
+        return (path == Path.LEFT_DIAGONAL || path == Path.RIGHT_DIAGONAL) && rankDistance == DEFAULT_STEP;
     }
 
     @Override
