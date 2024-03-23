@@ -20,11 +20,11 @@ public class Piece {
         return colorType.equals(ColorType.WHITE);
     }
 
-    public boolean isSameType(String pieceViewName) {
+    public boolean matches(String pieceViewName) {
         return pieceType.name().equals(pieceViewName);
     }
 
-    public boolean isSameType(PieceType pieceType) {
+    public boolean matches(PieceType pieceType) {
         return this.pieceType.equals(pieceType);
     }
 

@@ -44,7 +44,7 @@ public class Board {
         checkCanMove(source, destination, sourcePiece);
         checkSameColor(sourcePiece, destinationPiece);
 
-        if (sourcePiece.isSameType(PieceType.PAWN)) {
+        if (sourcePiece.matches(PieceType.PAWN)) {
             checkPawnCanCatch(source, destination, destinationPiece);
         }
 
@@ -92,9 +92,9 @@ public class Board {
     }
 
     private boolean needFindPathCondition(Square source, Piece sourcePiece) {
-        return !sourcePiece.isSameType(PieceType.KNIGHT)
-                && !(sourcePiece.isSameType(PieceType.PAWN) && source.isPawnStartSquare())
-                && !sourcePiece.isSameType(PieceType.KING);
+        return !sourcePiece.matches(PieceType.KNIGHT)
+                && !(sourcePiece.matches(PieceType.PAWN) && source.isPawnStartSquare())
+                && !sourcePiece.matches(PieceType.KING);
     }
 
     private void findPath(Square source, Square destination, SquareDifferent diff) {

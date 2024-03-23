@@ -25,7 +25,7 @@ public enum PieceView {
 
     public static String toView(Piece piece) {
         PieceView pieceView = Arrays.stream(PieceView.values())
-                .filter(p -> piece.isSameType(p.name()))
+                .filter(p -> piece.matches(p.name()))
                 .findFirst()
                 .orElseThrow();
 

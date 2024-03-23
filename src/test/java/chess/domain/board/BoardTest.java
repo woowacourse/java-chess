@@ -120,7 +120,7 @@ public class BoardTest {
         Piece actual = boardOutput.board().get(Square.of(File.H, Rank.FIVE));
 
         // then
-        assertThat(actual.isSameType(PieceType.PAWN)
+        assertThat(actual.matches(PieceType.PAWN)
                 && actual.isSameColor(new Piece(PieceType.PAWN, ColorType.WHITE)))
                 .isTrue();
     }
