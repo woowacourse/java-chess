@@ -5,10 +5,15 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 
-public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
+public class Chess {
 
-    private final Board board = Board.create();
-    private Color turn = Color.WHITE;
+    private final Board board;
+    private Color turn;
+
+    public Chess() {
+        this.board = Board.create();
+        this.turn = Color.WHITE;
+    }
 
     public void play(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.isSame(targetPosition)) {
