@@ -22,7 +22,9 @@ public class InputView {
     public Position readPosition() {
         String rawPosition = scanner.next();
         validatePositionLength(rawPosition);
-        return Position.generate(rawPosition);
+        String rawFile = String.valueOf(rawPosition.charAt(0));
+        String rawRank = String.valueOf(rawPosition.charAt(1));
+        return Position.generate(rawFile, rawRank);
     }
 
     private void validatePositionLength(String rawPosition) {

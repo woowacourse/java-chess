@@ -17,9 +17,7 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position generate(String rawPosition) {
-        String rawFile = String.valueOf(rawPosition.charAt(0));
-        String rawRank = String.valueOf(rawPosition.charAt(1));
+    public static Position generate(String rawFile, String rawRank) {
         File file = FileInput.asFile(rawFile);
         Rank rank = RankInput.asRank(rawRank);
         return new Position(file, rank);
