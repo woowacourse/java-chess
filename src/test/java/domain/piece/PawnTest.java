@@ -31,11 +31,4 @@ class PawnTest {
         assertThat(blackPawn.isReachable(Vector.of(0, -1), new Pawn(BLACK))).isFalse();
     }
 
-    @Test
-    void attackMovement() {
-    }
-
-    @Test
-    void inverseIfBlack() {
-    }
 }
