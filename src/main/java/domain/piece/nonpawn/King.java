@@ -13,11 +13,9 @@ public class King extends NonPawnPiece {
 
     @Override
     protected void validateDirection(final Position source, final Position target) {
-        if (source.isAdjacentAt(target)) {
-            return;
+        if (!source.isAdjacentAt(target)) {
+            throw new IllegalArgumentException(String.format("킹은 한 번에 %d칸만 이동할 수 있습니다.", DISTANCE_LIMIT_COUNT));
         }
-
-        throw new IllegalArgumentException(String.format("킹은 한 번에 %d칸만 이동할 수 있습니다.", DISTANCE_LIMIT_COUNT));
     }
 
     @Override

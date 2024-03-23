@@ -11,11 +11,9 @@ public class Rook extends NonPawnPiece {
 
     @Override
     protected void validateDirection(final Position source, final Position target) {
-        if (source.isStraightAt(target)) {
-            return;
+        if (!source.isStraightAt(target)) {
+            throw new IllegalArgumentException("룩은 수평, 수직 방향으로만 이동할 수 있습니다.");
         }
-
-        throw new IllegalArgumentException("룩은 수평, 수직 방향으로만 이동할 수 있습니다.");
     }
 
     @Override

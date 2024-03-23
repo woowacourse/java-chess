@@ -11,11 +11,9 @@ public class Knight extends NonPawnPiece {
 
     @Override
     protected void validateDirection(final Position source, final Position target) {
-        if (source.isKnightPositionAt(target)) {
-            return;
+        if (!source.isKnightPositionAt(target)) {
+            throw new IllegalArgumentException("나이트는 L자 방향으로만 이동할 수 있습니다.");
         }
-
-        throw new IllegalArgumentException("나이트는 L자 방향으로만 이동할 수 있습니다.");
     }
 
     @Override

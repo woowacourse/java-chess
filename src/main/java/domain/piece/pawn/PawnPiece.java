@@ -18,11 +18,7 @@ public abstract class PawnPiece implements Piece {
     public final void validateMovement(final Position source, final Position target, final Piece other) {
         validateColorDifference(other);
         validateForwardMovement(source, target);
-        if (isPawnMovement(source, target, other)) {
-            return;
-        }
-
-        throw new IllegalArgumentException("잘못된 방향으로 이동하고 있습니다.");
+        validateFawnMovement(source, target, other);
     }
 
     private void validateColorDifference(final Piece other) {
@@ -32,6 +28,12 @@ public abstract class PawnPiece implements Piece {
     }
 
     protected abstract void validateForwardMovement(final Position source, final Position target);
+
+    private void validateFawnMovement(final Position source, final Position target, final Piece other) {
+        if (!isPawnMovement(source, target, other)) {
+            throw new IllegalArgumentException("잘못된 방향으로 이동하고 있습니다.");
+        }
+    }
 
     private boolean isPawnMovement(final Position source, final Position target, final Piece other) {
         return isMovingTwoDistanceForward(source, target, other) ||
