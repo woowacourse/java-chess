@@ -6,17 +6,17 @@ import chess.domain.square.dto.SquareDifferent;
 
 public class BishopLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 
-    private final BlockedPathCheckStrategy pathFindStrategy;
+    private final BlockedPathCheckStrategy blockedPathCheckStrategy;
 
     public BishopLegalMoveCheckStrategy() {
-        this.pathFindStrategy = new BlockedPathCheckStrategy();
+        this.blockedPathCheckStrategy = new BlockedPathCheckStrategy();
     }
 
     @Override
     public boolean check(Square source, Square destination, Board board) {
         SquareDifferent diff = source.calculateDiff(destination);
 
-        if (!pathFindStrategy.check(source, destination, board)) {
+        if (!blockedPathCheckStrategy.check(source, destination, board)) {
             return false;
         }
 

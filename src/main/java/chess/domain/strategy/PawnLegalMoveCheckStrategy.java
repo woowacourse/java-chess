@@ -14,10 +14,10 @@ public class PawnLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
     private static final Rank WHITE_PAWN_FIRST_RANK = Rank.TWO;
     private static final Rank BLACK_PAWN_FIRST_RANK = Rank.SEVEN;
 
-    private final BlockedPathCheckStrategy pathFindStrategy;
+    private final BlockedPathCheckStrategy blockedPathCheckStrategy;
 
     public PawnLegalMoveCheckStrategy() {
-        this.pathFindStrategy = new BlockedPathCheckStrategy();
+        this.blockedPathCheckStrategy = new BlockedPathCheckStrategy();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PawnLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
         int firstForwardIndex = selectIndexByColor(PAWN_FIRST_FORWARD_INDEX, sourcePiece.isBlack());
 
         if (isFirstRank(source)) {
-            if (!pathFindStrategy.check(source, destination, board)) {
+            if (!blockedPathCheckStrategy.check(source, destination, board)) {
                 return false;
             }
 
