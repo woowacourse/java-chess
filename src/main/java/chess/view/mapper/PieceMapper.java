@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.mapper;
 
 import chess.domain.Piece;
 import chess.domain.PieceType;

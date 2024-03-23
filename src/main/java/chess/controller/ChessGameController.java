@@ -5,21 +5,15 @@ import chess.domain.ChessGame;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Row;
-import chess.view.ColumnMapper;
 import chess.view.Commend;
 import chess.view.InputView;
+import chess.view.MoveRequestDto;
 import chess.view.OutputView;
-import chess.view.RowMapper;
+import chess.view.mapper.ColumnMapper;
+import chess.view.mapper.RowMapper;
 import java.util.List;
 
 public class ChessGameController {
-    public static final int COMMEND_INDEX = 0;
-    public static final int MOVE_COMMEND_FORMAT_SIZE = 3;
-    public static final int MOVE_FROM_INDEX = 1;
-    public static final int MOVE_TO_INDEX = 2;
-    public static final int INPUT_COLUMN_INDEX = 0;
-    public static final int INPUT_ROW_INDEX = 1;
-
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
     private final ChessGame chessGame = new ChessGame(new Board());
@@ -39,18 +33,14 @@ public class ChessGameController {
 
     private boolean processGame(Board board) {
         try {
-            List<String> commendValues = inputView.readCommend();
-            Commend commend = Commend.inputToCommend(commendValues.get(COMMEND_INDEX));
+            Commend commend = inputView.readCommend();
             if (commend == Commend.START) {
                 handleStartCommend(board);
             }
             if (commend == Commend.MOVE) {
-                handleMoveCommend(board, commendValues);
+                handleMoveCommend(board);
             }
-            if (commend == Commend.END) {
-                return false;
-            }
-            return true;
+            return commend != Commend.END;
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
             process(board);
@@ -62,12 +52,10 @@ public class ChessGameController {
         outputView.printBoard(board);
     }
 
-    private void handleMoveCommend(Board board, List<String> commendValues) {
-        if (commendValues.size() != MOVE_COMMEND_FORMAT_SIZE) {
-            throw new IllegalArgumentException("게임 이동 입력 형식이 올바르지 않습니다.");
-        }
-        Position from = createPosition(commendValues, MOVE_FROM_INDEX);
-        Position to = createPosition(commendValues, MOVE_TO_INDEX);
+    private void handleMoveCommend(Board board) {
+        MoveRequestDto moveRequestDto = inputView.readPositions();
+        Position from = createPosition(moveRequestDto.getFromColumn(), moveRequestDto.getFromRow());
+        Position to = createPosition(moveRequestDto.getToColumn(), moveRequestDto.getToRow());
 
         List<Position> movablePositions = chessGame.generateMovablePositions(from);
         chessGame.movePiece(movablePositions, from, to);
@@ -75,11 +63,9 @@ public class ChessGameController {
         outputView.printBoard(board);
     }
 
-    private Position createPosition(List<String> commendValues, int moveFromIndex) {
-        String fromValue = commendValues.get(moveFromIndex);
-
-        Column fromColumn = ColumnMapper.findByInputValue(fromValue.split("")[INPUT_COLUMN_INDEX]);
-        Row fromRow = RowMapper.findByInputValue(fromValue.split("")[INPUT_ROW_INDEX]);
-        return new Position(fromRow, fromColumn);
+    private Position createPosition(String requestColumn, String requestRow) {
+        Column column = ColumnMapper.findByInputValue(requestColumn);
+        Row row = RowMapper.findByInputValue(requestRow);
+        return new Position(row, column);
     }
 }
