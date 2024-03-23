@@ -1,6 +1,5 @@
 package chess.domain.chessBoard;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
@@ -36,7 +35,7 @@ class SpaceTest {
     }
 
     @Test
-    @DisplayName("피스를 움직이면 이동하려는 위치에 해당피스가 있다")
+    @DisplayName("피스를 움직이면 기존 위치가 비어있다")
     void should_be_empty_starting_space_when_move() {
         Piece piece1 = new King(Color.WHITE);
         Piece piece2 = new EmptyPiece();
@@ -46,19 +45,6 @@ class SpaceTest {
         space1.movePiece(space2, List.of(space1, space2));
 
         assertThat(space1.doesNotHavePiece()).isTrue();
-    }
-
-    @Test
-    @DisplayName("각 피스의 이동 규칙을 위반한 이동은 할 수 없다")
-    void should_not_move_when_violate_move_rule() {
-        Piece piece1 = new Bishop(Color.BLACK);
-        Piece piece2 = new EmptyPiece();
-        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
-        Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
-
-        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
 
     @Test

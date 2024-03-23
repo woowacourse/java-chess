@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.Space;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -11,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class KnightTest {
+public class KnightSpaceTest {
 
     @Test
     @DisplayName("한칸 이동+한칸 대각선 이동을 할 수 있다(성공)")

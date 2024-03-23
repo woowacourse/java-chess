@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.Space;
+import chess.domain.piece.BlackPawn;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -11,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class PawnTest {
+public class PawnSpaceTest {
 
     @Test
     @DisplayName("첫 이동은 두 칸 움직일 수 있다.")

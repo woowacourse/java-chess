@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.chessBoard;
 
-import chess.domain.chessBoard.Space;
+import chess.domain.piece.Color;
+import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -11,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class RookTest {
+class RookSpaceTest {
 
     @Test
     @DisplayName("상하좌우로 칸 수 제한 없이 움직일 수 있다.")
