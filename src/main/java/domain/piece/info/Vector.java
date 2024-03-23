@@ -30,4 +30,8 @@ public class Vector {
     public boolean isUnitVector() {
         return Math.abs(fileDifference) == 1 || Math.abs(rankDifference) == 1;
     }
+
+    public int absoluteSum() {
+        return Math.abs(fileDifference) + Math.abs(rankDifference);
+    }
 }

@@ -13,6 +13,7 @@ class VectorTest {
     @DisplayName("두 위치가 같으면 예외가 발생한다")
     void isSamePosition() {
         final Position position = new Position(File.A, Rank.ONE);
+
         Assertions.assertThatThrownBy(() -> new Vector(position, position))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("두 위치가 같습니다");
@@ -109,5 +110,15 @@ class VectorTest {
                 () -> Assertions.assertThat(new Vector(source, targetLeft).isUnitVector()).isTrue(),
                 () -> Assertions.assertThat(new Vector(source, targetLeftUp).isUnitVector()).isTrue()
         );
+    }
+
+    @Test
+    @DisplayName("벡터는 파일과 랭크의 절댓값 합을 구할 수 있다")
+    void absoluteSum() {
+        final Position source = new Position(File.D, Rank.FOUR);
+        final Position target = new Position(File.C, Rank.THREE);
+
+        final Vector vector = new Vector(source, target);
+        Assertions.assertThat(vector.absoluteSum()).isEqualTo(2);
     }
 }
