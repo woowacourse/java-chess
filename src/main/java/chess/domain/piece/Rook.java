@@ -1,17 +1,16 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.Color.BLACK;
-import static chess.domain.attribute.Color.WHITE;
-import static chess.domain.attribute.File.A;
-import static chess.domain.attribute.File.H;
-import static chess.domain.attribute.Rank.EIGHT;
-import static chess.domain.attribute.Rank.ONE;
+import static chess.domain.piece.attribute.Color.BLACK;
+import static chess.domain.piece.attribute.Color.WHITE;
+import static chess.domain.chessboard.attribute.File.A;
+import static chess.domain.chessboard.attribute.File.H;
+import static chess.domain.chessboard.attribute.Rank.EIGHT;
+import static chess.domain.chessboard.attribute.Rank.ONE;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class Rook extends SlidingPiece {
 

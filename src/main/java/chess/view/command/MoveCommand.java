@@ -2,7 +2,7 @@ package chess.view.command;
 
 import java.util.List;
 
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Position;
 
 public class MoveCommand {
 

@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import java.util.Set;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class Pawn extends AbstractPawn {
 

@@ -13,10 +13,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.File;
-import chess.domain.attribute.Position;
-import chess.domain.attribute.Rank;
+import chess.domain.piece.attribute.Color;
+import chess.domain.chessboard.attribute.File;
+import chess.domain.piece.attribute.Position;
+import chess.domain.chessboard.attribute.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

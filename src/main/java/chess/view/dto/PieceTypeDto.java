@@ -1,10 +1,10 @@
 package chess.view.dto;
 
-import static chess.domain.attribute.Color.BLACK;
+import static chess.domain.piece.attribute.Color.BLACK;
 
 import java.util.Arrays;
 
-import chess.domain.attribute.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.piece.Piece;
 
 public enum PieceTypeDto {

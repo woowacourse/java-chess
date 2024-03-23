@@ -2,15 +2,15 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static chess.domain.attribute.Color.WHITE;
-import static chess.domain.attribute.Rank.EIGHT;
-import static chess.domain.attribute.Rank.FIVE;
-import static chess.domain.attribute.Rank.FOUR;
-import static chess.domain.attribute.Rank.ONE;
-import static chess.domain.attribute.Rank.SEVEN;
-import static chess.domain.attribute.Rank.SIX;
-import static chess.domain.attribute.Rank.THREE;
-import static chess.domain.attribute.Rank.TWO;
+import static chess.domain.piece.attribute.Color.WHITE;
+import static chess.domain.chessboard.attribute.Rank.EIGHT;
+import static chess.domain.chessboard.attribute.Rank.FIVE;
+import static chess.domain.chessboard.attribute.Rank.FOUR;
+import static chess.domain.chessboard.attribute.Rank.ONE;
+import static chess.domain.chessboard.attribute.Rank.SEVEN;
+import static chess.domain.chessboard.attribute.Rank.SIX;
+import static chess.domain.chessboard.attribute.Rank.THREE;
+import static chess.domain.chessboard.attribute.Rank.TWO;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -20,9 +20,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.attribute.File;
-import chess.domain.attribute.Position;
-import chess.domain.attribute.Rank;
+import chess.domain.chessboard.attribute.File;
+import chess.domain.piece.attribute.Position;
+import chess.domain.chessboard.attribute.Rank;
 
 class PieceTest {
 

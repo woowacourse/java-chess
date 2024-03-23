@@ -1,17 +1,16 @@
 package chess.domain.chessboard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.File;
-import chess.domain.attribute.Position;
-import chess.domain.attribute.Rank;
-import chess.domain.chessboard.attribute.square.Square;
+import chess.domain.chessboard.attribute.Square;
+import chess.domain.piece.attribute.Color;
+import chess.domain.chessboard.attribute.File;
+import chess.domain.piece.attribute.Position;
+import chess.domain.chessboard.attribute.Rank;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

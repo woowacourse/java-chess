@@ -1,4 +1,4 @@
-package chess.domain.attribute;
+package chess.domain.piece.attribute;
 
 public enum Color {
     WHITE,

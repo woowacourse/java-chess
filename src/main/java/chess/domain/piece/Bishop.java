@@ -1,16 +1,16 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.Color.BLACK;
-import static chess.domain.attribute.Color.WHITE;
-import static chess.domain.attribute.File.C;
-import static chess.domain.attribute.File.F;
-import static chess.domain.attribute.Rank.EIGHT;
-import static chess.domain.attribute.Rank.ONE;
+import static chess.domain.piece.attribute.Color.BLACK;
+import static chess.domain.piece.attribute.Color.WHITE;
+import static chess.domain.chessboard.attribute.File.C;
+import static chess.domain.chessboard.attribute.File.F;
+import static chess.domain.chessboard.attribute.Rank.EIGHT;
+import static chess.domain.chessboard.attribute.Rank.ONE;
 
 import java.util.Set;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class Bishop extends SlidingPiece {
 

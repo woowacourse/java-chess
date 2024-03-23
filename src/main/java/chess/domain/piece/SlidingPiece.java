@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public abstract class SlidingPiece extends Piece {
 

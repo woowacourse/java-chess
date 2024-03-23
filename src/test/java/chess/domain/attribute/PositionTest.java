@@ -11,6 +11,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.chessboard.attribute.Direction;
+import chess.domain.chessboard.attribute.File;
+import chess.domain.chessboard.attribute.Rank;
+import chess.domain.piece.attribute.Position;
 
 class PositionTest {
 

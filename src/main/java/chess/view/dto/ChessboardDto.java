@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.attribute.File;
-import chess.domain.attribute.Position;
-import chess.domain.attribute.Rank;
+import chess.domain.chessboard.attribute.File;
+import chess.domain.piece.attribute.Position;
+import chess.domain.chessboard.attribute.Rank;
 import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.Piece;
 

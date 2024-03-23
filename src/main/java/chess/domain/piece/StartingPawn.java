@@ -1,22 +1,22 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.Color.BLACK;
-import static chess.domain.attribute.Color.WHITE;
-import static chess.domain.attribute.File.A;
-import static chess.domain.attribute.File.B;
-import static chess.domain.attribute.File.C;
-import static chess.domain.attribute.File.D;
-import static chess.domain.attribute.File.E;
-import static chess.domain.attribute.File.F;
-import static chess.domain.attribute.File.G;
-import static chess.domain.attribute.File.H;
-import static chess.domain.attribute.Rank.SEVEN;
-import static chess.domain.attribute.Rank.TWO;
+import static chess.domain.piece.attribute.Color.BLACK;
+import static chess.domain.piece.attribute.Color.WHITE;
+import static chess.domain.chessboard.attribute.File.A;
+import static chess.domain.chessboard.attribute.File.B;
+import static chess.domain.chessboard.attribute.File.C;
+import static chess.domain.chessboard.attribute.File.D;
+import static chess.domain.chessboard.attribute.File.E;
+import static chess.domain.chessboard.attribute.File.F;
+import static chess.domain.chessboard.attribute.File.G;
+import static chess.domain.chessboard.attribute.File.H;
+import static chess.domain.chessboard.attribute.Rank.SEVEN;
+import static chess.domain.chessboard.attribute.Rank.TWO;
 
 import java.util.Set;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class StartingPawn extends AbstractPawn {
 

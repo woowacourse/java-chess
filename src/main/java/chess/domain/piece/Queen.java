@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.File.D;
-import static chess.domain.attribute.Rank.EIGHT;
-import static chess.domain.attribute.Rank.ONE;
+import static chess.domain.chessboard.attribute.File.D;
+import static chess.domain.chessboard.attribute.Rank.EIGHT;
+import static chess.domain.chessboard.attribute.Rank.ONE;
 
 import java.util.Set;
 
-import chess.domain.attribute.Color;
-import chess.domain.attribute.Position;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class Queen extends SlidingPiece {
 

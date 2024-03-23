@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import chess.domain.attribute.Color;
+import chess.domain.piece.attribute.Color;
 
 public enum Direction {
     UP(1, 0),

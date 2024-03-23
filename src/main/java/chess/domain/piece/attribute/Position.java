@@ -1,10 +1,12 @@
-package chess.domain.attribute;
+package chess.domain.piece.attribute;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import chess.domain.chessboard.attribute.File;
+import chess.domain.chessboard.attribute.Rank;
 import chess.domain.chessboard.attribute.Direction;
 
 public class Position {
@@ -20,7 +22,7 @@ public class Position {
     }
 
     public static Position of(final String position) {
-        return of(File.of(position.charAt(0)), Rank.of(position.charAt(1)));
+        return of(File.from(position.charAt(0)), Rank.from(position.charAt(1)));
     }
 
     public static Position of(final Rank rank, final File file) {
@@ -50,15 +52,15 @@ public class Position {
         return file.name() + rank.name();
     }
 
-    public static boolean isInRange(final int column, final int row) {
+    public static boolean isInBoard(final int column, final int row) {
         return File.isInRange(column) && Rank.isInRange(row);
     }
 
     public Optional<Position> moveTo(final Direction direction) {
         int row = rank.toRow() + direction.getRow();
         int column = file.toColumn() + direction.getColumn();
-        if (isInRange(column, row)) {
-            return Optional.of(Position.of(File.of(column), Rank.of(row)));
+        if (isInBoard(column, row)) {
+            return Optional.of(Position.of(File.from(column), Rank.from(row)));
         }
         return Optional.empty();
     }

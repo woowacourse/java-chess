@@ -1,4 +1,4 @@
-package chess.domain.chessboard.attribute.square;
+package chess.domain.chessboard.attribute;
 
 import java.util.Optional;
 
