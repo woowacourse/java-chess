@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DifferenceTest {
 
@@ -32,5 +33,15 @@ class DifferenceTest {
 
         assertThat(difference.hasDistance(3)).isTrue();
         assertThat(difference.hasDistance(4)).isFalse();
+    }
+
+    @Test
+    @DisplayName("음수 거리를 비교할 수 없다")
+    void should_not_determine_when_minus_distance() {
+        Difference difference = new RankDifference(3);
+
+        assertThatThrownBy(() -> difference.hasDistance(-3))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("음수 거리를 비교할 수 없습니다");
     }
 }

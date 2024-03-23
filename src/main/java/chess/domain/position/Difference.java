@@ -11,11 +11,14 @@ public abstract class Difference {
     }
 
     public boolean hasDistance(int distance) {
+        if (distance < 0) {
+            throw new IllegalArgumentException("음수 거리를 비교할 수 없습니다");
+        }
         return Math.abs(difference) == distance;
     }
 
     public boolean hasSameDistance(Difference otherDifference) {
-        return otherDifference.hasDistance(difference);
+        return otherDifference.hasDistance(Math.abs(difference));
     }
 
     @Override
