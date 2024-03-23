@@ -1,9 +1,10 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
+import domain.direction.DiagonalDirection;
+import domain.direction.Direction;
+import domain.direction.StraightDirection;
 import domain.piece.base.ChessPieceBase;
-import domain.piece.strategy.QueenStrategy;
-import java.util.List;
 
 public class Queen extends ChessPieceBase {
 
@@ -12,11 +13,20 @@ public class Queen extends ChessPieceBase {
     }
 
     @Override
-    public List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack) {
+    public Direction getDirection(Coordinate start, Coordinate destination) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        QueenStrategy queenStrategy = QueenStrategy.getMoveStrategy(rowDifference, columnDifference);
-        return queenStrategy.getDirection();
+        try {
+            return DiagonalDirection.getDirection(rowDifference, columnDifference);
+        } catch (IllegalArgumentException e) {
+            return StraightDirection.getDirection(rowDifference, columnDifference);
+        }
+    }
+
+    @Override
+    public boolean cantMove(Coordinate start, Coordinate destination) {
+        getDirection(start, destination);
+        return false;
     }
 }
