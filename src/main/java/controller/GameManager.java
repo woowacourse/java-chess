@@ -15,7 +15,7 @@ public class GameManager {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
-    public void start() { // TODO: start -> move -> start -> move => end?
+    public void start() {
         outputView.printStartNotice();
         String rawCommand = requestCommand();
         Command command = CommandInput.asCommand(rawCommand);
@@ -33,7 +33,9 @@ public class GameManager {
             String rawCommand = requestCommand();
             Command command = CommandInput.asCommand(rawCommand);
             if (command.isStart()) {
-                start();
+                chess = new Chess();
+                outputView.printBoard(chess.getBoard());
+                manage(chess);
                 return;
             }
             if (command.isEnd()) {
