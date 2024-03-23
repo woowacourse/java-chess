@@ -28,8 +28,8 @@ public class BishopTest {
     @MethodSource("bishopMoveTestParameters")
     void bishopMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Bishop bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
-        Bishop movedBishop = bishop.move(newPosition, false, false, false);
+        Piece bishop = new Bishop(pieceInfo, new BishopMoveStrategy());
+        Piece movedBishop = bishop.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedBishop.getPosition();
 

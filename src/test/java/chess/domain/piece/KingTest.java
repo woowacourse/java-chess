@@ -32,8 +32,8 @@ public class KingTest {
     @MethodSource("kingCanMoveTestParameters")
     void kingMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        King king = new King(pieceInfo, new KingMoveStrategy());
-        King movedKing = king.move(newPosition, false, false, false);
+        Piece king = new King(pieceInfo, new KingMoveStrategy());
+        Piece movedKing = king.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedKing.getPosition();
 

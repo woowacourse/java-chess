@@ -16,4 +16,6 @@ public interface Piece {
     Team getTeam();
 
     boolean isSameTeam(Team otherTeam);
+
+    Position getPosition();
 }

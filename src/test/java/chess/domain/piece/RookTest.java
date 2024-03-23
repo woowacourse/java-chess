@@ -28,8 +28,8 @@ public class RookTest {
     @MethodSource("rookMoveTestParameters")
     void rookMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Rook rook = new Rook(pieceInfo, new RookMoveStrategy());
-        Rook movedRook = rook.move(newPosition, false, false, false);
+        Piece rook = new Rook(pieceInfo, new RookMoveStrategy());
+        Piece movedRook = rook.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedRook.getPosition();
 

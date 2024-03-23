@@ -32,8 +32,8 @@ public class KnightTest {
     @MethodSource("knightMoveTestParameters")
     void knightMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Knight knight = new Knight(pieceInfo, new KnightMoveStrategy());
-        Knight movedKnight = knight.move(newPosition, false, false, false);
+        Piece knight = new Knight(pieceInfo, new KnightMoveStrategy());
+        Piece movedKnight = knight.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedKnight.getPosition();
 

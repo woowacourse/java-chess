@@ -32,8 +32,8 @@ public class QueenTest {
     @MethodSource("queenMoveTestParameters")
     void queenMoveTest(Position currentPosition, Position newPosition, Position expectedMovedPosition) {
         PieceInfo pieceInfo = new PieceInfo(currentPosition, Team.WHITE);
-        Queen queen = new Queen(pieceInfo, new QueenMoveStrategy());
-        Queen movedQueen = queen.move(newPosition, false, false, false);
+        Piece queen = new Queen(pieceInfo, new QueenMoveStrategy());
+        Piece movedQueen = queen.move(newPosition, false, false, false);
 
         Position actualMovedPosition = movedQueen.getPosition();
 
