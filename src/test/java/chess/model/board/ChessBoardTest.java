@@ -1,7 +1,6 @@
 package chess.model.board;
 
-import chess.model.piece.Blank;
-import chess.model.piece.Piece;
+import chess.model.piece.*;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
@@ -9,8 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Map;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -75,6 +77,29 @@ class ChessBoardTest {
 
     @Test
     @DisplayName("Knight는 이동 경로에 기물이 존재해도 뛰어넘을 수 있다.")
-    public void dummy() {
+    void moveKnightWhenPathContainsPiece() {
+        // given
+        Knight knight = Knight.from(Side.WHITE);
+        ChessPosition knightPosition = ChessPosition.of(File.A, Rank.ONE);
+        ChessBoard customChessBoard = createCustomChessBoard(knight, knightPosition);
+
+        ChessPosition targetPosition = ChessPosition.of(File.B, Rank.THREE);
+
+        // when
+        customChessBoard.move(knightPosition, targetPosition);
+
+        // then
+        Map<ChessPosition, Piece> actualBoard = customChessBoard.getBoard();
+        assertThat(actualBoard).containsEntry(targetPosition, knight);
+    }
+
+    private ChessBoard createCustomChessBoard(Knight knight, ChessPosition knightPosition) {
+        Map<ChessPosition, Piece> chessBoard = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> ChessPosition.of(file, rank)))
+                .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
+        chessBoard.put(knightPosition, knight);
+        chessBoard.put(knightPosition.calculateNextPosition(0, 1), Pawn.from(Side.WHITE));
+        return new ChessBoard(chessBoard);
     }
 }
