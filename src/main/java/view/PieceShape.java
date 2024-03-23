@@ -9,7 +9,7 @@ public enum PieceShape {
     BISHOP("B", "b"),
     KNIGHT("N", "n"),
     PAWN("P", "p"),
-    NONE(".", ".");
+    EMPTY(".", ".");
 
     public static final String PIECE_SHAPE_NOT_FOUND = "잘못된 기물 모양입니다.";
     private final String blackShape;
@@ -30,7 +30,7 @@ public enum PieceShape {
 
     public static String whiteShapeOf(final String shape) {
         return Arrays.stream(values())
-                .filter(value -> value.name().equals(shape))
+                .filter(value -> shape.toLowerCase().contains(value.name().toLowerCase()))
                 .map(value -> value.whiteShape)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));
@@ -39,7 +39,7 @@ public enum PieceShape {
 
     public static String blackShapeOf(final String shape) {
         return Arrays.stream(values())
-                .filter(value -> value.name().equals(shape))
+                .filter(value -> shape.toLowerCase().contains(value.name().toLowerCase()))
                 .map(value -> value.blackShape)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));

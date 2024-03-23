@@ -45,6 +45,16 @@ class BoardTest {
                 .hasMessage("해당 말로 해당 위치를 갈 수 없습니다");
 
     }
+    @Test
+    @DisplayName("체스판에서 빈칸을 이동시키려고 하면 예외가 발생한다")
+    void emptySource() {
+        final Board board = new Board(BoardInitiator.init());
+
+        assertThatThrownBy(() -> board.move(C_THREE, C_FOUR))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 말이 선택되지 않았습니다");
+
+    }
 
 
     @Test

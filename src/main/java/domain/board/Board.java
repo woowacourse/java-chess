@@ -29,9 +29,16 @@ public class Board {
         final Piece targetPiece = squares.get(target);
         final Vector vector = new Vector(source, target);
 
+        validateIsEmpty(currentPiece);
         validateTurn(currentPiece);
         validateReachability(vector, currentPiece, targetPiece);
         validateNoPieceOnPath(source, vector);
+    }
+
+    private void validateIsEmpty(final Piece currentPiece) {
+        if (currentPiece.isEmpty()) {
+            throw new IllegalArgumentException("이동할 말이 선택되지 않았습니다");
+        }
     }
 
     private void validateNoPieceOnPath(final Position source, final Vector vector) {
