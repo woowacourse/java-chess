@@ -2,6 +2,7 @@ package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.model.piece.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,8 +14,28 @@ import java.util.stream.Stream;
 class MovementTest {
 
     @ParameterizedTest
+    @MethodSource(value = "provideSideAndExpectedResult")
+    @DisplayName("진영에 따라 직진 움직임인지 판단한다.")
+    void isForward(Side side, Movement movement, boolean expectedResult) {
+        // when
+        boolean actualResult = movement.isForward(side);
+
+        // then
+        assertThat(actualResult).isEqualTo(expectedResult);
+    }
+
+    private static Stream<Arguments> provideSideAndExpectedResult() {
+        return Stream.of(
+                Arguments.of(Side.WHITE, new Movement(Difference.from(0), Difference.from(1)), true),
+                Arguments.of(Side.WHITE, new Movement(Difference.from(0), Difference.from(-1)), false),
+                Arguments.of(Side.BLACK, new Movement(Difference.from(0), Difference.from(1)), false),
+                Arguments.of(Side.BLACK, new Movement(Difference.from(0), Difference.from(-1)), true)
+        );
+    }
+
+    @ParameterizedTest
     @MethodSource(value = "provideMovementAndDiagonalResult")
-    @DisplayName("대각선에 있는지 판단한다.")
+    @DisplayName("대각선 움직임인지 판단한다.")
     void isDiagonal(Movement movement, boolean expectedResult) {
         // when
         boolean actualResult = movement.isDiagonal();
