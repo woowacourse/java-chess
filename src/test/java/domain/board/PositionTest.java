@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PositionTest {
 
     @Test
-    @DisplayName("두 Position의 File 차이 구하기")
+    @DisplayName("현재 Position의 File과 특정 Position의 File의 차를 계산")
     void calculateFileDifference() {
         Position position1 = Position.of(1, 2);
         Position position2 = Position.of(2, 2);
@@ -16,7 +16,7 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("두 Position의 Rank 차이 구하기")
+    @DisplayName("현재 Position의 Rank과 특정 Position의 Rank의 차를 계산")
     void calculateRankDifference() {
         Position position1 = Position.of(2, 1);
         Position position2 = Position.of(2, 2);
@@ -24,7 +24,7 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("Rank가 2인지 여부 반환")
+    @DisplayName("Position 의 rank가 흰색 Pawn의 초기 rank 인지 확인")
     void isPawnInitialPosition() {
         Position position = Position.of(1, 2);
         assertThat(position.isWhitePawnInitialPosition()).isTrue();

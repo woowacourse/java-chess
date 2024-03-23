@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RankTest {
 
     @Test
-    @DisplayName("Rank 간의 차이 계산")
+    @DisplayName("현재 Rank와 특정 Rank의 차를 계산")
     void subtract() {
         Rank rank1 = Rank.valueOf(1);
         Rank rank2 = Rank.valueOf(2);
