@@ -16,28 +16,28 @@ class RouteTest {
     class 경로_생성 {
         @Test
         void 인접한_UP_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.SIX);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void 인접한_LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.E, Rank.FIVE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void UP_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.EIGHT);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(2)
                     .containsExactlyInAnyOrderElementsOf(List.of(
@@ -48,10 +48,10 @@ class RouteTest {
 
         @Test
         void UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.H, Rank.SEVEN);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(1)
                     .containsExactly(new Position(File.G, Rank.SIX));
@@ -59,19 +59,19 @@ class RouteTest {
 
         @Test
         void RIGHT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.G, Rank.FIVE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.H, Rank.THREE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(1)
                     .containsExactly(new Position(File.G, Rank.FOUR));
@@ -79,10 +79,10 @@ class RouteTest {
 
         @Test
         void DOWN_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.TWO);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(2)
                     .containsExactlyInAnyOrderElementsOf(List.of(
@@ -93,10 +93,10 @@ class RouteTest {
 
         @Test
         void DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.C, Rank.TWO);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(2)
                     .containsExactlyInAnyOrderElementsOf(List.of(
@@ -107,10 +107,10 @@ class RouteTest {
 
         @Test
         void LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.C, Rank.FIVE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(2)
                     .containsExactlyInAnyOrderElementsOf(List.of(
@@ -121,10 +121,10 @@ class RouteTest {
 
         @Test
         void UP_LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.A, Rank.EIGHT);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute())
                     .hasSize(3)
                     .containsExactlyInAnyOrderElementsOf(List.of(
@@ -136,82 +136,82 @@ class RouteTest {
 
         @Test
         void UP_UP_LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.D, Rank.SIX);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void UP_UP_RIGHT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.F, Rank.SIX);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void RIGHT_RIGHT_UP_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.G, Rank.FIVE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void RIGHT_RIGHT_DOWN_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.G, Rank.THREE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void DOWN_DOWN_RIGHT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.F, Rank.TWO);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void DOWN_DOWN_LEFT_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.D, Rank.TWO);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void LEFT_LEFT_DOWN_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.C, Rank.THREE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void LEFT_LEFT_UP_방향으로_이동하는_경로를_반환한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.C, Rank.FIVE);
 
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
             assertThat(route.getRoute()).hasSize(0);
         }
 
         @Test
         void LEFT_LEFT_LEFT_UP_방향으로_이동하면_예외가_발생한다() {
-            Position resource = new Position(File.E, Rank.FOUR);
+            Position source = new Position(File.E, Rank.FOUR);
             Position target = new Position(File.B, Rank.FIVE);
 
-            assertThatThrownBy(() -> Route.create(resource, target))
+            assertThatThrownBy(() -> Route.create(source, target))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("올바르지 않은 방향입니다.");
         }
@@ -221,9 +221,9 @@ class RouteTest {
     class 경로_막힘 {
         @Test
         void 경로는_다른_피스가_없으면_막히지_않는다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.SEVEN);
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
 
             Map<Position, Piece> emptyBoard = Map.of();
 
@@ -232,9 +232,9 @@ class RouteTest {
 
         @Test
         void 도착_지점에_폰이_있어도_경로는_막히지_않는다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.F, Rank.SIX);
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
 
             Map<Position, Piece> board = Map.of(target, new WhitePawn());
 
@@ -243,9 +243,9 @@ class RouteTest {
 
         @Test
         void 출발_지점과_도착_지점_사이에_폰이_있으면_경로가_막힌다() {
-            Position resource = new Position(File.F, Rank.FIVE);
+            Position source = new Position(File.F, Rank.FIVE);
             Position target = new Position(File.C, Rank.FIVE);
-            Route route = Route.create(resource, target);
+            Route route = Route.create(source, target);
 
             Map<Position, Piece> board = Map.of(new Position(File.D, Rank.FIVE), new WhitePawn());
 
