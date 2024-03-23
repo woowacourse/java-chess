@@ -17,8 +17,8 @@ class DirectionTest {
     @Test
     void findDirectionByDiff() {
         // given
-        Square source = Square.of(File.a, Rank.SEVEN);
-        Square destination = Square.of(File.b, Rank.SIX);
+        Square source = Square.of(File.A, Rank.SEVEN);
+        Square destination = Square.of(File.B, Rank.SIX);
         SquareDifferent diff = source.calculateDiff(destination);
 
         // when

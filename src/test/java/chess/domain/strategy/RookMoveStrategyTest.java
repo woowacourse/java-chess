@@ -24,8 +24,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookHorizontalDestination() {
         // given
-        Square source = Square.of(File.a, Rank.EIGHT);
-        Square destination = Square.of(File.h, Rank.EIGHT);
+        Square source = Square.of(File.A, Rank.EIGHT);
+        Square destination = Square.of(File.H, Rank.EIGHT);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -39,8 +39,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookVerticalDestination() {
         // given
-        Square source = Square.of(File.a, Rank.FIVE);
-        Square destination = Square.of(File.a, Rank.TWO);
+        Square source = Square.of(File.A, Rank.FIVE);
+        Square destination = Square.of(File.A, Rank.TWO);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -54,8 +54,8 @@ public class RookMoveStrategyTest {
     @Test
     void rookInCorrectDestination() {
         // given
-        Square source = Square.of(File.a, Rank.FIVE);
-        Square destination = Square.of(File.b, Rank.TWO);
+        Square source = Square.of(File.A, Rank.FIVE);
+        Square destination = Square.of(File.B, Rank.TWO);
         ColorType colorType = ColorType.BLACK;
 
         // when

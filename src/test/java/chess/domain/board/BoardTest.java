@@ -26,8 +26,8 @@ public class BoardTest {
     void checkPieceSameColor() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.a, Rank.EIGHT);
-        Square destination = Square.of(File.a, Rank.SEVEN);
+        Square source = Square.of(File.A, Rank.EIGHT);
+        Square destination = Square.of(File.A, Rank.SEVEN);
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
@@ -38,8 +38,8 @@ public class BoardTest {
     void move() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.a, Rank.TWO);
-        Square destination = Square.of(File.a, Rank.THREE);
+        Square source = Square.of(File.A, Rank.TWO);
+        Square destination = Square.of(File.A, Rank.THREE);
 
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
@@ -50,8 +50,8 @@ public class BoardTest {
     void checkPathBlocked() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.a, Rank.EIGHT);
-        Square destination = Square.of(File.a, Rank.FIVE);
+        Square source = Square.of(File.A, Rank.EIGHT);
+        Square destination = Square.of(File.A, Rank.FIVE);
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
@@ -62,8 +62,8 @@ public class BoardTest {
     void checkPathNotBlocked() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.a, Rank.TWO);
-        Square destination = Square.of(File.a, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.TWO);
+        Square destination = Square.of(File.A, Rank.FOUR);
 
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
@@ -74,8 +74,8 @@ public class BoardTest {
     void checkCannotMove() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.b, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.THREE);
+        Square source = Square.of(File.B, Rank.EIGHT);
+        Square destination = Square.of(File.C, Rank.THREE);
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
@@ -86,8 +86,8 @@ public class BoardTest {
     void checkCanMove() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.b, Rank.ONE);
-        Square destination = Square.of(File.c, Rank.THREE);
+        Square source = Square.of(File.B, Rank.ONE);
+        Square destination = Square.of(File.C, Rank.THREE);
 
         // when & then
         assertThatCode(() -> board.move(source, destination)).doesNotThrowAnyException();
@@ -98,8 +98,8 @@ public class BoardTest {
     void checkTurn() {
         // given
         Board board = new Board();
-        Square source = Square.of(File.b, Rank.SEVEN);
-        Square destination = Square.of(File.c, Rank.SIX);
+        Square source = Square.of(File.B, Rank.SEVEN);
+        Square destination = Square.of(File.C, Rank.SIX);
 
         // when & then
         assertThatThrownBy(() -> board.move(source, destination)).isInstanceOf(IllegalArgumentException.class);
@@ -110,14 +110,14 @@ public class BoardTest {
     void catchOpponent() {
         // given
         Board board = new Board();
-        board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
-        board.move(Square.of(File.h, Rank.SEVEN), Square.of(File.h, Rank.FIVE));
+        board.move(Square.of(File.G, Rank.TWO), Square.of(File.G, Rank.FOUR));
+        board.move(Square.of(File.H, Rank.SEVEN), Square.of(File.H, Rank.FIVE));
 
         // when
-        board.move(Square.of(File.g, Rank.FOUR), Square.of(File.h, Rank.FIVE));
+        board.move(Square.of(File.G, Rank.FOUR), Square.of(File.H, Rank.FIVE));
 
         BoardOutput boardOutput = board.toBoardOutput();
-        Piece actual = boardOutput.board().get(Square.of(File.h, Rank.FIVE));
+        Piece actual = boardOutput.board().get(Square.of(File.H, Rank.FIVE));
 
         // then
         assertThat(actual.isSameType(PieceType.PAWN)
@@ -130,11 +130,11 @@ public class BoardTest {
     void pawnStraightCatch() {
         // given
         Board board = new Board();
-        board.move(Square.of(File.g, Rank.TWO), Square.of(File.g, Rank.FOUR));
-        board.move(Square.of(File.g, Rank.SEVEN), Square.of(File.g, Rank.FIVE));
+        board.move(Square.of(File.G, Rank.TWO), Square.of(File.G, Rank.FOUR));
+        board.move(Square.of(File.G, Rank.SEVEN), Square.of(File.G, Rank.FIVE));
 
         // when & then
-        assertThatThrownBy(() -> board.move(Square.of(File.g, Rank.FOUR), Square.of(File.g, Rank.FIVE)))
+        assertThatThrownBy(() -> board.move(Square.of(File.G, Rank.FOUR), Square.of(File.G, Rank.FIVE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

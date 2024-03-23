@@ -58,7 +58,9 @@ public class ChessGame {
             return false;
         }
 
-        MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
+        String sourceName = command.get(1);
+        String destinationName = command.get(2);
+        MoveCommand moveCommand = new MoveCommand(Square.findByName(sourceName), Square.findByName(destinationName));
         movePiece(board, moveCommand);
 
         return true;

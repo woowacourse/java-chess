@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("퀸 움직임 전략")
 class QueenMoveStrategyTest {
@@ -25,8 +24,8 @@ class QueenMoveStrategyTest {
     @Test
     void horizontalMove() {
         // given
-        Square source = Square.of(File.d, Rank.SIX);
-        Square destination = Square.of(File.h, Rank.SIX);
+        Square source = Square.of(File.D, Rank.SIX);
+        Square destination = Square.of(File.H, Rank.SIX);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -40,8 +39,8 @@ class QueenMoveStrategyTest {
     @Test
     void verticalMove() {
         // given
-        Square source = Square.of(File.d, Rank.EIGHT);
-        Square destination = Square.of(File.d, Rank.ONE);
+        Square source = Square.of(File.D, Rank.EIGHT);
+        Square destination = Square.of(File.D, Rank.ONE);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -55,8 +54,8 @@ class QueenMoveStrategyTest {
     @Test
     void diagonalMove() {
         // given
-        Square source = Square.of(File.d, Rank.EIGHT);
-        Square destination = Square.of(File.b, Rank.SIX);
+        Square source = Square.of(File.D, Rank.EIGHT);
+        Square destination = Square.of(File.B, Rank.SIX);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -70,8 +69,8 @@ class QueenMoveStrategyTest {
     @Test
     void cannotMove() {
         // given
-        Square source = Square.of(File.d, Rank.EIGHT);
-        Square destination = Square.of(File.c, Rank.SIX);
+        Square source = Square.of(File.D, Rank.EIGHT);
+        Square destination = Square.of(File.C, Rank.SIX);
         ColorType colorType = ColorType.BLACK;
 
         // when

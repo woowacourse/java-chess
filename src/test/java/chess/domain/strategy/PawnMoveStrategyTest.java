@@ -17,8 +17,8 @@ public class PawnMoveStrategyTest {
     void pawnCorrectDestination() {
         // given
         MoveStrategy moveStrategy = new PawnMoveStrategy();
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.a, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.A, Rank.FOUR);
         ColorType colorType = ColorType.WHITE;
 
         // when
@@ -33,8 +33,8 @@ public class PawnMoveStrategyTest {
     void pawnInCorrectDestination() {
         // given
         MoveStrategy moveStrategy = new PawnMoveStrategy();
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.c, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.C, Rank.FOUR);
         ColorType colorType = ColorType.BLACK;
 
         // when
@@ -49,8 +49,8 @@ public class PawnMoveStrategyTest {
     void moveOneDiagonal() {
         // given
         MoveStrategy moveStrategy = new PawnMoveStrategy();
-        Square source = Square.of(File.a, Rank.THREE);
-        Square destination = Square.of(File.b, Rank.FOUR);
+        Square source = Square.of(File.A, Rank.THREE);
+        Square destination = Square.of(File.B, Rank.FOUR);
         ColorType colorType = ColorType.WHITE;
 
         // when

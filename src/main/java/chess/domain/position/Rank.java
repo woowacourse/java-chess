@@ -61,4 +61,9 @@ public enum Rank {
 
         return Collections.unmodifiableList(reversedRanks);
     }
+
+    public int value() {
+        return value;
+    }
+
 }

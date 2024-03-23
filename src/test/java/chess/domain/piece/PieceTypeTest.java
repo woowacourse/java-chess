@@ -24,14 +24,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.PAWN;
-            source = Square.of(File.a, Rank.SEVEN);
+            source = Square.of(File.A, Rank.SEVEN);
         }
 
         @DisplayName("폰은 한 칸 전진할 수 있다.")
         @Test
         void pawnCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.SIX);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -45,7 +45,7 @@ class PieceTypeTest {
         @Test
         void pawnCanFirstMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
+            Square destination = Square.of(File.A, Rank.FIVE);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -59,8 +59,8 @@ class PieceTypeTest {
         @Test
         void pawnCannotFirstMove() {
             // given
-            source = Square.of(File.a, Rank.SIX);
-            Square destination = Square.of(File.a, Rank.FOUR);
+            source = Square.of(File.A, Rank.SIX);
+            Square destination = Square.of(File.A, Rank.FOUR);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -78,14 +78,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.KNIGHT;
-            source = Square.of(File.b, Rank.EIGHT);
+            source = Square.of(File.B, Rank.EIGHT);
         }
 
         @DisplayName("나이트는 주어진 규칙에 따라 움직일 수 있다.")
         @Test
         void knightWhiteCanMove() {
             // given
-            Square destination = Square.of(File.c, Rank.SIX);
+            Square destination = Square.of(File.C, Rank.SIX);
             ColorType colorType = ColorType.WHITE;
 
             // when
@@ -103,14 +103,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.BISHOP;
-            source = Square.of(File.c, Rank.EIGHT);
+            source = Square.of(File.C, Rank.EIGHT);
         }
 
         @DisplayName("비숍은 대각선 방향으로 움직일 수 있다.")
         @Test
         void knightWhiteCanMove() {
             // given
-            Square destination = Square.of(File.f, Rank.FIVE);
+            Square destination = Square.of(File.F, Rank.FIVE);
             ColorType colorType = ColorType.WHITE;
 
             // when
@@ -128,14 +128,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.ROOK;
-            source = Square.of(File.a, Rank.EIGHT);
+            source = Square.of(File.A, Rank.EIGHT);
         }
 
         @DisplayName("룩은 수직 방향으로 움직일 수 있다.")
         @Test
         void rookVerticalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
+            Square destination = Square.of(File.A, Rank.FIVE);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -149,7 +149,7 @@ class PieceTypeTest {
         @Test
         void rookHorizontalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.FIVE);
+            Square destination = Square.of(File.A, Rank.FIVE);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -167,14 +167,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.QUEEN;
-            source = Square.of(File.d, Rank.EIGHT);
+            source = Square.of(File.D, Rank.EIGHT);
         }
 
         @DisplayName("퀸은 수직 방향으로 움직일 수 있다.")
         @Test
         void queenVerticalCanMove() {
             // given
-            Square destination = Square.of(File.d, Rank.FIVE);
+            Square destination = Square.of(File.D, Rank.FIVE);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -188,7 +188,7 @@ class PieceTypeTest {
         @Test
         void queenHorizontalCanMove() {
             // given
-            Square destination = Square.of(File.a, Rank.EIGHT);
+            Square destination = Square.of(File.A, Rank.EIGHT);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -202,7 +202,7 @@ class PieceTypeTest {
         @Test
         void queenWhiteCanMove() {
             // given
-            Square destination = Square.of(File.h, Rank.FOUR);
+            Square destination = Square.of(File.H, Rank.FOUR);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -220,14 +220,14 @@ class PieceTypeTest {
         @BeforeEach
         void setUp() {
             type = PieceType.KING;
-            source = Square.of(File.e, Rank.EIGHT);
+            source = Square.of(File.E, Rank.EIGHT);
         }
 
         @DisplayName("킹은 수직 1칸 이동할 수 있다.")
         @Test
         void kingVerticalMove() {
             // given
-            Square destination = Square.of(File.e, Rank.SEVEN);
+            Square destination = Square.of(File.E, Rank.SEVEN);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -241,7 +241,7 @@ class PieceTypeTest {
         @Test
         void kingHorizontalMove() {
             // given
-            Square destination = Square.of(File.d, Rank.EIGHT);
+            Square destination = Square.of(File.D, Rank.EIGHT);
             ColorType colorType = ColorType.BLACK;
 
             // when
@@ -255,7 +255,7 @@ class PieceTypeTest {
         @Test
         void queenWhiteCanMove() {
             // given
-            Square destination = Square.of(File.f, Rank.SEVEN);
+            Square destination = Square.of(File.F, Rank.SEVEN);
             ColorType colorType = ColorType.BLACK;
 
             // when

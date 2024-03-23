@@ -5,15 +5,21 @@ import java.util.List;
 
 public enum File {
 
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h,
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h"),
     ;
+
+    private final String symbol;
+
+    File(String symbol) {
+        this.symbol = symbol;
+    }
 
     private static final String OUT_OF_RANGE_ERROR = "더 이상 이동할 수 없습니다.";
     private static final String FILE_NOT_FOUND_ERROR = "존재하지 않는 파일입니다.";
@@ -44,5 +50,9 @@ public enum File {
                 .filter(file -> file.name().equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(FILE_NOT_FOUND_ERROR));
+    }
+
+    public String symbol() {
+        return symbol;
     }
 }
