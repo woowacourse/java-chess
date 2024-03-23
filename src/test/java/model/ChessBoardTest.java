@@ -3,11 +3,14 @@ package model;
 import static model.Fixtures.A1;
 import static model.Fixtures.A2;
 import static model.Fixtures.A3;
+import static model.Fixtures.A4;
+import static model.Fixtures.A5;
 import static model.Fixtures.A6;
 import static model.Fixtures.A7;
 import static model.Fixtures.A8;
 import static model.Fixtures.B1;
 import static model.Fixtures.B2;
+import static model.Fixtures.B5;
 import static model.Fixtures.B7;
 import static model.Fixtures.B8;
 import static model.Fixtures.C1;
@@ -22,12 +25,10 @@ import static model.Fixtures.E1;
 import static model.Fixtures.E2;
 import static model.Fixtures.E4;
 import static model.Fixtures.E5;
-import static model.Fixtures.E6;
 import static model.Fixtures.E7;
 import static model.Fixtures.E8;
 import static model.Fixtures.F1;
 import static model.Fixtures.F2;
-import static model.Fixtures.F3;
 import static model.Fixtures.F7;
 import static model.Fixtures.F8;
 import static model.Fixtures.G1;
@@ -127,7 +128,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("기물이 없는 위치가 주어졌을 때 예외가 발생한다.")
+    @DisplayName("해당 위치에 기물이 없는 경우 예외가 발생한다.")
     void blankPosition() {
         //given
         final ChessBoard chessBoard = new ChessBoard();
@@ -140,45 +141,8 @@ class ChessBoardTest {
                 .isInstanceOf(PieceDoesNotExistException.class);
     }
 
-    @DisplayName("이동 경로에 다른 기물이 있으면 예외를 발생시킨다.")
     @Test
-    void routeContainPiece() {
-        //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
-
-        final Map<Position, Piece> board = chessBoard.getBoard();
-        board.put(E6, new Queen(Camp.BLACK));
-        chessBoard.move(new Moving(A2, A3));
-
-        //when && then
-        final Moving moving = new Moving(E7, E5);
-
-        assertThatThrownBy(() -> chessBoard.move(moving))
-                .isInstanceOf(PieceExistInRouteException.class);
-    }
-
-    //TODO 폰 테스트 필히 추가
-
-    @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
-    @Test
-    void targetPositionIsEqualCamp() {
-        //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
-
-        final Map<Position, Piece> board = chessBoard.getBoard();
-        board.put(F3, new Queen(Camp.WHITE));
-
-        //when && then
-        final Moving moving = new Moving(G1, F3);
-
-        assertThatThrownBy(() -> chessBoard.move(moving))
-                .isInstanceOf(PieceExistInRouteException.class);
-    }
-
-    @Test
-    @DisplayName("상대방의 기물을 이동시키려 하면 예외가 발생한다.")
+    @DisplayName("자신의 기물이 아니면 예외가 발생한다.")
     void invalidTurn() {
         //given
         final ChessBoard chessBoard = new ChessBoard();
@@ -189,5 +153,73 @@ class ChessBoardTest {
 
         assertThatThrownBy(() -> chessBoard.move(moving))
                 .isInstanceOf(InvalidTurnException.class);
+    }
+
+    @DisplayName("이동 경로에 기물이 있으면 예외를 발생시킨다.")
+    @Test
+    void routeContainPiece() {
+        //given
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        //when && then
+        final Moving moving = new Moving(A1, A3);
+
+        assertThatThrownBy(() -> chessBoard.move(moving))
+                .isInstanceOf(PieceExistInRouteException.class);
+    }
+
+    @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
+    @Test
+    void targetPositionIsEqualCamp() {
+        //given
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        //when
+        chessBoard.move(new Moving(A2, A4)); // WHITE
+        chessBoard.move(new Moving(A7, A5)); // BLACK
+
+        //then
+        final Moving moving = new Moving(A1, A4);
+
+        assertThatThrownBy(() -> chessBoard.move(moving))
+                .isInstanceOf(PieceExistInRouteException.class);
+    }
+
+    @Test
+    @DisplayName("기물이 잡히면 체스보드에서 제거된다.")
+    void removePiece() {
+        //given
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        //when
+        chessBoard.move(new Moving(A2, A4));
+        chessBoard.move(new Moving(B7, B5));
+        chessBoard.move(new Moving(A4, B5));
+
+        //then
+        assertThat(chessBoard.getBoard()).hasSize(31);
+    }
+
+    @Test
+    @DisplayName("선공은 WHITE이다.")
+    void checkFirstAttack() {
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        assertThat(chessBoard.getCamp()).isEqualTo(Camp.WHITE);
+    }
+
+    @Test
+    @DisplayName("후공은 BLACK이다.")
+    void checkLastAttack() {
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        chessBoard.move(new Moving(A2, A3));
+
+        assertThat(chessBoard.getCamp()).isEqualTo(Camp.BLACK);
     }
 }

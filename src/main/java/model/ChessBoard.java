@@ -24,6 +24,7 @@ import model.position.Rank;
 public class ChessBoard {
 
     // TODO 처음에 각 기물들을 배치해두는 것이 좋을까 아니면 빈 Map 두고 메서드 실행하면 추가하는게 좋을지 고민하기
+    private static final Camp START_CAMP = Camp.WHITE;
     private static final Map<File, Function<Camp, Piece>> initPosition = new EnumMap<>(File.class);
 
     static {
@@ -43,7 +44,7 @@ public class ChessBoard {
 
     public ChessBoard() {
         this.board = new HashMap<>();
-        this.camp = Camp.WHITE;
+        this.camp = START_CAMP;
     }
 
     public void setting() {
@@ -53,7 +54,7 @@ public class ChessBoard {
         settingExceptPawn(Camp.WHITE, Rank.ONE);
     }
 
-    private void settingExceptPawn(final Camp camp, Rank rank) {
+    private void settingExceptPawn(final Camp camp, final Rank rank) {
         for (File file : File.values()) {
             board.put(new Position(file, rank), initPosition.get(file).apply(camp));
         }
@@ -65,39 +66,37 @@ public class ChessBoard {
         }
     }
 
-    public void move(Moving moving) {
+    public void move(final Moving moving) {
         validate(camp, moving);
 
-        //TODO 여기 테스트 보충
-        Piece piece = board.get(moving.getCurrentPosition());
+        final Piece piece = board.get(moving.getCurrentPosition());
         board.put(moving.getNextPosition(), piece);
         board.remove(moving.getCurrentPosition());
         camp = camp.toggle();
     }
 
-    private void validate(Camp camp, Moving moving) {
-        Position currentPosition = moving.getCurrentPosition();
+    private void validate(final Camp camp, final Moving moving) {
+        final Position currentPosition = moving.getCurrentPosition();
         if (!board.containsKey(currentPosition)) {
-            throw new PieceDoesNotExistException(ErrorCode.PIECE_DOES_NOT_EXIST_POSITION);  //TODO ("해당 위치에 기물이 없습니다.");
+            throw new PieceDoesNotExistException(ErrorCode.PIECE_DOES_NOT_EXIST_POSITION);
         }
 
-        Piece piece = board.get(currentPosition);
+        final Piece piece = board.get(currentPosition);
         if (!piece.isSameCamp(camp)) {
-            throw new InvalidTurnException(ErrorCode.INVALID_CAMP_PIECE); // TODO ("자신의 기물만 이동 가능합니다.");
+            throw new InvalidTurnException(ErrorCode.INVALID_CAMP_PIECE);
         }
 
-        Set<Position> positions = getRoute(moving, piece);
+        final Set<Position> positions = getRoute(moving, piece);
 
         for (Position position : positions) {
             if (board.containsKey(position)) {
-                throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE); // TODO ("이동 경로에 다른 기물이 있습니다.");
+                throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE);
             }
         }
 
-        // TODO 테스트 보충
-        Piece target = board.get(moving.getNextPosition());
+        final Piece target = board.get(moving.getNextPosition());
         if (target != null && target.isSameCamp(piece.getCamp())) {
-            throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE); // TODO 도착 지점에 같은 진영의 기물이 있습니다.
+            throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE);
         }
     }
 
