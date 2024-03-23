@@ -37,4 +37,8 @@ public enum File {
     public boolean isFurtherRightThan(File other) {
         return columnNumber > other.columnNumber;
     }
+
+    public File move(int weight) {
+        return from(columnNumber + weight);
+    }
 }

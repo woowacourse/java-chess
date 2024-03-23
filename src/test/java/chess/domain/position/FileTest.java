@@ -29,13 +29,20 @@ class FileTest {
     @ParameterizedTest
     @CsvSource(value = {"A, B", "B, E", "D, H", "G, H"})
     void should_CheckIsFileFurtherLeftThanTarget(File left, File right) {
-        assertThat(left.isFurtherLeftThan(right));
+        assertThat(left.isFurtherLeftThan(right)).isTrue();
     }
 
     @DisplayName("파일이 특정 파일보다 보드 위치에서 더 오른쪽인지 알 수 있다")
     @ParameterizedTest
     @CsvSource(value = {"A, B", "B, E", "D, H", "G, H"})
     void should_CheckIsFileFurtherRightThanTarget(File left, File right) {
-        assertThat(right.isFurtherRightThan(left));
+        assertThat(right.isFurtherRightThan(left)).isTrue();
+    }
+
+    @DisplayName("가중치만큼 움직인 파일을 계산할 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"A, 1, B", "A, 2, C", "A, 3, D", "A, 4, E", "A, 5, F"})
+    void should_CalculateMovedFile_When_MoveWeightIsGiven(File start, int weight, File moved) {
+        assertThat(start.move(weight)).isEqualTo(moved);
     }
 }
