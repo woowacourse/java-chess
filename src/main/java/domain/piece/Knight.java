@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Knight extends Piece {
 
-    private static final List<ChessVector> CHESS_VECTORS = List.of(
+    private static final List<ChessVector> MOVABLE_VECTORS = List.of(
             new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
             new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
 
@@ -21,7 +21,7 @@ public class Knight extends Piece {
     public boolean canMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        return CHESS_VECTORS.contains(chessVector);
+        return MOVABLE_VECTORS.contains(chessVector);
     }
 
     @Override

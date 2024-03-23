@@ -28,11 +28,11 @@ public class ChessBoard {
     private static final Piece WHITE_PAWN = new Pawn(Team.WHITE);
 
     private final Map<Square, Piece> pieceSquares;
-    private Team team;
+    private Team currentTeam;
 
     private ChessBoard(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
-        this.team = Team.WHITE;
+        this.currentTeam = Team.WHITE;
     }
 
     public static ChessBoard create() {
@@ -55,7 +55,7 @@ public class ChessBoard {
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
 
-        team = team.turn();
+        currentTeam = currentTeam.turn();
     }
 
     private void validateMove(final Square source, final Square target) {
@@ -86,7 +86,7 @@ public class ChessBoard {
 
     private void validateTeam(final Square source) {
         final Piece sourcePiece = pieceSquares.get(source);
-        if (sourcePiece.isOppositeTeam(team)) {
+        if (sourcePiece.isOppositeTeam(currentTeam)) {
             throw new IllegalArgumentException("상대방의 말을 움직일 수 없습니다.");
         }
     }
