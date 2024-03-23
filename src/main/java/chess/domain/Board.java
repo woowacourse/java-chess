@@ -45,7 +45,7 @@ public class Board {
                 checkSameTeamPieceExist(piece.getTeam(), target));
     }
 
-    public boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
+    boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
         List<Position> internalPositions = currentPosition.getInternalPositions(newPosition);
 
         return internalPositions.stream()
@@ -53,19 +53,19 @@ public class Board {
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 
-    public boolean checkPieceExist(Position position) {
+    boolean checkPieceExist(Position position) {
         Piece piece = board.get(position);
 
         return piece.getType() != PieceType.EMPTY;
     }
 
-    public boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
+    boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
         Piece otherPiece = board.get(otherPosition);
 
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    public void placePiece(Position currentPosition, Piece piece) {
+    void placePiece(Position currentPosition, Piece piece) {
         board.put(currentPosition, piece);
     }
 
