@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
@@ -30,8 +31,9 @@ public class Board {
         ));
     }
 
+    // TODO: Empty 반환에 대한 테스트, Empty에 대한 캐싱
     public Piece findByCoordinate(Coordinate coordinate) {
-        return pieces.get(coordinate);
+        return pieces.getOrDefault(coordinate, new Empty());
     }
 
     public void move(Coordinate source, Coordinate target) {
