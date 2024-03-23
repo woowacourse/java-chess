@@ -15,6 +15,14 @@ public class FileRankPosition {
         return new FileRankPosition(file, rank.reverse());
     }
 
+    public boolean isFileSameWith(FileRankPosition other) {
+        return file == other.file;
+    }
+
+    public boolean isRankSameWith(FileRankPosition other) {
+        return rank == other.rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
