@@ -9,15 +9,10 @@ public enum BoardDirection {
     S((start, destination) -> start.isOrthogonalWith(destination) && start.isAbove(destination), 1, 0),
     E((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherLeftThan(destination), 0, 1),
     W((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherRightThan(destination), 0, -1),
-    NE((start, destination) -> start.isDiagonalWith(destination) && start.isBelow(destination)
-            && start.isFurtherLeftThan(destination), -1, 1),
-    NW((start, destination) -> start.isDiagonalWith(destination) && start.isBelow(destination)
-            && start.isFurtherRightThan(destination), -1, -1),
-    SW((start, destination) -> start.isDiagonalWith(destination) && start.isAbove(destination)
-            && start.isFurtherRightThan(destination), 1, -1),
-    SE((start, destination) -> start.isDiagonalWith(destination) && start.isAbove(destination)
-            && start.isFurtherLeftThan(destination), 1, 1),
-    ;
+    NE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftLowerThan(destination), -1, 1),
+    NW((start, destination) -> start.isDiagonalWith(destination) && start.isRightLowerThan(destination), -1, -1),
+    SW((start, destination) -> start.isDiagonalWith(destination) && start.isRightUpperThan(destination), 1, -1),
+    SE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftUpperThan(destination), 1, 1);
 
     private final BiPredicate<FileRankPosition, FileRankPosition> matchCondition;
     private final int moveOnceFileWeight;
