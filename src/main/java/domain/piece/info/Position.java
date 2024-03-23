@@ -1,8 +1,7 @@
-package domain.board;
+package domain.piece.info;
 
-import domain.piece.info.Direction;
-import domain.piece.info.File;
-import domain.piece.info.Rank;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -15,20 +14,32 @@ public class Position {
     }
 
     public int fileIndex() {
-        return file.index();
+        return file.toIndex();
     }
 
     public int rankIndex() {
-        return rank.index();
+        return rank.toIndex();
+    }
+
+    public List<Position> findPathWithOutEndPoints(final Position target) {
+        final Direction direction = Direction.between(this, target);
+        final List<Position> path = new ArrayList<>();
+
+        Position current = this;
+        while (!current.equals(target)) {
+            path.add(current);
+            current = current.next(direction);
+        }
+        path.remove(this);
+        path.remove(target);
+
+        return path;
     }
 
     public Position next(final Direction direction) {
         return new Position(File.of(fileIndex() + direction.file()),
                 Rank.of(rankIndex() + direction.rank()));
     }
-
-    public 
-
 
 
     @Override
@@ -39,7 +50,7 @@ public class Position {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position position = (Position) o;
+        final Position position = (Position) o;
         return file == position.file && rank == position.rank;
     }
 
