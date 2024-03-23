@@ -23,11 +23,11 @@ public class BishopMovementStrategy implements MovementStrategy {
         return isMovableDirection(direction) && isMovableDistance(source, target);
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return BISHOP_DIRECTION.contains(direction);
     }
 
-    private boolean isMovableDistance(Position source, Position target) {
+    private boolean isMovableDistance(final Position source, final Position target) {
         int distance = source.calculateDistanceTo(target);
         return distance > 0;
     }

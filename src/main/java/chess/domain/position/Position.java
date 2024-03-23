@@ -13,19 +13,20 @@ public class Position {
     private final ChessFile file;
     private final ChessRank rank;
 
-    private Position(ChessFile file, ChessRank rank) {
+    private Position(final ChessFile file, final ChessRank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(String position) {
+    // position String은 뷰로직. 처리해서 보내도록 수정
+    public static Position of(final String position) {
         return CACHE.computeIfAbsent(position, key -> new Position(
                 ChessFile.findByValue(String.valueOf(position.charAt(0))),
                 ChessRank.findByValue(String.valueOf(position.charAt(1)))
         ));
     }
 
-    public Set<Position> findBetween(Position target) {
+    public Set<Position> findBetween(final Position target) {
         List<ChessRank> betweenRanks = ChessRank.findBetween(this.rank, target.rank);
         List<ChessFile> betweenFiles = ChessFile.findBetween(this.file, target.file);
 
@@ -38,7 +39,7 @@ public class Position {
         return findDiagonalPositions(betweenFiles, betweenRanks);
     }
 
-    private Set<Position> findHorizontalPositions(List<ChessFile> betweenFiles) {
+    private Set<Position> findHorizontalPositions(final List<ChessFile> betweenFiles) {
         Set<Position> positions = new HashSet<>();
         for (ChessFile file : betweenFiles) {
             positions.add(new Position(file, this.rank));
@@ -46,7 +47,7 @@ public class Position {
         return positions;
     }
 
-    private Set<Position> findVerticalPositions(List<ChessRank> betweenRanks) {
+    private Set<Position> findVerticalPositions(final List<ChessRank> betweenRanks) {
         Set<Position> positions = new HashSet<>();
         for (ChessRank rank : betweenRanks) {
             positions.add(new Position(this.file, rank));
@@ -54,7 +55,7 @@ public class Position {
         return positions;
     }
 
-    private Set<Position> findDiagonalPositions(List<ChessFile> betweenFiles, List<ChessRank> betweenRanks) {
+    private Set<Position> findDiagonalPositions(final List<ChessFile> betweenFiles, final List<ChessRank> betweenRanks) {
         Set<Position> positions = new HashSet<>();
         for (int i = 0; i < betweenFiles.size(); i++) {
             positions.add(new Position(betweenFiles.get(i), betweenRanks.get(i)));
@@ -62,7 +63,7 @@ public class Position {
         return positions;
     }
 
-    public int calculateDistanceTo(Position target) {
+    public int calculateDistanceTo(final Position target) {
         int fileDistance = calculateFileDistanceTo(target);
         int rankDistance = calculateRankDistanceTo(target);
 
@@ -72,15 +73,15 @@ public class Position {
         return rankDistance;
     }
 
-    public int calculateFileDistanceTo(Position target) {
+    public int calculateFileDistanceTo(final Position target) {
         return Math.abs(target.file.index() - file.index());
     }
 
-    public int calculateRankDistanceTo(Position target) {
+    public int calculateRankDistanceTo(final Position target) {
         return Math.abs(target.rank.index() - rank.index());
     }
 
-    public boolean isRank(ChessRank rank) {
+    public boolean isRank(final ChessRank rank) {
         return this.rank == rank;
     }
 

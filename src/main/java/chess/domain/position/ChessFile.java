@@ -16,7 +16,6 @@ public enum ChessFile {
     H("h", 7),
     ;
 
-
     private final String value;
     private final int index;
 
@@ -36,7 +35,7 @@ public enum ChessFile {
         return findBetweenFilesWhenEndLessThanStart(start, end);
     }
 
-    private static List<ChessFile> findFilesBetween(ChessFile start, ChessFile end) {
+    private static List<ChessFile> findFilesBetween(final ChessFile start, final ChessFile end) {
         List<ChessFile> files = new ArrayList<>();
         for (int index = start.index() + 1; index < end.index(); index++) {
             files.add(ChessFile.findByIndex(index));
@@ -44,21 +43,21 @@ public enum ChessFile {
         return files;
     }
 
-    private static List<ChessFile> findBetweenFilesWhenEndLessThanStart(ChessFile start, ChessFile end) {
+    private static List<ChessFile> findBetweenFilesWhenEndLessThanStart(final ChessFile start, final ChessFile end) {
         List<ChessFile> files = findFilesBetween(end, start);
         Collections.reverse(files);
         return files;
     }
 
 
-    private static ChessFile findByIndex(int fileIndex) {
+    private static ChessFile findByIndex(final int fileIndex) {
         return Arrays.stream(values())
                 .filter(file -> file.index == fileIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 파일 범위에 해당하지 않는 인덱스입니다."));
     }
 
-    public static ChessFile findByValue(String fileValue) {
+    public static ChessFile findByValue(final String fileValue) {
         return Arrays.stream(values())
                 .filter(file -> file.value.equals(fileValue))
                 .findFirst()

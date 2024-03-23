@@ -19,16 +19,16 @@ public class WhitePawnMovementStrategy implements MovementStrategy {
     }
 
     @Override
-    public boolean isMovable(Position source, Position target) {
+    public boolean isMovable(final Position source, final Position target) {
         Direction direction = Direction.of(source, target);
         return isMovableDirection(direction) && isMovableDistance(source, target, direction);
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return WHITE_DIRECTION.contains(direction);
     }
 
-    private boolean isMovableDistance(Position source, Position target, Direction direction) {
+    private boolean isMovableDistance(final Position source, final Position target, final Direction direction) {
         int distance = source.calculateDistanceTo(target);
 
         if (source.isRank(ChessRank.TWO) && direction == Direction.TOP) {

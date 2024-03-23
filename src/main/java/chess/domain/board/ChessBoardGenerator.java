@@ -30,7 +30,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         return pieces;
     }
 
-    private Map<Position, Piece> createBlackFirstLine(ChessRank chessRank) {
+    private Map<Position, Piece> createBlackFirstLine(final ChessRank chessRank) {
         Map<Position, Piece> firstLine = new HashMap<>();
         firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.BLACK_ROOK));
         firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
@@ -44,7 +44,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         return firstLine;
     }
 
-    private Map<Position, Piece> createWhiteFirstLine(ChessRank chessRank) {
+    private Map<Position, Piece> createWhiteFirstLine(final ChessRank chessRank) {
         Map<Position, Piece> firstLine = new HashMap<>();
         firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.WHITE_ROOK));
         firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
@@ -72,7 +72,7 @@ public class ChessBoardGenerator implements BoardGenerator {
         return secondLine;
     }
 
-    private Map<Position, Piece> createWhiteSecondLine(ChessRank chessRank) {
+    private Map<Position, Piece> createWhiteSecondLine(final ChessRank chessRank) {
         Map<Position, Piece> secondLine = new HashMap<>();
         secondLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
         secondLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));

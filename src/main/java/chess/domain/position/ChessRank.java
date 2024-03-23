@@ -32,14 +32,14 @@ public enum ChessRank {
         return EIGHT.index();
     }
 
-    public static List<ChessRank> findBetween(ChessRank start, ChessRank end) {
+    public static List<ChessRank> findBetween(final ChessRank start, final ChessRank end) {
         if (start.index() < end.index()) {
             return findRanksBetween(start, end);
         }
         return findBetweenRanksWhenEndLessThanStart(end, start);
     }
 
-    private static List<ChessRank> findRanksBetween(ChessRank start, ChessRank end) {
+    private static List<ChessRank> findRanksBetween(final ChessRank start, final ChessRank end) {
         List<ChessRank> ranks = new ArrayList<>();
         for (int index = start.index() + 1; index < end.index(); index++) {
             ranks.add(findByIndex(index));
@@ -47,20 +47,20 @@ public enum ChessRank {
         return ranks;
     }
 
-    private static List<ChessRank> findBetweenRanksWhenEndLessThanStart(ChessRank start, ChessRank end) {
+    private static List<ChessRank> findBetweenRanksWhenEndLessThanStart(final ChessRank start, final ChessRank end) {
         List<ChessRank> ranks = findRanksBetween(start, end);
         Collections.reverse(ranks);
         return ranks;
     }
 
-    private static ChessRank findByIndex(int rankIndex) {
+    private static ChessRank findByIndex(final int rankIndex) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == rankIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
     }
 
-    public static ChessRank findByValue(String rankValue) {
+    public static ChessRank findByValue(final String rankValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(rankValue))
                 .findFirst()

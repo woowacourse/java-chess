@@ -21,7 +21,7 @@ public class Turn {
         turn = PieceColor.WHITE;
     }
 
-    public boolean isTurn(PieceColor color) {
+    public boolean isTurn(final PieceColor color) {
         return this.turn == color;
     }
 }

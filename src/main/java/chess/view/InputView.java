@@ -29,7 +29,7 @@ public class InputView {
         throw new IllegalArgumentException("명령 입력 형식이 올바르지 않습니다.");
     }
 
-    private void validatePosition(String source, String target) {
+    private void validatePosition(final String source, final String target) {
         if (source.length() != 2 || target.length() != 2) {
             throw new IllegalArgumentException("위치 입력 형식이 올바르지 않습니다.");
         }

@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 public class Piece {
     protected final PieceType type;
 
-    public Piece(PieceType type) {
+    public Piece(final PieceType type) {
         this.type = type;
     }
 
@@ -19,7 +19,7 @@ public class Piece {
         return this.type.color() == color;
     }
 
-    public boolean isType(PieceType pieceType) {
+    public boolean isType(final PieceType pieceType) {
         return this.type == pieceType;
     }
 

@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.Turn;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardGenerator;
 import chess.dto.BoardStatus;
 import chess.dto.CommandInfo;
@@ -12,7 +12,7 @@ public class ChessGame {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessGame(final InputView inputView, OutputView outputView) {
+    public ChessGame(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
