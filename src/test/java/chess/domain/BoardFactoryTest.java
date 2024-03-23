@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardFactoryTest {
 
-    private static final Board BOARD = BoardFactory.startGame();
+    private static final Board BOARD = BoardFactory.createInitBoard();
 
     @ParameterizedTest
     @CsvSource({

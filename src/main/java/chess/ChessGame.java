@@ -27,7 +27,7 @@ public class ChessGame {
         outputView.printStartGame();
         GameCommand command = inputView.readCommand();
         if (command == GameCommand.START) {
-            Board board = BoardFactory.startGame();
+            Board board = BoardFactory.createInitBoard();
             showBoard(board);
             play(board);
         }

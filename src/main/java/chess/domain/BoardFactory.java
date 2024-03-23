@@ -19,7 +19,7 @@ public class BoardFactory {
 
     }
 
-    public static Board startGame() {
+    public static Board createInitBoard() {
         Map<Position, Piece> map = new HashMap<>();
         initializePawn(map);
         initializeKnight(map);
