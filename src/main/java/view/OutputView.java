@@ -15,9 +15,7 @@ public class OutputView {
     }
 
     public void printChessBoard(ChessBoardDto chessBoardDto) {
-        for (String line : chessBoardDto.getValue()) {
-            System.out.println(line);
-        }
+        System.out.printf(chessBoardDto.getValue());
     }
 
     public void printException(final ErrorCode errorCode) {

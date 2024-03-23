@@ -38,6 +38,10 @@ public enum File {
                 .orElseThrow(() -> new IndexOutOfBoundsException("인덱스 범위 초과"));
     }
 
+    public boolean isLast() {
+        return this == H;
+    }
+
     public String getValue() {
         return value;
     }
