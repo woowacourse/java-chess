@@ -36,6 +36,6 @@ class FileTest {
     @ParameterizedTest
     @CsvSource(value = {"A, B", "B, E", "D, H", "G, H"})
     void should_CheckIsFileFurtherRightThanTarget(File left, File right) {
-        assertThat(right.isFurtherLeftThan(left));
+        assertThat(right.isFurtherRightThan(left));
     }
 }
