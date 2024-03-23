@@ -9,7 +9,7 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    boolean isBackward(Path path) {
+    protected boolean isBackward(Path path) {
         return path.isUpside();
     }
 }

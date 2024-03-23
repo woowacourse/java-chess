@@ -10,7 +10,7 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
-    boolean isBackward(Path path) {
+    protected boolean isBackward(Path path) {
         return path.isDownside();
     }
 }

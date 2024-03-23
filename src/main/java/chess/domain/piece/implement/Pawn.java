@@ -6,14 +6,14 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
 public abstract class Pawn extends Piece {
-    abstract boolean isBackward(Path path);
-
     private boolean moved;
 
     protected Pawn(Color color) {
         super(color, PieceType.PAWN);
         this.moved = false;
     }
+
+    abstract protected boolean isBackward(Path path);
 
     @Override
     public boolean canMove(Path path) {
