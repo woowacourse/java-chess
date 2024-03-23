@@ -1,7 +1,9 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import chess.domain.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.File;
 import chess.domain.piece.Position;
@@ -12,40 +14,28 @@ import org.junit.jupiter.api.Test;
 
 class RookTest {
 
-    @DisplayName("룩을 직선으로 이동한다.")
-    @Test
-    void canMove() {
-        // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
-
-        // when
-        final boolean canMove = rook.canMoveTo(new Position(File.D, Rank.SIX)); // 상
-
-        // then
-        assertThat(canMove).isTrue();
-    }
-
-    @DisplayName("룩은 직선 이외로는 이동할 수 없다.") // TODO: 대각선+직선 이동 케이스 추가
+    @DisplayName("룩은 직선 이외로는 이동할 수 없다.")
     @Test
     void canNotMove() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.D, Rank.FIVE), new Position(File.E, Rank.FOUR)); // 대각선 위로 이동하는 움직임
 
-        // when
-        final boolean canMove = rook.canMoveTo(new Position(File.E, Rank.FOUR)); // 대각선 위
-
-        // then
-        assertThat(canMove).isFalse();
+        // when && then
+        assertThatThrownBy(() -> rook.getRoute(movement))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("도착 지점이 위쪽일 때의 위치들을 반환한다.")
     @Test
     void getRouteUp() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.A, Rank.FIVE), new Position(File.A, Rank.EIGHT));
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.EIGHT));
+        final Set<Position> positions = rook.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -58,10 +48,11 @@ class RookTest {
     @Test
     void getRouteDown() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.A, Rank.FIVE), new Position(File.A, Rank.TWO));
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.TWO));
+        final Set<Position> positions = rook.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -74,10 +65,11 @@ class RookTest {
     @Test
     void getRouteRight() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.A, Rank.FIVE), new Position(File.D, Rank.FIVE));
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.D, Rank.FIVE));
+        final Set<Position> positions = rook.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -90,15 +82,16 @@ class RookTest {
     @Test
     void getRouteLeft() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.D, Rank.FIVE), new Position(File.A, Rank.FIVE));
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.FIVE));
+        final Set<Position> positions = rook.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
-                new Position(File.B, Rank.FIVE),
-                new Position(File.C, Rank.FIVE)
+                new Position(File.C, Rank.FIVE),
+                new Position(File.B, Rank.FIVE)
         );
     }
 }

@@ -1,33 +1,28 @@
 package chess.domain.piece.type;
 
+import chess.domain.Movement;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Rook extends Piece {
 
-    public Rook(Color color, Position position) {
-        super(color, position);
+    public Rook(final Color color) {
+        super(color);
     }
 
     @Override
-    public boolean canMoveTo(final Position target) {
-        return this.position.isVerticalWith(target) || this.position.isHorizontalWith(target);
-    }
-
-    @Override
-    public Set<Position> getRoute(final Position target) {
-        if (this.position.isVerticalWith(target)) {
-            return RouteCalculator.getVerticalMiddlePositions(this.position, target);
+    public Set<Position> getRoute(final Movement movement) {
+        if (movement.isVertical()) {
+            return RouteCalculator.getVerticalMiddlePositions(movement);
         }
 
-        if (this.position.isHorizontalWith(target)) {
-            return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
+        if (movement.isHorizontal()) {
+            return RouteCalculator.getHorizontalMiddlePositions(movement);
         }
 
-        return new HashSet<>();
+        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece.type;
 
+import chess.domain.Movement;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -14,43 +15,50 @@ public class Pawn extends Piece {
     private static final Rank INIT_WHITE_RANK = Rank.TWO;
     private static final Rank INIT_BLACK_RANK = Rank.SEVEN;
 
-    public Pawn(final Color color, final Position position) {
-        super(color, position);
+    public Pawn(final Color color) {
+        super(color);
+    }
+
+    public boolean canMove(final Movement movement) {
+        if (color.equals(Color.WHITE)) {
+            return canWhiteMove(movement);
+        }
+        return canBlackMove(movement);
+    }
+
+    private boolean canWhiteMove(final Movement movement) {
+        if (isInitPosition(movement)) {
+            return (movement.isUp() && movement.getRankDistance() == INIT_AVAILABLE_STEP)
+                    || (movement.isUp() && movement.getRankDistance() == DEFAULT_STEP);
+        }
+        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+    }
+
+    private boolean canBlackMove(final Movement movement) {
+        if (isInitPosition(movement)) {
+            return (!movement.isUp() && movement.getRankDistance() == INIT_AVAILABLE_STEP)
+                    || (!movement.isUp() && movement.getRankDistance() == DEFAULT_STEP);
+        }
+        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+    }
+
+    private boolean isInitPosition(final Movement movement) {
+        if (color.equals(Color.WHITE)) {
+            return movement.getCurrent().isRank(INIT_WHITE_RANK);
+        }
+        return movement.getCurrent().isRank(INIT_BLACK_RANK);
     }
 
     @Override
-    public boolean canMoveTo(final Position target) {
-        if (color.equals(Color.WHITE)) {
-            return canWhiteMoveTo(target);
+    public Set<Position> getRoute(final Movement movement) {
+        if (canMove(movement)) {
+            return RouteCalculator.getVerticalMiddlePositions(movement);
         }
-        return canBlackMoveTo(target);
-    }
 
-    private boolean canWhiteMoveTo(final Position target) {
-        if (isInitPosition()) {
-            return (this.position.isDownWith(target) && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
-        }
-        return this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP;
-    }
+//        if ((movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP)) {
+//            return new HashSet<>();
+//        }
 
-    private boolean canBlackMoveTo(final Position target) {
-        if (isInitPosition()) {
-            return (!this.position.isDownWith(target) && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (!this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP);
-        }
-        return !this.position.isDownWith(target) && this.position.getRankDistance(target) == DEFAULT_STEP;
-    }
-
-    private boolean isInitPosition() {
-        if (color.equals(Color.WHITE)) {
-            return this.position.isRank(INIT_WHITE_RANK);
-        }
-        return this.position.isRank(INIT_BLACK_RANK);
-    }
-
-    @Override
-    public Set<Position> getRoute(final Position target) {
-        return RouteCalculator.getVerticalMiddlePositions(this.position, target);
+        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 }

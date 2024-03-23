@@ -3,66 +3,17 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.File;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.piece.Rank;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Night;
-import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
-import java.util.Set;
+import chess.util.ChessBoardInitalizer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    final ChessBoard chessBoard = ChessBoard.init();
-
-    @Test
-    void create() {
-        final Set<Piece> chessBoardDetail = chessBoard.getPieces();
-
-        assertThat(chessBoardDetail).containsExactlyInAnyOrder(
-                new Rook(Color.BLACK, new Position(File.A, Rank.EIGHT)),
-                new Night(Color.BLACK, new Position(File.B, Rank.EIGHT)),
-                new Bishop(Color.BLACK, new Position(File.C, Rank.EIGHT)),
-                new Queen(Color.BLACK, new Position(File.D, Rank.EIGHT)),
-                new King(Color.BLACK, new Position(File.E, Rank.EIGHT)),
-                new Bishop(Color.BLACK, new Position(File.F, Rank.EIGHT)),
-                new Night(Color.BLACK, new Position(File.G, Rank.EIGHT)),
-                new Rook(Color.BLACK, new Position(File.H, Rank.EIGHT)),
-
-                new Pawn(Color.BLACK, new Position(File.A, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.B, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.C, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.D, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.E, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.F, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.G, Rank.SEVEN)),
-                new Pawn(Color.BLACK, new Position(File.H, Rank.SEVEN)),
-
-                new Pawn(Color.WHITE, new Position(File.A, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.B, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.C, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.D, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.E, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.F, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.G, Rank.TWO)),
-                new Pawn(Color.WHITE, new Position(File.H, Rank.TWO)),
-
-                new Rook(Color.WHITE, new Position(File.A, Rank.ONE)),
-                new Night(Color.WHITE, new Position(File.B, Rank.ONE)),
-                new Bishop(Color.WHITE, new Position(File.C, Rank.ONE)),
-                new Queen(Color.WHITE, new Position(File.D, Rank.ONE)),
-                new King(Color.WHITE, new Position(File.E, Rank.ONE)),
-                new Bishop(Color.WHITE, new Position(File.F, Rank.ONE)),
-                new Night(Color.WHITE, new Position(File.G, Rank.ONE)),
-                new Rook(Color.WHITE, new Position(File.H, Rank.ONE)));
-    }
+    private final ChessBoard chessBoard = ChessBoardInitalizer.init();
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._룩의 경우")
     @Test
@@ -148,14 +99,14 @@ class ChessBoardTest {
         chessBoard.move(currentPosition, nextPosition);
 
         // then
-        assertThat(currentPiece.getPosition()).isEqualTo(nextPosition);
+        assertThat(chessBoard.findPieceBy(nextPosition)).isEqualTo(currentPiece);
     }
 
     @DisplayName("빈칸인데 경로상에 기물이 존재하면 움직일 수 없다.")
     @Test
     void canNotMoveByExistingPiece() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.ONE); // 룩
+        final Position currentPosition = new Position(File.A, Rank.ONE);
         final Position nextPosition = new Position(File.A, Rank.FIVE);
 
         // when && then

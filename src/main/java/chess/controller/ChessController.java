@@ -1,7 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.StartCommand;
+import chess.util.ChessBoardInitalizer;
+import chess.domain.Command;
+import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -11,33 +13,26 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
+    public ChessController(final InputView inputView, final OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void runChess() {
-        final ChessBoard chessBoard = ChessBoard.init();
-        startChess(chessBoard);
+        final Command command = Command.from(inputView.readStartCommand());
 
-        List<String> positions = inputView.readMoveCommand();
-
-        while (isNotEndCommand(positions)) {
-            playTurn(chessBoard, positions);
-
-            positions = inputView.readMoveCommand();
-        }
-    }
-
-    private void startChess(final ChessBoard chessBoard) {
-        if (isCommandStart()) {
+        if (command.isStartCommand()) {
+            final ChessBoard chessBoard = ChessBoardInitalizer.init();
             outputView.printChessBoard(chessBoard.getPieces());
-        }
-    }
 
-    private boolean isCommandStart() {
-        StartCommand startCommand = StartCommand.from(inputView.readStartCommand());
-        return startCommand.equals(StartCommand.START);
+            List<String> positions = inputView.readMoveCommand();
+
+            while (isNotEndCommand(positions)) {
+                playTurn(chessBoard, positions);
+
+                positions = inputView.readMoveCommand();
+            }
+        }
     }
 
     private boolean isNotEndCommand(final List<String> validInputPositions) {
@@ -45,7 +40,10 @@ public class ChessController {
     }
 
     private void playTurn(final ChessBoard chessBoard, final List<String> positions) {
-        chessBoard.move(positions);
+        final Position current = new Position(positions.get(0));
+        final Position target = new Position(positions.get(1));
+
+        chessBoard.move(current, target);
         outputView.printChessBoard(chessBoard.getPieces());
     }
 }

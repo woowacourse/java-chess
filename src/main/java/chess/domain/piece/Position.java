@@ -16,34 +16,6 @@ public class Position {
         this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
     }
 
-    public boolean isVerticalWith(final Position target) {
-        return this.file == target.file && this.rank != target.rank;
-    }
-
-    public boolean isHorizontalWith(final Position target) {
-        return this.file != target.file && this.rank == target.rank;
-    }
-
-    public boolean isDiagonalWith(final Position target) {
-        return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
-    }
-
-    public boolean isUpWith(final Position target) {
-        return this.rank.isBigger(target.rank);
-    }
-
-    public boolean isDownWith(final Position target) {
-        return !isUpWith(target);
-    }
-
-    public boolean isRightWith(final Position target) {
-        return this.file.isBigger(target.file);
-    }
-
-    public boolean isLeftWith(final Position target) {
-        return !isRightWith(target);
-    }
-
     public Position up() {
         return new Position(this.file, this.rank.up());
     }
@@ -60,12 +32,12 @@ public class Position {
         return new Position(this.file.left(), this.rank.up());
     }
 
-    public int getRankDistance(final Position target) {
-        return this.rank.getDistance(target.rank);
+    public int getFileDistance(final Position other) {
+        return this.file.getDistance(other.file);
     }
 
-    public int getFileDistance(final Position target) {
-        return this.file.getDistance(target.file);
+    public int getRankDistance(final Position other) {
+        return this.rank.getDistance(other.rank);
     }
 
     public boolean isRank(final Rank rank) {

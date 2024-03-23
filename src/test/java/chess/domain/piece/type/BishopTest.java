@@ -1,7 +1,10 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import chess.domain.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.File;
 import chess.domain.piece.Position;
@@ -12,40 +15,28 @@ import org.junit.jupiter.api.Test;
 
 class BishopTest {
 
-    @DisplayName("비숍을 대각선으로 이동한다.")
-    @Test
-    void canMoveDiagonal() {
-        // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
-
-        // when
-        boolean canMove = bishop.canMoveTo(new Position(File.E, Rank.FOUR));
-
-        // then
-        assertThat(canMove).isTrue();
-    }
-
     @DisplayName("비숍은 대각선 이외로는 이동할 수 없다.")
     @Test
     void canNotMove() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Bishop bishop = new Bishop(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX)); // 대각선 위로 이동하는 움직임
 
-        // when
-        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.SIX)); // 대각선 위
-
-        // then
-        assertThat(canMove).isFalse();
+        // when && then
+        assertThatThrownBy(() -> bishop.getRoute(movement))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("도착 지점이 오른쪽 위 대각선일 때 위치들을 반환한다.")
     @Test
     void getRouteRightUp() {
         // given
-        final Bishop bishop = new Bishop(Color.WHITE, new Position(File.A, Rank.TWO));
+        final Bishop bishop = new Bishop(Color.WHITE);
+        final Movement movement = new Movement(new Position(File.A, Rank.TWO), new Position(File.D, Rank.FIVE));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.D, Rank.FIVE));
+        final Set<Position> positions = bishop.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -58,10 +49,11 @@ class BishopTest {
     @Test
     void getRouteRightDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
+        final Bishop bishop = new Bishop(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.C, Rank.FOUR), new Position(File.F, Rank.ONE));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.F, Rank.ONE));
+        final Set<Position> positions = bishop.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -74,10 +66,11 @@ class BishopTest {
     @Test
     void getRouteLeftUp() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
+        final Bishop bishop = new Bishop(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.C, Rank.FOUR), new Position(File.A, Rank.SIX));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.SIX));
+        final Set<Position> positions = bishop.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -89,10 +82,11 @@ class BishopTest {
     @Test
     void getRouteLeftDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.SIX));
+        final Bishop bishop = new Bishop(Color.BLACK);
+        final Movement movement = new Movement(new Position(File.D, Rank.SIX), new Position(File.A, Rank.THREE));
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.THREE));
+        final Set<Position> positions = bishop.getRoute(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

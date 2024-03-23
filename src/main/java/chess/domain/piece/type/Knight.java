@@ -7,19 +7,19 @@ import chess.domain.piece.Position;
 import java.util.HashSet;
 import java.util.Set;
 
-public class King extends Piece {
+public class Knight extends Piece {
 
-    private static final int DEFAULT_STEP = 1;
+    private static final int DEFAULT_STEP_ONE = 1;
+    private static final int DEFAULT_STEP_TWO = 2;
 
-    public King(final Color color) {
+    public Knight(final Color color) {
         super(color);
     }
 
     @Override
     public Set<Position> getRoute(final Movement movement) {
-        if ((movement.isVertical() && movement.getRankDistance() == DEFAULT_STEP)
-                || (movement.isHorizontal() && movement.getFileDistance() == DEFAULT_STEP)
-                || (movement.isDiagonal() && movement.getRankDistance() == DEFAULT_STEP)) {
+        if (movement.getRankDistance() == DEFAULT_STEP_TWO && movement.getFileDistance() == DEFAULT_STEP_ONE
+                || movement.getRankDistance() == DEFAULT_STEP_ONE && movement.getFileDistance() == DEFAULT_STEP_TWO) {
             return new HashSet<>();
         }
 

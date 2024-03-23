@@ -2,18 +2,18 @@ package chess.domain;
 
 import java.util.Arrays;
 
-public enum StartCommand {
+public enum Command {
 
     START("start"),
     END("end");
 
     private final String message;
 
-    StartCommand(final String message) {
+    Command(final String message) {
         this.message = message;
     }
 
-    public static StartCommand from(final String input) {
+    public static Command from(final String input) {
         validateBlank(input);
 
         return Arrays.stream(values())
@@ -27,6 +27,10 @@ public enum StartCommand {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 명령어입니다.");
         }
+    }
+
+    public boolean isStartCommand() {
+        return this.equals(Command.START);
     }
 
     public String getMessage() {

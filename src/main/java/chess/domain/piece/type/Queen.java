@@ -1,43 +1,36 @@
 package chess.domain.piece.type;
 
+import chess.domain.Movement;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Queen extends Piece {
 
-    public Queen(final Color color, final Position position) {
-        super(color, position);
+    public Queen(final Color color) {
+        super(color);
     }
 
     @Override
-    public boolean canMoveTo(final Position target) {
-        return this.position.isVerticalWith(target)
-                || this.position.isHorizontalWith(target)
-                || this.position.isDiagonalWith(target);
-    }
+    public Set<Position> getRoute(final Movement movement) {
+        if (movement.isDiagonalRightUp()) {
+            return RouteCalculator.getRightDiagonalMiddlePositions(movement);
+        }
 
-    @Override
-    public Set<Position> getRoute(final Position target) {
-        if (this.position.isDiagonalWith(target)
-                && (this.position.isLeftWith(target) && this.position.isDownWith((target)))
-                || (this.position.isRightWith(target) && this.position.isUpWith(target))) {
-            return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
+        if (movement.isDiagonalLeftUp()) {
+            return RouteCalculator.getLeftDiagonalMiddlePositions(movement);
         }
-        if (this.position.isDiagonalWith(target)
-                && (this.position.isRightWith(target) && this.position.isDownWith(target))
-                || (this.position.isLeftWith(target) && this.position.isUpWith(target))) {
-            return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
+
+        if (movement.isVertical()) {
+            return RouteCalculator.getVerticalMiddlePositions(movement);
         }
-        if (this.position.isVerticalWith(target)) {
-            return RouteCalculator.getVerticalMiddlePositions(this.position, target);
+
+        if (movement.isHorizontal()) {
+            return RouteCalculator.getHorizontalMiddlePositions(movement);
         }
-        if (this.position.isHorizontalWith(target)) {
-            return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
-        }
-        return new HashSet<>();
+
+        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 }

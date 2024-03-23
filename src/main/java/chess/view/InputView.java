@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.StartCommand;
+import chess.domain.Command;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +18,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
-
     public List<String> readMoveCommand() {
         final String input = scanner.nextLine();
         validateBlank(input);
-        if (StartCommand.END.getMessage().equals(input)) {
+        if (Command.END.getMessage().equals(input)) {
             return new ArrayList<>();
         }
         return Arrays.asList(input.split(" ")).subList(1, 3);

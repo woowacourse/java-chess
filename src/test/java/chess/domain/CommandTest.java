@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.StartCommand;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,13 +9,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class StartCommandTest {
+class CommandTest {
 
     @DisplayName("공백을 입력하면 예외를 발생시킨다.")
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "  "})
     void BlankInputThrowException(final String value) {
-        Assertions.assertThatThrownBy(() -> StartCommand.from(value))
+        Assertions.assertThatThrownBy(() -> Command.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 명령어입니다.");
     }
@@ -25,7 +24,7 @@ class StartCommandTest {
     @ParameterizedTest
     @NullSource
     void nullInputThrowException(final String value) {
-        Assertions.assertThatThrownBy(() -> StartCommand.from(value))
+        Assertions.assertThatThrownBy(() -> Command.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효하지 않은 명령어입니다.");
     }
@@ -34,7 +33,7 @@ class StartCommandTest {
     @ParameterizedTest
     @ValueSource(strings = {"st", "END", "go"})
     void test(final String value) {
-        Assertions.assertThatThrownBy(() -> StartCommand.from(value))
+        Assertions.assertThatThrownBy(() -> Command.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 입력은 start, end로 해야 합니다.");
     }
@@ -42,9 +41,9 @@ class StartCommandTest {
     @DisplayName("올바른 입력에 대해 명령어를 생성한다.")
     @CsvSource(value = {"start, START", "end, END"})
     @ParameterizedTest
-    void create(final String value, final StartCommand expected) {
+    void create(final String value, final Command expected) {
         // given
-        final StartCommand command = StartCommand.from(value);
+        final Command command = Command.from(value);
 
         // when & then
         assertThat(command).isEqualTo(expected);

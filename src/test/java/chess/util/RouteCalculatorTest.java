@@ -3,6 +3,7 @@ package chess.util;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chess.domain.Movement;
 import chess.domain.piece.File;
 import chess.domain.piece.Position;
 import chess.domain.piece.Rank;
@@ -16,14 +17,13 @@ class RouteCalculatorTest {
     @Test
     void getVerticalMiddlePositions() {
         // given
-        final Position current = new Position(File.F, Rank.EIGHT);
-        final Position target = new Position(File.F, Rank.ONE);
+        final Movement movement = new Movement(new Position(File.F, Rank.EIGHT), new Position(File.F, Rank.ONE));
 
         // when
-        final Set<Position> positions = RouteCalculator.getVerticalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getVerticalMiddlePositions(movement);
 
         // then
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 new Position(File.F, Rank.SEVEN),
                 new Position(File.F, Rank.SIX),
                 new Position(File.F, Rank.FIVE),
@@ -37,14 +37,13 @@ class RouteCalculatorTest {
     @Test
     void getHorizontalMiddlePositions() {
         // given
-        final Position current = new Position(File.H, Rank.FOUR);
-        final Position target = new Position(File.D, Rank.FOUR);
+        final Movement movement = new Movement(new Position(File.H, Rank.FOUR), new Position(File.D, Rank.FOUR));
 
         // when
-        final Set<Position> positions = RouteCalculator.getHorizontalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getHorizontalMiddlePositions(movement);
 
         // then
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 new Position(File.G, Rank.FOUR),
                 new Position(File.F, Rank.FOUR),
                 new Position(File.E, Rank.FOUR)
@@ -55,16 +54,15 @@ class RouteCalculatorTest {
     @Test
     void getRightDiagonalMiddlePositions() {
         // given
-        final Position current = new Position(File.C, Rank.THREE);
-        final Position target = new Position(File.F, Rank.SIX);
+        final Movement movement = new Movement(new Position(File.C, Rank.THREE), new Position(File.F, Rank.SIX));
 
         // when
-        final Set<Position> positions = RouteCalculator.getRightDiagonalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getRightDiagonalMiddlePositions(movement);
 
         // then
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 new Position(File.D, Rank.FOUR),
-                new Position(File.E ,Rank.FIVE)
+                new Position(File.E, Rank.FIVE)
         );
     }
 
@@ -72,14 +70,13 @@ class RouteCalculatorTest {
     @Test
     void getLeftDiagonalMiddlePositions() {
         // given
-        final Position current = new Position(File.B, Rank.SIX);
-        final Position target = new Position(File.E, Rank.THREE);
+        final Movement movement = new Movement(new Position(File.B, Rank.SIX), new Position(File.E, Rank.THREE));
 
         // when
-        final Set<Position> positions = RouteCalculator.getLeftDiagonalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getLeftDiagonalMiddlePositions(movement);
 
         // then
-        assertThat(positions).contains(
+        assertThat(positions).containsExactlyInAnyOrder(
                 new Position(File.C, Rank.FIVE),
                 new Position(File.D, Rank.FOUR)
         );
