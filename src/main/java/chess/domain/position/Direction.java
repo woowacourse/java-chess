@@ -1,7 +1,4 @@
-package chess.domain;
-
-import chess.domain.position.Square;
-import chess.dto.SquareDifferent;
+package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

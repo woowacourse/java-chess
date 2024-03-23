@@ -1,12 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.Direction;
+import chess.domain.position.Direction;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Square;
-import chess.dto.BoardOutput;
-import chess.dto.SquareDifferent;
+import chess.domain.position.SquareDifferent;
 
 import java.util.Map;
 

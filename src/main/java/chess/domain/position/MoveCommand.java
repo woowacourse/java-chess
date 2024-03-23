@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.domain.position;
 
 import chess.domain.position.Square;
 

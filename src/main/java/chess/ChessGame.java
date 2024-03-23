@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
-import chess.dto.MoveCommand;
+import chess.domain.position.MoveCommand;
 import chess.util.RetryUtil;
 import chess.view.GameCommand;
 import chess.view.InputView;

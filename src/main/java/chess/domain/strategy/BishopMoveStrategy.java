@@ -2,7 +2,7 @@ package chess.domain.strategy;
 
 import chess.domain.piece.ColorType;
 import chess.domain.position.Square;
-import chess.dto.SquareDifferent;
+import chess.domain.position.SquareDifferent;
 
 public class BishopMoveStrategy implements MoveStrategy {
 

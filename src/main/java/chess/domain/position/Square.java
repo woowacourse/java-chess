@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.dto.SquareDifferent;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
