@@ -10,12 +10,12 @@ import view.InputView;
 import view.OutputView;
 import view.mapper.CommandInput;
 
-public class GameManager { // TODO: 차례를 표시하도록
+public class GameManager {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
-    public void start() {
+    public void start() { // TODO: start -> move -> start -> move => end?
         outputView.printStartNotice();
         String rawCommand = requestCommand();
         Command command = CommandInput.asCommand(rawCommand);
@@ -27,8 +27,9 @@ public class GameManager { // TODO: 차례를 표시하도록
         manage(chess);
     }
 
-    private void manage(Chess chess) {
+    private void manage(Chess chess) { // TODO: indent 1로 줄이기
         try {
+            outputView.printTurn(chess.getTurn());
             String rawCommand = requestCommand();
             Command command = CommandInput.asCommand(rawCommand);
             if (command.isStart()) {

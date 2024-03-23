@@ -10,7 +10,7 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
     private final Board board = Board.create();
     private Color turn = Color.WHITE;
 
-    public void play(Position sourcePosition, Position targetPosition) {
+    public void play(Position sourcePosition, Position targetPosition) { // TODO: sourcePiece가 None 일 경우 예외 처리
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
 
@@ -46,5 +46,9 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
 
     public Board getBoard() {
         return board;
+    }
+
+    public Color getTurn() {
+        return turn;
     }
 }

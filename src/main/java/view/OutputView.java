@@ -1,6 +1,7 @@
 package view;
 
 import domain.board.Board;
+import domain.piece.Color;
 import domain.piece.Piece;
 import java.util.List;
 
@@ -11,6 +12,15 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    public void printTurn(Color turn) {
+        if (turn.isBlack()) {
+            System.out.println("블랙(대문자) 진영의 차례입니다.");
+        }
+        if (turn.isWhite()) {
+            System.out.println("화이트(소문자) 진영의 차례입니다.");
+        }
     }
 
     public void printBoard(Board board) {
