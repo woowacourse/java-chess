@@ -5,7 +5,7 @@ import domain.position.Position;
 import java.util.Map;
 
 public abstract class Piece {
-    private final PieceColor color;
+    protected final PieceColor color;
 
     protected Piece(final PieceColor color) {
         this.color = color;
