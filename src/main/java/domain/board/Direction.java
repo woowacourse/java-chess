@@ -26,10 +26,10 @@ public enum Direction {
         int rankDifference = target.calculateRankDifference(source);
 
         return Arrays.stream(values())
-            .filter(direction -> direction.fileDirection == decideFileDirection(fileDifference)
-                && direction.rankDirection == decideRankDirection(rankDifference))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
+                .filter(direction -> direction.fileDirection == decideFileDirection(fileDifference)
+                        && direction.rankDirection == decideRankDirection(rankDifference))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
     }
 
     public static int decideFileDirection(int fileDifference) {

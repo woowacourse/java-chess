@@ -57,6 +57,6 @@ public final class Rank {
     @Override
     public String toString() {
         return "Rank[" +
-            "value=" + value + ']';
+                "value=" + value + ']';
     }
 }

@@ -18,7 +18,7 @@ public class Position {
 
     public Position nextPosition(Direction direction) {
         return Position.of(file.value() + direction.getFileDirection(),
-            rank.value() + direction.getRankDirection());
+                rank.value() + direction.getRankDirection());
     }
 
     public boolean isWhitePawnInitialPosition() {
@@ -39,7 +39,7 @@ public class Position {
 
     public boolean isOnSameDiagonalAs(Position target) {
         return Math.abs(file.subtract(target.file))
-            == Math.abs(rank.subtract(target.rank));
+                == Math.abs(rank.subtract(target.rank));
     }
 
     public boolean isOnSameFileAs(Position target) {
@@ -70,8 +70,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-            "file=" + file +
-            ", rank=" + rank +
-            '}';
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

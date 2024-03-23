@@ -24,9 +24,9 @@ public enum FileResolver {
 
     public static int resolveFile(char rawFile) {
         return Arrays.stream(values())
-            .filter(value -> value.rawFile == rawFile)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 file입니다."))
-            .file;
+                .filter(value -> value.rawFile == rawFile)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 file입니다."))
+                .file;
     }
 }

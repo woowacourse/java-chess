@@ -49,6 +49,6 @@ public final class File {
     @Override
     public String toString() {
         return "File[" +
-            "value=" + value + ']';
+                "value=" + value + ']';
     }
 }

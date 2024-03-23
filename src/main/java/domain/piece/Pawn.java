@@ -15,9 +15,9 @@ public class Pawn extends Piece {
 
         if (isWhite()) {
             return (source.isWhitePawnInitialPosition() && rankDifference == 2)
-                || (rankDifference == 1 && Math.abs(fileDifference) <= 1);
+                    || (rankDifference == 1 && Math.abs(fileDifference) <= 1);
         }
         return (source.isBlackPawnInitialPosition() && rankDifference == -2)
-            || (rankDifference == -1 && Math.abs(fileDifference) <= 1);
+                || (rankDifference == -1 && Math.abs(fileDifference) <= 1);
     }
 }
