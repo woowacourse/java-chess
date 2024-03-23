@@ -18,7 +18,7 @@ public enum File {
     public static File from(final String file) {
         return Arrays.stream(File.values())
                 .filter(value -> value.name().equals(file.toUpperCase()))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
 

@@ -23,7 +23,7 @@ public enum PieceView {
     public static PieceView findByType(final Type type) {
         return Arrays.stream(PieceView.values())
                 .filter(value -> value.name().equals(type.name()))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_TYPE));
     }
 
