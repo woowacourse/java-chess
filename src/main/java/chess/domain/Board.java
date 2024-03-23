@@ -24,7 +24,7 @@ public class Board {
     }
 
     private void movePiece(Point currentPoint, Point destination, Piece currentPiece) {
-        board.put(currentPoint, Empty.getEmpty());
+        board.put(currentPoint, Piece.empty());
         board.put(destination, currentPiece);
     }
 
@@ -50,7 +50,7 @@ public class Board {
 
     private void validateDestination(Player player, Point destination) {
         Piece nextPiece = board.get(destination);
-        if (!nextPiece.equals(Empty.getEmpty()) && player.isMyPiece(nextPiece)) {
+        if (!nextPiece.equals(Piece.empty()) && player.isMyPiece(nextPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
         }
     }
@@ -60,7 +60,7 @@ public class Board {
 
         Point nextPoint = currentPoint.add(unitDirection.file(), unitDirection.rank());
         while (!nextPoint.equals(destination)) {
-            if (!Empty.getEmpty().equals(board.get(nextPoint))) {
+            if (!Piece.empty().equals(board.get(nextPoint))) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
             nextPoint = nextPoint.add(unitDirection.file(), unitDirection.rank());
@@ -71,12 +71,12 @@ public class Board {
     private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
         if (currentPiece instanceof Pawn) {
             if (currentPoint.isDiagonal(destination)) {
-                if (board.get(destination).equals(Empty.getEmpty())) {
+                if (board.get(destination).equals(Piece.empty())) {
                     throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
                 }
             }
             if (currentPoint.isStraight(destination)) {
-                if (!board.get(destination).equals(Empty.getEmpty())) {
+                if (!board.get(destination).equals(Piece.empty())) {
                     throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
                 }
             }

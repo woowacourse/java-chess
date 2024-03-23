@@ -14,27 +14,31 @@ public abstract class Piece {
     }
 
     public static Piece bishopFrom(Team team) {
-        return new Bishop(team);
+        return Bishop.from(team);
     }
 
     public static Piece kingFrom(Team team) {
-        return new King(team);
+        return King.from(team);
     }
 
     public static Piece knightFrom(Team team) {
-        return new Knight(team);
+        return Knight.from(team);
     }
 
     public static Piece pawnFrom(Team team) {
-        return new Pawn(team);
+        return Pawn.from(team);
     }
 
     public static Piece queenFrom(Team team) {
-        return new Queen(team);
+        return Queen.from(team);
     }
 
     public static Piece rookFrom(Team team) {
-        return new Rook(team);
+        return Rook.from(team);
+    }
+
+    public static Piece empty() {
+        return Empty.getEmpty();
     }
 
     public abstract boolean isMovable(Point currentPoint, Point nextPoint);

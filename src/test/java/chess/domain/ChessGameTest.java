@@ -21,7 +21,7 @@ class ChessGameTest {
         Point destination = new Point('b', 3);
         chessGame.move(departure, destination);
 
-        assertThat(board.get(departure)).isEqualTo(Empty.getEmpty());
+        assertThat(board.get(departure)).isEqualTo(Piece.empty());
         assertThat(board.get(destination)).isInstanceOf(Pawn.class);
     }
 }

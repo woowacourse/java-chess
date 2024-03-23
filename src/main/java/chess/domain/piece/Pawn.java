@@ -3,15 +3,24 @@ package chess.domain.piece;
 import chess.domain.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public final class Pawn extends Piece {
 
     private static final String NAME = "P";
     private static final int TWO_RANK = 2;
+    private static final Map<Team, Pawn> POOL = Map.of(
+            Team.WHITE, new Pawn(Team.WHITE),
+            Team.BLACK, new Pawn(Team.BLACK)
+    );
 
-    Pawn(Team team) {
+    private Pawn(Team team) {
         super(NAME, team);
+    }
+
+    static Pawn from(Team team) {
+        return POOL.get(team);
     }
 
     @Override

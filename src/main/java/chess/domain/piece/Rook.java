@@ -1,13 +1,22 @@
 package chess.domain.piece;
 
 import chess.domain.Point;
+import java.util.Map;
 
 public final class Rook extends Piece {
 
     private static final String name = "R";
+    private static final Map<Team, Rook> POOL = Map.of(
+            Team.WHITE, new Rook(Team.WHITE),
+            Team.BLACK, new Rook(Team.BLACK)
+    );
 
-    Rook(Team team) {
+    private Rook(Team team) {
         super(name, team);
+    }
+
+    static Rook from(Team team) {
+        return POOL.get(team);
     }
 
     @Override

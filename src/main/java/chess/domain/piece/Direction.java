@@ -39,12 +39,12 @@ public enum Direction {
                 .orElseThrow();
     }
 
-    private boolean isMatch(int file, int rank) {
-        return this.directionOfFile == file && this.directionOfRank == rank;
-    }
-
     public static List<Direction> findPawnDirections() {
         return List.of(UPPER_LEFT, UPPER, UPPER_RIGHT);
+    }
+
+    private boolean isMatch(int file, int rank) {
+        return this.directionOfFile == file && this.directionOfRank == rank;
     }
 
     public int rank() {
