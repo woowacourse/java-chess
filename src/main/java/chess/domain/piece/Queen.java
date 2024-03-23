@@ -6,7 +6,7 @@ public final class Queen extends Piece {
 
     private static final String name = "Q";
 
-    public Queen(Team team) {
+    Queen(Team team) {
         super(name, team);
     }
 
@@ -15,4 +15,3 @@ public final class Queen extends Piece {
         return currentPoint.isStraight(nextPoint) || currentPoint.isDiagonal(nextPoint);
     }
 }
-

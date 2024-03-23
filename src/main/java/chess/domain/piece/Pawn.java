@@ -10,7 +10,7 @@ public final class Pawn extends Piece {
     private static final String NAME = "P";
     private static final int TWO_RANK = 2;
 
-    public Pawn(Team team) {
+    Pawn(Team team) {
         super(NAME, team);
     }
 

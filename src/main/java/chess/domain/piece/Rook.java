@@ -6,7 +6,7 @@ public final class Rook extends Piece {
 
     private static final String name = "R";
 
-    public Rook(Team team) {
+    Rook(Team team) {
         super(name, team);
     }
 

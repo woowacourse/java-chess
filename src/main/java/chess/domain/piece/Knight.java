@@ -6,7 +6,7 @@ public final class Knight extends Piece {
 
     private static final String name = "N";
 
-    public Knight(Team team) {
+    Knight(Team team) {
         super(name, team);
     }
 
