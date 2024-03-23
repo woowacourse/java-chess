@@ -1,10 +1,9 @@
 package domain.piece.info;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class VectorTest {
@@ -117,8 +116,22 @@ class VectorTest {
     void absoluteSum() {
         final Position source = new Position(File.D, Rank.FOUR);
         final Position target = new Position(File.C, Rank.THREE);
-
         final Vector vector = new Vector(source, target);
+
         Assertions.assertThat(vector.absoluteSum()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("벡터는 주어진 값의 절대값을 갖고 있는지 확인할 수 있다")
+    void absoluteValueOf() {
+        final Position source = new Position(File.D, Rank.FOUR);
+        final Position target = new Position(File.C, Rank.TWO);
+        final Vector vector = new Vector(source, target);
+
+        assertAll(
+                () -> Assertions.assertThat(vector.hasAbsoluteValueOf(1)).isTrue(),
+                () -> Assertions.assertThat(vector.hasAbsoluteValueOf(2)).isTrue(),
+                () -> Assertions.assertThat(vector.hasAbsoluteValueOf(3)).isFalse()
+        );
     }
 }

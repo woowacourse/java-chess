@@ -34,4 +34,8 @@ public class Vector {
     public int absoluteSum() {
         return Math.abs(fileDifference) + Math.abs(rankDifference);
     }
+
+    public boolean hasAbsoluteValueOf(final int value) {
+        return Math.abs(fileDifference) == value || Math.abs(rankDifference) == value;
+    }
 }

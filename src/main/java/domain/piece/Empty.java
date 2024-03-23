@@ -4,7 +4,6 @@
 //import domain.piece.info.Direction;
 //import domain.piece.info.Type;
 //import domain.piece.movement.Continuous;
-//import domain.piece.movement.Movement;
 //import java.util.List;
 //
 //public class Empty extends Piece {
