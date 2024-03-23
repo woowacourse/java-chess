@@ -1,28 +1,42 @@
 package chess.domain;
 
-import java.util.Objects;
+import java.util.Map;
 
-public class Rank {
+public enum Rank {
 
-    private static final int MINIMUM_RANK = 1;
-    private static final int MAXIMUM_RANK = 8;
+    FIRST(1),
+    SECOND(2),
+    THIRD(3),
+    FOURTH(4),
+    FIFTH(5),
+    SIXTH(6),
+    SEVENTH(7),
+    EIGHTH(8);
+
+
+    private static final int MIN_RANK = 1;
+    private static final int MAX_RANK = 8;
+    private static final Map<Integer, Rank> POOL = Map.of(
+            1, FIRST, 2, SECOND, 3, THIRD, 4, FOURTH,
+            5, FIFTH, 6, SIXTH, 7, SEVENTH, 8, EIGHTH
+    );
 
     private final int rank;
 
-    public Rank(int rank) {
-        validateRange(rank);
+
+    Rank(int rank) {
         this.rank = rank;
     }
 
-    private void validateRange(int rank) {
-        if (isOutOfRange(rank)) {
-            throw new IllegalArgumentException(
-                    String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", MINIMUM_RANK, MAXIMUM_RANK));
+    public static Rank of(int rank) {
+        if (!POOL.containsKey(rank)) {
+            throw new IllegalArgumentException(String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", MIN_RANK, MAX_RANK));
         }
+        return POOL.get(rank);
     }
 
     private boolean isOutOfRange(int rank) {
-        return rank < MINIMUM_RANK || rank > MAXIMUM_RANK;
+        return rank < MIN_RANK || rank > MAX_RANK;
     }
 
     public int distance(Rank rank) {
@@ -34,27 +48,10 @@ public class Rank {
     }
 
     public Rank add(int directionOfRank) {
-        return new Rank(rank + directionOfRank);
+        return Rank.of(rank + directionOfRank);
     }
 
     public boolean addable(int addRank) {
         return !isOutOfRange(this.rank + addRank);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Rank rank1 = (Rank) o;
-        return rank == rank1.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank);
     }
 }

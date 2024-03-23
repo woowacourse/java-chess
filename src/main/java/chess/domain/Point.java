@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class Point {
 
+    private static final int KNIGHT_VALUE = 2;
+
     private final File file;
     private final Rank rank;
 
@@ -14,11 +16,11 @@ public class Point {
     }
 
     public Point(char file, int rank) {
-        this(new File(file), new Rank(rank));
+        this(File.of(file), Rank.of(rank));
     }
 
     public Point(String point) {
-        this(new File(point.charAt(0)), new Rank(point.charAt(1) - '0'));
+        this(File.of(point.charAt(0)), Rank.of(point.charAt(1) - '0'));
     }
 
     public boolean isDiagonal(Point point) {
@@ -64,9 +66,9 @@ public class Point {
         return rank.isFirstRank();
     }
 
-    public Point add(int directionOfFile, int directionOfRank) {
-        File addedFile = file.add(directionOfFile);
-        Rank addedRank = rank.add(directionOfRank);
+    public Point add(int addFile, int addRank) {
+        File addedFile = file.add(addFile);
+        Rank addedRank = rank.add(addRank);
 
         return new Point(addedFile, addedRank);
     }
@@ -79,7 +81,7 @@ public class Point {
         int fileDistance = point.file.distance(this.file);
         int rankDistance = point.rank.distance(this.rank);
 
-        if (multiplyAxis(point) == 2) {
+        if (multiplyAxis(point) == KNIGHT_VALUE) {
             return Direction.of(fileDistance, rankDistance);
         }
         return Direction.of(unitDistance(fileDistance), unitDistance(rankDistance));
@@ -89,7 +91,7 @@ public class Point {
         if (distance == 0) {
             return 0;
         }
-        return distance / Math.abs(distance);
+        return distance < 0 ? -1 : 1;
     }
 
     @Override

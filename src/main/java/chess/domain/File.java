@@ -1,57 +1,49 @@
 package chess.domain;
 
-import java.util.Objects;
+import java.util.Map;
 
-public class File {
+public enum File {
 
-    private static final char MINIMUM_FILE = 'a';
-    private static final char MAXIMUM_FILE = 'h';
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
+
+    private static final char MIN_FILE = 'a';
+    private static final char MAX_FILE = 'h';
+    private static final Map<Character, File> POOL = Map.of(
+            'a', A, 'b', B, 'c', C, 'd', D, 'e', E, 'f', F, 'g', G, 'h', H
+    );
 
     private final char file;
 
-    public File(char file) {
-        validateRange(file);
+    File(char file) {
         this.file = file;
     }
 
-    private void validateRange(char file) {
-        if (isOutOfRange(file)) {
-            throw new IllegalArgumentException(
-                    String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", MINIMUM_FILE, MAXIMUM_FILE));
+    public static File of(char character) {
+        char lowerChar = Character.toLowerCase(character);
+        if (!POOL.containsKey(lowerChar)) {
+            throw new IllegalArgumentException(String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", MIN_FILE, MAX_FILE));
         }
-    }
-
-    private boolean isOutOfRange(char file) {
-        return file < MINIMUM_FILE || file > MAXIMUM_FILE;
+        return POOL.get(lowerChar);
     }
 
     public int distance(File file) {
         return this.file - file.file;
     }
 
-    public File add(int directionOfFile) {
-        char file = (char) (this.file + directionOfFile);
-        return new File(file);
+    public File add(int fileValue) {
+        char file = (char) (this.file + fileValue);
+        return File.of(file);
     }
 
-    public boolean addable(int addFile) {
-        return !isOutOfRange((char) (this.file + addFile));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        File file1 = (File) o;
-        return Objects.equals(file, file1.file);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file);
+    public boolean addable(int fileValue) {
+        int addedFile = this.file + fileValue;
+        return addedFile >= MIN_FILE && addedFile <= MAX_FILE;
     }
 }

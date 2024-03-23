@@ -13,16 +13,16 @@ class FileTest {
     @ValueSource(chars = {'a', 'h'})
     @DisplayName("a부터 h까지의 가로 위치를 가진다.")
     void createRank(char position) {
-        File file = new File(position);
+        File file = File.of(position);
 
-        assertThat(file).isEqualTo(new File(position));
+        assertThat(file).isEqualTo(File.of(position));
     }
 
     @ParameterizedTest
     @ValueSource(chars = {'z', 'i'})
     @DisplayName("가로 위치가 a 부터 h 사이의 값이 아니라면 예외가 발생한다.")
     void invalidRank(char position) {
-        assertThatThrownBy(() -> new File(position))
+        assertThatThrownBy(() -> File.of(position))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
