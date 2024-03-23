@@ -12,8 +12,10 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position(final String input) {
-        this(File.fromSymbol(input.substring(0, 1)), Rank.fromInput(input.substring(1)));
+    public static Position from(final String input) {
+        String file = input.substring(0, 1);
+        String rank = input.substring(1);
+        return new Position(File.fromSymbol(file), Rank.fromInput(rank));
     }
 
     public boolean isVerticalWith(final Position target) {

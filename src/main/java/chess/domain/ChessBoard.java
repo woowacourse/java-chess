@@ -60,7 +60,7 @@ public class ChessBoard {
     public void move(final List<String> positions) {
         final String currentPosition = positions.get(0);
         final String targetPosition = positions.get(1);
-        move(new Position(currentPosition), new Position(targetPosition));
+        move(Position.from(currentPosition), Position.from(targetPosition));
     }
 
     void move(final Position currentPosition, final Position targetPosition) {
