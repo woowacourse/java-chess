@@ -18,4 +18,17 @@ public enum Team {
     public int getForwardDirection() {
         return forwardDirection;
     }
+
+    //TODO: 테스트 필요한가?
+    public Team opposite() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+
+        if (this == WHITE) {
+            return BLACK;
+        }
+
+        return EMPTY;
+    }
 }

@@ -15,4 +15,6 @@ public interface Piece {
     Team getTeam();
 
     boolean isSameTeam(Piece other);
+
+    boolean isEnemy(Piece other);
 }
