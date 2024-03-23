@@ -91,6 +91,16 @@ class PawnTest {
         assertThat(blackPawn.isReachable(DOWN_LEFT, whitePawn)).isTrue();
     }
 
+    @Test
+    @DisplayName("폰의 대각선 한 칸 앞에 적 기물이 없다면 움직일 수 없다")
+    void invalidAttack() {
+        final Piece whitePawn = new Pawn(WHITE);
+        final Piece blackPawn = new Pawn(BLACK);
+
+        assertThat(whitePawn.isReachable(UP_RIGHT, Empty.INSTANCE)).isFalse();
+        assertThat(blackPawn.isReachable(DOWN_LEFT, Empty.INSTANCE)).isFalse();
+    }
+
 
     /*
         firstMove => moveTwo + no enemy
