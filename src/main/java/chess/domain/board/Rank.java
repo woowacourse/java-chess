@@ -1,36 +1,50 @@
 package chess.domain.board;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-class Rank {
+public enum Rank {
 
-    private static final int MIN_VALUE_RANGE = 1;
-    private static final int MAX_VALUE_RANGE = 8;
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+
+    ;
+
+    private static final char MIN_VALUE_RANGE = 1;
+    private static final char MAX_VALUE_RANGE = 8;
 
     private final int value;
 
-    public Rank(int value) {
-        if (value < MIN_VALUE_RANGE || value > MAX_VALUE_RANGE) {
-            throw new IllegalArgumentException("유효한 범위의 숫자가 아닙니다.");
-        }
 
+    Rank(int value) {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
+    public static Rank from(int value) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효한 범위가 아닙니다."));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Rank rank = (Rank) o;
-        return value == rank.value;
+    public Rank move(int weight) {
+        return Arrays.stream(Rank.values())
+                .filter(it -> it.value == value + weight)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효한 범위를 초과 했습니다."));
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
+    boolean canMove(int weight) {
+        return value + weight >= MIN_VALUE_RANGE && value + weight <= MAX_VALUE_RANGE;
     }
+
+    public int compare(Rank other) {
+        return Integer.compare(value, other.value);
+    }
+
 }
