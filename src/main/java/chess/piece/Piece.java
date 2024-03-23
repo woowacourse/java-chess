@@ -31,7 +31,7 @@ public abstract class Piece {
         return distance <= maxUnitMove;
     }
 
-    public boolean isAttackable(Position source, Position destination) {
+    public boolean canAttack(Position source, Position destination) {
         return isMovable(source, destination);
     }
 
@@ -39,8 +39,8 @@ public abstract class Piece {
         return !isMovable(source, destination);
     }
 
-    public boolean isNotAttackable(Position source, Position destination) {
-        return !isAttackable(source, destination);
+    public boolean canNotCapture(Position source, Position destination) {
+        return !canAttack(source, destination);
     }
 
     public boolean isInitPawn() {

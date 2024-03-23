@@ -13,17 +13,17 @@ class PawnTest {
 
     @Test
     @DisplayName("폰은 대각선 전진 방향으로 공격할 수 있다.")
-    void pawnAttackableTest() {
+    void pawnAttackTest() {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
         Position position = Position.of(File.D, Rank.FOUR);
         // when, then
         assertAll(
-                () -> assertThat(whitePawn.isAttackable(position, Position.of(File.C, Rank.FIVE))).isTrue(),
-                () -> assertThat(whitePawn.isAttackable(position, Position.of(File.E, Rank.FIVE))).isTrue(),
-                () -> assertThat(blackPawn.isAttackable(position, Position.of(File.C, Rank.THREE))).isTrue(),
-                () -> assertThat(blackPawn.isAttackable(position, Position.of(File.E, Rank.THREE))).isTrue()
+                () -> assertThat(whitePawn.canAttack(position, Position.of(File.C, Rank.FIVE))).isTrue(),
+                () -> assertThat(whitePawn.canAttack(position, Position.of(File.E, Rank.FIVE))).isTrue(),
+                () -> assertThat(blackPawn.canAttack(position, Position.of(File.C, Rank.THREE))).isTrue(),
+                () -> assertThat(blackPawn.canAttack(position, Position.of(File.E, Rank.THREE))).isTrue()
         );
     }
 }

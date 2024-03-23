@@ -67,7 +67,7 @@ class BoardTest {
 
     @Test
     @DisplayName("Pawn이 정면으로 공격하는 경우 예외를 발생한다.")
-    void pawnAttackableTest() {
+    void pawnAttackTest() {
         // given
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(Position.of(File.A, Rank.TWO), new InitPawn(Color.WHITE));

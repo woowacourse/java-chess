@@ -58,7 +58,7 @@ public class Board {
 
     private void validateMovable(Position source, Position destination, Piece piece) {
         if (hasDifferentColorPieceOn(destination, piece)) {
-            validateAttackable(source, destination, piece);
+            validateAttack(source, destination, piece);
             return;
         }
 
@@ -67,8 +67,8 @@ public class Board {
         }
     }
 
-    private void validateAttackable(Position source, Position destination, Piece piece) {
-        if (piece.isNotAttackable(source, destination)) {
+    private void validateAttack(Position source, Position destination, Piece piece) {
+        if (piece.canNotCapture(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
