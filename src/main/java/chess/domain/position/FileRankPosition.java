@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class FileRankPosition {
@@ -79,6 +81,24 @@ public class FileRankPosition {
 
     public boolean isRightLowerThan(FileRankPosition other) {
         return this.isBelow(other) && this.isFurtherRightThan(other);
+    }
+
+    public List<FileRankPosition> calculateSlidingPath(FileRankPosition destination) {
+        BoardDirection boardDirection = BoardDirection.of(this, destination);
+        FileRankPosition start = this;
+        List<FileRankPosition> path = new ArrayList<>();
+        while (!start.equals(destination)) {
+            start = start.moveOneSpace(boardDirection);
+            path.add(start);
+        }
+        path.remove(path.size() - 1);
+        return path;
+    }
+
+    private FileRankPosition moveOneSpace(BoardDirection boardDirection) {
+        File movedFile = file.move(boardDirection.getMoveOnceFileWeight());
+        Rank movedRank = rank.move(boardDirection.getMoveOnceRankWeight());
+        return new FileRankPosition(movedFile, movedRank);
     }
 
     @Override

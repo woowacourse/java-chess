@@ -7,6 +7,18 @@ import static chess.fixture.PositionFixtures.A8;
 import static chess.fixture.PositionFixtures.B1;
 import static chess.fixture.PositionFixtures.B2;
 import static chess.fixture.PositionFixtures.B3;
+import static chess.fixture.PositionFixtures.C1;
+import static chess.fixture.PositionFixtures.C3;
+import static chess.fixture.PositionFixtures.D1;
+import static chess.fixture.PositionFixtures.D4;
+import static chess.fixture.PositionFixtures.E1;
+import static chess.fixture.PositionFixtures.E5;
+import static chess.fixture.PositionFixtures.F1;
+import static chess.fixture.PositionFixtures.F6;
+import static chess.fixture.PositionFixtures.G1;
+import static chess.fixture.PositionFixtures.G7;
+import static chess.fixture.PositionFixtures.H1;
+import static chess.fixture.PositionFixtures.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
@@ -101,5 +113,17 @@ class FileRankPositionTest {
     @Test
     void should_CheckPositionIsRightUpperThanOther() {
         assertThat(B2.isRightUpperThan(A1)).isTrue();
+    }
+
+    @DisplayName("수직 이동 경로를 계산할 수 있다")
+    @Test
+    void should_CalculateOrthogonalPath_When_DestinationIsGiven() {
+        assertThat(A1.calculateSlidingPath(H1)).containsExactly(B1, C1, D1, E1, F1, G1);
+    }
+
+    @DisplayName("대각 이동 경로를 계산할 수 있다")
+    @Test
+    void should_CalculateDiagonalPath_When_DestinationIsGiven() {
+        assertThat(A1.calculateSlidingPath(H8)).containsExactly(B2, C3, D4, E5, F6, G7);
     }
 }
