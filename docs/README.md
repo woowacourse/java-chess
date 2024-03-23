@@ -31,10 +31,12 @@
 ## 리팩토링 목록
 - [x] white 폰이 black 폰을 먹을 때 white폰이 black 폰으로 바뀐다. 단, 블랙이 움직였을 경우에만
 - [x] outputview 수정
-- [ㅇ] chessBoardMaker 테스트 분리
+- [x] chessBoardMaker 테스트 분리
 - [x] current -> source로 변경하기
-- [ ] direction, multidirection, position, board 테스트 새로
+- [x] direction, multidirection 테스트 새로
+- [ ] position 테스트 새로
 - [ ] file, rank 테스트 새로
+- [ ] move 메서드 개선
 
 ## 체스 말 이동 규칙
 

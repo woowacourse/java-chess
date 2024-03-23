@@ -26,7 +26,6 @@ public class OutputView {
             board.add(new ArrayList<>(List.of(".", ".", ".", ".", ".", ".", ".", ".")));
         }
 
-
         for (Entry<Position, Piece> positionPiece: pieces.entrySet()) {
             final Position position = positionPiece.getKey();
             final int fileIndex = position.getFile().getIndex() - 1;

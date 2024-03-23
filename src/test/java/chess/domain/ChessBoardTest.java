@@ -14,52 +14,6 @@ class ChessBoardTest {
 
     final ChessBoard chessBoard = ChessBoardMaker.init();
 
-//    @Test
-//    void create() {
-//        Map<Position, Piece> chessBoardDetail = chessBoard.getPieces();
-//
-//        assertThat(chessBoardDetail).containsExactlyEntriesOf(createExpectedPieces());
-//
-//        final Set<Piece> chessBoardDetail = chessBoard.getPieces();
-//
-//        assertThat(chessBoardDetail).containsExactlyInAnyOrder(
-//                new Rook(Color.BLACK, new Position(File.A, Rank.EIGHT)),
-//                new Night(Color.BLACK, new Position(File.B, Rank.EIGHT)),
-//                new Bishop(Color.BLACK, new Position(File.C, Rank.EIGHT)),
-//                new Queen(Color.BLACK, new Position(File.D, Rank.EIGHT)),
-//                new King(Color.BLACK, new Position(File.E, Rank.EIGHT)),
-//                new Bishop(Color.BLACK, new Position(File.F, Rank.EIGHT)),
-//                new Night(Color.BLACK, new Position(File.G, Rank.EIGHT)),
-//                new Rook(Color.BLACK, new Position(File.H, Rank.EIGHT)),
-//
-//                new Pawn(Color.BLACK, new Position(File.A, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.B, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.C, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.D, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.E, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.F, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.G, Rank.SEVEN)),
-//                new Pawn(Color.BLACK, new Position(File.H, Rank.SEVEN)),
-//
-//                new Pawn(Color.WHITE, new Position(File.A, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.B, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.C, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.D, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.E, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.F, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.G, Rank.TWO)),
-//                new Pawn(Color.WHITE, new Position(File.H, Rank.TWO)),
-//
-//                new Rook(Color.WHITE, new Position(File.A, Rank.ONE)),
-//                new Night(Color.WHITE, new Position(File.B, Rank.ONE)),
-//                new Bishop(Color.WHITE, new Position(File.C, Rank.ONE)),
-//                new Queen(Color.WHITE, new Position(File.D, Rank.ONE)),
-//                new King(Color.WHITE, new Position(File.E, Rank.ONE)),
-//                new Bishop(Color.WHITE, new Position(File.F, Rank.ONE)),
-//                new Night(Color.WHITE, new Position(File.G, Rank.ONE)),
-//                new Rook(Color.WHITE, new Position(File.H, Rank.ONE)));
-//    }
-
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._룩의 경우")
     @Test
     void existInWayRook() {
