@@ -7,8 +7,8 @@ import view.InputView;
 import view.OutputView;
 
 public class GameManager {
-
     private final InputView inputView = new InputView();
+
     private final OutputView outputView = new OutputView();
 
     public void start() {
@@ -31,7 +31,7 @@ public class GameManager {
     private void playGame() {
         Chess chess = initChess();
         while (wantMove(chess)) {
-            tryMove(chess);
+            tryMoveUntilNoError(chess);
         }
     }
 
@@ -43,7 +43,7 @@ public class GameManager {
 
     private boolean wantMove(Chess chess) {
         outputView.printTurn(chess.getTurn());
-        Command command = requestCommand();
+        Command command = inputView.readCommand();
         if (command.isStart()) {
             playGame();
             return false;
@@ -51,23 +51,20 @@ public class GameManager {
         return !command.isEnd();
     }
 
-    private Command requestCommand() {
+    private void tryMoveUntilNoError(Chess chess) {
         try {
-            return inputView.readCommand();
+            tryMove(chess);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return requestCommand();
+            inputView.clean();
         }
     }
 
     private void tryMove(Chess chess) {
-        try {
-            Position sourcePosition = inputView.readPosition(); // TODO: 예외 처리
-            Position targetPosition = inputView.readPosition();
-            chess.play(sourcePosition, targetPosition);
-            outputView.printBoard(chess.getBoard());
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-        }
+        Position sourcePosition = inputView.readSourcePosition();
+        Position targetPosition = inputView.readTargetPosition();
+        inputView.clean();
+        chess.play(sourcePosition, targetPosition);
+        outputView.printBoard(chess.getBoard());
     }
 }

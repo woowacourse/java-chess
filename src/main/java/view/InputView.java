@@ -23,8 +23,17 @@ public class InputView {
         return CommandInput.asCommand(rawCommand);
     }
 
-    public Position readPosition() {
+    public Position readSourcePosition() {
         String rawPosition = scanner.next();
         return Position.generate(rawPosition);
+    }
+
+    public Position readTargetPosition() {
+        String rawPosition = scanner.next();
+        return Position.generate(rawPosition);
+    } // TODO: file 만 입력된 경우 예외 처리 (StringIndexOutOfBoundsException)
+
+    public void clean() {
+        scanner.nextLine();
     }
 }
