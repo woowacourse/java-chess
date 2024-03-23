@@ -1,7 +1,6 @@
 package chess.domain.chessBoard;
 
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.PieceSign;
@@ -34,9 +33,6 @@ public class Space {
     }
 
     private void validateClearRoute(Space targetSpace, List<Space> spaces) {
-        if (piece.getClass() == Knight.class) {
-            return;
-        }
         List<Position> routes = targetSpace.position.findRoute(position);
         for (Position route : routes) {
             for (Space space : spaces) {
