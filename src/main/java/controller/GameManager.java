@@ -16,37 +16,7 @@ public class GameManager {
         if (initCommand.isNotStart()) {
             return;
         }
-        Chess chess = initChess();
-        manage(chess);
-    }
-
-    private void manage(Chess chess) { // TODO: indent 1로 줄이기
-        try {
-            outputView.printTurn(chess.getTurn());
-            Command command = requestCommand();
-            if (command.isEnd()) {
-                return;
-            }
-            if (command.isStart()) {
-                chess = initChess();
-                manage(chess);
-                return;
-            }
-            Position sourcePosition = inputView.readPosition();
-            Position targetPosition = inputView.readPosition();
-            chess.play(sourcePosition, targetPosition);
-            outputView.printBoard(chess.getBoard());
-            manage(chess);
-        } catch (IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
-            manage(chess);
-        }
-    }
-
-    private Chess initChess() {
-        Chess chess = new Chess();
-        outputView.printBoard(chess.getBoard());
-        return chess;
+        playGame();
     }
 
     private Command requestInitCommand() {
@@ -58,12 +28,46 @@ public class GameManager {
         }
     }
 
+    private void playGame() {
+        Chess chess = initChess();
+        while (wantMove(chess)) {
+            tryMove(chess);
+        }
+    }
+
+    private Chess initChess() {
+        Chess chess = new Chess();
+        outputView.printBoard(chess.getBoard());
+        return chess;
+    }
+
+    private boolean wantMove(Chess chess) {
+        outputView.printTurn(chess.getTurn());
+        Command command = requestCommand();
+        if (command.isStart()) {
+            playGame();
+            return false;
+        }
+        return !command.isEnd();
+    }
+
     private Command requestCommand() {
         try {
             return inputView.readCommand();
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return requestCommand();
+        }
+    }
+
+    private void tryMove(Chess chess) {
+        try {
+            Position sourcePosition = inputView.readPosition(); // TODO: 예외 처리
+            Position targetPosition = inputView.readPosition();
+            chess.play(sourcePosition, targetPosition);
+            outputView.printBoard(chess.getBoard());
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
         }
     }
 }
