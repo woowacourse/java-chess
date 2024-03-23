@@ -21,13 +21,13 @@ public class ChessController {
 
     public void runChessGame() {
         outputView.printCommandMessage();
-        ChessCommand initializeCommand = enterCommand();
+        ChessCommand initialCommand = enterCommandAndExtractPrefix();
 
-        if (initializeCommand == ChessCommand.START) {
+        if (initialCommand == ChessCommand.START) {
             ChessBoard chessBoard = new ChessBoard();
-            retry(() -> enterAndExecuteCommand(chessBoard, initializeCommand));
+            retry(() -> enterAndExecuteCommand(chessBoard, initialCommand));
         }
-        if (initializeCommand == ChessCommand.MOVE) {
+        if (initialCommand == ChessCommand.MOVE) {
             throw new IllegalStateException("게임이 시작되지 않았습니다.");
         }
     }
@@ -36,15 +36,15 @@ public class ChessController {
         Pattern pattern = Pattern.compile(InputView.MOVE_POSITION_REGEX_FORMAT);
         while (command != ChessCommand.END) {
             outputView.printSquareStatus(chessBoard);
-            List<String> input = inputView.enterChessCommand();
+            List<String> input = inputView.enterStartOrEndOrMoveCommand();
             command = ChessCommand.from(input.get(0));
 
             executeMoveCommand(chessBoard, input, command, pattern);
         }
     }
 
-    private ChessCommand enterCommand() {
-        List<String> input = inputView.enterChessCommand();
+    private ChessCommand enterCommandAndExtractPrefix() {
+        List<String> input = inputView.enterStartOrEndOrMoveCommand();
         return ChessCommand.from(input.get(0));
     }
 
