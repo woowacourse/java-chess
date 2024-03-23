@@ -8,7 +8,7 @@ import domain.piece.info.Vector;
 public class Rook extends Piece {
 
     public Rook(final Color color) {
-        super(color, Type.ROOK);
+        super(color);
     }
 
     @Override

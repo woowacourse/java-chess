@@ -32,14 +32,6 @@ class PieceTest {
     }
 
     @Test
-    @DisplayName("기물은 자신의 모양 정보를 제공한다.")
-    void pieceShape() {
-        final Piece piece = new Rook(Color.WHITE);
-
-        assertThat(piece.type()).isEqualTo(Type.ROOK);
-    }
-
-    @Test
     @DisplayName("이동하려는 위치에 같은 색의 기물이 있으면 이동할 수 없다")
     void sameColor() {
         final Piece piece = new Rook(Color.WHITE);

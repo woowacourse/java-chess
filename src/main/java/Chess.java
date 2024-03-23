@@ -1,5 +1,3 @@
-import static constants.Bound.BOARD_LOWER_BOUND;
-import static constants.Bound.BOARD_UPPER_BOUND;
 import static view.Command.MOVE;
 import static view.Command.START;
 
@@ -97,7 +95,7 @@ public class Chess {
 
     private List<RankInfo> createPieceInfo(final Board board) {
         final List<RankInfo> rankInfos = new ArrayList<>();
-        for (int rank = BOARD_UPPER_BOUND.value(); rank >= BOARD_LOWER_BOUND.value(); rank--) {
+        for (int rank = 7; rank >= 0; rank--) {
             final RankInfo pieceShapeOfRank = DtoMapper.getPieceShapeOfRank(board, rank);
             rankInfos.add(pieceShapeOfRank);
         }

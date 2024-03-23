@@ -9,7 +9,7 @@ import java.util.List;
 public class MovedPawn extends Piece {
 
     public MovedPawn(final Color color) {
-        super(color, Type.PAWN);
+        super(color);
     }
 
     @Override

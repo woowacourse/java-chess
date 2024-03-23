@@ -7,12 +7,12 @@ import domain.piece.info.Vector;
 public class King extends Piece {
 
     public King(final Color color) {
-        super(color, Type.KING);
+        super(color);
     }
 
     @Override
     protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
-        return vector.isAbsoluteValueSmallerOrEqualThanOne();
+        return vector.isAllAbsoluteValueSmallerOrEqualThanOne();
     }
 
 }

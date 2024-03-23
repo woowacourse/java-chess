@@ -27,11 +27,6 @@ public class InitPawn extends MovedPawn {
     }
 
     @Override
-    public boolean isInitPawn() {
-        return true;
-    }
-
-    @Override
     public Piece move() {
         return new MovedPawn(color());
     }

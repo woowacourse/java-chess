@@ -7,7 +7,7 @@ import domain.piece.info.Vector;
 public class Bishop extends Piece {
 
     public Bishop(final Color color) {
-        super(color, Type.BISHOP);
+        super(color);
     }
 
     @Override

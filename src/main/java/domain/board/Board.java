@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private Color currentPlayerColor;
+    private Color currentTurnColor;
     private final Map<Position, Piece> squares;
 
     public Board(final Map<Position, Piece> squares) {
-        this.currentPlayerColor = Color.WHITE;
+        this.currentTurnColor = Color.WHITE;
         this.squares = squares;
     }
 
@@ -60,7 +60,7 @@ public class Board {
     }
 
     private void validateTurn(final Piece currentPiece) {
-        if (!currentPiece.hasColor(currentPlayerColor)) {
+        if (!currentPiece.hasColor(currentTurnColor)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
     }
@@ -72,7 +72,7 @@ public class Board {
 
 
     private void switchTurn() {
-        currentPlayerColor = currentPlayerColor.reverse();
+        currentTurnColor = currentTurnColor.reverse();
     }
 
     public Map<Position, Piece> squares() {

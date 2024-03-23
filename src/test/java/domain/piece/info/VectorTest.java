@@ -78,14 +78,14 @@ class VectorTest {
     @DisplayName("주어진 두 위치가 인접해 있는지 확인한다")
     void isNearest() {
         assertAll(
-                () -> assertThat(new Vector(D_FOUR, D_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FOUR).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, D_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FOUR).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, D_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FOUR).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, D_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FOUR).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue()
         );
     }
 

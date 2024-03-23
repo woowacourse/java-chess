@@ -49,7 +49,7 @@ public class Vector {
         return isStraight() || isDiagonal();
     }
 
-    public boolean isAbsoluteValueSmallerOrEqualThanOne() {
+    public boolean isAllAbsoluteValueSmallerOrEqualThanOne() {
         return Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) <= 1;
     }
 

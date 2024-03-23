@@ -6,11 +6,9 @@ import domain.piece.info.Vector;
 
 public abstract class Piece {
     private final Color color;
-    private final Type type;
 
-    protected Piece(final Color color, final Type type) {
+    protected Piece(final Color color) {
         this.color = color;
-        this.type = type;
     }
 
     public Piece move() {
@@ -31,10 +29,6 @@ public abstract class Piece {
 
     protected abstract boolean isInstanceReachable(final Vector vector, final Piece targetPiece);
 
-    public boolean isInitPawn() {
-        return false;
-    }
-
     public boolean isWhite() {
         return color == Color.WHITE;
     }
@@ -45,10 +39,6 @@ public abstract class Piece {
 
     public boolean hasColor(final Color color) {
         return this.color == color;
-    }
-
-    public Type type() {
-        return type;
     }
 
     public Color color() {

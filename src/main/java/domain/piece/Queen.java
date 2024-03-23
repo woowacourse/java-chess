@@ -7,7 +7,7 @@ import domain.piece.info.Vector;
 public class Queen extends Piece {
 
     public Queen(final Color color) {
-        super(color, Type.QUEEN);
+        super(color);
     }
 
     @Override

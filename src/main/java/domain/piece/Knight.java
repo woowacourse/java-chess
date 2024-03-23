@@ -7,7 +7,7 @@ import domain.piece.info.Vector;
 public class Knight extends Piece {
 
     public Knight(final Color color) {
-        super(color, Type.KNIGHT);
+        super(color);
     }
 
     @Override
