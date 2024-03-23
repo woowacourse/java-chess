@@ -1,5 +1,8 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 public enum File {
     A(0),
     B(1),
@@ -14,6 +17,13 @@ public enum File {
 
     File(int columnNumber) {
         this.columnNumber = columnNumber;
+    }
+
+    public static File from(int columnNumber) {
+        return Arrays.stream(values())
+                .filter(file -> file.columnNumber == columnNumber)
+                .findAny()
+                .orElseThrow(() -> new NoSuchElementException("해당 하는 열 위치를 찾지 못하였습니다"));
     }
 
     public int calculateDistanceWith(File other) {

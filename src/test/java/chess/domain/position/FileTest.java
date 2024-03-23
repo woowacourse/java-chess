@@ -8,6 +8,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class FileTest {
+    @DisplayName("열번호에 맞는 파일을 찾을 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"0, A", "1, B", "2, C", "3, D", "4, E", "5, F", "6, G", "7, H"})
+    void should_ReturnAppropriateFile_When_ColumnNumberIsGiven(int columnNumber, File file) {
+        assertThat(File.from(columnNumber)).isEqualTo(file);
+    }
+
     @DisplayName("체스 파일 간 거리를 계산할 수 있다")
     @ParameterizedTest
     @CsvSource(value = {"A, B, 1", "H, A, 7", "C, E, 2"})
