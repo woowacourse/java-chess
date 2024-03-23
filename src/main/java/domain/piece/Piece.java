@@ -31,6 +31,10 @@ public abstract class Piece {
         return color != targetPiece.color;
     }
 
+    public boolean isDifferentColor(Color color) {
+        return this.color.isDifferent(color);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
