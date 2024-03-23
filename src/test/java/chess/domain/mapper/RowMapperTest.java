@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class RowMapperTest {
+class RowMapperTest {
 
     @Test
     @DisplayName("이름으로 Row를 찾는다.")

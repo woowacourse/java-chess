@@ -14,7 +14,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class BlackPawnTest {
+class BlackPawnTest {
     /**
      * ........  8 (rank 8)
      * ...P....  7

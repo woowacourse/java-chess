@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class PositionTest {
+class PositionTest {
 
     @Test
     @DisplayName("포지션 생성 테스트")
