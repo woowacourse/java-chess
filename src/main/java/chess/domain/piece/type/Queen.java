@@ -22,7 +22,7 @@ public class Queen extends Piece {
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        if (this.position.isDiagonalWith(target)
+        if (this.position.isDiagonalWith(target) // TODO: position에서 두개씩은 묶을 수 있지 않을까?
                 && (this.position.isLeftWith(target) && this.position.isDownWith((target)))
                 || (this.position.isRightWith(target) && this.position.isUpWith(target))) {
             return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);

@@ -17,27 +17,19 @@ public class ChessController {
     }
 
     public void runChess() {
+        Command command = Command.fromStartCommand(inputView.readStartCommand());
+        if (command == Command.END) {
+            return;
+        }
+
         final ChessBoard chessBoard = ChessBoard.init();
-        startChess(chessBoard);
+        outputView.printChessBoard(chessBoard.getPieces());
 
         List<String> positions = inputView.readMoveCommand();
-
         while (isNotEndCommand(positions)) {
             playTurn(chessBoard, positions);
-
             positions = inputView.readMoveCommand();
         }
-    }
-
-    private void startChess(final ChessBoard chessBoard) {
-        if (isCommandStart()) {
-            outputView.printChessBoard(chessBoard.getPieces());
-        }
-    }
-
-    private boolean isCommandStart() {
-        Command command = Command.fromStartCommand(inputView.readStartCommand());
-        return command.equals(Command.START);
     }
 
     private boolean isNotEndCommand(final List<String> validInputPositions) {

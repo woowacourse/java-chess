@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private Set<Piece> pieces;
+    private Set<Piece> pieces; // map<position, piece>으로 갖고있을 수 있을듯
 
     private ChessBoard(final Set<Piece> pieces) {
         this.pieces = pieces;
