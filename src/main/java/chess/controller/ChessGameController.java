@@ -28,7 +28,7 @@ public class ChessGameController {
 
     private void waitStartCommand() {
         String command = inputView.readCommand().trim();
-        if (command.equals("start")) {
+        if ("start".equals(command)) {
             final ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
             outputView.printBoard(chessGame.collectBoard());
             startChessGame(chessGame);
