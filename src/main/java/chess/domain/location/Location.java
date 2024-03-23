@@ -5,8 +5,6 @@ import java.util.Objects;
 
 //TODO 캐싱
 public class Location {
-    private static final IllegalArgumentException WRONG_LOCATION_INPUT_EXCEPTION
-            = new IllegalArgumentException("잘못된 위치 입력입니다.");
     private static final int LOCATION_INPUT_LENGTH = 2;
 
     private final Column column;
@@ -24,22 +22,18 @@ public class Location {
     }
 
     public static Location of(String input) {
-        try {
-            validateInput(input);
-            Column column = Column.of(input.substring(0, 1));
-            Row row = Row.of(input.substring(1, LOCATION_INPUT_LENGTH));
-            return new Location(column, row);
-        } catch (IllegalArgumentException exception) {
-            throw WRONG_LOCATION_INPUT_EXCEPTION;
-        }
+        validateInput(input);
+        Column column = Column.of(input.substring(0, 1));
+        Row row = Row.of(input.substring(1, LOCATION_INPUT_LENGTH));
+        return new Location(column, row);
     }
 
     private static void validateInput(String input) {
         if (input == null || input.isBlank()) {
-            throw WRONG_LOCATION_INPUT_EXCEPTION;
+            throw new IllegalArgumentException("빈 값을 위치로 입력할 수 없습니다.");
         }
         if (input.length() != LOCATION_INPUT_LENGTH) {
-            throw WRONG_LOCATION_INPUT_EXCEPTION;
+            throw new IllegalArgumentException("잘못된 위치 입력입니다.");
         }
     }
 
