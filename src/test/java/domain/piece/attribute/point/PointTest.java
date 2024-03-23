@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
 class PointTest {
@@ -44,39 +45,19 @@ class PointTest {
     }
 
     @Test
-    @DisplayName("포인트가 자신의 인덱스를 알려준다.")
-    void get_index_by_point() {
-        final Point point = Point.from("e5");
-
-        final var sut = point.toIndex();
-
-        assertThat(sut).isEqualTo(new Index(4, 4));
-    }
-
-    @Test
-    @DisplayName("파일 과 랭크의 인덱스를 통해 포인트를 생성한다.")
-    void create_with_index() {
-        final var index = new Index(3, 5);
-
-        final var sut = Point.fromIndex(index);
-
-        assertThat(sut).isEqualTo(new Point(File.F, Rank.FOUR));
-    }
-
-    @Test
     @DisplayName("왼쪽으로 포인트를 이동한다.")
     void move_point_left() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveLeft();
 
-        assertThat(sut).isEqualTo(new Point(File.B, Rank.FOUR));
+        assertThat(sut).isEqualTo(B4);
     }
 
     @Test
     @DisplayName("포인트가 왼쪽으로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_left() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveLeft();
 
@@ -86,7 +67,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 왼쪽으로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_left() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveLeft(3);
 
@@ -96,17 +77,17 @@ class PointTest {
     @Test
     @DisplayName("오른쪽으로 포인트를 이동한다.")
     void move_point_right() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveRight();
 
-        assertThat(sut).isEqualTo(new Point(File.D, Rank.FOUR));
+        assertThat(sut).isEqualTo(D4);
     }
 
     @Test
     @DisplayName("포인트가 오른쪽으로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_right() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveRight();
 
@@ -116,7 +97,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 오른쪽으로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_right() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveRight(7);
 
@@ -126,17 +107,17 @@ class PointTest {
     @Test
     @DisplayName("위로 포인트를 이동한다.")
     void move_point_up() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveUp();
 
-        assertThat(sut).isEqualTo(new Point(File.C, Rank.FIVE));
+        assertThat(sut).isEqualTo(C5);
     }
 
     @Test
     @DisplayName("포인트가 위로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_up() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveUp();
 
@@ -146,7 +127,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 위로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_up() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveUp(5);
 
@@ -156,17 +137,17 @@ class PointTest {
     @Test
     @DisplayName("아래로 포인트를 이동한다.")
     void move_point_down() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveDown();
 
-        assertThat(sut).isEqualTo(new Point(File.C, Rank.THREE));
+        assertThat(sut).isEqualTo(C3);
     }
 
     @Test
     @DisplayName("포인트가 아래로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_down() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.canMoveDown();
 
@@ -176,7 +157,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 아래로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_down() {
-        final var point = new Point(File.C, Rank.ONE);
+        final var point = C1;
 
         final var sut = point.canMoveDown(1);
 
@@ -186,17 +167,17 @@ class PointTest {
     @Test
     @DisplayName("왼쪽 위로 포인트를 이동한다.")
     void move_point_up_left() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveUpLeft();
 
-        assertThat(sut).isEqualTo(new Point(File.B, Rank.FIVE));
+        assertThat(sut).isEqualTo(B5);
     }
 
     @Test
     @DisplayName("포인트가 왼쪽 위로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_up_left() {
-        final var point = new Point(File.D, Rank.FOUR);
+        final var point = D4;
 
         final var sut = point.canMoveUpLeft();
 
@@ -206,7 +187,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 왼쪽 위로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_up_left() {
-        final var point = new Point(File.A, Rank.ONE);
+        final var point = A1;
 
         final var sut = point.canMoveUpLeft(1);
 
@@ -216,17 +197,17 @@ class PointTest {
     @Test
     @DisplayName("오른쪽 위로 포인트를 이동한다.")
     void move_point_up_right() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveUpRight();
 
-        assertThat(sut).isEqualTo(new Point(File.D, Rank.FIVE));
+        assertThat(sut).isEqualTo(D5);
     }
 
     @Test
     @DisplayName("포인트가 오른쪽 위로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_up_right() {
-        final var point = new Point(File.D, Rank.FOUR);
+        final var point = D4;
 
         final var sut = point.canMoveUpRight();
 
@@ -236,7 +217,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 오른쪽 위로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_up_right() {
-        final var point = new Point(File.H, Rank.ONE);
+        final var point = H1;
 
         final var sut = point.canMoveUpRight(1);
 
@@ -246,17 +227,17 @@ class PointTest {
     @Test
     @DisplayName("왼쪽 아래로 포인트를 이동한다.")
     void move_point_down_left() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveDownLeft();
 
-        assertThat(sut).isEqualTo(new Point(File.B, Rank.THREE));
+        assertThat(sut).isEqualTo(B3);
     }
 
     @Test
     @DisplayName("포인트가 왼쪽 아래로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_down_left() {
-        final var point = new Point(File.D, Rank.FOUR);
+        final var point = D4;
 
         final var sut = point.canMoveDownLeft();
 
@@ -276,17 +257,17 @@ class PointTest {
     @Test
     @DisplayName("오른쪽 아래로 포인트를 이동한다.")
     void move_point_down_right() {
-        final var point = new Point(File.C, Rank.FOUR);
+        final var point = C4;
 
         final var sut = point.moveDownRight();
 
-        assertThat(sut).isEqualTo(new Point(File.D, Rank.THREE));
+        assertThat(sut).isEqualTo(D3);
     }
 
     @Test
     @DisplayName("포인트가 오른쪽 아래로 이동 가능하면 참을 반환한다")
     void true_if_point_can_move_down_right() {
-        final var point = new Point(File.D, Rank.FOUR);
+        final var point = D4;
 
         final var sut = point.canMoveDownRight();
 
@@ -296,7 +277,7 @@ class PointTest {
     @Test
     @DisplayName("포인트가 오른쪽 아래로 이동 불가능하면 거짓을 반환한다")
     void false_if_point_can_not_move_down_right() {
-        final var point = new Point(File.G, Rank.FOUR);
+        final var point = G4;
 
         final var sut = point.canMoveDownRight(2);
 
