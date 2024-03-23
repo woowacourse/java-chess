@@ -89,9 +89,9 @@ public class Board {
         }
 
         Position attackingPiecePosition = findAttackingPiecePosition(team, kingPosition);
+        boolean isNotAttackAttackingPiece = isNotAttackAttackingPiece(team.opponent(), attackingPiecePosition);
         boolean isNotBlockAttackingPiece
                 = isNotBlockAttackingPiece(team, new Positions(attackingPiecePosition, kingPosition));
-        boolean isNotAttackAttackingPiece = isNotAttackAttackingPiece(team.opponent(), attackingPiecePosition);
         return isNotSafePathAvailableForKing && isNotBlockAttackingPiece && isNotAttackAttackingPiece;
     }
 
@@ -132,6 +132,24 @@ public class Board {
                 .toList();
     }
 
+    private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent())
+                        && entry.getKey() != attackingPosition)
+                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
+                .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
+    }
+
+    private boolean isAttacking(Piece thisPiece, Positions positions) {
+        if (thisPiece.isAttacking(positions)) {
+            List<Position> betweenPositions = thisPiece.findBetweenPositionsWhenAttack(positions);
+            return betweenPositions.stream()
+                    .noneMatch(pieces::containsKey);
+        }
+        return false;
+    }
+
     private boolean isNotBlockAttackingPiece(Team team, Positions positions) {
         List<Position> attackRoutePositions = pieces.get(positions.source())
                 .findBetweenPositionsWhenAttack(positions);
@@ -148,22 +166,13 @@ public class Board {
                 .flatMap(entry -> entry.getKey()
                         .findAllMovablePosition(entry.getValue())
                         .stream()
-                        .filter(position -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position))))
+                        .filter(position -> !entry.getValue().equals(position) && isMovable(entry.getValue(), new Positions(entry.getKey(), position))))
                 .toList();
     }
 
-    private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent())
-                        && entry.getKey() != attackingPosition)
-                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
-                .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
-    }
-
-    private boolean isAttacking(Piece thisPiece, Positions positions) {
-        if (thisPiece.isAttacking(positions)) {
-            List<Position> betweenPositions = findBetweenPositions(thisPiece, positions);
+    private boolean isMovable(Piece thisPiece, Positions positions) {
+        if (thisPiece.isMovable(positions)) {
+            List<Position> betweenPositions = thisPiece.findBetweenPositions(positions);
             return betweenPositions.stream()
                     .noneMatch(pieces::containsKey);
         }

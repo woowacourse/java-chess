@@ -33,6 +33,10 @@ public abstract class Piece {
         return isMovable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
+    public boolean isAttacking(Positions positions) {
+        return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
+    }
+
     public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
         return findBetweenPositions(positions);
     }
@@ -50,10 +54,6 @@ public abstract class Piece {
             return;
         }
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
-    }
-
-    public boolean isAttacking(Positions positions) {
-        return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
     public boolean isOppositeTeamWith(Team team) {
