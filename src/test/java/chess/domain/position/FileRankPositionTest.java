@@ -4,6 +4,7 @@ import static chess.fixture.PositionFixtures.A1;
 import static chess.fixture.PositionFixtures.A3;
 import static chess.fixture.PositionFixtures.A8;
 import static chess.fixture.PositionFixtures.B1;
+import static chess.fixture.PositionFixtures.B2;
 import static chess.fixture.PositionFixtures.B3;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,5 +34,11 @@ class FileRankPositionTest {
     @Test
     void should_CheckPositionIsOrthogonalWithOther() {
         assertThat(A1.isOrthogonalWith(B3)).isFalse();
+    }
+
+    @DisplayName("파일 거리와 랭크 거리가 같으면 Diagonal 관계이다")
+    @Test
+    void should_CheckPositionIsDiagonalWithOher() {
+        assertThat(A1.isDiagonalWith(B2)).isTrue();
     }
 }

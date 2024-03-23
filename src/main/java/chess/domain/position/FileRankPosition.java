@@ -19,6 +19,12 @@ public class FileRankPosition {
         return file == other.file || rank == other.rank;
     }
 
+    public boolean isDiagonalWith(FileRankPosition other) {
+        int fileDistance = file.calculateDistanceWith(other.file);
+        int rankDistance = rank.calculateDistanceWith(other.rank);
+        return fileDistance == rankDistance;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
