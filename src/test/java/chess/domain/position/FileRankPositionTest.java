@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import static chess.fixture.PositionFixtures.A1;
+import static chess.fixture.PositionFixtures.A2;
 import static chess.fixture.PositionFixtures.A3;
 import static chess.fixture.PositionFixtures.A8;
 import static chess.fixture.PositionFixtures.B1;
@@ -52,5 +53,29 @@ class FileRankPositionTest {
     @Test
     void should_IsNoDiagonalRelationship_When_OtherIsSamePosition() {
         assertThat(A1.isDiagonalWith(A1)).isFalse();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 더 왼쪽에 있는 지 확인할 수 있다")
+    @Test
+    void sould_CheckPositionIsFurtherLeftThanOther() {
+        assertThat(A1.isFurtherLeftThan(B1)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 더 오른쪽에 있는 지 확인할 수 있다")
+    @Test
+    void sould_CheckPositionIsFurtherRightThanOther() {
+        assertThat(B1.isFurtherRightThan(A1)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 더 아래에 있는 지 확인할 수 있다")
+    @Test
+    void sould_CheckPositionIsBelowThanOther() {
+        assertThat(A1.isBelow(A2)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 더 왼쪽에 있는 지 확인할 수 있다")
+    @Test
+    void sould_CheckPositionIsAboveThanOther() {
+        assertThat(A2.isAbove(A1)).isTrue();
     }
 }
