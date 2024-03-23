@@ -13,14 +13,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ChessBoardTest {
 
     private ChessBoard chessBoard;
-    private Position from;
-    private Position to;
+    private final Position from = Position.fromCoordinate(Coordinate.of("b2"));
+    private final Position to = Position.fromCoordinate(Coordinate.of("b3"));
 
     @BeforeEach
     void beforeEach() {
         chessBoard = new ChessBoard(new ChessSpaceGenerator());
-        from = Position.fromCoordinate(Coordinate.of("b2"));
-        to = Position.fromCoordinate(Coordinate.of("b3"));
     }
 
     @Test
