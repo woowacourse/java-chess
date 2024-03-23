@@ -28,7 +28,7 @@ public class ChessBoard {
         if (isActive()) {
             return;
         }
-        throw new IllegalStateException("게임이 시작되지 않았습니다");
+        throw new IllegalStateException("게임이 활성화되지 않았습니다");
     }
 
     private void validateTurn(Space fromSpace) {
