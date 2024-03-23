@@ -15,10 +15,6 @@ public abstract class ChessPiece implements Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public Position getPosition() {
-        return pieceInfo.getPosition();
-    }
-
     @Override
     public abstract ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
                                     boolean isSameTeamExist);
@@ -46,6 +42,11 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
+    public Position getPosition() {
+        return pieceInfo.getPosition();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -54,12 +55,11 @@ public abstract class ChessPiece implements Piece {
             return false;
         }
         ChessPiece that = (ChessPiece) o;
-        return Objects.equals(pieceInfo, that.pieceInfo) && Objects.equals(moveStrategy,
-                that.moveStrategy);
+        return Objects.equals(pieceInfo, that.pieceInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceInfo, moveStrategy);
+        return Objects.hash(pieceInfo);
     }
 }
