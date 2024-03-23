@@ -19,7 +19,11 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank from(final int input) {
+    public static Rank fromInput(final String rawInput) {
+        return fromNumber(Integer.parseInt(rawInput));
+    }
+
+    public static Rank fromNumber(final int input) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == input)
                 .findFirst()
@@ -27,7 +31,7 @@ public enum Rank {
     }
 
     public Rank up() {
-        return from(this.index + 1);
+        return fromNumber(this.index + 1);
     }
 
     public int getDistance(final Rank other) {

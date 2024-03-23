@@ -8,10 +8,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class FileTest {
 
-    @DisplayName("char입력받아 File을 생성한다.")
+    @DisplayName("문자를 입력받아 File을 생성한다.")
     @ParameterizedTest
     @CsvSource(value = {"'a', A", "'b', B", "'c', C", "'d', D", "'e', E", "'f', F", "'g', G", "'h', H"})
-    void from(final char input, final File expected) {
+    void from(final String input, final File expected) {
         // given && when
         final File file = File.fromSymbol(input);
 
@@ -19,10 +19,10 @@ class FileTest {
         Assertions.assertThat(file).isEqualTo(expected);
     }
 
-    @DisplayName("유효하지 않는 char을 입력하면 예외를 발생시킨다.")
+    @DisplayName("유효하지 않는 문자를 입력하면 예외를 발생시킨다.")
     @ParameterizedTest
-    @ValueSource(chars = {'i', 'j', 'k', 'z'})
-    void invalidFile(final char input) {
+    @ValueSource(strings = {"i", "j", "k", "z"})
+    void invalidFile(final String input) {
         Assertions.assertThatThrownBy(() -> File.fromSymbol(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효한 파일 입력이 아닙니다.");

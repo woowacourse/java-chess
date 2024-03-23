@@ -79,9 +79,7 @@ public class ChessBoard {
             catchPiece(currentPiece, targetPosition);
         }
 
-        System.out.println("이동전 현재 피스의 해시값: " + currentPiece.hashCode());
         currentPiece.move(targetPosition);
-        System.out.println("이동후 현재 피스의 해시값: " + currentPiece.hashCode());
     }
 
     Piece findPieceBy(final Position input) {

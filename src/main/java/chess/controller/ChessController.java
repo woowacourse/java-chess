@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.StartCommand;
+import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -36,8 +36,8 @@ public class ChessController {
     }
 
     private boolean isCommandStart() {
-        StartCommand startCommand = StartCommand.from(inputView.readStartCommand());
-        return startCommand.equals(StartCommand.START);
+        Command command = Command.fromStartCommand(inputView.readStartCommand());
+        return command.equals(Command.START);
     }
 
     private boolean isNotEndCommand(final List<String> validInputPositions) {

@@ -13,7 +13,7 @@ public class Position {
     }
 
     public Position(final String input) {
-        this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
+        this(File.fromSymbol(input.substring(0, 1)), Rank.fromInput(input.substring(1)));
     }
 
     public boolean isVerticalWith(final Position target) {
