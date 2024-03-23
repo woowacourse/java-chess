@@ -1,7 +1,9 @@
 package model.status;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import exception.InvalidStatusException;
 import java.util.List;
 import model.ChessBoard;
 import org.junit.jupiter.api.DisplayName;
@@ -39,5 +41,19 @@ class RunningTest {
         final List<String> endCommand = List.of("end");
         assertThat(gameStatus.play(endCommand, chessBoard))
                 .isInstanceOf(End.class);
+    }
+
+    @Test
+    @DisplayName("실행 중에서 start 하면 예외가 발생한다.")
+    void start() {
+        //given
+        final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.setting();
+
+        //when && then
+        final List<String> startCommand = List.of("start");
+        assertThatThrownBy(() -> gameStatus.play(startCommand, chessBoard))
+                .isInstanceOf(InvalidStatusException.class);
     }
 }
