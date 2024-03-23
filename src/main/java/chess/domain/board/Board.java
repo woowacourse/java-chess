@@ -25,10 +25,6 @@ public class Board {
         this.turn = new Turn();
     }
 
-    public BoardOutput toBoardOutput() {
-        return new BoardOutput(board);
-    }
-
     public void move(Square source, Square destination) {
         checkMovable(source, destination);
 
@@ -125,5 +121,9 @@ public class Board {
 
         board.replace(source, destinationPiece);
         board.replace(destination, sourcePiece);
+    }
+
+    public Piece findPieceBySquare(Square square) {
+        return board.get(square);
     }
 }

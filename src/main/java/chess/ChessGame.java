@@ -76,22 +76,21 @@ public class ChessGame {
     }
 
     private void printBoardOutput(Board board) {
-        Map<Square, Piece> boardOutput = board.toBoardOutput().board();
         List<String> output = new ArrayList<>();
 
         for (Rank rank : Rank.reverse()) {
-            output.add(makeRankOutput(rank, boardOutput));
+            output.add(makeRankOutput(rank, board));
         }
 
         outputView.writeBoard(output);
     }
 
-    private String makeRankOutput(Rank rank, Map<Square, Piece> boardOutput) {
+    private String makeRankOutput(Rank rank, Board board) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (File file : File.values()) {
             Square square = Square.of(file, rank);
-            Piece piece = boardOutput.get(square);
+            Piece piece = board.findPieceBySquare(square);
 
             String pieceView = PieceView.toView(piece);
             stringBuilder.append(pieceView);

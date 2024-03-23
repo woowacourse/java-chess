@@ -116,8 +116,7 @@ public class BoardTest {
         // when
         board.move(Square.of(File.G, Rank.FOUR), Square.of(File.H, Rank.FIVE));
 
-        BoardOutput boardOutput = board.toBoardOutput();
-        Piece actual = boardOutput.board().get(Square.of(File.H, Rank.FIVE));
+        Piece actual = board.findPieceBySquare(Square.of(File.H, Rank.FIVE));
 
         // then
         assertThat(actual.matches(PieceType.PAWN)
