@@ -37,8 +37,8 @@ public enum Direction {
 
 
     public static Direction between(final Position current, final Position source) {
-        final int fileDiff = current.fileIndex() - source.fileIndex();
-        final int rankDiff = current.rankIndex() - source.rankIndex();
+        final int fileDiff = current.toFileIndex() - source.toFileIndex();
+        final int rankDiff = current.toRankIndex() - source.toRankIndex();
 
         if (isValueExist(Math.abs(fileDiff), Math.abs(rankDiff))) {
             return Direction.of(Math.abs(fileDiff), Math.abs(rankDiff));

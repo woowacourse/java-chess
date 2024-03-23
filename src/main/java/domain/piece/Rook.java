@@ -7,12 +7,12 @@ import domain.piece.info.Vector;
 
 public class Rook extends Piece {
 
-    public Rook(final Color color, final Type type) {
-        super(color, type);
+    public Rook(final Color color) {
+        super(color, Type.ROOK);
     }
 
     @Override
-    protected boolean isReachable(final Vector vector) {
+    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
         return vector.isStraight();
     }
 

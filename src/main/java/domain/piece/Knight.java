@@ -6,12 +6,12 @@ import domain.piece.info.Vector;
 
 public class Knight extends Piece {
 
-    public Knight(final Color color, final Type type) {
-        super(color, type);
+    public Knight(final Color color) {
+        super(color, Type.KNIGHT);
     }
 
     @Override
-    protected boolean isReachable(final Vector vector) {
+    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
         return vector.hasAbsoluteValueOf(1) && vector.hasAbsoluteValueOf(2);
     }
 

@@ -6,12 +6,12 @@ import domain.piece.info.Vector;
 
 public class Queen extends Piece {
 
-    public Queen(final Color color, final Type type) {
-        super(color, type);
+    public Queen(final Color color) {
+        super(color, Type.QUEEN);
     }
 
     @Override
-    protected boolean isReachable(final Vector vector) {
+    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
         return vector.isDiagonal() || vector.isStraight();
     }
 }

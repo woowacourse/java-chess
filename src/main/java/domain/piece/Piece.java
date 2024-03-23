@@ -1,11 +1,9 @@
 package domain.piece;
 
-import domain.piece.info.Position;
 import domain.piece.info.Color;
-import domain.piece.info.Direction;
+import domain.piece.info.Position;
 import domain.piece.info.Type;
 import domain.piece.info.Vector;
-import java.util.List;
 
 public abstract class Piece {
     private final Color color;
@@ -23,14 +21,18 @@ public abstract class Piece {
 
         final Vector vector = new Vector(source, target);
 
-        return isReachable(vector);
+        return isReachable(vector, targetPiece);
     }
 
     public boolean isSameColor(final Piece piece) {
         return this.color.isSameColor(piece.color);
     }
 
-    protected abstract boolean isReachable(final Vector vector);
+    protected abstract boolean isReachable(final Vector vector, final Piece targetPiece);
+
+    public boolean isInitPawn() {
+        return false;
+    }
 
     public Type type() {
         return type;
@@ -38,5 +40,9 @@ public abstract class Piece {
 
     public Color color() {
         return color;
+    }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
     }
 }

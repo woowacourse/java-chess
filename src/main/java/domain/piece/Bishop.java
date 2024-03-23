@@ -6,12 +6,12 @@ import domain.piece.info.Vector;
 
 public class Bishop extends Piece {
 
-    public Bishop(final Color color, final Type type) {
-        super(color, type);
+    public Bishop(final Color color) {
+        super(color, Type.BISHOP);
     }
 
     @Override
-    protected boolean isReachable(final Vector vector) {
+    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
         return vector.isDiagonal();
     }
 }
