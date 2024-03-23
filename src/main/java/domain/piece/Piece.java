@@ -16,7 +16,7 @@ public abstract class Piece {
         return color == Color.WHITE;
     }
 
-    public boolean hasColorOf(Color color) {
-        return this.color == color;
+    public boolean hasNotColorOf(Color color) {
+        return this.color != color;
     }
 }

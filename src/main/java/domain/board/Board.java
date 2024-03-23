@@ -36,7 +36,7 @@ public class Board {
         validateWhenStraightOrDiagonalMove(source, target);
         validateWhenPieceIsPawn(source, target);
     }
-    
+
     private void validatePieceExistToMove(Position source) {
         if (isNoPieceAt(source)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
@@ -45,10 +45,9 @@ public class Board {
 
     private void validateIsOwnTurn(Position source, Turn turn) {
         Piece piece = board.get(source);
-        if (piece.hasColorOf(turn.getColor())) {
-            return;
+        if (piece.hasNotColorOf(turn.getColor())) {
+            throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
         }
-        throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
     }
 
     private void validateDifferentPosition(Position source, Position target) {
@@ -65,10 +64,9 @@ public class Board {
 
     private void validatePieceCanMove(Position source, Position target) {
         Piece piece = board.get(source);
-        if (piece.canMove(source, target)) {
-            return;
+        if (!piece.canMove(source, target)) {
+            throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
         }
-        throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
     }
 
     private void validateWhenStraightOrDiagonalMove(Position source, Position target) {
