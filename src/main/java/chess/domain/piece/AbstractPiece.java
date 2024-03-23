@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.util.List;
 import java.util.Objects;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
@@ -14,9 +13,6 @@ abstract class AbstractPiece implements Piece {
         this.type = type;
         this.team = team;
     }
-
-    @Override
-    public abstract List<Coordinate> findMovablePath(Coordinate start, Coordinate destination);
 
     @Override
     public void validateMovable(Coordinate source, Coordinate target, Board board) {

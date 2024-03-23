@@ -21,15 +21,6 @@ public class Rook extends AbstractPiece {
         super(PieceType.ROOK, team);
     }
 
-    @Override
-    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
-        return POSSIBLE_DIRECTIONS.stream()
-                .map(possibleDirection -> possibleDirection.createPath(start))
-                .filter(coordinates -> coordinates.contains(destination))
-                .findFirst()
-                .orElse(Collections.emptyList());
-    }
-
     // TODO: 메서드 추출, 상위 클래스 추출
     @Override
     public void validateMovable(Coordinate source, Coordinate target, Board board) {

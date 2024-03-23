@@ -3,7 +3,6 @@ package chess.domain.piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 
@@ -25,37 +24,6 @@ public class Pawn extends AbstractPiece {
 
     public Pawn(Team team) {
         super(PieceType.PAWN, team);
-    }
-
-    @Override
-    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
-        int startRank = start.getRank();
-        char startFile = start.getFile();
-
-        return FORWARD_WEIGHTS.stream()
-                .map(weight -> mapToNextCoordinate(startRank, startFile, weight))
-                .filter(coordinate -> !Objects.isNull(coordinate))
-                .toList();
-    }
-
-    private Coordinate mapToNextCoordinate(int startRank, char startFile, Map.Entry<Integer, Integer> weight) {
-        try {
-            int rankValue = calculateNextRank(startRank, weight);
-            char fileValue = calculateNextFile(startFile, weight);
-            return new Coordinate(rankValue, fileValue);
-        } catch (IllegalArgumentException ignored) {
-            return null;
-        }
-    }
-
-    private int calculateNextRank(int startRank, Map.Entry<Integer, Integer> weight) {
-        int forwardDirection = getTeam().getForwardDirection();
-
-        return startRank + weight.getKey() * forwardDirection;
-    }
-
-    private char calculateNextFile(char startFile, Map.Entry<Integer, Integer> weight) {
-        return (char) (startFile + weight.getValue());
     }
 
     @Override

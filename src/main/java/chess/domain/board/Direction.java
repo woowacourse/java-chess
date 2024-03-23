@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -20,13 +19,6 @@ public enum Direction {
 
     Direction(Map.Entry<Integer, Integer> entry) {
         this.entry = entry;
-    }
-
-    public static Direction of(int xDiff, int yDiff) {
-        return Arrays.stream(values())
-                .filter((it) -> it.entry.equals(Map.entry((Integer.compare(xDiff, 0)), Integer.compare(yDiff, 0))))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("같은 곳으로는 이동할 수 없습니다."));
     }
 
     public List<Coordinate> createPath(Coordinate start) {

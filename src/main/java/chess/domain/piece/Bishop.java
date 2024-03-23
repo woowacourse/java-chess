@@ -21,15 +21,6 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
-        return POSSIBLE_DIRECTIONS.stream()
-                .map(possibleDirection -> possibleDirection.createPath(start))
-                .filter(coordinates -> coordinates.contains(destination))
-                .findFirst()
-                .orElse(Collections.emptyList());
-    }
-
-    @Override
     public void validateMovable(Coordinate source, Coordinate target, Board board) {
         Piece targetPiece = board.findByCoordinate(target);
         if (source.equals(target)) {
