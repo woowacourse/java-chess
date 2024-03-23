@@ -18,7 +18,7 @@ public abstract class Piece {
     }
 
     public boolean isMovable(Position source, Position destination) {
-        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
+        UnitDirection direction = source.unitDirectionToward(destination);
         return unitDirections.contains(direction) &&
                 isReachable(source, destination, direction);
     }

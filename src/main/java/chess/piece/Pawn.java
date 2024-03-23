@@ -34,7 +34,7 @@ public abstract class Pawn extends Piece {
 
     @Override
     public final boolean isAttackable(Position source, Position destination) {
-        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
+        UnitDirection direction = source.unitDirectionToward(destination);
         if (hasColorOf(Color.WHITE)) {
             return WHITE_PAWN_ATTACK_UNIT_DIRECTION.contains(direction);
         }

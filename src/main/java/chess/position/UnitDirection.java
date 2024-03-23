@@ -23,12 +23,6 @@ public class UnitDirection {
         return new UnitDirection(fileDifference / gcd, rankDifference / gcd);
     }
 
-    public static UnitDirection differencesBetween(Position source, Position destination) {
-        int fileDelta = destination.subtractFile(source);
-        int rankDelta = destination.subtractRank(source);
-        return differencesOf(fileDelta, rankDelta);
-    }
-
     public Position nextPosition(Position position) {
         return position.createPositionByDifferencesOf(fileDifference, rankDifference);
     }

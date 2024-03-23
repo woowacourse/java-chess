@@ -16,7 +16,7 @@ public class Path {
     }
 
     public static Path createExcludingBothEnds(Position source, Position destination) {
-        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
+        UnitDirection direction = source.unitDirectionToward(destination);
         List<Position> positions = getPositionsBetween(source, destination, direction);
         return new Path(positions);
     }
