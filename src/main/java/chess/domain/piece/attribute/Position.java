@@ -11,7 +11,7 @@ import chess.domain.chessboard.attribute.Direction;
 
 public class Position {
 
-    private static final Map<String, Position> POSITIONS = new HashMap<>();
+    private static final Map<String, Position> CACHED_POSITIONS = new HashMap<>();
 
     private final File file;
     private final Rank rank;
@@ -30,10 +30,10 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        if (POSITIONS.isEmpty()) {
+        if (CACHED_POSITIONS.isEmpty()) {
             initializePositions();
         }
-        return POSITIONS.get(keyOf(file, rank));
+        return CACHED_POSITIONS.get(keyOf(file, rank));
     }
 
     private static void initializePositions() {
@@ -44,7 +44,7 @@ public class Position {
 
     private static void putPositions(final Rank rank) {
         for (final File file : File.values()) {
-            POSITIONS.put(keyOf(file, rank), new Position(file, rank));
+            CACHED_POSITIONS.put(keyOf(file, rank), new Position(file, rank));
         }
     }
 
