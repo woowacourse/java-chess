@@ -42,6 +42,17 @@ class PawnTest {
     }
 
     @Test
+    @DisplayName("검정 폰에 남쪽 대각선에 상대 말이 있을 경우, 해당 말 위치로 움직일 수 있다.")
+    void findPathTest_whenBlackPawnCanMoveDiagonal() {
+        Pawn pawn = new Pawn(Team.BLACK);
+        Position start = new Position(File.F, Rank.SIX);
+        boolean isEnemyExistAtEnd = true;
+
+        assertThat(pawn.findPath(start, new Position(File.E, Rank.FIVE), isEnemyExistAtEnd))
+                .containsExactly(new Position(File.E, Rank.FIVE));
+    }
+
+    @Test
     @DisplayName("흰 폰이 초기 위치에 있을 경우, 북쪽으로 한 칸 또는 두 칸 이동한다.")
     void findPathTest_whenWhitePawnInitPosition() {
         Pawn pawn = new Pawn(Team.WHITE);
@@ -67,14 +78,39 @@ class PawnTest {
                 .containsExactly(new Position(File.F, Rank.FIVE));
     }
 
+    @Test
+    @DisplayName("흰 폰에 북쪽 대각선에 상대 말이 있을 경우, 해당 말 위치로 움직일 수 있다.")
+    void findPathTest_whenWhitePawnCanMoveDiagonal() {
+        Pawn pawn = new Pawn(Team.WHITE);
+        Position start = new Position(File.F, Rank.FOUR);
+        boolean isEnemyExistAtEnd = true;
+
+        assertThat(pawn.findPath(start, new Position(File.E, Rank.FIVE), isEnemyExistAtEnd))
+                .containsExactly(new Position(File.E, Rank.FIVE));
+    }
+
     @ParameterizedTest
-    @CsvSource({"G, FOUR", "F, FIVE", "F, TWO"})
-    @DisplayName("이동할 수 없는 곳인 경우, 예외가 발생한다.")
+    @CsvSource({"G, FOUR", "F, FIVE", "F, TWO", "E, FOUR", "G, FOUR"})
+    @DisplayName("적이 없을 때 이동할 수 없는 곳인 경우, 예외가 발생한다.")
     void findPathTest_whenOutOfMovement_throwException(File file, Rank rank) {
         Pawn pawn = new Pawn(Team.BLACK);
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
         boolean isEnemyExistAtEnd = false;
+
+        assertThatThrownBy(() -> pawn.findPath(start, end, isEnemyExistAtEnd))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("불가능한 경로입니다.");
+    }
+
+    @ParameterizedTest
+    @CsvSource({"G, FOUR", "F,FIVE", "F, THREE", "F, TWO"})
+    @DisplayName("적이 있을 때 이동할 수 없는 곳인 경우, 예외가 발생한다.")
+    void findPathTest_whenOutOfDiagonalMovement_throwException(File file, Rank rank) {
+        Pawn pawn = new Pawn(Team.BLACK);
+        Position start = new Position(File.F, Rank.FOUR);
+        Position end = new Position(file, rank);
+        boolean isEnemyExistAtEnd = true;
 
         assertThatThrownBy(() -> pawn.findPath(start, end, isEnemyExistAtEnd))
                 .isInstanceOf(IllegalArgumentException.class)
