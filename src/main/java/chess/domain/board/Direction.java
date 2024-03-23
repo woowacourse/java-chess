@@ -16,32 +16,28 @@ public enum Direction {
     LEFT_UP(Map.entry(-1, 1)),
     LEFT_DOWN(Map.entry(-1, -1));
 
-    private final Map.Entry<Integer, Integer> entry;
+    private final Map.Entry<Integer, Integer> gradient;
 
-    Direction(Map.Entry<Integer, Integer> entry) {
-        this.entry = entry;
+    Direction(Map.Entry<Integer, Integer> gradient) {
+        this.gradient = gradient;
     }
 
-    public static Direction of(int xDiff, int yDiff) {
+    public static Direction of(Coordinate start, Coordinate destination) {
         return Arrays.stream(values())
-                .filter((it) -> it.entry.equals(Map.entry((Integer.compare(xDiff, 0)), Integer.compare(yDiff, 0))))
+                .filter(it -> it.gradient.equals(destination.compare(start)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("같은 곳으로는 이동할 수 없습니다."));
     }
 
-    public List<Coordinate> createPath(Coordinate start) {
+    public List<Coordinate> createPath(final Coordinate start) {
         List<Coordinate> coordinates = new ArrayList<>();
-        int fileWeight = entry.getKey();
-        int rankWeight = entry.getValue();
-        int nextRank = start.getRank() + rankWeight;
-        char nextFile = (char) (start.getFile() + fileWeight);
-
-        while (nextRank >= 1 && nextRank <= 8 && nextFile >= 'a' && nextFile <= 'h') {
-            coordinates.add(new Coordinate(nextRank, nextFile));
-            nextRank += rankWeight;
-            nextFile += fileWeight;
+        int fileWeight = gradient.getKey();
+        int rankWeight = gradient.getValue();
+        Coordinate coordinate = start;
+        while (coordinate.canMove(fileWeight, rankWeight)) {
+            coordinate = coordinate.move(fileWeight, rankWeight);
+            coordinates.add(coordinate);
         }
-
         return coordinates;
     }
 }
