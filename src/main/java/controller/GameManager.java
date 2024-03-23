@@ -7,8 +7,8 @@ import view.InputView;
 import view.OutputView;
 
 public class GameManager {
-    private final InputView inputView = new InputView();
 
+    private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void start() {
@@ -56,14 +56,14 @@ public class GameManager {
             tryMove(chess);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
+        } finally {
             inputView.clean();
         }
     }
 
     private void tryMove(Chess chess) {
-        Position sourcePosition = inputView.readSourcePosition();
-        Position targetPosition = inputView.readTargetPosition();
-        inputView.clean();
+        Position sourcePosition = inputView.readPosition();
+        Position targetPosition = inputView.readPosition();
         chess.play(sourcePosition, targetPosition);
         outputView.printBoard(chess.getBoard());
     }
