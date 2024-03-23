@@ -1,7 +1,6 @@
 package controller;
 
 import domain.game.ChessBoard;
-import domain.game.Square;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -55,16 +54,16 @@ public class ChessController {
         }
     }
 
-    private Square generateSquare(final String coordinate) {
+    private Position generateSquare(final String coordinate) {
         if (isNotValidCoordinateInput(coordinate)) {
             throw new IllegalArgumentException("이동할 source와 target 정보를 다시 입력해주세요.");
         }
 
         List<String> coordinates = List.of(coordinate.split(""));
-        return new Square(new Position(
+        return new Position(
                 new File(coordinates.get(0).charAt(0)),
                 new Rank(Integer.parseInt(coordinates.get(1)))
-        ));
+        );
     }
 
     private boolean isNotValidCoordinateInput(final String input) {

@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.game.Square;
 import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class Piece {
     }
 
     public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Square, Piece> chessBoard) {
+                                     final Map<Position, Piece> chessBoard) {
         pieceRole.validateMovableRoute(source, target, chessBoard);
     }
 

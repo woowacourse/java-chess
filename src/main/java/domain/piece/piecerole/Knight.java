@@ -10,7 +10,6 @@ import static domain.game.Direction.UP_LEFT;
 import static domain.game.Direction.UP_RIGHT;
 
 import domain.game.Movable;
-import domain.game.Square;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
@@ -40,7 +39,7 @@ public class Knight extends PieceRole {
 
     @Override
     public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Square, Piece> chessBoard) {
+                                     final Map<Position, Piece> chessBoard) {
         validateCorrectRouteForPiece(source, target);
     }
 

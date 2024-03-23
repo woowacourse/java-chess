@@ -6,7 +6,6 @@ import static domain.game.Direction.SOUTH;
 import static domain.game.Direction.WEST;
 
 import domain.game.Movable;
-import domain.game.Square;
 import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
@@ -31,7 +30,8 @@ public class King extends PieceRole {
     }
 
     @Override
-    public void validateMovableRoute(Position source, Position target, Map<Square, Piece> chessBoard) {
+    public void validateMovableRoute(Position source, Position target,
+                                     Map<Position, Piece> chessBoard) {
         validateCorrectRouteForPiece(source, target);
     }
 
