@@ -21,7 +21,7 @@ public class Queen extends Piece {
 
     @Override
     protected boolean canAttack(final Square source, final Square target) {
-        return canNotMove(source, target);
+        return canMove(source, target);
     }
 
     @Override
