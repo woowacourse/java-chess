@@ -22,8 +22,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("기물 생성")
 class BoardFactoryTest {
-
-    Map<Square, Piece> pieces;
+    private Map<Square, Piece> pieces;
 
     @BeforeEach
     void setUp() {

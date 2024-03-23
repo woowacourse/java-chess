@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("게임판")
 class BoardTest {
-    Board board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
