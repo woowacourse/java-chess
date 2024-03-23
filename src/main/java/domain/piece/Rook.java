@@ -16,27 +16,10 @@ public class Rook extends Piece {
     @Override
     public boolean canMove(final Square source, final Square target) {
         final List<Square> movableSquares = new ArrayList<>();
-        Square northSource = source;
-        Square southSource = source;
-        Square eastSource = source;
-        Square westSource = source;
-
-        while (northSource.canMove(Direction.NORTH)) {
-            northSource = northSource.next2(Direction.NORTH);
-            movableSquares.add(northSource);
-        }
-        while (southSource.canMove(Direction.SOUTH)) {
-            southSource = southSource.next2(Direction.SOUTH);
-            movableSquares.add(southSource);
-        }
-        while (eastSource.canMove(Direction.EAST)) {
-            eastSource = eastSource.next2(Direction.EAST);
-            movableSquares.add(eastSource);
-        }
-        while (westSource.canMove(Direction.WEST)) {
-            westSource = westSource.next2(Direction.WEST);
-            movableSquares.add(westSource);
-        }
+        addMovableSquares(source, Direction.NORTH, movableSquares);
+        addMovableSquares(source, Direction.SOUTH, movableSquares);
+        addMovableSquares(source, Direction.EAST, movableSquares);
+        addMovableSquares(source, Direction.WEST, movableSquares);
 
         return movableSquares.contains(target);
     }

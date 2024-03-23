@@ -1,13 +1,25 @@
 package domain.piece;
 
+import domain.Direction;
 import domain.Square;
 import domain.Team;
+
+import java.util.List;
 
 public abstract class Piece {
     protected final Team team;
 
     protected Piece(final Team team) {
         this.team = team;
+    }
+
+
+    protected static void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares) {
+        Square movableSource = source;
+        while (movableSource.canMove(direction)) {
+            movableSource = movableSource.next2(direction);
+            movableSquares.add(movableSource);
+        }
     }
 
     public boolean canNotMove(final Square source, final Square target) {
