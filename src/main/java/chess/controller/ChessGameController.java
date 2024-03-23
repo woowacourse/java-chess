@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Row;
+import chess.domain.board.Board;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.MoveRequestDto;

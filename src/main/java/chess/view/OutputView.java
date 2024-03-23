@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.Board;
 import chess.domain.Piece;
+import chess.domain.board.Board;
 import chess.view.mapper.PieceMapper;
 import java.util.ArrayList;
 import java.util.List;

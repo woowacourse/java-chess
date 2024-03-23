@@ -2,7 +2,6 @@ package chess.domain.chessGame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.Color;
 import chess.domain.Column;
@@ -10,6 +9,7 @@ import chess.domain.Piece;
 import chess.domain.PieceType;
 import chess.domain.Position;
 import chess.domain.Row;
+import chess.domain.board.Board;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
