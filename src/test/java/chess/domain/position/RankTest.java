@@ -3,6 +3,7 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,8 +20,8 @@ class RankTest {
     @DisplayName("행번호에 해당하는 Rank가 없을 경우 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(ints = {-1, 9, 10})
-    void should_ThrowIllegalArgumentException_When_WrongRowNumberIsGiven(int invalidRowNumber) {
+    void should_ThrowNoSuchElementException_When_WrongRowNumberIsGiven(int invalidRowNumber) {
         assertThatThrownBy(() -> Rank.from(invalidRowNumber))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NoSuchElementException.class);
     }
 }

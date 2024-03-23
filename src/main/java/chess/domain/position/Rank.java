@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum Rank {
     ONE(7),
@@ -22,6 +23,6 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.rowNumber == rowNumber)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("행 번호가 %d인 랭크를 찾을 수 없습니다", rowNumber)));
+                .orElseThrow(() -> new NoSuchElementException(String.format("행 번호가 %d인 랭크를 찾을 수 없습니다", rowNumber)));
     }
 }
