@@ -22,18 +22,18 @@ public class ChessGame {
     }
 
     public List<Position> generateMovablePositions(Position fromPosition, Color currentTurn) {
-        Piece piece = board.findPieceByPosition(fromPosition);
-        if (piece.isSameTeam(currentTurn.opposite())) {
+        Piece fromPiece = board.findPieceByPosition(fromPosition);
+        if (fromPiece.isSameTeam(currentTurn.opposite())) {
             throw new IllegalArgumentException("다른 팀의 기물을 움직일 수 없습니다.");
         }
-        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(fromPosition);
-        return generateValidPositions(expectedAllPositions, piece);
+        Map<Direction, Deque<Position>> expectedAllPositions = fromPiece.calculateAllDirectionPositions(fromPosition);
+        return generateValidPositions(expectedAllPositions, fromPiece);
     }
 
-    private List<Position> generateValidPositions(Map<Direction, Deque<Position>> expectedAllPositions, Piece piece) {
+    private List<Position> generateValidPositions(Map<Direction, Deque<Position>> expectedAllPositions, Piece fromPiece) {
         return expectedAllPositions.keySet()
                 .stream()
-                .map(direction -> filterInvalidPositions(expectedAllPositions.get(direction), direction, piece))
+                .map(direction -> filterInvalidPositions(expectedAllPositions.get(direction), direction, fromPiece))
                 .flatMap(List::stream)
                 .toList();
     }
