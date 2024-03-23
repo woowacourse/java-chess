@@ -10,7 +10,11 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
     private final Board board = Board.create();
     private Color turn = Color.WHITE;
 
-    public void play(Position sourcePosition, Position targetPosition) { // 소스와 타겟이 같은 경우
+    public void play(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.isSame(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 움직여야 합니다.");
+        }
+
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
 

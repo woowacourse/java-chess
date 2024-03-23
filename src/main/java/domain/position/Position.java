@@ -19,7 +19,9 @@ public class Position {
         return this.rank.isSame(rank);
     }
 
-    // TODO: source와 target이 같은 위치라면?
+    public boolean isSame(Position target) {
+        return rank.isSame(target.rank) && file.isSame(target.file);
+    }
 
     public boolean isStraight(Position target) {
         return isVertical(target) || isHorizontal(target);
