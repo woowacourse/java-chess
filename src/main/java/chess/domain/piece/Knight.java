@@ -7,10 +7,11 @@ import chess.domain.piece.character.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Knight extends Piece {
     private static final Set<Integer> MOVE_DIFFERENCES = Set.of(1, 2);
-
 
     public Knight(Team team) {
         this(team, false);
@@ -35,8 +36,9 @@ public class Knight extends Piece {
 
     @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
-        List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
-        return differenceList.containsAll(MOVE_DIFFERENCES);
+        Set<Integer> differenceSet = Stream.of(Math.abs(rowDifference), Math.abs(columnDifference))
+                .collect(Collectors.toSet());
+        return differenceSet.containsAll(MOVE_DIFFERENCES);
     }
 
     @Override
