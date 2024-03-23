@@ -3,10 +3,8 @@ package controller;
 import domain.Chess;
 import domain.command.Command;
 import domain.position.Position;
-import java.util.List;
 import view.InputView;
 import view.OutputView;
-import view.mapper.CommandInput;
 
 public class GameManager {
 
@@ -14,10 +12,8 @@ public class GameManager {
     private final OutputView outputView = new OutputView();
 
     public void start() {
-        outputView.printStartNotice();
-        String rawCommand = requestCommand();
-        Command command = CommandInput.asCommand(rawCommand);
-        if (command.isNotStart()) {
+        Command initCommand = requestInitCommand();
+        if (initCommand.isNotStart()) {
             return;
         }
         Chess chess = initChess();
@@ -27,8 +23,7 @@ public class GameManager {
     private void manage(Chess chess) { // TODO: indent 1로 줄이기
         try {
             outputView.printTurn(chess.getTurn());
-            String rawCommand = requestCommand();
-            Command command = CommandInput.asCommand(rawCommand);
+            Command command = requestCommand();
             if (command.isEnd()) {
                 return;
             }
@@ -37,8 +32,9 @@ public class GameManager {
                 manage(chess);
                 return;
             }
-            List<String> rawPositions = CommandInput.extractPositions(rawCommand);
-            playChess(chess, rawPositions);
+            Position sourcePosition = inputView.readPosition();
+            Position targetPosition = inputView.readPosition();
+            chess.play(sourcePosition, targetPosition);
             outputView.printBoard(chess.getBoard());
             manage(chess);
         } catch (IllegalArgumentException e) {
@@ -53,13 +49,16 @@ public class GameManager {
         return chess;
     }
 
-    private void playChess(Chess chess, List<String> rawPositions) {
-        Position sourcePosition = Position.generate(rawPositions.get(0));
-        Position targetPosition = Position.generate(rawPositions.get(1));
-        chess.play(sourcePosition, targetPosition);
+    private Command requestInitCommand() {
+        try {
+            return inputView.readInitCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return requestInitCommand();
+        }
     }
 
-    private String requestCommand() {
+    private Command requestCommand() {
         try {
             return inputView.readCommand();
         } catch (IllegalArgumentException e) {
