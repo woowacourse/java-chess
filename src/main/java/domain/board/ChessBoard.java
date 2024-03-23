@@ -11,15 +11,30 @@ import java.util.Map;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
+    private final Turn turn;
 
-    public ChessBoard(final Map<Position, Piece> board) {
-        this.board = new HashMap<>(board);
+    private ChessBoard(Map<Position, Piece> board, Turn turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
+    public ChessBoard(Map<Position, Piece> board) {
+        this(new HashMap<>(board), new Turn());
     }
 
     public void move(final Position source, final Position target) {
+        validateTurn(source);
         validateEmptyRoute(source, target);
         validateLegalMove(source, target);
         movePiece(source, target);
+        this.turn.flip();
+    }
+
+    private void validateTurn(final Position source) {
+        Piece piece = findPieceByPosition(source);
+        if (this.turn.isOpponentTurn(piece.color())) {
+            throw new IllegalArgumentException("상대 턴입니다.");
+        }
     }
 
     private void validateEmptyRoute(final Position source, final Position target) {
