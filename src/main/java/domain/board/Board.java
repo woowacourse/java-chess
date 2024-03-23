@@ -46,7 +46,7 @@ public class Board {
 
     private void validateReachability(final Vector vector, final Piece currentPiece, final Piece targetPiece) {
         if (!currentPiece.isReachable(vector, targetPiece)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("해당 말로 해당 위치를 갈 수 없습니다");
         }
     }
 

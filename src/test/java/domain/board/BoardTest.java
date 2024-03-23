@@ -31,4 +31,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 경로에 다른 말이 놓져 있습니다");
     }
+
+    @Test
+    @DisplayName("해당 말로 이동할 수 없는 위치가 입력되면 예외가 발생한다")
+    void reachability() {
+        final Board board = new Board(BoardInitiator.init());
+
+        assertThatThrownBy(() -> board.move(B_TWO, H_TWO))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말로 해당 위치를 갈 수 없습니다");
+
+    }
 }
