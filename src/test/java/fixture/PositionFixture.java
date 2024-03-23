@@ -30,4 +30,7 @@ public final class PositionFixture {
     }
 
 
+    public static Position generateB3Position() {
+        return new Position(new File('b'), new Rank(3));
+    }
 }

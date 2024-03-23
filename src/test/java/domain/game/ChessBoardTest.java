@@ -18,18 +18,15 @@ class ChessBoardTest {
     @DisplayName("source에 위치한 piece를 target으로 이동한다.")
     @Test
     void movePieceToTarget() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB2Position();
+        Position sourcePosition = PositionFixture.generateB2Position();
+        Position targetPosition = PositionFixture.generateB3Position();
 
         ChessBoard chessBoard = new ChessBoard();
-
-        Piece piece = new Piece(King.from(), Color.BLACK);
-        chessBoard.add(sourcePosition, piece);
 
         chessBoard.move(sourcePosition, targetPosition);
 
         Piece findPiece = chessBoard.findPieceBySquare(targetPosition);
-        Assertions.assertThat(findPiece).isEqualTo(piece);
+        Assertions.assertThat(findPiece).isEqualTo(new Piece(Pawn.from(Color.WHITE), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
