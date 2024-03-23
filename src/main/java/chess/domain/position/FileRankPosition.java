@@ -16,10 +16,16 @@ public class FileRankPosition {
     }
 
     public boolean isOrthogonalWith(FileRankPosition other) {
+        if (this.equals(other)) {
+            return false;
+        }
         return file == other.file || rank == other.rank;
     }
 
     public boolean isDiagonalWith(FileRankPosition other) {
+        if (this.equals(other)) {
+            return false;
+        }
         int fileDistance = file.calculateDistanceWith(other.file);
         int rankDistance = rank.calculateDistanceWith(other.rank);
         return fileDistance == rankDistance;

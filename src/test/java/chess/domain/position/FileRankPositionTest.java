@@ -30,6 +30,12 @@ class FileRankPositionTest {
         assertThat(A1.isOrthogonalWith(A3)).isTrue();
     }
 
+    @DisplayName("대상 위치가 같은 위치라면 Orthogoanl하지 않다")
+    @Test
+    void should_IsNoOrthogonalRelationship_When_OtherIsSamePosition() {
+        assertThat(A1.isOrthogonalWith(A1)).isFalse();
+    }
+
     @DisplayName("다른 포지션과 수직 혹은 수평 관계에 있지 않으면 Orthogonal하지 않다")
     @Test
     void should_CheckPositionIsOrthogonalWithOther() {
@@ -40,5 +46,11 @@ class FileRankPositionTest {
     @Test
     void should_CheckPositionIsDiagonalWithOher() {
         assertThat(A1.isDiagonalWith(B2)).isTrue();
+    }
+
+    @DisplayName("대상 위치가 같은 위치라면 Diagonal관계가 아니다")
+    @Test
+    void should_IsNoDiagonalRelationship_When_OtherIsSamePosition() {
+        assertThat(A1.isDiagonalWith(A1)).isFalse();
     }
 }
