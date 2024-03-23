@@ -3,7 +3,7 @@ package chess.domain.strategy;
 import chess.domain.Direction;
 import chess.domain.Position;
 import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Queue;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public abstract class SpecialPieceMoveStrategy implements MoveStrategy {
     }
 
     @Override
-    public Map<Direction, Deque<Position>> generateMovablePositions(Position position) {
+    public Map<Direction, Queue<Position>> generateMovablePositions(Position position) {
         return directions.stream()
                 .collect(Collectors.toMap(
                         direction -> direction,
@@ -28,7 +28,7 @@ public abstract class SpecialPieceMoveStrategy implements MoveStrategy {
                 ));
     }
 
-    private Deque<Position> generateMovablePositionsByDirection(Position currentPosition, Direction direction) {
+    private Queue<Position> generateMovablePositionsByDirection(Position currentPosition, Direction direction) {
         int movableMaxDistance = currentPosition.calculateMaxDistance(direction, defaultMaxMoveDistance);
         return new ArrayDeque<>(IntStream.rangeClosed(1, movableMaxDistance)
                 .mapToObj(weight -> currentPosition.calculateNextPosition(direction, weight))

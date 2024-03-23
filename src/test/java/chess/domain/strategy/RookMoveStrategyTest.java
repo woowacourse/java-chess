@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Column;
 import chess.domain.Direction;
-import chess.domain.Row;
 import chess.domain.Position;
-import java.util.Deque;
+import chess.domain.Row;
 import java.util.Map;
+import java.util.Queue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class RookMoveStrategyTest {
         Position position = new Position(Row.RANK1, Column.A);
         MoveStrategy moveStrategy = new RookMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
+        Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(
@@ -53,7 +53,7 @@ class RookMoveStrategyTest {
         Position position = new Position(Row.RANK4, Column.D);
         MoveStrategy moveStrategy = new RookMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
+        Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(

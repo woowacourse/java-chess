@@ -8,8 +8,8 @@ import chess.domain.Direction;
 import chess.domain.PieceType;
 import chess.domain.Position;
 import chess.domain.Row;
-import java.util.Deque;
 import java.util.Map;
+import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +32,7 @@ class WhitePawnMoveStrategyTest {
     void canMoveTwoDistanceAtStartPositionTest() {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
-        Map<Direction, Deque<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
                 new Position(Row.RANK2, Column.G));
 
         assertAll(
@@ -55,7 +55,7 @@ class WhitePawnMoveStrategyTest {
      * ........  4
      * .......p  3
      * ........  2
-     * ........  1 (rank 1)
+     * ........  1 (rank1)
      *
      * abcdefgh
      */
@@ -64,7 +64,7 @@ class WhitePawnMoveStrategyTest {
     void canMoveOneDistancePositionTest() {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
-        Map<Direction, Deque<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
                 new Position(Row.RANK3, Column.H));
 
         assertAll(

@@ -8,7 +8,7 @@ import chess.domain.strategy.MoveStrategy;
 import chess.domain.strategy.QueenMoveStrategy;
 import chess.domain.strategy.RookMoveStrategy;
 import chess.domain.strategy.WhitePawnMoveStrategy;
-import java.util.Deque;
+import java.util.Queue;
 import java.util.Map;
 
 public enum PieceType {
@@ -18,8 +18,7 @@ public enum PieceType {
     KNIGHT(new KnightMoveStrategy()),
     BISHOP(new BishopMoveStrategy()),
     QUEEN(new QueenMoveStrategy()),
-    KING(new KingMoveStrategy()),
-    ;
+    KING(new KingMoveStrategy());
 
     private final MoveStrategy moveStrategy;
 
@@ -27,8 +26,7 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
     }
 
-    public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
+    public Map<Direction, Queue<Position>> calculateAllDirectionPositions(Position currentPosition) {
         return this.moveStrategy.generateMovablePositions(currentPosition);
     }
-
 }

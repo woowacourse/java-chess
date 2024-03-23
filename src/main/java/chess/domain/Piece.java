@@ -1,6 +1,6 @@
 package chess.domain;
 
-import java.util.Deque;
+import java.util.Queue;
 import java.util.Map;
 
 public class Piece {
@@ -13,7 +13,7 @@ public class Piece {
         this.color = color;
     }
 
-    public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
+    public Map<Direction, Queue<Position>> calculateAllDirectionPositions(Position currentPosition) {
         return pieceType.calculateAllDirectionPositions(currentPosition);
     }
 

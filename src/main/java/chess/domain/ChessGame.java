@@ -1,7 +1,6 @@
 package chess.domain;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -20,14 +19,14 @@ public class ChessGame {
 
     public List<Position> generateMovablePositions(Position position) {
         Piece piece = board.findPieceByPosition(position);
-        Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position);
+        Map<Direction, Queue<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(position);
         if (piece.isPawn()) {
             return generateValidPositionsWithPawn(expectedAllPositions, piece);
         }
         return generateValidPositions(expectedAllPositions, piece);
     }
 
-    private List<Position> generateValidPositions(Map<Direction, Deque<Position>> expectedAllPositions, Piece piece) {
+    private List<Position> generateValidPositions(Map<Direction, Queue<Position>> expectedAllPositions, Piece piece) {
         return expectedAllPositions.keySet()
                 .stream()
                 .map(expectedAllPositions::get)
@@ -36,7 +35,7 @@ public class ChessGame {
                 .toList();
     }
 
-    private List<Position> filterInvalidPositions(Deque<Position> expectedPositions, Piece piece) {
+    private List<Position> filterInvalidPositions(Queue<Position> expectedPositions, Piece piece) {
         List<Position> result = new ArrayList<>();
         while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek())) {
             Position position = expectedPositions.poll();
@@ -61,7 +60,8 @@ public class ChessGame {
         return !expectedPositions.isEmpty();
     }
 
-    private List<Position> generateValidPositionsWithPawn(Map<Direction, Deque<Position>> expectedAllPositions, Piece piece) {
+    private List<Position> generateValidPositionsWithPawn(Map<Direction, Queue<Position>> expectedAllPositions,
+                                                          Piece piece) {
         return expectedAllPositions.keySet()
                 .stream()
                 .map(direction -> filterInvalidPositionsWithPawn(expectedAllPositions.get(direction), direction, piece))
@@ -69,16 +69,18 @@ public class ChessGame {
                 .toList();
     }
 
-    private List<Position> filterInvalidPositionsWithPawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
+    private List<Position> filterInvalidPositionsWithPawn(Queue<Position> expectedPositions, Direction direction,
+                                                          Piece piece) {
         if (piece.isBlack()) {
             return handleBlackPawn(expectedPositions, direction, piece);
         }
         return handleWhitePawn(expectedPositions, direction, piece);
     }
 
-    private List<Position> handleBlackPawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
+    private List<Position> handleBlackPawn(Queue<Position> expectedPositions, Direction direction, Piece piece) {
         List<Position> result = new ArrayList<>();
-        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek()) && direction == Direction.S) {
+        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek())
+                && direction == Direction.S) {
             Position position = expectedPositions.poll();
             result.add(position);
         }
@@ -89,9 +91,10 @@ public class ChessGame {
         return result;
     }
 
-    private List<Position> handleWhitePawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
+    private List<Position> handleWhitePawn(Queue<Position> expectedPositions, Direction direction, Piece piece) {
         List<Position> result = new ArrayList<>();
-        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek()) && direction == Direction.N) {
+        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek())
+                && direction == Direction.N) {
             Position position = expectedPositions.poll();
             result.add(position);
         }

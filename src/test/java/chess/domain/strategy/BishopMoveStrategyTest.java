@@ -1,13 +1,13 @@
 package chess.domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Column;
 import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.Row;
-import java.util.Deque;
 import java.util.Map;
+import java.util.Queue;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class BishopMoveStrategyTest {
         Position position = new Position(Row.RANK2, Column.B);
         MoveStrategy moveStrategy = new BishopMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
+        Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.NE)).containsExactly(
@@ -56,24 +56,18 @@ class BishopMoveStrategyTest {
     }
 
     /**
-     * ........  8 (rank 8)
-     * ........  7
-     * ........  6
-     * ........  5
-     * ........  4
-     * ........  3
-     * ........  2
-     * ..b.....  1 (rank 1)
-     *
+     * ........  8 (rank 8) ........  7 ........  6 ........  5 ........  4 ........  3 ........  2 ..b.....  1 (rank
+     * 1)
+     * <p>
      * abcdefgh
-    */
+     */
     @Test
     @DisplayName("비숍이 C1 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnCenterPosition() {
         Position position = new Position(Row.RANK1, Column.C);
         BishopMoveStrategy bishopMoveStrategy = new BishopMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = bishopMoveStrategy.generateMovablePositions(position);
+        Map<Direction, Queue<Position>> directionListMap = bishopMoveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.NE)).containsExactly(

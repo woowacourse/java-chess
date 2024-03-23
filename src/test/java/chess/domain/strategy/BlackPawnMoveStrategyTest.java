@@ -8,8 +8,8 @@ import chess.domain.Direction;
 import chess.domain.PieceType;
 import chess.domain.Position;
 import chess.domain.Row;
-import java.util.Deque;
 import java.util.Map;
+import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,31 +32,25 @@ class BlackPawnMoveStrategyTest {
     void canMoveTwoDistanceAtStartPositionTest() {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
-        Map<Direction, Deque<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
                 new Position(Row.RANK7, Column.G));
 
         assertAll(
-            () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                    new Position(Row.RANK6, Column.G),
-                    new Position(Row.RANK5, Column.G)),
-            () -> assertThat(directionListMap.get(Direction.N)).isNull(),
-            () -> assertThat(directionListMap.get(Direction.E)).isNull(),
-            () -> assertThat(directionListMap.get(Direction.W)).isNull(),
-            () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.RANK6, Column.H)),
-            () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.RANK6, Column.F))
+                () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
+                        new Position(Row.RANK6, Column.G),
+                        new Position(Row.RANK5, Column.G)),
+                () -> assertThat(directionListMap.get(Direction.N)).isNull(),
+                () -> assertThat(directionListMap.get(Direction.E)).isNull(),
+                () -> assertThat(directionListMap.get(Direction.W)).isNull(),
+                () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.RANK6, Column.H)),
+                () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.RANK6, Column.F))
         );
     }
 
     /**
-     * ........  8 (rank 8)
-     * ........  7
-     * .......P  6
-     * ........  5
-     * ........  4
-     * ........  3
-     * ........  2
-     * ........  1 (rank 1)
-     *
+     * ........  8 (rank 8) ........  7 .......P  6 ........  5 ........  4 ........  3 ........  2 ........  1 (rank
+     * 1)
+     * <p>
      * abcdefgh
      */
     @Test
@@ -64,7 +58,7 @@ class BlackPawnMoveStrategyTest {
     void canMoveOneDistancePositionTest() {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
-        Map<Direction, Deque<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
                 new Position(Row.RANK6, Column.H));
 
         assertAll(

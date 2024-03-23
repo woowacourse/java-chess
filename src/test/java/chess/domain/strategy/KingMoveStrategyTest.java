@@ -7,8 +7,8 @@ import chess.domain.Column;
 import chess.domain.Direction;
 import chess.domain.Position;
 import chess.domain.Row;
-import java.util.Deque;
 import java.util.Map;
+import java.util.Queue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +31,7 @@ public class KingMoveStrategyTest {
         Position position = new Position(Row.RANK2, Column.D);
         MoveStrategy moveStrategy = new KingMoveStrategy();
 
-        Map<Direction, Deque<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
+        Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.N)).containsExactly(
