@@ -10,10 +10,10 @@ public class Queen extends AbstractSlidingPiece {
                 Direction.DOWN,
                 Direction.LEFT,
                 Direction.RIGHT,
-                Direction.LEFT_UP,
-                Direction.LEFT_DOWN,
-                Direction.RIGHT_UP,
-                Direction.RIGHT_DOWN
+                Direction.UP_LEFT,
+                Direction.DOWN_LEFT,
+                Direction.UP_RIGHT,
+                Direction.DOWN_RIGHT
         ));
     }
 }

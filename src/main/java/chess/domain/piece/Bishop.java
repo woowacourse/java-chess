@@ -6,10 +6,10 @@ public class Bishop extends AbstractSlidingPiece {
 
     public Bishop(Team team) {
         super(PieceType.BISHOP, team, List.of(
-                Direction.LEFT_DOWN,
-                Direction.LEFT_UP,
-                Direction.RIGHT_DOWN,
-                Direction.RIGHT_UP
+                Direction.DOWN_LEFT,
+                Direction.UP_LEFT,
+                Direction.DOWN_RIGHT,
+                Direction.UP_RIGHT
         ));
     }
 }
