@@ -16,10 +16,10 @@ class PawnTest {
     @Test
     void canWhiteMoveTwoAtFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.TWO));
+        final Pawn pawn = new Pawn(Color.WHITE);
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FOUR));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.TWO), new Position(File.D, Rank.FOUR));
 
         // then
         assertThat(canMove).isTrue();
@@ -29,10 +29,10 @@ class PawnTest {
     @Test
     void canBlackMoveTwoAtFirst() {
         // given
-        final Pawn pawn = new Pawn(Color.BLACK, new Position(File.D, Rank.SEVEN));
+        final Pawn pawn = new Pawn(Color.BLACK);
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FIVE));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.SEVEN), new Position(File.D, Rank.FIVE));
 
         // then
         assertThat(canMove).isTrue();
@@ -42,10 +42,10 @@ class PawnTest {
     @Test
     void canNotMoveTwo() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FOUR));
+        final Pawn pawn = new Pawn(Color.WHITE);
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.SIX));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FOUR), new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isFalse();
@@ -55,10 +55,10 @@ class PawnTest {
     @Test
     void canMoveForwardOneStep() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FIVE));
+        final Pawn pawn = new Pawn(Color.WHITE);
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.SIX));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -68,10 +68,10 @@ class PawnTest {
     @Test
     void canNotMoveForwardOverOneStep() { // TODO: 한칸인데 뒤로가는 경우 추가
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.D, Rank.FIVE));
+        final Pawn pawn = new Pawn(Color.WHITE);
 
         // when
-        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.EIGHT));
+        final boolean canMove = pawn.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.EIGHT));
 
         // then
         assertThat(canMove).isFalse();
@@ -81,10 +81,10 @@ class PawnTest {
     @Test
     void getRouteForward() {
         // given
-        final Pawn pawn = new Pawn(Color.WHITE, new Position(File.A, Rank.TWO));
+        final Pawn pawn = new Pawn(Color.WHITE);
 
         // when
-        final Set<Position> positions = pawn.getRoute(new Position(File.A, Rank.FOUR));
+        final Set<Position> positions = pawn.getRoute(new Position(File.A, Rank.TWO), new Position(File.A, Rank.FOUR));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

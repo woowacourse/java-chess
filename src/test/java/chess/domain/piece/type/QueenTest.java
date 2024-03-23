@@ -16,10 +16,10 @@ class QueenTest {
     @Test
     void canMoveStraight() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Queen queen = new Queen(Color.BLACK);
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position(File.D, Rank.EIGHT));
+        final boolean canMove = queen.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.EIGHT));
 
         // then
         assertThat(canMove).isTrue();
@@ -29,10 +29,10 @@ class QueenTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Queen queen = new Queen(Color.BLACK);
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position(File.F, Rank.SEVEN));
+        final boolean canMove = queen.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.F, Rank.SEVEN));
 
         // then
         assertThat(canMove).isTrue();
@@ -42,10 +42,10 @@ class QueenTest {
     @Test
     void canNotMove() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Queen queen = new Queen(Color.BLACK);
 
         // when
-        final boolean canMove = queen.canMoveTo(new Position(File.A, Rank.ONE));
+        final boolean canMove = queen.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.A, Rank.ONE));
 
         // then
         assertThat(canMove).isFalse();
@@ -55,10 +55,10 @@ class QueenTest {
     @Test
     void getRouteLeft() {
         // given
-        final Queen queen = new Queen(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Queen queen = new Queen(Color.BLACK);
 
         // when
-        final Set<Position> positions = queen.getRoute(new Position(File.G, Rank.TWO));
+        final Set<Position> positions = queen.getRoute(new Position(File.D, Rank.FIVE), new Position(File.G, Rank.TWO));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

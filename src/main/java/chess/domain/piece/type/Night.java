@@ -11,21 +11,38 @@ public class Night extends Piece {
     private static final int DEFAULT_STEP_ONE = 1;
     private static final int DEFAULT_STEP_TWO = 2;
 
-    public Night(final Color color, final Position position) {
-        super(color, position);
+    public Night(final Color color) {
+        super(color);
     }
 
+//    public Night(final Color color, final Position position) {
+//        super(color, position);
+//    }
+//
+//    @Override
+//    public boolean canMoveTo(final Position target) {
+//        int rankDistance = source.getRankDistance(target);
+//        int fileDistance = source.getFileDistance(target);
+//
+//        return (rankDistance == DEFAULT_STEP_TWO && fileDistance == DEFAULT_STEP_ONE)
+//                || (rankDistance == DEFAULT_STEP_ONE && fileDistance == DEFAULT_STEP_TWO);
+//    }
+//
+//    @Override
+//    public Set<Position> getRoute(final Position target) {
+//        return new HashSet<>();
+//    }
+
     @Override
-    public boolean canMoveTo(final Position target) {
-        int rankDistance = this.position.getRankDistance(target);
-        int fileDistance = this.position.getFileDistance(target);
+    public boolean canMoveTo(final Position source, final Position target) {
+        int rankDistance = source.getRankDistance(target);
+        int fileDistance = source.getFileDistance(target);
 
         return (rankDistance == DEFAULT_STEP_TWO && fileDistance == DEFAULT_STEP_ONE)
-                || (rankDistance == DEFAULT_STEP_ONE && fileDistance == DEFAULT_STEP_TWO);
-    }
+                || (rankDistance == DEFAULT_STEP_ONE && fileDistance == DEFAULT_STEP_TWO);    }
 
     @Override
-    public Set<Position> getRoute(final Position target) {
+    public Set<Position> getRoute(final Position source, final Position target) {
         return new HashSet<>();
     }
 }

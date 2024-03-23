@@ -15,48 +15,65 @@ public class Pawn extends Piece {
     private static final Rank INIT_WHITE_RANK = Rank.TWO;
     private static final Rank INIT_BLACK_RANK = Rank.SEVEN;
 
-    public Pawn(final Color color, final Position position) {
-        super(color, position);
+    public Pawn(final Color color) {
+        super(color);
+    }
+
+//    public Pawn(final Color color, final Position position) {
+//        super(color, position);
+//    }
+
+//    @Override
+//    public boolean canMoveTo(final Position target) {
+//        if (color.equals(Color.WHITE)) {
+//            return canWhiteMoveTo(source, target);
+//        }
+//        return canBlackMoveTo(source, target);
+//    }
+
+    private boolean canWhiteMoveTo(final Position source, final Position target) {
+        boolean isDownThanTarget = Direction.of(source, target).contains(Direction.DOWN);
+
+        if (isInitPosition(source)) {
+            return (isDownThanTarget && source.getRankDistance(target) == INIT_AVAILABLE_STEP)
+                    || (isDownThanTarget && source.getRankDistance(target) == DEFAULT_STEP);
+        }
+
+        return isDownThanTarget && source.getRankDistance(target) == DEFAULT_STEP;
+    }
+
+    private boolean canBlackMoveTo(final Position source, final Position target) {
+        boolean isDownThanTarget = Direction.of(source, target).contains(Direction.DOWN);
+
+        if (isInitPosition(source)) {
+            return (!isDownThanTarget && source.getRankDistance(target) == INIT_AVAILABLE_STEP)
+                    || (!isDownThanTarget && source.getRankDistance(target) == DEFAULT_STEP);
+        }
+        return !isDownThanTarget && source.getRankDistance(target) == DEFAULT_STEP;
+    }
+
+    private boolean isInitPosition(final Position source) {
+        if (color.equals(Color.WHITE)) {
+            return source.isSameRank(INIT_WHITE_RANK);
+        }
+        return source.isSameRank(INIT_BLACK_RANK);
+    }
+
+//    @Override
+//    public Set<Position> getRoute(final Position target) {
+//        return RouteCalculator.getVerticalMiddlePositions(source, target);
+//    }
+
+    @Override
+    public boolean canMoveTo(final Position source, final Position target) {
+        if (color.equals(Color.WHITE)) {
+            return canWhiteMoveTo(source, target);
+        }
+        return canBlackMoveTo(source, target);
     }
 
     @Override
-    public boolean canMoveTo(final Position target) {
-        if (color.equals(Color.WHITE)) {
-            return canWhiteMoveTo(target);
-        }
-        return canBlackMoveTo(target);
-    }
-
-    private boolean canWhiteMoveTo(final Position target) {
-        boolean isDownThanTarget = Direction.of(this.position, target).contains(Direction.DOWN);
-
-        if (isInitPosition()) {
-            return (isDownThanTarget && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP);
-        }
-
-        return isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP;
-    }
-
-    private boolean canBlackMoveTo(final Position target) {
-        boolean isDownThanTarget = Direction.of(this.position, target).contains(Direction.DOWN);
-
-        if (isInitPosition()) {
-            return (!isDownThanTarget && this.position.getRankDistance(target) == INIT_AVAILABLE_STEP)
-                    || (!isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP);
-        }
-        return !isDownThanTarget && this.position.getRankDistance(target) == DEFAULT_STEP;
-    }
-
-    private boolean isInitPosition() {
-        if (color.equals(Color.WHITE)) {
-            return this.position.isSameRank(INIT_WHITE_RANK);
-        }
-        return this.position.isSameRank(INIT_BLACK_RANK);
-    }
-
-    @Override
-    public Set<Position> getRoute(final Position target) {
-        return RouteCalculator.getVerticalMiddlePositions(this.position, target);
+    public Set<Position> getRoute(final Position source, final Position target) {
+        return RouteCalculator.getVerticalMiddlePositions(source, target);
     }
 }

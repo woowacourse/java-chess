@@ -16,10 +16,10 @@ class BishopTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Bishop bishop = new Bishop(Color.BLACK);
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position(File.E, Rank.FOUR));
+        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.E, Rank.FOUR));
 
         // then
         assertThat(canMove).isTrue();
@@ -29,10 +29,10 @@ class BishopTest {
     @Test
     void canNotMove() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Bishop bishop = new Bishop(Color.BLACK);
 
         // when
-        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.SIX)); // 바로 위
+        boolean canMove = bishop.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX)); // 바로 위
 
         // then
         assertThat(canMove).isFalse();
@@ -42,10 +42,10 @@ class BishopTest {
     @Test
     void getRouteRightUp() {
         // given
-        final Bishop bishop = new Bishop(Color.WHITE, new Position(File.A, Rank.TWO));
+        final Bishop bishop = new Bishop(Color.WHITE);
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.D, Rank.FIVE));
+        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.TWO), new Position(File.D, Rank.FIVE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -58,10 +58,10 @@ class BishopTest {
     @Test
     void getRouteRightDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
+        final Bishop bishop = new Bishop(Color.BLACK);
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.F, Rank.ONE));
+        final Set<Position> positions = bishop.getRoute(new Position(File.C, Rank.FOUR), new Position(File.F, Rank.ONE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -74,10 +74,10 @@ class BishopTest {
     @Test
     void getRouteLeftUp() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.C, Rank.FOUR));
+        final Bishop bishop = new Bishop(Color.BLACK);
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.SIX));
+        final Set<Position> positions = bishop.getRoute(new Position(File.C, Rank.FOUR), new Position(File.A, Rank.SIX));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -89,10 +89,10 @@ class BishopTest {
     @Test
     void getRouteLeftDown() {
         // given
-        final Bishop bishop = new Bishop(Color.BLACK, new Position(File.D, Rank.SIX));
+        final Bishop bishop = new Bishop(Color.BLACK);
 
         // when
-        final Set<Position> positions = bishop.getRoute(new Position(File.A, Rank.THREE));
+        final Set<Position> positions = bishop.getRoute(new Position(File.D, Rank.SIX), new Position(File.A, Rank.THREE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

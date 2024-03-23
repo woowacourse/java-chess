@@ -11,15 +11,39 @@ public class King extends Piece {
 
     private static final int DEFAULT_STEP = 1;
 
-    public King(final Color color, final Position position) {
-        super(color, position);
+    public King(final Color color) {
+        super(color);
     }
 
+//    public King(final Color color, final Position position) {
+//        super(color, position);
+//    }
+//
+//    @Override
+//    public boolean canMoveTo(final Position target) {
+//        MultiDirection multiDirection = MultiDirection.of(source, target);
+//        int rankDistance = source.getRankDistance(target);
+//        int fileDistance = source.getFileDistance(target);
+//
+//        if (multiDirection == MultiDirection.VERTICAL && rankDistance == DEFAULT_STEP) {
+//            return true;
+//        }
+//        if (multiDirection == MultiDirection.HORIZONTAL && fileDistance == DEFAULT_STEP) {
+//            return true;
+//        }
+//        return (multiDirection == MultiDirection.LEFT_DIAGONAL || multiDirection == MultiDirection.RIGHT_DIAGONAL) && rankDistance == DEFAULT_STEP;
+//    }
+//
+//    @Override
+//    public Set<Position> getRoute(final Position target) {
+//        return new HashSet<>();
+//    }
+
     @Override
-    public boolean canMoveTo(final Position target) {
-        MultiDirection multiDirection = MultiDirection.of(this.position, target);
-        int rankDistance = this.position.getRankDistance(target);
-        int fileDistance = this.position.getFileDistance(target);
+    public boolean canMoveTo(final Position source, final Position target) {
+        MultiDirection multiDirection = MultiDirection.of(source, target);
+        int rankDistance = source.getRankDistance(target);
+        int fileDistance = source.getFileDistance(target);
 
         if (multiDirection == MultiDirection.VERTICAL && rankDistance == DEFAULT_STEP) {
             return true;
@@ -31,7 +55,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(final Position target) {
+    public Set<Position> getRoute(final Position source, final Position target) {
         return new HashSet<>();
     }
 }

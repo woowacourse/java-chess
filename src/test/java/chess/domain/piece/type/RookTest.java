@@ -16,10 +16,10 @@ class RookTest {
     @Test
     void canMove() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final boolean canMove = rook.canMoveTo(new Position(File.D, Rank.SIX)); // 상
+        final boolean canMove = rook.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX)); // 상
 
         // then
         assertThat(canMove).isTrue();
@@ -29,10 +29,11 @@ class RookTest {
     @Test
     void canNotMove() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final boolean canMove = rook.canMoveTo(new Position(File.E, Rank.FOUR)); // 대각선 위
+        final boolean canMove = rook.canMoveTo(new Position(File.D, Rank.FIVE),
+                new Position(File.E, Rank.FOUR)); // 대각선 위
 
         // then
         assertThat(canMove).isFalse();
@@ -42,10 +43,11 @@ class RookTest {
     @Test
     void getRouteUp() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.EIGHT));
+        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.FIVE),
+                new Position(File.A, Rank.EIGHT));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -58,10 +60,10 @@ class RookTest {
     @Test
     void getRouteDown() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.TWO));
+        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.FIVE), new Position(File.A, Rank.TWO));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -74,10 +76,10 @@ class RookTest {
     @Test
     void getRouteRight() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.A, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.D, Rank.FIVE));
+        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.FIVE), new Position(File.D, Rank.FIVE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -90,10 +92,10 @@ class RookTest {
     @Test
     void getRouteLeft() {
         // given
-        final Rook rook = new Rook(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final Rook rook = new Rook(Color.BLACK);
 
         // when
-        final Set<Position> positions = rook.getRoute(new Position(File.A, Rank.FIVE));
+        final Set<Position> positions = rook.getRoute(new Position(File.D, Rank.FIVE), new Position(File.A, Rank.FIVE));
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

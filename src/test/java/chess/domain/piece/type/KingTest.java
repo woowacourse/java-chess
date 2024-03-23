@@ -15,10 +15,10 @@ class KingTest {
     @Test
     void canMoveStraight() {
         // given
-        final King king = new King(Color.WHITE, new Position(File.D, Rank.FIVE));
+        final King king = new King(Color.WHITE);
 
         // when
-        final boolean canMove = king.canMoveTo(new Position(File.D, Rank.SIX));
+        final boolean canMove = king.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -28,10 +28,10 @@ class KingTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final King king = new King(Color.WHITE, new Position(File.D, Rank.FIVE));
+        final King king = new King(Color.WHITE);
 
         // when
-        final boolean canMove = king.canMoveTo(new Position(File.E, Rank.SIX));
+        final boolean canMove = king.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.E, Rank.SIX));
 
         // then
         assertThat(canMove).isTrue();
@@ -41,10 +41,10 @@ class KingTest {
     @Test
     void canNotMove() {
         // given
-        final King king = new King(Color.BLACK, new Position(File.D, Rank.FIVE));
+        final King king = new King(Color.BLACK);
 
         // when
-        final boolean canMove = king.canMoveTo(new Position(File.A, Rank.ONE));
+        final boolean canMove = king.canMoveTo(new Position(File.D, Rank.FIVE), new Position(File.A, Rank.ONE));
 
         // then
         assertThat(canMove).isFalse();

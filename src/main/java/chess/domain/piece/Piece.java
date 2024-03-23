@@ -6,28 +6,28 @@ import java.util.Set;
 public abstract class Piece {
 
     protected final Color color;
-    protected Position position;
+//    protected Position position;
 
-    protected Piece(final Color color, final Position position) {
+    protected Piece(final Color color) {
         this.color = color;
-        this.position = position;
+//        this.position = position;
     }
 
-    public abstract boolean canMoveTo(final Position target);
+    public abstract boolean canMoveTo(final Position source, final Position target);
 
-    public abstract Set<Position> getRoute(final Position target);
+    public abstract Set<Position> getRoute(final Position source, final Position target);
 
-    public void move(final Position target) {
-        this.position = target;
-    }
+//    public void move(final Position target) {
+//        this.position = target;
+//    }
 
     public boolean isMySide(final Piece other) {
         return this.color == other.color;
     }
 
-    public boolean isPosition(final Position other) {
-        return this.position.equals(other);
-    }
+//    public boolean isPosition(final Position other) {
+//        return this.position.equals(other);
+//    }
 
     public boolean isBlack() {
         return this.color.equals(Color.BLACK);
@@ -37,9 +37,9 @@ public abstract class Piece {
         return getClass().equals(other);
     }
 
-    public Position getPosition() {
-        return position;
-    }
+//    public Position getPosition() {
+//        return position;
+//    }
 
     @Override
     public boolean equals(final Object o) {
@@ -50,16 +50,16 @@ public abstract class Piece {
             return false;
         }
         final Piece piece = (Piece) o;
-        return color == piece.color && Objects.equals(position, piece.position);
+        return color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, position);
+        return Objects.hash(color);
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ":" + color + "," + position;
+        return getClass().getSimpleName() + ":" + color;
     }
 }
