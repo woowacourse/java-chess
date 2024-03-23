@@ -15,6 +15,9 @@ public class Rook extends Piece {
 
     @Override
     public String display() {
-        return "R";
+        if (isBlack()) {
+            return "R";
+        }
+        return "r";
     }
 }

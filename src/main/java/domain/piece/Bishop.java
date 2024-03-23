@@ -15,6 +15,9 @@ public class Bishop extends Piece {
 
     @Override
     public String display() {
-        return "B";
+        if (isBlack()) {
+            return "B";
+        }
+        return "b";
     }
 }

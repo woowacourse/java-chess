@@ -39,6 +39,9 @@ public class Pawn extends Piece {
 
     @Override
     public String display() {
-        return "P";
+        if (isBlack()) {
+            return "P";
+        }
+        return "p";
     }
 }

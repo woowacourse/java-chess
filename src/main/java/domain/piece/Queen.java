@@ -15,6 +15,9 @@ public class Queen extends Piece {
 
     @Override
     public String display() {
-        return "Q";
+        if (isBlack()) {
+            return "Q";
+        }
+        return "q";
     }
 }

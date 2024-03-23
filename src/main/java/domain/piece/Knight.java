@@ -63,6 +63,9 @@ public class Knight extends Piece {
 
     @Override
     public String display() {
-        return "N";
+        if (isBlack()) {
+            return "N";
+        }
+        return "n";
     }
 }
