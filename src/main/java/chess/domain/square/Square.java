@@ -1,13 +1,16 @@
 package chess.domain.square;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Square {
     private static final String ERROR_INVALID_PATTERN = "문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요.";
     private static final String PATTERN = "^[a-z][0-9]$";
     private static final char FILE_LEFT_BOUND = 'a';
     private static final char RANK_UPPER_BOUND = '8';
+    private static final Map<String, Square> cache = new HashMap<>();
 
     private final File file;
     private final Rank rank;
@@ -19,9 +22,16 @@ public class Square {
 
     public static Square from(String square) {
         validatePattern(square);
-        File file = File.from(parseFile(square));
-        Rank rank = Rank.from(parseRank(square));
-        return new Square(file, rank);
+        return cache.computeIfAbsent(square, s -> {
+                File file = File.from(parseFile(square));
+                Rank rank = Rank.from(parseRank(square));
+                return new Square(file, rank);
+        });
+    }
+
+    public static Square of(File file, Rank rank) {
+        String squareKey = generateSquareKey(file, rank);
+        return cache.computeIfAbsent(squareKey, k -> new Square(file, rank));
     }
 
     private static void validatePattern(String square) {
@@ -30,12 +40,16 @@ public class Square {
         }
     }
 
+    private static int parseFile(String square) {
+        return RANK_UPPER_BOUND - square.charAt(1);
+    }
+
     private static int parseRank(String square) {
         return square.charAt(0) - FILE_LEFT_BOUND;
     }
 
-    private static int parseFile(String square) {
-        return RANK_UPPER_BOUND - square.charAt(1);
+    private static String generateSquareKey(File file, Rank rank) {
+        return file.name().toLowerCase() + rank.ordinal();
     }
 
     public List<Square> generatePath(Square target) {
@@ -98,11 +112,11 @@ public class Square {
         return file == other.file && rank == other.rank;
     }
 
-    public int getFile() {
+    public int getFileOrdinal() {
         return rank.ordinal();
     }
 
-    public int getRank() {
+    public int getRankOrdinal() {
         return file.ordinal();
     }
 }

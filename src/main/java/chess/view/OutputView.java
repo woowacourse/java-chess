@@ -40,7 +40,7 @@ public class OutputView {
         for (Piece piece : pieces) {
             Square square = piece.getSquare();
             char pieceSymbol = PieceMapper.map(piece.getType(), piece.getColor());
-            board[square.getFile()][square.getRank()] = pieceSymbol;
+            board[square.getFileOrdinal()][square.getRankOrdinal()] = pieceSymbol;
         }
     }
 
