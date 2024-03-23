@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-@DisplayName("행")
+@DisplayName("랭크")
 class RankTest {
 
     @ParameterizedTest
@@ -15,6 +15,6 @@ class RankTest {
     void validateRange(int value) {
         assertThatCode(() -> Rank.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("범위 밖을 벗어난 행 입니다.");
+                .hasMessageContaining("범위 밖의 랭크 입니다.");
     }
 }

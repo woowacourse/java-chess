@@ -12,12 +12,17 @@ class RookTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a6", "h6", "c1", "c8"})
-    @DisplayName("에 대한 이동 루트가 상하좌우로 이동하는지 판단한다.")
-    void canMove(String target) {
-        Rook rook = new Rook(PieceColor.BLACK);
+    @DisplayName("상하좌우로 이동한다.")
+    void move(String targetInput) {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from(targetInput);
+        Rook rook = new Rook(PieceColor.BLACK, source);
 
-        boolean actual = rook.canMove(Square.from("c6"), Square.from(target));
+        // when
+        rook.move(target);
 
-        assertThat(actual).isTrue();
+        // then
+        assertThat(rook.getSquare()).isEqualTo(target);
     }
 }

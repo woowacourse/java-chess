@@ -12,12 +12,17 @@ class QueenTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a8", "c8", "e8", "h6", "h1", "c1", "a4", "a6"})
-    @DisplayName("에 대한 이동 루트가 상하좌우 대각선 중 하나인지 판단한다.")
-    void canMove(String target) {
-        Queen queen = new Queen(PieceColor.BLACK);
+    @DisplayName("상하좌우 또는 대각선 으로 이동한다.")
+    void move(String targetInput) {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from(targetInput);
+        Queen queen = new Queen(PieceColor.BLACK, source);
 
-        boolean actual = queen.canMove(Square.from("c6"), Square.from(target));
+        // when
+        queen.move(target);
 
-        assertThat(actual).isTrue();
+        // then
+        assertThat(queen.getSquare()).isEqualTo(target);
     }
 }

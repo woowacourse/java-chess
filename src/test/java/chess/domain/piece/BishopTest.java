@@ -12,12 +12,17 @@ class BishopTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a8", "e8", "a4", "h1"})
-    @DisplayName("에 대한 이동 루트가 대각선인지 판단한다.")
-    void canMove(String target) {
-        Bishop bishop = new Bishop(PieceColor.BLACK);
+    @DisplayName("대각선으로 이동한다.")
+    void move(String targetInput) {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from(targetInput);
+        Bishop bishop = new Bishop(PieceColor.BLACK, source);
 
-        boolean actual = bishop.canMove(Square.from("c6"), Square.from(target));
+        // when
+        bishop.move(target);
 
-        assertThat(actual).isTrue();
+        // then
+        assertThat(bishop.getSquare()).isEqualTo(target);
     }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-@DisplayName("열")
+@DisplayName("파일")
 class FileTest {
 
     @ParameterizedTest
@@ -15,6 +15,6 @@ class FileTest {
     void validateRange(int value) {
         assertThatCode(() -> File.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("범위 밖을 벗어난 열 입니다.");
+                .hasMessageContaining("범위 밖의 파일 입니다.");
     }
 }

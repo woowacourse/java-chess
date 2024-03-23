@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 
 public class BoardFactory {
 
-    public static final List<BiFunction<PieceColor, Square, Piece>> PIECES_ARRANGEMENT = List.of(
+    private static final List<BiFunction<PieceColor, Square, Piece>> PIECES_ARRANGEMENT = List.of(
             Rook::new, Knight::new, Bishop::new, Queen::new,
             King::new, Bishop::new, Knight::new, Rook::new);
 

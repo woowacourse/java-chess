@@ -1,9 +1,6 @@
 package chess.domain.square;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Square {
     private static final String ERROR_INVALID_PATTERN = "문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요.";
@@ -106,17 +103,19 @@ public class Square {
         return rank.compareTo(other.rank) > 0;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Square other)) return false;
-        return file == other.file && rank == other.rank;
-    }
-
     public int getFileOrdinal() {
         return file.ordinal();
     }
 
     public int getRankOrdinal() {
         return rank.ordinal();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Square square = (Square) o;
+        return file == square.file && rank == square.rank;
     }
 }

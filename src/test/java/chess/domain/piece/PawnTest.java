@@ -4,7 +4,7 @@ import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,56 +12,63 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PawnTest {
 
     @ParameterizedTest
-    @CsvSource({"c6, true", "c5, true", "c4, false"})
-    @DisplayName("의 색이 검정일 경우 최초 이동 시 아래로 최대 두 칸 이동할 수 있다.")
-    void canMoveUpToTwoStepWhenBlackPawnFirstMovement(String target, boolean expected) {
-        Pawn pawn = new Pawn(PieceColor.BLACK);
+    @ValueSource(strings = {"c6", "c5"})
+    @DisplayName("검은색 기물일 경우 처음에 아래로 최대 두 칸까지 이동할 수 있다.")
+    void moveUpToTwoStepWhenBlackPawnFirstMovement(String targetInput) {
+        //given
+        Square source = Square.from("c7");
+        Square target = Square.from(targetInput);
+        Pawn pawn = new Pawn(PieceColor.BLACK, source);
 
-        boolean actual = pawn.canMove(Square.from("c7"), Square.from(target));
+        // when
+        pawn.move(target);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(pawn.getSquare()).isEqualTo(target);
     }
 
     @ParameterizedTest
-    @CsvSource({"c3, true", "c4, true", "c5, false"})
-    @DisplayName("의 색이 흰색일 경우 최초 이동 시 위로 최대 두 칸 이동할 수 있다.")
-    void canMoveUpToTwoStepWhenWhitePawnFirstMovement(String target, boolean expected) {
-        Pawn pawn = new Pawn(PieceColor.WHITE);
+    @ValueSource(strings = {"c3", "c4"})
+    @DisplayName("흰색 기물일 경우 처음에 위로 최대 두 칸까지 이동할 수 있다.")
+    void moveUpToTwoStepWhenWhitePawnFirstMovement(String targetInput) {
+        //given
+        Square source = Square.from("c2");
+        Square target = Square.from(targetInput);
+        Pawn pawn = new Pawn(PieceColor.WHITE, source);
 
-        boolean actual = pawn.canMove(Square.from("c2"), Square.from(target));
+        // when
+        pawn.move(target);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(pawn.getSquare()).isEqualTo(target);
     }
+    @Test
+    @DisplayName("검은색 기물일 경우 두번째 이동부터 아래로 한 칸만 이동할 수 있다.")
+    void moveOnlyOneStepWhenBlackPawnAfterFirstMovement() {
+        //given
+        Square source = Square.from("c7");
+        Square stopover = Square.from("c6");
+        Square target = Square.from("c5");
+        Pawn pawn = new Pawn(PieceColor.BLACK, source);
 
-    @ParameterizedTest
-    @CsvSource({"c5, true", "c4, false"})
-    @DisplayName("의 색이 검정일 경우 최초 이동 이후에는 한 칸씩만 아래로 이동할 수 있다.")
-    void canMoveOnlyOneStepBlackPawnAfterFirstMovement(String target, boolean expected) {
-        Pawn pawn = new Pawn(PieceColor.BLACK);
+        // when
+        pawn.move(stopover);
+        pawn.move(target);
 
-        boolean actual = pawn.canMove(Square.from("c6"), Square.from(target));
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @CsvSource({"c4, true", "c5, false"})
-    @DisplayName("의 색이 흰색일 경우 최초 이동 이후에는 한 칸씩만 위로 이동할 수 있다.")
-    void canMoveOnlyOneStepWhitePawnAfterFirstMovement(String target, boolean expected) {
-        Pawn pawn = new Pawn(PieceColor.WHITE);
-
-        boolean actual = pawn.canMove(Square.from("c3"), Square.from(target));
-
-        assertThat(actual).isEqualTo(expected);
+        assertThat(pawn.getSquare()).isEqualTo(target);
     }
 
     @Test
-    @DisplayName("은 후진할 수 없다.")
-    void cannotMoveBackward() {
-        Pawn pawn = new Pawn(PieceColor.WHITE);
-        Square source = Square.from("b3");
-        Square target = Square.from("b2");
+    @DisplayName("흰색 기물일 경우 두번째 이동부터 위로 한 칸만 이동할 수 있다.")
+    void moveOnlyOneStepWhenWhitePawnAfterFirstMovement() {
+        //given
+        Square source = Square.from("c2");
+        Square stopover = Square.from("c3");
+        Square target = Square.from("c4");
+        Pawn pawn = new Pawn(PieceColor.WHITE, source);
 
-        assertThat(pawn.canMove(source, target)).isFalse();
+        // when
+        pawn.move(stopover);
+        pawn.move(target);
+
+        assertThat(pawn.getSquare()).isEqualTo(target);
     }
 }
