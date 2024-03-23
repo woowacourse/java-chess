@@ -7,20 +7,20 @@ import java.util.regex.Pattern;
 
 public enum Command {
 
-    START("start"),
-    MOVE("move"),
-    POSITION("[a-h][1-8]"),
-    END("end");
+    START(Pattern.compile("start")),
+    MOVE(Pattern.compile("move")),
+    POSITION(Pattern.compile("[a-hA-H][1-8]")),
+    END(Pattern.compile("end"));
 
-    private final String value;
+    private final Pattern pattern;
 
-    Command(String value) {
-        this.value = value;
+    Command(final Pattern pattern) {
+        this.pattern = pattern;
     }
 
     public static void validate(String input) {
         boolean match = Arrays.stream(values())
-                .anyMatch(command -> Pattern.compile(command.value).matcher(input).matches());
+                .anyMatch(command -> command.pattern.matcher(input).matches());
         if (!match) {
             throw new InvalidCommandException(ErrorCode.INVALID_COMMAND);
         }
@@ -28,7 +28,7 @@ public enum Command {
 
     public static Command from(String value) {
         return Arrays.stream(values())
-                .filter(command -> Pattern.compile(command.value).matcher(value).matches())
+                .filter(command -> command.pattern.matcher(value).matches())
                 .findFirst()
                 .orElseThrow(() -> new InvalidCommandException(ErrorCode.INVALID_COMMAND));
     }

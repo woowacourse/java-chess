@@ -20,7 +20,8 @@ class CommandTest {
                 () -> assertThat(Command.from("end")).isEqualTo(Command.END),
                 () -> assertThat(Command.from("move")).isEqualTo(Command.MOVE),
                 () -> assertThat(Command.from("a1")).isEqualTo(Command.POSITION),
-                () -> assertThat(Command.from("h8")).isEqualTo(Command.POSITION)
+                () -> assertThat(Command.from("h8")).isEqualTo(Command.POSITION),
+                () -> assertThat(Command.from("D8")).isEqualTo(Command.POSITION)
         );
     }
 
