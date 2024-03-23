@@ -17,9 +17,7 @@ enum Direction {
     RIGHT_RIGHT_UP(new Weight(1, 2)),
     RIGHT_RIGHT_DOWN(new Weight(-1, 2)),
     DOWN_DOWN_LEFT(new Weight(-2, -1)),
-    DOWN_DOWN_RIGHT(new Weight(-2, 1)),
-
-    ;
+    DOWN_DOWN_RIGHT(new Weight(-2, 1));
 
     private final Weight weight;
 

@@ -12,9 +12,7 @@ enum PieceShape {
     KNIGHT(PieceType.KNIGHT, "n"),
     ROOK(PieceType.ROOK, "r"),
     PAWN(PieceType.PAWN, "p"),
-    EMPTY(PieceType.EMPTY, "."),
-
-    ;
+    EMPTY(PieceType.EMPTY, ".");
 
     private final PieceType pieceType;
     private final String shape;
