@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
+import chess.Calculator;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -21,8 +23,6 @@ public abstract class Piece {
     public abstract Piece move();
 
     public abstract Character findCharacter();
-
-    protected abstract List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference);
 
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
@@ -45,6 +45,20 @@ public abstract class Piece {
 
         return findBetweenPositions(movement.source(), rowDifference, columnDifference);
     }
+
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+        int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
+        int rowSign = Calculator.calculateSign(rowDifference);
+        int columnSign = Calculator.calculateSign(columnDifference);
+
+        List<Position> positions = new ArrayList<>();
+        for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
+            positions.add(position.move(rowSign * movement, columnSign * movement));
+        }
+        return positions;
+    }
+
+    ;
 
     private void validateMovable(Movement movement) {
         if (isMovable(movement)) {

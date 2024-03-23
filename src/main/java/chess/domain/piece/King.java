@@ -33,12 +33,12 @@ public class King extends Piece {
     }
 
     @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        return new ArrayList<>();
+    protected boolean isMovable(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
     }
 
     @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+        return new ArrayList<>();
     }
 }

@@ -34,13 +34,13 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        return new ArrayList<>();
-    }
-
-    @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
         return differenceList.containsAll(MOVE_DIFFERENCES);
+    }
+
+    @Override
+    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+        return new ArrayList<>();
     }
 }
