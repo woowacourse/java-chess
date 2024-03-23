@@ -13,7 +13,7 @@ class DirectionTest {
     @Test
     void upPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.UP.createPath(start);
+        List<Coordinate> path = Direction.UP.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(5, 'd'),
                 new Coordinate(6, 'd'),
@@ -28,7 +28,7 @@ class DirectionTest {
     @Test
     void downPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.DOWN.createPath(start);
+        List<Coordinate> path = Direction.DOWN.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(3, 'd'),
                 new Coordinate(2, 'd'),
@@ -42,7 +42,7 @@ class DirectionTest {
     @Test
     void rightPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.RIGHT.createPath(start);
+        List<Coordinate> path = Direction.RIGHT.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(4, 'e'),
                 new Coordinate(4, 'f'),
@@ -57,7 +57,7 @@ class DirectionTest {
     @Test
     void leftPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.LEFT.createPath(start);
+        List<Coordinate> path = Direction.LEFT.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(4, 'c'),
                 new Coordinate(4, 'b'),
@@ -71,7 +71,7 @@ class DirectionTest {
     @Test
     void rightDownPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.RIGHT_DOWN.createPath(start);
+        List<Coordinate> path = Direction.RIGHT_DOWN.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(3, 'e'),
                 new Coordinate(2, 'f'),
@@ -85,7 +85,7 @@ class DirectionTest {
     @Test
     void rightUpPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.RIGHT_UP.createPath(start);
+        List<Coordinate> path = Direction.RIGHT_UP.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(5, 'e'),
                 new Coordinate(6, 'f'),
@@ -100,7 +100,7 @@ class DirectionTest {
     @Test
     void leftDownPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.LEFT_DOWN.createPath(start);
+        List<Coordinate> path = Direction.LEFT_DOWN.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(3, 'c'),
                 new Coordinate(2, 'b'),
@@ -114,7 +114,7 @@ class DirectionTest {
     @Test
     void leftUpPath() {
         Coordinate start = new Coordinate(4, 'd');
-        List<Coordinate> path = Direction.LEFT_UP.createPath(start);
+        List<Coordinate> path = Direction.LEFT_UP.createSlidingPath(start);
         List<Coordinate> expected = List.of(
                 new Coordinate(5, 'c'),
                 new Coordinate(6, 'b'),

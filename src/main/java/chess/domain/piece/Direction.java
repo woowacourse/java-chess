@@ -22,7 +22,7 @@ enum Direction {
         this.entry = entry;
     }
 
-    public List<Coordinate> createPath(Coordinate start) {
+    public List<Coordinate> createSlidingPath(Coordinate start) {
         List<Coordinate> coordinates = new ArrayList<>();
         int fileWeight = entry.getKey();
         int rankWeight = entry.getValue();
