@@ -98,9 +98,13 @@ public class Board {
     private boolean isNotSafePathAvailableForKing(Team team, Position kingPosition) {
         return kingPosition.findAllMovablePosition(new King(team))
                 .stream()
-                .filter(position -> !pieces.containsKey(position)
-                        || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(team)))
+                .filter(position -> isMovablePosition(team, position))
                 .allMatch(position -> calculateAttackedPositionCount(team, position) != 0);
+    }
+
+    private boolean isMovablePosition(Team team, Position position) {
+        return !pieces.containsKey(position)
+                || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(team));
     }
 
     private boolean isDoubleCheck(Team team, Position kingPosition) {
