@@ -20,5 +20,11 @@ public enum File {
         return Math.abs(columnNumber - other.columnNumber);
     }
 
+    public boolean isFurtherLeftThan(File other) {
+        return columnNumber < other.columnNumber;
+    }
 
+    public boolean isFurtherRightThan(File other) {
+        return columnNumber > other.columnNumber;
+    }
 }
