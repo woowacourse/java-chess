@@ -1,6 +1,6 @@
 package domain.position;
 
-import domain.game.Vector;
+import domain.game.ChessVector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class PositionTest {
         Position source = new Position(new File('b'), new Rank(1));
         Position target = new Position(new File('c'), new Rank(2));
 
-        Assertions.assertThat(source.subtract(target)).isEqualTo(new Vector(-1, -1));
+        Assertions.assertThat(source.toVector(target)).isEqualTo(new ChessVector(-1, -1));
     }
 
 }

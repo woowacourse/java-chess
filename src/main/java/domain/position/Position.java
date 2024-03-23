@@ -1,7 +1,7 @@
 package domain.position;
 
+import domain.game.ChessVector;
 import domain.game.Direction;
-import domain.game.Vector;
 import java.util.Objects;
 
 public class Position {
@@ -25,8 +25,8 @@ public class Position {
         rank = rank.add(dRank);
     }
 
-    public Vector subtract(Position target) {
-        return new Vector(file.subtract(target.file), rank.subtract(target.rank));
+    public ChessVector toVector(Position target) {
+        return new ChessVector(file.subtract(target.file), rank.subtract(target.rank));
     }
 
     @Override

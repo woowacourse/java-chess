@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.position.Position;
+
 import java.util.Arrays;
 
 public enum Direction {
@@ -14,7 +15,6 @@ public enum Direction {
     WEST(-1, 0),
     NORTH_WEST(-1, 1),
 
-    // KNIGHT DIRECTION
     UP_RIGHT(1, 2),
     UP_LEFT(-1, 2),
     RIGHT_UP(2, 1),
@@ -23,9 +23,6 @@ public enum Direction {
     LEFT_UP(-2, 1),
     DOWN_RIGHT(1, -2),
     DOWN_LEFT(-1, -2);
-
-    private static final int MAX_BOARD_DISTANCE = 8;
-    private static final int MIN_BOARD_DISTANCE = 1;
 
     private final int fileVector;
     private final int rankVector;
@@ -37,32 +34,16 @@ public enum Direction {
 
 
     public static Direction findDirection(Position source, Position target) {
-        Vector vector = target.subtract(source);
+        ChessVector targetChessVector = target.toVector(source);
+        ChessVector unitChessVector = targetChessVector.toUnitVector();
         return Arrays.stream(values())
-                .filter(direction -> isSameDirection(direction, vector))
+                .filter(direction -> isSameDirection(direction, unitChessVector))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
-    // TODO : 가독성 개선
-    private static boolean isSameDirection(final Direction direction, final Vector vector) {
-        for (int step = MIN_BOARD_DISTANCE; step <= MAX_BOARD_DISTANCE; step++) {
-            int fileVector = direction.fileVector;
-            int rankVector = direction.rankVector;
-
-            if (canReach(findDistance(fileVector, step), vector.file()) && canReach(findDistance(rankVector, step), vector.rank())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static int findDistance(int unitVector, int step) {
-        return unitVector * step;
-    }
-
-    private static boolean canReach(int step, int unitVector) {
-        return step == unitVector;
+    private static boolean isSameDirection(Direction direction, ChessVector chessVector) {
+        return direction.fileVector == chessVector.getFileVector() && direction.rankVector == chessVector.getRankVector();
     }
 
     public int getFileVector() {
