@@ -54,7 +54,7 @@ public class RouteCalculator {
 
         final Set<Position> positions = new HashSet<>();
         for (int i = 0; i < source.getRankDistance(target) - 1; i++) {
-            position = position.upRight();
+            position = position.rightUp();
             positions.add(position);
         }
         return positions;
@@ -65,7 +65,7 @@ public class RouteCalculator {
 
         final Set<Position> positions = new HashSet<>();
         for (int i = 0; i < source.getRankDistance(target) - 1; i++) {
-            position = position.upLeft();
+            position = position.leftUp();
             positions.add(position);
         }
         return positions;

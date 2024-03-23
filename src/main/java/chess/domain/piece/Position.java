@@ -44,11 +44,11 @@ public class Position {
         return new Position(this.file.right(), this.rank);
     }
 
-    public Position upRight() {
+    public Position rightUp() {
         return new Position(this.file.right(), this.rank.up());
     }
 
-    public Position upLeft() {
+    public Position leftUp() {
         return new Position(this.file.left(), this.rank.up());
     }
 

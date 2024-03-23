@@ -34,8 +34,9 @@
 - [x] chessBoardMaker 테스트 분리
 - [x] current -> source로 변경하기
 - [x] direction, multidirection 테스트 새로
-- [ ] position 테스트 새로
-- [ ] file, rank 테스트 새로
+- [ ] 입력의 DTO 통한 검증 추가
+- [x] position 테스트 새로
+- [x] file, rank 테스트 새로
 - [ ] move 메서드 개선
 
 ## 체스 말 이동 규칙
@@ -56,7 +57,6 @@
 
 - 두 칸 이동, 수직으로 한 칸 이동 또는 한 칸 이동, 수직으로 두 칸 이동할 수 있다.
 - 이동 경로에 다른 기물이 있을 경우 뛰어넘을 수 있다.
-
 
 **BISHOP**
 
