@@ -15,11 +15,15 @@ public class ChessGame {
     public Map<Position, Piece> start() {
         if (turn != Team.WHITE && turn != Team.BLACK) {
             turn = Team.WHITE;
+            return board.getBoard();
         }
-        return board.getBoard();
+        throw new IllegalArgumentException("start는 한 번만 입력될 수 있습니다.");
     }
 
     public Map<Position, Piece> move(Position source, Position target) {
+        if (turn != Team.WHITE && turn != Team.BLACK) {
+            throw new IllegalArgumentException("start가 입력되지 전에 move를 수행할 수 없습니다.");
+        }
         if (checkTurn(source, turn)) {
             board.movePieceAndRenewBoard(source, target);
             turn = turnChange();
