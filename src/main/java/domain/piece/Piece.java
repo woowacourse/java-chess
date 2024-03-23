@@ -13,6 +13,10 @@ public abstract class Piece {
         this.type = type;
     }
 
+    public Piece move() {
+        return this;
+    }
+
     public boolean isReachable(final Vector vector, final Piece targetPiece) {
         if (this.isSameColorWith(targetPiece)) {
             return false;

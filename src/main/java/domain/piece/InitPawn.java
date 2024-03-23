@@ -5,19 +5,19 @@ import domain.piece.info.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitPawn extends Pawn {
+public class InitPawn extends MovedPawn {
     public InitPawn(final Color color) {
         super(color);
     }
 
     @Override
     protected boolean isInstanceReachable(final Vector sourceVector, final Piece targetPiece) {
-        List<Vector> vectors = new ArrayList<>();
-        addDefaultMovement(targetPiece, vectors);
-        addAttackMovement(targetPiece, vectors);
-        addInitMovement(targetPiece, vectors);
-        vectors = inverseIfBlack(vectors);
-        return vectors.stream().anyMatch(vector -> vector.equals(sourceVector));
+        List<Vector> movements = new ArrayList<>();
+        addDefaultMovement(targetPiece, movements);
+        addAttackMovement(targetPiece, movements);
+        addInitMovement(targetPiece, movements);
+        movements = inverseIfBlack(movements);
+        return movements.stream().anyMatch(vector -> vector.equals(sourceVector));
     }
 
     private void addInitMovement(final Piece targetPiece, final List<Vector> vectors) {
@@ -29,5 +29,10 @@ public class InitPawn extends Pawn {
     @Override
     public boolean isInitPawn() {
         return true;
+    }
+
+    @Override
+    public Piece move() {
+        return new MovedPawn(color());
     }
 }
