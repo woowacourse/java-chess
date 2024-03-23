@@ -3,7 +3,6 @@ package controller;
 import domain.Chess;
 import domain.command.Command;
 import domain.position.Position;
-import java.util.Arrays;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -21,8 +20,7 @@ public class GameManager {
         if (command.isNotStart()) {
             return;
         }
-        Chess chess = new Chess();
-        outputView.printBoard(chess.getBoard());
+        Chess chess = initChess();
         manage(chess);
     }
 
@@ -31,17 +29,16 @@ public class GameManager {
             outputView.printTurn(chess.getTurn());
             String rawCommand = requestCommand();
             Command command = CommandInput.asCommand(rawCommand);
-            if (command.isStart()) {
-                chess = new Chess();
-                outputView.printBoard(chess.getBoard());
-                manage(chess);
-                return;
-            }
             if (command.isEnd()) {
                 return;
             }
-            List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
-            playChess(chess, moveCommands);
+            if (command.isStart()) {
+                chess = initChess();
+                manage(chess);
+                return;
+            }
+            List<String> rawPositions = CommandInput.extractPositions(rawCommand);
+            playChess(chess, rawPositions);
             outputView.printBoard(chess.getBoard());
             manage(chess);
         } catch (IllegalArgumentException e) {
@@ -50,9 +47,15 @@ public class GameManager {
         }
     }
 
-    private void playChess(Chess chess, List<String> moveTokens) {
-        Position sourcePosition = Position.generate(moveTokens.get(1));
-        Position targetPosition = Position.generate(moveTokens.get(2));
+    private Chess initChess() {
+        Chess chess = new Chess();
+        outputView.printBoard(chess.getBoard());
+        return chess;
+    }
+
+    private void playChess(Chess chess, List<String> rawPositions) {
+        Position sourcePosition = Position.generate(rawPositions.get(0));
+        Position targetPosition = Position.generate(rawPositions.get(1));
         chess.play(sourcePosition, targetPosition);
     }
 
