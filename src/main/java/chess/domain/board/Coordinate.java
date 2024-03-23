@@ -32,4 +32,12 @@ public class Coordinate {
     public int hashCode() {
         return Objects.hash(rank, file);
     }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "rank=" + rank +
+                ", file=" + file +
+                '}';
+    }
 }

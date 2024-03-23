@@ -33,4 +33,11 @@ class File {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "value=" + value +
+                '}';
+    }
 }
