@@ -18,7 +18,7 @@ public class ChessApplication {
     public static void main(String[] args) {
         outputView.printStartMessage();
         String command = inputView.readCommand();
-        if (command.equals(START_COMMAND)) {
+        if (START_COMMAND.equals(command)) {
             outputView.printBoard(chessGame.getBoard());
             startTurn();
         }
@@ -26,10 +26,10 @@ public class ChessApplication {
 
     private static void startTurn() {
         String gameCommand = inputView.readCommand();
-        if (gameCommand.equals(END_COMMAND)) {
+        if (END_COMMAND.equals(gameCommand)) {
             return;
         }
-        if (gameCommand.startsWith(MOVE_COMMAND)) {
+        if (MOVE_COMMAND.startsWith(gameCommand)) {
             Board board = chessGame.startTurn(MovePositionDto.from(gameCommand));
             outputView.printBoard(board);
         }
