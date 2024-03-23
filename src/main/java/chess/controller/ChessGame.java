@@ -26,11 +26,11 @@ public class ChessGame {
         state = GameState.PLAYING;
     }
 
-    public void tryMove(Location source, Location target) {
+    public void move(Location source, Location target) {
         if (state != GameState.PLAYING) {
             throw new IllegalStateException("게임이 시작되지 않았습니다. 게임을 시작해 주세요");
         }
-        board.tryMove(source, target);
+        board.move(source, target);
     }
 
     public void endGame() {

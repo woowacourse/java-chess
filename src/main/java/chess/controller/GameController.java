@@ -54,9 +54,11 @@ public class GameController {
     private void move() {
         String sourceInput = INPUT_VIEW.readLocation();
         String targetInput = INPUT_VIEW.readLocation();
+
         Location source = Location.of(sourceInput);
         Location target = Location.of(targetInput);
-        chessGame.tryMove(source, target);
+
+        chessGame.move(source, target);
         OUTPUT_VIEW.printBoard(chessGame.getBoard());
     }
 

@@ -79,7 +79,7 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public void tryMove(Location source, Location target) {
+    public void move(Location source, Location target) {
         Piece selectedPiece = findPieceAt(source);
         Path path = createPath(source, target);
         if (selectedPiece.canMove(path)) {
