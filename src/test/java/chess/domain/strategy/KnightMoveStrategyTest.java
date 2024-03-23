@@ -12,7 +12,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class KnightMoveStrategyTest {
+class KnightMoveStrategyTest {
     /**
      * ........  8 (rank 8)
      * ........  7

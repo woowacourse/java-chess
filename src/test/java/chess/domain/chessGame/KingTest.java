@@ -15,7 +15,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class KingTest {
+class KingTest {
     /**
      * ........  8 (rank 8)
      * ...P....  7
