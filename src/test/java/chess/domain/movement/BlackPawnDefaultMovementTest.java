@@ -36,6 +36,17 @@ class BlackPawnDefaultMovementTest {
     }
 
     @Test
+    @DisplayName("상대 말이 이동하고자 하는 곳에 있을 때, 이동이 불가능하다.")
+    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+        Position start = new Position(File.D, Rank.FOUR);
+        Position end = new Position(File.D, Rank.THREE);
+        BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
+        boolean isEnemyExistAtEnd = true;
+
+        assertThat(blackPawnDefaultMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+    }
+
+    @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
         Position start = new Position(File.D, Rank.FOUR);

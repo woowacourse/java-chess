@@ -6,12 +6,18 @@ import java.util.List;
 
 public class WhitePawnFirstMovement implements MovementRule {
 
+    private static final Rank WHITE_PAWN_INIT_RANK = Rank.TWO;
+
     @Override
     public boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
 
-        return start.isSameRank(Rank.TWO) && rankDifference == 2 && fileDifference == 0;
+        boolean isEmptyAtEnd = !isEnemyExistAtEnd;
+        boolean isExistInitPosition = start.isSameRank(WHITE_PAWN_INIT_RANK);
+        boolean isMatchDifference = rankDifference == 2 && fileDifference == 0;
+
+        return isEmptyAtEnd && isExistInitPosition && isMatchDifference;
     }
 
     @Override

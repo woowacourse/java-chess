@@ -18,8 +18,9 @@ class BlackPawnFirstMovementTest {
         Position start = new Position(File.D, Rank.SEVEN);
         Position end = new Position(File.D, Rank.FIVE);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end, false)).isTrue();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
     }
 
     @ParameterizedTest
@@ -30,6 +31,17 @@ class BlackPawnFirstMovementTest {
         Position end = new Position(file, rank);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
         boolean isEnemyExistAtEnd = false;
+
+        assertThat(blackPawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+    }
+
+    @Test
+    @DisplayName("상대 말이 이동하고자 하는 곳에 있을 때, 이동이 불가능하다.")
+    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+        Position start = new Position(File.D, Rank.SEVEN);
+        Position end = new Position(File.D, Rank.FIVE);
+        BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+        boolean isEnemyExistAtEnd = true;
 
         assertThat(blackPawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }

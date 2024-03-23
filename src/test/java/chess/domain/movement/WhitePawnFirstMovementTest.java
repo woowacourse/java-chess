@@ -35,6 +35,17 @@ class WhitePawnFirstMovementTest {
         assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
+    @Test
+    @DisplayName("상대 말이 이동하고자 하는 곳에 있을 때, 이동이 불가능하다.")
+    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+        Position start = new Position(File.D, Rank.TWO);
+        Position end = new Position(File.D, Rank.FOUR);
+        WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+        boolean isEnemyExistAtEnd = true;
+
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+    }
+
     @ParameterizedTest
     @CsvSource({"C, ONE", "D, THREE", "D, FOUR"})
     @DisplayName("초기 위치가 아닐 경우, 이동 불가능하다.")
