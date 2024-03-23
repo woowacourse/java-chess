@@ -6,6 +6,7 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BoardOutput {
@@ -19,16 +20,16 @@ public class BoardOutput {
         List<List<Piece>> output = new ArrayList<>();
 
         for (Rank rank : Rank.reverse()) {
-            List<Piece> piecesByRank = new ArrayList<>();
-            for (File file : File.values()) {
-                Square square = Square.of(file, rank);
-                Piece piece = board.findPieceBySquare(square);
-
-                piecesByRank.add(piece);
-            }
-            output.add(piecesByRank);
+            output.add(makeRow(board, rank));
         }
         return new BoardOutput(output);
+    }
+
+    private static List<Piece> makeRow(Board board, Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> Square.of(file, rank))
+                .map(board::findPieceBySquare)
+                .toList();
     }
 
     public List<List<Piece>> values() {
