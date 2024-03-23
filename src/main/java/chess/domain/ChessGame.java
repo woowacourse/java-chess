@@ -25,8 +25,9 @@ public class ChessGame {
         if (checkTurn(source, turn)) {
             board.movePieceAndRenewBoard(source, target);
             turn = turnChange();
+            return board.getBoard();
         }
-        return board.getBoard();
+        throw new IllegalArgumentException(String.format("%s의 차례입니다.", turn.name()));
     }
 
     private void validateMove(Position source, Position target) {
