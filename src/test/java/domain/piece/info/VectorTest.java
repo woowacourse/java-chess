@@ -46,4 +46,32 @@ class VectorTest {
                 () -> Assertions.assertThat(new Vector(source, targetRightDown).isDiagonal()).isTrue()
         );
     }
+
+    /*
+     ...T....  7
+     ...x....  6
+     ...x....  5
+     TxxSxxxT  4
+     ...x....  3
+     ...x....  2
+     ...T....  1 (rank 1)
+
+     abcdefgh
+  */
+    @Test
+    @DisplayName("주어진 두 위치가 일직선상에 위치하는지 확인한다")
+    void isStaright() {
+        final Position source = new Position(File.D, Rank.FOUR);
+        final Position targetUp = new Position(File.D, Rank.SEVEN);
+        final Position targetRight = new Position(File.H, Rank.FOUR);
+        final Position targetDown = new Position(File.D, Rank.ONE);
+        final Position targetLeft = new Position(File.A, Rank.FOUR);
+
+        assertAll(
+                () -> Assertions.assertThat(new Vector(source, targetUp).isStraight()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetRight).isStraight()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetDown).isStraight()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetLeft).isStraight()).isTrue()
+        );
+    }
 }
