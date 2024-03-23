@@ -74,4 +74,40 @@ class VectorTest {
                 () -> Assertions.assertThat(new Vector(source, targetLeft).isStraight()).isTrue()
         );
     }
+
+    /*
+     ........  7
+     ........  6
+     ..TTT...  5
+     ..TST...  4
+     ..TTT...  3
+     ........  2
+     ........  1 (rank 1)
+
+     abcdefgh
+  */
+    @Test
+    @DisplayName("주어진 두 위치가 인접해 있는지 확인한다")
+    void isNearest() {
+        final Position source = new Position(File.D, Rank.FOUR);
+        final Position targetUp = new Position(File.D, Rank.FIVE);
+        final Position targetUpRight = new Position(File.E, Rank.FIVE);
+        final Position targetRight = new Position(File.E, Rank.FOUR);
+        final Position targetRightDown = new Position(File.E, Rank.THREE);
+        final Position targetDown = new Position(File.D, Rank.THREE);
+        final Position targetDownLeft = new Position(File.C, Rank.THREE);
+        final Position targetLeft = new Position(File.C, Rank.FOUR);
+        final Position targetLeftUp = new Position(File.C, Rank.FIVE);
+
+        assertAll(
+                () -> Assertions.assertThat(new Vector(source, targetUp).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetUpRight).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetRight).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetRightDown).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetDown).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetDownLeft).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetLeft).isUnitVector()).isTrue(),
+                () -> Assertions.assertThat(new Vector(source, targetLeftUp).isUnitVector()).isTrue()
+        );
+    }
 }
