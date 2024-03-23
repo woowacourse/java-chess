@@ -21,7 +21,7 @@ public abstract class Pawn extends Piece {
         if (!movable.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.findCourses(position.findDirectionTo(destination), destination);
+        return position.findCourses(destination);
     }
 
     public abstract boolean isCaptureMove(Position destination);
