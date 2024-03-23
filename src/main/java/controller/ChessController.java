@@ -3,7 +3,6 @@ package controller;
 import domain.game.ChessGame;
 import domain.game.MovePosition;
 import java.util.EnumMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import view.Command;
@@ -42,9 +41,8 @@ public class ChessController {
 
     private void play(ChessGame chessGame) {
         try {
-            List<String> rawCommand = inputView.readCommand();
-            Command command = Command.from(rawCommand);
-            MovePosition movePosition = new MovePosition(rawCommand.subList(1, rawCommand.size()));
+            MovePosition movePosition = new MovePosition(inputView.readCommand());
+            Command command = Command.from(movePosition);
             commands.get(command).accept(chessGame, movePosition);
         } catch (Exception e) {
             outputView.printErrorMessage(e);

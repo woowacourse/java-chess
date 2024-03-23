@@ -1,36 +1,31 @@
 package view;
 
+import domain.game.MovePosition;
 import java.util.Arrays;
-import java.util.List;
 
 public enum Command {
-    START("start", 1),
-    END("end", 1),
-    MOVE("move", 3);
-
-    private static final int COMMAND_NAME_INDEX = 0;
+    START("start", 0),
+    END("end", 0),
+    MOVE("move", 2);
 
     private final String name;
-    private final int length;
+    private final int positionCount;
 
-    Command(String name, int length) {
+    Command(String name, int positionCount) {
         this.name = name;
-        this.length = length;
+        this.positionCount = positionCount;
     }
 
-    public static Command from(List<String> rawCommand) {
-        return Arrays.stream(values())
-                .filter(command -> command.isSameCommand(rawCommand) && command.isSameSize(rawCommand))
+    public static Command from(MovePosition movePosition) {
+        Command command = Arrays.stream(values())
+                .filter(c -> c.name.equals(movePosition.commandName()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
-    }
 
-    private boolean isSameCommand(List<String> rawCommand) {
-        return this.name.equals(rawCommand.get(COMMAND_NAME_INDEX));
-    }
-
-    private boolean isSameSize(List<String> rawCommand) {
-        return this.length == rawCommand.size();
+        if (command.positionCount != movePosition.size()) {
+            throw new IllegalArgumentException("명령어의 길이가 올바르지 않습니다.");
+        }
+        return command;
     }
 
     public String getName() {
