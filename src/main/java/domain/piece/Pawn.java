@@ -12,11 +12,6 @@ public class Pawn extends Piece {
         super(color, Type.PAWN);
     }
 
-    /*
-        firstMove => moveTwo + no enemy
-        ordinary => moveOne + no enemy
-        opposite => diagonal + have enemy
-     */
     @Override
     protected boolean isInstanceReachable(final Vector sourceVector, final Piece targetPiece) {
         List<Vector> vectors = new ArrayList<>();

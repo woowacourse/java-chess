@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private Color turn;
+    private Color currentPlayerColor;
     private final Map<Position, Piece> squares;
 
     public Board(final Map<Position, Piece> squares) {
-        this.turn = Color.WHITE;
+        this.currentPlayerColor = Color.WHITE;
         this.squares = squares;
     }
 
@@ -33,9 +33,8 @@ public class Board {
     }
 
     private void validateMovement(final Piece currentPiece, final Vector vector, final Piece targetPiece) {
-        validateTurn(currentPiece);
+//        validateTurn(currentPiece);
         validateReachability(vector, currentPiece, targetPiece);
-
     }
 
     private boolean isPiecesPossiblyExistOnPath(final Vector vector) {
@@ -50,36 +49,39 @@ public class Board {
     }
 
     private void validateNoPieceExistInPath(final Vector vector, final Position source) {
-        // 룩, 비숍, 퀸, 폰(두 칸),
 
         final List<Position> path = vector.generatePathExcludingEndpoints(source);
-//        path.stream()
-//                .map(squares::get)
-//                .filter(r -> !r.isEmpty())
-//                .findAny()
-//                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 경로입니다"));
+        final boolean isPieceExistInPath = !path.stream()
+                .map(squares::get)
+                .allMatch(Piece::isEmpty);
+
+        if (isPieceExistInPath) {
+            throw new IllegalArgumentException("시작위치와 도착위치 사이에 다른 말이 놓져 있습니다");
+        }
     }
 
     private void validateTurn(final Piece currentPiece) {
-        if (!currentPiece.hasColor(turn)) {
+        if (!currentPiece.hasColor(currentPlayerColor)) {
             throw new IllegalArgumentException("현재 차례가 아닙니다.");
         }
     }
 
     private void updateBoard(final Position source, final Position target, final Piece currentPiece) {
-        squares.remove(target);
-
-        if (currentPiece.isInitPawn()) {
-            squares.put(target, new Pawn(turn));
-        } else {
-            squares.put(target, currentPiece);
-        }
+        overwriteSourceToTarget(target, currentPiece);
 
         squares.put(source, Empty.INSTANCE);
     }
 
+    private void overwriteSourceToTarget(final Position target, final Piece currentPiece) {
+        if (currentPiece.isInitPawn()) {
+            squares.put(target, new Pawn(currentPlayerColor));
+            return;
+        }
+        squares.put(target, currentPiece);
+    }
+
     private void switchTurn() {
-        turn = turn.reverse();
+        currentPlayerColor = currentPlayerColor.reverse();
     }
 
     public Map<Position, Piece> squares() {

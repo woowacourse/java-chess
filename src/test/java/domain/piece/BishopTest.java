@@ -1,5 +1,6 @@
 package domain.piece;
 
+import static domain.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,17 +29,13 @@ class BishopTest {
     @DisplayName("비숍은 대각선 방향으로 움직일 수 있다")
     void isDiagonal() {
         final Piece bishop = new Bishop(Color.BLACK);
-        final Position source = new Position(File.D, Rank.FOUR);
-        final Position targetOne = new Position(File.A, Rank.SEVEN);
-        final Position targetTwo = new Position(File.G, Rank.SEVEN);
-        final Position targetThree = new Position(File.A, Rank.ONE);
-        final Position targetFour = new Position(File.G, Rank.ONE);
+        final Position source = D_FOUR;
 
         assertAll(
-                () -> assertThat(bishop.isReachable(new Vector(source, targetOne), Empty.INSTANCE)).isTrue(),
-                () -> assertThat(bishop.isReachable(new Vector(source, targetTwo), Empty.INSTANCE)).isTrue(),
-                () -> assertThat(bishop.isReachable(new Vector(source, targetThree), Empty.INSTANCE)).isTrue(),
-                () -> assertThat(bishop.isReachable(new Vector(source, targetFour), Empty.INSTANCE)).isTrue()
+                () -> assertThat(bishop.isReachable(new Vector(source, G_SEVEN), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, G_ONE), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, A_ONE), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, A_SEVEN), Empty.INSTANCE)).isTrue()
         );
     }
 }

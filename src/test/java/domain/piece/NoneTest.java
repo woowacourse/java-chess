@@ -1,5 +1,7 @@
 package domain.piece;
 
+import static domain.PositionFixture.D_FOUR;
+import static domain.PositionFixture.D_SEVEN;
 import static org.assertj.core.api.Assertions.*;
 
 import domain.piece.info.Color;
@@ -18,10 +20,8 @@ class NoneTest {
     void moveNone() {
         final Piece empty = Empty.INSTANCE;
         final Piece other = new Rook(Color.BLACK);
-        final Position source = new Position(File.D, Rank.FOUR);
-        final Position target = new Position(File.D, Rank.SEVEN);
 
-        assertThatThrownBy(() -> empty.isReachable(new Vector(source, target), other))
+        assertThatThrownBy(() -> empty.isReachable(new Vector(D_FOUR, D_SEVEN), other))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("비어 있는 칸입니다.");
     }

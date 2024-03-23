@@ -1,6 +1,8 @@
 package domain.piece;
 
 
+import static domain.PositionFixture.A_ONE;
+import static domain.PositionFixture.A_TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.info.Color;
@@ -42,9 +44,7 @@ class PieceTest {
     void sameColor() {
         final Piece piece = new Rook(Color.WHITE);
         final Piece otherPiece = new Rook(Color.WHITE);
-        final Position source = new Position(File.A, Rank.ONE);
-        final Position target = new Position(File.A, Rank.TWO);
 
-        assertThat(piece.isReachable(new Vector(source, target), otherPiece)).isFalse();
+        assertThat(piece.isReachable(new Vector(A_ONE, A_TWO), otherPiece)).isFalse();
     }
 }

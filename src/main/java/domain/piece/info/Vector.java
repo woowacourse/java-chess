@@ -1,6 +1,5 @@
 package domain.piece.info;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -50,8 +49,8 @@ public class Vector {
         return isStraight() || isDiagonal();
     }
 
-    public boolean isUnitVector() {
-        return Math.abs(fileDifference) == 1 || Math.abs(rankDifference) == 1;
+    public boolean isAbsoluteValueSmallerOrEqualThanOne() {
+        return Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) <= 1;
     }
 
     public int absoluteSum() {
@@ -67,12 +66,12 @@ public class Vector {
     }
 
     public List<Position> generatePathExcludingEndpoints(final Position source) {
-        final int maxDifferecne = maxAbsoluteValue();
-        final int unitFile = fileDifference / maxDifferecne;
-        final int unitRank = rankDifference / maxDifferecne;
+        final int maxAbsoluteValue = maxAbsoluteValue();
+        final int unitFile = fileDifference / maxAbsoluteValue;
+        final int unitRank = rankDifference / maxAbsoluteValue;
         final LinkedList<Position> ret = new LinkedList<>();
         ret.add(source);
-        for (int counter = 0; counter < maxDifferecne; counter++) {
+        for (int counter = 0; counter < maxAbsoluteValue; counter++) {
             ret.add(ret.getLast().next(unitFile, unitRank));
         }
         ret.removeLast();

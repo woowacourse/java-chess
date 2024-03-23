@@ -1,15 +1,10 @@
 package domain.piece.info;
 
 import static domain.PositionFixture.*;
-import static domain.piece.info.File.*;
-import static domain.piece.info.Rank.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.piece.Piece;
-import domain.piece.Queen;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +13,7 @@ class VectorTest {
     @Test
     @DisplayName("두 위치가 같으면 예외가 발생한다")
     void isSamePosition() {
-        final Position position = new Position(A, ONE);
-
-        assertThatThrownBy(() -> new Vector(position, position))
+        assertThatThrownBy(() -> new Vector(A_ONE, A_ONE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("두 위치가 같습니다");
     }
@@ -40,17 +33,11 @@ class VectorTest {
     @Test
     @DisplayName("주어진 두 위치가 대각선상에 위치하는지 확인한다")
     void isDiagonal() {
-        final Position source = new Position(D, FOUR);
-        final Position targetLeftUp = new Position(A, SEVEN);
-        final Position targetRightUp = new Position(G, SEVEN);
-        final Position targetLeftDown = new Position(A, ONE);
-        final Position targetRightDown = new Position(G, ONE);
-
         assertAll(
-                () -> assertThat(new Vector(source, targetLeftUp).isDiagonal()).isTrue(),
-                () -> assertThat(new Vector(source, targetRightUp).isDiagonal()).isTrue(),
-                () -> assertThat(new Vector(source, targetLeftDown).isDiagonal()).isTrue(),
-                () -> assertThat(new Vector(source, targetRightDown).isDiagonal()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, A_SEVEN).isDiagonal()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, G_SEVEN).isDiagonal()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, A_ONE).isDiagonal()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, G_ONE).isDiagonal()).isTrue()
         );
     }
 
@@ -68,17 +55,11 @@ class VectorTest {
     @Test
     @DisplayName("주어진 두 위치가 일직선상에 위치하는지 확인한다")
     void isStraight() {
-        final Position source = new Position(D, FOUR);
-        final Position targetUp = new Position(D, SEVEN);
-        final Position targetRight = new Position(H, FOUR);
-        final Position targetDown = new Position(D, ONE);
-        final Position targetLeft = new Position(A, FOUR);
-
         assertAll(
-                () -> assertThat(new Vector(source, targetUp).isStraight()).isTrue(),
-                () -> assertThat(new Vector(source, targetRight).isStraight()).isTrue(),
-                () -> assertThat(new Vector(source, targetDown).isStraight()).isTrue(),
-                () -> assertThat(new Vector(source, targetLeft).isStraight()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, D_SEVEN).isStraight()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, H_FOUR).isStraight()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, D_ONE).isStraight()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, A_FOUR).isStraight()).isTrue()
         );
     }
 
@@ -96,34 +77,22 @@ class VectorTest {
     @Test
     @DisplayName("주어진 두 위치가 인접해 있는지 확인한다")
     void isNearest() {
-        final Position source = new Position(D, FOUR);
-        final Position targetUp = new Position(D, FIVE);
-        final Position targetUpRight = new Position(E, FIVE);
-        final Position targetRight = new Position(E, FOUR);
-        final Position targetRightDown = new Position(E, THREE);
-        final Position targetDown = new Position(D, THREE);
-        final Position targetDownLeft = new Position(C, THREE);
-        final Position targetLeft = new Position(C, FOUR);
-        final Position targetLeftUp = new Position(C, FIVE);
-
         assertAll(
-                () -> assertThat(new Vector(source, targetUp).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetUpRight).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetRight).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetRightDown).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetDown).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetDownLeft).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetLeft).isUnitVector()).isTrue(),
-                () -> assertThat(new Vector(source, targetLeftUp).isUnitVector()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, D_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FOUR).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, D_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_THREE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FOUR).isAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FIVE).isAbsoluteValueSmallerOrEqualThanOne()).isTrue()
         );
     }
 
     @Test
     @DisplayName("벡터는 파일과 랭크의 절댓값 합을 구할 수 있다")
     void absoluteSum() {
-        final Position source = new Position(D, FOUR);
-        final Position target = new Position(C, THREE);
-        final Vector vector = new Vector(source, target);
+        final Vector vector = new Vector(D_FOUR, C_THREE);
 
         assertThat(vector.absoluteSum()).isEqualTo(2);
     }
@@ -131,9 +100,7 @@ class VectorTest {
     @Test
     @DisplayName("벡터는 주어진 값의 절대값을 갖고 있는지 확인할 수 있다")
     void absoluteValueOf() {
-        final Position source = new Position(D, FOUR);
-        final Position target = new Position(C, TWO);
-        final Vector vector = new Vector(source, target);
+        final Vector vector = new Vector(D_FOUR, C_TWO);
 
         assertAll(
                 () -> assertThat(vector.hasAbsoluteValueOf(1)).isTrue(),
@@ -187,6 +154,6 @@ class VectorTest {
                 () -> assertThat(positionsSix).contains(C_THREE, B_TWO).hasSize(2),
                 () -> assertThat(positionsSeven).contains(C_FOUR, B_FOUR).hasSize(2),
                 () -> assertThat(positionsEight).contains(C_FIVE, B_SIX).hasSize(2)
-                );
+        );
     }
 }

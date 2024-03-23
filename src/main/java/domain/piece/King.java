@@ -12,7 +12,7 @@ public class King extends Piece {
 
     @Override
     protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
-        return vector.isUnitVector();
+        return vector.isAbsoluteValueSmallerOrEqualThanOne();
     }
 
 }
