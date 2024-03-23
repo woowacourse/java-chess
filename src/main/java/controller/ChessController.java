@@ -42,7 +42,7 @@ public class ChessController {
                 MovePosition movePosition = new MovePosition(rawCommand.subList(1, rawCommand.size()));
                 commands.get(command).accept(chessGame, movePosition);
             } catch (Exception e) {
-                // todo 에러 출력
+                outputView.printErrorMessage(e);
             }
         }
     }

@@ -61,4 +61,8 @@ public class OutputView {
         }
         return pieceName;
     }
+
+    public void printErrorMessage(Exception e) {
+        System.out.println(e.getMessage());
+    }
 }
