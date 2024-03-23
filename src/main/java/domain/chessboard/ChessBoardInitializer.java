@@ -2,15 +2,14 @@ package domain.chessboard;
 
 import domain.coordinate.Coordinate;
 import domain.piece.Bishop;
+import domain.piece.BlackPawn;
 import domain.piece.Color;
 import domain.piece.King;
 import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.WhitePawn;
 import domain.piece.base.ChessPiece;
-import domain.position.Column;
-import domain.position.Row;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +26,12 @@ public class ChessBoardInitializer {
         Map<Coordinate, ChessPiece> board = new HashMap<>();
 
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(Color.BLACK).get(i));
-            board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(Color.WHITE).get(i));
+            board.put(new Coordinate(BLACK_FIRST_RANK, i), createFirstRank(Color.BLACK).get(i));
+            board.put(new Coordinate(WHITE_FIRST_RANK, i), createFirstRank(Color.WHITE).get(i));
         }
         for (int i = 0; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_SECOND_RANK), new Column(i)), new Pawn(Color.BLACK));
-            board.put(new Coordinate(new Row(WHITE_SECOND_RANK), new Column(i)), new Pawn(Color.WHITE));
+            board.put(new Coordinate(BLACK_SECOND_RANK, i), new BlackPawn());
+            board.put(new Coordinate(WHITE_SECOND_RANK, i), new WhitePawn());
         }
         return board;
     }
