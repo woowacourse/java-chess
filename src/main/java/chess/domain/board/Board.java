@@ -2,8 +2,10 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
+import chess.dto.PieceDrawing;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,7 +37,9 @@ public class Board {
         });
     }
 
-    public Set<Piece> getPieces() {
-        return pieces;
+    public List<PieceDrawing> generatePieceDrawings() {
+        return pieces.stream()
+                .map(PieceDrawing::of)
+                .toList();
     }
 }

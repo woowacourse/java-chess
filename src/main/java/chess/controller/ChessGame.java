@@ -27,7 +27,7 @@ public class ChessGame {
 
             if (command == Command.START) {
                 board = BoardFactory.createBoard();
-                OutputView.printBoard(board.getPieces());
+                OutputView.printBoard(board.generatePieceDrawings());
             }
             if (command == Command.MOVE) {
                 turn = tryMove(board, arguments.get(1), arguments.get(2), turn);
@@ -43,8 +43,8 @@ public class ChessGame {
             board.move(
                     Square.from(source),
                     Square.from(target));
-            OutputView.printBoard(board.getPieces());
-            return turn.next();
+            OutputView.printBoard(board.generatePieceDrawings());
+            return turn.opposite();
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
         }

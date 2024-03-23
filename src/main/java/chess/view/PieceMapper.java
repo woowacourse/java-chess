@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
 
 public enum PieceMapper {
     KING('k'),
@@ -11,16 +10,16 @@ public enum PieceMapper {
     KNIGHT('n'),
     PAWN('p');
 
-    private final char name;
+    private final char symbol;
 
-    PieceMapper(char name) {
-        this.name = name;
+    PieceMapper(char symbol) {
+        this.symbol = symbol;
     }
 
-    public static char map(PieceType pieceType, PieceColor pieceColor) {
-        if (pieceColor == PieceColor.BLACK) {
-            return Character.toUpperCase(valueOf(pieceType.name()).name);
+    public static char map(String typeName, String colorName) {
+        if (PieceColor.BLACK.isSame(colorName)) {
+            return Character.toUpperCase(valueOf(typeName).symbol);
         }
-        return valueOf(pieceType.name()).name;
+        return valueOf(typeName).symbol;
     }
 }

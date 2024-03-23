@@ -113,10 +113,10 @@ public class Square {
     }
 
     public int getFileOrdinal() {
-        return rank.ordinal();
+        return file.ordinal();
     }
 
     public int getRankOrdinal() {
-        return file.ordinal();
+        return rank.ordinal();
     }
 }

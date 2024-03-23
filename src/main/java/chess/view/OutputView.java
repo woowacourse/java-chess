@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.piece.Piece;
-import chess.domain.square.Square;
+import chess.dto.PieceDrawing;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 
 public class OutputView {
     private static final int BOARD_SIZE = 8;
@@ -19,9 +18,9 @@ public class OutputView {
         System.out.printf(TITLE_START);
     }
 
-    public static void printBoard(Set<Piece> pieces) {
+    public static void printBoard(List<PieceDrawing> pieceDrawings) {
         char[][] board = generateEmptyBoard();
-        setPiecesOnBoard(board, pieces);
+        setPiecesOnBoard(board, pieceDrawings);
         for (char[] line : board) {
             System.out.println(line);
         }
@@ -36,11 +35,10 @@ public class OutputView {
         return emptyBoard;
     }
 
-    private static void setPiecesOnBoard(char[][] board, Set<Piece> pieces) {
-        for (Piece piece : pieces) {
-            Square square = piece.getSquare();
-            char pieceSymbol = PieceMapper.map(piece.getType(), piece.getColor());
-            board[square.getFileOrdinal()][square.getRankOrdinal()] = pieceSymbol;
+    private static void setPiecesOnBoard(char[][] board, List<PieceDrawing> pieceDrawings) {
+        for (PieceDrawing pieceDrawing : pieceDrawings) {
+            char pieceSymbol = PieceMapper.map(pieceDrawing.typeName(), pieceDrawing.colorName());
+            board[pieceDrawing.rankOrdinal()][pieceDrawing.fileOrdinal()] = pieceSymbol;
         }
     }
 
