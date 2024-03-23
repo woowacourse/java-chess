@@ -4,8 +4,9 @@ import domain.position.Position;
 import domain.position.UnitVector;
 import java.util.Set;
 
-public abstract sealed class PawnMoveStrategy implements MoveStrategy permits BlackPawnMoveStrategy,
-        WhitePawnMoveStrategy {
+public abstract sealed class PawnMoveStrategy implements MoveStrategy permits BlackPawnMoveStrategy, WhitePawnMoveStrategy {
+    private static final int ONE_STEP_SIZE = 1;
+
     @Override
     public boolean isMovable(Position source, Position destination, Set<Position> otherPiecesPosition) {
         int rowDiff = destination.rowIndex() - source.rowIndex();
@@ -22,14 +23,16 @@ public abstract sealed class PawnMoveStrategy implements MoveStrategy permits Bl
         return false;
     }
 
-    private boolean isCrossMovable(int rowDiff, int colDiff) {
-        return isEqualSize(rowDiff, 1) && isEqualSize(colDiff, 1);
-    }
-
     protected abstract Set<UnitVector> getCrossValidVectors();
 
+    protected abstract UnitVector getStraightValidVector();
+
+    private boolean isCrossMovable(int rowDiff, int colDiff) {
+        return isEqualSize(rowDiff, ONE_STEP_SIZE) && isEqualSize(colDiff, ONE_STEP_SIZE);
+    }
+
     private boolean isStraightMovable(int rowDiff, Position source, Set<Position> otherPiecesPosition) {
-        boolean isOneStepForwardMovable = isEqualSize(rowDiff, 1);
+        boolean isOneStepForwardMovable = isEqualSize(rowDiff, ONE_STEP_SIZE);
         boolean isTwoStepForwardMovable = checkTwoStepMovable(rowDiff, source, otherPiecesPosition);
 
         return isOneStepForwardMovable || isTwoStepForwardMovable;
@@ -40,14 +43,12 @@ public abstract sealed class PawnMoveStrategy implements MoveStrategy permits Bl
         Position positionAfterOneStep = source.add(getStraightValidVector());
         boolean isBlockedByOtherPiece = otherPiecesPosition.contains(positionAfterOneStep);
 
-        return isEqualSize(rowDiff, 2) && isInitialMove && !isBlockedByOtherPiece;
+        return isEqualSize(rowDiff, ONE_STEP_SIZE * 2) && isInitialMove && !isBlockedByOtherPiece;
     }
 
-    protected abstract UnitVector getStraightValidVector();
+    protected abstract boolean isInitialPosition(final Position position);
 
     private boolean isEqualSize(int biPolarValue, int expectedSize) {
         return Math.abs(biPolarValue) == Math.abs(expectedSize);
     }
-
-    protected abstract boolean isInitialPosition(final Position position);
 }
