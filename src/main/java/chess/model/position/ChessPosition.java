@@ -21,9 +21,9 @@ public class ChessPosition {
         return ChessPositionCache.CACHE.get(key);
     }
 
-    public Movement calculateMovement(ChessPosition other) {
-        Difference fileDifference = file.minus(other.file);
-        Difference rankDifference = rank.minus(other.rank);
+    public Movement calculateMovement(ChessPosition source) {
+        Difference fileDifference = file.minus(source.file);
+        Difference rankDifference = rank.minus(source.rank);
         return new Movement(fileDifference, rankDifference);
     }
 

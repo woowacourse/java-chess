@@ -1,0 +1,27 @@
+package chess.model.position;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+class ChessPositionTest {
+
+    @Test
+    @DisplayName("타겟 위치와 소스 위치 간의 이동량을 계산한다.")
+    void calculateMovement() {
+        // given
+        ChessPosition sourcePosition = ChessPosition.of(File.A, Rank.FOUR);
+        ChessPosition targetPosition = ChessPosition.of(File.B, Rank.TWO);
+
+        // when
+        Movement movement = targetPosition.calculateMovement(sourcePosition);
+
+        // then
+        Difference fileDifference = Difference.from(1);
+        Difference rankDifference = Difference.from(-2);
+        assertThat(movement).isEqualTo(new Movement(fileDifference, rankDifference));
+    }
+
+}
