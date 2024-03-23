@@ -1,38 +1,32 @@
 package domain.coordinate;
 
-import domain.position.Column;
-import domain.position.Row;
+import domain.direction.Direction;
 import java.util.Objects;
 
 public class Coordinate {
 
-    private final Row row;
-    private final Column column;
+    private final Position row;
+    private final Position column;
 
-    public Coordinate(Row row, Column column) {
+    public Coordinate(Position row, Position column) {
         this.row = row;
         this.column = column;
     }
 
+    public Coordinate(int row, int column) {
+        this(new Position(row), new Position(column));
+    }
+
     public int calculateRowDifference(Coordinate coordinate) {
-        return row.getRowDifference(coordinate.row);
+        return row.calculateDifference(coordinate.row);
     }
 
     public int calculateColumnDifference(Coordinate coordinate) {
-        return column.getColumnDifference(coordinate.column);
+        return column.calculateDifference(coordinate.column);
     }
 
-    public boolean isSameRowPosition(int otherPosition) {
-        return row.isSamePosition(otherPosition);
-    }
-
-    public void moveByDistances(int rowDistance, int columnDistance) {
-        row.moveBy(rowDistance);
-        column.moveBy(columnDistance);
-    }
-
-    public Coordinate copied() {
-        return new Coordinate(row.copied(), column.copied());
+    public boolean hasSameRowPosition(Position row) {
+        return this.row.equals(row);
     }
 
     @Override
