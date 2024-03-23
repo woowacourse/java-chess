@@ -27,7 +27,6 @@ class RookTest {
           abcdefgh
     */
     @Test
-
     @DisplayName("룩은 가로, 세로 방향으로 이동할 수 있다")
     void movement() {
         final Piece rook = new Rook(Color.BLACK);
@@ -44,5 +43,4 @@ class RookTest {
                 () -> Assertions.assertThat(rook.isReachable(source, targetLeft, Empty.INSTANCE)).isTrue()
         );
     }
-
 }

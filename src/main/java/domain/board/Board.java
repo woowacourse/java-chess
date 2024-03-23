@@ -22,10 +22,11 @@ public class Board {
 //        validateNoPieceExistBetween(source, target);
 //        validateTurn(currentPiece);
 
-        if (currentPiece.isReachable(source, target, targetPiece)) {
-            updateBoard(source, target, currentPiece);
-            switchTurn();
+        if (!currentPiece.isReachable(source, target, targetPiece)) {
+            throw new IllegalArgumentException();
         }
+        updateBoard(source, target, currentPiece);
+        switchTurn();
     }
 
 //    private void validateNoPieceExistBetween(final Position source, final Position target) {
@@ -53,7 +54,7 @@ public class Board {
         } else {
             squares.put(target, currentPiece);
         }
-        
+
         squares.put(source, Empty.INSTANCE);
     }
 
