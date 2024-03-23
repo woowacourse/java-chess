@@ -20,9 +20,9 @@ public class ChessGame {
         this.state = state.start();
     }
 
-    public void move(String source, String target) { // todo positions
-        Position sourcePosition = getPosition(source);
-        Position targetPosition = getPosition(target);
+    public void move(MovePosition movePosition) {
+        Position sourcePosition = getPosition(movePosition.source());
+        Position targetPosition = getPosition(movePosition.target());
         this.state = state.move(sourcePosition, targetPosition);
     }
 

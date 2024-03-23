@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -10,7 +12,9 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public String readCommand() {
-        return scanner.nextLine().trim();
+    public List<String> readCommand() {
+        String command = scanner.nextLine().trim();
+        // todo validate
+        return Arrays.asList(command.split(" "));
     }
 }
