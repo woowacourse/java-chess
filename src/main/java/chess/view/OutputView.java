@@ -3,12 +3,13 @@ package chess.view;
 import chess.domain.location.Column;
 import chess.domain.location.Location;
 import chess.domain.location.Row;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.implement.Bishop;
+import chess.domain.piece.implement.King;
+import chess.domain.piece.implement.Knight;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.implement.Queen;
+import chess.domain.piece.implement.Rook;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
@@ -41,28 +42,27 @@ public class OutputView {
         if (piece == null) {
             return ".";
         }
-        String s = getPieceString(piece);
+        String s = getPieceString(piece.getPieceType());
         if (piece.isBlack()) {
             return s.toUpperCase();
         }
         return s.toLowerCase();
     }
 
-    private String getPieceString(Piece piece) {
-
-        if (piece instanceof King) {
+    private String getPieceString(PieceType type) {
+        if (type == PieceType.KING) {
             return "k";
         }
-        if (piece instanceof Queen) {
+        if (type == PieceType.QUEEN) {
             return "q";
         }
-        if (piece instanceof Rook) {
+        if (type == PieceType.ROOK) {
             return "r";
         }
-        if (piece instanceof Knight) {
+        if (type == PieceType.KNIGHT) {
             return "n";
         }
-        if (piece instanceof Bishop) {
+        if (type == PieceType.BISHOP) {
             return "b";
         }
         return "p";

@@ -1,10 +1,13 @@
-package chess.domain.piece;
+package chess.domain.piece.implement;
 
 import chess.domain.board.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class Bishop extends Piece {
     public Bishop(Color color) {
-        super(color);
+        super(color, PieceType.BISHOP);
     }
 
     @Override

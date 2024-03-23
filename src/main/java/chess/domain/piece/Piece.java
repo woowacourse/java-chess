@@ -4,9 +4,11 @@ import chess.domain.board.Path;
 
 public abstract class Piece {
     private final Color color;
+    private final PieceType pieceType;
 
-    protected Piece(Color color) {
+    protected Piece(Color color, PieceType pieceType) {
         this.color = color;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean canMove(Path path);
@@ -19,5 +21,9 @@ public abstract class Piece {
 
     public boolean isAlly(Piece other) {
         return this.color == other.color;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

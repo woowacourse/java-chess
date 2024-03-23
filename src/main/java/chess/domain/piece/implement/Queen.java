@@ -1,18 +1,18 @@
-package chess.domain.piece;
+package chess.domain.piece.implement;
 
 import chess.domain.board.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
-public class Rook extends Piece {
-    public Rook(Color color) {
-        super(color);
+public class Queen extends Piece {
+    public Queen(Color color) {
+        super(color, PieceType.QUEEN);
     }
 
     @Override
     public boolean canMove(Path path) {
         if (path.hasPiecePathExcludedTarget()) {
-            return false;
-        }
-        if (path.containsDiagonalDirection()) {
             return false;
         }
         return path.isNotAllyAtTarget() && path.hasCountOfDirection(1);
@@ -22,3 +22,4 @@ public class Rook extends Piece {
     public void move() {
     }
 }
+

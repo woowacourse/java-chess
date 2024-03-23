@@ -1,6 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.implement;
 
 import chess.domain.board.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.implement.Pawn;
 
 public class WhitePawn extends Pawn {
 

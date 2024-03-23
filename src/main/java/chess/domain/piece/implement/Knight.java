@@ -1,10 +1,13 @@
-package chess.domain.piece;
+package chess.domain.piece.implement;
 
 import chess.domain.board.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public class Knight extends Piece {
     public Knight(Color color) {
-        super(color);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override

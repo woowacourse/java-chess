@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.implement;
 
 import chess.domain.board.Path;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 
 public abstract class Pawn extends Piece {
     abstract boolean isBackward(Path path);
@@ -8,7 +11,7 @@ public abstract class Pawn extends Piece {
     private boolean moved;
 
     protected Pawn(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
         this.moved = false;
     }
 
