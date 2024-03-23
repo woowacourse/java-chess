@@ -15,7 +15,7 @@ public class BoardFactory {
     public Map<Square, Piece> create() {
         Map<Square, Piece> board = new HashMap<>();
 
-        for (Rank rank : Rank.values()) {
+        for (Rank rank : Rank.sorted()) {
             createByRank(rank, board);
         }
 
@@ -23,7 +23,7 @@ public class BoardFactory {
     }
 
     private void createByRank(Rank rank, Map<Square, Piece> board) {
-        for (File file : File.values()) {
+        for (File file : File.sorted()) {
             Square square = Square.of(file, rank);
             Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
 

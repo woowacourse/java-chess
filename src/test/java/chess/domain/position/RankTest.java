@@ -3,6 +3,8 @@ package chess.domain.position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -32,5 +34,21 @@ class RankTest {
 
         // when & then
         assertThatThrownBy(() -> rank.moveVertical(index)).isInstanceOf(IndexOutOfBoundsException.class);
+    }
+
+    @Test
+    @DisplayName("랭크는 인덱스에 따라 정렬된 결과를 반환한다.")
+    void ranksSorted() {
+        // given & when & then
+        assertThat(Rank.sorted()).isEqualTo(List.of(Rank.ONE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE,
+                Rank.SIX, Rank.SEVEN, Rank.EIGHT));
+    }
+
+    @Test
+    @DisplayName("랭크는 인덱스에 따라 내림차순 정렬된 결과를 반환한다.")
+    void ranksReverseSorted() {
+        // given & when & then
+        assertThat(Rank.reversed()).isEqualTo(List.of(Rank.EIGHT, Rank.SEVEN, Rank.SIX, Rank.FIVE, Rank.FOUR,
+                Rank.THREE, Rank.TWO, Rank.ONE));
     }
 }

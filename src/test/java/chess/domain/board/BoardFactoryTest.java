@@ -37,7 +37,7 @@ public class BoardFactoryTest {
 
     private Map<Square, Piece> createExpectedBoard() {
         Map<Square, Piece> expected = new HashMap<>();
-        List<File> files = List.of(File.values());
+        List<File> files = File.sorted();
         List<PieceType> pieces = List.of(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
                 PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
 
@@ -53,8 +53,8 @@ public class BoardFactoryTest {
         IntStream.range(0, 8)
                 .forEach(i -> expected.put(Square.of(files.get(i), Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK)));
 
-        for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
-            for (File file : File.values()) {
+        for (Rank rank : Rank.sorted().subList(2, 6)) {
+            for (File file : File.sorted()) {
                 expected.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
             }
         }

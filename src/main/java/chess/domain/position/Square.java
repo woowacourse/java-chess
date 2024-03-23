@@ -11,8 +11,8 @@ public class Square {
     private static final Map<String, Square> POOL;
 
     static {
-        POOL = Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values())
+        POOL = Rank.sorted().stream()
+                .flatMap(rank -> File.sorted().stream()
                         .map(file -> new Square(file, rank)))
                 .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
     }

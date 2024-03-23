@@ -3,6 +3,8 @@ package chess.domain.position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -32,5 +34,12 @@ class FileTest {
 
         // when & then
         assertThatThrownBy(() -> file.moveHorizontal(index)).isInstanceOf(IndexOutOfBoundsException.class);
+    }
+
+    @Test
+    @DisplayName("파일은 인덱스에 따라 정렬된 결과를 반환한다.")
+    void filesSorted() {
+        // given & when & then
+        assertThat(File.sorted()).isEqualTo(List.of(File.A, File.B, File.C, File.D, File.E, File.F, File.G, File.H));
     }
 }

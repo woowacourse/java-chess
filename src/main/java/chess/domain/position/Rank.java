@@ -1,8 +1,7 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public enum Rank {
@@ -19,7 +18,6 @@ public enum Rank {
     ;
 
     private static final String OUT_OF_RANGE_ERROR = "더 이상 전진할 수 없습니다.";
-    private static final String RANK_NOT_FOUND_ERROR = "존재하지 않는 랭크입니다.";
 
     private final int value;
 
@@ -28,7 +26,7 @@ public enum Rank {
     }
 
     public Rank moveVertical(int index) {
-        List<Rank> ranks = List.of(Rank.values());
+        List<Rank> ranks = Rank.sorted();
         int targetIndex = ranks.indexOf(this) + index;
 
         validateIndexBound(targetIndex, ranks);
@@ -43,27 +41,24 @@ public enum Rank {
     }
 
     public int calculateDiff(Rank rank) {
-        List<Rank> ranks = List.of(Rank.values());
+        List<Rank> ranks = sorted();
 
         return ranks.indexOf(rank) - ranks.indexOf(this);
     }
 
-    public static Rank findRankByValue(int value) {
+    public static List<Rank> reversed() {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == value)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(RANK_NOT_FOUND_ERROR));
+                .sorted(Comparator.comparing(Rank::value).reversed())
+                .toList();
     }
 
-    public static List<Rank> reverse() {
-        List<Rank> reversedRanks = new ArrayList<>(List.of(Rank.values()));
-        Collections.reverse(reversedRanks);
-
-        return Collections.unmodifiableList(reversedRanks);
+    public static List<Rank> sorted() {
+        return Arrays.stream(Rank.values())
+                .sorted(Comparator.comparing(Rank::value))
+                .toList();
     }
 
     public int value() {
         return value;
     }
-
 }
