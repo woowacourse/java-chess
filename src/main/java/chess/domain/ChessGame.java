@@ -13,7 +13,9 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> start() {
-        turn = Team.WHITE;
+        if (turn != Team.WHITE && turn != Team.BLACK) {
+            turn = Team.WHITE;
+        }
         return board.getBoard();
     }
 
