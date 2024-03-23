@@ -5,12 +5,13 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
-import chess.domain.position.MoveCommand;
+import chess.domain.position.MoveInformation;
 import chess.util.RetryUtil;
-import chess.view.GameCommand;
+import chess.view.GameStatus;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceView;
+import chess.view.UserCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,9 @@ public class ChessGame {
     }
 
     public void play() {
-        String progressCommand = RetryUtil.retryUntilNoException(inputView::readProgressCommand);
+        UserCommand command = RetryUtil.retryUntilNoException(inputView::readProgressCommand);
 
-        if (!isStartCommand(progressCommand)) {
+        if (!isStart(command)) {
             return;
         }
 
@@ -39,8 +40,8 @@ public class ChessGame {
         playUntilEnd(board);
     }
 
-    public boolean isStartCommand(String command) {
-        return command.equals(GameCommand.START.value());
+    public boolean isStart(UserCommand command) {
+        return command.gameStatus().equals(GameStatus.START);
     }
 
     private void playUntilEnd(Board board) {
@@ -52,22 +53,25 @@ public class ChessGame {
     }
 
     private boolean loopWhileEnd(Board board) {
-        List<String> command = inputView.readCommand();
+        UserCommand command = RetryUtil.retryUntilNoException(inputView::readMoveCommand);
 
-        if (command.size() == 1) {
+        if (isEnd(command.gameStatus())) {
             return false;
         }
 
-        String sourceName = command.get(1);
-        String destinationName = command.get(2);
-        MoveCommand moveCommand = new MoveCommand(Square.findByName(sourceName), Square.findByName(destinationName));
-        movePiece(board, moveCommand);
+        MoveInformation moveInformation =
+                new MoveInformation(Square.findByName(command.source()), Square.findByName(command.destination()));
+        movePiece(board, moveInformation);
 
         return true;
     }
 
-    private void movePiece(Board board, MoveCommand moveCommand) {
-        board.move(moveCommand.source(), moveCommand.destination());
+    private boolean isEnd(GameStatus gameStatus) {
+        return gameStatus.equals(GameStatus.END);
+    }
+
+    private void movePiece(Board board, MoveInformation moveInformation) {
+        board.move(moveInformation.source(), moveInformation.destination());
         printBoardOutput(board);
     }
 
