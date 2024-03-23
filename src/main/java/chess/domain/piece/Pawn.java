@@ -8,7 +8,6 @@ import java.util.Map;
 
 public final class Pawn extends Piece {
 
-    private static final String NAME = "P";
     private static final int TWO_RANK = 2;
     private static final Map<Team, Pawn> POOL = Map.of(
             Team.WHITE, new Pawn(Team.WHITE),
@@ -16,7 +15,7 @@ public final class Pawn extends Piece {
     );
 
     private Pawn(Team team) {
-        super(NAME, team);
+        super(team);
     }
 
     static Pawn from(Team team) {

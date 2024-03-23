@@ -5,14 +5,13 @@ import java.util.Map;
 
 public final class Rook extends Piece {
 
-    private static final String name = "R";
     private static final Map<Team, Rook> POOL = Map.of(
             Team.WHITE, new Rook(Team.WHITE),
             Team.BLACK, new Rook(Team.BLACK)
     );
 
     private Rook(Team team) {
-        super(name, team);
+        super(team);
     }
 
     static Rook from(Team team) {

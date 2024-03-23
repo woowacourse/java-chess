@@ -5,11 +5,9 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    private final String name;
     private final Team team;
 
-    public Piece(String name, Team team) {
-        this.name = name;
+    public Piece(Team team) {
         this.team = team;
     }
 
@@ -47,31 +45,7 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public String getName() {
-        if (team.isWhite()) {
-            return name.toLowerCase();
-        }
-        return name;
-    }
-
     public Team getTeam() {
         return team;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return Objects.equals(name, piece.name) && team == piece.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, team);
     }
 }
