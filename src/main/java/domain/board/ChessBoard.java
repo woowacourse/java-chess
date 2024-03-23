@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -37,7 +38,11 @@ public class ChessBoard {
         board.put(target, board.remove(source));
     }
 
-    public Map<Position, Piece> getBoard() {
+    public Map<Position, Piece> getBoard() { // todo getPositionAndPieces
         return Collections.unmodifiableMap(board);
+    }
+
+    public Color getSourceColor(Position source) {
+        return findByPosition(source).color();
     }
 }

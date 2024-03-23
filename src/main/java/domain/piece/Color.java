@@ -9,6 +9,10 @@ public enum Color {
         return this == BLACK;
     }
 
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
     public boolean isNeutrality() {
         return this == NEUTRALITY;
     }

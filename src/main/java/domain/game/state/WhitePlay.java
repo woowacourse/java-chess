@@ -1,0 +1,31 @@
+package domain.game.state;
+
+import domain.board.ChessBoard;
+import domain.piece.Color;
+import domain.position.Position;
+
+public class WhitePlay extends GameState {
+    protected WhitePlay(ChessBoard board) {
+        super(board);
+    }
+
+    @Override
+    public GameState start() {
+        throw new UnsupportedOperationException("이미 게임이 시작되었습니다.");
+    }
+
+    @Override
+    public GameState move(Position source, Position target) {
+        Color color = chessBoard().getSourceColor(source);
+        if (!color.isWhite()) {
+            throw new IllegalArgumentException("흰색 기물만 이동할 수 있습니다.");
+        }
+        chessBoard().movePiece(source, target);
+        return new BlackPlay(chessBoard());
+    }
+
+    @Override
+    public GameState end() {
+        return new End(chessBoard());
+    }
+}
