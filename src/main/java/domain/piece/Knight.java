@@ -10,58 +10,50 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return isUpUpRight(source, target) || isUpUpLeft(source, target)
-                || isDownDownRight(source, target) || isDownDownLeft(source, target)
-                || isUpRightRight(source, target) || isUpLeftLeft(source, target)
-                || isDownRightRight(source, target) || isDownLeftLeft(source, target);
+        return isRightUpUp(source, target) || isLeftUpUp(source, target)
+                || isRightDownDown(source, target) || isLeftDownDown(source, target)
+                || isRightRightUp(source, target) || isLeftLeftUp(source, target)
+                || isRightRightDown(source, target) || isLeftLeftDown(source, target);
     }
 
-    private boolean isUpUpLeft(Position source, Position target) {
-        return source.isLeftUp(target)
-                && source.isLegalRankStep(target, 2)
-                && source.isLegalFileStep(target, 1);
+    private boolean isRightUpUp(Position source, Position target) {
+        return source.isRightUp(target) && distanceOneFileTwoRank(source, target);
     }
 
-    private boolean isUpUpRight(Position source, Position target) {
-        return source.isRightUp(target)
-                && source.isLegalRankStep(target, 2)
-                && source.isLegalFileStep(target, 1);
+    private boolean isLeftUpUp(Position source, Position target) {
+        return source.isLeftUp(target) && distanceOneFileTwoRank(source, target);
     }
 
-    private boolean isDownDownLeft(Position source, Position target) {
-        return source.isLeftDown(target)
-                && source.isLegalRankStep(target, 2)
-                && source.isLegalFileStep(target, 1);
+    private boolean isRightDownDown(Position source, Position target) {
+        return source.isRightDown(target) && distanceOneFileTwoRank(source, target);
     }
 
-    private boolean isDownDownRight(Position source, Position target) {
-        return source.isRightDown(target)
-                && source.isLegalRankStep(target, 2)
-                && source.isLegalFileStep(target, 1);
+    private boolean isLeftDownDown(Position source, Position target) {
+        return source.isLeftDown(target) && distanceOneFileTwoRank(source, target);
     }
 
-    private boolean isUpLeftLeft(Position source, Position target) {
-        return source.isRightDown(target)
-                && source.isLegalRankStep(target, 1)
-                && source.isLegalFileStep(target, 2);
+    private boolean isRightRightUp(Position source, Position target) {
+        return source.isRightUp(target) && distanceTwoFileOneRank(source, target);
     }
 
-    private boolean isUpRightRight(Position source, Position target) {
-        return source.isRightDown(target)
-                && source.isLegalRankStep(target, 1)
-                && source.isLegalFileStep(target, 2);
+    private boolean isLeftLeftUp(Position source, Position target) {
+        return source.isLeftUp(target) && distanceTwoFileOneRank(source, target);
     }
 
-    private boolean isDownLeftLeft(Position source, Position target) {
-        return source.isRightDown(target)
-                && source.isLegalRankStep(target, 1)
-                && source.isLegalFileStep(target, 2);
+    private boolean isRightRightDown(Position source, Position target) {
+        return source.isRightDown(target) && distanceTwoFileOneRank(source, target);
     }
 
-    private boolean isDownRightRight(Position source, Position target) {
-        return source.isRightDown(target)
-                && source.isLegalRankStep(target, 1)
-                && source.isLegalFileStep(target, 2);
+    private boolean isLeftLeftDown(Position source, Position target) {
+        return source.isLeftDown(target) && distanceTwoFileOneRank(source, target);
+    }
+
+    private boolean distanceOneFileTwoRank(Position source, Position target) {
+        return source.isLegalFileStep(target, 1) && source.isLegalRankStep(target, 2);
+    }
+
+    private boolean distanceTwoFileOneRank(Position source, Position target) {
+        return source.isLegalFileStep(target, 2) && source.isLegalRankStep(target, 1);
     }
 
     @Override
