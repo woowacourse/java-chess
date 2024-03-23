@@ -11,9 +11,6 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-
-    public static final String REGEX_FORMAT = "^[a-h][1-8]$";
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -27,12 +24,13 @@ public class ChessController {
 
         outputView.printCommandMessage();
         ChessCommand command = enterCommand();
+        Pattern pattern = Pattern.compile(InputView.MOVE_POSITION_REGEX_FORMAT);
         while (command != ChessCommand.END) {
             outputView.printSquareStatus(chessBoard);
             List<String> input = inputView.enterChessCommand();
             command = ChessCommand.from(input.get(0));
 
-            executeMoveCommand(chessBoard, input, command);
+            executeMoveCommand(chessBoard, input, command, pattern);
         }
     }
 
@@ -47,15 +45,18 @@ public class ChessController {
         }
     }
 
-    private void executeMoveCommand(final ChessBoard chessBoard, final List<String> input, final ChessCommand command) {
+    private void executeMoveCommand(final ChessBoard chessBoard,
+                                    final List<String> input,
+                                    final ChessCommand command,
+                                    final Pattern pattern) {
         if (command == ChessCommand.MOVE) {
             validateMoveCommand(input);
-            chessBoard.move(generateSquare(input.get(1)), generateSquare(input.get(2)));
+            chessBoard.move(generateSquare(input.get(1), pattern), generateSquare(input.get(2), pattern));
         }
     }
 
-    private Position generateSquare(final String coordinate) {
-        if (isNotValidCoordinateInput(coordinate)) {
+    private Position generateSquare(final String coordinate, final Pattern pattern) {
+        if (isNotValidCoordinateInput(coordinate, pattern)) {
             throw new IllegalArgumentException("이동할 source와 target 정보를 다시 입력해주세요.");
         }
 
@@ -66,7 +67,7 @@ public class ChessController {
         );
     }
 
-    private boolean isNotValidCoordinateInput(final String input) {
-        return !Pattern.compile(REGEX_FORMAT).matcher(input).matches();
+    private boolean isNotValidCoordinateInput(final String input, final Pattern pattern) {
+        return !pattern.matcher(input).matches();
     }
 }

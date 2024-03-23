@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class DirectionTest {
 
-    @DisplayName("(1,1) -> (2,2)로 이동하면,  방향이다.")
+    @DisplayName("(1,1) -> (2,2)로 이동하면, 북동 방향이다.")
     @Test
     void moveToNorthEast() {
         Position sourcePosition = PositionFixture.generateB1Position();
