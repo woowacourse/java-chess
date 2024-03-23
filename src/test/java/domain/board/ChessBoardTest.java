@@ -19,6 +19,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
     @Test
+    void 출발_위치에_기물_존재하지_않으면_예외가_발생한다() {
+        Position source = new Position(File.F, Rank.FOUR);
+        Position target = new Position(File.F, Rank.EIGHT);
+        ChessBoard board = new ChessBoard(Map.of());
+
+        assertThatThrownBy(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("피스가 없습니다.");
+    }
+    @Test
     void 기물을_움직일_때_중간에_다른_기물이_있으면_예외가_발생한다() {
         Position source = new Position(File.F, Rank.FOUR);
         Position target = new Position(File.F, Rank.EIGHT);
@@ -69,7 +79,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(Map.of(resource, new Queen(Color.WHITE)));
         board.move(resource, target);
 
-        Assertions.assertThatThrownBy(() -> board.move(resource, target))
+        Assertions.assertThatThrownBy(() -> board.move(target, resource))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대 턴입니다.");
     }

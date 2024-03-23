@@ -23,11 +23,19 @@ public class ChessBoard {
     }
 
     public void move(final Position source, final Position target) {
+        validateEmptyPiece(source);
         validateTurn(source);
         validateEmptyRoute(source, target);
         validateLegalMove(source, target);
         movePiece(source, target);
         this.turn.flip();
+    }
+
+    private void validateEmptyPiece(final Position source) {
+        Piece piece = findPieceByPosition(source);
+        if (piece.color().isNeutrality()) {
+            throw new IllegalArgumentException("피스가 없습니다.");
+        }
     }
 
     private void validateTurn(final Position source) {

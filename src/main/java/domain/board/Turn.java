@@ -22,6 +22,6 @@ public class Turn {
     }
 
     boolean isOpponentTurn(final Color color) {
-        return this.color != color;
+        return this.color != color && !color.isNeutrality();
     }
 }
