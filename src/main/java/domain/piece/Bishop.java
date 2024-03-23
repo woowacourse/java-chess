@@ -4,7 +4,6 @@ import domain.Direction;
 import domain.Square;
 import domain.Team;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,11 +20,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final List<Square> movableSquares = new ArrayList<>();
-        for (final Direction movableDirection : movableDirections) {
-            addMovableSquares(source, movableDirection, movableSquares);
-        }
-        return movableSquares.contains(target);
+        return checkMovable(source, target, movableDirections);
     }
 
     @Override

@@ -4,6 +4,7 @@ import domain.Direction;
 import domain.Square;
 import domain.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -13,8 +14,15 @@ public abstract class Piece {
         this.team = team;
     }
 
+    protected boolean checkMovable(final Square source, final Square target, final List<Direction> movableDirections) {
+        final List<Square> movableSquares = new ArrayList<>();
+        for (final Direction movableDirection : movableDirections) {
+            addMovableSquares(source, movableDirection, movableSquares);
+        }
+        return movableSquares.contains(target);
+    }
 
-    protected static void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares) {
+    protected void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares) {
         Square movableSource = source;
         while (movableSource.canMove(direction)) {
             movableSource = movableSource.next2(direction);
