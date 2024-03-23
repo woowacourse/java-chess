@@ -38,4 +38,18 @@ class RankTest {
     void should_CalculateDistance_When_OtherRankGiven(Rank rank1, Rank rank2, int distance) {
         assertThat(rank1.calculateDistanceWith(rank2)).isEqualTo(distance);
     }
+
+    @DisplayName("랭크가 특정 랭크보다 보드 위치에서 더 위인지 알 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"EIGHT, ONE", "SEVEN, TWO", "SIX, THREE", "FIVE, FOUR"})
+    void should_CalculateRankIsHigherThanOther(Rank higher, Rank lower) {
+        assertThat(higher.isAbove(lower)).isTrue();
+    }
+
+    @DisplayName("랭크가 특정 랭크보다 보드 위치에서 더 위인지 알 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"EIGHT, ONE", "SEVEN, TWO", "SIX, THREE", "FIVE, FOUR"})
+    void should_CalculateRankIsLowerThanOther(Rank higher, Rank lower) {
+        assertThat(lower.isBelow(higher)).isTrue();
+    }
 }

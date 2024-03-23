@@ -33,4 +33,12 @@ public enum Rank {
     public int calculateDistanceWith(Rank other) {
         return Math.abs(rowNumber - other.rowNumber);
     }
+
+    public boolean isAbove(Rank other) {
+        return rowNumber < other.rowNumber;
+    }
+
+    public boolean isBelow(Rank other) {
+        return rowNumber > other.rowNumber;
+    }
 }
