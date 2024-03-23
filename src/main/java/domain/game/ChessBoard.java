@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceGenerator;
 import domain.position.Position;
@@ -7,10 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
-
+    private Color turn;
     private final Map<Position, Piece> piecePosition;
 
     public ChessBoard() {
+        this.turn = Color.WHITE;
         this.piecePosition = new HashMap<>();
         PieceGenerator.generate(piecePosition);
     }
@@ -23,9 +25,10 @@ public class ChessBoard {
         commonMoveValidate(sourcePosition, targetPosition);
 
         Piece findPiece = piecePosition.get(sourcePosition);
-
+        validateCorrectTurn(findPiece);
         findPiece.validateMovableRoute(sourcePosition, targetPosition, piecePosition);
         update(sourcePosition, targetPosition, findPiece);
+        turn = turn.switchTurn();
     }
 
     private void commonMoveValidate(Position sourcePosition, Position targetPosition) {
@@ -37,6 +40,12 @@ public class ChessBoard {
         }
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("같은 위치로의 이동입니다. 다시 입력해주세요.");
+        }
+    }
+
+    private void validateCorrectTurn(final Piece findPiece) {
+        if (!findPiece.isEqualColor(turn)) {
+            throw new IllegalArgumentException("현재는 " + turn.name() + "의 이동 차례입니다.");
         }
     }
 
