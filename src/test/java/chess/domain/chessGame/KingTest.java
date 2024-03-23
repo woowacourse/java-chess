@@ -31,18 +31,18 @@ public class KingTest {
     @Test
     @DisplayName("실제로 움직일 수 있는 위치를 모두 가져온다.")
     void generateMovablePositions() {
-        Position targetPosition = new Position(Row.RANK2, Column.D);
+        Position targetPosition = new Position(Row.TWO, Column.D);
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
                         targetPosition, new Piece(PieceType.KING, Color.WHITE),
-                        new Position(Row.RANK2, Column.E), new Piece(PieceType.WHITE_PAWN, Color.WHITE),
-                        new Position(Row.RANK1, Column.D), new Piece(PieceType.BISHOP, Color.WHITE),
-                        new Position(Row.RANK3, Column.C), new Piece(PieceType.BLACK_PAWN, Color.WHITE),
-                        new Position(Row.RANK7, Column.D), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK4, Column.F), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK1, Column.E), new Piece(PieceType.ROOK, Color.BLACK),
-                        new Position(Row.RANK1, Column.C), new Piece(PieceType.KNIGHT, Color.BLACK),
-                        new Position(Row.RANK2, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK)
+                        new Position(Row.TWO, Column.E), new Piece(PieceType.WHITE_PAWN, Color.WHITE),
+                        new Position(Row.ONE, Column.D), new Piece(PieceType.BISHOP, Color.WHITE),
+                        new Position(Row.THREE, Column.C), new Piece(PieceType.BLACK_PAWN, Color.WHITE),
+                        new Position(Row.SEVEN, Column.D), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
+                        new Position(Row.FOUR, Column.F), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
+                        new Position(Row.ONE, Column.E), new Piece(PieceType.ROOK, Color.BLACK),
+                        new Position(Row.ONE, Column.C), new Piece(PieceType.KNIGHT, Color.BLACK),
+                        new Position(Row.TWO, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK)
 
                 )
         ));
@@ -50,11 +50,11 @@ public class KingTest {
         List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         assertThat(result).containsExactlyInAnyOrder(
-                new Position(Row.RANK3, Column.D),
-                new Position(Row.RANK3, Column.E),
-                new Position(Row.RANK1, Column.E),
-                new Position(Row.RANK1, Column.C),
-                new Position(Row.RANK2, Column.C)
+                new Position(Row.THREE, Column.D),
+                new Position(Row.THREE, Column.E),
+                new Position(Row.ONE, Column.E),
+                new Position(Row.ONE, Column.C),
+                new Position(Row.TWO, Column.C)
         );
     }
 }

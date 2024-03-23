@@ -3,14 +3,14 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum Row {
-    RANK1(7),
-    RANK2(6),
-    RANK3(5),
-    RANK4(4),
-    RANK5(3),
-    RANK6(2),
-    RANK7(1),
-    RANK8(0);
+    ONE(7),
+    TWO(6),
+    THREE(5),
+    FOUR(4),
+    FIVE(3),
+    SIX(2),
+    SEVEN(1),
+    EIGHT(0);
 
     private final int index;
 
@@ -31,6 +31,6 @@ public enum Row {
 
     public boolean isNextInRange(int distance) {
         int nextIndex = index + distance;
-        return RANK8.index <= nextIndex && nextIndex <= RANK1.index;
+        return EIGHT.index <= nextIndex && nextIndex <= ONE.index;
     }
 }

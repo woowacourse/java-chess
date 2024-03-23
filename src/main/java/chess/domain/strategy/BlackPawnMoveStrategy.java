@@ -9,6 +9,6 @@ public class BlackPawnMoveStrategy extends PawnMoveStrategy{
     private static final List<Direction> DIRECTIONS = List.of(Direction.S, Direction.SE, Direction.SW);
 
     public BlackPawnMoveStrategy() {
-        super(DIRECTIONS, Row.RANK7, Direction.S);
+        super(DIRECTIONS, Row.SEVEN, Direction.S);
     }
 }

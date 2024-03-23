@@ -22,13 +22,13 @@ public class Board {
     }
 
     private void initializeBlackTeam() {
-        initializePawn(Row.RANK7, Color.BLACK);
-        initializeHighValuePiece(Row.RANK8, Color.BLACK);
+        initializePawn(Row.SEVEN, Color.BLACK);
+        initializeHighValuePiece(Row.EIGHT, Color.BLACK);
     }
 
     private void initializeWhiteTeam() {
-        initializePawn(Row.RANK2, Color.WHITE);
-        initializeHighValuePiece(Row.RANK1, Color.WHITE);
+        initializePawn(Row.TWO, Color.WHITE);
+        initializeHighValuePiece(Row.ONE, Color.WHITE);
     }
 
     private void initializePawn(Row row, Color color) {

@@ -30,22 +30,22 @@ public class BlackPawnTest {
     @Test
     @DisplayName("블랙 폰 시작 위치에서 양쪽 대각선에 상대 기물이 있고 앞 2칸은 비어있다.")
     void startPositionPawnWithOnlyAttackablePositions() {
-        Position targetPosition = new Position(Row.RANK7, Column.D);
+        Position targetPosition = new Position(Row.SEVEN, Column.D);
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
                         targetPosition, new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK6, Column.C), new Piece(PieceType.ROOK, Color.WHITE),
-                        new Position(Row.RANK6, Column.E), new Piece(PieceType.ROOK, Color.WHITE)
+                        new Position(Row.SIX, Column.C), new Piece(PieceType.ROOK, Color.WHITE),
+                        new Position(Row.SIX, Column.E), new Piece(PieceType.ROOK, Color.WHITE)
                 )
         ));
 
         List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         Assertions.assertThat(result).containsExactlyInAnyOrder(
-                new Position(Row.RANK6, Column.C),
-                new Position(Row.RANK6, Column.E),
-                new Position(Row.RANK6, Column.D),
-                new Position(Row.RANK5, Column.D)
+                new Position(Row.SIX, Column.C),
+                new Position(Row.SIX, Column.E),
+                new Position(Row.SIX, Column.D),
+                new Position(Row.FIVE, Column.D)
         );
     }
 
@@ -64,19 +64,19 @@ public class BlackPawnTest {
     @Test
     @DisplayName("블랙 폰 시작 위치에서 앞으로만 이동할 수 있는 경우")
     void startPositionPawnWithFreePositions() {
-        Position targetPosition = new Position(Row.RANK7, Column.D);
+        Position targetPosition = new Position(Row.SEVEN, Column.D);
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
                         targetPosition, new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK6, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK)
+                        new Position(Row.SIX, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK)
                 )
         ));
 
         List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         Assertions.assertThat(result).containsExactlyInAnyOrder(
-                new Position(Row.RANK6, Column.D),
-                new Position(Row.RANK5, Column.D)
+                new Position(Row.SIX, Column.D),
+                new Position(Row.FIVE, Column.D)
         );
     }
 
@@ -95,12 +95,12 @@ public class BlackPawnTest {
     @Test
     @DisplayName("블랙 폰 시작 위치에서 움직일 수 없는 경우")
     void startPositionPawnWithCantMovePositions() {
-        Position targetPosition = new Position(Row.RANK7, Column.D);
+        Position targetPosition = new Position(Row.SEVEN, Column.D);
         ChessGame chessGame = new ChessGame(new Board(
                 Map.of(
                         targetPosition, new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK6, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
-                        new Position(Row.RANK6, Column.D), new Piece(PieceType.BLACK_PAWN, Color.WHITE)
+                        new Position(Row.SIX, Column.C), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
+                        new Position(Row.SIX, Column.D), new Piece(PieceType.BLACK_PAWN, Color.WHITE)
                 )
         ));
 

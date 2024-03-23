@@ -17,30 +17,30 @@ class RookMoveStrategyTest {
     @Test
     @DisplayName("룩이 A1 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnEdgePosition() {
-        Position position = new Position(Row.RANK1, Column.A);
+        Position position = new Position(Row.ONE, Column.A);
         MoveStrategy moveStrategy = new RookMoveStrategy();
 
         Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(
-                        new Position(Row.RANK2, Column.A),
-                        new Position(Row.RANK3, Column.A),
-                        new Position(Row.RANK4, Column.A),
-                        new Position(Row.RANK5, Column.A),
-                        new Position(Row.RANK6, Column.A),
-                        new Position(Row.RANK7, Column.A),
-                        new Position(Row.RANK8, Column.A)
+                        new Position(Row.TWO, Column.A),
+                        new Position(Row.THREE, Column.A),
+                        new Position(Row.FOUR, Column.A),
+                        new Position(Row.FIVE, Column.A),
+                        new Position(Row.SIX, Column.A),
+                        new Position(Row.SEVEN, Column.A),
+                        new Position(Row.EIGHT, Column.A)
                 ),
                 () -> Assertions.assertThat(directionListMap.get(Direction.S)).isEmpty(),
                 () -> Assertions.assertThat(directionListMap.get(Direction.E)).containsExactly(
-                        new Position(Row.RANK1, Column.B),
-                        new Position(Row.RANK1, Column.C),
-                        new Position(Row.RANK1, Column.D),
-                        new Position(Row.RANK1, Column.E),
-                        new Position(Row.RANK1, Column.F),
-                        new Position(Row.RANK1, Column.G),
-                        new Position(Row.RANK1, Column.H)
+                        new Position(Row.ONE, Column.B),
+                        new Position(Row.ONE, Column.C),
+                        new Position(Row.ONE, Column.D),
+                        new Position(Row.ONE, Column.E),
+                        new Position(Row.ONE, Column.F),
+                        new Position(Row.ONE, Column.G),
+                        new Position(Row.ONE, Column.H)
 
                 ),
                 () -> Assertions.assertThat(directionListMap.get(Direction.W)).isEmpty()
@@ -50,35 +50,35 @@ class RookMoveStrategyTest {
     @Test
     @DisplayName("룩이 D4 에 있을 때 방향에 따라 움직일 수 있는 후보 포지션을 차례대로 저장한다.")
     void calculateCandidateOnCenterPosition() {
-        Position position = new Position(Row.RANK4, Column.D);
+        Position position = new Position(Row.FOUR, Column.D);
         MoveStrategy moveStrategy = new RookMoveStrategy();
 
         Map<Direction, Queue<Position>> directionListMap = moveStrategy.generateMovablePositions(position);
 
         assertAll(
                 () -> Assertions.assertThat(directionListMap.get(Direction.N)).containsExactly(
-                        new Position(Row.RANK5, Column.D),
-                        new Position(Row.RANK6, Column.D),
-                        new Position(Row.RANK7, Column.D),
-                        new Position(Row.RANK8, Column.D)
+                        new Position(Row.FIVE, Column.D),
+                        new Position(Row.SIX, Column.D),
+                        new Position(Row.SEVEN, Column.D),
+                        new Position(Row.EIGHT, Column.D)
                 ),
                 () -> Assertions.assertThat(directionListMap.get(Direction.E)).containsExactly(
-                        new Position(Row.RANK4, Column.E),
-                        new Position(Row.RANK4, Column.F),
-                        new Position(Row.RANK4, Column.G),
-                        new Position(Row.RANK4, Column.H)
+                        new Position(Row.FOUR, Column.E),
+                        new Position(Row.FOUR, Column.F),
+                        new Position(Row.FOUR, Column.G),
+                        new Position(Row.FOUR, Column.H)
 
                 ),
                 () -> Assertions.assertThat(directionListMap.get(Direction.S)).containsExactly(
-                        new Position(Row.RANK3, Column.D),
-                        new Position(Row.RANK2, Column.D),
-                        new Position(Row.RANK1, Column.D)
+                        new Position(Row.THREE, Column.D),
+                        new Position(Row.TWO, Column.D),
+                        new Position(Row.ONE, Column.D)
                 )
                 ,
                 () -> Assertions.assertThat(directionListMap.get(Direction.W)).containsExactly(
-                        new Position(Row.RANK4, Column.C),
-                        new Position(Row.RANK4, Column.B),
-                        new Position(Row.RANK4, Column.A)
+                        new Position(Row.FOUR, Column.C),
+                        new Position(Row.FOUR, Column.B),
+                        new Position(Row.FOUR, Column.A)
                 )
         );
     }

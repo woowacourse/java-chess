@@ -4,14 +4,14 @@ import chess.domain.Row;
 import java.util.Arrays;
 
 public enum RowMapper {
-    RANK1(Row.RANK1, "1"),
-    RANK2(Row.RANK2, "2"),
-    RANK3(Row.RANK3, "3"),
-    RANK4(Row.RANK4, "4"),
-    RANK5(Row.RANK5, "5"),
-    RANK6(Row.RANK6, "6"),
-    RANK7(Row.RANK7, "7"),
-    RANK8(Row.RANK8, "8");
+    RANK1(Row.ONE, "1"),
+    RANK2(Row.TWO, "2"),
+    RANK3(Row.THREE, "3"),
+    RANK4(Row.FOUR, "4"),
+    RANK5(Row.FIVE, "5"),
+    RANK6(Row.SIX, "6"),
+    RANK7(Row.SEVEN, "7"),
+    RANK8(Row.EIGHT, "8");
 
     private final Row row;
     private final String value;

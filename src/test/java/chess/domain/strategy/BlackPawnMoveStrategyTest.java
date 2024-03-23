@@ -33,17 +33,17 @@ class BlackPawnMoveStrategyTest {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
         Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
-                new Position(Row.RANK7, Column.G));
+                new Position(Row.SEVEN, Column.G));
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                        new Position(Row.RANK6, Column.G),
-                        new Position(Row.RANK5, Column.G)),
+                        new Position(Row.SIX, Column.G),
+                        new Position(Row.FIVE, Column.G)),
                 () -> assertThat(directionListMap.get(Direction.N)).isNull(),
                 () -> assertThat(directionListMap.get(Direction.E)).isNull(),
                 () -> assertThat(directionListMap.get(Direction.W)).isNull(),
-                () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.RANK6, Column.H)),
-                () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.RANK6, Column.F))
+                () -> assertThat(directionListMap.get(Direction.SE)).containsExactly(new Position(Row.SIX, Column.H)),
+                () -> assertThat(directionListMap.get(Direction.SW)).containsExactly(new Position(Row.SIX, Column.F))
         );
     }
 
@@ -59,11 +59,11 @@ class BlackPawnMoveStrategyTest {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
         Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
-                new Position(Row.RANK6, Column.H));
+                new Position(Row.SIX, Column.H));
 
         assertAll(
                 () -> assertThat(directionListMap.get(Direction.S)).containsExactly(
-                        new Position(Row.RANK5, Column.H)
+                        new Position(Row.FIVE, Column.H)
                 ))
         ;
     }
