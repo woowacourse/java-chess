@@ -8,6 +8,7 @@ import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,7 +31,7 @@ class PawnTest {
                 .findBetweenPositions(new Positions(
                         Position.of(2, 1),
                         Position.of(5, 1))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
@@ -41,7 +42,7 @@ class PawnTest {
                 .findBetweenPositions(new Positions(
                         Position.of(7, 1),
                         Position.of(4, 1))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
@@ -52,7 +53,7 @@ class PawnTest {
                 .findBetweenPositions(new Positions(
                         Position.of(3, 1),
                         Position.of(5, 1))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
@@ -63,7 +64,7 @@ class PawnTest {
                 .findBetweenPositions(new Positions(
                         Position.of(6, 1),
                         Position.of(4, 1))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
@@ -75,7 +76,7 @@ class PawnTest {
                 .findBetweenPositions(new Positions(
                         Position.of(7, 1),
                         Position.of(7, 2))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 
@@ -136,7 +137,7 @@ class PawnTest {
                 .findBetweenPositionsWhenAttack(new Positions(
                         Position.of(2, 2),
                         Position.of(3, 2))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 }

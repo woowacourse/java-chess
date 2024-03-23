@@ -12,7 +12,7 @@ public class PositionTest {
     @ValueSource(ints = {0, 9})
     void invalidRowThrowsException(int row) {
         assertThatThrownBy(() -> Position.of(row, 1))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("가로는 1부터 8 사이의 값이어야 합니다: " + row);
     }
 
@@ -21,7 +21,7 @@ public class PositionTest {
     @ValueSource(ints = {0, 9})
     void invalidColumnThrowsException(int column) {
         assertThatThrownBy(() -> Position.of(1, column))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("세로는 1부터 8 사이의 값이어야 합니다: " + column);
     }
 }

@@ -7,6 +7,7 @@ import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +29,7 @@ class BishopTest {
                 .findBetweenPositions(new Positions(
                         Position.of(4, 4),
                         Position.of(1, 4))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치로 움직일 수 없습니다.");
     }
 

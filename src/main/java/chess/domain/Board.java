@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,7 +20,7 @@ public class Board {
     public void validateSameTeamByPosition(Position position, Team team) {
         validatePieceExistsOnPosition(position);
         if (pieces.get(position).isOppositeTeamWith(team)) {
-            throw new IllegalArgumentException("%s 팀이 움직일 차례입니다".formatted(team.name()));
+            throw new ImpossibleMoveException("%s 팀이 움직일 차례입니다".formatted(team.name()));
         }
     }
 
@@ -36,13 +37,13 @@ public class Board {
 
     private void validatePieceExistsOnPosition(Position position) {
         if (!pieces.containsKey(position)) {
-            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
+            throw new ImpossibleMoveException("해당 위치에 기물이 존재하지 않습니다.");
         }
     }
 
     private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece thisPiece) {
         if (pieces.containsKey(targetPosition) && thisPiece.isSameTeamWith(pieces.get(targetPosition))) {
-            throw new IllegalArgumentException("해당 위치에 아군 기물이 존재합니다.");
+            throw new ImpossibleMoveException("해당 위치에 아군 기물이 존재합니다.");
         }
     }
 
@@ -51,7 +52,7 @@ public class Board {
 
         if (betweenPositions.stream()
                 .anyMatch(pieces::containsKey)) {
-            throw new IllegalArgumentException("이동을 가로막는 기물이 존재합니다.");
+            throw new ImpossibleMoveException("이동을 가로막는 기물이 존재합니다.");
         }
     }
 

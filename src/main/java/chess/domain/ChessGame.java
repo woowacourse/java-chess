@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import java.util.Map;
 
 public class ChessGame {
@@ -26,7 +27,7 @@ public class ChessGame {
             printCheck.run();
         }
         if (board.isChecked(currentTeam)) {
-            throw new IllegalArgumentException("체크 상태를 벗어나지 않았습니다.");
+            throw new ImpossibleMoveException("체크 상태를 벗어나지 않았습니다.");
         }
     }
 }

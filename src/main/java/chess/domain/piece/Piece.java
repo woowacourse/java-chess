@@ -4,6 +4,7 @@ import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import java.util.List;
 
 public abstract class Piece {
@@ -49,7 +50,7 @@ public abstract class Piece {
         if (isMovable(positions)) {
             return;
         }
-        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
     }
 
     public boolean isAttacking(Positions positions) {

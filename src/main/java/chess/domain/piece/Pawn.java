@@ -6,6 +6,7 @@ import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class Pawn extends Piece {
         if (isAttackable(rowDifference, columnDifference)) {
             return;
         }
-        throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
+        throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
     }
 
     @Override

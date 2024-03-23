@@ -14,6 +14,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.exception.ImpossibleMoveException;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class BoardTest {
         Board board = new Board(BoardFactory.generateStartBoard());
         assertThatThrownBy(() ->
                 board.validateSameTeamByPosition(Position.of(2, 2), Team.BLACK))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("%s 팀이 움직일 차례입니다".formatted(Team.BLACK.name()));
     }
 
@@ -56,7 +57,7 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(new Positions(
                 Position.of(3, 1),
                 Position.of(2, 2))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
     }
 
@@ -67,7 +68,7 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(new Positions(
                 Position.of(1, 3),
                 Position.of(3, 5))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("이동을 가로막는 기물이 존재합니다.");
     }
 
@@ -78,7 +79,7 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(new Positions(
                 Position.of(1, 1),
                 Position.of(1, 2))))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ImpossibleMoveException.class)
                 .hasMessage("해당 위치에 아군 기물이 존재합니다.");
     }
 

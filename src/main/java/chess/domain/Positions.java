@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.exception.ImpossibleMoveException;
+
 public class Positions {
     private final Position sourcePosition;
     private final Position targetPosition;
@@ -12,7 +14,7 @@ public class Positions {
 
     private void validate(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("시작 위치와 목표 위치가 동일할 수 없습니다.");
+            throw new ImpossibleMoveException("시작 위치와 목표 위치가 동일할 수 없습니다.");
         }
     }
 

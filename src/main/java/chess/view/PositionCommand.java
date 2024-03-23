@@ -1,19 +1,20 @@
 package chess.view;
 
 import chess.domain.Position;
+import chess.exception.InvalidCommandException;
 import java.util.regex.Pattern;
 
-public class PositionConverter {
+public class PositionCommand {
     private static final String REGEX = "^[a-h][1-8]$";
     public static final int ROW_INDEX = 1;
     public static final int COLUMN_INDEX = 0;
 
-    private PositionConverter() {
+    private PositionCommand() {
     }
 
     public static Position generate(String value) {
         if (!Pattern.matches(REGEX, value)) {
-            throw new IllegalArgumentException("잘못된 명령어입니다.");
+            throw new InvalidCommandException("잘못된 위치 입력입니다.");
         }
 
         int row = value.charAt(ROW_INDEX) - '0';
