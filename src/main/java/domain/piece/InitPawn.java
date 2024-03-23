@@ -13,15 +13,21 @@ public class InitPawn extends Pawn {
     @Override
     protected boolean isReachable(final Vector sourceVector, final Piece targetPiece) {
         List<Vector> vectors = new ArrayList<>();
-        defaultMovement(vectors);
-        firstMovement(vectors);
+        defaultMovement(targetPiece, vectors);
+        firstMovement(targetPiece, vectors);
         attackMovement(targetPiece, vectors);
         vectors = inverseIfBlack(vectors);
         return vectors.stream().anyMatch(vector -> vector.equals(sourceVector));
-
     }
 
-    private void firstMovement(final List<Vector> vectors) {
-        vectors.add(Vector.of(0, 2));
+    private void firstMovement(final Piece targetPiece, final List<Vector> vectors) {
+        if (targetPiece.isEmpty()) {
+            vectors.add(Vector.of(0, 2));
+        }
+    }
+
+    @Override
+    public boolean isInitPawn() {
+        return true;
     }
 }

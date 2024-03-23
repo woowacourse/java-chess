@@ -31,8 +31,8 @@ public class Vector {
         }
     }
 
-    public Vector inverse() {
-        return new Vector(-fileDifference, -rankDifference);
+    public Vector reflectHorizontally() {
+        return new Vector(fileDifference, -rankDifference);
     }
 
     public boolean isStraight() {

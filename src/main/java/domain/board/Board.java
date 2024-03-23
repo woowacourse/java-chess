@@ -53,7 +53,7 @@ public class Board {
         } else {
             squares.put(target, currentPiece);
         }
-
+        
         squares.put(source, Empty.INSTANCE);
     }
 

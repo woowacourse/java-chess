@@ -17,4 +17,9 @@ public class Empty extends Piece {
         throw new UnsupportedOperationException("비어 있는 칸입니다.");
     }
 
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
 }

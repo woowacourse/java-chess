@@ -20,29 +20,30 @@ public class Pawn extends Piece {
     @Override
     protected boolean isReachable(final Vector sourceVector, final Piece targetPiece) {
         List<Vector> vectors = new ArrayList<>();
-        defaultMovement(vectors);
+        defaultMovement(targetPiece, vectors);
         attackMovement(targetPiece, vectors);
         vectors = inverseIfBlack(vectors);
-        new Strategy(targetPiece, vectors, isInitPawn());
         return vectors.stream().anyMatch(vector -> vector.equals(sourceVector));
     }
 
-    protected void defaultMovement(final List<Vector> vectors) {
-        vectors.add(Vector.of(0, 1));
+    protected void defaultMovement(final Piece targetPiece, final List<Vector> vectors) {
+        if (targetPiece.isEmpty()) {
+            vectors.add(Vector.of(0, 1));
+        }
+    }
+
+    protected void attackMovement(final Piece targetPiece, final List<Vector> vectors) {
+        if (!targetPiece.isEmpty()) {
+            vectors.add(Vector.of(1, 1));
+            vectors.add(Vector.of(-1, 1));
+        }
     }
 
     protected List<Vector> inverseIfBlack(List<Vector> vectors) {
         if (color() == Color.BLACK) {
-            vectors = vectors.stream().map(Vector::inverse).toList();
+            vectors = vectors.stream().map(Vector::reflectHorizontally).toList();
         }
         return vectors;
-    }
-
-    protected void attackMovement(final Piece targetPiece, final List<Vector> vectors) {
-        if (targetPiece.type() != Type.NONE) {
-            vectors.add(Vector.of(1, 1));
-            vectors.add(Vector.of(-1, 1));
-        }
     }
 
 }
