@@ -1,24 +1,32 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import domain.coordinate.Coordinate;
-import domain.position.Column;
-import domain.position.Row;
-import java.util.List;
-import org.assertj.core.api.Assertions;
+import domain.direction.DiagonalDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BishopTest {
 
-    @DisplayName("비숍의 움직임 방향을 가져온다.")
+    Bishop bishop = new Bishop(Color.BLACK);
+    Coordinate start = new Coordinate(3, 3);
+    Coordinate destination;
+
+    @DisplayName("비숍은 대각선 방향으로 이동할 수 있다.")
     @Test
-    void getBishopDirection() {
-        Coordinate coordinate = new Coordinate(new Row(0), new Column(3));
-        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
+    void getDirection() {
+        destination = new Coordinate(7, 7);
 
-        Bishop bishop = new Bishop(Color.BLACK);
-
-        Assertions.assertThat(bishop.getDirection(coordinate, nextCoordinate, false)).isEqualTo(List.of(1, -1));
+        assertThat(bishop.getDirection(start, destination)).isEqualTo(DiagonalDirection.DOWN_RIGHT);
     }
 
+    @DisplayName("비숍은 대각선 방향이면 거리와 상관없이 이동 가능하다.")
+    @Test
+    void canMove() {
+        destination = new Coordinate(1, 1);
+
+        assertFalse(() -> bishop.cantMove(start, destination));
+    }
 }

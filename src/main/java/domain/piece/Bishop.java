@@ -1,9 +1,9 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
+import domain.direction.DiagonalDirection;
+import domain.direction.Direction;
 import domain.piece.base.ChessPieceBase;
-import domain.piece.strategy.BishopStrategy;
-import java.util.List;
 
 public class Bishop extends ChessPieceBase {
 
@@ -12,11 +12,16 @@ public class Bishop extends ChessPieceBase {
     }
 
     @Override
-    public List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack) {
+    public Direction getDirection(Coordinate start, Coordinate destination) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        BishopStrategy bishopStrategy = BishopStrategy.getMoveStrategy(rowDifference, columnDifference);
-        return bishopStrategy.getDirection();
+        return DiagonalDirection.getDirection(rowDifference, columnDifference);
+    }
+
+    @Override
+    public boolean cantMove(Coordinate start, Coordinate destination) {
+        getDirection(start, destination);
+        return false;
     }
 }
