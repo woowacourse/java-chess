@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
@@ -17,23 +17,34 @@ class AbstractSlidingPiece extends AbstractPiece {
 
     @Override
     void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
-        List<Coordinate> slidingPath = createSlidingPath(source, target);
-        validateReachable(target, slidingPath);
+        List<Coordinate> slidingPath = createTargetIncludedSlidingPath(source, target);
+
         validateBlocked(target, slidingPath, board);
     }
 
-    private List<Coordinate> createSlidingPath(Coordinate source, Coordinate target) {
+    private List<Coordinate> createTargetIncludedSlidingPath(Coordinate source, Coordinate target) {
         return directions.stream()
-                .map(possibleDirection -> possibleDirection.createSlidingPath(source))
+                .map(direction -> createSlidingPath(source, direction))
                 .filter(coordinates -> coordinates.contains(target))
                 .findFirst()
-                .orElse(Collections.emptyList());
+                .orElseThrow(() -> new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다."));
     }
 
-    private void validateReachable(Coordinate target, List<Coordinate> possiblePath) {
-        if (!possiblePath.contains(target)) {
-            throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
+    private List<Coordinate> createSlidingPath(Coordinate start, Direction direction) {
+        List<Coordinate> coordinates = new ArrayList<>();
+        Weight weight = direction.getValue();
+        int rankWeight = weight.rankWeight();
+        int fileWeight = weight.fileWeight();
+        int nextRank = start.getRank() + rankWeight;
+        char nextFile = (char) (start.getFile() + fileWeight);
+
+        while (nextRank >= 1 && nextRank <= 8 && nextFile >= 'a' && nextFile <= 'h') {
+            coordinates.add(new Coordinate(nextRank, nextFile));
+            nextRank += rankWeight;
+            nextFile += fileWeight;
         }
+
+        return coordinates;
     }
 
     private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {

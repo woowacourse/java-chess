@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 
@@ -36,9 +35,9 @@ abstract class AbstractNonSlidingPiece extends AbstractPiece {
         char startFile = source.getFile();
 
         for (Direction direction : directions) {
-            Map.Entry<Integer, Integer> weight = direction.getValue();
-            int nextRank = startRank + weight.getKey();
-            char nextFile = (char) (startFile + weight.getValue());
+            Weight weight = direction.getValue();
+            int nextRank = startRank + weight.rankWeight();
+            char nextFile = (char) (startFile + weight.fileWeight());
 
             try {
                 Coordinate coordinate = new Coordinate(nextRank, nextFile);
