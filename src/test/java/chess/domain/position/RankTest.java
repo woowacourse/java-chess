@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
@@ -29,14 +30,20 @@ class RankTest {
     @ParameterizedTest
     @CsvSource(value = {"EIGHT, ONE", "SEVEN, TWO", "SIX, THREE", "FIVE, FOUR"})
     void should_ReturnReverseRank(Rank rank, Rank reversedRank) {
-        assertThat(rank.reverse()).isEqualTo(reversedRank);
+        assertAll(
+                () -> assertThat(rank.reverse()).isEqualTo(reversedRank),
+                () -> assertThat(reversedRank.reverse()).isEqualTo(rank)
+        );
     }
 
     @DisplayName("두 랭크간 거리를 계산할 수 있다")
     @ParameterizedTest
     @CsvSource(value = {"EIGHT, ONE, 7", "TWO, ONE, 1", "FIVE, ONE, 4"})
     void should_CalculateDistance_When_OtherRankGiven(Rank rank1, Rank rank2, int distance) {
-        assertThat(rank1.calculateDistanceWith(rank2)).isEqualTo(distance);
+        assertAll(
+                () -> assertThat(rank1.calculateDistanceWith(rank2)).isEqualTo(distance),
+                () -> assertThat(rank2.calculateDistanceWith(rank1)).isEqualTo(distance)
+        );
     }
 
     @DisplayName("랭크가 특정 랭크보다 보드 위치에서 더 위인지 알 수 있다")
