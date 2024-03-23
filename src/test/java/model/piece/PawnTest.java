@@ -80,8 +80,7 @@ class PawnTest {
     @DisplayName("앞에 기물이 있다면 전진이 불가하다.")
     void canNotGoForward() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         /*
         RNBQKBNR  8
@@ -111,8 +110,7 @@ class PawnTest {
     @DisplayName("대각선에 기물이 있다면 이동이 가능하다. WHITE (위 오른쪽)")
     void canGoDiagonal1() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         /*
         RNBQKBNR  8
@@ -140,8 +138,7 @@ class PawnTest {
     @DisplayName("대각선에 기물이 있다면 이동이 가능하다. BLACK (아래 오른쪽)")
     void canGoDiagonal2() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         /*
         RNBQKBNR  8
@@ -170,8 +167,7 @@ class PawnTest {
     @DisplayName("대각선에 기물이 없다면 이동이 불가하다.")
     void canNotGoDiagonal() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         /*
         RNBQKB.R  8
@@ -201,8 +197,7 @@ class PawnTest {
     @DisplayName("폰은 후진은 불가하다. WHITE")
     void canNotGoBackWhite() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when
         chessBoard.move(new Moving(H2, H4));
@@ -219,8 +214,7 @@ class PawnTest {
     @DisplayName("폰은 후진은 불가하다. BLACK")
     void canNotGoBack2() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when
         chessBoard.move(new Moving(H2, H4));

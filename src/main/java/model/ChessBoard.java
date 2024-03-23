@@ -23,44 +23,44 @@ import model.position.Rank;
 
 public class ChessBoard {
 
-    // TODO 처음에 각 기물들을 배치해두는 것이 좋을까 아니면 빈 Map 두고 메서드 실행하면 추가하는게 좋을지 고민하기
-    private static final Camp START_CAMP = Camp.WHITE;
-    private static final Map<File, Function<Camp, Piece>> initPosition = new EnumMap<>(File.class);
+    private static final Camp STARTING_CAMP = Camp.WHITE;
+    private static final Map<File, Function<Camp, Piece>> startingPosition = new EnumMap<>(File.class);
 
     static {
-        initPosition.put(File.A, Rook::new);
-        initPosition.put(File.B, Knight::new);
-        initPosition.put(File.C, Bishop::new);
-        initPosition.put(File.D, Queen::new);
-        initPosition.put(File.E, King::new);
-        initPosition.put(File.F, Bishop::new);
-        initPosition.put(File.G, Knight::new);
-        initPosition.put(File.H, Rook::new);
+        startingPosition.put(File.A, Rook::new);
+        startingPosition.put(File.B, Knight::new);
+        startingPosition.put(File.C, Bishop::new);
+        startingPosition.put(File.D, Queen::new);
+        startingPosition.put(File.E, King::new);
+        startingPosition.put(File.F, Bishop::new);
+        startingPosition.put(File.G, Knight::new);
+        startingPosition.put(File.H, Rook::new);
     }
 
     private final Map<Position, Piece> board;
     private Camp camp;
 
-
-    public ChessBoard() {
-        this.board = new HashMap<>();
-        this.camp = START_CAMP;
+    private ChessBoard(final Map<Position, Piece> board) {
+        this.board = board;
+        this.camp = STARTING_CAMP;
     }
 
-    public void setting() {
-        settingExceptPawn(Camp.BLACK, Rank.EIGHT);
-        settingPawn(Camp.BLACK, Rank.SEVEN);
-        settingPawn(Camp.WHITE, Rank.TWO);
-        settingExceptPawn(Camp.WHITE, Rank.ONE);
+    public static ChessBoard setupStartingPosition() {
+        Map<Position, Piece> res = new HashMap<>();
+        settingExceptPawn(res, Camp.BLACK, Rank.EIGHT);
+        settingPawn(res, Camp.BLACK, Rank.SEVEN);
+        settingPawn(res, Camp.WHITE, Rank.TWO);
+        settingExceptPawn(res, Camp.WHITE, Rank.ONE);
+        return new ChessBoard(res);
     }
 
-    private void settingExceptPawn(final Camp camp, final Rank rank) {
+    private static void settingExceptPawn(final Map<Position, Piece> board, final Camp camp, final Rank rank) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), initPosition.get(file).apply(camp));
+            board.put(new Position(file, rank), startingPosition.get(file).apply(camp));
         }
     }
 
-    private void settingPawn(final Camp camp, final Rank rank) {
+    private static void settingPawn(final Map<Position, Piece> board, final Camp camp, final Rank rank) {
         for (File file : File.values()) {
             board.put(new Position(file, rank), new Pawn(camp));
         }

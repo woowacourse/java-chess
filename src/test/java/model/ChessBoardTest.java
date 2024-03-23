@@ -64,11 +64,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("초기에는 32개의 기물이 생성된다.")
     void initPieces() {
-        //given
-        final ChessBoard chessBoard = new ChessBoard();
-
-        //when
-        chessBoard.setting();
+        //given && when
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //then
         final Map<Position, Piece> board = chessBoard.getBoard();
@@ -78,11 +75,9 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물들의 시작 위치를 확인한다.")
     void checkInitialPosition() {
-        //given
-        final ChessBoard chessBoard = new ChessBoard();
+        //given && when
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
-        //when
-        chessBoard.setting();
         final Map<Position, Piece> board = chessBoard.getBoard();
 
         final Map<Position, Piece> expected = new HashMap<>();
@@ -131,8 +126,7 @@ class ChessBoardTest {
     @DisplayName("해당 위치에 기물이 없는 경우 예외가 발생한다.")
     void blankPosition() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         final Moving moving = new Moving(E4, E5);
 
@@ -145,8 +139,7 @@ class ChessBoardTest {
     @DisplayName("자신의 기물이 아니면 예외가 발생한다.")
     void invalidTurn() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when && then
         final Moving moving = new Moving(A7, A6);
@@ -159,8 +152,7 @@ class ChessBoardTest {
     @Test
     void routeContainPiece() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when && then
         final Moving moving = new Moving(A1, A3);
@@ -173,8 +165,7 @@ class ChessBoardTest {
     @Test
     void targetPositionIsEqualCamp() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when
         chessBoard.move(new Moving(A2, A4)); // WHITE
@@ -191,8 +182,7 @@ class ChessBoardTest {
     @DisplayName("기물이 잡히면 체스보드에서 제거된다.")
     void removePiece() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when
         chessBoard.move(new Moving(A2, A4));
@@ -206,8 +196,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("선공은 WHITE이다.")
     void checkFirstAttack() {
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         assertThat(chessBoard.getCamp()).isEqualTo(Camp.WHITE);
     }
@@ -215,8 +204,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("후공은 BLACK이다.")
     void checkLastAttack() {
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         chessBoard.move(new Moving(A2, A3));
 

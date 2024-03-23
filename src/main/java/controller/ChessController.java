@@ -22,8 +22,7 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
         outputView.printStartMessage();
         GameStatus gameStatus = initGame();
 

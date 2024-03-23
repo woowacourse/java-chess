@@ -15,7 +15,7 @@ class EndTest {
     @DisplayName("종료 상태에서 play하면 예외가 발생한다.")
     void invalidPlay() {
         //given
-        final ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         final List<String> endCommand = List.of("end");
 

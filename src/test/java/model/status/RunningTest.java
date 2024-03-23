@@ -23,8 +23,7 @@ class RunningTest {
     @DisplayName("실행 중에서 move 하면 Running 이다.")
     void running() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         final List<String> moveCommand = List.of("move", "a2", "a3");
         assertThat(gameStatus.play(moveCommand, chessBoard))
@@ -35,8 +34,7 @@ class RunningTest {
     @DisplayName("실행 중에서 end 하면 End 이다.")
     void ending() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         final List<String> endCommand = List.of("end");
         assertThat(gameStatus.play(endCommand, chessBoard))
@@ -48,8 +46,7 @@ class RunningTest {
     void start() {
         //given
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
-        final ChessBoard chessBoard = new ChessBoard();
-        chessBoard.setting();
+        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         //when && then
         final List<String> startCommand = List.of("start");
