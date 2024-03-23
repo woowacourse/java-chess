@@ -14,7 +14,7 @@ public class Empty extends Piece {
 
     public static Empty getEmpty() {
         if (empty == null) {
-            empty = Empty.getEmpty();
+            empty = new Empty(Team.EMPTY);
         }
         return empty;
     }
