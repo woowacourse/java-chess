@@ -5,7 +5,7 @@ import chess.domain.ChessGame;
 import chess.domain.Column;
 import chess.domain.Position;
 import chess.domain.Row;
-import chess.view.Commend;
+import chess.view.Command;
 import chess.view.InputView;
 import chess.view.MoveRequestDto;
 import chess.view.OutputView;
@@ -33,14 +33,14 @@ public class ChessGameController {
 
     private boolean processGame(Board board) {
         try {
-            Commend commend = inputView.readCommend();
-            if (commend == Commend.START) {
+            Command command = inputView.readCommend();
+            if (command == Command.START) {
                 handleStartCommend(board);
             }
-            if (commend == Commend.MOVE) {
+            if (command == Command.MOVE) {
                 handleMoveCommend(board);
             }
-            return commend != Commend.END;
+            return command != Command.END;
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
             process(board);

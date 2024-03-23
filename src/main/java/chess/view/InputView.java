@@ -10,12 +10,12 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Commend readCommend() {
+    public Command readCommend() {
         String input = scanner.next();
         if (!COMMAND_REGEX.matcher(input).matches()) {
             throw new IllegalArgumentException("입력한 체스 게임 명령어가 올바르지 않습니다.");
         }
-        return Commend.inputToCommend(input);
+        return Command.inputToCommend(input);
     }
 
     public MoveRequestDto readPositions() {
