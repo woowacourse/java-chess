@@ -7,8 +7,8 @@ import chess.domain.strategy.MoveStrategy;
 import java.util.Objects;
 
 public abstract class ChessPiece implements Piece {
-    final PieceInfo pieceInfo;
-    final MoveStrategy moveStrategy;
+    protected final PieceInfo pieceInfo;
+    protected final MoveStrategy moveStrategy;
 
     public ChessPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         this.pieceInfo = pieceInfo;
