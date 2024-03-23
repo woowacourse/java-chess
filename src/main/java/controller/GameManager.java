@@ -13,11 +13,11 @@ public class GameManager {
     private final OutputView outputView = new OutputView();
 
     public void start() {
+        outputView.printStartNotice();
         Command initCommand = requestInitCommand();
-        if (initCommand.isNotStart()) {
-            return;
+        if (initCommand.isStart()) {
+            playGame();
         }
-        playGame();
     }
 
     private Command requestInitCommand() {
@@ -44,12 +44,25 @@ public class GameManager {
 
     private boolean wantMove(Turn turn) {
         outputView.printTurn(turn);
-        Command command = inputView.readCommand();
+        Command command = requestCommand();
+        if (command.isEnd()) {
+            return false;
+        }
         if (command.isStart()) {
             playGame();
             return false;
         }
-        return !command.isEnd();
+        return true;
+    }
+
+    private Command requestCommand() {
+        try {
+            return inputView.readCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            inputView.clean();
+            return requestCommand();
+        }
     }
 
     private void tryMoveUntilNoError(Chess chess) {
