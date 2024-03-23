@@ -15,4 +15,10 @@ public enum File {
     File(int columnNumber) {
         this.columnNumber = columnNumber;
     }
+
+    public int calculateDistanceWith(File other) {
+        return Math.abs(columnNumber - other.columnNumber);
+    }
+
+
 }
