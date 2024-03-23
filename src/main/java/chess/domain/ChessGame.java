@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 public class ChessGame {
 
@@ -28,85 +27,45 @@ public class ChessGame {
             throw new IllegalArgumentException("다른 팀의 기물을 움직일 수 없습니다.");
         }
         Map<Direction, Deque<Position>> expectedAllPositions = piece.calculateAllDirectionPositions(fromPosition);
-        if (piece.isPawn()) {
-            return generateValidPositionsWithPawn(expectedAllPositions, piece);
-        }
         return generateValidPositions(expectedAllPositions, piece);
     }
 
     private List<Position> generateValidPositions(Map<Direction, Deque<Position>> expectedAllPositions, Piece piece) {
         return expectedAllPositions.keySet()
                 .stream()
-                .map(expectedAllPositions::get)
-                .map(expectedPositions -> filterInvalidPositions(expectedPositions, piece))
+                .map(direction -> filterInvalidPositions(expectedAllPositions.get(direction), direction, piece))
                 .flatMap(List::stream)
                 .toList();
     }
 
-    private List<Position> filterInvalidPositions(Deque<Position> expectedPositions, Piece piece) {
+    private List<Position> filterInvalidPositions(Deque<Position> expectedPositions, Direction direction, Piece piece) {
         List<Position> result = new ArrayList<>();
-        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek())) {
-            Position position = expectedPositions.poll();
-            result.add(position);
+        Position currentPosition = expectedPositions.poll();
+        while (isEmptySpace(direction, piece, currentPosition)) {
+            result.add(currentPosition);
+            currentPosition = expectedPositions.poll();
         }
-        addObstaclePosition(result, expectedPositions, piece);
-        return result;
-    }
-
-    private void addObstaclePosition(List<Position> result, Queue<Position> expectedPositions, Piece piece) {
-        Position last = expectedPositions.poll();
-        if (last != null && board.hasPiece(last) && !board.findPieceByPosition(last).isSameTeam(piece)) {
-            result.add(last);
-        }
-    }
-
-    private boolean isNotEmpty(Queue<Position> expectedPositions) {
-        return !expectedPositions.isEmpty();
-    }
-
-    private List<Position> generateValidPositionsWithPawn(Map<Direction, Deque<Position>> expectedAllPositions, Piece piece) {
-        return expectedAllPositions.keySet()
-                .stream()
-                .map(direction -> filterInvalidPositionsWithPawn(expectedAllPositions.get(direction), direction, piece))
-                .flatMap(List::stream)
-                .toList();
-    }
-
-    private List<Position> filterInvalidPositionsWithPawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
-        if (piece.isBlack()) {
-            return handleBlackPawn(expectedPositions, direction, piece);
-        }
-        return handleWhitePawn(expectedPositions, direction, piece);
-    }
-
-    private List<Position> handleBlackPawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
-        List<Position> result = new ArrayList<>();
-        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek()) && direction == Direction.S) {
-            Position position = expectedPositions.poll();
-            result.add(position);
-        }
-
-        if (direction == Direction.SE || direction == Direction.SW) {
-            addObstaclePosition(result, expectedPositions, piece);
+        if (isEnemySpace(direction, piece, currentPosition)) {
+            result.add(currentPosition);
         }
         return result;
     }
 
-    private List<Position> handleWhitePawn(Deque<Position> expectedPositions, Direction direction, Piece piece) {
-        List<Position> result = new ArrayList<>();
-        while (isNotEmpty(expectedPositions) && board.isEmptySpace(expectedPositions.peek()) && direction == Direction.N) {
-            Position position = expectedPositions.poll();
-            result.add(position);
-        }
-
-        if (direction == Direction.NE || direction == Direction.NW) {
-            addObstaclePosition(result, expectedPositions, piece);
-        }
-        return result;
+    private boolean isEmptySpace(Direction direction, Piece piece, Position currentPosition) {
+        return currentPosition != null
+                && piece.isForward(direction)
+                && board.isEmptySpace(currentPosition);
     }
 
-    public void movePiece(List<Position> positions, Position from, Position to) {
-        if (positions.contains(to)) {
+    private boolean isEnemySpace(Direction direction, Piece piece, Position currentPosition) {
+        return currentPosition != null
+                && piece.isAttack(direction)
+                && board.hasPiece(currentPosition)
+                && !board.findPieceByPosition(currentPosition).isSameTeam(piece);
+    }
+
+    public void movePiece(List<Position> movablePositions, Position from, Position to) {
+        if (movablePositions.contains(to)) {
             board.movePiece(from, to);
             return;
         }

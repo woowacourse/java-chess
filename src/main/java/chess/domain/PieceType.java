@@ -31,5 +31,4 @@ public enum PieceType {
     public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
         return this.moveStrategy.generateMovablePositions(currentPosition);
     }
-
 }

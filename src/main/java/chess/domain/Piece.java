@@ -29,8 +29,24 @@ public class Piece {
         return this.color == Color.BLACK;
     }
 
-    public boolean isPawn() {
-        return this.pieceType == PieceType.BLACK_PAWN || this.pieceType == PieceType.WHITE_PAWN;
+    public boolean isForward(Direction direction) {
+        if (pieceType == PieceType.BLACK_PAWN) {
+            return direction == Direction.S;
+        }
+        if (pieceType == PieceType.WHITE_PAWN) {
+            return direction == Direction.N;
+        }
+        return true;
+    }
+
+    public boolean isAttack(Direction direction) {
+        if (pieceType == PieceType.BLACK_PAWN) {
+            return direction == Direction.SW || direction == Direction.SE;
+        }
+        if (pieceType == PieceType.WHITE_PAWN) {
+            return direction == Direction.NE || direction == Direction.NW;
+        }
+        return true;
     }
 
     public PieceType getPieceType() {
