@@ -25,7 +25,7 @@ public class Board {
     public void move(Position start, Position end) {
         validate(start, end);
         Piece piece = board.get(start);
-        List<Position> path = piece.findPath(start, end);
+        List<Position> path = piece.findPath(start, end, isExistEnemy(end));
 
         validateEmpty(path);
         board.remove(start);
@@ -50,8 +50,13 @@ public class Board {
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
     }
 
-    private boolean isExistSameTeam(Position end) {
-        return find(end).map(piece -> piece.isSameTeam(turn))
+    private boolean isExistSameTeam(Position position) {
+        return find(position).map(piece -> piece.isSameTeam(turn))
+                .orElse(false);
+    }
+
+    private boolean isExistEnemy(Position position) {
+        return find(position).map(piece -> !piece.isSameTeam(turn))
                 .orElse(false);
     }
 

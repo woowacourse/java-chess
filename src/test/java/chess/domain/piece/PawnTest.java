@@ -20,11 +20,12 @@ class PawnTest {
     void findPathTest_whenBlackPawnInitPosition() {
         Pawn pawn = new Pawn(Team.BLACK);
         Position start = new Position(File.F, Rank.SEVEN);
+        boolean isEnemyExistAtEnd = false;
 
         assertAll(
-                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.SIX)))
+                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.SIX), isEnemyExistAtEnd))
                         .containsExactly(new Position(File.F, Rank.SIX)),
-                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE)))
+                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), isEnemyExistAtEnd))
                         .containsExactly(new Position(File.F, Rank.SIX), new Position(File.F, Rank.FIVE))
         );
     }
@@ -34,8 +35,9 @@ class PawnTest {
     void findPathTest_whenBlackPawnNotInitPosition() {
         Pawn pawn = new Pawn(Team.BLACK);
         Position start = new Position(File.F, Rank.SIX);
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE)))
+        assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), isEnemyExistAtEnd))
                 .containsExactly(new Position(File.F, Rank.FIVE));
     }
 
@@ -44,11 +46,12 @@ class PawnTest {
     void findPathTest_whenWhitePawnInitPosition() {
         Pawn pawn = new Pawn(Team.WHITE);
         Position start = new Position(File.F, Rank.TWO);
+        boolean isEnemyExistAtEnd = false;
 
         assertAll(
-                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.THREE)))
+                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.THREE), isEnemyExistAtEnd))
                         .containsExactly(new Position(File.F, Rank.THREE)),
-                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FOUR)))
+                () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FOUR), isEnemyExistAtEnd))
                         .containsExactly(new Position(File.F, Rank.THREE), new Position(File.F, Rank.FOUR))
         );
     }
@@ -58,8 +61,9 @@ class PawnTest {
     void findPathTest_whenWhitePawnNotInitPosition() {
         Pawn pawn = new Pawn(Team.WHITE);
         Position start = new Position(File.F, Rank.FOUR);
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE)))
+        assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), isEnemyExistAtEnd))
                 .containsExactly(new Position(File.F, Rank.FIVE));
     }
 
@@ -70,8 +74,9 @@ class PawnTest {
         Pawn pawn = new Pawn(Team.BLACK);
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
+        boolean isEnemyExistAtEnd = false;
 
-        assertThatThrownBy(() -> pawn.findPath(start, end))
+        assertThatThrownBy(() -> pawn.findPath(start, end, isEnemyExistAtEnd))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

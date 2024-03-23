@@ -20,8 +20,9 @@ class KingTest {
         King king = new King(Team.BLACK);
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(king.findPath(start, end)).containsExactly(end);
+        assertThat(king.findPath(start, end, isEnemyExistAtEnd)).containsExactly(end);
     }
 
     @ParameterizedTest
@@ -31,8 +32,9 @@ class KingTest {
         King king = new King(Team.BLACK);
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
+        boolean isEnemyExistAtEnd = false;
 
-        assertThatThrownBy(() -> king.findPath(start, end))
+        assertThatThrownBy(() -> king.findPath(start, end, isEnemyExistAtEnd))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }
