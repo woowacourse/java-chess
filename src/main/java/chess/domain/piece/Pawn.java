@@ -27,16 +27,7 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    public void validateMovable(Coordinate source, Coordinate target, Board board) {
-        Piece targetPiece = board.findByCoordinate(target);
-        if (source.equals(target)) {
-            throw new IllegalStateException("제자리 이동은 할 수 없습니다.");
-        }
-
-        if (isSameTeam(targetPiece)) {
-            throw new IllegalStateException("아군 기물은 공격할 수 없습니다.");
-        }
-
+    void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
         List<Coordinate> diagonalPath = createPath(source, DIAGONAL_WEIGHT);
         List<Coordinate> forwardPath = createPath(source, FORWARD_WEIGHTS);
         if (!(forwardPath.contains(target) || diagonalPath.contains(target))) {
@@ -49,7 +40,7 @@ public class Pawn extends AbstractPiece {
                 throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
             }
 
-            if (!isEnemy(targetPiece)) {
+            if (!isEnemy(board.findByCoordinate(target))) {
                 throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
             }
         }

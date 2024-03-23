@@ -16,7 +16,25 @@ abstract class AbstractPiece implements Piece {
 
     @Override
     public void validateMovable(Coordinate source, Coordinate target, Board board) {
+        validateSameCoordinate(source, target);
+        validateSameTeam(target, board);
+        validatePieceMoveRule(source, target, board);
     }
+
+    private void validateSameCoordinate(Coordinate source, Coordinate target) {
+        if (source.equals(target)) {
+            throw new IllegalStateException("제자리 이동은 할 수 없습니다.");
+        }
+    }
+
+    private void validateSameTeam(Coordinate target, Board board) {
+        Piece targetPiece = board.findByCoordinate(target);
+        if (isSameTeam(targetPiece)) {
+            throw new IllegalStateException("아군 기물은 공격할 수 없습니다.");
+        }
+    }
+
+    abstract void validatePieceMoveRule(Coordinate source, Coordinate target, Board board);
 
     @Override
     public PieceType getType() {
