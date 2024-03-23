@@ -11,9 +11,9 @@ public abstract class Piece {
         this.team = team;
     }
 
-    protected abstract boolean canMove(Square source, Square target);
+    public abstract boolean canMove(Square source, Square target);
 
-    protected abstract boolean canAttack(final Square source, final Square target);
+    public abstract boolean canAttack(final Square source, final Square target);
 
     public final boolean canNotMove(final Square source, final Square target) {
         return !canMove(source, target);

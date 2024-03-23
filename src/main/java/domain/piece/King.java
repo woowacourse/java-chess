@@ -22,7 +22,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean canAttack(final Square source, final Square target) {
+    public boolean canAttack(final Square source, final Square target) {
         return canMove(source, target);
     }
 
