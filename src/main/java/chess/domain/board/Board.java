@@ -36,6 +36,11 @@ public class Board {
         return pieces.getOrDefault(coordinate, new Empty());
     }
 
+    // TODO: 테스트 코드 및 존재 여부 고민
+    public boolean isPiecePresent(Coordinate coordinate) {
+        return pieces.containsKey(coordinate);
+    }
+
     public void move(Coordinate source, Coordinate target) {
         Piece sourcePiece = findSource(source, target);
 
