@@ -14,10 +14,12 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import domain.position.UnitVector;
+import domain.strategy.BlackPawnMoveStrategy;
 import domain.strategy.ContinuousMoveStrategy;
 import domain.strategy.KnightMoveStrategy;
 import domain.strategy.MoveStrategy;
 import domain.strategy.PawnMoveStrategy;
+import domain.strategy.WhitePawnMoveStrategy;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -112,7 +114,14 @@ public class Fixture {
         public static final MoveStrategy BISHOP_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.DIAGONAL_VECTORS, 8);
         public static final MoveStrategy ROOK_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.ORTHOGONAL_VECTORS, 8);
         public static final MoveStrategy KNIGHT_MOVE_STRATEGY = new KnightMoveStrategy();
-        public static final MoveStrategy WHITE_PAWN_MOVE_STRATEGY = new PawnMoveStrategy(TeamColor.WHITE);
-        public static final MoveStrategy BLACK_PAWN_MOVE_STRATEGY = new PawnMoveStrategy(TeamColor.BLACK);
+        public static final MoveStrategy WHITE_PAWN_MOVE_STRATEGY = new WhitePawnMoveStrategy();
+        public static final MoveStrategy BLACK_PAWN_MOVE_STRATEGY = new BlackPawnMoveStrategy();
+    }
+
+    public static PawnMoveStrategy pawnMoveStrategyOf(TeamColor teamColor) {
+        if (teamColor.equals(TeamColor.WHITE)) {
+            return new WhitePawnMoveStrategy();
+        }
+        return new BlackPawnMoveStrategy();
     }
 }

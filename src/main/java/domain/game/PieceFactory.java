@@ -1,11 +1,11 @@
 package domain.game;
 
 import domain.position.UnitVector;
+import domain.strategy.BlackPawnMoveStrategy;
 import domain.strategy.ContinuousMoveStrategy;
 import domain.strategy.KnightMoveStrategy;
 import domain.strategy.MoveStrategy;
-import domain.strategy.PawnMoveStrategy;
-
+import domain.strategy.WhitePawnMoveStrategy;
 import java.util.Map;
 
 import static domain.game.PieceType.*;
@@ -16,8 +16,8 @@ public class PieceFactory {
 
     private static final int MAXIMUM_MOVE_BOUND = 8;
     private static final int KING_MAXIMUM_MOVE_BOUND = 1;
-    private static final MoveStrategy whitePawnStrategy = new PawnMoveStrategy(TeamColor.WHITE);
-    private static final MoveStrategy blackPawnStrategy = new PawnMoveStrategy(TeamColor.BLACK);
+    private static final MoveStrategy whitePawnStrategy = new WhitePawnMoveStrategy();
+    private static final MoveStrategy blackPawnStrategy = new BlackPawnMoveStrategy();
     private static final MoveStrategy knightStrategy = new KnightMoveStrategy();
     private static final MoveStrategy rookStrategy = new ContinuousMoveStrategy(UnitVector.orthogonalVectors(), MAXIMUM_MOVE_BOUND);
     private static final MoveStrategy bishopStrategy = new ContinuousMoveStrategy(UnitVector.diagonalVectors(), MAXIMUM_MOVE_BOUND);

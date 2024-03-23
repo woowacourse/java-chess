@@ -1,76 +1,49 @@
 package domain.strategy;
 
-import domain.game.TeamColor;
 import domain.position.Position;
-import domain.position.Rank;
-
+import domain.position.UnitVector;
 import java.util.Set;
 
-public class PawnMoveStrategy implements MoveStrategy {
-    private final TeamColor teamColor;
-
-    public PawnMoveStrategy(final TeamColor teamColor) {
-        this.teamColor = teamColor;
-    }
-
+public abstract sealed class PawnMoveStrategy implements MoveStrategy permits BlackPawnMoveStrategy,
+        WhitePawnMoveStrategy {
     @Override
-    public boolean isMovable(final Position source, final Position destination, final Set<Position> piecePositions) {
-        if (teamColor == TeamColor.WHITE) {
-            return isWhiteMovable(source, destination, piecePositions.contains(destination));
-        }
-        return isBlackMovable(source, destination, piecePositions.contains(destination));
-    }
-
-    private boolean isWhiteMovable(final Position source, final Position destination, boolean isExistOtherPiece) {
+    public boolean isMovable(Position source, Position destination, Set<Position> otherPiecesPosition) {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
+        UnitVector unitVector = UnitVector.of(rowDiff, colDiff);
+        boolean isPieceExistOnDestination = otherPiecesPosition.contains(destination);
 
-        boolean isStraightMovable = (goUpWhite(rowDiff, colDiff) || goUpUpWhite(rowDiff, colDiff, source)) && !isExistOtherPiece;
-        boolean isCrossMovable = goCrossWhite(rowDiff, colDiff) && isExistOtherPiece;
-
-        return isStraightMovable || isCrossMovable;
+        if (isPieceExistOnDestination) {
+            return isCrossMovable(unitVector, colDiff);
+        }
+        return isStraightMovable(unitVector, rowDiff, isInitialPosition(source));
     }
 
-    private boolean goUpWhite(int rowDiff, int colDiff) {
-        return rowDiff == -1 && colDiff == 0;
+    private boolean isCrossMovable(UnitVector unitVector, int colDiff) {
+        Set<UnitVector> validVectors = getCrossValidVectors();
+        return validVectors.contains(unitVector) && Math.abs(colDiff) == 1;
     }
 
-    private boolean goUpUpWhite(int rowDiff, int colDiff, Position source) {
-        return rowDiff == -2 && colDiff == 0 && isInitialPosition(source);
-    }
+    protected abstract Set<UnitVector> getCrossValidVectors();
 
-    private boolean goCrossWhite(final int rowDiff, final int colDiff) {
-        return rowDiff == -1 && Math.abs(colDiff) == 1;
-    }
+    private boolean isStraightMovable(UnitVector unitVector, int rowDiff, boolean isInitialMove) {
+        UnitVector validVector = getStraightValidVector();
 
-
-    private boolean isBlackMovable(final Position source, final Position destination, final boolean isExistOtherPiece) {
-        int rowDiff = destination.rowIndex() - source.rowIndex();
-        int colDiff = destination.columnIndex() - source.columnIndex();
-
-        boolean isStraightMovable = (goUpBlack(rowDiff, colDiff) || goUpUpBlack(rowDiff, colDiff, source)) && !isExistOtherPiece;
-        boolean isCrossMovable = goCrossBlack(rowDiff, colDiff) && isExistOtherPiece;
-
-        return isStraightMovable || isCrossMovable;
-    }
-
-    private boolean goUpBlack(int rowDiff, int colDiff) {
-        return rowDiff == 1 && colDiff == 0;
-    }
-
-    private boolean goUpUpBlack(int rowDiff, int colDiff, Position source) {
-        return rowDiff == 2 && colDiff == 0 && isInitialPosition(source);
-    }
-
-    private boolean goCrossBlack(final int rowDiff, final int colDiff) {
-        return rowDiff == 1 && Math.abs(colDiff) == 1;
-    }
-
-    public boolean isInitialPosition(final Position position) {
-        if (teamColor == TeamColor.BLACK) {
-            return position.rank() == Rank.SEVEN;
+        if (!unitVector.equals(validVector)) {
+            return false;
         }
 
-        return position.rank() == Rank.TWO;
+        boolean isOneStepForwardMovable = isEqualSize(rowDiff, 1);
+        boolean isTwoStepForwardMovable = isEqualSize(rowDiff, 2) && isInitialMove;
+
+        return isOneStepForwardMovable || isTwoStepForwardMovable;
     }
+
+    protected abstract UnitVector getStraightValidVector();
+
+    private boolean isEqualSize(int biPolarValue, int expectedSize) {
+        return Math.abs(biPolarValue) == Math.abs(expectedSize);
+    }
+
+    protected abstract boolean isInitialPosition(final Position position);
 }
