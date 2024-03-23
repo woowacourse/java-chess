@@ -15,13 +15,13 @@ public enum UnitVector {
     LEFT(0, -1, (row, col) -> row == 0 && col < 0),
     UP_LEFT(-1, -1, (row, col) -> row < 0 && col < 0);
 
-    private final int row;
-    private final int col;
+    private final int rowValue;
+    private final int colValue;
     private final BiPredicate<Integer, Integer> condition;
 
     UnitVector(final int row, final int col, BiPredicate<Integer, Integer> condition) {
-        this.row = row;
-        this.col = col;
+        this.rowValue = row;
+        this.colValue = col;
         this.condition = condition;
     }
 
@@ -52,10 +52,10 @@ public enum UnitVector {
     }
 
     public int getRow() {
-        return row;
+        return rowValue;
     }
 
     public int getCol() {
-        return col;
+        return colValue;
     }
 }
