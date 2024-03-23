@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import chess.domain.Path;
+import chess.domain.MultiDirection;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -16,18 +16,18 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        Path path = Path.of(this.position, target);
-        return path == Path.RIGHT_DIAGONAL || path == Path.LEFT_DIAGONAL;
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
+        return multiDirection == MultiDirection.RIGHT_DIAGONAL || multiDirection == MultiDirection.LEFT_DIAGONAL;
     }
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        Path path = Path.of(this.position, target);
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
 
-        if (path == Path.RIGHT_DIAGONAL) {
+        if (multiDirection == MultiDirection.RIGHT_DIAGONAL) {
             return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
         }
-        if (path == Path.LEFT_DIAGONAL) {
+        if (multiDirection == MultiDirection.LEFT_DIAGONAL) {
             return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
         }
 

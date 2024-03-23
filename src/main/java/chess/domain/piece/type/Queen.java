@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import chess.domain.Path;
+import chess.domain.MultiDirection;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -16,26 +16,26 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        Path path = Path.of(this.position, target);
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
 
-        return path == Path.VERTICAL || path == Path.HORIZONTAL
-                || path == Path.LEFT_DIAGONAL || path == Path.RIGHT_DIAGONAL;
+        return multiDirection == MultiDirection.VERTICAL || multiDirection == MultiDirection.HORIZONTAL
+                || multiDirection == MultiDirection.LEFT_DIAGONAL || multiDirection == MultiDirection.RIGHT_DIAGONAL;
     }
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        Path path = Path.of(this.position, target);
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
 
-        if (path == Path.RIGHT_DIAGONAL) {
+        if (multiDirection == MultiDirection.RIGHT_DIAGONAL) {
             return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
         }
-        if (path == Path.LEFT_DIAGONAL) {
+        if (multiDirection == MultiDirection.LEFT_DIAGONAL) {
             return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
         }
-        if (path == Path.VERTICAL) {
+        if (multiDirection == MultiDirection.VERTICAL) {
             return RouteCalculator.getVerticalMiddlePositions(this.position, target);
         }
-        if (path == Path.HORIZONTAL) {
+        if (multiDirection == MultiDirection.HORIZONTAL) {
             return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
         }
         return new HashSet<>();

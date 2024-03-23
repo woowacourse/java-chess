@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import chess.domain.Path;
+import chess.domain.MultiDirection;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -16,18 +16,18 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        Path path = Path.of(this.position, target);
-        return path == Path.VERTICAL || path == Path.HORIZONTAL;
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
+        return multiDirection == MultiDirection.VERTICAL || multiDirection == MultiDirection.HORIZONTAL;
     }
 
     @Override
     public Set<Position> getRoute(final Position target) {
-        Path path = Path.of(this.position, target);
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
 
-        if (path == Path.VERTICAL) {
+        if (multiDirection == MultiDirection.VERTICAL) {
             return RouteCalculator.getVerticalMiddlePositions(this.position, target);
         }
-        if (path == Path.HORIZONTAL) {
+        if (multiDirection == MultiDirection.HORIZONTAL) {
             return RouteCalculator.getHorizontalMiddlePositions(this.position, target);
         }
 

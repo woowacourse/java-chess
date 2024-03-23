@@ -4,7 +4,7 @@ import chess.domain.piece.Position;
 import java.util.Arrays;
 import java.util.function.BiPredicate;
 
-public enum Path {
+public enum MultiDirection {
     VERTICAL((source, target) -> source.isSameFile(target) && !source.isSameRank(target)),
     HORIZONTAL((source, target) -> !source.isSameFile(target) && source.isSameRank(target)),
     RIGHT_DIAGONAL((source, target) -> source.isDiagonalWith(target)
@@ -18,11 +18,11 @@ public enum Path {
 
     private final BiPredicate<Position, Position> predicate;
 
-    Path(final BiPredicate<Position, Position> predicate) {
+    MultiDirection(final BiPredicate<Position, Position> predicate) {
         this.predicate = predicate;
     }
 
-    public static Path of(final Position source, final Position target) {
+    public static MultiDirection of(final Position source, final Position target) {
         return Arrays.stream(values())
                 .filter(path -> path.test(source, target))
                 .findAny()

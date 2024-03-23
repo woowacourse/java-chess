@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import chess.domain.Path;
+import chess.domain.MultiDirection;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -17,17 +17,17 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveTo(final Position target) {
-        Path path = Path.of(this.position, target);
+        MultiDirection multiDirection = MultiDirection.of(this.position, target);
         int rankDistance = this.position.getRankDistance(target);
         int fileDistance = this.position.getFileDistance(target);
 
-        if (path == Path.VERTICAL && rankDistance == DEFAULT_STEP) {
+        if (multiDirection == MultiDirection.VERTICAL && rankDistance == DEFAULT_STEP) {
             return true;
         }
-        if (path == Path.HORIZONTAL && fileDistance == DEFAULT_STEP) {
+        if (multiDirection == MultiDirection.HORIZONTAL && fileDistance == DEFAULT_STEP) {
             return true;
         }
-        return (path == Path.LEFT_DIAGONAL || path == Path.RIGHT_DIAGONAL) && rankDistance == DEFAULT_STEP;
+        return (multiDirection == MultiDirection.LEFT_DIAGONAL || multiDirection == MultiDirection.RIGHT_DIAGONAL) && rankDistance == DEFAULT_STEP;
     }
 
     @Override
