@@ -14,8 +14,9 @@ public class MovePositionDto {
     }
 
     public static MovePositionDto from(String command) {
-        String sourceText = command.split(" ")[1];
-        String targetText = command.split(" ")[2];
+        String[] splitCommand = command.split(" ");
+        String sourceText = splitCommand[1];
+        String targetText = splitCommand[2];
         return new MovePositionDto(resolvePosition(sourceText), resolvePosition(targetText));
     }
 
