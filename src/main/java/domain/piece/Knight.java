@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.ChessVector;
+import domain.Direction;
 import domain.Square;
 import domain.Team;
 
@@ -18,11 +19,31 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        // TODO: contains 로 변경
-        return SQUARE_VECTORS.stream()
-                .anyMatch(vector -> vector.equals(chessVector));
+        if (source.next2(Direction.EAST).next2(Direction.EAST).next2(Direction.NORTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.EAST).next2(Direction.EAST).next2(Direction.SOUTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.WEST).next2(Direction.WEST).next2(Direction.NORTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.WEST).next2(Direction.WEST).next2(Direction.SOUTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.NORTH).next2(Direction.NORTH).next2(Direction.EAST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.NORTH).next2(Direction.NORTH).next2(Direction.WEST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.SOUTH).next2(Direction.SOUTH).next2(Direction.EAST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.SOUTH).next2(Direction.SOUTH).next2(Direction.WEST).equals(target)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
