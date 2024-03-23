@@ -6,22 +6,22 @@ import chess.domain.strategy.*;
 
 public enum PieceType {
 
-    KING(new KingMoveStrategy()),
-    QUEEN(new QueenMoveStrategy()),
-    ROOK(new RookMoveStrategy()),
-    BISHOP(new BishopMoveStrategy()),
-    KNIGHT(new KnightMoveStrategy()),
-    PAWN(new PawnMoveStrategy()),
-    EMPTY(new EmptyMoveStrategy()),
+    KING(new KingLegalMoveCheckStrategy()),
+    QUEEN(new QueenLegalMoveCheckStrategy()),
+    ROOK(new RookLegalMoveCheckStrategy()),
+    BISHOP(new BishopLegalMoveCheckStrategy()),
+    KNIGHT(new KnightLegalMoveCheckStrategy()),
+    PAWN(new PawnLegalMoveCheckStrategy()),
+    EMPTY(new EmptyLegalMoveCheckStrategy()),
     ;
 
-    private final MoveStrategy moveStrategy;
+    private final LegalMoveCheckStrategy legalMoveCheckStrategy;
 
-    PieceType(MoveStrategy moveStrategy) {
-        this.moveStrategy = moveStrategy;
+    PieceType(LegalMoveCheckStrategy legalMoveCheckStrategy) {
+        this.legalMoveCheckStrategy = legalMoveCheckStrategy;
     }
 
     public boolean canMove(Square source, Square destination, Board board) {
-        return moveStrategy.check(source, destination, board);
+        return legalMoveCheckStrategy.check(source, destination, board);
     }
 }

@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("폰 움직임 전략")
-public class PawnMoveStrategyTest {
+public class PawnLegalMoveCheckStrategyTest {
 
-    private MoveStrategy moveStrategy;
+    private LegalMoveCheckStrategy legalMoveCheckStrategy;
     private Board board;
 
     @BeforeEach
     void setUp() {
-        moveStrategy = new PawnMoveStrategy();
+        legalMoveCheckStrategy = new PawnLegalMoveCheckStrategy();
         board = new Board();
     }
 
@@ -32,7 +32,7 @@ public class PawnMoveStrategyTest {
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -47,7 +47,7 @@ public class PawnMoveStrategyTest {
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();
@@ -62,7 +62,7 @@ public class PawnMoveStrategyTest {
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();

@@ -4,12 +4,12 @@ import chess.domain.board.Board;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
-public class BishopMoveStrategy implements MoveStrategy {
+public class RookLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 
-    private final PathFindStrategy pathFindStrategy;
+    private final BlockedPathCheckStrategy pathFindStrategy;
 
-    public BishopMoveStrategy() {
-        this.pathFindStrategy = new PathFindStrategy();
+    public RookLegalMoveCheckStrategy() {
+        this.pathFindStrategy = new BlockedPathCheckStrategy();
     }
 
     @Override
@@ -20,6 +20,6 @@ public class BishopMoveStrategy implements MoveStrategy {
             return false;
         }
 
-        return Math.abs(diff.fileDiff()) - Math.abs(diff.rankDiff()) == 0;
+        return Math.abs(diff.rankDiff()) == 0 || Math.abs(diff.fileDiff()) == 0;
     }
 }

@@ -7,17 +7,17 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
-public class PawnMoveStrategy implements MoveStrategy {
+public class PawnLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 
     private static final int PAWN_FORWARD_INDEX = 1;
     private static final int PAWN_FIRST_FORWARD_INDEX = 2;
     private static final Rank WHITE_PAWN_FIRST_RANK = Rank.TWO;
     private static final Rank BLACK_PAWN_FIRST_RANK = Rank.SEVEN;
 
-    private final PathFindStrategy pathFindStrategy;
+    private final BlockedPathCheckStrategy pathFindStrategy;
 
-    public PawnMoveStrategy() {
-        this.pathFindStrategy = new PathFindStrategy();
+    public PawnLegalMoveCheckStrategy() {
+        this.pathFindStrategy = new BlockedPathCheckStrategy();
     }
 
     @Override

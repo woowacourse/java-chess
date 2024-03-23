@@ -5,7 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
-public class PathFindStrategy implements MoveStrategy {
+public class BlockedPathCheckStrategy implements LegalMoveCheckStrategy {
 
     @Override
     public boolean check(Square source, Square destination, Board board) {

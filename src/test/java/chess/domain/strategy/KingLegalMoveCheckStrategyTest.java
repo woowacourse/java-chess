@@ -11,73 +11,73 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("퀸 움직임 전략")
-class QueenMoveStrategyTest {
+@DisplayName("킹 움직임 전략")
+public class KingLegalMoveCheckStrategyTest {
 
-    private MoveStrategy moveStrategy;
+    private LegalMoveCheckStrategy legalMoveCheckStrategy;
     private Board board;
 
     @BeforeEach
     void setUp() {
-        moveStrategy = new QueenMoveStrategy();
+        legalMoveCheckStrategy = new KingLegalMoveCheckStrategy();
         board = new Board();
     }
 
-    @DisplayName("퀸은 수평 이동이 들어오면 이동 가능을 반환한다.")
+    @DisplayName("킹은 수평 1칸 이동 위치가 들어오면 이동 가능을 반환한다.")
     @Test
     void horizontalMove() {
         // given
-        Square source = Square.of(File.D, Rank.SIX);
-        Square destination = Square.of(File.H, Rank.SIX);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.F, Rank.EIGHT);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("퀸은 수직 이동이 들어오면 이동 가능을 반환한다.")
+    @DisplayName("킹은 수직 1칸 이동 위치가 들어오면 이동 가능을 반환한다.")
     @Test
     void verticalMove() {
         // given
-        Square source = Square.of(File.D, Rank.SIX);
-        Square destination = Square.of(File.D, Rank.THREE);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.E, Rank.SEVEN);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("퀸은 대각 이동이 들어오면 이동 가능을 반환한다.")
+    @DisplayName("킹은 대각 1칸 이동 위치가 들어오면 이동 가능을 반환한다.")
     @Test
     void diagonalMove() {
         // given
-        Square source = Square.of(File.D, Rank.SIX);
-        Square destination = Square.of(File.G, Rank.THREE);
+        Square source = Square.of(File.E, Rank.EIGHT);
+        Square destination = Square.of(File.D, Rank.SEVEN);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
     }
 
-    @DisplayName("퀸은 잘못된 이동이 들어오면 이동 불가능을 반환한다.")
+    @DisplayName("킹은 잘못된 위치가 들어오면 이동 불가능을 반환한다.")
     @Test
     void cannotMove() {
         // given
-        Square source = Square.of(File.D, Rank.EIGHT);
+        Square source = Square.of(File.E, Rank.EIGHT);
         Square destination = Square.of(File.C, Rank.SIX);
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();

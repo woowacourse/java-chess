@@ -4,12 +4,12 @@ import chess.domain.board.Board;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
-public class QueenMoveStrategy implements MoveStrategy {
+public class QueenLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 
-    private final PathFindStrategy pathFindStrategy;
+    private final BlockedPathCheckStrategy pathFindStrategy;
 
-    public QueenMoveStrategy() {
-        this.pathFindStrategy = new PathFindStrategy();
+    public QueenLegalMoveCheckStrategy() {
+        this.pathFindStrategy = new BlockedPathCheckStrategy();
     }
 
     @Override

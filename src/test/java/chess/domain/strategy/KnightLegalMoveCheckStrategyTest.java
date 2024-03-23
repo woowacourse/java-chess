@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("나이트 움직임 전략")
-class KnightMoveStrategyTest {
+class KnightLegalMoveCheckStrategyTest {
 
-    private MoveStrategy moveStrategy;
+    private LegalMoveCheckStrategy legalMoveCheckStrategy;
     private Board board;
 
     @BeforeEach
     void setUp() {
-        moveStrategy = new KnightMoveStrategy();
+        legalMoveCheckStrategy = new KnightLegalMoveCheckStrategy();
         board = new Board();
     }
 
@@ -32,7 +32,7 @@ class KnightMoveStrategyTest {
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isTrue();
@@ -47,7 +47,7 @@ class KnightMoveStrategyTest {
         Piece destinationPiece = board.findPieceBySquare(destination);
 
         // when
-        boolean actual = moveStrategy.check(source, destination, board);
+        boolean actual = legalMoveCheckStrategy.check(source, destination, board);
 
         // then
         assertThat(actual).isFalse();

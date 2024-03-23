@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.position.Square;
 import chess.dto.SquareDifferent;
 
-public class KnightMoveStrategy implements MoveStrategy {
+public class KnightLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 
     @Override
     public boolean check(Square source, Square destination, Board board) {
