@@ -15,7 +15,7 @@ public abstract class Piece {
     }
 
     public boolean isSameColor(Piece piece) {
-        return color == piece.color;
+        return isSameColor(piece.color);
     }
 
     public boolean isSameColor(Color otherColor) {
