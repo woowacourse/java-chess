@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Position;
-import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class QueenTest {
     @Test
     void queenMoveOverLineAndDiagonalLine() {
         assertThatThrownBy(() -> new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
+                .findBetweenPositions(new MovementDto(
                         Position.of(1, 1),
                         Position.of(2, 3))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -37,7 +37,7 @@ class QueenTest {
     @Test
     void betweenPositionDiagonal() {
         assertThat(new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
+                .findBetweenPositions(new MovementDto(
                         Position.of(4, 4),
                         Position.of(7, 7))))
                 .containsExactly(Position.of(5, 5), Position.of(6, 6));
@@ -47,7 +47,7 @@ class QueenTest {
     @Test
     void betweenPositionDiagonalMinus() {
         assertThat(new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
+                .findBetweenPositions(new MovementDto(
                         Position.of(4, 4),
                         Position.of(1, 1))))
                 .containsExactly(Position.of(3, 3), Position.of(2, 2));
@@ -57,7 +57,7 @@ class QueenTest {
     @Test
     void betweenPositionLine() {
         assertThat(new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
+                .findBetweenPositions(new MovementDto(
                         Position.of(4, 4),
                         Position.of(4, 7))))
                 .containsExactly(Position.of(4, 5), Position.of(4, 6));
@@ -67,7 +67,7 @@ class QueenTest {
     @Test
     void betweenPositionLineMinus() {
         assertThat(new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
+                .findBetweenPositions(new MovementDto(
                         Position.of(4, 4),
                         Position.of(1, 4))))
                 .containsExactly(Position.of(3, 4), Position.of(2, 4));

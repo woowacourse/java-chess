@@ -1,7 +1,9 @@
 package chess.view;
 
 import chess.domain.Position;
+import chess.domain.Status;
 import chess.domain.piece.character.Character;
+import chess.dto.BoardStatusDto;
 import java.util.Map;
 
 public class OutputView {
@@ -29,7 +31,15 @@ public class OutputView {
         return EMPTY_POSITION;
     }
 
-    public static void printCheck() {
-        System.out.println("체크 !" + System.lineSeparator());
+    public static void printGameStatus(BoardStatusDto boardStatusDto) {
+        printChessBoard(boardStatusDto.board());
+        printStatus(boardStatusDto.status());
+    }
+
+    private static void printStatus(Status status) {
+        switch (status) {
+            case CHECKMATE -> System.out.println("체크메이트!");
+            case CHECK -> System.out.println("체크!");
+        }
     }
 }

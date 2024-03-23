@@ -1,9 +1,9 @@
 package chess.domain;
 
-import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.dto.BoardStatusDto;
+import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
-import java.util.Map;
 
 public class ChessGame {
     private final Board board;
@@ -14,20 +14,27 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public Map<Position, Character> movePiece(Positions positions, Runnable printCheck) {
-        board.validateSameTeamByPosition(positions.source(), currentTeam);
-        board.move(positions);
-        validateCheck(printCheck);
+    public BoardStatusDto movePiece(MovementDto movementDto) {
+        board.validateSameTeamByPosition(movementDto.source(), currentTeam);
+        board.move(movementDto);
+        validateCheck();
         currentTeam = currentTeam.opponent();
-        return board.mapPositionToCharacter();
+        return new BoardStatusDto(board.mapPositionToCharacter(), checkStatus());
     }
 
-    private void validateCheck(Runnable printCheck) {
-        if (board.isChecked(currentTeam.opponent())) {
-            printCheck.run();
-        }
+    private void validateCheck() {
         if (board.isChecked(currentTeam)) {
             throw new ImpossibleMoveException("체크 상태를 벗어나지 않았습니다.");
         }
+    }
+
+    private Status checkStatus() {
+        if (board.isChecked(currentTeam)) {
+            if (board.isCheckmate(currentTeam)) {
+                return Status.CHECKMATE;
+            }
+            return Status.CHECK;
+        }
+        return Status.NORMAL;
     }
 }

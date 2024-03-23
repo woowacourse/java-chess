@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.Position;
-import chess.domain.Positions;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -14,6 +13,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ public class BoardTest {
     @Test
     void movePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        board.move(new Positions(
+        board.move(new MovementDto(
                 Position.of(2, 1),
                 Position.of(3, 1)));
 
@@ -54,7 +54,7 @@ public class BoardTest {
     @Test
     void invalidSourcePositionMovePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(new Positions(
+        assertThatThrownBy(() -> board.move(new MovementDto(
                 Position.of(3, 1),
                 Position.of(2, 2))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -65,7 +65,7 @@ public class BoardTest {
     @Test
     void betweenPositionHasPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(new Positions(
+        assertThatThrownBy(() -> board.move(new MovementDto(
                 Position.of(1, 3),
                 Position.of(3, 5))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -76,7 +76,7 @@ public class BoardTest {
     @Test
     void targetPositionHasTeamPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() -> board.move(new Positions(
+        assertThatThrownBy(() -> board.move(new MovementDto(
                 Position.of(1, 1),
                 Position.of(1, 2))))
                 .isInstanceOf(ImpossibleMoveException.class)

@@ -2,7 +2,7 @@ package chess.view;
 
 import static chess.view.GameCommand.isStart;
 
-import chess.domain.Positions;
+import chess.dto.MovementDto;
 import chess.exception.InvalidCommandException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -31,10 +31,10 @@ public class InputView {
         };
     }
 
-    public static Positions inputPositions() {
+    public static MovementDto inputMovement() {
         StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
         if (inputTokenizer.countTokens() == 2) {
-            return new Positions(
+            return new MovementDto(
                     PositionCommand.generate(inputTokenizer.nextToken()),
                     PositionCommand.generate(inputTokenizer.nextToken()));
         }

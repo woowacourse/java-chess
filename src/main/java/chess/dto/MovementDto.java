@@ -1,12 +1,13 @@
-package chess.domain;
+package chess.dto;
 
+import chess.domain.Position;
 import chess.exception.ImpossibleMoveException;
 
-public class Positions {
+public class MovementDto {
     private final Position sourcePosition;
     private final Position targetPosition;
 
-    public Positions(Position sourcePosition, Position targetPosition) {
+    public MovementDto(Position sourcePosition, Position targetPosition) {
         validate(sourcePosition, targetPosition);
         this.sourcePosition = sourcePosition;
         this.targetPosition = targetPosition;
