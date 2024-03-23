@@ -4,7 +4,7 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
 
-public abstract class NonPawn implements Piece { // todo 같은 색 기물 존재 테스트
+public abstract class NonPawn implements Piece {
     private final Color color;
 
     protected NonPawn(Color color) {
