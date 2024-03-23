@@ -1,15 +1,14 @@
 package view.dto;
 
 import domain.board.Position;
-import domain.game.Turn;
 import view.FileResolver;
 
-public record MovePositionDto(Position sourcePosition, Position targetPosition, Turn turn) {
+public record MovePositionDto(Position sourcePosition, Position targetPosition) {
 
-    public static MovePositionDto from(String command, Turn turn) {
+    public static MovePositionDto from(String command) {
         String sourcePositionText = command.split(" ")[1];
         String targetPositionText = command.split(" ")[2];
-        return new MovePositionDto(resolvePosition(sourcePositionText), resolvePosition(targetPositionText), turn);
+        return new MovePositionDto(resolvePosition(sourcePositionText), resolvePosition(targetPositionText));
     }
 
     private static Position resolvePosition(String positionText) {

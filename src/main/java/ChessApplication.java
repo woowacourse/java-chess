@@ -1,6 +1,6 @@
-import controller.ChessController;
 import domain.board.Board;
-import domain.game.Turn;
+import domain.board.InitialBoardGenerator;
+import domain.game.ChessGame;
 import view.InputView;
 import view.OutputView;
 import view.dto.MovePositionDto;
@@ -13,26 +13,26 @@ public class ChessApplication {
 
     private static final InputView inputView = new InputView();
     private static final OutputView outputView = new OutputView();
-    private static final ChessController controller = new ChessController();
+    private static final ChessGame chessGame = new ChessGame(Board.generatedBy(new InitialBoardGenerator()));
 
     public static void main(String[] args) {
         outputView.printStartMessage();
         String command = inputView.readCommand();
         if (command.equals(START_COMMAND)) {
-            outputView.printBoard(controller.getBoard());
-            startTurn(Turn.makeInitialTurn());
+            outputView.printBoard(chessGame.getBoard());
+            startTurn();
         }
     }
 
-    private static void startTurn(Turn turn) {
+    private static void startTurn() {
         String gameCommand = inputView.readCommand();
         if (gameCommand.equals(END_COMMAND)) {
             return;
         }
         if (gameCommand.startsWith(MOVE_COMMAND)) {
-            Board board = controller.move(MovePositionDto.from(gameCommand, turn));
+            Board board = chessGame.startTurn(MovePositionDto.from(gameCommand));
             outputView.printBoard(board);
         }
-        startTurn(turn.changeTurn());
+        startTurn();
     }
 }

@@ -19,11 +19,12 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
-    public void move(Position sourcePosition, Position targetPosition, Turn turn) {
+    public Board move(Position sourcePosition, Position targetPosition, Turn turn) {
         Piece piece = board.get(sourcePosition);
         validate(sourcePosition, targetPosition, turn);
         board.remove(sourcePosition);
         board.put(targetPosition, piece);
+        return new Board(board);
     }
 
     private void validate(Position sourcePosition, Position targetPosition, Turn turn) {
