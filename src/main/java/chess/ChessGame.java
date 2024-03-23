@@ -26,12 +26,12 @@ public class ChessGame {
     public void start() {
         outputView.printStartGame();
         GameCommand command = inputView.readCommand();
-        if (command == GameCommand.START) {
+        if (command.isStart()) {
             Board board = BoardFactory.createInitBoard();
             showBoard(board);
             play(board);
         }
-        if (command == GameCommand.MOVE) {
+        if (command.isMove()) {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
         }
     }
@@ -44,10 +44,10 @@ public class ChessGame {
 
     private void processTurn(Board board) {
         GameCommand command = inputView.readCommand();
-        if (command == GameCommand.START) {
+        if (command.isStart()) {
             throw new IllegalArgumentException("이미 게임을 시작했습니다.");
         }
-        if (command == GameCommand.END) {
+        if (command.isEnd()) {
             System.exit(0);
         }
         executeMove(board);

@@ -20,4 +20,16 @@ public enum GameCommand {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 커멘드입니다."));
     }
+
+    public boolean isStart() {
+        return this == START;
+    }
+
+    public boolean isEnd() {
+        return this == END;
+    }
+
+    public boolean isMove() {
+        return this == MOVE;
+    }
 }
