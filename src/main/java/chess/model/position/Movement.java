@@ -4,6 +4,7 @@ import chess.model.piece.Side;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -91,5 +92,19 @@ public class Movement {
             prevPosition = nextPosition;
         }
         return unmodifiableList(path);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movement movement = (Movement) o;
+        return Objects.equals(fileDifference, movement.fileDifference)
+                && Objects.equals(rankDifference, movement.rankDifference);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fileDifference, rankDifference);
     }
 }
