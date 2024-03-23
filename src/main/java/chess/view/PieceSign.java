@@ -10,7 +10,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
-
 import java.util.Arrays;
 
 public enum PieceSign {

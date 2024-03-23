@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.domain.chessBoard.ChessBoard;
-
 import java.util.List;
 
 public class OutputView {
@@ -24,7 +23,7 @@ public class OutputView {
         List<String> board = chessBoard.showBoard();
 
         for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
-            String boardLine = String.join("", board.subList(i * CHESS_BOARD_LENGTH, (i+1) * CHESS_BOARD_LENGTH));
+            String boardLine = String.join("", board.subList(i * CHESS_BOARD_LENGTH, (i + 1) * CHESS_BOARD_LENGTH));
             System.out.println(boardLine);
         }
         System.out.println();

@@ -5,7 +5,6 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.PieceSign;
-
 import java.util.List;
 
 public class Space {

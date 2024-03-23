@@ -3,7 +3,6 @@ package chess.machine;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
-
 import java.util.Arrays;
 import java.util.List;
 

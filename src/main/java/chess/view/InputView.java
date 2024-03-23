@@ -2,7 +2,6 @@ package chess.view;
 
 import chess.machine.Command;
 import chess.machine.CommandMapper;
-
 import java.util.Scanner;
 
 public class InputView {
