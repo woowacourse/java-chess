@@ -34,10 +34,8 @@
 - [x] chessBoardMaker 테스트 분리
 - [x] current -> source로 변경하기
 - [x] direction, multidirection 테스트 새로
-- [ ] 입력의 DTO 통한 검증 추가
 - [x] position 테스트 새로
 - [x] file, rank 테스트 새로
-- [ ] move 메서드 개선
 
 ## 체스 말 이동 규칙
 
