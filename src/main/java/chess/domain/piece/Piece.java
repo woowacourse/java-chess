@@ -25,16 +25,16 @@ public abstract class Piece {
 
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return isMovable(rowDifference, columnDifference);
-    }
-
     public boolean isMovable(Positions positions) {
         return isMovable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
-    public boolean isAttacking(Positions positions) {
+    public boolean isAttackable(Positions positions) {
         return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
+    }
+
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return isMovable(rowDifference, columnDifference);
     }
 
     public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
