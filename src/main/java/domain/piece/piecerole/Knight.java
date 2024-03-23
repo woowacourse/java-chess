@@ -1,15 +1,15 @@
 package domain.piece.piecerole;
 
-import static domain.game.Direction.DOWN_LEFT;
-import static domain.game.Direction.DOWN_RIGHT;
-import static domain.game.Direction.LEFT_DOWN;
-import static domain.game.Direction.LEFT_UP;
-import static domain.game.Direction.RIGHT_DOWN;
-import static domain.game.Direction.RIGHT_UP;
-import static domain.game.Direction.UP_LEFT;
-import static domain.game.Direction.UP_RIGHT;
+import static domain.move.Direction.DOWN_LEFT;
+import static domain.move.Direction.DOWN_RIGHT;
+import static domain.move.Direction.LEFT_DOWN;
+import static domain.move.Direction.LEFT_UP;
+import static domain.move.Direction.RIGHT_DOWN;
+import static domain.move.Direction.RIGHT_UP;
+import static domain.move.Direction.UP_LEFT;
+import static domain.move.Direction.UP_RIGHT;
 
-import domain.game.Movable;
+import domain.move.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

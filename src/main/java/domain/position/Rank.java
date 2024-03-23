@@ -3,11 +3,14 @@ package domain.position;
 import java.util.Objects;
 
 public class Rank {
-
     private final int number;
 
     public Rank(int number) {
         this.number = number;
+    }
+
+    public Rank(char number) {
+        this(Character.getNumericValue(number));
     }
 
     public int subtract(Rank target) {

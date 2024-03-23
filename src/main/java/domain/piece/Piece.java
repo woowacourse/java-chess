@@ -1,7 +1,5 @@
 package domain.piece;
 
-import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
 import java.util.Objects;
@@ -18,19 +16,12 @@ public class Piece {
     public boolean isEqualColor(final Color target) {
         return this.color == target;
     }
+
     public boolean isNotEqualColor(final Color target) {
         return this.color != target;}
 
     public boolean canMove(final Position source, final Position target) {
         return pieceRole.canMove(source, target);
-    }
-
-    public boolean isPawn() {
-        return pieceRole instanceof Pawn;
-    }
-
-    public boolean isNotKnight() {
-        return !(pieceRole instanceof Knight);
     }
 
     public PieceRole getPieceRole() {

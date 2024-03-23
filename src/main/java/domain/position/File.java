@@ -3,7 +3,6 @@ package domain.position;
 import java.util.Objects;
 
 public class File {
-
     private final char letter;
 
     public File(char letter) {

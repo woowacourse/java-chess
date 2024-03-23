@@ -1,11 +1,11 @@
 package domain.piece.piecerole;
 
-import static domain.game.Direction.NORTH_EAST;
-import static domain.game.Direction.NORTH_WEST;
-import static domain.game.Direction.SOUTH_EAST;
-import static domain.game.Direction.SOUTH_WEST;
+import static domain.move.Direction.NORTH_EAST;
+import static domain.move.Direction.NORTH_WEST;
+import static domain.move.Direction.SOUTH_EAST;
+import static domain.move.Direction.SOUTH_WEST;
 
-import domain.game.Movable;
+import domain.move.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package domain.position;
 
-import domain.game.ChessVector;
-import domain.game.Direction;
+import domain.move.ChessVector;
+import domain.move.Direction;
 import java.util.Objects;
 
 public class Position {
@@ -14,8 +14,11 @@ public class Position {
     }
 
     public Position(final Position other) {
-        this.file = other.file;
-        this.rank = other.rank;
+        this(other.file, other.rank);
+    }
+
+    public Position(final String fileRank) {
+        this(new File(fileRank.charAt(0)), new Rank(fileRank.charAt(1)));
     }
 
     public Position move(final Direction direction) {

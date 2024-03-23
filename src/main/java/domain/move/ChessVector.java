@@ -1,10 +1,9 @@
-package domain.game;
+package domain.move;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
 public class ChessVector {
-
     private final int fileVector;
     private final int rankVector;
 

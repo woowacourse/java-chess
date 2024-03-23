@@ -1,17 +1,18 @@
 package domain.piece.piecerole;
 
-import static domain.game.Direction.EAST;
-import static domain.game.Direction.NORTH;
-import static domain.game.Direction.SOUTH;
-import static domain.game.Direction.WEST;
+import static domain.move.Direction.EAST;
+import static domain.move.Direction.NORTH;
+import static domain.move.Direction.SOUTH;
+import static domain.move.Direction.WEST;
 
-import domain.game.Movable;
+import domain.move.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;
 
 public class King implements PieceRole {
     private static final int MAX_MOVEMENT = 1;
+
     private final List<Movable> routes;
 
     public King() {

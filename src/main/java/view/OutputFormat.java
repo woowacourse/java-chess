@@ -9,15 +9,13 @@ import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OutputView {
-    private static final OutputFormat FORMAT = new OutputFormat();
-    private static final String COMMAND_MESSAGE = "> 체스 게임을 시작합니다.%n"
-            + "> 게임 시작 : start%n"
-            + "> 게임 종료 : end%n"
-            + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n";
+public class OutputFormat {
 
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
 
@@ -37,15 +35,31 @@ public class OutputView {
         pieceSymbol.put(new Piece(new Pawn(Color.WHITE), Color.WHITE), "p");
     }
 
-    public void printCommandMessage() {
-        System.out.printf(COMMAND_MESSAGE);
+    public String parseChessBoard(final ChessBoard chessBoard) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int rank = 8; rank >= 1; rank--) {
+            parsePositionByFile(chessBoard, rank);
+            stringBuilder.append(parsePositionByFile(chessBoard, rank)).append("\n");
+        }
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 
-    public void printChessBoard(final ChessBoard chessBoard) {
-        System.out.println(FORMAT.parseChessBoard(chessBoard));
+    private String parsePositionByFile(ChessBoard chessBoard, int rank) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int file = 0; file < 8; file++) {
+            Position position = new Position(new Position(new File((char) ('a' + file)), new Rank(rank)));
+            stringBuilder.append(parseSymbol(chessBoard, position));
+        }
+        return stringBuilder.toString();
     }
 
-    public void printErrorMessage(String message) {
-        System.out.println("[ERROR] " + message);
+    private String parseSymbol(ChessBoard chessBoard, Position position) {
+        if (chessBoard.isNotEmptyAt(position)) {
+            Piece piece = chessBoard.findPieceByPosition(position);
+            return pieceSymbol.get(piece);
+        }
+        return ".";
     }
+
 }

@@ -1,4 +1,4 @@
-package domain.game;
+package domain.move;
 
 import domain.position.Position;
 import java.util.Objects;
