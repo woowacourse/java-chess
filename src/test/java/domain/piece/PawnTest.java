@@ -71,6 +71,16 @@ class PawnTest {
         assertThat(blackPawn.isReachable(DOWN_DOWN, Empty.INSTANCE)).isTrue();
     }
 
+    @Test
+    @DisplayName("이미 움직인 폰은 앞으로 두 칸 움직일 수 없다")
+    void movedPawn() {
+        final Piece whitePawn = new Pawn(WHITE);
+        final Piece blackPawn = new Pawn(BLACK);
+
+        assertThat(whitePawn.isReachable(UP_UP, Empty.INSTANCE)).isFalse();
+        assertThat(blackPawn.isReachable(DOWN_DOWN, Empty.INSTANCE)).isFalse();
+    }
+
 
     /*
         firstMove => moveTwo + no enemy
