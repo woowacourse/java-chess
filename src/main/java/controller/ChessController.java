@@ -35,11 +35,11 @@ public class ChessController {
         outputView.printStartingMessage();
         ChessGame chessGame = new ChessGame();
         while (chessGame.isRunning()) {
-            play(chessGame);
+            executeCommand(chessGame);
         }
     }
 
-    private void play(ChessGame chessGame) {
+    private void executeCommand(ChessGame chessGame) {
         try {
             MovePosition movePosition = new MovePosition(inputView.readCommand());
             Command command = Command.from(movePosition);
