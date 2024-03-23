@@ -1,15 +1,14 @@
 package domain.piece;
 
-import domain.position.PawnMovementDirection;
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.Map;
 
 import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
-import static domain.position.PawnMovementDirection.calculateDirection;
-import static domain.position.Rank.SEVEN;
-import static domain.position.Rank.TWO;
+import static domain.piece.PawnMovementDirection.calculateDirection;
+import static domain.board.Rank.SEVEN;
+import static domain.board.Rank.TWO;
 
 public class Pawn extends Piece {
 

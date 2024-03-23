@@ -2,7 +2,7 @@ package dto;
 
 import domain.Board;
 import domain.PieceType;
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.Collections;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package dto;
 
 import domain.GameCommand;
-import domain.position.Position;
+import domain.board.Position;
 
 public record RequestDto(GameCommand command, MovePositionDto movePositionDto) {
 

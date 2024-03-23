@@ -1,6 +1,6 @@
-package domain.position;
+package domain.piece;
 
-import domain.piece.PieceColor;
+import domain.board.Position;
 
 import java.util.Arrays;
 

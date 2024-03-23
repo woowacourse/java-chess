@@ -1,6 +1,6 @@
 package domain.strategy;
 
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.Set;
 

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.position.CommonMovementDirection;
+import domain.piece.CommonMovementDirection;
 import domain.strategy.ContinuousMoveStrategy;
 import domain.strategy.KnightMoveStrategy;
 import domain.strategy.MoveStrategy;

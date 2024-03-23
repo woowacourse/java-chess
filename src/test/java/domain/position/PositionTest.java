@@ -1,5 +1,9 @@
 package domain.position;
 
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
+import domain.piece.CommonMovementDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

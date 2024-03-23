@@ -1,13 +1,13 @@
 package view;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
 
 import java.util.Map;
 
-import static domain.position.File.*;
-import static domain.position.Rank.*;
+import static domain.board.File.*;
+import static domain.board.Rank.*;
 
 public class PositionConvertor {
     private static final Map<String, File> files = Map.of(

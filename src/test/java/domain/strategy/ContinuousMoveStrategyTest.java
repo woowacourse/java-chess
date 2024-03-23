@@ -1,7 +1,7 @@
 package domain.strategy;
 
-import domain.position.Position;
-import domain.position.CommonMovementDirection;
+import domain.board.Position;
+import domain.piece.CommonMovementDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static domain.position.File.*;
-import static domain.position.Rank.*;
-import static domain.position.CommonMovementDirection.*;
+import static domain.board.File.*;
+import static domain.board.Rank.*;
+import static domain.piece.CommonMovementDirection.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ContinuousMoveStrategyTest {

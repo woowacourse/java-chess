@@ -1,5 +1,9 @@
 package domain.position;
 
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
+import domain.piece.PawnMovementDirection;
 import domain.piece.PieceColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,9 +13,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static domain.piece.PieceColor.*;
-import static domain.position.File.*;
-import static domain.position.PawnMovementDirection.*;
-import static domain.position.Rank.*;
+import static domain.board.File.*;
+import static domain.piece.PawnMovementDirection.*;
+import static domain.board.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

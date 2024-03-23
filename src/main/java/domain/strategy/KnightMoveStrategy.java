@@ -1,7 +1,7 @@
 package domain.strategy;
 
-import domain.position.KnightMovementDirection;
-import domain.position.Position;
+import domain.piece.KnightMovementDirection;
+import domain.board.Position;
 
 import java.util.Set;
 

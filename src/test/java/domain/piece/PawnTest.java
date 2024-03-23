@@ -1,8 +1,8 @@
 package domain.piece;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,9 +14,9 @@ import java.util.stream.Stream;
 
 import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
-import static domain.position.File.*;
-import static domain.position.PawnMovementDirection.*;
-import static domain.position.Rank.*;
+import static domain.board.File.*;
+import static domain.piece.PawnMovementDirection.*;
+import static domain.board.Rank.*;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

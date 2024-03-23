@@ -1,4 +1,6 @@
-package domain.position;
+package domain.board;
+
+import domain.piece.MovementDirection;
 
 public record Position(File file, Rank rank) {
 

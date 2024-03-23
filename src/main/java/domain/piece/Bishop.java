@@ -1,13 +1,12 @@
 package domain.piece;
 
-import domain.position.CommonMovementDirection;
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static domain.position.CommonMovementDirection.*;
+import static domain.piece.CommonMovementDirection.*;
 
 public class Bishop extends Piece {
     private static final List<CommonMovementDirection> MOVABLE_DIRECTIONS = List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);

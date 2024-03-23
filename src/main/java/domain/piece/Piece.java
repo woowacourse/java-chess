@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.Map;
 

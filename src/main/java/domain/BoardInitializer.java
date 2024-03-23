@@ -1,7 +1,7 @@
 package domain;
 
-import domain.position.File;
-import domain.position.Position;
+import domain.board.File;
+import domain.board.Position;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import static domain.PieceType.*;
-import static domain.position.File.*;
-import static domain.position.Rank.*;
+import static domain.board.File.*;
+import static domain.board.Rank.*;
 
 public class BoardInitializer {
     private static final Map<PieceType, List<Position>> pieceInitialPositions = Map.ofEntries(

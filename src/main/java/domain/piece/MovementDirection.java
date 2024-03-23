@@ -1,4 +1,4 @@
-package domain.position;
+package domain.piece;
 
 public interface MovementDirection {
 

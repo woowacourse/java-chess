@@ -1,7 +1,7 @@
 package domain.strategy;
 
-import domain.position.Position;
-import domain.position.CommonMovementDirection;
+import domain.board.Position;
+import domain.piece.CommonMovementDirection;
 
 import java.util.List;
 import java.util.Set;

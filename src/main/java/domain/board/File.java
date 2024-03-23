@@ -1,4 +1,4 @@
-package domain.position;
+package domain.board;
 
 import java.util.Arrays;
 

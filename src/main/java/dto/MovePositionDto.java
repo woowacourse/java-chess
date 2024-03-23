@@ -1,6 +1,6 @@
 package dto;
 
-import domain.position.Position;
+import domain.board.Position;
 
 import java.util.Collections;
 import java.util.List;

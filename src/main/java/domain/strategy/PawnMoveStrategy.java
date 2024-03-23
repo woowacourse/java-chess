@@ -1,8 +1,8 @@
 package domain.strategy;
 
 import domain.TeamColor;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.board.Position;
+import domain.board.Rank;
 
 import java.util.Set;
 

@@ -1,8 +1,8 @@
 package domain.strategy;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

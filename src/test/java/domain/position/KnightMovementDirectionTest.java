@@ -1,5 +1,9 @@
 package domain.position;
 
+import domain.board.File;
+import domain.board.Position;
+import domain.board.Rank;
+import domain.piece.KnightMovementDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -7,9 +11,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.position.File.*;
-import static domain.position.KnightMovementDirection.*;
-import static domain.position.Rank.*;
+import static domain.board.File.*;
+import static domain.piece.KnightMovementDirection.*;
+import static domain.board.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
