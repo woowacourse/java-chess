@@ -7,11 +7,20 @@ public class Turn {
 
     private static final Turn whiteTurn = new Turn(Color.WHITE);
     private static final Turn blackTurn = new Turn(Color.BLACK);
+    private static final Turn noneTurn = new Turn(Color.EMPTY);
 
     private final Color color;
 
-    public Turn(Color color) {
+    private Turn(Color color) {
         this.color = color;
+    }
+
+    public static Turn notPlayingGame() {
+        return noneTurn;
+    }
+
+    public static Turn firstTurn() {
+        return whiteTurn;
     }
 
     public Turn oppositeTurn() {

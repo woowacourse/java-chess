@@ -1,18 +1,17 @@
 package chess.domain.chessBoard;
 
 import chess.domain.chessBoard.generator.SpaceGenerator;
-import chess.domain.piece.Color;
 import chess.domain.position.Position;
-
 import java.util.List;
 
 public class ChessBoard {
 
     private final List<Space> spaces;
-    private Turn turn = new Turn(Color.EMPTY);
+    private Turn turn;
 
     public ChessBoard(SpaceGenerator spaceGenerator) {
         this.spaces = spaceGenerator.generateSpaces();
+        this.turn = Turn.notPlayingGame();
     }
 
     public void move(Position from, Position to) {
@@ -36,6 +35,7 @@ public class ChessBoard {
         if (fromSpace.isValidTurn(turn)) {
             return;
         }
+        System.out.println(turn);
         throw new IllegalStateException("상대 플레이어의 차례입니다");
     }
 
@@ -47,11 +47,11 @@ public class ChessBoard {
     }
 
     public void startGame() {
-        turn = new Turn(Color.WHITE);
+        turn = Turn.firstTurn();
     }
 
     public void endGame() {
-        turn = new Turn(Color.EMPTY);
+        turn = Turn.notPlayingGame();
     }
 
     public boolean isActive() {
