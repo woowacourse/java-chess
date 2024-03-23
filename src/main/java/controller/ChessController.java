@@ -4,8 +4,8 @@ import dto.ChessBoardDto;
 import exception.CustomException;
 import java.util.Collections;
 import java.util.List;
-import model.Command;
 import model.ChessBoard;
+import model.Command;
 import model.status.GameStatus;
 import model.status.Initialization;
 import view.InputView;
@@ -66,18 +66,16 @@ public class ChessController {
 
     private List<String> readCommand() {
         try {
-            return readLine();
+            List<String> command = inputView.readCommandList();
+            validate(command);
+            return command;
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
         }
         return Collections.emptyList();
     }
 
-    private List<String> readLine() {
-        List<String> input = inputView.readCommandList();
-        for (String value : input) {
-            Command.validate(value);
-        }
-        return input;
+    private void validate(final List<String> commands) {
+        commands.forEach(Command::validate);
     }
 }
