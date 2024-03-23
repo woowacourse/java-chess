@@ -1,9 +1,9 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
+import domain.direction.StraightDirection;
 import domain.piece.base.ChessPieceBase;
-import domain.piece.strategy.RookStrategy;
-import java.util.List;
 
 public class Rook extends ChessPieceBase {
 
@@ -12,11 +12,16 @@ public class Rook extends ChessPieceBase {
     }
 
     @Override
-    public List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack) {
+    public Direction getDirection(Coordinate start, Coordinate destination) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        RookStrategy rookStrategy = RookStrategy.getMoveStrategy(rowDifference, columnDifference);
-        return rookStrategy.getDirection();
+        return StraightDirection.getDirection(rowDifference, columnDifference);
+    }
+
+    @Override
+    public boolean cantMove(Coordinate start, Coordinate destination) {
+        getDirection(start, destination);
+        return false;
     }
 }
