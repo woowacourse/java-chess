@@ -1,9 +1,11 @@
 package chess.domain.location;
 
 import chess.domain.board.Direction;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Row {
     ONE(1),
@@ -15,13 +17,9 @@ public enum Row {
     SEVEN(7),
     EIGHT(8);
 
-    public static final Map<Integer, Row> ROWS = new HashMap<>();
-
-    static {
-        for (Row row : values()) {
-            ROWS.put(row.rank, row);
-        }
-    }
+    public static final Map<Integer, Row> ROWS =
+            Arrays.stream(values())
+                    .collect(Collectors.toMap(Row::getRank, Function.identity()));
 
     private final int rank;
 
@@ -62,5 +60,9 @@ public enum Row {
 
     public int calculateDistance(Row other) {
         return other.rank - this.rank;
+    }
+
+    private int getRank() {
+        return rank;
     }
 }
