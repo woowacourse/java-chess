@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardInitializer {
-    public ChessBoardInitializer() {
+    private ChessBoardInitializer() {
     }
 
-    public Map<ChessPosition, Piece> create() {
+    public static Map<ChessPosition, Piece> create() {
         Map<ChessPosition, Piece> board = new HashMap<>();
         board.putAll(createSpecialPieces(Side.BLACK));
         board.putAll(createPawns(Side.BLACK));
@@ -21,7 +21,7 @@ public class ChessBoardInitializer {
         return board;
     }
 
-    private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
+    private static Map<ChessPosition, Piece> createSpecialPieces(Side side) {
         Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Rook(side),
@@ -35,7 +35,7 @@ public class ChessBoardInitializer {
         );
     }
 
-    private Rank convertSpecialPieceRankWithSide(Side side) {
+    private static Rank convertSpecialPieceRankWithSide(Side side) {
         Rank rank = Rank.ONE;
         if (side == Side.BLACK) {
             rank = Rank.EIGHT;
@@ -43,7 +43,7 @@ public class ChessBoardInitializer {
         return rank;
     }
 
-    private Map<ChessPosition, Piece> createPawns(Side side) {
+    private static Map<ChessPosition, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Pawn(side),
@@ -57,7 +57,7 @@ public class ChessBoardInitializer {
         );
     }
 
-    private Rank convertPawnRanksWithSide(Side side) {
+    private static Rank convertPawnRanksWithSide(Side side) {
         Rank rank = Rank.TWO;
         if (side == Side.BLACK) {
             rank = Rank.SEVEN;
