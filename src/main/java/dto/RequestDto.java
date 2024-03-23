@@ -13,10 +13,16 @@ public record RequestDto(GameCommand command, MovePositionDto movePositionDto) {
     }
 
     public Position source() {
+        if (movePositionDto.doesNotHavePosition()) {
+            throw new IllegalArgumentException("이동 위치 정보가 없습니다.");
+        }
         return movePositionDto.source();
     }
 
     public Position destination() {
+        if (movePositionDto.doesNotHavePosition()) {
+            throw new IllegalArgumentException("이동 위치 정보가 없습니다.");
+        }
         return movePositionDto.destination();
     }
 }

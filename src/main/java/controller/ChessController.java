@@ -6,6 +6,7 @@ import domain.game.BoardInitializer;
 import domain.game.Turn;
 import dto.BoardDto;
 import dto.RequestDto;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
@@ -20,9 +21,19 @@ public class ChessController {
 
     public void run() {
         outputView.printWelcomeMessage();
-        GameCommand command = inputView.inputGameStart();
+        GameCommand command = readUserInput(inputView::inputGameStart);
         if (command.isStart()) {
             startGame();
+        }
+    }
+
+    private <T> T readUserInput(Supplier<T> inputSupplier) {
+        while (true) {
+            try {
+                return inputSupplier.get();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -31,15 +42,15 @@ public class ChessController {
         printStatus(board);
 
         Turn turn = new Turn();
-        RequestDto requestDto = inputView.inputGameCommand();
+        RequestDto requestDto = readUserInput(inputView::inputGameCommand);
         while (requestDto.command().isContinuable()) {
             doTurn(board, turn, requestDto);
             printStatus(board);
-            requestDto = inputView.inputGameCommand();
+            requestDto = readUserInput(inputView::inputGameCommand);
         }
     }
 
-    private void doTurn(final Board board, Turn turn, final RequestDto requestDto) {
+    private void doTurn(Board board, Turn turn, RequestDto requestDto) {
         try {
             board.movePiece(turn.current(), requestDto.source(), requestDto.destination());
             turn.next();

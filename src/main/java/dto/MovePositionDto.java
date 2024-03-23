@@ -14,8 +14,8 @@ public record MovePositionDto(List<Position> positions) {
         return new MovePositionDto(List.of(source, destination));
     }
 
-    public boolean hasPosition() {
-        return !positions.isEmpty();
+    public boolean doesNotHavePosition() {
+        return positions.isEmpty();
     }
 
     public Position source() {
