@@ -1,17 +1,21 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Square {
     private static final String INVALID_RANK_ERROR = "위치가 존재하지 않습니다. 다시 입력하세요.";
-    private static final Map<String, Square> pool = Arrays.stream(Rank.values())
-            .flatMap(rank -> Arrays.stream(File.values())
-                                    .map(file -> new Square(file, rank)))
-            .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    private static final Map<String, Square> POOL;
+
+    static {
+        POOL = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new Square(file, rank)))
+                .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    }
 
     private final File file;
     private final Rank rank;
@@ -26,16 +30,16 @@ public class Square {
     }
 
     public static Square of(File file, Rank rank) {
-        return pool.get(toKey(file, rank));
+        return POOL.get(toKey(file, rank));
     }
 
     public static Square findByName(String name) {
         validateInPool(name);
-        return pool.get(name);
+        return POOL.get(name);
     }
 
     private static void validateInPool(String name) {
-        if (!pool.containsKey(name)) {
+        if (!POOL.containsKey(name)) {
             throw new IllegalArgumentException(INVALID_RANK_ERROR);
         }
     }
