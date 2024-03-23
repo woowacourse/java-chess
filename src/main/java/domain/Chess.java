@@ -16,7 +16,7 @@ public class Chess {
         this.turn = new Turn(Color.WHITE);
     }
 
-    public void play(Position sourcePosition, Position targetPosition) {
+    public void tryMove(Position sourcePosition, Position targetPosition) {
         validateMovement(sourcePosition, targetPosition);
         if (canAttack(sourcePosition, targetPosition)) {
             attack(sourcePosition, targetPosition);

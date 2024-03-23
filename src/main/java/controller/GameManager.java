@@ -78,7 +78,7 @@ public class GameManager {
     private void tryMove(Chess chess) {
         Position sourcePosition = inputView.readPosition();
         Position targetPosition = inputView.readPosition();
-        chess.play(sourcePosition, targetPosition);
+        chess.tryMove(sourcePosition, targetPosition);
         outputView.printBoard(chess.getBoard());
     }
 }
