@@ -56,8 +56,12 @@ class BoardTest {
         Position source = Position.of(2, 1);
         Position target = Position.of(3, 3);
         Knight knight = new Knight(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
         Board board = Board.generatedBy(() -> new HashMap<>(
-                Map.of(source, knight)
+                Map.of(
+                        source, knight,
+                        target, empty
+                )
         ));
 
         board.move(source, target, Turn.makeInitialTurn());
@@ -73,8 +77,12 @@ class BoardTest {
         Position source = Position.of(2, 2);
         Position target = Position.of(1, 3);
         King king = new King(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
         Board board = Board.generatedBy(() -> new HashMap<>(
-                Map.of(source, king)
+                Map.of(
+                        source, king,
+                        target, empty
+                )
         ));
 
         board.move(source, target, Turn.makeInitialTurn());
@@ -90,8 +98,12 @@ class BoardTest {
         Position source = Position.of(2, 1);
         Position target = Position.of(3, 4);
         Knight knight = new Knight(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
         Board board = Board.generatedBy(() -> new HashMap<>(
-                Map.of(source, knight)
+                Map.of(
+                        source, knight,
+                        target, empty
+                )
         ));
 
         assertThatThrownBy(() -> board.move(source, target, Turn.makeInitialTurn()))
@@ -108,11 +120,13 @@ class BoardTest {
 
         Rook rook = new Rook(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
                 Map.of(
                         source, rook,
-                        middlePosition, pawn
+                        middlePosition, pawn,
+                        target, empty
                 )
         ));
 
@@ -130,11 +144,13 @@ class BoardTest {
 
         Bishop bishop = new Bishop(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
                 Map.of(
                         source, bishop,
-                        middlePosition, pawn
+                        middlePosition, pawn,
+                        target, empty
                 )
         ));
 
@@ -152,11 +168,13 @@ class BoardTest {
 
         Queen queen = new Queen(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
                 Map.of(
                         source, queen,
-                        middlePosition, pawn
+                        middlePosition, pawn,
+                        target, empty
                 )
         ));
 
@@ -174,11 +192,13 @@ class BoardTest {
 
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
                 Map.of(
                         source, pawn,
-                        middlePosition, queen
+                        middlePosition, queen,
+                        target, empty
                 )
         ));
 
@@ -239,10 +259,12 @@ class BoardTest {
         Position target = Position.of(3, 3);
 
         Pawn pawn = new Pawn(Color.WHITE);
+        Empty empty = new Empty(Color.EMPTY);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
                 Map.of(
-                        source, pawn
+                        source, pawn,
+                        target, empty
                 )
         ));
 

@@ -34,11 +34,10 @@ public class OutputView {
     }
 
     private String pieceToString(Piece piece) {
-        if (piece == null) {
-            return ".";
-        }
-
         String pieceText = "";
+        if (piece instanceof Empty) {
+            pieceText = ".";
+        }
         if (piece instanceof Bishop) {
             pieceText = "B";
         }

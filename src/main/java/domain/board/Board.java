@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.game.Turn;
 import domain.piece.Color;
+import domain.piece.Empty;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 
@@ -23,6 +24,7 @@ public class Board {
         Piece piece = board.get(source);
         validate(source, target, turn);
         board.remove(source);
+        board.put(source, new Empty(Color.EMPTY));
         board.put(target, piece);
         return new Board(board);
     }
@@ -64,7 +66,7 @@ public class Board {
 
     private void validatePieceCanMove(Position source, Position target) {
         Piece piece = board.get(source);
-        if (!piece.canMove(source, target)) {
+        if (piece.isEmpty() || !piece.canMove(source, target)) {
             throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
         }
     }
@@ -119,17 +121,21 @@ public class Board {
         return source.isOnSameDiagonalAs(target);
     }
 
-    private boolean isPieceAt(Position position) {
-        return board.containsKey(position);
+    private boolean isNoPieceAt(Position position) {
+        return board.get(position) instanceof Empty;
     }
 
-    private boolean isNoPieceAt(Position position) {
-        return !board.containsKey(position);
+    private boolean isPieceAt(Position position) {
+        return !isNoPieceAt(position);
     }
+
 
     private Color findPieceColorAt(Position position) {
         if (isNoPieceAt(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+        }
+        if (board.get(position).isEmpty()) {
+            return Color.EMPTY;
         }
         if (board.get(position).isWhite()) {
             return Color.WHITE;
@@ -138,9 +144,6 @@ public class Board {
     }
 
     public Piece findPieceAt(Position position) {
-        if (isNoPieceAt(position)) {
-            return null;
-        }
         return board.get(position);
     }
 }

@@ -16,6 +16,7 @@ public class InitialBoardGenerator implements BoardGenerator {
         placeBishops(board);
         placeQueens(board);
         placeKings(board);
+        placeEmpty(board);
         return board;
     }
 
@@ -55,5 +56,17 @@ public class InitialBoardGenerator implements BoardGenerator {
     private void placeKings(Map<Position, Piece> board) {
         board.put(Position.of(5, 8), new King(Color.BLACK));
         board.put(Position.of(5, 1), new King(Color.WHITE));
+    }
+
+    private void placeEmpty(Map<Position, Piece> board) {
+        for (int rank = 3; rank <= 6; rank++) {
+            placeEmptyToOneRank(board, rank);
+        }
+    }
+
+    private void placeEmptyToOneRank(Map<Position, Piece> board, int rank) {
+        for (int file = 1; file <= 8; file++) {
+            board.put(Position.of(file, rank), new Empty(Color.EMPTY));
+        }
     }
 }

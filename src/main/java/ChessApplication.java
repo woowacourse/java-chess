@@ -29,7 +29,7 @@ public class ChessApplication {
         if (END_COMMAND.equals(gameCommand)) {
             return;
         }
-        if (MOVE_COMMAND.startsWith(gameCommand)) {
+        if (gameCommand.startsWith(MOVE_COMMAND)) {
             Board board = chessGame.startTurn(MovePositionDto.from(gameCommand));
             outputView.printBoard(board);
         }

@@ -7,7 +7,7 @@ import java.util.Objects;
 public class File {
 
     private static final Map<Integer, File> CACHE = new HashMap<>();
-    
+
     private final int value;
 
     private File(int value) {
