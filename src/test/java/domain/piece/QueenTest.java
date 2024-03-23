@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
+    // TODO: 테스트 분리
     @DisplayName("퀸은 상하좌우 대각선으로 여러칸 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "squareArguments")

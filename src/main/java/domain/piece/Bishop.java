@@ -37,8 +37,6 @@ public class Bishop extends Piece {
             southWestSource = southWestSource.next2(Direction.SOUTH_WEST);
             movableSquares.add(southWestSource);
         }
-
-
         return movableSquares.contains(target);
     }
 
