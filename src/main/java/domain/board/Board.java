@@ -28,22 +28,22 @@ public class Board {
     }
 
     private void validate(Position source, Position target, Turn turn) {
-        validateNoPieceToMove(source);
-        validateTurn(source, turn);
-        validateSamePosition(source, target);
-        validateOwnPieceExistAttarget(source, target);
+        validatePieceExistToMove(source);
+        validateIsOwnTurn(source, turn);
+        validateDifferentPosition(source, target);
+        validateOwnPieceNotExistAtTarget(source, target);
         validatePieceCanMove(source, target);
         validateWhenStraightOrDiagonalMove(source, target);
         validateWhenPieceIsPawn(source, target);
     }
-
-    private void validateNoPieceToMove(Position source) {
+    
+    private void validatePieceExistToMove(Position source) {
         if (isNoPieceAt(source)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
         }
     }
 
-    private void validateTurn(Position source, Turn turn) {
+    private void validateIsOwnTurn(Position source, Turn turn) {
         Piece piece = board.get(source);
         if (piece.hasColorOf(turn.getColor())) {
             return;
@@ -51,13 +51,13 @@ public class Board {
         throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
     }
 
-    private void validateSamePosition(Position source, Position target) {
+    private void validateDifferentPosition(Position source, Position target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
         }
     }
 
-    private void validateOwnPieceExistAttarget(Position source, Position target) {
+    private void validateOwnPieceNotExistAtTarget(Position source, Position target) {
         if (isPieceAt(target) && (findPieceColorAt(source) == findPieceColorAt(target))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
@@ -73,20 +73,20 @@ public class Board {
 
     private void validateWhenStraightOrDiagonalMove(Position source, Position target) {
         if (isStraightMove(source, target) || isDiagonalMove(source, target)) {
-            validatePieceExistOnRoute(source, target);
+            validatePieceNotExistOnRoute(source, target);
         }
     }
 
-    private void validatePieceExistOnRoute(Position source, Position target) {
+    private void validatePieceNotExistOnRoute(Position source, Position target) {
         Direction direction = Direction.of(source, target);
         Position currentPosition = source.nextPosition(direction);
         while (!currentPosition.equals(target)) {
-            validatePieceExistAt(currentPosition);
+            validatePieceNotExistAt(currentPosition);
             currentPosition = currentPosition.nextPosition(direction);
         }
     }
 
-    private void validatePieceExistAt(Position middlePosition) {
+    private void validatePieceNotExistAt(Position middlePosition) {
         if (isPieceAt(middlePosition)) {
             throw new IllegalArgumentException("경로에 말이 있으면 움직일 수 없습니다.");
         }
@@ -95,18 +95,18 @@ public class Board {
     private void validateWhenPieceIsPawn(Position source, Position target) {
         Piece piece = board.get(source);
         if (piece instanceof Pawn) {
-            validatePawnStraightCapture(source, target);
-            validatePawnDiagonalMove(source, target);
+            validatePawnStraightMove(source, target);
+            validatePawnDiagonalCapture(source, target);
         }
     }
 
-    private void validatePawnStraightCapture(Position source, Position target) {
+    private void validatePawnStraightMove(Position source, Position target) {
         if (isStraightMove(source, target) && isPieceAt(target)) {
             throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
         }
     }
 
-    private void validatePawnDiagonalMove(Position source, Position target) {
+    private void validatePawnDiagonalCapture(Position source, Position target) {
         if (isDiagonalMove(source, target) && isNoPieceAt(target)) {
             throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
         }
