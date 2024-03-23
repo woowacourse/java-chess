@@ -41,7 +41,7 @@ public class Knight extends PieceRole {
     @Override
     public void validateMovableRoute(final Position source, final Position target,
                                      final Map<Square, Piece> chessBoard) {
-        validateValidRouteForPiece(source, target);
+        validateCorrectRouteForPiece(source, target);
     }
 
     @Override

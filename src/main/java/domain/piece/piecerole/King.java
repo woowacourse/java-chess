@@ -31,9 +31,8 @@ public class King extends PieceRole {
     }
 
     @Override
-    public boolean validateMovableRoute(Position source, Position target, Map<Square, Piece> chessBoard) {
-        return routes.stream()
-                .anyMatch(movable -> movable.canMove(source, target));
+    public void validateMovableRoute(Position source, Position target, Map<Square, Piece> chessBoard) {
+        validateCorrectRouteForPiece(source, target);
     }
 
     @Override

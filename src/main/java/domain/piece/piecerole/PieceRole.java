@@ -33,7 +33,7 @@ public abstract class PieceRole {
         }
     }
 
-    protected void validateValidRouteForPiece(final Position source, final Position target) {
+    protected void validateCorrectRouteForPiece(final Position source, final Position target) {
         boolean cannotMove = routes.stream()
                 .noneMatch(movable -> movable.canMove(source, target));
         if (cannotMove) {

@@ -1,9 +1,7 @@
 package domain.game;
 
-import domain.piece.Color;
 import domain.piece.Piece;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -22,7 +20,6 @@ public class ChessBoard {
         commonMoveValidate(sourceSquare, targetSquare);
 
         Piece findPiece = pieceBySquare.get(sourceSquare);
-        pawnMoveValidate(sourceSquare, targetSquare, findPiece);
 
         findPiece.validateMovableRoute(sourceSquare.position(), targetSquare.position(), pieceBySquare);
         update(sourceSquare, targetSquare, findPiece);
@@ -45,67 +42,9 @@ public class ChessBoard {
 
         if (pieceBySquare.containsKey(targetSquare)) {
             Piece targetPiece = pieceBySquare.get(targetSquare);
-            return sourcePiece.isEqualColor(targetPiece.color());
+            return sourcePiece.isEqualColor(targetPiece.getColor());
         }
         return false;
-    }
-
-    private void pawnMoveValidate(Square sourceSquare, Square targetSquare, Piece findPiece) {
-        if (findPiece.isPawn()) {
-            Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
-            blackPawnValidate(targetSquare, findPiece, direction);
-            whitePawnValidate(targetSquare, findPiece, direction);
-        }
-    }
-
-    private void blackPawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
-        if (findPiece.isEqualColor(Color.BLACK)) {
-            pawnMoveValidate(
-                    Direction.SOUTH,
-                    List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST),
-                    targetSquare,
-                    direction
-            );
-        }
-    }
-
-    private void whitePawnValidate(Square targetSquare, Piece findPiece, Direction direction) {
-        if (findPiece.isEqualColor(Color.WHITE)) {
-            pawnMoveValidate(
-                    Direction.NORTH,
-                    List.of(Direction.NORTH_EAST, Direction.NORTH_WEST),
-                    targetSquare,
-                    direction
-            );
-        }
-    }
-
-    private void pawnMoveValidate(Direction forward,
-                                  List<Direction> diagonals,
-                                  Square targetSquare,
-                                  Direction direction
-    ) {
-        forwardValidate(forward, direction, targetSquare);
-        diagonalValidate(diagonals, direction, targetSquare);
-    }
-
-    private void forwardValidate(Direction forwardDirection, Direction direction, Square targetSquare) {
-        if (direction == forwardDirection && pieceBySquare.containsKey(targetSquare)) {
-            throw new IllegalStateException("전진하려는 곳에 다른 기물이 있으면 이동할 수 없습니다.");
-        }
-    }
-
-    private void diagonalValidate(List<Direction> diagonals, Direction direction, Square targetSquare) {
-        diagonals.stream()
-                .filter(diagonal -> hasNotPieceAtDiagonal(direction, targetSquare, diagonal))
-                .findAny()
-                .ifPresent(dir -> {
-                    throw new IllegalStateException("대각선으로 이동할 수 없습니다.");
-                });
-    }
-
-    private boolean hasNotPieceAtDiagonal(Direction direction, Square targetSquare, Direction diagonal) {
-        return direction == diagonal && !pieceBySquare.containsKey(targetSquare);
     }
 
     private void update(Square sourceSquare, Square targetSquare, Piece findPiece) {

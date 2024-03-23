@@ -20,23 +20,25 @@ import java.util.stream.IntStream;
 
 public class PieceGenerator {
     private static final int CHESS_BOARD_SIZE = 8;
-    private static final List<PieceRole> BACK = List.of(
-            new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
-    private static final List<PieceRole> FRONT_BLACK = IntStream.range(1, CHESS_BOARD_SIZE + 1)
-            .mapToObj(number -> (PieceRole) new Pawn(Color.BLACK))
+    private static final List<PieceRole> ROYAL_PIECES = List.of(
+            Rook.from(), Knight.from(), Bishop.from(), Queen.from(),
+            King.from(), Bishop.from(), Knight.from(), Rook.from()
+    );
+    private static final List<PieceRole> BLACK_PAWNS = IntStream.range(1, CHESS_BOARD_SIZE + 1)
+            .mapToObj(number -> (PieceRole) Pawn.from(Color.BLACK))
             .toList();
 
-    private static final List<PieceRole> FRONT_WHITE = IntStream.range(1, CHESS_BOARD_SIZE + 1)
-            .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
+    private static final List<PieceRole> WHITE_PAWNS = IntStream.range(1, CHESS_BOARD_SIZE + 1)
+            .mapToObj(number -> (PieceRole) Pawn.from(Color.WHITE))
             .toList();
 
     private static final Map<Integer, List<Piece>> rankPieces = new HashMap<>();
 
     static {
-        rankPieces.put(8, generateListPiece(BACK, Color.BLACK));
-        rankPieces.put(7, generateListPiece(FRONT_BLACK, Color.BLACK));
-        rankPieces.put(2, generateListPiece(FRONT_WHITE, Color.WHITE));
-        rankPieces.put(1, generateListPiece(BACK, Color.WHITE));
+        rankPieces.put(8, generateListPiece(ROYAL_PIECES, Color.BLACK));
+        rankPieces.put(7, generateListPiece(BLACK_PAWNS, Color.BLACK));
+        rankPieces.put(2, generateListPiece(WHITE_PAWNS, Color.WHITE));
+        rankPieces.put(1, generateListPiece(ROYAL_PIECES, Color.WHITE));
     }
 
     private PieceGenerator() {
@@ -59,6 +61,7 @@ public class PieceGenerator {
 
     private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color) {
         return pieceRoles.stream()
-                .map(pieceRole -> new Piece(pieceRole, color)).toList();
+                .map(pieceRole -> new Piece(pieceRole, color))
+                .toList();
     }
 }

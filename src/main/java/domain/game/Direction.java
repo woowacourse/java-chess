@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.position.Position;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Direction {
 
@@ -65,5 +66,23 @@ public enum Direction {
 
     public int getRankVector() {
         return rankVector;
+    }
+
+    public boolean isForward() {
+        return anyMatch(List.of(
+                Direction.NORTH, Direction.SOUTH
+        ));
+    }
+
+    public boolean isDiagonal() {
+        return anyMatch(List.of(
+                Direction.NORTH_EAST, Direction.NORTH_WEST,
+                Direction.SOUTH_EAST, Direction.SOUTH_WEST
+        ));
+    }
+
+    private boolean anyMatch(final List<Direction> directions) {
+        return directions.stream()
+                .anyMatch(this::equals);
     }
 }
