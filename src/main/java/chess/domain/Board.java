@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
@@ -55,34 +56,15 @@ public class Board {
         }
     }
 
-    public boolean isChecked(Team team) {
+    public CheckState findCheckState(Team team) {
         Position kingPosition = getKingPosition(team);
-        return isBeingAttacked(team, kingPosition);
-    }
-
-    public boolean isCheckmate(Team attackedTeam) {
-        Position kingPosition = getKingPosition(attackedTeam);
-        Piece king = pieces.get(kingPosition);
-
-        // 자신이 공격받고 있는데 움직일데도 없음
-        boolean isCheckAndImmovable = isCheckAndImmovable(attackedTeam, kingPosition, king);
-
-        // 더블 체크이고, 움직일 곳이 없으면, true
-        List<Position> attackingPiecePositions = findAttackingPiecePositions(attackedTeam, kingPosition);
-        if (attackingPiecePositions.size() > 1 && isCheckAndImmovable) {
-            return true;
+        if (!isChecked(team, kingPosition)) {
+            return CheckState.SAFE;
         }
-        Position attackingPiecePosition = attackingPiecePositions.get(0);
-
-        // 나를 공격하는 유닛의 경로를 막을 수 없는 경우
-        boolean isNotBlockable = isNotBlockable(attackedTeam, new Positions(attackingPiecePosition, kingPosition));
-
-        // 나를 공격하는 유닛을 공격할 수 없는 경우
-        boolean cannotAttackAttackingPiece
-                = cannotAttackAttackingPiece(attackedTeam.opponent(), attackingPiecePosition);
-
-        // 자신이 공격받고 있는데 움직일 데도 없음, 나를 공격하는 유닛의 경로를 막을 수 없음
-        return isCheckAndImmovable && isNotBlockable && cannotAttackAttackingPiece;
+        if(isCheckmate(team, kingPosition)) {
+            return CheckState.CHECK_MATE;
+        }
+        return CheckState.CHECK;
     }
 
     private Position getKingPosition(Team team) {
@@ -96,26 +78,83 @@ public class Board {
                 .getKey();
     }
 
-    private boolean isCheckAndImmovable(Team attackedTeam, Position kingPosition, Piece king) {
-        return kingPosition.findAllMovablePosition(king)
-                .stream()
-                .filter(position -> !pieces.containsKey(position)
-                        || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
-                .allMatch(position -> isBeingAttacked(attackedTeam, position));
+    private boolean isChecked(Team team, Position kingPosition) {
+        return calculateAttackedPositionCount(team, kingPosition) > 0;
     }
 
-    private boolean isBeingAttacked(Team team, Position position) {
-        return !findAttackingPiecePositions(team, position).isEmpty();
+    private boolean isCheckmate(Team team, Position kingPosition) {
+        boolean isNotSafePathAvailableForKing = isNotSafePathAvailableForKing(team, kingPosition);
+        if (isDoubleCheck(team, kingPosition) && isNotSafePathAvailableForKing) {
+            return true;
+        }
+
+        Position attackingPiecePosition = findAttackingPiecePosition(team, kingPosition);
+        boolean isNotBlockAttackingPiece
+                = isNotBlockAttackingPiece(team, new Positions(attackingPiecePosition, kingPosition));
+        boolean isNotAttackAttackingPiece = isNotAttackAttackingPiece(team.opponent(), attackingPiecePosition);
+        return isNotSafePathAvailableForKing && isNotBlockAttackingPiece && isNotAttackAttackingPiece;
+    }
+
+    private boolean isNotSafePathAvailableForKing(Team team, Position kingPosition) {
+        return kingPosition.findAllMovablePosition(new King(team))
+                .stream()
+                .filter(position -> !pieces.containsKey(position)
+                        || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(team)))
+                .allMatch(position -> calculateAttackedPositionCount(team, position) != 0);
+    }
+
+    private boolean isDoubleCheck(Team team, Position kingPosition) {
+        return calculateAttackedPositionCount(team, kingPosition) >= 2;
+    }
+
+    private int calculateAttackedPositionCount(Team team, Position position) {
+        return findAttackingPiecePositions(team, position).size();
+    }
+
+    private Position findAttackingPiecePosition(Team team, Position position) {
+        return findAttackingPiecePositions(team, position)
+                .stream()
+                .findAny()
+                .orElseThrow(() ->
+                        new IllegalStateException("해당 위치를 공격하는 기물은 없습니다."));
     }
 
     private List<Position> findAttackingPiecePositions(Team team, Position position) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey() != position)
-                .filter(entry -> entry.getValue().isOppositeTeamWith(team))
+                .filter(entry -> entry.getKey() != position && entry.getValue().isOppositeTeamWith(team))
                 .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
                 .map(Entry::getKey)
                 .toList();
+    }
+
+    private boolean isNotBlockAttackingPiece(Team team, Positions positions) {
+        List<Position> attackRoutePositions = pieces.get(positions.source())
+                .findBetweenPositionsWhenAttack(positions);
+        List<Position> teamPieceMovablePositions = findTeamPieceMovablePositions(team, positions);
+
+        return teamPieceMovablePositions.stream()
+                .noneMatch(attackRoutePositions::contains);
+    }
+
+    private List<Position> findTeamPieceMovablePositions(Team team, Positions positions) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameTeamWith(team) && !entry.getKey().equals(positions.target()))
+                .flatMap(entry -> entry.getKey()
+                        .findAllMovablePosition(entry.getValue())
+                        .stream()
+                        .filter(position -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position))))
+                .toList();
+    }
+
+    private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent())
+                        && entry.getKey() != attackingPosition)
+                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
+                .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
     }
 
     private boolean isAttacking(Piece thisPiece, Positions positions) {
@@ -132,31 +171,6 @@ public class Board {
             return thisPiece.findBetweenPositionsWhenAttack(positions);
         }
         return thisPiece.findBetweenPositions(positions);
-    }
-
-    private boolean isNotBlockable(Team attackedTeam, Positions positions) {
-        List<Position> attackRoutePositions
-                = pieces.get(positions.source()).findBetweenPositionsWhenAttack(positions);
-
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam)
-                        && !entry.getKey().equals(positions.target()))
-                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
-                        .stream()
-                        .anyMatch(attackRoutePositions::contains));
-    }
-
-    private boolean cannotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent()))
-                .filter(entry -> entry.getKey() != attackingPosition)
-                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
-                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)))
-                .map(Entry::getKey)
-                .toList()
-                .isEmpty();
     }
 
     public Map<Position, Character> mapPositionToCharacter() {

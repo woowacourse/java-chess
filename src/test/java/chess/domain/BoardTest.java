@@ -1,11 +1,10 @@
+package chess.domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Position;
-import chess.domain.Positions;
+import chess.domain.*;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -91,7 +90,7 @@ public class BoardTest {
                 Position.of(1, 6), new Queen(Team.BLACK)
         ));
 
-        assertThat(board.isCheckmate(Team.WHITE)).isTrue();
+        assertThat(board.findCheckState(Team.WHITE)).isEqualTo(CheckState.CHECK_MATE);
     }
 
     @DisplayName("더블 체크인 경우, 왕이 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
@@ -104,7 +103,7 @@ public class BoardTest {
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
-        assertThat(board.isCheckmate(Team.WHITE)).isTrue();
+        assertThat(board.findCheckState(Team.WHITE)).isEqualTo(CheckState.CHECK_MATE);
     }
 
     @DisplayName("체크된 상태에서 왕이 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
@@ -117,7 +116,7 @@ public class BoardTest {
                 Position.of(2, 7), new Bishop(Team.BLACK)
         ));
 
-        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
+        assertThat(board.findCheckState(Team.WHITE)).isEqualTo(CheckState.CHECK);
     }
 
     @DisplayName("체크된 상태에서 체크하는 경로를 막을 수 있으면, 체크메이트가 아니다.")
@@ -130,7 +129,7 @@ public class BoardTest {
                 Position.of(3, 6), new Bishop(Team.BLACK)
         ));
 
-        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
+        assertThat(board.findCheckState(Team.WHITE)).isEqualTo(CheckState.CHECK);
     }
 
     @DisplayName("체크된 상태에서 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
@@ -143,7 +142,7 @@ public class BoardTest {
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
-        assertThat(board.isCheckmate(Team.WHITE)).isFalse();
+        assertThat(board.findCheckState(Team.WHITE)).isEqualTo(CheckState.CHECK);
     }
 
     @DisplayName("Board에서 위치와 Character를 알 수 있다.")

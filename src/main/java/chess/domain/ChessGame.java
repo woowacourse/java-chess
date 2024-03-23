@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class ChessGame {
     private final Board board;
@@ -13,7 +14,7 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public Map<Position, Character> movePiece(Positions positions, Runnable printCheck) {
+    public Map<Position, Character> movePiece(Positions positions, Consumer<CheckState> printCheck) {
         board.validateSameTeamByPosition(positions.source(), currentTeam);
         board.move(positions);
         validateCheck(printCheck);
@@ -21,11 +22,9 @@ public class ChessGame {
         return board.mapPositionToCharacter();
     }
 
-    private void validateCheck(Runnable printCheck) {
-        if (board.isChecked(currentTeam.opponent())) {
-            printCheck.run();
-        }
-        if (board.isChecked(currentTeam)) {
+    private void validateCheck(Consumer<CheckState> printCheck) {
+        printCheck.accept(board.findCheckState(currentTeam.opponent()));
+        if (board.findCheckState(currentTeam) != CheckState.SAFE) {
             throw new IllegalArgumentException("체크 상태를 벗어나지 않았습니다.");
         }
     }

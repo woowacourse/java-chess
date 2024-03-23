@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.CheckState;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import java.util.Map;
@@ -29,7 +30,12 @@ public class OutputView {
         return EMPTY_POSITION;
     }
 
-    public static void printCheck() {
-        System.out.println("체크 !" + System.lineSeparator());
+    public static void printCheck(CheckState checkState) {
+        if (checkState == CheckState.CHECK) {
+            System.out.println(System.lineSeparator() + "체크 !");
+        }
+        if(checkState == CheckState.CHECK_MATE) {
+            System.out.println(System.lineSeparator() + "체크 메이트 !");
+        }
     }
 }
