@@ -1,6 +1,7 @@
 package chess.model.position;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
@@ -44,6 +45,19 @@ public class Difference {
 
     public int absoluteValue() {
         return abs(amount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Difference that = (Difference) o;
+        return amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 
     private static class DifferenceCache {
