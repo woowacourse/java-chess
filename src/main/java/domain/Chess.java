@@ -10,10 +10,13 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
     private final Board board = Board.create();
     private Color turn = Color.WHITE;
 
-    public void play(Position sourcePosition, Position targetPosition) { // TODO: sourcePiece가 None 일 경우 예외 처리
+    public void play(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
 
+        if (sourcePiece.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 움직일 기물이 없습니다.");
+        }
         if (sourcePiece.isDifferentColor(turn)) { // TODO: 부정 -> 긍정 변경하기
             throw new IllegalArgumentException("[ERROR] 이동할 수 없는 기물입니다. 차례가 아닙니다.");
         }
