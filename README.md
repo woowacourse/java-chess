@@ -2,8 +2,9 @@
 
 ## 용어 정리
 
-- Rank: 체스판의 가로 줄
-- File: 체스판의 세로 줄
+- Rank: 체스판의 가로 줄 (1 ~ 8)
+- File: 체스판의 세로 줄 (a ~ h)
+- 각 진영은 BLACK과 WHITE로 구분한다.
 - Piece: 체스 각각의 기물
 - Pawn(폰)
     - 첫 이동 시에는 두 칸을 전진할 수 있다. 그 이후에는 한 칸씩만 전진할 수 있다.
@@ -25,25 +26,15 @@
 #### 입력
 
 - 시작/종료 명령어를 입력한다.
-  - start/end가 아니면 에외가 발생한다.
-- move 명령어와 source target 위치를 입력받는다.
-  - `move (source위치) (target위치)` 형식이 아니면 예외가 발생한다.
+  - start/end가 아니면 예외가 발생한다.
+- move 명령어와 source target 위치 혹은 종료 명령어를 입력한다.
+  - `move (source위치) (target위치)` 혹은 `end` 형식이 아니면 예외가 발생한다.
 
 #### 출력
 
 - 초기 체스판 현황을 출력한다.
 
 - 각 이동마다 체스판을 출력한다.
-```text
-RNBQKBNR
-PPPPPPPP
-........
-........
-........
-........
-pppppppp
-rnbqkbnr
-```
 
 ### 비즈니스 기능
 
@@ -54,18 +45,29 @@ rnbqkbnr
     - 검은색 진영은 체스판 위에 배치하고 흰색 진영은 아래에 배치한다.
     - 폰은 전부 Rank 2와 Rank 7에 위치 한다.
     - 이외의 기물은 RNBQKBNR(rnbqkbnr) 순서로 Rank 1과 Rank 8에 위치한다.
-
+      ```text
+      RNBQKBNR 8 | BLACK
+      PPPPPPPP 7 | BLACK
+      ........ 6
+      ........ 5
+      ........ 4
+      ........ 3
+      pppppppp 2 | WHITE
+      rnbqkbnr 1 | WHITE
+      
+      abcdefgh
+      ```
 
 - 체스판에 Source 또는 Target 위치에 기물이 있는지 찾는다.
-    - Source 위치에 기물이 없으면 예외 발생
+    - Source 위치에 기물이 없으면 예외가 발생한다.
 
 - 체스 기물이 이동한다.
     - 경로에 기물이 있다면 이동할 수 없다.
     - Target 위치에 아군 기물이 있으면 이동할 수 없다.
 - Pawn
     - 폰은 1칸씩 전진한다.
-        - Rank2에 있는 경우 2칸 or 1칸 움직일 수 있다. (WHITE)
-        - Rank6에 있는 경우 2칸 or 1칸 움직일 수 있다. (BLACK)
+        - [WHITE 진영] Rank2에 있는 경우 2칸 혹은 1칸 움직일 수 있다.
+        - [BLACK 진영] Rank6에 있는 경우 2칸 혹은 1칸 움직일 수 있다.
     - 전진한 최종 위치에 어느 기물이든 있으면 움직일 수 없다.
     - 뒤로 갈 수 없다.
     - 상대편 기물이 대각선 방향에 있으면 움직일 수 있다.
@@ -74,7 +76,7 @@ rnbqkbnr
     - (file, rank)
         - (file+2, rank+1), (file+2, rank-1), (file-2, rank+1), (file-2, rank-1)
         - (file+1, rank+2), (file+1, rank-2), (file-1, rank+2), (file-1, rank-2)
-    - 유일하게 다른 기물을 뛰어넘을 수 있다
+    - 유일하게 다른 기물을 뛰어넘을 수 있다.
 - Bishop
     - 대각선 방향으로 움직인다.
     - 원하는 만큼 움직일 수 있다.
