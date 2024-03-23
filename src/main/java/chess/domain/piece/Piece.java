@@ -8,9 +8,11 @@ public interface Piece {
 
     List<Coordinate> findMovablePath(Coordinate start, Coordinate destination);
 
-    void validateMovable(Coordinate start, Coordinate target, Board board);
+    void validateMovable(Coordinate source, Coordinate target, Board board);
 
     PieceType getType();
 
     Team getTeam();
+
+    boolean isSameTeam(Piece other);
 }

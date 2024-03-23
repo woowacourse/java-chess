@@ -19,7 +19,7 @@ abstract class AbstractPiece implements Piece {
     public abstract List<Coordinate> findMovablePath(Coordinate start, Coordinate destination);
 
     @Override
-    public void validateMovable(Coordinate start, Coordinate target, Board board) {
+    public void validateMovable(Coordinate source, Coordinate target, Board board) {
     }
 
     @Override
@@ -30,6 +30,11 @@ abstract class AbstractPiece implements Piece {
     @Override
     public Team getTeam() {
         return team;
+    }
+
+    @Override
+    public boolean isSameTeam(Piece other) {
+        return this.team == other.getTeam();
     }
 
     @Override
