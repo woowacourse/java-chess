@@ -31,4 +31,12 @@ public enum BoardDirection {
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("움직이는 방향을 찾는 것에 실패하였습니다"));
     }
+
+    public int getMoveOnceFileWeight() {
+        return moveOnceFileWeight;
+    }
+
+    public int getMoveOnceRankWeight() {
+        return moveOnceRankWeight;
+    }
 }
