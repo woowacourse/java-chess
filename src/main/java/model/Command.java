@@ -12,6 +12,14 @@ public enum Command {
     POSITION(Pattern.compile("[a-hA-H][1-8]")),
     END(Pattern.compile("end"));
 
+    public static final int HEAD_INDEX = 0;
+    public static final int START_COMMAND_SIZE = 1;
+    public static final int MOVE_COMMAND_SIZE = 3;
+    public static final int END_COMMAND_SIZE = 1;
+    public static final int CURRENT_INDEX = 1;
+    public static final int NEXT_INDEX = 2;
+
+
     private final Pattern pattern;
 
     Command(final Pattern pattern) {

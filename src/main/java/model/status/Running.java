@@ -3,8 +3,8 @@ package model.status;
 import constant.ErrorCode;
 import exception.InvalidStatusException;
 import java.util.List;
-import model.Command;
 import model.ChessBoard;
+import model.Command;
 import model.position.Moving;
 import model.position.Position;
 
@@ -12,16 +12,21 @@ public class Running implements GameStatus {
 
     @Override
     public GameStatus play(final List<String> command, final ChessBoard chessBoard) {
-        Command cmd = Command.from(command.get(0));
-        if (cmd == Command.END && command.size() == 1) {
+        final Command cmd = Command.from(command.get(Command.HEAD_INDEX));
+        if (cmd == Command.END && command.size() == Command.END_COMMAND_SIZE) {
             return new End();
         }
-        if (cmd == Command.MOVE && command.size() == 3) {
-            Moving moving = new Moving(Position.from(command.get(1)), Position.from(command.get(2)));
+        if (cmd == Command.MOVE && command.size() == Command.MOVE_COMMAND_SIZE) {
+            final Moving moving = convert(command);
             chessBoard.move(moving);
             return new Running();
         }
         throw new InvalidStatusException(ErrorCode.INVALID_STATUS);
+    }
+
+    private Moving convert(final List<String> command) {
+        return new Moving(Position.from(command.get(Command.CURRENT_INDEX)),
+                Position.from(command.get(Command.NEXT_INDEX)));
     }
 
     @Override

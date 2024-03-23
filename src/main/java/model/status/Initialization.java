@@ -11,11 +11,11 @@ public class Initialization {
     }
 
     public static GameStatus gameSetting(List<String> command) {
-        Command cmd = Command.from(command.get(0));
-        if (cmd == Command.START && command.size() == 1) {
+        Command cmd = Command.from(command.get(Command.HEAD_INDEX));
+        if (cmd == Command.START && command.size() == Command.START_COMMAND_SIZE) {
             return new Running();
         }
-        if (cmd == Command.END && command.size() == 1) {
+        if (cmd == Command.END && command.size() == Command.END_COMMAND_SIZE) {
             return new End();
         }
         throw new InvalidStatusException(ErrorCode.INVALID_STATUS);
