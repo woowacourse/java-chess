@@ -134,5 +134,15 @@ class BoardTest {
                     () -> assertThat(board.find(START_ENEMY_ROOK)).isEqualTo(Optional.of(QUEEN))
             );
         }
+
+        @Test
+        @DisplayName("도착할 곳에 다른 팀이 있을 경우, 해당 말을 잡아먹는다.")
+        void moveTest_whenNotInTurn_throwException() {
+            Position legalPosition = new Position(File.D, Rank.EIGHT);
+
+            assertThatThrownBy(() -> board.move(START_ENEMY_ROOK, legalPosition))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("해당 팀의 차례가 아닙니다.");
+        }
     }
 }

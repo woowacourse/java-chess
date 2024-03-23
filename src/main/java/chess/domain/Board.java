@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.Optional;
 public class Board {
 
     private final Map<Position, Piece> board;
+    private Team turn;
 
     public Board(Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
+        this.turn = Team.WHITE;
     }
 
     public Optional<Piece> find(Position position) {
@@ -22,32 +25,34 @@ public class Board {
 
     public void move(Position start, Position end) {
         validate(start, end);
-
         Piece piece = board.get(start);
         List<Position> path = piece.findPath(start, end);
 
         validateEmpty(path);
-
         board.remove(start);
         board.put(end, piece);
+        turn = turn.nextTurn();
     }
 
     public void validate(Position start, Position end) {
         if (isNotExistPiece(start)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
-        if (isExistSameTeam(start, end)) {
+        if (isDifferentTurn(start)) {
+            throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
+        }
+        if (isExistSameTeam(end)) {
             throw new IllegalArgumentException("도착 지점에 같은 팀 말이 있어 이동이 불가능합니다.");
         }
     }
 
-    private boolean isExistSameTeam(Position start, Position end) {
-        Optional<Piece> pieceAtEnd = find(end);
-        if (pieceAtEnd.isEmpty()) {
-            return false;
-        }
+    private boolean isDifferentTurn(Position position) {
+        return find(position).map(piece -> !piece.isSameTeam(turn))
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+    }
 
-        return find(start).map(piece -> piece.isSameTeam(pieceAtEnd.get()))
+    private boolean isExistSameTeam(Position end) {
+        return find(end).map(piece -> piece.isSameTeam(turn))
                 .orElse(false);
     }
 

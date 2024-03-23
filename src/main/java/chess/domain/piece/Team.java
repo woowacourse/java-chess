@@ -7,4 +7,11 @@ public enum Team {
     public boolean isBlack() {
         return this == BLACK;
     }
+
+    public Team nextTurn() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }
