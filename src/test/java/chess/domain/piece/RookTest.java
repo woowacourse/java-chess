@@ -111,6 +111,35 @@ class RookTest {
     }
 
     /***
+     * ....T... 8  T: target
+     * ........ 7
+     * ........ 6
+     * ........ 5
+     * ........ 4
+     * ....R... 3  R: Rook
+     * ........ 2
+     * ........ 1
+     * --------
+     * abcdefgh
+     */
+    @DisplayName("룩의 이동 범위 안에 상대 기물이 있다면, 기물을 잡을 수 있다.")
+    @Test
+    void attack() {
+        Rook rook = new Rook(Team.WHITE);
+        Queen enemy = new Queen(Team.BLACK);
+        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        Coordinate source = new Coordinate(3, 'e');
+        Coordinate target = new Coordinate(8, 'e');
+        pieces.put(source, rook);
+        pieces.put(target, enemy);
+
+        Board board = new Board(pieces);
+
+        assertThatCode(() -> rook.validateMovable(source, target, board))
+                .doesNotThrowAnyException();
+    }
+
+    /***
      * ....O... 8
      * ....O... 7
      * ....O... 6

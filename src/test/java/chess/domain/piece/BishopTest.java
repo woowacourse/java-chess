@@ -112,6 +112,35 @@ class BishopTest {
 
     /***
      * ........ 8
+     * T....... 7  T: target
+     * ........ 6
+     * ........ 5
+     * ........ 4
+     * ....Q... 3  B: Bishop
+     * ........ 2
+     * ........ 1
+     * --------
+     * abcdefgh
+     */
+    @DisplayName("비숍의 이동 범위 안에 상대 기물이 있다면, 기물을 잡을 수 있다.")
+    @Test
+    void attack() {
+        Bishop bishop = new Bishop(Team.WHITE);
+        Queen enemy = new Queen(Team.BLACK);
+        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        Coordinate source = new Coordinate(3, 'e');
+        Coordinate target = new Coordinate(7, 'a');
+        pieces.put(source, bishop);
+        pieces.put(target, enemy);
+
+        Board board = new Board(pieces);
+
+        assertThatCode(() -> bishop.validateMovable(source, target, board))
+                .doesNotThrowAnyException();
+    }
+
+    /***
+     * ........ 8
      * O....... 7
      * .O.....O 6
      * ..O...O. 5

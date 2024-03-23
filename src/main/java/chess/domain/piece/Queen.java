@@ -57,11 +57,10 @@ public class Queen extends AbstractPiece {
         List<Coordinate> movablePath = new ArrayList<>();
 
         for (Coordinate coordinate : possiblePath) {
+            movablePath.add(coordinate);
             if (board.isPiecePresent(coordinate)) {
                 break;
             }
-
-            movablePath.add(coordinate);
         }
 
         return movablePath;

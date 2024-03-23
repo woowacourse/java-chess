@@ -141,6 +141,35 @@ class QueenTest {
     }
 
     /***
+     * ....T... 8  T: target
+     * ........ 7
+     * ........ 6
+     * ........ 5
+     * ........ 4
+     * ....Q... 3  Q: Queen
+     * ........ 2
+     * ........ 1
+     * --------
+     * abcdefgh
+     */
+    @DisplayName("퀸의 이동 범위 안에 상대 기물이 있다면, 기물을 잡을 수 있다.")
+    @Test
+    void attack() {
+        Queen queen = new Queen(Team.WHITE);
+        Queen enemy = new Queen(Team.BLACK);
+        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        Coordinate source = new Coordinate(3, 'e');
+        Coordinate target = new Coordinate(8, 'e');
+        pieces.put(source, queen);
+        pieces.put(target, enemy);
+
+        Board board = new Board(pieces);
+
+        assertThatCode(() -> queen.validateMovable(source, target, board))
+                .doesNotThrowAnyException();
+    }
+
+    /***
      * ....O... 8
      * O...O... 7
      * .O..O..O 6
