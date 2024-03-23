@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class Board {
 
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> pieces;
     private int turnCount;
 
-    public Board(Map<Position, Piece> board, int turnCount) {
-        this.board = board;
+    public Board(Map<Position, Piece> pieces, int turnCount) {
+        this.pieces = pieces;
         this.turnCount = turnCount;
     }
 
@@ -24,8 +24,8 @@ public class Board {
 
         validate(sourcePiece, targetPiece, source, target);
 
-        board.put(target, sourcePiece);
-        board.put(source, Piece.from(PieceType.NONE));
+        pieces.put(target, sourcePiece);
+        pieces.put(source, Piece.from(PieceType.NONE));
         turnCount++;
     }
 
@@ -78,7 +78,7 @@ public class Board {
             columnDifference = consumeColumn(columnDifference);
             Position position = new Position(source.getRow() + rowDifference,
                 source.getColumn() + columnDifference);
-            Piece targetPiece = board.get(position);
+            Piece targetPiece = pieces.get(position);
             if (targetPiece.isExist()) {
                 throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
             }
@@ -106,6 +106,6 @@ public class Board {
     }
 
     public Piece findPiece(Position position) {
-        return board.get(position);
+        return pieces.get(position);
     }
 }
