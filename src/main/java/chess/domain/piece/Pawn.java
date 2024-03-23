@@ -8,6 +8,8 @@ import chess.domain.strategy.MoveStrategy;
 import chess.domain.strategy.WhitePawnNotFirstMoveStrategy;
 
 public class Pawn extends ChessPiece {
+    private static final WhitePawnNotFirstMoveStrategy whitePawnNotFirstMoveStrategy = new WhitePawnNotFirstMoveStrategy();
+    private static final BlackPawnNotFirstMoveStrategy blackPawnNotFirstMoveStrategy = new BlackPawnNotFirstMoveStrategy();
 
     public Pawn(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
@@ -43,8 +45,8 @@ public class Pawn extends ChessPiece {
 
     private MoveStrategy changeMovedStrategy() {
         if (pieceInfo.getTeam() == Team.WHITE) {
-            return new WhitePawnNotFirstMoveStrategy();
+            return whitePawnNotFirstMoveStrategy;
         }
-        return new BlackPawnNotFirstMoveStrategy();
+        return blackPawnNotFirstMoveStrategy;
     }
 }

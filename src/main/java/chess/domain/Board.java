@@ -24,17 +24,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
+    private static final int BOARD_SIZE = 8;
+
     private final Map<Position, Piece> board;
 
     public Board() {
-        Map<Position, Piece> board = new HashMap<>();
-        initialize(board);
-
-        this.board = board;
+        this.board = initialize();
     }
 
-    private void initialize(Map<Position, Piece> board) {
-        placeEmptyPieces(board, createPieceLocationsByIndex(0, 64));
+    private Map<Position, Piece> initialize() {
+        return placeEmptyPieces(createPieceLocationsByIndex(0, BOARD_SIZE * BOARD_SIZE));
     }
 
     public void placeInitialPieces() {
@@ -96,18 +95,22 @@ public class Board {
         }
     }
 
-    private void placeEmptyPieces(Map<Position, Piece> board, List<String> locations) {
+    private Map<Position, Piece> placeEmptyPieces(List<String> locations) {
+        Map<Position, Piece> board = new HashMap<>();
+
         for (String location : locations) {
             PieceInfo pieceInfo = new PieceInfo(Position.of(location), Team.NONE);
             board.put(pieceInfo.getPosition(), new EmptyPiece(pieceInfo, new EmptyMoveStrategy()));
         }
+
+        return board;
     }
 
     private List<String> createPieceLocationsByIndex(int startIndex, int endIndex) {
         List<String> positions = new ArrayList<>();
 
         for (int i = startIndex; i < endIndex; i++) {
-            positions.add("" + (char) (i % 8 + 'a') + (char) (i / 8 + '1'));
+            positions.add("" + (char) (i % BOARD_SIZE + 'a') + (char) (i / BOARD_SIZE + '1'));
         }
 
         return positions;
