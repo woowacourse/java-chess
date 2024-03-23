@@ -1,71 +1,21 @@
 package view;
 
 import domain.board.ChessBoard;
-import domain.piece.Piece;
-import domain.piece.Type;
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import static view.Command.END;
-import static view.Command.MOVE;
-import static view.Command.START;
 
 public class OutputView {
-    private static final String LINE_SEPARATOR = System.lineSeparator();
-    private static final Map<Type, String> PIECE_DISPLAY = Map.of(
-            Type.PAWN, "p",
-            Type.KNIGHT, "n",
-            Type.BISHOP, "b",
-            Type.ROOK, "r",
-            Type.QUEEN, "q",
-            Type.KING, "k"
-    );
+    private final MessageResolver messageResolver;
 
-    public void printGameStartMessage() {
-        String gameStartMessage = "> 체스 게임을 시작합니다.";
-        String gameStartCommandMessage = String.format("> 게임 시작 : %s", START.getName());
-        String gameEndCommandMessage = String.format("> 게임 종료 : %s", END.getName());
-        String gameMoveCommandMessage = String.format("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3",
-                MOVE.getName(), MOVE.getName());
-
-        System.out.println(String.join(LINE_SEPARATOR, gameStartMessage, gameStartCommandMessage,
-                gameEndCommandMessage, gameMoveCommandMessage));
+    public OutputView(final MessageResolver messageResolver) {
+        this.messageResolver = messageResolver;
     }
 
-    public void printBoard(ChessBoard chessBoard) {
-        Map<Position, Piece> board = chessBoard.getBoard();
-        for (int rank = 8; rank >= 1; rank--) {
-            printBoardRow(board, Rank.fromNumber(rank));
-        }
+    public void printGameGuideMessage() {
+        System.out.println(messageResolver.resolveGameStartMessage());
     }
 
-    private void printBoardRow(Map<Position, Piece> board, Rank targetRank) {
-        List<String> strings = new ArrayList<>(Collections.nCopies(8, "."));
-        for (var positionAndPiece : board.entrySet()) {
-            Position position = positionAndPiece.getKey();
-            Piece piece = positionAndPiece.getValue();
-            Rank rank = position.rank();
-            File file = position.file();
-
-            if (rank == targetRank) {
-                strings.set(file.order(), pieceDisplay(piece));
-            }
-        }
-        System.out.println(String.join("", strings));
-    }
-
-    private String pieceDisplay(Piece piece) {
-        String pieceName = PIECE_DISPLAY.get(piece.type());
-        if (piece.color().isBlack()) {
-            return pieceName.toUpperCase();
-        }
-        return pieceName;
+    public void printBoard(ChessBoard board) {
+        String boardRankMessage = messageResolver.resolveBoard(board);
+        System.out.println(boardRankMessage);
     }
 
     public void printErrorMessage(final String errorMessage) {

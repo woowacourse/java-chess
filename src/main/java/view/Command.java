@@ -5,13 +5,13 @@ public enum Command {
     END("end"),
     MOVE("move");
 
-    private final String name;
+    private final String message;
 
-    Command(String name) {
-        this.name = name;
+    Command(String message) {
+        this.message = message;
     }
 
-    public String getName() {
-        return name;
+    public String message() {
+        return message;
     }
 }
