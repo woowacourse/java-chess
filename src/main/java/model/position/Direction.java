@@ -5,27 +5,24 @@ import java.util.function.BiPredicate;
 
 public enum Direction {
 
-    SOUTH(0, Direction::isSouth),
-    EAST(1, Direction::isEast),
-    NORTH(2, Direction::isNorth),
-    WEST(3, Direction::isWest),
-    SOUTH_EAST(4, Direction::isSouthEast),
-    SOUTH_WEST(5, Direction::isSouthWest),
-    NORTH_EAST(6, Direction::isNorthEast),
-    NORTH_WEST(7, Direction::isNorthWest);
+    SOUTH(Direction::isSouth, 1, 0),
+    EAST(Direction::isEast, 0, 1),
+    NORTH(Direction::isNorth, -1, 0),
+    WEST(Direction::isWest, 0, -1),
+    SOUTH_EAST(Direction::isSouthEast, 1, 1),
+    SOUTH_WEST(Direction::isSouthWest, 1, -1),
+    NORTH_EAST(Direction::isNorthEast, -1, 1),
+    NORTH_WEST(Direction::isNorthWest, -1, -1);
 
-    // 하, 우, 상, 좌, 하우, 하좌, 상우, 상좌
-    static final int[] DIRECTION_RANK = new int[]{1, 0, -1, 0, 1, 1, -1, -1};
-    static final int[] DIRECTION_FILE = new int[]{0, 1, 0, -1, 1, -1, 1, -1};
-
-    private final int index;
     private final BiPredicate<Integer, Integer> predicate;
+    private final int deltaRank;
+    private final int deltaFile;
 
-    Direction(final int index, final BiPredicate<Integer, Integer> predicate) {
-        this.index = index;
+    Direction(final BiPredicate<Integer, Integer> predicate, final int deltaRank, final int deltaFile) {
         this.predicate = predicate;
+        this.deltaRank = deltaRank;
+        this.deltaFile = deltaFile;
     }
-
 
     public static Direction from(Position currentPosition, Position nextPosition) {
         return Arrays.stream(values())
@@ -68,7 +65,11 @@ public enum Direction {
         return (dRank < 0 && dFile < 0);
     }
 
-    public int getIndex() {
-        return index;
+    public int getDeltaRank() {
+        return deltaRank;
+    }
+
+    public int getDeltaFile() {
+        return deltaFile;
     }
 }

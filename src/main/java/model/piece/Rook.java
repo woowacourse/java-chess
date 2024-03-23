@@ -23,7 +23,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMovable(final Moving moving) {
+    protected boolean canMovable(final Moving moving) {
         if (moving.isNotMoved()) {
             return false;
         }

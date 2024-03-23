@@ -1,8 +1,5 @@
 package model.position;
 
-import static model.position.Direction.DIRECTION_FILE;
-import static model.position.Direction.DIRECTION_RANK;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -44,6 +41,13 @@ public class Moving {
         return Objects.equals(currentPosition, nextPosition);
     }
 
+    public boolean isShapeCapitalL() {
+        final int differenceRank = Math.abs(currentPosition.getRankIndex() - nextPosition.getRankIndex());
+        final int differenceFile = Math.abs(currentPosition.getFileIndex() - nextPosition.getFileIndex());
+
+        return differenceRank + differenceFile == 3 && differenceRank != 0 && differenceFile != 0;
+    }
+
     public boolean isAdjacent() {
         final int currentRank = currentPosition.getRankIndex();
         final int currentFile = currentPosition.getFileIndex();
@@ -57,12 +61,13 @@ public class Moving {
     public Set<Position> route() {
         final int currentRank = currentPosition.getRankIndex();
         final int currentFile = currentPosition.getFileIndex();
-        final int index = Direction.from(currentPosition, nextPosition).getIndex();
+
+        Direction direction = Direction.from(currentPosition, nextPosition);
 
         Set<Position> result = new HashSet<>();
         for (int i = 1; i < distance(); i++) {
-            Rank rank = Rank.from(currentRank + (i * DIRECTION_RANK[index]));
-            File file = File.from(currentFile + (i * DIRECTION_FILE[index]));
+            Rank rank = Rank.from(currentRank + (i * direction.getDeltaRank()));
+            File file = File.from(currentFile + (i * direction.getDeltaFile()));
             result.add(new Position(file, rank));
         }
         return result;

@@ -27,13 +27,7 @@ public class Knight extends Piece {
         if (moving.isNotMoved()) {
             return false;
         }
-        final Position currentPosition = moving.getCurrentPosition();
-        final Position nextPosition = moving.getNextPosition();
-
-        final int differenceRank = Math.abs(currentPosition.getRankIndex() - nextPosition.getRankIndex());
-        final int differenceFile = Math.abs(currentPosition.getFileIndex() - nextPosition.getFileIndex());
-
-        return differenceRank + differenceFile == 3 && differenceRank != 0 && differenceFile != 0;
+        return moving.isShapeCapitalL();
     }
 
     @Override
