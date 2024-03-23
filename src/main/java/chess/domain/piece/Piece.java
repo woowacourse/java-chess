@@ -57,10 +57,6 @@ public abstract class Piece {
         return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
     }
 
-    public boolean isOppositeTeamWith(Team team) {
-        return !isSameTeamWith(team);
-    }
-
     public boolean isSameTeamWith(Piece piece) {
         return isSameTeamWith(piece.team);
     }

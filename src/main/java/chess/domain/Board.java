@@ -19,7 +19,7 @@ public class Board {
 
     public void validateSameTeamByPosition(Position position, Team team) {
         validatePieceExistsOnPosition(position);
-        if (pieces.get(position).isOppositeTeamWith(team)) {
+        if (!pieces.get(position).isSameTeamWith(team)) {
             throw new ImpossibleMoveException("%s 팀이 움직일 차례입니다".formatted(team.name()));
         }
     }
@@ -101,7 +101,7 @@ public class Board {
         return kingPosition.findAllMovablePosition(king)
                 .stream()
                 .filter(position -> !pieces.containsKey(position)
-                        || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(attackedTeam)))
+                        || (pieces.containsKey(position) && !pieces.get(position).isSameTeamWith(attackedTeam)))
                 .allMatch(position -> isBeingAttacked(attackedTeam, position));
     }
 
@@ -113,7 +113,7 @@ public class Board {
         return pieces.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey() != position)
-                .filter(entry -> entry.getValue().isOppositeTeamWith(team))
+                .filter(entry -> !entry.getValue().isSameTeamWith(team))
                 .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
                 .map(Entry::getKey)
                 .toList();
@@ -153,7 +153,7 @@ public class Board {
                 .stream()
                 .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent()))
                 .filter(entry -> entry.getKey() != attackingPosition)
-                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
+                .filter(entry -> !entry.getValue().isSameTeamWith(attackingTeam))
                 .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
     }
 

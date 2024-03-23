@@ -52,5 +52,4 @@ class RookTest {
                         Position.of(1, 4))))
                 .containsExactly(Position.of(3, 4), Position.of(2, 4));
     }
-
 }
