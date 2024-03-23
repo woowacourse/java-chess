@@ -11,6 +11,10 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public boolean isKnight() {
+        return false;
+    }
+
     public abstract boolean canMove(Position source, Position target);
 
     public boolean canAttack(Position source, Position target) {
