@@ -1,6 +1,7 @@
 package chess;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardOutput;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Rank;
@@ -15,7 +16,6 @@ import chess.view.UserCommand;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGame {
 
@@ -35,7 +35,7 @@ public class ChessGame {
         }
 
         Board board = new Board();
-        printBoardOutput(board);
+        outputView.writeBoard(BoardOutput.of(board));
 
         playUntilEnd(board);
     }
@@ -59,9 +59,8 @@ public class ChessGame {
             return false;
         }
 
-        MoveInformation moveInformation =
-                new MoveInformation(Square.findByName(command.source()), Square.findByName(command.destination()));
-        movePiece(board, moveInformation);
+        movePiece(board, command);
+        outputView.writeBoard(BoardOutput.of(board));
 
         return true;
     }
@@ -70,32 +69,10 @@ public class ChessGame {
         return gameStatus.equals(GameStatus.END);
     }
 
-    private void movePiece(Board board, MoveInformation moveInformation) {
-        board.move(moveInformation.source(), moveInformation.destination());
-        printBoardOutput(board);
-    }
+    private void movePiece(Board board, UserCommand command) {
+        Square source = Square.findByName(command.source());
+        Square destination = Square.findByName(command.destination());
 
-    private void printBoardOutput(Board board) {
-        List<String> output = new ArrayList<>();
-
-        for (Rank rank : Rank.reverse()) {
-            output.add(makeRankOutput(rank, board));
-        }
-
-        outputView.writeBoard(output);
-    }
-
-    private String makeRankOutput(Rank rank, Board board) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (File file : File.values()) {
-            Square square = Square.of(file, rank);
-            Piece piece = board.findPieceBySquare(square);
-
-            String pieceView = PieceView.toView(piece);
-            stringBuilder.append(pieceView);
-        }
-
-        return stringBuilder.toString();
+        board.move(source, destination);
     }
 }
