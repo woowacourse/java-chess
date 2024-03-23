@@ -29,6 +29,19 @@ public class Coordinate {
         return this.row.equals(row);
     }
 
+    public Coordinate moveOneStep(Direction direction) {
+        Position row = this.row.moveBy(direction.getRowOffset());
+        Position column = this.column.moveBy(direction.getColumnOffset());
+
+        return new Coordinate(row, column);
+    }
+
+    public int calculateDistanceToDestination(Direction direction, Coordinate destination) {
+        return direction.calculateDistance(
+                calculateRowDifference(destination), calculateColumnDifference(destination)
+        );
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
