@@ -13,7 +13,6 @@ public class PawnMoveStrategy implements MoveStrategy {
     private static final int PAWN_FIRST_FORWARD_INDEX = 2;
     private static final Rank WHITE_PAWN_FIRST_RANK = Rank.TWO;
     private static final Rank BLACK_PAWN_FIRST_RANK = Rank.SEVEN;
-    private static final String PAWN_CANNOT_CATCH_STRAIGHT_ERROR = "폰은 직선 경로로 상대 말을 잡을 수 없습니다.";
 
     private final PathFindStrategy pathFindStrategy;
 
@@ -29,7 +28,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         Direction direction = Direction.findDirectionByDiff(diff);
 
         if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
-            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
+            return false;
         }
 
         int forwardIndex = selectIndexByColor(PAWN_FORWARD_INDEX, sourcePiece.isBlack());
@@ -68,7 +67,6 @@ public class PawnMoveStrategy implements MoveStrategy {
         return checkCanForward(forwardIndex, diff.rankDiff(), diff.fileDiff())
                 || checkDiagonal(forwardIndex, diff.rankDiff(), diff.fileDiff());
     }
-
 
     private boolean checkCanForward(int forwardIndex, int rankDiff, int fileDiff) {
         return rankDiff == forwardIndex && fileDiff == 0;

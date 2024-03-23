@@ -5,18 +5,24 @@ import java.util.List;
 
 public enum File {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h"),
     ;
 
     private static final String OUT_OF_RANGE_ERROR = "더 이상 이동할 수 없습니다.";
     private static final String FILE_NOT_FOUND_ERROR = "존재하지 않는 파일입니다.";
+
+    private final String command;
+
+    File(String command) {
+        this.command = command;
+    }
 
     public File moveHorizontal(int index) {
         List<File> files = List.of(File.values());
@@ -39,9 +45,9 @@ public enum File {
         return files.indexOf(file) - files.indexOf(this);
     }
 
-    public static File findFileByName(String name) {
+    public static File findFileByCommand(String command) {
         return Arrays.stream(File.values())
-                .filter(file -> file.name().equals(name))
+                .filter(file -> file.command.equals(command))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(FILE_NOT_FOUND_ERROR));
     }
