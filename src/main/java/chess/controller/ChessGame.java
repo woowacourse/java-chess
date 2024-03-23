@@ -6,8 +6,13 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class ChessGame {
-    private Board board = new Board();
-    private GameState state = GameState.PREPARING;
+    private Board board;
+    private GameState state;
+
+    public ChessGame() {
+        this.board = new Board();
+        state = GameState.PREPARING;
+    }
 
     public boolean isPlayable() {
         return state.isPlayable();
