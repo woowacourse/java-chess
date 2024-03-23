@@ -32,4 +32,13 @@ public enum Rank {
     public Rank move(final int i) {
         return Rank.from(this.index + i);
     }
+
+    public boolean canMove(final int column) {
+        for (final Rank value : values()) {
+            if (value.index == this.index + column) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

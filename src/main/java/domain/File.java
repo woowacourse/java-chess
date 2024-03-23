@@ -35,4 +35,13 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 파일입니다."));
     }
+
+    public boolean canMove(final int row) {
+        for (final File value : values()) {
+            if (value.index == this.index + row) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

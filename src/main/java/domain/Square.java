@@ -32,6 +32,13 @@ public class Square {
         return new Square(newFile, newRank);
     }
 
+    public boolean canMove(final Direction direction) {
+        if (file.canMove(direction.row()) && rank.canMove(direction.column())) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isRank(final Rank rank) {
         return this.rank == rank;
     }
