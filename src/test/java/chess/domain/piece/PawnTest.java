@@ -1,10 +1,18 @@
 package chess.domain.piece;
 
+import static chess.domain.fixture.CoordinateFixture.C2;
+import static chess.domain.fixture.CoordinateFixture.C3;
+import static chess.domain.fixture.CoordinateFixture.C4;
+import static chess.domain.fixture.CoordinateFixture.C5;
+import static chess.domain.fixture.CoordinateFixture.C6;
+import static chess.domain.fixture.CoordinateFixture.C7;
+import static chess.domain.fixture.PieceFixture.BLACK_PAWN;
+import static chess.domain.fixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.List;
 import chess.domain.board.Coordinate;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,30 +28,18 @@ class PawnTest {
     @DisplayName("흰색 폰의 이동 가능한 모든 좌표를 계산한다.")
     @Test
     void findMovablePathWhite() {
-        Coordinate start = new Coordinate(2, 'c');
-        Coordinate destination = new Coordinate(3, 'c');
-        Pawn pawn = new Pawn(Team.WHITE);
+        List<Coordinate> result = WHITE_PAWN.findMovablePath(C2, C3);
 
-        List<Coordinate> result = pawn.findMovablePath(start, destination);
-
-        List<Coordinate> expected = List.of(
-                new Coordinate(3, 'c'),
-                new Coordinate(4, 'c'));
+        List<Coordinate> expected = List.of(C3, C4);
         assertThat(result).containsExactlyElementsOf(expected);
     }
 
     @DisplayName("검은색 폰의 이동 가능한 모든 좌표를 계산한다.")
     @Test
     void findMovablePathBlack() {
-        Coordinate start = new Coordinate(7, 'c');
-        Coordinate destination = new Coordinate(3, 'c');
-        Pawn pawn = new Pawn(Team.BLACK);
+        List<Coordinate> result = BLACK_PAWN.findMovablePath(C7, C3);
 
-        List<Coordinate> result = pawn.findMovablePath(start, destination);
-
-        List<Coordinate> expected = List.of(
-                new Coordinate(6, 'c'),
-                new Coordinate(5, 'c'));
+        List<Coordinate> expected = List.of(C6, C5);
         assertThat(result).containsExactlyElementsOf(expected);
     }
 }

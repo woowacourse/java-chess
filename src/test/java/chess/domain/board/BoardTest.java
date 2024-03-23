@@ -1,22 +1,63 @@
 package chess.domain.board;
 
+import static chess.domain.fixture.CoordinateFixture.A1;
+import static chess.domain.fixture.CoordinateFixture.A2;
+import static chess.domain.fixture.CoordinateFixture.A3;
+import static chess.domain.fixture.CoordinateFixture.A4;
+import static chess.domain.fixture.CoordinateFixture.A5;
+import static chess.domain.fixture.CoordinateFixture.A7;
+import static chess.domain.fixture.CoordinateFixture.A8;
+import static chess.domain.fixture.CoordinateFixture.B1;
+import static chess.domain.fixture.CoordinateFixture.B2;
+import static chess.domain.fixture.CoordinateFixture.B3;
+import static chess.domain.fixture.CoordinateFixture.B7;
+import static chess.domain.fixture.CoordinateFixture.B8;
+import static chess.domain.fixture.CoordinateFixture.C1;
+import static chess.domain.fixture.CoordinateFixture.C2;
+import static chess.domain.fixture.CoordinateFixture.C3;
+import static chess.domain.fixture.CoordinateFixture.C7;
+import static chess.domain.fixture.CoordinateFixture.C8;
+import static chess.domain.fixture.CoordinateFixture.D1;
+import static chess.domain.fixture.CoordinateFixture.D2;
+import static chess.domain.fixture.CoordinateFixture.D4;
+import static chess.domain.fixture.CoordinateFixture.D7;
+import static chess.domain.fixture.CoordinateFixture.D8;
+import static chess.domain.fixture.CoordinateFixture.E1;
+import static chess.domain.fixture.CoordinateFixture.E2;
+import static chess.domain.fixture.CoordinateFixture.E7;
+import static chess.domain.fixture.CoordinateFixture.E8;
+import static chess.domain.fixture.CoordinateFixture.F1;
+import static chess.domain.fixture.CoordinateFixture.F2;
+import static chess.domain.fixture.CoordinateFixture.F7;
+import static chess.domain.fixture.CoordinateFixture.F8;
+import static chess.domain.fixture.CoordinateFixture.G1;
+import static chess.domain.fixture.CoordinateFixture.G2;
+import static chess.domain.fixture.CoordinateFixture.G7;
+import static chess.domain.fixture.CoordinateFixture.G8;
+import static chess.domain.fixture.CoordinateFixture.H1;
+import static chess.domain.fixture.CoordinateFixture.H2;
+import static chess.domain.fixture.CoordinateFixture.H7;
+import static chess.domain.fixture.CoordinateFixture.H8;
+import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
+import static chess.domain.fixture.PieceFixture.BLACK_KING;
+import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
+import static chess.domain.fixture.PieceFixture.BLACK_PAWN;
+import static chess.domain.fixture.PieceFixture.BLACK_QUEEN;
+import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
+import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
+import static chess.domain.fixture.PieceFixture.WHITE_KING;
+import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
+import static chess.domain.fixture.PieceFixture.WHITE_PAWN;
+import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
+import static chess.domain.fixture.PieceFixture.WHITE_ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,10 +75,9 @@ class BoardTest {
     void whiteKing() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(1, 'e'));
+        Piece result = board.findByCoordinate(E1);
 
-        Piece expected = new King(Team.WHITE);
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(WHITE_KING);
     }
 
     @DisplayName("백팀의 퀸은 d1 있다.")
@@ -45,10 +85,9 @@ class BoardTest {
     void whiteQueen() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(1, 'd'));
+        Piece result = board.findByCoordinate(D1);
 
-        Piece expected = new Queen(Team.WHITE);
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(WHITE_QUEEN);
     }
 
     @DisplayName("백팀의 비숍은 c1, f1에 있다.")
@@ -56,13 +95,12 @@ class BoardTest {
     void whiteBishop() {
         Board board = new Board();
 
-        Piece bishop1 = board.findByCoordinate(new Coordinate(1, 'c'));
-        Piece bishop2 = board.findByCoordinate(new Coordinate(1, 'f'));
+        Piece bishop1 = board.findByCoordinate(C1);
+        Piece bishop2 = board.findByCoordinate(F1);
 
-        Piece expected = new Bishop(Team.WHITE);
         assertThat(bishop1)
                 .isEqualTo(bishop2)
-                .isEqualTo(expected);
+                .isEqualTo(WHITE_BISHOP);
     }
 
     @DisplayName("백팀의 나이트는 b1, g1에 있다.")
@@ -70,13 +108,12 @@ class BoardTest {
     void whiteKnight() {
         Board board = new Board();
 
-        Piece knight1 = board.findByCoordinate(new Coordinate(1, 'b'));
-        Piece knight2 = board.findByCoordinate(new Coordinate(1, 'g'));
+        Piece knight1 = board.findByCoordinate(B1);
+        Piece knight2 = board.findByCoordinate(G1);
 
-        Piece expected = new Knight(Team.WHITE);
         assertThat(knight1)
                 .isEqualTo(knight2)
-                .isEqualTo(expected);
+                .isEqualTo(WHITE_KNIGHT);
     }
 
     @DisplayName("백팀의 룩은 a1, h1에 있다.")
@@ -84,13 +121,12 @@ class BoardTest {
     void whiteRook() {
         Board board = new Board();
 
-        Piece rook1 = board.findByCoordinate(new Coordinate(1, 'a'));
-        Piece rook2 = board.findByCoordinate(new Coordinate(1, 'h'));
+        Piece rook1 = board.findByCoordinate(A1);
+        Piece rook2 = board.findByCoordinate(H1);
 
-        Piece expected = new Rook(Team.WHITE);
         assertThat(rook1)
                 .isEqualTo(rook2)
-                .isEqualTo(expected);
+                .isEqualTo(WHITE_ROOK);
     }
 
     @DisplayName("백팀의 폰은 랭크가 2이고 파일은 A부터 H까지다.")
@@ -98,14 +134,18 @@ class BoardTest {
     void whitePawn() {
         Board board = new Board();
 
-        List<Piece> result = new ArrayList<>();
-        for (char fileValue = 'a'; fileValue <= 'h'; fileValue++) {
-            Piece piece = board.findByCoordinate(new Coordinate(2, fileValue));
-            result.add(piece);
-        }
+        List<Piece> result = List.of(
+                board.findByCoordinate(A2),
+                board.findByCoordinate(B2),
+                board.findByCoordinate(C2),
+                board.findByCoordinate(D2),
+                board.findByCoordinate(E2),
+                board.findByCoordinate(F2),
+                board.findByCoordinate(G2),
+                board.findByCoordinate(H2)
+        );
 
-        List<Pawn> expected = Collections.nCopies(8, new Pawn(Team.WHITE));
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).containsOnly(WHITE_PAWN);
     }
 
     @DisplayName("흑팀의 킹은 e8에 있다.")
@@ -113,10 +153,9 @@ class BoardTest {
     void blackKing() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(8, 'e'));
+        Piece result = board.findByCoordinate(E8);
 
-        Piece expected = new King(Team.BLACK);
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(BLACK_KING);
     }
 
     @DisplayName("흑팀의 퀸은 d8 있다.")
@@ -124,10 +163,9 @@ class BoardTest {
     void blackQueen() {
         Board board = new Board();
 
-        Piece result = board.findByCoordinate(new Coordinate(8, 'd'));
+        Piece result = board.findByCoordinate(D8);
 
-        Piece expected = new Queen(Team.BLACK);
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isEqualTo(BLACK_QUEEN);
     }
 
     @DisplayName("흑팀의 비숍은 c8, f8에 있다.")
@@ -135,13 +173,12 @@ class BoardTest {
     void blackBishop() {
         Board board = new Board();
 
-        Piece bishop1 = board.findByCoordinate(new Coordinate(8, 'c'));
-        Piece bishop2 = board.findByCoordinate(new Coordinate(8, 'f'));
+        Piece bishop1 = board.findByCoordinate(C8);
+        Piece bishop2 = board.findByCoordinate(F8);
 
-        Piece expected = new Bishop(Team.BLACK);
         assertThat(bishop1)
                 .isEqualTo(bishop2)
-                .isEqualTo(expected);
+                .isEqualTo(BLACK_BISHOP);
     }
 
     @DisplayName("흑팀의 나이트는 b8, g8에 있다.")
@@ -149,13 +186,12 @@ class BoardTest {
     void blackKnight() {
         Board board = new Board();
 
-        Piece knight1 = board.findByCoordinate(new Coordinate(8, 'b'));
-        Piece knight2 = board.findByCoordinate(new Coordinate(8, 'g'));
+        Piece knight1 = board.findByCoordinate(B8);
+        Piece knight2 = board.findByCoordinate(G8);
 
-        Piece expected = new Knight(Team.BLACK);
         assertThat(knight1)
                 .isEqualTo(knight2)
-                .isEqualTo(expected);
+                .isEqualTo(BLACK_KNIGHT);
     }
 
     @DisplayName("흑팀의 룩은 a8, h8에 있다.")
@@ -163,13 +199,12 @@ class BoardTest {
     void blackRook() {
         Board board = new Board();
 
-        Piece rook1 = board.findByCoordinate(new Coordinate(8, 'a'));
-        Piece rook2 = board.findByCoordinate(new Coordinate(8, 'h'));
+        Piece rook1 = board.findByCoordinate(A8);
+        Piece rook2 = board.findByCoordinate(H8);
 
-        Piece expected = new Rook(Team.BLACK);
         assertThat(rook1)
                 .isEqualTo(rook2)
-                .isEqualTo(expected);
+                .isEqualTo(BLACK_ROOK);
     }
 
     @DisplayName("흑팀의 폰은 랭크가 7이고 파일은 A부터 H까지다.")
@@ -177,24 +212,26 @@ class BoardTest {
     void blackPawn() {
         Board board = new Board();
 
-        List<Piece> result = new ArrayList<>();
-        for (char i = 'a'; i <= 'h'; i++) {
-            Piece piece = board.findByCoordinate(new Coordinate(7, i));
-            result.add(piece);
-        }
+        List<Piece> result = List.of(
+                board.findByCoordinate(A7),
+                board.findByCoordinate(B7),
+                board.findByCoordinate(C7),
+                board.findByCoordinate(D7),
+                board.findByCoordinate(E7),
+                board.findByCoordinate(F7),
+                board.findByCoordinate(G7),
+                board.findByCoordinate(H7)
+        );
 
-        List<Pawn> expected = Collections.nCopies(8, new Pawn(Team.BLACK));
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).containsOnly(BLACK_PAWN);
     }
 
     @DisplayName("source 좌표에 기물이 없으면 예외를 발생한다.")
     @Test
     void noSource() {
         Board emptyBoard = new Board(new HashMap<>());
-        Coordinate source = new Coordinate(2, 'a');
-        Coordinate target = new Coordinate(3, 'b');
 
-        assertThatThrownBy(() -> emptyBoard.move(source, target))
+        assertThatThrownBy(() -> emptyBoard.move(A2, B3))
                 .isInstanceOf(NoSuchElementException.class);
     }
 
@@ -202,10 +239,10 @@ class BoardTest {
     @Test
     void existTarget() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate target = new Coordinate(2, 'a');
-        pieces.put(source, new Rook(Team.WHITE));
-        pieces.put(target, new Rook(Team.WHITE));
+        Coordinate source = A1;
+        Coordinate target = A2;
+        pieces.put(source, WHITE_ROOK);
+        pieces.put(target, WHITE_ROOK);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
@@ -217,9 +254,9 @@ class BoardTest {
     @Test
     void nonExistPath() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate target = new Coordinate(4, 'd');
-        pieces.put(source, new Rook(Team.WHITE));
+        Coordinate source = A1;
+        Coordinate target = D4;
+        pieces.put(source, WHITE_ROOK);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
@@ -231,11 +268,11 @@ class BoardTest {
     @Test
     void pathStuck() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate between = new Coordinate(2, 'b');
-        Coordinate target = new Coordinate(3, 'c');
-        pieces.put(source, new Bishop(Team.WHITE));
-        pieces.put(between, new Pawn(Team.WHITE));
+        Coordinate source = A1;
+        Coordinate between = B2;
+        Coordinate target = C3;
+        pieces.put(source, WHITE_BISHOP);
+        pieces.put(between, WHITE_PAWN);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
@@ -247,9 +284,9 @@ class BoardTest {
     @Test
     void nonInitialPawnCantMove2() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(3, 'a');
-        Coordinate target = new Coordinate(5, 'a');
-        pieces.put(source, new Pawn(Team.WHITE));
+        Coordinate source = A3;
+        Coordinate target = A5;
+        pieces.put(source, WHITE_PAWN);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
@@ -261,9 +298,9 @@ class BoardTest {
     @Test
     void move() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Piece sourcePiece = new Pawn(Team.WHITE);
-        Coordinate source = new Coordinate(2, 'a');
-        Coordinate target = new Coordinate(4, 'a');
+        Piece sourcePiece = WHITE_PAWN;
+        Coordinate source = A2;
+        Coordinate target = A4;
         pieces.put(source, sourcePiece);
         Board board = new Board(pieces);
 
