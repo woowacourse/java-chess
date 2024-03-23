@@ -23,6 +23,10 @@ public class PieceInfo {
         return team == otherTeam;
     }
 
+    public boolean isDifferentPosition(Position otherPosition) {
+        return !position.equals(otherPosition);
+    }
+
     public PieceInfo renewPosition(Position newPosition) {
         return new PieceInfo(newPosition, team);
     }

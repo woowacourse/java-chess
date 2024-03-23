@@ -64,17 +64,17 @@ public class ChessGame {
     private Team playMoveCommand(List<String> commands, Team turn) {
         Position source = Position.of(commands.get(1));
         Position target = Position.of(commands.get(2));
-        if (source.equals(target) || !isCorrectTurn(source, turn) || !board.movePieceAndRenewBoard(source, target)) {
+        if (source.equals(target) || isOppositeTurn(source, turn) || !board.movePieceAndRenewBoard(source, target)) {
             OutputView.printWrongMovementMessage();
             return turn;
         }
-        
+
         OutputView.printBoard(makeBoardDto(board.getBoard()));
         return Team.takeTurn(turn);
     }
 
-    private boolean isCorrectTurn(Position source, Team team) {
-        return board.getBoard().get(source).isSameTeam(team);
+    private boolean isOppositeTurn(Position source, Team team) {
+        return board.isPieceFromOtherTeam(source, team);
     }
 
     private BoardDto makeBoardDto(Map<Position, Piece> board) {

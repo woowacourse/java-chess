@@ -146,7 +146,7 @@ public class Board {
         Piece movedPiece = movePiece(source, target, piece);
         PieceInfo pieceInfo = movedPiece.getPieceInfo();
 
-        if (!pieceInfo.getPosition().equals(target)) {
+        if (pieceInfo.isDifferentPosition(target)) {
             return false;
         }
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE), new EmptyMoveStrategy()));
@@ -159,5 +159,10 @@ public class Board {
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
                 checkSameTeamPieceExist(piece.getTeam(), target));
+    }
+
+    public boolean isPieceFromOtherTeam(Position source, Team team) {
+        Piece piece = board.get(source);
+        return !piece.isSameTeam(team);
     }
 }
