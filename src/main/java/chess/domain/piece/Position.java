@@ -56,12 +56,13 @@ public class Position {
         int dx = destination.x - this.x;
         int dy = destination.y - this.y;
 
-        if (isInEightDirection(dx, dy)) {
-            dx = calculateMoved(dx);
-            dy = calculateMoved(dy);
-            return Direction.findDirection(dx, dy);
+        if (isNotInEightDirection(dx, dy)) {
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        throw new IllegalArgumentException("이동할 수 없습니다.");
+        
+        dx = calculateMoved(dx);
+        dy = calculateMoved(dy);
+        return Direction.findDirection(dx, dy);
     }
 
     private boolean isInEightDirection(int dx, int dy) {
