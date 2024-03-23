@@ -2,10 +2,10 @@ package chess.view;
 
 public class MoveRequestDto {
 
-    String fromColumn;
-    String fromRow;
-    String toColumn;
-    String toRow;
+    private final String fromColumn;
+    private final String fromRow;
+    private final String toColumn;
+    private final String toRow;
 
     public MoveRequestDto(String fromColumn, String fromRow, String toColumn, String toRow) {
         this.fromColumn = fromColumn;
