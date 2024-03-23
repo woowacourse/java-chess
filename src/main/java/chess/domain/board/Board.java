@@ -1,8 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.PieceColor;
 import chess.domain.square.Square;
 
 import java.util.HashMap;
@@ -11,50 +10,71 @@ import java.util.Map;
 
 public class Board {
 
-    static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
-    static final String ERROR_MOVE_NOT_AVAILABLE = "해당 위치로 기물을 이동할 수 없습니다.";
-    private final Map<Square, Piece> values;
+    private static final String ERROR_SAME_SQUARE = "기물의 출발지와 목적지는 달라야 합니다.";
+    private static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
+    private static final String ERROR_MOVE_NOT_AVAILABLE = "해당 위치로 기물을 이동할 수 없습니다.";
 
-    public Board(Map<Square, Piece> values) {
-        this.values = new HashMap<>(values);
+    private final Map<Square, Piece> pieces;
+
+    public Board(Map<Square, Piece> pieces) {
+        this.pieces = new HashMap<>(pieces);
     }
 
     public void move(final Square source, final Square target) {
-        Piece sourcePiece = values.get(source);
+        validateIsSameSquare(source, target);
+        validateIsNonExistentPiece(source);
 
-        if (isNotExistPiece(source)) {
+        Piece sourcePiece = findPieceBySquare(source);
+        validateCanMove(source, target, sourcePiece);
+        validateExistObstacleOnPath(source, target);
+
+        pieces.remove(source);
+        pieces.put(target, sourcePiece);
+    }
+
+    private void validateIsSameSquare(final Square source, final Square target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException(ERROR_SAME_SQUARE);
+        }
+    }
+
+    private void validateIsNonExistentPiece(final Square square) {
+        if (!pieces.containsKey(square)) {
             throw new IllegalArgumentException(ERROR_NOT_EXIST_PIECE);
         }
+    }
 
+    private Piece findPieceBySquare(Square square) {
+        return pieces.get(square);
+    }
+
+    private void validateCanMove(final Square source, final Square target, final Piece sourcePiece) {
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
+    }
 
-        if (sourcePiece.getType() != PieceType.KNIGHT && existObstacleOnPath(source, target)) {
+    private void validateExistObstacleOnPath(final Square source, final Square target) {
+        List<Square> path = source.findPath(target);
+        for (Square square : path) {
+            checkIsNotEmpty(square);
+        }
+    }
+
+    private void checkIsNotEmpty(final Square square) {
+        if (pieces.containsKey(square)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
-
-        values.remove(source);
-        values.put(target, sourcePiece);
     }
 
-    private boolean existObstacleOnPath(final Square source, final Square target) {
-        List<Square> path = source.generatePath(target);
-        return path.stream().anyMatch(values::containsKey);
-    }
-
-    public boolean isNotExistPiece(Square square) {
-        return !values.containsKey(square);
-    }
-
-    public Map<Square, Piece> get() {
-        return values;
-    }
-
-    public boolean isExistPieceWithColor(Square square, Team team) {
-        if (values.containsKey(square)) {
-            return values.get(square).getColor() == team;
+    public boolean isExistPieceWithColor(final Square square, PieceColor color) {
+        if (pieces.containsKey(square)) {
+            return pieces.get(square).getColor() == color;
         }
         return false;
+    }
+
+    public Map<Square, Piece> getPieces() {
+        return pieces;
     }
 }

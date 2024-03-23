@@ -1,30 +1,96 @@
 package chess.domain.square;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.square.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 @DisplayName("랭크")
 class RankTest {
 
-    @Test
     @DisplayName("좌표가 숫자가 아닐 경우 예외가 발생한다.")
+    @Test
     void occurExceptionIfRankNotNumeric() {
         assertThatCode(() -> Rank.from("삼"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Rank.ERROR_NOT_NUMERIC);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("좌표가 범위를 벗어날 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"0", "9"})
-    @DisplayName("좌표가 범위를 벗어날 경우 예외가 발생한다.")
     void occurExceptionIfRankIsOutOfRange(String rank) {
         assertThatCode(() -> Rank.from(rank))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(Rank.ERROR_NOT_EXIST_RANK);
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("같은 랭크인지 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"ONE, true", "TWO, false"})
+    void checkIsSameFile(Rank other, boolean expected) {
+        Rank rank = Rank.ONE;
+
+        boolean actual = rank.isSameRank(other);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("두 랭크 간 거리를 구한다.")
+    @Test
+    void calculateDistanceBetweenTwoRanks() {
+        Rank rank = Rank.ONE;
+        Rank other = Rank.EIGHT;
+
+        int actual = rank.calculateDistance(other);
+
+        assertThat(actual).isEqualTo(7);
+    }
+
+    @DisplayName("두 랭크 간 거리를 이용해 이동 방향을 구한다.")
+    @ParameterizedTest
+    @CsvSource({"FOUR, 1", "FIVE, 0", "SIX, -1"})
+    void calculateDirectionUsingDistanceBetweenTwoRanks(Rank other, int expected) {
+        Rank rank = Rank.FIVE;
+
+        int actual = rank.calculateDirection(other);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("주어진 값만큼 이동한다.")
+    @Test
+    void moveByValue() {
+        Rank rank = Rank.FIVE;
+
+        Rank actual = rank.move(1);
+
+        assertThat(actual).isEqualTo(Rank.SIX);
+    }
+
+    @DisplayName("보드에서 벗어난 위치로 이동하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 8})
+    void occurExceptionWhenMoveToOutOfRange(int value) {
+        Rank rank = Rank.ONE;
+
+        assertThatThrownBy(() -> rank.move(value))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("두 랭크 간 경로를 찾는다.")
+    @Test
+    void findPathBetweenTwoRanks() {
+        Rank rank = Rank.ONE;
+        Rank other = Rank.FOUR;
+
+        List<Rank> actual = rank.findRankPath(other);
+
+        assertThat(actual).containsExactlyInAnyOrder(Rank.TWO, Rank.THREE);
     }
 }

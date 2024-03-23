@@ -1,6 +1,9 @@
 package chess.domain.square;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum File {
 
@@ -13,37 +16,60 @@ public enum File {
     g(7),
     h(8);
 
-    static final String ERROR_NOT_EXIST_FILE = "은(는) 존재하지 않는 파일입니다.";
+    private static final String ERROR_NOT_EXIST_FILE = "은(는) 존재하지 않는 파일입니다.";
 
-    private final int file;
+    private final int index;
 
-    File(int file) {
-        this.file = file;
+    File(final int index) {
+        this.index = index;
     }
 
-    public static File from(String file) {
-        validateExist(file);
-        return valueOf(file);
-    }
-
-    private static void validateExist(String input) {
-        if (Arrays.stream(values()).noneMatch(file -> file.name().equals(input))) {
-            throw new IllegalArgumentException(input + ERROR_NOT_EXIST_FILE);
-        }
-    }
-
-    public File add(int value) {
+    public static File from(final String value) {
         return Arrays.stream(values())
-                .filter(file -> file.file == this.file + value)
+                .filter(file -> file.name().equals(value))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException((this.file + value) + ERROR_NOT_EXIST_FILE));
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_FILE));
     }
 
-    public int diff(File target) {
-        return file - target.file;
+    public boolean isSameFile(final File other) {
+        return index == other.index;
     }
 
-    public int get() {
-        return file;
+    public int calculateDistance(final File other) {
+        return Math.abs(index - other.index);
+    }
+
+    public int calculateDirection(final File other) {
+        return (int) Math.signum(index - other.index);
+    }
+
+    public File move(final int value) {
+        return valueOf(this.index + value);
+    }
+
+    private File valueOf(final int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_FILE));
+    }
+
+    public List<File> findFilePath(final File other) {
+        int start = Math.min(index, other.index) + 1;
+        int end = Math.max(index, other.index);
+
+        List<File> filePath = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            filePath.add(valueOf(i));
+        }
+
+        if (start != index) {
+            Collections.reverse(filePath);
+        }
+        return filePath;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

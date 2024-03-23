@@ -20,10 +20,10 @@ public class OutputView {
         System.out.printf(TITLE_START);
     }
 
-    public static void printInitialBoard(final Map<Square, Piece> board) {
+    public static void printBoard(final Map<Square, Piece> board) {
         char[][] result = generateEmptyBoard();
         setPiecesOnBoard(board, result);
-        printBoard(result);
+        printResultBoard(result);
     }
 
     private static char[][] generateEmptyBoard() {
@@ -36,13 +36,13 @@ public class OutputView {
 
     private static void setPiecesOnBoard(final Map<Square, Piece> board, final char[][] result) {
         board.forEach(((square, piece) -> {
-            int col = square.file().get() - 1;
-            int row = square.rank().get() - 1;
+            int col = square.file().getIndex() - 1;
+            int row = square.rank().getIndex() - 1;
             result[row][col] = PieceMapper.map(piece.getType(), piece.getColor());
         }));
     }
 
-    private static void printBoard(final char[][] result) {
+    private static void printResultBoard(final char[][] result) {
         for (int i = result.length - 1; i >= 0; i--) {
             System.out.println(String.copyValueOf(result[i]));
         }

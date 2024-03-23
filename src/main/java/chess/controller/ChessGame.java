@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Team;
+import chess.domain.piece.PieceColor;
 import chess.domain.square.Square;
 import chess.view.Command;
 import chess.view.InputView;
@@ -18,7 +18,7 @@ public class ChessGame {
     public void run() {
         OutputView.printStartMessage();
         Command command = Command.START;
-        Team turn = Team.WHITE;
+        PieceColor turn = PieceColor.WHITE;
         Board board = new Board(Map.of());
 
         while (command != Command.END) {
@@ -27,7 +27,7 @@ public class ChessGame {
 
             if (command == Command.START) {
                 board = BoardFactory.createBoard();
-                OutputView.printInitialBoard(board.get());
+                OutputView.printBoard(board.getPieces());
             }
             if (command == Command.MOVE) {
                 turn = tryMove(board, arguments.get(1), arguments.get(2), turn);
@@ -35,7 +35,7 @@ public class ChessGame {
         }
     }
 
-    private Team tryMove(Board board, String source, String target, Team turn) {
+    private PieceColor tryMove(Board board, String source, String target, PieceColor turn) {
         try {
             if (isNotTurn(board, source, turn)) {
                 throw new IllegalArgumentException("현재는 " + turn + "팀의 턴입니다.");
@@ -43,7 +43,7 @@ public class ChessGame {
             board.move(
                     Square.from(source),
                     Square.from(target));
-            OutputView.printInitialBoard(board.get());
+            OutputView.printBoard(board.getPieces());
             return turn.next();
         } catch (IllegalArgumentException | IllegalStateException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -51,7 +51,7 @@ public class ChessGame {
         return turn;
     }
 
-    private boolean isNotTurn(Board board, String source, Team turn) {
+    private boolean isNotTurn(Board board, String source, PieceColor turn) {
         return !board.isExistPieceWithColor(Square.from(source), turn);
     }
 

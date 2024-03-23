@@ -2,24 +2,25 @@ package chess.domain.piece;
 
 import chess.domain.square.Square;
 
-public abstract class Piece {
+public class Piece {
 
-    // TODO: Type 필드 제거 후 Getter 추상화
     private final PieceType type;
-    private final Team color;
+    private final PieceColor color;
 
-    public Piece(PieceType type, Team color) {
+    public Piece(final PieceType type, final PieceColor color) {
         this.type = type;
         this.color = color;
     }
 
-    public abstract boolean canMove(Square source, Square target);
+    public boolean canMove(final Square source, final Square target) {
+        return type.findMoveStrategy(source, target);
+    }
 
     public PieceType getType() {
         return type;
     }
 
-    public Team getColor() {
+    public PieceColor getColor() {
         return color;
     }
 }
