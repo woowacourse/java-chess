@@ -24,7 +24,7 @@ public class ChessController {
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void runChessGame() {
         ChessBoard chessBoard = new ChessBoard();
         PieceGenerator.generate(chessBoard);
 
