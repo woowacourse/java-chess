@@ -5,13 +5,13 @@ import java.util.NoSuchElementException;
 import java.util.function.BiPredicate;
 
 public enum BoardDirection {
-    N((start, destination) -> start.isOrthogonalWith(destination) && start.isBelow(destination), -1, 0),
-    S((start, destination) -> start.isOrthogonalWith(destination) && start.isAbove(destination), 1, 0),
-    E((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherLeftThan(destination), 0, 1),
-    W((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherRightThan(destination), 0, -1),
-    NE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftLowerThan(destination), -1, 1),
+    N((start, destination) -> start.isOrthogonalWith(destination) && start.isBelow(destination), 0, -1),
+    S((start, destination) -> start.isOrthogonalWith(destination) && start.isAbove(destination), 0, 1),
+    E((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherLeftThan(destination), 1, 0),
+    W((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherRightThan(destination), -1, 0),
+    NE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftLowerThan(destination), 1, -1),
     NW((start, destination) -> start.isDiagonalWith(destination) && start.isRightLowerThan(destination), -1, -1),
-    SW((start, destination) -> start.isDiagonalWith(destination) && start.isRightUpperThan(destination), 1, -1),
+    SW((start, destination) -> start.isDiagonalWith(destination) && start.isRightUpperThan(destination), -1, 1),
     SE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftUpperThan(destination), 1, 1);
 
     private final BiPredicate<FileRankPosition, FileRankPosition> matchCondition;
