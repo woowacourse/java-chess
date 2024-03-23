@@ -5,6 +5,9 @@ import chess.domain.piece.Piece;
 
 public class Turn {
 
+    private static final Turn whiteTurn = new Turn(Color.WHITE);
+    private static final Turn blackTurn = new Turn(Color.BLACK);
+
     private final Color color;
 
     public Turn(Color color) {
@@ -13,9 +16,9 @@ public class Turn {
 
     public Turn oppositeTurn() {
         if (color == Color.BLACK) {
-            return new Turn(Color.WHITE);
+            return whiteTurn;
         }
-        return new Turn(Color.BLACK);
+        return blackTurn;
     }
 
     public boolean isActive() {
