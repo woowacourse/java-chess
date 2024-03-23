@@ -7,10 +7,15 @@ import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BoardFactory {
+
+    private static final List<PieceType> PIECE_TYPE_ORDER = List.of(PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP,
+            PieceType.QUEEN, PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK);
+    private static final List<Rank> BLACK_PIECE_ZONE = List.of(Rank.SEVEN, Rank.EIGHT);
+    private static final List<Rank> PAWN_ZONE = List.of(Rank.TWO, Rank.SEVEN);
+    private static final List<Rank> NORMAL_PIECE_ZONE = List.of(Rank.ONE, Rank.EIGHT);
 
     public BoardFactory() {
     }
@@ -19,64 +24,59 @@ public class BoardFactory {
         Map<Square, Piece> board = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
-            createByRank(rank, board);
+            createPieceByRank(rank, board);
         }
 
         return board;
     }
 
-    private void createByRank(Rank rank, Map<Square, Piece> board) {
+    private void createPieceByRank(Rank rank, Map<Square, Piece> board) {
+        if (NORMAL_PIECE_ZONE.contains(rank)) {
+            createPieceByOrder(rank, board);
+            return;
+        }
+
+        if (PAWN_ZONE.contains(rank)) {
+            createPawnPiece(rank, board);
+            return;
+        }
+
+        createEmptyPiece(rank, board);
+    }
+
+    private void createPawnPiece(Rank rank, Map<Square, Piece> board) {
+        ColorType colorType = decideColorType(rank);
+
         for (File file : File.values()) {
-            Square square = Square.of(file, rank);
-            Piece piece = new Piece(PieceType.EMPTY, ColorType.EMPTY);
-
-            piece = makePiece(rank, file, piece);
-
-            board.put(square, piece);
+            board.put(Square.of(file, rank), new Piece(PieceType.PAWN, colorType));
         }
     }
 
-    private Piece makePiece(Rank rank, File file, Piece piece) {
-        if (rank.equals(Rank.ONE) || rank.equals(Rank.EIGHT)) {
-            piece = decideType(file, piece, rank);
-        }
+    private void createPieceByOrder(Rank rank, Map<Square, Piece> board) {
+        Iterator<File> fileIterator = Arrays.stream(File.values()).iterator();
+        Iterator<PieceType> pieceTypeIterator = PIECE_TYPE_ORDER.iterator();
 
-        if (rank.equals(Rank.TWO) || rank.equals(Rank.SEVEN)) {
-            piece = decideColorType(rank, PieceType.PAWN);
-        }
+        ColorType colorType = decideColorType(rank);
 
-        return piece;
+        while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
+            File file = fileIterator.next();
+            PieceType pieceType = pieceTypeIterator.next();
+
+            board.put(Square.of(file, rank), new Piece(pieceType, colorType));
+        }
     }
 
-    private Piece decideType(File file, Piece piece, Rank rank) {
-        if (file.equals(File.A) || file.equals(File.H)) {
-            return decideColorType(rank, PieceType.ROOK);
+    private ColorType decideColorType(Rank rank) {
+        if (BLACK_PIECE_ZONE.contains(rank)) {
+            return ColorType.BLACK;
         }
 
-        if (file.equals(File.B) || file.equals(File.G)) {
-            return decideColorType(rank, PieceType.KNIGHT);
-        }
-
-        if (file.equals(File.C) || file.equals(File.F)) {
-            return decideColorType(rank, PieceType.BISHOP);
-        }
-
-        if (file.equals(File.D)) {
-            return decideColorType(rank, PieceType.QUEEN);
-        }
-
-        if (file.equals(File.E)) {
-            return decideColorType(rank, PieceType.KING);
-        }
-
-        return piece;
+        return ColorType.WHITE;
     }
 
-    private Piece decideColorType(Rank rank, PieceType pieceType) {
-        if (rank == Rank.ONE || rank == Rank.TWO) {
-            return new Piece(pieceType, ColorType.WHITE);
+    private void createEmptyPiece(Rank rank, Map<Square, Piece> board) {
+        for (File file : File.values()) {
+            board.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
         }
-
-        return new Piece(pieceType, ColorType.BLACK);
     }
 }
