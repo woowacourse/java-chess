@@ -47,6 +47,6 @@ public class ContinuousMoveStrategy implements MoveStrategy {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
 
-        return CommonMovementDirection.find(source, destination);
+        return CommonMovementDirection.calculateDirection(source, destination);
     }
 }

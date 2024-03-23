@@ -20,7 +20,7 @@ class CommonMovementDirectionTest {
     @ParameterizedTest
     void findMovementDirection(final Position source, final Position destination, final CommonMovementDirection expect) {
         // When
-        CommonMovementDirection commonMovementDirection = CommonMovementDirection.find(source, destination);
+        CommonMovementDirection commonMovementDirection = CommonMovementDirection.calculateDirection(source, destination);
 
         // Then
         assertThat(commonMovementDirection).isEqualTo(expect);
@@ -44,9 +44,9 @@ class CommonMovementDirectionTest {
     @ParameterizedTest
     void throwExceptionWhenInvalidSourceAndDestination(final Position source, final Position destination) {
         // When & THen
-        assertThatThrownBy(() -> CommonMovementDirection.find(source, destination))
+        assertThatThrownBy(() -> CommonMovementDirection.calculateDirection(source, destination))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("방향 계산이 불가능한 거리값입니다.");
+                .hasMessage("상/하/좌/우 혹은 대각선으로 이동할 수 없는 칸입니다.");
     }
 
     private static Stream<Arguments> throwExceptionWhenInvalidSourceAndDestinationTestCase() {

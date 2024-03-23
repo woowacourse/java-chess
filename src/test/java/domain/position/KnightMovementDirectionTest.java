@@ -7,29 +7,26 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static domain.position.CommonMovementDirection.DOWN_LEFT;
-import static domain.position.CommonMovementDirection.DOWN_RIGHT;
-import static domain.position.CommonMovementDirection.UP_LEFT;
-import static domain.position.CommonMovementDirection.UP_RIGHT;
 import static domain.position.File.*;
 import static domain.position.KnightMovementDirection.*;
 import static domain.position.Rank.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightMovementDirectionTest {
 
-    @DisplayName("나이트가 이동 가능한 방향의 출발지/목적지 정보가 입력되면 true를 반환한다.")
-    @MethodSource("isMovableDirectionTestCase")
+    @DisplayName("입력된 출발지 & 목적지를 계산해서 나이트의 이동 방향을 반환한다.")
+    @MethodSource("calculateDirectionTestCase")
     @ParameterizedTest
-    void isMovableDirectionTest(final Position source, final Position destination) {
+    void calculateDirectionTest(final Position source, final Position destination, final KnightMovementDirection expect) {
         // When
-        boolean isMovable = isMovableDirection(source, destination);
+        KnightMovementDirection knightMovementDirection = calculateDirection(source, destination);
 
         // Then
-        assertThat(isMovable).isTrue();
+        assertThat(knightMovementDirection).isEqualTo(expect);
     }
 
-    private static Stream<Arguments> isMovableDirectionTestCase() {
+    private static Stream<Arguments> calculateDirectionTestCase() {
         return Stream.of(
                 Arguments.of(position(C, FOUR), position(D, SIX), UP_RIGHT),
                 Arguments.of(position(C, FOUR), position(B, SIX), UP_LEFT),
@@ -42,18 +39,17 @@ class KnightMovementDirectionTest {
         );
     }
 
-    @DisplayName("나이트가 이동할 수 없는 출발지/도착지 위치 정보가 입력되면 false를 반환한다.")
-    @MethodSource("isNotMovableDirectionTestCase")
+    @DisplayName("나이트가 이동할 수 없는 출발지/도착지 위치 정보가 입력되면 예외를 발생시킨다.")
+    @MethodSource("throwExceptionWhenInvalidLocationTestCase")
     @ParameterizedTest
-    void isNotMovableDirectionTest(final Position source, final Position destination) {
-        // When
-        boolean isMovable = isMovableDirection(source, destination);
-
-        // Then
-        assertThat(isMovable).isFalse();
+    void throwExceptionWhenInvalidLocationTest(final Position source, final Position destination) {
+        // When & Then
+        assertThatThrownBy(() -> KnightMovementDirection.calculateDirection(source, destination))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("나이트가 이동할 수 없는 방향입니다.");
     }
 
-    private static Stream<Arguments> isNotMovableDirectionTestCase() {
+    private static Stream<Arguments> throwExceptionWhenInvalidLocationTestCase() {
         return Stream.of(
                 Arguments.of(position(B, TWO), position(B, SIX)),
                 Arguments.of(position(B, FIVE), position(B, TWO)),
