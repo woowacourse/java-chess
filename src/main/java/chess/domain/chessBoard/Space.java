@@ -35,13 +35,17 @@ public class Space {
     private void validateClearRoute(Space targetSpace, List<Space> spaces) {
         List<Position> routes = targetSpace.position.findRoute(position);
         for (Position route : routes) {
-            for (Space space : spaces) {
-                validateRouteHasPiece(route, space);
-            }
+            validateRouteHasPieceInSpaces(route, spaces);
         }
     }
 
-    private void validateRouteHasPiece(Position route, Space space) {
+    private void validateRouteHasPieceInSpaces(Position route, List<Space> spaces) {
+        for (Space space : spaces) {
+            validateRouteHasPieceInSpace(route, space);
+        }
+    }
+
+    private void validateRouteHasPieceInSpace(Position route, Space space) {
         if (space.position.equals(route) && space.hasPiece()) {
             throw new IllegalArgumentException("루트에 피스가 있습니다.");
         }
