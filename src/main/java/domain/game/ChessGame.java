@@ -1,7 +1,9 @@
 package domain.game;
 
 import domain.piece.Color;
+import domain.piece.Piece;
 import domain.position.Position;
+import java.util.Map;
 
 public class ChessGame implements Execute {
     private final ChessBoard chessBoard;
@@ -14,12 +16,12 @@ public class ChessGame implements Execute {
         this.state = State.READY;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
     public boolean isNotEnd() {
         return state != State.END;
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard.getPieceByPosition();
     }
 
     @Override

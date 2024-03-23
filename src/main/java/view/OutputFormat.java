@@ -1,6 +1,5 @@
 package view;
 
-import domain.game.ChessBoard;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Bishop;
@@ -35,7 +34,7 @@ public class OutputFormat {
         pieceSymbol.put(new Piece(new Pawn(Color.WHITE), Color.WHITE), "p");
     }
 
-    public String parseChessBoard(final ChessBoard chessBoard) {
+    public String parseChessBoard(final Map<Position, Piece> chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int rank = 8; rank >= 1; rank--) {
             parsePositionByFile(chessBoard, rank);
@@ -45,7 +44,7 @@ public class OutputFormat {
         return stringBuilder.toString();
     }
 
-    private String parsePositionByFile(ChessBoard chessBoard, int rank) {
+    private String parsePositionByFile(Map<Position, Piece> chessBoard, int rank) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int file = 0; file < 8; file++) {
             Position position = new Position(new Position(new File((char) ('a' + file)), new Rank(rank)));
@@ -54,9 +53,9 @@ public class OutputFormat {
         return stringBuilder.toString();
     }
 
-    private String parseSymbol(ChessBoard chessBoard, Position position) {
-        if (chessBoard.isNotEmptyAt(position)) {
-            Piece piece = chessBoard.findPieceByPosition(position);
+    private String parseSymbol(Map<Position, Piece> chessBoard, Position position) {
+        if (chessBoard.containsKey(position)) {
+            Piece piece = chessBoard.get(position);
             return pieceSymbol.get(piece);
         }
         return ".";
