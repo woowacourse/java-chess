@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.board.Board;
 import chess.domain.location.Location;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -29,7 +28,7 @@ public class GameController {
         runOrRetry();
     }
 
-    private void runOrRetry(){
+    private void runOrRetry() {
         try {
             play();
         } catch (IllegalArgumentException | IllegalStateException exception) {

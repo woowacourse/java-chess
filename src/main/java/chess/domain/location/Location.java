@@ -21,10 +21,10 @@ public class Location {
     }
 
     public static Location of(String input) {
-            validateInput(input);
-            Column column = Column.findByName(input.substring(0, 1));
-            Row row = Row.findByRank(input.substring(1, 2));
-            return new Location(column, row);
+        validateInput(input);
+        Column column = Column.findByName(input.substring(0, 1));
+        Row row = Row.findByRank(input.substring(1, 2));
+        return new Location(column, row);
     }
 
     private static void validateInput(String input) {

@@ -34,6 +34,7 @@ class ColumnTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 Column 입력입니다.");
     }
+
     @DisplayName("Column 거리를 계산한다.")
     @Test
     void calculateDistanceTest() {
