@@ -58,6 +58,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return file.getValue() + rank.getValue() + "  (" + rank.getIndex() + ", " + file.getIndex() + ")";
+        return file.getValue() + rank.getValue();
     }
 }
