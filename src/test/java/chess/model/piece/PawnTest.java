@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
+
     @ParameterizedTest
-    @MethodSource("provideTargetPositionAndResultInInitialPosition")
-    @DisplayName("초기 위치에 있는 Pawn이 타켓 위치까지 움직이는 경로를 찾는다.")
-    void findPathInitialPosition(ChessPosition target, List<ChessPosition> expected) {
+    @MethodSource("providePositionsAndResultInInitialPosition")
+    @DisplayName("초기 위치에 있는 Pawn은 한 칸 혹은 두 칸 전진할 수 있다.")
+    void findPathInitialPosition(Side side, ChessPosition source, ChessPosition target, List<ChessPosition> expected) {
         // given
-        ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
-        Pawn pawn = Pawn.from(Side.WHITE);
+        Pawn pawn = Pawn.from(side);
 
         // when
         List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
@@ -31,8 +31,47 @@ class PawnTest {
         assertThat(path).isEqualTo(expected);
     }
 
+    private static Stream<Arguments> providePositionsAndResultInInitialPosition() {
+        return Stream.of(
+                Arguments.arguments(
+                        Side.WHITE,
+                        ChessPosition.of(File.B, Rank.TWO),
+                        ChessPosition.of(File.B, Rank.THREE),
+                        List.of(
+                                ChessPosition.of(File.B, Rank.THREE)
+                        )
+                ),
+                Arguments.arguments(
+                        Side.WHITE,
+                        ChessPosition.of(File.B, Rank.TWO),
+                        ChessPosition.of(File.B, Rank.FOUR),
+                        List.of(
+                                ChessPosition.of(File.B, Rank.THREE),
+                                ChessPosition.of(File.B, Rank.FOUR)
+                        )
+                ),
+                Arguments.arguments(
+                        Side.BLACK,
+                        ChessPosition.of(File.B, Rank.SEVEN),
+                        ChessPosition.of(File.B, Rank.FIVE),
+                        List.of(
+                                ChessPosition.of(File.B, Rank.SIX),
+                                ChessPosition.of(File.B, Rank.FIVE)
+                        )
+                ),
+                Arguments.arguments(
+                        Side.BLACK,
+                        ChessPosition.of(File.B, Rank.SEVEN),
+                        ChessPosition.of(File.B, Rank.SIX),
+                        List.of(
+                                ChessPosition.of(File.B, Rank.SIX)
+                        )
+                )
+        );
+    }
+
     @Test
-    @DisplayName("초기 위치가 아닌 Pawn이 타켓 위치까지 움직이는 경로를 찾는다.")
+    @DisplayName("초기 위치가 아닌 Pawn은 한 칸만 전진할 수 있다.")
     void findPath() {
         // given
         ChessPosition source = ChessPosition.of(File.C, Rank.THREE);
@@ -47,8 +86,23 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("Pawn의 대각선에 적 기물이 있다면 움직이는 경로를 찾는다.")
-    void findPathCatchEnemy() {
+    @DisplayName("초기 위치가 아닌 Pawn은 두 칸 전진할 수 없다.")
+    void findPathNotInInitialPosition() {
+        // given
+        ChessPosition source = ChessPosition.of(File.C, Rank.THREE);
+        ChessPosition target = ChessPosition.of(File.C, Rank.FIVE);
+        Pawn pawn = Pawn.from(Side.WHITE);
+
+        // when
+        List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
+
+        // then
+        assertThat(path).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Pawn의 대각선에 적 기물이 있다면 움직일 수 있다.")
+    void findPathDiagonally() {
         // given
         ChessPosition source = ChessPosition.of(File.C, Rank.THREE);
         ChessPosition target = ChessPosition.of(File.D, Rank.FOUR);
@@ -64,14 +118,28 @@ class PawnTest {
 
     @Test
     @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
-    void findPathWhenInvalidTarget() {
+    void findPathWithInvalidTarget() {
         // given
         ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
         ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
         Rook targetPiece = Rook.from(Side.WHITE);
         Pawn pawn = Pawn.from(Side.WHITE);
 
-        //when //then
+        // when & then
+        assertThatThrownBy(() -> pawn.findPath(source, target, targetPiece))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("전진하고자 하는 타겟 위치에 기물이 존재하면 예외가 발생한다.")
+    void findPathWithInvalidForwardTarget() {
+        // given
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.C, Rank.THREE);
+        Rook targetPiece = Rook.from(Side.BLACK);
+        Pawn pawn = Pawn.from(Side.WHITE);
+
+        // when & then
         assertThatThrownBy(() -> pawn.findPath(source, target, targetPiece))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -89,23 +157,5 @@ class PawnTest {
 
         // then
         assertThat(path).isEmpty();
-    }
-
-    private static Stream<Arguments> provideTargetPositionAndResultInInitialPosition() {
-        return Stream.of(
-                Arguments.arguments(
-                        ChessPosition.of(File.B, Rank.THREE),
-                        List.of(
-                                ChessPosition.of(File.B, Rank.THREE)
-                        )
-                ),
-                Arguments.arguments(
-                        ChessPosition.of(File.B, Rank.FOUR),
-                        List.of(
-                                ChessPosition.of(File.B, Rank.THREE),
-                                ChessPosition.of(File.B, Rank.FOUR)
-                        )
-                )
-        );
     }
 }
