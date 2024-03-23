@@ -43,10 +43,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class RookTest {
 
-    @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
+    @DisplayName("이동할 수 없는 경로면 예외가 발생한다.")
     @ParameterizedTest
-    @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(final Moving moving) {
+    @MethodSource("invalidMovingParameterProvider")
+    void invalidMoving(final Moving moving) {
         final Rook rook = new Rook(Camp.BLACK);
 
         assertAll(
@@ -56,7 +56,7 @@ class RookTest {
         );
     }
 
-    static Stream<Arguments> cantMovableParameterProvider() {
+    static Stream<Arguments> invalidMovingParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(A8, B7)),
                 Arguments.of(new Moving(A8, C4)),
@@ -65,9 +65,9 @@ class RookTest {
         );
     }
 
-    @DisplayName("이동할 수 있다면 경로를 반환한다.")
+    @DisplayName("이동 경로를 반환한다. 출발지와 도착지는 포함하지 않는다.")
     @ParameterizedTest
-    @MethodSource("canMovableParameterProvider")
+    @MethodSource("checkRouteParameterProvider")
     void checkRoute(final Moving moving, final Set<Position> expected) {
         final Rook rook = new Rook(Camp.BLACK);
 
@@ -77,7 +77,7 @@ class RookTest {
         );
     }
 
-    static Stream<Arguments> canMovableParameterProvider() {
+    static Stream<Arguments> checkRouteParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(A8, A2), Set.of(A3, A4, A5, A6, A7)),
                 Arguments.of(new Moving(H8, D8), Set.of(G8, F8, E8)),

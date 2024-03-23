@@ -11,17 +11,17 @@ import org.junit.jupiter.api.Test;
 
 class RunningTest {
 
+    @DisplayName("러닝 상태일때 상태를 확인한다.")
     @Test
-    @DisplayName("running 상태면 isRunning 이 true이다.")
-    void isRunning() {
+    void checkRunning() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
 
         assertThat(gameStatus.isRunning()).isTrue();
     }
 
+    @DisplayName("러닝 상태일 때 play 후 상태를 확인한다.")
     @Test
-    @DisplayName("실행 중에서 move 하면 Running 이다.")
-    void running() {
+    void checkRunningAfterPlay() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -30,9 +30,9 @@ class RunningTest {
                 .isInstanceOf(Running.class);
     }
 
+    @DisplayName("러닝 상태에서 end 후 상태를 학인한다.")
     @Test
-    @DisplayName("실행 중에서 end 하면 End 이다.")
-    void ending() {
+    void checkRunningAfterEnd() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -41,9 +41,9 @@ class RunningTest {
                 .isInstanceOf(End.class);
     }
 
+    @DisplayName("러닝 상태에서 start 하면 예외가 발생한다.")
     @Test
-    @DisplayName("실행 중에서 start 하면 예외가 발생한다.")
-    void start() {
+    void failToStartIfAlreadyRunning() {
         //given
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();

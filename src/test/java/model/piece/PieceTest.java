@@ -16,14 +16,14 @@ class PieceTest {
 
     @ParameterizedTest
     @DisplayName("위치가 동일하다면 예외가 발생한다.")
-    @MethodSource("invalidMoveParameterProvider")
-    void invalidMove(Piece piece) {
+    @MethodSource("invalidMovingParameterProvider")
+    void invalidMoving(Piece piece) {
         final Moving notMovedMoving = new Moving(G7, G7);
         assertThatThrownBy(() -> piece.getMoveRoute(notMovedMoving))
                 .isInstanceOf(InvalidMovingException.class);
     }
 
-    static Stream<Arguments> invalidMoveParameterProvider() {
+    static Stream<Arguments> invalidMovingParameterProvider() {
         return Stream.of(
                 Arguments.of(new Bishop(Camp.BLACK)),
                 Arguments.of(new King(Camp.BLACK)),

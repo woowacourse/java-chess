@@ -8,9 +8,11 @@ import static model.Fixtures.A7;
 import static model.Fixtures.A8;
 import static model.Fixtures.B2;
 import static model.Fixtures.B3;
+import static model.Fixtures.B4;
 import static model.Fixtures.B5;
 import static model.Fixtures.B7;
 import static model.Fixtures.C2;
+import static model.Fixtures.C3;
 import static model.Fixtures.C4;
 import static model.Fixtures.D5;
 import static model.Fixtures.D6;
@@ -27,10 +29,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import exception.InvalidMovingException;
+import java.util.Set;
 import java.util.stream.Stream;
 import model.Camp;
 import model.ChessBoard;
 import model.position.Moving;
+import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -39,11 +43,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
-    @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
+    @DisplayName("이동할 수 없는 경로면 예외가 발생한다.")
     @ParameterizedTest
-    @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(final Moving moving) {
-        final Pawn pawn = new Pawn(Camp.BLACK);
+    @MethodSource("invalidMovingParameterProvider")
+    void invalidMoving(final Camp camp, final Moving moving) {
+        final Pawn pawn = new Pawn(camp);
 
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isFalse(),
@@ -52,33 +56,39 @@ class PawnTest {
         );
     }
 
-    static Stream<Arguments> cantMovableParameterProvider() {
+    static Stream<Arguments> invalidMovingParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(A6, A4)),
-                Arguments.of(new Moving(A7, A4)),
-                Arguments.of(new Moving(A7, A8))
+                Arguments.of(Camp.BLACK, new Moving(A6, A4)),
+                Arguments.of(Camp.BLACK, new Moving(A7, A4)),
+                Arguments.of(Camp.WHITE, new Moving(A8, A7))
         );
     }
 
-    @DisplayName("이동할 수 있다면 경로를 반환한다.")
+    @DisplayName("이동 경로를 반환한다. 출발지와 도착지는 포함하지 않는다.")
     @ParameterizedTest
-    @MethodSource("canMovableParameterProvider")
-    void canMovable(final Moving moving) {
-        final Pawn pawn = new Pawn(Camp.BLACK);
+    @MethodSource("checkRouteParameterProvider")
+    void checkRoute(final Camp camp, final Moving moving, final Set<Position> expected) {
+        final Pawn pawn = new Pawn(camp);
 
-        assertThat(pawn.canMovable(moving)).isTrue();
+        assertAll(
+                () -> assertThat(pawn.canMovable(moving)).isTrue(),
+                () -> assertThat(pawn.getMoveRoute(moving)).isEqualTo(expected)
+        );
+
     }
 
-    static Stream<Arguments> canMovableParameterProvider() {
+    static Stream<Arguments> checkRouteParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(A7, A5)),
-                Arguments.of(new Moving(A6, A5))
+                Arguments.of(Camp.BLACK, new Moving(A7, A5), Set.of(A6)),
+                Arguments.of(Camp.BLACK, new Moving(A6, A5), Set.of()),
+                Arguments.of(Camp.WHITE, new Moving(B2, B4), Set.of(B3)),
+                Arguments.of(Camp.WHITE, new Moving(C2, C3), Set.of())
         );
     }
 
     @Test
-    @DisplayName("앞에 기물이 있다면 전진이 불가하다.")
-    void canNotGoForward() {
+    @DisplayName("앞에 기물이 있을때 전진이 불가하다.")
+    void whenPieceInFrontCanNotMoveForward() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -107,8 +117,8 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("대각선에 기물이 있다면 이동이 가능하다. WHITE (위 오른쪽)")
-    void canGoDiagonal1() {
+    @DisplayName("대각선에 기물이 있을 때 대각선 이동이 가능하다. WHITE (위 오른쪽)")
+    void whenPieceInDiagonalCanMove1() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -136,7 +146,7 @@ class PawnTest {
 
     @Test
     @DisplayName("대각선에 기물이 있다면 이동이 가능하다. BLACK (아래 오른쪽)")
-    void canGoDiagonal2() {
+    void whenPieceInDiagonalCanMove2() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -164,8 +174,8 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("대각선에 기물이 없다면 이동이 불가하다.")
-    void canNotGoDiagonal() {
+    @DisplayName("대각선에 기물이 없다면 대각선 이동이 불가하다.")
+    void whenPieceNotInDiagonalCanNotMove() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -194,8 +204,8 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("폰은 후진은 불가하다. WHITE")
-    void canNotGoBackWhite() {
+    @DisplayName("폰은 후진할 수 없다. WHITE")
+    void failToMoveBackWhitePawn() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -211,8 +221,8 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("폰은 후진은 불가하다. BLACK")
-    void canNotGoBack2() {
+    @DisplayName("폰은 후진할 수 없다. BLACK")
+    void failToMoveBackBlackPawn() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 

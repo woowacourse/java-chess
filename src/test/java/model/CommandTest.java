@@ -12,9 +12,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class CommandTest {
 
-    @Test
     @DisplayName("올바른 command가 입력되면 예외가 발생하지 않는다.")
-    void command() {
+    @Test
+    void checkCommand() {
         assertAll(
                 () -> assertThat(Command.from("start")).isEqualTo(Command.START),
                 () -> assertThat(Command.from("end")).isEqualTo(Command.END),
@@ -28,7 +28,7 @@ class CommandTest {
     @ParameterizedTest
     @DisplayName("유효하지 않은 command가 입력되면 예외가 발생한다.")
     @ValueSource(strings = {"st", "endd", "a0"})
-    void validateValue(String value) {
+    void invalidCommand(String value) {
         assertThatThrownBy(() -> Command.validate(value))
                 .isInstanceOf(InvalidCommandException.class);
     }

@@ -14,29 +14,29 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class InitializationTest {
 
-    @Test
     @DisplayName("start를 입력하면 게임이 시작된다.")
-    void start() {
+    @Test
+    void gameStartWhenCommandIsStart() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
         assertThat(gameStatus).isInstanceOf(Running.class);
     }
 
-    @Test
     @DisplayName("end를 입력하면 게임이 종료된다.")
-    void end() {
+    @Test
+    void gameEndWhenCommandIsEnd() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("end"));
         assertThat(gameStatus).isInstanceOf(End.class);
     }
 
-    @ParameterizedTest
     @DisplayName("시작시 유효하지 않은 명령어가 오면 예외가 발생한다.")
-    @MethodSource("invalidStartParameterProvider")
-    void invalidStart(List<String> command) {
+    @ParameterizedTest
+    @MethodSource("invalidCommandParameterProvider")
+    void invalidCommand(List<String> command) {
         assertThatThrownBy(() -> Initialization.gameSetting(command))
                 .isInstanceOf(InvalidStatusException.class);
     }
 
-    static Stream<Arguments> invalidStartParameterProvider() {
+    static Stream<Arguments> invalidCommandParameterProvider() {
         return Stream.of(
                 Arguments.of(List.of("start", "a1")),
                 Arguments.of(List.of("start", "start")),

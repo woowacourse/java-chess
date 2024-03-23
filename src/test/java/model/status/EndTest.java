@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 class EndTest {
 
-    @Test
     @DisplayName("종료 상태에서 play하면 예외가 발생한다.")
-    void invalidPlay() {
+    @Test
+    void failToPlayIfStatusEnd() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
         final GameStatus gameStatus = Initialization.gameSetting(List.of("start"));
@@ -27,9 +27,9 @@ class EndTest {
                 .isInstanceOf(InvalidStatusException.class);
     }
 
+    @DisplayName("종료 상태일 때 상태를 확인한다.")
     @Test
-    @DisplayName("종료 상태면 isRunning 이 false 이다.")
-    void isNotRunning() {
+    void checkRunning() {
         final GameStatus gameStatus = Initialization.gameSetting(List.of("end"));
 
         assertThat(gameStatus.isRunning()).isFalse();

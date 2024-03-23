@@ -48,10 +48,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class QueenTest {
 
-    @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
+    @DisplayName("이동할 수 없는 경로면 예외가 발생한다.")
     @ParameterizedTest
-    @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(final Moving moving) {
+    @MethodSource("invalidMovingParameterProvider")
+    void invalidMoving(final Moving moving) {
         final Queen queen = new Queen(Camp.BLACK);
 
         assertAll(
@@ -61,7 +61,7 @@ class QueenTest {
         );
     }
 
-    static Stream<Arguments> cantMovableParameterProvider() {
+    static Stream<Arguments> invalidMovingParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(B3, B3)),
                 Arguments.of(new Moving(D8, E5)),
@@ -71,9 +71,9 @@ class QueenTest {
         );
     }
 
-    @DisplayName("이동할 수 있다면 경로를 반환한다.")
+    @DisplayName("이동 경로를 반환한다. 출발지와 도착지는 포함하지 않는다.")
     @ParameterizedTest
-    @MethodSource("canMovableParameterProvider")
+    @MethodSource("checkRouteParameterProvider")
     void checkRoute(final Moving moving, final Set<Position> expected) {
         final Queen queen = new Queen(Camp.BLACK);
 
@@ -83,7 +83,7 @@ class QueenTest {
         );
     }
 
-    static Stream<Arguments> canMovableParameterProvider() {
+    static Stream<Arguments> checkRouteParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(D8, D1), Set.of(D2, D3, D4, D5, D6, D7)),
                 Arguments.of(new Moving(D8, A8), Set.of(B8, C8)),

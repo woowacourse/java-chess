@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 class CampTest {
 
-    @Test
     @DisplayName("현재 Camp가 WHITE 면 BLACK을 현재 Camp가 BLACK이면 WHITE를 반환한다.")
-    void toggle() {
+    @Test
+    void checkToggle() {
         assertAll(
                 () -> assertThat(Camp.BLACK.toggle()).isEqualTo(Camp.WHITE),
                 () -> assertThat(Camp.WHITE.toggle()).isEqualTo(Camp.BLACK)

@@ -61,9 +61,9 @@ import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    @Test
     @DisplayName("초기에는 32개의 기물이 생성된다.")
-    void initPieces() {
+    @Test
+    void checkPiecesCount() {
         //given && when
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -72,9 +72,9 @@ class ChessBoardTest {
         assertThat(board.keySet()).hasSize(32);
     }
 
-    @Test
     @DisplayName("기물들의 시작 위치를 확인한다.")
-    void checkInitialPosition() {
+    @Test
+    void checkStartingPosition() {
         //given && when
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -122,9 +122,9 @@ class ChessBoardTest {
         assertThat(board).isEqualTo(expected);
     }
 
-    @Test
     @DisplayName("해당 위치에 기물이 없는 경우 예외가 발생한다.")
-    void blankPosition() {
+    @Test
+    void failToMoveIfNoPiece() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -137,7 +137,7 @@ class ChessBoardTest {
 
     @Test
     @DisplayName("자신의 기물이 아니면 예외가 발생한다.")
-    void invalidTurn() {
+    void failToMoveIfDifferentCamp() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -150,7 +150,7 @@ class ChessBoardTest {
 
     @DisplayName("이동 경로에 기물이 있으면 예외를 발생시킨다.")
     @Test
-    void routeContainPiece() {
+    void failToMoveIfContainPieceInRoute() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -163,7 +163,7 @@ class ChessBoardTest {
 
     @DisplayName("도착 지점에 같은 진영의 기물이 있으면 예외를 발생시킨다.")
     @Test
-    void targetPositionIsEqualCamp() {
+    void failToMoveIfContainsPieceInTargetPosition() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -178,9 +178,9 @@ class ChessBoardTest {
                 .isInstanceOf(PieceExistInRouteException.class);
     }
 
-    @Test
     @DisplayName("기물이 잡히면 체스보드에서 제거된다.")
-    void removePiece() {
+    @Test
+    void checkRemovePiece() {
         //given
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
@@ -193,17 +193,17 @@ class ChessBoardTest {
         assertThat(chessBoard.getBoard()).hasSize(31);
     }
 
-    @Test
     @DisplayName("선공은 WHITE이다.")
+    @Test
     void checkFirstAttack() {
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         assertThat(chessBoard.getCamp()).isEqualTo(Camp.WHITE);
     }
 
-    @Test
     @DisplayName("후공은 BLACK이다.")
-    void checkLastAttack() {
+    @Test
+    void checkSecondAttack() {
         final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
 
         chessBoard.move(new Moving(A2, A3));

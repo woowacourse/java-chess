@@ -19,9 +19,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import exception.InvalidMovingException;
+import java.util.Set;
 import java.util.stream.Stream;
 import model.Camp;
 import model.position.Moving;
+import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,10 +31,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class KnightTest {
 
-    @DisplayName("이동할 수 없는 경로면 예외를 발생시킨다.")
+    @DisplayName("이동할 수 없는 경로면 예외가 발생한다.")
     @ParameterizedTest
-    @MethodSource("cantMovableParameterProvider")
-    void invalidRoute(final Moving moving) {
+    @MethodSource("invalidMovingParameterProvider")
+    void invalidMoving(final Moving moving) {
         final Knight knight = new Knight(Camp.BLACK);
 
         assertAll(
@@ -42,7 +44,7 @@ class KnightTest {
         );
     }
 
-    static Stream<Arguments> cantMovableParameterProvider() {
+    static Stream<Arguments> invalidMovingParameterProvider() {
         return Stream.of(
                 Arguments.of(new Moving(D5, A5)),
                 Arguments.of(new Moving(A8, F3)),
@@ -50,28 +52,28 @@ class KnightTest {
         );
     }
 
-    @DisplayName("이동할 수 있다면 경로를 반환한다.")
+    @DisplayName("이동 경로를 반환한다. 출발지와 도착지는 포함하지 않는다.")
     @ParameterizedTest
-    @MethodSource("canMovableParameterProvider")
-    void canMovable(final Moving moving) {
+    @MethodSource("checkRouteParameterProvider")
+    void checkRoute(final Moving moving, final Set<Position> expected) {
         final Knight knight = new Knight(Camp.BLACK);
 
         assertAll(
                 () -> assertThat(knight.canMovable(moving)).isTrue(),
-                () -> assertThat(knight.getMoveRoute(moving)).isEmpty()
+                () -> assertThat(knight.getMoveRoute(moving)).isEqualTo(expected)
         );
     }
 
-    static Stream<Arguments> canMovableParameterProvider() {
+    static Stream<Arguments> checkRouteParameterProvider() {
         return Stream.of(
-                Arguments.of(new Moving(A8, C7)),
-                Arguments.of(new Moving(A8, B6)),
-                Arguments.of(new Moving(D6, C4)),
-                Arguments.of(new Moving(D6, B5)),
-                Arguments.of(new Moving(D6, B7)),
-                Arguments.of(new Moving(D6, C8)),
-                Arguments.of(new Moving(D6, E8)),
-                Arguments.of(new Moving(D6, F7))
+                Arguments.of(new Moving(A8, C7), Set.of()),
+                Arguments.of(new Moving(A8, B6), Set.of()),
+                Arguments.of(new Moving(D6, C4), Set.of()),
+                Arguments.of(new Moving(D6, B5), Set.of()),
+                Arguments.of(new Moving(D6, B7), Set.of()),
+                Arguments.of(new Moving(D6, C8), Set.of()),
+                Arguments.of(new Moving(D6, E8), Set.of()),
+                Arguments.of(new Moving(D6, F7), Set.of())
         );
     }
 }
