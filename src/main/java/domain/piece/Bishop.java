@@ -15,8 +15,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-
-
         final List<Square> movableSquares = new ArrayList<>();
         Square northEastSource = source;
         Square northWestSource = source;
