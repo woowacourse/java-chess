@@ -15,6 +15,10 @@ public class FileRankPosition {
         return new FileRankPosition(file, rank.reverse());
     }
 
+    public boolean isOrthogonalWith(FileRankPosition other) {
+        return file == other.file || rank == other.rank;
+    }
+
     public boolean isFileSameWith(FileRankPosition other) {
         return file == other.file;
     }
