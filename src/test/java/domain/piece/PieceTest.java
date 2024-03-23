@@ -10,7 +10,7 @@ class PieceTest {
     @DisplayName("기물은 기물 종류와 색을 갖는다.")
     @Test
     void generatePiece() {
-        Piece pieceType = new Piece(new Pawn(Color.BLACK), Color.BLACK);
-        Assertions.assertThat(pieceType).isEqualTo(new Piece(new Pawn(Color.BLACK), Color.BLACK));
+        Piece pieceType = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
+        Assertions.assertThat(pieceType).isEqualTo(new Piece(Pawn.from(Color.BLACK), Color.BLACK));
     }
 }

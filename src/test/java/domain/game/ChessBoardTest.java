@@ -26,7 +26,7 @@ class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard();
 
-        Piece piece = new Piece(new King(), Color.BLACK);
+        Piece piece = new Piece(King.from(), Color.BLACK);
         chessBoard.add(sourceSquare, piece);
 
         chessBoard.move(sourceSquare, targetSquare);
@@ -57,8 +57,8 @@ class ChessBoardTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new King(), Color.BLACK);
-        Piece targetPiece = new Piece(new Queen(), Color.BLACK);
+        Piece sourcePiece = new Piece(King.from(), Color.BLACK);
+        Piece targetPiece = new Piece(Queen.from(), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
@@ -76,7 +76,7 @@ class ChessBoardTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new King(), Color.BLACK);
+        Piece sourcePiece = new Piece(King.from(), Color.BLACK);
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
 
@@ -92,8 +92,8 @@ class ChessBoardTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
+        Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
@@ -111,8 +111,8 @@ class ChessBoardTest {
         Square sourceSquare = SquareFixture.generateSquare(sourcePosition);
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
 
-        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
+        Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
@@ -136,9 +136,9 @@ class ChessBoardTest {
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
         Square blockSquare = SquareFixture.generateSquare(blockPosition);
 
-        Piece sourcePiece = new Piece(new Rook(), Color.WHITE);
-        Piece targetPiece = new Piece(new Rook(), Color.WHITE);
-        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(Rook.from(), Color.WHITE);
+        Piece targetPiece = new Piece(Rook.from(), Color.WHITE);
+        Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
@@ -160,9 +160,9 @@ class ChessBoardTest {
         Square targetSquare = SquareFixture.generateSquare(targetPosition);
         Square blockSquare = SquareFixture.generateSquare(blockPosition);
 
-        Piece sourcePiece = new Piece(new Knight(), Color.WHITE);
-        Piece targetPiece = new Piece(new Knight(), Color.WHITE);
-        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(Knight.from(), Color.WHITE);
+        Piece targetPiece = new Piece(Knight.from(), Color.WHITE);
+        Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourceSquare, sourcePiece);
