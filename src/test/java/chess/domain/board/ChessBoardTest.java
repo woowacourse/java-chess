@@ -55,7 +55,7 @@ public class ChessBoardTest {
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b2", new Turn(PieceColor.WHITE)))
@@ -73,7 +73,7 @@ public class ChessBoardTest {
         board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE)))
@@ -90,7 +90,7 @@ public class ChessBoardTest {
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b3", "b2", new Turn(PieceColor.WHITE)))
@@ -107,7 +107,7 @@ public class ChessBoardTest {
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b7", new Turn(PieceColor.WHITE)))
@@ -123,9 +123,9 @@ public class ChessBoardTest {
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_ROOK));
         board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
-
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b7", new Turn(PieceColor.WHITE)))
@@ -141,9 +141,9 @@ public class ChessBoardTest {
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_KNIGHT));
         board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
-
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatCode(() -> chessBoard.move("b2", "c4", new Turn(PieceColor.WHITE))).doesNotThrowAnyException();
@@ -161,7 +161,7 @@ public class ChessBoardTest {
         board.put(Position.of("c3"), new Piece(PieceType.BLACK_KING));
         generatorStub.setBoard(board);
 
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when
         chessBoard.move("b2", "c3", new Turn(PieceColor.WHITE));
@@ -180,7 +180,7 @@ public class ChessBoardTest {
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
         generatorStub.setBoard(board);
 
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "c3", new Turn(PieceColor.WHITE)))
@@ -198,7 +198,7 @@ public class ChessBoardTest {
         board.put(Position.of("b3"), new Piece(PieceType.BLACK_PAWN));
         generatorStub.setBoard(board);
 
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE)))
@@ -215,7 +215,8 @@ public class ChessBoardTest {
         board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
         board.put(Position.of("a1"), new Piece(PieceType.WHITE_ROOK));
         generatorStub.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(generatorStub.generate());
+
+        ChessBoard chessBoard = new ChessBoard(generatorStub);
         Turn turn = new Turn(PieceColor.WHITE);
 
         // when
