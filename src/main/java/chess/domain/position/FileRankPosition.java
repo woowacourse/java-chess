@@ -65,6 +65,22 @@ public class FileRankPosition {
         return rank.isBelow(other.rank);
     }
 
+    public boolean isLeftLowerThan(FileRankPosition other) {
+        return this.isBelow(other) && this.isFurtherLeftThan(other);
+    }
+
+    public boolean isLeftUpperThan(FileRankPosition other) {
+        return this.isAbove(other) && this.isFurtherLeftThan(other);
+    }
+
+    public boolean isRightUpperThan(FileRankPosition other) {
+        return this.isAbove(other) && this.isFurtherRightThan(other);
+    }
+
+    public boolean isRightLowerThan(FileRankPosition other) {
+        return this.isBelow(other) && this.isFurtherRightThan(other);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
