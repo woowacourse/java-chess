@@ -1,58 +1,19 @@
-package chess.model;
+package chess.model.board;
 
+import chess.model.Position;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
 
-    private static final List<String> INITIAL_BOARD = List.of(
-            "RNBQKBNR",
-            "PPPPPPPP",
-            "........",
-            "........",
-            "........",
-            "........",
-            "pppppppp",
-            "rnbqkbnr"
-    );
-
     private final Map<Position, Piece> board;
     private int turnCount;
 
-    private Board(Map<Position, Piece> board, int turnCount) {
+    public Board(Map<Position, Piece> board, int turnCount) {
         this.board = board;
         this.turnCount = turnCount;
-    }
-
-    public static Board createInitialBoard() {
-        return new Board(generateBoard(INITIAL_BOARD), 0);
-    }
-
-    public static Board createCustomBoard(List<String> customBoard) {
-        return new Board(generateBoard(customBoard), 0);
-    }
-
-    private static Map<Position, Piece> generateBoard(List<String> customBoard) {
-        Map<Position, Piece> board = new HashMap<>();
-        for (int i = 0; i < customBoard.size(); i++) {
-            String row = customBoard.get(i);
-            putPiecesInRow(board, row, i);
-        }
-        return board;
-    }
-
-    private static void putPiecesInRow(Map<Position, Piece> board, String row, int rowIndex) {
-        for (int j = 0; j < row.length(); j++) {
-            Position position = new Position(rowIndex, j);
-            char pieceName = row.charAt(j);
-            PieceType pieceType = PieceType.findPieceTypeByName(String.valueOf(pieceName));
-            Piece piece = Piece.from(pieceType);
-            board.put(position, piece);
-        }
     }
 
     public void move(String sourceCoordinate, String targetCoordinate) {
@@ -94,8 +55,10 @@ public class Board {
         }
     }
 
-    private void validatePieceCanMove(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
-        if (targetPiece.isEnemy(turnCount) && sourcePiece.isPawn() && ((Pawn) sourcePiece).canAttack(source, target)) {
+    private void validatePieceCanMove(Piece sourcePiece, Piece targetPiece, Position source,
+        Position target) {
+        if (targetPiece.isEnemy(turnCount) && sourcePiece.isPawn()
+            && ((Pawn) sourcePiece).canAttack(source, target)) {
             return;
         }
         if (!sourcePiece.canMove(source, target)) {
@@ -113,7 +76,8 @@ public class Board {
         while (Math.abs(rowDifference) > 1 || Math.abs(columnDifference) > 1) {
             rowDifference = consumeRow(rowDifference);
             columnDifference = consumeColumn(columnDifference);
-            Position position = new Position(source.getRow() + rowDifference, source.getColumn() + columnDifference);
+            Position position = new Position(source.getRow() + rowDifference,
+                source.getColumn() + columnDifference);
             Piece targetPiece = board.get(position);
             if (targetPiece.isExist()) {
                 throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");

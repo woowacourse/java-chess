@@ -3,7 +3,7 @@ package chess.dto;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import java.util.ArrayList;
 import java.util.List;
 

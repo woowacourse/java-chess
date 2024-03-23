@@ -1,8 +1,10 @@
 package chess.controller;
 
 import chess.dto.BoardDto;
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.Command;
+import chess.model.board.BoardFactory;
+import chess.model.board.InitialBoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -50,7 +52,8 @@ public final class ChessGame {
     }
 
     private Board executeStart() {
-        Board board = Board.createInitialBoard();
+        BoardFactory boardFactory = new InitialBoardFactory();
+        Board board = boardFactory.generate();
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
         return board;

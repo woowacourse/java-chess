@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.model.Board;
+import chess.model.board.Board;
 import chess.model.Position;
 import java.util.ArrayList;
 import java.util.List;
