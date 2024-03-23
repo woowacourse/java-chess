@@ -68,13 +68,13 @@ public class Pawn extends PieceRole {
 
     private void validateForwardPiece(final Position target, final Map<Square, Piece> chessBoard) {
         if (chessBoard.containsKey(new Square(target))) {
-            throw new IllegalStateException("전진하려는 곳에 다른 기물이 있어서 이동할 수 없습니다.");
+            throw new IllegalArgumentException("전진하려는 곳에 다른 기물이 있어서 이동할 수 없습니다.");
         }
     }
 
     private void validateDiagonalPiece(final Position target, final Map<Square, Piece> chessBoard) {
         if (!chessBoard.containsKey(new Square(target))) {
-            throw new IllegalStateException("다른 진영의 기물이 있을 때만 대각선으로 이동할 수 있습니다.");
+            throw new IllegalArgumentException("다른 진영의 기물이 있을 때만 대각선으로 이동할 수 있습니다.");
         }
     }
 

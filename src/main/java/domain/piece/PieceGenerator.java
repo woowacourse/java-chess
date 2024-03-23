@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.game.ChessBoard;
 import domain.game.Square;
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
@@ -44,18 +43,18 @@ public class PieceGenerator {
     private PieceGenerator() {
     }
 
-    public static void generate(final ChessBoard mover) {
+    public static void generate(final Map<Square, Piece> chessBoard) {
         for (int row = CHESS_BOARD_SIZE; row >= 1; row--) {
             List<Piece> pieces = rankPieces.getOrDefault(row, new ArrayList<>());
-            initializeSquares(mover, pieces, row);
+            initializeSquares(chessBoard, pieces, row);
         }
     }
 
-    private static void initializeSquares(ChessBoard mover, List<Piece> pieces, int row) {
+    private static void initializeSquares(Map<Square, Piece> chessBoard, List<Piece> pieces, int row) {
         for (int column = 0; column < pieces.size(); column++) {
             Square square = new Square(new Position(new File((char) ('a' + column)), new Rank(row)));
             Piece piece = pieces.get(column);
-            mover.add(square, piece);
+            chessBoard.put(square, piece);
         }
     }
 

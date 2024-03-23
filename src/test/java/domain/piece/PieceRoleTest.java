@@ -101,7 +101,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> king.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
 
         @DisplayName("퀸이 (b,1)에서 (c,3)로 이동하지 못한다.")
@@ -114,7 +114,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> queen.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
 
         @DisplayName("룩이 (c,1)에서 (b,2)로 이동하지 못한다.")
@@ -127,7 +127,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> rook.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
 
         @DisplayName("나이트가 (b,1)에서 (b,2)로 이동하지 못한다.")
@@ -140,7 +140,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> knight.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
 
         @DisplayName("비숍이 (b,1)에서 (b,2)로 이동하지 못한다.")
@@ -153,7 +153,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> bishop.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
 
         @DisplayName("검은색 폰이 (c,2)에서 (c,3)로 이동하지 못한다.")
@@ -166,7 +166,7 @@ class PieceRoleTest {
 
             Assertions.assertThatThrownBy(
                     () -> pawn.validateMovableRoute(sourcePosition, targetPosition, new HashMap<>())
-            ).isInstanceOf(IllegalStateException.class);
+            ).isInstanceOf(IllegalArgumentException.class);
         }
     }
 

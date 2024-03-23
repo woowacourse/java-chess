@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.piece.Piece;
+import domain.piece.PieceGenerator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class ChessBoard {
 
     public ChessBoard() {
         this.pieceBySquare = new HashMap<>();
+        PieceGenerator.generate(pieceBySquare);
     }
 
     public void add(Square square, Piece piece) {
@@ -27,13 +29,13 @@ public class ChessBoard {
 
     private void commonMoveValidate(Square sourceSquare, Square targetSquare) {
         if (!pieceBySquare.containsKey(sourceSquare)) {
-            throw new IllegalStateException("해당 위치에 Piece가 존재하지 않습니다.");
+            throw new IllegalArgumentException("해당 위치에 Piece가 존재하지 않습니다.");
         }
         if (hasSameColorPiece(sourceSquare, targetSquare)) {
-            throw new IllegalStateException("같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
+            throw new IllegalArgumentException("같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
         }
         if (sourceSquare.equals(targetSquare)) {
-            throw new IllegalStateException("같은 위치로의 이동입니다. 다시 입력해주세요.");
+            throw new IllegalArgumentException("같은 위치로의 이동입니다. 다시 입력해주세요.");
         }
     }
 

@@ -2,7 +2,6 @@ package controller;
 
 import domain.game.ChessBoard;
 import domain.game.Square;
-import domain.piece.PieceGenerator;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -26,7 +25,6 @@ public class ChessController {
 
     public void runChessGame() {
         ChessBoard chessBoard = new ChessBoard();
-        PieceGenerator.generate(chessBoard);
 
         outputView.printCommandMessage();
         ChessCommand command = enterCommand();
