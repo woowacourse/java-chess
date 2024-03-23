@@ -5,10 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import exception.InvalidCommandException;
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CommandTest {
 
@@ -27,9 +30,18 @@ class CommandTest {
 
     @ParameterizedTest
     @DisplayName("유효하지 않은 command가 입력되면 예외가 발생한다.")
-    @ValueSource(strings = {"st", "endd", "a0"})
-    void invalidCommand(String value) {
+    @MethodSource("invalidCommandParameterProvider")
+    void invalidCommand(List<String> value) {
         assertThatThrownBy(() -> Command.validate(value))
                 .isInstanceOf(InvalidCommandException.class);
+    }
+
+    static Stream<Arguments> invalidCommandParameterProvider() {
+        return Stream.of(
+                Arguments.of(List.of("start", "end")),
+                Arguments.of(List.of("sta")),
+                Arguments.of(List.of("end", "a1", "a2")),
+                Arguments.of(List.of("move"))
+        );
     }
 }

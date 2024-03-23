@@ -12,10 +12,10 @@ public class Initialization {
 
     public static GameStatus gameSetting(List<String> command) {
         Command cmd = Command.from(command.get(Command.HEAD_INDEX));
-        if (cmd == Command.START && command.size() == Command.START_COMMAND_SIZE) {
+        if (cmd == Command.START && cmd.isAvailableSize(command.size())) {
             return new Running();
         }
-        if (cmd == Command.END && command.size() == Command.END_COMMAND_SIZE) {
+        if (cmd == Command.END && cmd.isAvailableSize(command.size())) {
             return new End();
         }
         throw new InvalidStatusException(ErrorCode.INVALID_STATUS);

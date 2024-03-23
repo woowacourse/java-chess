@@ -66,15 +66,11 @@ public class ChessController {
     private List<String> readCommand() {
         try {
             List<String> command = inputView.readCommandList();
-            validate(command);
+            Command.validate(command);
             return command;
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
         }
         return Collections.emptyList();
-    }
-
-    private void validate(final List<String> commands) {
-        commands.forEach(Command::validate);
     }
 }
