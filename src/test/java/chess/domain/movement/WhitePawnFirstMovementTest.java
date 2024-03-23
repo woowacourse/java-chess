@@ -18,8 +18,9 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(File.D, Rank.TWO);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isTrue();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
     }
 
     @ParameterizedTest
@@ -29,8 +30,9 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(File.D, Rank.TWO);
         Position end = new Position(file, rank);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @ParameterizedTest
@@ -40,8 +42,9 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(file, rank);
         Position end = start.moveToNorth().moveToNorth();
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @Test
@@ -51,8 +54,9 @@ class WhitePawnFirstMovementTest {
         Position middle = new Position(File.D, Rank.THREE);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnFirstMovement.findPath(start, end))
+        assertThat(whitePawnFirstMovement.findPath(start, end, isEnemyExistAtEnd))
                 .containsExactly(middle, end);
     }
 }

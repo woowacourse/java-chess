@@ -1,4 +1,4 @@
-package chess.domain.movement.discrete;
+package chess.domain.movement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,8 +18,9 @@ class WhitePawnDefaultMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.D, Rank.FIVE);
         WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnDefaultMovement.isMovable(start, end)).isTrue();
+        assertThat(whitePawnDefaultMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
     }
 
     @ParameterizedTest
@@ -29,8 +30,9 @@ class WhitePawnDefaultMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
         WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnDefaultMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnDefaultMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @Test
@@ -39,8 +41,9 @@ class WhitePawnDefaultMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.D, Rank.FIVE);
         WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(whitePawnDefaultMovement.findPath(start, end))
+        assertThat(whitePawnDefaultMovement.findPath(start, end, isEnemyExistAtEnd))
                 .containsExactly(end);
     }
 }

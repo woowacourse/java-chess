@@ -1,4 +1,6 @@
-package chess.domain.movement.discrete;
+package chess.domain.movement;
+
+import chess.domain.movement.discrete.DiscreteMovementRule;
 
 public class BlackPawnDefaultMovement extends DiscreteMovementRule {
 

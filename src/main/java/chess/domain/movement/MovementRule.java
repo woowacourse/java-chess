@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface MovementRule {
 
-    boolean isMovable(Position start, Position end);
+    boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd);
 
-    List<Position> findPath(Position start, Position end);
+    List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd);
 }

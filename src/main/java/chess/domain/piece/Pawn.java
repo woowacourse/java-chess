@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Team;
+import chess.domain.movement.BlackPawnDefaultMovement;
 import chess.domain.movement.BlackPawnFirstMovement;
 import chess.domain.movement.MovementRule;
+import chess.domain.movement.WhitePawnDefaultMovement;
 import chess.domain.movement.WhitePawnFirstMovement;
-import chess.domain.movement.discrete.BlackPawnDefaultMovement;
-import chess.domain.movement.discrete.WhitePawnDefaultMovement;
 import java.util.List;
 
 public final class Pawn extends Piece {

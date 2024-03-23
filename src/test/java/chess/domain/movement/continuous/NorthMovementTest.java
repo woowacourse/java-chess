@@ -16,8 +16,9 @@ class NorthMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.C, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(northMovement.isMovable(start, end)).isTrue();
+        assertThat(northMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
     }
 
     @Test
@@ -26,8 +27,9 @@ class NorthMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.B, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(northMovement.isMovable(start, end)).isFalse();
+        assertThat(northMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @Test
@@ -36,8 +38,9 @@ class NorthMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.C, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(northMovement.findPath(start, end))
+        assertThat(northMovement.findPath(start, end, isEnemyExistAtEnd))
                 .containsExactly(new Position(File.C, Rank.FIVE), new Position(File.C, Rank.SIX));
     }
 }

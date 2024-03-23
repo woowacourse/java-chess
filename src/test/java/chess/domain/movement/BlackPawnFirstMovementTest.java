@@ -19,7 +19,7 @@ class BlackPawnFirstMovementTest {
         Position end = new Position(File.D, Rank.FIVE);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isTrue();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, false)).isTrue();
     }
 
     @ParameterizedTest
@@ -29,8 +29,9 @@ class BlackPawnFirstMovementTest {
         Position start = new Position(File.D, Rank.SEVEN);
         Position end = new Position(file, rank);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @ParameterizedTest
@@ -40,8 +41,9 @@ class BlackPawnFirstMovementTest {
         Position start = new Position(file, rank);
         Position end = start.moveToSouth().moveToSouth();
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
 
@@ -52,8 +54,9 @@ class BlackPawnFirstMovementTest {
         Position middle = new Position(File.D, Rank.SIX);
         Position end = new Position(File.D, Rank.FIVE);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(blackPawnFirstMovement.findPath(start, end))
+        assertThat(blackPawnFirstMovement.findPath(start, end, isEnemyExistAtEnd))
                 .containsExactly(middle, end);
     }
 }

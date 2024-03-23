@@ -19,8 +19,9 @@ class KingMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
         KingMovement kingMovement = new KingMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(kingMovement.isMovable(start, end)).isTrue();
+        assertThat(kingMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
     }
 
     @ParameterizedTest
@@ -30,8 +31,9 @@ class KingMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
         KingMovement kingMovement = new KingMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(kingMovement.isMovable(start, end)).isFalse();
+        assertThat(kingMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
     }
 
     @Test
@@ -40,8 +42,9 @@ class KingMovementTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.D, Rank.FIVE);
         KingMovement kingMovement = new KingMovement();
+        boolean isEnemyExistAtEnd = false;
 
-        assertThat(kingMovement.findPath(start, end))
+        assertThat(kingMovement.findPath(start, end, isEnemyExistAtEnd))
                 .containsExactly(end);
     }
 }
