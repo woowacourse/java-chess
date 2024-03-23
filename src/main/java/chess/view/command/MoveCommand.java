@@ -11,8 +11,8 @@ public class MoveCommand {
 
     public MoveCommand(final String input) {
         List<String> command = List.of(input.split(" "));
-        this.source = Position.of(command.get(1));
-        this.target = Position.of(command.get(2));
+        this.source = Position.from(command.get(1));
+        this.target = Position.from(command.get(2));
     }
 
     public Position getSource() {

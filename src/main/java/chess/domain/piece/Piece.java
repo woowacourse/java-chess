@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.attribute.Color;

@@ -1,17 +1,21 @@
 package chess.domain.piece.attribute;
 
+import static chess.domain.chessboard.Chessboard.isInBoard;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import chess.domain.chessboard.attribute.Direction;
 import chess.domain.chessboard.attribute.File;
 import chess.domain.chessboard.attribute.Rank;
-import chess.domain.chessboard.attribute.Direction;
 
 public class Position {
 
     private static final Map<String, Position> CACHED_POSITIONS = new HashMap<>();
+
+    private static final String PATTERN = "^[a-h][1-8]$";
 
     private final File file;
     private final Rank rank;
@@ -21,7 +25,11 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position of(final String position) {
+    public static Position from(final String position) {
+        if (!position.matches(PATTERN)) {
+            throw new IllegalArgumentException(
+                    "잘못된 형식입니다. 파일은 a~h, 랭크는 1~8입니다. (예: a8, f4): %s".formatted(position));
+        }
         return of(File.from(position.charAt(0)), Rank.from(position.charAt(1)));
     }
 
@@ -52,13 +60,9 @@ public class Position {
         return file.name() + rank.name();
     }
 
-    public static boolean isInBoard(final int column, final int row) {
-        return File.isInRange(column) && Rank.isInRange(row);
-    }
-
     public Optional<Position> moveTo(final Direction direction) {
-        int row = rank.toRow() + direction.getRow();
-        int column = file.toColumn() + direction.getColumn();
+        int row = rank.toRow() + direction.row();
+        int column = file.toColumn() + direction.column();
         if (isInBoard(column, row)) {
             return Optional.of(Position.of(File.from(column), Rank.from(row)));
         }
@@ -86,13 +90,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(rank, file);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
     }
 }

@@ -72,6 +72,10 @@ public class Chessboard {
         return pieces;
     }
 
+    public static boolean isInBoard(final int column, final int row) {
+        return File.isInRange(column) && Rank.isInRange(row);
+    }
+
     public Optional<Piece> pieceIn(final Position position) {
         return pieceIn(position.rank(), position.file());
     }

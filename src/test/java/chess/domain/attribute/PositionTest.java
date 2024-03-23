@@ -34,7 +34,7 @@ class PositionTest {
     @MethodSource
     @ParameterizedTest
     void stringConstructor(String input, Position expected) {
-        assertThat(Position.of(input)).isEqualTo(expected);
+        assertThat(Position.from(input)).isEqualTo(expected);
     }
 
     private static Stream<Arguments> move() {

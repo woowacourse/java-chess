@@ -2,10 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.attribute.Color.BLACK;
 import static chess.domain.piece.attribute.Color.WHITE;
-import static chess.domain.chessboard.attribute.File.B;
-import static chess.domain.chessboard.attribute.File.G;
-import static chess.domain.chessboard.attribute.Rank.EIGHT;
-import static chess.domain.chessboard.attribute.Rank.ONE;
 
 import java.util.Set;
 
@@ -15,10 +11,10 @@ import chess.domain.piece.attribute.Position;
 public class Knight extends UnslidingPiece {
 
     private static final Set<Position> WHITE_INITIAL_POSITIONS = Set.of(
-            Position.of(B, ONE), Position.of(G, ONE)
+            Position.from("b1"), Position.from("g1")
     );
     private static final Set<Position> BLACK_INITIAL_POSITIONS = Set.of(
-            Position.of(B, EIGHT), Position.of(G, EIGHT)
+            Position.from("b8"), Position.from("g8")
     );
 
     public Knight(final Color color, final Position position) {
