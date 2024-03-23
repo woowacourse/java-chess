@@ -24,14 +24,14 @@ public enum File {
         this.index = index;
     }
 
-    public static File from(char input) {
+    public static File from(final char input) {
         return Arrays.stream(values())
                 .filter(file -> file.value.equals(String.valueOf(input)))
                 .findFirst()
                 .orElseThrow(() -> new InvalidPositionException(ErrorCode.INVALID_POSITION));
     }
 
-    public static File from(int targetIndex) {
+    public static File from(final int targetIndex) {
         return Arrays.stream(values())
                 .filter(file -> file.index == targetIndex)
                 .findFirst()

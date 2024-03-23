@@ -23,14 +23,14 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank from(char input) {
+    public static Rank from(final char input) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(String.valueOf(input)))
                 .findFirst()
                 .orElseThrow(() -> new InvalidPositionException(ErrorCode.INVALID_POSITION));
     }
 
-    public static Rank from(int targetIndex) {
+    public static Rank from(final int targetIndex) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == targetIndex)
                 .findFirst()

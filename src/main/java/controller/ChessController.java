@@ -22,7 +22,7 @@ public class ChessController {
     }
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
+        final ChessBoard chessBoard = new ChessBoard();
         chessBoard.setting();
         outputView.printStartMessage();
         GameStatus gameStatus = initGame();
@@ -36,13 +36,13 @@ public class ChessController {
     private GameStatus initGame() {
         try {
             return Initialization.gameSetting(getCommand());
-        } catch (CustomException exception) {
+        } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return initGame();
         }
     }
 
-    private GameStatus play(GameStatus gameStatus, final ChessBoard chessBoard) {
+    private GameStatus play(final GameStatus gameStatus, final ChessBoard chessBoard) {
         try {
             return gameStatus.play(getCommand(), chessBoard);
         } catch (CustomException exception) {

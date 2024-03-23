@@ -24,7 +24,7 @@ public enum Direction {
         this.deltaFile = deltaFile;
     }
 
-    public static Direction from(Position currentPosition, Position nextPosition) {
+    public static Direction from(final Position currentPosition, final Position nextPosition) {
         return Arrays.stream(values())
                 .filter(direction -> direction.predicate.test(
                         nextPosition.getRankIndex() - currentPosition.getRankIndex(),
@@ -33,35 +33,35 @@ public enum Direction {
                 .orElseThrow();
     }
 
-    private static boolean isSouth(int dRank, int dFile) {
+    private static boolean isSouth(final int dRank, final int dFile) {
         return (dRank > 0 && dFile == 0);
     }
 
-    private static boolean isEast(int dRank, int dFile) {
+    private static boolean isEast(final int dRank, final int dFile) {
         return (dRank == 0 && dFile > 0);
     }
 
-    private static boolean isNorth(int dRank, int dFile) {
+    private static boolean isNorth(final int dRank, final int dFile) {
         return (dRank < 0 && dFile == 0);
     }
 
-    private static boolean isWest(int dRank, int dFile) {
+    private static boolean isWest(final int dRank, final int dFile) {
         return (dRank == 0 && dFile < 0);
     }
 
-    private static boolean isSouthEast(int dRank, int dFile) {
+    private static boolean isSouthEast(final int dRank, final int dFile) {
         return (dRank > 0 && dFile > 0);
     }
 
-    private static boolean isSouthWest(int dRank, int dFile) {
+    private static boolean isSouthWest(final int dRank, final int dFile) {
         return (dRank > 0 && dFile < 0);
     }
 
-    private static boolean isNorthEast(int dRank, int dFile) {
+    private static boolean isNorthEast(final int dRank, final int dFile) {
         return (dRank < 0 && dFile > 0);
     }
 
-    private static boolean isNorthWest(int dRank, int dFile) {
+    private static boolean isNorthWest(final int dRank, final int dFile) {
         return (dRank < 0 && dFile < 0);
     }
 

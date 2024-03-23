@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
-// TODO 여기도 fixture 쓸 수 있는 방법 고민해보기
 class MovingTest {
 
     @ParameterizedTest
@@ -16,11 +14,11 @@ class MovingTest {
     @ValueSource(strings = {"a2", "b4", "h8"})
     void isNotMoved(String value) {
         //given
-        Position current = Position.from(value);
-        Position next = Position.from(value);
+        final Position current = Position.from(value);
+        final Position next = Position.from(value);
 
         //when
-        Moving moving = new Moving(current, next);
+        final Moving moving = new Moving(current, next);
 
         //then
         assertThat(moving.isNotMoved()).isTrue();
@@ -31,11 +29,11 @@ class MovingTest {
     @CsvSource(value = {"a1,a2", "b5,b3", "d8,g4"})
     void isMoved(String current, String next) {
         //given
-        Position currentPosition = Position.from(current);
-        Position nextPosition = Position.from(next);
+        final Position currentPosition = Position.from(current);
+        final Position nextPosition = Position.from(next);
 
         //when
-        Moving moving = new Moving(currentPosition, nextPosition);
+        final Moving moving = new Moving(currentPosition, nextPosition);
 
         //then
         assertThat(moving.isNotMoved()).isFalse();
@@ -46,11 +44,11 @@ class MovingTest {
     @CsvSource(value = {"b2,f2", "h6,a6", "d3,c3"})
     void checkHorizontal(String current, String next) {
         //given
-        Position currentPosition = Position.from(current);
-        Position nextPosition = Position.from(next);
+        final Position currentPosition = Position.from(current);
+        final Position nextPosition = Position.from(next);
 
         //when
-        Moving moving = new Moving(currentPosition, nextPosition);
+        final Moving moving = new Moving(currentPosition, nextPosition);
 
         //then
         assertThat(moving.isHorizontal()).isTrue();
@@ -61,11 +59,11 @@ class MovingTest {
     @CsvSource(value = {"a7,a1", "e2,e5", "g1,g8"})
     void checkVertical(String current, String next) {
         //given
-        Position currentPosition = Position.from(current);
-        Position nextPosition = Position.from(next);
+        final Position currentPosition = Position.from(current);
+        final Position nextPosition = Position.from(next);
 
         //when
-        Moving moving = new Moving(currentPosition, nextPosition);
+        final Moving moving = new Moving(currentPosition, nextPosition);
 
         //then
         assertThat(moving.isVertical()).isTrue();
@@ -76,11 +74,11 @@ class MovingTest {
     @CsvSource(value = {"b8,g3", "h7,f5", "e1,d2", "a1,h8"})
     void checkDiagonal(String current, String next) {
         //given
-        Position currentPosition = Position.from(current);
-        Position nextPosition = Position.from(next);
+        final Position currentPosition = Position.from(current);
+        final Position nextPosition = Position.from(next);
 
         //when
-        Moving moving = new Moving(currentPosition, nextPosition);
+        final Moving moving = new Moving(currentPosition, nextPosition);
 
         //then
         assertThat(moving.isDiagonal()).isTrue();

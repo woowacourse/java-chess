@@ -9,12 +9,12 @@ public class Position {
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position from(String command) {
+    public static Position from(final String command) {
         validate(command);
         return new Position(File.from(command.charAt(0)), Rank.from(command.charAt(1)));
     }

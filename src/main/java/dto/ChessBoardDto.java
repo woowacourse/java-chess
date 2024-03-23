@@ -33,7 +33,7 @@ public class ChessBoardDto {
         return new ChessBoardDto(result);
     }
 
-    private static String convertToString(Map<Position, Piece> board, File file, Rank rank) {
+    private static String convertToString(final Map<Position, Piece> board, final File file, final Rank rank) {
         final Position position = new Position(file, rank);
         final Piece piece = board.get(position);
         if (piece != null) {
@@ -42,7 +42,7 @@ public class ChessBoardDto {
         return "." + paddedRankGuidLine(file, rank);
     }
 
-    private static String paddedRankGuidLine(File file, Rank rank) {
+    private static String paddedRankGuidLine(final File file, final Rank rank) {
         if (file.isLast()) {
             return "  " + rank.getValue();
         }

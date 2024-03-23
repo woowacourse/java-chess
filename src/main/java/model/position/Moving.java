@@ -8,7 +8,7 @@ public class Moving {
     private final Position currentPosition;
     private final Position nextPosition;
 
-    public Moving(Position currentPosition, Position nextPosition) {
+    public Moving(final Position currentPosition, final Position nextPosition) {
         this.currentPosition = currentPosition;
         this.nextPosition = nextPosition;
     }
@@ -92,7 +92,7 @@ public class Moving {
     }
 
     @Override
-    public boolean equals(Object target) {
+    public boolean equals(final Object target) {
         if (target == this) {
             return true;
         }
