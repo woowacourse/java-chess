@@ -20,11 +20,16 @@ public class ChessController {
     }
 
     public void runChessGame() {
-        ChessBoard chessBoard = new ChessBoard();
-
         outputView.printCommandMessage();
         ChessCommand initializeCommand = enterCommand();
-        retry(() -> enterAndExecuteCommand(chessBoard, initializeCommand));
+
+        if (initializeCommand == ChessCommand.START) {
+            ChessBoard chessBoard = new ChessBoard();
+            retry(() -> enterAndExecuteCommand(chessBoard, initializeCommand));
+        }
+        if (initializeCommand == ChessCommand.MOVE) {
+            throw new IllegalStateException("게임이 시작되지 않았습니다.");
+        }
     }
 
     private void enterAndExecuteCommand(final ChessBoard chessBoard, ChessCommand command) {
