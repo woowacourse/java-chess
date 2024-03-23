@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import view.mapper.FileInput;
+import view.mapper.RankInput;
 
 public class Position {
 
@@ -13,6 +15,14 @@ public class Position {
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position generate(String rawPosition) {
+        String rawFile = String.valueOf(rawPosition.charAt(0));
+        String rawRank = String.valueOf(rawPosition.charAt(1));
+        File file = FileInput.asFile(rawFile);
+        Rank rank = RankInput.asRank(rawRank);
+        return new Position(file, rank);
     }
 
     public boolean hasRank(Rank rank) {

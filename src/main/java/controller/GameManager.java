@@ -3,7 +3,6 @@ package controller;
 import domain.Chess;
 import domain.command.Command;
 import domain.position.Position;
-import domain.position.PositionGenerator;
 import java.util.Arrays;
 import java.util.List;
 import view.InputView;
@@ -52,9 +51,8 @@ public class GameManager {
     }
 
     private void playChess(Chess chess, List<String> moveTokens) {
-        PositionGenerator positionGenerator = new PositionGenerator();
-        Position sourcePosition = positionGenerator.generate(moveTokens.get(1));
-        Position targetPosition = positionGenerator.generate(moveTokens.get(2));
+        Position sourcePosition = Position.generate(moveTokens.get(1));
+        Position targetPosition = Position.generate(moveTokens.get(2));
         chess.play(sourcePosition, targetPosition);
     }
 
