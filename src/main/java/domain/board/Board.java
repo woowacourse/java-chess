@@ -30,12 +30,10 @@ public class Board {
         return squares.get(position);
     }
 
-    public void placePieceByPosition(Piece piece, Position position) {
-        squares.replace(position, piece);
-    }
-
-    public void displacePieceByPosition(Position position) {
-        squares.replace(position, new None(Color.NONE));
+    public void movePiece(Position source, Position target) {
+        Piece sourcePiece = findPieceByPosition(source);
+        squares.replace(target, sourcePiece);
+        squares.replace(source, new None(Color.NONE));
     }
 
     public boolean isBlocked(Position source, Position target) {

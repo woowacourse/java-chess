@@ -3,7 +3,7 @@ package domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.Color;
-import domain.piece.None;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
 import domain.position.File;
@@ -32,26 +32,15 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("해당 위치에 기물을 둔다.")
+    @DisplayName("해당 위치로 기물을 옮긴다.")
     void placePiece() {
-        Position position = new Position(File.A, Rank.ONE);
-        Piece expected = new Rook(Color.WHITE);
+        Position source = new Position(File.A, Rank.TWO);
+        Position target = new Position(File.A, Rank.THREE);
+        Piece expected = new Pawn(Color.WHITE);
 
-        board.placePieceByPosition(expected, position);
+        board.movePiece(source, target);
 
-        Piece actual = board.findPieceByPosition(position);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("해당 위치의 기물을 없앤다.")
-    void displacePiece() {
-        Position position = new Position(File.A, Rank.ONE);
-
-        board.displacePieceByPosition(position);
-
-        Piece actual = board.findPieceByPosition(position);
-        Piece expected = new None(Color.NONE);
+        Piece actual = board.findPieceByPosition(target);
         assertThat(actual).isEqualTo(expected);
     }
 
