@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.dto.BoardDto;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
+import chess.model.board.CustomBoardFactory;
 import chess.model.board.InitialBoardFactory;
 import chess.model.piece.Piece;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,7 @@ class BoardTest {
 
     @DisplayName("체스판에 기물을 초기화 한다")
     @Test
-    void createPiecesOnBoard() {
+    void generateInitialBoard() {
         Board board = boardFactory.generate();
         BoardDto boardDto = BoardDto.from(board);
 
@@ -32,6 +34,36 @@ class BoardTest {
             ........
             pppppppp
             rnbqkbnr""";
+
+        assertThat(boardDto).hasToString(expected);
+    }
+
+    @DisplayName("기물들의 스냅샷으로 체스판을 생성한다")
+    @Test
+    void generateCustomBoard() {
+        List<String> snapShot = List.of(
+            "........",
+            "K...P...",
+            "PP......",
+            "........",
+            "...p....",
+            ".pn.....",
+            ".p.q....",
+            "....k..."
+        );
+        boardFactory = new CustomBoardFactory(snapShot, 16);
+        Board board = boardFactory.generate();
+        BoardDto boardDto = BoardDto.from(board);
+
+        String expected = """
+            ........
+            K...P...
+            PP......
+            ........
+            ...p....
+            .pn.....
+            .p.q....
+            ....k...""";
 
         assertThat(boardDto).hasToString(expected);
     }
