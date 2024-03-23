@@ -34,9 +34,7 @@ public class InputView {
     public static MovementDto inputMovement() {
         StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
         if (inputTokenizer.countTokens() == 2) {
-            return new MovementDto(
-                    PositionCommand.generate(inputTokenizer.nextToken()),
-                    PositionCommand.generate(inputTokenizer.nextToken()));
+            return new MovementDto(inputTokenizer.nextToken(), inputTokenizer.nextToken());
         }
         throw new InvalidCommandException("잘못된 명령어입니다.");
     }

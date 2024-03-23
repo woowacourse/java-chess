@@ -3,8 +3,8 @@ package chess.controller;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
+import chess.domain.Movement;
 import chess.dto.BoardStatusDto;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveExceptionHandler;
 import chess.exception.InvalidCommandExceptionHandler;
 import chess.view.InputView;
@@ -18,10 +18,9 @@ public class ChessController {
         OutputView.printChessBoard(board.mapPositionToCharacter());
 
         while (InvalidCommandExceptionHandler.handle(InputView::isInputMove)) {
-            MovementDto movementDto = InvalidCommandExceptionHandler.handle(InputView::inputMovement);
-            BoardStatusDto boardStatusDto = ImpossibleMoveExceptionHandler
-                    .handle(() -> chessGame.movePiece(movementDto));
-            OutputView.printGameStatus(boardStatusDto);
+            Movement movement = InvalidCommandExceptionHandler.handle(InputView::inputMovement).movement();
+            ImpossibleMoveExceptionHandler.handle(() -> chessGame.movePiece(movement));
+            OutputView.printGameStatus(new BoardStatusDto(board.mapPositionToCharacter(), chessGame.checkStatus()));
         }
     }
 }

@@ -3,10 +3,10 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class KnightTest {
     @Test
     void knightMoveOverDayHieroglyph() {
         assertThatThrownBy(() -> new Knight(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(1, 1),
                         Position.of(3, 3))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -37,7 +37,7 @@ class KnightTest {
     @Test
     void betweenPosition() {
         assertThat(new Knight(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(3, 3),
                         Position.of(2, 1))))
                 .isEmpty();

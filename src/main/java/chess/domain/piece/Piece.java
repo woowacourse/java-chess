@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import java.util.List;
 
@@ -30,31 +30,31 @@ public abstract class Piece {
         return isMovable(rowDifference, columnDifference);
     }
 
-    public boolean isMovable(MovementDto movementDto) {
-        return isMovable(movementDto.calculateRowDifference(), movementDto.calculateColumnDifference());
+    public boolean isMovable(Movement movement) {
+        return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
     }
 
-    public List<Position> findBetweenPositionsWhenAttack(MovementDto movementDto) {
-        return findBetweenPositions(movementDto);
+    public List<Position> findBetweenPositionsWhenAttack(Movement movement) {
+        return findBetweenPositions(movement);
     }
 
-    public List<Position> findBetweenPositions(MovementDto movementDto) {
-        validateMovable(movementDto);
-        int rowDifference = movementDto.calculateRowDifference();
-        int columnDifference = movementDto.calculateColumnDifference();
+    public List<Position> findBetweenPositions(Movement movement) {
+        validateMovable(movement);
+        int rowDifference = movement.calculateRowDifference();
+        int columnDifference = movement.calculateColumnDifference();
 
-        return findBetweenPositions(movementDto.source(), rowDifference, columnDifference);
+        return findBetweenPositions(movement.source(), rowDifference, columnDifference);
     }
 
-    private void validateMovable(MovementDto movementDto) {
-        if (isMovable(movementDto)) {
+    private void validateMovable(Movement movement) {
+        if (isMovable(movement)) {
             return;
         }
         throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
     }
 
-    public boolean isAttacking(MovementDto movementDto) {
-        return isAttackable(movementDto.calculateRowDifference(), movementDto.calculateColumnDifference());
+    public boolean isAttacking(Movement movement) {
+        return isAttackable(movement.calculateRowDifference(), movement.calculateColumnDifference());
     }
 
     public boolean isSameTeamWith(Piece piece) {

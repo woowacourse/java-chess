@@ -1,8 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.character.Team;
-import chess.dto.BoardStatusDto;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 
 public class ChessGame {
@@ -14,12 +12,11 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public BoardStatusDto movePiece(MovementDto movementDto) {
-        board.validateSameTeamByPosition(movementDto.source(), currentTeam);
-        board.move(movementDto);
+    public void movePiece(Movement movement) {
+        board.validateSameTeamByPosition(movement.source(), currentTeam);
+        board.move(movement);
         validateCheck();
         currentTeam = currentTeam.opponent();
-        return new BoardStatusDto(board.mapPositionToCharacter(), checkStatus());
     }
 
     private void validateCheck() {
@@ -28,7 +25,7 @@ public class ChessGame {
         }
     }
 
-    private Status checkStatus() {
+    public Status checkStatus() {
         if (board.isChecked(currentTeam)) {
             if (board.isCheckmate(currentTeam)) {
                 return Status.CHECKMATE;

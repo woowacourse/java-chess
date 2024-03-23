@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.dto.MovementDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -68,7 +67,7 @@ public class Position {
         return positions.values()
                 .stream()
                 .filter(position -> position != this)
-                .filter(position -> piece.isMovable(new MovementDto(this, position)))
+                .filter(position -> piece.isMovable(new Movement(this, position)))
                 .toList();
     }
 

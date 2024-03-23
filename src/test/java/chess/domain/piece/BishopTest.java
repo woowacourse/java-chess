@@ -3,10 +3,10 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class BishopTest {
     @Test
     void bishopMoveOverDiagonalLine() {
         assertThatThrownBy(() -> new Bishop(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(4, 4),
                         Position.of(1, 4))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -37,7 +37,7 @@ class BishopTest {
     @Test
     void betweenPosition() {
         assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(4, 4),
                         Position.of(7, 7))))
                 .containsExactly(Position.of(5, 5), Position.of(6, 6));
@@ -47,7 +47,7 @@ class BishopTest {
     @Test
     void betweenPositionMinus() {
         assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(4, 4),
                         Position.of(1, 1))))
                 .containsExactly(Position.of(3, 3), Position.of(2, 2));

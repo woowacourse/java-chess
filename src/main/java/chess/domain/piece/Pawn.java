@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import chess.Calculator;
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +40,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findBetweenPositionsWhenAttack(MovementDto movementDto) {
-        int rowDifference = movementDto.calculateRowDifference();
-        int columnDifference = movementDto.calculateColumnDifference();
+    public List<Position> findBetweenPositionsWhenAttack(Movement movement) {
+        int rowDifference = movement.calculateRowDifference();
+        int columnDifference = movement.calculateColumnDifference();
         validateAttackable(rowDifference, columnDifference);
-        return findBetweenPositions(movementDto.source(), rowDifference, columnDifference);
+        return findBetweenPositions(movement.source(), rowDifference, columnDifference);
     }
 
     private void validateAttackable(int rowDifference, int columnDifference) {

@@ -4,12 +4,12 @@ import chess.domain.Position;
 import chess.exception.InvalidCommandException;
 import java.util.regex.Pattern;
 
-public class PositionCommand {
+public class PositionConverter {
     private static final String REGEX = "^[a-h][1-8]$";
-    public static final int ROW_INDEX = 1;
-    public static final int COLUMN_INDEX = 0;
+    private static final int ROW_INDEX = 1;
+    private static final int COLUMN_INDEX = 0;
 
-    private PositionCommand() {
+    private PositionConverter() {
     }
 
     public static Position generate(String value) {

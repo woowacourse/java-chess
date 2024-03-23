@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import chess.dto.MovementDto;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class PawnTest {
     @Test
     void startWhitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(2, 1),
                         Position.of(5, 1))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -39,7 +39,7 @@ class PawnTest {
     @Test
     void startBlackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(7, 1),
                         Position.of(4, 1))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -50,7 +50,7 @@ class PawnTest {
     @Test
     void whitePawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE).move()
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(3, 1),
                         Position.of(5, 1))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -61,7 +61,7 @@ class PawnTest {
     @Test
     void blackPawnMoveOverTwo() {
         assertThatThrownBy(() -> new Pawn(Team.BLACK).move()
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(6, 1),
                         Position.of(4, 1))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -73,7 +73,7 @@ class PawnTest {
     @EnumSource
     void whitePawnMoveColumn(Team team) {
         assertThatThrownBy(() -> new Pawn(team)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(7, 1),
                         Position.of(7, 2))))
                 .isInstanceOf(ImpossibleMoveException.class)
@@ -84,7 +84,7 @@ class PawnTest {
     @Test
     void betweenPosition() {
         assertThat(new Pawn(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(2, 3),
                         Position.of(4, 3))))
                 .containsExactly(Position.of(3, 3));
@@ -94,7 +94,7 @@ class PawnTest {
     @Test
     void betweenPositionHasMoved() {
         assertThat(new Pawn(Team.WHITE).move()
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(3, 3),
                         Position.of(4, 3))))
                 .isEmpty();
@@ -104,7 +104,7 @@ class PawnTest {
     @Test
     void betweenPositionOneWhenHasNotMoved() {
         assertThat(new Pawn(Team.WHITE)
-                .findBetweenPositions(new MovementDto(
+                .findBetweenPositions(new Movement(
                         Position.of(2, 3),
                         Position.of(3, 3))))
                 .isEmpty();
@@ -114,7 +114,7 @@ class PawnTest {
     @Test
     void movableDiagonalWhenAttack() {
         assertThatCode(() -> new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new MovementDto(
+                .findBetweenPositionsWhenAttack(new Movement(
                         Position.of(2, 2),
                         Position.of(3, 3))))
                 .doesNotThrowAnyException();
@@ -124,7 +124,7 @@ class PawnTest {
     @Test
     void noneBetweenPositionWhenAttack() {
         assertThat(new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new MovementDto(
+                .findBetweenPositionsWhenAttack(new Movement(
                         Position.of(2, 2),
                         Position.of(3, 3))))
                 .isEmpty();
@@ -134,7 +134,7 @@ class PawnTest {
     @Test
     void cannotMoveStraightWhenAttack() {
         assertThatThrownBy(() -> new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new MovementDto(
+                .findBetweenPositionsWhenAttack(new Movement(
                         Position.of(2, 2),
                         Position.of(3, 2))))
                 .isInstanceOf(ImpossibleMoveException.class)
