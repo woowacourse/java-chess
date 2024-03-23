@@ -5,13 +5,14 @@ import chess.domain.piece.rule.BlackPawnMoveRule;
 import chess.domain.piece.rule.Rule;
 import chess.domain.position.Position;
 import chess.domain.position.PositionDifference;
+import chess.domain.position.Rank;
 import chess.domain.position.RankDifference;
 
 public class BlackPawn extends Piece {
 
     private static final Rule catchRule = BlackPawnCatchRule.instance();
 
-    private boolean isMoved = false;
+    private static final Rank initialRank = Rank.SEVEN;
 
     public BlackPawn() {
         super(Color.BLACK, BlackPawnMoveRule.instance());
@@ -20,8 +21,8 @@ public class BlackPawn extends Piece {
     @Override
     public boolean isMovable(Position from, Position to) {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);
-        if (!isMoved) {
-            isMoved = true;
+
+        if (from.isSameRank(initialRank)) {
             return positionDifference.isObeyRule(decideFirstMoveRule()) || super.isMovable(from, to);
         }
         return super.isMovable(from, to);

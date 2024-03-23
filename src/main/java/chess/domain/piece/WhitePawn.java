@@ -5,13 +5,14 @@ import chess.domain.piece.rule.WhitePawnCatchRule;
 import chess.domain.piece.rule.WhitePawnMoveRule;
 import chess.domain.position.Position;
 import chess.domain.position.PositionDifference;
+import chess.domain.position.Rank;
 import chess.domain.position.RankDifference;
 
 public class WhitePawn extends Piece {
 
     private static final Rule catchRule = WhitePawnCatchRule.instance();
 
-    private boolean isMoved = false;
+    private static final Rank initialRank = Rank.TWO;
 
     public WhitePawn() {
         super(Color.WHITE, WhitePawnMoveRule.instance());
@@ -20,8 +21,8 @@ public class WhitePawn extends Piece {
     @Override
     public boolean isMovable(Position from, Position to) {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);
-        if (!isMoved) {
-            isMoved = true;
+
+        if (from.isSameRank(initialRank)) {
             return positionDifference.isObeyRule(firstMoveRule()) || super.isMovable(from, to);
         }
         return super.isMovable(from, to);

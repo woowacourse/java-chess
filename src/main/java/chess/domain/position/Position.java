@@ -14,6 +14,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public static Position fromCoordinate(Coordinate coordinate) {
+        return new Position(coordinate.file(), coordinate.rank());
+    }
+
     public PositionDifference calculateDifferenceTo(Position position) {
         return new PositionDifference(
                 file.calculateDifference(position.file),
@@ -55,8 +59,8 @@ public class Position {
         return positions;
     }
 
-    public static Position fromCoordinate(Coordinate coordinate) {
-        return new Position(coordinate.file(), coordinate.rank());
+    public boolean isSameRank(Rank otherRank) {
+        return rank == otherRank;
     }
 
     @Override
