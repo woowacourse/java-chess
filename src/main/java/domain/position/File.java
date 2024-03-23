@@ -15,11 +15,7 @@ public class File {
     }
 
     public int subtract(File target) {
-        return letter - target.getLetter();
-    }
-
-    public char getLetter() {
-        return letter;
+        return letter - target.letter;
     }
 
     @Override

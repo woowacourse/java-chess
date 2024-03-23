@@ -5,10 +5,10 @@ import domain.game.Direction;
 import java.util.Objects;
 
 public class Position {
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -18,11 +18,10 @@ public class Position {
         this.rank = other.rank;
     }
 
-    public void move(final Direction direction) {
-        int dFile = direction.getFileVector();
-        int dRank = direction.getRankVector();
-        file = file.add(dFile);
-        rank = rank.add(dRank);
+    public Position move(final Direction direction) {
+        int fileVector = direction.getFileVector();
+        int rankVector = direction.getRankVector();
+        return new Position(file.add(fileVector), rank.add(rankVector));
     }
 
     public ChessVector toVector(Position target) {

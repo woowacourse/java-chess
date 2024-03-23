@@ -11,15 +11,11 @@ public class Rank {
     }
 
     public int subtract(Rank target) {
-        return number - target.getNumber();
+        return number - target.number;
     }
 
     public Rank add(final int movement) {
         return new Rank(number + movement);
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     @Override

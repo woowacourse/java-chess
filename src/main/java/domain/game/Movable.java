@@ -22,9 +22,9 @@ public class Movable {
 
     private boolean doesStepExceedMaxMovement(Position sourcePosition, Position targetPosition) {
         int step = 0;
-        Position here = new Position(sourcePosition);
-        while (!here.equals(targetPosition)) {
-            here.move(direction);
+        Position position = new Position(sourcePosition);
+        while (!position.equals(targetPosition)) {
+            position = position.move(direction);
             step++;
         }
         return step <= maxMovement;

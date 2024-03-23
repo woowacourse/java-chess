@@ -24,7 +24,7 @@ public class ChessBoard {
 
         Piece findPiece = pieceByPosition.get(sourcePosition);
         pawnMoveValidate(sourcePosition, targetPosition, findPiece);
-        sameColorPieceOnRouteValidate(sourcePosition, targetPosition, findPiece);
+        pieceOnRouteValidate(sourcePosition, targetPosition, findPiece);
 
         if (findPiece.canMove(sourcePosition, targetPosition)) {
             updateChessBoardAfterMove(sourcePosition, targetPosition, findPiece);
@@ -111,22 +111,21 @@ public class ChessBoard {
         return direction == diagonal && !pieceByPosition.containsKey(targetPosition);
     }
 
-    private void sameColorPieceOnRouteValidate(Position sourcePosition, Position targetPosition, Piece findPiece) {
+    private void pieceOnRouteValidate(Position sourcePosition, Position targetPosition, Piece findPiece) {
         if (findPiece.isNotKnight()) {
             Direction direction = Direction.findDirection(sourcePosition, targetPosition);
-
-            Position position = new Position(sourcePosition);
-            position.move(direction);
-            checkPieceOnRoute(targetPosition, position, direction);
+            checkPieceOnRoute(sourcePosition, targetPosition, direction);
         }
     }
 
-    private void checkPieceOnRoute(Position targetPosition, Position position, Direction direction) {
-        while (!position.equals(targetPosition)) {
-            if (pieceByPosition.containsKey(new Position(position))) {
+    private void checkPieceOnRoute(Position sourcePosition, Position targetPosition, Direction direction) {
+        Position movePosition = sourcePosition.move(direction);
+
+        while (!movePosition.equals(targetPosition)) {
+            if (pieceByPosition.containsKey(movePosition)) {
                 throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
             }
-            position.move(direction);
+            movePosition = movePosition.move(direction);
         }
     }
 
