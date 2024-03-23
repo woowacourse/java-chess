@@ -1,14 +1,17 @@
 package domain.piece;
 
 import domain.board.Position;
+import domain.game.PieceType;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static domain.game.PieceType.QUEEN;
 import static domain.piece.CommonMovementDirection.*;
 
 public class Queen extends Piece {
+    private static final PieceType PIECE_TYPE = QUEEN;
 
     public Queen(final PieceColor color) {
         super(color);
@@ -53,5 +56,10 @@ public class Queen extends Piece {
         if (piecePositions.containsKey(alivePosition) && !checkEnemy(piecePositions.get(alivePosition))) {
             throw new IllegalArgumentException("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PIECE_TYPE;
     }
 }

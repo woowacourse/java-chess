@@ -1,17 +1,20 @@
 package domain.piece;
 
 import domain.board.Position;
+import domain.game.PieceType;
 
 import java.util.Map;
 
 public abstract class Piece {
     protected final PieceColor color;
 
-    protected Piece(final PieceColor color) {
+    public Piece(final PieceColor color) {
         this.color = color;
     }
 
     public abstract void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions);
+
+    public abstract PieceType pieceType();
 
     protected boolean checkEnemy(final Piece otherPiece) {
         return otherPiece.isEnemy(this.color);
@@ -19,5 +22,9 @@ public abstract class Piece {
 
     public boolean isEnemy(final PieceColor otherColor) {
         return this.color != otherColor;
+    }
+
+    public PieceColor pieceColor() {
+        return color;
     }
 }

@@ -1,16 +1,19 @@
 package domain.piece;
 
 import domain.board.Position;
+import domain.game.PieceType;
 
 import java.util.Map;
 
-import static domain.piece.PieceColor.BLACK;
-import static domain.piece.PieceColor.WHITE;
-import static domain.piece.PawnMovementDirection.calculateDirection;
 import static domain.board.Rank.SEVEN;
 import static domain.board.Rank.TWO;
+import static domain.game.PieceType.PAWN;
+import static domain.piece.PawnMovementDirection.calculateDirection;
+import static domain.piece.PieceColor.BLACK;
+import static domain.piece.PieceColor.WHITE;
 
 public class Pawn extends Piece {
+    private static final PieceType PIECE_TYPE = PAWN;
 
     public Pawn(final PieceColor color) {
         super(color);
@@ -59,5 +62,10 @@ public class Pawn extends Piece {
         if (piecePositions.containsKey(path)) {
             throw new IllegalArgumentException("기물이 존재하는 칸으로 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PIECE_TYPE;
     }
 }

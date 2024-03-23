@@ -1,15 +1,18 @@
 package domain.piece;
 
 import domain.board.Position;
+import domain.game.PieceType;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static domain.game.PieceType.*;
 import static domain.piece.CommonMovementDirection.*;
 
 public class Rook extends Piece {
     private static final List<CommonMovementDirection> MOVABLE_DIRECTIONS = List.of(UP, DOWN, RIGHT, LEFT);
+    private static final PieceType PIECE_TYPE = ROOK;
 
     public Rook(final PieceColor color) {
         super(color);
@@ -61,5 +64,10 @@ public class Rook extends Piece {
         if (piecePositions.containsKey(alivePosition) && !checkEnemy(piecePositions.get(alivePosition))) {
             throw new IllegalArgumentException("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PIECE_TYPE;
     }
 }

@@ -1,12 +1,15 @@
 package domain.piece;
 
 import domain.board.Position;
+import domain.game.PieceType;
 
 import java.util.Map;
 
+import static domain.game.PieceType.KING;
 import static domain.piece.CommonMovementDirection.calculateDirection;
 
 public class King extends Piece {
+    private static final PieceType PIECE_TYPE = KING;
 
     public King(final PieceColor color) {
         super(color);
@@ -35,5 +38,10 @@ public class King extends Piece {
         if (piecePositions.containsKey(alivePosition) && !checkEnemy(piecePositions.get(alivePosition))) {
             throw new IllegalArgumentException("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
         }
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PIECE_TYPE;
     }
 }
