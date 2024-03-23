@@ -18,7 +18,6 @@ public class Bishop extends NonPawn {
 
     @Override
     protected void validateMoveCount(Position source, Position target) {
-        // 거리 제한 없음
     }
 
     @Override
