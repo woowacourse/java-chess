@@ -10,18 +10,25 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class RankTest {
-    @DisplayName("0부터 시작하는 행번호로 Rank를 찾을 수 있다")
+    @DisplayName("0부터 시작하는 행 번호로 Rank를 찾을 수 있다")
     @ParameterizedTest
     @CsvSource(value = {"0, EIGHT", "1, SEVEN", "2, SIX", "3, FIVE", "4, FOUR", "5, THREE", "6, TWO", "7, ONE"})
     void should_FindRank_When_RowNumberGiven(int rowNumber, Rank rank) {
         assertThat(Rank.from(rowNumber)).isEqualTo(rank);
     }
 
-    @DisplayName("행번호에 해당하는 Rank가 없을 경우 예외가 발생한다")
+    @DisplayName("행 번호에 해당하는 Rank가 없을 경우 예외가 발생한다")
     @ParameterizedTest
     @ValueSource(ints = {-1, 9, 10})
     void should_ThrowNoSuchElementException_When_WrongRowNumberIsGiven(int invalidRowNumber) {
         assertThatThrownBy(() -> Rank.from(invalidRowNumber))
                 .isInstanceOf(NoSuchElementException.class);
+    }
+
+    @DisplayName("Rank가 주어졌을 때 x축 반전시킨 Rank를 반환할 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"EIGHT, ONE", "SEVEN, TWO", "SIX, THREE", "FIVE, FOUR"})
+    void should_ReturnReverseRank(Rank rank, Rank reversedRank) {
+        assertThat(rank.reverse()).isEqualTo(reversedRank);
     }
 }

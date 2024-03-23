@@ -25,4 +25,8 @@ public enum Rank {
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException(String.format("행 번호가 %d인 랭크를 찾을 수 없습니다", rowNumber)));
     }
+
+    public Rank reverse() {
+        return Rank.from(ONE.rowNumber - rowNumber);
+    }
 }
