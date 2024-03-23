@@ -42,7 +42,7 @@ public class PieceGenerator {
 
     public static Map<Position, Piece> generate() {
         Map<Position, Piece> initChessBoard = new HashMap<>();
-        for (int row = 1; row <= 8 ; row++) {
+        for (int row = 1; row <= CHESS_BOARD_SIZE ; row++) {
             List<Piece> pieces = rankPieces.getOrDefault(row, new ArrayList<>());
             initializePositions(initChessBoard, pieces, row);
         }

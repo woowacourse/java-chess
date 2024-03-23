@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pawn implements PieceRole {
-    protected List<Movable> routes;
-    protected int moveCount;
+    private List<Movable> routes;
+    private int moveCount;
 
     public Pawn(final Color color) {
         moveCount = 1;
@@ -29,7 +29,7 @@ public class Pawn implements PieceRole {
         }
     }
 
-    protected int getMaxMovement(final int moveCount) {
+    private int getMaxMovement(final int moveCount) {
         if (moveCount == 1) {
             return 2;
         }

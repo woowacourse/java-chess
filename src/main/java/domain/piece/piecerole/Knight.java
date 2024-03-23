@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Knight implements PieceRole {
-    public static final int MAX_MOVEMENT = 1;
+    private static final int MAX_MOVEMENT = 1;
     private final List<Movable> routes;
 
     public Knight() {

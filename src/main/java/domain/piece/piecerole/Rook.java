@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rook implements PieceRole {
-    public static final int MAX_MOVEMENT = 7;
+    private static final int MAX_MOVEMENT = 7;
 
     private final List<Movable> routes;
 
