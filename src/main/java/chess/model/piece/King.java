@@ -1,13 +1,15 @@
 package chess.model.piece;
 
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class King extends Piece {
 
     private static final int MAX_MOVE_RANGE = 1;
 
-    public King(PieceType pieceType) {
-        super(pieceType);
+    public King(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_BISHOP;
+import static chess.model.material.Color.BLACK;
+import static chess.model.material.Type.BISHOP;
 
 import chess.model.Position;
 import java.util.stream.Stream;
@@ -16,15 +17,15 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void bishopCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Bishop(BLACK_BISHOP);
+        Piece piece = new Bishop(BISHOP, BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideSourceAndTargetWithExpected() {
         return Stream.of(
-                Arguments.of(new Position(3, 3), new Position(7, 7), true),
-                Arguments.of(new Position(3, 3), new Position(3, 7), false)
+            Arguments.of(new Position(3, 3), new Position(7, 7), true),
+            Arguments.of(new Position(3, 3), new Position(3, 7), false)
         );
     }
 }

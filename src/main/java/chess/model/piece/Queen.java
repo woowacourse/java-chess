@@ -11,11 +11,13 @@ import static chess.model.Direction.UP_RIGHT;
 
 import chess.model.Direction;
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class Queen extends Piece {
 
-    public Queen(PieceType pieceType) {
-        super(pieceType);
+    public Queen(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

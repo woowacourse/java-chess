@@ -1,11 +1,13 @@
 package chess.model.piece;
 
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class None extends Piece {
 
-    protected None(PieceType pieceType) {
-        super(pieceType);
+    public None(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

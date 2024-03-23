@@ -1,7 +1,8 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_PAWN;
-import static chess.model.piece.PieceType.WHITE_PAWN;
+import static chess.model.material.Color.BLACK;
+import static chess.model.material.Color.WHITE;
+import static chess.model.material.Type.PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Position;
@@ -18,15 +19,15 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideBlackPawnSourceAndTargetWithExpected")
     void blackPawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(BLACK_PAWN);
+        Piece piece = new Pawn(PAWN, BLACK);
         boolean canMove = piece.canMove(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideBlackPawnSourceAndTargetWithExpected() {
         return Stream.of(
-                Arguments.of(new Position(1, 0), new Position(2, 0), true),
-                Arguments.of(new Position(1, 7), new Position(0, 7), false)
+            Arguments.of(new Position(1, 0), new Position(2, 0), true),
+            Arguments.of(new Position(1, 7), new Position(0, 7), false)
         );
     }
 
@@ -34,51 +35,51 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideWhitePawnSourceAndTargetWithExpected")
     void whitePawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(WHITE_PAWN);
+        Piece piece = new Pawn(PAWN, WHITE);
         boolean canMove = piece.canMove(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideWhitePawnSourceAndTargetWithExpected() {
         return Stream.of(
-                Arguments.of(new Position(6, 0), new Position(5, 0), true),
-                Arguments.of(new Position(6, 7), new Position(7, 7), false)
+            Arguments.of(new Position(6, 0), new Position(5, 0), true),
+            Arguments.of(new Position(6, 7), new Position(7, 7), false)
         );
     }
 
     @DisplayName("White Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
     @Test
     void whitePawnCanInitialMove() {
-        Piece piece = new Pawn(WHITE_PAWN);
+        Piece piece = new Pawn(PAWN, WHITE);
         Position source = new Position(6, 0);
         Position target = new Position(4, 0);
         boolean canMove = piece.canMove(source, target);
-        assertThat(canMove).isEqualTo(true);
+        assertThat(canMove).isTrue();
     }
 
     @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 움직일 수 있다")
     @Test
     void blackPawnCanInitialMove() {
-        Piece piece = new Pawn(BLACK_PAWN);
+        Piece piece = new Pawn(PAWN, BLACK);
         Position source = new Position(1, 0);
         Position target = new Position(3, 0);
         boolean canMove = piece.canMove(source, target);
-        assertThat(canMove).isEqualTo(true);
+        assertThat(canMove).isTrue();
     }
 
     @DisplayName("White Pawn이 전방 대각선 1칸 공격이면 움직일 수 있다")
     @ParameterizedTest
     @MethodSource("provideWhitePawnAttackMovePosition")
     void whitePawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(WHITE_PAWN);
-        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        Pawn piece = new Pawn(PAWN, WHITE);
+        boolean canMove = piece.canAttack(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideWhitePawnAttackMovePosition() {
         return Stream.of(
-                Arguments.of(new Position(6, 0), new Position(5, 1), true),
-                Arguments.of(new Position(6, 7), new Position(7, 6), false)
+            Arguments.of(new Position(6, 0), new Position(5, 1), true),
+            Arguments.of(new Position(6, 7), new Position(7, 6), false)
         );
     }
 
@@ -86,15 +87,15 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideBlackPawnAttackMovePosition")
     void blackPawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(BLACK_PAWN);
-        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        Pawn piece = new Pawn(PAWN, BLACK);
+        boolean canMove = piece.canAttack(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideBlackPawnAttackMovePosition() {
         return Stream.of(
-                Arguments.of(new Position(1, 0), new Position(2, 1), true),
-                Arguments.of(new Position(1, 0), new Position(0, 1), false)
+            Arguments.of(new Position(1, 0), new Position(2, 1), true),
+            Arguments.of(new Position(1, 0), new Position(0, 1), false)
         );
     }
 }

@@ -7,11 +7,13 @@ import static chess.model.Direction.UP_RIGHT;
 
 import chess.model.Direction;
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class Bishop extends Piece {
 
-    public Bishop(PieceType pieceType) {
-        super(pieceType);
+    public Bishop(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package chess.model.piece;
 
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class Pawn extends Piece {
 
@@ -13,24 +15,26 @@ public class Pawn extends Piece {
     private static final int WHITE_INITIAL_ROW = 6;
     private static final int BLACK_INITIAL_ROW = 1;
 
-    public Pawn(PieceType pieceType) {
-        super(pieceType);
+    public Pawn(Type type, Color color) {
+        super(type, color);
     }
 
     @Override
     public boolean canMove(Position source, Position target) {
         int rowDifference = calculateRowDifference(source, target);
         int columnDifference = calculateColumnDifference(source, target);
-        if (type.isWhite()) {
+        if (color.isWhite()) {
             boolean isRowUp = rowDifference == UP_SINGLE_MOVE;
             boolean isColumnNeutral = columnDifference == NONE_MOVE;
-            boolean isInitialMove = rowDifference == UP_DOUBLE_MOVE && source.getRow() == WHITE_INITIAL_ROW;
+            boolean isInitialMove =
+                rowDifference == UP_DOUBLE_MOVE && source.getRow() == WHITE_INITIAL_ROW;
             return isColumnNeutral && (isRowUp || isInitialMove);
         }
-        if (type.isBlack()) {
+        if (color.isBlack()) {
             boolean isRowDown = rowDifference == DOWN_SINGLE_MOVE;
             boolean isColumnNeutral = columnDifference == NONE_MOVE;
-            boolean isInitialMove = rowDifference == DOWN_DOUBLE_MOVE && source.getRow() == BLACK_INITIAL_ROW;
+            boolean isInitialMove =
+                rowDifference == DOWN_DOUBLE_MOVE && source.getRow() == BLACK_INITIAL_ROW;
             return isColumnNeutral && (isRowDown || isInitialMove);
         }
         return false;
@@ -39,12 +43,12 @@ public class Pawn extends Piece {
     public boolean canAttack(Position source, Position target) {
         int rowDifference = calculateRowDifference(source, target);
         int columnDifference = calculateColumnDifference(source, target);
-        if (type.isWhite()) {
+        if (color.isWhite()) {
             boolean isRowUp = rowDifference == UP_SINGLE_MOVE;
             boolean isColumnHorizontal = Math.abs(columnDifference) == HORIZONTAL_MOVE;
             return isRowUp && isColumnHorizontal;
         }
-        if (type.isBlack()) {
+        if (color.isBlack()) {
             boolean isRowDown = rowDifference == DOWN_SINGLE_MOVE;
             boolean isColumnHorizontal = Math.abs(columnDifference) == HORIZONTAL_MOVE;
             return isRowDown && isColumnHorizontal;

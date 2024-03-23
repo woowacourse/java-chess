@@ -1,10 +1,12 @@
 package chess.view;
 
 import chess.dto.BoardDto;
+import chess.dto.RankDto;
 
 public final class OutputView {
 
     private static final String NEWLINE = System.lineSeparator();
+    private static final CharSequence RANK_DELIMITER = "";
     private static final String ERROR_PREFIX = "[ERROR] ";
 
     public void printException(IllegalArgumentException e) {
@@ -12,6 +14,12 @@ public final class OutputView {
     }
 
     public void printChessBoard(BoardDto boardDto) {
-        System.out.println(boardDto.toString() + NEWLINE);
+        boardDto.getRanks()
+            .forEach(this::printRank);
+    }
+
+    private void printRank(RankDto rankDto) {
+        String rank = String.join(RANK_DELIMITER, rankDto.getRank());
+        System.out.println(rank);
     }
 }

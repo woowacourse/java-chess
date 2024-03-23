@@ -1,14 +1,16 @@
 package chess.model.piece;
 
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class Knight extends Piece {
 
     private static final int FIRST_MOVEMENT = 2;
     private static final int SECOND_MOVEMENT = 1;
 
-    public Knight(PieceType pieceType) {
-        super(pieceType);
+    public Knight(Type type, Color color) {
+        super(type, color);
     }
 
     @Override

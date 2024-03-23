@@ -1,49 +1,39 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_BISHOP;
-import static chess.model.piece.PieceType.BLACK_KING;
-import static chess.model.piece.PieceType.BLACK_KNIGHT;
-import static chess.model.piece.PieceType.BLACK_PAWN;
-import static chess.model.piece.PieceType.BLACK_QUEEN;
-import static chess.model.piece.PieceType.BLACK_ROOK;
-import static chess.model.piece.PieceType.NONE;
-import static chess.model.piece.PieceType.WHITE_BISHOP;
-import static chess.model.piece.PieceType.WHITE_KING;
-import static chess.model.piece.PieceType.WHITE_KNIGHT;
-import static chess.model.piece.PieceType.WHITE_PAWN;
-import static chess.model.piece.PieceType.WHITE_QUEEN;
-import static chess.model.piece.PieceType.WHITE_ROOK;
-
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public abstract class Piece implements MoveStrategy {
 
-    protected final PieceType type;
+    protected final Type type;
+    protected final Color color;
 
-    protected Piece(PieceType pieceType) {
-        this.type = pieceType;
+    protected Piece(Type type, Color color) {
+        this.type = type;
+        this.color = color;
     }
 
-    public static Piece from(PieceType pieceType) {
-        if (pieceType == BLACK_PAWN || pieceType == WHITE_PAWN) {
-            return new Pawn(pieceType);
+    public static Piece of(Type type, Color color) {
+        if (Type.PAWN.equals(type)) {
+            return new Pawn(type, color);
         }
-        if (pieceType == BLACK_ROOK || pieceType == WHITE_ROOK) {
-            return new Rook(pieceType);
+        if (Type.ROOK.equals(type)) {
+            return new Rook(type, color);
         }
-        if (pieceType == BLACK_KNIGHT || pieceType == WHITE_KNIGHT) {
-            return new Knight(pieceType);
+        if (Type.KNIGHT.equals(type)) {
+            return new Knight(type, color);
         }
-        if (pieceType == BLACK_BISHOP || pieceType == WHITE_BISHOP) {
-            return new Bishop(pieceType);
+        if (Type.BISHOP.equals(type)) {
+            return new Bishop(type, color);
         }
-        if (pieceType == BLACK_QUEEN || pieceType == WHITE_QUEEN) {
-            return new Queen(pieceType);
+        if (Type.QUEEN.equals(type)) {
+            return new Queen(type, color);
         }
-        if (pieceType == BLACK_KING || pieceType == WHITE_KING) {
-            return new King(pieceType);
+        if (Type.KING.equals(type)) {
+            return new King(type, color);
         }
-        return new None(pieceType);
+        return new None(type, color);
     }
 
     protected final int calculateRowDifference(Position source, Position target) {
@@ -55,27 +45,19 @@ public abstract class Piece implements MoveStrategy {
     }
 
     public boolean isEnemy(int turnCount) {
-        return !type.isSameColor(turnCount);
+        return color.isDifferentColor(turnCount);
     }
 
     public boolean isAlly(int turnCount) {
-        return type.isSameColor(turnCount);
-    }
-
-    public boolean isWhite() {
-        return type.isWhite();
-    }
-
-    public boolean isBlack() {
-        return type.isBlack();
+        return color.isSameColor(turnCount);
     }
 
     public boolean isExist() {
-        return type != NONE;
+        return type.isNotNone();
     }
 
     public boolean isNone() {
-        return type == NONE;
+        return type.isNone();
     }
 
     public boolean isPawn() {
@@ -86,8 +68,12 @@ public abstract class Piece implements MoveStrategy {
         return type.isKnight();
     }
 
-    @Override
-    public String toString() {
-        return type.getDisplayName();
+    public boolean isSameType(Type type) {
+        return this.type == type;
+    }
+
+
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 }

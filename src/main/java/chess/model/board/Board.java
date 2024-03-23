@@ -1,9 +1,10 @@
 package chess.model.board;
 
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceType;
 import java.util.Map;
 
 public class Board {
@@ -25,7 +26,7 @@ public class Board {
         validate(sourcePiece, targetPiece, source, target);
 
         pieces.put(target, sourcePiece);
-        pieces.put(source, Piece.from(PieceType.NONE));
+        pieces.put(source, Piece.of(Type.NONE, Color.NONE));
         turnCount++;
     }
 
@@ -47,10 +48,10 @@ public class Board {
 
     private void validateTurn(Piece sourcePiece) {
         boolean isEnemy = sourcePiece.isEnemy(turnCount);
-        if (isEnemy && sourcePiece.isWhite()) {
+        if (isEnemy && sourcePiece.isSameColor(Color.WHITE)) {
             throw new IllegalArgumentException("지금은 Black 차례입니다.");
         }
-        if (isEnemy && sourcePiece.isBlack()) {
+        if (isEnemy && sourcePiece.isSameColor(Color.BLACK)) {
             throw new IllegalArgumentException("지금은 White 차례입니다.");
         }
     }

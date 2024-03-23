@@ -24,18 +24,26 @@ class BoardTest {
     void generateInitialBoard() {
         Board board = boardFactory.generate();
         BoardDto boardDto = BoardDto.from(board);
+        List<String> actual = combineRanks(boardDto);
+        List<String> expected = List.of(
+            "RNBQKBNR",
+            "PPPPPPPP",
+            "........",
+            "........",
+            "........",
+            "........",
+            "pppppppp",
+            "rnbqkbnr"
+        );
 
-        String expected = """
-            RNBQKBNR
-            PPPPPPPP
-            ........
-            ........
-            ........
-            ........
-            pppppppp
-            rnbqkbnr""";
+        assertThat(actual).containsExactlyElementsOf(expected);
+    }
 
-        assertThat(boardDto).hasToString(expected);
+    private List<String> combineRanks(BoardDto boardDto) {
+        return boardDto.getRanks()
+            .stream()
+            .map(rankDto -> String.join("", rankDto.getRank()))
+            .toList();
     }
 
     @DisplayName("기물들의 스냅샷으로 체스판을 생성한다")
@@ -51,21 +59,12 @@ class BoardTest {
             ".p.q....",
             "....k..."
         );
-        boardFactory = new CustomBoardFactory(snapShot, 16);
+        BoardFactory boardFactory = new CustomBoardFactory(snapShot, 16);
         Board board = boardFactory.generate();
         BoardDto boardDto = BoardDto.from(board);
+        List<String> actual = combineRanks(boardDto);
 
-        String expected = """
-            ........
-            K...P...
-            PP......
-            ........
-            ...p....
-            .pn.....
-            .p.q....
-            ....k...""";
-
-        assertThat(boardDto).hasToString(expected);
+        assertThat(actual).containsExactlyElementsOf(snapShot);
     }
 
     @DisplayName("White 차례에 Black 기물 이동 시 예외가 발생한다.")

@@ -1,6 +1,7 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_KING;
+import static chess.model.material.Color.BLACK;
+import static chess.model.material.Type.KING;
 
 import chess.model.Position;
 import java.util.stream.Stream;
@@ -16,15 +17,15 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void kingCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new King(BLACK_KING);
+        Piece piece = new King(KING, BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideSourceAndTargetWithExpected() {
         return Stream.of(
-                Arguments.of(new Position(3, 3), new Position(3, 4), true),
-                Arguments.of(new Position(3, 3), new Position(5, 4), false)
+            Arguments.of(new Position(3, 3), new Position(3, 4), true),
+            Arguments.of(new Position(3, 3), new Position(5, 4), false)
         );
     }
 }

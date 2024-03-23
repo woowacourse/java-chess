@@ -7,11 +7,13 @@ import static chess.model.Direction.UP;
 
 import chess.model.Direction;
 import chess.model.Position;
+import chess.model.material.Color;
+import chess.model.material.Type;
 
 public class Rook extends Piece {
 
-    public Rook(PieceType pieceType) {
-        super(pieceType);
+    public Rook(Type type, Color color) {
+        super(type, color);
     }
 
     @Override
