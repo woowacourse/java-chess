@@ -96,6 +96,19 @@ class SpaceTest {
     }
 
     @Test
+    @DisplayName("이동할 위치에 상대 말이 있지만 잡을 수 없으면 이동할 수 없다")
+    void should_not_move_when_target_space_has_other_color_piece_and_not_catchable() {
+        Piece piece1 = new WhitePawn();
+        Piece piece2 = new BlackPawn();
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
+
+        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치의 상대 말을 잡을 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("이동경로에 피스가 있으면 움직일 수 없다")
     void should_not_move_when_route_has_piece() {
         Piece piece1 = new Rook(Color.WHITE);
