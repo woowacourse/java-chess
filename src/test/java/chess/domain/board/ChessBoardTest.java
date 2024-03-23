@@ -41,8 +41,8 @@ public class ChessBoardTest {
         List<PieceInfo> pieceInfos = boardStatus.pieceInfos();
 
         assertAll(
-                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 2, "p"))).isTrue(),
-                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 1, "p"))).isFalse()
+                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 2, PieceType.WHITE_PAWN))).isTrue(),
+                () -> assertThat(pieceInfos.contains(new PieceInfo(1, 1, PieceType.WHITE_PAWN))).isFalse()
         );
     }
 

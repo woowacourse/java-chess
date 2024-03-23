@@ -50,7 +50,7 @@ public class OutputView {
 
     private void applyBoardStatus(final BoardStatus status, final String[][] board) {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
-            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = pieceInfo.name();
+            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = PieceTypeName.findName(pieceInfo.type());
         }
     }
 

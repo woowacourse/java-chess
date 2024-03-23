@@ -23,8 +23,8 @@ public class Piece {
         return this.type == pieceType;
     }
 
-    public String name() {
-        return type.pieceName();
+    public PieceType type() {
+        return type;
     }
 
     public PieceColor color() {

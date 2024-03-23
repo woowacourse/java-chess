@@ -10,26 +10,24 @@ import chess.domain.piece.strategy.RookMovementStrategy;
 import chess.domain.piece.strategy.WhitePawnMovementStrategy;
 
 public enum PieceType {
-    WHITE_PAWN("p", PieceColor.WHITE, WhitePawnMovementStrategy.getInstance()),
-    BLACK_PAWN("P", PieceColor.BLACK, BlackPawnMovementStrategy.getInstance()),
-    WHITE_ROOK("r", PieceColor.WHITE, RookMovementStrategy.getInstance()),
-    BLACK_ROOK("R", PieceColor.BLACK, RookMovementStrategy.getInstance()),
-    WHITE_KNIGHT("n", PieceColor.WHITE, KnightMovementStrategy.getInstance()),
-    BLACK_KNIGHT("N", PieceColor.BLACK, KnightMovementStrategy.getInstance()),
-    WHITE_BISHOP("b", PieceColor.WHITE, BishopMovementStrategy.getInstance()),
-    BLACK_BISHOP("B", PieceColor.BLACK, BishopMovementStrategy.getInstance()),
-    WHITE_KING("k", PieceColor.WHITE, KingMovementStrategy.getInstance()),
-    BLACK_KING("K", PieceColor.BLACK, KingMovementStrategy.getInstance()),
-    WHITE_QUEEN("q", PieceColor.WHITE, QueenMovementStrategy.getInstance()),
-    BLACK_QUEEN("Q", PieceColor.BLACK, QueenMovementStrategy.getInstance()),
+    WHITE_PAWN(PieceColor.WHITE, WhitePawnMovementStrategy.getInstance()),
+    BLACK_PAWN(PieceColor.BLACK, BlackPawnMovementStrategy.getInstance()),
+    WHITE_ROOK(PieceColor.WHITE, RookMovementStrategy.getInstance()),
+    BLACK_ROOK(PieceColor.BLACK, RookMovementStrategy.getInstance()),
+    WHITE_KNIGHT(PieceColor.WHITE, KnightMovementStrategy.getInstance()),
+    BLACK_KNIGHT(PieceColor.BLACK, KnightMovementStrategy.getInstance()),
+    WHITE_BISHOP(PieceColor.WHITE, BishopMovementStrategy.getInstance()),
+    BLACK_BISHOP(PieceColor.BLACK, BishopMovementStrategy.getInstance()),
+    WHITE_KING(PieceColor.WHITE, KingMovementStrategy.getInstance()),
+    BLACK_KING(PieceColor.BLACK, KingMovementStrategy.getInstance()),
+    WHITE_QUEEN(PieceColor.WHITE, QueenMovementStrategy.getInstance()),
+    BLACK_QUEEN(PieceColor.BLACK, QueenMovementStrategy.getInstance()),
     ;
 
-    private final String name;
     private final PieceColor color;
     private final MovementStrategy movementStrategy;
 
-    PieceType(String name, PieceColor color, MovementStrategy movementStrategy) {
-        this.name = name;
+    PieceType(PieceColor color, MovementStrategy movementStrategy) {
         this.color = color;
         this.movementStrategy = movementStrategy;
     }
@@ -44,10 +42,6 @@ public enum PieceType {
 
     public PieceColor color() {
         return color;
-    }
-
-    public String pieceName() {
-        return name;
     }
 
     public MovementStrategy movementStrategy() {
