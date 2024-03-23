@@ -16,13 +16,22 @@ public class ChessController {
     }
 
     public void start() {
+        outputView.printGameGuideMessage();
         final ChessBoard board = ChessBoardFactory.createInitialChessBoard();
-        outputView.printGameStartMessage();
 
-        Command command = readCommandUntilValid();
+        Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
             command.execute(board, outputView);
             command = readCommandUntilValid();
+        }
+    }
+
+    private Command readStartCommandUntilValid() {
+        try {
+            return inputView.readStartCommand();
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+            return readStartCommandUntilValid();
         }
     }
 
