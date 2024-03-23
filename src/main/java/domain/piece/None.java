@@ -14,6 +14,11 @@ public class None extends Piece {
     }
 
     @Override
+    public boolean isNotBlank() {
+        return false;
+    }
+
+    @Override
     public boolean canMove(Position source, Position target) {
         return false;
     }

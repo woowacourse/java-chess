@@ -10,33 +10,33 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
     private final Board board = Board.create();
     private Color turn = Color.WHITE;
 
-    public void play(Position sourcePosition, Position targetPosition) {
+    public void play(Position sourcePosition, Position targetPosition) { // 소스와 타겟이 같은 경우
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
 
         if (sourcePiece.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 움직일 기물이 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 선택된 위치에 기물이 없습니다.");
         }
-        if (sourcePiece.isDifferentColor(turn)) { // TODO: 부정 -> 긍정 변경하기
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 기물입니다. 차례가 아닙니다.");
+        if (sourcePiece.isOppositeColor(turn)) {
+            throw new IllegalArgumentException("[ERROR] 차례가 아닙니다.");
         }
-        if (!sourcePiece.isKnight() && !board.isNotBlocked(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다. 경로가 비어있지 않습니다.");
+        if (sourcePiece.isNotKnight() && board.isBlocked(sourcePosition, targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 다른 기물이 길을 막습니다.");
         }
         if (sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다. 목적지에 같은 편 기물이 있습니다.");
+            throw new IllegalArgumentException("[ERROR] 가려는 곳에 같은 편 기물이 있습니다.");
         }
-        if (sourcePiece.canAttack(sourcePosition, targetPosition) && sourcePiece.isDifferentColor(targetPiece)) {
+        if (sourcePiece.canAttack(sourcePosition, targetPosition) && sourcePiece.isOppositeColor(targetPiece)) {
             board.placePieceByPosition(sourcePiece, targetPosition);
             board.displacePieceByPosition(sourcePosition);
             switchTurn();
             return;
         }
         if (!sourcePiece.canMove(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다. 해당 기물은 해당 위치로 움직일 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 움직일 수 없는 방식입니다.");
         }
-        if (sourcePiece.canMove(sourcePosition, targetPosition) && !targetPiece.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 이동할 수 없는 위치입니다. 목적지에 기물이 있습니다.");
+        if (targetPiece.isNotBlank()) {
+            throw new IllegalArgumentException("[ERROR] 가려는 곳에 기물이 있습니다.");
         }
         board.placePieceByPosition(sourcePiece, targetPosition);
         board.displacePieceByPosition(sourcePosition);

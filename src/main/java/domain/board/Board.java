@@ -38,7 +38,7 @@ public class Board {
         squares.replace(position, new None(Color.NONE));
     }
 
-    public boolean isNotBlocked(Position source, Position target) {
+    public boolean isBlocked(Position source, Position target) {
         List<Position> betweenPositions = new ArrayList<>();
         if (source.isStraight(target)) {
             betweenPositions.addAll(source.findBetweenStraightPositions(target));
@@ -48,6 +48,6 @@ public class Board {
         }
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)
-                .allMatch(betweenPiece -> betweenPiece.getClass().equals(None.class));
+                .anyMatch(betweenPiece -> !betweenPiece.getClass().equals(None.class));
     } // TODO: getClass 제거
 }

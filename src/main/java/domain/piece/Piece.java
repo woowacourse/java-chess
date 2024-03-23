@@ -19,12 +19,16 @@ public abstract class Piece {
 
     public abstract String display(); // TODO: view 로직 분리
 
-    public boolean isKnight() {
-        return false;
+    public boolean isNotKnight() {
+        return true;
     }
 
     public boolean isBlank() {
         return false;
+    }
+
+    public boolean isNotBlank() {
+        return true;
     }
 
     public boolean isBlack() {
@@ -35,16 +39,16 @@ public abstract class Piece {
         return color.isWhite();
     }
 
-    public boolean isDifferentColor(Piece targetPiece) {
-        return (isBlack() && targetPiece.isWhite()) || (isWhite() && targetPiece.isBlack());
+    public boolean isOppositeColor(Color color) {
+        return this.color.isOpposite(color);
+    }
+
+    public boolean isOppositeColor(Piece targetPiece) {
+        return this.color.isOpposite(targetPiece.color);
     }
 
     public boolean isSameColor(Piece targetPiece) {
         return (isBlack() && targetPiece.isBlack()) || (isWhite() && targetPiece.isWhite());
-    }
-
-    public boolean isDifferentColor(Color color) {
-        return this.color.isDifferent(color);
     }
 
     @Override
