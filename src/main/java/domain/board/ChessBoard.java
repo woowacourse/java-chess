@@ -38,7 +38,7 @@ public class ChessBoard {
         board.put(target, board.remove(source));
     }
 
-    public Map<Position, Piece> getBoard() { // todo getPositionAndPieces
+    public Map<Position, Piece> getPositionAndPieces() {
         return Collections.unmodifiableMap(board);
     }
 

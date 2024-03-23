@@ -37,7 +37,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(pieceMap);
 
         board.movePiece(source, target);
-        assertThat(board.getBoard()).containsEntry(target, piece)
+        assertThat(board.getPositionAndPieces()).containsEntry(target, piece)
                 .doesNotContainKey(source);
     }
 
@@ -52,7 +52,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(pieceMap);
 
         board.movePiece(source, target);
-        assertThat(board.getBoard()).containsEntry(target, sourcePiece)
+        assertThat(board.getPositionAndPieces()).containsEntry(target, sourcePiece)
                 .doesNotContainKey(source);
     }
 }

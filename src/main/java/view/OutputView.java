@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     public void printBoard(ChessBoard chessBoard) {
-        Map<Position, Piece> board = chessBoard.getBoard();
+        Map<Position, Piece> board = chessBoard.getPositionAndPieces();
         for (int rank = 8; rank >= 1; rank--) {
             printBoardRow(board, Rank.fromNumber(rank));
         }
