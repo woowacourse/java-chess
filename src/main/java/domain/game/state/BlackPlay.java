@@ -18,7 +18,7 @@ public class BlackPlay extends GameState {
     public GameState move(Position source, Position target) {
         Color sourcePieceColor = chessBoard().getPieceColor(source);
         if (!sourcePieceColor.isBlack()) {
-            throw new IllegalArgumentException("검은색 기물만 이동할 수 있습니다.");
+            throw new IllegalArgumentException("검은색 기물 차례입니다.");
         }
         chessBoard().movePiece(source, target);
         return new WhitePlay(chessBoard());

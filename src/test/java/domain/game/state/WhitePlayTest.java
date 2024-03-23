@@ -29,7 +29,7 @@ class WhitePlayTest {
 
         assertThatThrownBy(() -> whitePlay.move(source, target))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("흰색 기물만 이동할 수 있습니다.");
+                .hasMessageContaining("흰색 기물 차례입니다.");
     }
 
     @Test
