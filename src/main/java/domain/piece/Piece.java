@@ -19,10 +19,6 @@ public abstract class Piece {
 
     public abstract String display(); // TODO: view 로직 분리
 
-    public boolean isNotKnight() {
-        return true;
-    }
-
     public boolean isBlank() {
         return false;
     }

@@ -24,7 +24,7 @@ public class Chess { // TODO: 생성자 초기화 vs 변수 초기화?
         if (sourcePiece.isOppositeColor(turn)) {
             throw new IllegalArgumentException("[ERROR] 차례가 아닙니다.");
         }
-        if (sourcePiece.isNotKnight() && board.isBlocked(sourcePosition, targetPosition)) {
+        if (board.isBlocked(sourcePosition, targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 다른 기물이 길을 막습니다.");
         }
         if (sourcePiece.isSameColor(targetPiece)) {

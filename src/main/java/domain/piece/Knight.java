@@ -9,11 +9,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isNotKnight() {
-        return false;
-    }
-
-    @Override
     public boolean canMove(Position source, Position target) {
         return isRightUpUp(source, target) || isLeftUpUp(source, target)
                 || isRightDownDown(source, target) || isLeftDownDown(source, target)

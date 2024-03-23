@@ -48,6 +48,6 @@ public class Board {
         }
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)
-                .anyMatch(betweenPiece -> !betweenPiece.getClass().equals(None.class));
-    } // TODO: getClass 제거
+                .anyMatch(Piece::isNotBlank);
+    }
 }
