@@ -21,12 +21,11 @@ public class Board {
 
     public void move(final Square from, final Square to, final Color turn) {
         Piece sourcePiece = pieces.get(from);
-        validateSourcePiece(sourcePiece, turn);
         Piece destinationPiece = pieces.get(to);
-        validateDestinationColor(sourcePiece, destinationPiece);
-
         Movement movement = new Movement(from, to);
-        validate(sourcePiece, destinationPiece, movement);
+        validateSourcePiece(sourcePiece, turn);
+        validateDestinationColor(sourcePiece, destinationPiece);
+        validateDestinationMove(sourcePiece, destinationPiece, movement);
 
         pieces.remove(from);
         pieces.put(to, sourcePiece);
@@ -48,7 +47,7 @@ public class Board {
         }
     }
 
-    private void validate(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
+    private void validateDestinationMove(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
         checkCanMove(sourcePiece, destinationPiece, movement);
         checkRoute(movement);
     }
