@@ -22,6 +22,11 @@ public class King extends Piece {
     }
 
     @Override
+    protected boolean canAttack(final Square source, final Square target) {
+        return canNotMove(source, target);
+    }
+
+    @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;

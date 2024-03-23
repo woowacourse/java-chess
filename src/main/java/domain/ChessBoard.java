@@ -119,10 +119,10 @@ public class ChessBoard {
     private boolean isBlocked(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        final ChessVector direction = chessVector.scaleDown();
+        final ChessVector unitVector = chessVector.scaleDown();
         final long pathCount = chessVector.findAbsGCD();
 
-        return Stream.iterate(source.next(direction), square -> square.next(direction))
+        return Stream.iterate(source.next(unitVector), square -> square.next(unitVector))
                 .limit(pathCount)
                 .filter(square -> !square.equals(target))
                 .anyMatch(pieceSquares::containsKey);

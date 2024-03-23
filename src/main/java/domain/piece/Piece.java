@@ -11,18 +11,16 @@ public abstract class Piece {
         this.team = team;
     }
 
+    protected abstract boolean canMove(Square source, Square target);
+
+    protected abstract boolean canAttack(final Square source, final Square target);
+
     public final boolean canNotMove(final Square source, final Square target) {
         return !canMove(source, target);
     }
 
-    protected abstract boolean canMove(Square source, Square target);
-
     public final boolean canNotAttack(final Square source, final Square target) {
         return !canAttack(source, target);
-    }
-
-    protected boolean canAttack(final Square source, final Square target) {
-        return canMove(source, target);
     }
 
     public final boolean isSameTeam(final Piece other) {
