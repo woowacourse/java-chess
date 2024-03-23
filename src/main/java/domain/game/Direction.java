@@ -3,6 +3,7 @@ package domain.game;
 import domain.position.Position;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Direction {
 
@@ -32,6 +33,14 @@ public enum Direction {
         this.rankVector = rankVector;
     }
 
+    public boolean isNorthOrSouth() {
+        return this == Direction.NORTH || this == Direction.SOUTH;
+    }
+
+    public boolean isDiagonalDirection() {
+        return List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.NORTH_WEST)
+                .contains(this);
+    }
 
     public static Direction findDirection(Position source, Position target) {
         ChessVector targetChessVector = target.toVector(source);

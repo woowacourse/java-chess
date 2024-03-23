@@ -18,6 +18,8 @@ public class Piece {
     public boolean isEqualColor(final Color target) {
         return this.color == target;
     }
+    public boolean isNotEqualColor(final Color target) {
+        return this.color != target;}
 
     public boolean canMove(final Position source, final Position target) {
         return pieceRole.canMove(source, target);
@@ -31,13 +33,14 @@ public class Piece {
         return !(pieceRole instanceof Knight);
     }
 
+    public PieceRole getPieceRole() {
+        return pieceRole;
+    }
+
     public Color getColor() {
         return color;
     }
 
-    public PieceRole getPieceRole() {
-        return pieceRole;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,8 +50,8 @@ public class Piece {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Piece pieceType = (Piece) o;
-        return pieceRole.equals(pieceType.getPieceRole()) && color == pieceType.color;
+        Piece piece = (Piece) o;
+        return pieceRole.equals(piece.pieceRole) && color == piece.color;
     }
 
     @Override

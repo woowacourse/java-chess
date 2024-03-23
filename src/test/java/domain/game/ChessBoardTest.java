@@ -42,7 +42,7 @@ class ChessBoardTest {
 
         ChessBoard chessBoard = new ChessBoard();
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -59,7 +59,7 @@ class ChessBoardTest {
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -73,7 +73,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourcePosition, sourcePiece);
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -90,7 +90,7 @@ class ChessBoardTest {
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -130,7 +130,7 @@ class ChessBoardTest {
         chessBoard.add(targetPosition, targetPiece);
         chessBoard.add(blockPosition, blockPiece);
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalStateException.class);
     }
 

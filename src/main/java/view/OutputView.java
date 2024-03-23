@@ -59,7 +59,7 @@ public class OutputView {
     }
 
     public String generateSymbol(ChessBoard chessBoard, Position square) {
-        if (chessBoard.hasPiece(square)) {
+        if (chessBoard.isNotEmptyAt(square)) {
             Piece piece = chessBoard.findPieceByPosition(square);
             return pieceSymbol.get(piece);
         }

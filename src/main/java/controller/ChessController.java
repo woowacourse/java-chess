@@ -45,6 +45,7 @@ public class ChessController {
     private void executeMoveCommand(final ChessBoard chessBoard, final List<String> input, final ChessCommand command) {
         if (command == ChessCommand.MOVE) {
             validateMoveCommand(input);
+            chessBoard.checkRoute(generatePosition(input.get(1)), generatePosition(input.get(2)));
             chessBoard.move(generatePosition(input.get(1)), generatePosition(input.get(2)));
         }
     }
