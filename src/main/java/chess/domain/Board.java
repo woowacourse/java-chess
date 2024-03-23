@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
