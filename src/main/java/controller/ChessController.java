@@ -36,14 +36,18 @@ public class ChessController {
         outputView.printStartingMessage();
         ChessGame chessGame = new ChessGame();
         while (chessGame.isRunning()) {
-            try {
-                List<String> rawCommand = inputView.readCommand();
-                Command command = Command.from(rawCommand);
-                MovePosition movePosition = new MovePosition(rawCommand.subList(1, rawCommand.size()));
-                commands.get(command).accept(chessGame, movePosition);
-            } catch (Exception e) {
-                outputView.printErrorMessage(e);
-            }
+            play(chessGame);
+        }
+    }
+
+    private void play(ChessGame chessGame) {
+        try {
+            List<String> rawCommand = inputView.readCommand();
+            Command command = Command.from(rawCommand);
+            MovePosition movePosition = new MovePosition(rawCommand.subList(1, rawCommand.size()));
+            commands.get(command).accept(chessGame, movePosition);
+        } catch (Exception e) {
+            outputView.printErrorMessage(e);
         }
     }
 
