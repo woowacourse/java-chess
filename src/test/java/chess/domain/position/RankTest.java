@@ -31,4 +31,11 @@ class RankTest {
     void should_ReturnReverseRank(Rank rank, Rank reversedRank) {
         assertThat(rank.reverse()).isEqualTo(reversedRank);
     }
+
+    @DisplayName("두 랭크간 거리를 계산할 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"EIGHT, ONE, 7", "TWO, ONE, 1", "FIVE, ONE, 4"})
+    void should_CalculateDistance_When_OtherRankGiven(Rank rank1, Rank rank2, int distance) {
+        assertThat(rank1.calculateDistanceWith(rank2)).isEqualTo(distance);
+    }
 }

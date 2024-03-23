@@ -29,4 +29,8 @@ public enum Rank {
     public Rank reverse() {
         return Rank.from(ONE.rowNumber - rowNumber);
     }
+
+    public int calculateDistanceWith(Rank other) {
+        return Math.abs(rowNumber - other.rowNumber);
+    }
 }
