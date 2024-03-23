@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -17,6 +18,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -187,7 +189,32 @@ class BoardTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("source 좌표에 기물이 없으면 예외를 발생한다.")
+    @DisplayName("주어진 좌표의 기물이 존재하지 않으면 Empty 피스를 반환한다.")
+    @Test
+    void findByCoordinate() {
+        Board emptyBoard = new Board(new HashMap<>());
+
+        Piece result = emptyBoard.findByCoordinate(new Coordinate(2, 'a'));
+
+        assertThat(result).isEqualTo(new Empty());
+    }
+
+    @DisplayName("해당 위치의 기물이 존재하는지 판단할 수 있다.")
+    @Test
+    void isPiecePresent() {
+        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        Piece sourcePiece = new Pawn(Team.WHITE);
+        Coordinate source = new Coordinate(2, 'a');
+        pieces.put(source, sourcePiece);
+        Board board = new Board(pieces);
+
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(board.isPiecePresent(source)),
+                () -> Assertions.assertFalse(board.isPiecePresent(new Coordinate(3, 'a')))
+        );
+    }
+
+    @DisplayName("source 좌표에 기물이 없으면 기물을 움직일 수 없다.")
     @Test
     void noSource() {
         Board emptyBoard = new Board(new HashMap<>());
@@ -198,66 +225,7 @@ class BoardTest {
                 .isInstanceOf(NoSuchElementException.class);
     }
 
-    @DisplayName("target 좌표에 기물이 있으면 예외를 발생한다.")
-    @Test
-    void existTarget() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate target = new Coordinate(2, 'a');
-        pieces.put(source, new Rook(Team.WHITE));
-        pieces.put(target, new Rook(Team.WHITE));
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("목적지 좌표에 기물이 이미 존재합니다.");
-    }
-
-    @DisplayName("source 좌표에 있는 기물이 target 좌표로 이동 가능한 경로가 존재하지 않을 경우, 이동할 수 없다.")
-    @Test
-    void nonExistPath() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate target = new Coordinate(4, 'd');
-        pieces.put(source, new Rook(Team.WHITE));
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("해당 기물은 목적지 좌표에 갈 수 없습니다.");
-    }
-
-    @DisplayName("target 으로 가는 경로에 기물이 존재하면, 이동할 수 없다.")
-    @Test
-    void pathStuck() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(1, 'a');
-        Coordinate between = new Coordinate(2, 'b');
-        Coordinate target = new Coordinate(3, 'c');
-        pieces.put(source, new Bishop(Team.WHITE));
-        pieces.put(between, new Pawn(Team.WHITE));
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("경로 중간에 기물이 존재해 이동할 수 없습니다.");
-    }
-
-    @DisplayName("폰에 한에, 초기 좌표가 아니면 2칸 전진할 수 없다.")
-    @Test
-    void nonInitialPawnCantMove2() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = new Coordinate(3, 'a');
-        Coordinate target = new Coordinate(5, 'a');
-        pieces.put(source, new Pawn(Team.WHITE));
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("폰이 초기 위치가 아니면, 2칸 전진할 수 없습니다.");
-    }
-
-    @DisplayName("기물이 움직일 수 있다.")
+    @DisplayName("기물이 갈 수 있는 곳이라면, 보드를 업데이트한다.")
     @Test
     void move() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
