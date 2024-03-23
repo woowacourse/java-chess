@@ -6,11 +6,11 @@ import chess.domain.piece.character.Team;
 
 public class Rook extends Piece {
     public Rook(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.ROOK), false);
     }
 
-    private Rook(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Rook(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -18,12 +18,7 @@ public class Rook extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new Rook(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.ROOK);
+        return new Rook(character, true);
     }
 
     @Override

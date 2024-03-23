@@ -7,21 +7,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class PawnTest {
     @DisplayName("자신의 특징을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_PAWN", "WHITE,WHITE_PAWN"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new Pawn(team).findCharacter())
-                .isEqualTo(character);
+    @EnumSource
+    void findCharacter(Team team) {
+        assertThat(new Pawn(team).character())
+                .isEqualTo(new Character(team, Kind.PAWN));
     }
 
     @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")

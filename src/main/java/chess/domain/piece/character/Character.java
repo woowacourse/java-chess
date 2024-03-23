@@ -1,35 +1,16 @@
 package chess.domain.piece.character;
 
-import java.util.Arrays;
-
-public enum Character {
-    BLACK_PAWN(Team.BLACK, Kind.PAWN),
-    BLACK_KNIGHT(Team.BLACK, Kind.KNIGHT),
-    BLACK_BISHOP(Team.BLACK, Kind.BISHOP),
-    BLACK_ROOK(Team.BLACK, Kind.ROOK),
-    BLACK_QUEEN(Team.BLACK, Kind.QUEEN),
-    BLACK_KING(Team.BLACK, Kind.KING),
-    WHITE_PAWN(Team.WHITE, Kind.PAWN),
-    WHITE_KNIGHT(Team.WHITE, Kind.KNIGHT),
-    WHITE_BISHOP(Team.WHITE, Kind.BISHOP),
-    WHITE_ROOK(Team.WHITE, Kind.ROOK),
-    WHITE_QUEEN(Team.WHITE, Kind.QUEEN),
-    WHITE_KING(Team.WHITE, Kind.KING),
-    ;
-
-    private final Team team;
-    private final Kind kind;
-
-    Character(Team team, Kind kind) {
-        this.team = team;
-        this.kind = kind;
-    }
-
-    public static Character findCharacter(Team team, Kind kind) {
-        return Arrays.stream(values())
-                .filter(character -> character.team == team && character.kind == kind)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("%s, %s의 Character가 존재하지 않습니다."
-                        .formatted(team.name(), kind.name())));
-    }
+public record Character(Team team, Kind kind) {
+    public static final Character BLACK_PAWN = new Character(Team.BLACK, Kind.PAWN);
+    public static final Character BLACK_KNIGHT = new Character(Team.BLACK, Kind.KNIGHT);
+    public static final Character BLACK_BISHOP = new Character(Team.BLACK, Kind.BISHOP);
+    public static final Character BLACK_ROOK = new Character(Team.BLACK, Kind.ROOK);
+    public static final Character BLACK_QUEEN = new Character(Team.BLACK, Kind.QUEEN);
+    public static final Character BLACK_KING = new Character(Team.BLACK, Kind.KING);
+    public static final Character WHITE_PAWN = new Character(Team.WHITE, Kind.PAWN);
+    public static final Character WHITE_KNIGHT = new Character(Team.WHITE, Kind.KNIGHT);
+    public static final Character WHITE_BISHOP = new Character(Team.WHITE, Kind.BISHOP);
+    public static final Character WHITE_ROOK = new Character(Team.WHITE, Kind.ROOK);
+    public static final Character WHITE_QUEEN = new Character(Team.WHITE, Kind.QUEEN);
+    public static final Character WHITE_KING = new Character(Team.WHITE, Kind.KING);
 }

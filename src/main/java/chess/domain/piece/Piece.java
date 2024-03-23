@@ -12,17 +12,15 @@ import java.util.List;
 public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
 
-    protected final Team team;
+    protected final Character character;
     protected final boolean hasMoved;
 
-    protected Piece(Team team, boolean hasMoved) {
-        this.team = team;
+    protected Piece(Character character, boolean hasMoved) {
+        this.character = character;
         this.hasMoved = hasMoved;
     }
 
     public abstract Piece move();
-
-    public abstract Character findCharacter();
 
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
@@ -70,10 +68,14 @@ public abstract class Piece {
     }
 
     public boolean isSameTeamWith(Piece piece) {
-        return isSameTeamWith(piece.team);
+        return isSameTeamWith(piece.character.team());
     }
 
     public boolean isSameTeamWith(Team team) {
-        return this.team == team;
+        return this.character.team() == team;
+    }
+
+    public Character character() {
+        return character;
     }
 }

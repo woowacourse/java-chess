@@ -6,11 +6,11 @@ import chess.domain.piece.character.Team;
 
 public class Bishop extends Piece {
     public Bishop(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.BISHOP), false);
     }
 
-    private Bishop(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Bishop(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -18,16 +18,11 @@ public class Bishop extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new Bishop(team, true);
+        return new Bishop(character, true);
     }
 
     @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) == Math.abs(columnDifference);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.BISHOP);
     }
 }

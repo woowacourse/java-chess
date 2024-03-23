@@ -7,11 +7,11 @@ import chess.domain.piece.character.Team;
 public class Queen extends Piece {
 
     public Queen(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.QUEEN), false);
     }
 
-    private Queen(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Queen(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -19,12 +19,7 @@ public class Queen extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new Queen(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.QUEEN);
+        return new Queen(character, true);
     }
 
     @Override

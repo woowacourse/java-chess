@@ -19,11 +19,11 @@ public class Pawn extends Piece {
 
 
     public Pawn(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.PAWN), false);
     }
 
-    private Pawn(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Pawn(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -31,12 +31,7 @@ public class Pawn extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new Pawn(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.PAWN);
+        return new Pawn(character, true);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class Pawn extends Piece {
         if (columnDifference != 0) {
             return false;
         }
-        if (team == Team.WHITE) {
+        if (character.team() == Team.WHITE) {
             return rowDifference == WHITE_NORMAL_MOVEMENT || (!hasMoved && rowDifference == WHITE_START_MOVEMENT);
         }
         return rowDifference == BLACK_NORMAL_MOVEMENT || (!hasMoved && rowDifference == BLACK_START_MOVEMENT);
@@ -77,7 +72,7 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean isAttackable(int rowDifference, int columnDifference) {
-        if (team == Team.WHITE) {
+        if (character.team() == Team.WHITE) {
             return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
         }
         return rowDifference == BLACK_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;

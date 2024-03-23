@@ -6,20 +6,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class KingTest {
     @DisplayName("자신의 특징을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_KING", "WHITE,WHITE_KING"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new King(team).findCharacter())
-                .isEqualTo(character);
+    @EnumSource
+    void findCharacter(Team team) {
+        assertThat(new King(team).character())
+                .isEqualTo(new Character(team, Kind.KING));
     }
 
     @DisplayName("킹은 한칸 초과하여 움직인 경우, 예외가 발생한다.")

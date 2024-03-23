@@ -84,10 +84,10 @@ public class Board {
     }
 
     private Position getKingPosition(Team team) {
-        Character character = Character.findCharacter(team, Kind.KING);
+        Character myKingCharacter = new Character(team, Kind.KING);
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().findCharacter() == character)
+                .filter(entry -> myKingCharacter.equals(entry.getValue().character()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(
                         "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
@@ -143,11 +143,11 @@ public class Board {
     }
 
     private boolean cannotAttackCheckingPiece(Team attackingTeam, Position attackingPosition) {
+        Character myKingCharacter = new Character(attackingTeam.opponent(), Kind.KING);
         return pieces.entrySet()
                 .stream()
                 .filter(entry -> !entry.getValue().isSameTeamWith(attackingTeam))
-                .filter(entry -> entry.getValue().findCharacter()
-                        != Character.findCharacter(attackingTeam.opponent(), Kind.KING))
+                .filter(entry -> !myKingCharacter.equals(entry.getValue().character()))
                 .filter(entry -> entry.getKey() != attackingPosition)
                 .noneMatch(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), attackingPosition)));
     }
@@ -157,7 +157,7 @@ public class Board {
                 .stream()
                 .collect(Collectors.toMap(
                         Entry::getKey,
-                        entry -> entry.getValue().findCharacter()
+                        entry -> entry.getValue().character()
                 ));
     }
 }

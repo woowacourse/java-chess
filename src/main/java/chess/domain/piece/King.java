@@ -10,13 +10,12 @@ import java.util.List;
 public class King extends Piece {
     private static final int MAX_MOVE_DIFFERENCE = 1;
 
-
     public King(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.KING), false);
     }
 
-    private King(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private King(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -24,12 +23,7 @@ public class King extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new King(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.KING);
+        return new King(character, true);
     }
 
     @Override

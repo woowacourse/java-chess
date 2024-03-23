@@ -6,20 +6,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class RookTest {
     @DisplayName("자신의 특징을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_ROOK", "WHITE,WHITE_ROOK"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new Rook(team).findCharacter())
-                .isEqualTo(character);
+    @EnumSource
+    void findCharacter(Team team) {
+        assertThat(new Rook(team).character())
+                .isEqualTo(new Character(team, Kind.ROOK));
     }
 
     @DisplayName("룩은 직선이 아닌 경우, 예외가 발생한다.")

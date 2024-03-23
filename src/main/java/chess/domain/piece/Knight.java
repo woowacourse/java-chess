@@ -14,11 +14,11 @@ public class Knight extends Piece {
     private static final Set<Integer> MOVE_DIFFERENCES = Set.of(1, 2);
 
     public Knight(Team team) {
-        this(team, false);
+        this(new Character(team, Kind.KNIGHT), false);
     }
 
-    private Knight(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Knight(Character character, boolean hasMoved) {
+        super(character, hasMoved);
     }
 
     @Override
@@ -26,12 +26,7 @@ public class Knight extends Piece {
         if (hasMoved) {
             return this;
         }
-        return new Knight(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.KNIGHT);
+        return new Knight(character, true);
     }
 
     @Override
