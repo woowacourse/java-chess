@@ -1,11 +1,8 @@
 package controller;
 
+import controller.command.Command;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardFactory;
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
-import view.Command;
 import view.InputView;
 import view.OutputView;
 
@@ -19,31 +16,22 @@ public class ChessController {
     }
 
     public void start() {
-        ChessBoard board = ChessBoardFactory.createInitialChessBoard();
-        outputView.printStartingMessage();
+        final ChessBoard board = ChessBoardFactory.createInitialChessBoard();
+        outputView.printGameStartMessage();
 
-        Command command;
-        do {
-            String[] commands = inputView.readCommand().split(" ");
-            command = Command.findByName(commands[0]);
-            actMoveCommand(board, commands, command);
-            outputView.printBoard(board);
-        } while (command.isNotEnd());
-    }
-
-    private void actMoveCommand(ChessBoard board, String[] commands, Command command) {
-        if (command.isMove()) {
-            Position resource = generatePosition(commands[1]);
-            Position target = generatePosition(commands[2]);
-            board.move(resource, target);
+        Command command = readCommandUntilValid();
+        while (command.isNotEnded()) {
+            command.execute(board, outputView);
+            command = readCommandUntilValid();
         }
     }
 
-    private Position generatePosition(String position) {
-        String resourceFile = position.substring(0, 1);
-        String resourceRank = position.substring(1, 2);
-        File file = File.fromName(resourceFile);
-        Rank rank = Rank.fromNumber(Integer.parseInt(resourceRank));
-        return new Position(file, rank);
+    private Command readCommandUntilValid() {
+        try {
+            return inputView.readCommand();
+        } catch (Exception e) {
+            outputView.printErrorMessage(e.getMessage());
+            return readCommandUntilValid();
+        }
     }
 }
