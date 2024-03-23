@@ -1,13 +1,11 @@
 package chess.view;
 
+import chess.domain.Command;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
-    private static final String MOVE_COMMAND = "move";
     private static final String INVALID_GAME_COMMAND = "start 또는 end만 입력가능합니다.";
     private static final String INVALID_MOVE_COMMAND = "부적절한 명령어입니다. move b2 b3와 같이 입력해주세요.";
     private static final String MOVE_COMMAND_DELIMITER = " ";
@@ -31,7 +29,7 @@ public class InputView {
     }
 
     private void validateGameCommand(final String command) {
-        if (!command.equals(START_COMMAND) && !command.equals(END_COMMAND)) {
+        if (!command.equals(Command.START_COMMAND) && !command.equals(Command.END_COMMAND)) {
             throw new IllegalArgumentException(INVALID_GAME_COMMAND);
         }
     }
@@ -47,13 +45,13 @@ public class InputView {
     }
 
     private void validateDelimiter(final String input) {
-        if (!input.equals(END_COMMAND) && !input.contains(MOVE_COMMAND_DELIMITER)) {
+        if (!input.equals(Command.END_COMMAND) && !input.contains(MOVE_COMMAND_DELIMITER)) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND);
         }
     }
 
     private void validateMoveCommand(final String command) {
-        if (!command.equals(MOVE_COMMAND) && !command.equals(END_COMMAND)) {
+        if (!command.equals(Command.MOVE_COMMAND) && !command.equals(Command.END_COMMAND)) {
             throw new IllegalArgumentException(INVALID_MOVE_COMMAND);
         }
     }
