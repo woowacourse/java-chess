@@ -19,14 +19,14 @@ public class ChessBoard {
         final String sourcePosition = positions.get(0);
         final String targetPosition = positions.get(1);
 
-        move2(Position.from(sourcePosition), Position.from(targetPosition));
+        move(Position.from(sourcePosition), Position.from(targetPosition));
     }
 
-    void move2(final Position sourcePosition, final Position targetPosition) {
+    void move(final Position sourcePosition, final Position targetPosition) {
         final Piece sourcePiece = findPieceBy(sourcePosition);
 
         if (sourcePiece.isClass(Pawn.class) && canPawnCatch(sourcePosition, targetPosition)) {
-            catchPiece(sourcePosition, targetPosition);
+            movePiece(sourcePosition, targetPosition);
             return;
         }
 
@@ -35,11 +35,9 @@ public class ChessBoard {
 
         if (isPieceExist(targetPosition)) {
             validateNotMySide(sourcePiece, targetPosition);
-            catchPiece(sourcePosition, targetPosition);
         }
 
-        pieces.put(targetPosition, sourcePiece);
-        pieces.put(sourcePosition, new Empty());
+        movePiece(sourcePosition, targetPosition);
     }
 
     Piece findPieceBy(final Position input) {
@@ -66,7 +64,7 @@ public class ChessBoard {
                 && !sourcePiece.isMySide(targetPiece);
     }
 
-    private void catchPiece(final Position sourcePosition, final Position targetPosition) {
+    private void movePiece(final Position sourcePosition, final Position targetPosition) {
         Piece sourcePiece = pieces.get(sourcePosition);
 
         pieces.put(targetPosition, sourcePiece);
