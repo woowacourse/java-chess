@@ -1,9 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -11,13 +12,13 @@ public class Position {
     private static final int MIN_COLUMN = 1;
     private static final int MAX_COLUMN = 8;
 
-    private static final List<Position> positions;
+    private static final Map<Integer, Position> positions;
 
     static {
-        positions = new ArrayList<>();
+        positions = new ConcurrentHashMap<>();
         for (int row = MIN_ROW; row <= MAX_ROW; row++) {
             for (int column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
-                positions.add(new Position(row, column));
+                positions.put(toKey(row, column), new Position(row, column));
             }
         }
     }
@@ -32,19 +33,20 @@ public class Position {
 
     public static Position of(int row, int column) {
         validateRange(row, column);
-        return positions.stream()
-                .filter(position -> position.row == row && position.column == column)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("캐시에 해당 값이 존재하지 않습니다."));
+        return positions.get(toKey(row, column));
+    }
+
+    private static int toKey(int row, int column) {
+        return (row - MIN_ROW) * MAX_COLUMN + column;
     }
 
     private static void validateRange(int row, int column) {
         if (isRowOutOfRange(row)) {
-            throw new IllegalArgumentException(
+            throw new IllegalStateException(
                     "가로는 %d부터 %d 사이의 값이어야 합니다: %d".formatted(MIN_ROW, MAX_ROW, row));
         }
         if (isColumnOutOfRange(column)) {
-            throw new IllegalArgumentException(
+            throw new IllegalStateException(
                     "세로는 %d부터 %d 사이의 값이어야 합니다: %d".formatted(MIN_COLUMN, MAX_COLUMN, column));
         }
     }
@@ -62,7 +64,8 @@ public class Position {
     }
 
     public List<Position> findAllMovablePosition(Piece piece) {
-        return positions.stream()
+        return positions.values()
+                .stream()
                 .filter(position -> position != this)
                 .filter(position -> piece.isMovable(new Positions(this, position)))
                 .toList();
