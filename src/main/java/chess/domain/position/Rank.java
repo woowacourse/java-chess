@@ -41,4 +41,8 @@ public enum Rank {
     public boolean isBelow(Rank other) {
         return rowNumber > other.rowNumber;
     }
+
+    public Rank move(int weight) {
+        return from(rowNumber + weight);
+    }
 }

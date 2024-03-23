@@ -59,4 +59,11 @@ class RankTest {
     void should_CalculateRankIsLowerThanOther(Rank higher, Rank lower) {
         assertThat(lower.isBelow(higher)).isTrue();
     }
+
+    @DisplayName("가중치만큼 움직인 랭크를 계산할 수 있다")
+    @ParameterizedTest
+    @CsvSource(value = {"EIGHT, 1, SEVEN", "EIGHT, 2, SIX", "EIGHT, 3, FIVE", "EIGHT, 4, FOUR", "EIGHT, 5, THREE"})
+    void should_CalculateMovedFile_When_MoveWeightIsGiven(Rank start, int weight, Rank moved) {
+        assertThat(start.move(weight)).isEqualTo(moved);
+    }
 }
