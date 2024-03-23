@@ -8,8 +8,8 @@ import domain.Team;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    public Pawn(final Team color) { // TODO: 변수명 변경
-        super(color);
+    public Pawn(final Team team) {
+        super(team);
     }
 
     @Override

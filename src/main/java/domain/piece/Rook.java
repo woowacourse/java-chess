@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rook extends Piece {
-    public Rook(final Team color) {
-        super(color);
+    public Rook(final Team team) {
+        super(team);
     }
 
     @Override

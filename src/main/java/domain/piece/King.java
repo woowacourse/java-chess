@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public class King extends Piece {
 
-    public King(final Team color) {
-        super(color);
+    public King(final Team team) {
+        super(team);
     }
 
     @Override

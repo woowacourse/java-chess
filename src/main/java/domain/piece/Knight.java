@@ -13,8 +13,8 @@ public class Knight extends Piece {
             new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
             new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
 
-    public Knight(final Team color) {
-        super(color);
+    public Knight(final Team team) {
+        super(team);
     }
 
     @Override

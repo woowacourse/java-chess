@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Bishop extends Piece {
-    public Bishop(final Team color) {
-        super(color);
+    public Bishop(final Team team) {
+        super(team);
     }
 
     @Override
