@@ -1,9 +1,11 @@
 package domain.piece;
 
+import domain.game.Square;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.position.Position;
+import java.util.Map;
 
 public record Piece(PieceRole pieceRole, Color color) {
 
@@ -11,8 +13,9 @@ public record Piece(PieceRole pieceRole, Color color) {
         return this.color == target;
     }
 
-    public boolean canMove(final Position source, final Position target) {
-        return pieceRole.canMove(source, target);
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Square, Piece> chessBoard) {
+        pieceRole.validateMovableRoute(source, target, chessBoard);
     }
 
     public boolean isPawn() {

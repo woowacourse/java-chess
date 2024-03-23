@@ -2,51 +2,53 @@ package domain.piece.piecerole;
 
 import domain.game.Direction;
 import domain.game.Movable;
+import domain.game.Square;
 import domain.piece.Color;
+import domain.piece.Piece;
 import domain.position.Position;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class Pawn implements PieceRole {
-    protected List<Movable> routes;
-    protected int count;
+public class Pawn extends PieceRole {
+    private static final int INITIAL_MAX_MOVEMENT = 2;
+    private static final Map<Color, List<Movable>> MOVABLE_ROUTES = new HashMap<>();
 
-    public Pawn(final Color color) {
-        count = 1;
-        if (color == Color.BLACK) {
-            this.routes = List.of(
-                    new Movable(getMaxStepSize(count), Direction.SOUTH),
-                    new Movable(getMaxStepSize(count), Direction.SOUTH_EAST),
-                    new Movable(getMaxStepSize(count), Direction.SOUTH_WEST)
-            );
-        }
-        if (color == Color.WHITE) {
-            this.routes = List.of(
-                    new Movable(getMaxStepSize(count), Direction.NORTH),
-                    new Movable(getMaxStepSize(count), Direction.NORTH_EAST),
-                    new Movable(getMaxStepSize(count), Direction.NORTH_WEST)
-            );
-        }
+    static {
+        MOVABLE_ROUTES.put(Color.BLACK, List.of(
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH),
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH_EAST),
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH_WEST)
+        ));
+        MOVABLE_ROUTES.put(Color.WHITE, List.of(
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH),
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH_EAST),
+                new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH_WEST)
+        ));
     }
 
-    protected int getMaxStepSize(final int count) {
-        if (count == 1) {
-            return 2;
-        }
-        return 1;
+    private boolean hasNotMoved;
+
+    private Pawn(List<Movable> routes) {
+        super(routes);
+        this.hasNotMoved = true;
+    }
+
+    public static Pawn from(final Color color) {
+        return new Pawn(MOVABLE_ROUTES.get(color));
     }
 
     @Override
-    public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        boolean canMove = routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
-        if (count == 1) {
-            for (Movable movable : routes) {
-                movable.decreaseMaxStepSize();
-            }
-            count++;
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Square, Piece> chessBoard) {
+        validateValidRouteForPiece(source, target);
+        validateBlockedRoute(source, target, chessBoard);
+
+        if (hasNotMoved) {
+            routes.forEach(Movable::decreaseMaxMovement);
+            hasNotMoved = false;
         }
-        return canMove;
     }
 
     @Override

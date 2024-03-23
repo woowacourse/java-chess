@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +23,9 @@ public class ChessBoard {
 
         Piece findPiece = pieceBySquare.get(sourceSquare);
         pawnMoveValidate(sourceSquare, targetSquare, findPiece);
-        moveValidateExceptKnight(sourceSquare, targetSquare, findPiece);
 
-        if (findPiece.canMove(sourceSquare.position(), targetSquare.position())) {
-            update(sourceSquare, targetSquare, findPiece);
-        }
+        findPiece.validateMovableRoute(sourceSquare.position(), targetSquare.position(), pieceBySquare);
+        update(sourceSquare, targetSquare, findPiece);
     }
 
     private void commonMoveValidate(Square sourceSquare, Square targetSquare) {
@@ -109,25 +106,6 @@ public class ChessBoard {
 
     private boolean hasNotPieceAtDiagonal(Direction direction, Square targetSquare, Direction diagonal) {
         return direction == diagonal && !pieceBySquare.containsKey(targetSquare);
-    }
-
-    private void moveValidateExceptKnight(Square sourceSquare, Square targetSquare, Piece findPiece) {
-        if (findPiece.isNotKnight()) {
-            Direction direction = Direction.findDirection(sourceSquare.position(), targetSquare.position());
-
-            Position here = new Position(sourceSquare.position());
-            here.move(direction);
-            checkPieceOnRoute(targetSquare, here, direction);
-        }
-    }
-
-    private void checkPieceOnRoute(Square targetSquare, Position here, Direction direction) {
-        while (!here.equals(targetSquare.position())) {
-            if (pieceBySquare.containsKey(new Square(here))) {
-                throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
-            }
-            here.move(direction);
-        }
     }
 
     private void update(Square sourceSquare, Square targetSquare, Piece findPiece) {

@@ -6,27 +6,34 @@ import static domain.game.Direction.SOUTH;
 import static domain.game.Direction.WEST;
 
 import domain.game.Movable;
+import domain.game.Square;
+import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class King implements PieceRole {
+public class King extends PieceRole {
     public static final int MAX_MOVEMENT = 1;
-    private final List<Movable> routes;
 
-    public King() {
-        routes = List.of(
+    private King(final List<Movable> routes) {
+        super(routes);
+    }
+
+    public static King from() {
+        List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),
                 new Movable(MAX_MOVEMENT, SOUTH),
                 new Movable(MAX_MOVEMENT, WEST)
         );
+        return new King(routes);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
+    public boolean validateMovableRoute(Position source, Position target, Map<Square, Piece> chessBoard) {
         return routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+                .anyMatch(movable -> movable.canMove(source, target));
     }
 
     @Override

@@ -10,17 +10,22 @@ import static domain.game.Direction.SOUTH_WEST;
 import static domain.game.Direction.WEST;
 
 import domain.game.Movable;
+import domain.game.Square;
+import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class Queen implements PieceRole {
+public class Queen extends PieceRole {
     public static final int MAX_MOVEMENT = 7;
 
-    private final List<Movable> routes;
+    private Queen(List<Movable> routes) {
+        super(routes);
+    }
 
-    public Queen() {
-        routes = List.of(
+    public static Queen from() {
+        List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),
                 new Movable(MAX_MOVEMENT, SOUTH),
@@ -30,13 +35,16 @@ public class Queen implements PieceRole {
                 new Movable(MAX_MOVEMENT, SOUTH_EAST),
                 new Movable(MAX_MOVEMENT, SOUTH_WEST)
         );
+        return new Queen(routes);
     }
 
     @Override
-    public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Square, Piece> chessBoard) {
+        validateValidRouteForPiece(source, target);
+        validateBlockedRoute(source, target, chessBoard);
     }
+
 
     @Override
     public boolean equals(Object o) {

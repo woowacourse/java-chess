@@ -6,28 +6,35 @@ import static domain.game.Direction.SOUTH;
 import static domain.game.Direction.WEST;
 
 import domain.game.Movable;
+import domain.game.Square;
+import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class Rook implements PieceRole {
+public class Rook extends PieceRole {
     public static final int MAX_MOVEMENT = 7;
 
-    private final List<Movable> routes;
+    private Rook(List<Movable> routes) {
+        super(routes);
+    }
 
-    public Rook() {
-        routes = List.of(
+    public static Rook from() {
+        List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),
                 new Movable(MAX_MOVEMENT, SOUTH),
                 new Movable(MAX_MOVEMENT, WEST)
         );
+        return new Rook(routes);
     }
 
     @Override
-    public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Square, Piece> chessBoard) {
+        validateValidRouteForPiece(source, target);
+        validateBlockedRoute(source, target, chessBoard);
     }
 
     @Override

@@ -10,16 +10,22 @@ import static domain.game.Direction.UP_LEFT;
 import static domain.game.Direction.UP_RIGHT;
 
 import domain.game.Movable;
+import domain.game.Square;
+import domain.piece.Piece;
 import domain.position.Position;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-public class Knight implements PieceRole {
+public class Knight extends PieceRole {
     public static final int MAX_MOVEMENT = 1;
-    private final List<Movable> routes;
 
-    public Knight() {
-        routes = List.of(
+    private Knight(List<Movable> routes) {
+        super(routes);
+    }
+
+    public static Knight from() {
+        List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, DOWN_LEFT),
                 new Movable(MAX_MOVEMENT, DOWN_RIGHT),
                 new Movable(MAX_MOVEMENT, LEFT_DOWN),
@@ -29,12 +35,13 @@ public class Knight implements PieceRole {
                 new Movable(MAX_MOVEMENT, UP_LEFT),
                 new Movable(MAX_MOVEMENT, UP_RIGHT)
         );
+        return new Knight(routes);
     }
 
     @Override
-    public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return routes.stream()
-                .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Square, Piece> chessBoard) {
+        validateValidRouteForPiece(source, target);
     }
 
     @Override

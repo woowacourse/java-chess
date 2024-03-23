@@ -25,19 +25,19 @@ public class OutputView {
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
 
     static {
-        pieceSymbol.put(new Piece(new Rook(), Color.BLACK), "R");
-        pieceSymbol.put(new Piece(new Knight(), Color.BLACK), "N");
-        pieceSymbol.put(new Piece(new Bishop(), Color.BLACK), "B");
-        pieceSymbol.put(new Piece(new Queen(), Color.BLACK), "Q");
-        pieceSymbol.put(new Piece(new King(), Color.BLACK), "K");
-        pieceSymbol.put(new Piece(new Pawn(Color.BLACK), Color.BLACK), "P");
+        pieceSymbol.put(new Piece(Rook.from(), Color.BLACK), "R");
+        pieceSymbol.put(new Piece(Knight.from(), Color.BLACK), "N");
+        pieceSymbol.put(new Piece(Bishop.from(), Color.BLACK), "B");
+        pieceSymbol.put(new Piece(Queen.from(), Color.BLACK), "Q");
+        pieceSymbol.put(new Piece(King.from(), Color.BLACK), "K");
+        pieceSymbol.put(new Piece(Pawn.from(Color.BLACK), Color.BLACK), "P");
 
-        pieceSymbol.put(new Piece(new Rook(), Color.WHITE), "r");
-        pieceSymbol.put(new Piece(new Knight(), Color.WHITE), "n");
-        pieceSymbol.put(new Piece(new Bishop(), Color.WHITE), "b");
-        pieceSymbol.put(new Piece(new Queen(), Color.WHITE), "q");
-        pieceSymbol.put(new Piece(new King(), Color.WHITE), "k");
-        pieceSymbol.put(new Piece(new Pawn(Color.WHITE), Color.WHITE), "p");
+        pieceSymbol.put(new Piece(Rook.from(), Color.WHITE), "r");
+        pieceSymbol.put(new Piece(Knight.from(), Color.WHITE), "n");
+        pieceSymbol.put(new Piece(Bishop.from(), Color.WHITE), "b");
+        pieceSymbol.put(new Piece(Queen.from(), Color.WHITE), "q");
+        pieceSymbol.put(new Piece(King.from(), Color.WHITE), "k");
+        pieceSymbol.put(new Piece(Pawn.from(Color.WHITE), Color.WHITE), "p");
     }
 
     public void printCommandMessage() {

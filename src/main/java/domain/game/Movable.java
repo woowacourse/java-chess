@@ -30,7 +30,7 @@ public class Movable {
         return step <= maxStepSize;
     }
 
-    public void decreaseMaxStepSize() {
+    public void decreaseMaxMovement() {
         maxStepSize--;
     }
 

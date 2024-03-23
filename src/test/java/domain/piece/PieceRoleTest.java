@@ -26,7 +26,7 @@ class PieceRoleTest {
 
             PieceRole king = new King();
 
-            Assertions.assertThat(king.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(king.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
 
         @DisplayName("퀸이 (b,1)에서 (b,7)로 이동한다.")
@@ -37,7 +37,7 @@ class PieceRoleTest {
 
             PieceRole queen = new Queen();
 
-            Assertions.assertThat(queen.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(queen.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
 
         @DisplayName("룩이 (b,1)에서 (b,7)로 이동한다.")
@@ -48,7 +48,7 @@ class PieceRoleTest {
 
             PieceRole rook = new Rook();
 
-            Assertions.assertThat(rook.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(rook.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
 
         @DisplayName("나이트가 (b,1)에서 (c,3)로 이동한다.")
@@ -59,7 +59,7 @@ class PieceRoleTest {
 
             PieceRole knight = new Knight();
 
-            Assertions.assertThat(knight.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(knight.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
 
         @DisplayName("비숍이 (b,1)에서 (c,2)로 이동한다.")
@@ -70,7 +70,7 @@ class PieceRoleTest {
 
             PieceRole bishop = new Bishop();
 
-            Assertions.assertThat(bishop.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(bishop.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
 
         @DisplayName("흰색 폰이 (c,2)에서 (c,3)로 이동한다.")
@@ -81,7 +81,7 @@ class PieceRoleTest {
 
             PieceRole pawn = new Pawn(Color.WHITE);
 
-            Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isTrue();
+            Assertions.assertThat(pawn.validateMovableRoute(sourcePosition, targetPosition)).isTrue();
         }
     }
 
@@ -96,7 +96,7 @@ class PieceRoleTest {
 
             PieceRole king = new King();
 
-            Assertions.assertThat(king.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(king.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
 
         @DisplayName("퀸이 (b,1)에서 (c,3)로 이동하지 못한다.")
@@ -107,7 +107,7 @@ class PieceRoleTest {
 
             PieceRole queen = new Queen();
 
-            Assertions.assertThat(queen.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(queen.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
 
         @DisplayName("룩이 (c,1)에서 (b,2)로 이동하지 못한다.")
@@ -118,7 +118,7 @@ class PieceRoleTest {
 
             PieceRole rook = new Rook();
 
-            Assertions.assertThat(rook.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(rook.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
 
         @DisplayName("나이트가 (b,1)에서 (b,2)로 이동하지 못한다.")
@@ -129,7 +129,7 @@ class PieceRoleTest {
 
             PieceRole knight = new Knight();
 
-            Assertions.assertThat(knight.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(knight.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
 
         @DisplayName("비숍이 (b,1)에서 (b,2)로 이동하지 못한다.")
@@ -140,7 +140,7 @@ class PieceRoleTest {
 
             PieceRole bishop = new Bishop();
 
-            Assertions.assertThat(bishop.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(bishop.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
 
         @DisplayName("검은색 폰이 (c,2)에서 (c,3)로 이동하지 못한다.")
@@ -151,7 +151,7 @@ class PieceRoleTest {
 
             PieceRole pawn = new Pawn(Color.BLACK);
 
-            Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isFalse();
+            Assertions.assertThat(pawn.validateMovableRoute(sourcePosition, targetPosition)).isFalse();
         }
     }
 
