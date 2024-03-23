@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public record MovePositionDto(List<Position> positions) {
-
     public static MovePositionDto noPosition() {
         return new MovePositionDto(Collections.emptyList());
     }

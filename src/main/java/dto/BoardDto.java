@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public record BoardDto(Map<Position, PieceType> piecePositions) {
-
     public static BoardDto from(final Board board) {
         Map<Position, PieceType> piecePositions = board.getChessBoard()
                 .entrySet()

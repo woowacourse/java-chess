@@ -4,7 +4,6 @@ import domain.GameCommand;
 import domain.position.Position;
 
 public record RequestDto(GameCommand command, MovePositionDto movePositionDto) {
-
     public static RequestDto of(GameCommand command) {
         return new RequestDto(command, MovePositionDto.noPosition());
     }
