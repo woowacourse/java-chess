@@ -5,7 +5,7 @@ import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 
-class AbstractSlidingPiece extends AbstractPiece {
+abstract class AbstractSlidingPiece extends AbstractPiece {
 
     private final List<Direction> directions;
 
