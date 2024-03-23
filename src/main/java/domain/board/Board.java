@@ -19,68 +19,68 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
-    public Board move(Position sourcePosition, Position targetPosition, Turn turn) {
-        Piece piece = board.get(sourcePosition);
-        validate(sourcePosition, targetPosition, turn);
-        board.remove(sourcePosition);
-        board.put(targetPosition, piece);
+    public Board move(Position source, Position target, Turn turn) {
+        Piece piece = board.get(source);
+        validate(source, target, turn);
+        board.remove(source);
+        board.put(target, piece);
         return new Board(board);
     }
 
-    private void validate(Position sourcePosition, Position targetPosition, Turn turn) {
-        validateNoPieceToMove(sourcePosition);
-        validateTurn(sourcePosition, turn);
-        validateSamePosition(sourcePosition, targetPosition);
-        validateOwnPieceExistAtTargetPosition(sourcePosition, targetPosition);
-        validatePieceCanMove(sourcePosition, targetPosition);
-        validateWhenStraightOrDiagonalMove(sourcePosition, targetPosition);
-        validateWhenPieceIsPawn(sourcePosition, targetPosition);
+    private void validate(Position source, Position target, Turn turn) {
+        validateNoPieceToMove(source);
+        validateTurn(source, turn);
+        validateSamePosition(source, target);
+        validateOwnPieceExistAttarget(source, target);
+        validatePieceCanMove(source, target);
+        validateWhenStraightOrDiagonalMove(source, target);
+        validateWhenPieceIsPawn(source, target);
     }
 
-    private void validateNoPieceToMove(Position sourcePosition) {
-        if (isNoPieceAt(sourcePosition)) {
+    private void validateNoPieceToMove(Position source) {
+        if (isNoPieceAt(source)) {
             throw new IllegalArgumentException("source 위치에 말이 없습니다.");
         }
     }
 
-    private void validateTurn(Position sourcePosition, Turn turn) {
-        Piece piece = board.get(sourcePosition);
+    private void validateTurn(Position source, Turn turn) {
+        Piece piece = board.get(source);
         if (piece.hasColorOf(turn.getColor())) {
             return;
         }
         throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
     }
 
-    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
+    private void validateSamePosition(Position source, Position target) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
         }
     }
 
-    private void validateOwnPieceExistAtTargetPosition(Position sourcePosition, Position targetPosition) {
-        if (isPieceAt(targetPosition) && (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition))) {
+    private void validateOwnPieceExistAttarget(Position source, Position target) {
+        if (isPieceAt(target) && (findPieceColorAt(source) == findPieceColorAt(target))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
     }
 
-    private void validatePieceCanMove(Position sourcePosition, Position targetPosition) {
-        Piece piece = board.get(sourcePosition);
-        if (piece.canMove(sourcePosition, targetPosition)) {
+    private void validatePieceCanMove(Position source, Position target) {
+        Piece piece = board.get(source);
+        if (piece.canMove(source, target)) {
             return;
         }
         throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
     }
 
-    private void validateWhenStraightOrDiagonalMove(Position sourcePosition, Position targetPosition) {
-        if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
-            validatePieceExistOnRoute(sourcePosition, targetPosition);
+    private void validateWhenStraightOrDiagonalMove(Position source, Position target) {
+        if (isStraightMove(source, target) || isDiagonalMove(source, target)) {
+            validatePieceExistOnRoute(source, target);
         }
     }
 
-    private void validatePieceExistOnRoute(Position sourcePosition, Position targetPosition) {
-        Direction direction = Direction.of(sourcePosition, targetPosition);
-        Position currentPosition = sourcePosition.nextPosition(direction);
-        while (!currentPosition.equals(targetPosition)) {
+    private void validatePieceExistOnRoute(Position source, Position target) {
+        Direction direction = Direction.of(source, target);
+        Position currentPosition = source.nextPosition(direction);
+        while (!currentPosition.equals(target)) {
             validatePieceExistAt(currentPosition);
             currentPosition = currentPosition.nextPosition(direction);
         }
@@ -92,33 +92,33 @@ public class Board {
         }
     }
 
-    private void validateWhenPieceIsPawn(Position sourcePosition, Position targetPosition) {
-        Piece piece = board.get(sourcePosition);
+    private void validateWhenPieceIsPawn(Position source, Position target) {
+        Piece piece = board.get(source);
         if (piece instanceof Pawn) {
-            validatePawnStraightCapture(sourcePosition, targetPosition);
-            validatePawnDiagonalMove(sourcePosition, targetPosition);
+            validatePawnStraightCapture(source, target);
+            validatePawnDiagonalMove(source, target);
         }
     }
 
-    private void validatePawnStraightCapture(Position sourcePosition, Position targetPosition) {
-        if (isStraightMove(sourcePosition, targetPosition) && isPieceAt(targetPosition)) {
+    private void validatePawnStraightCapture(Position source, Position target) {
+        if (isStraightMove(source, target) && isPieceAt(target)) {
             throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
         }
     }
 
-    private void validatePawnDiagonalMove(Position sourcePosition, Position targetPosition) {
-        if (isDiagonalMove(sourcePosition, targetPosition) && isNoPieceAt(targetPosition)) {
+    private void validatePawnDiagonalMove(Position source, Position target) {
+        if (isDiagonalMove(source, target) && isNoPieceAt(target)) {
             throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
         }
     }
 
-    private boolean isStraightMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameRankAs(targetPosition)
-                || sourcePosition.isOnSameFileAs(targetPosition);
+    private boolean isStraightMove(Position source, Position target) {
+        return source.isOnSameRankAs(target)
+                || source.isOnSameFileAs(target);
     }
 
-    private boolean isDiagonalMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameDiagonalAs(targetPosition);
+    private boolean isDiagonalMove(Position source, Position target) {
+        return source.isOnSameDiagonalAs(target);
     }
 
     private boolean isPieceAt(Position position) {

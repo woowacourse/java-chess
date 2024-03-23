@@ -10,7 +10,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(Position sourcePosition, Position targetPosition);
+    public abstract boolean canMove(Position source, Position target);
 
     public boolean isWhite() {
         return color == Color.WHITE;

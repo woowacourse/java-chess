@@ -9,7 +9,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameDiagonalAs(targetPosition);
+    public boolean canMove(Position source, Position target) {
+        return source.isOnSameDiagonalAs(target);
     }
 }

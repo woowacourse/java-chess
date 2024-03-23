@@ -9,9 +9,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
+    public boolean canMove(Position source, Position target) {
+        int fileDifference = source.calculateFileDifference(target);
+        int rankDifference = source.calculateRankDifference(target);
 
         return (Math.abs(fileDifference) == 1 && Math.abs(rankDifference) == 2)
             || (Math.abs(fileDifference) == 2 && Math.abs(rankDifference) == 1);

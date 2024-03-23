@@ -21,9 +21,9 @@ public enum Direction {
         this.rankDirection = rankDirection;
     }
 
-    public static Direction of(Position sourcePosition, Position targetPosition) {
-        int fileDifference = targetPosition.calculateFileDifference(sourcePosition);
-        int rankDifference = targetPosition.calculateRankDifference(sourcePosition);
+    public static Direction of(Position source, Position target) {
+        int fileDifference = target.calculateFileDifference(source);
+        int rankDifference = target.calculateRankDifference(source);
 
         return Arrays.stream(values())
             .filter(direction -> direction.fileDirection == decideFileDirection(fileDifference)

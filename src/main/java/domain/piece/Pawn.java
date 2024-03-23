@@ -9,15 +9,15 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        int rankDifference = targetPosition.calculateRankDifference(sourcePosition);
-        int fileDifference = targetPosition.calculateFileDifference(sourcePosition);
+    public boolean canMove(Position source, Position target) {
+        int rankDifference = target.calculateRankDifference(source);
+        int fileDifference = target.calculateFileDifference(source);
 
         if (isWhite()) {
-            return (sourcePosition.isWhitePawnInitialPosition() && rankDifference == 2)
+            return (source.isWhitePawnInitialPosition() && rankDifference == 2)
                 || (rankDifference == 1 && Math.abs(fileDifference) <= 1);
         }
-        return (sourcePosition.isBlackPawnInitialPosition() && rankDifference == -2)
+        return (source.isBlackPawnInitialPosition() && rankDifference == -2)
             || (rankDifference == -1 && Math.abs(fileDifference) <= 1);
     }
 }

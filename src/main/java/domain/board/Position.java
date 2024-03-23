@@ -37,17 +37,17 @@ public class Position {
         return rank.subtract(otherPosition.rank);
     }
 
-    public boolean isOnSameDiagonalAs(Position targetPosition) {
-        return Math.abs(file.subtract(targetPosition.file))
-            == Math.abs(rank.subtract(targetPosition.rank));
+    public boolean isOnSameDiagonalAs(Position target) {
+        return Math.abs(file.subtract(target.file))
+            == Math.abs(rank.subtract(target.rank));
     }
 
-    public boolean isOnSameFileAs(Position targetPosition) {
-        return file.equals(targetPosition.file);
+    public boolean isOnSameFileAs(Position target) {
+        return file.equals(target.file);
     }
 
-    public boolean isOnSameRankAs(Position targetPosition) {
-        return rank.equals(targetPosition.rank);
+    public boolean isOnSameRankAs(Position target) {
+        return rank.equals(target.rank);
     }
 
     @Override

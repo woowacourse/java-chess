@@ -14,7 +14,7 @@ public class ChessGame {
     }
 
     public Board startTurn(MovePositionDto movePositionDto) {
-        Board movedBoard = board.move(movePositionDto.sourcePosition(), movePositionDto.targetPosition(), turn);
+        Board movedBoard = board.move(movePositionDto.source(), movePositionDto.target(), turn);
         turn = turn.changeTurn();
         return movedBoard;
     }
