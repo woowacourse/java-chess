@@ -5,6 +5,7 @@ import static chess.domain.CommandType.MOVE;
 import static chess.domain.CommandType.START;
 
 import chess.domain.Board;
+import chess.domain.Command;
 import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
@@ -30,12 +31,12 @@ public class ChessGame {
     }
 
     public void startGame() {
-        String firstCommand = InputView.inputCommand().get(0);
-        while (!isStart(firstCommand) && !isEnd(firstCommand)) {
+        Command command = Command.from(InputView.inputCommand());
+        while (!command.isTypeEqualTo(START) && !command.isTypeEqualTo(END)) {
             OutputView.printInputAgainMessage();
-            firstCommand = InputView.inputCommand().get(0);
+            command = Command.from(InputView.inputCommand());
         }
-        if (isStart(firstCommand)) {
+        if (command.isTypeEqualTo(START)) {
             OutputView.printBoard(makeBoardDto(board.getBoard()));
             playGame();
         }
@@ -49,23 +50,21 @@ public class ChessGame {
     }
 
     private Team playTurn(Team turn) {
-        List<String> commands = InputView.inputCommand();
-        String command = commands.get(0);
-        while (!isMove(command) && !isEnd(command)) {
+        Command command = Command.from(InputView.inputCommand());
+        while (!command.isTypeEqualTo(MOVE) && !command.isTypeEqualTo(END)) {
             OutputView.printInputAgainMessage();
-            commands = InputView.inputCommand();
-            command = commands.get(0);
+            command = Command.from(InputView.inputCommand());
         }
-        if (isMove(command)) {
-            return playMoveCommand(commands, turn);
+        if (command.isTypeEqualTo(MOVE)) {
+            return playMoveCommand(command, turn);
         }
         return Team.NONE;
     }
 
-    private Team playMoveCommand(List<String> commands, Team turn) {
-        Position source = Position.of(commands.get(1));
-        Position target = Position.of(commands.get(2));
-        if (source.equals(target) || isOppositeTurn(source, turn) || !board.movePieceAndRenewBoard(source, target)) {
+    private Team playMoveCommand(Command command, Team turn) {
+        Position source = command.getSource();
+        Position target = command.getTarget();
+        if (isOppositeTurn(source, turn) || !board.movePieceAndRenewBoard(source, target)) {
             OutputView.printWrongMovementMessage();
             return turn;
         }
@@ -101,17 +100,5 @@ public class ChessGame {
         }
 
         return rawBoard;
-    }
-
-    private boolean isStart(String command) {
-        return START.sameCommand(command);
-    }
-
-    private boolean isMove(String command) {
-        return MOVE.sameCommand(command);
-    }
-
-    private boolean isEnd(String command) {
-        return END.sameCommand(command);
     }
 }
