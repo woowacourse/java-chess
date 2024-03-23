@@ -71,14 +71,6 @@ public class Position {
         return Objects.hash(file, rank);
     }
 
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
-    }
-
     public int getFile() {
         return file.getValue();
     }
