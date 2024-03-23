@@ -12,9 +12,6 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    public BoardFactory() {
-    }
-
     public Map<Square, Piece> create() {
         Map<Square, Piece> board = new HashMap<>();
 
