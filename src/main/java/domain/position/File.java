@@ -1,6 +1,8 @@
 package domain.position;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public enum File {
     A(0),
@@ -11,6 +13,14 @@ public enum File {
     F(5),
     G(6),
     H(7);
+
+    private static final Map<Integer, File> FILE_POOL = new HashMap<>();
+
+    static {
+        Arrays.stream(values()).forEach(
+                file -> FILE_POOL.put(file.index, file)
+        );
+    }
 
     private final int index;
 
@@ -23,9 +33,9 @@ public enum File {
     }
 
     public static File of(final int index) {
-        return Arrays.stream(values())
-                .filter(file -> file.getIndex() == index)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 인덱스입니다."));
+        if (!FILE_POOL.containsKey(index)) {
+            throw new IllegalArgumentException("유효하지 않은 인덱스입니다.");
+        }
+        return FILE_POOL.get(index);
     }
 }
