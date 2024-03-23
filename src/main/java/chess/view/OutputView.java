@@ -26,11 +26,11 @@ public class OutputView {
     }
 
     private void printBoardRow(Row row, Map<Location, Piece> board) {
-        Arrays.stream(Column.values())
-                .map(column -> new Location(column, row))
-                .map(location -> board.get(location))
-                .map(this::convertPieceToString)
-                .forEach(System.out::print);
+        for (Column column : Column.values()) {
+            Location location = new Location(column, row);
+            Piece piece = board.get(location);
+            System.out.print(convertPieceToString(piece));
+        }
     }
 
     private String convertPieceToString(Piece piece) {
