@@ -5,7 +5,6 @@ import java.util.Objects;
 
 //TODO 캐싱
 public class Location {
-    private static final int LOCATION_INPUT_LENGTH = 2;
 
     private final Column column;
     private final Row row;
@@ -24,7 +23,7 @@ public class Location {
     public static Location of(String input) {
         validateInput(input);
         Column column = Column.of(input.substring(0, 1));
-        Row row = Row.of(input.substring(1, LOCATION_INPUT_LENGTH));
+        Row row = Row.of(input.substring(1, 2));
         return new Location(column, row);
     }
 
@@ -32,7 +31,7 @@ public class Location {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("빈 값을 위치로 입력할 수 없습니다.");
         }
-        if (input.length() != LOCATION_INPUT_LENGTH) {
+        if (input.length() != 2) {
             throw new IllegalArgumentException("잘못된 위치 입력입니다.");
         }
     }
