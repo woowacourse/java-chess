@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.dto.SquareCreateCommand;
 import chess.dto.SquareDifferent;
 
 import java.util.Arrays;
@@ -27,12 +28,12 @@ public class Square {
         return POOL.get(toKey(file, rank));
     }
 
-    public static Square from(String command) {
-        String fileName = String.valueOf(command.charAt(0));
-        String rankValue = String.valueOf(command.charAt(1));
+    public static Square from(SquareCreateCommand command) {
+        String fileCommand = String.valueOf(command.getFileCommand());
+        String rankValue = String.valueOf(command.getRankValue());
         validateRank(rankValue);
 
-        File file = File.findFileByCommand(fileName);
+        File file = File.findFileByCommand(fileCommand);
         Rank rank = Rank.findRankByValue(Integer.parseInt(rankValue));
 
         return POOL.get(toKey(file, rank));

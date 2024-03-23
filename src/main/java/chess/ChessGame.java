@@ -6,6 +6,7 @@ import chess.domain.position.File;
 import chess.domain.position.Rank;
 import chess.domain.position.Square;
 import chess.dto.MoveCommand;
+import chess.dto.SquareCreateCommand;
 import chess.util.RetryUtil;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -57,10 +58,16 @@ public class ChessGame {
             return false;
         }
 
-        MoveCommand moveCommand = new MoveCommand(Square.from(command.get(1)), Square.from(command.get(2)));
-        movePiece(board, moveCommand);
+        movePiece(board, createMoveCommand(command));
 
         return true;
+    }
+
+    private MoveCommand createMoveCommand(List<String> command) {
+        Square source = Square.from(new SquareCreateCommand(command.get(1)));
+        Square destination = Square.from(new SquareCreateCommand(command.get(2)));
+
+        return new MoveCommand(source, destination);
     }
 
     private void movePiece(Board board, MoveCommand moveCommand) {
