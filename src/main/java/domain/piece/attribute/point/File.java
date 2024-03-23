@@ -32,4 +32,46 @@ public enum File {
         return values()[ordinalIndex];
     }
 
+    public boolean isLeftEnd() {
+        return ordinal() == 0;
+    }
+
+    public boolean isRightEnd() {
+        return ordinal() + 1 == values().length;
+    }
+
+    public File moveLeft() {
+        return moveLeft(1);
+    }
+
+    public File moveLeft(final int count) {
+        if (canMoveLeft(count)) {
+            return values()[ordinal() - count];
+        }
+        throw new IllegalStateException("%d 만큼 왼쪽으로 움직일 수 없습니다.");
+    }
+
+    public boolean canMoveLeft() {
+        return canMoveLeft(1);
+    }
+
+    public boolean canMoveLeft(final int count) {
+        return ordinal() - count >= 0;
+    }
+
+    public File moveRight() {
+        return moveRight(1);
+    }
+
+    public File moveRight(final int count) {
+        if (canMoveRight(count)) {
+            return values()[ordinal() + count];
+        }
+        throw new IllegalStateException("%d 만큼 오른쪽으로 움직일 수 없습니다.");
+    }
+
+    public boolean canMoveRight(final int count) {
+        return ordinal() + count < values().length;
+    }
+
 }

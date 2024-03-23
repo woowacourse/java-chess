@@ -32,4 +32,43 @@ public enum Rank {
         return values()[ordinalIndex];
     }
 
+    public boolean isUpEnd() {
+        return ordinal() + 1 == values().length;
+    }
+
+    public boolean isDownEnd() {
+        return ordinal() == 0;
+    }
+
+    public Rank moveUp() {
+        return moveUp(0);
+    }
+
+    public Rank moveUp(final int count) {
+        if (canMoveUp(count)) {
+            return values()[ordinal() + count];
+        }
+        throw new IllegalStateException("%d 만큼 위쪽으로 움직일 수 없습니다.");
+    }
+
+    public boolean canMoveUp(final int count) {
+        return ordinal() + count < values().length;
+    }
+
+    public Rank moveDown() {
+        return moveDown(1);
+    }
+
+
+    public Rank moveDown(final int count) {
+        if (canMoveDown(count)) {
+            return values()[ordinal() - count];
+        }
+        throw new IllegalStateException("%d 만큼 아래쪽으로 움직일 수 없습니다.");
+    }
+
+    public boolean canMoveDown(final int count) {
+        return ordinal() - count >= 0;
+    }
+
 }
