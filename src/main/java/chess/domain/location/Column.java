@@ -2,7 +2,9 @@ package chess.domain.location;
 
 import chess.domain.board.Direction;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public enum Column {
     A(1),
@@ -14,18 +16,30 @@ public enum Column {
     G(7),
     H(8);
 
-    private static final List<Column> COLUMNS = List.of(A, B, C, D, E, F, G, H);
+    private static final Map<String, Column> CACHED_COLUMNS_BY_NAME = new HashMap<>();
+
+    static {
+        for (Column column : values()) {
+            CACHED_COLUMNS_BY_NAME.put(column.name(), column);
+        }
+    }
+
     private final int index;
 
     Column(int index) {
         this.index = index;
     }
 
-    public static Column of(String input) {
-        return Arrays.stream(values())
-                .filter(column -> column.isName(input))
-                .findAny()
+    public static Column findByName(String inputName) {
+        return Optional.ofNullable(CACHED_COLUMNS_BY_NAME.get(inputName.toUpperCase()))
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Column 입력입니다."));
+    }
+
+    public static Column findByIndex(int inputIndex) {
+        return Arrays.stream(values())
+                .filter(column -> column.isIndexOf(inputIndex))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 방향 입력입니다."));
     }
 
     public Column move(Direction direction) {
@@ -38,29 +52,19 @@ public enum Column {
         return this;
     }
 
-    private Column next() {
-        int ordinalIndex = this.index - 1;
-        try {
-            return COLUMNS.get(ordinalIndex + 1);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
-        }
-    }
-
     private Column previous() {
-        int ordinalIndex = this.index - 1;
-        try {
-            return COLUMNS.get(ordinalIndex - 1);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
-        }
+        return Column.findByIndex(this.index - 1);
     }
 
-    private boolean isName(String name) {
-        return this.name().equalsIgnoreCase(name);
+    private Column next() {
+        return Column.findByIndex(this.index + 1);
     }
 
     public int calculateDistance(Column other) {
         return other.index - this.index;
+    }
+
+    public boolean isIndexOf(int index) {
+        return this.index == index;
     }
 }

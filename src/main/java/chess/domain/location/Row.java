@@ -1,8 +1,9 @@
 package chess.domain.location;
 
 import chess.domain.board.Direction;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public enum Row {
     ONE(1),
@@ -14,22 +15,31 @@ public enum Row {
     SEVEN(7),
     EIGHT(8);
 
-    private static final List<Row> ROWS = List.of(ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT);
+    public static final Map<Integer, Row> ROWS = new HashMap<>();
+
+    static {
+        for (Row row : values()) {
+            ROWS.put(row.rank, row);
+        }
+    }
+
     private final int rank;
 
     Row(int rank) {
         this.rank = rank;
     }
 
-    public static Row of(String input) {
-        return Arrays.stream(values())
-                .filter(row -> row.isRank(input))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 Row 입력입니다."));
+    public static Row findByRank(String rank) {
+        try {
+            return findByRank(Integer.parseInt(rank));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 Row 입력입니다. 숫자를 입력해 주세요");
+        }
     }
 
-    private boolean isRank(String input) {
-        return rank == Integer.parseInt(input);
+    public static Row findByRank(int rank) {
+        return Optional.ofNullable(ROWS.get(rank))
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 Row 입력입니다."));
     }
 
     public Row move(Direction direction) {
@@ -43,21 +53,11 @@ public enum Row {
     }
 
     private Row previous() {
-        int ordinalIndex = this.rank - 1;
-        try {
-            return ROWS.get(ordinalIndex - 1);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
-        }
+        return Row.findByRank(this.rank - 1);
     }
 
     private Row next() {
-        int ordinalIndex = this.rank - 1;
-        try {
-            return ROWS.get(ordinalIndex + 1);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
-        }
+        return Row.findByRank(this.rank + 1);
     }
 
     public int calculateDistance(Row other) {

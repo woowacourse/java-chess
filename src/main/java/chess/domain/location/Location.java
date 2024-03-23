@@ -21,10 +21,10 @@ public class Location {
     }
 
     public static Location of(String input) {
-        validateInput(input);
-        Column column = Column.of(input.substring(0, 1));
-        Row row = Row.of(input.substring(1, 2));
-        return new Location(column, row);
+            validateInput(input);
+            Column column = Column.findByName(input.substring(0, 1));
+            Row row = Row.findByRank(input.substring(1, 2));
+            return new Location(column, row);
     }
 
     private static void validateInput(String input) {
@@ -32,7 +32,7 @@ public class Location {
             throw new IllegalArgumentException("빈 값을 위치로 입력할 수 없습니다.");
         }
         if (input.length() != 2) {
-            throw new IllegalArgumentException("잘못된 위치 입력입니다.");
+            throw new IllegalArgumentException("잘못된 위치 입력입니다. 입력 형식 : A~H 사이의 알파벳 + 1~8 사이의 숫자");
         }
     }
 

@@ -26,31 +26,22 @@ class LocationTest {
             Assertions.assertThat(location).isEqualTo(new Location(Column.A, Row.ONE));
         }
 
-        @DisplayName("범위를 벗어난 입력으로 객체를 생성하면 예외가 발생한다.")
-        @ParameterizedTest
-        @ValueSource(strings = {"I1", "A9"})
-        void outOfBoundConstructTest(String outOfBoundInput) {
-            Assertions.assertThatThrownBy(() -> Location.of(outOfBoundInput))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("잘못된 위치 입력입니다.");
-        }
-
         @DisplayName("빈 문자열로 객체를 생성하면 예외가 발생한다.")
         @ParameterizedTest
         @NullAndEmptySource
         void emptyInputConstructTest(String emptyInput) {
             Assertions.assertThatThrownBy(() -> Location.of(emptyInput))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("잘못된 위치 입력입니다.");
+                    .hasMessage("빈 값을 위치로 입력할 수 없습니다.");
         }
 
-        @DisplayName("형식에 맞지 않는 문자열로 객체를 생성하면 예외가 발생한다.")
+        @DisplayName("잘못된 길이의 입력으로 객체를 생성하면 예외가 발생한다.")
         @ParameterizedTest
-        @ValueSource(strings = {"A", "AA", "1A", "12", "A1B"})
+        @ValueSource(strings = {"A", "A1B"})
         void wrongPatternInputConstructTest(String wrongInput) {
             Assertions.assertThatThrownBy(() -> Location.of(wrongInput))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("잘못된 위치 입력입니다.");
+                    .hasMessage("잘못된 위치 입력입니다. 입력 형식 : A~H 사이의 알파벳 + 1~8 사이의 숫자");
         }
     }
 }

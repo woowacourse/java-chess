@@ -14,21 +14,30 @@ class ColumnTest {
     @ParameterizedTest
     @ValueSource(strings = {"a", "A", "h", "H"})
     void constructTest(String input) {
-        assertThatCode(() -> Column.of(input))
+        assertThatCode(() -> Column.findByName(input))
                 .doesNotThrowAnyException();
     }
 
     @DisplayName("범위 이외의 알파벳을 이용해 객체를 생성하면 예외가 발생한다.")
     @Test
     void outOfBoundConstructTest() {
-        assertThatThrownBy(() -> Column.of("I"))
+        assertThatThrownBy(() -> Column.findByName("I"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 Column 입력입니다.");
     }
 
+    @DisplayName("알파벳이 아닌 값을 이용해 객체를 생성하면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "각", "!"})
+    void NotAlphabetExceptionTest(String input) {
+        assertThatThrownBy(() -> Column.findByName(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 Column 입력입니다.");
+    }
     @DisplayName("Column 거리를 계산한다.")
     @Test
     void calculateDistanceTest() {
+
         Column source = Column.C;
         Column target = Column.G;
         assertThat(source.calculateDistance(target)).isEqualTo(4);
