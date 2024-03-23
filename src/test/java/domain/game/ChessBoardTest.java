@@ -1,5 +1,7 @@
 package domain.game;
 
+import static fixture.PositionFixture.*;
+
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.King;
@@ -8,7 +10,6 @@ import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
 import domain.position.Position;
-import fixture.PositionFixture;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +20,8 @@ class ChessBoardTest {
     @DisplayName("source에 위치한 piece를 target으로 이동한다.")
     @Test
     void movePieceToTarget() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createB2();
 
         ChessBoard chessBoard = new ChessBoard();
 
@@ -36,8 +37,8 @@ class ChessBoardTest {
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
     @Test
     void movePieceIfSourceHasNotPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createC2();
 
         ChessBoard chessBoard = new ChessBoard();
 
@@ -48,8 +49,8 @@ class ChessBoardTest {
     @DisplayName("옮기고자 하는 위치에 같은 진영의 Piece가 있다면 에러를 반환한다.")
     @Test
     void hasSameColorPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createC2();
 
         Piece sourcePiece = new Piece(new King(), Color.BLACK);
         Piece targetPiece = new Piece(new Queen(), Color.BLACK);
@@ -65,8 +66,8 @@ class ChessBoardTest {
     @DisplayName("같은 위치로의 이동이라면 에러를 반환한다.")
     @Test
     void moveToSamePosition() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB1Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createB1();
 
         Piece sourcePiece = new Piece(new King(), Color.BLACK);
         ChessBoard chessBoard = new ChessBoard();
@@ -79,8 +80,8 @@ class ChessBoardTest {
     @DisplayName("앞에 다른 진영의 기물이 있는 경우 폰이 이동하지 못한다.")
     @Test
     void movePawnWhenFrontPositionHasOtherPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createB2();
 
         Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
@@ -96,8 +97,8 @@ class ChessBoardTest {
     @DisplayName("대각선에 다른 진영의 기물이 있는 경우 폰이 이동할 수 있다.")
     @Test
     void movePawnWhenDiagonalPositionHasOtherPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createC2();
 
         Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
@@ -116,9 +117,9 @@ class ChessBoardTest {
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
     @Test
     void isOverlappedPath() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB7Position();
-        Position blockPosition = PositionFixture.generateB2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createB7();
+        Position blockPosition = createB2();
 
         Piece sourcePiece = new Piece(new Rook(), Color.WHITE);
         Piece targetPiece = new Piece(new Rook(), Color.WHITE);
@@ -136,9 +137,9 @@ class ChessBoardTest {
     @DisplayName("나이트는 이동하는 경로에 기물이 있어도 이동할 수 있다.")
     @Test
     void knightCanJump() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC3Position();
-        Position blockPosition = PositionFixture.generateB2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createC3();
+        Position blockPosition = createB2();
 
         Piece sourcePiece = new Piece(new Knight(), Color.WHITE);
         Piece targetPiece = new Piece(new Knight(), Color.WHITE);

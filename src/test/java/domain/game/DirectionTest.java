@@ -1,5 +1,7 @@
 package domain.game;
 
+import static fixture.PositionFixture.*;
+
 import domain.position.Position;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
@@ -11,8 +13,8 @@ class DirectionTest {
     @DisplayName("(1,1) -> (2,2)로 이동하면,  방향이다.")
     @Test
     void moveToNorthEast() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
+        Position sourcePosition = createB1();
+        Position targetPosition = createC2();
 
         Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
         Assertions.assertThat(findDirection).isEqualTo(Direction.NORTH_EAST);

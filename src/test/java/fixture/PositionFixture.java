@@ -5,27 +5,27 @@ import domain.position.Position;
 import domain.position.Rank;
 
 public final class PositionFixture {
-    public static Position generateC1Position() {
+    public static Position createC1() {
         return new Position(new File('c'), new Rank(1));
     }
 
-    public static Position generateC2Position() {
+    public static Position createC2() {
         return new Position(new File('c'), new Rank(2));
     }
 
-    public static Position generateC3Position() {
+    public static Position createC3() {
         return new Position(new File('c'), new Rank(3));
     }
 
-    public static Position generateB1Position() {
+    public static Position createB1() {
         return new Position(new File('b'), new Rank(1));
     }
 
-    public static Position generateB2Position() {
+    public static Position createB2() {
         return new Position(new File('b'), new Rank(2));
     }
 
-    public static Position generateB7Position() {
+    public static Position createB7() {
         return new Position(new File('b'), new Rank(7));
     }
 

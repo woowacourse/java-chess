@@ -1,5 +1,7 @@
 package domain.piece;
 
+import static fixture.PositionFixture.*;
+
 import domain.piece.piecerole.Bishop;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
@@ -21,8 +23,8 @@ class PieceRoleTest {
         @DisplayName("킹이 (b,1)에서 (b,2)로 이동한다.")
         @Test
         void canKingMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateB2Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createB2();
 
             PieceRole king = new King();
 
@@ -32,8 +34,8 @@ class PieceRoleTest {
         @DisplayName("퀸이 (b,1)에서 (b,7)로 이동한다.")
         @Test
         void canQueenMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateB7Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createB7();
 
             PieceRole queen = new Queen();
 
@@ -43,8 +45,8 @@ class PieceRoleTest {
         @DisplayName("룩이 (b,1)에서 (b,7)로 이동한다.")
         @Test
         void canRookMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateB7Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createB7();
 
             PieceRole rook = new Rook();
 
@@ -54,8 +56,8 @@ class PieceRoleTest {
         @DisplayName("나이트가 (b,1)에서 (c,3)로 이동한다.")
         @Test
         void canKnightMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateC3Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createC3();
 
             PieceRole knight = new Knight();
 
@@ -65,8 +67,8 @@ class PieceRoleTest {
         @DisplayName("비숍이 (b,1)에서 (c,2)로 이동한다.")
         @Test
         void canBishopMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateC2Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createC2();
 
             PieceRole bishop = new Bishop();
 
@@ -76,8 +78,8 @@ class PieceRoleTest {
         @DisplayName("흰색 폰이 (c,2)에서 (c,3)로 이동한다.")
         @Test
         void canPawnMove() {
-            Position sourcePosition = PositionFixture.generateC2Position();
-            Position targetPosition = PositionFixture.generateC3Position();
+            Position sourcePosition = createC2();
+            Position targetPosition = createC3();
 
             PieceRole pawn = new Pawn(Color.WHITE);
 
@@ -91,8 +93,8 @@ class PieceRoleTest {
         @DisplayName("킹이 (b,1)에서 (c,2)로 이동하지 못한다.")
         @Test
         void cannotKingMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateC2Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createC2();
 
             PieceRole king = new King();
 
@@ -102,8 +104,8 @@ class PieceRoleTest {
         @DisplayName("퀸이 (b,1)에서 (c,3)로 이동하지 못한다.")
         @Test
         void cannotQueenMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateC3Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createC3();
 
             PieceRole queen = new Queen();
 
@@ -113,8 +115,8 @@ class PieceRoleTest {
         @DisplayName("룩이 (c,1)에서 (b,2)로 이동하지 못한다.")
         @Test
         void cannotRookMove() {
-            Position sourcePosition = PositionFixture.generateC1Position();
-            Position targetPosition = PositionFixture.generateB2Position();
+            Position sourcePosition = createC1();
+            Position targetPosition = createB2();
 
             PieceRole rook = new Rook();
 
@@ -124,8 +126,8 @@ class PieceRoleTest {
         @DisplayName("나이트가 (b,1)에서 (b,2)로 이동하지 못한다.")
         @Test
         void cannotKnightMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateB2Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createB2();
 
             PieceRole knight = new Knight();
 
@@ -135,8 +137,8 @@ class PieceRoleTest {
         @DisplayName("비숍이 (b,1)에서 (b,2)로 이동하지 못한다.")
         @Test
         void cannotBishopMove() {
-            Position sourcePosition = PositionFixture.generateB1Position();
-            Position targetPosition = PositionFixture.generateB2Position();
+            Position sourcePosition = createB1();
+            Position targetPosition = createB2();
 
             PieceRole bishop = new Bishop();
 
@@ -146,8 +148,8 @@ class PieceRoleTest {
         @DisplayName("검은색 폰이 (c,2)에서 (c,3)로 이동하지 못한다.")
         @Test
         void canPawnMove() {
-            Position sourcePosition = PositionFixture.generateC2Position();
-            Position targetPosition = PositionFixture.generateC3Position();
+            Position sourcePosition = createC2();
+            Position targetPosition = createC3();
 
             PieceRole pawn = new Pawn(Color.BLACK);
 
