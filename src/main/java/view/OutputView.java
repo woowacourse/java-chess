@@ -9,12 +9,13 @@ public class OutputView {
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
     private static final String MOVE_COMMAND = "move";
+    private static final String NEW_LINE = System.lineSeparator();
 
     public void printStartMessage() {
-        System.out.println("> 체스 게임을 시작합니다.");
-        System.out.printf("> 게임 시작 : %s%n", START_COMMAND);
-        System.out.printf("> 게임 종료 : %s%n", END_COMMAND);
-        System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n", MOVE_COMMAND, MOVE_COMMAND);
+        System.out.println("> 체스 게임을 시작합니다." + NEW_LINE +
+                "> 게임 시작 : " + START_COMMAND + NEW_LINE +
+                "> 게임 종료 : " + END_COMMAND + NEW_LINE +
+                "> 게임 이동 : " + MOVE_COMMAND + " source위치 target위치 - 예. " + MOVE_COMMAND + " b2 b3");
     }
 
     public void printBoard(Board board) {
