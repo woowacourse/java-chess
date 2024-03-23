@@ -39,6 +39,10 @@ public class OutputView {
         pieceSymbol.put(new Piece(Pawn.from(Color.WHITE), Color.WHITE), "p");
     }
 
+    public static void printErrorMessage(final String message) {
+        System.out.println(message);
+    }
+
     public void printCommandMessage() {
         System.out.printf(COMMAND_MESSAGE);
     }

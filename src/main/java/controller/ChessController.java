@@ -23,7 +23,11 @@ public class ChessController {
         ChessBoard chessBoard = new ChessBoard();
 
         outputView.printCommandMessage();
-        ChessCommand command = enterCommand();
+        ChessCommand initializeCommand = enterCommand();
+        retry(() -> enterAndExecuteCommand(chessBoard, initializeCommand));
+    }
+
+    private void enterAndExecuteCommand(final ChessBoard chessBoard, ChessCommand command) {
         Pattern pattern = Pattern.compile(InputView.MOVE_POSITION_REGEX_FORMAT);
         while (command != ChessCommand.END) {
             outputView.printSquareStatus(chessBoard);
@@ -69,5 +73,16 @@ public class ChessController {
 
     private boolean isNotValidCoordinateInput(final String input, final Pattern pattern) {
         return !pattern.matcher(input).matches();
+    }
+
+    private static void retry(Runnable runnable) {
+        while (true) {
+            try {
+                runnable.run();
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }
