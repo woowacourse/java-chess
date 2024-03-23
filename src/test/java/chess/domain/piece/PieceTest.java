@@ -13,15 +13,15 @@ public class PieceTest {
     @Test
     void createPiece() {
         // when & then
-        assertThatCode(() -> new Piece(PieceType.KING, ColorType.WHITE)).doesNotThrowAnyException();
+        assertThatCode(() -> new Piece(PieceType.KING, CampType.WHITE)).doesNotThrowAnyException();
     }
 
     @DisplayName("체스말은 같은 색인지 여부를 반환한다.")
     @Test
     void checkSameColor() {
         // given
-        Piece blackPiece = new Piece(PieceType.PAWN, ColorType.BLACK);
-        Piece whitePiece = new Piece(PieceType.ROOK, ColorType.WHITE);
+        Piece blackPiece = new Piece(PieceType.PAWN, CampType.BLACK);
+        Piece whitePiece = new Piece(PieceType.ROOK, CampType.WHITE);
 
         // when
         boolean actual = blackPiece.isSameColor(whitePiece);

@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.ColorType;
+import chess.domain.piece.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.square.Square;
@@ -47,11 +47,8 @@ public class Board {
     }
 
     private void checkTurn(Piece sourcePiece) {
-        if (turn.isBlackTurn() && sourcePiece.isWhite()) {
-            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
-        }
-
-        if (turn.isWhiteTurn() && sourcePiece.isBlack()) {
+        if (turn.isBlackTurn() && sourcePiece.isWhite() 
+                || turn.isWhiteTurn() && sourcePiece.isBlack()) {
             throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
         }
     }
@@ -73,7 +70,7 @@ public class Board {
         Piece destinationPiece = board.get(destination);
 
         if (destinationPiece.isNotEmpty()) {
-            board.replace(source, new Piece(PieceType.EMPTY, ColorType.EMPTY));
+            board.replace(source, new Piece(PieceType.EMPTY, CampType.EMPTY));
             board.replace(destination, sourcePiece);
             return;
         }

@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum ColorType {
+public enum CampType {
 
     BLACK,
     WHITE,

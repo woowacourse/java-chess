@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.ColorType;
+import chess.domain.piece.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.square.File;
@@ -122,7 +122,7 @@ public class BoardTest {
 
         // then
         assertThat(actual.isSameType(PieceType.PAWN.name())
-                && actual.isSameColor(new Piece(PieceType.PAWN, ColorType.WHITE)))
+                && actual.isSameColor(new Piece(PieceType.PAWN, CampType.WHITE)))
                 .isTrue();
     }
 

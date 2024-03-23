@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
-import chess.domain.piece.ColorType;
+import chess.domain.piece.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
@@ -46,7 +46,7 @@ public class BoardFactoryTest {
     private void makeEmptyPiece(Map<Square, Piece> expected) {
         for (Rank rank : Arrays.copyOfRange(Rank.values(), 2, 6)) {
             for (File file : File.values()) {
-                expected.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
+                expected.put(Square.of(file, rank), new Piece(PieceType.EMPTY, CampType.EMPTY));
             }
         }
     }
@@ -57,8 +57,8 @@ public class BoardFactoryTest {
 
         while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
             File file = fileIterator.next();
-            expected.put(Square.of(file, Rank.EIGHT), new Piece(pieceTypeIterator.next(), ColorType.BLACK));
-            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, ColorType.BLACK));
+            expected.put(Square.of(file, Rank.EIGHT), new Piece(pieceTypeIterator.next(), CampType.BLACK));
+            expected.put(Square.of(file, Rank.SEVEN), new Piece(PieceType.PAWN, CampType.BLACK));
         }
     }
 
@@ -68,8 +68,8 @@ public class BoardFactoryTest {
 
         while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
             File file = fileIterator.next();
-            expected.put(Square.of(file, Rank.ONE), new Piece(pieceTypeIterator.next(), ColorType.WHITE));
-            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, ColorType.WHITE));
+            expected.put(Square.of(file, Rank.ONE), new Piece(pieceTypeIterator.next(), CampType.WHITE));
+            expected.put(Square.of(file, Rank.TWO), new Piece(PieceType.PAWN, CampType.WHITE));
         }
     }
 }

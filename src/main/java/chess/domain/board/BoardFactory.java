@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.square.File;
 import chess.domain.square.Square;
 import chess.domain.square.Rank;
-import chess.domain.piece.ColorType;
+import chess.domain.piece.CampType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 
@@ -45,10 +45,10 @@ public class BoardFactory {
     }
 
     private void createPawnPiece(Rank rank, Map<Square, Piece> board) {
-        ColorType colorType = decideColorType(rank);
+        CampType campType = decideColorType(rank);
 
         for (File file : File.values()) {
-            board.put(Square.of(file, rank), new Piece(PieceType.PAWN, colorType));
+            board.put(Square.of(file, rank), new Piece(PieceType.PAWN, campType));
         }
     }
 
@@ -56,27 +56,27 @@ public class BoardFactory {
         Iterator<File> fileIterator = Arrays.stream(File.values()).iterator();
         Iterator<PieceType> pieceTypeIterator = PIECE_TYPE_ORDER.iterator();
 
-        ColorType colorType = decideColorType(rank);
+        CampType campType = decideColorType(rank);
 
         while (fileIterator.hasNext() && pieceTypeIterator.hasNext()) {
             File file = fileIterator.next();
             PieceType pieceType = pieceTypeIterator.next();
 
-            board.put(Square.of(file, rank), new Piece(pieceType, colorType));
+            board.put(Square.of(file, rank), new Piece(pieceType, campType));
         }
     }
 
-    private ColorType decideColorType(Rank rank) {
+    private CampType decideColorType(Rank rank) {
         if (BLACK_PIECE_ZONE.contains(rank)) {
-            return ColorType.BLACK;
+            return CampType.BLACK;
         }
 
-        return ColorType.WHITE;
+        return CampType.WHITE;
     }
 
     private void createEmptyPiece(Rank rank, Map<Square, Piece> board) {
         for (File file : File.values()) {
-            board.put(Square.of(file, rank), new Piece(PieceType.EMPTY, ColorType.EMPTY));
+            board.put(Square.of(file, rank), new Piece(PieceType.EMPTY, CampType.EMPTY));
         }
     }
 }

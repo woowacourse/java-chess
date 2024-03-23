@@ -6,19 +6,19 @@ import chess.domain.square.Square;
 public class Piece {
 
     private final PieceType pieceType;
-    private final ColorType colorType;
+    private final CampType campType;
 
-    public Piece(PieceType pieceType, ColorType colorType) {
+    public Piece(PieceType pieceType, CampType campType) {
         this.pieceType = pieceType;
-        this.colorType = colorType;
+        this.campType = campType;
     }
 
     public boolean isBlack() {
-        return colorType.equals(ColorType.BLACK);
+        return campType.equals(CampType.BLACK);
     }
 
     public boolean isWhite() {
-        return colorType.equals(ColorType.WHITE);
+        return campType.equals(CampType.WHITE);
     }
 
     public boolean isSameType(String pieceViewName) {
@@ -26,7 +26,7 @@ public class Piece {
     }
 
     public boolean isSameColor(Piece whitePiece) {
-        return colorType.equals(whitePiece.colorType);
+        return campType.equals(whitePiece.campType);
     }
 
     public boolean isNotEmpty() {
