@@ -7,22 +7,16 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Square {
 
     private static final Pattern INTEGER_FORMAT_REGEX = Pattern.compile("^[1-9][0-9]*$");
     private static final String INVALID_RANK_ERROR = "랭크는 자연수로 입력해야 합니다.";
-    private static final Map<String, Square> POOL = Arrays.stream(Rank.values())
-            .flatMap(rank -> Arrays.stream(File.values())
-                                    .map(file -> new Square(file, rank)))
-            .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    private static final Map<String, Square> POOL = createSquarePool();
 
     private final File file;
     private final Rank rank;
-
-    private static String toKey(File file, Rank rank) {
-        return file.name() + rank.name();
-    }
 
     private Square(File file, Rank rank) {
         this.file = file;
@@ -48,6 +42,21 @@ public class Square {
         if (!INTEGER_FORMAT_REGEX.matcher(rankValue).matches()) {
             throw new IllegalArgumentException(INVALID_RANK_ERROR);
         }
+    }
+
+    private static Map<String, Square> createSquarePool() {
+        return Arrays.stream(Rank.values())
+                .flatMap(createSquare())
+                .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    }
+
+    private static Function<Rank, Stream<Square>> createSquare() {
+        return rank -> Arrays.stream(File.values())
+                .map(file -> new Square(file, rank));
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 
     public Square moveVertical(int index) {
