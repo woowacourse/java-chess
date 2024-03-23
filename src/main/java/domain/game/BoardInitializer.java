@@ -4,9 +4,9 @@ import domain.position.File;
 import domain.position.Position;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static domain.game.PieceType.*;
 import static domain.position.File.*;
@@ -32,10 +32,10 @@ public class BoardInitializer {
     );
 
     public static Board init() {
-        Map<Position, Piece> positions = new HashMap<>();
-        pieceInitialPositions.forEach(((pieceType, position) -> {
-            position.forEach(p -> positions.put(p, PieceFactory.create(pieceType)));
-        }));
+        Map<Position, Piece> positions = pieceInitialPositions.entrySet().stream()
+                .flatMap(entry -> entry.getValue().stream()
+                        .map(position -> Map.entry(position, PieceFactory.create(entry.getKey()))))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return new Board(positions);
     }
