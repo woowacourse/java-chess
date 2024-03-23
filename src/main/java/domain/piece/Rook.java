@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Rook extends Piece {
+    private static final List<Direction> movableDirections = List.of(
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.WEST);
+
     public Rook(final Team team) {
         super(team);
     }
@@ -16,11 +22,9 @@ public class Rook extends Piece {
     @Override
     public boolean canMove(final Square source, final Square target) {
         final List<Square> movableSquares = new ArrayList<>();
-        addMovableSquares(source, Direction.NORTH, movableSquares);
-        addMovableSquares(source, Direction.SOUTH, movableSquares);
-        addMovableSquares(source, Direction.EAST, movableSquares);
-        addMovableSquares(source, Direction.WEST, movableSquares);
-
+        for (final Direction movableDirection : movableDirections) {
+            addMovableSquares(source, movableDirection, movableSquares);
+        }
         return movableSquares.contains(target);
     }
 

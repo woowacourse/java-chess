@@ -4,9 +4,19 @@ import domain.Direction;
 import domain.Square;
 import domain.Team;
 
+import java.util.List;
 import java.util.Objects;
 
 public class King extends Piece {
+    private static final List<Direction> movableDirections = List.of(
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.WEST,
+            Direction.NORTH_EAST,
+            Direction.NORTH_WEST,
+            Direction.SOUTH_EAST,
+            Direction.SOUTH_WEST);
 
     public King(final Team team) {
         super(team);
@@ -14,29 +24,10 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        if (source.next2(Direction.NORTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.SOUTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.EAST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.WEST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.NORTH_EAST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.NORTH_WEST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.SOUTH_EAST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.SOUTH_WEST).equals(target)) {
-            return true;
+        for (final Direction movableDirection : movableDirections) {
+            if (source.next2(movableDirection).equals(target)) {
+                return true;
+            }
         }
         return false;
     }

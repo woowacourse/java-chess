@@ -9,6 +9,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Queen extends Piece {
+    private static final List<Direction> movableDirections = List.of(
+            Direction.NORTH,
+            Direction.SOUTH,
+            Direction.EAST,
+            Direction.WEST,
+            Direction.NORTH_EAST,
+            Direction.NORTH_WEST,
+            Direction.SOUTH_EAST,
+            Direction.SOUTH_WEST);
+
     public Queen(final Team team) {
         super(team);
     }
@@ -16,15 +26,9 @@ public class Queen extends Piece {
     @Override
     public boolean canMove(final Square source, final Square target) {
         final List<Square> movableSquares = new ArrayList<>();
-        addMovableSquares(source, Direction.NORTH, movableSquares);
-        addMovableSquares(source, Direction.SOUTH, movableSquares);
-        addMovableSquares(source, Direction.EAST, movableSquares);
-        addMovableSquares(source, Direction.WEST, movableSquares);
-        addMovableSquares(source, Direction.NORTH_EAST, movableSquares);
-        addMovableSquares(source, Direction.NORTH_WEST, movableSquares);
-        addMovableSquares(source, Direction.SOUTH_EAST, movableSquares);
-        addMovableSquares(source, Direction.SOUTH_WEST, movableSquares);
-
+        for (final Direction movableDirection : movableDirections) {
+            addMovableSquares(source, movableDirection, movableSquares);
+        }
         return movableSquares.contains(target);
     }
 
