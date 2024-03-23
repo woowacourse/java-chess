@@ -9,7 +9,6 @@ public class Rook extends Piece {
 
     public Rook(Color color) {
         super(color,
-                MAX_UNIT_MOVE,
                 Set.of(
                         UnitDirection.differencesOf(1, 0),
                         UnitDirection.differencesOf(0, 1),
@@ -17,5 +16,10 @@ public class Rook extends Piece {
                         UnitDirection.differencesOf(0, -1)
                 )
         );
+    }
+
+    @Override
+    protected boolean isReachable(int distance) {
+        return distance <= MAX_UNIT_MOVE;
     }
 }

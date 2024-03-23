@@ -21,8 +21,8 @@ public abstract class Pawn extends Piece {
             UnitDirection.differencesOf(-1, -1)
     );
 
-    protected Pawn(Color color, int maxUnitMove) {
-        super(color, maxUnitMove, getPawnDirectionByColor(color));
+    protected Pawn(Color color) {
+        super(color, getPawnDirectionByColor(color));
     }
 
     private static Set<UnitDirection> getPawnDirectionByColor(Color color) {

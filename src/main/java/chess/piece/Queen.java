@@ -9,7 +9,6 @@ public class Queen extends Piece {
 
     public Queen(Color color) {
         super(color,
-                MAX_UNIT_MOVE,
                 Set.of(
                         UnitDirection.differencesOf(1, 1),
                         UnitDirection.differencesOf(1, 0),
@@ -21,5 +20,10 @@ public class Queen extends Piece {
                         UnitDirection.differencesOf(-1, -1)
                 )
         );
+    }
+
+    @Override
+    protected boolean isReachable(int distance) {
+        return distance <= MAX_UNIT_MOVE;
     }
 }

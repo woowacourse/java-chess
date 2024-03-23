@@ -8,12 +8,10 @@ import java.util.stream.Stream;
 public abstract class Piece {
 
     private final Color color;
-    private final int maxUnitMove;
     private final Set<UnitDirection> unitDirections;
 
-    protected Piece(Color color, int maxUnitMove, Set<UnitDirection> unitDirections) {
+    protected Piece(Color color, Set<UnitDirection> unitDirections) {
         this.color = color;
-        this.maxUnitMove = maxUnitMove;
         this.unitDirections = unitDirections;
     }
 
@@ -28,8 +26,10 @@ public abstract class Piece {
                         position -> position.isNotEquals(destination),
                         unitDirection::nextPosition)
                 .count();
-        return distance <= maxUnitMove;
+        return isReachable(distance);
     }
+
+    protected abstract boolean isReachable(int distance);
 
     public boolean canAttack(Position source, Position destination) {
         return isMovable(source, destination);

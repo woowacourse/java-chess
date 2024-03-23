@@ -9,7 +9,6 @@ public class Knight extends Piece {
 
     public Knight(Color color) {
         super(color,
-                MAX_UNIT_MOVE,
                 Set.of(
                         UnitDirection.differencesOf(2, 1),
                         UnitDirection.differencesOf(2, -1),
@@ -20,5 +19,10 @@ public class Knight extends Piece {
                         UnitDirection.differencesOf(-1, 2),
                         UnitDirection.differencesOf(-1, -2)
                 ));
+    }
+
+    @Override
+    protected boolean isReachable(int distance) {
+        return distance <= MAX_UNIT_MOVE;
     }
 }
