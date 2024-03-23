@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 class MovementTest {
     @Test
     void 출발지와_도착지가_같으면_예외가_발생한다() {
@@ -61,9 +63,9 @@ class MovementTest {
     }
 
     @Test
-    void 출발지와_도착지가_같은_file_혹은_같은_rank_혹은_같은_대각선에_있지_않을_떄_경로_반환을_요청하면_예외가_발생한다() {
+    void 출발지와_도착지가_같은_file_혹은_같은_rank_혹은_같은_대각선에_있지_않을_떄_경로_반환을_요청하면_빈_배열을_반환한다() {
         Movement movement = new Movement(Position.of(1, 1), Position.of(3, 2));
-        assertThatThrownBy(movement::getIntermediatePositions)
-                .isInstanceOf(IllegalStateException.class);
+        List<Position> positions = movement.getIntermediatePositions();
+        assertThat(positions.isEmpty()).isTrue();
     }
 }

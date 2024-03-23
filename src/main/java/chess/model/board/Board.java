@@ -78,11 +78,11 @@ public class Board {
     }
 
     private void validateIntermediatePositions(Movement movement) {
-        if (getSourcePiece(movement).isType(Type.KNIGHT)) {
-            return;
-        }
-        List<Position> intermediatePositions = movement.getIntermediatePositions();
-        if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
+        boolean isMovementBlocked = movement.getIntermediatePositions()
+                .stream()
+                .map(squares::get)
+                .anyMatch(piece -> !piece.isEmpty());
+        if (isMovementBlocked) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
     }

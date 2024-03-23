@@ -48,20 +48,16 @@ public class Movement {
     }
 
     public List<Position> getIntermediatePositions() {
-        validateDirection();
         List<Position> positions = new ArrayList<>();
+        if (!isSameFileOrRank() && !isDiagonal()) {
+            return positions;
+        }
         Position currentPosition = source.moveToTargetByStep(destination);
         while (!currentPosition.equals(destination)) {
             positions.add(currentPosition);
             currentPosition = currentPosition.moveToTargetByStep(destination);
         }
         return positions;
-    }
-
-    private void validateDirection() {
-        if (!isSameFileOrRank() && !isDiagonal()) {
-            throw new IllegalStateException("직선이나 대각선 방향이 아닙니다.");
-        }
     }
 
     public boolean isSourceRankMatch(int rank) {
