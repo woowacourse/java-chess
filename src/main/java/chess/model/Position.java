@@ -23,7 +23,7 @@ public class Position {
 
     public static Position from(String coordinate) {
         if (coordinate.length() != VALID_COORDINATE_LENGTH) {
-            throw new IllegalArgumentException("유효하지 않은 좌표값입니다.");
+            throw new IllegalArgumentException("좌표 값은 2자리여야 합니다.");
         }
         int column = coordinate.charAt(COLUMN_INDEX) - MIN_COLUMN;
         int row = MAX_VALUE - coordinate.charAt(ROW_INDEX) + MIN_ROW;
