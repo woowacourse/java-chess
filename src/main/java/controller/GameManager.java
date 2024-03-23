@@ -10,7 +10,7 @@ import view.InputView;
 import view.OutputView;
 import view.mapper.CommandInput;
 
-public class GameManager {
+public class GameManager { // TODO: 차례를 표시하도록
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -28,19 +28,24 @@ public class GameManager {
     }
 
     private void manage(Chess chess) {
-        String rawCommand = requestCommand();
-        Command command = CommandInput.asCommand(rawCommand);
-        if (command.isStart()) {
-            start();
-            return;
+        try {
+            String rawCommand = requestCommand();
+            Command command = CommandInput.asCommand(rawCommand);
+            if (command.isStart()) {
+                start();
+                return;
+            }
+            if (command.isEnd()) {
+                return;
+            }
+            List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
+            playChess(chess, moveCommands);
+            outputView.printBoard(chess.getBoard());
+            manage(chess);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            manage(chess);
         }
-        if (command.isEnd()) {
-            return;
-        }
-        List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
-        playChess(chess, moveCommands);
-        outputView.printBoard(chess.getBoard());
-        manage(chess);
     }
 
     private void playChess(Chess chess, List<String> moveTokens) {
