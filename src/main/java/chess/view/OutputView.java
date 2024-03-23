@@ -11,10 +11,6 @@ public class OutputView {
     private static final char EMPTY_SQUARE = '.';
     private static final int BOARD_SIZE = 8;
 
-    public void printGameStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
-    }
-
     public void printBoard(final List<PieceResponse> pieces) {
         char[][] board = setUpBoard();
         addPieceToBoard(pieces, board);

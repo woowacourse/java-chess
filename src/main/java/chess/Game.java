@@ -23,7 +23,6 @@ public class Game {
     }
 
     public void start() {
-        outputView.printGameStartMessage();
         Board board = BoardFactory.createBoard();
 
         String command = inputView.readStartCommand();
