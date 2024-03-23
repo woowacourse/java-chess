@@ -30,12 +30,12 @@ public class ChessGame {
     }
 
     public void startGame() {
-        String startCommand = InputView.inputCommand().get(0);
-        while (START.differentCommand(startCommand) && END.differentCommand(startCommand)) {
+        String firstCommand = InputView.inputCommand().get(0);
+        while (!isStart(firstCommand) && !isEnd(firstCommand)) {
             OutputView.printInputAgainMessage();
-            startCommand = InputView.inputCommand().get(0);
+            firstCommand = InputView.inputCommand().get(0);
         }
-        if (START.sameCommand(startCommand)) {
+        if (isStart(firstCommand)) {
             OutputView.printBoard(makeBoardDto(board.getBoard()));
             playGame();
         }
@@ -51,11 +51,12 @@ public class ChessGame {
     private Team playTurn(Team turn) {
         List<String> commands = InputView.inputCommand();
         String command = commands.get(0);
-        while (MOVE.differentCommand(command) && END.differentCommand(command)) {
+        while (!isMove(command) && !isEnd(command)) {
             OutputView.printInputAgainMessage();
-            command = InputView.inputCommand().get(0);
+            commands = InputView.inputCommand();
+            command = commands.get(0);
         }
-        if (MOVE.sameCommand(command)) {
+        if (isMove(command)) {
             return playMoveCommand(commands, turn);
         }
         return Team.NONE;
@@ -100,5 +101,17 @@ public class ChessGame {
         }
 
         return rawBoard;
+    }
+
+    private boolean isStart(String command) {
+        return START.sameCommand(command);
+    }
+
+    private boolean isMove(String command) {
+        return MOVE.sameCommand(command);
+    }
+
+    private boolean isEnd(String command) {
+        return END.sameCommand(command);
     }
 }
