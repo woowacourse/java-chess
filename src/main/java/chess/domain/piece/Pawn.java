@@ -49,7 +49,7 @@ public class Pawn extends ChessPiece {
     }
 
     private boolean isUnableToMove(Position currentPosition, Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
-        int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
+        int diffX = Math.abs(currentPosition.getXPosition() - newPosition.getXPosition());
         if (isDisturbed) {
             return true;
         }

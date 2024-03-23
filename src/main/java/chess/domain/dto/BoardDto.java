@@ -34,8 +34,8 @@ public class BoardDto {
     }
 
     private static void makeBoardDtoPiece(Position position, Piece piece, List<List<String>> rawBoard) {
-        int realYPosition = position.getY() - 1;
-        int realXPosition = position.getX() - 1;
+        int realYPosition = position.getYPosition();
+        int realXPosition = position.getXPosition();
         PieceType pieceType = piece.getType();
         PieceInfo pieceInfo = piece.getPieceInfo();
 
