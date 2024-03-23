@@ -42,7 +42,7 @@ public class ChessBoard {
         return Collections.unmodifiableMap(board);
     }
 
-    public Color getSourceColor(Position source) {
-        return findByPosition(source).color();
+    public Color getPieceColor(Position position) {
+        return findByPosition(position).color();
     }
 }
