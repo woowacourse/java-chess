@@ -47,15 +47,15 @@ public enum Direction {
         return this.equals(RIGHT_UP) || this.equals(LEFT_UP) || this.equals(RIGHT_DOWN) || this.equals(LEFT_DOWN);
     }
 
-    public Square nextSquare(Square candidate) {
+    public Square nextSquare(Square square) {
         if (isVertical()) {
-            return candidate.moveVertical(rankIndex);
+            return square.moveVertical(rankIndex);
         }
 
         if (isHorizontal()) {
-            return candidate.moveHorizontal(fileIndex);
+            return square.moveHorizontal(fileIndex);
         }
 
-        return candidate.moveDiagonal(fileIndex, rankIndex);
+        return square.moveDiagonal(fileIndex, rankIndex);
     }
 }
