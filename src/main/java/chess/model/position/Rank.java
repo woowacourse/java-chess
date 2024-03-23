@@ -1,7 +1,5 @@
 package chess.model.position;
 
-import chess.model.piece.Side;
-
 import java.util.Arrays;
 
 public enum Rank {

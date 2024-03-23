@@ -6,13 +6,13 @@ import chess.model.position.Movement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class Queen extends Piece {
     private static final Map<Side, Queen> CACHE = Arrays.stream(Side.values())
-            .collect(Collectors.toMap(identity(), Queen::new));
+            .collect(toMap(identity(), Queen::new));
 
     private Queen(Side side) {
         super(side);

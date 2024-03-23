@@ -6,13 +6,13 @@ import chess.model.position.Movement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class Knight extends Piece {
     private static final Map<Side, Knight> CACHE = Arrays.stream(Side.values())
-            .collect(Collectors.toMap(identity(), Knight::new));
+            .collect(toMap(identity(), Knight::new));
 
     private static final int DISPLACEMENT = 3;
 

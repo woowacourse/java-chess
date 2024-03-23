@@ -6,13 +6,13 @@ import chess.model.position.Movement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class Bishop extends Piece {
     private static final Map<Side, Bishop> CACHE = Arrays.stream(Side.values())
-            .collect(Collectors.toMap(identity(), Bishop::new));
+            .collect(toMap(identity(), Bishop::new));
 
     private Bishop(Side side) {
         super(side);

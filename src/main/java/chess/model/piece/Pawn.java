@@ -7,13 +7,13 @@ import chess.model.position.Rank;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 public class Pawn extends Piece {
     private static final Map<Side, Pawn> CACHE = Arrays.stream(Side.values())
-            .collect(Collectors.toMap(identity(), Pawn::new));
+            .collect(toMap(identity(), Pawn::new));
 
     private static final int DISPLACEMENT = 1;
     private static final int INITIAL_SPECIAL_DISPLACEMENT = 2;
