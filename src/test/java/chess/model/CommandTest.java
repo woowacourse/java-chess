@@ -16,16 +16,16 @@ class CommandTest {
     @ValueSource(strings = {"", "starts", "END", "시작"})
     void findInvalidGameCommand(String command) {
         assertThatThrownBy(() -> Command.findCommand(command))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바르지 않은 게임 명령어입니다.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("올바르지 않은 게임 명령어입니다.");
     }
 
     @DisplayName("올바른 게임 명령어가 들어오면 해당 Command 상수를 반환한다")
     @Test
     void findValidGameCommand() {
         assertAll(
-                () -> assertThat(Command.findCommand("start")).isEqualTo(Command.START),
-                () -> assertThat(Command.findCommand("end")).isEqualTo(Command.END)
+            () -> assertThat(Command.findCommand("start")).isEqualTo(Command.START),
+            () -> assertThat(Command.findCommand("end")).isEqualTo(Command.END)
         );
     }
 }

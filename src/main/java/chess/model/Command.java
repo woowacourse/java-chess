@@ -15,9 +15,9 @@ public enum Command {
 
     public static Command findCommand(String displayName) {
         return Arrays.stream(values())
-                .filter(command -> command.displayName.equals(displayName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 게임 명령어입니다."));
+            .filter(command -> command.displayName.equals(displayName))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 게임 명령어입니다."));
     }
 
     public boolean isStart() {

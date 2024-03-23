@@ -30,9 +30,9 @@ public enum Direction {
         int normalizedX = normalize(deltaX);
         int normalizedY = normalize(deltaY);
         return Arrays.stream(values())
-                .filter(direction -> direction.deltaX == normalizedX && direction.deltaY == normalizedY)
-                .findAny()
-                .orElse(NONE);
+            .filter(direction -> direction.deltaX == normalizedX && direction.deltaY == normalizedY)
+            .findAny()
+            .orElse(NONE);
     }
 
     private static int calculateDifference(int source, int target) {

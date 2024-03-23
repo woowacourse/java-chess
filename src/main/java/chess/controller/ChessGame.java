@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.dto.BoardDto;
-import chess.model.board.Board;
 import chess.model.Command;
+import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.board.InitialBoardFactory;
 import chess.view.InputView;
