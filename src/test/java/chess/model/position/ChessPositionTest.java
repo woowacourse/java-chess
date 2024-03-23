@@ -24,4 +24,19 @@ class ChessPositionTest {
         assertThat(movement).isEqualTo(new Movement(fileDifference, rankDifference));
     }
 
+    @Test
+    @DisplayName("오프셋으로 다음 위치를 계산한다.")
+    void calculateNextPosition() {
+        // given
+        ChessPosition chessPosition = ChessPosition.of(File.A, Rank.FOUR);
+        int fileOffset = 2;
+        int rankOffset = -1;
+
+        // when
+        ChessPosition nextPosition = chessPosition.calculateNextPosition(fileOffset, rankOffset);
+
+        // then
+        assertThat(nextPosition).isEqualTo(ChessPosition.of(File.C, Rank.THREE));
+    }
+
 }
