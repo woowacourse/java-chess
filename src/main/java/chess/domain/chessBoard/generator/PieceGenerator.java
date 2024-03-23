@@ -7,6 +7,8 @@ import java.util.List;
 public interface PieceGenerator {
 
     List<Piece> makeSpecialPieces(Color color);
+
     List<Piece> makePawnPieces(Color color);
+
     List<Piece> makeEmptyPieces();
 }

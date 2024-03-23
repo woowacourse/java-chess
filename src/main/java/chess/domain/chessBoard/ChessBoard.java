@@ -18,7 +18,6 @@ public class ChessBoard {
         validateActiveGame();
         Space fromSpace = findSpace(from);
         Space toSpace = findSpace(to);
-
         validateTurn(fromSpace);
         fromSpace.movePiece(toSpace, spaces);
         turn = turn.oppositeTurn();
