@@ -65,6 +65,12 @@ public class King extends AbstractPiece {
         }
     }
 
+    /**
+     * TODO: 이런 느낌은 어떻지?
+     *    if(coordinate.canApply(Weight weight)) {
+     *        source.apply(Weight weight);
+     *    };
+     */
     public List<Coordinate> createPath(Coordinate source) {
         List<Coordinate> possibleCoordinate = new ArrayList<>();
         int startRank = source.getRank();
