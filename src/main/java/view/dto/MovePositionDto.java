@@ -15,6 +15,9 @@ public class MovePositionDto {
 
     public static MovePositionDto from(String command) {
         String[] splitCommand = command.split(" ");
+        if (splitCommand.length != 3) {
+            throw new IllegalArgumentException("형식에 맞는 입력을 해주세요 ex) move b2 b3");
+        }
         String sourceText = splitCommand[1];
         String targetText = splitCommand[2];
         return new MovePositionDto(resolvePosition(sourceText), resolvePosition(targetText));
