@@ -1,27 +1,25 @@
 package domain.piece.base;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.Color;
-import java.util.List;
 
 public abstract class ChessPieceBase implements ChessPiece {
 
-    protected final Color color;
+    private final Color color;
 
     public ChessPieceBase(Color color) {
         this.color = color;
     }
 
     @Override
-    public abstract List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack);
+    public abstract Direction getDirection(Coordinate start, Coordinate destination);
 
     @Override
-    public boolean isSameColor(Color color) {
+    public abstract boolean cantMove(Coordinate start, Coordinate destination);
+
+    @Override
+    public boolean hasSameColor(Color color) {
         return this.color == color;
-    }
-
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
     }
 }

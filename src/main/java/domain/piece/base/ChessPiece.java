@@ -1,14 +1,14 @@
 package domain.piece.base;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.Color;
-import java.util.List;
 
 public interface ChessPiece {
 
-    boolean isSameColor(Color color);
+    Direction getDirection(Coordinate start, Coordinate destination);
 
-    boolean isBlack();
+    boolean cantMove(Coordinate start, Coordinate destination);
 
-    List<Integer> getDirection(Coordinate coordinate, Coordinate destination, boolean canAttack);
+    boolean hasSameColor(Color color);
 }
