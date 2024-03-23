@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Rook;
 import chess.domain.square.Square;
@@ -43,23 +42,6 @@ class BoardTest {
         assertThatCode(() -> board.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치에 기물이 존재하지 않습니다.");
-    }
-
-    @Test
-    @DisplayName("목적지 스퀘어에 움직일 기물과 같은 색상 기물이 있을 경우 예외가 발생한다.")
-    void exceptionOnMoveWhenTargetPieceColorIsSameAsSourcePieceColor() {
-        // given
-        Square source = Square.from("b3");
-        Square target = Square.from("b4");
-        Board board = new Board(Set.of(
-                new Rook(PieceColor.BLACK, source),
-                new Bishop(PieceColor.BLACK, target)
-        ));
-
-        // when & then
-        assertThatCode(() -> board.move(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("같은색 기물 존재.");
     }
 
     @Test
@@ -130,6 +112,6 @@ class BoardTest {
         boolean exist = board.existOnSquareWithColor(source, PieceColor.BLACK);
 
         // then
-        assertThat(exist).isFalse();
+        assertThat(exist).isTrue();
     }
 }

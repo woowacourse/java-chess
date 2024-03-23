@@ -20,7 +20,7 @@ public class Board {
     }
 
     public void move(Square source, Square target) {
-        Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalStateException(ERROR_NOT_EXIST_PIECE));
+        Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PIECE));
         sourcePiece.move(target);
         removeTargetPieceIfAttacked(sourcePiece, target);
     }

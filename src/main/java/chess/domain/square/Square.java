@@ -38,11 +38,11 @@ public class Square {
     }
 
     private static int parseFile(String square) {
-        return RANK_UPPER_BOUND - square.charAt(1);
+        return square.charAt(0) - FILE_LEFT_BOUND;
     }
 
     private static int parseRank(String square) {
-        return square.charAt(0) - FILE_LEFT_BOUND;
+        return RANK_UPPER_BOUND - square.charAt(1);
     }
 
     private static String generateSquareKey(File file, Rank rank) {
