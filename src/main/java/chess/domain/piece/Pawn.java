@@ -37,11 +37,16 @@ public class Pawn extends ChessPiece {
         Position currentPosition = pieceInfo.getPosition();
         int diffX = Math.abs(currentPosition.getX() - newPosition.getX());
 
-        boolean isInvalidVerticalMove = diffX == 0 && isOtherPieceExist;
-        boolean isInvalidDiagonalMove = diffX == 1 && (!isOtherPieceExist || isSameTeam);
+        boolean isInvalidVerticalMove = (diffX == 0) && isOtherPieceExist;
+        boolean isInvalidDiagonalMove = (diffX == 1) && (!isOtherPieceExist || isSameTeam);
 
-        return !moveStrategy.canMove(currentPosition, newPosition) || isDisturbed || isInvalidVerticalMove
-                || isInvalidDiagonalMove;
+        if (!moveStrategy.canMove(currentPosition, newPosition)) {
+            return true;
+        }
+        if (isDisturbed || isInvalidVerticalMove || isInvalidDiagonalMove) {
+            return true;
+        }
+        return false;
     }
 
     private MoveStrategy changeMovedStrategy() {

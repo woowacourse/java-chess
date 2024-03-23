@@ -30,7 +30,12 @@ public class King extends ChessPiece {
     public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
                                  boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
-
-        return !moveStrategy.canMove(currentPosition, newPosition) || isSameTeamExist;
+        if (!moveStrategy.canMove(currentPosition, newPosition)) {
+            return true;
+        }
+        if (isSameTeamExist) {
+            return true;
+        }
+        return false;
     }
 }

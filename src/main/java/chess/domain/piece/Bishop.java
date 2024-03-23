@@ -30,7 +30,12 @@ public class Bishop extends ChessPiece {
     public boolean isMoveInvalid(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
                                  boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
-
-        return !moveStrategy.canMove(currentPosition, newPosition) || isDisturbed || isSameTeamExist;
+        if (!moveStrategy.canMove(currentPosition, newPosition)) {
+            return true;
+        }
+        if (isDisturbed || isSameTeamExist) {
+            return true;
+        }
+        return false;
     }
 }
