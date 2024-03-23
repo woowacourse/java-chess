@@ -3,10 +3,32 @@ package domain.piece;
 import domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
+
+    @ParameterizedTest(name = "source : {0}, target : {1}")
+    @MethodSource("canMoveDirection")
+    @DisplayName("모든 직선 방향으로 룩 이동 가능")
+    void canMove(Position source, Position target) {
+        Rook rook = new Rook(Color.WHITE);
+        assertThat(rook.canMove(source, target)).isTrue();
+    }
+
+    private static Stream<Arguments> canMoveDirection() {
+        return Stream.of(
+                Arguments.of(PositionArgument.from, PositionArgument.UP),
+                Arguments.of(PositionArgument.from, PositionArgument.DOWN),
+                Arguments.of(PositionArgument.from, PositionArgument.LEFT),
+                Arguments.of(PositionArgument.from, PositionArgument.RIGHT)
+        );
+    }
 
     @Test
     @DisplayName("Rank가 같으면 룩 이동 가능")

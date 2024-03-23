@@ -3,45 +3,35 @@ package domain.piece;
 import domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 
-    @Test
-    @DisplayName("오른쪽 위 대각선 방향으로 퀸 이동 가능")
-    void canMove_RightUp() {
+    @ParameterizedTest(name = "source : {0}, target : {1}")
+    @MethodSource("canMoveDirection")
+    @DisplayName("모든 방향으로 퀸 이동 가능")
+    void canMove(Position source, Position target) {
         Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 3);
-        Position position2 = Position.of(6, 8);
-        assertThat(queen.canMove(position1, position2)).isTrue();
+        assertThat(queen.canMove(source, target)).isTrue();
     }
 
-    @Test
-    @DisplayName("오른쪽 아래 대각선 방향으로 퀸 이동 가능")
-    void canMove_RightDown() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(4, 6);
-        Position position2 = Position.of(2, 8);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 위 대각선 방향으로 퀸 이동 가능")
-    void canMove_LeftUp() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 7);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 아래 대각선 방향으로 퀸 이동 가능")
-    void canMove_LeftDown() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 3);
-        assertThat(queen.canMove(position1, position2)).isTrue();
+    private static Stream<Arguments> canMoveDirection() {
+        return Stream.of(
+                Arguments.of(PositionArgument.from, PositionArgument.UP),
+                Arguments.of(PositionArgument.from, PositionArgument.DOWN),
+                Arguments.of(PositionArgument.from, PositionArgument.LEFT),
+                Arguments.of(PositionArgument.from, PositionArgument.RIGHT),
+                Arguments.of(PositionArgument.from, PositionArgument.UP_LEFT),
+                Arguments.of(PositionArgument.from, PositionArgument.UP_RIGHT),
+                Arguments.of(PositionArgument.from, PositionArgument.DOWN_LEFT),
+                Arguments.of(PositionArgument.from, PositionArgument.DOWN_RIGHT)
+        );
     }
 
     @Test
