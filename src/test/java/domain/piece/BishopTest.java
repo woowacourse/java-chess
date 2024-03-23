@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 
 class BishopTest {
     /*
-            T.....T.  7
+            4.....1.  7
             .x...x..  6
             ..x.x...  5
             ...B....  4
             ..x.x...  3
             .x...x..  2
-            T.....T.  1 (rank 1)
+            3.....2.  1 (rank 1)
 
             abcdefgh
          */
@@ -28,16 +28,16 @@ class BishopTest {
     void isDiagonal() {
         final Piece bishop = new Bishop(Color.BLACK);
         final Position source = new Position(File.D, Rank.FOUR);
-        final Position targetLeftUp = new Position(File.A, Rank.SEVEN);
-        final Position targetRightUp = new Position(File.G, Rank.SEVEN);
-        final Position targetLeftDown = new Position(File.A, Rank.ONE);
-        final Position targetRightDown = new Position(File.G, Rank.ONE);
+        final Position targetOne = new Position(File.A, Rank.SEVEN);
+        final Position targetTwo = new Position(File.G, Rank.SEVEN);
+        final Position targetThree = new Position(File.A, Rank.ONE);
+        final Position targetFour = new Position(File.G, Rank.ONE);
 
         assertAll(
-                () -> Assertions.assertThat(bishop.isReachable(source, targetLeftUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetRightUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetLeftDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetRightDown, Empty.INSTANCE)).isTrue()
+                () -> Assertions.assertThat(bishop.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(bishop.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(bishop.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(bishop.isReachable(source, targetFour, Empty.INSTANCE)).isTrue()
         );
     }
 }

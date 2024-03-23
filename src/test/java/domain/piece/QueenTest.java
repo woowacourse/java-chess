@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
 
 class QueenTest {
     /*
-          T..T..T.  7
+          8..1..2.  7
           .x.x.x..  6
           ..xxx...  5
-          TxxQxxxT  4
+          7xxQxxx3  4
           ..xxx...  3
           .x.x.x..  2
-          T..T..T.  1 (rank 1)
+          6..5..4.  1 (rank 1)
 
           abcdefgh
        */
@@ -27,24 +27,24 @@ class QueenTest {
     void isDiagonal() {
         final Piece queen = new Queen(Color.BLACK);
         final Position source = new Position(File.D, Rank.FOUR);
-        final Position targetUp = new Position(File.D, Rank.SEVEN);
-        final Position targetRightUp = new Position(File.G, Rank.SEVEN);
-        final Position targetRight = new Position(File.H, Rank.FOUR);
-        final Position targetRightDown = new Position(File.G, Rank.ONE);
-        final Position targetDown = new Position(File.D, Rank.ONE);
-        final Position targetLeftDown = new Position(File.A, Rank.ONE);
-        final Position targetLeft = new Position(File.A, Rank.FOUR);
-        final Position targetLeftUp = new Position(File.A, Rank.SEVEN);
+        final Position targetOne = new Position(File.D, Rank.SEVEN);
+        final Position targetTwo = new Position(File.G, Rank.SEVEN);
+        final Position targetThree = new Position(File.H, Rank.FOUR);
+        final Position targetFour = new Position(File.G, Rank.ONE);
+        final Position targetFive = new Position(File.D, Rank.ONE);
+        final Position targetSix = new Position(File.A, Rank.ONE);
+        final Position targetSeven = new Position(File.A, Rank.FOUR);
+        final Position targetEight = new Position(File.A, Rank.SEVEN);
 
         assertAll(
-                () -> Assertions.assertThat(queen.isReachable(source, targetUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetRightUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetRight, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetRightDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetLeftDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetLeft, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetLeftUp, Empty.INSTANCE)).isTrue()
+                () -> Assertions.assertThat(queen.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetFour, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetFive, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetSix, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetSeven, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(queen.isReachable(source, targetEight, Empty.INSTANCE)).isTrue()
         );
     }
 

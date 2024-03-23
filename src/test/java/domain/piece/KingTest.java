@@ -15,9 +15,9 @@ class KingTest {
     /*
       ........  7
       ........  6
-      ..TTT...  5
-      ..TKT...  4
-      ..TTT...  3
+      ..812...  5
+      ..7K3...  4
+      ..654...  3
       ........  2
       ........  1 (rank 1)
 
@@ -28,24 +28,24 @@ class KingTest {
     void isReachable() {
         final Piece king = new King(Color.BLACK);
         final Position source = new Position(File.D, Rank.FOUR);
-        final Position targetUp = new Position(File.D, Rank.FIVE);
-        final Position targetRightUp = new Position(File.E, Rank.FIVE);
-        final Position targetRight = new Position(File.E, Rank.FOUR);
-        final Position targetRightDown = new Position(File.E, Rank.THREE);
-        final Position targetDown = new Position(File.D, Rank.THREE);
-        final Position targetLeftDown = new Position(File.C, Rank.THREE);
-        final Position targetLeft = new Position(File.C, Rank.FOUR);
-        final Position targetLeftUp = new Position(File.C, Rank.TWO);
+        final Position targetOne = new Position(File.D, Rank.FIVE);
+        final Position targetTwo = new Position(File.E, Rank.FIVE);
+        final Position targetThree = new Position(File.E, Rank.FOUR);
+        final Position targetFour = new Position(File.E, Rank.THREE);
+        final Position targetFive = new Position(File.D, Rank.THREE);
+        final Position targetSix = new Position(File.C, Rank.THREE);
+        final Position targetSeven = new Position(File.C, Rank.FOUR);
+        final Position targetEight = new Position(File.C, Rank.TWO);
 
         assertAll(
-                () -> Assertions.assertThat(king.isReachable(source, targetUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetRightUp, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetRight, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetRightDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetLeftDown, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetLeft, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(king.isReachable(source, targetLeftUp, Empty.INSTANCE)).isTrue()
+                () -> Assertions.assertThat(king.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetFour, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetFive, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetSix, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetSeven, Empty.INSTANCE)).isTrue(),
+                () -> Assertions.assertThat(king.isReachable(source, targetEight, Empty.INSTANCE)).isTrue()
         );
     }
 }

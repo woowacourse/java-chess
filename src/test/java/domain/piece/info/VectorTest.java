@@ -134,4 +134,15 @@ class VectorTest {
                 () -> Assertions.assertThat(vector.hasAbsoluteValueOf(3)).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("x축 대칭이동을 시킬 수 있다")
+    void reflect() {
+        final Vector vector = Vector.of(0, 1);
+        final Vector expected = Vector.of(0, -1);
+
+        final Vector reflected = vector.reflectHorizontally();
+
+        Assertions.assertThat(reflected).isEqualTo(expected);
+    }
 }
