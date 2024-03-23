@@ -1,18 +1,12 @@
 package chess.domain.strategy;
 
-import chess.domain.Position;
-import chess.domain.PositionDifference;
+import chess.domain.MoveRange;
 
-public class BlackPawnNotFirstMoveStrategy implements MoveStrategy {
+public class BlackPawnNotFirstMoveStrategy extends PawnMoveStrategy {
+    private static final MoveRange STRAIGHT_MOVE_RANGE = new MoveRange(1, 1);
+    private static final MoveRange DIAGONAL_MOVE_RANGE = new MoveRange(1, 1);
 
-    @Override
-    public boolean canMove(Position currentPosition, Position newPosition) {
-        PositionDifference positionDifference = currentPosition.calculateDifference(newPosition);
-
-        boolean canMoveStraight = positionDifference.isWithinVerticalRange(1, 1);
-        boolean canMoveDiagonal =
-                positionDifference.isWithinVerticalRange(1, 1) && positionDifference.isMagnitudeEqual();
-
-        return canMoveStraight || canMoveDiagonal;
+    public BlackPawnNotFirstMoveStrategy() {
+        super(STRAIGHT_MOVE_RANGE, DIAGONAL_MOVE_RANGE);
     }
 }

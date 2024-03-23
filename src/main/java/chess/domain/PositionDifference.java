@@ -16,7 +16,7 @@ public record PositionDifference(int xDifference, int yDifference) {
         return Math.abs(xDifference) <= 1 && Math.abs(yDifference) <= 1;
     }
 
-    public boolean isWithinVerticalRange(int minimum, int maximum) {
-        return (minimum <= yDifference) && (yDifference <= maximum);
+    public boolean isWithinVerticalRange(MoveRange moveRange) {
+        return (moveRange.start() <= yDifference) && (yDifference <= moveRange.end());
     }
 }
