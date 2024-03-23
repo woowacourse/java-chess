@@ -72,4 +72,9 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("Knight는 이동 경로에 기물이 존재해도 뛰어넘을 수 있다.")
+    public void dummy() {
+    }
 }

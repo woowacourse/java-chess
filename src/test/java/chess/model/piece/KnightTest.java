@@ -16,9 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
-    @DisplayName("Knight가 타켓 위치까지 움직이는 경로를 찾는다.")
+    @DisplayName("Knight는 L자로 움직인다.")
     void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
         ChessPosition source = ChessPosition.of(File.E, Rank.FOUR);
@@ -29,35 +30,6 @@ class KnightTest {
 
         // then
         assertThat(path).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
-    void findPathWhenInvalidTarget() {
-        // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
-        Knight knight = Knight.from(Side.WHITE);
-        Pawn targetPiece = Pawn.from(Side.WHITE);
-
-        // when // then
-        assertThatThrownBy(() -> knight.findPath(source, target, targetPiece))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("Knight 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
-    void findPathWhenCanNotReachTargetPiece() {
-        // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
-        Knight knight = Knight.from(Side.BLACK);
-
-        // when
-        List<ChessPosition> path = knight.findPath(source, target, Blank.INSTANCE);
-
-        // then
-        assertThat(path).isEmpty();
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
@@ -97,4 +69,32 @@ class KnightTest {
         );
     }
 
+    @Test
+    @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
+    void findPathWhenInvalidTarget() {
+        // given
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
+        Knight knight = Knight.from(Side.WHITE);
+        Pawn targetPiece = Pawn.from(Side.WHITE);
+
+        // when & then
+        assertThatThrownBy(() -> knight.findPath(source, target, targetPiece))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Knight 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
+    void findPathWhenCanNotReachTargetPiece() {
+        // given
+        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+        Knight knight = Knight.from(Side.BLACK);
+
+        // when
+        List<ChessPosition> path = knight.findPath(source, target, Blank.INSTANCE);
+
+        // then
+        assertThat(path).isEmpty();
+    }
 }
