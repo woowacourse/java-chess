@@ -31,6 +31,24 @@ public class FileRankPosition {
         return fileDistance == rankDistance;
     }
 
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
+    public Direction directionTo(FileRankPosition target) {
+        boolean destinationIsAbove = target.rank.isAbove(rank);
+        return Direction.from(destinationIsAbove);
+    }
+
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
+    public int squaredDistanceWith(FileRankPosition other) {
+        int fileDistance = file.calculateDistanceWith(other.file);
+        int rankDistance = rank.calculateDistanceWith(other.rank);
+        return (int) Math.pow(fileDistance, 2) + (int) Math.pow(rankDistance, 2);
+    }
+
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
+    public boolean isRankSameWith(FileRankPosition other) {
+        return rank == other.rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
