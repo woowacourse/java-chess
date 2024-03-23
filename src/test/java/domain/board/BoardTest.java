@@ -60,11 +60,21 @@ class BoardTest {
 
     @Test
     @DisplayName("보드에서 말이 잘 움직여지는지 확인한다")
-    void () {
+    void playChess() {
         final Board board = new Board(BoardInitiator.init());
 
         Assertions.assertThatCode(() -> {
-                    board.move(B_ONE, A_THREE);
+                    board.move(E_TWO, E_FOUR);
+                    board.move(C_SEVEN, C_SIX);
+                    board.move(D_TWO, D_FOUR);
+                    board.move(D_SEVEN, D_FIVE);
+                    board.move(B_ONE, C_THREE);
+                    board.move(D_FIVE, E_FOUR);
+                    board.move(C_THREE, E_FOUR);
+                    board.move(B_EIGHT, D_SEVEN);
+                    board.move(D_ONE, E_TWO);
+                    board.move(G_EIGHT, F_SIX);
+                    board.move(E_FOUR, D_SIX);
                 }
         ).doesNotThrowAnyException();
 
