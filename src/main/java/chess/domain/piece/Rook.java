@@ -11,7 +11,8 @@ public class Rook extends ChessPiece {
     }
 
     @Override
-    public Rook move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                           boolean isSameTeamExist) {
         if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeamExist)) {
             return this;
         }

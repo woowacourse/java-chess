@@ -14,7 +14,7 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
+    public ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
         if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeam)) {
             return this;
         }

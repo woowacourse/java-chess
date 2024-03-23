@@ -11,7 +11,8 @@ public class King extends ChessPiece {
     }
 
     @Override
-    public King move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+                           boolean isSameTeamExist) {
         if (isMoveInvalid(newPosition, isDisturbed, isOtherPieceExist, isSameTeamExist)) {
             return this;
         }
