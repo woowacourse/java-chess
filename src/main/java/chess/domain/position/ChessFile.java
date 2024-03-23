@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum ChessFile {
@@ -29,18 +30,26 @@ public enum ChessFile {
     }
 
     public static List<ChessFile> findBetween(final ChessFile start, final ChessFile end) {
-        List<ChessFile> files = new ArrayList<>();
         if (start.index() < end.index()) {
-            for (int index = start.index() + 1; index < end.index(); index++) {
-                files.add(ChessFile.findByIndex(index));
-            }
-            return files;
+            return findFilesBetween(start, end);
         }
-        for (int index = start.index() - 1; index > end.index(); index--) {
+        return findBetweenFilesWhenEndLessThanStart(start, end);
+    }
+
+    private static List<ChessFile> findFilesBetween(ChessFile start, ChessFile end) {
+        List<ChessFile> files = new ArrayList<>();
+        for (int index = start.index() + 1; index < end.index(); index++) {
             files.add(ChessFile.findByIndex(index));
         }
         return files;
     }
+
+    private static List<ChessFile> findBetweenFilesWhenEndLessThanStart(ChessFile start, ChessFile end) {
+        List<ChessFile> files = findFilesBetween(end, start);
+        Collections.reverse(files);
+        return files;
+    }
+
 
     private static ChessFile findByIndex(int fileIndex) {
         return Arrays.stream(values())

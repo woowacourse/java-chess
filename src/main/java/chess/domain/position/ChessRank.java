@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public enum ChessRank {
@@ -32,16 +33,23 @@ public enum ChessRank {
     }
 
     public static List<ChessRank> findBetween(ChessRank start, ChessRank end) {
-        List<ChessRank> ranks = new ArrayList<>();
         if (start.index() < end.index()) {
-            for (int index = start.index() + 1; index < end.index(); index++) {
-                ranks.add(findByIndex(index));
-            }
-            return ranks;
+            return findRanksBetween(start, end);
         }
-        for (int index = start.index() - 1; index > end.index(); index--) {
+        return findBetweenRanksWhenEndLessThanStart(end, start);
+    }
+
+    private static List<ChessRank> findRanksBetween(ChessRank start, ChessRank end) {
+        List<ChessRank> ranks = new ArrayList<>();
+        for (int index = start.index() + 1; index < end.index(); index++) {
             ranks.add(findByIndex(index));
         }
+        return ranks;
+    }
+
+    private static List<ChessRank> findBetweenRanksWhenEndLessThanStart(ChessRank start, ChessRank end) {
+        List<ChessRank> ranks = findRanksBetween(start, end);
+        Collections.reverse(ranks);
         return ranks;
     }
 

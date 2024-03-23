@@ -25,8 +25,41 @@ public class Position {
         ));
     }
 
-    public boolean isRank(ChessRank rank) {
-        return this.rank == rank;
+    public Set<Position> findBetween(Position target) {
+        List<ChessRank> betweenRanks = ChessRank.findBetween(this.rank, target.rank);
+        List<ChessFile> betweenFiles = ChessFile.findBetween(this.file, target.file);
+
+        if (betweenRanks.isEmpty()) {
+            return findHorizontalPositions(betweenFiles);
+        }
+        if (betweenFiles.isEmpty()) {
+            return findVerticalPositions(betweenRanks);
+        }
+        return findDiagonalPositions(betweenFiles, betweenRanks);
+    }
+
+    private Set<Position> findHorizontalPositions(List<ChessFile> betweenFiles) {
+        Set<Position> positions = new HashSet<>();
+        for (ChessFile file : betweenFiles) {
+            positions.add(new Position(file, this.rank));
+        }
+        return positions;
+    }
+
+    private Set<Position> findVerticalPositions(List<ChessRank> betweenRanks) {
+        Set<Position> positions = new HashSet<>();
+        for (ChessRank rank : betweenRanks) {
+            positions.add(new Position(this.file, rank));
+        }
+        return positions;
+    }
+
+    private Set<Position> findDiagonalPositions(List<ChessFile> betweenFiles, List<ChessRank> betweenRanks) {
+        Set<Position> positions = new HashSet<>();
+        for (int i = 0; i < betweenFiles.size(); i++) {
+            positions.add(new Position(betweenFiles.get(i), betweenRanks.get(i)));
+        }
+        return positions;
     }
 
     public int calculateDistanceTo(Position target) {
@@ -47,36 +80,16 @@ public class Position {
         return Math.abs(target.rank.index() - rank.index());
     }
 
+    public boolean isRank(ChessRank rank) {
+        return this.rank == rank;
+    }
+
     public int indexOfFile() {
         return file.index();
     }
 
     public int indexOfRank() {
         return rank.index();
-    }
-
-    public Set<Position> findBetween(Position target) {
-        Set<Position> positions = new HashSet<>();
-        List<ChessRank> betweenRanks = ChessRank.findBetween(this.rank, target.rank);
-        List<ChessFile> betweenFiles = ChessFile.findBetween(this.file, target.file);
-        if (betweenRanks.isEmpty()) {
-            for (ChessFile file : betweenFiles) {
-                positions.add(new Position(file, this.rank));
-            }
-            return positions;
-        }
-
-        if (betweenFiles.isEmpty()) {
-            for (ChessRank rank : betweenRanks) {
-                positions.add(new Position(this.file, rank));
-            }
-            return positions;
-        }
-
-        for (int i = 0; i < betweenFiles.size(); i++) {
-            positions.add(new Position(betweenFiles.get(i), betweenRanks.get(i)));
-        }
-        return positions;
     }
 
     @Override
@@ -90,5 +103,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
