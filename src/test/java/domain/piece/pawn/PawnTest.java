@@ -34,7 +34,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -55,7 +55,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -76,7 +76,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -87,7 +87,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -98,7 +98,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> whitePawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 뒤로 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -157,7 +157,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("앞에 말이 있어서 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -178,7 +178,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("초기 위치가 아닌 폰은 2칸 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -199,7 +199,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("대각선 방향에 상대 말이 없어서 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -210,7 +210,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 직선 방향으로 1칸 또는 2칸, 대각 방향으로 1칸만 이동할 수 있습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
@@ -221,7 +221,7 @@ class PawnTest {
 
             assertThatThrownBy(() -> blackPawn.validateMovement(resource, target, other))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("폰은 뒤로 이동할 수 없습니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
 
         @Test
