@@ -8,7 +8,7 @@ public enum Color {
         return this == BLACK;
     }
 
-    public boolean isWhite() { // TODO: 사용
+    public boolean isWhite() {
         return this == WHITE;
     }
 
