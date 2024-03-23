@@ -1,10 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,9 +22,10 @@ class PawnTest {
         Square source = Square.from("c7");
         Square target = Square.from(targetInput);
         Pawn pawn = new Pawn(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(pawn));
 
         // when
-        pawn.move(target);
+        pawn.move(board, target);
 
         assertThat(pawn.getSquare()).isEqualTo(target);
     }
@@ -34,9 +38,10 @@ class PawnTest {
         Square source = Square.from("c2");
         Square target = Square.from(targetInput);
         Pawn pawn = new Pawn(PieceColor.WHITE, source);
+        Board board = new Board(Set.of(pawn));
 
         // when
-        pawn.move(target);
+        pawn.move(board, target);
 
         assertThat(pawn.getSquare()).isEqualTo(target);
     }
@@ -48,10 +53,11 @@ class PawnTest {
         Square stopover = Square.from("c6");
         Square target = Square.from("c5");
         Pawn pawn = new Pawn(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(pawn));
 
         // when
-        pawn.move(stopover);
-        pawn.move(target);
+        pawn.move(board, stopover);
+        pawn.move(board, target);
 
         assertThat(pawn.getSquare()).isEqualTo(target);
     }
@@ -64,10 +70,11 @@ class PawnTest {
         Square stopover = Square.from("c3");
         Square target = Square.from("c4");
         Pawn pawn = new Pawn(PieceColor.WHITE, source);
+        Board board = new Board(Set.of(pawn));
 
         // when
-        pawn.move(stopover);
-        pawn.move(target);
+        pawn.move(board, stopover);
+        pawn.move(board, target);
 
         assertThat(pawn.getSquare()).isEqualTo(target);
     }

@@ -1,9 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,9 +21,10 @@ class KingTest {
         Square source = Square.from("c6");
         Square target = Square.from(targetInput);
         King king = new King(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(king));
 
         // when
-        king.move(target);
+        king.move(board, target);
 
         // then
         assertThat(king.getSquare()).isEqualTo(target);

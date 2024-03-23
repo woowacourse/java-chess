@@ -1,6 +1,9 @@
 package chess.domain.square;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Square {
     private static final String ERROR_INVALID_PATTERN = "문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요.";
@@ -20,9 +23,9 @@ public class Square {
     public static Square from(String square) {
         validatePattern(square);
         return cache.computeIfAbsent(square, s -> {
-                File file = File.from(parseFile(square));
-                Rank rank = Rank.from(parseRank(square));
-                return new Square(file, rank);
+            File file = File.from(parseFile(square));
+            Rank rank = Rank.from(parseRank(square));
+            return new Square(file, rank);
         });
     }
 
@@ -54,12 +57,11 @@ public class Square {
         int vectorFile = file.vectorTo(target.file);
         int vectorRank = rank.vectorTo(target.rank);
 
-        Square current = this;
-        do {
-            current = current.add(vectorFile, vectorRank);
+        Square current = add(vectorFile, vectorRank);
+        while (!current.equals(target)) {
             path.add(current);
-        } while (!current.equals(target));
-
+            current = current.add(vectorFile, vectorRank);
+        }
         return path;
     }
 
@@ -117,5 +119,10 @@ public class Square {
         if (o == null || getClass() != o.getClass()) return false;
         Square square = (Square) o;
         return file == square.file && rank == square.rank;
+    }
+
+    @Override
+    public String toString() {
+        return generateSquareKey(file, rank);
     }
 }

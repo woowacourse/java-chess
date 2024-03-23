@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.square.Square;
 import chess.domain.square.Rank;
 
@@ -26,7 +27,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(Square target) {
+    public void move(Board board, Square target) {
 
     }
 

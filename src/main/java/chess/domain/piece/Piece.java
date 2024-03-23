@@ -1,19 +1,20 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.square.Square;
 
 import java.util.Objects;
 
 public abstract class Piece {
     private final PieceColor color;
-    private final Square square;
+    protected Square square;
 
     public Piece(PieceColor color, Square square) {
         this.color = color;
         this.square = square;
     }
 
-    public abstract void move(Square target);
+    public abstract void move(Board board, Square target);
 
     public abstract PieceType getType();
 
