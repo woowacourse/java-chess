@@ -39,21 +39,6 @@ public enum File {
         return Math.abs(index - other.index);
     }
 
-    public int calculateDirection(final File other) {
-        return (int) Math.signum(index - other.index);
-    }
-
-    public File move(final int value) {
-        return valueOf(this.index + value);
-    }
-
-    private File valueOf(final int value) {
-        return Arrays.stream(values())
-                .filter(file -> file.index == value)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_FILE));
-    }
-
     public List<File> findFilePath(final File other) {
         int start = Math.min(index, other.index) + 1;
         int end = Math.max(index, other.index);
@@ -67,6 +52,13 @@ public enum File {
             Collections.reverse(filePath);
         }
         return filePath;
+    }
+
+    private File valueOf(final int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_FILE));
     }
 
     public int getIndex() {

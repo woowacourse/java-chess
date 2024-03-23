@@ -53,17 +53,6 @@ public enum Rank {
         return (int) Math.signum(index - other.index);
     }
 
-    public Rank move(final int value) {
-        return valueOf(this.index + value);
-    }
-
-    private Rank valueOf(final int value) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.index == value)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_RANK));
-    }
-
     public List<Rank> findRankPath(final Rank other) {
         int start = Math.min(index, other.index) + 1;
         int end = Math.max(index, other.index);
@@ -74,6 +63,13 @@ public enum Rank {
         }
 
         return rankPath;
+    }
+
+    private Rank valueOf(final int value) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == value)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_RANK));
     }
 
     public int getIndex() {

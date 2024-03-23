@@ -2,7 +2,6 @@ package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,26 +60,6 @@ class RankTest {
         int actual = rank.calculateDirection(other);
 
         assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("주어진 값만큼 이동한다.")
-    @Test
-    void moveByValue() {
-        Rank rank = Rank.FIVE;
-
-        Rank actual = rank.move(1);
-
-        assertThat(actual).isEqualTo(Rank.SIX);
-    }
-
-    @DisplayName("보드에서 벗어난 위치로 이동하면 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 8})
-    void occurExceptionWhenMoveToOutOfRange(int value) {
-        Rank rank = Rank.ONE;
-
-        assertThatThrownBy(() -> rank.move(value))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("두 랭크 간 경로를 찾는다.")

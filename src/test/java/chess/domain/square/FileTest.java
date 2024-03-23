@@ -2,13 +2,11 @@ package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
@@ -42,37 +40,6 @@ class FileTest {
         int actual = file.calculateDistance(other);
 
         assertThat(actual).isEqualTo(7);
-    }
-
-    @DisplayName("두 파일 간 거리를 이용해 이동 방향을 구한다.")
-    @ParameterizedTest
-    @CsvSource({"c, 1", "d, 0", "e, -1"})
-    void calculateDirectionUsingDistanceBetweenTwoFiles(File other, int expected) {
-        File file = File.d;
-
-        int actual = file.calculateDirection(other);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @DisplayName("주어진 값만큼 이동한다.")
-    @Test
-    void moveByValue() {
-        File file = File.d;
-
-        File actual = file.move(1);
-
-        assertThat(actual).isEqualTo(File.e);
-    }
-
-    @DisplayName("보드에서 벗어난 위치로 이동하면 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 8})
-    void occurExceptionWhenMoveToOutOfRange(int value) {
-        File file = File.a;
-
-        assertThatThrownBy(() -> file.move(value))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("두 파일 간 경로를 찾는다.")
