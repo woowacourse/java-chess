@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -43,6 +44,15 @@ class BoardTest {
         assertThat(board.find(notExistPosition)).isEqualTo(Optional.empty());
     }
 
+    /*
+     * .R......
+     * ........
+     * ........
+     * .q.k....
+     * ........
+     * ........
+     * ........
+     * */
     @Nested
     @DisplayName("말 이동 테스트")
     class MovingTest {
@@ -51,7 +61,10 @@ class BoardTest {
         private static final King KING = new King(Team.WHITE);
         private static final Position START_QUEEN = new Position(File.E, Rank.TWO);
         private static final Queen QUEEN = new Queen(Team.WHITE);
-        private static final Map<Position, Piece> MAP = Map.of(START_KING, KING, START_QUEEN, QUEEN);
+        private static final Rook ENEMY_ROOK = new Rook(Team.BLACK);
+        private static final Position START_ENEMY_ROOK = new Position(File.H, Rank.TWO);
+        private static final Map<Position, Piece> MAP = Map.of(
+                START_KING, KING, START_QUEEN, QUEEN, START_ENEMY_ROOK, ENEMY_ROOK);
         private Board board;
 
         @BeforeEach
@@ -86,9 +99,9 @@ class BoardTest {
         @Test
         @DisplayName("말의 이동 반경을 벗어날 경우, 예외가 발생한다.")
         void moveTest_whenOutOfMovement_throwException() {
-            Position impossibleEnd = new Position(File.F, Rank.EIGHT);
+            Position outOfMovement = new Position(File.F, Rank.EIGHT);
 
-            assertThatThrownBy(() -> board.move(START_KING, impossibleEnd))
+            assertThatThrownBy(() -> board.move(START_KING, outOfMovement))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("불가능한 경로입니다.");
         }
@@ -96,11 +109,30 @@ class BoardTest {
         @Test
         @DisplayName("이동 경로 위에 다른 말이 존재할 경우, 예외가 발생한다.")
         void moveTest_whenBlocked_throwException() {
-            Position impossibleEnd = new Position(File.E, Rank.FIVE);
+            Position blockedPosition = new Position(File.E, Rank.FIVE);
 
-            assertThatThrownBy(() -> board.move(START_QUEEN, impossibleEnd))
+            assertThatThrownBy(() -> board.move(START_QUEEN, blockedPosition))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("다른 말이 있어 이동 불가능합니다.");
+        }
+
+        @Test
+        @DisplayName("도착할 곳에 같은 팀이 있을 경우, 예외가 발생한다.")
+        void moveTest_whenExistSameTeamAtTheEnd_throwException() {
+            assertThatThrownBy(() -> board.move(START_QUEEN, START_KING))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("도착 지점에 같은 팀 말이 있어 이동이 불가능합니다.");
+        }
+
+        @Test
+        @DisplayName("도착할 곳에 다른 팀이 있을 경우, 해당 말을 잡아먹는다.")
+        void moveTest_whenExistSameTeamAtTheEnd() {
+            board.move(START_QUEEN, START_ENEMY_ROOK);
+
+            assertAll(
+                    () -> assertThat(board.find(START_QUEEN)).isEqualTo(Optional.empty()),
+                    () -> assertThat(board.find(START_ENEMY_ROOK)).isEqualTo(Optional.of(QUEEN))
+            );
         }
     }
 }

@@ -21,20 +21,53 @@ public class Board {
     }
 
     public void move(Position start, Position end) {
-        Piece piece = find(start)
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+        validate(start, end);
+
+        Piece piece = board.get(start);
         List<Position> path = piece.findPath(start, end);
 
-        if (isMovable(path)) {
-            throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
-        }
+        validateEmpty(path);
 
         board.remove(start);
         board.put(end, piece);
     }
 
-    private boolean isMovable(List<Position> path) {
+    public void validate(Position start, Position end) {
+        if (isNotExistPiece(start)) {
+            throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
+        }
+        if (isExistSameTeam(start, end)) {
+            throw new IllegalArgumentException("도착 지점에 같은 팀 말이 있어 이동이 불가능합니다.");
+        }
+    }
+
+    private boolean isExistSameTeam(Position start, Position end) {
+        Optional<Piece> pieceAtEnd = find(end);
+        if (pieceAtEnd.isEmpty()) {
+            return false;
+        }
+
+        return find(start).map(piece -> piece.isSameTeam(pieceAtEnd.get()))
+                .orElse(false);
+    }
+
+    private void validateEmpty(List<Position> path) {
+        if (isBlocked(path)) {
+            throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
+        }
+    }
+
+    private boolean isBlocked(List<Position> path) {
         return path.stream()
-                .anyMatch(position -> board.get(position) != null);
+                .limit(path.size() - 1)
+                .anyMatch(this::isExistPiece);
+    }
+
+    private boolean isExistPiece(Position position) {
+        return board.get(position) != null;
+    }
+
+    private boolean isNotExistPiece(Position position) {
+        return !isExistPiece(position);
     }
 }
