@@ -58,8 +58,6 @@ public abstract class Piece {
         return positions;
     }
 
-    ;
-
     private void validateMovable(Movement movement) {
         if (isMovable(movement)) {
             return;
