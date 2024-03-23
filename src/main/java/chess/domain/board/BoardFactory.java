@@ -44,13 +44,13 @@ public class BoardFactory {
         return IntStream.range(0, PIECES_ARRANGEMENT.size())
                 .mapToObj(file -> PIECES_ARRANGEMENT.get(file).apply(
                         pieceColor,
-                        new Square(rank, File.from(file))))
+                        new Square(File.from(file), rank)))
                 .collect(Collectors.toSet());
     }
 
     private static Set<Piece> createPawns(Rank rank, PieceColor pieceColor) {
         return Arrays.stream(File.values())
-                .map(file -> new Pawn(pieceColor, new Square(rank, file)))
+                .map(file -> new Pawn(pieceColor, new Square(file, rank)))
                 .collect(Collectors.toSet());
     }
 }
