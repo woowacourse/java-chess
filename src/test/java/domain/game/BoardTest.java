@@ -31,7 +31,7 @@ class BoardTest {
         // Given
         Piece piece = PieceFactory.create(PieceType.WHITE_BISHOP);
         Position source = B2;
-        Position destination = new Position(File.D, Rank.FOUR);
+        Position destination = Position.of(File.D, Rank.FOUR);
         Map<Position, Piece> piecePositions = new HashMap<>(Map.of(source, piece));
         Board board = new Board(piecePositions);
 

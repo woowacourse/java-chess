@@ -42,6 +42,6 @@ public class PositionConvertor {
         if (!files.containsKey(file) || !ranks.containsKey(rank)) {
             throw  new IllegalArgumentException("잘못된 위치입니다.");
         }
-        return new Position(files.get(split[0]), ranks.get(split[1]));
+        return Position.of(files.get(split[0]), ranks.get(split[1]));
     }
 }

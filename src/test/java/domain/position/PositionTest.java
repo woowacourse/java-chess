@@ -15,14 +15,14 @@ class PositionTest {
         Rank rank = Rank.ONE;
 
         // When
-        Position position = new Position(file, rank);
+        Position position = Position.of(file, rank);
 
         // Then
         assertThat(position.rank()).isEqualTo(rank);
         assertThat(position.file()).isEqualTo(file);
     }
 
-    @DisplayName("백터 값을 전달하면 새로운 위치의 Position을 반환한다.")
+    @DisplayName("백터 값을 전달하면 새로운 위치의 Position 을 반환한다.")
     @Test
     void addPositionTest() {
         // Given
@@ -34,5 +34,22 @@ class PositionTest {
         // Then
         assertThat(newPosition.file()).isEqualTo(File.E);
         assertThat(newPosition.rank()).isEqualTo(Rank.THREE);
+    }
+
+    @DisplayName("이전에 생성된 Position 객체가 있으면, 캐싱된 객체를 반환한다.")
+    @Test
+    void cachedPositionTest() {
+        // Given
+        File file = File.A;
+        Rank rank = Rank.ONE;
+
+        // When
+        Position position = Position.of(file, rank);
+        Position cachedPosition = Position.of(file, rank);
+        Position notCachedPosition = new Position(file, rank);
+
+        // Then
+        assertThat(System.identityHashCode(position)).isEqualTo(System.identityHashCode(cachedPosition));
+        assertThat(System.identityHashCode(notCachedPosition)).isNotEqualTo(System.identityHashCode(cachedPosition));
     }
 }
