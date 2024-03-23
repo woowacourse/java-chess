@@ -1,8 +1,10 @@
 package domain.board;
 
+import domain.game.Turn;
 import domain.piece.Color;
 import domain.piece.Pawn;
 import domain.piece.Piece;
+
 import java.util.Map;
 
 public class Board {
@@ -17,16 +19,16 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
-    public void move(Position sourcePosition, Position targetPosition, Color color) {
+    public void move(Position sourcePosition, Position targetPosition, Turn turn) {
         Piece piece = board.get(sourcePosition);
-        validate(sourcePosition, targetPosition, color);
+        validate(sourcePosition, targetPosition, turn);
         board.remove(sourcePosition);
         board.put(targetPosition, piece);
     }
 
-    private void validate(Position sourcePosition, Position targetPosition, Color color) {
+    private void validate(Position sourcePosition, Position targetPosition, Turn turn) {
         validateNoPieceToMove(sourcePosition);
-        validateTurn(sourcePosition, color);
+        validateTurn(sourcePosition, turn);
         validateSamePosition(sourcePosition, targetPosition);
         validateOwnPieceExistAtTargetPosition(sourcePosition, targetPosition);
         validatePieceCanMove(sourcePosition, targetPosition);
@@ -40,9 +42,9 @@ public class Board {
         }
     }
 
-    private void validateTurn(Position sourcePosition, Color color) {
+    private void validateTurn(Position sourcePosition, Turn turn) {
         Piece piece = board.get(sourcePosition);
-        if (piece.hasColorOf(color)) {
+        if (piece.hasColorOf(turn.getColor())) {
             return;
         }
         throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
@@ -111,7 +113,7 @@ public class Board {
 
     private boolean isStraightMove(Position sourcePosition, Position targetPosition) {
         return sourcePosition.isOnSameRankAs(targetPosition)
-            || sourcePosition.isOnSameFileAs(targetPosition);
+                || sourcePosition.isOnSameFileAs(targetPosition);
     }
 
     private boolean isDiagonalMove(Position sourcePosition, Position targetPosition) {

@@ -1,20 +1,16 @@
 package domain.board;
 
+import domain.game.Turn;
+import domain.piece.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-
-import domain.piece.Bishop;
-import domain.piece.Color;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
-import domain.piece.Queen;
-import domain.piece.Rook;
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
@@ -25,9 +21,9 @@ class BoardTest {
         Position sourcePosition = Position.of(4, 4);
         Position targetPosition = Position.of(4, 5);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("source 위치에 말이 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("source 위치에 말이 없습니다.");
     }
 
     @Test
@@ -37,9 +33,9 @@ class BoardTest {
         Position sourcePosition = Position.of(1, 1);
         Position targetPosition = Position.of(1, 2);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("한 칸에 말이 2개 존재할 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("한 칸에 말이 2개 존재할 수 없습니다.");
     }
 
     @Test
@@ -49,9 +45,9 @@ class BoardTest {
         Position sourcePosition = Position.of(1, 1);
         Position targetPosition = Position.of(1, 1);
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
     }
 
     @Test
@@ -61,13 +57,13 @@ class BoardTest {
         Position targetPosition = Position.of(3, 3);
         Knight knight = new Knight(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, knight)
+                Map.of(sourcePosition, knight)
         ));
 
-        board.move(sourcePosition, targetPosition, Color.WHITE);
+        board.move(sourcePosition, targetPosition, Turn.makeInitialTurn());
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
-            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
+                () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+                () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
         );
     }
 
@@ -78,13 +74,13 @@ class BoardTest {
         Position targetPosition = Position.of(1, 3);
         King king = new King(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, king)
+                Map.of(sourcePosition, king)
         ));
 
-        board.move(sourcePosition, targetPosition, Color.WHITE);
+        board.move(sourcePosition, targetPosition, Turn.makeInitialTurn());
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
-            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
+                () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+                () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
         );
     }
 
@@ -95,12 +91,12 @@ class BoardTest {
         Position targetPosition = Position.of(3, 4);
         Knight knight = new Knight(Color.WHITE);
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, knight)
+                Map.of(sourcePosition, knight)
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("말의 규칙에 맞지 않는 이동입니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("말의 규칙에 맞지 않는 이동입니다.");
     }
 
     @Test
@@ -114,15 +110,15 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, rook,
-                middlePosition, pawn
-            )
+                Map.of(
+                        sourcePosition, rook,
+                        middlePosition, pawn
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -136,15 +132,15 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, bishop,
-                middlePosition, pawn
-            )
+                Map.of(
+                        sourcePosition, bishop,
+                        middlePosition, pawn
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -158,15 +154,15 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, queen,
-                middlePosition, pawn
-            )
+                Map.of(
+                        sourcePosition, queen,
+                        middlePosition, pawn
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -180,15 +176,15 @@ class BoardTest {
         Queen queen = new Queen(Color.WHITE);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                middlePosition, queen
-            )
+                Map.of(
+                        sourcePosition, pawn,
+                        middlePosition, queen
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("경로에 말이 있으면 움직일 수 없습니다.");
     }
 
     @Test
@@ -201,15 +197,15 @@ class BoardTest {
         Queen queen = new Queen(Color.BLACK);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                targetPosition, queen
-            )
+                Map.of(
+                        sourcePosition, pawn,
+                        targetPosition, queen
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("직진으로 잡을 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("직진으로 잡을 수 없습니다.");
     }
 
     @Test
@@ -222,17 +218,17 @@ class BoardTest {
         Queen queen = new Queen(Color.BLACK);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                targetPosition, queen
-            )
+                Map.of(
+                        sourcePosition, pawn,
+                        targetPosition, queen
+                )
         ));
 
-        board.move(sourcePosition, targetPosition, Color.WHITE);
+        board.move(sourcePosition, targetPosition, Turn.makeInitialTurn());
 
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
-            () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(pawn)
+                () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+                () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(pawn)
         );
     }
 
@@ -245,13 +241,13 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
 
         Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn
-            )
+                Map.of(
+                        sourcePosition, pawn
+                )
         ));
 
-        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
+        assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Turn.makeInitialTurn()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
     }
 }
