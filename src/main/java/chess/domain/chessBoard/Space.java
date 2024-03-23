@@ -21,7 +21,7 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace, List<Space> spaces) {
-        validateIsMovableSpace(targetSpace);
+        validateIsMovableOrCatchable(targetSpace);
         validateClearRoute(targetSpace, spaces);
         validateSameColorOnSpace(targetSpace);
         if (piece.isCatchable(position, targetSpace.position) || targetSpace.doesNotHavePiece()) {
@@ -51,10 +51,11 @@ public class Space {
         }
     }
 
-    private void validateIsMovableSpace(Space targetSpace) {
-        if (!piece.isMovable(position, targetSpace.position)) {
-            throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
+    private void validateIsMovableOrCatchable(Space targetSpace) {
+        if (piece.isMovable(position, targetSpace.position) || piece.isCatchable(position, targetSpace.position)) {
+            return;
         }
+        throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
     }
 
     private void validateSameColorOnSpace(Space targetSpace) {

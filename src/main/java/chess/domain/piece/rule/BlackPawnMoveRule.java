@@ -16,6 +16,6 @@ public class BlackPawnMoveRule implements Rule {
 
     @Override
     public boolean obey(FileDifference fileDifference, RankDifference rankDifference) {
-        return rankDifference.equals(new RankDifference(-1));
+        return rankDifference.equals(new RankDifference(-1)) && fileDifference.hasDistance(0);
     }
 }
