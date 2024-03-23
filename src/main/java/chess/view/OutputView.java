@@ -8,6 +8,8 @@ import java.util.List;
 
 public class OutputView {
 
+    private static final String EMPTY_BOARD = "........";
+
     public void printStartMessage() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작 : start");
@@ -17,14 +19,14 @@ public class OutputView {
 
     public void printBoard(Board board) {
         List<StringBuilder> result = new ArrayList<>();
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
-        result.add(new StringBuilder("........"));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
+        result.add(new StringBuilder(EMPTY_BOARD));
 
         board.getBoard().keySet()
                 .forEach(position -> {
