@@ -13,6 +13,9 @@ import view.message.PieceType;
 public class ChessBoardDto {
 
     private static final String FILE_GUIDE_LINE = "abcdefgh";
+    private static final String EMPTY_POINT = ".";
+    private static final String RANK_GUIDE_LINE = "  %s";
+    private static final int BOARD_SIZE = 8;
 
     private final String value;
 
@@ -22,9 +25,9 @@ public class ChessBoardDto {
 
     public static ChessBoardDto from(final ChessBoard chessBoard) {
         final Map<Position, Piece> pieceOfPosition = chessBoard.getBoard();
-        final String result = IntStream.range(0, 8)
+        final String result = IntStream.range(0, BOARD_SIZE)
                 .mapToObj(Rank::from)
-                .map(rank -> IntStream.range(0, 8)
+                .map(rank -> IntStream.range(0, BOARD_SIZE)
                         .mapToObj(File::from)
                         .map(file -> convertToString(pieceOfPosition, file, rank))
                         .collect(Collectors.joining()))
@@ -39,12 +42,12 @@ public class ChessBoardDto {
         if (piece != null) {
             return PieceType.from(piece).getValue() + paddedRankGuidLine(file, rank);
         }
-        return "." + paddedRankGuidLine(file, rank);
+        return EMPTY_POINT + paddedRankGuidLine(file, rank);
     }
 
     private static String paddedRankGuidLine(final File file, final Rank rank) {
         if (file.isLast()) {
-            return "  " + rank.getValue();
+            return String.format(RANK_GUIDE_LINE, rank.getValue());
         }
         return "";
     }
