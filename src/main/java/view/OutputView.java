@@ -14,8 +14,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class OutputView {
+    private static final int RANK_COUNT = 8;
+    private static final int FILE_COUNT = 8;
+    private static final String EMPTY_DISPLAY = ".";
     private static final Map<Type, String> PIECE_DISPLAY = Map.of(
             Type.PAWN, "p",
             Type.KNIGHT, "n",
@@ -34,24 +38,26 @@ public class OutputView {
 
     public void printBoard(ChessBoard chessBoard) {
         Map<Position, Piece> board = chessBoard.getPositionAndPieces();
-        for (int rank = 8; rank >= 1; rank--) {
-            printBoardRow(board, Rank.fromNumber(rank));
+        for (int rank = RANK_COUNT; rank > 0; rank--) {
+            System.out.println(generateBoardDisplay(board, Rank.fromNumber(rank)));
         }
+        System.out.println();
     }
 
-    private void printBoardRow(Map<Position, Piece> board, Rank targetRank) {
-        List<String> strings = new ArrayList<>(Collections.nCopies(8, "."));
+    private String generateBoardDisplay(Map<Position, Piece> board, Rank targetRank) {
+        List<String> boardDisplay = new ArrayList<>(Collections.nCopies(FILE_COUNT, EMPTY_DISPLAY));
         for (var positionAndPiece : board.entrySet()) {
-            Position position = positionAndPiece.getKey();
-            Piece piece = positionAndPiece.getValue();
-            Rank rank = position.rank();
-            File file = position.file();
-
-            if (rank == targetRank) {
-                strings.set(file.order(), pieceDisplay(piece));
-            }
+            fillPieceDisplay(boardDisplay, positionAndPiece, targetRank);
         }
-        System.out.println(String.join("", strings));
+        return String.join("", boardDisplay);
+    }
+
+    private void fillPieceDisplay(List<String> boardDisplay, Entry<Position, Piece> positionAndPiece, Rank targetRank) {
+        Rank rank = positionAndPiece.getKey().rank();
+        File file = positionAndPiece.getKey().file();
+        if (rank == targetRank) {
+            boardDisplay.set(file.order(), pieceDisplay(positionAndPiece.getValue()));
+        }
     }
 
     private String pieceDisplay(Piece piece) {
