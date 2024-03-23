@@ -126,7 +126,7 @@ public class Board {
     private List<Position> findAttackingPiecePositions(Team team, Position position) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey() != position && entry.getValue().isOppositeTeamWith(team))
+                .filter(entry -> !entry.getKey().equals(position) && entry.getValue().isOppositeTeamWith(team))
                 .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
                 .map(Entry::getKey)
                 .toList();
@@ -135,8 +135,8 @@ public class Board {
     private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey() != getKingPosition(attackingTeam.opponent())
-                        && entry.getKey() != attackingPosition)
+                .filter(entry -> !entry.getKey().equals(getKingPosition(attackingTeam.opponent()))
+                        && !entry.getKey().equals(attackingPosition))
                 .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
                 .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
     }
