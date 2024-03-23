@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Command {
-    private final String command;
+    private final CommandType command;
     private static String source;
     private static String target;
 
-    private Command(String command) {
+    private Command(CommandType command) {
         this.command = command;
     }
 
@@ -18,7 +18,7 @@ public class Command {
         if (inputCommand.equals(CommandType.MOVE.getCommandType())) {
             validateMove(commands);
         }
-        return new Command(inputCommand);
+        return new Command(CommandType.valueByCommandType(inputCommand));
     }
 
     private static void validateCommand(String inputCommand) {
@@ -37,7 +37,7 @@ public class Command {
     }
 
     public boolean isCommand(CommandType commandType) {
-        return command.equals(commandType.getCommandType());
+        return command.equals(commandType);
     }
 
     public String getSource() {
