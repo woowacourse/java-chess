@@ -1,56 +1,35 @@
 package domain.piece;
 
-import domain.ChessVector;
+import domain.Direction;
 import domain.Rank;
 import domain.Square;
 import domain.Team;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Pawn extends Piece {
-    private static final List<ChessVector> BLACK_ATTACK_SQUARE_VECTORS = List.of(new ChessVector(1, -1),
-            new ChessVector(-1, -1));
-    private static final List<ChessVector> WHITE_ATTACK_SQUARE_VECTORS = List.of(new ChessVector(-1, 1),
-            new ChessVector(1, 1));
-    private static final ChessVector BLACK_START_SQUARE_VECTOR = new ChessVector(0, -2);
-    private static final ChessVector WHITE_START_SQUARE_VECTOR = new ChessVector(0, 2);
-    private static final ChessVector BLACK_MOVE_SQUARE_VECTOR = new ChessVector(0, -1);
-    private static final ChessVector WHITE_MOVE_SQUARE_VECTOR = new ChessVector(0, 1);
-
-    public Pawn(final Team color) {
+    public Pawn(final Team color) { // TODO: 변수명 변경
         super(color);
     }
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        Rank rank = Rank.SEVEN;
-        ChessVector startChessVector = BLACK_START_SQUARE_VECTOR;
-        ChessVector moveChessVector = BLACK_MOVE_SQUARE_VECTOR;
-
-        if (team == Team.WHITE) {
-            rank = Rank.TWO;
-            startChessVector = WHITE_START_SQUARE_VECTOR;
-            moveChessVector = WHITE_MOVE_SQUARE_VECTOR;
+        if (this.team == Team.BLACK) {
+            return source.next2(Direction.SOUTH).equals(target) ||
+                    (source.next2(Direction.SOUTH_SOUTH).equals(target) && source.isRank(Rank.SEVEN));
         }
-
-        return (source.isRank(rank) && startChessVector.equals(chessVector))
-                || chessVector.equals(moveChessVector);
+        return source.next2(Direction.NORTH).equals(target) ||
+                (source.next2(Direction.NORTH_NORTH).equals(target) && source.isRank(Rank.TWO));
     }
 
     @Override
     public boolean canAttack(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        List<ChessVector> attackChessVectors = BLACK_ATTACK_SQUARE_VECTORS;
-
-        if (team == Team.WHITE) {
-            attackChessVectors = WHITE_ATTACK_SQUARE_VECTORS;
+        if (this.team == Team.BLACK) {
+            return source.next2(Direction.SOUTH_EAST).equals(target) ||
+                    source.next2(Direction.SOUTH_WEST).equals(target);
         }
-
-        return attackChessVectors.stream().anyMatch(attackVector -> attackVector.equals(chessVector));
+        return source.next2(Direction.NORTH_EAST).equals(target) ||
+                source.next2(Direction.NORTH_WEST).equals(target);
     }
 
     @Override
