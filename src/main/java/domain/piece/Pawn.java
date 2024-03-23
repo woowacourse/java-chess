@@ -26,18 +26,9 @@ public class Pawn extends Piece {
     @Override
     public boolean canAttack(Position source, Position target) {
         if (isBlack()) {
-            if (source.hasRank(Rank.SEVEN)) {
-                return source.isRightDown(target) && distanceOneRankOneFile(source, target)
-                        || source.isLeftDown(target) && distanceOneRankOneFile(source, target);
-            }
             return source.isRightDown(target) && distanceOneRankOneFile(source, target)
                     || source.isLeftDown(target) && distanceOneRankOneFile(source, target);
         }
-        if (source.hasRank(Rank.TWO)) {
-            return source.isRightUp(target) && distanceOneRankOneFile(source, target)
-                    || source.isLeftUp(target) && distanceOneRankOneFile(source, target);
-        }
-
         return source.isRightUp(target) && distanceOneRankOneFile(source, target)
                 || source.isLeftUp(target) && distanceOneRankOneFile(source, target);
     }
