@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.ChessBoardMaker;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,12 +18,11 @@ public class ChessController {
     }
 
     public void runChess() {
-        Command command = Command.fromStartCommand(inputView.readStartCommand());
-        if (command == Command.END) {
+        if (Command.fromStartCommand(inputView.readStartCommand()) == Command.END) {
             return;
         }
 
-        final ChessBoard chessBoard = ChessBoard.init();
+        final ChessBoard chessBoard = ChessBoardMaker.init();
         outputView.printChessBoard(chessBoard.getPieces());
 
         List<String> positions = inputView.readMoveCommand();

@@ -1,17 +1,8 @@
 package chess.domain;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.File;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
-import chess.domain.piece.type.Bishop;
-import chess.domain.piece.type.King;
-import chess.domain.piece.type.Night;
 import chess.domain.piece.type.Pawn;
-import chess.domain.piece.type.Queen;
-import chess.domain.piece.type.Rook;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,53 +11,21 @@ public class ChessBoard {
 
     private Set<Piece> pieces; // map<position, piece>으로 갖고있을 수 있을듯
 
-    private ChessBoard(final Set<Piece> pieces) {
+    public ChessBoard(final Set<Piece> pieces) {
         this.pieces = pieces;
-    }
-
-    public static ChessBoard init() {
-        final Set<Piece> pieces = new HashSet<>();
-
-        pieces.addAll((createPieceWithoutPawn(Color.BLACK, Rank.EIGHT)));
-        pieces.addAll((createPawn(Color.BLACK, Rank.SEVEN)));
-        pieces.addAll((createPawn(Color.WHITE, Rank.TWO)));
-        pieces.addAll((createPieceWithoutPawn(Color.WHITE, Rank.ONE)));
-
-        return new ChessBoard(pieces);
-    }
-
-    private static Set<Piece> createPawn(final Color color, final Rank rank) {
-        return Set.of(new Pawn(color, new Position(File.A, rank)),
-                new Pawn(color, new Position(File.B, rank)),
-                new Pawn(color, new Position(File.C, rank)),
-                new Pawn(color, new Position(File.D, rank)),
-                new Pawn(color, new Position(File.E, rank)),
-                new Pawn(color, new Position(File.F, rank)),
-                new Pawn(color, new Position(File.G, rank)),
-                new Pawn(color, new Position(File.H, rank)));
-    }
-
-    private static Set<Piece> createPieceWithoutPawn(final Color color, final Rank rank) {
-        return Set.of(new Rook(color, new Position(File.A, rank)),
-                new Night(color, new Position(File.B, rank)),
-                new Bishop(color, new Position(File.C, rank)),
-                new Queen(color, new Position(File.D, rank)),
-                new King(color, new Position(File.E, rank)),
-                new Bishop(color, new Position(File.F, rank)),
-                new Night(color, new Position(File.G, rank)),
-                new Rook(color, new Position(File.H, rank)));
     }
 
     public void move(final List<String> positions) {
         final String currentPosition = positions.get(0);
         final String targetPosition = positions.get(1);
+
         move(Position.from(currentPosition), Position.from(targetPosition));
     }
 
     void move(final Position currentPosition, final Position targetPosition) {
         final Piece currentPiece = findPieceBy(currentPosition);
 
-        if (currentPiece instanceof Pawn && canPawnCatch(currentPiece, targetPosition)) {
+        if (currentPiece.isClass(Pawn.class) && canPawnCatch(currentPiece, targetPosition)) {
             catchPiece(currentPiece, targetPosition);
             return;
         }

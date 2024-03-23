@@ -33,6 +33,10 @@ public abstract class Piece {
         return this.color.equals(Color.BLACK);
     }
 
+    public boolean isClass(final Class<?> other) {
+        return getClass().equals(other);
+    }
+
     public Position getPosition() {
         return position;
     }

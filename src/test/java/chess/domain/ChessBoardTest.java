@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    final ChessBoard chessBoard = ChessBoard.init();
+    final ChessBoard chessBoard = ChessBoardMaker.init();
 
     @Test
     void create() {
