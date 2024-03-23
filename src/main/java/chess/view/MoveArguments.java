@@ -5,14 +5,26 @@ import chess.model.position.File;
 import chess.model.position.Rank;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public record MoveArguments(String sourceFile, int sourceRank, String targetFile, int targetRank) {
-
+public class MoveArguments {
     private static final String MOVE_REGEX = "([a-zA-Z])(\\d)";
     private static final Pattern MOVE_PATTERN = Pattern.compile(MOVE_REGEX);
     private static final int ARGUMENTS_SIZE = 4;
+
+    private final String sourceFile;
+    private final int sourceRank;
+    private final String targetFile;
+    private final int targetRank;
+
+    private MoveArguments(String sourceFile, int sourceRank, String targetFile, int targetRank) {
+        this.sourceFile = sourceFile;
+        this.sourceRank = sourceRank;
+        this.targetFile = targetFile;
+        this.targetRank = targetRank;
+    }
 
     public static MoveArguments from(List<String> inputs) {
         List<String> arguments = convertArguments(inputs);
@@ -54,5 +66,34 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
 
     public ChessPosition createTargetPosition() {
         return new ChessPosition(File.from(targetFile), Rank.from(targetRank));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (MoveArguments) obj;
+        return Objects.equals(this.sourceFile, that.sourceFile) &&
+                this.sourceRank == that.sourceRank &&
+                Objects.equals(this.targetFile, that.targetFile) &&
+                this.targetRank == that.targetRank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sourceFile, sourceRank, targetFile, targetRank);
+    }
+
+    @Override
+    public String toString() {
+        return "MoveArguments[" +
+                "sourceFile=" + sourceFile + ", " +
+                "sourceRank=" + sourceRank + ", " +
+                "targetFile=" + targetFile + ", " +
+                "targetRank=" + targetRank + ']';
     }
 }
