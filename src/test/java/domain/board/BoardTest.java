@@ -3,6 +3,9 @@ package domain.board;
 import static domain.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
+import domain.piece.Empty;
+import domain.piece.Knight;
+import domain.piece.Piece;
 import domain.piece.info.File;
 import domain.piece.info.Position;
 import domain.piece.info.Rank;
@@ -40,6 +43,30 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(B_TWO, H_TWO))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 말로 해당 위치를 갈 수 없습니다");
+
+    }
+
+
+    @Test
+    @DisplayName("보드에서 말이 움직인 자리가 빈 칸이 되는지 확인한다")
+    void empty() {
+        final Board board = new Board(BoardInitiator.init());
+
+        board.move(B_ONE, A_THREE);
+
+        assertThat(board.squares().get(B_ONE)).isInstanceOf(Empty.class);
+        assertThat(board.squares().get(A_THREE)).isInstanceOf(Knight.class);
+    }
+
+    @Test
+    @DisplayName("보드에서 말이 잘 움직여지는지 확인한다")
+    void () {
+        final Board board = new Board(BoardInitiator.init());
+
+        Assertions.assertThatCode(() -> {
+                    board.move(B_ONE, A_THREE);
+                }
+        ).doesNotThrowAnyException();
 
     }
 }
