@@ -3,9 +3,9 @@ package chess.domain.strategy;
 import chess.domain.Direction;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.position.Rank;
-import chess.domain.position.Square;
-import chess.dto.SquareDifferent;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.square.dto.SquareDifferent;
 
 public class PawnLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 

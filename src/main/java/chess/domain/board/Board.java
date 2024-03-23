@@ -3,8 +3,8 @@ package chess.domain.board;
 import chess.domain.piece.ColorType;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Square;
-import chess.dto.BoardOutput;
+import chess.domain.square.Square;
+import chess.domain.board.dto.BoardOutput;
 
 import java.util.Map;
 

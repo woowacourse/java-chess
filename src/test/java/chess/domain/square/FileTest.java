@@ -1,4 +1,4 @@
-package chess.domain.position;
+package chess.domain.square;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

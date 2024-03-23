@@ -2,8 +2,8 @@ package chess.domain.strategy;
 
 import chess.domain.Direction;
 import chess.domain.board.Board;
-import chess.domain.position.Square;
-import chess.dto.SquareDifferent;
+import chess.domain.square.Square;
+import chess.domain.square.dto.SquareDifferent;
 
 public class BlockedPathCheckStrategy implements LegalMoveCheckStrategy {
 

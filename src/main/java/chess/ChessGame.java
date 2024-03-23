@@ -2,11 +2,11 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
-import chess.domain.position.Square;
-import chess.dto.MoveCommand;
-import chess.dto.SquareCreateCommand;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.board.dto.MoveCommand;
+import chess.domain.square.dto.SquareCreateCommand;
 import chess.util.RetryUtil;
 import chess.view.InputView;
 import chess.view.OutputView;

@@ -1,4 +1,4 @@
-package chess.domain.position;
+package chess.domain.square;
 
 import java.util.Arrays;
 import java.util.List;

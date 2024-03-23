@@ -1,7 +1,7 @@
 package chess.domain.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.position.Square;
+import chess.domain.square.Square;
 
 public class EmptyLegalMoveCheckStrategy implements LegalMoveCheckStrategy {
 

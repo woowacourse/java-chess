@@ -2,9 +2,9 @@ package chess.domain.strategy;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
-import chess.domain.position.Square;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

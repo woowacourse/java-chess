@@ -1,9 +1,9 @@
 package chess.domain;
 
-import chess.domain.position.File;
-import chess.domain.position.Rank;
-import chess.domain.position.Square;
-import chess.dto.SquareDifferent;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
+import chess.domain.square.dto.SquareDifferent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

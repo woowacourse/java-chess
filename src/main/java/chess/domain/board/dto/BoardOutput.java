@@ -1,6 +1,6 @@
-package chess.dto;
+package chess.domain.board.dto;
 
-import chess.domain.position.Square;
+import chess.domain.square.Square;
 import chess.domain.piece.Piece;
 
 import java.util.Map;

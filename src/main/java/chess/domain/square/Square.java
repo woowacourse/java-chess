@@ -1,7 +1,7 @@
-package chess.domain.position;
+package chess.domain.square;
 
-import chess.dto.SquareCreateCommand;
-import chess.dto.SquareDifferent;
+import chess.domain.square.dto.SquareCreateCommand;
+import chess.domain.square.dto.SquareDifferent;
 
 import java.util.Arrays;
 import java.util.Map;

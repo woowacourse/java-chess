@@ -1,4 +1,4 @@
-package chess.dto;
+package chess.domain.square.dto;
 
 public class SquareCreateCommand {
 
