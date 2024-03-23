@@ -20,23 +20,23 @@ import org.junit.jupiter.api.Test;
 class MovedPawnTest {
 
     @Test
-    @DisplayName("폰 앞에 적 기물이 있거나 비어있을 때 앞으로 한 칸 이동할 수 있다")
+    @DisplayName("폰 앞이 비어있을 때 앞으로 한 칸 이동할 수 있다")
     void isReachable() {
         final Piece whitePawn = new MovedPawn(WHITE);
         final Piece blackPawn = new MovedPawn(BLACK);
 
         assertThat(whitePawn.isReachable(UP, Empty.INSTANCE)).isTrue();
-        assertThat(blackPawn.isReachable(DOWN, whitePawn)).isTrue();
+        assertThat(blackPawn.isReachable(DOWN, Empty.INSTANCE)).isTrue();
     }
 
     @Test
-    @DisplayName("폰 앞에 같은편 말이 있을 때 앞으로 한 칸 이동할 수 없다")
+    @DisplayName("폰 앞에 적 혹은 같은편의 기물이 있을 때 앞으로 한 칸 이동할 수 없다")
     void defaultMovement() {
         final Piece whitePawn = new MovedPawn(WHITE);
         final Piece blackPawn = new MovedPawn(BLACK);
 
         assertThat(whitePawn.isReachable(UP, new MovedPawn(WHITE))).isFalse();
-        assertThat(blackPawn.isReachable(DOWN, new MovedPawn(BLACK))).isFalse();
+        assertThat(blackPawn.isReachable(DOWN, new MovedPawn(WHITE))).isFalse();
     }
 
     @Test
