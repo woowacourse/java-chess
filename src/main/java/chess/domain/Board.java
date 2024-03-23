@@ -36,9 +36,10 @@ public class Board {
             Position position = new Position(row, column);
             if (color == Color.WHITE) {
                 board.put(position, new Piece(PieceType.WHITE_PAWN, color));
-                continue;
             }
-            board.put(position, new Piece(PieceType.BLACK_PAWN, color));
+            if (color == Color.BLACK) {
+                board.put(position, new Piece(PieceType.BLACK_PAWN, color));
+            }
         }
     }
 
