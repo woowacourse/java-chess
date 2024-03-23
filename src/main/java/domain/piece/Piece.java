@@ -24,11 +24,11 @@ public abstract class Piece {
         return canMove(source, target);
     }
 
-    public boolean isSameCamp(final Piece other) {
+    public boolean isSameTeam(final Piece other) {
         return this.team == other.team;
     }
 
-    public boolean isOppositeCamp(final Team other) {
+    public boolean isOppositeTeam(final Team other) {
         return team != other;
     }
 

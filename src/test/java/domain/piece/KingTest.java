@@ -43,7 +43,7 @@ class KingTest {
     }
 
 
-    @DisplayName("킹은 상하좌우 대각선으로 한칸 움직일 수 있다.")
+    @DisplayName("킹은 두칸 이상은 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "canNotArguments")
     void canNotMove(final Square target, final boolean expected) {
@@ -60,9 +60,9 @@ class KingTest {
 
     static Stream<Arguments> canNotArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.B, Rank.FIVE), false),
-                Arguments.of(new Square(File.G, Rank.FIVE), false),
-                Arguments.of(new Square(File.D, Rank.EIGHT), false)
+                Arguments.of(new Square(File.B, Rank.FIVE), false), // -2, 1
+                Arguments.of(new Square(File.G, Rank.FIVE), false), // 2, 1
+                Arguments.of(new Square(File.D, Rank.SIX), false) // 0, 2
         );
     }
 }

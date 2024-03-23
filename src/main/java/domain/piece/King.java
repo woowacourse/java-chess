@@ -1,13 +1,12 @@
 package domain.piece;
 
-import domain.ChessVector;
+import domain.Direction;
 import domain.Square;
 import domain.Team;
 
 import java.util.Objects;
 
 public class King extends Piece {
-    public static final int KING_MOVEMENT_DISTANCE = 1;
 
     public King(final Team color) {
         super(color);
@@ -15,9 +14,31 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        return chessVector.isManhattanDistance(KING_MOVEMENT_DISTANCE);
+        if (source.next2(Direction.NORTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.SOUTH).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.EAST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.WEST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.NORTH_EAST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.NORTH_WEST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.SOUTH_EAST).equals(target)) {
+            return true;
+        }
+        if (source.next2(Direction.SOUTH_WEST).equals(target)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -25,6 +25,13 @@ public class Square {
         return new Square(newFile, newRank);
     }
 
+    public Square next2(final Direction direction) {
+        final File newFile = this.file.move(direction.row());
+        final Rank newRank = this.rank.move(direction.column());
+
+        return new Square(newFile, newRank);
+    }
+
     public boolean isRank(final Rank rank) {
         return this.rank == rank;
     }
@@ -51,5 +58,11 @@ public class Square {
                 "file=" + file +
                 ", rank=" + rank +
                 '}';
+    }
+
+    public Direction calculateDirection(final Square target) {
+        final int fileSub = this.file.subtract(target.file);
+        final int rankSub = this.rank.subtract(target.rank);
+        return Direction.from(fileSub, rankSub);
     }
 }
