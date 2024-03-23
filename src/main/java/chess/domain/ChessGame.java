@@ -13,7 +13,7 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> start() {
-        if (turn != Team.WHITE && turn != Team.BLACK) {
+        if (notStarted()) {
             turn = Team.WHITE;
             return board.getBoard();
         }
@@ -31,12 +31,16 @@ public class ChessGame {
     }
 
     private void validateMove(Position source, Position target) {
-        if (turn != Team.WHITE && turn != Team.BLACK) {
+        if (notStarted()) {
             throw new IllegalArgumentException("start가 입력되지 전에 move를 수행할 수 없습니다.");
         }
         if (source.equals(target)) {
             throw new IllegalArgumentException("source좌표와 target좌표가 같을 수 없습니다.");
         }
+    }
+
+    private boolean notStarted() {
+        return turn != Team.WHITE && turn != Team.BLACK;
     }
 
     private boolean checkTurn(Position source, Team turn) {
