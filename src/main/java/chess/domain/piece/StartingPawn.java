@@ -33,7 +33,7 @@ public class StartingPawn extends AbstractPawn {
         super(color, position);
     }
 
-    public static Set<Piece> ofInitialPositions(final Color color) {
+    public static Set<StartingPawn> ofInitialPositions(final Color color) {
         if (color.isBlack()) {
             return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, StartingPawn::new);
         }

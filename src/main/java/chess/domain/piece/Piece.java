@@ -18,13 +18,13 @@ public abstract class Piece {
         this.position = position;
     }
 
-    protected static Set<Piece> initialPiecesOf(
+    protected static <P extends Piece> Set<P> initialPiecesOf(
             final Set<Position> initialPositions,
             final Color color,
-            final BiFunction<Color, Position, Piece> pieceConstructor
+            final PieceConstructor<P> pieceConstructor
     ) {
         return initialPositions.stream()
-                .map(position -> pieceConstructor.apply(color, position))
+                .map(position -> pieceConstructor.create(color, position))
                 .collect(Collectors.toUnmodifiableSet());
     }
 

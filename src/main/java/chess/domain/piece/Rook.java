@@ -25,7 +25,7 @@ public class Rook extends SlidingPiece {
         super(color, position);
     }
 
-    public static Set<Piece> ofInitialPositions(final Color color) {
+    public static Set<Rook> ofInitialPositions(final Color color) {
         if (color.isBlack()) {
             return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Rook::new);
         }
