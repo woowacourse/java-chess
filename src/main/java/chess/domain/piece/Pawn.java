@@ -1,32 +1,32 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.square.Square;
+import chess.domain.square.Rank;
 
 public class Pawn extends Piece {
     private static final int FIRST_STEP_LIMIT = 2;
     private static final int STEP_LIMIT = 1;
 
-    public Pawn(PieceColor color, Position position) {
-        super(color, position);
+    public Pawn(PieceColor color, Square square) {
+        super(color, square);
     }
 
-    private boolean isBackward(Position source, Position target) {
+    private boolean isBackward(Square source, Square target) {
         if (getColor() == PieceColor.BLACK) {
             return target.isLowerThan(source);
         }
         return target.isUpperThan(source);
     }
 
-    private boolean isFirstStep(Position position) {
+    private boolean isFirstStep(Square square) {
         if (getColor() == PieceColor.BLACK) {
-            return position.isSameRow(Row.SEVEN);
+            return square.isSameRank(Rank.SEVEN);
         }
-        return position.isSameRow(Row.TWO);
+        return square.isSameRank(Rank.TWO);
     }
 
     @Override
-    public void move(Position target) {
+    public void move(Square target) {
 
     }
 

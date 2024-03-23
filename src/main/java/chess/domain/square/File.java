@@ -1,18 +1,19 @@
-package chess.domain.position;
+package chess.domain.square;
 
-public enum Row {
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+public enum File {
 
-    private static final String ERROR_OUT_OF_RANGE = "범위 밖을 벗어난 행 입니다.";
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H;
 
-    public static Row from(int value) {
+    private static final String ERROR_OUT_OF_RANGE = "범위 밖의 파일 입니다.";
+
+    public static File from(int value) {
         validateRange(value);
         return values()[value];
     }
@@ -23,17 +24,17 @@ public enum Row {
         }
     }
 
-    public Row add(int value) {
+    public File add(int value) {
         int sum = ordinal() + value;
         validateRange(sum);
         return values()[sum];
     }
 
-    public int vectorTo(Row other) {
+    public int vectorTo(File other) {
         return (int) Math.signum(other.compareTo(this));
     }
 
-    public int distance(Row other) {
+    public int distance(File other) {
         return Math.abs(compareTo(other));
     }
 }

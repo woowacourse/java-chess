@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,7 +16,7 @@ class RookTest {
     void canMove(String target) {
         Rook rook = new Rook(PieceColor.BLACK);
 
-        boolean actual = rook.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = rook.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isTrue();
     }

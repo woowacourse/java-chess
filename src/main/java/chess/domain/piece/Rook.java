@@ -1,15 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 
 public class Rook extends Piece {
 
-    public Rook(PieceColor color, Position position) {
-        super(color, position);
+    public Rook(PieceColor color, Square square) {
+        super(color, square);
     }
 
     @Override
-    public void move(Position target) {
+    public void move(Square target) {
 
     }
 

@@ -8,9 +8,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.domain.square.File;
+import chess.domain.square.Square;
+import chess.domain.square.Rank;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 
 public class BoardFactory {
 
-    public static final List<BiFunction<PieceColor, Position, Piece>> PIECES_ARRANGEMENT = List.of(
+    public static final List<BiFunction<PieceColor, Square, Piece>> PIECES_ARRANGEMENT = List.of(
             Rook::new, Knight::new, Bishop::new, Queen::new,
             King::new, Bishop::new, Knight::new, Rook::new);
 
@@ -32,25 +32,25 @@ public class BoardFactory {
     public static Board createBoard() {
         Set<Piece> board = new HashSet<>();
 
-        board.addAll(createPiecesWithoutPawn(Row.EIGHT, PieceColor.BLACK));
-        board.addAll(createPawns(Row.SEVEN, PieceColor.BLACK));
-        board.addAll(createPawns(Row.TWO, PieceColor.WHITE));
-        board.addAll(createPiecesWithoutPawn(Row.ONE, PieceColor.WHITE));
+        board.addAll(createPiecesWithoutPawn(Rank.EIGHT, PieceColor.BLACK));
+        board.addAll(createPawns(Rank.SEVEN, PieceColor.BLACK));
+        board.addAll(createPawns(Rank.TWO, PieceColor.WHITE));
+        board.addAll(createPiecesWithoutPawn(Rank.ONE, PieceColor.WHITE));
 
         return new Board(board);
     }
 
-    private static Set<Piece> createPiecesWithoutPawn(Row row, PieceColor pieceColor) {
+    private static Set<Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
         return IntStream.range(0, PIECES_ARRANGEMENT.size())
-                .mapToObj(column -> PIECES_ARRANGEMENT.get(column).apply(
+                .mapToObj(file -> PIECES_ARRANGEMENT.get(file).apply(
                         pieceColor,
-                        new Position(row, Column.from(column))))
+                        new Square(rank, File.from(file))))
                 .collect(Collectors.toSet());
     }
 
-    private static Set<Piece> createPawns(Row row, PieceColor pieceColor) {
-        return Arrays.stream(Column.values())
-                .map(column -> new Pawn(pieceColor, new Position(row, column)))
+    private static Set<Piece> createPawns(Rank rank, PieceColor pieceColor) {
+        return Arrays.stream(File.values())
+                .map(file -> new Pawn(pieceColor, new Square(rank, file)))
                 .collect(Collectors.toSet());
     }
 }

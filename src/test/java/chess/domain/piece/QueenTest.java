@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,7 +16,7 @@ class QueenTest {
     void canMove(String target) {
         Queen queen = new Queen(PieceColor.BLACK);
 
-        boolean actual = queen.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = queen.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isTrue();
     }

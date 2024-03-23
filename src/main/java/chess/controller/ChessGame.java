@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.PieceColor;
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -41,8 +41,8 @@ public class ChessGame {
                 throw new IllegalArgumentException("현재는 " + turn + "팀의 턴입니다.");
             }
             board.move(
-                    Position.from(source),
-                    Position.from(target));
+                    Square.from(source),
+                    Square.from(target));
             OutputView.printBoard(board.getPieces());
             return turn.next();
         } catch (IllegalArgumentException | IllegalStateException e) {

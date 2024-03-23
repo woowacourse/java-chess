@@ -1,17 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 
 public class King extends Piece {
 
     private static final int STEP_LIMIT = 1;
 
-    public King(PieceColor color, Position position) {
-        super(color, position);
+    public King(PieceColor color, Square square) {
+        super(color, square);
     }
 
     @Override
-    public void move(Position target) {
+    public void move(Square target) {
 
     }
 

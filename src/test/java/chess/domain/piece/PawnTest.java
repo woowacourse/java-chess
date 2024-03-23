@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +17,7 @@ class PawnTest {
     void canMoveUpToTwoStepWhenBlackPawnFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actual = pawn.canMove(Position.from("c7"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c7"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -28,7 +28,7 @@ class PawnTest {
     void canMoveUpToTwoStepWhenWhitePawnFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actual = pawn.canMove(Position.from("c2"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c2"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -39,7 +39,7 @@ class PawnTest {
     void canMoveOnlyOneStepBlackPawnAfterFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.BLACK);
 
-        boolean actual = pawn.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -50,7 +50,7 @@ class PawnTest {
     void canMoveOnlyOneStepWhitePawnAfterFirstMovement(String target, boolean expected) {
         Pawn pawn = new Pawn(PieceColor.WHITE);
 
-        boolean actual = pawn.canMove(Position.from("c3"), Position.from(target));
+        boolean actual = pawn.canMove(Square.from("c3"), Square.from(target));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -59,8 +59,8 @@ class PawnTest {
     @DisplayName("은 후진할 수 없다.")
     void cannotMoveBackward() {
         Pawn pawn = new Pawn(PieceColor.WHITE);
-        Position source = Position.from("b3");
-        Position target = Position.from("b2");
+        Square source = Square.from("b3");
+        Square target = Square.from("b2");
 
         assertThat(pawn.canMove(source, target)).isFalse();
     }

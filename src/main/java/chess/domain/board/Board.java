@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -15,20 +15,20 @@ public class Board {
         this.pieces = new HashSet<>(pieces);
     }
 
-    public void move(Position source, Position target) {
+    public void move(Square source, Square target) {
         Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalStateException(ERROR_NOT_EXIST_PIECE));
         removeTargetPieceIfAttacked(sourcePiece, target);
         sourcePiece.move(target);
     }
 
-    public Optional<Piece> findPiece(Position position) {
+    public Optional<Piece> findPiece(Square square) {
         return pieces.stream()
-                .filter(piece -> piece.isLocated(position))
+                .filter(piece -> piece.isLocated(square))
                 .findAny();
     }
 
-    private void removeTargetPieceIfAttacked(Piece sourcePiece, Position targetPosition) {
-        findPiece(targetPosition).ifPresent(targetPiece -> {
+    private void removeTargetPieceIfAttacked(Piece sourcePiece, Square targetSquare) {
+        findPiece(targetSquare).ifPresent(targetPiece -> {
             if (sourcePiece.getColor() != targetPiece.getColor()) {
                 pieces.remove(targetPiece);
             }

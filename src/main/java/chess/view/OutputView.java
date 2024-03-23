@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -38,9 +38,9 @@ public class OutputView {
 
     private static void setPiecesOnBoard(char[][] board, Set<Piece> pieces) {
         for (Piece piece : pieces) {
-            Position position = piece.getPosition();
+            Square square = piece.getSquare();
             char pieceSymbol = PieceMapper.map(piece.getType(), piece.getColor());
-            board[position.getRow()][position.getColumn()] = pieceSymbol;
+            board[square.getFile()][square.getRank()] = pieceSymbol;
         }
     }
 

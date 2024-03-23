@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -16,7 +16,7 @@ class BishopTest {
     void canMove(String target) {
         Bishop bishop = new Bishop(PieceColor.BLACK);
 
-        boolean actual = bishop.canMove(Position.from("c6"), Position.from(target));
+        boolean actual = bishop.canMove(Square.from("c6"), Square.from(target));
 
         assertThat(actual).isTrue();
     }

@@ -20,14 +20,14 @@
 - [x] 게임 시작 시 검은색 말은 `7 ~ 8` 행에 위치 하고, 흰색 말은 `1 ~ 2` 행에 위치 한다.
 - [x] 각 기물의 초기 위치는 아래와 같다.
     ```
-    RNBQKBNR  8 (row 8)
+    RNBQKBNR  8 (rank 8)
     PPPPPPPP  7
     ........  6
     ........  5
     ........  4
     ........  3
     pppppppp  2
-    rnbqkbnr  1 (row 1)
+    rnbqkbnr  1 (rank 1)
     
     abcdefgh
     ```
@@ -101,7 +101,7 @@
     <tr>
         <td rowspan="3">
             <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
-            <b> domain / position</b>
+            <b> domain / square</b>
         </td>
         <td><b>File</b></td>
         <td>체스판의 열을 의미하는 클래스</td>
