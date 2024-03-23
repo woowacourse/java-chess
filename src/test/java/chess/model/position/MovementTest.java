@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 class MovementTest {
@@ -122,5 +123,22 @@ class MovementTest {
                 Arguments.of(new Movement(Difference.from(1), Difference.from(-1)), 4, false),
                 Arguments.of(new Movement(Difference.from(3), Difference.from(5)), 3, false)
         );
+    }
+
+    @Test
+    @DisplayName("이동량으로 소스 위치부터 타겟 위치까지 직선 경로를 구한다.")
+    void findStraightPath() {
+        // given
+        ChessPosition sourcePosition = ChessPosition.of(File.A, Rank.FOUR); // File.C, Rank.TWO
+        Difference fileDifference = Difference.from(2);
+        Difference rankDifference = Difference.from(-2);
+        Movement movement = new Movement(fileDifference, rankDifference);
+
+        // when
+        List<ChessPosition> path = movement.findStraightPath(sourcePosition);
+
+        // then
+        assertThat(path)
+                .containsExactly(ChessPosition.of(File.B, Rank.THREE), ChessPosition.of(File.C, Rank.TWO));
     }
 }
