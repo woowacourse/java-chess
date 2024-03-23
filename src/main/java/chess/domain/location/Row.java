@@ -27,15 +27,15 @@ public enum Row {
         this.rank = rank;
     }
 
-    public static Row findByRank(String rank) {
+    public static Row createByRank(String rank) {
         try {
-            return findByRank(Integer.parseInt(rank));
+            return createByRank(Integer.parseInt(rank));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("잘못된 Row 입력입니다. 숫자를 입력해 주세요");
         }
     }
 
-    public static Row findByRank(int rank) {
+    public static Row createByRank(int rank) {
         return Optional.ofNullable(ROWS.get(rank))
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Row 입력입니다."));
     }
@@ -51,11 +51,11 @@ public enum Row {
     }
 
     private Row previous() {
-        return Row.findByRank(this.rank - 1);
+        return Row.createByRank(this.rank - 1);
     }
 
     private Row next() {
-        return Row.findByRank(this.rank + 1);
+        return Row.createByRank(this.rank + 1);
     }
 
     public int calculateDistance(Row other) {

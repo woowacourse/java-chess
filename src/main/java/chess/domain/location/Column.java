@@ -27,12 +27,12 @@ public enum Column {
         this.index = index;
     }
 
-    public static Column findByName(String inputName) {
+    public static Column createByName(String inputName) {
         return Optional.ofNullable(CACHED_COLUMNS_BY_NAME.get(inputName.toUpperCase()))
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Column 입력입니다."));
     }
 
-    public static Column findByIndex(int inputIndex) {
+    public static Column createByIndex(int inputIndex) {
         return Arrays.stream(values())
                 .filter(column -> column.isIndexOf(inputIndex))
                 .findFirst()
@@ -50,11 +50,11 @@ public enum Column {
     }
 
     private Column previous() {
-        return Column.findByIndex(this.index - 1);
+        return Column.createByIndex(this.index - 1);
     }
 
     private Column next() {
-        return Column.findByIndex(this.index + 1);
+        return Column.createByIndex(this.index + 1);
     }
 
     public int calculateDistance(Column other) {
