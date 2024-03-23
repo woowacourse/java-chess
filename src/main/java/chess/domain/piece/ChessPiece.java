@@ -16,7 +16,7 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
-    public abstract ChessPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
+    public abstract ChessPiece move(Position newPosition, boolean isObstacleInRange, boolean isOtherPieceExist,
                                     boolean isSameTeamExist);
 
     @Override

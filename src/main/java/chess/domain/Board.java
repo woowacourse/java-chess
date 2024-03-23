@@ -132,13 +132,13 @@ public class Board {
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 
-    public boolean checkPieceExist(Position position) {
+    public boolean checkOtherPieceExist(Position position) {
         Piece piece = board.get(position);
 
         return piece.getType() != PieceType.EMPTY;
     }
 
-    public boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
+    public boolean checkSameTeamExist(Team currentTeam, Position otherPosition) {
         Piece otherPiece = board.get(otherPosition);
 
         return otherPiece.isSameTeam(currentTeam);
@@ -160,8 +160,8 @@ public class Board {
     private Piece movePiece(Position source, Position target, Piece piece) {
         return piece.move(target,
                 checkObstacleInRange(source, target),
-                checkPieceExist(target),
-                checkSameTeamPieceExist(piece.getTeam(), target));
+                checkOtherPieceExist(target),
+                checkSameTeamExist(piece.getTeam(), target));
     }
 
     public boolean isPieceFromOtherTeam(Position source, Team team) {

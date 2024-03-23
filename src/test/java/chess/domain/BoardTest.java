@@ -53,7 +53,7 @@ public class BoardTest {
         board.placePiece(currentPosition, rook);
         board.placePiece(otherPosition, otherRook);
 
-        boolean actualPieceMovePossible = board.checkSameTeamPieceExist(currentTeam, otherPosition);
+        boolean actualPieceMovePossible = board.checkSameTeamExist(currentTeam, otherPosition);
 
         Assertions.assertThat(actualPieceMovePossible).isEqualTo(expectedPieceMovePossible);
     }
