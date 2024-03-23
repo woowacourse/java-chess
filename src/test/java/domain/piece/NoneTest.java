@@ -1,12 +1,12 @@
 package domain.piece;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 import domain.piece.info.Color;
 import domain.piece.info.File;
 import domain.piece.info.Position;
 import domain.piece.info.Rank;
-import domain.piece.info.Type;
+import domain.piece.info.Vector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class NoneTest {
         final Position source = new Position(File.D, Rank.FOUR);
         final Position target = new Position(File.D, Rank.SEVEN);
 
-        Assertions.assertThatThrownBy(() -> empty.isReachable(source, target, other))
+        assertThatThrownBy(() -> empty.isReachable(new Vector(source, target), other))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("비어 있는 칸입니다.");
     }

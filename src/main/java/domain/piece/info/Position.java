@@ -13,25 +13,8 @@ public class Position {
         this.rank = rank;
     }
 
-
-    public List<Position> findPathWithOutEndPoints(final Position target) {
-        final Direction direction = Direction.between(this, target);
-        final List<Position> path = new ArrayList<>();
-
-        Position current = this;
-        while (!current.equals(target)) {
-            path.add(current);
-            current = current.next(direction);
-        }
-        path.remove(this);
-        path.remove(target);
-
-        return path;
-    }
-
-    public Position next(final Direction direction) {
-        return new Position(File.of(toFileIndex() + direction.file()),
-                Rank.of(toRankIndex() + direction.rank()));
+    public Position next(final int fileDelta, final int rankDelta) {
+        return new Position(File.of(file.toIndex() + fileDelta), Rank.of(rank.toIndex() + rankDelta));
     }
 
     public int toFileIndex() {

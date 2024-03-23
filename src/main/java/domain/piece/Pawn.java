@@ -18,21 +18,21 @@ public class Pawn extends Piece {
         opposite => diagonal + have enemy
      */
     @Override
-    protected boolean isReachable(final Vector sourceVector, final Piece targetPiece) {
+    protected boolean isInstanceReachable(final Vector sourceVector, final Piece targetPiece) {
         List<Vector> vectors = new ArrayList<>();
-        defaultMovement(targetPiece, vectors);
-        attackMovement(targetPiece, vectors);
+        addDefaultMovement(targetPiece, vectors);
+        addAttackMovement(targetPiece, vectors);
         vectors = inverseIfBlack(vectors);
         return vectors.stream().anyMatch(vector -> vector.equals(sourceVector));
     }
 
-    protected void defaultMovement(final Piece targetPiece, final List<Vector> vectors) {
+    protected void addDefaultMovement(final Piece targetPiece, final List<Vector> vectors) {
         if (targetPiece.isEmpty()) {
             vectors.add(Vector.of(0, 1));
         }
     }
 
-    protected void attackMovement(final Piece targetPiece, final List<Vector> vectors) {
+    protected void addAttackMovement(final Piece targetPiece, final List<Vector> vectors) {
         if (!targetPiece.isEmpty()) {
             vectors.add(Vector.of(1, 1));
             vectors.add(Vector.of(-1, 1));

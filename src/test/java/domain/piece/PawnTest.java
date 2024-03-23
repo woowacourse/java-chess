@@ -2,9 +2,7 @@ package domain.piece;
 
 import static domain.piece.info.Color.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import domain.piece.info.Color;
 import domain.piece.info.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

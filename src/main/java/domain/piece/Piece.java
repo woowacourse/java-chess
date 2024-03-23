@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.piece.info.Color;
-import domain.piece.info.Position;
 import domain.piece.info.Type;
 import domain.piece.info.Vector;
 
@@ -14,24 +13,34 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        if (isSameColor(targetPiece)) {
+    public boolean isReachable(final Vector vector, final Piece targetPiece) {
+        if (this.isSameColorWith(targetPiece)) {
             return false;
         }
 
-        final Vector vector = new Vector(source, target);
-
-        return isReachable(vector, targetPiece);
+        return isInstanceReachable(vector, targetPiece);
     }
 
-    public boolean isSameColor(final Piece piece) {
+    public boolean isSameColorWith(final Piece piece) {
         return this.color.isSameColor(piece.color);
     }
 
-    protected abstract boolean isReachable(final Vector vector, final Piece targetPiece);
+    protected abstract boolean isInstanceReachable(final Vector vector, final Piece targetPiece);
 
     public boolean isInitPawn() {
         return false;
+    }
+
+    public boolean isWhite() {
+        return color == Color.WHITE;
+    }
+
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean hasColor(final Color color) {
+        return this.color == color;
     }
 
     public Type type() {
@@ -40,12 +49,5 @@ public abstract class Piece {
 
     public Color color() {
         return color;
-    }
-
-    public boolean isWhite() {
-        return color == Color.WHITE;
-    }
-    public boolean isEmpty() {
-        return false;
     }
 }

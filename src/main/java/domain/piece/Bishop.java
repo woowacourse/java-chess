@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
+    protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
         return vector.isDiagonal();
     }
 }

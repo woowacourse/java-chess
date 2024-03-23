@@ -1,11 +1,13 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.info.Color;
 import domain.piece.info.File;
 import domain.piece.info.Position;
 import domain.piece.info.Rank;
+import domain.piece.info.Vector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,14 +39,14 @@ class QueenTest {
         final Position targetEight = new Position(File.A, Rank.SEVEN);
 
         assertAll(
-                () -> Assertions.assertThat(queen.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetFour, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetFive, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetSix, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetSeven, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(queen.isReachable(source, targetEight, Empty.INSTANCE)).isTrue()
+                () -> assertThat(queen.isReachable(new Vector(source, targetOne), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetTwo), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetThree), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetFour), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetFive), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetSix), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetSeven), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(queen.isReachable(new Vector(source, targetEight), Empty.INSTANCE)).isTrue()
         );
     }
 

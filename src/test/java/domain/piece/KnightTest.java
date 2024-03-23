@@ -3,12 +3,11 @@ package domain.piece;
 import static domain.piece.info.Color.*;
 import static domain.piece.info.File.*;
 import static domain.piece.info.Rank.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.piece.info.Color;
-import domain.piece.info.File;
 import domain.piece.info.Position;
-import domain.piece.info.Rank;
+import domain.piece.info.Vector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,14 +40,14 @@ class KnightTest {
         final Position targetEight = new Position(C, SIX);
 
         assertAll(
-                () -> Assertions.assertThat(knight.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetFour, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetFive, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetSix, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetSeven, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(knight.isReachable(source, targetEight, Empty.INSTANCE)).isTrue()
+                () -> assertThat(knight.isReachable(new Vector(source, targetOne), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetTwo), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetThree), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetFour), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetFive), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetSix), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetSeven), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(knight.isReachable(new Vector(source, targetEight), Empty.INSTANCE)).isTrue()
         );
     }
 }

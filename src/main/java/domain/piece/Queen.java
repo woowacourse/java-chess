@@ -11,7 +11,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isReachable(final Vector vector, final Piece targetPiece) {
-        return vector.isDiagonal() || vector.isStraight();
+    protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
+        return vector.isStraightOrDiagonal();
     }
 }

@@ -6,10 +6,7 @@ import static domain.piece.info.Rank.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.piece.info.Color;
-import domain.piece.info.File;
 import domain.piece.info.Position;
-import domain.piece.info.Rank;
 import domain.piece.info.Vector;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -40,10 +37,10 @@ class RookTest {
         final Position targetFour = new Position(A, FOUR);
 
         assertAll(
-                () -> Assertions.assertThat(rook.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(rook.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(rook.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(rook.isReachable(source, targetFour, Empty.INSTANCE)).isTrue()
+                () -> assertThat(rook.isReachable(new Vector(source, targetOne), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(rook.isReachable(new Vector(source, targetTwo), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(rook.isReachable(new Vector(source, targetThree), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(rook.isReachable(new Vector(source, targetFour), Empty.INSTANCE)).isTrue()
         );
     }
 }

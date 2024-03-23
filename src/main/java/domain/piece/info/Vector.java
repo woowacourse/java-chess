@@ -1,5 +1,8 @@
 package domain.piece.info;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class Vector {
@@ -43,6 +46,10 @@ public class Vector {
         return Math.abs(fileDifference) == Math.abs(rankDifference);
     }
 
+    public boolean isStraightOrDiagonal() {
+        return isStraight() || isDiagonal();
+    }
+
     public boolean isUnitVector() {
         return Math.abs(fileDifference) == 1 || Math.abs(rankDifference) == 1;
     }
@@ -53,6 +60,28 @@ public class Vector {
 
     public boolean hasAbsoluteValueOf(final int value) {
         return Math.abs(fileDifference) == value || Math.abs(rankDifference) == value;
+    }
+
+    public boolean hasAbsoluteValueMoreOrEqualThan(final int value) {
+        return Math.abs(fileDifference) >= value || Math.abs(rankDifference) >= value;
+    }
+
+    public List<Position> generatePathExcludingEndpoints(final Position source) {
+        final int maxDifferecne = maxAbsoluteValue();
+        final int unitFile = fileDifference / maxDifferecne;
+        final int unitRank = rankDifference / maxDifferecne;
+        final LinkedList<Position> ret = new LinkedList<>();
+        ret.add(source);
+        for (int counter = 0; counter < maxDifferecne; counter++) {
+            ret.add(ret.getLast().next(unitFile, unitRank));
+        }
+        ret.removeLast();
+        ret.removeFirst();
+        return ret;
+    }
+
+    private int maxAbsoluteValue() {
+        return Math.max(Math.abs(fileDifference), Math.abs(rankDifference));
     }
 
     @Override

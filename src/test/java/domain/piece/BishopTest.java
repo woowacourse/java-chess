@@ -1,5 +1,6 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.piece.info.Color;
@@ -34,10 +35,10 @@ class BishopTest {
         final Position targetFour = new Position(File.G, Rank.ONE);
 
         assertAll(
-                () -> Assertions.assertThat(bishop.isReachable(source, targetOne, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetTwo, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetThree, Empty.INSTANCE)).isTrue(),
-                () -> Assertions.assertThat(bishop.isReachable(source, targetFour, Empty.INSTANCE)).isTrue()
+                () -> assertThat(bishop.isReachable(new Vector(source, targetOne), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, targetTwo), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, targetThree), Empty.INSTANCE)).isTrue(),
+                () -> assertThat(bishop.isReachable(new Vector(source, targetFour), Empty.INSTANCE)).isTrue()
         );
     }
 }

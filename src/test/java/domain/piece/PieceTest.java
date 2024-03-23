@@ -8,6 +8,7 @@ import domain.piece.info.File;
 import domain.piece.info.Position;
 import domain.piece.info.Rank;
 import domain.piece.info.Type;
+import domain.piece.info.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +45,6 @@ class PieceTest {
         final Position source = new Position(File.A, Rank.ONE);
         final Position target = new Position(File.A, Rank.TWO);
 
-        assertThat(piece.isReachable(source, target, otherPiece)).isFalse();
+        assertThat(piece.isReachable(new Vector(source, target), otherPiece)).isFalse();
     }
 }
