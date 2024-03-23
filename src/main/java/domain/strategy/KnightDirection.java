@@ -1,4 +1,4 @@
-package domain.position;
+package domain.strategy;
 
 import java.util.Arrays;
 

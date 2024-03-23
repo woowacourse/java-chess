@@ -1,6 +1,5 @@
 package domain.strategy;
 
-import domain.position.KnightDirection;
 import domain.position.Position;
 
 import java.util.Set;
