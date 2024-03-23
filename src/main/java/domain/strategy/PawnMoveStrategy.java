@@ -10,33 +10,37 @@ public abstract sealed class PawnMoveStrategy implements MoveStrategy permits Bl
     public boolean isMovable(Position source, Position destination, Set<Position> otherPiecesPosition) {
         int rowDiff = destination.rowIndex() - source.rowIndex();
         int colDiff = destination.columnIndex() - source.columnIndex();
-        UnitVector unitVector = UnitVector.of(rowDiff, colDiff);
         boolean isPieceExistOnDestination = otherPiecesPosition.contains(destination);
+        UnitVector unitVector = UnitVector.of(rowDiff, colDiff);
 
-        if (isPieceExistOnDestination) {
-            return isCrossMovable(unitVector, colDiff);
+        if (getCrossValidVectors().contains(unitVector)) {
+            return isCrossMovable(rowDiff, colDiff) && isPieceExistOnDestination;
         }
-        return isStraightMovable(unitVector, rowDiff, isInitialPosition(source));
+        if (getStraightValidVector().equals(unitVector)) {
+            return isStraightMovable(rowDiff, source, otherPiecesPosition) && !isPieceExistOnDestination;
+        }
+        return false;
     }
 
-    private boolean isCrossMovable(UnitVector unitVector, int colDiff) {
-        Set<UnitVector> validVectors = getCrossValidVectors();
-        return validVectors.contains(unitVector) && Math.abs(colDiff) == 1;
+    private boolean isCrossMovable(int rowDiff, int colDiff) {
+        return isEqualSize(rowDiff, 1) && isEqualSize(colDiff, 1);
     }
 
     protected abstract Set<UnitVector> getCrossValidVectors();
 
-    private boolean isStraightMovable(UnitVector unitVector, int rowDiff, boolean isInitialMove) {
-        UnitVector validVector = getStraightValidVector();
-
-        if (!unitVector.equals(validVector)) {
-            return false;
-        }
-
+    private boolean isStraightMovable(int rowDiff, Position source, Set<Position> otherPiecesPosition) {
         boolean isOneStepForwardMovable = isEqualSize(rowDiff, 1);
-        boolean isTwoStepForwardMovable = isEqualSize(rowDiff, 2) && isInitialMove;
+        boolean isTwoStepForwardMovable = checkTwoStepMovable(rowDiff, source, otherPiecesPosition);
 
         return isOneStepForwardMovable || isTwoStepForwardMovable;
+    }
+
+    private boolean checkTwoStepMovable(int rowDiff, Position source, Set<Position> otherPiecesPosition) {
+        boolean isInitialMove = isInitialPosition(source);
+        Position positionAfterOneStep = source.add(getStraightValidVector());
+        boolean isBlockedByOtherPiece = otherPiecesPosition.contains(positionAfterOneStep);
+
+        return isEqualSize(rowDiff, 2) && isInitialMove && !isBlockedByOtherPiece;
     }
 
     protected abstract UnitVector getStraightValidVector();
