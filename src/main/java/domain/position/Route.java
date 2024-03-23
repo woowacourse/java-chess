@@ -1,6 +1,9 @@
 package domain.position;
 
+import domain.piece.Piece;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -53,8 +56,11 @@ public class Route {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Route::new));
     }
 
-    // todo: 닫을 수 있지 않을까, 또는 지울 수 있지 않을까
-    public List<Position> getRoute() {
+    public boolean isBlocked(final Map<Position, Piece> board) {
+        return positions.stream().anyMatch(board::containsKey);
+    }
+
+    List<Position> getRoute() {
         return positions;
     }
 }

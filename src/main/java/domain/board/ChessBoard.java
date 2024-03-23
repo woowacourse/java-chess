@@ -7,7 +7,6 @@ import domain.position.Route;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -25,25 +24,23 @@ public class ChessBoard {
 
     private void validateEmptyRoute(final Position source, final Position target) {
         final Route route = Route.create(source, target);
-        final List<Position> positions = route.getRoute();
-        final boolean isPieceExist = positions.stream().anyMatch(board::containsKey);
-        if (isPieceExist) {
+        if (route.isBlocked(board)) {
             throw new IllegalArgumentException("중간에 말이 있어서 이동할 수 없습니다.");
         }
     }
 
     private void validateLegalMove(final Position source, final Position target) {
-        final Piece resourcePiece = findByPosition(source);
-        resourcePiece.validateMovement(source, target, findByPosition(target));
+        final Piece resourcePiece = findPieceByPosition(source);
+        resourcePiece.validateMovement(source, target, findPieceByPosition(target));
     }
 
     private void movePiece(final Position source, final Position target) {
-        final Piece piece = findByPosition(source);
+        final Piece piece = findPieceByPosition(source);
         board.remove(source);
         board.put(target, piece);
     }
 
-    private Piece findByPosition(final Position position) {
+    private Piece findPieceByPosition(final Position position) {
         return board.getOrDefault(position, Empty.getInstance());
     }
 

@@ -1,9 +1,12 @@
 package domain.position;
 
+import domain.piece.Piece;
+import domain.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -211,6 +214,42 @@ class RouteTest {
             assertThatThrownBy(() -> Route.create(resource, target))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("올바르지 않은 방향입니다.");
+        }
+    }
+
+    @Nested
+    class 경로_막힘 {
+        @Test
+        void 경로는_다른_피스가_없으면_막히지_않는다() {
+            Position resource = new Position(File.F, Rank.FIVE);
+            Position target = new Position(File.F, Rank.SEVEN);
+            Route route = Route.create(resource, target);
+
+            Map<Position, Piece> emptyBoard = Map.of();
+
+            assertThat(route.isBlocked(emptyBoard)).isFalse();
+        }
+
+        @Test
+        void 도착_지점에_폰이_있어도_경로는_막히지_않는다() {
+            Position resource = new Position(File.F, Rank.FIVE);
+            Position target = new Position(File.F, Rank.SIX);
+            Route route = Route.create(resource, target);
+
+            Map<Position, Piece> board = Map.of(target, new WhitePawn());
+
+            assertThat(route.isBlocked(board)).isFalse();
+        }
+
+        @Test
+        void 출발_지점과_도착_지점_사이에_폰이_있으면_경로가_막힌다() {
+            Position resource = new Position(File.F, Rank.FIVE);
+            Position target = new Position(File.C, Rank.FIVE);
+            Route route = Route.create(resource, target);
+
+            Map<Position, Piece> board = Map.of(new Position(File.D, Rank.FIVE), new WhitePawn());
+
+            assertThat(route.isBlocked(board)).isTrue();
         }
     }
 }
