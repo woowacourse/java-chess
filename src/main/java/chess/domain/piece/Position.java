@@ -1,8 +1,13 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Position {
+
+    private static final Set<Position> POSITIONS = cachePositions();
 
     private final File file;
     private final Rank rank;
@@ -12,10 +17,23 @@ public class Position {
         this.rank = rank;
     }
 
+    private static Set<Position> cachePositions() {
+        return Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> new Position(file, rank)))
+                .collect(Collectors.toSet());
+    }
+
+    private static Position findPosition(final File file, final Rank rank) {
+        return POSITIONS.stream()
+                .filter(position -> position.equals(new Position(file, rank)))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효하지 않은 위치입니다."));
+    }
+
     public static Position from(final String input) {
         String file = input.substring(0, 1);
         String rank = input.substring(1);
-        return new Position(File.fromSymbol(file), Rank.fromInput(rank));
+        return findPosition(File.fromSymbol(file), Rank.fromInput(rank));
     }
 
     public boolean isVerticalWith(final Position target) {
