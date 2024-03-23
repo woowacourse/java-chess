@@ -4,52 +4,64 @@ import chess.domain.board.Board;
 import chess.domain.location.Location;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Map;
+import java.util.Optional;
 
 public class GameController {
     private static final InputView INPUT_VIEW = new InputView();
     private static final OutputView OUTPUT_VIEW = new OutputView();
 
-    private Board board = new Board();
-    private GameState state = GameState.PLAYING;
+    private final Map<Command, Runnable> commandFunctions;
+    private final ChessGame chessGame;
+
+    public GameController() {
+        chessGame = new ChessGame();
+        commandFunctions = Map.of(
+                Command.START, this::initBoard,
+                Command.MOVE, this::move,
+                Command.END, this::end
+        );
+    }
+
 
     public void run() {
         OUTPUT_VIEW.printGameStart();
+        runOrRetry();
+    }
+
+    private void runOrRetry(){
         try {
             play();
-        } catch (RuntimeException exception) {
+        } catch (IllegalArgumentException | IllegalStateException exception) {
             OUTPUT_VIEW.printException(exception);
-            run();
+            runOrRetry();
         }
     }
 
     private void play() {
-        while (state.isPlaying()) {
+        while (chessGame.isPlayable()) {
             Command command = INPUT_VIEW.readCommand();
-            playTurn(command);
-        }
-    }
-
-    private void playTurn(Command command) {
-        if (command == Command.END) {
-            state = GameState.END;
-        }
-        if (command == Command.START) {
-            initBoard();
-        }
-        if (command == Command.MOVE) {
-            move();
+            Optional.ofNullable(commandFunctions.get(command))
+                    .orElseThrow(() -> new IllegalArgumentException("잘못된 커멘드 입력입니다."))
+                    .run();
         }
     }
 
     private void initBoard() {
-        board = new Board();
-        OUTPUT_VIEW.printBoard(board.getBoard());
+        chessGame.initBoard();
+        OUTPUT_VIEW.printBoard(chessGame.getBoard());
     }
 
     private void move() {
-        Location source = Location.of(INPUT_VIEW.readLocation());
-        Location target = Location.of(INPUT_VIEW.readLocation());
-        board.tryMove(source, target);
-        OUTPUT_VIEW.printBoard(board.getBoard());
+        String sourceInput = INPUT_VIEW.readLocation();
+        String targetInput = INPUT_VIEW.readLocation();
+        Location source = Location.of(sourceInput);
+        Location target = Location.of(targetInput);
+        chessGame.tryMove(source, target);
+        OUTPUT_VIEW.printBoard(chessGame.getBoard());
+    }
+
+    private void end() {
+        chessGame.endGame();
     }
 }

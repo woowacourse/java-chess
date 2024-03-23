@@ -1,9 +1,9 @@
 package chess.controller;
 
 public enum GameState {
-    PLAYING, END;
+    PREPARING, PLAYING, END;
 
-    public boolean isPlaying() {
-        return this == PLAYING;
+    public boolean isPlayable() {
+        return this != END;
     }
 }
