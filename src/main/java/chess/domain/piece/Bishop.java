@@ -15,6 +15,6 @@ public class Bishop extends SlidingPiece {
 
     @Override
     public List<Position> searchPath(Position start, Position destination) {
-        return start.diagonalPath(destination);
+        return start.calculateSlidingPath(destination);
     }
 }

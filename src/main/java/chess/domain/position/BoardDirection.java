@@ -14,18 +14,18 @@ public enum BoardDirection {
     SW((start, destination) -> start.isDiagonalWith(destination) && start.isRightUpperThan(destination), -1, 1),
     SE((start, destination) -> start.isDiagonalWith(destination) && start.isLeftUpperThan(destination), 1, 1);
 
-    private final BiPredicate<FileRankPosition, FileRankPosition> matchCondition;
+    private final BiPredicate<Position, Position> matchCondition;
     private final int moveOnceFileWeight;
     private final int moveOnceRankWeight;
 
-    BoardDirection(BiPredicate<FileRankPosition, FileRankPosition> matchCondition, int moveOnceFileWeight,
+    BoardDirection(BiPredicate<Position, Position> matchCondition, int moveOnceFileWeight,
                    int moveOnceRankWeight) {
         this.matchCondition = matchCondition;
         this.moveOnceFileWeight = moveOnceFileWeight;
         this.moveOnceRankWeight = moveOnceRankWeight;
     }
 
-    public static BoardDirection of(FileRankPosition start, FileRankPosition destination) {
+    public static BoardDirection of(Position start, Position destination) {
         return Arrays.stream(values())
                 .filter(boardDirection -> boardDirection.matchCondition.test(start, destination))
                 .findAny()

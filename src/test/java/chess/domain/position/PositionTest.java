@@ -1,93 +1,129 @@
 package chess.domain.position;
 
+import static chess.fixture.PositionFixtures.A1;
+import static chess.fixture.PositionFixtures.A2;
+import static chess.fixture.PositionFixtures.A3;
+import static chess.fixture.PositionFixtures.A8;
+import static chess.fixture.PositionFixtures.B1;
+import static chess.fixture.PositionFixtures.B2;
+import static chess.fixture.PositionFixtures.B3;
+import static chess.fixture.PositionFixtures.C1;
+import static chess.fixture.PositionFixtures.C3;
+import static chess.fixture.PositionFixtures.D1;
+import static chess.fixture.PositionFixtures.D4;
+import static chess.fixture.PositionFixtures.E1;
+import static chess.fixture.PositionFixtures.E5;
+import static chess.fixture.PositionFixtures.F1;
+import static chess.fixture.PositionFixtures.F6;
+import static chess.fixture.PositionFixtures.G1;
+import static chess.fixture.PositionFixtures.G7;
+import static chess.fixture.PositionFixtures.H1;
+import static chess.fixture.PositionFixtures.H8;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PositionTest {
-    @DisplayName("포지션은 x축 대칭인 포지션을 반환할 수 있다")
+    @DisplayName("x축 대칭인 포지션을 반환할 수 있다")
     @Test
     void should_ReturnVerticalReversePosition() {
-        Position testPosition = Position.of(0, 0);
-
-        assertThat(testPosition.verticalReversePosition()).isEqualTo(Position.of(7, 0));
+        assertThat(A1.calculateVerticalReversedPosition()).isEqualTo(A8);
     }
 
-    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 직선인지 확인할 수 있다")
+    @DisplayName("다른 포지션과 수평 관계에 있으면 Orthogonal하다")
     @Test
-    void should_CheckVerticalRelationShipWithPositions() {
-        Position position = Position.of(1, 1);
-
-        assertAll(
-                () -> assertThat(position.isStraightWith(Position.of(2, 1))).isTrue(),
-                () -> assertThat(position.isStraightWith(Position.of(1, 2))).isTrue(),
-                () -> assertThat(position.isStraightWith(Position.of(4, 4))).isFalse()
-        );
+    void should_HaveOrthogonalRelationship_When_OtherIsHorizontalWithGivenPosition() {
+        assertThat(A1.isOrthogonalWith(B1)).isTrue();
     }
 
-    @DisplayName("한 포지션에서 다른 포지션까지의 연결이 대각인지 확인할 수 있다")
+    @DisplayName("다른 포지션과 수직 관계에 있으면 Orthogonal하다")
     @Test
-    void should_CheckDiagonalRelationShipWithPositions() {
-        Position position = Position.of(1, 1);
-
-        assertAll(
-                () -> assertThat(position.isDiagonalWith(Position.of(2, 2))).isTrue(),
-                () -> assertThat(position.isDiagonalWith(Position.of(2, 1))).isFalse()
-        );
+    void should_HaveOrthogonalRelationship_When_OtherIsVerticalWithGivenPosition() {
+        assertThat(A1.isOrthogonalWith(A3)).isTrue();
     }
 
-    @DisplayName("한 포지션에서 다른 포지션까지의 위치 차의 제곱을 계산할 수 있다")
+    @DisplayName("대상 위치가 같은 위치라면 Orthogoanl하지 않다")
     @Test
-    void should_ReturnSquaredDistanceBetweenPositions() {
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(2, 3);
-
-        assertThat(position1.squaredDistanceWith(position2)).isEqualTo(5);
+    void should_IsNoOrthogonalRelationship_When_OtherIsSamePosition() {
+        assertThat(A1.isOrthogonalWith(A1)).isFalse();
     }
 
-    @DisplayName("다른 포지션으로의 위 아래 방향을 계산할 수 있다.")
+    @DisplayName("다른 포지션과 수직 혹은 수평 관계에 있지 않으면 Orthogonal하지 않다")
     @Test
-    void should_CalculateDirectionToTargetPosition() {
-        Position higherPosition = Position.of(0, 0);
-        Position lowerPosition = Position.of(1, 0);
-
-        assertAll(
-                () -> assertThat(lowerPosition.directionTo(higherPosition)).isEqualTo(Direction.UP),
-                () -> assertThat(higherPosition.directionTo(lowerPosition)).isEqualTo(Direction.DOWN)
-        );
+    void should_CheckPositionIsOrthogonalWithOther() {
+        assertThat(A1.isOrthogonalWith(B3)).isFalse();
     }
 
-    @DisplayName("포지션이 같은 행에 있는지 확인할 수 있다")
+    @DisplayName("파일 거리와 랭크 거리가 같으면 Diagonal 관계이다")
     @Test
-    void should_CheckSameRowToTarget() {
-        Position position = Position.of(0, 0);
-        RowPosition rowPosition = new RowPosition(0);
-
-        assertThat(position.rowIs(rowPosition)).isTrue();
+    void should_CheckPositionIsDiagonalWithOher() {
+        assertThat(A1.isDiagonalWith(B2)).isTrue();
     }
 
-    @DisplayName("대각선 상의 포지션끼리 경유 경로를 구할 수 있다")
+    @DisplayName("대상 위치가 같은 위치라면 Diagonal관계가 아니다")
     @Test
-    void should_ReturnDiagonalPassingPath() {
-        Position start = Position.of(0, 0);
-        Position destination = Position.of(2, 2);
-        List<Position> path = start.diagonalPath(destination);
-
-        assertThat(path).contains(Position.of(1, 1));
+    void should_IsNoDiagonalRelationship_When_OtherIsSamePosition() {
+        assertThat(A1.isDiagonalWith(A1)).isFalse();
     }
 
-    @DisplayName("직선 상의 포지션끼리 경유 경로를 구할 수 있다")
+    @DisplayName("다른 포지션과 비교했을 때 더 왼쪽에 있는 지 확인할 수 있다")
     @Test
-    void should_ReturnStraightPassingPath() {
-        Position start = Position.of(0, 0);
-        Position destination = Position.of(0, 2);
-        List<Position> path = start.straightPath(destination);
-
-        assertThat(path).contains(Position.of(0, 1));
+    void should_CheckPositionIsFurtherLeftThanOther() {
+        assertThat(A1.isFurtherLeftThan(B1)).isTrue();
     }
 
+    @DisplayName("다른 포지션과 비교했을 때 더 오른쪽에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsFurtherRightThanOther() {
+        assertThat(B1.isFurtherRightThan(A1)).isTrue();
+    }
 
+    @DisplayName("다른 포지션과 비교했을 때 더 아래에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsBelowThanOther() {
+        assertThat(A1.isBelow(A2)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 더 왼쪽에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsAboveThanOther() {
+        assertThat(A2.isAbove(A1)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 왼쪽 아래에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsLeftLowerThanOther() {
+        assertThat(A1.isLeftLowerThan(B2)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 왼쪽 위에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsLeftUpperThanOther() {
+        assertThat(A2.isLeftUpperThan(B1)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 오른쪽 아래에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsRightLowerThanOther() {
+        assertThat(B1.isRightLowerThan(A2)).isTrue();
+    }
+
+    @DisplayName("다른 포지션과 비교했을 때 오른쪽 위에 있는 지 확인할 수 있다")
+    @Test
+    void should_CheckPositionIsRightUpperThanOther() {
+        assertThat(B2.isRightUpperThan(A1)).isTrue();
+    }
+
+    @DisplayName("수직 이동 경로를 계산할 수 있다")
+    @Test
+    void should_CalculateOrthogonalPath_When_DestinationIsGiven() {
+        assertThat(A1.calculateSlidingPath(H1)).containsExactly(B1, C1, D1, E1, F1, G1);
+    }
+
+    @DisplayName("대각 이동 경로를 계산할 수 있다")
+    @Test
+    void should_CalculateDiagonalPath_When_DestinationIsGiven() {
+        assertThat(A1.calculateSlidingPath(H8)).containsExactly(B2, C3, D4, E5, F6, G7);
+    }
 }

@@ -6,12 +6,12 @@ import static chess.view.GameExecutionCommand.START;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
-import chess.domain.position.ColumnPosition;
+import chess.domain.position.File;
 import chess.domain.position.Position;
-import chess.domain.position.RowPosition;
+import chess.domain.position.Rank;
+import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -35,14 +35,14 @@ public class OutputView {
     }
 
     private String resolveChessBoardMessage(ChessBoard chessBoard) {
-        return IntStream.rangeClosed(RowPosition.MIN_NUMBER, RowPosition.MAX_NUMBER)
-                .mapToObj(rowNumber -> resolveRowMessage(chessBoard, rowNumber))
+        return Arrays.stream(Rank.values())
+                .map(rank -> resolveRankMessage(chessBoard, rank))
                 .collect(Collectors.joining(LINE_SEPARATOR));
     }
 
-    private String resolveRowMessage(ChessBoard chessBoard, int rowNumber) {
-        return IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
-                .mapToObj(columnNumber -> Position.of(rowNumber, columnNumber))
+    private String resolveRankMessage(ChessBoard chessBoard, Rank rank) {
+        return Arrays.stream(File.values())
+                .map(file -> new Position(file, rank))
                 .map(position -> resolveSquareMessage(chessBoard, position))
                 .collect(Collectors.joining());
     }

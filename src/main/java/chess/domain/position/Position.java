@@ -1,140 +1,104 @@
 package chess.domain.position;
 
-import static chess.domain.position.ColumnPosition.MAX_NUMBER;
-import static chess.domain.position.ColumnPosition.MIN_NUMBER;
-import static java.util.stream.Collectors.toMap;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class Position {
-    //TODO: 풀 생성 과정 단순화 가능한지 고민해보기
-    private static final Map<String, Position> POOL = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
-            .mapToObj(RowPosition::new)
-            .flatMap(rowPosition -> IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
-                    .mapToObj(ColumnPosition::new)
-                    .map(columnPosition -> new Position(rowPosition, columnPosition)))
-            .collect(toMap(position -> Position.toKey(position.rowPosition, position.columnPosition),
-                    position -> position));
+    private final File file;
+    private final Rank rank;
 
-    private final RowPosition rowPosition;
-    private final ColumnPosition columnPosition;
-
-    public Position(RowPosition rowPosition, ColumnPosition columnPosition) {
-        this.rowPosition = rowPosition;
-        this.columnPosition = columnPosition;
+    public Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
-    public static Position of(int rowPosition, int colPosition) {
-        RowPosition row = new RowPosition(rowPosition);
-        ColumnPosition col = new ColumnPosition(colPosition);
-        return POOL.get(toKey(row, col));
+    public Position calculateVerticalReversedPosition() {
+        return new Position(file, rank.reverse());
     }
 
-    private static String toKey(RowPosition rowPosition, ColumnPosition colPosition) {
-        return String.valueOf(rowPosition) + String.valueOf(colPosition);
+    public boolean isOrthogonalWith(Position other) {
+        if (this.equals(other)) {
+            return false;
+        }
+        return file == other.file || rank == other.rank;
     }
 
-    public Position verticalReversePosition() {
-        return POOL.get(toKey(rowPosition.reverse(), this.columnPosition));
+    public boolean isDiagonalWith(Position other) {
+        if (this.equals(other)) {
+            return false;
+        }
+        int fileDistance = file.calculateDistanceWith(other.file);
+        int rankDistance = rank.calculateDistanceWith(other.rank);
+        return fileDistance == rankDistance;
     }
 
-    public boolean isStraightWith(Position target) {
-        return rowPosition.equals(target.rowPosition) || columnPosition.equals(target.columnPosition);
-    }
-
-    public boolean isDiagonalWith(Position target) {
-        int rowInterval = rowPosition.intervalWith(target.rowPosition);
-        int colInterval = columnPosition.intervalWith(target.columnPosition);
-        return rowInterval == colInterval;
-    }
-
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
     public Direction directionTo(Position target) {
-        boolean destinationIsAbove = target.rowPosition.isLowerThan(rowPosition);
+        boolean destinationIsAbove = target.rank.isAbove(rank);
         return Direction.from(destinationIsAbove);
     }
 
-    public int squaredDistanceWith(Position target) {
-        int rowInterval = rowPosition.intervalWith(target.rowPosition);
-        int colInterval = columnPosition.intervalWith(target.columnPosition);
-        return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
+    public int squaredDistanceWith(Position other) {
+        int fileDistance = file.calculateDistanceWith(other.file);
+        int rankDistance = rank.calculateDistanceWith(other.rank);
+        return (int) Math.pow(fileDistance, 2) + (int) Math.pow(rankDistance, 2);
     }
 
-    public boolean rowIs(RowPosition rowPosition) {
-        return this.rowPosition.equals(rowPosition);
+    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
+    public boolean isRankSameWith(Rank rank) {
+        return this.rank == rank;
     }
 
-    public List<Position> diagonalPath(Position target) {
-        //도착지와 현재 위치의 방향을 찾는다.
-        if (!isDiagonalWith(target)) {
-            throw new IllegalArgumentException("대각선 경로를 계산할 수 없습니다");
-        }
+    public boolean isFurtherLeftThan(Position other) {
+        return file.isFurtherLeftThan(other.file);
+    }
 
+    public boolean isFurtherRightThan(Position other) {
+        return file.isFurtherRightThan(other.file);
+    }
+
+    public boolean isAbove(Position other) {
+        return rank.isAbove(other.rank);
+    }
+
+    public boolean isBelow(Position other) {
+        return rank.isBelow(other.rank);
+    }
+
+    public boolean isLeftLowerThan(Position other) {
+        return this.isBelow(other) && this.isFurtherLeftThan(other);
+    }
+
+    public boolean isLeftUpperThan(Position other) {
+        return this.isAbove(other) && this.isFurtherLeftThan(other);
+    }
+
+    public boolean isRightUpperThan(Position other) {
+        return this.isAbove(other) && this.isFurtherRightThan(other);
+    }
+
+    public boolean isRightLowerThan(Position other) {
+        return this.isBelow(other) && this.isFurtherRightThan(other);
+    }
+
+    public List<Position> calculateSlidingPath(Position destination) {
+        BoardDirection boardDirection = BoardDirection.of(this, destination);
+        Position start = this;
         List<Position> path = new ArrayList<>();
-        int nextRowStep = 1;
-        int nextColumnStep = 1;
-
-        if (this.rowPosition.isHigherThan(target.rowPosition)) {
-            nextRowStep = -1;
+        while (!start.equals(destination)) {
+            start = start.moveOneSpace(boardDirection);
+            path.add(start);
         }
-
-        if (this.columnPosition.isRight(target.columnPosition)) {
-            nextColumnStep = -1;
-        }
-        Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
-        while (true) {
-            if (nextPosition.equals(target)) {
-                break;
-            }
-            path.add(nextPosition);
-            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
-        }
+        path.remove(path.size() - 1);
         return path;
     }
 
-    public List<Position> straightPath(Position target) {
-
-        //도착지와 현재 위치의 방향을 찾는다.
-        if (!isStraightWith(target)) {
-            throw new IllegalArgumentException("직선 경로를 계산할 수 없습니다");
-        }
-
-        List<Position> path = new ArrayList<>();
-        int nextRowStep = 0;
-        int nextColumnStep = 0;
-
-        if (this.rowPosition.isLowerThan(target.rowPosition)) {
-            nextRowStep = 1;
-        }
-
-        if (this.rowPosition.isHigherThan(target.rowPosition)) {
-            nextRowStep = -1;
-        }
-
-        if (this.columnPosition.isLeft(target.columnPosition)) {
-            nextColumnStep = 1;
-        }
-
-        if (this.columnPosition.isRight(target.columnPosition)) {
-            nextColumnStep = -1;
-        }
-
-        Position nextPosition = movePosition(nextRowStep, nextColumnStep);
-        while (true) {
-            if (nextPosition.equals(target)) {
-                break;
-            }
-            path.add(nextPosition);
-            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
-        }
-        return path;
-    }
-
-    private Position movePosition(int rowMove, int columnMove) {
-        return Position.of(rowPosition.move(rowMove), columnPosition.move(columnMove));
+    private Position moveOneSpace(BoardDirection boardDirection) {
+        File movedFile = file.move(boardDirection.getMoveOnceFileWeight());
+        Rank movedRank = rank.move(boardDirection.getMoveOnceRankWeight());
+        return new Position(movedFile, movedRank);
     }
 
     @Override
@@ -145,13 +109,12 @@ public class Position {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position position = (Position) o;
-        return Objects.equals(rowPosition, position.rowPosition) && Objects.equals(columnPosition,
-                position.columnPosition);
+        Position that = (Position) o;
+        return file == that.file && rank == that.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rowPosition, columnPosition);
+        return Objects.hash(file, rank);
     }
 }

@@ -4,25 +4,25 @@ import static chess.domain.position.Direction.DOWN;
 import static chess.domain.position.Direction.UP;
 
 import chess.domain.position.Direction;
-import chess.domain.position.RowPosition;
+import chess.domain.position.Rank;
 
 public enum Team {
-    WHITE(UP, RowPosition.SIX),
-    BLACK(DOWN, RowPosition.ONE);
+    WHITE(UP, Rank.TWO),
+    BLACK(DOWN, Rank.SIX);
 
     private final Direction direction;
-    private final RowPosition initialPawnRow;
+    private final Rank initialPawnRank;
 
-    Team(Direction direction, RowPosition initialPawnRow) {
+    Team(Direction direction, Rank initialPawnRank) {
         this.direction = direction;
-        this.initialPawnRow = initialPawnRow;
+        this.initialPawnRank = initialPawnRank;
     }
 
     public Direction getDirection() {
         return direction;
     }
 
-    public RowPosition getInitialPawnRow() {
-        return initialPawnRow;
+    public Rank getInitialPawnRank() {
+        return initialPawnRank;
     }
 }

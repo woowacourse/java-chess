@@ -10,14 +10,11 @@ public class Queen extends SlidingPiece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        return start.isStraightWith(destination) || start.isDiagonalWith(destination);
+        return start.isOrthogonalWith(destination) || start.isDiagonalWith(destination);
     }
 
     @Override
     public List<Position> searchPath(Position start, Position destination) {
-        if (start.isDiagonalWith(destination)) {
-            return start.diagonalPath(destination);
-        }
-        return start.straightPath(destination);
+        return start.calculateSlidingPath(destination);
     }
 }

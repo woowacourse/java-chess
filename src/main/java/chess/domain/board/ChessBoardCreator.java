@@ -8,33 +8,36 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import chess.domain.position.ColumnPosition;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class ChessBoardCreator {
     private static final Map<Class<? extends Piece>, List<Position>> INITIAL_PIECE_ARRANGEMENT = new HashMap<>() {
         {
-            List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
+            List<Position> rookPositions = List.of(new Position(File.A, Rank.EIGHT), new Position(File.H, Rank.EIGHT));
             put(Rook.class, rookPositions);
 
-            List<Position> knightPositions = List.of(Position.of(0, 1), Position.of(0, 6));
+            List<Position> knightPositions = List.of(new Position(File.B, Rank.EIGHT),
+                    new Position(File.G, Rank.EIGHT));
             put(Knight.class, knightPositions);
 
-            List<Position> bishopPositions = List.of(Position.of(0, 2), Position.of(0, 5));
+            List<Position> bishopPositions = List.of(new Position(File.C, Rank.EIGHT),
+                    new Position(File.F, Rank.EIGHT));
             put(Bishop.class, bishopPositions);
 
-            List<Position> queenPositions = List.of(Position.of(0, 3));
+            List<Position> queenPositions = List.of(new Position(File.D, Rank.EIGHT));
             put(Queen.class, queenPositions);
 
-            List<Position> kingPositions = List.of(Position.of(0, 4));
+            List<Position> kingPositions = List.of(new Position(File.E, Rank.EIGHT));
             put(King.class, kingPositions);
 
-            List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
-                    .mapToObj(col -> Position.of(1, col))
+            List<Position> pawnPositions = Arrays.stream(File.values())
+                    .map(file -> new Position(file, Rank.SEVEN))
                     .toList();
             put(Pawn.class, pawnPositions);
         }
@@ -54,7 +57,7 @@ public class ChessBoardCreator {
         Map<Position, Piece> positionPiece = new HashMap<>();
         positions.forEach(position -> {
             positionPiece.put(position, createPieceInstance(pieceType, Team.BLACK));
-            positionPiece.put(position.verticalReversePosition(), createPieceInstance(pieceType, Team.WHITE));
+            positionPiece.put(position.calculateVerticalReversedPosition(), createPieceInstance(pieceType, Team.WHITE));
         });
         return positionPiece;
     }

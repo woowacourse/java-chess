@@ -10,11 +10,11 @@ public class Rook extends SlidingPiece {
 
     @Override
     public boolean canMove(Position start, Position destination) {
-        return start.isStraightWith(destination);
+        return start.isOrthogonalWith(destination);
     }
 
     @Override
     public List<Position> searchPath(Position start, Position destination) {
-        return start.straightPath(destination);
+        return start.calculateSlidingPath(destination);
     }
 }

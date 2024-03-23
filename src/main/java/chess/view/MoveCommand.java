@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
 
 public class MoveCommand {
@@ -23,9 +25,9 @@ public class MoveCommand {
     }
 
     private static Position makePosition(String input) {
-        int rowNumber = 8 - (input.charAt(1) - '0');
-        int columnNumber = input.charAt(0) - 'a';
-        return Position.of(rowNumber, columnNumber);
+        Rank rank = Rank.from(8 - (input.charAt(1) - '0'));
+        File file = File.from(input.charAt(0) - 'a');
+        return new Position(file, rank);
     }
 
     public Position getStart() {

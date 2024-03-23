@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.fixture.PositionFixtures.A1;
+import static chess.fixture.PositionFixtures.A2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -19,29 +21,29 @@ class ChessBoardTest {
     @Test
     void should_CheckPositionEmptiness_When_GivenPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        Position position = Position.of(1, 1);
+        Position position = A1;
         positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
-        assertThat(chessBoard.positionIsEmpty(Position.of(2, 2))).isTrue();
+        assertThat(chessBoard.positionIsEmpty(A2)).isTrue();
     }
 
     @DisplayName("체스보드의 특정위치에 기물이 있는지 확인할 수 있다")
     @Test
     void should_CheckPositionNotEmptiness_When_GivenPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        Position position = Position.of(1, 1);
+        Position position = A1;
         positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
-        assertThat(chessBoard.positionIsEmpty(Position.of(1, 1))).isFalse();
+        assertThat(chessBoard.positionIsEmpty(A1)).isFalse();
     }
 
     @DisplayName("체스보드 특정 위치의 기물을 가져올 수 있다")
     @Test
     void should_GetPieceByPosition_When_GiveTargetPosition() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        Position position = Position.of(1, 1);
+        Position position = A1;
         positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -52,11 +54,11 @@ class ChessBoardTest {
     @Test
     void should_ThrowNoSuchElementException_When_TargetPositionIsEmpty() {
         Map<Position, Piece> positionPiece = new HashMap<>();
-        Position position = Position.of(1, 1);
+        Position position = A1;
         positionPiece.put(position, new King(Team.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
-        assertThatThrownBy(() -> chessBoard.findPieceByPosition(Position.of(1, 2)))
+        assertThatThrownBy(() -> chessBoard.findPieceByPosition(A2))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
     }

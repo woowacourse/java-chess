@@ -4,14 +4,15 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum Rank {
-    ONE(7),
-    TWO(6),
-    THREE(5),
-    FOUR(4),
-    FIVE(3),
-    SIX(2),
+    EIGHT(0),
     SEVEN(1),
-    EIGHT(0);
+    SIX(2),
+    FIVE(3),
+    FOUR(4),
+    THREE(5),
+    TWO(6),
+    ONE(7);
+
 
     private final int rowNumber;
 
