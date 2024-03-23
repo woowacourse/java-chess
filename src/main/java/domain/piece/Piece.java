@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.board.Turn;
 import domain.position.Position;
 import java.util.Objects;
 
@@ -35,16 +36,16 @@ public abstract class Piece {
         return color.isWhite();
     }
 
-    public boolean isOppositeColor(Color color) {
-        return this.color.isOpposite(color);
-    }
-
-    public boolean isOppositeColor(Piece targetPiece) {
+    public boolean isOppositeSide(Piece targetPiece) {
         return this.color.isOpposite(targetPiece.color);
     }
 
     public boolean isSameColor(Piece targetPiece) {
         return (isBlack() && targetPiece.isBlack()) || (isWhite() && targetPiece.isWhite());
+    }
+
+    public boolean isNotTurn(Turn turn) {
+        return turn.isNotTurn(color);
     }
 
     @Override

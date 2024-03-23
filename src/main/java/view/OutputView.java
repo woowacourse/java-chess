@@ -1,20 +1,11 @@
 package view;
 
 import domain.board.Board;
-import domain.piece.Color;
+import domain.board.Turn;
 import domain.piece.Piece;
 import java.util.List;
 
 public class OutputView {
-
-    public void printTurn(Color turn) {
-        if (turn.isBlack()) {
-            System.out.println("블랙(대문자) 진영의 차례입니다.");
-        }
-        if (turn.isWhite()) {
-            System.out.println("화이트(소문자) 진영의 차례입니다.");
-        }
-    }
 
     public void printBoard(Board board) {
         List<Piece> pieces = board.extractPieces();
@@ -34,6 +25,15 @@ public class OutputView {
 
     private boolean isLastFile(int fileIndex) {
         return fileIndex % 8 == 7;
+    }
+
+    public void printTurn(Turn turn) {
+        if (turn.isBlack()) {
+            System.out.println("블랙(대문자) 진영의 차례입니다.");
+        }
+        if (turn.isWhite()) {
+            System.out.println("화이트(소문자) 진영의 차례입니다.");
+        }
     }
 
     public void printError(String errorMessage) {

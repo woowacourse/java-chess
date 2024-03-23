@@ -1,6 +1,7 @@
 package domain;
 
 import domain.board.Board;
+import domain.board.Turn;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -8,11 +9,11 @@ import domain.position.Position;
 public class Chess {
 
     private final Board board;
-    private Color turn;
+    private Turn turn;
 
     public Chess() {
         this.board = Board.create();
-        this.turn = Color.WHITE;
+        this.turn = new Turn(Color.WHITE);
     }
 
     public void play(Position sourcePosition, Position targetPosition) {
@@ -32,14 +33,14 @@ public class Chess {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
         validate(sourcePiece.isBlank(), "[ERROR] 선택된 위치에 기물이 없습니다.");
-        validate(sourcePiece.isOppositeColor(turn), "[ERROR] 차례가 아닙니다.");
+        validate(sourcePiece.isNotTurn(turn), "[ERROR] 차례가 아닙니다.");
         validate(targetPiece.isSameColor(sourcePiece), "[ERROR] 가려는 곳에 같은 편 기물이 있습니다.");
     }
 
     private boolean canAttack(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
-        return sourcePiece.canAttack(sourcePosition, targetPosition) && targetPiece.isOppositeColor(sourcePiece);
+        return sourcePiece.canAttack(sourcePosition, targetPosition) && targetPiece.isOppositeSide(sourcePiece);
     }
 
     private void attack(Position sourcePosition, Position targetPosition) {
@@ -56,7 +57,7 @@ public class Chess {
 
     private void move(Position sourcePosition, Position targetPosition) {
         board.movePiece(sourcePosition, targetPosition);
-        switchTurn();
+        turn = turn.next();
     }
 
     private void validate(boolean condition, String errorMessage) {
@@ -65,15 +66,11 @@ public class Chess {
         }
     }
 
-    private void switchTurn() {
-        turn = turn.oppositeColor();
-    }
-
     public Board getBoard() {
         return board;
     }
 
-    public Color getTurn() {
+    public Turn getTurn() {
         return turn;
     }
 }
