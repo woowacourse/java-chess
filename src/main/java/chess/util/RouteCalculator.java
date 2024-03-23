@@ -10,11 +10,11 @@ public class RouteCalculator {
     private RouteCalculator() {
     }
 
-    public static Set<Position> getVerticalMiddlePositions(final Position current, final Position target) {
-        Position position = getLowerPosition(current, target);
+    public static Set<Position> getVerticalMiddlePositions(final Position source, final Position target) {
+        Position position = getLowerPosition(source, target);
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < current.getRankDistance(target) - 1; i++) {
+        for (int i = 0; i < source.getRankDistance(target) - 1; i++) {
             position = position.up();
             positions.add(position);
         }
@@ -22,49 +22,49 @@ public class RouteCalculator {
         return positions;
     }
 
-    private static Position getLowerPosition(final Position current, final Position target) {
-        if (Direction.of(current, target).contains(Direction.DOWN)) {
-            return current;
+    private static Position getLowerPosition(final Position source, final Position target) {
+        if (Direction.of(source, target).contains(Direction.DOWN)) {
+            return source;
         }
 
         return target;
     }
 
-    public static Set<Position> getHorizontalMiddlePositions(final Position current, final Position target) {
-        Position position = getLefterPosition(current, target);
+    public static Set<Position> getHorizontalMiddlePositions(final Position source, final Position target) {
+        Position position = getLefterPosition(source, target);
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < current.getFileDistance(target) - 1; i++) {
+        for (int i = 0; i < source.getFileDistance(target) - 1; i++) {
             position = position.right();
             positions.add(position);
         }
         return positions;
     }
 
-    private static Position getLefterPosition(final Position current, final Position target) {
-        if (Direction.of(current, target).contains(Direction.LEFT)) {
-            return current;
+    private static Position getLefterPosition(final Position source, final Position target) {
+        if (Direction.of(source, target).contains(Direction.LEFT)) {
+            return source;
         }
 
         return target;
     }
 
-    public static Set<Position> getRightDiagonalMiddlePositions(final Position current, final Position target) {
-        Position position = getLowerPosition(current, target);
+    public static Set<Position> getRightDiagonalMiddlePositions(final Position source, final Position target) {
+        Position position = getLowerPosition(source, target);
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < current.getRankDistance(target) - 1; i++) {
+        for (int i = 0; i < source.getRankDistance(target) - 1; i++) {
             position = position.upRight();
             positions.add(position);
         }
         return positions;
     }
 
-    public static Set<Position> getLeftDiagonalMiddlePositions(final Position current, final Position target) {
-        Position position = getLowerPosition(current, target);
+    public static Set<Position> getLeftDiagonalMiddlePositions(final Position source, final Position target) {
+        Position position = getLowerPosition(source, target);
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < current.getRankDistance(target) - 1; i++) {
+        for (int i = 0; i < source.getRankDistance(target) - 1; i++) {
             position = position.upLeft();
             positions.add(position);
         }

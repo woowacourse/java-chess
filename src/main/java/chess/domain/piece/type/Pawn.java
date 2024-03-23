@@ -19,18 +19,6 @@ public class Pawn extends Piece {
         super(color);
     }
 
-//    public Pawn(final Color color, final Position position) {
-//        super(color, position);
-//    }
-
-//    @Override
-//    public boolean canMoveTo(final Position target) {
-//        if (color.equals(Color.WHITE)) {
-//            return canWhiteMoveTo(source, target);
-//        }
-//        return canBlackMoveTo(source, target);
-//    }
-
     private boolean canWhiteMoveTo(final Position source, final Position target) {
         boolean isDownThanTarget = Direction.of(source, target).contains(Direction.DOWN);
 
@@ -58,11 +46,6 @@ public class Pawn extends Piece {
         }
         return source.isSameRank(INIT_BLACK_RANK);
     }
-
-//    @Override
-//    public Set<Position> getRoute(final Position target) {
-//        return RouteCalculator.getVerticalMiddlePositions(source, target);
-//    }
 
     @Override
     public boolean canMoveTo(final Position source, final Position target) {

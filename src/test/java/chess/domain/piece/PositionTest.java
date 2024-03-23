@@ -22,17 +22,17 @@ class PositionTest {
     @Test
     void canMoveDiagonal() {
         // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position sourcePosition = new Position(File.D, Rank.FIVE);
         final Position targetPositionRightUp = new Position(File.E, Rank.SIX);
         final Position targetPositionRightDown = new Position(File.E, Rank.FOUR);
         final Position targetPositionLeftUP = new Position(File.C, Rank.SIX);
         final Position targetPositionLeftDown = new Position(File.C, Rank.FOUR);
 
         // when
-        final boolean resultRightUp = currentPosition.isDiagonalWith(targetPositionRightUp);
-        final boolean resultRightDown = currentPosition.isDiagonalWith(targetPositionRightDown);
-        final boolean resultLeftUP = currentPosition.isDiagonalWith(targetPositionLeftUP);
-        final boolean resultLeftDown = currentPosition.isDiagonalWith(targetPositionLeftDown);
+        final boolean resultRightUp = sourcePosition.isDiagonalWith(targetPositionRightUp);
+        final boolean resultRightDown = sourcePosition.isDiagonalWith(targetPositionRightDown);
+        final boolean resultLeftUP = sourcePosition.isDiagonalWith(targetPositionLeftUP);
+        final boolean resultLeftDown = sourcePosition.isDiagonalWith(targetPositionLeftDown);
 
         // then
         Assertions.assertThat(resultRightUp).isTrue();
@@ -45,11 +45,11 @@ class PositionTest {
     @Test
     void canNotMoveDiagonal() {
         // given
-        final Position currentPosition = new Position(File.D, Rank.FIVE);
+        final Position sourcePosition = new Position(File.D, Rank.FIVE);
         final Position notMovablePosition = new Position(File.D, Rank.SIX);
 
         // when
-        final boolean result = currentPosition.isDiagonalWith(notMovablePosition);
+        final boolean result = sourcePosition.isDiagonalWith(notMovablePosition);
 
         // then
         Assertions.assertThat(result).isFalse();

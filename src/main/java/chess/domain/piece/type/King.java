@@ -15,30 +15,6 @@ public class King extends Piece {
         super(color);
     }
 
-//    public King(final Color color, final Position position) {
-//        super(color, position);
-//    }
-//
-//    @Override
-//    public boolean canMoveTo(final Position target) {
-//        MultiDirection multiDirection = MultiDirection.of(source, target);
-//        int rankDistance = source.getRankDistance(target);
-//        int fileDistance = source.getFileDistance(target);
-//
-//        if (multiDirection == MultiDirection.VERTICAL && rankDistance == DEFAULT_STEP) {
-//            return true;
-//        }
-//        if (multiDirection == MultiDirection.HORIZONTAL && fileDistance == DEFAULT_STEP) {
-//            return true;
-//        }
-//        return (multiDirection == MultiDirection.LEFT_DIAGONAL || multiDirection == MultiDirection.RIGHT_DIAGONAL) && rankDistance == DEFAULT_STEP;
-//    }
-//
-//    @Override
-//    public Set<Position> getRoute(final Position target) {
-//        return new HashSet<>();
-//    }
-
     @Override
     public boolean canMoveTo(final Position source, final Position target) {
         MultiDirection multiDirection = MultiDirection.of(source, target);

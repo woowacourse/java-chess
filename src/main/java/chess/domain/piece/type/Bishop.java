@@ -13,30 +13,6 @@ public class Bishop extends Piece {
         super(color);
     }
 
-//    public Bishop(final Color color, final Position position) {
-//        super(color, position);
-//    }
-//
-//    @Override
-//    public boolean canMoveTo(final Position target) {
-//        MultiDirection multiDirection = MultiDirection.of(this.position, target);
-//        return multiDirection == MultiDirection.RIGHT_DIAGONAL || multiDirection == MultiDirection.LEFT_DIAGONAL;
-//    }
-//
-//    @Override
-//    public Set<Position> getRoute(final Position target) {
-//        MultiDirection multiDirection = MultiDirection.of(this.position, target);
-//
-//        if (multiDirection == MultiDirection.RIGHT_DIAGONAL) {
-//            return RouteCalculator.getRightDiagonalMiddlePositions(this.position, target);
-//        }
-//        if (multiDirection == MultiDirection.LEFT_DIAGONAL) {
-//            return RouteCalculator.getLeftDiagonalMiddlePositions(this.position, target);
-//        }
-//
-//        return new HashSet<>();
-//    }
-
     @Override
     public boolean canMoveTo(final Position source, final Position target) {
         MultiDirection multiDirection = MultiDirection.of(source, target);

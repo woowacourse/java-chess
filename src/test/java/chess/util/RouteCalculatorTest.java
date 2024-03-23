@@ -16,11 +16,11 @@ class RouteCalculatorTest {
     @Test
     void getVerticalMiddlePositions() {
         // given
-        final Position current = new Position(File.F, Rank.EIGHT);
+        final Position source = new Position(File.F, Rank.EIGHT);
         final Position target = new Position(File.F, Rank.ONE);
 
         // when
-        final Set<Position> positions = RouteCalculator.getVerticalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getVerticalMiddlePositions(source, target);
 
         // then
         assertThat(positions).contains(
@@ -37,11 +37,11 @@ class RouteCalculatorTest {
     @Test
     void getHorizontalMiddlePositions() {
         // given
-        final Position current = new Position(File.H, Rank.FOUR);
+        final Position source = new Position(File.H, Rank.FOUR);
         final Position target = new Position(File.D, Rank.FOUR);
 
         // when
-        final Set<Position> positions = RouteCalculator.getHorizontalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getHorizontalMiddlePositions(source, target);
 
         // then
         assertThat(positions).contains(
@@ -55,11 +55,11 @@ class RouteCalculatorTest {
     @Test
     void getRightDiagonalMiddlePositions() {
         // given
-        final Position current = new Position(File.C, Rank.THREE);
+        final Position source = new Position(File.C, Rank.THREE);
         final Position target = new Position(File.F, Rank.SIX);
 
         // when
-        final Set<Position> positions = RouteCalculator.getRightDiagonalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getRightDiagonalMiddlePositions(source, target);
 
         // then
         assertThat(positions).contains(
@@ -72,11 +72,11 @@ class RouteCalculatorTest {
     @Test
     void getLeftDiagonalMiddlePositions() {
         // given
-        final Position current = new Position(File.B, Rank.SIX);
+        final Position source = new Position(File.B, Rank.SIX);
         final Position target = new Position(File.E, Rank.THREE);
 
         // when
-        final Set<Position> positions = RouteCalculator.getLeftDiagonalMiddlePositions(current, target);
+        final Set<Position> positions = RouteCalculator.getLeftDiagonalMiddlePositions(source, target);
 
         // then
         assertThat(positions).contains(

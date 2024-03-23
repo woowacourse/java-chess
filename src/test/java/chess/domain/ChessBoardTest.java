@@ -64,11 +64,11 @@ class ChessBoardTest {
     @Test
     void existInWayRook() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.ONE);
+        final Position sourcePosition = new Position(File.A, Rank.ONE);
         final Position nextPosition = new Position(File.A, Rank.FOUR);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -76,11 +76,11 @@ class ChessBoardTest {
     @Test
     void existInWayNight() {
         // given
-        final Position currentPosition = new Position(File.B, Rank.ONE);
+        final Position sourcePosition = new Position(File.B, Rank.ONE);
         final Position nextPosition = new Position(File.B, Rank.TWO);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -88,11 +88,11 @@ class ChessBoardTest {
     @Test
     void existInWayBishop() {
         // given
-        final Position currentPosition = new Position(File.C, Rank.ONE);
+        final Position sourcePosition = new Position(File.C, Rank.ONE);
         final Position nextPosition = new Position(File.C, Rank.TWO);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -100,11 +100,11 @@ class ChessBoardTest {
     @Test
     void existInWayKing() {
         // given
-        final Position currentPosition = new Position(File.E, Rank.ONE);
+        final Position sourcePosition = new Position(File.E, Rank.ONE);
         final Position nextPosition = new Position(File.E, Rank.TWO);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -112,11 +112,11 @@ class ChessBoardTest {
     @Test
     void existInWayQueen() {
         // given
-        final Position currentPosition = new Position(File.D, Rank.ONE);
+        final Position sourcePosition = new Position(File.D, Rank.ONE);
         final Position nextPosition = new Position(File.D, Rank.THREE);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -124,11 +124,11 @@ class ChessBoardTest {
     @Test
     void canNotMoveTo() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.TWO); // 폰
+        final Position sourcePosition = new Position(File.A, Rank.TWO); // 폰
         final Position nextPosition = new Position(File.A, Rank.FIVE);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -136,26 +136,26 @@ class ChessBoardTest {
     @Test
     void moveWhenEmpty() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.TWO); // 폰
+        final Position sourcePosition = new Position(File.A, Rank.TWO); // 폰
         final Position nextPosition = new Position(File.A, Rank.FOUR);
-        final Piece currentPiece = chessBoard.findPieceBy(currentPosition);
+        final Piece sourcePiece = chessBoard.findPieceBy(sourcePosition);
 
         // when
-        chessBoard.move2(currentPosition, nextPosition);
+        chessBoard.move2(sourcePosition, nextPosition);
 
         // then
-        assertThat(chessBoard.getPieces().get(nextPosition)).isEqualTo(currentPiece);
+        assertThat(chessBoard.getPieces().get(nextPosition)).isEqualTo(sourcePiece);
     }
 
     @DisplayName("빈칸인데 경로상에 기물이 존재하면 움직일 수 없다.")
     @Test
     void canNotMoveByExistingPiece() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.ONE); // 룩
+        final Position sourcePosition = new Position(File.A, Rank.ONE); // 룩
         final Position nextPosition = new Position(File.A, Rank.FIVE);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -163,33 +163,33 @@ class ChessBoardTest {
     @Test
     void moveToCatch() {
         // given
-        Position currentPosition = new Position(File.B, Rank.ONE); // 나이트
-        final Piece originPiece = chessBoard.findPieceBy(currentPosition);
+        Position sourcePosition = new Position(File.B, Rank.ONE); // 나이트
+        final Piece originPiece = chessBoard.findPieceBy(sourcePosition);
         Position nextPosition = new Position(File.C, Rank.THREE);
-        chessBoard.move2(currentPosition, nextPosition);
+        chessBoard.move2(sourcePosition, nextPosition);
 
-        currentPosition = nextPosition;
+        sourcePosition = nextPosition;
         nextPosition = new Position(File.D, Rank.FIVE);
-        chessBoard.move2(currentPosition, nextPosition);
+        chessBoard.move2(sourcePosition, nextPosition);
 
-        currentPosition = nextPosition;
+        sourcePosition = nextPosition;
         nextPosition = new Position(File.E, Rank.SEVEN);
-        chessBoard.move2(currentPosition, nextPosition);
+        chessBoard.move2(sourcePosition, nextPosition);
 
         // when && then
-        final Piece currentPiece = chessBoard.findPieceBy(nextPosition);
-        assertThat(currentPiece).isEqualTo(originPiece);
+        final Piece sourcePiece = chessBoard.findPieceBy(nextPosition);
+        assertThat(sourcePiece).isEqualTo(originPiece);
     }
 
     @DisplayName("상대 기물을 잡으러 움직이는 도중에 기물이 존재하면 움직일 수 없다.")
     @Test
     void canNotMoveToCatchByExistingPiece() {
         // given
-        final Position currentPosition = new Position(File.A, Rank.ONE); // 룩
+        final Position sourcePosition = new Position(File.A, Rank.ONE); // 룩
         final Position nextPosition = new Position(File.A, Rank.EIGHT);
 
         // when && then
-        assertThatThrownBy(() -> chessBoard.move2(currentPosition, nextPosition))
+        assertThatThrownBy(() -> chessBoard.move2(sourcePosition, nextPosition))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

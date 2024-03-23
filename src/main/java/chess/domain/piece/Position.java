@@ -52,7 +52,7 @@ public class Position {
         return new Position(this.file.left(), this.rank.up());
     }
 
-    public boolean isDiagonalWith(final Position target) { // TODO: 애매
+    public boolean isDiagonalWith(final Position target) {
         return this.file.getDistance(target.file) == this.rank.getDistance(target.rank);
     }
 

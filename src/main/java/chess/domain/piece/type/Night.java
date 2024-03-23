@@ -15,24 +15,6 @@ public class Night extends Piece {
         super(color);
     }
 
-//    public Night(final Color color, final Position position) {
-//        super(color, position);
-//    }
-//
-//    @Override
-//    public boolean canMoveTo(final Position target) {
-//        int rankDistance = source.getRankDistance(target);
-//        int fileDistance = source.getFileDistance(target);
-//
-//        return (rankDistance == DEFAULT_STEP_TWO && fileDistance == DEFAULT_STEP_ONE)
-//                || (rankDistance == DEFAULT_STEP_ONE && fileDistance == DEFAULT_STEP_TWO);
-//    }
-//
-//    @Override
-//    public Set<Position> getRoute(final Position target) {
-//        return new HashSet<>();
-//    }
-
     @Override
     public boolean canMoveTo(final Position source, final Position target) {
         int rankDistance = source.getRankDistance(target);
