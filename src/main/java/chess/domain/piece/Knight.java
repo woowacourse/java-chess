@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.movement.MovementRule;
 import chess.domain.movement.discrete.KnightMovement;
 import java.util.List;

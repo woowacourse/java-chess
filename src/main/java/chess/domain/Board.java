@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;

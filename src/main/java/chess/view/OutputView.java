@@ -7,6 +7,7 @@ import chess.dto.PieceDto;
 import chess.dto.PieceType;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class OutputView {
 
@@ -38,16 +39,13 @@ public class OutputView {
     private void printBoardOneLine(Map<Position, PieceDto> board, Rank rank) {
         for (File file : FILE_ORDER) {
             PieceDto piece = board.get(new Position(file, rank));
-            printPiece(piece);
+            Optional<PieceDto> optional = Optional.ofNullable(piece);
+            optional.ifPresentOrElse(this::printPiece, () -> System.out.print(EMPTY_SPACE));
         }
         System.out.println();
     }
 
     private void printPiece(PieceDto piece) {
-        if (piece == null) {
-            System.out.print(EMPTY_SPACE);
-            return;
-        }
         if (piece.isBlack()) {
             printBlackPiece(piece.type());
             return;

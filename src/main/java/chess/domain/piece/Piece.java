@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Team;
 import chess.domain.movement.MovementRule;
 import chess.domain.position.Position;
 import java.util.List;
