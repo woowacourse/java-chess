@@ -6,7 +6,6 @@ import chess.domain.Position;
 import chess.domain.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 import static chess.domain.CommandType.*;
 
@@ -31,23 +30,20 @@ public class ChessGameController {
     }
 
     private void playChess(ChessGame chessGame) {
-        List<String> commands = InputView.inputCommand();
-        Command command = new Command(commands.get(0));
+        Command command = Command.of(InputView.inputCommand());
         while(!command.isCommand(END)) {
-            playOneTurn(chessGame, commands);
-            commands = InputView.inputCommand();
-            command = new Command(commands.get(0));
+            playOneTurn(chessGame, command);
+            command = Command.of(InputView.inputCommand());
         }
     }
 
-    private void playOneTurn(ChessGame chessGame, List<String> commands) {
-        Command command = new Command(commands.get(0));
+    private void playOneTurn(ChessGame chessGame, Command command) {
         if (command.isCommand(START)) {
             start(chessGame);
             return;
         }
         if (command.isCommand(MOVE)) {
-            move(chessGame, commands);
+            move(chessGame, command);
         }
     }
 
@@ -55,9 +51,9 @@ public class ChessGameController {
         OutputView.printBoard(BoardDto.of(chessGame.start()));
     }
 
-    private void move(ChessGame chessGame, List<String> commands) {
-        Position source = Position.of(commands.get(1));
-        Position target = Position.of(commands.get(2));
+    private void move(ChessGame chessGame, Command command) {
+        Position source = Position.of(command.getSource());
+        Position target = Position.of(command.getTarget());
         OutputView.printBoard(BoardDto.of(chessGame.move(source, target)));
     }
 }

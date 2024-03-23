@@ -2,24 +2,49 @@ package chess.domain;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class Command {
     private final String command;
+    private static String source;
+    private static String target;
 
-    public Command(String command) {
-        validateCommand(command);
+    private Command(String command) {
         this.command = command;
     }
 
-    private void validateCommand(String inputCommand) {
+    public static Command of(List<String> commands) {
+        String inputCommand = commands.get(0);
+        validateCommand(inputCommand);
+        if (inputCommand.equals(CommandType.MOVE.getCommandType())) {
+            validateMove(commands);
+        }
+        return new Command(inputCommand);
+    }
+
+    private static void validateCommand(String inputCommand) {
         List<String> commands = Arrays.stream(CommandType.values()).map(CommandType::getCommandType).toList();
         if (!commands.contains(inputCommand)) {
             throw new IllegalArgumentException(String.format("%s는 올바른 커맨드가 아닙니다. start, move, end 중 하나여야 합니다.", inputCommand));
         }
     }
 
+    private static void validateMove(List<String> commands) {
+        if (commands.size() != 3) {
+            throw new IllegalArgumentException("move 커맨드는 'move source위치 target위치' 3개의 인자로 이루어져야 합니다.");
+        }
+        source = commands.get(1);
+        target = commands.get(2);
+    }
+
     public boolean isCommand(CommandType commandType) {
-        return Objects.equals(command, commandType.getCommandType());
+        return command.equals(commandType.getCommandType());
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }
