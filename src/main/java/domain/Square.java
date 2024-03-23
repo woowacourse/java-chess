@@ -66,10 +66,4 @@ public class Square {
                 ", rank=" + rank +
                 '}';
     }
-
-    public Direction calculateDirection(final Square target) {
-        final int fileSub = this.file.subtract(target.file);
-        final int rankSub = this.rank.subtract(target.rank);
-        return Direction.from(fileSub, rankSub);
-    }
 }
