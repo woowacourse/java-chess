@@ -9,9 +9,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PieceMapperTest {
 
     @Test
-    @DisplayName("흑색 기물일 때 대문자로 변환한다.")
+    @DisplayName("검은색 기물일 때 대문자로 변환한다.")
     void mapToUpperCaseWhenBlackPiece() {
         Character actual = PieceMapper.map("KNIGHT", "BLACK");
         assertThat(actual).isEqualTo('N');
+    }
+
+    @Test
+    @DisplayName("흰색 기물일 때 소문자로 변환한다.")
+    void mapToUpperCaseWhenWhitePiece() {
+        Character actual = PieceMapper.map("KING", "WHITE");
+        assertThat(actual).isEqualTo('K');
     }
 }

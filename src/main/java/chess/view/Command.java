@@ -7,7 +7,7 @@ public enum Command {
     MOVE("move"),
     END("end");
 
-    public static final String ERROR_INVALID_COMMAND = " 은(는) 존재하지 않는 명령어 입니다.";
+    private static final String ERROR_INVALID_COMMAND = " 은(는) 존재하지 않는 명령어 입니다.";
     private final String value;
 
 
