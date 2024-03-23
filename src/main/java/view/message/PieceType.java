@@ -16,6 +16,7 @@ import model.piece.Queen;
 import model.piece.Rook;
 
 public enum PieceType {
+
     BISHOP_BLACK(new Bishop(Camp.BLACK), "B"),
     BISHOP_WHITE(new Bishop(Camp.WHITE), "b"),
     KING_BLACK(new King(Camp.BLACK), "K"),
