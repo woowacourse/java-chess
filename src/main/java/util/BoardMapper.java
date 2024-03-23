@@ -8,6 +8,7 @@ import dto.BoardDto;
 import dto.PointDto;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoardMapper {
@@ -16,13 +17,14 @@ public class BoardMapper {
     }
 
     public static BoardDto toDto(final ChessBoard chessBoard) {
-        return new BoardDto(convertMap(chessBoard.toMap()));
+        return new BoardDto(convertMap(chessBoard.getPieces()));
     }
 
-    private static Map<PointDto, String> convertMap(final Map<Point, Piece> chessMap) {
+    private static Map<PointDto, String> convertMap(final List<Piece> pieces) {
         final Map<PointDto, String> convertedMap = new HashMap<>();
-        for (final var entry : chessMap.entrySet()) {
-            convertedMap.put(convertPoint(entry.getKey()), convertPiece(entry.getValue()));
+        for (final Piece piece : pieces) {
+            convertedMap.put(convertPoint(piece.getPoint()), convertPiece(piece));
+
         }
         return convertedMap;
     }

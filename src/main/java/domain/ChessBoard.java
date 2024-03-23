@@ -6,7 +6,7 @@ import domain.piece.attribute.point.Point;
 import dto.RouteDto;
 import factory.ChessBoardGenerator;
 
-import java.util.Map;
+import java.util.List;
 
 public class ChessBoard {
     private final Pieces pieces;
@@ -36,7 +36,7 @@ public class ChessBoard {
         return ChessBoardGenerator.createDefaultBoard();
     }
 
-    public Map<Point, Piece> toMap() {
-        return pieces.toMap();
+    public List<Piece> getPieces() {
+        return this.pieces.allPieces();
     }
 }

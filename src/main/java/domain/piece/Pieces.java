@@ -22,7 +22,6 @@ public class Pieces {
         if (!piece.canMove(endPoint)) {
             return false;
         }
-
         return switch (piece.getStatus()) {
             case BISHOP, ROOK, QUEEN -> !(hasAnyPiece(piece.getPoint(), endPoint) && !isFriend(piece, endPoint));
             case KING, KNIGHT -> !isFriend(piece, endPoint);
@@ -42,13 +41,8 @@ public class Pieces {
         return value.size();
     }
 
-    public Map<Point, Piece> toMap() {
-        final Map<Point, Piece> map = new HashMap<>();
-
-        for (final Piece piece : value) {
-            map.put(piece.getPoint(), piece);
-        }
-        return map;
+    public List<Piece> allPieces() {
+        return Collections.unmodifiableList(this.value);
     }
 
     private boolean isFriend(final Piece piece, final Point point) {
