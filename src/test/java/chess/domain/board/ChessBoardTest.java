@@ -46,6 +46,22 @@ public class ChessBoardTest {
                 .hasMessage("시작 위치에 아군 체스말이 존재해야 합니다.");
     }
 
+    @DisplayName("체스말을 움직일 때, 도착 위치에 아군 말이 존재하는 경우 예외를 발생시킨다.")
+    @Test
+    void canNotAttack() {
+        // given
+        squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        squares.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(squares);
+        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        Color currentTurn = Color.WHITE;
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move(path, currentTurn))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치에 아군 체스말이 존재할 수 없습니다.");
+    }
+
     @DisplayName("target이 비어있는 경우 체스말을 움직인다.")
     @Test
     void movePieceTest() {

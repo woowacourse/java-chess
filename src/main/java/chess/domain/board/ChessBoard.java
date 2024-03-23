@@ -23,12 +23,47 @@ public class ChessBoard {
     }
 
     public void move(Path path, Color currentTurn) {
-        validateStartFriendly(path, currentTurn);
+        validate(path, currentTurn);
         if (squares.get(path.getEnd()) == Empty.getInstance()) {
             tryExchange(path);
             return;
         }
         tryAttack(path);
+    }
+
+    private void validate(Path path, Color currentTurn) {
+        validateStartFriendly(path, currentTurn);
+        validateEndNotFriendly(path, currentTurn);
+    }
+
+    // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
+    private void validateStartFriendly(Path path, Color friendlyColor) {
+        if (isEmpty(path.getStart()) || isEnemy(path.getStart(), friendlyColor)) {
+            throw new IllegalArgumentException("시작 위치에 아군 체스말이 존재해야 합니다.");
+        }
+    }
+
+    private void validateEndNotFriendly(Path path, Color currentTurn) {
+        if (isNotEmpty(path.getEnd()) && isFriendly(path.getEnd(), currentTurn)) {
+            throw new IllegalArgumentException("도착 위치에 아군 체스말이 존재할 수 없습니다.");
+        }
+    }
+
+    private boolean isEmpty(Position position) {
+        return squares.get(position) == Empty.getInstance();
+    }
+
+    private boolean isNotEmpty(Position position) {
+        return !isEmpty(position);
+    }
+
+    private boolean isFriendly(Position position, Color friendlyColor) {
+        Piece startPiece = (Piece) squares.get(position);
+        return startPiece.isColor(friendlyColor);
+    }
+
+    private boolean isEnemy(Position position, Color friendlyColor) {
+        return !isFriendly(position, friendlyColor);
     }
 
     // TODO: 예외 로직 세분화
@@ -51,22 +86,5 @@ public class ChessBoard {
         startSquare.move();
         squares.put(path.getEnd(), startSquare);
         squares.put(path.getStart(), Empty.getInstance());
-    }
-
-    // TODO: 하위 타입 캐스팅 대신 Map<Position, Piece>로 변경할지 고려
-    private void validateStartFriendly(Path path, Color friendlyColor) {
-        Square startSquare = squares.get(path.getStart());
-        if (isStartNotEmpty(startSquare) || isStartEnemy(startSquare, friendlyColor)) {
-            throw new IllegalArgumentException("시작 위치에 아군 체스말이 존재해야 합니다.");
-        }
-    }
-
-    private boolean isStartEnemy(Square startSquare, Color friendlyColor) {
-        Piece startPiece = (Piece) startSquare;
-        return !startPiece.isColor(friendlyColor);
-    }
-
-    private boolean isStartNotEmpty(Square startSquare) {
-        return startSquare == Empty.getInstance();
     }
 }
