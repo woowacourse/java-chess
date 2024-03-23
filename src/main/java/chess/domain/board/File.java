@@ -1,36 +1,50 @@
 package chess.domain.board;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-class File {
+public enum File {
+
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h'),
+
+    ;
 
     private static final char MIN_VALUE_RANGE = 'a';
     private static final char MAX_VALUE_RANGE = 'h';
 
-    private final char value;
+    private final int value;
 
-    public File(char value) {
-        if (value < MIN_VALUE_RANGE || value > MAX_VALUE_RANGE) {
-            throw new IllegalArgumentException("유효한 범위의 알파벳이 아닙니다.");
-        }
 
+    File(int value) {
         this.value = value;
     }
 
-    public char getValue() {
-        return value;
+    public static File from(int value) {
+        return Arrays.stream(values())
+                .filter(file -> file.value == value)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효한 범위가 아닙니다."));
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        File file = (File) o;
-        return value == file.value;
+    File move(int weight) {
+        return Arrays.stream(File.values())
+                .filter(it -> it.value == value + weight)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("유효한 범위를 초과 했습니다."));
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
+    boolean canMove(int weight) {
+        return value + weight >= MIN_VALUE_RANGE && value + weight <= MAX_VALUE_RANGE;
     }
+
+    int compare(File other) {
+        return Integer.compare(value, other.value);
+    }
+
 }
