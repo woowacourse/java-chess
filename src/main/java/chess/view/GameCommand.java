@@ -16,7 +16,7 @@ public enum GameCommand {
     public static GameCommand createFirstGameCommand(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
-                .filter(value -> !MOVE.equals(value))
+                .filter(value -> value != MOVE)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("start 혹은 end를 입력해주세요."));
     }
@@ -24,12 +24,12 @@ public enum GameCommand {
     public static GameCommand createMoveCommand(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
-                .filter(value -> !START.equals(value))
+                .filter(value -> value != START)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("move 혹은 end를 입력해주세요."));
     }
 
     public boolean isEnd() {
-        return this.equals(END);
+        return this == END;
     }
 }
