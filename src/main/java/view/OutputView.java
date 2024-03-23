@@ -43,24 +43,24 @@ public class OutputView {
         System.out.printf(COMMAND_MESSAGE);
     }
 
-    public void printPositionStatus(final ChessBoard mover) {
+    public void printPositionStatus(final ChessBoard chessBoard) {
         for (int rank = 8; rank >= 1; rank--) {
-            printPositionByFile(mover, rank);
+            printPositionByFile(chessBoard, rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private void printPositionByFile(ChessBoard mover, int row) {
+    private void printPositionByFile(ChessBoard chessBoard, int row) {
         for (int file = 0; file < 8; file++) {
             Position square = new Position(new Position(new File((char) ('a' + file)), new Rank(row)));
-            System.out.print(generateSymbol(mover, square));
+            System.out.print(generateSymbol(chessBoard, square));
         }
     }
 
-    public String generateSymbol(ChessBoard mover, Position square) {
-        if (mover.hasPiece(square)) {
-            Piece piece = mover.findPieceByPosition(square);
+    public String generateSymbol(ChessBoard chessBoard, Position square) {
+        if (chessBoard.hasPiece(square)) {
+            Piece piece = chessBoard.findPieceByPosition(square);
             return pieceSymbol.get(piece);
         }
         return ".";
