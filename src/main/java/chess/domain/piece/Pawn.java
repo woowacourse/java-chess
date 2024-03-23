@@ -6,6 +6,7 @@ import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 

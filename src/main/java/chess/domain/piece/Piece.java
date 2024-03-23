@@ -4,6 +4,7 @@ import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+
 import java.util.List;
 
 public abstract class Piece {

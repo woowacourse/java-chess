@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -61,7 +62,7 @@ public class Board {
         if (!isChecked(team, kingPosition)) {
             return CheckState.SAFE;
         }
-        if(isCheckmate(team, kingPosition)) {
+        if (isCheckmate(team, kingPosition)) {
             return CheckState.CHECK_MATE;
         }
         return CheckState.CHECK;
@@ -119,8 +120,7 @@ public class Board {
         return findAttackingPiecePositions(team, position)
                 .stream()
                 .findAny()
-                .orElseThrow(() ->
-                        new IllegalStateException("해당 위치를 공격하는 기물은 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("해당 위치를 공격하는 기물은 없습니다."));
     }
 
     private List<Position> findAttackingPiecePositions(Team team, Position position) {

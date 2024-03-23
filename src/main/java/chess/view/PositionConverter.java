@@ -1,12 +1,13 @@
 package chess.view;
 
 import chess.domain.Position;
+
 import java.util.regex.Pattern;
 
 public class PositionConverter {
-    private static final String REGEX = "^[a-h][1-8]$";
     public static final int ROW_INDEX = 1;
     public static final int COLUMN_INDEX = 0;
+    private static final String REGEX = "^[a-h][1-8]$";
 
     private PositionConverter() {
     }

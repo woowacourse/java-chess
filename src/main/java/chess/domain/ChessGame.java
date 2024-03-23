@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
+
 import java.util.Map;
 import java.util.function.Consumer;
 
