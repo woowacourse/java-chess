@@ -62,9 +62,9 @@ public class Moving {
         final int currentRank = currentPosition.getRankIndex();
         final int currentFile = currentPosition.getFileIndex();
 
-        Direction direction = Direction.from(currentPosition, nextPosition);
+        final Direction direction = Direction.from(currentPosition, nextPosition);
 
-        Set<Position> result = new HashSet<>();
+        final Set<Position> result = new HashSet<>();
         for (int i = 1; i < distance(); i++) {
             Rank rank = Rank.from(currentRank + (i * direction.getDeltaRank()));
             File file = File.from(currentFile + (i * direction.getDeltaFile()));
