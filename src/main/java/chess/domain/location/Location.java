@@ -36,11 +36,11 @@ public class Location {
         }
     }
 
-    public int calculateVerticalDistance(Location target) {
+    public int calculateRowDistance(Location target) {
         return this.row.calculateDistance(target.row);
     }
 
-    public int calculateHorizontalDistance(Location target) {
+    public int calculateColumnDistance(Location target) {
         return this.column.calculateDistance(target.column);
     }
 

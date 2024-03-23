@@ -14,72 +14,72 @@ public enum Direction {
     LEFT(0, -1),
     UP_LEFT(1, -1);
 
-    private final int vertical;
-    private final int horizontal;
+    private final int rowDistance;
+    private final int columnDistance;
 
 
-    Direction(int vertical, int horizontal) {
-        this.vertical = vertical;
-        this.horizontal = horizontal;
+    Direction(int rowDistance, int columnDistance) {
+        this.rowDistance = rowDistance;
+        this.columnDistance = columnDistance;
     }
 
-    private static Direction of(int verticalDistance, int horizontalDistance) {
-        if (verticalDistance > 0) {
-            return createUpsideDirection(horizontalDistance);
+    private static Direction of(int rowDistance, int columnDistance) {
+        if (rowDistance > 0) {
+            return createUpsideDirection(columnDistance);
         }
-        if (verticalDistance < 0) {
-            return createDownsideDirection(horizontalDistance);
+        if (rowDistance < 0) {
+            return createDownsideDirection(columnDistance);
         }
-        return createHorizontalDirection(horizontalDistance);
+        return createColumnDirection(columnDistance);
     }
 
-    private static Direction createUpsideDirection(int horizontalDistance) {
-        if (horizontalDistance < 0) {
+    private static Direction createUpsideDirection(int columnDistance) {
+        if (columnDistance < 0) {
             return UP_LEFT;
         }
-        if (horizontalDistance == 0) {
+        if (columnDistance == 0) {
             return UP;
         }
         return UP_RIGHT;
     }
 
-    private static Direction createDownsideDirection(int horizontalDistance) {
-        if (horizontalDistance < 0) {
+    private static Direction createDownsideDirection(int columnDistance) {
+        if (columnDistance < 0) {
             return DOWN_LEFT;
         }
-        if (horizontalDistance == 0) {
+        if (columnDistance == 0) {
             return DOWN;
         }
         return DOWN_RIGHT;
     }
 
-    private static Direction createHorizontalDirection(int horizontalDistance) {
-        if (horizontalDistance < 0) {
+    private static Direction createColumnDirection(int columnDistance) {
+        if (columnDistance < 0) {
             return LEFT;
         }
         return RIGHT;
     }
 
     public static List<Direction> createDirections(Location source, Location target) {
-        int verticalDistance = source.calculateVerticalDistance(target);
-        int horizontalDistance = source.calculateHorizontalDistance(target);
-        return Direction.createDirectionsByDistance(verticalDistance, horizontalDistance);
+        int rowDistance = source.calculateRowDistance(target);
+        int columnDistance = source.calculateColumnDistance(target);
+        return Direction.createDirectionsByDistance(rowDistance, columnDistance);
     }
 
-    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
-        validateDistance(verticalDistance, horizontalDistance);
+    private static List<Direction> createDirectionsByDistance(int rowDistance, int columnDistance) {
+        validateDistance(rowDistance, columnDistance);
         List<Direction> directions = new ArrayList<>();
-        while (verticalDistance != 0 || horizontalDistance != 0) {
-            Direction direction = of(verticalDistance, horizontalDistance);
+        while (rowDistance != 0 || columnDistance != 0) {
+            Direction direction = of(rowDistance, columnDistance);
             directions.add(direction);
-            verticalDistance -= direction.vertical;
-            horizontalDistance -= direction.horizontal;
+            rowDistance -= direction.rowDistance;
+            columnDistance -= direction.columnDistance;
         }
         return directions;
     }
 
-    private static void validateDistance(int verticalDistance, int horizontalDistance) {
-        if (verticalDistance == 0 && horizontalDistance == 0) {
+    private static void validateDistance(int rowDistance, int columnDistance) {
+        if (rowDistance == 0 && columnDistance == 0) {
             throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
         }
     }
@@ -93,18 +93,18 @@ public enum Direction {
     }
 
     public boolean isUpSide() {
-        return this.vertical == 1;
+        return this.rowDistance == 1;
     }
 
     public boolean isDownside() {
-        return this.vertical == -1;
+        return this.rowDistance == -1;
     }
 
     public boolean isRightSide() {
-        return this.horizontal == 1;
+        return this.columnDistance == 1;
     }
 
     public boolean isLeftSide() {
-        return this.horizontal == -1;
+        return this.columnDistance == -1;
     }
 }
