@@ -11,15 +11,12 @@ import java.util.Set;
 
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
+import chess.domain.piece.attribute.Positions;
 
 public class Rook extends SlidingPiece {
 
-    protected static final Set<Position> WHITE_INITIAL_POSITIONS = Set.of(
-            Position.of(A, ONE), Position.of(H, ONE)
-    );
-    protected static final Set<Position> BLACK_INITIAL_POSITIONS = Set.of(
-            Position.of(A, EIGHT), Position.of(H, EIGHT)
-    );
+    protected static final Set<Position> WHITE_INITIAL_POSITIONS = Positions.of("a1", "h1");
+    protected static final Set<Position> BLACK_INITIAL_POSITIONS = Positions.of("a8", "h8");
 
     public Rook(final Color color, final Position position) {
         super(color, position);

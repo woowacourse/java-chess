@@ -2,8 +2,6 @@ package chess.domain.piece.attribute;
 
 import static chess.domain.chessboard.Chessboard.isInBoard;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,14 +11,12 @@ import chess.domain.chessboard.attribute.Rank;
 
 public class Position {
 
-    private static final Map<String, Position> CACHED_POSITIONS = new HashMap<>();
-
     private static final String PATTERN = "^[a-h][1-8]$";
 
     private final File file;
     private final Rank rank;
 
-    private Position(final File file, final Rank rank) {
+    protected Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -38,26 +34,7 @@ public class Position {
     }
 
     public static Position of(final File file, final Rank rank) {
-        if (CACHED_POSITIONS.isEmpty()) {
-            initializePositions();
-        }
-        return CACHED_POSITIONS.get(keyOf(file, rank));
-    }
-
-    private static void initializePositions() {
-        for (final Rank rank : Rank.values()) {
-            putPositions(rank);
-        }
-    }
-
-    private static void putPositions(final Rank rank) {
-        for (final File file : File.values()) {
-            CACHED_POSITIONS.put(keyOf(file, rank), new Position(file, rank));
-        }
-    }
-
-    private static String keyOf(final File file, final Rank rank) {
-        return file.name() + rank.name();
+        return Positions.get(file, rank);
     }
 
     public Optional<Position> moveTo(final Direction direction) {

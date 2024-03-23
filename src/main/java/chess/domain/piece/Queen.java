@@ -11,8 +11,8 @@ import chess.domain.piece.attribute.Position;
 
 public class Queen extends SlidingPiece {
 
-    private static final Position WHITE_INITIAL_POSITION = Position.of(D, ONE);
-    private static final Position BLACK_INITIAL_POSITION = Position.of(D, EIGHT);
+    private static final Position WHITE_INITIAL_POSITION = Position.from("d1");
+    private static final Position BLACK_INITIAL_POSITION = Position.from("d8");
 
     public Queen(final Color color, final Position position) {
         super(color, position);
