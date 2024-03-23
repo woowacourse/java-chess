@@ -23,15 +23,17 @@ public class InputView {
         return CommandInput.asCommand(rawCommand);
     }
 
-    public Position readSourcePosition() {
+    public Position readPosition() {
         String rawPosition = scanner.next();
+        validatePositionLength(rawPosition);
         return Position.generate(rawPosition);
     }
 
-    public Position readTargetPosition() {
-        String rawPosition = scanner.next();
-        return Position.generate(rawPosition);
-    } // TODO: file 만 입력된 경우 예외 처리 (StringIndexOutOfBoundsException)
+    private void validatePositionLength(String rawPosition) {
+        if (rawPosition.length() != 2) {
+            throw new IllegalArgumentException("[ERROR] 올바른 위치를 입력해주세요.");
+        }
+    }
 
     public void clean() {
         scanner.nextLine();
