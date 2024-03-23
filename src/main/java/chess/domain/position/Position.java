@@ -1,19 +1,20 @@
 package chess.domain.position;
 
 import chess.domain.Direction;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Position {
-    private static final Map<String, Position> POOL = new HashMap<>();
+    private static final Map<String, Position> POOL;
 
     static {
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                POOL.put(toKey(file, rank), new Position(file, rank));
-            }
-        }
+        POOL = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> new Position(file, rank)))
+                .collect(Collectors.toMap(position -> toKey(position.file, position.rank), Function.identity()));
     }
 
     private final File file;
