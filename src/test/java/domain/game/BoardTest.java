@@ -39,8 +39,7 @@ class BoardTest {
         board.movePiece(WHITE, source, destination);
 
         // Then
-        assertThat(piecePositions.containsKey(destination)).isTrue();
-        assertThat(piecePositions.containsKey(source)).isFalse();
+        assertThat(piecePositions).doesNotContainKey(source).containsKey(destination);
     }
 
     @DisplayName("기물의 이동 목적지에 다른 색의 기물이 있으면 이동시킬 수 있다.")
@@ -61,8 +60,7 @@ class BoardTest {
         board.movePiece(WHITE, source, destination);
 
         // Then
-        assertThat(piecePositions.containsKey(destination)).isTrue();
-        assertThat(piecePositions.containsKey(source)).isFalse();
+        assertThat(piecePositions).doesNotContainKey(source).containsKey(destination);
     }
 
     @DisplayName("기물의 이동 목적지에 같은 색의 기물이 있으면 이동시킬 수 없다.")
