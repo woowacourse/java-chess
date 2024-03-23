@@ -1,7 +1,7 @@
 package view;
 
-import dto.RankInfo;
 import java.util.List;
+import view.dto.RankInfo;
 
 public class OutputView {
     private OutputView() {

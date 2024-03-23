@@ -9,18 +9,15 @@ import static view.Command.START;
 import domain.board.Board;
 import domain.board.BoardInitiator;
 import domain.board.Position;
-import dto.DtoMapper;
-import dto.RankInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 import view.Command;
 import view.InputView;
 import view.OutputView;
+import view.dto.DtoMapper;
+import view.dto.RankInfo;
 
 public class ChessController {
-    private static final Pattern VALID_POSITION_INPUT = Pattern.compile("[^a-h][^1-8]");
-
     public void start() {
         OutputView.printGameStartMessage();
         final Board board = new Board(BoardInitiator.init());
@@ -83,17 +80,7 @@ public class ChessController {
     private void moveByCommand(final Board board) {
         final String source = InputView.inputCommand();
         final String target = InputView.inputCommand();
-        validatePositionCommands(source, target);
         move(source, target, board);
-    }
-
-    private void validatePositionCommands(final String source, final String target) {
-        if (Pattern.matches(VALID_POSITION_INPUT.pattern(), source)) {
-            throw new IllegalArgumentException("잘못된 시작 위치 입력입니다.");
-        }
-        if (Pattern.matches(VALID_POSITION_INPUT.pattern(), target)) {
-            throw new IllegalArgumentException("잘못된 목표 위치 입력입니다.");
-        }
     }
 
     public void move(final String source, final String target, final Board board) {

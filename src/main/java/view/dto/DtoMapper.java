@@ -1,4 +1,4 @@
-package dto;
+package view.dto;
 
 import domain.board.Board;
 import domain.board.Position;

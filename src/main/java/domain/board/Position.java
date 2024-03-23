@@ -5,8 +5,11 @@ import domain.piece.info.File;
 import domain.piece.info.Rank;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Position {
+    private static final Pattern VALID_POSITION_INPUT = Pattern.compile("[^a-h][^1-8]");
+
     private final File file;
     private final Rank rank;
 
@@ -16,9 +19,16 @@ public class Position {
     }
 
     public static Position createPosition(final String positionValue) {
+        validatePositionCommands(positionValue);
         final File file = convertToFile(positionValue);
         final Rank rank = convertToRank(positionValue);
         return new Position(file, rank);
+    }
+
+    private static void validatePositionCommands(final String value) {
+        if (Pattern.matches(VALID_POSITION_INPUT.pattern(), value)) {
+            throw new IllegalArgumentException("잘못된 위치 값입니다.");
+        }
     }
 
     private static File convertToFile(final String positionValue) {
