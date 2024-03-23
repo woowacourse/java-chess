@@ -53,4 +53,9 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, position);
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ":" + color + "," + position;
+    }
 }

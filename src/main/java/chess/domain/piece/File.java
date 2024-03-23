@@ -54,4 +54,9 @@ public enum File {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return "" + symbol;
+    }
 }

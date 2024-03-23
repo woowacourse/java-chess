@@ -41,4 +41,9 @@ public enum Rank {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return "" + index;
+    }
 }

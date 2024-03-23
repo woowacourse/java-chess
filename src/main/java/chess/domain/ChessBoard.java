@@ -14,10 +14,11 @@ import chess.domain.piece.type.Rook;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private final Set<Piece> pieces;
+    private Set<Piece> pieces;
 
     private ChessBoard(final Set<Piece> pieces) {
         this.pieces = pieces;
@@ -78,7 +79,9 @@ public class ChessBoard {
             catchPiece(currentPiece, targetPosition);
         }
 
+        System.out.println("이동전 현재 피스의 해시값: " + currentPiece.hashCode());
         currentPiece.move(targetPosition);
+        System.out.println("이동후 현재 피스의 해시값: " + currentPiece.hashCode());
     }
 
     Piece findPieceBy(final Position input) {
@@ -92,8 +95,8 @@ public class ChessBoard {
         if (!isPieceExist(targetPosition)) {
             return false;
         }
-
-        return ((currentPiece.getPosition().isDiagonalWith(targetPosition) && currentPiece.getPosition().getRankDistance(targetPosition) == Pawn.DEFAULT_STEP))
+        return ((currentPiece.getPosition().isDiagonalWith(targetPosition)
+                && currentPiece.getPosition().getRankDistance(targetPosition) == Pawn.DEFAULT_STEP))
                 && !currentPiece.isMySide(findPieceBy(targetPosition));
     }
 
@@ -102,8 +105,14 @@ public class ChessBoard {
     }
 
     private void catchPiece(final Piece currentPiece, final Position targetPosition) {
-        pieces.remove(findPieceBy(targetPosition));
+        pieces = removePiece(targetPosition);
         currentPiece.move(targetPosition);
+    }
+
+    private Set<Piece> removePiece(final Position targetPosition) {
+        return pieces.stream()
+                .filter(piece -> !piece.isPosition(targetPosition))
+                .collect(Collectors.toSet());
     }
 
     private void validateStrategy(final Piece currentPiece, final Position targetPosition) {
@@ -132,5 +141,12 @@ public class ChessBoard {
 
     public Set<Piece> getPieces() {
         return pieces;
+    }
+
+    @Override
+    public String toString() {
+        return "ChessBoard{" +
+                "pieces=" + pieces +
+                '}';
     }
 }
