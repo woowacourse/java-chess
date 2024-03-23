@@ -1,7 +1,6 @@
 package view.dto;
 
 import domain.board.Position;
-import view.FileResolver;
 
 public class MovePositionDto {
 
