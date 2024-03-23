@@ -1,10 +1,11 @@
-package chess.domain.board;
+package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import chess.domain.board.Coordinate;
 
-public enum Direction {
+enum Direction {
 
     LEFT(Map.entry(-1, 0)),
     RIGHT(Map.entry(1, 0)),

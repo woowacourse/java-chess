@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
 
 public class Rook extends AbstractPiece {
 
