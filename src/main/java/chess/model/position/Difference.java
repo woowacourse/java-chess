@@ -26,7 +26,6 @@ public class Difference {
         }
     }
 
-
     public boolean isZero() {
         return amount == 0;
     }
