@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.ChessVector;
 import domain.Direction;
 import domain.Square;
 import domain.Team;
@@ -9,9 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Knight extends Piece {
-    private static final List<ChessVector> SQUARE_VECTORS = List.of(
-            new ChessVector(1, 2), new ChessVector(1, -2), new ChessVector(-1, 2), new ChessVector(-1, -2),
-            new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
+    private static final List<Direction> movableDirections = List.of(
+            Direction.NORTH_NORTH_EAST,
+            Direction.NORTH_NORTH_WEST,
+            Direction.SOUTH_SOUTH_EAST,
+            Direction.SOUTH_SOUTH_WEST,
+            Direction.EAST_EAST_NORTH,
+            Direction.EAST_EAST_SOUTH,
+            Direction.WEST_WEST_NORTH,
+            Direction.WEST_WEST_SOUTH
+    );
 
     public Knight(final Team team) {
         super(team);
@@ -19,29 +25,10 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        if (source.next2(Direction.EAST).next2(Direction.EAST).next2(Direction.NORTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.EAST).next2(Direction.EAST).next2(Direction.SOUTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.WEST).next2(Direction.WEST).next2(Direction.NORTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.WEST).next2(Direction.WEST).next2(Direction.SOUTH).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.NORTH).next2(Direction.NORTH).next2(Direction.EAST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.NORTH).next2(Direction.NORTH).next2(Direction.WEST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.SOUTH).next2(Direction.SOUTH).next2(Direction.EAST).equals(target)) {
-            return true;
-        }
-        if (source.next2(Direction.SOUTH).next2(Direction.SOUTH).next2(Direction.WEST).equals(target)) {
-            return true;
+        for (final Direction movableDirection : movableDirections) {
+            if (source.next2(movableDirection).equals(target)) {
+                return true;
+            }
         }
         return false;
     }
