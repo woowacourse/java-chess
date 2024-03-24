@@ -7,12 +7,15 @@ import chess.domain.position.RankDifference;
 public class Knight extends Piece {
 
     public Knight(Color color) {
-        super(color, decideRule());
+        super(color);
     }
 
-    private static Rule decideRule() {
-        return ((fileDifference, rankDifference) -> (fileDifference.hasDistance(1) && rankDifference.hasDistance(2))
-                || (fileDifference.hasDistance(2) && rankDifference.hasDistance(1)));
+    @Override
+    public boolean isMovable(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
+        return (fileDifference.hasDistance(1) && rankDifference.hasDistance(2))
+                || (fileDifference.hasDistance(2) && rankDifference.hasDistance(1));
     }
 
     @Override

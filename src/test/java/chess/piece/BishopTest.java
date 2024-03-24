@@ -20,13 +20,10 @@ class BishopTest {
     @DisplayName("대각선 방향으로 칸 수 제한 없이 움직일 수 있다(성공)")
     void should_move_diagonal_unlimited() {
         Piece piece = new Bishop(Color.WHITE);
+        Position from = new Position(File.a, Rank.ONE);
+        Position to = new Position(File.c, Rank.THREE);
 
-        Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
-        Space space2 = new Space(new EmptyPiece(), new Position(File.c, Rank.THREE));
-
-        space1.movePiece(space2);
-
-        assertThat(space2.getPiece()).isEqualTo(piece);
+        assertThat(piece.isMovable(from, to)).isTrue();
     }
 
     @Test

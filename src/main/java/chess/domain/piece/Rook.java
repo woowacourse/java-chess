@@ -7,13 +7,23 @@ import chess.domain.position.RankDifference;
 public class Rook extends Piece {
 
     public Rook(Color color) {
-        super(color, decideRule());
+        super(color);
     }
 
-    private static Rule decideRule() {
-        return (fileDifference, rankDifference) ->
-                ((!fileDifference.hasDistance(0) && rankDifference.hasDistance(0))) ||
-                        ((fileDifference.hasDistance(0)) && !rankDifference.hasDistance(0));
+    @Override
+    public boolean isMovable(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
+        return isVerticalMove(fileDifference, rankDifference) ||
+                isHorizontalMove(fileDifference, rankDifference);
+    }
+
+    private boolean isVerticalMove(FileDifference fileDifference, RankDifference rankDifference) {
+        return !fileDifference.hasDistance(0) && rankDifference.hasDistance(0);
+    }
+
+    private boolean isHorizontalMove(FileDifference fileDifference, RankDifference rankDifference) {
+        return (fileDifference.hasDistance(0)) && !rankDifference.hasDistance(0);
     }
 
     @Override

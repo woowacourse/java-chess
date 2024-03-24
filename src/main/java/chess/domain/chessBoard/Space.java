@@ -2,9 +2,7 @@ package chess.domain.chessBoard;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
-import chess.domain.position.FileDifference;
 import chess.domain.position.Position;
-import chess.domain.position.RankDifference;
 import java.util.List;
 
 public class Space {
@@ -18,7 +16,7 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace) {
-        if ((piece.isCatchable(position, targetSpace.position)
+        if (((piece.isCatchable(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece))
                 || piece.isMovable(position, targetSpace.position))
                 && !piece.isSameColor(targetSpace.piece)) {
             targetSpace.piece = piece;
