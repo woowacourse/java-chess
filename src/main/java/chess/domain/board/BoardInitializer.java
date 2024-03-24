@@ -1,10 +1,14 @@
 package chess.domain.board;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
+import chess.domain.InitialPiecePosition;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -20,8 +24,8 @@ public class BoardInitializer {
 
     public BoardInitializer() {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
-        initialPiecePositions.putAll(getWhitePieces());
-        initialPiecePositions.putAll(getBlackPieces());
+        initialPiecePositions.putAll(getPiecesByColor(WHITE));
+        initialPiecePositions.putAll(getPiecesByColor(BLACK));
         this.initialPiecePositions = initialPiecePositions;
     }
 
@@ -33,7 +37,7 @@ public class BoardInitializer {
         return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
                 .boxed()
                 .flatMap(this::generateHorizontalLine)
-                .collect(generateEntry());
+                .collect(generateEntry(Piece.getEmptyPiece()));
     }
 
     private Stream<Position> generateHorizontalLine(final int rank) {
@@ -41,48 +45,19 @@ public class BoardInitializer {
                 .mapToObj(file -> new Position(file, rank));
     }
 
-    private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
+    private Collector<Position, ?, Map<Position, Piece>> generateEntry(final Piece piece) {
         return Collectors.toMap(
                 position -> position,
-                position -> Piece.getEmptyPiece()
+                position -> piece
         );
     }
 
-    private Map<Position, Piece> getWhitePieces() {
-        Map<Position, Piece> initialWhitePiecePositions = new HashMap<>();
-        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.WHITE, 1));
-        initialWhitePiecePositions.putAll(getPawnsPieces(Color.WHITE, 2));
-        return initialWhitePiecePositions;
-    }
-
-    private Map<Position, Piece> getBlackPieces() {
-        Map<Position, Piece> initialWhitePiecePositions = new HashMap<>();
-        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.BLACK, 8));
-        initialWhitePiecePositions.putAll(getPawnsPieces(Color.BLACK, 7));
-        return initialWhitePiecePositions;
-    }
-
-    private Map<Position, Piece> getNotPawnsPieces(final Color color, final int rank) {
-        return Map.of(new Position(1, rank), new Piece(PieceType.ROOK, color),
-                new Position(2, rank), new Piece(PieceType.KNIGHT, color),
-                new Position(3, rank), new Piece(PieceType.BISHOP, color),
-                new Position(4, rank), new Piece(PieceType.QUEEN, color),
-                new Position(5, rank), new Piece(PieceType.KING, color),
-                new Position(6, rank), new Piece(PieceType.BISHOP, color),
-                new Position(7, rank), new Piece(PieceType.KNIGHT, color),
-                new Position(8, rank), new Piece(PieceType.ROOK, color));
-    }
-
-
-    private Map<Position, Piece> getPawnsPieces(final Color color, final int rank) {
-        return Map.of(new Position(1, rank), new Piece(PieceType.PAWN, color),
-                new Position(2, rank), new Piece(PieceType.PAWN, color),
-                new Position(3, rank), new Piece(PieceType.PAWN, color),
-                new Position(4, rank), new Piece(PieceType.PAWN, color),
-                new Position(5, rank), new Piece(PieceType.PAWN, color),
-                new Position(6, rank), new Piece(PieceType.PAWN, color),
-                new Position(7, rank), new Piece(PieceType.PAWN, color),
-                new Position(8, rank), new Piece(PieceType.PAWN, color));
+    private Map<Position, Piece> getPiecesByColor(final Color color) {
+        List<InitialPiecePosition> whitePieces = InitialPiecePosition.getInitialPositionByColor(color);
+        return whitePieces.stream()
+                .flatMap(initialPiecePosition -> initialPiecePosition.getInitialPositions().stream()
+                        .collect(generateEntry(initialPiecePosition.getPiece())).entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing));
     }
 
     public boolean isFirstMove(final Position position, final Piece piece) {
