@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.position.FileDifference;
 import chess.domain.position.Position;
-import chess.domain.position.PositionDifference;
+import chess.domain.position.RankDifference;
 
 public abstract class Piece {
 
@@ -22,8 +23,9 @@ public abstract class Piece {
     }
 
     public boolean isMovable(Position from, Position to) {
-        PositionDifference positionDifference = from.calculateDifferenceTo(to);
-        return positionDifference.isObeyRule(moveRule);
+        FileDifference fileDifference = from.calculateFileDifference(to);
+        RankDifference rankDifference = from.calculateRankDifference(to);
+        return moveRule.obey(fileDifference, rankDifference);
     }
 
     public abstract boolean isCatchable(Position from, Position to);

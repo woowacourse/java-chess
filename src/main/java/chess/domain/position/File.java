@@ -19,7 +19,7 @@ public enum File {
         this.value = value;
     }
 
-    public FileDifference calculateDifference(File file) {
+    public FileDifference calculateDifferenceTo(File file) {
         return new FileDifference(file.value - value);
     }
 

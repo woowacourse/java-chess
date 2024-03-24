@@ -15,7 +15,7 @@ class RankTest {
         Rank rankOne = Rank.ONE;
         Rank rankTwo = Rank.TWO;
 
-        RankDifference expectedDistance = rankOne.calculateDifference(rankTwo);
+        RankDifference expectedDistance = rankOne.calculateDifferenceTo(rankTwo);
 
         assertThat(expectedDistance).isEqualTo(new RankDifference(1));
     }

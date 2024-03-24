@@ -16,9 +16,17 @@ public class Position {
 
     public PositionDifference calculateDifferenceTo(Position position) {
         return new PositionDifference(
-                file.calculateDifference(position.file),
-                rank.calculateDifference(position.rank)
+                file.calculateDifferenceTo(position.file),
+                rank.calculateDifferenceTo(position.rank)
         );
+    }
+
+    public FileDifference calculateFileDifference(Position position) {
+        return file.calculateDifferenceTo(position.file);
+    }
+
+    public RankDifference calculateRankDifference(Position position) {
+        return rank.calculateDifferenceTo(position.rank);
     }
 
     public List<Position> findRoute(Position position) {
@@ -56,9 +64,9 @@ public class Position {
     }
 
     public static Position of(String positionName) {
-        String fileName = positionName.substring(0,1);
-        String rankName = positionName.substring(1,2);
-        return new Position(File.of(fileName),Rank.of(rankName));
+        String fileName = positionName.substring(0, 1);
+        String rankName = positionName.substring(1, 2);
+        return new Position(File.of(fileName), Rank.of(rankName));
     }
 
     @Override

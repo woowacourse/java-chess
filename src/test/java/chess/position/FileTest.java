@@ -15,7 +15,7 @@ class FileTest {
         File fileA = File.a;
         File fileB = File.b;
 
-        FileDifference expectedDistance = fileA.calculateDifference(fileB);
+        FileDifference expectedDistance = fileA.calculateDifferenceTo(fileB);
 
         assertThat(expectedDistance).isEqualTo(new FileDifference(1));
     }
