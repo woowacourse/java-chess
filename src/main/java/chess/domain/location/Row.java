@@ -1,7 +1,9 @@
 package chess.domain.location;
 
 import chess.domain.board.Direction;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Row {
     ONE(1),
@@ -13,8 +15,7 @@ public enum Row {
     SEVEN(7),
     EIGHT(8);
 
-    private static final Row[] ROWS = new Row[]
-            {ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT};
+    private static final List<Row> ROWS = List.of(ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT);
     private final int rank;
 
     Row(int rank) {
@@ -45,7 +46,7 @@ public enum Row {
     private Row previous() {
         int ordinalIndex = this.rank - 1;
         try {
-            return ROWS[ordinalIndex - 1];
+            return ROWS.get(ordinalIndex - 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
@@ -54,7 +55,7 @@ public enum Row {
     private Row next() {
         int ordinalIndex = this.rank - 1;
         try {
-            return ROWS[ordinalIndex + 1];
+            return ROWS.get(ordinalIndex - 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
