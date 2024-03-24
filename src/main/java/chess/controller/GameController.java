@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.InitialGame;
 import chess.domain.location.Location;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,12 +13,12 @@ public class GameController {
     private static final OutputView OUTPUT_VIEW = new OutputView();
 
     private final Map<Command, Runnable> commandFunctions;
-    private final ChessGame chessGame;
+    private ChessGame chessGame;
 
     public GameController() {
-        chessGame = new ChessGame();
+        chessGame = new InitialGame();
         commandFunctions = Map.of(
-                Command.START, this::initBoard,
+                Command.START, this::startGame,
                 Command.MOVE, this::move,
                 Command.END, this::end
         );
@@ -38,7 +40,7 @@ public class GameController {
     }
 
     private void play() {
-        while (chessGame.isPlayable()) {
+        while (chessGame.isNotEnd()) {
             Command command = INPUT_VIEW.readCommand();
             Optional.ofNullable(commandFunctions.get(command))
                     .orElseThrow(() -> new IllegalArgumentException("잘못된 커멘드 입력입니다."))
@@ -46,8 +48,8 @@ public class GameController {
         }
     }
 
-    private void initBoard() {
-        chessGame.initBoard();
+    private void startGame() {
+        chessGame = chessGame.startGame();
         OUTPUT_VIEW.printBoard(chessGame.getBoard());
     }
 
@@ -63,6 +65,6 @@ public class GameController {
     }
 
     private void end() {
-        chessGame.endGame();
+        chessGame = chessGame.endGame();
     }
 }

@@ -75,10 +75,6 @@ public class Board {
         board.put(new Location(Column.E, Row.EIGHT), new King(Color.BLACK));
     }
 
-    public Map<Location, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
-
     public void move(Location source, Location target) {
         Piece selectedPiece = findPieceAt(source);
         Path path = createPath(source, target);
@@ -128,5 +124,9 @@ public class Board {
             throw new IllegalArgumentException("말이 존재하지 않습니다.");
         }
         return piece;
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }
