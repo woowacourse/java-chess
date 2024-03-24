@@ -73,6 +73,12 @@ public class Position {
         return this.isBelow(other) && this.isFurtherRightThan(other);
     }
 
+    public int calculateDistance(Position other) {
+        int fileDistance = Math.abs(file.calculateDistanceWith(other.file));
+        int rankDistance = Math.abs(rank.calculateDistanceWith(other.rank));
+        return Math.max(fileDistance, rankDistance);
+    }
+
     public List<Position> calculateSlidingPath(Position destination) {
         Direction direction = Direction.of(this, destination);
         Position start = this;

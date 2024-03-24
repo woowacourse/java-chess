@@ -6,6 +6,7 @@ import static chess.fixture.PositionFixtures.A3;
 import static chess.fixture.PositionFixtures.B1;
 import static chess.fixture.PositionFixtures.B2;
 import static chess.fixture.PositionFixtures.B3;
+import static chess.fixture.PositionFixtures.B4;
 import static chess.fixture.PositionFixtures.C1;
 import static chess.fixture.PositionFixtures.C3;
 import static chess.fixture.PositionFixtures.D1;
@@ -119,5 +120,11 @@ class PositionTest {
     @Test
     void should_CalculateDiagonalPath_When_DestinationIsGiven() {
         assertThat(A1.calculateSlidingPath(H8)).containsExactly(B2, C3, D4, E5, F6, G7);
+    }
+
+    @DisplayName("이동하기 위해 몇 칸을 지나야하는지 계산할 수 있다")
+    @Test
+    void should_CalculateCellDistance_When_DestinationIsGiven() {
+        assertThat(A1.calculateDistance(B4)).isEqualTo(3);
     }
 }
