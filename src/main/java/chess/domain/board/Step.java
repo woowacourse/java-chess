@@ -30,7 +30,7 @@ public class Step {
     }
 
     public boolean isUpside() {
-        return direction.isUpSide();
+        return direction.isUpside();
     }
 
     public boolean isDownside() {

@@ -28,7 +28,7 @@ public class Path {
     }
 
     private static int calculateVerticalDistance(Direction direction) {
-        if (direction.isUpSide()) {
+        if (direction.isUpside()) {
             return POSITIVE_DISTANCE;
         }
         return NEGATIVE_DISTANCE;

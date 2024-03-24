@@ -1,7 +1,6 @@
 package chess.domain.location;
 
 import chess.domain.board.Direction;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public enum Row {
     }
 
     public Row move(Direction direction) {
-        if (direction.isUpSide()) {
+        if (direction.isUpside()) {
             return this.next();
         }
         if (direction.isDownside()) {
@@ -55,7 +54,7 @@ public enum Row {
     private Row next() {
         int ordinalIndex = this.rank - 1;
         try {
-            return ROWS.get(ordinalIndex - 1);
+            return ROWS.get(ordinalIndex + 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }

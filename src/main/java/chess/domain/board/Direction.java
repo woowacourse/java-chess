@@ -64,7 +64,7 @@ public enum Direction {
         return !isOrthogonal();
     }
 
-    public boolean isUpSide() {
+    public boolean isUpside() {
         return this.vertical == 1;
     }
 
