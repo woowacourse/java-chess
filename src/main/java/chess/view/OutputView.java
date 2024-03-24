@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.File;
-import chess.domain.Point;
-import chess.domain.Rank;
+import chess.domain.point.File;
+import chess.domain.point.Point;
+import chess.domain.point.Rank;
 import chess.domain.piece.Piece;
 import java.util.Map;
 

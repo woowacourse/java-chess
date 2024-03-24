@@ -2,6 +2,9 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.domain.point.File;
+import chess.domain.point.Point;
+import chess.domain.point.Rank;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;

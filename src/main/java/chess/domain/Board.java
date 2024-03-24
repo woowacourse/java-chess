@@ -4,6 +4,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.point.Point;
 import java.util.Map;
 
 public class Board {

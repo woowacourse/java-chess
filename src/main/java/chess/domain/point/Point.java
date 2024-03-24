@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.point;
 
 import chess.domain.piece.Direction;
 import java.util.EnumMap;

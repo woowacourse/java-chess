@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
+import chess.domain.point.Point;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Point;
-import chess.domain.Rank;
+import chess.domain.point.Point;
+import chess.domain.point.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

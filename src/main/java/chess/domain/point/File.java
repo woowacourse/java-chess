@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.point;
 
 import java.util.Map;
 
