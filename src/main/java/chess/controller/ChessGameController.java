@@ -29,14 +29,14 @@ public class ChessGameController {
     public void run() {
         outputView.printWelcomeMessage();
         waitStartCommand();
+        final ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
+        outputView.printBoard(chessGame.collectBoard());
+        startChessGame(chessGame);
     }
 
     private void waitStartCommand() {
         String command = inputView.readCommand();
         if ("start".equals(command)) {
-            final ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
-            outputView.printBoard(chessGame.collectBoard());
-            startChessGame(chessGame);
             return;
         }
         outputView.printGuidanceForStart();
