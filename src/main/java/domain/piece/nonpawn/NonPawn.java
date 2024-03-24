@@ -20,7 +20,7 @@ public abstract class NonPawn implements Piece {
     }
 
     private void validateDifferentColorFromOtherPiece(Piece other) {
-        if (this.color() == other.color()) {
+        if (color().isSameColor(other.color())) {
             throw new IllegalArgumentException("같은 색의 기물이 존재합니다.");
         }
     }

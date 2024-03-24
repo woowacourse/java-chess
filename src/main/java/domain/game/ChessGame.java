@@ -9,6 +9,9 @@ import domain.position.Position;
 import domain.position.Rank;
 
 public class ChessGame {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
     private GameState state;
 
     public ChessGame() {
@@ -21,14 +24,14 @@ public class ChessGame {
     }
 
     public void move(MovePosition movePosition) {
-        Position sourcePosition = getPosition(movePosition.source());
-        Position targetPosition = getPosition(movePosition.target());
+        Position sourcePosition = createPosition(movePosition.source());
+        Position targetPosition = createPosition(movePosition.target());
         this.state = state.move(sourcePosition, targetPosition);
     }
 
-    private Position getPosition(String source) {
-        File file = File.fromName(String.valueOf(source.charAt(0)));
-        Rank rank = Rank.fromNumber(Character.getNumericValue(source.charAt(1)));
+    private Position createPosition(String source) {
+        File file = File.fromName(source.charAt(FILE_INDEX));
+        Rank rank = Rank.fromNumber(source.charAt(RANK_INDEX));
         return new Position(file, rank);
     }
 

@@ -22,10 +22,14 @@ public enum Command {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
 
-        if (command.positionCount != movePosition.size()) {
+        validatePositionCount(movePosition, command);
+        return command;
+    }
+
+    private static void validatePositionCount(MovePosition movePosition, Command command) {
+        if (command.positionCount != movePosition.count()) {
             throw new IllegalArgumentException("명령어의 길이가 올바르지 않습니다.");
         }
-        return command;
     }
 
     public String getName() {

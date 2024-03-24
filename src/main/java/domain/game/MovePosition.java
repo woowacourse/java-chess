@@ -27,7 +27,7 @@ public class MovePosition {
         return positions.get(TARGET_INDEX);
     }
 
-    public int size() {
+    public int count() {
         return positions.size();
     }
 }

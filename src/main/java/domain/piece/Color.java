@@ -17,6 +17,10 @@ public enum Color {
         return this == NEUTRALITY;
     }
 
+    public boolean isSameColor(Color other) {
+        return this == other;
+    }
+
     public boolean isOppositeColor(Color other) {
         if (this == WHITE) {
             return other == BLACK;

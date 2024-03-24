@@ -31,6 +31,10 @@ public enum Rank {
                         String.format("rejected value: %d - 존재하지 않은 rank입니다.", number)));
     }
 
+    public static Rank fromNumber(char number) {
+        return fromNumber(Character.getNumericValue(number));
+    }
+
     public List<Rank> findRanksBetween(Rank other) {
         return IntStream.range(Math.min(this.number, other.number), Math.max(this.number, other.number))
                 .skip(DISCARDING_COUNT_FROM_FRONT)

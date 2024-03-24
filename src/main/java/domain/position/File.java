@@ -33,6 +33,10 @@ public enum File {
                         String.format("rejected value: %s - 존재하지 않은 file입니다.", name)));
     }
 
+    public static File fromName(char name) {
+        return fromName(String.valueOf(name));
+    }
+
     private static File fromOrder(int order) {
         return Arrays.stream(values())
                 .filter(file -> file.order == order)
