@@ -14,10 +14,13 @@ public class Distance {
     }
 
     public boolean hasSame(int displacement) {
+        int fileDistance = Math.abs(fileDifference);
+        int rankDistance = Math.abs(rankDifference);
+
         if (isCrossMovement() || isDiagonalMovement()) {
-            return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
+            return fileDistance == displacement || rankDistance == displacement;
         }
-        return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
+        return fileDistance + rankDistance == displacement;
     }
 
     public boolean isForward(Side side) {

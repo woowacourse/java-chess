@@ -46,7 +46,9 @@ public class Pawn extends Piece {
     }
 
     private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
-        return isPossibleDiagonal(distance) && targetPiece != null && !isSameSide(targetPiece);
+        return isPossibleDiagonal(distance)
+                && targetPiece != null
+                && !isSameSide(targetPiece);
     }
 
     private boolean canMoveForwardWith(Distance distance, int displacement) {
