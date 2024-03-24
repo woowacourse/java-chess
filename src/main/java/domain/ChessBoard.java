@@ -32,7 +32,7 @@ public class ChessBoard {
         MovePath movePath = MovePath.create(source, target, this);
         sourcePiece.checkValidMove(source, target, movePath);
 
-        board.put(source, Empty.getInstance());
+        board.put(source, Empty.instance());
         board.put(target, sourcePiece);
     }
 

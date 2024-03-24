@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,13 @@ public class Position {
     public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static List<Position> allPositions() {
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new Position(file, rank)))
+                .toList();
     }
 
     public Position createWithSameFile(Rank rank) {

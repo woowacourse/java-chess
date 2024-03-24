@@ -12,7 +12,7 @@ public class Empty extends Piece {
         super(Side.EMPTY);
     }
 
-    public static Empty getInstance() {
+    public static Empty instance() {
         return INSTANCE;
     }
 

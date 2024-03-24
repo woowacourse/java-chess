@@ -19,16 +19,9 @@ public class ChessBoardCreator {
     }
 
     private void generateSquares(Map<Position, Piece> board) {
-        allPositions().forEach(
-                position -> board.put(position, Empty.getInstance())
+        Position.allPositions().forEach(
+                position -> board.put(position, Empty.instance())
         );
-    }
-
-    private List<Position> allPositions() {
-        return Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values())
-                        .map(file -> new Position(file, rank)))
-                .toList();
     }
 
     private void initializeSquares(Map<Position, Piece> board) {
