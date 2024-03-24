@@ -19,7 +19,7 @@ public class OutputView {
                 > 게임 이동 : move source위치 target위치 - 예. move b2 b3%n""");
     }
 
-    public void printChessTable(final Map<Square, Piece> squarePieces) {
+    public void printChessBoard(final Map<Square, Piece> squarePieces) {
         final String board = Arrays.stream(Rank.values())
                 .map(rank -> createOneRank(squarePieces, rank))
                 .collect(Collectors.joining("\n"));

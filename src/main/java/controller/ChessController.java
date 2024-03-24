@@ -31,7 +31,7 @@ public class ChessController {
                 if (chessGame.isEnd()) {
                     break;
                 }
-                outputView.printChessTable(chessGame.getPieceSquares());
+                outputView.printChessBoard(chessGame.getPieceSquares());
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
