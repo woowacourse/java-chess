@@ -1,7 +1,7 @@
 package chess.dto;
 
+import chess.domain.Command;
 import chess.domain.position.Position;
-import chess.view.Command;
 
 import java.util.Optional;
 

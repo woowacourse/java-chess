@@ -23,7 +23,7 @@ public enum ChessFileMatcher {
         this.file = file;
     }
 
-    public static ChessFile matchByInputText(final String inputText) {
+    public static ChessFile matchByText(final String inputText) {
         return Arrays.stream(values())
                 .filter(file -> file.text.equals(inputText))
                 .findFirst()

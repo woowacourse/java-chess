@@ -57,7 +57,7 @@ public class OutputView {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
             int rankIndex = ChessRank.maxIndex() - pieceInfo.rankIndex();
             int fileIndex = pieceInfo.fileIndex();
-            board.get(rankIndex).set(fileIndex, PieceNameMatcher.findName(pieceInfo.type()));
+            board.get(rankIndex).set(fileIndex, PieceNameMatcher.matchByType(pieceInfo.type()));
         }
     }
 

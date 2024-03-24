@@ -5,29 +5,29 @@ import chess.domain.piece.PieceType;
 import java.util.Arrays;
 
 public enum PieceNameMatcher {
-    WHITE_PAWN("p", PieceType.WHITE_PAWN),
-    BLACK_PAWN("P", PieceType.BLACK_PAWN),
-    WHITE_ROOK("r", PieceType.WHITE_ROOK),
-    BLACK_ROOK("R", PieceType.BLACK_ROOK),
-    WHITE_KNIGHT("n", PieceType.WHITE_KNIGHT),
-    BLACK_KNIGHT("N", PieceType.BLACK_KNIGHT),
-    WHITE_BISHOP("b", PieceType.WHITE_BISHOP),
-    BLACK_BISHOP("B", PieceType.BLACK_BISHOP),
-    WHITE_KING("k", PieceType.WHITE_KING),
-    BLACK_KING("K", PieceType.BLACK_KING),
-    WHITE_QUEEN("q", PieceType.WHITE_QUEEN),
-    BLACK_QUEEN("Q", PieceType.BLACK_QUEEN),
+    WHITE_PAWN(PieceType.WHITE_PAWN, "p"),
+    BLACK_PAWN(PieceType.BLACK_PAWN, "P"),
+    WHITE_ROOK(PieceType.WHITE_ROOK, "r"),
+    BLACK_ROOK(PieceType.BLACK_ROOK, "R"),
+    WHITE_KNIGHT(PieceType.WHITE_KNIGHT, "n"),
+    BLACK_KNIGHT(PieceType.BLACK_KNIGHT, "N"),
+    WHITE_BISHOP(PieceType.WHITE_BISHOP, "b"),
+    BLACK_BISHOP(PieceType.BLACK_BISHOP, "B"),
+    WHITE_KING(PieceType.WHITE_KING, "k"),
+    BLACK_KING(PieceType.BLACK_KING, "K"),
+    WHITE_QUEEN(PieceType.WHITE_QUEEN, "q"),
+    BLACK_QUEEN(PieceType.BLACK_QUEEN, "Q"),
     ;
 
-    private final String name;
     private final PieceType type;
+    private final String name;
 
-    PieceNameMatcher(String name, PieceType type) {
-        this.name = name;
+    PieceNameMatcher(PieceType type, String name) {
         this.type = type;
+        this.name = name;
     }
 
-    public static String findName(PieceType type) {
+    public static String matchByType(PieceType type) {
         return Arrays.stream(values())
                 .filter(typeName -> typeName.type == type)
                 .findAny()

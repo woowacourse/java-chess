@@ -23,7 +23,7 @@ public enum ChessRankMatcher {
         this.rank = rank;
     }
 
-    public static ChessRank matchByInputText(final String inputText) {
+    public static ChessRank matchByText(final String inputText) {
         return Arrays.stream(values())
                 .filter(rankMatcher -> rankMatcher.text.equals(inputText))
                 .findFirst()
