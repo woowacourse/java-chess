@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.Movement;
 import chess.util.ChessBoardInitalizer;
 import chess.domain.Command;
 import chess.domain.piece.Position;
@@ -20,7 +19,7 @@ public class ChessController {
     }
 
     public void runChess() {
-        final Command command = Command.from(inputView.readStartCommand());
+        final Command command = Command.from(inputView.readInitCommand());
 
         if (!command.isStartCommand()) {
             return;
@@ -44,9 +43,9 @@ public class ChessController {
 
     private void playTurn(final ChessBoard chessBoard, final List<String> positions) {
         final Position current = new Position(positions.get(0));
-        final Position target = new Position(positions.get(1));
+        final Position destination = new Position(positions.get(1));
 
-        chessBoard.move(current, target);
+        chessBoard.move(current, destination);
         outputView.printChessBoard(chessBoard.getPieces());
     }
 }

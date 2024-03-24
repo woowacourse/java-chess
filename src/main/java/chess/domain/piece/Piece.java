@@ -14,8 +14,8 @@ public abstract class Piece {
 
     public abstract Set<Position> getRoute(final Movement movement);
 
-    public boolean isMySide(final Piece other) {
-        return this.color == other.color;
+    public boolean isOpponent(final Piece other) {
+        return this.color != other.color;
     }
 
     public boolean isBlack() {

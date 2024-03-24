@@ -5,23 +5,23 @@ import chess.domain.piece.Position;
 public class Movement {
 
     private final Position current;
-    private final Position target;
+    private final Position destination;
 
-    public Movement(final Position current, final Position target) {
+    public Movement(final Position current, final Position destination) {
         this.current = current;
-        this.target = target;
+        this.destination = destination;
     }
 
     public boolean isVertical() {
-        return current.isSameFile(target) && !current.isSameRank(target);
+        return current.isSameFile(destination) && !current.isSameRank(destination);
     }
 
     public boolean isHorizontal() {
-        return !current.isSameFile(target) && current.isSameRank(target);
+        return !current.isSameFile(destination) && current.isSameRank(destination);
     }
 
     public boolean isDiagonal() {
-        return current.getFileDistance(target) == current.getRankDistance(target);
+        return current.getFileDistance(destination) == current.getRankDistance(destination);
     }
 
     public boolean isDiagonalRightUp() {
@@ -33,7 +33,7 @@ public class Movement {
     }
 
     public boolean isUp() {
-        return target.getRank().isUp(current.getRank());
+        return destination.getRank().isUp(current.getRank());
     }
 
     public boolean isDown() {
@@ -41,7 +41,7 @@ public class Movement {
     }
 
     public boolean isRight() {
-        return target.getFile().isBigger(current.getFile());
+        return destination.getFile().isBigger(current.getFile());
     }
 
     public boolean isLeft() {
@@ -49,11 +49,11 @@ public class Movement {
     }
 
     public int getRankDistance() {
-        return current.getRankDistance(target);
+        return current.getRankDistance(destination);
     }
 
     public int getFileDistance() {
-        return current.getFileDistance(target);
+        return current.getFileDistance(destination);
     }
 
     public Position getLefterPosition() {
@@ -61,7 +61,7 @@ public class Movement {
             return current;
         }
 
-        return target;
+        return destination;
     }
 
     public Position getLowerPosition() {
@@ -69,14 +69,14 @@ public class Movement {
             return current;
         }
 
-        return target;
+        return destination;
     }
 
     public Position getCurrent() {
         return current;
     }
 
-    public Position getTarget() {
-        return target;
+    public Position getDestination() {
+        return destination;
     }
 }

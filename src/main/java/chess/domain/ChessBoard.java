@@ -13,19 +13,20 @@ public class ChessBoard {
         this.pieces = pieces;
     }
 
-    public void move(final Position current, final Position target) {
+    public void move(final Position current, final Position destination) {
+        final Movement movement = new Movement(current, destination);
+
         final Piece currentPiece = findPieceBy(current);
 
-        final Movement movement = new Movement(current, target);
-
-        validateJumpOver(currentPiece, movement);
-
-        if (isPieceExist(target) || canPawnCatch(currentPiece, movement)) {
-            validateNotMySide(currentPiece, movement);
-            movePiece(currentPiece, movement);
-            return;
+        if (canPawnCatch(currentPiece, movement) || isPieceExist(destination)) {
+            validateOpponent(currentPiece, movement);
         }
 
+        if (isPieceExist(destination)) {
+            validateOpponent(currentPiece, movement);
+        }
+
+        validateRoute(currentPiece, movement);
         movePiece(currentPiece, movement);
     }
 
@@ -39,7 +40,7 @@ public class ChessBoard {
 
     private void movePiece(final Piece currentPiece, final Movement movement) {
         pieces.remove(movement.getCurrent());
-        pieces.put(movement.getTarget(), currentPiece);
+        pieces.put(movement.getDestination(), currentPiece);
     }
 
     private boolean isPieceExist(final Position position) {
@@ -48,11 +49,11 @@ public class ChessBoard {
 
     private boolean canPawnCatch(final Piece currentPiece, final Movement movement) {
         return currentPiece instanceof Pawn
-                && isPieceExist(movement.getTarget())
+                && isPieceExist(movement.getDestination())
                 && (((Pawn) currentPiece).canCatch(movement));
     }
 
-    private void validateJumpOver(final Piece currentPiece, final Movement movement) {
+    private void validateRoute(final Piece currentPiece, final Movement movement) {
         if (existPieceInWay(currentPiece, movement)) {
             throw new IllegalArgumentException("[ERROR] 경로상 기물이 존재합니다.");
         }
@@ -62,9 +63,9 @@ public class ChessBoard {
         return pieces.keySet().stream().anyMatch(currentPiece.getRoute(movement)::contains);
     }
 
-    private void validateNotMySide(final Piece currentPiece, final Movement movement) {
-        final Piece targetPiece = findPieceBy(movement.getTarget());
-        if (currentPiece.isMySide(targetPiece)) {
+    private void validateOpponent(final Piece currentPiece, final Movement movement) {
+        final Piece targetPiece = findPieceBy(movement.getDestination());
+        if (!currentPiece.isOpponent(targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
         }
     }

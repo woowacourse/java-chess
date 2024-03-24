@@ -19,41 +19,6 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public boolean canMove(final Movement movement) {
-        if (color.equals(Color.WHITE)) {
-            return canWhiteMove(movement);
-        }
-        return canBlackMove(movement);
-    }
-
-    private boolean canWhiteMove(final Movement movement) {
-        if (isInitPosition(movement)) {
-            return (movement.isUp() && movement.getRankDistance() == INIT_AVAILABLE_STEP)
-                    || (movement.isUp() && movement.getRankDistance() == DEFAULT_STEP);
-        }
-        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
-    }
-
-    private boolean canBlackMove(final Movement movement) {
-        if (isInitPosition(movement)) {
-            return (movement.isDown() && movement.getRankDistance() == INIT_AVAILABLE_STEP)
-                    || (movement.isDown() && movement.getRankDistance() == DEFAULT_STEP);
-        }
-        return movement.isDown() && movement.getRankDistance() == DEFAULT_STEP;
-    }
-
-    private boolean isInitPosition(final Movement movement) {
-        if (color.equals(Color.WHITE)) {
-            return movement.getCurrent().isRank(INIT_WHITE_RANK);
-        }
-        return movement.getCurrent().isRank(INIT_BLACK_RANK);
-    }
-
-    public boolean canCatch(final Movement movement) {
-        return movement.getCurrent().isRank(INIT_WHITE_RANK)
-                && movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP;
-    }
-
     @Override
     public Set<Position> getRoute(final Movement movement) {
         if (canMove(movement)) {
@@ -61,5 +26,43 @@ public class Pawn extends Piece {
         }
 
         throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+    }
+
+    private boolean canMove(final Movement movement) {
+        if (this.isBlack()) {
+            return canBlackMove(movement);
+        }
+
+        return canWhiteMove(movement);
+    }
+
+    private boolean canWhiteMove(final Movement movement) {
+        if (isInitPosition(movement)) {
+            return movement.isUp() && movement.getRankDistance() == INIT_AVAILABLE_STEP
+                    || movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+        }
+
+        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+    }
+
+    private boolean canBlackMove(final Movement movement) {
+        if (isInitPosition(movement)) {
+            return movement.isDown() && movement.getRankDistance() == INIT_AVAILABLE_STEP
+                    || movement.isDown() && movement.getRankDistance() == DEFAULT_STEP;
+        }
+
+        return movement.isDown() && movement.getRankDistance() == DEFAULT_STEP;
+    }
+
+    private boolean isInitPosition(final Movement movement) {
+        if (this.isBlack()) {
+            movement.getCurrent().isRank(INIT_BLACK_RANK);
+        }
+
+        return movement.getCurrent().isRank(INIT_WHITE_RANK);
+    }
+
+    public boolean canCatch(final Movement movement) {
+        return movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP;
     }
 }

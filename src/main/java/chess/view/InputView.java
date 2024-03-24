@@ -10,7 +10,7 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public String readStartCommand() {
+    public String readInitCommand() {
         System.out.println("> 체스 게임을 시작합니다." + System.lineSeparator()
                 + "> 게임 시작 : start" + System.lineSeparator()
                 + "> 게임 종료 : end" + System.lineSeparator()
