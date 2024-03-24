@@ -21,17 +21,19 @@ public class ChessController {
     public void runChess() {
         final Command command = Command.from(inputView.readStartCommand());
 
-        if (command.isStartCommand()) {
-            final ChessBoard chessBoard = ChessBoardInitalizer.init();
-            outputView.printChessBoard(chessBoard.getPieces());
+        if (!command.isStartCommand()) {
+            return;
+        }
 
-            List<String> positions = inputView.readMoveCommand();
+        final ChessBoard chessBoard = ChessBoardInitalizer.init();
+        outputView.printChessBoard(chessBoard.getPieces());
 
-            while (isNotEndCommand(positions)) {
-                playTurn(chessBoard, positions);
+        List<String> positions = inputView.readMoveCommand();
 
-                positions = inputView.readMoveCommand();
-            }
+        while (isNotEndCommand(positions)) {
+            playTurn(chessBoard, positions);
+
+            positions = inputView.readMoveCommand();
         }
     }
 

@@ -14,8 +14,8 @@ public class RouteCalculator {
         Position position = movement.getLowerPosition();
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < movement.getRankDistance() - 1; i++) {
-            position = position.up();
+        for (int i = 1; i < movement.getRankDistance(); i++) {
+            position = position.move(0, 1);
             positions.add(position);
         }
 
@@ -26,8 +26,8 @@ public class RouteCalculator {
         Position position = movement.getLefterPosition();
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < movement.getFileDistance() - 1; i++) {
-            position = position.right();
+        for (int i = 1; i < movement.getFileDistance(); i++) {
+            position = position.move(1, 0);
             positions.add(position);
         }
         return positions;
@@ -37,8 +37,8 @@ public class RouteCalculator {
         Position position = movement.getLowerPosition();
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < movement.getRankDistance() - 1; i++) {
-            position = position.upRight();
+        for (int i = 1; i < movement.getRankDistance(); i++) {
+            position = position.move(1, 1);
             positions.add(position);
         }
         return positions;
@@ -48,8 +48,8 @@ public class RouteCalculator {
         Position position = movement.getLowerPosition();
 
         final Set<Position> positions = new HashSet<>();
-        for (int i = 0; i < movement.getRankDistance() - 1; i++) {
-            position = position.upLeft();
+        for (int i = 1; i < movement.getRankDistance(); i++) {
+            position = position.move(-1, 1);
             positions.add(position);
         }
         return positions;

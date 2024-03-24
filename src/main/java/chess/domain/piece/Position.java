@@ -16,20 +16,8 @@ public class Position {
         this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
     }
 
-    public Position up() {
-        return new Position(this.file, this.rank.up());
-    }
-
-    public Position right() {
-        return new Position(this.file.right(), this.rank);
-    }
-
-    public Position upRight() {
-        return new Position(this.file.right(), this.rank.up());
-    }
-
-    public Position upLeft() {
-        return new Position(this.file.left(), this.rank.up());
+    public Position move(final int fileIndex, final int rankIndex) {
+        return new Position(this.file.addIndex(fileIndex), this.rank.addIndex(rankIndex));
     }
 
     public int getFileDistance(final Position other) {
