@@ -32,8 +32,8 @@ public enum PieceFormat {
     public static String findFormat(final Piece piece) {
         return Arrays.stream(values())
                 .filter(type -> type.piece.equals(piece))
+                .map(pieceFormat -> pieceFormat.format)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("피스 타입이 없습니다."))
-                .format;
+                .orElseThrow(() -> new IllegalArgumentException("피스 타입이 없습니다."));
     }
 }
