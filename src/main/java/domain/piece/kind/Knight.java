@@ -10,15 +10,15 @@ import java.util.List;
 import static domain.piece.attribute.point.Direction.*;
 
 public class Knight extends Piece {
-    private static final List<List<Direction>> directionList = List.of(List.of(UP, UP_RIGHT),
-            List.of(UP, UP_LEFT),
-            List.of(UP, UP_RIGHT),
-            List.of(LEFT, UP_LEFT),
-            List.of(LEFT, DOWN_LEFT),
-            List.of(RIGHT, UP_RIGHT),
-            List.of(RIGHT, DOWN_RIGHT),
-            List.of(DOWN, DOWN_RIGHT),
-            List.of(DOWN, DOWN_LEFT));
+    private static final List<Direction> directionList = List.of(
+            UP_UP_LEFT,
+            UP_UP_RIGHT,
+            RIGHT_UP_RIGHT,
+            RIGHT_DOWN_RIGHT,
+            DOWN_DOWN_LEFT,
+            DOWN_DOWN_RIGHT,
+            LEFT_UP_LEFT,
+            LEFT_DOWN_LEFT);
 
     public Knight(final Point point, final Color color) {
         super(point, color);
@@ -27,22 +27,10 @@ public class Knight extends Piece {
 
     public boolean canMove(final Point point) {
         return directionList.stream()
-                            .map(this::movePoint)
+                            .filter(direction -> direction.canMovePoint(this.point))
+                            .map(direction -> direction.movePoint(this.point))
                             .anyMatch(point::equals);
     }
-
-    //TODO : 테스틑 통과를 위한 임시 null ( 수정 되야하는 1순위 WORST )
-    private Point movePoint(final List<Direction> directions) {
-        Point point = this.point;
-        for (final var direction : directions) {
-            if (!direction.canMovePoint(point)) {
-                return null;
-            }
-            point = direction.movePoint(point);
-        }
-        return point;
-    }
-
 
     @Override
     public PieceStatus getStatus() {
