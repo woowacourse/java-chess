@@ -4,6 +4,7 @@ import controller.command.Command;
 import controller.command.EndOnCommand;
 import controller.command.MoveOnCommand;
 import controller.command.StartOnCommand;
+import controller.command.StatusOnCommand;
 import domain.position.Position;
 
 import java.util.Scanner;
@@ -27,6 +28,9 @@ public class InputView {
         String[] rawInput = scanner.nextLine().trim().split(" ");
         if (hasSize(rawInput, 1) && "start".equals(rawInput[0])) {
             return new StartOnCommand();
+        }
+        if (hasSize(rawInput, 1) && "status".equals(rawInput[0])) {
+            return new StatusOnCommand();
         }
         if (hasSize(rawInput, 3) && "move".equals(rawInput[0])) {
             return new MoveOnCommand(resolvePosition(rawInput[1]), resolvePosition(rawInput[2]));

@@ -1,6 +1,7 @@
 package view;
 
 import domain.board.ChessBoard;
+import domain.board.Score;
 
 public class OutputView {
     private final MessageResolver messageResolver;
@@ -18,7 +19,12 @@ public class OutputView {
         System.out.println(boardRankMessage);
     }
 
-    public void printErrorMessage(final String errorMessage) {
+    public void printErrorMessage(String errorMessage) {
         System.out.println(errorMessage);
+    }
+
+    public void printScore(Score score) {
+        String scoreMessage = messageResolver.resolveScore(score);
+        System.out.println(scoreMessage);
     }
 }
