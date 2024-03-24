@@ -1,4 +1,6 @@
-package chess.view;
+package chess.dto;
+
+import chess.view.Commend;
 
 public record CommandDto(Commend commend, String from, String to) {
 
