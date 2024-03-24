@@ -12,7 +12,7 @@ public class PositionTest {
     @Test
     @DisplayName("Position을 생성한다.")
     void makePosition() {
-        var result = Position.of("b2");
+        var result = Position.from("b2");
         assertThat(result).isInstanceOf(Position.class);
     }
 
@@ -20,7 +20,7 @@ public class PositionTest {
     @DisplayName("잘못된 Position을 넘기면 에러가 발생한다.")
     void wrongValueTest() {
         assertThatThrownBy(() -> {
-            Position.of("x5");
+            Position.from("x5");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

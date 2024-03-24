@@ -18,8 +18,8 @@ class PawnTest {
     @DisplayName("폰은 시작 지점에 있을 때 앞으로 2칸 이동할 수 있다.")
     void Pawn_Move_forward_twice_on_start_position() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.of("a2"), Position.of("a4"));
-        List<Position> positions = List.of(Position.of("a3"));
+        List<Position> route = piece.getRoute(Position.from("a2"), Position.from("a4"));
+        List<Position> positions = List.of(Position.from("a3"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -27,7 +27,7 @@ class PawnTest {
     @DisplayName("폰은 앞으로 한 칸 이동할 수 있다.")
     void Pawn_Move_forward_once() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.of("a2"), Position.of("a3"));
+        List<Position> route = piece.getRoute(Position.from("a2"), Position.from("a3"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -36,7 +36,7 @@ class PawnTest {
     @DisplayName("폰은 대각선으로 이동할 수 있다.")
     void Pawn_Move_diagonal() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.of("a2"), Position.of("b3"));
+        List<Position> route = piece.getRoute(Position.from("a2"), Position.from("b3"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }

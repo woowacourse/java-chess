@@ -11,7 +11,7 @@ public class Position {
         this.column = column;
     }
 
-    public static Position of(String position) {
+    public static Position from(String position) {
         Row row = Row.valueOf(position.substring(0, 1));
         Column column = Column.valueOf(position.substring(1));
 
