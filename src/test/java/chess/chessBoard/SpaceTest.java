@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.ChessSpaceGenerator;
+import chess.domain.chessBoard.OriginalChessSpaceGenerator;
 import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
@@ -97,7 +97,7 @@ class SpaceTest {
     void should_not_move_when_route_has_piece() {
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.a, Rank.THREE);
-        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator(new PieceGenerator()));
+        ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new PieceGenerator()));
 
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)

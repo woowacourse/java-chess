@@ -9,11 +9,11 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessSpaceGenerator implements SpaceGenerator {
+public class OriginalChessSpaceGenerator implements SpaceGenerator {
 
     private final PieceGenerator pieceGenerator;
 
-    public ChessSpaceGenerator(PieceGenerator pieceGenerator) {
+    public OriginalChessSpaceGenerator(PieceGenerator pieceGenerator) {
         this.pieceGenerator = pieceGenerator;
     }
 
