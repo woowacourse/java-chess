@@ -30,7 +30,7 @@ public abstract class Piece {
         if (chessBoard.positionIsEmpty(destination)) {
             return false;
         }
-        if (chessBoard.findPieceByPosition(destination).isOtherTeam(this)) {
+        if (chessBoard.findPieceByPosition(destination).isOtherTeam(team)) {
             return false;
         }
         return true;
@@ -44,7 +44,7 @@ public abstract class Piece {
         return team == Team.BLACK;
     }
 
-    public boolean isOtherTeam(Piece other) {
-        return this.team != other.team;
+    public boolean isOtherTeam(Team other) {
+        return this.team != other;
     }
 }

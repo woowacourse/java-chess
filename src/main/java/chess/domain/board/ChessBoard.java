@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
@@ -45,5 +46,9 @@ public class ChessBoard {
     public boolean isPathClear(List<Position> path) {
         return path.stream()
                 .allMatch(this::positionIsEmpty);
+    }
+
+    public boolean isNoHostilePieceAt(Position position, Team team) {
+        return positionIsEmpty(position) || !findPieceByPosition(position).isOtherTeam(team);
     }
 }

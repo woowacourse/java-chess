@@ -53,8 +53,7 @@ public class Pawn extends Piece {
         }
         // 다른 팀의 기물이 목적지에 존재하지 않을 경우 폰은 대각선으로 이동할 수 없다.
         if (distance == DEFAULT_MOVE_DISTANCE && start.isDiagonalWith(destination)) {
-            return chessBoard.positionIsEmpty(destination) || !chessBoard.findPieceByPosition(destination)
-                    .isOtherTeam(this);
+            return chessBoard.isNoHostilePieceAt(destination, team);
         }
         return false;
     }

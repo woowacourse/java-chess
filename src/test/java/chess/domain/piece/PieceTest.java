@@ -26,8 +26,8 @@ class PieceTest {
         King whitePiece = new King(Team.WHITE);
 
         assertAll(
-                () -> assertThat(blackPiece.isOtherTeam(whitePiece)).isTrue(),
-                () -> assertThat(whitePiece.isOtherTeam(whitePiece)).isFalse()
+                () -> assertThat(blackPiece.isOtherTeam(Team.WHITE)).isTrue(),
+                () -> assertThat(whitePiece.isOtherTeam(Team.WHITE)).isFalse()
         );
     }
 }

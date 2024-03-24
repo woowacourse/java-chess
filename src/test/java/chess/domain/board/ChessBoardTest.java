@@ -4,6 +4,7 @@ import static chess.fixture.PositionFixtures.A1;
 import static chess.fixture.PositionFixtures.A2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -61,5 +62,19 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.findPieceByPosition(A2))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치에 기물이 존재하지 않습니다.");
+    }
+
+    @DisplayName("체스보드 특정 위치에 적대적 기물이 없는 지 확인할 수 있다")
+    @Test
+    void should_CheckThereIsHostilePiece_When_DestinationIsGiven() {
+        Map<Position, Piece> positionPiece = new HashMap<>();
+        King hostile = new King(Team.WHITE);
+        positionPiece.put(A1, hostile);
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertAll(
+                () -> assertThat(chessBoard.isNoHostilePieceAt(A2, Team.BLACK)).isTrue(),
+                () -> assertThat(chessBoard.isNoHostilePieceAt(A1, Team.BLACK)).isFalse()
+        );
     }
 }
