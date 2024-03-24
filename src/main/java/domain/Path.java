@@ -55,6 +55,10 @@ public class Path {
                 .toList();
     }
 
+    public boolean contains(Position position) {
+        return positions.contains(position);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

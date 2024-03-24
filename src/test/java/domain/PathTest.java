@@ -51,8 +51,9 @@ class PathTest {
     @DisplayName("오른쪽 위 대각선 경로를 생성한다.")
     @Test
     void makeRightUpDiagonalPath() {
-        Path actual = Path.of(A1, H8);
         Path expected = new Path(List.of(B2, C3, D4, E5, F6, G7));
+
+        Path actual = Path.of(A1, H8);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -72,8 +73,9 @@ class PathTest {
     @DisplayName("왼쪽 아래 대각선 경로를 생성한다.")
     @Test
     void makeLeftDownDiagonalPath() {
-        Path actual = Path.of(H8, A1);
         Path expected = new Path(List.of(G7, F6, E5, D4, C3, B2));
+
+        Path actual = Path.of(H8, A1);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -93,8 +95,9 @@ class PathTest {
     @DisplayName("오른쪽 아래 대각선 경로를 생성한다.")
     @Test
     void makeRightDownDiagonalPath() {
-        Path actual = Path.of(A8, H1);
         Path expected = new Path(List.of(B7, C6, D5, E4, F3, G2));
+
+        Path actual = Path.of(A8, H1);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -114,8 +117,9 @@ class PathTest {
     @DisplayName("왼쪽 위 대각선 경로를 생성한다.")
     @Test
     void makeLeftUpDiagonalPath() {
-        Path actual = Path.of(H1, A8);
         Path expected = new Path(List.of(G2, F3, E4, D5, C6, B7));
+
+        Path actual = Path.of(H1, A8);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -135,8 +139,9 @@ class PathTest {
     @DisplayName("수평 경로를 생성한다.")
     @Test
     void makeHorizontalPath() {
-        Path actual = Path.of(A1, H1);
         Path expected = new Path(List.of(B1, C1, D1, E1, F1, G1));
+
+        Path actual = Path.of(A1, H1);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -156,9 +161,30 @@ class PathTest {
     @DisplayName("수직 경로를 생성한다.")
     @Test
     void makeVerticalPath() {
-        Path actual = Path.of(A1, A8);
         Path expected = new Path(List.of(A2, A3, A4, A5, A6, A7));
 
+        Path actual = Path.of(A1, A8);
+
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @DisplayName("주어진 위치가 경로에 포함되어 있다.")
+    @Test
+    void contains() {
+        Path path = new Path(List.of(A1));
+
+        boolean actual = path.contains(A1);
+
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("주어진 위치가 경로에 포함되어 있지 않다.")
+    @Test
+    void notContains() {
+        Path path = new Path(List.of(A1));
+
+        boolean actual = path.contains(A2);
+
+        assertThat(actual).isFalse();
     }
 }
