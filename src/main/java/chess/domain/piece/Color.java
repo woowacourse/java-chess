@@ -7,6 +7,6 @@ public enum Color {
     ;
 
     public boolean isNotSameTeam(final Piece piece) {
-        return this != piece.getColor();
+        return this != piece.color();
     }
 }

@@ -25,10 +25,10 @@ public enum PieceSymbol {
 
     public static String getDisplay(final Piece piece) {
         PieceSymbol findSymbol = Arrays.stream(PieceSymbol.values())
-                .filter(pieceSymbol -> pieceSymbol.pieceType == piece.getPieceType())
+                .filter(pieceSymbol -> pieceSymbol.pieceType == piece.pieceType())
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 종류의 말입니다."));
-        return convertByColor(findSymbol, piece.getColor());
+        return convertByColor(findSymbol, piece.color());
     }
 
     private static String convertByColor(final PieceSymbol pieceSymbol, final Color color) {
