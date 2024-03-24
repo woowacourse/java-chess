@@ -7,13 +7,13 @@ import chess.domain.position.File;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.util.ChessBoardInitalizer;
+import chess.util.ChessBoardInitializer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    private final ChessBoard chessBoard = ChessBoardInitalizer.init();
+    private final ChessBoard chessBoard = ChessBoardInitializer.init();
 
     @DisplayName("경로에 기물이 존재하면 예외를 발생시킨다._룩의 경우")
     @Test

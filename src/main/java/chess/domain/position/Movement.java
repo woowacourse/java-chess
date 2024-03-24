@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.position.Position;
-
 public class Movement {
 
     private final Position current;
@@ -24,28 +22,22 @@ public class Movement {
         return current.getFileDistance(destination) == current.getRankDistance(destination);
     }
 
-    public boolean isDiagonalRightUp() {
-        return (isDiagonal() && (isLeft() && isDown() || isRight() && isUp()));
+    public boolean isDiagonalRight() {
+        return isDiagonal()
+                && (!isRight() && !isUp() || isRight() && isUp());
     }
 
-    public boolean isDiagonalLeftUp() {
-        return (isDiagonal() && (isRight() && isDown() || isLeft() && isUp()));
+    public boolean isDiagonalLeft() {
+        return isDiagonal()
+                && (isRight() && !isUp() || !isRight() && isUp());
     }
 
     public boolean isUp() {
         return destination.getRank().isUp(current.getRank());
     }
 
-    public boolean isDown() {
-        return !isUp();
-    }
-
     public boolean isRight() {
         return destination.getFile().isBigger(current.getFile());
-    }
-
-    public boolean isLeft() {
-        return !isRight();
     }
 
     public int getRankDistance() {
@@ -56,16 +48,16 @@ public class Movement {
         return current.getFileDistance(destination);
     }
 
-    public Position getLefterPosition() {
-        if (isRight()) {
+    public Position getLowerPosition() {
+        if (isUp()) {
             return current;
         }
 
         return destination;
     }
 
-    public Position getLowerPosition() {
-        if (isUp()) {
+    public Position getLefterPosition() {
+        if (isRight()) {
             return current;
         }
 

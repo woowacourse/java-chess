@@ -15,17 +15,29 @@ public class ChessBoard {
     }
 
     public void move(final Position current, final Position destination) {
+        final Piece currentPiece = findPieceBy(current);
         final Movement movement = new Movement(current, destination);
 
-        final Piece currentPiece = findPieceBy(current);
-
-        if (canPawnCatch(currentPiece, movement) || isPieceExist(destination)) {
-            validateOpponent(currentPiece, movement);
-        }
-
-        validateRoute(currentPiece, movement);
+        validate(currentPiece, movement);
 
         movePiece(currentPiece, movement);
+    }
+
+    private void validate(final Piece currentPiece, final Movement movement) {
+        validateStrategy(currentPiece, movement);
+        validateRoute(currentPiece, movement);
+
+        if (canPawnCatch(currentPiece, movement) || isPieceExist(movement.getDestination())) {
+            validateOpponent(currentPiece, movement);
+        }
+    }
+
+    private void validateStrategy(final Piece currentPiece, final Movement movement) {
+        if (currentPiece.canMove(movement)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 
     public Piece findPieceBy(final Position position) {
@@ -63,9 +75,11 @@ public class ChessBoard {
 
     private void validateOpponent(final Piece currentPiece, final Movement movement) {
         final Piece targetPiece = findPieceBy(movement.getDestination());
-        if (!currentPiece.isOpponent(targetPiece)) {
-            throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
+        if (currentPiece.isOpponent(targetPiece)) {
+            return;
         }
+
+        throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
     }
 
     public Map<Position, Piece> getPieces() {

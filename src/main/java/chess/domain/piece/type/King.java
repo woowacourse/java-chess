@@ -4,7 +4,6 @@ import chess.domain.position.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import java.util.HashSet;
 import java.util.Set;
 
 public class King extends Piece {
@@ -16,13 +15,14 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Position> getRoute(final Movement movement) {
-        if ((movement.isVertical() && movement.getRankDistance() == DEFAULT_STEP)
+    public boolean canMove(Movement movement) {
+        return (movement.isVertical() && movement.getRankDistance() == DEFAULT_STEP)
                 || (movement.isHorizontal() && movement.getFileDistance() == DEFAULT_STEP)
-                || (movement.isDiagonal() && movement.getRankDistance() == DEFAULT_STEP)) {
-            return new HashSet<>();
-        }
+                || (movement.isDiagonal() && movement.getRankDistance() == DEFAULT_STEP);
+    }
 
-        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+    @Override
+    public Set<Position> getRoute(final Movement movement) {
+        return Set.of();
     }
 }

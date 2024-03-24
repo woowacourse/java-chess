@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.util.ChessBoardInitalizer;
+import chess.util.ChessBoardInitializer;
 import chess.domain.Command;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -25,7 +25,7 @@ public class ChessController {
             return;
         }
 
-        final ChessBoard chessBoard = ChessBoardInitalizer.init();
+        final ChessBoard chessBoard = ChessBoardInitializer.init();
         outputView.printChessBoard(chessBoard.getPieces());
 
         List<String> positions = inputView.readMoveCommand();

@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.position.Direction;
 import chess.domain.position.Movement;
 import chess.domain.position.Position;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,8 +15,27 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Set<Position> getRoute(final Movement movement);
+    public Set<Position> getRoute(final Movement movement) {
+        Position position = movement.getLowerPosition();
 
+        final Direction direction = Direction.from(movement);
+        if (direction.equals(Direction.HORIZONTAL)) {
+            position = movement.getLefterPosition();
+        }
+
+        final Set<Position> positions = new HashSet<>();
+        for (int i = 1; i < distance(movement); i++) {
+            position = position.move(direction.getDx(), direction.getDy());
+            positions.add(position);
+        }
+        return positions;
+    }
+
+    public abstract boolean canMove(final Movement movement);
+
+    private int distance(final Movement movement) {
+        return Math.max(movement.getRankDistance(), movement.getFileDistance());
+    }
     public boolean isOpponent(final Piece other) {
         return this.color != other.color;
     }

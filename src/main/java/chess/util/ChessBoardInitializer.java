@@ -15,7 +15,10 @@ import chess.domain.piece.type.Rook;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ChessBoardInitalizer {
+public class ChessBoardInitializer {
+
+    private ChessBoardInitializer() {
+    }
 
     public static ChessBoard init() {
         final Map<Position, Piece> pieces = new LinkedHashMap<>();

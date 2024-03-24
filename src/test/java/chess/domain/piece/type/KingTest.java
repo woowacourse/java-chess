@@ -1,6 +1,6 @@
 package chess.domain.piece.type;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.Movement;
 import chess.domain.piece.Color;
@@ -20,8 +20,6 @@ class KingTest {
         final Movement movement = new Movement(new Position(File.D, Rank.FIVE), new Position(File.A, Rank.ONE));
 
         // when && then
-        assertThatThrownBy(() -> king.getRoute(movement))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+        assertThat(king.canMove(movement)).isFalse();
     }
 }

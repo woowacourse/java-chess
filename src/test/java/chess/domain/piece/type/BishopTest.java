@@ -1,7 +1,6 @@
 package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.position.Movement;
 import chess.domain.piece.Color;
@@ -22,9 +21,7 @@ class BishopTest {
         final Movement movement = new Movement(new Position(File.D, Rank.FIVE), new Position(File.D, Rank.SIX)); // 대각선 위로 이동하는 움직임
 
         // when && then
-        assertThatThrownBy(() -> bishop.getRoute(movement))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+        assertThat(bishop.canMove(movement)).isFalse();
     }
 
     @DisplayName("도착 지점이 오른쪽 위 대각선일 때 위치들을 반환한다.")
