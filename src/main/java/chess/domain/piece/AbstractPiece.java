@@ -1,21 +1,24 @@
 package chess.domain.piece;
 
-import java.util.List;
 import java.util.Objects;
-import chess.domain.board.Coordinate;
 
-abstract class AbstractPiece implements Piece {
+public abstract class AbstractPiece implements Piece {
 
     private final PieceType type;
     private final Team team;
 
-    public AbstractPiece(PieceType type, Team team) {
+    protected AbstractPiece(final PieceType type, final Team team) {
         this.type = type;
         this.team = team;
     }
 
-    @Override
-    public abstract List<Coordinate> findMovablePath(Coordinate start, Coordinate destination);
+    public boolean isSameTeam(Piece other) {
+        return this.team == other.getTeam();
+    }
+
+    public boolean isNotSameTeam(Piece other) {
+        return !isSameTeam(other);
+    }
 
     @Override
     public PieceType getType() {
@@ -29,8 +32,12 @@ abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AbstractPiece piece = (AbstractPiece) o;
         return type == piece.type && team == piece.team;
     }
