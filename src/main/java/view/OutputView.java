@@ -14,15 +14,12 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(ChessBoardDto chessBoardDto) {
-        System.out.printf(chessBoardDto.getValue());
+    public void printChessBoard(final ChessBoardDto chessBoardDto) {
+        System.out.printf(chessBoardDto.getBoard());
+        System.out.printf("현재 턴: %s%n%n", chessBoardDto.getCurrentTurn());
     }
 
     public void printException(final ErrorCode errorCode) {
         System.out.printf("[ERROR] %s%n", ErrorCodeMessage.from(errorCode).getMessage());
-    }
-
-    public void printCamp(final Camp camp) {
-        System.out.printf("현재 턴: %s%n%n", camp.toString());
     }
 }

@@ -52,7 +52,6 @@ public class ChessController {
 
     private void printCurrentStatus(final ChessBoard chessBoard) {
         outputView.printChessBoard(ChessBoardDto.from(chessBoard));
-        outputView.printCamp(chessBoard.getCamp());
     }
 
     private List<String> getCommand() {

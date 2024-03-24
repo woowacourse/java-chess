@@ -13,17 +13,19 @@ import view.message.PieceType;
 public class ChessBoardDto {
 
     private static final String FILE_GUIDE_LINE = "abcdefgh";
+    private static final String RANK_GUIDE_LINE_FORM = "  %s";
     private static final String EMPTY_POINT = ".";
-    private static final String RANK_GUIDE_LINE = "  %s";
     private static final int BOARD_SIZE = 8;
 
-    private final String value;
+    private final String board;
+    private final String currentTurn;
 
-    private ChessBoardDto(final String value) {
-        this.value = value;
+    public ChessBoardDto(final String board, final String currentTurn) {
+        this.board = board;
+        this.currentTurn = currentTurn;
     }
 
-    public static ChessBoardDto from(final ChessBoard chessBoard) {
+    public static ChessBoardDto from(final ChessBoard chessBoard) { // TODO 리팩터링
         final Map<Position, Piece> pieceOfPosition = chessBoard.getBoard();
         final String result = IntStream.range(0, BOARD_SIZE)
                 .mapToObj(Rank::from)
@@ -33,7 +35,8 @@ public class ChessBoardDto {
                         .collect(Collectors.joining()))
                 .collect(Collectors.joining(System.lineSeparator()))
                 .concat(String.format("%n%n%s%n", FILE_GUIDE_LINE));
-        return new ChessBoardDto(result);
+
+        return new ChessBoardDto(result, chessBoard.getCamp().toString());
     }
 
     private static String convertToString(final Map<Position, Piece> board, final File file, final Rank rank) {
@@ -47,12 +50,16 @@ public class ChessBoardDto {
 
     private static String paddedRankGuidLine(final File file, final Rank rank) {
         if (file.isLast()) {
-            return String.format(RANK_GUIDE_LINE, rank.getValue());
+            return String.format(RANK_GUIDE_LINE_FORM, rank.getValue());
         }
         return "";
     }
 
-    public String getValue() {
-        return value;
+    public String getBoard() {
+        return board;
+    }
+
+    public String getCurrentTurn() {
+        return currentTurn;
     }
 }
