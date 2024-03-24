@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Role.*;
 
 public abstract class Piece {
     protected Team team;

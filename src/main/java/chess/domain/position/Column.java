@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.chessPiece.Team;
+import chess.domain.chesspiece.Team;
 
 import java.util.Map;
 import java.util.function.Function;

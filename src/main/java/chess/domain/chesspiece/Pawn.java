@@ -1,8 +1,8 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Role.*;
 
 public class Pawn extends Piece {
 

@@ -1,13 +1,12 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 
-import static chess.domain.chessPiece.Role.BLACK_BISHOP;
-import static chess.domain.chessPiece.Role.WHITE_BISHOP;
+import static chess.domain.chesspiece.Role.*;
 
-public class Bishop extends Piece {
+public class Queen extends Piece {
 
-    public Bishop(Team team) {
+    public Queen(Team team) {
         super(team);
     }
 
@@ -15,7 +14,7 @@ public class Bishop extends Piece {
     protected void validateMovingRule(Position source, Position target) {
         int rowDistance = source.calculateRowDistance(target);
         int columnDistance = source.calculateColumnDistance(target);
-        if (rowDistance != columnDistance) {
+        if (source.isDifferentRow(target) && source.isDifferentColumn(target) && rowDistance != columnDistance) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
@@ -23,8 +22,8 @@ public class Bishop extends Piece {
     @Override
     public Role getRole() {
         if (team.isWhite()) {
-            return WHITE_BISHOP;
+            return WHITE_QUEEN;
         }
-        return BLACK_BISHOP;
+        return BLACK_QUEEN;
     }
 }
