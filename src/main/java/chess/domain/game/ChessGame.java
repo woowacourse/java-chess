@@ -10,7 +10,7 @@ import java.util.Queue;
 
 public class ChessGame {
 
-    public final Board board;
+    private final Board board;
 
     public ChessGame(Board board) {
         this.board = board;
