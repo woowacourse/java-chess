@@ -1,17 +1,17 @@
 package chess.model.position;
 
 import chess.model.piece.Piece;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Route {
 
     private static final int REMAIN_THRESHOLD = 1;
 
-    private final List<Position> positions;
+    private final Set<Position> positions;
 
-    private Route(List<Position> positions) {
+    private Route(Set<Position> positions) {
         this.positions = positions;
     }
 
@@ -19,7 +19,7 @@ public class Route {
         int columnOffset = source.calculateColumnOffSet(target);
         int rowOffset = source.calculateRowOffSet(target);
 
-        List<Position> positions = new ArrayList<>();
+        Set<Position> positions = new HashSet<>();
         while (isRemain(rowOffset) || isRemain(columnOffset)) {
             columnOffset = consumeOffset(columnOffset);
             rowOffset = consumeOffset(rowOffset);
@@ -56,5 +56,9 @@ public class Route {
     private boolean isPieceExist(Map<Position, Piece> pieces, Position position) {
         Piece piece = pieces.get(position);
         return piece.isExist();
+    }
+
+    public boolean containsAll(Set<Position> positions) {
+        return this.positions.containsAll(positions);
     }
 }
