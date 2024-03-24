@@ -15,7 +15,7 @@ public class OutputView {
     }
 
     public void printBoard(Board board) {
-        List<Piece> pieces = board.extractPieces();
+        List<Piece> pieces = board.extractPiecesByOrder();
         for (int i = 0; i < pieces.size(); i++) {
             String piece = pieces.get(i).display();
             System.out.print(piece);

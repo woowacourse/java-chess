@@ -7,7 +7,7 @@ import java.util.Objects;
 import view.mapper.FileInput;
 import view.mapper.RankInput;
 
-public class Position {
+public class Position { // TODO: cache 활용해보기
 
     private final File file;
     private final Rank rank;
@@ -25,6 +25,10 @@ public class Position {
 
     public boolean hasRank(Rank rank) {
         return this.rank.isSame(rank);
+    }
+
+    public boolean hasRank(List<Rank> ranks) {
+        return ranks.contains(rank);
     }
 
     public boolean isSame(Position target) {

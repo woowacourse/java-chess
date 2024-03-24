@@ -3,7 +3,9 @@ package domain.board;
 import domain.piece.Color;
 import domain.piece.None;
 import domain.piece.Piece;
+import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +24,22 @@ public class Board {
         return new Board(squares);
     }
 
-    public List<Piece> extractPieces() {
-        return squares.values().stream().toList();
+    public List<Piece> extractPiecesByOrder() {
+        List<Piece> pieces = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            for (File file : File.values()) {
+                pieces.add(findPieceByPosition(file, rank));
+            }
+        }
+        return pieces;
     }
 
     public Piece findPieceByPosition(Position position) {
         return squares.get(position);
+    }
+
+    private Piece findPieceByPosition(File file, Rank rank) {
+        return squares.get(new Position(file, rank));
     }
 
     public void movePiece(Position source, Position target) {
