@@ -17,6 +17,11 @@ public class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
+    public boolean notAllEmpty() {
+        return pieces.stream()
+                .anyMatch(Piece::isNotEmpty);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

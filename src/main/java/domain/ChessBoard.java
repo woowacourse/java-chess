@@ -28,8 +28,12 @@ public class ChessBoard {
     }
 
     public void move(Position source, Position target) {
-        board.put(target, findPiece(source));
+        Piece sourcePiece = findPiece(source);
+        MovePath movePath = MovePath.create(source, target, this);
+        sourcePiece.checkValidMove(source, target, movePath);
+
         board.put(source, Empty.getInstance());
+        board.put(target, sourcePiece);
     }
 
     public Piece findPiece(Position position) {

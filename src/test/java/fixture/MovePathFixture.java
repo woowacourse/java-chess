@@ -1,22 +1,24 @@
 package fixture;
 
 import domain.MovePath;
-import domain.Path;
+import domain.Pieces;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.Arrays;
+import java.util.List;
 
 public class MovePathFixture {
 
     public static MovePath noPieces() {
-        return new MovePath(new Path(), new Empty());
+        return new MovePath(new Pieces(), new Empty());
     }
 
     public static MovePath hasPathPieces(Piece... pieces) {
-        return MovePath.create(Arrays.asList(pieces), new Empty());
+        List<Piece> pathPieces = (List<Piece>) Arrays.asList(pieces);
+        return new MovePath(new Pieces(pathPieces), new Empty());
     }
 
     public static MovePath hasTargetPiece(Piece target) {
-        return new MovePath(new Path(), target);
+        return new MovePath(new Pieces(), target);
     }
 }
