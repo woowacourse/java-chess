@@ -2,13 +2,13 @@ package model.status;
 
 import constant.ErrorCode;
 import exception.InvalidStatusException;
-import java.util.List;
 import model.ChessBoard;
+import model.command.CommandLine;
 
 public class End implements GameStatus {
 
     @Override
-    public GameStatus play(final List<String> command, final ChessBoard chessBoard) {
+    public GameStatus play(final CommandLine commandLine, final ChessBoard chessBoard) {
         throw new InvalidStatusException(ErrorCode.INVALID_STATUS);
     }
 

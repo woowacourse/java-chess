@@ -1,4 +1,4 @@
-package model;
+package model.command;
 
 import constant.ErrorCode;
 import exception.InvalidCommandException;
@@ -8,22 +8,27 @@ import java.util.regex.Pattern;
 
 public enum Command {
 
-    START(Pattern.compile("start"), 1),
-    MOVE(Pattern.compile("move"), 3),
-    POSITION(Pattern.compile("[a-hA-H][1-8]"), 1),
-    END(Pattern.compile("end"), 1);
+    START(Pattern.compile("start"), 0),
+    MOVE(Pattern.compile("move"), 2),
+    POSITION(Pattern.compile("[a-hA-H][1-8]"), 0),
+    EMPTY(Pattern.compile("empty"), -1), // TODO 이거 맞을까
+    END(Pattern.compile("end"), 0);
 
     public static final int HEAD_INDEX = 0;
-    public static final int CURRENT_INDEX = 1;
-    public static final int NEXT_INDEX = 2;
-
 
     private final Pattern pattern;
-    private final int size;
+    private final int bodySize;
 
-    Command(final Pattern pattern, final int size) {
+    Command(final Pattern pattern, final int bodySize) {
         this.pattern = pattern;
-        this.size = size;
+        this.bodySize = bodySize;
+    }
+
+    public static Command from(String value) {
+        return Arrays.stream(values())
+                .filter(command -> command.pattern.matcher(value).matches())
+                .findFirst()
+                .orElseThrow(() -> new InvalidCommandException(ErrorCode.INVALID_COMMAND));
     }
 
     public static void validate(List<String> values) {
@@ -32,7 +37,7 @@ public enum Command {
         }
         values.forEach(Command::validate);
         Command command = Command.from(values.get(HEAD_INDEX));
-        if (values.size() != command.size) {
+        if (values.size() != command.bodySize) {
             throw new InvalidCommandException(ErrorCode.INVALID_COMMAND);
         }
     }
@@ -45,14 +50,7 @@ public enum Command {
         }
     }
 
-    public static Command from(String value) {
-        return Arrays.stream(values())
-                .filter(command -> command.pattern.matcher(value).matches())
-                .findFirst()
-                .orElseThrow(() -> new InvalidCommandException(ErrorCode.INVALID_COMMAND));
-    }
-
-    public boolean isAvailableSize(int targetSize) {
-        return size == targetSize;
+    public boolean isEqualToBodySize(int targetSize) {
+        return bodySize == targetSize;
     }
 }

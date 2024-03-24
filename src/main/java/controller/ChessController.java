@@ -2,10 +2,9 @@ package controller;
 
 import dto.ChessBoardDto;
 import exception.CustomException;
-import java.util.Collections;
 import java.util.List;
 import model.ChessBoard;
-import model.Command;
+import model.command.CommandLine;
 import model.status.GameStatus;
 import model.status.Initialization;
 import view.InputView;
@@ -34,7 +33,7 @@ public class ChessController {
 
     private GameStatus initGame() {
         try {
-            return Initialization.gameSetting(getCommand());
+            return Initialization.gameSetting(readCommandLine());
         } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return initGame();
@@ -43,7 +42,7 @@ public class ChessController {
 
     private GameStatus play(final GameStatus gameStatus, final ChessBoard chessBoard) {
         try {
-            return gameStatus.play(getCommand(), chessBoard);
+            return gameStatus.play(readCommandLine(), chessBoard);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return play(gameStatus, chessBoard);
@@ -54,22 +53,21 @@ public class ChessController {
         outputView.printChessBoard(ChessBoardDto.from(chessBoard));
     }
 
-    private List<String> getCommand() {
-        List<String> command = Collections.emptyList();
+    private CommandLine readCommandLine() {
+        CommandLine command = CommandLine.empty();
         while (command.isEmpty()) {
             command = readCommand();
         }
         return command;
     }
 
-    private List<String> readCommand() {
+    private CommandLine readCommand() {
         try {
             List<String> command = inputView.readCommandList();
-            Command.validate(command);
-            return command;
+            return CommandLine.from(command);
         } catch (CustomException exception) {
             outputView.printException(exception.getErrorCode());
         }
-        return Collections.emptyList();
+        return CommandLine.empty();
     }
 }

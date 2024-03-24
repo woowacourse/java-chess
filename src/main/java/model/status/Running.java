@@ -4,20 +4,19 @@ import constant.ErrorCode;
 import exception.InvalidStatusException;
 import java.util.List;
 import model.ChessBoard;
-import model.Command;
+import model.command.CommandLine;
 import model.position.Moving;
 import model.position.Position;
 
 public class Running implements GameStatus {
 
     @Override
-    public GameStatus play(final List<String> command, final ChessBoard chessBoard) {
-        final Command cmd = Command.from(command.get(Command.HEAD_INDEX));
-        if (cmd == Command.END && cmd.isAvailableSize(command.size())) {
+    public GameStatus play(final CommandLine commandLine, final ChessBoard chessBoard) {
+        if (commandLine.isEnd()) {
             return new End();
         }
-        if (cmd == Command.MOVE && cmd.isAvailableSize(command.size())) {
-            final Moving moving = convert(command);
+        if (commandLine.isMove()) {
+            final Moving moving = convert(commandLine.getBody());
             chessBoard.move(moving);
             return new Running();
         }
@@ -25,8 +24,8 @@ public class Running implements GameStatus {
     }
 
     private Moving convert(final List<String> command) {
-        return new Moving(Position.from(command.get(Command.CURRENT_INDEX)),
-                Position.from(command.get(Command.NEXT_INDEX)));
+        return new Moving(Position.from(command.get(CommandLine.CURRENT_POSITION_INDEX)),
+                Position.from(command.get(CommandLine.NEXT_POSITION_INDEX)));
     }
 
     @Override
