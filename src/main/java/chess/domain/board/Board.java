@@ -1,9 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.Position;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import java.util.Collections;
 import java.util.Map;
 
@@ -29,7 +27,7 @@ public class Board {
 
     private void move(final Position source, final Position target, final Piece piece) {
         board.put(target, piece);
-        board.put(source, new Piece(PieceType.EMPTY, Color.NONE));
+        board.put(source, Piece.getEmptyPiece());
     }
 
     private boolean isFirstMove(final Position source, final Piece piece) {

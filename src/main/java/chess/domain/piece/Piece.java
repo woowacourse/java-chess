@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Piece {
+    private static final Piece EMPTY_PIECE = new Piece(PieceType.EMPTY, Color.NONE);
 
     private final PieceType pieceType;
     private final Color color;
@@ -16,6 +17,10 @@ public class Piece {
     public Piece(final PieceType pieceType, final Color color) {
         this.pieceType = pieceType;
         this.color = color;
+    }
+
+    public static Piece getEmptyPiece() {
+        return EMPTY_PIECE;
     }
 
     public boolean canMove(final Position source, final Position target,
@@ -42,7 +47,7 @@ public class Piece {
     private void removeKillableDestinationObstacle(final Position source, final Map<Position, Piece> pieces,
                                                    final List<Position> obstacles) {
         if (obstacles.contains(source)
-                && pieces.getOrDefault(source, new Piece(PieceType.EMPTY, Color.NONE)).isNotSameColor(color)) {
+                && pieces.getOrDefault(source, Piece.getEmptyPiece()).isNotSameColor(color)) {
             obstacles.remove(source);
         }
     }
@@ -56,7 +61,7 @@ public class Piece {
 
     private boolean isPawnBlockedOnRankMove(final Position source, final Position target,
                                             final Map<Position, Piece> pieces) {
-        Piece piece = pieces.getOrDefault(target, new Piece(PieceType.EMPTY, Color.NONE));
+        Piece piece = pieces.getOrDefault(target, Piece.getEmptyPiece());
         return pieceType == PieceType.PAWN && isRankMove(source, target)
                 && piece.isNotEmpty();
     }

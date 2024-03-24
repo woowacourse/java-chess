@@ -44,7 +44,7 @@ public class BoardInitializer {
     private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
         return Collectors.toMap(
                 position -> position,
-                position -> new Piece(PieceType.EMPTY, Color.NONE)
+                position -> Piece.getEmptyPiece()
         );
     }
 
@@ -86,7 +86,7 @@ public class BoardInitializer {
     }
 
     public boolean isFirstMove(final Position position, final Piece piece) {
-        Piece initialPiece = initialPiecePositions.getOrDefault(position, new Piece(PieceType.EMPTY, Color.NONE));
+        Piece initialPiece = initialPiecePositions.getOrDefault(position, Piece.getEmptyPiece());
         return initialPiece.equals(piece);
     }
 }
