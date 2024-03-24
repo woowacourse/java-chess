@@ -33,7 +33,7 @@ public class ChessController {
     }
 
     private GameCommand getFirstGameCommand() {
-        return GameCommand.createFirstGameCommand(inputView.readGameCommand());
+        return GameCommand.createInStart(inputView.readGameCommand());
     }
 
     private void playChess(ChessBoard chessBoard) {
