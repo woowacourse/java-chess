@@ -1,6 +1,8 @@
-package chess.domain.position;
+package chess.domain.board;
 
 import chess.domain.piece.*;
+import chess.domain.position.ColumnPosition;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.List;
