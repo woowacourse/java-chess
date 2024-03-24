@@ -3,6 +3,7 @@ package domain.board;
 import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
+import domain.piece.Type;
 import domain.position.Position;
 import domain.position.Route;
 
@@ -74,6 +75,12 @@ public class ChessBoard {
 
     private Piece findPieceByPosition(final Position position) {
         return board.getOrDefault(position, Empty.getInstance());
+    }
+
+    public boolean isKingNotExist() {
+        return board.values().stream()
+                .filter(piece -> piece.type() == Type.KING)
+                .count() != 2;
     }
 
     public Score calculateScore() {

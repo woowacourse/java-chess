@@ -1,6 +1,7 @@
 package controller;
 
 import controller.command.Command;
+import controller.command.EndOnCommand;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardFactory;
 import view.InputView;
@@ -22,7 +23,7 @@ public class ChessController {
         Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
             command.execute(board, outputView);
-            command = readCommandUntilValid();
+            command = readCommandIfGameNotEnded(board);
         }
     }
 
@@ -33,6 +34,13 @@ public class ChessController {
             outputView.printErrorMessage(e.getMessage());
             return readStartCommandUntilValid();
         }
+    }
+
+    private Command readCommandIfGameNotEnded(final ChessBoard board) {
+        if (board.isKingNotExist()) {
+            return new EndOnCommand();
+        }
+        return readCommandUntilValid();
     }
 
     private Command readCommandUntilValid() {
