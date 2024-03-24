@@ -47,14 +47,14 @@ public class Pawn extends Piece {
         final ChessVector chessVector = target.calculateVector(source);
 
         return (source.isRank(BLACK_START_RANK) && BLACK_START_VECTOR.equals(chessVector))
-                || chessVector.equals(BLACK_MOVE_VECTOR);
+                || BLACK_MOVE_VECTOR.equals(chessVector);
     }
 
     private boolean canWhiteMove(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
         return (source.isRank(WHITE_START_RANK) && WHITE_START_VECTOR.equals(chessVector))
-                || chessVector.equals(WHITE_MOVE_VECTOR);
+                || WHITE_MOVE_VECTOR.equals(chessVector);
     }
 
     @Override
