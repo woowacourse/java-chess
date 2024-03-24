@@ -12,28 +12,28 @@ class PawnTest {
     @DisplayName("흰색 폰은 1칸 전진할 수 있다.")
     void canMove_WhitePawn_ForwardOne() {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.UP)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.UP)).isTrue();
     }
 
     @Test
     @DisplayName("검정색 폰은 1칸 전진할 수 있다.")
     void canMove_BlackPawn_ForwardOne() {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.DOWN)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.DOWN)).isTrue();
     }
 
     @Test
     @DisplayName("흰색 폰은 후진할 수 없다.")
     void cannotMove_WhitePawn_Backward() {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.DOWN)).isFalse();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.DOWN)).isFalse();
     }
 
     @Test
     @DisplayName("검정색 폰은 후진할 수 없다.")
     void cannotMove_BlackPawn_Backward() {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.UP)).isFalse();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.UP)).isFalse();
     }
 
     @Test
@@ -58,15 +58,15 @@ class PawnTest {
     @DisplayName("흰색 폰은 앞 대각선으로 갈 수 있다.")
     void canMove_WhitePawn_DiagonalMove() {
         Pawn pawn = new Pawn(Color.WHITE);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.UP_LEFT)).isTrue();
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.UP_RIGHT)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.UP_LEFT)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.UP_RIGHT)).isTrue();
     }
 
     @Test
     @DisplayName("검정색 폰은 앞 대각선으로 갈 수 있다.")
     void canMove_BlackPawn_DiagonalMove() {
         Pawn pawn = new Pawn(Color.BLACK);
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.DOWN_LEFT)).isTrue();
-        assertThat(pawn.canMove(PositionArgument.from, PositionArgument.DOWN_RIGHT)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.DOWN_LEFT)).isTrue();
+        assertThat(pawn.canMove(PositionArgument.FROM, PositionArgument.DOWN_RIGHT)).isTrue();
     }
 }

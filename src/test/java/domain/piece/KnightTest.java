@@ -24,14 +24,14 @@ class KnightTest {
 
     private static Stream<Arguments> canMoveDirection() {
         return Stream.of(
-                Arguments.of(PositionArgument.from, PositionArgument.UP_UP_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.UP_UP_RIGHT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_DOWN_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_DOWN_RIGHT),
-                Arguments.of(PositionArgument.from, PositionArgument.LEFT_LEFT_DOWN),
-                Arguments.of(PositionArgument.from, PositionArgument.LEFT_LEFT_UP),
-                Arguments.of(PositionArgument.from, PositionArgument.RIGHT_RIGHT_DOWN),
-                Arguments.of(PositionArgument.from, PositionArgument.RIGHT_RIGHT_UP)
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_UP_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_UP_RIGHT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_DOWN_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_DOWN_RIGHT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.LEFT_LEFT_DOWN),
+                Arguments.of(PositionArgument.FROM, PositionArgument.LEFT_LEFT_UP),
+                Arguments.of(PositionArgument.FROM, PositionArgument.RIGHT_RIGHT_DOWN),
+                Arguments.of(PositionArgument.FROM, PositionArgument.RIGHT_RIGHT_UP)
         );
     }
 

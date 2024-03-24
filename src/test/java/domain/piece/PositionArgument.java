@@ -4,7 +4,7 @@ import domain.board.Position;
 
 public class PositionArgument {
 
-    static final Position from = Position.of(4, 4);
+    static final Position FROM = Position.of(4, 4);
     static final Position UP = Position.of(4, 5);
     static final Position DOWN = Position.of(4, 3);
     static final Position LEFT = Position.of(3, 4);

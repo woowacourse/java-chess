@@ -23,14 +23,14 @@ class QueenTest {
 
     private static Stream<Arguments> canMoveDirection() {
         return Stream.of(
-                Arguments.of(PositionArgument.from, PositionArgument.UP),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN),
-                Arguments.of(PositionArgument.from, PositionArgument.LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.RIGHT),
-                Arguments.of(PositionArgument.from, PositionArgument.UP_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.UP_RIGHT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_RIGHT)
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN),
+                Arguments.of(PositionArgument.FROM, PositionArgument.LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.RIGHT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_RIGHT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_RIGHT)
         );
     }
 

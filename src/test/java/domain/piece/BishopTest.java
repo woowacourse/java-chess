@@ -23,10 +23,10 @@ class BishopTest {
 
     private static Stream<Arguments> canMoveDirection() {
         return Stream.of(
-                Arguments.of(PositionArgument.from, PositionArgument.UP_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.UP_RIGHT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_LEFT),
-                Arguments.of(PositionArgument.from, PositionArgument.DOWN_RIGHT)
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.UP_RIGHT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_LEFT),
+                Arguments.of(PositionArgument.FROM, PositionArgument.DOWN_RIGHT)
         );
     }
 
