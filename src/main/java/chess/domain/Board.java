@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Board {
 
@@ -43,5 +44,22 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return board;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Board board1 = (Board) o;
+        return Objects.equals(board, board1.board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board);
     }
 }
