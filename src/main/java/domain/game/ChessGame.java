@@ -8,16 +8,16 @@ import java.util.Map;
 public class ChessGame implements Execute {
     private final ChessBoard chessBoard;
     private Color color;
-    private State state;
+    private GameState gameState;
 
     public ChessGame() {
         this.chessBoard = new ChessBoard();
         this.color = Color.WHITE;
-        this.state = State.READY;
+        this.gameState = GameState.READY;
     }
 
     public boolean isNotEnd() {
-        return state != State.END;
+        return gameState != GameState.END;
     }
 
     public Map<Position, Piece> getChessBoard() {
@@ -26,15 +26,15 @@ public class ChessGame implements Execute {
 
     @Override
     public void start() {
-        if (state != State.READY) {
+        if (gameState != GameState.READY) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
-        this.state = State.RUNNING;
+        this.gameState = GameState.RUNNING;
     }
 
     @Override
     public void move(Position source, Position target) {
-        if (state != State.RUNNING) {
+        if (gameState != GameState.RUNNING) {
             throw new IllegalStateException("게임 진행중이 아닙니다.");
         }
         chessBoard.checkColor(source, color);
@@ -46,9 +46,9 @@ public class ChessGame implements Execute {
 
     @Override
     public void end() {
-        if (state!= State.RUNNING) {
+        if (gameState != GameState.RUNNING) {
             throw new IllegalStateException("게임 진행중이 아닙니다.");
         }
-        state = State.END;
+        gameState = GameState.END;
     }
 }

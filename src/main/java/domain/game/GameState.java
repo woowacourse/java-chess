@@ -1,6 +1,6 @@
 package domain.game;
 
-public enum State {
+public enum GameState {
     READY,
     RUNNING,
     END
