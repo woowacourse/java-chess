@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.piece.attribute.Color;
-import domain.piece.Piece;
 import fixture.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

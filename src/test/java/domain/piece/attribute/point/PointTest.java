@@ -1,11 +1,7 @@
 package domain.piece.attribute.point;
 
-import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.piece.attribute.point.File;
-import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

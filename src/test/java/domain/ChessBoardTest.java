@@ -1,6 +1,5 @@
 package domain;
 
-import domain.ChessBoard;
 import domain.piece.kind.PieceStatus;
 import fixture.PieceImpl;
 import org.assertj.core.api.Assertions;

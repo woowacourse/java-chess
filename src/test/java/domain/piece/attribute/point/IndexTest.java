@@ -1,7 +1,5 @@
 package domain.piece.attribute.point;
 
-import domain.piece.attribute.point.Direction;
-import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

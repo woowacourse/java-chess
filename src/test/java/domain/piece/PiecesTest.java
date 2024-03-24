@@ -1,7 +1,5 @@
 package domain.piece;
 
-import domain.piece.Piece;
-import domain.piece.Pieces;
 import domain.piece.kind.*;
 import fixture.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
