@@ -19,6 +19,10 @@ public class Pawn extends Piece {
         super(color);
     }
 
+    public boolean canCatch(final Movement movement) {
+        return movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP;
+    }
+
     @Override
     public Set<Position> getRoute(final Movement movement) {
         if (canMove(movement)) {
@@ -60,9 +64,5 @@ public class Pawn extends Piece {
         }
 
         return movement.getCurrent().isRank(INIT_WHITE_RANK);
-    }
-
-    public boolean canCatch(final Movement movement) {
-        return movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP;
     }
 }

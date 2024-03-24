@@ -40,10 +40,15 @@ public class OutputView {
     private String convertToMark(final Piece piece) {
         if (piece.isBlack()) {
             if (piece instanceof Knight) {
-                return String.valueOf(Character.toUpperCase(piece.getClass().getSimpleName().charAt(0)));
+                return "N";
             }
             return String.valueOf(Character.toUpperCase(piece.getClass().getSimpleName().charAt(0)));
         }
+
+        if (piece instanceof Knight) {
+            return "n";
+        }
+
         return String.valueOf(Character.toLowerCase(piece.getClass().getSimpleName().charAt(0)));
     }
 }

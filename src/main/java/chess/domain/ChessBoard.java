@@ -23,11 +23,8 @@ public class ChessBoard {
             validateOpponent(currentPiece, movement);
         }
 
-        if (isPieceExist(destination)) {
-            validateOpponent(currentPiece, movement);
-        }
-
         validateRoute(currentPiece, movement);
+
         movePiece(currentPiece, movement);
     }
 
