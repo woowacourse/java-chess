@@ -6,16 +6,17 @@ import java.util.List;
 public class Bishop extends Piece {
 
     private static final int MAX_UNIT_MOVE = 7;
+    private static final List<Direction> BISHOP_DIRECTION = List.of(
+            Direction.POSITIVE_FILE_POSITIVE_RANK,
+            Direction.POSITIVE_FILE_NEGATIVE_RANK,
+            Direction.NEGATIVE_FILE_POSITIVE_RANK,
+            Direction.NEGATIVE_FILE_NEGATIVE_RANK
+    );
 
     public Bishop(Color color) {
         super(PieceType.BISHOP,
                 color,
-                List.of(
-                        Direction.POSITIVE_FILE_POSITIVE_RANK,
-                        Direction.POSITIVE_FILE_NEGATIVE_RANK,
-                        Direction.NEGATIVE_FILE_POSITIVE_RANK,
-                        Direction.NEGATIVE_FILE_NEGATIVE_RANK
-                )
+                BISHOP_DIRECTION
         );
     }
 
