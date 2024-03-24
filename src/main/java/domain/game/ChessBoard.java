@@ -39,7 +39,7 @@ public class ChessBoard {
     public void checkColor(Position source, Color color) {
         checkSourcePosition(source);
         if (pieceByPosition.get(source).isNotEqualColor(color)) {
-            throw new IllegalStateException("자신의 기물만 움직일 수 있습니다.");
+            throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다.");
         }
     }
 
@@ -53,16 +53,16 @@ public class ChessBoard {
 
     private void checkSourcePosition(Position source) {
         if (isEmptyAt(source)) {
-            throw new IllegalStateException("해당 위치에 Piece가 존재하지 않습니다.");
+            throw new IllegalArgumentException("해당 위치에 Piece가 존재하지 않습니다.");
         }
     }
 
     private void checkTargetPosition(Position sourcePosition, Position targetPosition) {
         if (hasSameColorPiece(sourcePosition, targetPosition)) {
-            throw new IllegalStateException("같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
+            throw new IllegalArgumentException("같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
         }
         if (isSamePosition(sourcePosition, targetPosition)) {
-            throw new IllegalStateException("같은 위치로의 이동입니다. 다시 입력해주세요.");
+            throw new IllegalArgumentException("같은 위치로의 이동입니다. 다시 입력해주세요.");
         }
     }
 
@@ -95,7 +95,7 @@ public class ChessBoard {
     private void checkPieceMove(final Position source, final Position target) {
         Piece sourcePiece = pieceByPosition.get(source);
         if (!sourcePiece.canMove(source, target)) {
-            throw new IllegalStateException("해당 피스가 움직일 수 있는 지점이 아닙니다.");
+            throw new IllegalArgumentException("해당 피스가 움직일 수 있는 지점이 아닙니다.");
         }
     }
 
@@ -116,7 +116,7 @@ public class ChessBoard {
 
     private void checkOtherPieceAt(Position movePosition) {
         if (isNotEmptyAt(movePosition)) {
-            throw new IllegalStateException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있으면 이동할 수 없습니다.");
         }
     }
 
@@ -134,7 +134,7 @@ public class ChessBoard {
 
     private void checkEmptyAtDiagonal(Position target) {
         if (isNotEmptyAt(target)) {
-            throw new IllegalStateException("이동하려는 곳에 기물이 없어 이동할 수 없습니다.");
+            throw new IllegalArgumentException("이동하려는 곳에 기물이 없어 이동할 수 없습니다.");
         }
     }
 
