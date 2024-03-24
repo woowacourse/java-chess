@@ -2,20 +2,16 @@ package chess.domain.position;
 
 import chess.domain.piece.Color;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Position {
-    private static final Map<String, Position> CACHE;
-
-    static {
-        CACHE = new HashMap<>();
-        Arrays.stream(Rank.values())
-                .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Position(file, rank)))
-                .forEach(position -> CACHE.put(toKey(position.file, position.rank), position));
-    }
-
+    private static final Map<String, Position> CACHE = Arrays.stream(Rank.values())
+            .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Position(file, rank)))
+            .collect(Collectors.toMap(position -> toKey(position.file, position.rank), Function.identity()));
+    
     private final File file;
     private final Rank rank;
 
