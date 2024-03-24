@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import domain.position.Position;
@@ -11,15 +12,15 @@ import java.util.Map;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
-    private final Turn turn;
+    private Color turn;
 
-    private ChessBoard(Map<Position, Piece> board, Turn turn) {
+    private ChessBoard(Map<Position, Piece> board, Color color) {
         this.board = board;
-        this.turn = turn;
+        this.turn = color;
     }
 
     public ChessBoard(Map<Position, Piece> board) {
-        this(new HashMap<>(board), new Turn());
+        this(new HashMap<>(board), Color.WHITE);
     }
 
     public void move(final Position source, final Position target) {
@@ -28,7 +29,7 @@ public class ChessBoard {
         validateEmptyRoute(source, target);
         validateLegalMove(source, target);
         movePiece(source, target);
-        this.turn.flip();
+        changeTurn();
     }
 
     private void validateEmptyPiece(final Position source) {
@@ -40,7 +41,7 @@ public class ChessBoard {
 
     private void validateTurn(final Position source) {
         final Piece piece = findPieceByPosition(source);
-        if (this.turn.isOpponentTurn(piece.color())) {
+        if (this.turn.isOpposite(piece.color())) {
             throw new IllegalArgumentException("상대 턴입니다.");
         }
     }
@@ -61,6 +62,14 @@ public class ChessBoard {
         final Piece piece = findPieceByPosition(source);
         board.remove(source);
         board.put(target, piece);
+    }
+
+    private void changeTurn() {
+        if (this.turn.isBlack()) {
+            this.turn = Color.WHITE;
+            return;
+        }
+        this.turn = Color.BLACK;
     }
 
     private Piece findPieceByPosition(final Position position) {

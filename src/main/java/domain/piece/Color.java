@@ -12,4 +12,8 @@ public enum Color {
     public boolean isNeutrality() {
         return this == NEUTRALITY;
     }
+
+    public boolean isOpposite(final Color color) {
+        return this != color && !color.isNeutrality();
+    }
 }
