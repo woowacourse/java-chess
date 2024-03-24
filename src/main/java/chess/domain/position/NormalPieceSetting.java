@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class PiecesFirstPosition {
+public class NormalPieceSetting {
     private static final Map<Piece, List<Position>> INITIAL_BLACK_PIECES_ARRANGEMENT = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
@@ -55,6 +55,9 @@ public class PiecesFirstPosition {
             put(new Pawn(Team.WHITE), pawnPositions);
         }
     };
+
+    private NormalPieceSetting() {
+    }
 
     public static Map<Piece, List<Position>> blackPiecesArrangeMent() {
         return Map.copyOf(INITIAL_BLACK_PIECES_ARRANGEMENT);

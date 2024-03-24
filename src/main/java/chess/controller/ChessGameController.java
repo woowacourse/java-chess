@@ -52,7 +52,7 @@ public class ChessGameController {
     }
 
     private ChessBoard initializeChessBoard() {
-        ChessBoardCreator chessBoardCreator = new ChessBoardCreator();
+        ChessBoardCreator chessBoardCreator = ChessBoardCreator.normalGameCreator();
         ChessBoard chessBoard = chessBoardCreator.create();
         outputView.printChessBoardMessage(chessBoard);
         return chessBoard;
