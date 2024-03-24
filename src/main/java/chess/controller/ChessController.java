@@ -72,7 +72,7 @@ public class ChessController {
         try {
             operation.run();
             return false;
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
             return true;
         }
@@ -81,7 +81,7 @@ public class ChessController {
     private <T> T tryOperation(Supplier<T> operation) {
         try {
             return operation.get();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printException(e.getMessage());
             return null;
         }
