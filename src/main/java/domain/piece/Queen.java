@@ -23,10 +23,4 @@ public class Queen extends ChessPieceBase {
             return StraightDirection.getDirection(rowDifference, columnDifference);
         }
     }
-
-    @Override
-    public boolean cantMove(Coordinate start, Coordinate destination) {
-        getDirection(start, destination);
-        return false;
-    }
 }

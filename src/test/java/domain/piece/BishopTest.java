@@ -1,10 +1,10 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import domain.coordinate.Coordinate;
 import domain.direction.DiagonalDirection;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,11 +22,12 @@ class BishopTest {
         assertThat(bishop.getDirection(start, destination)).isEqualTo(DiagonalDirection.DOWN_RIGHT);
     }
 
-    @DisplayName("비숍은 대각선 방향이면 거리와 상관없이 이동 가능하다.")
+    @DisplayName("비숍은 대각선 방향 이외로는 이동할 수 없다.")
     @Test
     void canMove() {
-        destination = new Coordinate(1, 1);
-
-        assertFalse(() -> bishop.cantMove(start, destination));
+        destination = new Coordinate(3, 2);
+        Assertions.assertThatThrownBy(() -> bishop.getDirection(start, destination))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다.");
     }
 }

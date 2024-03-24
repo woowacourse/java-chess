@@ -18,10 +18,4 @@ public class Bishop extends ChessPieceBase {
 
         return DiagonalDirection.getDirection(rowDifference, columnDifference);
     }
-
-    @Override
-    public boolean cantMove(Coordinate start, Coordinate destination) {
-        getDirection(start, destination);
-        return false;
-    }
 }

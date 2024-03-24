@@ -25,15 +25,8 @@ public class ChessBoard {
     }
 
     private void validateCanMove(ChessPiece piece, Coordinate start, Coordinate destination) {
-        validateDistanceToDestination(piece, start, destination);
         validateDestination(destination);
         validatePath(piece, start, destination);
-    }
-
-    private void validateDistanceToDestination(ChessPiece piece, Coordinate start, Coordinate destination) {
-        if (piece.cantMove(start, destination)) {
-            throw new IllegalArgumentException("해당 말이 이동할 수 없는 위치입니다.");
-        }
     }
 
     private void validateDestination(Coordinate destination) {

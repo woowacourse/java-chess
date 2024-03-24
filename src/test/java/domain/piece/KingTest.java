@@ -1,7 +1,7 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.coordinate.Coordinate;
 import domain.direction.DiagonalDirection;
@@ -19,7 +19,9 @@ class KingTest {
         Coordinate start = new Coordinate(3, 3);
         Coordinate destination = new Coordinate(5, 3);
 
-        assertTrue(king.cantMove(start, destination));
+        assertThatThrownBy(() -> king.getDirection(start, destination))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @Nested

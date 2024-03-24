@@ -1,7 +1,6 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import domain.coordinate.Coordinate;
 import domain.direction.StraightDirection;
@@ -10,16 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
-
-    @DisplayName("룩은 방향만 맞으면 거리와 상관없이 이동할 수 있다.")
-    @Test
-    void cantMoveTest() {
-        Coordinate start = new Coordinate(3, 3);
-        Coordinate destination = new Coordinate(3, 0);
-        Rook rook = new Rook(Color.BLACK);
-
-        assertFalse(rook.cantMove(start, destination));
-    }
 
     @Nested
     @DisplayName("룩이 이동할 수 있는 방향을 확인한다.")

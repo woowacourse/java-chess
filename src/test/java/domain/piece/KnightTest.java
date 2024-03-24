@@ -1,7 +1,6 @@
 package domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import domain.coordinate.Coordinate;
 import domain.direction.KnightDirection;
@@ -10,16 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class KnightTest {
-
-    @DisplayName("나이트는 방향만 올바르면 이동할 수 있다.")
-    @Test
-    void cantMoveTest() {
-        Coordinate start = new Coordinate(3, 3);
-        Coordinate destination = new Coordinate(5, 2);
-        Knight knight = new Knight(Color.BLACK);
-
-        assertFalse(knight.cantMove(start, destination));
-    }
 
     @Nested
     @DisplayName("나이트가 이동할 수 있는 방향을 확인한다.")

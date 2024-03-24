@@ -19,29 +19,29 @@ public class WhitePawn extends ChessPieceBase {
     public Direction getDirection(Coordinate start, Coordinate destination) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
+        boolean isInitialPawn = isInitialPawn(start);
 
-        return getPawnDirection(rowDifference, columnDifference);
+        return getWhitePawnDirection(rowDifference, columnDifference, isInitialPawn);
     }
 
-    private Direction getPawnDirection(int rowDifference, int columnDifference) {
+    private Direction getWhitePawnDirection(int rowDifference, int columnDifference, boolean isInitialPawn) {
         if (rowDifference == -1 && Math.abs(columnDifference) == 1) {
             return DiagonalDirection.getDirection(rowDifference, columnDifference);
         }
-        if ((rowDifference == -1 || rowDifference == -2) && Math.abs(columnDifference) == 0) {
+        if (canMoveUp(rowDifference, columnDifference, isInitialPawn)) {
             return StraightDirection.UP;
         }
-        throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
     }
 
-    @Override
-    public boolean cantMove(Coordinate start, Coordinate destination) {
-        Direction direction = getDirection(start, destination);
-        int distance = start.calculateDistanceToDestination(direction, destination);
-
-        if (isInitialPawn(start) && distance == 2) {
+    private boolean canMoveUp(int rowDifference, int columnDifference, boolean isInitialPawn) {
+        if (columnDifference != 0) {
             return false;
         }
-        return distance != 1;
+        if (rowDifference == -2) {
+            return isInitialPawn;
+        }
+        return rowDifference == -1;
     }
 
     private boolean isInitialPawn(Coordinate start) {

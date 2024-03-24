@@ -16,7 +16,13 @@ public class King extends ChessPieceBase {
     public Direction getDirection(Coordinate start, Coordinate destination) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
+        Direction direction = getKingDirection(rowDifference, columnDifference);
+        validateDistance(start, destination, direction);
 
+        return direction;
+    }
+
+    private Direction getKingDirection(int rowDifference, int columnDifference) {
         try {
             return DiagonalDirection.getDirection(rowDifference, columnDifference);
         } catch (IllegalArgumentException e) {
@@ -24,9 +30,9 @@ public class King extends ChessPieceBase {
         }
     }
 
-    @Override
-    public boolean cantMove(Coordinate start, Coordinate destination) {
-        Direction direction = getDirection(start, destination);
-        return start.calculateDistanceToDestination(direction, destination) != 1;
+    private void validateDistance(Coordinate start, Coordinate destination, Direction direction) {
+        if (start.calculateDistanceToDestination(direction, destination) != 1) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
     }
 }

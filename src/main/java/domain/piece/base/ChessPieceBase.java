@@ -16,9 +16,6 @@ public abstract class ChessPieceBase implements ChessPiece {
     public abstract Direction getDirection(Coordinate start, Coordinate destination);
 
     @Override
-    public abstract boolean cantMove(Coordinate start, Coordinate destination);
-
-    @Override
     public boolean hasSameColor(Color color) {
         return this.color == color;
     }

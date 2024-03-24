@@ -18,10 +18,4 @@ public class Knight extends ChessPieceBase {
 
         return KnightDirection.getDirection(rowDifference, columnDifference);
     }
-
-    @Override
-    public boolean cantMove(Coordinate start, Coordinate destination) {
-        getDirection(start, destination);
-        return false;
-    }
 }

@@ -103,11 +103,9 @@ class ChessBoardTest {
     @DisplayName("해당 말이 이동할 수 없는 위치를 지정한다.")
     @Test
     void cantMoveWhenPieceCannotMove() {
-        // 흰색 비숍을 바로 위칸으로 이동시킨다.
-        // 비숍은 대각선만 이동 가능하기에, 이동할 수 없는 위치이다.
-        assertThatThrownBy(() -> movePieceInBoard(7, 2, 6, 2))
+        assertThatThrownBy(() -> movePieceInBoard(6, 1, 4, 3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 방향입니다.");
+                .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     private void movePieceInBoard(int startRow, int startColumn, int destinationRow, int destinationColumn) {
