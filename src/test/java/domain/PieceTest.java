@@ -6,6 +6,7 @@ import static fixture.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.piece.Piece;
+import domain.piece.Rook;
 import fixture.MovePathFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

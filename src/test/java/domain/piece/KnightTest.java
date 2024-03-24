@@ -37,6 +37,7 @@ class KnightTest {
 
     abcdefgh
      */
+    private static final Position SOURCE = D4;
     private static final List<Position> MOVABLE_POSITIONS = List.of(B3, B5, C2, C6, E2, E6, F3, F5);
 
     private static Stream<Arguments> movableTargets() {
@@ -44,7 +45,7 @@ class KnightTest {
     }
 
     private static Stream<Arguments> immovableTargets() {
-        return PositionFixture.immovablePositions(MOVABLE_POSITIONS);
+        return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
     }
 
     @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸 움직인다.")
@@ -53,7 +54,7 @@ class KnightTest {
     void hasFollowedRule(Position target) {
         Knight knight = new Knight(Side.BLACK);
 
-        boolean actual = knight.hasFollowedRule(D4, target, MovePathFixture.noPieces());
+        boolean actual = knight.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
     }
@@ -64,7 +65,7 @@ class KnightTest {
     void hasViolatedRule(Position target) {
         Knight knight = new Knight(Side.BLACK);
 
-        boolean actual = knight.hasFollowedRule(D4, target, MovePathFixture.noPieces());
+        boolean actual = knight.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
     }

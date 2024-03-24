@@ -86,9 +86,9 @@ public class PositionFixture {
                 .map(Arguments::arguments);
     }
 
-    public static Stream<Arguments> immovablePositions(List<Position> movablePositions) {
+    public static Stream<Arguments> immovablePositions(List<Position> movablePositions, Position source) {
         return Position.allPositions().stream()
-                .filter(position -> !movablePositions.contains(position))
+                .filter(position -> !movablePositions.contains(position) && !position.equals(source))
                 .map(Arguments::arguments);
     }
 }
