@@ -41,7 +41,7 @@ class CoordinateTest {
     @Test
     void hasSameRowPosition() {
         Coordinate coordinate = new Coordinate(7, 1);
-        Position row = new Position(7);
+        Position row = Position.of(7);
 
         assertTrue(coordinate.hasSameRowPosition(row));
     }

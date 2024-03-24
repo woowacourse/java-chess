@@ -10,28 +10,29 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class PositionTest {
 
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 8})
-    @DisplayName("위치값은 0부터 7까지 가능하다.")
-    void validate(int value) {
-        assertThatThrownBy(() -> new Position(value))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동할 수 없는 위치입니다.");
-    }
-
     @DisplayName("입력받은 값 만큼 이동한다.")
     @Test
     void moveBy() {
-        Position position = new Position(5);
-        assertThat(position.moveBy(1)).isEqualTo(new Position(6));
-        assertThat(position.moveBy(-1)).isEqualTo(new Position(4));
+        Position position = Position.of(5);
+        assertThat(position.moveBy(1)).isEqualTo(Position.of(6));
+        assertThat(position.moveBy(-1)).isEqualTo(Position.of(4));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-6, 3})
+    @DisplayName("위치 값의 범위를 초과하여 이동할 수 없다.")
+    void moveByException(int offset) {
+        Position position = Position.of(5);
+        assertThatThrownBy(() -> position.moveBy(offset))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다.");
     }
 
     @DisplayName("값의 차이를 계산한다.")
     @Test
     void calculateDifference() {
-        Position position = new Position(5);
-        Position position1 = new Position(4);
+        Position position = Position.of(5);
+        Position position1 = Position.of(4);
         assertThat(position.calculateDifference(position1)).isEqualTo(-1);
     }
 }

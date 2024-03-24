@@ -14,7 +14,7 @@ public class Coordinate {
     }
 
     public Coordinate(int row, int column) {
-        this(new Position(row), new Position(column));
+        this(Position.of(row), Position.of(column));
     }
 
     public int calculateRowDifference(Coordinate coordinate) {

@@ -45,6 +45,6 @@ public class BlackPawn extends ChessPieceBase {
     }
 
     private boolean isInitialPawn(Coordinate start) {
-        return start.hasSameRowPosition(new Position(INITIAL_ROW));
+        return start.hasSameRowPosition(Position.of(INITIAL_ROW));
     }
 }

@@ -1,27 +1,36 @@
 package domain.coordinate;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private static final int MIN_VALUE = 0;
-    private static final int MAX_VALUE = 7;
+    private static final Map<Integer, Position> CACHE = new HashMap<>();
 
     private final int value;
 
-    public Position(int value) {
-        validate(value);
-        this.value = value;
-    }
-
-    private void validate(int value) {
-        if (MAX_VALUE < value || value < MIN_VALUE) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+    static {
+        for (int i = 0; i < 8; i++) {
+            CACHE.put(i, new Position(i));
         }
     }
 
-    public Position moveBy(int offSet) {
-        return new Position(value + offSet);
+    private Position(int value) {
+        this.value = value;
+    }
+
+    public static Position of(int value) {
+        Position position = CACHE.get(value);
+
+        if (position == null) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        return position;
+    }
+
+    public Position moveBy(int offset) {
+        return Position.of(value + offset);
     }
 
     public int calculateDifference(Position other) {
