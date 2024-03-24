@@ -2,7 +2,6 @@ package chess.domain.chessBoard;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -27,9 +26,9 @@ public class PieceGenerator {
         );
     }
 
-    public static List<Piece> makePawnPieces(Color color, int amount) {
+    public static List<Piece> makePawnPieces(Color color) {
         List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < 8; i++) {
             pieces.add(new Pawn(color));
         }
         return pieces;
