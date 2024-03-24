@@ -6,7 +6,7 @@ import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InitialBoardGenerator implements BoardGenerator {
+public class InitialBoardGenerator {
     private static final Map<Position, Piece> squares = new HashMap<>();
 
     static {
@@ -31,8 +31,7 @@ public class InitialBoardGenerator implements BoardGenerator {
         squares.put(Position.of(7, 1), PieceFactory.of(Color.WHITE, Type.KNIGHT));
         squares.put(Position.of(8, 1), PieceFactory.of(Color.WHITE, Type.ROOK));
     }
-    
-    @Override
+
     public Board create() {
         return new Board(squares);
     }
