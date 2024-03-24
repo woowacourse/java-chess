@@ -34,7 +34,7 @@ public class Queen extends Piece {
         if (chessBoard.positionIsEmpty(destination)) {
             return false;
         }
-        if (chessBoard.findPieceByPosition(destination).isSameTeam(this)) {
+        if (chessBoard.findPieceByPosition(destination).isOtherTeam(this)) {
             return false;
         }
         return true;
