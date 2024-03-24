@@ -61,11 +61,10 @@ public class ChessPosition {
     private static class ChessPositionCache {
         static final Map<String, ChessPosition> CACHE = Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> new ChessPosition(file, rank))
-                ).collect(toMap(
+                        .map(rank -> new ChessPosition(file, rank)))
+                .collect(toMap(
                         chessPosition -> chessPosition.getFile().name() + chessPosition.getRank().name(),
-                        identity())
-                );
+                        identity()));
 
         private ChessPositionCache() {
         }

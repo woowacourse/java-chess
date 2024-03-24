@@ -70,7 +70,7 @@ public class ChessBoardInitializer {
         return IntStream.range(FIRST_BLANK_RANK_COORDINATE, LAST_BLANK_RANK_COORDINATE + 1)
                 .boxed()
                 .flatMap(rankCoordinate -> Arrays.stream(File.values())
-                        .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate)))
-                ).collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
+                        .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate))))
+                .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
     }
 }
