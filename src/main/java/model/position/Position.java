@@ -3,7 +3,7 @@ package model.position;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import model.direction.MovingPattern;
+import model.direction.Direction;
 
 public class Position {
     private final int file;
@@ -28,14 +28,14 @@ public class Position {
         }
     }
 
-    public boolean isAvailablePosition(MovingPattern movingPattern) {
-        int movedFile = file + movingPattern.fileDifferential();
-        int movedRank = rank + movingPattern.rankDifferential();
+    public boolean isAvailablePosition(Direction direction) {
+        int movedFile = file + direction.fileDifferential();
+        int movedRank = rank + direction.rankDifferential();
         return 1 <= movedFile && movedFile <= 8 && 1 <= movedRank && movedRank <= 8;
     }
 
-    public Position getNextPosition(MovingPattern movingPattern){
-        return Position.of(file + movingPattern.fileDifferential(), rank + movingPattern.rankDifferential());
+    public Position getNextPosition(Direction direction){
+        return Position.of(file + direction.fileDifferential(), rank + direction.rankDifferential());
     }
 
     public static Position of(int file, int rank) {

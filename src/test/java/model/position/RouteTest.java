@@ -1,11 +1,13 @@
 package model.position;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import model.direction.Direction;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RouteTest {
 
@@ -17,7 +19,7 @@ class RouteTest {
         for (int rank = 1; rank <= 8; rank++) {
             holePositions.add(Position.of(1, rank));
         }
-        Route initialRoute = new Route(holePositions);
+        Route initialRoute = new Route(Direction.N, holePositions);
 
         List<Position> subPositions = new ArrayList<>();
         for (int rank = 1; rank < 4; rank++) {
