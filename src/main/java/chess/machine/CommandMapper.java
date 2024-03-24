@@ -6,8 +6,7 @@ import java.util.function.Function;
 public class CommandMapper {
 
     public Command inputToCommand(String input) {
-        return CommandMatcher.getCommandFunction(input)
-                .apply(input);
+        return CommandMatcher.findCommand(input);
     }
 
     private enum CommandMatcher {
@@ -23,10 +22,11 @@ public class CommandMapper {
             this.inputCommand = inputCommand;
         }
 
-        private static Function<String, ? extends Command> getCommandFunction(String inputCommand) {
+        private static Command findCommand(String inputCommand) {
             return Arrays.stream(values())
                     .filter(value -> inputCommand.contains(value.inputCommand))
                     .map(value -> value.commandFunction)
+                    .map(value -> value.apply(inputCommand))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Command 입력입니다"));
         }
