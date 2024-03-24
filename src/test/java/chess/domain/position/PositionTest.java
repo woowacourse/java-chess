@@ -10,12 +10,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 class PositionTest {
 
     @Test
-    @DisplayName("동등성을 올바르게 판단한다.")
+    @DisplayName("동일성을 올바르게 판단한다.")
     void equalsTest() {
         // given
         Position position = Position.of(File.A, Rank.ONE);
-        // when, then
-        assertThat(position).isEqualTo(Position.of(File.A, Rank.ONE));
+        // when
+        boolean isSame = position == Position.of(File.A, Rank.ONE);
+        // then
+        assertThat(isSame).isTrue();
     }
 
     @ParameterizedTest
