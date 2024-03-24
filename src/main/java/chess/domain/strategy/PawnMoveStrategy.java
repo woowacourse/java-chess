@@ -16,12 +16,10 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
 
     private final List<Direction> directions;
     private final Row startRow;
-    private final Direction forwardDirection;
 
-    protected PawnMoveStrategy(List<Direction> directions, Row startRow, Direction forwardDirection) {
+    protected PawnMoveStrategy(List<Direction> directions, Row startRow) {
         this.directions = directions;
         this.startRow = startRow;
-        this.forwardDirection = forwardDirection;
     }
 
     @Override
@@ -35,7 +33,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
 
     private Queue<Position> generateMovablePositionsByDirection(Position currentPosition, Direction direction) {
         int movableMaxDistance = currentPosition.calculateMaxDistance(direction, DEFAULT_MAX_MOVE_DISTANCE);
-        if (currentPosition.isSameRow(startRow) && direction == forwardDirection) {
+        if (currentPosition.isSameRow(startRow) && direction.isStraight()) {
             movableMaxDistance++;
         }
         return new ArrayDeque<>(IntStream.rangeClosed(1, movableMaxDistance)
