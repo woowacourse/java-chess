@@ -16,9 +16,18 @@ class RookTest {
     private final Piece other = Empty.create();
 
     @Test
-    void 직선_방향으로_이동할_수_있다() {
+    void 수직_방향으로_이동할_수_있다() {
         Position source = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.D, Rank.EIGHT);
+        Position target = new Position(File.D, Rank.FIVE);
+
+        assertThatCode(() -> rook.validateMovement(source, target, other))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void 수평_방향으로_이동할_수_있다() {
+        Position source = new Position(File.A, Rank.FOUR);
+        Position target = new Position(File.B, Rank.FOUR);
 
         assertThatCode(() -> rook.validateMovement(source, target, other))
                 .doesNotThrowAnyException();
@@ -56,7 +65,7 @@ class RookTest {
 
     @Test
     void 거리에_상관없이_이동할_수_있다() {
-        Position source = new Position(File.D, Rank.FOUR);
+        Position source = new Position(File.D, Rank.ONE);
         Position target = new Position(File.D, Rank.EIGHT);
 
         assertThatCode(() -> rook.validateMovement(source, target, other))

@@ -18,7 +18,7 @@ class BishopTest {
     @Test
     void 대각선_방향으로_이동할_수_있다() {
         Position source = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.G, Rank.SEVEN);
+        Position target = new Position(File.E, Rank.FIVE);
 
         assertThatCode(() -> bishop.validateMovement(source, target, other))
                 .doesNotThrowAnyException();
@@ -32,5 +32,34 @@ class BishopTest {
         assertThatThrownBy(() -> bishop.validateMovement(source, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("대각선 방향으로 이동해야 합니다.");
+    }
+
+    @Test
+    void L자_방향으로_이동하면_예외가_발생한다() {
+        Position source = new Position(File.D, Rank.FOUR);
+        Position target = new Position(File.F, Rank.THREE);
+
+        assertThatThrownBy(() -> bishop.validateMovement(source, target, other))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("대각선 방향으로 이동해야 합니다.");
+    }
+
+    @Test
+    void 정의되지_않은_방향으로_이동하면_예외가_발생한다() {
+        Position source = new Position(File.D, Rank.FOUR);
+        Position target = new Position(File.A, Rank.TWO);
+
+        assertThatThrownBy(() -> bishop.validateMovement(source, target, other))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("대각선 방향으로 이동해야 합니다.");
+    }
+
+    @Test
+    void 거리에_상관없이_이동할_수_있다() {
+        Position source = new Position(File.A, Rank.ONE);
+        Position target = new Position(File.H, Rank.EIGHT);
+
+        assertThatCode(() -> bishop.validateMovement(source, target, other))
+                .doesNotThrowAnyException();
     }
 }

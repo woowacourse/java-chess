@@ -18,25 +18,24 @@ class ChessBoardTest {
     void 기물을_움직일_때_중간에_다른_기물이_있으면_예외가_발생한다() {
         Position source = new Position(File.F, Rank.FOUR);
         Position target = new Position(File.F, Rank.EIGHT);
-        Map<Position, Piece> pieceMap = Map.of(
+        ChessBoard board = new ChessBoard(Map.of(
                 source, new Queen(Color.WHITE),
-                new Position(File.F, Rank.FIVE), new Queen(Color.BLACK));
-        ChessBoard board = new ChessBoard(pieceMap);
+                new Position(File.F, Rank.FIVE), new Queen(Color.BLACK)));
 
         assertThatThrownBy(() -> board.movePiece(source, target))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동 경로에 다른 기물이 존재합니다.");
     }
 
     @Test
     void 기물을_움직일_때_중간에_다른_기물이_없으면_이동한다() {
         Position source = new Position(File.F, Rank.FOUR);
-        Piece piece = new Queen(Color.WHITE);
         Position target = new Position(File.F, Rank.EIGHT);
-        Map<Position, Piece> pieceMap = Map.of(source, piece);
-        ChessBoard board = new ChessBoard(pieceMap);
+        Piece piece = new Queen(Color.WHITE);
+        ChessBoard board = new ChessBoard(Map.of(source, piece));
 
         board.movePiece(source, target);
+
         assertThat(board.getPositionAndPieces()).containsEntry(target, piece)
                 .doesNotContainKey(source);
     }
@@ -46,13 +45,14 @@ class ChessBoardTest {
         Position source = new Position(File.F, Rank.FOUR);
         Position target = new Position(File.G, Rank.FIVE);
         Piece sourcePiece = new Queen(Color.WHITE);
-        Map<Position, Piece> pieceMap = Map.of(
+        BlackPawn targetPiece = new BlackPawn();
+        ChessBoard board = new ChessBoard(Map.of(
                 source, sourcePiece,
-                target, new BlackPawn());
-        ChessBoard board = new ChessBoard(pieceMap);
+                target, targetPiece));
 
         board.movePiece(source, target);
+
         assertThat(board.getPositionAndPieces()).containsEntry(target, sourcePiece)
-                .doesNotContainKey(source);
+                .doesNotContainValue(targetPiece);
     }
 }

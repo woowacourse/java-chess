@@ -12,8 +12,8 @@ import domain.position.Rank;
 import org.junit.jupiter.api.Test;
 
 class KnightTest {
-    private static final Piece other = Empty.create();
     private final Piece knight = new Knight(Color.WHITE);
+    private static final Piece other = Empty.create();
 
     @Test
     void L자_방향으로_이동할_수_있다() {
@@ -52,5 +52,14 @@ class KnightTest {
         assertThatThrownBy(() -> knight.validateMovement(source, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("L자 방향으로 이동해야 합니다.");
+    }
+
+    @Test
+    void 두_칸_이동할_수_있다() {
+        Position source = new Position(File.D, Rank.FOUR);
+        Position target = new Position(File.E, Rank.TWO);
+
+        assertThatCode(() -> knight.validateMovement(source, target, other))
+                .doesNotThrowAnyException();
     }
 }
