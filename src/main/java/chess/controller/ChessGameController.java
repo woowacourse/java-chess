@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 
 public class ChessGameController {
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^move\\s+([a-h][1-8]\\s+[a-h][1-8])$");
+    private static final int COLUMN_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+    private static final int SOURCE_INDEX = 0;
+    private static final int DESTINATION_INDEX = 1;
+    private static final int SOURCE_DESTINATION_INDEX = 1;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -52,40 +57,39 @@ public class ChessGameController {
         if (command.equals("end")) {
             System.exit(0);
         }
-        if (command.startsWith("move")) {
-            movePiece(chessGame, command);
-            return;
+        if (!command.startsWith("move")) {
+            throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
-        throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
+        movePiece(chessGame, command);
     }
 
     private void movePiece(ChessGame chessGame, String command) {
         List<Position> positions = readPositions(command);
-        chessGame.move(positions.get(0), positions.get(1));
+        chessGame.move(positions.get(COLUMN_INDEX), positions.get(RANK_INDEX));
         outputView.printBoard(chessGame.collectBoard());
     }
 
     private List<Position> readPositions(String command) {
         List<Position> positions = new ArrayList<>();
         List<String> rawPositions = parseDepartureDestination(command);
-        positions.add(parsePosition(rawPositions.get(0)));
-        positions.add(parsePosition(rawPositions.get(1)));
+        positions.add(parsePosition(rawPositions.get(SOURCE_INDEX)));
+        positions.add(parsePosition(rawPositions.get(DESTINATION_INDEX)));
         return positions;
     }
 
     private Position parsePosition(String rawPosition) {
-        int departureColumn = Column.findColumn(String.valueOf(rawPosition.charAt(0)));
-        int departureRank = parseRank(String.valueOf(rawPosition.charAt(1)));
+        int departureColumn = Column.findColumn(String.valueOf(rawPosition.charAt(COLUMN_INDEX)));
+        int departureRank = parseRank(String.valueOf(rawPosition.charAt(RANK_INDEX)));
         return new Position(departureColumn, departureRank);
     }
 
     private List<String> parseDepartureDestination(String command) {
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
 
-        if (matcher.find()) {
-            return List.of(matcher.group(1).split("\\s+"));
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
-        throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
+        return List.of(matcher.group(SOURCE_DESTINATION_INDEX).split("\\s+"));
     }
 
     private int parseRank(String rawRank) {
