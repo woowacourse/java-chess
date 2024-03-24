@@ -24,6 +24,19 @@ public class ChessBoardTest {
         assertThat(chessBoard.getChessBoard()).hasSize(32);
     }
 
+    @DisplayName("게임이 시작되면 White팀부터 게임을 시작한다")
+    @Test
+    void validateTurn() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        Position blackSource = Position.of(File.B, Rank.SEVEN);
+        Position blackTarget = Position.of(File.B, Rank.SIX);
+
+        // when, then
+        assertThatThrownBy(() -> chessBoard.move(blackSource, blackTarget))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("source에 위치한 piece가 움직일 수 있는지 판단한다")
     @Test
     public void move() throws NoSuchFieldException, IllegalAccessException {

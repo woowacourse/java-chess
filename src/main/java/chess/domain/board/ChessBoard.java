@@ -17,10 +17,12 @@ import java.util.Optional;
 
 public class ChessBoard {
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
+    private Color currentTurnTeamColor;
 
     public ChessBoard() {
         initializeBlackPieces();
         initializeWhitePieces();
+        currentTurnTeamColor = Color.WHITE;
     }
 
     public void move(Position source, Position target) {
@@ -28,16 +30,24 @@ public class ChessBoard {
             throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
         }
         Piece sourcePiece = chessBoard.get(source);
+        validateTurn(sourcePiece);
 
         if (!canMove(sourcePiece, source, target)) {
             throw new IllegalArgumentException("올바르지 않은 이동입니다.");
         }
         chessBoard.put(target, sourcePiece);
         chessBoard.remove(source);
+        currentTurnTeamColor = currentTurnTeamColor.convertTurn();
     }
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
+    }
+
+    private void validateTurn(Piece sourcePiece) {
+        if (currentTurnTeamColor != sourcePiece.getColor()) {
+            throw new IllegalArgumentException("해당 팀의 턴이 아닙니다.");
+        }
     }
 
     private boolean canMove(Piece sourcePiece, Position source, Position target) {
