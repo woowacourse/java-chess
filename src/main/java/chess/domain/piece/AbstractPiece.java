@@ -37,16 +37,6 @@ abstract class AbstractPiece implements Piece {
     abstract void validatePieceMoveRule(Coordinate source, Coordinate target, Board board);
 
     @Override
-    public PieceType getType() {
-        return type;
-    }
-
-    @Override
-    public Team getTeam() {
-        return team;
-    }
-
-    @Override
     public boolean isSameTeam(Piece other) {
         return this.team == other.getTeam();
     }
@@ -54,6 +44,16 @@ abstract class AbstractPiece implements Piece {
     @Override
     public boolean isEnemy(Piece other) {
         return this.team.opposite() == other.getTeam();
+    }
+
+    @Override
+    public PieceType getType() {
+        return type;
+    }
+
+    @Override
+    public Team getTeam() {
+        return team;
     }
 
     @Override

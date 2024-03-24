@@ -8,7 +8,6 @@ public enum Team {
 
     private final int forwardDirection;
 
-
     Team(int forwardDirection) {
         this.forwardDirection = forwardDirection;
     }
@@ -17,7 +16,6 @@ public enum Team {
         return forwardDirection;
     }
 
-    //TODO: 테스트 필요한가?
     public Team opposite() {
         if (this == BLACK) {
             return WHITE;

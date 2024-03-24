@@ -35,7 +35,6 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
         Weight weight = direction.getWeight();
         Coordinate nowCoordinate = start;
 
-        //TODO: 쓰기 시 복사하는 패턴이 숨겨지는데, 사용처에서 알 수 있을까?
         while (nowCoordinate.isApplicable(weight)) {
             nowCoordinate = nowCoordinate.apply(weight);
             slidingPath.add(nowCoordinate);
