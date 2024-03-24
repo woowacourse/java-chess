@@ -26,8 +26,7 @@ public class ChessController {
         if (gameCommand.isEnd()) {
             return;
         }
-        ChessBoardInitializer initializer = new ChessBoardInitializer();
-        ChessBoard chessBoard = new ChessBoard(initializer.create());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.INITIAL_BOARD);
         outputView.printChessBoard(chessBoard);
         retryOnException(() -> playChess(chessBoard));
     }

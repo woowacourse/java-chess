@@ -22,8 +22,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
-        chessBoard = new ChessBoard(chessBoardInitializer.create());
+        chessBoard = new ChessBoard(ChessBoardInitializer.INITIAL_BOARD);
     }
 
     @Test
