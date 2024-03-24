@@ -14,10 +14,7 @@ public class BoardFactory {
     public static Map<Point, Piece> createEmptyBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
-        IntStream.rangeClosed(1, 8)
-                .boxed()
-                .map(BoardFactory::lineOfEmpty)
-                .forEach(board::putAll);
+        putEmptyLines(8, board);
 
         return board;
     }
@@ -25,34 +22,38 @@ public class BoardFactory {
     public static Map<Point, Piece> createInitialChessBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
-        board.putAll(createEighthLine());
-        board.putAll(createSeventhLine());
-        IntStream.rangeClosed(3, 6)
-                .boxed()
-                .map(BoardFactory::lineOfEmpty)
-                .forEach(board::putAll);
-        board.putAll(createSecondLine());
-        board.putAll(createFirstLine());
+        board.putAll(BlackFirstLine());
+        board.putAll(BlackSecondLine());
+        putEmptyLines(4, board);
+        board.putAll(WhiteSecondLine());
+        board.putAll(WhiteFirstLine());
         return board;
     }
 
-    private static Map<Point, Piece> createEighthLine() {
-        return lineOfKing(8, Team.BLACK);
+    private static void putEmptyLines(int size, Map<Point, Piece> board) {
+        IntStream.range(0, size)
+                .boxed()
+                .map(BoardFactory::EmptyLine)
+                .forEach(board::putAll);
     }
 
-    private static Map<Point, Piece> createSeventhLine() {
-        return lineOfPawn(7, Team.BLACK);
+    private static Map<Point, Piece> BlackFirstLine() {
+        return teamFirstLine(8, Team.BLACK);
     }
 
-    private static Map<Point, Piece> createSecondLine() {
-        return lineOfPawn(2, Team.WHITE);
+    private static Map<Point, Piece> BlackSecondLine() {
+        return teamSecondLine(7, Team.BLACK);
     }
 
-    private static Map<Point, Piece> createFirstLine() {
-        return lineOfKing(1, Team.WHITE);
+    private static Map<Point, Piece> WhiteSecondLine() {
+        return teamSecondLine(2, Team.WHITE);
     }
 
-    private static Map<Point, Piece> lineOfPawn(int rank, Team team) {
+    private static Map<Point, Piece> WhiteFirstLine() {
+        return teamFirstLine(1, Team.WHITE);
+    }
+
+    private static Map<Point, Piece> teamSecondLine(int rank, Team team) {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = File.minValue(); c <= File.maxValue(); c++) {
@@ -61,7 +62,7 @@ public class BoardFactory {
         return line;
     }
 
-    private static Map<Point, Piece> lineOfKing(int rank, Team team) {
+    private static Map<Point, Piece> teamFirstLine(int rank, Team team) {
         return Map.of(
                 Point.of(File.A, Rank.of(rank)), Piece.rookFrom(team),
                 Point.of(File.B, Rank.of(rank)), Piece.knightFrom(team),
@@ -74,7 +75,7 @@ public class BoardFactory {
         );
     }
 
-    private static Map<Point, Piece> lineOfEmpty(int rank) {
+    private static Map<Point, Piece> EmptyLine(int rank) {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = File.minValue(); c <= File.maxValue(); c++) {
