@@ -1,7 +1,9 @@
 package chess.controller;
 
-import chess.domain.*;
-import chess.view.GameCommand;
+import chess.domain.ChessBoard;
+import chess.domain.ChessBoardFactory;
+import chess.domain.Position;
+import chess.view.CommandExpression;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -20,36 +22,32 @@ public class ChessController {
     public void run() {
         final ChessBoard chessBoard = ChessBoardFactory.makeChessBoard();
         outputView.printCommandInformation();
-        GameCommand gameCommand = inputView.readGameCommand();
+        CommandExpression commandExpression = inputView.readCommand();
 
-        if (GameCommand.START.equals(gameCommand)) {
+        if (commandExpression.isStart()) {
             outputView.printChessBoard(chessBoard);
             repeat(chessBoard, this::startGame);
         }
     }
 
     private void startGame(final ChessBoard chessBoard) {
-        GameCommand gameCommand = inputView.readGameCommand();
+        CommandExpression commandExpression = inputView.readCommand();
 
-        do {
-            if (GameCommand.MOVE.equals(gameCommand)) {
-                Position source = readPosition();
-                Position target = readPosition();
-                chessBoard.move(source, target);
-                outputView.printChessBoard(chessBoard);
-            }
-        } while (inputView.readGameCommand() != GameCommand.END);
+        while (commandExpression.isMove()) {
+            Position source = commandExpression.getSourcePosition();
+            Position target = commandExpression.getTargetPosition();
+            chessBoard.move(source, target);
+            outputView.printChessBoard(chessBoard);
+            commandExpression = inputView.readCommand();
+        }
+
+        validateStartDuplicate(commandExpression);
     }
 
-    private Position readPosition() {
-        String position = inputView.readPosition();
-
-        int fileIdx = Integer.parseInt(position.substring(0, 1));
-        int rankIdx = Integer.parseInt(position.substring(1, 2));
-        File file = File.values()[fileIdx];
-        Rank rank = Rank.values()[rankIdx];
-
-        return Position.of(file, rank);
+    private void validateStartDuplicate(CommandExpression commandExpression) {
+        if (commandExpression.isStart()) {
+            throw new IllegalArgumentException("게임 도중에는 start 명령어를 입력할 수 없습니다.");
+        }
     }
 
     private void repeat(final ChessBoard chessBoard, final Consumer<ChessBoard> consumer) {
