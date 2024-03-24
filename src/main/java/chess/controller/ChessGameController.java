@@ -48,7 +48,7 @@ public class ChessGameController {
             Position source = createPosition(inputView.getPosition());
             Position target = createPosition(inputView.getPosition());
 
-            board.move(source, target);
+            board.tryMove(source, target);
             outputView.printBoard(board);
         }
     }
