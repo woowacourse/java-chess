@@ -46,8 +46,8 @@ public abstract class Piece {
 
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
-        int rowSign = Calculator.calculateSign(rowDifference);
-        int columnSign = Calculator.calculateSign(columnDifference);
+        int rowSign = Calculator.divideAbsoluteValue(rowDifference);
+        int columnSign = Calculator.divideAbsoluteValue(columnDifference);
 
         List<Position> positions = new ArrayList<>();
         for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
@@ -63,7 +63,7 @@ public abstract class Piece {
         throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
     }
 
-    public boolean isAttacking(Movement movement) {
+    public boolean isAttackable(Movement movement) {
         return isAttackable(movement.calculateRowDifference(), movement.calculateColumnDifference());
     }
 

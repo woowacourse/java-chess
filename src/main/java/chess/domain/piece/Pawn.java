@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
-    public static final int WHITE_NORMAL_MOVEMENT = 1;
-    public static final int WHITE_START_MOVEMENT = 2;
-    public static final int BLACK_NORMAL_MOVEMENT = -1;
-    public static final int BLACK_START_MOVEMENT = -2;
-    public static final int ATTACK_COLUMN_MOVEMENT = 1;
-
+    public static final int WHITE_MOVE_ROW_DIFFERENCE = 1;
+    public static final int WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE = 2;
+    public static final int BLACK_MOVE_ROW_DIFFERENCE = -1;
+    public static final int BLACK_FIRST_MOVE_MAX_ROW_DIFFERENCE = -2;
+    public static final int ATTACK_ABSOLUTE_COLUMN_DIFFERENCE = 1;
 
     public Pawn(Team team) {
         this(new Character(team, Kind.PAWN), false);
@@ -52,11 +51,10 @@ public class Pawn extends Piece {
     @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
-        if (Math.abs(rowDifference) == WHITE_START_MOVEMENT) {
-            positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
-            return positions;
+        if (Math.abs(rowDifference) == WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE) {
+            positions.add(position.move(Calculator.divideAbsoluteValue(rowDifference), 0));
         }
-        return new ArrayList<>();
+        return positions;
     }
 
     @Override
@@ -65,16 +63,20 @@ public class Pawn extends Piece {
             return false;
         }
         if (character.team() == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT || (!hasMoved && rowDifference == WHITE_START_MOVEMENT);
+            return rowDifference == WHITE_MOVE_ROW_DIFFERENCE
+                    || (!hasMoved && rowDifference == WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE);
         }
-        return rowDifference == BLACK_NORMAL_MOVEMENT || (!hasMoved && rowDifference == BLACK_START_MOVEMENT);
+        return rowDifference == BLACK_MOVE_ROW_DIFFERENCE
+                || (!hasMoved && rowDifference == BLACK_FIRST_MOVE_MAX_ROW_DIFFERENCE);
     }
 
     @Override
     protected boolean isAttackable(int rowDifference, int columnDifference) {
         if (character.team() == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
+            return rowDifference == WHITE_MOVE_ROW_DIFFERENCE
+                    && Math.abs(columnDifference) == ATTACK_ABSOLUTE_COLUMN_DIFFERENCE;
         }
-        return rowDifference == BLACK_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
+        return rowDifference == BLACK_MOVE_ROW_DIFFERENCE
+                && Math.abs(columnDifference) == ATTACK_ABSOLUTE_COLUMN_DIFFERENCE;
     }
 }

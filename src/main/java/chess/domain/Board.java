@@ -122,7 +122,7 @@ public class Board {
     }
 
     private boolean isAttacking(Piece thisPiece, Movement movement) {
-        if (thisPiece.isAttacking(movement)) {
+        if (thisPiece.isAttackable(movement)) {
             return findBetweenPositions(thisPiece, movement).stream()
                     .noneMatch(pieces::containsKey);
         }

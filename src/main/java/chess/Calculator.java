@@ -1,7 +1,7 @@
 package chess;
 
 public class Calculator {
-    public static int calculateSign(int value) {
+    public static int divideAbsoluteValue(int value) {
         if (value == 0) {
             return 0;
         }
