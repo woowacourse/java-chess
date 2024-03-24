@@ -16,7 +16,7 @@ public enum Rank {
         try {
             return values()[this.ordinal() + offset];
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("[ERROR] 체스판 세로 범위를 넘어가도록 움직일 수는 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 체스판 세로 범위를 넘어갔습니다.");
         }
     }
 
