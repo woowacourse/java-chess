@@ -1,10 +1,10 @@
-package chess.view;
+package chess.view.matcher;
 
 import chess.domain.piece.PieceType;
 
 import java.util.Arrays;
 
-public enum PieceTypeName {
+public enum PieceNameMatcher {
     WHITE_PAWN("p", PieceType.WHITE_PAWN),
     BLACK_PAWN("P", PieceType.BLACK_PAWN),
     WHITE_ROOK("r", PieceType.WHITE_ROOK),
@@ -22,7 +22,7 @@ public enum PieceTypeName {
     private final String name;
     private final PieceType type;
 
-    PieceTypeName(String name, PieceType type) {
+    PieceNameMatcher(String name, PieceType type) {
         this.name = name;
         this.type = type;
     }

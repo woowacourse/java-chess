@@ -26,10 +26,7 @@ public class ChessBoard {
         return BoardStatus.from(board);
     }
 
-    public void move(final String from, final String to, final Turn turn) {
-        Position source = Position.of(from);
-        Position target = Position.of(to);
-
+    public void move(final Position source, final Position target, final Turn turn) {
         validate(source, target, turn);
 
         Piece sourcePiece = board.get(source);

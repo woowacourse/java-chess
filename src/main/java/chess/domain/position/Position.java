@@ -18,12 +18,9 @@ public class Position {
         this.rank = rank;
     }
 
-    // position String은 뷰로직. 처리해서 보내도록 수정
-    public static Position of(final String position) {
-        return CACHE.computeIfAbsent(position, key -> new Position(
-                ChessFile.findByValue(String.valueOf(position.charAt(0))),
-                ChessRank.findByValue(String.valueOf(position.charAt(1)))
-        ));
+    public static Position of(final ChessFile file, final ChessRank rank) {
+        return CACHE.computeIfAbsent(file.name() + rank.name(),
+                key -> new Position(file, rank));
     }
 
     public Set<Position> findBetween(final Position target) {

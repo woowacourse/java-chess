@@ -2,6 +2,8 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,27 +18,27 @@ class KnightMovementStrategyTest {
 
     static Stream<Arguments> canKnightMoveL_ShapeDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("c2")),
-                Arguments.arguments(Position.of("d4"), Position.of("e2")),
-                Arguments.arguments(Position.of("d4"), Position.of("c6")),
-                Arguments.arguments(Position.of("d4"), Position.of("e6")),
-                Arguments.arguments(Position.of("d4"), Position.of("f3")),
-                Arguments.arguments(Position.of("d4"), Position.of("f5")),
-                Arguments.arguments(Position.of("d4"), Position.of("b5")),
-                Arguments.arguments(Position.of("d4"), Position.of("b3"))
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.TWO)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.TWO)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.SIX)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.SIX)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.THREE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.FIVE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.FIVE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.THREE))
         );
     }
 
     static Stream<Arguments> cannotKnightMoveExceptL_ShapeDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("g5")),
-                Arguments.arguments(Position.of("d4"), Position.of("g7")),
-                Arguments.arguments(Position.of("d4"), Position.of("c5")),
-                Arguments.arguments(Position.of("d4"), Position.of("c7")),
-                Arguments.arguments(Position.of("d4"), Position.of("a3")),
-                Arguments.arguments(Position.of("d4"), Position.of("a1")),
-                Arguments.arguments(Position.of("d4"), Position.of("e3")),
-                Arguments.arguments(Position.of("d4"), Position.of("e1"))
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.FIVE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.SEVEN)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.FIVE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.SEVEN)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.THREE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.ONE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.THREE)),
+                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.ONE))
         );
     }
 

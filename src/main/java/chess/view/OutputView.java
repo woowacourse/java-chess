@@ -4,6 +4,7 @@ import chess.domain.position.ChessFile;
 import chess.domain.position.ChessRank;
 import chess.dto.BoardStatus;
 import chess.dto.PieceInfo;
+import chess.view.matcher.PieceNameMatcher;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
@@ -50,7 +51,7 @@ public class OutputView {
 
     private void applyBoardStatus(final BoardStatus status, final String[][] board) {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
-            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = PieceTypeName.findName(pieceInfo.type());
+            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = PieceNameMatcher.findName(pieceInfo.type());
         }
     }
 

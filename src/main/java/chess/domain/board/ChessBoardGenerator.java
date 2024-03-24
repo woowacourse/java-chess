@@ -7,10 +7,33 @@ import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoardGenerator implements BoardGenerator {
-    private final static ChessBoardGenerator INSTANCE = new ChessBoardGenerator();
+    private static final ChessBoardGenerator INSTANCE = new ChessBoardGenerator();
+
+    private static final List<PieceType> FIRST_LINE_WHITE_PIECES = List.of(
+            PieceType.WHITE_ROOK,
+            PieceType.WHITE_KNIGHT,
+            PieceType.WHITE_BISHOP,
+            PieceType.WHITE_QUEEN,
+            PieceType.WHITE_KING,
+            PieceType.WHITE_BISHOP,
+            PieceType.WHITE_KNIGHT,
+            PieceType.WHITE_ROOK
+    );
+
+    private static final List<PieceType> FIRST_LINE_BLACK_PIECES = List.of(
+            PieceType.BLACK_ROOK,
+            PieceType.BLACK_KNIGHT,
+            PieceType.BLACK_BISHOP,
+            PieceType.BLACK_QUEEN,
+            PieceType.BLACK_KING,
+            PieceType.BLACK_BISHOP,
+            PieceType.BLACK_KNIGHT,
+            PieceType.BLACK_ROOK
+    );
 
     private ChessBoardGenerator() {
     }
@@ -22,67 +45,39 @@ public class ChessBoardGenerator implements BoardGenerator {
     @Override
     public Map<Position, Piece> generate() {
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.putAll(createBlackFirstLine(ChessRank.EIGHT));
-        pieces.putAll(createBlackSecondLine(ChessRank.SEVEN));
+        pieces.putAll(createLineFromAnotherPieceType(ChessRank.EIGHT, FIRST_LINE_BLACK_PIECES));
+        pieces.putAll(createLineFromOnePieceType(ChessRank.SEVEN, PieceType.BLACK_PAWN));
 
-        pieces.putAll(createWhiteSecondLine(ChessRank.TWO));
-        pieces.putAll(createWhiteFirstLine(ChessRank.ONE));
+        pieces.putAll(createLineFromOnePieceType(ChessRank.TWO, PieceType.WHITE_PAWN));
+        pieces.putAll(createLineFromAnotherPieceType(ChessRank.ONE, FIRST_LINE_WHITE_PIECES));
         return pieces;
     }
 
-    private Map<Position, Piece> createBlackFirstLine(final ChessRank chessRank) {
+    private Map<Position, Piece> createLineFromAnotherPieceType(final ChessRank chessRank, final List<PieceType> types) {
         Map<Position, Piece> firstLine = new HashMap<>();
-        firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.BLACK_ROOK));
-        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
-        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
-        firstLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.BLACK_QUEEN));
-        firstLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.BLACK_KING));
-        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.BLACK_BISHOP));
-        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.BLACK_KNIGHT));
-        firstLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.BLACK_ROOK));
+        firstLine.put(Position.of(ChessFile.A, chessRank), new Piece(types.get(ChessFile.A.index())));
+        firstLine.put(Position.of(ChessFile.B, chessRank), new Piece(types.get(ChessFile.B.index())));
+        firstLine.put(Position.of(ChessFile.C, chessRank), new Piece(types.get(ChessFile.C.index())));
+        firstLine.put(Position.of(ChessFile.D, chessRank), new Piece(types.get(ChessFile.D.index())));
+        firstLine.put(Position.of(ChessFile.E, chessRank), new Piece(types.get(ChessFile.E.index())));
+        firstLine.put(Position.of(ChessFile.F, chessRank), new Piece(types.get(ChessFile.F.index())));
+        firstLine.put(Position.of(ChessFile.G, chessRank), new Piece(types.get(ChessFile.G.index())));
+        firstLine.put(Position.of(ChessFile.H, chessRank), new Piece(types.get(ChessFile.H.index())));
 
         return firstLine;
     }
 
-    private Map<Position, Piece> createWhiteFirstLine(final ChessRank chessRank) {
-        Map<Position, Piece> firstLine = new HashMap<>();
-        firstLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.WHITE_ROOK));
-        firstLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
-        firstLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
-        firstLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.WHITE_QUEEN));
-        firstLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.WHITE_KING));
-        firstLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.WHITE_BISHOP));
-        firstLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.WHITE_KNIGHT));
-        firstLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.WHITE_ROOK));
+    private Map<Position, Piece> createLineFromOnePieceType(final ChessRank chessRank, final PieceType type) {
+        Map<Position, Piece> line = new HashMap<>();
+        line.put(Position.of(ChessFile.A, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.B, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.C, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.D, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.E, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.F, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.G, chessRank), new Piece(type));
+        line.put(Position.of(ChessFile.H, chessRank), new Piece(type));
 
-        return firstLine;
-    }
-
-    private Map<Position, Piece> createBlackSecondLine(ChessRank chessRank) {
-        Map<Position, Piece> secondLine = new HashMap<>();
-        secondLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-        secondLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.BLACK_PAWN));
-
-        return secondLine;
-    }
-
-    private Map<Position, Piece> createWhiteSecondLine(final ChessRank chessRank) {
-        Map<Position, Piece> secondLine = new HashMap<>();
-        secondLine.put(Position.of(ChessFile.A.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.B.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.C.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.D.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.E.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.F.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.G.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-        secondLine.put(Position.of(ChessFile.H.value() + chessRank.value()), new Piece(PieceType.WHITE_PAWN));
-
-        return secondLine;
+        return line;
     }
 }

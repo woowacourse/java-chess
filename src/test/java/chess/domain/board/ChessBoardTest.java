@@ -4,6 +4,8 @@ import chess.domain.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import chess.dto.BoardStatus;
 import chess.dto.PieceInfo;
@@ -34,7 +36,11 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance());
 
         // when
-        chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE));
+        chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.THREE),
+                new Turn(PieceColor.WHITE)
+        );
 
         // then
         BoardStatus boardStatus = chessBoard.status();
@@ -52,13 +58,16 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "b2", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.TWO),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력하신 이동 위치가 올바르지 않습니다.");
     }
@@ -69,14 +78,17 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
-        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.THREE), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.THREE),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 target입니다.");
     }
@@ -87,13 +99,16 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b3", "b2", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.THREE),
+                Position.of(ChessFile.B, ChessRank.TWO),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("입력하신 이동 위치가 올바르지 않습니다.");
     }
@@ -104,13 +119,16 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
 
         generatorStub.setBoard(board);
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "b7", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.SEVEN),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물이 이동할 수 없는 방식입니다.");
     }
@@ -121,14 +139,17 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_ROOK));
-        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_ROOK));
+        board.put(Position.of(ChessFile.B, ChessRank.THREE), new Piece(PieceType.WHITE_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "b7", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.SEVEN),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동하고자 하는 경로 사이에 기물이 존재합니다.");
     }
@@ -139,32 +160,38 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_KNIGHT));
-        board.put(Position.of("b3"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_KNIGHT));
+        board.put(Position.of(ChessFile.B, ChessRank.THREE), new Piece(PieceType.WHITE_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatCode(() -> chessBoard.move("b2", "c4", new Turn(PieceColor.WHITE))).doesNotThrowAnyException();
+        assertThatCode(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.C, ChessRank.FOUR),
+                new Turn(PieceColor.WHITE))).doesNotThrowAnyException();
     }
 
     @DisplayName("폰은 타겟에 상대 기물이 있으면 대각선으로 이동할 수 있다.")
     @Test
     void canPawnMoveDiagonal() {
         // given
-        PieceInfo expected = PieceInfo.of(Position.of("c3"), new Piece(PieceType.WHITE_PAWN));
+        PieceInfo expected = PieceInfo.of(Position.of(ChessFile.C, ChessRank.THREE), new Piece(PieceType.WHITE_PAWN));
 
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
-        board.put(Position.of("c3"), new Piece(PieceType.BLACK_KING));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.C, ChessRank.THREE), new Piece(PieceType.BLACK_KING));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when
-        chessBoard.move("b2", "c3", new Turn(PieceColor.WHITE));
+        chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.C, ChessRank.THREE),
+                new Turn(PieceColor.WHITE));
         List<PieceInfo> pieceInfos = chessBoard.status().pieceInfos();
 
         // then
@@ -177,13 +204,16 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "c3", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.C, ChessRank.THREE),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
     }
@@ -194,14 +224,17 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
-        board.put(Position.of("b3"), new Piece(PieceType.BLACK_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.B, ChessRank.THREE), new Piece(PieceType.BLACK_PAWN));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move("b2", "b3", new Turn(PieceColor.WHITE)))
+        assertThatThrownBy(() -> chessBoard.move(
+                Position.of(ChessFile.B, ChessRank.TWO),
+                Position.of(ChessFile.B, ChessRank.THREE),
+                new Turn(PieceColor.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰은 대각선으로만 공격할 수 있습니다.");
     }
@@ -212,18 +245,18 @@ public class ChessBoardTest {
         // given
         BoardGeneratorStub generatorStub = new BoardGeneratorStub();
         HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Piece(PieceType.WHITE_PAWN));
-        board.put(Position.of("a1"), new Piece(PieceType.WHITE_ROOK));
+        board.put(Position.of(ChessFile.B, ChessRank.TWO), new Piece(PieceType.WHITE_PAWN));
+        board.put(Position.of(ChessFile.A, ChessRank.ONE), new Piece(PieceType.WHITE_ROOK));
         generatorStub.setBoard(board);
 
         ChessBoard chessBoard = new ChessBoard(generatorStub);
         Turn turn = new Turn(PieceColor.WHITE);
 
         // when
-        chessBoard.move("b2", "b3", turn);
+        chessBoard.move(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.B, ChessRank.THREE), turn);
 
         // then
-        assertThatThrownBy(() -> chessBoard.move("a1", "h1", turn))
+        assertThatThrownBy(() -> chessBoard.move(Position.of(ChessFile.A, ChessRank.ONE), Position.of(ChessFile.H, ChessRank.ONE), turn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 색의 차례가 아닙니다.");
     }

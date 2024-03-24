@@ -1,6 +1,9 @@
 package chess.view;
 
+import chess.domain.position.Position;
 import chess.dto.CommandInfo;
+import chess.view.matcher.ChessFileMatcher;
+import chess.view.matcher.ChessRankMatcher;
 
 import java.util.Scanner;
 
@@ -24,7 +27,8 @@ public class InputView {
         }
         if (commandText.length == 3) {
             validatePosition(commandText[1], commandText[2]);
-            return CommandInfo.ofMovable(Command.findByText(commandText[0]), commandText[1], commandText[2]);
+            return CommandInfo.ofMovable(
+                    Command.findByText(commandText[0]), extractPosition(commandText[1]), extractPosition(commandText[2]));
         }
         throw new IllegalArgumentException("명령 입력 형식이 올바르지 않습니다.");
     }
@@ -33,5 +37,12 @@ public class InputView {
         if (source.length() != 2 || target.length() != 2) {
             throw new IllegalArgumentException("위치 입력 형식이 올바르지 않습니다.");
         }
+    }
+
+    private Position extractPosition(final String positionText) {
+        String file = String.valueOf(positionText.charAt(0));
+        String rank = String.valueOf(positionText.charAt(1));
+
+        return Position.of(ChessFileMatcher.matchByInputText(file), ChessRankMatcher.matchByInputText(rank));
     }
 }

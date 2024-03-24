@@ -2,6 +2,8 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.position.ChessFile;
+import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,8 @@ class BlackPawnMovementStrategyTest {
     void canBlackPawnMoveOneStep() {
         // given
         Piece pawn = new Piece(PieceType.BLACK_PAWN);
-        Position source = Position.of("a6");
-        Position target = Position.of("a5");
+        Position source = Position.of(ChessFile.A, ChessRank.SIX);
+        Position target = Position.of(ChessFile.A, ChessRank.FIVE);
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -30,8 +32,8 @@ class BlackPawnMovementStrategyTest {
     void canBlackPawnMoveTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.BLACK_PAWN);
-        Position source = Position.of("a7");
-        Position target = Position.of("a5");
+        Position source = Position.of(ChessFile.A, ChessRank.SEVEN);
+        Position target = Position.of(ChessFile.A, ChessRank.FIVE);
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -45,8 +47,8 @@ class BlackPawnMovementStrategyTest {
     void cannotBlackPawnMoveTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.BLACK_PAWN);
-        Position source = Position.of("a6");
-        Position target = Position.of("a4");
+        Position source = Position.of(ChessFile.A, ChessRank.SIX);
+        Position target = Position.of(ChessFile.A, ChessRank.FOUR);
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -60,8 +62,8 @@ class BlackPawnMovementStrategyTest {
     void canBlackPawnMoveDiagonalOneStep() {
         // given
         Piece pawn = new Piece(PieceType.BLACK_PAWN);
-        Position source = Position.of("b7");
-        Position target = Position.of("a6");
+        Position source = Position.of(ChessFile.B, ChessRank.SEVEN);
+        Position target = Position.of(ChessFile.A, ChessRank.SIX);
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -75,8 +77,8 @@ class BlackPawnMovementStrategyTest {
     void cannotBlackPawnMoveDiagonalTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.BLACK_PAWN);
-        Position source = Position.of("a7");
-        Position target = Position.of("c5");
+        Position source = Position.of(ChessFile.A, ChessRank.SEVEN);
+        Position target = Position.of(ChessFile.C, ChessRank.FIVE);
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
