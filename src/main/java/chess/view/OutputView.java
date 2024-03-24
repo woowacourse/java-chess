@@ -6,7 +6,9 @@ import chess.dto.BoardStatus;
 import chess.dto.PieceInfo;
 import chess.view.matcher.PieceNameMatcher;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class OutputView {
@@ -31,33 +33,37 @@ public class OutputView {
     }
 
     public void printChessBoard(final BoardStatus status) {
-        String[][] board = createInitBoard();
+        List<List<String>> board = createInitBoard();
         applyBoardStatus(status, board);
 
         StringJoiner boardJoiner = new StringJoiner(System.lineSeparator());
-        for (String[] line : board) {
+        for (List<String> line : board) {
             boardJoiner.add(createBoardLine(line));
         }
         System.out.println(boardJoiner + System.lineSeparator());
     }
 
-    private String[][] createInitBoard() {
-        String[][] board = new String[ChessRank.maxIndex() + 1][ChessFile.maxIndex() + 1];
+    private List<List<String>> createInitBoard() {
+        List<List<String>> board = new ArrayList<>();
+
         for (int rank = ChessRank.minIndex(); rank <= ChessRank.maxIndex(); rank++) {
-            Arrays.fill(board[rank], ".");
+            ArrayList<String> boardLine = new ArrayList<>(Collections.nCopies(ChessFile.maxIndex() + 1, "."));
+            board.add(boardLine);
         }
         return board;
     }
 
-    private void applyBoardStatus(final BoardStatus status, final String[][] board) {
+    private void applyBoardStatus(final BoardStatus status, final List<List<String>> board) {
         for (PieceInfo pieceInfo : status.pieceInfos()) {
-            board[ChessRank.maxIndex() - pieceInfo.rankIndex()][pieceInfo.fileIndex()] = PieceNameMatcher.findName(pieceInfo.type());
+            int rankIndex = ChessRank.maxIndex() - pieceInfo.rankIndex();
+            int fileIndex = pieceInfo.fileIndex();
+            board.get(rankIndex).set(fileIndex, PieceNameMatcher.findName(pieceInfo.type()));
         }
     }
 
-    private StringBuilder createBoardLine(final String[] line) {
+    private StringBuilder createBoardLine(final List<String> line) {
         StringBuilder lineBuilder = new StringBuilder();
-        for (String point : line) {
+        for (final String point : line) {
             lineBuilder.append(point);
         }
         return lineBuilder;
