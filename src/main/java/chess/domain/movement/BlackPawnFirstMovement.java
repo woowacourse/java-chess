@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 
-public class BlackPawnFirstMovement implements MovementRule {
+public final class BlackPawnFirstMovement implements MovementRule {
 
     private static final Rank BLACK_PAWN_INIT_RANK = Rank.SEVEN;
 

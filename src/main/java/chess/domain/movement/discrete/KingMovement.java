@@ -1,6 +1,6 @@
 package chess.domain.movement.discrete;
 
-public class KingMovement extends DiscreteMovementRule {
+public final class KingMovement extends DiscreteMovementRule {
 
     @Override
     protected boolean isMovable(int rankDifference, int fileDifference) {
