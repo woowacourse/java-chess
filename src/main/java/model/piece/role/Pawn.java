@@ -11,7 +11,7 @@ import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
 
-public final class Pawn extends SingleShiftRole {
+public final class Pawn extends Role {
     private static final int INITIAL_WHITE_PAWN_RANK = 2;
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
     private boolean isTryToTake;
