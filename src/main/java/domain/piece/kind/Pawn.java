@@ -54,7 +54,7 @@ public class Pawn extends Piece {
     }
 
     private boolean specialCase(final Direction direction) {
-        return !this.flag && direction.isStraight();
+        return !this.flag && direction.isVerticalStraight();
     }
 
     @Override

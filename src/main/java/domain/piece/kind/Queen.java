@@ -14,7 +14,6 @@ public class Queen extends Piece {
         return PieceStatus.QUEEN;
     }
 
-    //TODO : 현재 방향을 계산해야만 검증 로직 가능 좀 더 생각해봐야함
     public boolean canMove(final Point point) {
         this.point.calculate(point);
         return true;

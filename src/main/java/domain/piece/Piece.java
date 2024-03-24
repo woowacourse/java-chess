@@ -40,7 +40,7 @@ public abstract class Piece implements Movable {
 
     public boolean isDirectionStraight(final Point point) {
         return this.point.calculate(point)
-                         .isStraight();
+                         .isVerticalStraight();
     }
 
     public boolean isDirectionDiagonal(final Point point) {

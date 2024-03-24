@@ -1,7 +1,5 @@
 package domain.piece.attribute.point;
 
-import domain.piece.attribute.point.Direction;
-import domain.piece.attribute.point.Index;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +39,7 @@ class DirectionTest {
     void true_if_direction_is_up_or_down() {
 
         Set<Direction> set = EnumSet.of(Direction.UP, Direction.DOWN);
-        set.forEach(direction -> assertThat(direction.isStraight()).isTrue());
+        set.forEach(direction -> assertThat(direction.isVerticalStraight()).isTrue());
     }
 
     @Test
@@ -51,6 +49,6 @@ class DirectionTest {
         set.remove(Direction.UP);
         set.remove(Direction.DOWN);
 
-        set.forEach(direction -> assertThat(direction.isStraight()).isFalse());
+        set.forEach(direction -> assertThat(direction.isVerticalStraight()).isFalse());
     }
 }

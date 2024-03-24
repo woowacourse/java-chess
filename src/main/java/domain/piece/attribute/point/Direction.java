@@ -21,8 +21,7 @@ public enum Direction {
         return function.apply(index);
     }
 
-    // TODO : PAWN 에서 사용하기 위함 + 함수명이 Straight 일시 왼쪽 오른쪽 선도 생각 가능
-    public boolean isStraight() {
+    public boolean isVerticalStraight() {
         return this == UP || this == DOWN;
     }
 
