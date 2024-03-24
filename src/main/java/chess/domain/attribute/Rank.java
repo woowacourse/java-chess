@@ -59,4 +59,24 @@ public enum Rank {
     public int getValue() {
         return row;
     }
+
+    public Rank up() {
+        int upOrdinal = this.ordinal() - 1;
+        Rank[] files = Rank.values();
+        try {
+            return files[upOrdinal];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalStateException("해당 칸의 위칸이 존재하지 않습니다.");
+        }
+    }
+
+    public Rank down() {
+        int downOrdinal = this.ordinal() + 1;
+        Rank[] files = Rank.values();
+        try {
+            return files[downOrdinal];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalStateException("해당 칸의 아래칸이 존재하지 않습니다.");
+        }
+    }
 }
