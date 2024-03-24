@@ -28,11 +28,11 @@ public class Board {
     public void move(Positions positions) {
         validatePieceExistsOnPosition(positions.source());
 
-        Piece thisPiece = pieces.get(positions.source());
-        validateSameTeamPieceExistsOnTargetPosition(positions.target(), thisPiece);
-        validateBlockingPieceExists(thisPiece, positions);
+        Piece piece = pieces.get(positions.source());
+        validateSameTeamPieceExistsOnTargetPosition(positions.target(), piece);
+        validateBlockingPieceExists(piece, positions);
 
-        pieces.put(positions.target(), thisPiece.move());
+        pieces.put(positions.target(), piece.move());
         pieces.remove(positions.source());
     }
 
@@ -42,14 +42,14 @@ public class Board {
         }
     }
 
-    private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece thisPiece) {
-        if (pieces.containsKey(targetPosition) && thisPiece.isSameTeamWith(pieces.get(targetPosition))) {
+    private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece piece) {
+        if (pieces.containsKey(targetPosition) && piece.isSameTeamWith(pieces.get(targetPosition))) {
             throw new IllegalArgumentException("해당 위치에 아군 기물이 존재합니다.");
         }
     }
 
-    private void validateBlockingPieceExists(Piece thisPiece, Positions positions) {
-        List<Position> betweenPositions = findBetweenPositions(thisPiece, positions);
+    private void validateBlockingPieceExists(Piece piece, Positions positions) {
+        List<Position> betweenPositions = findBetweenPositions(piece, positions);
 
         if (betweenPositions.stream()
                 .anyMatch(pieces::containsKey)) {
@@ -144,9 +144,9 @@ public class Board {
                 .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
     }
 
-    private boolean isAttacking(Piece thisPiece, Positions positions) {
-        if (thisPiece.isAttackable(positions)) {
-            List<Position> betweenPositions = thisPiece.findBetweenPositionsWhenAttack(positions);
+    private boolean isAttacking(Piece piece, Positions positions) {
+        if (piece.isAttackable(positions)) {
+            List<Position> betweenPositions = piece.findBetweenPositionsWhenAttack(positions);
             return betweenPositions.stream()
                     .noneMatch(pieces::containsKey);
         }
@@ -173,20 +173,20 @@ public class Board {
                 .toList();
     }
 
-    private boolean isMovable(Piece thisPiece, Positions positions) {
-        if (thisPiece.isMovable(positions)) {
-            List<Position> betweenPositions = thisPiece.findBetweenPositions(positions);
+    private boolean isMovable(Piece piece, Positions positions) {
+        if (piece.isMovable(positions)) {
+            List<Position> betweenPositions = piece.findBetweenPositions(positions);
             return betweenPositions.stream()
                     .noneMatch(pieces::containsKey);
         }
         return false;
     }
 
-    private List<Position> findBetweenPositions(Piece thisPiece, Positions positions) {
+    private List<Position> findBetweenPositions(Piece piece, Positions positions) {
         if (pieces.containsKey(positions.target())) {
-            return thisPiece.findBetweenPositionsWhenAttack(positions);
+            return piece.findBetweenPositionsWhenAttack(positions);
         }
-        return thisPiece.findBetweenPositions(positions);
+        return piece.findBetweenPositions(positions);
     }
 
     public Map<Position, Character> mapPositionToCharacter() {
