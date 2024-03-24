@@ -27,7 +27,7 @@ public class Route {
         if (source.isHorizontal(target)) {
             return createHorizontalRoute(source, target);
         }
-        throw new IllegalArgumentException("올바르지 않은 방향입니다.");
+        throw new IllegalArgumentException("잘못된 방향으로 이동하고 있습니다.");
     }
 
     private static Route createEmptyRoute() {

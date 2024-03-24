@@ -14,7 +14,7 @@ public class BlackPawn extends PawnPiece {
     @Override
     protected void validateForwardMovement(final Position source, final Position target) {
         if (!source.isUpperRankThan(target)) {
-            throw new IllegalArgumentException("잘못된 방향으로 이동하고 있습니다.");
+            throw new IllegalArgumentException("폰은 앞으로 이동해야 합니다.");
         }
     }
 

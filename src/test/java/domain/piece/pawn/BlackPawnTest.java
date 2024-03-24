@@ -95,7 +95,7 @@ class BlackPawnTest {
 
         assertThatThrownBy(() -> blackPawn.validateMovement(source, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("잘못된 방향으로 이동하고 있습니다.");
+                .hasMessage("폰은 앞으로 이동해야 합니다.");
     }
 
     @Test

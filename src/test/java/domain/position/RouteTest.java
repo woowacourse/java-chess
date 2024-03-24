@@ -213,7 +213,7 @@ class RouteTest {
 
             assertThatThrownBy(() -> Route.create(source, target))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("올바르지 않은 방향입니다.");
+                    .hasMessage("잘못된 방향으로 이동하고 있습니다.");
         }
     }
 
