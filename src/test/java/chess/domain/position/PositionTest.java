@@ -3,7 +3,6 @@ package chess.domain.position;
 import static chess.fixture.PositionFixtures.A1;
 import static chess.fixture.PositionFixtures.A2;
 import static chess.fixture.PositionFixtures.A3;
-import static chess.fixture.PositionFixtures.A8;
 import static chess.fixture.PositionFixtures.B1;
 import static chess.fixture.PositionFixtures.B2;
 import static chess.fixture.PositionFixtures.B3;
@@ -25,11 +24,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PositionTest {
-    @DisplayName("x축 대칭인 포지션을 반환할 수 있다")
-    @Test
-    void should_ReturnVerticalReversePosition() {
-        assertThat(A1.calculateVerticalReversedPosition()).isEqualTo(A8);
-    }
 
     @DisplayName("다른 포지션과 수평 관계에 있으면 Orthogonal하다")
     @Test

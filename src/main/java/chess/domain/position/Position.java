@@ -13,10 +13,6 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position calculateVerticalReversedPosition() {
-        return new Position(file, rank.reverse());
-    }
-
     public boolean isOrthogonalWith(Position other) {
         if (this.equals(other)) {
             return false;
