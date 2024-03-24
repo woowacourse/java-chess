@@ -34,7 +34,6 @@ public class ChessBoard {
         if (fromSpace.isValidTurn(turn)) {
             return;
         }
-        System.out.println(turn);
         throw new IllegalStateException("상대 플레이어의 차례입니다");
     }
 
