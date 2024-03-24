@@ -24,7 +24,7 @@ class KingTest {
         King king = new King(Side.WHITE);
 
         // when
-        List<ChessPosition> path = king.findPath(source, target, null);
+        List<ChessPosition> path = king.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -53,7 +53,7 @@ class KingTest {
         King king = new King(Side.BLACK);
 
         // when
-        List<ChessPosition> path = king.findPath(source, target, null);
+        List<ChessPosition> path = king.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEmpty();

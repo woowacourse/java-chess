@@ -24,7 +24,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Side.WHITE);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, null);
+        List<ChessPosition> path = pawn.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -39,7 +39,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Side.WHITE);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, null);
+        List<ChessPosition> path = pawn.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEqualTo(List.of(new ChessPosition(File.C, Rank.FOUR)));
@@ -84,7 +84,7 @@ class PawnTest {
         Pawn pawn = new Pawn(Side.BLACK);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, null);
+        List<ChessPosition> path = pawn.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEmpty();

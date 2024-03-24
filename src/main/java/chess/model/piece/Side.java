@@ -2,13 +2,18 @@ package chess.model.piece;
 
 public enum Side {
     BLACK,
-    WHITE;
+    WHITE,
+    EMPTY;
 
     public boolean isWhite() {
-        return this.equals(WHITE);
+        return WHITE.equals(this);
     }
 
-    public boolean isUpperSide() {
-        return this.equals(BLACK);
+    public boolean isBlack() {
+        return BLACK.equals(this);
+    }
+
+    public boolean isEmpty() {
+        return EMPTY.equals(this);
     }
 }

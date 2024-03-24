@@ -30,6 +30,8 @@ public class Knight extends Piece {
     }
 
     private boolean canMove(Distance distance) {
-        return distance.hasSame(DISPLACEMENT) && !distance.isCrossMovement() && !distance.isDiagonalMovement();
+        return distance.hasSame(DISPLACEMENT)
+                && !distance.isCrossMovement()
+                && !distance.isDiagonalMovement();
     }
 }

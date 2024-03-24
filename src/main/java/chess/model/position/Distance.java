@@ -27,7 +27,7 @@ public class Distance {
         if (fileDifference != 0) {
             return false;
         }
-        if (side.isUpperSide()) {
+        if (side.isBlack()) {
             return rankDifference < 0;
         }
         return rankDifference > 0;

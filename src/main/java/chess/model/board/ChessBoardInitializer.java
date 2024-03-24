@@ -1,6 +1,7 @@
 package chess.model.board;
 
 import chess.model.piece.Bishop;
+import chess.model.piece.Empty;
 import chess.model.piece.King;
 import chess.model.piece.Knight;
 import chess.model.piece.Pawn;
@@ -11,20 +12,29 @@ import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ChessBoardInitializer {
     private ChessBoardInitializer() {
     }
 
     public static Map<ChessPosition, Piece> create() {
-        Map<ChessPosition, Piece> board = new HashMap<>();
+        Map<ChessPosition, Piece> board = createInitialBoard();
         board.putAll(createSpecialPieces(Side.BLACK));
         board.putAll(createPawns(Side.BLACK));
         board.putAll(createSpecialPieces(Side.WHITE));
         board.putAll(createPawns(Side.WHITE));
         return board;
+    }
+
+    private static Map<ChessPosition, Piece> createInitialBoard() {
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values())
+                        .map(file -> new ChessPosition(file, rank)))
+                .collect(Collectors.toMap(Function.identity(), chessPosition -> new Empty()));
     }
 
     private static Map<ChessPosition, Piece> createSpecialPieces(Side side) {
@@ -56,18 +66,16 @@ public class ChessBoardInitializer {
     }
 
     private static Rank convertSpecialPieceRankWithSide(Side side) {
-        Rank rank = Rank.ONE;
         if (side == Side.BLACK) {
-            rank = Rank.EIGHT;
+            return Rank.EIGHT;
         }
-        return rank;
+        return Rank.ONE;
     }
 
     private static Rank convertPawnRanksWithSide(Side side) {
-        Rank rank = Rank.TWO;
         if (side == Side.BLACK) {
-            rank = Rank.SEVEN;
+            return Rank.SEVEN;
         }
-        return rank;
+        return Rank.TWO;
     }
 }

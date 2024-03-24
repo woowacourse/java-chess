@@ -24,7 +24,7 @@ class KnightTest {
         Knight knight = new Knight(Side.WHITE);
 
         // when
-        List<ChessPosition> path = knight.findPath(source, target, null);
+        List<ChessPosition> path = knight.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -53,7 +53,7 @@ class KnightTest {
         Knight knight = new Knight(Side.BLACK);
 
         // when
-        List<ChessPosition> path = knight.findPath(source, target, null);
+        List<ChessPosition> path = knight.findPath(source, target, new Empty());
 
         // then
         assertThat(path).isEmpty();

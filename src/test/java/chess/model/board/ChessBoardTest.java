@@ -31,19 +31,21 @@ class ChessBoardTest {
         //when
         chessBoard.move(source, target);
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
+        Piece sourcePiece = board.get(source);
+        Piece targetPiece = board.get(target);
 
         //then
         assertAll(
-                () -> assertThat(board.get(source)).isNull(),
-                () -> assertThat(board.get(target)).isNotNull()
+                () -> assertThat(sourcePiece.isEmpty()).isTrue(),
+                () -> assertThat(targetPiece.isEmpty()).isFalse()
         );
     }
 
     @Test
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
-    void moveNullSource() {
+    void moveEmptySource() {
         //given
-        ChessPosition source = null;
+        ChessPosition source = new ChessPosition(File.C, Rank.FIVE);
         ChessPosition target = new ChessPosition(File.D, Rank.TWO);
 
         //when //then

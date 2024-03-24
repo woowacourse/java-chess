@@ -16,17 +16,25 @@ public class ChessBoard {
 
     public void move(ChessPosition sourcePosition, ChessPosition targetPosition) {
         Piece sourcePiece = board.get(sourcePosition);
-        validateSourceIsNull(sourcePiece);
         Piece targetPiece = board.get(targetPosition);
+        validateSourcePiece(sourcePiece);
+
         List<ChessPosition> path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
         validatePathIsEmpty(path);
         validatePathContainsPiece(path);
-        board.remove(sourcePosition);
+        changePositions(sourcePosition, targetPosition, sourcePiece, targetPiece);
+    }
+
+    private void changePositions(
+            final ChessPosition sourcePosition, final ChessPosition targetPosition,
+            final Piece sourcePiece, final Piece targetPiece
+    ) {
+        board.put(sourcePosition, targetPiece);
         board.put(targetPosition, sourcePiece);
     }
 
-    private void validateSourceIsNull(Piece sourcePiece) {
-        if (sourcePiece == null) {
+    private void validateSourcePiece(Piece sourcePiece) {
+        if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("Source에 기물이 존재하지 않습니다.");
         }
     }
@@ -46,7 +54,7 @@ public class ChessBoard {
     }
 
     private void validatePathContainsPiece(Piece found) {
-        if (found != null) {
+        if (!found.isEmpty()) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재하여 움직일 수 없습니다.");
         }
     }

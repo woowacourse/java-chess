@@ -18,8 +18,12 @@ public abstract class Piece {
         return this.side == other.side;
     }
 
+    public boolean isEmpty() {
+        return side.isEmpty();
+    }
+
     public void checkValidTargetPiece(Piece other) {
-        if (other != null && isSameSide(other)) {
+        if (!other.isEmpty() && isSameSide(other)) {
             throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
     }
