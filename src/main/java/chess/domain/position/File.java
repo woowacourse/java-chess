@@ -47,7 +47,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치가 없습니다."));
     }
 
-    public int calculateDifference(File file) {
-        return file.westToEast - this.westToEast;
+    public int calculateDifference(File other) {
+        return other.westToEast - this.westToEast;
     }
 }
