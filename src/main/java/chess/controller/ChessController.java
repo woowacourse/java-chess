@@ -21,17 +21,15 @@ public class ChessController {
     }
 
     public void run() {
-        GameCommand gameCommand = retryOnException(this::getFirstGameCommand);
+        GameCommand gameCommand = retryOnException(
+                () -> GameCommand.createFirstGameCommand(inputView.readGameCommand())
+        );
         if (gameCommand.isEnd()) {
             return;
         }
         ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.create());
         outputView.printChessBoard(chessBoard);
         retryOnException(() -> playChess(chessBoard));
-    }
-
-    private GameCommand getFirstGameCommand() {
-        return GameCommand.createFirstGameCommand(inputView.readGameCommand());
     }
 
     private void playChess(ChessBoard chessBoard) {
