@@ -20,16 +20,15 @@ public class Coordinate {
 
         char fileWeight = weight.fileWeight();
         int rankWeight = weight.rankWeight();
-        return new Coordinate(rank.getValue() + rankWeight, (char) (file.getValue() + fileWeight));
+        return new Coordinate(rank.value() + rankWeight, (char) (file.value() + fileWeight));
     }
 
     public boolean isApplicable(Weight weight) {
         int rankWeight = weight.rankWeight();
         char fileWeight = weight.fileWeight();
 
-        //TODO: rank, file의 applicable을 생성하도록 개선 가능할 듯!
         try {
-            new Coordinate(rank.getValue() + rankWeight, (char) (file.getValue() + fileWeight));
+            new Coordinate(rank.value() + rankWeight, (char) (file.value() + fileWeight));
             return true;
         } catch (IllegalArgumentException exception) {
             return false;
@@ -37,7 +36,7 @@ public class Coordinate {
     }
 
     public int getRank() {
-        return rank.getValue();
+        return rank.value();
     }
 
     @Override
