@@ -11,7 +11,6 @@ import chess.domain.piece.Queen;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ public class QueenTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece);
     }
@@ -37,7 +36,7 @@ public class QueenTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.c, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece);
     }
@@ -50,7 +49,7 @@ public class QueenTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.b, Rank.THREE));
 
-        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+        assertThatThrownBy(() -> space1.movePiece(space2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
@@ -63,7 +62,7 @@ public class QueenTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.c, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece1);
     }

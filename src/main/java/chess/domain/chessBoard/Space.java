@@ -17,8 +17,7 @@ public class Space {
         this.position = position;
     }
 
-    public void movePiece(Space targetSpace, List<Space> spaces) {
-        validateClearRoute(targetSpace, spaces);
+    public void movePiece(Space targetSpace) {
         FileDifference fileDifference = position.calculateFileDifferenceTo(targetSpace.position);
         RankDifference rankDifference = position.calculateRankDifferenceTo(targetSpace.position);
         if ((piece.isCatchable(fileDifference, rankDifference)
@@ -31,26 +30,15 @@ public class Space {
         throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
     }
 
-    private void validateClearRoute(Space targetSpace, List<Space> spaces) {
-        List<Position> routes = position.findRoute(targetSpace.position);
-        for (Position route : routes) {
-            for (Space space : spaces) {
-                validateRouteHasPiece(route, space);
-            }
-        }
-    }
-
-    private void validateRouteHasPiece(Position route, Space space) {
-        if (space.position.equals(route) && space.hasPiece()) {
-            throw new IllegalArgumentException("루트에 피스가 있습니다.");
-        }
+    public List<Position> findRouteToTarget(Space targetSpace) {
+        return position.findRoute(targetSpace.position);
     }
 
     public boolean isSamePosition(Position otherPosition) {
         return position.equals(otherPosition);
     }
 
-    private boolean hasPiece() {
+    public boolean hasPiece() {
         return !piece.isSameColor(new EmptyPiece());
     }
 

@@ -3,6 +3,8 @@ package chess.chessBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessSpaceGenerator;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
@@ -12,7 +14,6 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece1);
     }
@@ -39,7 +40,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space1.doesNotHavePiece()).isTrue();
     }
@@ -52,7 +53,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.FOUR));
 
-        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+        assertThatThrownBy(() -> space1.movePiece(space2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
@@ -73,7 +74,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
 
-        assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
+        assertThatThrownBy(() -> space1.movePiece(space2))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
@@ -86,7 +87,7 @@ class SpaceTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.b, Rank.TWO));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece1);
     }
@@ -96,11 +97,12 @@ class SpaceTest {
     void should_not_move_when_route_has_piece() {
         Piece piece1 = new Rook(Color.WHITE);
         Piece piece2 = new Pawn(Color.BLACK);
-        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
-        Space space2 = new Space(piece2, new Position(File.a, Rank.TWO));
-        Space space3 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
-        assertThatThrownBy(() -> space1.movePiece(space3, List.of(space1, space2, space3)))
+        Position from = new Position(File.a, Rank.ONE);
+        Position to = new Position(File.a, Rank.THREE);
+        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
+
+        assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("루트에 피스가 있습니다.");
     }

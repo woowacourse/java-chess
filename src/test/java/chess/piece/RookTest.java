@@ -10,7 +10,6 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ class RookTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece);
     }
@@ -36,7 +35,7 @@ class RookTest {
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
         Space space2 = new Space(piece2, new Position(File.a, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece1);
     }

@@ -11,7 +11,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +23,7 @@ public class PawnTest {
         Space space1 = new Space(piece, new Position(File.a, Rank.ONE));
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
 
-        space1.movePiece(space2, List.of(space1, space2));
+        space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece);
     }
@@ -37,9 +36,9 @@ public class PawnTest {
         Space space2 = new Space(new EmptyPiece(), new Position(File.a, Rank.THREE));
         Space space3 = new Space(new EmptyPiece(), new Position(File.a, Rank.FIVE));
 
-        space1.movePiece(space2, List.of(space1, space2, space3));
+        space1.movePiece(space2);
 
-        assertThatThrownBy(() -> space2.movePiece(space3, List.of(space1, space2, space3)))
+        assertThatThrownBy(() -> space2.movePiece(space3))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }

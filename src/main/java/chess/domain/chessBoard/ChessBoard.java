@@ -15,7 +15,24 @@ public class ChessBoard {
         Space fromSpace = findSpace(from);
         Space toSpace = findSpace(to);
 
-        fromSpace.movePiece(toSpace, spaces);
+        List<Position> routeToTarget = fromSpace.findRouteToTarget(toSpace);
+        validateClearRoute(routeToTarget);
+
+        fromSpace.movePiece(toSpace);
+    }
+
+    private void validateClearRoute(List<Position> routes) {
+        for (Position route : routes) {
+            for (Space space : spaces) {
+                validateRouteHasPiece(route, space);
+            }
+        }
+    }
+
+    private void validateRouteHasPiece(Position route, Space space) {
+        if (space.isSamePosition(route) && space.hasPiece()) {
+            throw new IllegalArgumentException("루트에 피스가 있습니다.");
+        }
     }
 
     private Space findSpace(Position position) {
