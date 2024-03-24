@@ -44,7 +44,7 @@ public class InputView {
         return RequestDto.of(command);
     }
 
-    private static RequestDto createRequestDtoFromInput(List<String> input, GameCommand command) {
+    private RequestDto createRequestDtoFromInput(List<String> input, GameCommand command) {
         String sourcePosition = input.get(1);
         String destinationPosition = input.get(2);
         Position source = PositionConvertor.convertPosition(sourcePosition);
