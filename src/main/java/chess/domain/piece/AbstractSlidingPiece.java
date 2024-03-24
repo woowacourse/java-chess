@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.piece.exception.InvalidMoveException;
+import chess.domain.piece.exception.ObstacleException;
 
 abstract class AbstractSlidingPiece extends AbstractPiece {
 
@@ -27,7 +29,7 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
                 .map(direction -> createSlidingPath(source, direction))
                 .filter(coordinates -> coordinates.contains(target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다."));
+                .orElseThrow(InvalidMoveException::new);
     }
 
     private List<Coordinate> createSlidingPath(Coordinate start, Direction direction) {
@@ -50,7 +52,7 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
                 .orElse(target);
 
         if (!blockedCoordinate.equals(target)) {
-            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
+            throw new ObstacleException();
         }
     }
 }

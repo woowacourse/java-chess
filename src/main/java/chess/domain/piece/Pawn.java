@@ -3,6 +3,8 @@ package chess.domain.piece;
 import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.piece.exception.InvalidMoveException;
+import chess.domain.piece.exception.ObstacleException;
 
 public class Pawn extends AbstractPiece {
 
@@ -51,13 +53,13 @@ public class Pawn extends AbstractPiece {
 
     private void validateReachable(Coordinate target, List<Coordinate> diagonalPath, List<Coordinate> forwardPath) {
         if (!(forwardPath.contains(target) || diagonalPath.contains(target))) {
-            throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
+            throw new InvalidMoveException();
         }
     }
 
     private void validateForwardAttack(Coordinate target, Board board, List<Coordinate> forwardPath) {
         if (forwardPath.contains(target) && isEnemy(board.findByCoordinate(target))) {
-            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
+            throw new ObstacleException();
         }
     }
 
@@ -78,7 +80,7 @@ public class Pawn extends AbstractPiece {
                 .orElse(target);
 
         if (!blockedCoordinate.equals(target)) {
-            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
+            throw new ObstacleException();
         }
     }
 
@@ -90,11 +92,11 @@ public class Pawn extends AbstractPiece {
 
     private void validateEnemyExist(Coordinate target, Board board) {
         if (!board.isPiecePresent(target)) {
-            throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
+            throw new InvalidMoveException();
         }
 
         if (!isEnemy(board.findByCoordinate(target))) {
-            throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
+            throw new InvalidMoveException();
         }
     }
 }
