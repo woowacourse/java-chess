@@ -32,13 +32,13 @@ public class Board {
         final Piece targetPiece = squares.get(target);
         final Vector vector = new Vector(source, target);
 
-        validateIsEmpty(currentPiece);
-        validateTurn(currentPiece);
+        validateEmptiness(currentPiece);
+        validateCurrentTurn(currentPiece);
         validateReachability(vector, currentPiece, targetPiece);
         validateNoPieceOnPath(source, vector);
     }
 
-    private void validateIsEmpty(final Piece currentPiece) {
+    private void validateEmptiness(final Piece currentPiece) {
         if (currentPiece.isEmpty()) {
             throw new IllegalArgumentException("이동할 말이 선택되지 않았습니다");
         }
@@ -69,7 +69,7 @@ public class Board {
         }
     }
 
-    private void validateTurn(final Piece currentPiece) {
+    private void validateCurrentTurn(final Piece currentPiece) {
         if (!currentPiece.hasColor(currentTurnColor)) {
             throw new IllegalArgumentException(
                     String.format("현재 차례: %s, 현재 차례의 말만 움직일 수 있습니다", currentTurnColor.name()));

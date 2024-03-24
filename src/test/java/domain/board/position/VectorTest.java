@@ -1,4 +1,4 @@
-package domain.piece.info;
+package domain.board.position;
 
 import static domain.PositionFixture.A_FOUR;
 import static domain.PositionFixture.A_ONE;

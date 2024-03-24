@@ -9,7 +9,7 @@ import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class NoneTest {
+class EmptyTest {
 
     @Test
     @DisplayName("비어있는 칸을 움직이려고 하면 예외가 발생한다")
