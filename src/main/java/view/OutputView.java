@@ -2,7 +2,7 @@ package view;
 
 import domain.board.Board;
 import domain.piece.Piece;
-import domain.piece.Type;
+import domain.piece.PieceType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,25 +42,25 @@ public class OutputView {
 
     private enum PieceOutput {
 
-        BISHOP(Type.BISHOP, "B"),
-        KING(Type.KING, "K"),
-        KNIGHT(Type.KNIGHT, "N"),
-        PAWN(Type.PAWN, "P"),
-        QUEEN(Type.QUEEN, "Q"),
-        ROOK(Type.ROOK, "R"),
-        NONE(Type.NONE, ".");
+        BISHOP(PieceType.BISHOP, "B"),
+        KING(PieceType.KING, "K"),
+        KNIGHT(PieceType.KNIGHT, "N"),
+        PAWN(PieceType.PAWN, "P"),
+        QUEEN(PieceType.QUEEN, "Q"),
+        ROOK(PieceType.ROOK, "R"),
+        NONE(PieceType.NONE, ".");
 
-        private final Type type;
+        private final PieceType pieceType;
         private final String output;
 
-        PieceOutput(Type type, String output) {
-            this.type = type;
+        PieceOutput(PieceType pieceType, String output) {
+            this.pieceType = pieceType;
             this.output = output;
         }
 
         private static String asString(Piece piece) {
             String output = Arrays.stream(values())
-                    .filter(pieceOutput -> piece.isSameType(pieceOutput.type))
+                    .filter(pieceOutput -> piece.isSameType(pieceOutput.pieceType))
                     .findFirst()
                     .orElse(NONE)
                     .output;

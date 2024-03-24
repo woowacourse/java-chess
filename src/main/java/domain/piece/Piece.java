@@ -6,16 +6,16 @@ import java.util.Objects;
 
 public class Piece {
 
-    private final Type type;
+    private final PieceType pieceType;
     private final Color color;
 
-    public Piece(Type type, Color color) {
-        this.type = type;
+    public Piece(PieceType pieceType, Color color) {
+        this.pieceType = pieceType;
         this.color = color;
     }
 
-    public boolean isSameType(Type type) {
-        return this.type == type;
+    public boolean isSameType(PieceType pieceType) {
+        return this.pieceType == pieceType;
     }
 
     public boolean isWhite() {
@@ -23,10 +23,10 @@ public class Piece {
     }
 
     public boolean canMove(Position source, Position target) {
-        if (isSameType(Type.PAWN)) {
-            return color.canMove(source, target) && type.canMove(source, target);
+        if (isSameType(PieceType.PAWN)) {
+            return color.canMove(source, target) && pieceType.canMove(source, target);
         }
-        return type.canMove(source, target);
+        return pieceType.canMove(source, target);
     }
 
     public boolean isDifferentColor(Piece targetPiece) {
@@ -42,11 +42,11 @@ public class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return type == piece.type && color == piece.color;
+        return pieceType == piece.pieceType && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, color);
+        return Objects.hash(pieceType, color);
     }
 }

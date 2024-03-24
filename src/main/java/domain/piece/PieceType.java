@@ -4,7 +4,7 @@ import domain.position.Position;
 
 import java.util.function.BiPredicate;
 
-public enum Type {
+public enum PieceType {
 
     BISHOP(Position::isDiagonal),
     KING(Position::isNeighbor),
@@ -17,7 +17,7 @@ public enum Type {
 
     private final BiPredicate<Position, Position> tactic;
 
-    Type(BiPredicate<Position, Position> tactic) {
+    PieceType(BiPredicate<Position, Position> tactic) {
         this.tactic = tactic;
     }
 

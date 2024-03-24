@@ -2,7 +2,7 @@ package domain.board;
 
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.Type;
+import domain.piece.PieceType;
 import domain.position.Position;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class Board {
     }
 
     public void displacePieceByPosition(Position position) {
-        squares.replace(position, new Piece(Type.NONE, Color.NONE));
+        squares.replace(position, new Piece(PieceType.NONE, Color.NONE));
     }
 
     public boolean isNotBlocked(Position source, Position target) {
@@ -44,6 +44,6 @@ public class Board {
         }
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)
-                .allMatch(betweenPiece -> betweenPiece.isSameType(Type.NONE));
+                .allMatch(betweenPiece -> betweenPiece.isSameType(PieceType.NONE));
     }
 }
