@@ -38,7 +38,7 @@ public class ChessBoard {
         piece.getRoute(source, target)
                 .forEach(this::checkObstacle);
 
-        if (piece.isPawn() && Direction.findUpDown(source, target)) {
+        if (piece.isPawn() && Direction.isUpDown(source, target)) {
             checkObstacle(target);
         }
         checkTeam(target, piece);
