@@ -22,6 +22,7 @@ public class Route {
         for (int i = 0; i < directions.size(); i++) {
             steps.add(new Step(directions.get(i), squareStates.get(i)));
         }
+        validatePathDistance(steps);
         return steps;
     }
 
@@ -80,13 +81,13 @@ public class Route {
         return lastStep.isEmpty() || lastStep.isEnemy();
     }
 
+    public boolean isTargetHasEnemy() {
+        return steps.get(findTargetIndex()).isEnemy();
+    }
+
     public boolean isUpside() {
         return steps.stream()
                 .allMatch((Step::isUpside));
-    }
-
-    public boolean isTargetHasEnemy() {
-        return steps.get(findTargetIndex()).isEnemy();
     }
 
     public boolean isDownside() {
