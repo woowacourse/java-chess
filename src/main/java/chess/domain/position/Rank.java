@@ -24,15 +24,27 @@ public enum Rank {
         return rank.value - value;
     }
 
-    public List<Rank> getRankRoute(Rank to) {
-        List<Rank> ranks = new ArrayList<>();
+    public List<Rank> findRankRouteToTargetRank(Rank to) {
         if (value == to.value) {
-            ranks.add(this);
-            return ranks;
+            return List.of(this);
         }
+        if (to.value > value) {
+            return inclineDirectionRoute(to);
+        }
+        return declineDirectionRoute(to);
+    }
 
-        int unitDirection = (to.value - value) / Math.abs(to.value - value);
-        for (int i = value + unitDirection; i != to.value; i += unitDirection) {
+    private List<Rank> inclineDirectionRoute(Rank to) {
+        List<Rank> ranks = new ArrayList<>();
+        for (int i = value + 1; i < to.value; i++) {
+            ranks.add(Rank.of(i));
+        }
+        return ranks;
+    }
+
+    private List<Rank> declineDirectionRoute(Rank to) {
+        List<Rank> ranks = new ArrayList<>();
+        for (int i = value - 1; i > to.value; i--) {
             ranks.add(Rank.of(i));
         }
         return ranks;

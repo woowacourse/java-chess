@@ -23,15 +23,27 @@ public enum File {
         return file.value - value;
     }
 
-    public List<File> getFileRoute(File to) {
-        List<File> files = new ArrayList<>();
+    public List<File> findFileRouteToTargetFile(File to) {
         if (value == to.value) {
-            files.add(this);
-            return files;
+            return List.of(this);
         }
+        if (to.value > value) {
+            return inclineDirectionRoute(to);
+        }
+        return declineDirectionRoute(to);
+    }
 
-        int unitDirection = (to.value - value) / Math.abs(to.value - value);
-        for (int i = value + unitDirection; i != to.value; i += unitDirection) {
+    private List<File> inclineDirectionRoute(File to) {
+        List<File> files = new ArrayList<>();
+        for (int i = value + 1; i < to.value; i++) {
+            files.add(File.of(i));
+        }
+        return files;
+    }
+
+    private List<File> declineDirectionRoute(File to) {
+        List<File> files = new ArrayList<>();
+        for (int i = value - 1; i > to.value; i--) {
             files.add(File.of(i));
         }
         return files;

@@ -1,7 +1,6 @@
 package chess.domain.chessBoard;
 
 import chess.domain.piece.EmptyPiece;
-import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.FileDifference;
 import chess.domain.position.Position;
@@ -33,10 +32,7 @@ public class Space {
     }
 
     private void validateClearRoute(Space targetSpace, List<Space> spaces) {
-        if (piece.getClass() == Knight.class) {
-            return;
-        }
-        List<Position> routes = targetSpace.position.findRoute(position);
+        List<Position> routes = position.findRoute(targetSpace.position);
         for (Position route : routes) {
             for (Space space : spaces) {
                 validateRouteHasPiece(route, space);

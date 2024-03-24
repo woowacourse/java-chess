@@ -23,8 +23,8 @@ public class Position {
     }
 
     public List<Position> findRoute(Position position) {
-        List<File> files = file.getFileRoute(position.file);
-        List<Rank> ranks = rank.getRankRoute(position.rank);
+        List<File> files = file.findFileRouteToTargetFile(position.file);
+        List<Rank> ranks = rank.findRankRouteToTargetRank(position.rank);
 
         if (files.size() == ranks.size()) {
             return findDiagonalRoute(files, ranks);
