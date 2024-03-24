@@ -59,14 +59,14 @@ public class Position {
         if (isNotInEightDirection(dx, dy)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        
+
         dx = calculateMoved(dx);
         dy = calculateMoved(dy);
         return Direction.findDirection(dx, dy);
     }
 
-    private boolean isInEightDirection(int dx, int dy) {
-        return Math.abs(dx) == Math.abs(dy) || (dx + dy != 0 && dx * dy == 0);
+    private boolean isNotInEightDirection(int dx, int dy) {
+        return !(Math.abs(dx) == Math.abs(dy) || (dx + dy != 0 && dx * dy == 0));
     }
 
     private int calculateMoved(int dx) {
@@ -76,8 +76,9 @@ public class Position {
         return dx;
     }
 
-    public Set<Position> findCourses(Direction direction, Position other) {
+    public Set<Position> findCourses(Position other) {
         Set<Position> positions = new HashSet<>();
+        Direction direction = findDirectionTo(other);
         int newX = x + direction.getDx();
         int newY = y + direction.getDy();
 
