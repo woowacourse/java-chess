@@ -51,6 +51,13 @@ public class ChessController {
         outputView.printChessBoard(chessBoard);
     }
 
+    private void retryOnException(Runnable retryOperation) {
+        boolean retry = true;
+        while (retry) {
+            retry = tryOperation(retryOperation);
+        }
+    }
+
     private <T> T retryOnException(Supplier<T> retryOperation) {
         boolean retry = true;
         T result = null;
@@ -61,10 +68,13 @@ public class ChessController {
         return result;
     }
 
-    private void retryOnException(Runnable retryOperation) {
-        boolean retry = true;
-        while (retry) {
-            retry = tryOperation(retryOperation);
+    private boolean tryOperation(Runnable operation) {
+        try {
+            operation.run();
+            return false;
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e.getMessage());
+            return true;
         }
     }
 
@@ -74,16 +84,6 @@ public class ChessController {
         } catch (IllegalArgumentException e) {
             outputView.printException(e.getMessage());
             return null;
-        }
-    }
-
-    private boolean tryOperation(Runnable operation) {
-        try {
-            operation.run();
-            return false;
-        } catch (IllegalArgumentException e) {
-            outputView.printException(e.getMessage());
-            return true;
         }
     }
 }

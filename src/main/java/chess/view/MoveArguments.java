@@ -10,14 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MoveArguments {
+    private static final int ARGUMENTS_SIZE = 4;
     private static final String MOVE_REGEX = "([a-zA-Z])(\\d)";
     private static final Pattern MOVE_PATTERN = Pattern.compile(MOVE_REGEX);
-    private static final int ARGUMENTS_SIZE = 4;
 
-    private final String sourceFile;
     private final int sourceRank;
-    private final String targetFile;
     private final int targetRank;
+    private final String sourceFile;
+    private final String targetFile;
 
     private MoveArguments(String sourceFile, int sourceRank, String targetFile, int targetRank) {
         this.sourceFile = sourceFile;

@@ -25,6 +25,18 @@ public class ChessBoard {
         board.put(targetPosition, sourcePiece);
     }
 
+    private void validateSourceIsNull(Piece sourcePiece) {
+        if (sourcePiece == null) {
+            throw new IllegalArgumentException("Source에 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private void validatePathIsEmpty(List<ChessPosition> path) {
+        if (path.isEmpty()) {
+            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
+        }
+    }
+
     private void validatePathContainsPiece(List<ChessPosition> path) {
         int repeatCount = path.size() - 1;
         IntStream.range(0, repeatCount)
@@ -36,18 +48,6 @@ public class ChessBoard {
     private void validatePathContainsPiece(Piece found) {
         if (found != null) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재하여 움직일 수 없습니다.");
-        }
-    }
-
-    private void validatePathIsEmpty(List<ChessPosition> path) {
-        if (path.isEmpty()) {
-            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
-        }
-    }
-
-    private void validateSourceIsNull(Piece sourcePiece) {
-        if (sourcePiece == null) {
-            throw new IllegalArgumentException("Source에 기물이 존재하지 않습니다.");
         }
     }
 

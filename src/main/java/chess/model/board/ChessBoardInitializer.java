@@ -1,10 +1,16 @@
 package chess.model.board;
 
-import chess.model.piece.*;
+import chess.model.piece.Bishop;
+import chess.model.piece.King;
+import chess.model.piece.Knight;
+import chess.model.piece.Pawn;
+import chess.model.piece.Piece;
+import chess.model.piece.Queen;
+import chess.model.piece.Rook;
+import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,14 +41,6 @@ public class ChessBoardInitializer {
         );
     }
 
-    private static Rank convertSpecialPieceRankWithSide(Side side) {
-        Rank rank = Rank.ONE;
-        if (side == Side.BLACK) {
-            rank = Rank.EIGHT;
-        }
-        return rank;
-    }
-
     private static Map<ChessPosition, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
         return Map.of(
@@ -55,6 +53,14 @@ public class ChessBoardInitializer {
                 new ChessPosition(File.G, rank), new Pawn(side),
                 new ChessPosition(File.H, rank), new Pawn(side)
         );
+    }
+
+    private static Rank convertSpecialPieceRankWithSide(Side side) {
+        Rank rank = Rank.ONE;
+        if (side == Side.BLACK) {
+            rank = Rank.EIGHT;
+        }
+        return rank;
     }
 
     private static Rank convertPawnRanksWithSide(Side side) {

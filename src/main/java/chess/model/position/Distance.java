@@ -1,7 +1,6 @@
 package chess.model.position;
 
 import chess.model.piece.Side;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,13 @@ public class Distance {
         this.rankDifference = rankDifference;
     }
 
+    public boolean hasSame(int displacement) {
+        if (isCrossMovement() || isDiagonalMovement()) {
+            return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
+        }
+        return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
+    }
+
     public boolean isForward(Side side) {
         if (fileDifference != 0) {
             return false;
@@ -24,13 +30,6 @@ public class Distance {
         return rankDifference > 0;
     }
 
-    public boolean isDiagonalMovement() {
-        if (isNotMoved()) {
-            return false;
-        }
-        return Math.abs(fileDifference) == Math.abs(rankDifference);
-    }
-
     public boolean isCrossMovement() {
         if (isNotMoved()) {
             return false;
@@ -38,19 +37,15 @@ public class Distance {
         return fileDifference == 0 || rankDifference == 0;
     }
 
-    public boolean hasSame(int displacement) {
-        if (isCrossMovement() || isDiagonalMovement()) {
-            return Math.abs(fileDifference) == displacement || Math.abs(rankDifference) == displacement;
+    public boolean isDiagonalMovement() {
+        if (isNotMoved()) {
+            return false;
         }
-        return Math.abs(fileDifference) + Math.abs(rankDifference) == displacement;
-    }
-
-    private boolean isNotMoved() {
-        return fileDifference == 0 && rankDifference == 0;
+        return Math.abs(fileDifference) == Math.abs(rankDifference);
     }
 
     public List<ChessPosition> findPath(ChessPosition source) {
-        if (!isDiagonalMovement() && !isCrossMovement()) {
+        if (!isCrossMovement() && !isDiagonalMovement()) {
             return List.of();
         }
         int fileOffset = calculateIncrement(fileDifference);
@@ -60,6 +55,17 @@ public class Distance {
         List<ChessPosition> path = new ArrayList<>();
         addPath(source, repeatCount, fileOffset, rankOffset, path);
         return path;
+    }
+
+    private int calculateIncrement(int difference) {
+        return Integer.compare(difference, 0);
+    }
+
+    private int calculateRepeatCount() {
+        if (fileDifference == 0) {
+            return Math.abs(rankDifference);
+        }
+        return Math.abs(fileDifference);
     }
 
     private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
@@ -73,15 +79,8 @@ public class Distance {
         }
     }
 
-    private int calculateIncrement(int difference) {
-        return Integer.compare(difference, 0);
-    }
-
-    private int calculateRepeatCount() {
-        if (fileDifference == 0) {
-            return Math.abs(rankDifference);
-        }
-        return Math.abs(fileDifference);
+    private boolean isNotMoved() {
+        return fileDifference == 0 && rankDifference == 0;
     }
 
     public int getFileDifference() {

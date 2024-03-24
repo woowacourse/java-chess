@@ -2,7 +2,6 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.Distance;
-
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -38,14 +37,6 @@ public class Pawn extends Piece {
         }
     }
 
-    private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
-        return isPossibleDiagonal(distance) && targetPiece != null && !isSameSide(targetPiece);
-    }
-
-    private boolean isPossibleDiagonal(Distance distance) {
-        return distance.isDiagonalMovement() && distance.hasSame(DISPLACEMENT);
-    }
-
     private boolean canCrossMove(ChessPosition source, Distance distance) {
         if (source.isPawnInitialPosition(side)) {
             return canMoveForwardWith(distance, DISPLACEMENT) ||
@@ -54,7 +45,15 @@ public class Pawn extends Piece {
         return canMoveForwardWith(distance, DISPLACEMENT);
     }
 
+    private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
+        return isPossibleDiagonal(distance) && targetPiece != null && !isSameSide(targetPiece);
+    }
+
     private boolean canMoveForwardWith(Distance distance, int displacement) {
         return distance.isForward(side) && distance.hasSame(displacement);
+    }
+
+    private boolean isPossibleDiagonal(Distance distance) {
+        return distance.isDiagonalMovement() && distance.hasSame(DISPLACEMENT);
     }
 }

@@ -1,7 +1,6 @@
 package chess.model.position;
 
 import chess.model.piece.Side;
-
 import java.util.Arrays;
 
 public enum Rank {
@@ -31,19 +30,19 @@ public enum Rank {
         return this.coordinate - other.coordinate;
     }
 
+    public boolean isPawnInitialRank(Side side) {
+        if (side.isWhite()) {
+            return TWO.equals(this);
+        }
+        return SEVEN.equals(this);
+    }
+
     public Rank findNextRank(int offset) {
         int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
-    }
-
-    public boolean isPawnInitialRank(Side side) {
-        if (side.isWhite()) {
-            return TWO.equals(this);
-        }
-        return SEVEN.equals(this);
     }
 
     public int getCoordinate() {
