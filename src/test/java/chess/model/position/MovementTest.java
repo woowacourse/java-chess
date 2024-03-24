@@ -63,7 +63,7 @@ class MovementTest {
     }
 
     @Test
-    void 출발지와_도착지가_같은_file_혹은_같은_rank_혹은_같은_대각선에_있지_않을_떄_경로_반환을_요청하면_빈_배열을_반환한다() {
+    void 대각선이나_가로세로선이_아닌_움직임에서는_중간_위치를_반환하지_않는다() {
         Movement movement = new Movement(Position.of(1, 1), Position.of(3, 2));
         List<Position> positions = movement.getIntermediatePositions();
         assertThat(positions.isEmpty()).isTrue();
