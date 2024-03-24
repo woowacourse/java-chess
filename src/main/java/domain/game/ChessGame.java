@@ -26,7 +26,7 @@ public class ChessGame implements Execute {
 
     @Override
     public void start() {
-        if (gameState != GameState.READY) {
+        if (gameState == GameState.RUNNING) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
         this.gameState = GameState.RUNNING;
