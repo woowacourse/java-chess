@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static chess.domain.position.Fixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -90,5 +91,47 @@ class QueenTest {
                 () -> Assertions.assertThat(testQueen.canMove(startPosition, H2, board)).isFalse(),
                 () -> Assertions.assertThat(testQueen.canMove(startPosition, H5, board)).isFalse()
         );
+    }
+
+    /*
+    ........  8
+    ........  7
+    ........  6
+    ........  5
+    ....q...  4
+    ...p....  3
+    ........  2
+    .x......  1
+    abcdefgh
+    */
+    @DisplayName("퀸은 대각선 경유경로에 다른 기물이 있다면 이동할 수 없다")
+    @Test
+    void should_CanNotMove_When_OtherPieceInDiagonalPath(){
+        ChessBoard board = new ChessBoard(Map.ofEntries(Map.entry(D3, new Pawn(Team.BLACK))));
+        Queen testQueen = new Queen(Team.WHITE);
+        Position startPosition = D4;
+
+        assertThat(testQueen.canMove(startPosition,B1, board)).isFalse();
+    }
+
+    /*
+   ........  8
+   ........  7
+   ........  6
+   ........  5
+   ...q....  4
+   ...p....  3
+   ........  2
+   ...x....  1
+   abcdefgh
+   */
+    @DisplayName("룩은 직선 경유경로에 다른 기물이 있다면 이동할 수 없다")
+    @Test
+    void should_CanNotMove_When_OtherPieceInStraightPath(){
+        ChessBoard board = new ChessBoard(Map.ofEntries(Map.entry(D3, new Pawn(Team.BLACK))));
+        Queen testQueen = new Queen(Team.WHITE);
+        Position startPosition = D4;
+
+        assertThat(testQueen.canMove(startPosition,D1, board)).isFalse();
     }
 }

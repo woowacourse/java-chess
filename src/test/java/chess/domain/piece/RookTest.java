@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static chess.domain.position.Fixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -63,5 +64,26 @@ class RookTest {
                 () -> assertThat(testRook.canMove(startPosition, F5, board)).isFalse(),
                 () -> assertThat(testRook.canMove(startPosition, C6, board)).isFalse()
         );
+    }
+
+    /*
+    ........  8
+    ........  7
+    ........  6
+    ........  5
+    ...r....  4
+    ...p....  3
+    ........  2
+    ...x....  1
+    abcdefgh
+    */
+    @DisplayName("룩은 직선 경유경로에 다른 기물이 있다면 이동할 수 없다")
+    @Test
+    void should_CanNotMove_When_OtherPieceInStraightPath(){
+        ChessBoard board = new ChessBoard(Map.ofEntries(Map.entry(D3, new Pawn(Team.BLACK))));
+        Rook testRook = new Rook(Team.WHITE);
+        Position startPosition = D4;
+
+        assertThat(testRook.canMove(startPosition,D1, board)).isFalse();
     }
 }

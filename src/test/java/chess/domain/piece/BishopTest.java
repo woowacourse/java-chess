@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static chess.domain.position.Fixture.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -65,5 +66,26 @@ class BishopTest {
                 () -> Assertions.assertThat(testBishop.canMove(startPosition, D7, board)).isFalse(),
                 () -> Assertions.assertThat(testBishop.canMove(startPosition, D1, board)).isFalse()
         );
+    }
+
+    /*
+    ........  8
+    ........  7
+    ........  6
+    ........  5
+    ....b...  4
+    ...p....  3
+    ........  2
+    .x......  1
+    abcdefgh
+    */
+    @DisplayName("비숍은 대각선 경유경로에 다른 기물이 있다면 이동할 수 없다")
+    @Test
+    void should_CanNotMove_When_OtherPieceInDiagonalPath(){
+        ChessBoard board = new ChessBoard(Map.ofEntries(Map.entry(D3, new Pawn(Team.BLACK))));
+        Bishop testBishop = new Bishop(Team.WHITE);
+        Position startPosition = D4;
+
+        assertThat(testBishop.canMove(startPosition,B1, board)).isFalse();
     }
 }
