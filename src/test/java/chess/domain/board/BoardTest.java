@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
@@ -29,8 +30,8 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
     @DisplayName("해당 위치에 기물이 존재하지 않으면 예외가 발생한다.")
+    @Test
     void occurExceptionWhenNotExistPiece() {
         Board board = new Board(Map.of());
         Square source = Square.of(File.b, Rank.THREE);
@@ -41,8 +42,8 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
     @DisplayName("상대방 팀의 기물을 이동하려는 경우 예외가 발생한다.")
+    @Test
     void occurExceptionWhenNotMyTurn() {
         Board board = new Board(Map.of());
         Square source = Square.of(File.b, Rank.SEVEN);
@@ -53,8 +54,8 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
     @DisplayName("각 기물의 이동 방식으로 갈 수 없는 목적지인 경우 예외가 발생한다.")
+    @Test
     void occurExceptionWhenCannotMove() {
         Board board = new Board(Map.of(
                 Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
@@ -66,8 +67,8 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
     @DisplayName("이동 경로에 다른 기물이 있으면 예외가 발생한다.")
+    @Test
     void occurExceptionWhenExistObstacleOnPath() {
         Board board = new Board(Map.of(
                 Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK),
@@ -79,5 +80,21 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("출발지에서 목적지로 기물을 이동한다.")
+    @Test
+    void movePieceFromSourceToTarget() {
+        Board board = new Board(Map.of(
+                Square.of(File.b, Rank.TWO), new Piece(PieceType.ROOK, PieceColor.WHITE),
+                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.WHITE)
+        ));
+
+        Square source = Square.of(File.b, Rank.TWO);
+        Square target = Square.of(File.b, Rank.THREE);
+        PieceColor turn = PieceColor.WHITE;
+        board.move(source, target, turn);
+
+        assertThat(board.getPieces()).containsKey(Square.of(File.b, Rank.THREE));
     }
 }
