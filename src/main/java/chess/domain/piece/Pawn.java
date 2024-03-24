@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Coordinate;
 import chess.domain.piece.exception.InvalidMoveException;
 import chess.domain.piece.exception.ObstacleException;
@@ -17,10 +18,6 @@ public class Pawn extends AbstractPiece {
             Direction.UP_LEFT,
             Direction.UP_RIGHT
     );
-
-    //TODO: 상수의 올바른 위치를 생각해보기.
-    private static final int INITIAL_BLACK_PAWN_RANK = 7;
-    private static final int INITIAL_WHITE_PAWN_RANK = 2;
 
     public Pawn(Team team) {
         super(PieceType.PAWN, team);
@@ -68,7 +65,7 @@ public class Pawn extends AbstractPiece {
     }
 
     private void validateInitialCoordinate(Coordinate source) {
-        if (!(source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK)) {
+        if (!BoardFactory.isInitialRank(source)) {
             throw new IllegalStateException("초기 상태의 폰이 아닌 경우, 2칸 이동할 수 없습니다.");
         }
     }

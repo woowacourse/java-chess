@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -13,12 +14,25 @@ import chess.domain.piece.Team;
 
 public class BoardFactory {
 
-    private static final int INITIAL_WHITE_SPECIAL_RANK = 1;
     private static final int INITIAL_WHITE_PAWN_RANK = 2;
-    private static final int INITIAL_BLACK_SPECIAL_RANK = 8;
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
+    private static final int INITIAL_WHITE_SPECIAL_RANK = 1;
+    private static final int INITIAL_BLACK_SPECIAL_RANK = 8;
 
     private BoardFactory() {
+    }
+
+    public static boolean isInitialRank(Coordinate coordinate) {
+        int targetRank = coordinate.getRank();
+        List<Integer> initialRanks = List.of(
+                INITIAL_WHITE_PAWN_RANK,
+                INITIAL_BLACK_PAWN_RANK,
+                INITIAL_WHITE_SPECIAL_RANK,
+                INITIAL_BLACK_SPECIAL_RANK
+        );
+
+        return initialRanks.stream()
+                .anyMatch(initialRank -> targetRank == initialRank);
     }
 
     public static Map<Coordinate, Piece> createInitialPieces() {
