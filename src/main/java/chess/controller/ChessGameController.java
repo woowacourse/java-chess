@@ -14,14 +14,14 @@ public class ChessGameController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        ChessBoard chessBoard = new ChessBoard();
-        GameState gameState = new Ready(chessBoard);
         outputView.printStartMessage();
-
-        playGame(gameState, chessBoard);
+        playGame();
     }
 
-    private void playGame(GameState gameState, ChessBoard chessBoard) {
+    private void playGame() {
+        ChessBoard chessBoard = new ChessBoard();
+        GameState gameState = new Ready(chessBoard);
+        
         while (!gameState.isEnd()) {
             GameState currentGameState = gameState;
             gameState = repeatUntilSuccess(() -> playEachTurn(currentGameState));
