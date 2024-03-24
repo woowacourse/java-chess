@@ -7,13 +7,17 @@ import java.util.Map;
 public class Position {
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
+    private static final char START_VALUE_OF_FILE = 'a';
+    private static final char END_VALUE_OF_FILE = 'h';
+    private static final int START_VALUE_OF_RANK = 1;
+    private static final int END_VALUE_OF_RANK = 8;
 
     private final char file;
     private final int rank;
 
     static {
-        for (char i = 'a'; i <= 'h'; i++) {
-            for (int j = 1; j <= 8; j++) {
+        for (char i = START_VALUE_OF_FILE; i <= END_VALUE_OF_FILE; i++) {
+            for (int j = START_VALUE_OF_RANK; j <= END_VALUE_OF_RANK; j++) {
                 CACHE.put(toKey(i, j), new Position(i, j));
             }
         }
