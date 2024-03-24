@@ -17,7 +17,7 @@ class KingTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"b7", "c7", "d7", "d6", "d5", "c5", "b5", "b6"})
-    @DisplayName("상하좌우 대각선 중 한칸 이동 한다.")
+    @DisplayName("상하좌우 대각선 중 한칸 이동한 뒤 위치 상태를 목적지로 변경한다.")
     void move(String targetInput) {
         // given
         Square source = Square.from("c6");
@@ -33,7 +33,7 @@ class KingTest {
     }
 
     @Test
-    @DisplayName("두 칸 이상 이동하면 예외가 발생한다.")
+    @DisplayName("두 칸 이상 이동할 경우 예외가 발생한다.")
     void validateStepCount() {
         // given
         Square source = Square.from("c6");
@@ -65,7 +65,7 @@ class KingTest {
     }
 
     @Test
-    @DisplayName("목적지에 아군 기물이 존재하면 예외가 발생한다.")
+    @DisplayName("목적지에 아군 기물이 존재할 경우 예외가 발생한다.")
     void validateFriendly() {
         // given
         Square source = Square.from("c6");

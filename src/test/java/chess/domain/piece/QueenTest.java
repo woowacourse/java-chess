@@ -33,7 +33,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("상하좌우 또는 대각선이 아닌 곳으로 이동하려 하면 예외가 발생한다.")
+    @DisplayName("상하좌우 또는 대각선이 아닌 곳으로 이동할 경우 예외가 발생한다.")
     void validateDirection() {
         // given
         Square source = Square.from("c6");
@@ -65,7 +65,7 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("목적지에 아군 기물이 존재하면 예외가 발생한다.")
+    @DisplayName("목적지에 아군 기물이 존재할 경우 예외가 발생한다.")
     void validateFriendly() {
         // given
         Square source = Square.from("c6");
