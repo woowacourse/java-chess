@@ -28,7 +28,7 @@ public class ChessMachine {
         validateFirstCommand();
 
         ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
-        outputView.printChessBoard(chessBoard);
+        outputView.printChessBoard(chessBoard.getSpaces());
 
         playChess(chessBoard);
     }
@@ -49,7 +49,7 @@ public class ChessMachine {
 
             if (command.equals(MOVE_COMMAND)) {
                 chessBoard.move(Position.of(fromTo.get(1)), Position.of(fromTo.get(2)));
-                outputView.printChessBoard(chessBoard);
+                outputView.printChessBoard(chessBoard.getSpaces());
             }
         }
     }

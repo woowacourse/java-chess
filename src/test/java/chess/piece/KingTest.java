@@ -26,7 +26,7 @@ public class KingTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("k");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class KingTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("k");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test
@@ -65,6 +65,6 @@ public class KingTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("k");
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 }

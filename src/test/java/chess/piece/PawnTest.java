@@ -26,7 +26,7 @@ public class PawnTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("p");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test

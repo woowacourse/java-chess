@@ -27,7 +27,7 @@ public class KnightTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("n");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class KnightTest {
 
         space1.movePiece(space3, List.of(space1, space2, space3));
 
-        assertThat(space3.pieceCharacter()).isEqualTo("n");
+        assertThat(space3.getPiece()).isEqualTo(piece1);
     }
 
     @Test
@@ -67,6 +67,6 @@ public class KnightTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("n");
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 }

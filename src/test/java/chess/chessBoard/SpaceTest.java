@@ -29,7 +29,7 @@ class SpaceTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo(PieceSign.findSign(piece1));
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 
     @Test
@@ -89,7 +89,7 @@ class SpaceTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("p");
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 
     @Test

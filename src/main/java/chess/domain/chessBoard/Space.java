@@ -1,6 +1,5 @@
 package chess.domain.chessBoard;
 
-import chess.view.PieceSign;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
@@ -15,10 +14,6 @@ public class Space {
     public Space(Piece piece, Position position) {
         this.piece = piece;
         this.position = position;
-    }
-
-    public String pieceCharacter() {
-        return PieceSign.findSign(piece);
     }
 
     public void movePiece(Space targetSpace, List<Space> spaces) {
@@ -65,5 +60,9 @@ public class Space {
 
     public boolean doesNotHavePiece() {
         return piece.isSameColor(new EmptyPiece());
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }

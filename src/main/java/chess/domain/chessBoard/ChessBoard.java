@@ -27,9 +27,7 @@ public class ChessBoard {
         throw new IllegalArgumentException("해당하는 Space가 없습니다");
     }
 
-    public List<String> showBoard() {
-        return spaces.stream()
-                .map(Space::pieceCharacter)
-                .toList();
+    public List<Space> getSpaces() {
+        return spaces;
     }
 }

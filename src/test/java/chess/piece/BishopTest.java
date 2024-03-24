@@ -27,7 +27,7 @@ class BishopTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("b");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test
@@ -53,6 +53,6 @@ class BishopTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("b");
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 }

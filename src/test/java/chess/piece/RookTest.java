@@ -25,7 +25,7 @@ class RookTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("r");
+        assertThat(space2.getPiece()).isEqualTo(piece);
     }
 
     @Test
@@ -38,6 +38,6 @@ class RookTest {
 
         space1.movePiece(space2, List.of(space1, space2));
 
-        assertThat(space2.pieceCharacter()).isEqualTo("r");
+        assertThat(space2.getPiece()).isEqualTo(piece1);
     }
 }
