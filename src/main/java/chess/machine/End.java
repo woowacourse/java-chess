@@ -6,7 +6,7 @@ public class End implements Command {
 
     private static final String INPUT_COMMAND = "end";
 
-    public End(String input) {
+    private End(String input) {
         if (!input.startsWith(INPUT_COMMAND)) {
             throw new IllegalArgumentException("종료 명령이 아닙니다");
         }
