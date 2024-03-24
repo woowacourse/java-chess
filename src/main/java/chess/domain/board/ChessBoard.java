@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class ChessBoard {
+    // TODO : 테스트 커버리지 높이기
     private final Map<Position, Piece> board;
 
     public ChessBoard(Map<Position, Piece> board) {
@@ -25,6 +26,11 @@ public class ChessBoard {
         return board.get(targetPosition);
     }
 
+    public boolean pathIsAllEmpty(List<Position> path) {
+        return path.stream()
+                .allMatch(this::positionIsEmpty);
+    }
+
     public void move(Position start, Position destination) {
         if (canMove(start, destination)) {
             movePiece(start, destination);
@@ -39,28 +45,20 @@ public class ChessBoard {
         board.put(destination, piece);
     }
 
-    public boolean canMove(Position start, Position destination) {
+    private boolean canMove(Position start, Position destination) {
         Piece piece = findPieceByPosition(start);
 
-        return piece.canMove(start, destination, this) && isMovablePosition(start, destination);
-    }
-
-    public boolean pathIsAllEmpty(List<Position> path) {
-        return path.stream()
-                .allMatch(this::positionIsEmpty);
-    }
-
-    public boolean piecesIsOtherTeam(Position start, Position destination) {
-        if (positionIsEmpty(start) || positionIsEmpty(destination)) {
-            return false;
-        }
-
-        Piece startPiece = findPieceByPosition(start);
-        Piece desinationPiece = findPieceByPosition(destination);
-        return startPiece.isOtherTeam(desinationPiece);
+        return piece.canMove(start, destination, this)
+                && isMovablePosition(start, destination);
     }
 
     private boolean isMovablePosition(Position start, Position destination) {
         return positionIsEmpty(destination) || piecesIsOtherTeam(start, destination);
+    }
+
+    private boolean piecesIsOtherTeam(Position start, Position destination) {
+        Piece startPiece = findPieceByPosition(start);
+        Piece desinationPiece = findPieceByPosition(destination);
+        return startPiece.isOtherTeam(desinationPiece);
     }
 }

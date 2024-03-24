@@ -11,14 +11,12 @@ import static chess.domain.position.ColumnPosition.MIN_NUMBER;
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
-    //TODO: 풀 생성 과정 단순화 가능한지 고민해보기
     private static final Map<String, Position> POOL = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
             .mapToObj(RowPosition::new)
             .flatMap(rowPosition -> IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
                     .mapToObj(ColumnPosition::new)
                     .map(columnPosition -> new Position(rowPosition, columnPosition)))
-            .collect(toMap(position -> Position.toKey(position.rowPosition, position.columnPosition),
-                    position -> position));
+            .collect(toMap(position -> Position.toKey(position.rowPosition, position.columnPosition), position -> position));
 
     private final RowPosition rowPosition;
     private final ColumnPosition columnPosition;
@@ -98,7 +96,6 @@ public class Position {
         return Position.of(rowPosition.findRowIntervalWith(rowInterval)
                 , columnPosition.findColumnIntervalWith(columnInterval));
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -37,7 +37,6 @@ public class ChessBoardCreator {
         return positionPiece;
     }
 
-    //TODO: 의미 있는 메서드명 생각해보기
     private Map<Position, Piece> mapPositionToPiece(Piece pieceType, List<Position> positions) {
         Map<Position, Piece> positionPiece = new HashMap<>();
         positions.forEach(position -> positionPiece.put(position, pieceType));

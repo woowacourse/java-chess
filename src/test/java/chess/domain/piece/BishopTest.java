@@ -81,11 +81,11 @@ class BishopTest {
     */
     @DisplayName("비숍은 대각선 경유경로에 다른 기물이 있다면 이동할 수 없다")
     @Test
-    void should_CanNotMove_When_OtherPieceInDiagonalPath(){
+    void should_CanNotMove_When_OtherPieceInDiagonalPath() {
         ChessBoard board = new ChessBoard(Map.ofEntries(Map.entry(D3, new Pawn(Team.BLACK))));
         Bishop testBishop = new Bishop(Team.WHITE);
         Position startPosition = D4;
 
-        assertThat(testBishop.canMove(startPosition,B1, board)).isFalse();
+        assertThat(testBishop.canMove(startPosition, B1, board)).isFalse();
     }
 }

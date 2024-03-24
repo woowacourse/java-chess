@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import chess.domain.position.RowPosition;
 
 public abstract class Piece {
     private final Team team;

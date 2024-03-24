@@ -36,7 +36,6 @@ public class Pawn extends Piece {
                 && board.pathIsAllEmpty(start.findPath(destination));
     }
 
-    //TODO: 테스트 구현하기
     private boolean isKillPassing(Position start, Position destination, ChessBoard board) {
         return isForward(start, destination)
                 && start.squaredDistanceWith(destination) == KILL_PASSING_DISTANCE
