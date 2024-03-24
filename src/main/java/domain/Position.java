@@ -79,14 +79,6 @@ public class Position {
         return target.rank.isLess(rank);
     }
 
-    public boolean isBlackPawnRank() {
-        return InitPosition.PAWN.rank(Side.BLACK) == this.rank;
-    }
-
-    public boolean isWhitePawnRank() {
-        return InitPosition.isWhitePawnRank(rank);
-    }
-
     public List<File> findBetweenFiles(Position target) {
         return file.findBetween(target.file);
     }

@@ -45,13 +45,6 @@ public class Pawn extends Piece {
         return current.isRankDecreased(target);
     }
 
-    private boolean isInitPosition(Position current) {
-        if (isBlack()) {
-            return current.isBlackPawnRank();
-        }
-        return current.isWhitePawnRank();
-    }
-
     private boolean hasOpponentAtTarget(Position target, Map<Position, Piece> pieces) {
         return pieces.containsKey(target) && pieces.get(target).isOpponent(this);
     }
