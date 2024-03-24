@@ -44,7 +44,7 @@ public class ChessBoard {
         Direction direction = piece.getDirection(start, destination);
         Coordinate current = start.moveOneStep(direction);
 
-        while(!current.equals(destination)) {
+        while (!current.equals(destination)) {
             validatePieceExist(current);
             current = current.moveOneStep(direction);
         }
