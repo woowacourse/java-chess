@@ -14,44 +14,49 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean hasFollowedRule(Position source, Position target, MovePath movePath) {
-        if (isBlack()) {
-            return hasFollowedBlackRule(source, target, movePath);
-        }
-        return hasFollowedWhiteRule(source, target, movePath);
-    }
-
-    private boolean hasFollowedBlackRule(Position source, Position target, MovePath movePath) {
-        Side side = Side.BLACK;
-
-        boolean downDiagonalAttack = isDownDiagonal(source, target) && movePath.isOpponentTargetPiece(side);
+        boolean diagonalAttack = isDiagonalAttack(source, target, movePath);
         boolean notAttack = movePath.isTargetPieceEmpty();
-        boolean downTwoAtInitialPosition = isInitialPosition(source, side) && isDownTwo(source, target);
-        boolean downOne = isDownOne(source, target);
+        boolean forwardTwoAtInitialPosition = isInitialPosition(source) && isForwardTwo(source, target);
+        boolean forwardOne = isForwardOne(source, target);
 
-        return downDiagonalAttack || notAttack && (downTwoAtInitialPosition || downOne);
+        return diagonalAttack || notAttack && (forwardTwoAtInitialPosition || forwardOne);
     }
 
-    private boolean isDownDiagonal(Position source, Position target) {
-        return source.hasHigherRankByOne(target) && source.hasOneFileGap(target);
+    private boolean isDiagonalAttack(Position source, Position target, MovePath movePath) {
+        return isAttackableDiagonal(source, target) && movePath.isOpponentTargetPiece(side());
     }
 
-    private boolean isInitialPosition(Position source, Side side) {
-        List<Position> positions = InitialPosition.PAWN.positions(side);
+    private boolean isAttackableDiagonal(Position source, Position target) {
+        if (isBlack()) {
+            return source.hasHigherRankByOne(target) && source.hasOneFileGap(target);
+        }
+        return target.hasHigherRankByOne(source) && source.hasOneFileGap(target);
+    }
+
+    private boolean isInitialPosition(Position source) {
+        List<Position> positions = InitialPosition.PAWN.positions(side());
         return positions.contains(source);
     }
 
-    private boolean isDownTwo(Position source, Position target) {
-        return source.hasHigherRankByTwo(target) && source.isSameFile(target);
+    private boolean isForwardTwo(Position source, Position target) {
+        if (isBlack()) {
+            return source.hasHigherRankByTwo(target) && source.isSameFile(target);
+        }
+        return target.hasHigherRankByTwo(source) && source.isSameFile(target);
     }
 
-    private boolean isDownOne(Position source, Position target) {
-        return source.hasHigherRankByOne(target) && source.isSameFile(target);
-    }
-
-    private boolean hasFollowedWhiteRule(Position source, Position target, MovePath movePath) {
-        Side side = Side.WHITE;
-
+    private boolean isForwardOne(Position source, Position target) {
+        if (isBlack()) {
+            return source.hasHigherRankByOne(target) && source.isSameFile(target);
+        }
         return target.hasHigherRankByOne(source) && source.isSameFile(target);
+    }
+
+    private Side side() {
+        if (isBlack()) {
+            return Side.BLACK;
+        }
+        return Side.WHITE;
     }
 
     @Override
