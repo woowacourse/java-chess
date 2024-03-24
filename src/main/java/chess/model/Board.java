@@ -140,7 +140,7 @@ public class Board {
     }
 
     private void validateEmptyPosition(Position position) {
-        Piece targetPiece = board.get(position);
+        Piece targetPiece = findPiece(position);
         if (targetPiece.isExist()) {
             throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
         }
