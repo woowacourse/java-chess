@@ -10,13 +10,13 @@ import java.util.Set;
 public abstract class NonSlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    protected NonSlidingPiece(Position position, Color color, Set<Direction> directions) {
+    protected NonSlidingPiece(final Position position, final Color color, final Set<Direction> directions) {
         super(position, color);
         this.directions = directions;
     }
 
-    public Set<Position> findPathTo(Position destination) {
-        Set<Position> path = position.findPathTo(directions);
+    public Set<Position> findPathTo(final Position destination) {
+        final Set<Position> path = position.findPathTo(directions);
 
         if (!path.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");

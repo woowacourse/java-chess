@@ -27,7 +27,7 @@ public enum Direction {
     private final int dx;
     private final int dy;
 
-    Direction(int dx, int dy) {
+    Direction(final int dx, final int dy) {
         this.dx = dx;
         this.dy = dy;
     }
@@ -58,7 +58,7 @@ public enum Direction {
         return Set.of(Direction.DOWN_DOWN, Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
     }
 
-    public static Direction findDirection(int dx, int dy) {
+    public static Direction findDirection(final int dx, final int dy) {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.dx == dx && direction.dy == dy)
                 .findFirst()

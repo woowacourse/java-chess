@@ -15,12 +15,12 @@ public enum Column {
     private final String columnInput;
     private final int value;
 
-    Column(String columnInput, int value) {
+    Column(final String columnInput, final int value) {
         this.columnInput = columnInput;
         this.value = value;
     }
 
-    public static int findColumn(String input) {
+    public static int findColumn(final String input) {
         return Arrays.stream(Column.values())
                 .filter(column -> column.columnInput.equals(input))
                 .findFirst()

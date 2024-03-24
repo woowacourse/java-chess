@@ -9,17 +9,17 @@ import java.util.Set;
 public class BlackPawn extends Pawn {
     private static final Set<Direction> DIRECTIONS = Set.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
 
-    public BlackPawn(Position position) {
+    public BlackPawn(final Position position) {
         super(position, Color.BLACK, DIRECTIONS);
     }
 
-    public boolean isCaptureMove(Position destination) {
-        Direction direction = position.findDirectionTo(destination);
+    public boolean isCaptureMove(final Position destination) {
+        final Direction direction = position.findDirectionTo(destination);
         return direction == Direction.LEFT_DOWN || direction == Direction.RIGHT_DOWN;
     }
 
     @Override
-    public BlackPawn update(Position destination) {
+    public BlackPawn update(final Position destination) {
         return new BlackPawn(destination);
     }
 

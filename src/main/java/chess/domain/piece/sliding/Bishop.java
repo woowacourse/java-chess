@@ -9,7 +9,7 @@ import java.util.Set;
 public class Bishop extends SlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getDiagonalDirection();
 
-    public Bishop(Position position, Color color) {
+    public Bishop(final Position position, final Color color) {
         super(position, color, DIRECTIONS);
     }
 
@@ -22,7 +22,7 @@ public class Bishop extends SlidingPiece {
     }
 
     @Override
-    public Bishop update(Position destination) {
+    public Bishop update(final Position destination) {
         return new Bishop(destination, color);
     }
 }

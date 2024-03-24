@@ -25,12 +25,12 @@ public enum PieceDisplay {
     private final PieceType pieceType;
     private final String display;
 
-    PieceDisplay(PieceType pieceType, String display) {
+    PieceDisplay(final PieceType pieceType, final String display) {
         this.pieceType = pieceType;
         this.display = display;
     }
 
-    public static List<String> makeBoardDisplay(Map<Position, PieceType> board) {
+    public static List<String> makeBoardDisplay(final Map<Position, PieceType> board) {
         List<String> result = new ArrayList<>();
         for (int y = 8; y >= 1; y--) {
             result.add(makeBoardLine(board, y));
@@ -38,7 +38,7 @@ public enum PieceDisplay {
         return result;
     }
 
-    private static String makeBoardLine(Map<Position, PieceType> board, int y) {
+    private static String makeBoardLine(final Map<Position, PieceType> board, final int y) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int x = 1; x <= 8; x++) {
             stringBuilder.append(findPieceDisplay(board.get(new Position(x, y))));
@@ -46,7 +46,7 @@ public enum PieceDisplay {
         return stringBuilder.toString();
     }
 
-    private static String findPieceDisplay(PieceType pieceType) {
+    private static String findPieceDisplay(final PieceType pieceType) {
         return Arrays.stream(PieceDisplay.values())
                 .filter(piece -> piece.pieceType == pieceType)
                 .findFirst()

@@ -9,12 +9,12 @@ import java.util.Set;
 public class King extends NonSlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getEightDirection();
 
-    public King(Position position, Color color) {
+    public King(final Position position, final Color color) {
         super(position, color, DIRECTIONS);
     }
 
     @Override
-    public King update(Position destination) {
+    public King update(final Position destination) {
         return new King(destination, color);
     }
 

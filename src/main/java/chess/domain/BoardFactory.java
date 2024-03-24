@@ -33,7 +33,7 @@ public class BoardFactory {
         }
     }
 
-    private static void initLine(int x) {
+    private static void initLine(final int x) {
         for (int y = 1; y <= 8; y++) {
             Position position = new Position(x, y);
             board.put(position, new Blank(position));

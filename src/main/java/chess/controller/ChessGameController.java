@@ -22,7 +22,7 @@ public class ChessGameController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessGameController(InputView inputView, OutputView outputView) {
+    public ChessGameController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -36,7 +36,7 @@ public class ChessGameController {
     }
 
     private void waitStartCommand() {
-        String command = inputView.readCommand();
+        final String command = inputView.readCommand();
         if ("start".equals(command)) {
             return;
         }
@@ -44,7 +44,7 @@ public class ChessGameController {
         waitStartCommand();
     }
 
-    private void startChessGame(ChessGame chessGame) {
+    private void startChessGame(final ChessGame chessGame) {
         try {
             doOneRound(chessGame);
         } catch (IllegalArgumentException e) {
@@ -53,8 +53,8 @@ public class ChessGameController {
         startChessGame(chessGame);
     }
 
-    private void doOneRound(ChessGame chessGame) {
-        String command = inputView.readCommand();
+    private void doOneRound(final ChessGame chessGame) {
+        final String command = inputView.readCommand();
         if (command.equals("end")) {
             System.exit(0);
         }
@@ -64,28 +64,28 @@ public class ChessGameController {
         movePiece(chessGame, command);
     }
 
-    private void movePiece(ChessGame chessGame, String command) {
-        List<Position> positions = readPositions(command);
+    private void movePiece(final ChessGame chessGame, final String command) {
+        final List<Position> positions = readPositions(command);
         chessGame.move(positions.get(COLUMN_INDEX), positions.get(RANK_INDEX));
         outputView.printBoard(chessGame.collectBoard());
     }
 
-    private List<Position> readPositions(String command) {
-        List<Position> positions = new ArrayList<>();
-        List<String> rawPositions = parseSourceDestination(command);
+    private List<Position> readPositions(final String command) {
+        final List<Position> positions = new ArrayList<>();
+        final List<String> rawPositions = parseSourceDestination(command);
         positions.add(parsePosition(rawPositions.get(SOURCE_INDEX)));
         positions.add(parsePosition(rawPositions.get(DESTINATION_INDEX)));
         return positions;
     }
 
-    private Position parsePosition(String rawPosition) {
-        int column = Column.findColumn(String.valueOf(rawPosition.charAt(COLUMN_INDEX)));
-        int rank = parseRank(String.valueOf(rawPosition.charAt(RANK_INDEX)));
+    private Position parsePosition(final String rawPosition) {
+        final int column = Column.findColumn(String.valueOf(rawPosition.charAt(COLUMN_INDEX)));
+        final int rank = parseRank(String.valueOf(rawPosition.charAt(RANK_INDEX)));
         return new Position(column, rank);
     }
 
-    private List<String> parseSourceDestination(String command) {
-        Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
+    private List<String> parseSourceDestination(final String command) {
+        final Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
 
         if (!matcher.find()) {
             throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
@@ -93,7 +93,7 @@ public class ChessGameController {
         return List.of(matcher.group(SOURCE_DESTINATION_INDEX).split("\\s+"));
     }
 
-    private int parseRank(String rawRank) {
+    private int parseRank(final String rawRank) {
         try {
             return Integer.parseInt(rawRank);
         } catch (NumberFormatException e) {

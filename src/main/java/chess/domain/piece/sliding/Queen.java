@@ -9,7 +9,7 @@ import java.util.Set;
 public class Queen extends SlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getEightDirection();
 
-    public Queen(Position position, Color color) {
+    public Queen(final Position position, final Color color) {
         super(position, color, DIRECTIONS);
     }
 
@@ -22,7 +22,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public Queen update(Position destination) {
+    public Queen update(final Position destination) {
         return new Queen(destination, color);
     }
 }

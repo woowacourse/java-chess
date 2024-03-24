@@ -10,13 +10,13 @@ import java.util.Set;
 public abstract class SlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    protected SlidingPiece(Position position, Color color, Set<Direction> directions) {
+    protected SlidingPiece(final Position position, final Color color, final Set<Direction> directions) {
         super(position, color);
         this.directions = directions;
     }
 
-    public Set<Position> findPathTo(Position destination) {
-        Direction direction = position.findDirectionTo(destination);
+    public Set<Position> findPathTo(final Position destination) {
+        final Direction direction = position.findDirectionTo(destination);
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }

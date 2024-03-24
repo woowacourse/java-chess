@@ -7,18 +7,18 @@ public abstract class Piece {
     protected final Position position;
     protected final Color color;
 
-    protected Piece(Position position, Color color) {
+    protected Piece(final Position position, final Color color) {
         this.position = position;
         this.color = color;
     }
 
-    public abstract Set<Position> findPathTo(Position destination);
+    public abstract Set<Position> findPathTo(final Position destination);
 
-    public boolean isSameColor(Color otherColor) {
+    public boolean isSameColor(final Color otherColor) {
         return color == otherColor;
     }
 
-    public boolean isOppositeColor(Piece other) {
+    public boolean isOppositeColor(final Piece other) {
         if (color == Color.WHITE) {
             return other.color == Color.BLACK;
         }
@@ -28,7 +28,7 @@ public abstract class Piece {
         return false;
     }
 
-    public abstract Piece update(Position destination);
+    public abstract Piece update(final Position destination);
 
     public abstract PieceType pieceType();
 }

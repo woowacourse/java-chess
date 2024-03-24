@@ -9,12 +9,12 @@ import java.util.Set;
 public class Knight extends NonSlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getKnightDirection();
 
-    public Knight(Position position, Color color) {
+    public Knight(final Position position, final Color color) {
         super(position, color, DIRECTIONS);
     }
 
     @Override
-    public Knight update(Position destination) {
+    public Knight update(final Position destination) {
         return new Knight(destination, color);
     }
 

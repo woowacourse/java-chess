@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 public abstract class MoveState {
     protected final Map<Position, Piece> board;
 
-    public MoveState(Map<Position, Piece> board) {
+    public MoveState(final Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
-    public MoveState changeState(Position source) {
-        PieceType pieceType = board.get(source).pieceType();
+    public MoveState changeState(final Position source) {
+        final PieceType pieceType = board.get(source).pieceType();
         if (pieceType == PieceType.BLANK) {
             return new BlankMoveState(board);
         }
@@ -28,21 +28,21 @@ public abstract class MoveState {
         return new GeneralMoveState(board);
     }
 
-    public abstract void move(Color turnColor, Position source, Position destination);
+    public abstract void move(final Color turnColor, final Position source, final Position destination);
 
-    public void checkTurnOf(Piece currentPiece, Color turnColor) {
+    public void checkTurnOf(final Piece currentPiece, final Color turnColor) {
         if (!currentPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("상대 말은 이동할 수 없습니다.");
         }
     }
 
-    protected boolean isAllBlankCourses(Set<Position> path) {
+    protected boolean isAllBlankCourses(final Set<Position> path) {
         return path.stream()
                 .map(board::get)
                 .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
     }
 
-    protected void updateBoard(Position source, Position destination, Piece currentPiece) {
+    protected void updateBoard(final Position source, final Position destination, final Piece currentPiece) {
         board.replace(destination, currentPiece.update(destination));
         board.replace(source, new Blank(source));
     }

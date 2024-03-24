@@ -9,17 +9,17 @@ import java.util.Set;
 public class WhiteFirstPawn extends Pawn {
     private static final Set<Direction> DIRECTIONS = Direction.getWhiteFirstPawnDirection();
 
-    public WhiteFirstPawn(Position position) {
+    public WhiteFirstPawn(final Position position) {
         super(position, Color.WHITE, DIRECTIONS);
     }
 
-    public boolean isCaptureMove(Position destination) {
-        Direction direction = position.findDirectionTo(destination);
+    public boolean isCaptureMove(final Position destination) {
+        final Direction direction = position.findDirectionTo(destination);
         return direction == Direction.LEFT_UP || direction == Direction.RIGHT_UP;
     }
 
     @Override
-    public WhitePawn update(Position destination) {
+    public WhitePawn update(final Position destination) {
         return new WhitePawn(destination);
     }
 

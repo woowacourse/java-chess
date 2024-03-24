@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class BlankMoveState extends MoveState {
 
-    public BlankMoveState(Map<Position, Piece> board) {
+    public BlankMoveState(final Map<Position, Piece> board) {
         super(board);
     }
 
     @Override
-    public void move(Color turnColor, Position source, Position destination) {
+    public void move(final Color turnColor, final Position source, final Position destination) {
         throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
     }
 }

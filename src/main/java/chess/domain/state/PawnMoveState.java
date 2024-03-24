@@ -10,21 +10,22 @@ import java.util.Set;
 
 public class PawnMoveState extends MoveState {
 
-    public PawnMoveState(Map<Position, Piece> board) {
+    public PawnMoveState(final Map<Position, Piece> board) {
         super(board);
     }
 
     @Override
-    public void move(Color turnColor, Position source, Position destination) {
-        Pawn currentPiece = (Pawn) board.get(source);
+    public void move(final Color turnColor, final Position source, final Position destination) {
+        final Pawn currentPiece = (Pawn) board.get(source);
         checkTurnOf(currentPiece, turnColor);
-        Piece destinationPiece = board.get(destination);
+        final Piece destinationPiece = board.get(destination);
         validatePath(destination, currentPiece);
         validateWithCapture(destination, currentPiece, destinationPiece);
         updateBoard(source, destination, currentPiece);
     }
 
-    private void validateWithCapture(Position destination, Pawn currentPiece, Piece destinationPiece) {
+    private void validateWithCapture(final Position destination, final Pawn currentPiece,
+                                     final Piece destinationPiece) {
         if (!currentPiece.isCaptureMove(destination) && destinationPiece.pieceType() != PieceType.BLANK) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
@@ -33,8 +34,8 @@ public class PawnMoveState extends MoveState {
         }
     }
 
-    private void validatePath(Position destination, Pawn currentPiece) {
-        Set<Position> path = currentPiece.findPathTo(destination);
+    private void validatePath(final Position destination, final Pawn currentPiece) {
+        final Set<Position> path = currentPiece.findPathTo(destination);
         if (!isAllBlankCourses(path)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }

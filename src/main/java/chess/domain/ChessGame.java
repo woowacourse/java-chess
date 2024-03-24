@@ -12,12 +12,12 @@ public class ChessGame {
     private MoveState moveState;
     private Color turnColor;
 
-    public ChessGame(Map<Position, Piece> board) {
+    public ChessGame(final Map<Position, Piece> board) {
         this.moveState = new BlankMoveState(board);
         this.turnColor = Color.WHITE;
     }
 
-    public void move(Position source, Position destination) {
+    public void move(final Position source, final Position destination) {
         moveState = moveState.changeState(source);
         moveState.move(turnColor, source, destination);
         changeTurnColor();

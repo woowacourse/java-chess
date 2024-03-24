@@ -8,21 +8,21 @@ import java.util.Set;
 
 public class GeneralMoveState extends MoveState {
 
-    public GeneralMoveState(Map<Position, Piece> board) {
+    public GeneralMoveState(final Map<Position, Piece> board) {
         super(board);
     }
 
     @Override
-    public void move(Color turnColor, Position source, Position destination) {
-        Piece currentPiece = board.get(source);
+    public void move(final Color turnColor, final Position source, final Position destination) {
+        final Piece currentPiece = board.get(source);
         checkTurnOf(currentPiece, turnColor);
-        Piece destinationPiece = board.get(destination);
-        Set<Position> path = currentPiece.findPathTo(destination);
+        final Piece destinationPiece = board.get(destination);
+        final Set<Position> path = currentPiece.findPathTo(destination);
         validatePath(turnColor, path, destinationPiece);
         updateBoard(source, destination, currentPiece);
     }
 
-    private void validatePath(Color turnColor, Set<Position> path, Piece destinationPiece) {
+    private void validatePath(final Color turnColor, final Set<Position> path, final Piece destinationPiece) {
         if (destinationPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
         }

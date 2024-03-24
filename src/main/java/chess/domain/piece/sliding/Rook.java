@@ -9,7 +9,7 @@ import java.util.Set;
 public class Rook extends SlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getFourDirection();
 
-    public Rook(Position position, Color color) {
+    public Rook(final Position position, final Color color) {
         super(position, color, DIRECTIONS);
     }
 
@@ -22,7 +22,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public Rook update(Position destination) {
+    public Rook update(final Position destination) {
         return new Rook(destination, color);
     }
 }

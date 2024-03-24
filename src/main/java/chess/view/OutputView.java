@@ -19,7 +19,7 @@ public class OutputView {
         System.out.println("'start'를 입력하면 체스 게임을 시작합니다.");
     }
 
-    public void printBoard(Map<Position, PieceType> board) {
+    public void printBoard(final Map<Position, PieceType> board) {
         List<String> lines = PieceDisplay.makeBoardDisplay(board);
         lines.forEach(System.out::println);
         System.out.println();
