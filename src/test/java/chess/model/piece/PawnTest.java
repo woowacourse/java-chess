@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
     @ParameterizedTest
-    @MethodSource("provideTargetPositionAndResultInInitialPosition")
+    @MethodSource("getPathsWhenPawnInB2")
     @DisplayName("초기 위치에 있는 Pawn이 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPathInitialPosition(ChessPosition target, List<ChessPosition> expected) {
         // given
@@ -97,7 +97,7 @@ class PawnTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    private static Stream<Arguments> provideTargetPositionAndResultInInitialPosition() {
+    private static Stream<Arguments> getPathsWhenPawnInB2() {
         return Stream.of(
                 Arguments.arguments(B3, List.of(B3)),
                 Arguments.arguments(B4, List.of(B3, B4))

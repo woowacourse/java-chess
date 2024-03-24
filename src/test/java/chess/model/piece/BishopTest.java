@@ -23,7 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BishopTest {
     @ParameterizedTest
-    @MethodSource("provideTargetPositionAndResult")
+    @MethodSource("getPathsWhenBishopInC2")
     @DisplayName("Bishop이 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
@@ -59,7 +59,7 @@ class BishopTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    private static Stream<Arguments> provideTargetPositionAndResult() {
+    private static Stream<Arguments> getPathsWhenBishopInC2() {
         return Stream.of(
                 Arguments.of(D3, List.of(D3)),
                 Arguments.of(D1, List.of(D1)),

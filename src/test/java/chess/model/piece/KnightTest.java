@@ -25,7 +25,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class KnightTest {
     @ParameterizedTest
-    @MethodSource("provideTargetPositionAndResult")
+    @MethodSource("getPathsWhenKnightInE4")
     @DisplayName("Knight가 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
@@ -61,7 +61,7 @@ class KnightTest {
                 .isInstanceOf(IllegalStateException.class);
     }
 
-    private static Stream<Arguments> provideTargetPositionAndResult() {
+    private static Stream<Arguments> getPathsWhenKnightInE4() {
         return Stream.of(
                 Arguments.of(C3, List.of(C3)),
                 Arguments.of(C5, List.of(C5)),
