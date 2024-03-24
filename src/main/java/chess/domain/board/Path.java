@@ -6,8 +6,9 @@ import java.util.List;
 
 public class Path {
 
-    public static final int POSITIVE_DISTANCE = 1;
-    public static final int NEGATIVE_DISTANCE = -1;
+    private static final int POSITIVE_DISTANCE = 1;
+    private static final int NEUTRAL_DISTANCE = 0;
+    private static final int NEGATIVE_DISTANCE = -1;
 
     public static List<Direction> createDirections(Location source, Location target) {
         int verticalDistance = source.calculateVerticalDistance(target);
@@ -31,14 +32,20 @@ public class Path {
         if (direction.isUpside()) {
             return POSITIVE_DISTANCE;
         }
-        return NEGATIVE_DISTANCE;
+        if (direction.isDownside()) {
+            return NEGATIVE_DISTANCE;
+        }
+        return NEUTRAL_DISTANCE;
     }
 
     private static int calculateHorizontalDistance(Direction direction) {
         if (direction.isRightSide()) {
             return POSITIVE_DISTANCE;
         }
-        return NEGATIVE_DISTANCE;
+        if (direction.isLeftSide()) {
+            return NEGATIVE_DISTANCE;
+        }
+        return NEUTRAL_DISTANCE;
     }
 
     private static void validateDistance(int verticalDistance, int horizontalDistance) {
