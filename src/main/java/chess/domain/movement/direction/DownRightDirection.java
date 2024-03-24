@@ -1,6 +1,7 @@
 package chess.domain.movement.direction;
 
-import chess.domain.Position;
+
+import chess.domain.position.Position;
 
 public class DownRightDirection extends StraightDirection {
 
@@ -14,6 +15,6 @@ public class DownRightDirection extends StraightDirection {
             return position;
         }
 
-        return new Position(position.file() + 1, position.rank() - 1);
+        return position.right().down();
     }
 }

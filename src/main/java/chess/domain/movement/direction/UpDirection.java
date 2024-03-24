@@ -1,6 +1,6 @@
 package chess.domain.movement.direction;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public class UpDirection extends StraightDirection {
 
@@ -13,6 +13,6 @@ public class UpDirection extends StraightDirection {
         if (position.isMaximumRank()) {
             return position;
         }
-        return new Position(position.file(), position.rank() + 1);
+        return position.up();
     }
 }

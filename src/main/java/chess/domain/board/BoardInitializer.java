@@ -3,10 +3,9 @@ package chess.domain.board;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
-import chess.domain.InitialPiecePosition;
-import chess.domain.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,7 @@ public class BoardInitializer {
 
     private Stream<Position> generateHorizontalLine(final int rank) {
         return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
-                .mapToObj(file -> new Position(file, rank));
+                .mapToObj(file -> Position.of(file, rank));
     }
 
     private Collector<Position, ?, Map<Position, Piece>> generateEntry(final Piece piece) {

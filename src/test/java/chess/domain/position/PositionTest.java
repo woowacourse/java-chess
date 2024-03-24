@@ -1,10 +1,11 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.MoveDistance;
 import java.awt.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class PositionTest {
     @Test
     @DisplayName("위치는 가로, 세로 좌표값을 가진다.")
     void createPosition() {
-        assertThatCode(() -> new Position(1, 1))
+        assertThatCode(() -> Position.of(1, 1))
                 .doesNotThrowAnyException();
     }
 
@@ -24,7 +25,7 @@ class PositionTest {
     @DisplayName("위치는 가로, 세로 범위는 각각 1 ~ 8 이다.")
     @CsvSource({"0,1", "1,0", "1, 9", "9, 1"})
     void createPositionThrowException(int file, int rank) {
-        assertThatThrownBy(() -> new Position(file, rank))
+        assertThatThrownBy(() -> Position.of(file, rank))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("위치의 가로, 세로 범위는 각각 1 ~ 8이여야 합니다.");
     }
@@ -32,7 +33,7 @@ class PositionTest {
     @Test
     @DisplayName("point로부터 위치를 생성한다.")
     void of() {
-        assertThat(Position.of(new Point(1, 2))).isEqualTo(new Position(1, 2));
+        assertThat(Position.of(new Point(1, 2))).isEqualTo(Position.of(1, 2));
     }
 
     @Test
@@ -46,19 +47,19 @@ class PositionTest {
     @Test
     @DisplayName("이동 거리만큼 이동할 수 있다.")
     void moveByDistance() {
-        Position position = new Position(2, 2);
+        Position position = Position.of(2, 2);
         assertAll(
-                () -> assertThat(position.moveByDistance(new MoveDistance(1, 2))).isEqualTo(new Position(3, 4)),
-                () -> assertThat(position.moveByDistance(new MoveDistance(-1, 2))).isEqualTo(new Position(1, 4)),
-                () -> assertThat(position.moveByDistance(new MoveDistance(0, 2))).isEqualTo(new Position(2, 4)),
-                () -> assertThat(position.moveByDistance(new MoveDistance(0, 0))).isEqualTo(new Position(2, 2))
+                () -> assertThat(position.moveByDistance(new MoveDistance(1, 2))).isEqualTo(Position.of(3, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(-1, 2))).isEqualTo(Position.of(1, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(0, 2))).isEqualTo(Position.of(2, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(0, 0))).isEqualTo(Position.of(2, 2))
         );
     }
 
     @Test
     @DisplayName("이동 거리만큼 이동하였을 때, 범위를 초과한 경우 예외가 발생한다.")
     void notMoveByDistance() {
-        Position position = new Position(2, 2);
+        Position position = Position.of(2, 2);
         assertThatThrownBy(() -> assertThat(position.moveByDistance(new MoveDistance(-7, 2))))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이동이 불가능합니다.");
@@ -67,7 +68,7 @@ class PositionTest {
     @Test
     @DisplayName("위치의 file이 최소인 경우 참을 반환한다.")
     void isMinimumFile() {
-        Position position = new Position(1, 3);
+        Position position = Position.of(1, 3);
         assertThat(position.isMinimumFile()).isTrue();
     }
 
@@ -75,14 +76,14 @@ class PositionTest {
     @Test
     @DisplayName("위치의 file이 최대인 경우 참을 반환한다.")
     void isMaximumFile() {
-        Position position = new Position(8, 3);
+        Position position = Position.of(8, 3);
         assertThat(position.isMaximumFile()).isTrue();
     }
 
     @Test
     @DisplayName("위치의 rank가 최소인 경우 참을 반환한다.")
     void isMinimumRank() {
-        Position position = new Position(3, 1);
+        Position position = Position.of(3, 1);
         assertThat(position.isMinimumRank()).isTrue();
     }
 
@@ -90,7 +91,7 @@ class PositionTest {
     @Test
     @DisplayName("위치의 rank가 최대인 경우 참을 반환한다.")
     void isMaximumRank() {
-        Position position = new Position(3, 8);
+        Position position = Position.of(3, 8);
         assertThat(position.isMaximumRank()).isTrue();
     }
 
@@ -98,7 +99,7 @@ class PositionTest {
     @Test
     @DisplayName("최대 최소가 아닌 값이 나올 경우 거짓을 반환한다.")
     void isNotBoundaryValue() {
-        Position position = new Position(3, 3);
+        Position position = Position.of(3, 3);
         assertAll(
                 () -> assertThat(position.isMinimumFile()).isFalse(),
                 () -> assertThat(position.isMaximumFile()).isFalse(),

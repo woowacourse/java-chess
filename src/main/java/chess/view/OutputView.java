@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +35,7 @@ public class OutputView {
     private void printRankLine(final Map<Position, Piece> positions, final int rank) {
         String rankLine = IntStream.rangeClosed(MINIMUM_FILE_RANGE, MAXIMUM_FILE_RANGE)
                 .boxed()
-                .map(file -> positions.get(new Position(file, rank)))
+                .map(file -> positions.get(Position.of(file, rank)))
                 .map(PieceSymbol::getDisplay)
                 .collect(Collectors.joining(""));
         System.out.println(rankLine);

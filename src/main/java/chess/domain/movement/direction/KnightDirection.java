@@ -1,7 +1,7 @@
 package chess.domain.movement.direction;
 
 import chess.domain.MoveDistance;
-import chess.domain.Position;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class KnightDirection implements Direction {
