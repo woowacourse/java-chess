@@ -1,5 +1,6 @@
 package chess.domain.location;
 
+import chess.domain.board.Direction;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -53,4 +54,28 @@ class LocationTest {
                     .hasMessage("잘못된 위치 입력입니다.");
         }
     }
+
+    @DisplayName("입력받은 방향으로 위치를 이동한다.")
+    @Test
+    void moveTest() {
+        Location location = Location.of("A1");
+        location = location.move(Direction.UP_RIGHT);
+        Assertions.assertThat(location.equals(Location.of("B2"))).isTrue();
+    }
+    @DisplayName("타겟과 해당 위치 간의 수직 거리를 구한다.")
+    @Test
+    void calculateVerticalDistanceTest() {
+        Location location = Location.of("A1");
+        int verticalDistance = location.calculateVerticalDistance(Location.of("B3"));
+        Assertions.assertThat(verticalDistance).isEqualTo(2);
+    }
+
+    @DisplayName("타겟과 해당 위치 간의 수평 거리를 구한다.")
+    @Test
+    void calculateHorizontalDistanceTest() {
+        Location location = Location.of("A1");
+        int horizontalDistance = location.calculateHorizontalDistance(Location.of("B3"));
+        Assertions.assertThat(horizontalDistance).isEqualTo(1);
+    }
+
 }
