@@ -5,21 +5,19 @@ import domain.board.position.Vector;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class InitPawn extends MovedPawn {
+public class InitPawn extends AbstractPawn {
     public InitPawn(final Color color) {
         super(color);
     }
 
     @Override
     protected boolean isInstanceReachable(final Vector sourceVector, final Piece targetPiece) {
-        final List<Vector> possibleVectors = Stream.of(
+        return Stream.of(
                         getWhiteOneStepForwardVectors(targetPiece),
                         getWhiteOneStepAttackVectors(targetPiece),
-                        getWhiteTwoStepForwardVectors(targetPiece))
+                        getWhiteTwoStepForwardVectors(targetPiece)
+                )
                 .flatMap(List::stream)
-                .toList();
-
-        return possibleVectors.stream()
                 .map(this::reflectRankIfBlack)
                 .anyMatch(vector -> vector.equals(sourceVector));
     }

@@ -5,8 +5,6 @@ import domain.board.position.Vector;
 import java.util.List;
 
 public abstract class AbstractPawn extends Piece {
-
-
     protected AbstractPawn(final Color color) {
         super(color);
     }

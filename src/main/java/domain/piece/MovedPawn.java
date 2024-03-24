@@ -13,11 +13,12 @@ public class MovedPawn extends AbstractPawn {
 
     @Override
     protected boolean isInstanceReachable(final Vector sourceVector, final Piece targetPiece) {
-        final List<Vector> possibleVectors = Stream.of(
-                getWhiteOneStepForwardVectors(targetPiece),
-                getWhiteOneStepAttackVectors(targetPiece)
-        ).flatMap(List::stream).toList();
-
-        return possibleVectors.stream().map(this::reflectRankIfBlack).anyMatch(vector -> vector.equals(sourceVector));
+        return Stream.of(
+                        getWhiteOneStepForwardVectors(targetPiece),
+                        getWhiteOneStepAttackVectors(targetPiece)
+                )
+                .flatMap(List::stream)
+                .map(this::reflectRankIfBlack)
+                .anyMatch(vector -> vector.equals(sourceVector));
     }
 }
