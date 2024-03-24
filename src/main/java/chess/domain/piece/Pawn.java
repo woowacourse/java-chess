@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.position.BoardDirection;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -12,29 +13,39 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination, ChessBoard chessBoard) {
-        //TODO: 조건식 가독성 있게 추상화 및 매직넘버 상수화
-        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 1) {
-            return true;
+        if (isNotReachable(start, destination, chessBoard)) {
+            return false;
         }
-        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 4 && start.isOrthogonalWith(
-                destination) && start.isRankSameWith(teamInitialPawnRow())) {
-            return true;
+        if (isPathNotClear(start, destination, chessBoard)) {
+            return false;
         }
-        return false;
+        if (isFriendlyPieceAtDestination(destination, chessBoard)) {
+            return false;
+        }
+        return true;
     }
 
-    boolean isNotReachable(Position start, Position destination) {
-        //1칸 전진은 암때나 가능
-        //2칸 전진은 초기 위치일때만 가능
-        //대각 한칸 이동은 적이 있을 때만 가능
-        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 1) {
-            return true;
+    boolean isNotReachable(Position start, Position destination, ChessBoard chessBoard) {
+        BoardDirection direction = BoardDirection.of(start, destination);
+        System.out.println("direction = " + direction);
+        //팀의 전진방향과 맞도록 위로 한칸 움직이는 것은 가능하다
+        if (team.isTeamForwardDirectionsContains(direction) && start.squaredDistanceWith(destination) == 1
+                && start.isOrthogonalWith(destination)) {
+            return false;
         }
-        if (isForward(start, destination) && start.squaredDistanceWith(destination) == 4 && start.isOrthogonalWith(
-                destination) && start.isRankSameWith(teamInitialPawnRow())) {
-            return true;
+        //폰이 초기위치에 있고 팀의 전진방향과 맞도록 위로 두칸 움직이는 것은 가능 하다
+        if (team.isTeamForwardDirectionsContains(direction) && start.squaredDistanceWith(destination) == 4
+                && start.isOrthogonalWith(destination)
+                && start.isRankSameWith(teamInitialPawnRow())) {
+            return false;
         }
-        return false;
+        //팀의 전진방향과 맞고 대각선으로 1칸 움직일 때 목적지에 적이 있으면 움직일 수 있다
+        if (team.isTeamForwardDirectionsContains(direction) && start.squaredDistanceWith(destination) == 2
+                && start.isDiagonalWith(destination) && !chessBoard.positionIsEmpty(destination)
+                && chessBoard.findPieceByPosition(destination).isOtherTeam(this)) {
+            return false;
+        }
+        return true;
     }
 
     boolean isPathNotClear(Position start, Position destination, ChessBoard chessBoard) {

@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.position.BoardDirection;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public abstract class Piece {
-    private final Team team;
+    protected final Team team;
 
     public Piece(Team team) {
         this.team = team;
@@ -16,6 +17,10 @@ public abstract class Piece {
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;
+    }
+
+    public boolean isTeamForwardDirectionsContains(BoardDirection direction) {
+        return team.isTeamForwardDirectionsContains(direction);
     }
 
     public Direction teamForwardDirection() {

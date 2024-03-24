@@ -1,8 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.SlidingPiece;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
@@ -41,37 +39,9 @@ public class ChessBoard {
     }
 
     public boolean canMove(Position start, Position destination) {
-        //TODO: 메서드 분리, 반복되는 기능 메서드로 추출
-        Piece piece = findPieceByPosition(start);
-
-        //TODO: instanceOf 말고 같은 타입으로 다룰 수 있는 방법 없는지 확인하기
-        if (piece instanceof Pawn) {
-            if (piece.canMove(start, destination, this) && positionIsEmpty(destination)) {
-                return true;
-            }
-            if (((Pawn) piece).isKillPassing(start, destination) && !positionIsEmpty(destination) && piece.isOtherTeam(
-                    findPieceByPosition(destination))) {
-                return true;
-            }
-            return false;
-        }
-
-        if (piece instanceof SlidingPiece) {
-            List<Position> path = ((SlidingPiece) piece).searchPath(start, destination);
-            if (piece.canMove(start, destination, this) && isPathClear(path) && (positionIsEmpty(destination)
-                    || piece.isOtherTeam(findPieceByPosition(destination)))) {
-                return true;
-            }
-            return false;
-        }
-
-        if (piece.canMove(start, destination, this) && (positionIsEmpty(destination) || piece.isOtherTeam(
-                findPieceByPosition(destination)))) {
-            return true;
-        }
-        return false;
+        return findPieceByPosition(start).canMove(start, destination, this);
     }
-
+    
     public boolean isPathClear(List<Position> path) {
         return path.stream()
                 .allMatch(this::positionIsEmpty);
