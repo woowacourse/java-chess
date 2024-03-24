@@ -25,9 +25,13 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 파일입니다."));
     }
 
-    public int subtract(final File other) {
-        return this.index - other.index;
+    public static File from(final int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(index + "번 파일은 존재하지 않습니다."));
     }
+
 
     public File move(final int vector) {
         return Arrays.stream(values())

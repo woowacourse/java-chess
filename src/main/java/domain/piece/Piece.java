@@ -21,7 +21,7 @@ public abstract class Piece {
         for (final Direction movableDirection : movableDirections) {
             addMovableSquares(source, movableDirection, movableSquares, pieces);
         }
-        
+
         return movableSquares.contains(target);
     }
 
@@ -54,4 +54,8 @@ public abstract class Piece {
     public abstract boolean equals(final Object o);
 
     public abstract int hashCode();
+
+    public boolean isBlack() {
+        return this.team == Team.BLACK;
+    }
 }

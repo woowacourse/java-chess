@@ -1,6 +1,7 @@
 package controller;
 
 import domain.*;
+import dto.ChessBoardDTO;
 import view.InputView;
 import view.Menu;
 import view.OutputView;
@@ -23,7 +24,7 @@ public class ChessController {
 
                 if (menu.isStart()) {
                     chessBoard = ChessBoard.create();
-                    outputView.printChessTable(chessBoard.getPieces());
+                    outputView.printChessBoard(ChessBoardDTO.from(chessBoard.getPieces()));
                 }
                 if (menu.isEnd()) {
                     break;
@@ -45,7 +46,7 @@ public class ChessController {
 
         chessBoard.move(source, target);
 
-        outputView.printChessTable(chessBoard.getPieces());
+        outputView.printChessBoard(ChessBoardDTO.from(chessBoard.getPieces()));
     }
 
     private Square readSquare() {

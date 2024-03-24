@@ -1,13 +1,8 @@
 package view;
 
-import domain.File;
-import domain.Rank;
-import domain.Square;
-import domain.piece.Piece;
+import dto.ChessBoardDTO;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class OutputView {
     public void printHeader() {
@@ -18,25 +13,13 @@ public class OutputView {
                 > 게임 이동 : move source위치 target위치 - 예. move b2 b3""");
     }
 
-    public void printChessTable(final Map<Square, Piece> squarePieces) {
-        final String board = Arrays.stream(Rank.values())
-                .map(rank -> Arrays.stream(File.values())
-                        .map(file -> createRank(squarePieces, rank, file))
-                        .collect(Collectors.joining())
-                ).collect(Collectors.joining("\n"));
-
-        System.out.println(board);
-    }
-
-    private static String createRank(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
-        final Square square = new Square(file, rank);
-
-        if (squarePieces.containsKey(square)) {
-            final Piece piece = squarePieces.get(square);
-            return PieceTypeFormat.findFormat(piece);
+    public void printChessBoard(final ChessBoardDTO chessBoardDTO) {
+        final List<String> pieces = chessBoardDTO.pieces();
+        for (int i = 0; i < pieces.size(); i += 8) {
+            final int end = Math.min(i + 8, pieces.size());
+            final List<String> sublist = pieces.subList(i, end);
+            System.out.println(String.join("", sublist));
         }
-
-        return PieceTypeFormat.EMPTY_PIECE;
     }
 
     public void printError(final String message) {
