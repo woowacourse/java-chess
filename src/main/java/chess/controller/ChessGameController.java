@@ -15,49 +15,47 @@ import chess.view.mapper.RowMapper;
 public class ChessGameController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
-    private final ChessGame chessGame = new ChessGame(new Board());
 
     public void run() {
+        ChessGame chessGame = new ChessGame(new Board());
         outputView.printStartMessage();
-        Board board = chessGame.getBoard();
-        process(board);
+        process(chessGame);
     }
 
-    private void process(Board board) {
+    private void process(ChessGame chessGame) {
         boolean isRunning = true;
         while (isRunning) {
-            isRunning = processGame(board);
+            isRunning = processGame(chessGame);
         }
     }
 
-    private boolean processGame(Board board) {
+    private boolean processGame(ChessGame chessGame) {
         try {
             Command command = inputView.readCommend();
             if (command == Command.START) {
-                handleStartCommend(board);
+                handleStart(chessGame);
             }
             if (command == Command.MOVE) {
-                handleMoveCommend(board);
+                handleMove(chessGame);
             }
             return command != Command.END;
         } catch (IllegalArgumentException error) {
             outputView.printError(error);
-            process(board);
+            process(chessGame);
             return false;
         }
     }
 
-    private void handleStartCommend(Board board) {
-        outputView.printBoard(board);
+    private void handleStart(ChessGame chessGame) {
+        outputView.printBoard(chessGame.getBoard());
     }
 
-    private void handleMoveCommend(Board board) {
+    private void handleMove(ChessGame chessGame) {
         MoveRequestDto moveRequestDto = inputView.readPositions();
         Position from = createPosition(moveRequestDto.getFromColumn(), moveRequestDto.getFromRow());
         Position to = createPosition(moveRequestDto.getToColumn(), moveRequestDto.getToRow());
-
         chessGame.movePiece(from, to);
-        outputView.printBoard(board);
+        outputView.printBoard(chessGame.getBoard());
     }
 
     private Position createPosition(String requestColumn, String requestRow) {

@@ -21,7 +21,7 @@ public class InputView {
     public MoveRequestDto readPositions() {
         String input = scanner.nextLine().strip();
         if (!POSITION_REGEX.matcher(input).matches()) {
-            throw new IllegalArgumentException("입력한 source위치 target위치 형식이 올바르지 않습니다.");
+            throw new IllegalArgumentException("입력한 이동 명령 형식이 올바르지 않습니다.");
         }
 
         return new MoveRequestDto(

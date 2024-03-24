@@ -21,11 +21,15 @@ public class Piece {
     }
 
     public boolean isEnemy(Piece piece) {
-        return this.color != piece.color;
+        return isNotSameColor(piece.color);
     }
 
     public boolean isBlack() {
         return this.color == Color.BLACK;
+    }
+
+    public boolean isNotSameColor(Color turn) {
+        return this.color != turn;
     }
 
     public boolean isPawnAttackPossible(Direction direction) {
