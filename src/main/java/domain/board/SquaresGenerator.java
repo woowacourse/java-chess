@@ -60,7 +60,7 @@ public class SquaresGenerator {
 
         private List<Position> initPositions() {
             return this.files.stream()
-                    .flatMap(file -> ranks.stream().map(rank -> new Position(file, rank)))
+                    .flatMap(file -> ranks.stream().map(rank -> Position.generate(file, rank)))
                     .toList();
         }
     }

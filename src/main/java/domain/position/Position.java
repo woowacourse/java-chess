@@ -7,20 +7,39 @@ import java.util.Objects;
 import view.mapper.FileInput;
 import view.mapper.RankInput;
 
-public class Position { // TODO: cache 활용해보기
+public class Position {
+
+    private static final List<Position> CACHE;
+
+    static {
+        CACHE = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> new Position(file, rank)))
+                .toList();
+    }
 
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position generate(File file, Rank rank) {
+        return CACHE.stream()
+                .filter(position -> position.hasFile(file) && position.hasRank(rank))
+                .findFirst()
+                .orElse(new Position(file, rank));
     }
 
     public static Position generate(String rawFile, String rawRank) {
         File file = FileInput.asFile(rawFile);
         Rank rank = RankInput.asRank(rawRank);
-        return new Position(file, rank);
+        return generate(file, rank);
+    }
+
+    private boolean hasFile(File file) {
+        return this.file.isSame(file);
     }
 
     public boolean hasRank(Rank rank) {
@@ -92,11 +111,11 @@ public class Position { // TODO: cache 활용해보기
     public List<Position> findBetweenStraightPositions(Position target) {
         if (file.isSame(target.file)) {
             return rank.betweenRanks(target.rank).stream()
-                    .map(rank -> new Position(file, rank))
+                    .map(rank -> generate(file, rank))
                     .toList();
         }
         return file.betweenFiles(target.file).stream()
-                .map(file -> new Position(file, rank))
+                .map(file -> generate(file, rank))
                 .toList();
     }
 
@@ -106,7 +125,7 @@ public class Position { // TODO: cache 활용해보기
 
         List<Position> positions = new ArrayList<>();
         for (int index = 0; index < ranks.size(); index++) {
-            Position position = new Position(files.get(index), ranks.get(index));
+            Position position = generate(files.get(index), ranks.get(index));
             positions.add(position);
         }
         return positions;

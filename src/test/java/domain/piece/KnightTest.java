@@ -42,8 +42,8 @@ class KnightTest {
     @DisplayName("목적지가 해당 경로 위에 있는 경우 움직일 수 있다.")
     void canMove_True(File file, Rank rank) {
         Piece piece = new Knight(Color.WHITE);
-        Position source = new Position(File.D, Rank.FOUR);
-        Position target = new Position(file, rank);
+        Position source = Position.generate(File.D, Rank.FOUR);
+        Position target = Position.generate(file, rank);
 
         boolean actual = piece.canMove(source, target);
 
@@ -64,8 +64,8 @@ class KnightTest {
     @DisplayName("목적지가 해당 경로 위에 없는 경우 움직일 수 없다.")
     void canMove_False() {
         Piece piece = new Knight(Color.WHITE);
-        Position source = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.G, Rank.FOUR);
+        Position source = Position.generate(File.D, Rank.FOUR);
+        Position target = Position.generate(File.G, Rank.FOUR);
 
         boolean actual = piece.canMove(source, target);
 

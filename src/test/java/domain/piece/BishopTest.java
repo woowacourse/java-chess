@@ -24,8 +24,8 @@ public class BishopTest {
     @DisplayName("목적지가 대각선 경로에 있는 경우 움직일 수 있다.")
     void canMove_Diagonal_True() {
         Piece piece = new Bishop(Color.WHITE);
-        Position source = new Position(File.D, Rank.FOUR);
-        Position target = new Position(File.H, Rank.EIGHT);
+        Position source = Position.generate(File.D, Rank.FOUR);
+        Position target = Position.generate(File.H, Rank.EIGHT);
 
         boolean actual = piece.canMove(source, target);
 
@@ -46,8 +46,8 @@ public class BishopTest {
     @DisplayName("목적지가 대각선 경로에 없는 경우 움직일 수 없다.")
     void canMove_Diagonal_False() {
         Piece piece = new Rook(Color.WHITE);
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.H, Rank.FOUR);
+        Position source = Position.generate(File.A, Rank.ONE);
+        Position target = Position.generate(File.H, Rank.FOUR);
 
         boolean actual = piece.canMove(source, target);
 

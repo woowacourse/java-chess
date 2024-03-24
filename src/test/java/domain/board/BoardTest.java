@@ -24,7 +24,7 @@ public class BoardTest {
     @Test
     @DisplayName("해당 위치의 기물을 가져온다.")
     void findPieceByPosition() {
-        Position position = new Position(File.A, Rank.ONE);
+        Position position = Position.generate(File.A, Rank.ONE);
 
         Piece piece = board.findPieceByPosition(position);
 
@@ -34,8 +34,8 @@ public class BoardTest {
     @Test
     @DisplayName("해당 위치로 기물을 옮긴다.")
     void placePiece() {
-        Position source = new Position(File.A, Rank.TWO);
-        Position target = new Position(File.A, Rank.THREE);
+        Position source = Position.generate(File.A, Rank.TWO);
+        Position target = Position.generate(File.A, Rank.THREE);
         Piece expected = new Pawn(Color.WHITE);
 
         board.movePiece(source, target);
@@ -47,8 +47,8 @@ public class BoardTest {
     @Test
     @DisplayName("해당 위치에 다른 기물이 있는 경우 참을 반환한다.")
     void isNotBlocked_True() {
-        Position source = new Position(File.A, Rank.ONE);
-        Position target = new Position(File.A, Rank.THREE);
+        Position source = Position.generate(File.A, Rank.ONE);
+        Position target = Position.generate(File.A, Rank.THREE);
 
         boolean actual = board.isBlocked(source, target);
 
@@ -58,8 +58,8 @@ public class BoardTest {
     @Test
     @DisplayName("해당 위치에 다른 기물이 없는 경우 거짓을 반환한다.")
     void isNotBlocked_False() {
-        Position source = new Position(File.A, Rank.TWO);
-        Position target = new Position(File.A, Rank.FOUR);
+        Position source = Position.generate(File.A, Rank.TWO);
+        Position target = Position.generate(File.A, Rank.FOUR);
 
         boolean actual = board.isBlocked(source, target);
 

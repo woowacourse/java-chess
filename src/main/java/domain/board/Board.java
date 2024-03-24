@@ -39,7 +39,7 @@ public class Board {
     }
 
     private Piece findPieceByPosition(File file, Rank rank) {
-        return squares.get(new Position(file, rank));
+        return squares.get(Position.generate(file, rank));
     }
 
     public void movePiece(Position source, Position target) {
