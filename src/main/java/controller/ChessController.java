@@ -2,6 +2,7 @@ package controller;
 
 import domain.ChessBoard;
 import dto.RouteDto;
+import java.util.Objects;
 import util.BoardMapper;
 import view.ChessCommand;
 import view.InputView;
@@ -20,7 +21,7 @@ public class ChessController {
                 chessBoard = ChessBoard.createDefaultBoard();
             }
             if (chessCommand == ChessCommand.MOVE) {
-                pieceMove(chessBoard);
+                pieceMove(Objects.requireNonNull(chessBoard));
             }
             OutputView.printBoard(BoardMapper.toDto(chessBoard));
         }

@@ -27,6 +27,7 @@ public class ChessBoard {
 
         if (pieces.check(piece, endPoint)) {
             pieces.move(piece, endPoint);
+            return;
         }
         throw new IllegalArgumentException(
                 String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.getStatus(), startPoint, endPoint));
