@@ -48,7 +48,11 @@ public enum Rank {
         if (canMoveUp(count)) {
             return values()[ordinal() + count];
         }
-        throw new IllegalStateException("%d 만큼 위쪽으로 움직일 수 없습니다.");
+        throw new IllegalStateException(String.format("%d 만큼 위쪽으로 움직일 수 없습니다.", count));
+    }
+
+    public boolean canMoveUp() {
+        return canMoveUp(1);
     }
 
     public boolean canMoveUp(final int count) {
@@ -65,6 +69,10 @@ public enum Rank {
             return values()[ordinal() - count];
         }
         throw new IllegalStateException("%d 만큼 아래쪽으로 움직일 수 없습니다.");
+    }
+
+    public boolean canMoveDown() {
+        return canMoveDown(1);
     }
 
     public boolean canMoveDown(final int count) {

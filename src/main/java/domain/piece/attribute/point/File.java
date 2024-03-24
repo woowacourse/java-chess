@@ -67,7 +67,7 @@ public enum File {
         if (canMoveRight(count)) {
             return values()[ordinal() + count];
         }
-        throw new IllegalStateException("%d 만큼 오른쪽으로 움직일 수 없습니다.");
+        throw new IllegalStateException(String.format("%d 만큼 오른쪽으로 움직일 수 없습니다.", count));
     }
 
     public boolean canMoveRight(final int count) {
