@@ -1,5 +1,7 @@
 package chess.domain.attribute;
 
+import static chess.domain.attribute.File.A;
+import static chess.domain.attribute.File.H;
 import static chess.domain.attribute.Rank.EIGHT;
 import static chess.domain.attribute.Rank.FOUR;
 import static chess.domain.attribute.Rank.ONE;
@@ -7,6 +9,9 @@ import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -48,5 +53,23 @@ class RankTest {
     void downException() {
         assertThatThrownBy(ONE::down)
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("위 칸으로 이동할 수 있는지 알려준다.")
+    @Test
+    void canMoveUp() {
+        assertAll(
+                () -> assertTrue(ONE::canMoveUp),
+                () -> assertFalse(EIGHT::canMoveUp)
+        );
+    }
+
+    @DisplayName("아래 칸으로 이동할 수 있는지 알려준다.")
+    @Test
+    void canMoveDown() {
+        assertAll(
+                () -> assertTrue(EIGHT::canMoveDown),
+                () -> assertFalse(ONE::canMoveDown)
+        );
     }
 }

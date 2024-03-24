@@ -79,4 +79,22 @@ public enum Rank {
             throw new IllegalStateException("해당 칸의 아래칸이 존재하지 않습니다.");
         }
     }
+
+    public boolean canMoveUp() {
+        try {
+            up();
+        } catch (IllegalStateException exception) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canMoveDown() {
+        try {
+            down();
+        } catch (IllegalStateException exception) {
+            return false;
+        }
+        return true;
+    }
 }
