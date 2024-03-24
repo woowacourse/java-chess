@@ -12,27 +12,27 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     DOWN_RIGHT(1, -1);
 
-    private final int rowDirection;
+    private final int fileDirection;
 
-    private final int columnDirection;
+    private final int rankDirection;
 
-    Direction(int rowDirection, int columnDirection) {
-        this.rowDirection = rowDirection;
-        this.columnDirection = columnDirection;
+    Direction(int fileDirection, int rankDirection) {
+        this.fileDirection = fileDirection;
+        this.rankDirection = rankDirection;
     }
 
     public static Direction findDirection(Position source, Position target) {
-        int rowDirection = source.findRowDirection(target);
-        int columnDirection = source.findColumnDirection(target);
+        int fileDirection = source.findFileDirection(target);
+        int rankDirection = source.findRankDirection(target);
 
         return Arrays.stream(values())
-                .filter(value -> isSameDirection(value, rowDirection, columnDirection))
+                .filter(value -> isSameDirection(value, fileDirection, rankDirection))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 방향입니다."));
     }
 
-    private static boolean isSameDirection(Direction value, int rowDirection, int columnDirection) {
-        return value.rowDirection == rowDirection && value.columnDirection == columnDirection;
+    private static boolean isSameDirection(Direction value, int fileDirection, int rankDirection) {
+        return value.fileDirection == fileDirection && value.rankDirection == rankDirection;
     }
 
     public static boolean isUpDown(Position source, Position target) {
@@ -41,6 +41,6 @@ public enum Direction {
     }
 
     public Position move(Position source) {
-        return source.move(rowDirection, columnDirection);
+        return source.move(fileDirection, rankDirection);
     }
 }

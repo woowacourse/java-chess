@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.position;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -36,10 +36,10 @@ public class PositionTest {
             "a2, 1, -1, b1"})
     @DisplayName("전달한 방향으로 이동한 새로운 Position을 반환한다.")
     void Position_Move_with_direction(Position source,
-                                      int rowDirection,
-                                      int columnDirection,
+                                      int fileDirection,
+                                      int rankDirection,
                                       Position target) {
-        var result = source.move(rowDirection, columnDirection);
+        var result = source.move(fileDirection, rankDirection);
         assertThat(result).isEqualTo(target);
     }
 
@@ -50,10 +50,10 @@ public class PositionTest {
             "b4, b2, 2",
             "b5, a2, 3"})
     @DisplayName("두 포지션 사이의 세로 길이를 구한다.")
-    void Position_Calculate_column_distance_with_other_position(Position source,
+    void Position_Calculate_rank_distance_with_other_position(Position source,
                                                                 Position target,
                                                                 int distance) {
-        var result = source.calculateColumnDistance(target);
+        var result = source.calculateRankDistance(target);
         assertThat(result).isEqualTo(distance);
     }
 
@@ -64,10 +64,10 @@ public class PositionTest {
             "e4, b4, 3",
             "b3, a1, 1"})
     @DisplayName("두 포지션 사이의 가로 길이를 구한다.")
-    void Position_Calculate_row_distance_with_other_position(Position source,
+    void Position_Calculate_file_distance_with_other_position(Position source,
                                                                 Position target,
                                                                 int distance) {
-        var result = source.calculateRowDistance(target);
+        var result = source.calculateFileDistance(target);
         assertThat(result).isEqualTo(distance);
     }
 
@@ -75,9 +75,9 @@ public class PositionTest {
     @CsvSource(value = {
             "a1, b1, true",
             "a2, a4, false"})
-    @DisplayName("두 포지션이 같은 row인지 확인한다.")
-    void Position_Check_is_same_column(Position source, Position target, boolean isSame) {
-        var result = source.isSameColumn(target);
+    @DisplayName("두 포지션이 같은 file인지 확인한다.")
+    void Position_Check_is_same_rank(Position source, Position target, boolean isSame) {
+        var result = source.isSameRank(target);
         assertThat(result).isEqualTo(isSame);
     }
 
@@ -85,9 +85,9 @@ public class PositionTest {
     @CsvSource(value = {
             "a1, b1, false",
             "a2, a4, true"})
-    @DisplayName("두 포지션이 같은 row인지 확인한다.")
-    void Position_Check_is_same_row(Position source, Position target, boolean isSame) {
-        var result = source.isSameRow(target);
+    @DisplayName("두 포지션이 같은 file인지 확인한다.")
+    void Position_Check_is_same_file(Position source, Position target, boolean isSame) {
+        var result = source.isSameFile(target);
         assertThat(result).isEqualTo(isSame);
     }
 }

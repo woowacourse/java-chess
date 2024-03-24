@@ -3,59 +3,55 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Position {
-    private final Row row;
-    private final Column column;
+    private final File file;
+    private final Rank rank;
 
-    private Position(Row row, Column column) {
-        this.row = row;
-        this.column = column;
+    private Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     public static Position from(String position) {
-        Row row = Row.valueOf(position.substring(0, 1));
-        Column column = Column.valueOf(position.substring(1));
+        File file = File.valueOf(position.substring(0, 1));
+        Rank rank = Rank.valueOf(position.substring(1));
 
-        return new Position(row, column);
+        return new Position(file, rank);
     }
 
-    public Position move(int rowDirection, int columnDirection) {
-        return new Position(row.update(rowDirection), column.update(columnDirection));
+    public Position move(int fileDirection, int rankDirection) {
+        return new Position(file.update(fileDirection), rank.update(rankDirection));
     }
 
-    public int calculateRowDistance(Position target) {
-        return Math.abs(row.subtractRow(target.row));
+    public int calculateFileDistance(Position target) {
+        return Math.abs(file.subtractFile(target.file));
     }
 
-    public int calculateColumnDistance(Position target) {
-        return Math.abs(subtractColumns(target));
+    public int calculateRankDistance(Position target) {
+        return Math.abs(subtractRanks(target));
     }
 
-    public int subtractColumns(Position target) {
-        return column.subtractColumn(target.column);
+    public int subtractRanks(Position target) {
+        return rank.subtractRank(target.rank);
     }
 
-    public boolean isSameColumn(Position target) {
-        return this.column == target.column;
+    public boolean isSameRank(Position target) {
+        return this.rank == target.rank;
     }
 
-    public boolean isSameRow(Position target) {
-        return this.row == target.row;
+    public boolean isSameFile(Position target) {
+        return this.file == target.file;
     }
 
-    public int findRowDirection(Position target) {
-        return row.findDirection(target.row);
+    public int findFileDirection(Position target) {
+        return file.findDirection(target.file);
     }
 
-    public int findColumnDirection(Position target) {
-        return column.findDirection(target.column);
+    public int findRankDirection(Position target) {
+        return rank.findDirection(target.rank);
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Column getColumn() {
-        return column;
+    public Rank getRank() {
+        return rank;
     }
 
     @Override
@@ -63,11 +59,11 @@ public class Position {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Position position = (Position) object;
-        return row == position.row && column == position.column;
+        return file == position.file && rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, column);
+        return Objects.hash(file, rank);
     }
 }

@@ -7,18 +7,18 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toMap;
 
-public class Column {
-    private static final Map<String, Column> CACHE = IntStream.rangeClosed(1, 8)
-            .mapToObj(String::valueOf)
-            .collect(toMap(Function.identity(), Column::new));
+public class Rank {
+    private static final Map<String, Rank> CACHE = IntStream.rangeClosed(1, 8)
+                                                            .mapToObj(String::valueOf)
+                                                            .collect(toMap(Function.identity(), Rank::new));
 
     private final String value;
 
-    private Column(String value) {
+    private Rank(String value) {
         this.value = value;
     }
 
-    public static Column valueOf(String value) {
+    public static Rank valueOf(String value) {
         validate(value);
         return CACHE.get(value);
     }
@@ -38,17 +38,17 @@ public class Column {
         }
     }
 
-    public Column update(int value) {
+    public Rank update(int value) {
         int index = Integer.parseInt(this.value) + value;
         return CACHE.get(String.valueOf(index));
     }
 
-    public int subtractColumn(Column column) {
-        return Integer.parseInt(this.value) - Integer.parseInt(column.value);
+    public int subtractRank(Rank rank) {
+        return Integer.parseInt(this.value) - Integer.parseInt(rank.value);
     }
 
-    public int findDirection(Column column) {
-        return Integer.compare(Integer.parseInt(column.value), Integer.parseInt(value));
+    public int findDirection(Rank rank) {
+        return Integer.compare(Integer.parseInt(rank.value), Integer.parseInt(value));
     }
 
     @Override
@@ -59,8 +59,8 @@ public class Column {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Column column = (Column) o;
-        return value == column.value;
+        Rank rank = (Rank) o;
+        return value == rank.value;
     }
 
     @Override

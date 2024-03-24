@@ -1,6 +1,6 @@
 package chess.domain.chesspiece;
 
-import chess.domain.position.Column;
+import chess.domain.position.Rank;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -12,8 +12,8 @@ import static chess.domain.chesspiece.Role.*;
 import static chess.domain.chesspiece.Team.WHITE;
 
 public class Pawn extends Piece {
-    private static Column WHITE_PAWN_START_COLUMN = Column.valueOf("2");
-    private static Column BLACK_PAWN_START_COLUMN = Column.valueOf("7");
+    private static Rank WHITE_PAWN_START_COLUMN = Rank.valueOf("2");
+    private static Rank BLACK_PAWN_START_COLUMN = Rank.valueOf("7");
 
     public Pawn(Team team) {
         super(team);
@@ -48,12 +48,12 @@ public class Pawn extends Piece {
     }
 
     private boolean moveForwardTwice(Position source, Position target) {
-        int columnDistance = calculatePawnColumnDistance(source, target);
-        return isStartPosition(source) && source.isSameRow(target) && columnDistance == 2;
+        int columnDistance = calculatePawnRankDistance(source, target);
+        return isStartPosition(source) && source.isSameFile(target) && columnDistance == 2;
     }
 
-    private int calculatePawnColumnDistance(Position source, Position target) {
-        int columnDistance = source.subtractColumns(target);
+    private int calculatePawnRankDistance(Position source, Position target) {
+        int columnDistance = source.subtractRanks(target);
         if(team == WHITE) {
             columnDistance *= -1;
         }
@@ -62,20 +62,20 @@ public class Pawn extends Piece {
 
     private boolean isStartPosition(Position source) {
         if(team == WHITE) {
-            return source.getColumn() == WHITE_PAWN_START_COLUMN;
+            return source.getRank() == WHITE_PAWN_START_COLUMN;
         }
-        return source.getColumn() == BLACK_PAWN_START_COLUMN;
+        return source.getRank() == BLACK_PAWN_START_COLUMN;
     }
 
     private boolean moveForward(Position source, Position target) {
-        int columnDistance = calculatePawnColumnDistance(source, target);
-        return source.isSameRow(target) && columnDistance == 1;
+        int columnDistance = calculatePawnRankDistance(source, target);
+        return source.isSameFile(target) && columnDistance == 1;
     }
 
     private boolean attack(Position source, Position target) {
-        int rowDistance = source.calculateRowDistance(target);
-        int colDistance = calculatePawnColumnDistance(source, target);
-        return rowDistance == 1 && colDistance == 1;
+        int fileDistance = source.calculateFileDistance(target);
+        int colDistance = calculatePawnRankDistance(source, target);
+        return fileDistance == 1 && colDistance == 1;
     }
 
     @Override

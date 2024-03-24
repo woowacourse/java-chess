@@ -1,7 +1,7 @@
 package chess.domain.chessboard;
 
 import chess.domain.chesspiece.Piece;
-import chess.domain.position.Row;
+import chess.domain.position.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +14,9 @@ public class Line {
         this.line = line;
     }
 
-    public Line update(Row row, Piece chessPiece) {
+    public Line update(File file, Piece chessPiece) {
         List<Piece> line = new ArrayList<>(this.line);
-        line.set(row.getValue(), chessPiece);
+        line.set(file.getValue(), chessPiece);
         return new Line(line);
     }
 
@@ -24,7 +24,7 @@ public class Line {
         return Collections.unmodifiableList(line);
     }
 
-    public Piece getChessPiece(Row row) {
-        return line.get(row.getValue());
+    public Piece getChessPiece(File file) {
+        return line.get(file.getValue());
     }
 }

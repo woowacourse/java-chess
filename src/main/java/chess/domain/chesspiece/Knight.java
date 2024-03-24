@@ -23,10 +23,10 @@ public class Knight extends Piece {
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        int rowDistance = source.calculateRowDistance(target);
-        int colDistance = source.calculateColumnDistance(target);
+        int fileDistance = source.calculateFileDistance(target);
+        int colDistance = source.calculateRankDistance(target);
 
-        if (!(rowDistance == 2 && colDistance == 1 || rowDistance == 1 && colDistance == 2)) {
+        if (!(fileDistance == 2 && colDistance == 1 || fileDistance == 1 && colDistance == 2)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

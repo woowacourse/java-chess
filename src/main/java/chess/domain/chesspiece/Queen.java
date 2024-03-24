@@ -32,9 +32,9 @@ public class Queen extends Piece {
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        int rowDistance = source.calculateRowDistance(target);
-        int columnDistance = source.calculateColumnDistance(target);
-        if (!source.isSameRow(target) && !source.isSameColumn(target) && rowDistance != columnDistance) {
+        int fileDistance = source.calculateFileDistance(target);
+        int columnDistance = source.calculateRankDistance(target);
+        if (!source.isSameFile(target) && !source.isSameRank(target) && fileDistance != columnDistance) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
