@@ -22,19 +22,18 @@ public class InputView {
         }
     }
 
-    public static boolean isInputMove() {
-        String commandValue = SCANNER.next();
-        return switch (GameCommand.find(commandValue)) {
+    public static MovementDto isInputMove() {
+        StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
+        return switch (GameCommand.find(inputTokenizer.nextToken())) {
             case START -> throw new InvalidCommandException("게임이 시작한 이후, 다시 게임을 시작할 수 없습니다.");
-            case END -> false;
-            case MOVE -> true;
+            case END -> new MovementDto(false, "", "");
+            case MOVE -> inputMovement(inputTokenizer);
         };
     }
 
-    public static MovementDto inputMovement() {
-        StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
+    private static MovementDto inputMovement(StringTokenizer inputTokenizer) {
         if (inputTokenizer.countTokens() == 2) {
-            return new MovementDto(inputTokenizer.nextToken(), inputTokenizer.nextToken());
+            return new MovementDto(true, inputTokenizer.nextToken(), inputTokenizer.nextToken());
         }
         throw new InvalidCommandException("잘못된 명령어입니다.");
     }

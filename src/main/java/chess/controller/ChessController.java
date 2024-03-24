@@ -5,21 +5,26 @@ import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.Movement;
 import chess.dto.BoardStatusDto;
-import chess.exception.ImpossibleMoveExceptionHandler;
-import chess.exception.InvalidCommandExceptionHandler;
+import chess.dto.MovementDto;
+import chess.exception.CustomExceptionHandler;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
     public void play() {
-        InvalidCommandExceptionHandler.handle(InputView::inputStartCommand);
+        CustomExceptionHandler.handle(InputView::inputStartCommand);
         Board board = new Board(BoardFactory.generateStartBoard());
         ChessGame chessGame = new ChessGame(board);
         OutputView.printChessBoard(board.mapPositionToCharacter());
 
-        while (InvalidCommandExceptionHandler.handle(InputView::isInputMove)) {
-            Movement movement = InvalidCommandExceptionHandler.handle(InputView::inputMovement).movement();
-            ImpossibleMoveExceptionHandler.handle(() -> chessGame.movePiece(movement));
+        CustomExceptionHandler.handle(() -> playTurn(chessGame, board));
+    }
+
+    private static void playTurn(ChessGame chessGame, Board board) {
+        MovementDto movementDto;
+        while ((movementDto = InputView.isInputMove()).isMove()) {
+            Movement movement = movementDto.movement();
+            chessGame.movePiece(movement);
             OutputView.printGameStatus(new BoardStatusDto(board.mapPositionToCharacter(), chessGame.checkStatus()));
         }
     }
