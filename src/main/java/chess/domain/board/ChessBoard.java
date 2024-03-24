@@ -29,7 +29,7 @@ public class ChessBoard {
             movePiece(start, destination);
             return;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("기물의 행마법에 어긋나는 이동입니다");
     }
 
     private void movePiece(Position start, Position destination) {
@@ -41,7 +41,7 @@ public class ChessBoard {
     public boolean canMove(Position start, Position destination) {
         return findPieceByPosition(start).canMove(start, destination, this);
     }
-    
+
     public boolean isPathClear(List<Position> path) {
         return path.stream()
                 .allMatch(this::positionIsEmpty);
