@@ -34,13 +34,15 @@ public class Controller {
     }
 
     private void controlChessBoard(ChessBoard chessBoard, List<String> inputCommand) {
+        Position source = generatePosition(inputCommand);
+        Position destination = generatePosition(inputCommand);
+        chessBoard.move(source, destination);
+    }
+
+    private Position generatePosition(List<String> inputCommand) {
         int file = GameCommand.toSourceFileValue(inputCommand);
         int rank = GameCommand.toSourceRankValue(inputCommand);
-        Position source = Position.of(file, rank);
-        int toFile = GameCommand.toDestinationFileValue(inputCommand);
-        int toRank = GameCommand.toDestinationRankValue(inputCommand);
-        Position destination = Position.of(toFile, toRank);
-        chessBoard.move(source, destination);
+        return Position.of(file, rank);
     }
 
     private GameCommand executeInitial() {
