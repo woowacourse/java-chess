@@ -4,6 +4,9 @@ import domain.position.Position;
 
 public class Knight extends Piece {
 
+    private static final int ONE_STEP = 1;
+    private static final int TWO_STEP = 2;
+
     public Knight(Color color) {
         super(color);
     }
@@ -49,11 +52,11 @@ public class Knight extends Piece {
     }
 
     private boolean distanceOneFileTwoRank(Position source, Position target) {
-        return source.isLegalFileStep(target, 1) && source.isLegalRankStep(target, 2);
+        return source.isLegalFileStep(target, ONE_STEP) && source.isLegalRankStep(target, TWO_STEP);
     }
 
     private boolean distanceTwoFileOneRank(Position source, Position target) {
-        return source.isLegalFileStep(target, 2) && source.isLegalRankStep(target, 1);
+        return source.isLegalFileStep(target, TWO_STEP) && source.isLegalRankStep(target, ONE_STEP);
     }
 
     @Override

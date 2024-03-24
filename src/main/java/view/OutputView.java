@@ -21,17 +21,21 @@ public class OutputView {
             System.out.print(piece);
             separateLineByFileIndex(i);
         }
-        System.out.println();
+        printNewLine();
     }
 
     private void separateLineByFileIndex(int fileIndex) {
         if (isLastFile(fileIndex)) {
-            System.out.println();
+            printNewLine();
         }
     }
 
     private boolean isLastFile(int fileIndex) {
         return fileIndex % 8 == 7;
+    }
+
+    private void printNewLine() {
+        System.out.println();
     }
 
     public void printTurn(Turn turn) {

@@ -7,6 +7,10 @@ import view.mapper.CommandInput;
 
 public class InputView {
 
+    private static final int POSITION_LENGTH = 2;
+    private static final int POSITION_FILE_INDEX = 0;
+    private static final int POSITION_RANK_INDEX = 1;
+
     private final Scanner scanner = new Scanner(System.in);
 
     public Command readInitCommand() {
@@ -22,13 +26,13 @@ public class InputView {
     public Position readPosition() {
         String rawPosition = scanner.next();
         validatePositionLength(rawPosition);
-        String rawFile = String.valueOf(rawPosition.charAt(0));
-        String rawRank = String.valueOf(rawPosition.charAt(1));
+        String rawFile = String.valueOf(rawPosition.charAt(POSITION_FILE_INDEX));
+        String rawRank = String.valueOf(rawPosition.charAt(POSITION_RANK_INDEX));
         return Position.generate(rawFile, rawRank);
     }
 
     private void validatePositionLength(String rawPosition) {
-        if (rawPosition.length() != 2) {
+        if (rawPosition.length() != POSITION_LENGTH) {
             throw new IllegalArgumentException("[ERROR] 올바른 위치를 입력해주세요.");
         }
     }
