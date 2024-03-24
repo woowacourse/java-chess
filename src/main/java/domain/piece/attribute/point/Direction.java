@@ -11,7 +11,24 @@ public enum Direction {
     DOWN(Point::moveDown, Point::canMoveDown),
     DOWN_LEFT(Point::moveDownLeft, Point::canMoveDownLeft),
     LEFT(Point::moveLeft, Point::canMoveLeft),
-    UP_LEFT(Point::moveUpLeft, Point::canMoveUpLeft);
+    UP_LEFT(Point::moveUpLeft, Point::canMoveUpLeft),
+
+    UP_UP_LEFT(Point::moveUpUpLeft, Point::canMoveUpUpLeft),
+
+    UP_UP_RIGHT(Point::moveUpUpRight, Point::canMoveUpUpRight),
+    RIGHT_UP_RIGHT(Point::moveRightUpRight, Point::canMoveRightUpRight),
+
+    RIGHT_DOWN_RIGHT(Point::moveRightDownRight, Point::canMoveRightDownRight),
+
+    DOWN_DOWN_LEFT(Point::moveDownDownLeft, Point::canMoveDownDownLeft),
+
+    DOWN_DOWN_RIGHT(Point::moveDownDownRight, Point::canMoveDownDownRight),
+    LEFT_UP_LEFT(Point::moveLeftUpLeft, Point::canMoveLeftUpLeft),
+
+    LEFT_DOWN_LEFT(Point::moveLeftDownLeft, Point::canMoveLeftDownLeft),
+
+
+    ;
     private final UnaryOperator<Point> movePointFunction;
     private final Predicate<Point> canMovePredicate;
 

@@ -10,6 +10,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static domain.piece.attribute.point.Direction.*;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -17,14 +18,22 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class DirectionTest {
     private static Stream<Arguments> maskingParam() {
         return Stream.of(
-                arguments(Direction.UP, A1, A2),
-                arguments(Direction.UP_RIGHT, A2, B3),
-                arguments(Direction.RIGHT, B3, C3),
-                arguments(Direction.DOWN_RIGHT, B4, C3),
-                arguments(Direction.DOWN, D4, D3),
-                arguments(Direction.DOWN_LEFT, F5, E4),
-                arguments(Direction.LEFT, G3, F3),
-                arguments(Direction.UP_LEFT, B4, A5)
+                arguments(UP, A1, A2),
+                arguments(UP_RIGHT, A2, B3),
+                arguments(RIGHT, B3, C3),
+                arguments(DOWN_RIGHT, B4, C3),
+                arguments(DOWN, D4, D3),
+                arguments(DOWN_LEFT, F5, E4),
+                arguments(LEFT, G3, F3),
+                arguments(UP_LEFT, B4, A5),
+                arguments(UP_UP_LEFT, C3, B5),
+                arguments(UP_UP_RIGHT, D4, E6),
+                arguments(RIGHT_UP_RIGHT, C3, E4),
+                arguments(RIGHT_DOWN_RIGHT, F5, H4),
+                arguments(DOWN_DOWN_LEFT, C3, B1),
+                arguments(DOWN_DOWN_RIGHT, D5, E3),
+                arguments(LEFT_UP_LEFT, C3, A4),
+                arguments(LEFT_DOWN_LEFT, D5, B4)
         );
     }
 

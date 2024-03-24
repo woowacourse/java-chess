@@ -283,4 +283,247 @@ class PointTest {
 
         assertThat(sut).isFalse();
     }
+
+    @Test
+    @DisplayName("위-왼쪽위로 포인트를 이동한다.")
+    void move_point_up_and_up_left() {
+        final var point = G4;
+
+        final var sut = point.moveUpUpLeft();
+
+        assertThat(sut).isEqualTo(F6);
+    }
+
+    @Test
+    @DisplayName("포인트가 위-왼쪽위로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_up_and_up_left() {
+        final var point = G4;
+
+        final var sut = point.canMoveUpUpLeft();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 위-왼쪽위로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_up_and_up_left() {
+        final var point = G7;
+
+        final var sut = point.canMoveUpUpLeft();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("위-오른쪽위로 포인트를 이동한다.")
+    void move_point_up_and_up_right() {
+        final var point = G4;
+
+        final var sut = point.moveUpUpRight();
+
+        assertThat(sut).isEqualTo(H6);
+    }
+
+    @Test
+    @DisplayName("포인트가 위-오른쪽위로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_up_and_up_right() {
+        final var point = A4;
+
+        final var sut = point.canMoveUpUpRight();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 위-오른쪽위로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_up_and_up_right() {
+        final var point = H7;
+
+        final var sut = point.canMoveUpUpRight();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("오른쪽-오른쪽위로 포인트를 이동한다.")
+    void move_point_right_and_up_right() {
+        final var point = D4;
+
+        final var sut = point.moveRightUpRight();
+
+        assertThat(sut).isEqualTo(F5);
+    }
+
+    @Test
+    @DisplayName("포인트가 오른쪽-오른쪽위로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_right_and_up_right() {
+        final var point = F7;
+
+        final var sut = point.canMoveRightUpRight();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 오른쪽-오른쪽위로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_right_and_up_right() {
+        final var point = G7;
+
+        final var sut = point.canMoveUpUpRight();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("오른쪽-아래오른쪽 으로 포인트를 이동한다.")
+    void move_point_right_and_down_right() {
+        final var point = D4;
+
+        final var sut = point.moveRightDownRight();
+
+        assertThat(sut).isEqualTo(F3);
+    }
+
+    @Test
+    @DisplayName("포인트가 오른쪽-아래오른쪽 으로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_right_and_down_right() {
+        final var point = F7;
+
+        final var sut = point.canMoveRightUpRight();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 오른쪽-아래오른쪽 으로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_right_and_down_right() {
+        final var point = D1;
+
+        final var sut = point.canMoveRightDownRight();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("왼쪽-아래왼쪽 으로 포인트를 이동한다.")
+    void move_point_left_and_down_left() {
+        final var point = D4;
+
+        final var sut = point.moveLeftDownLeft();
+
+        assertThat(sut).isEqualTo(B3);
+    }
+
+    @Test
+    @DisplayName("포인트가 왼쪽-아래왼쪽 으로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_left_and_down_left() {
+        final var point = C2;
+
+        final var sut = point.canMoveLeftDownLeft();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 왼쪽-아래왼쪽 으로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_left_and_down_left() {
+        final var point = B2;
+
+        final var sut = point.canMoveLeftDownLeft();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("왼쪽-위왼쪽 으로 포인트를 이동한다.")
+    void move_point_left_and_up_left() {
+        final var point = D4;
+
+        final var sut = point.moveLeftUpLeft();
+
+        assertThat(sut).isEqualTo(B5);
+    }
+
+    @Test
+    @DisplayName("포인트가 왼쪽-위왼쪽 으로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_left_and_up_left() {
+        final var point = C2;
+
+        final var sut = point.canMoveLeftUpLeft();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 왼쪽-위왼쪽 으로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_left_and_up_left() {
+        final var point = B7;
+
+        final var sut = point.canMoveLeftUpLeft();
+
+        assertThat(sut).isFalse();
+    }
+
+    @Test
+    @DisplayName("아래-아래왼쪽 으로 포인트를 이동한다")
+    void move_point_down_and_down_left() {
+        final var point = D4;
+
+        final var sut = point.moveDownDownLeft();
+
+        assertThat(sut).isEqualTo(C2);
+    }
+
+    @Test
+    @DisplayName("포인트가 아래-아래왼쪽 으로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_down_and_down_left() {
+        final var point = C3;
+
+        final var sut = point.canMoveDownDownLeft();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 아래-아래왼쪽 으로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_down_and_down_left() {
+        final var point = B2;
+
+        final var sut = point.canMoveDownDownLeft();
+
+        assertThat(sut).isFalse();
+    }
+
+
+
+
+    @Test
+    @DisplayName("아래-아래오른쪽 으로 포인트를 이동한다")
+    void move_point_down_and_down_right() {
+        final var point = D4;
+
+        final var sut = point.moveDownDownRight();
+
+        assertThat(sut).isEqualTo(E2);
+    }
+
+    @Test
+    @DisplayName("포인트가 아래-아래오른쪽 으로 이동 가능하면 참을 반환한다.")
+    void true_if_point_can_move_down_and_down_right() {
+        final var point = C3;
+
+        final var sut = point.canMoveDownDownRight();
+
+        assertThat(sut).isTrue();
+    }
+
+    @Test
+    @DisplayName("포인트가 아래-아래오른쪽 으로 이동 불가능하면 거짓을 반환한다.")
+    void false_if_point_can_move_down_and_down_right() {
+        final var point = C2;
+
+        final var sut = point.canMoveDownDownRight();
+
+        assertThat(sut).isFalse();
+    }
 }

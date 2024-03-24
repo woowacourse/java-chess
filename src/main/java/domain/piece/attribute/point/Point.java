@@ -164,7 +164,74 @@ public record Point(File file, Rank rank) {
         return new Point(this.file.moveRight(count), this.rank.moveDown(count));
     }
 
+    public boolean canMoveUpUpLeft() {
+        return canMoveLeft(1) && canMoveUp(2);
+    }
+
+    public Point moveUpUpLeft() {
+        return new Point(this.file.moveLeft(1), this.rank.moveUp(2));
+    }
+
+    public boolean canMoveUpUpRight() {
+        return canMoveRight(1) && canMoveUp(2);
+    }
+
+    public Point moveUpUpRight() {
+        return new Point(this.file.moveRight(1), this.rank.moveUp(2));
+    }
+
+    public Point moveRightUpRight() {
+        return new Point(this.file.moveRight(2), this.rank.moveUp(1));
+    }
+
+    public boolean canMoveRightUpRight() {
+        return canMoveRight(2) && canMoveUp(1);
+    }
+
+    public Point moveRightDownRight() {
+        return new Point(this.file.moveRight(2), this.rank.moveDown(1));
+    }
+
+    public boolean canMoveRightDownRight() {
+        return canMoveRight(2) && canMoveDown(1);
+    }
+
+    public Point moveLeftDownLeft() {
+        return new Point(this.file.moveLeft(2), this.rank.moveDown(1));
+    }
+
+    public boolean canMoveLeftDownLeft() {
+        return canMoveLeft(2) && canMoveDown(1);
+    }
+
+    public Point moveLeftUpLeft() {
+        return new Point(this.file.moveLeft(2), this.rank.moveUp(1));
+    }
+
+    public boolean canMoveLeftUpLeft() {
+        return canMoveLeft(2) && canMoveUp(1);
+    }
+
+    public Point moveDownDownRight() {
+        return new Point(this.file.moveRight(1), this.rank.moveDown(2));
+    }
+
+    public boolean canMoveDownDownRight() {
+        return canMoveRight(1) && canMoveDown(2);
+    }
+
+    public Point moveDownDownLeft() {
+        return new Point(this.file.moveLeft(1), this.rank.moveDown(2));
+    }
+
+    public boolean canMoveDownDownLeft() {
+        return canMoveLeft(1) && canMoveDown(2);
+    }
+
+
     public boolean notEquals(final Point point) {
         return !this.equals(point);
     }
+
+
 }
