@@ -1,24 +1,32 @@
 package domain.piece.attribute.point;
 
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 public enum Direction {
-    UP(index -> new Index(index.nextVertical(), index.horizontal())),
-    UP_RIGHT(index -> new Index(index.nextVertical(), index.nextHorizontal())),
-    RIGHT(index -> new Index(index.vertical(), index.nextHorizontal())),
-    DOWN_RIGHT(index -> new Index(index.prevVertical(), index.nextHorizontal())),
-    DOWN(index -> new Index(index.prevVertical(), index.horizontal())),
-    DOWN_LEFT(index -> new Index(index.prevVertical(), index.prevHorizontal())),
-    LEFT(index -> new Index(index.vertical(), index.prevHorizontal())),
-    UP_LEFT(index -> new Index(index.nextVertical(), index.prevHorizontal()));
-    private final UnaryOperator<Index> function;
+    UP(Point::moveUp, Point::canMoveUp),
+    UP_RIGHT(Point::moveUpRight, Point::canMoveUpRight),
+    RIGHT(Point::moveRight, Point::canMoveRight),
+    DOWN_RIGHT(Point::moveDownRight, Point::canMoveDownRight),
+    DOWN(Point::moveDown, Point::canMoveDown),
+    DOWN_LEFT(Point::moveDownLeft, Point::canMoveDownLeft),
+    LEFT(Point::moveLeft, Point::canMoveLeft),
+    UP_LEFT(Point::moveUpLeft, Point::canMoveUpLeft);
+    private final UnaryOperator<Point> movePointFunction;
+    private final Predicate<Point> canMovePredicate;
 
-    Direction(final UnaryOperator<Index> function) {
-        this.function = function;
+
+    Direction(final UnaryOperator<Point> movePointFunction, final Predicate<Point> canMovePredicate) {
+        this.movePointFunction = movePointFunction;
+        this.canMovePredicate = canMovePredicate;
     }
 
-    public Index move(final Index index) {
-        return function.apply(index);
+    public Point movePoint(final Point point) {
+        return movePointFunction.apply(point);
+    }
+
+    public boolean canMovePoint(final Point point) {
+        return canMovePredicate.test(point);
     }
 
     public boolean isStraight() {

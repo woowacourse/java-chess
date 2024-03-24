@@ -3,7 +3,6 @@ package domain.piece.kind;
 import domain.piece.Piece;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
-import domain.piece.attribute.point.Index;
 import domain.piece.attribute.point.Point;
 
 import java.util.List;
@@ -28,18 +27,20 @@ public class Knight extends Piece {
 
     public boolean canMove(final Point point) {
         return directionList.stream()
-                            .map(this::moveIndex)
-                            .filter(Index::isInBoundary)
-                            .map(Point::fromIndex)
+                            .map(this::movePoint)
                             .anyMatch(point::equals);
     }
 
-    private Index moveIndex(final List<Direction> directions) {
-        Index index = this.point.toIndex();
+    //TODO : 테스틑 통과를 위한 임시 null ( 수정 되야하는 1순위 WORST )
+    private Point movePoint(final List<Direction> directions) {
+        Point point = this.point;
         for (final var direction : directions) {
-            index = index.move(direction);
+            if (!direction.canMovePoint(point)) {
+                return null;
+            }
+            point = direction.movePoint(point);
         }
-        return index;
+        return point;
     }
 
 

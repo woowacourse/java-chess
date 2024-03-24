@@ -17,13 +17,6 @@ public record Point(File file, Rank rank) {
         return this.rank.ordinal();
     }
 
-    public static Point fromIndex(final Index index) {
-        if (!index.isInBoundary()) {
-            throw new IllegalArgumentException("파일과 랭크의 범위를 벗어났습니다.");
-        }
-        return new Point(File.findByIndex(index.horizontal()), Rank.findByIndex(index.vertical()));
-    }
-
     public Direction calculate(final Point point) {
         return DirectionUtil.determineDirection(this, point);
     }
@@ -43,7 +36,6 @@ public record Point(File file, Rank rank) {
         }
     }
 
-
     public boolean canMoveLeft() {
         return canMoveLeft(1);
     }
@@ -61,7 +53,7 @@ public record Point(File file, Rank rank) {
     }
 
     public boolean canMoveRight() {
-        return canMoveLeft(1);
+        return canMoveRight(1);
     }
 
     public boolean canMoveRight(final int count) {
@@ -172,8 +164,7 @@ public record Point(File file, Rank rank) {
         return new Point(this.file.moveRight(count), this.rank.moveDown(count));
     }
 
-    public Index toIndex() {
-        return new Index(rank.ordinal(), file.ordinal());
+    public boolean notEquals(final Point point) {
+        return !this.equals(point);
     }
-
 }

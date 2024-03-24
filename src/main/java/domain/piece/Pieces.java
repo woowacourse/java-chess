@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
 
 import java.util.*;
@@ -11,6 +12,7 @@ public class Pieces {
     public Pieces(final List<Piece> value) {
         this.value = new ArrayList<>(value);
     }
+
 
     public Optional<Piece> findPieceWithPoint(final Point point) {
         return value.stream()
@@ -55,12 +57,19 @@ public class Pieces {
     }
 
     private boolean hasAnyPiece(final Point startPoint, final Point endPoint) {
-        final var list = startPoint.toIndex()
-                                   .findMovePath(startPoint.calculate(endPoint), endPoint.toIndex());
+        final Direction direction = startPoint.calculate(endPoint);
 
-        return list.stream()
-                   .map(index -> findPieceWithPoint(Point.fromIndex(index)))
-                   .anyMatch(Optional::isPresent);
+        final List<Point> pathPoints = new ArrayList<>();
+        Point pathPoint = direction.movePoint(startPoint);
+
+        while (pathPoint.notEquals(endPoint) && direction.canMovePoint(pathPoint)) {
+            pathPoints.add(pathPoint);
+            pathPoint = direction.movePoint(pathPoint);
+        }
+
+        return pathPoints.stream()
+                         .map(this::findPieceWithPoint)
+                         .anyMatch(Optional::isPresent);
     }
 
 
