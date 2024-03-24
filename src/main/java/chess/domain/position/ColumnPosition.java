@@ -13,9 +13,8 @@ public class ColumnPosition {
         this.columnNumber = columnNumber;
     }
 
-    //TODO: 더 나은 메서드 명 고민해보기
-    public int move(int columnMove) {
-        return columnNumber + columnMove;
+    public int findColumnIntervalWith(int columnInterval) {
+        return columnNumber + columnInterval;
     }
 
     public int intervalWith(ColumnPosition otherColumnPosition) {

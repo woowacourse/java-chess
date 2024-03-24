@@ -54,74 +54,21 @@ public class Position {
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
 
-    // TODO 메서드 라인 수 개선
     public boolean rowIs(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);
     }
 
-    public List<Position> diagonalPath(Position target) {
-        //도착지와 현재 위치의 방향을 찾는다.
-        if (!isDiagonalWith(target)) {
-            throw new IllegalArgumentException("대각선 경로를 계산할 수 없습니다");
-        }
-
+    public List<Position> findPath(Position target) {
+        Direction direction = DirectionJudge.judge(this, target);
         List<Position> path = new ArrayList<>();
-        int nextRowStep = 1;
-        int nextColumnStep = 1;
 
-        if (this.rowPosition.isHigherThan(target.rowPosition)) {
-            nextRowStep = -1;
-        }
+        Position nextPosition = findPositionDirectionTo(direction);
 
-        if (this.columnPosition.isRight(target.columnPosition)) {
-            nextColumnStep = -1;
-        }
-        Position nextPosition = this.movePosition(nextRowStep, nextColumnStep);
-        while (true) {
-            if (nextPosition.equals(target)) {
-                break;
-            }
+        while (!target.equals(nextPosition)) {
             path.add(nextPosition);
-            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
-        }
-        return path;
-    }
-
-    public List<Position> straightPath(Position target) {
-
-        //도착지와 현재 위치의 방향을 찾는다.
-        if (!isStraightWith(target)) {
-            throw new IllegalArgumentException("직선 경로를 계산할 수 없습니다");
+            nextPosition = nextPosition.findPositionDirectionTo(direction);
         }
 
-        List<Position> path = new ArrayList<>();
-        int nextRowStep = 0;
-        int nextColumnStep = 0;
-
-        if (this.rowPosition.isLowerThan(target.rowPosition)) {
-            nextRowStep = 1;
-        }
-
-        if (this.rowPosition.isHigherThan(target.rowPosition)) {
-            nextRowStep = -1;
-        }
-
-        if (this.columnPosition.isLeft(target.columnPosition)) {
-            nextColumnStep = 1;
-        }
-
-        if (this.columnPosition.isRight(target.columnPosition)) {
-            nextColumnStep = -1;
-        }
-
-        Position nextPosition = movePosition(nextRowStep, nextColumnStep);
-        while (true) {
-            if (nextPosition.equals(target)) {
-                break;
-            }
-            path.add(nextPosition);
-            nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
-        }
         return path;
     }
 
@@ -141,9 +88,16 @@ public class Position {
         return columnPosition.isRight(target.columnPosition);
     }
 
-    private Position movePosition(int rowMove, int columnMove) {
-        return Position.of(rowPosition.move(rowMove), columnPosition.move(columnMove));
+    private Position findPositionDirectionTo(Direction direction) {
+        int nextRowStep = direction.getRowWeight();
+        int nextColumnStep = direction.getColumnWeight();
+        return movePosition(nextRowStep, nextColumnStep);
     }
+
+    private Position movePosition(int rowMove, int columnMove) {
+        return Position.of(rowPosition.findRowIntervalWith(rowMove), columnPosition.findColumnIntervalWith(columnMove));
+    }
+
 
     @Override
     public boolean equals(Object o) {

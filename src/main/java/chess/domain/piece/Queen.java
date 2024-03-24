@@ -18,8 +18,8 @@ public class Queen extends Piece {
 
     private List<Position> searchPath(Position start, Position destination) {
         if (start.isDiagonalWith(destination)) {
-            return start.diagonalPath(destination);
+            return start.findPath(destination);
         }
-        return start.straightPath(destination);
+        return start.findPath(destination);
     }
 }

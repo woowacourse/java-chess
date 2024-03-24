@@ -15,8 +15,8 @@ public class RowPosition {
         this.rowNumber = rowNumber;
     }
 
-    public int move(int rowMove) {
-        return rowNumber + rowMove;
+    public int findRowIntervalWith(int rowInterval) {
+        return rowNumber + rowInterval;
     }
 
     public RowPosition reverse() {

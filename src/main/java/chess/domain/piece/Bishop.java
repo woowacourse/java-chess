@@ -17,6 +17,6 @@ public class Bishop extends Piece {
     }
 
     private List<Position> searchPath(Position start, Position destination) {
-        return start.diagonalPath(destination);
+        return start.findPath(destination);
     }
 }

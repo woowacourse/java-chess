@@ -55,7 +55,7 @@ class PositionTest {
     void should_ReturnDiagonalPassingPath() {
         Position start = Position.of(0, 0);
         Position destination = Position.of(2, 2);
-        List<Position> path = start.diagonalPath(destination);
+        List<Position> path = start.findPath(destination);
 
         assertThat(path).contains(Position.of(1, 1));
     }
@@ -65,7 +65,7 @@ class PositionTest {
     void should_ReturnStraightPassingPath() {
         Position start = Position.of(0, 0);
         Position destination = Position.of(0, 2);
-        List<Position> path = start.straightPath(destination);
+        List<Position> path = start.findPath(destination);
 
         assertThat(path).contains(Position.of(0, 1));
     }

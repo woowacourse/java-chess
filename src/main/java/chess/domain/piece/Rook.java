@@ -17,6 +17,6 @@ public class Rook extends Piece {
     }
 
     private List<Position> searchPath(Position start, Position destination) {
-        return start.straightPath(destination);
+        return start.findPath(destination);
     }
 }
