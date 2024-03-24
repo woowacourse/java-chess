@@ -11,10 +11,10 @@ public enum PawnAttackStrategy {
     DOWN_LEFT_DIAGONAL(-1, -1, List.of(-1, -1), Color.BLACK),
     DOWN_RIGHT_DIAGONAL(-1, 1, List.of(-1, 1), Color.BLACK);
 
-    final int rowDifference;
-    final int columnDifference;
-    final List<Integer> direction;
-    final Color allowedPawnColor;
+    private final int rowDifference;
+    private final int columnDifference;
+    private final List<Integer> direction;
+    private final Color allowedPawnColor;
 
     PawnAttackStrategy(int rowDifference, int columnDifference, List<Integer> direction, Color allowedPawnColor) {
         this.rowDifference = rowDifference;

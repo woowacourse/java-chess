@@ -14,9 +14,9 @@ public enum KnightStrategy {
     DOWN_DOWN_RIGHT_DIAGONAL(-2, 1, List.of(-2, 1)),
     DOWN_DOWN_LEFT_DIAGONAL(-2, -1, List.of(-2, -1));
 
-    final int rowDifference;
-    final int columnDifference;
-    final List<Integer> direction;
+    private final int rowDifference;
+    private final int columnDifference;
+    private final List<Integer> direction;
 
     KnightStrategy(int rowDifference, int columnDifference, List<Integer> direction) {
         this.rowDifference = rowDifference;

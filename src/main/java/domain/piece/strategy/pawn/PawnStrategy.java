@@ -11,10 +11,10 @@ public enum PawnStrategy {
     UP_UP(2, 0, List.of(1, 0), Color.WHITE),
     DOWN_DOWN(-2, 0, List.of(-1, 0), Color.BLACK);
 
-    final int rowDifference;
-    final int columnDifference;
-    final List<Integer> direction;
-    final Color allowedPawnColor;
+    private final int rowDifference;
+    private final int columnDifference;
+    private final List<Integer> direction;
+    private final Color allowedPawnColor;
 
     PawnStrategy(int rowDifference, int columnDifference, List<Integer> direction, Color allowedPawnColor) {
         this.rowDifference = rowDifference;
