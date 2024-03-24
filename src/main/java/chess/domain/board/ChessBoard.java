@@ -23,10 +23,14 @@ public class ChessBoard {
     }
 
     public void move(Position source, Position target) {
-        if (!canMove(source, target)) {
-            throw new IllegalArgumentException("올바르지 않은 이동입니다.");
+        if (!chessBoard.containsKey(source)) {
+            throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
         }
         Piece sourcePiece = chessBoard.get(source);
+
+        if (!canMove(sourcePiece, source, target)) {
+            throw new IllegalArgumentException("올바르지 않은 이동입니다.");
+        }
         chessBoard.put(target, sourcePiece);
         chessBoard.remove(source);
     }
@@ -35,12 +39,7 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    private boolean canMove(Position source, Position target) {
-        if (!chessBoard.containsKey(source)) {
-            throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
-        }
-
-        Piece sourcePiece = chessBoard.get(source);
+    private boolean canMove(Piece sourcePiece, Position source, Position target) {
         Color targetPieceColor = Color.NONE;
 
         if (chessBoard.containsKey(target)) {
