@@ -37,8 +37,7 @@ public class Rook extends Piece {
 
     private void validateObstacle(Board board, Square target) {
         List<Square> path = square.generatePath(target);
-        if (path.stream().anyMatch(board::existOnSquare) ||
-                board.existOnSquareWithColor(target, getColor())) {
+        if (path.stream().anyMatch(board::existOnSquare)) {
             throw new IllegalArgumentException(ERROR_OBSTACLE_ON_PATH);
         }
     }

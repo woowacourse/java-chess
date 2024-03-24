@@ -21,8 +21,8 @@ public class Square {
     public static Square from(String square) {
         validatePattern(square);
         return cache.computeIfAbsent(square, s -> {
-            File file = File.from(square.charAt(0));
-            Rank rank = Rank.from(square.charAt(1));
+            File file = File.from(s.charAt(0));
+            Rank rank = Rank.from(s.charAt(1));
             return new Square(file, rank);
         });
     }

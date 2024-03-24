@@ -4,12 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("명령어")
 class CommandTest {
 
     @Test
-    @DisplayName("사용자의 명령어 입력을 변환한다.")
+    @DisplayName("사용자의 입력을 변환한다.")
     void from() {
         // given
         Command command = Command.from("start");
