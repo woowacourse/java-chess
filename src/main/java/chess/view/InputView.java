@@ -21,7 +21,7 @@ public class InputView {
         }
     }
 
-    public static boolean inputNextMove() {
+    public static boolean hasNextMove() {
         String commandValue = SCANNER.next();
         return switch (Command.find(commandValue)) {
             case START -> throw new IllegalArgumentException("게임이 시작한 이후, 다시 게임을 시작할 수 없습니다.");
