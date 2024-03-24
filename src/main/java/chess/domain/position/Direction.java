@@ -52,7 +52,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.checkDirection.test(source, destination))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 경로입니다."));
+                .orElseThrow(() -> new IllegalStateException("이동할 수 없는 경로입니다."));
     }
 
     public Position nextPosition(Position position) {

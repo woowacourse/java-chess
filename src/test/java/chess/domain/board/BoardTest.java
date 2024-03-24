@@ -106,7 +106,7 @@ class BoardTest {
         Position destination = Position.of(File.B, Rank.THREE);
         // when, then
         assertThatThrownBy(() -> board.move(source, destination))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이동할 수 없는 경로입니다.");
     }
 
