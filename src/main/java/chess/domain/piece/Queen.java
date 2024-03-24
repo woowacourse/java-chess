@@ -15,6 +15,6 @@ public class Queen extends Piece {
 
     @Override
     boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard) {
-        return chessBoard.isPathNotClear(start.calculateSlidingPath(destination));
+        return chessBoard.isPathHasObstacle(start.calculateSlidingPath(destination));
     }
 }
