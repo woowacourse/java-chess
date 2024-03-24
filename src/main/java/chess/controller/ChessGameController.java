@@ -2,13 +2,19 @@ package chess.controller;
 
 import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
+import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.Row;
+import chess.view.ColumnMapper;
 import chess.view.Commend;
 import chess.view.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.RowMapper;
 
 public class ChessGameController {
+    private static final int INPUT_COLUMN_INDEX = 0;
+    private static final int INPUT_ROW_INDEX = 1;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -56,7 +62,13 @@ public class ChessGameController {
     }
 
     private void handleMoveCommend(ChessGame chessGame, CommandDto commandDto) {
-        chessGame.handleMove(Position.from(commandDto.from()), Position.from(commandDto.to()));
+        chessGame.handleMove(createPositionByString(commandDto.from()), createPositionByString(commandDto.to()));
         outputView.printBoard(chessGame.getBoard());
+    }
+
+    private Position createPositionByString(String positionValue) {
+        Row row = RowMapper.findByInputValue(positionValue.split("")[INPUT_ROW_INDEX]);
+        Column column = ColumnMapper.findByInputValue(positionValue.split("")[INPUT_COLUMN_INDEX]);
+        return new Position(row, column);
     }
 }
