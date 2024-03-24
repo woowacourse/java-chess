@@ -1,11 +1,13 @@
 package view.util;
 
 import domain.piece.Bishop;
+import domain.piece.BlackPawn;
+import domain.piece.Color;
 import domain.piece.King;
 import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Queen;
 import domain.piece.Rook;
+import domain.piece.WhitePawn;
 import domain.piece.base.ChessPiece;
 import java.util.Arrays;
 
@@ -16,7 +18,8 @@ public enum PieceTranslator {
     ROOK(Rook.class, "r"),
     BISHOP(Bishop.class, "b"),
     KNIGHT(Knight.class, "n"),
-    PAWN(Pawn.class, "p"),
+    WHITE_PAWN(WhitePawn.class, "p"),
+    BLACK_PAWN(BlackPawn.class, "P"),
     NONE(null, ".");
 
     private final Class<? extends ChessPiece> classType;
@@ -33,7 +36,7 @@ public enum PieceTranslator {
         }
 
         PieceTranslator pieceTranslator = from(piece);
-        if (piece.isBlack()) {
+        if (piece.hasSameColor(Color.BLACK)) {
             return pieceTranslator.name.toUpperCase();
         }
         return pieceTranslator.name;
