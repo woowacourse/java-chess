@@ -1,7 +1,7 @@
 package view;
 
-import java.util.List;
 import view.dto.RankInfo;
+import view.dto.RankInfos;
 
 public class OutputView {
     private OutputView() {
@@ -14,16 +14,16 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printChessBoard(final List<RankInfo> rankInfo) {
-        for (final RankInfo info : rankInfo) {
-            printRank(info);
+    public static void printChessBoard(final RankInfos ranks) {
+        for (final RankInfo rank : ranks.getRankInfos()) {
+            printRank(rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private static void printRank(final RankInfo info) {
-        for (final String piece : info.piecesOfRank()) {
+    private static void printRank(final RankInfo rank) {
+        for (final String piece : rank.getPieces()) {
             System.out.print(piece);
         }
     }

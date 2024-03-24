@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class CommandTest {
+class CommandShapeTest {
     @Test
     @DisplayName("사용자의 입력에 맞는 Command를 반환한다.")
     void of() {
@@ -14,14 +14,14 @@ class CommandTest {
         final String end = "end";
         final String move = "move";
 
-        Command commandStart = Command.of(start);
-        Command commandEnd = Command.of(end);
-        Command commandMove = Command.of(move);
+        CommandShape commandStart = CommandShape.of(start);
+        CommandShape commandEnd = CommandShape.of(end);
+        CommandShape commandMove = CommandShape.of(move);
 
         assertAll(
-                () -> assertThat(commandStart).isEqualTo(Command.START),
-                () -> assertThat(commandEnd).isEqualTo(Command.END),
-                () -> assertThat(commandMove).isEqualTo(Command.MOVE)
+                () -> assertThat(commandStart).isEqualTo(CommandShape.START),
+                () -> assertThat(commandEnd).isEqualTo(CommandShape.END),
+                () -> assertThat(commandMove).isEqualTo(CommandShape.MOVE)
         );
     }
 }
