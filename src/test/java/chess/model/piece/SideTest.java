@@ -39,4 +39,19 @@ class SideTest {
         //then
         assertThat(result).isEqualTo(expected);
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "WHITE,WHITE,false", "WHITE,BLACK,true", "WHITE,EMPTY,false",
+            "BLACK,WHITE,true", "BLACK,BLACK,false", "BLACK,EMPTY,false",
+            "EMPTY,WHITE,false", "EMPTY,BLACK,false", "EMPTY,EMPTY,false",
+    })
+    @DisplayName("적 기물인지 판단한다.")
+    void isEnemy(Side now, Side other, boolean expected) {
+        //when
+        boolean result = now.isEnemy(other);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
 }

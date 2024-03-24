@@ -16,4 +16,14 @@ public enum Side {
     public boolean isEmpty() {
         return EMPTY.equals(this);
     }
+
+    public boolean isEnemy(Side other) {
+        if (isWhite()) {
+            return other.isBlack();
+        }
+        if (isBlack()) {
+            return other.isWhite();
+        }
+        return false;
+    }
 }
