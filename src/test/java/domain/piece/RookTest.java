@@ -11,28 +11,44 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
-    // TODO: 테스트 분리
     @DisplayName("룩은 상하좌우로 여러칸 움직일 수 있다.")
     @ParameterizedTest
-    @MethodSource(value = "squareArguments")
-    void canMove(final Square source, final Square target, final boolean expected) {
+    @MethodSource(value = "canMoveArguments")
+    void canMove(final Square target) {
         final Rook rook = new Rook(Team.BLACK);
-
+        final Square source = new Square(File.D, Rank.FOUR);
         // when
         final boolean canMove = rook.canMove(source, target, new ChessBoard().getPieces());
 
         // then
-        assertThat(canMove).isEqualTo(expected);
+        assertThat(canMove).isTrue();
     }
 
-    static Stream<Arguments> squareArguments() {
+    static Stream<Arguments> canMoveArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.A, Rank.FOUR), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.H, Rank.FOUR), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.D, Rank.ONE), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.D, Rank.EIGHT), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.TWO), false),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.THREE), false),
-                Arguments.of(new Square(File.D, Rank.FOUR), new Square(File.G, Rank.FIVE), false));
+                Arguments.of(new Square(File.A, Rank.FOUR)),
+                Arguments.of(new Square(File.H, Rank.FOUR)),
+                Arguments.of(new Square(File.D, Rank.ONE)),
+                Arguments.of(new Square(File.D, Rank.EIGHT)));
+    }
+
+    @DisplayName("룩은 대각선 뱡향으로 움직일 수 없다.")
+    @ParameterizedTest
+    @MethodSource(value = "canNotMoveArguments")
+    void canNotMove(final Square target) {
+        final Rook rook = new Rook(Team.BLACK);
+        final Square source = new Square(File.D, Rank.FOUR);
+        // when
+        final boolean canMove = rook.canMove(source, target, new ChessBoard().getPieces());
+
+        // then
+        assertThat(canMove).isFalse();
+    }
+
+    static Stream<Arguments> canNotMoveArguments() {
+        return Stream.of(
+                Arguments.of(new Square(File.G, Rank.TWO)),
+                Arguments.of(new Square(File.G, Rank.THREE)),
+                Arguments.of(new Square(File.G, Rank.FIVE)));
     }
 }

@@ -19,18 +19,18 @@ class PawnTest {
     @DisplayName("백색 폰은 위로 1칸 움직일 수 있다, 단 초기위치에서 2칸 이동을 허용한다.")
     @ParameterizedTest
     @MethodSource(value = "whitePawnMovementArguments")
-    void canWhitePawnMove(final Square target, final boolean result) {
+    void canWhitePawnMove(final Square target) {
         final Square source = new Square(File.D, Rank.TWO);
 
         final boolean canMove = whitePawn.canMove(source, target, new ChessBoard().getPieces());
 
-        assertThat(canMove).isEqualTo(result);
+        assertThat(canMove).isTrue();
     }
 
     static Stream<Arguments> whitePawnMovementArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.D, Rank.THREE), true),
-                Arguments.of(new Square(File.D, Rank.FOUR), true)
+                Arguments.of(new Square(File.D, Rank.THREE)),
+                Arguments.of(new Square(File.D, Rank.FOUR))
         );
     }
 
@@ -38,25 +38,25 @@ class PawnTest {
     @DisplayName("흑색 폰은 아래로 1칸 움직일 수 있다, 단 초기위치에서 2칸 이동을 허용한다.")
     @ParameterizedTest
     @MethodSource(value = "blackPawnMovementArguments")
-    void canBlackPawnMove(final Square target, final boolean result) {
+    void canBlackPawnMove(final Square target) {
         final Square source = new Square(File.D, Rank.SEVEN);
 
         final boolean canMove = blackPawn.canMove(source, target, new ChessBoard().getPieces());
 
-        assertThat(canMove).isEqualTo(result);
+        assertThat(canMove).isTrue();
     }
 
     static Stream<Arguments> blackPawnMovementArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.D, Rank.SIX), true),
-                Arguments.of(new Square(File.D, Rank.FIVE), true)
+                Arguments.of(new Square(File.D, Rank.SIX)),
+                Arguments.of(new Square(File.D, Rank.FIVE))
         );
     }
 
     @DisplayName("흰색 폰은 위 대각선 방향으로 공격할 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "whitePawnAttackArguments")
-    void canWhitePawnAttack(final Square target, final boolean result) {
+    void canWhitePawnAttack(final Square target) {
         final Square source = new Square(File.D, Rank.TWO);
 
         final Map<Square, Piece> pieces = new HashMap<>();
@@ -65,20 +65,20 @@ class PawnTest {
 
         final boolean canMove = whitePawn.canMove(source, target, new ChessBoard(pieces).getPieces());
 
-        assertThat(canMove).isEqualTo(result);
+        assertThat(canMove).isTrue();
     }
 
     static Stream<Arguments> whitePawnAttackArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.C, Rank.THREE), true),
-                Arguments.of(new Square(File.E, Rank.THREE), true)
+                Arguments.of(new Square(File.C, Rank.THREE)),
+                Arguments.of(new Square(File.E, Rank.THREE))
         );
     }
 
     @DisplayName("블랙폰은 대각선 아래 방향으로 공격할 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "blackPawnAttackArguments")
-    void canAttack(final Square target, final boolean result) {
+    void canAttack(final Square target) {
         final Square source = new Square(File.D, Rank.SEVEN);
 
         final Map<Square, Piece> pieces = new HashMap<>();
@@ -89,13 +89,13 @@ class PawnTest {
 
         final boolean canMove = blackPawn.canMove(source, target, chessBoard.getPieces());
 
-        assertThat(canMove).isEqualTo(result);
+        assertThat(canMove).isTrue();
     }
 
     static Stream<Arguments> blackPawnAttackArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.C, Rank.SIX), true),
-                Arguments.of(new Square(File.E, Rank.SIX), true)
+                Arguments.of(new Square(File.C, Rank.SIX)),
+                Arguments.of(new Square(File.E, Rank.SIX))
         );
     }
 
@@ -103,7 +103,7 @@ class PawnTest {
     @DisplayName("대각선에 적이 없으면 공격할 수 없다.")
     @ParameterizedTest
     @MethodSource(value = "canNotAttackArguments")
-    void canNotAttack(final Team sourceTeam, final Team targetTeam, final Square source, final Square target, final boolean result) {
+    void canNotAttack(final Team sourceTeam, final Team targetTeam, final Square source, final Square target) {
         final Pawn sourcePawn = new Pawn(sourceTeam);
         final Pawn targetPawn = new Pawn(targetTeam);
 
@@ -113,17 +113,17 @@ class PawnTest {
 
         final boolean canMove = sourcePawn.canMove(source, target, new ChessBoard(pieces).getPieces());
 
-        assertThat(canMove).isEqualTo(result);
+        assertThat(canMove).isFalse();
     }
 
     static Stream<Arguments> canNotAttackArguments() {
         return Stream.of(
-                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.SIX), false),
-                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FIVE), false),
-                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FOUR), false),
-                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.THREE), false),
-                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.ONE), false),
-                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.FOUR), false)
+                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.SIX)),
+                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FIVE)),
+                Arguments.of(Team.WHITE, Team.BLACK, new Square(File.D, Rank.SEVEN), new Square(File.D, Rank.FOUR)),
+                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.THREE)),
+                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.ONE)),
+                Arguments.of(Team.BLACK, Team.WHITE, new Square(File.D, Rank.TWO), new Square(File.D, Rank.FOUR))
         );
     }
 }

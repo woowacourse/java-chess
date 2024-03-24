@@ -14,7 +14,7 @@ class KnightTest {
     @DisplayName("나이트는 2칸,1칸을 조합한 정해진 8방향으로 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "canMoveArguments")
-    void canMove(final Square target, final boolean expected) {
+    void canMove(final Square target) {
         // given
         final Knight knight = new Knight(Team.BLACK);
         final Square source = new Square(File.D, Rank.FOUR);
@@ -23,25 +23,25 @@ class KnightTest {
         final boolean canMove = knight.canMove(source, target, new ChessBoard().getPieces());
 
         // then
-        assertThat(canMove).isEqualTo(expected);
+        assertThat(canMove).isTrue();
     }
 
     static Stream<Arguments> canMoveArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.E, Rank.TWO), true),
-                Arguments.of(new Square(File.C, Rank.TWO), true),
-                Arguments.of(new Square(File.B, Rank.THREE), true),
-                Arguments.of(new Square(File.B, Rank.FIVE), true),
-                Arguments.of(new Square(File.C, Rank.SIX), true),
-                Arguments.of(new Square(File.E, Rank.SIX), true),
-                Arguments.of(new Square(File.F, Rank.FIVE), true),
-                Arguments.of(new Square(File.F, Rank.THREE), true));
+                Arguments.of(new Square(File.E, Rank.TWO)),
+                Arguments.of(new Square(File.C, Rank.TWO)),
+                Arguments.of(new Square(File.B, Rank.THREE)),
+                Arguments.of(new Square(File.B, Rank.FIVE)),
+                Arguments.of(new Square(File.C, Rank.SIX)),
+                Arguments.of(new Square(File.E, Rank.SIX)),
+                Arguments.of(new Square(File.F, Rank.FIVE)),
+                Arguments.of(new Square(File.F, Rank.THREE)));
     }
 
     @DisplayName("나이트는 2칸,1칸을 조합한 정해진 8방향으로 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource(value = "canNotMoveArguments")
-    void canNotMove(final Square target, final boolean expected) {
+    void canNotMove(final Square target) {
         // given
         final Knight knight = new Knight(Team.BLACK);
         final Square source = new Square(File.D, Rank.FOUR);
@@ -50,13 +50,13 @@ class KnightTest {
         final boolean canMove = knight.canMove(source, target, new ChessBoard().getPieces());
 
         // then
-        assertThat(canMove).isEqualTo(expected);
+        assertThat(canMove).isFalse();
     }
 
     static Stream<Arguments> canNotMoveArguments() {
         return Stream.of(
-                Arguments.of(new Square(File.C, Rank.FOUR), false),
-                Arguments.of(new Square(File.G, Rank.THREE), false),
-                Arguments.of(new Square(File.G, Rank.FIVE), false));
+                Arguments.of(new Square(File.C, Rank.FOUR)),
+                Arguments.of(new Square(File.G, Rank.THREE)),
+                Arguments.of(new Square(File.G, Rank.FIVE)));
     }
 }
