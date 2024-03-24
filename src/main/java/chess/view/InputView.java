@@ -10,10 +10,10 @@ public class InputView {
 
     public static void inputStartCommand() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : %s".formatted(Command.START.getValue()));
-        System.out.println("> 게임 종료 : %s".formatted(Command.END.getValue()));
-        System.out.println("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3"
-                .formatted(Command.MOVE.getValue(), Command.MOVE.getValue()));
+        System.out.printf("> 게임 시작 : %s%n", Command.START.getValue());
+        System.out.printf("> 게임 종료 : %s%n", Command.END.getValue());
+        System.out.printf("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3%n",
+                Command.MOVE.getValue(), Command.MOVE.getValue());
 
         String commandValue = SCANNER.next();
         if (Command.START != Command.find(commandValue)) {
