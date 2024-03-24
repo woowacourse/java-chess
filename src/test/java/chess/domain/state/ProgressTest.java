@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
+import chess.domain.piece.Knight;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,6 +47,28 @@ class ProgressTest {
 
         // when
         GameState result = progress.play(List.of("end"));
+
+        // then
+        assertThat(result).isInstanceOf(End.class);
+    }
+
+    /*
+     * 초기 체스판 상태
+     * RNBQKBNR  8 (rank 8)
+     * PPPPPPPP  7
+     * ...n....  6
+     * abcdefgh
+     */
+    @DisplayName("한쪽 팀의 King이 잡히면 End를 반환한다")
+    @Test
+    void playWithKingCaptured() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.getChessBoard().put(Position.of(File.D, Rank.SIX), new Knight(Color.WHITE));
+        Progress progress = new Progress(chessBoard);
+
+        // when
+        GameState result = progress.play(List.of("move", "d6", "e8"));
 
         // then
         assertThat(result).isInstanceOf(End.class);

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -12,6 +13,8 @@ import chess.domain.position.Rank;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChessBoardTest {
     @DisplayName("체스보드가 생성되면 32개의 말이 셋팅된다")
@@ -85,5 +88,21 @@ public class ChessBoardTest {
         // when, then
         assertThatThrownBy(() -> chessBoard.move(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("해당되는 팀의 왕이 잡혔는지 확인한다")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK,true", "WHITE,false"})
+    void isKingCaptured(Color color, boolean expected) {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        Position blackKingPosition = Position.of(File.E, Rank.EIGHT);
+        chessBoard.getChessBoard().remove(blackKingPosition);
+
+        // when
+        boolean result = chessBoard.isKingCaptured(color);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }

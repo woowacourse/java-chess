@@ -5,6 +5,7 @@ import static chess.utils.Constant.MOVE_COMMAND;
 import static chess.utils.Constant.START_COMMAND;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class Progress implements GameState {
             Position target = Position.from(inputCommand.get(2));
 
             chessBoard.move(source, target);
+            if (chessBoard.isKingCaptured(Color.WHITE) || chessBoard.isKingCaptured(Color.BLACK)) {
+                return new End(chessBoard);
+            }
             return new Progress(chessBoard);
         }
         if (END_COMMAND.equals(command)) {

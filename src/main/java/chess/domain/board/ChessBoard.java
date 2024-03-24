@@ -40,6 +40,10 @@ public class ChessBoard {
         currentTurnTeamColor = currentTurnTeamColor.convertTurn();
     }
 
+    public boolean isKingCaptured(Color color) {
+        return !chessBoard.containsValue(new King(color));
+    }
+
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
     }
