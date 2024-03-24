@@ -1,49 +1,40 @@
 package chess.domain.piece;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import chess.domain.board.Coordinate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-public class Pawn extends AbstractPiece {
-
-    private static final List<Map.Entry<Integer, Integer>> WEIGHTS = List.of(
-            Map.entry(1, 0),
-            Map.entry(2, 0)
-    );
-
-    public Pawn(Team team) {
+public abstract class Pawn extends AbstractPiece {
+    protected Pawn(final Team team) {
         super(PieceType.PAWN, team);
     }
 
+    abstract Set<Entry<Integer, Integer>> straightWeights();
+
+    abstract Set<Entry<Integer, Integer>> diagonalWeights();
+
     @Override
-    public List<Coordinate> findMovablePath(Coordinate start, Coordinate destination) {
-        int startRank = start.getRank();
-        char startFile = start.getFile();
-
-        return WEIGHTS.stream()
-                .map(weight -> mapToNextCoordinate(startRank, startFile, weight))
-                .filter(coordinate -> !Objects.isNull(coordinate))
-                .toList();
+    public List<Coordinate> legalNextCoordinates(final Coordinate now, final Coordinate destination) {
+        List<Coordinate> legalNextCoordinates = new ArrayList<>();
+        legalNextCoordinates.addAll(straightLegalNextCoordinates(now));
+        legalNextCoordinates.addAll(diagonalLegalNextCoordinates(now));
+        return legalNextCoordinates;
     }
 
-    private Coordinate mapToNextCoordinate(int startRank, char startFile, Map.Entry<Integer, Integer> weight) {
-        try {
-            int rankValue = calculateNextRank(startRank, weight);
-            char fileValue = calculateNextFile(startFile, weight);
-            return new Coordinate(rankValue, fileValue);
-        } catch (IllegalArgumentException ignored) {
-            return null;
-        }
+    private Set<Coordinate> straightLegalNextCoordinates(final Coordinate now) {
+        return straightWeights().stream()
+                .filter(entry -> now.canMove(entry.getKey(), entry.getValue()))
+                .map(entry -> now.move(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
     }
 
-    private int calculateNextRank(int startRank, Map.Entry<Integer, Integer> weight) {
-        int forwardDirection = getTeam().getForwardDirection();
-
-        return startRank + weight.getKey() * forwardDirection;
-    }
-
-    private char calculateNextFile(char startFile, Map.Entry<Integer, Integer> weight) {
-        return (char) (startFile + weight.getValue());
+    private Set<Coordinate> diagonalLegalNextCoordinates(final Coordinate now) {
+        return diagonalWeights().stream()
+                .filter(entry -> now.canMove(entry.getKey(), entry.getValue()))
+                .map(entry -> now.move(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
     }
 }
