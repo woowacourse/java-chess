@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.Movement;
 import chess.util.ChessBoardInitalizer;
 import chess.domain.Command;
 import chess.domain.piece.Position;

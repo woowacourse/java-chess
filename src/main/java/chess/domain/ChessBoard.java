@@ -14,48 +14,42 @@ public class ChessBoard {
     }
 
     public void move(final Position current, final Position target) {
-        final Movement movement = new Movement(current, target);
-
         final Piece currentPiece = findPieceBy(current);
-//        if (currentPiece instanceof Pawn && canPawnCatch(currentPiece, movement)) {
-//            catchPiece(currentPiece, target);
-//            return;
-//        }
+
+        final Movement movement = new Movement(current, target);
 
         validateJumpOver(currentPiece, movement);
 
-        if (isPieceExist(target)) {
-            validateNotMySide(currentPiece, target);
-            catchPiece(currentPiece, target);
+        if (isPieceExist(target) || canPawnCatch(currentPiece, movement)) {
+            validateNotMySide(currentPiece, movement);
+            movePiece(currentPiece, movement);
+            return;
         }
 
-        pieces.put(target, currentPiece);
+        movePiece(currentPiece, movement);
     }
 
-    public Piece findPieceBy(final Position current) {
-        if (!pieces.containsKey(current)) {
+    public Piece findPieceBy(final Position position) {
+        if (!isPieceExist(position)) {
             throw new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다.");
         }
 
-        return pieces.get(current);
+        return pieces.get(position);
     }
 
-//    private boolean canPawnCatch(final Piece currentPiece, final Movement movement) {
-//        if (!isPieceExist(movement.getTarget())) {
-//            return false;
-//        }
-//
-//        return (movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP)
-//                && currentPiece.isMySide(findPieceBy(movement.getTarget()));
-//    }
-
-    private boolean isPieceExist(Position target) {
-        return pieces.containsKey(target);
+    private void movePiece(final Piece currentPiece, final Movement movement) {
+        pieces.remove(movement.getCurrent());
+        pieces.put(movement.getTarget(), currentPiece);
     }
 
-    private void catchPiece(final Piece currentPiece, final Position target) {
-        pieces.remove(target);
-        pieces.put(target, currentPiece);
+    private boolean isPieceExist(final Position position) {
+        return pieces.containsKey(position);
+    }
+
+    private boolean canPawnCatch(final Piece currentPiece, final Movement movement) {
+        return currentPiece instanceof Pawn
+                && isPieceExist(movement.getTarget())
+                && (((Pawn) currentPiece).canCatch(movement));
     }
 
     private void validateJumpOver(final Piece currentPiece, final Movement movement) {
@@ -65,12 +59,11 @@ public class ChessBoard {
     }
 
     private boolean existPieceInWay(final Piece currentPiece, final Movement movement) {
-        return pieces.keySet().stream()
-                .anyMatch(currentPiece.getRoute(movement)::contains);
+        return pieces.keySet().stream().anyMatch(currentPiece.getRoute(movement)::contains);
     }
 
-    private void validateNotMySide(final Piece currentPiece, final Position targetPosition) {
-        final Piece targetPiece = findPieceBy(targetPosition);
+    private void validateNotMySide(final Piece currentPiece, final Movement movement) {
+        final Piece targetPiece = findPieceBy(movement.getTarget());
         if (currentPiece.isMySide(targetPiece)) {
             throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
         }

@@ -20,6 +20,14 @@ public class Position {
         return new Position(this.file.addIndex(fileIndex), this.rank.addIndex(rankIndex));
     }
 
+    public boolean isSameFile(final Position other) {
+        return this.file.equals(other.file);
+    }
+
+    public boolean isSameRank(final Position other) {
+        return this.rank.equals(other.rank);
+    }
+
     public int getFileDistance(final Position other) {
         return this.file.getDistance(other.file);
     }

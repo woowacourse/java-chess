@@ -13,11 +13,11 @@ public class Movement {
     }
 
     public boolean isVertical() {
-        return current.getFile() == target.getFile() && current.getRank() != target.getRank();
+        return current.isSameFile(target) && !current.isSameRank(target);
     }
 
     public boolean isHorizontal() {
-        return current.getFile() != target.getFile() && current.getRank() == target.getRank();
+        return !current.isSameFile(target) && current.isSameRank(target);
     }
 
     public boolean isDiagonal() {
@@ -33,7 +33,7 @@ public class Movement {
     }
 
     public boolean isUp() {
-        return target.getRank().isBigger(current.getRank());
+        return target.getRank().isUp(current.getRank());
     }
 
     public boolean isDown() {
