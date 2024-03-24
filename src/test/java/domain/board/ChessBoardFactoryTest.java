@@ -26,9 +26,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ChessBoardFactoryTest {
-    @ParameterizedTest(name = "Rank {0}은 폰이 아닌 피스이고 {1}이다")
+    @ParameterizedTest(name = "Rank {0}은 폰이 아닌 기물이고 색은 {1}이다")
     @CsvSource(value = {"ONE,WHITE", "EIGHT,BLACK"})
-    void 초기_체스_보드에서_폰이_아닌_피스의_Rank와_Color_테스트(Rank rank, Color color) {
+    void 초기_체스_보드에서_폰이_아닌_기물의_Rank와_Color_테스트(Rank rank, Color color) {
         ChessBoard chessBoard = ChessBoardFactory.createInitialChessBoard();
 
         Map<Position, Piece> pieces = chessBoard.getPositionAndPieces();
@@ -52,9 +52,9 @@ class ChessBoardFactoryTest {
         );
     }
 
-    @ParameterizedTest(name = "Rank {0}은 폰 피스이고 {1}이다")
+    @ParameterizedTest(name = "Rank {0}은 폰 기물이고 색은 {1}이다")
     @MethodSource("provideRankAndPiece")
-    void 초기_체스_보드에서_폰_피스의_Rank와_Color_테스트(Rank rank, Class<? extends Piece> pawnClass) {
+    void 초기_체스_보드에서_폰_기물의_Rank와_Color_테스트(Rank rank, Class<? extends Piece> pawnClass) {
         ChessBoard chessBoard = ChessBoardFactory.createInitialChessBoard();
 
         Map<Position, Piece> pieces = chessBoard.getPositionAndPieces();
