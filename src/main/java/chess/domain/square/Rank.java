@@ -26,13 +26,13 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank from(String input) {
-        validateNumeric(input);
-        int parsedRank = Integer.parseInt(input);
+    public static Rank findByValue(String value) {
+        validateNumeric(value);
+        int parsedRank = Integer.parseInt(value);
         return Arrays.stream(values())
                 .filter(rank -> rank.index == parsedRank)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(input + ERROR_NOT_EXIST_RANK));
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_RANK));
     }
 
     private static void validateNumeric(String rank) {

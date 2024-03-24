@@ -11,10 +11,6 @@ public record Square(File file, Rank rank) {
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 
-    public static Square of(final File file, final Rank rank) {
-        return new Square(file, rank);
-    }
-
     public boolean isStraight(final Square target) {
         return file.isSameFile(target.file) || rank.isSameRank(target.rank());
     }
@@ -81,16 +77,16 @@ public record Square(File file, Rank rank) {
 
     private List<Square> createPath(List<File> filePath, List<Rank> rankPath) {
         if (filePath.isEmpty()) {
-            return mapToPathList(rankPath, rank -> Square.of(file, rank));
+            return mapToPathList(rankPath, rank -> new Square(file, rank));
         }
 
         if (rankPath.isEmpty()) {
-            return mapToPathList(filePath, file -> Square.of(file, rank));
+            return mapToPathList(filePath, file -> new Square(file, rank));
         }
 
         List<Square> path = new ArrayList<>();
         for (int i = 0; i < filePath.size(); i++) {
-            path.add(Square.of(filePath.get(i), rankPath.get(i)));
+            path.add(new Square(filePath.get(i), rankPath.get(i)));
         }
         return path;
     }

@@ -24,7 +24,7 @@ public enum File {
         this.index = index;
     }
 
-    public static File from(final String value) {
+    public static File findByValue(final String value) {
         return Arrays.stream(values())
                 .filter(file -> file.name().equals(value))
                 .findAny()

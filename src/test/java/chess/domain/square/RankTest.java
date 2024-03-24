@@ -17,7 +17,7 @@ class RankTest {
     @DisplayName("좌표가 숫자가 아닐 경우 예외가 발생한다.")
     @Test
     void occurExceptionIfRankNotNumeric() {
-        assertThatCode(() -> Rank.from("삼"))
+        assertThatCode(() -> Rank.findByValue("삼"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -25,7 +25,7 @@ class RankTest {
     @ParameterizedTest
     @ValueSource(strings = {"0", "9"})
     void occurExceptionIfRankIsOutOfRange(String rank) {
-        assertThatCode(() -> Rank.from(rank))
+        assertThatCode(() -> Rank.findByValue(rank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

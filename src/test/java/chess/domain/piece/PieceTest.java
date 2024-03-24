@@ -25,8 +25,8 @@ class PieceTest {
     @Test
     void checkCanMoveFromSourceToTarget() {
         final Piece piece = new Piece(PieceType.ROOK, PieceColor.WHITE);
-        final Square source = Square.of(File.b, Rank.FOUR);
-        final Square target = Square.of(File.b, Rank.FIVE);
+        final Square source = new Square(File.b, Rank.FOUR);
+        final Square target = new Square(File.b, Rank.FIVE);
 
         boolean actual = piece.canMove(source, target);
 

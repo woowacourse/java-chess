@@ -16,7 +16,7 @@ class FileTest {
     @DisplayName("좌표가 유효하지 않을 경우 예외가 발생한다.")
     @Test
     void occurExceptionIfFileIsInvalid() {
-        assertThatCode(() -> File.from("i"))
+        assertThatCode(() -> File.findByValue("i"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -26,7 +26,7 @@ class FileTest {
     void checkIsSameFile(String other, boolean expected) {
         File file = File.a;
 
-        boolean actual = file.isSameFile(File.from(other));
+        boolean actual = file.isSameFile(File.findByValue(other));
 
         assertThat(actual).isEqualTo(expected);
     }

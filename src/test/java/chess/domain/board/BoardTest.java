@@ -21,9 +21,9 @@ class BoardTest {
     @Test
     void occurExceptionWhenSourceAndTargetAreSameSquare() {
         Board board = new Board(Map.of(
-                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
-        Square source = Square.of(File.b, Rank.THREE);
-        Square target = Square.of(File.b, Rank.THREE);
+                new Square(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
+        Square source = new Square(File.b, Rank.THREE);
+        Square target = new Square(File.b, Rank.THREE);
         PieceColor turn = PieceColor.WHITE;
 
         assertThatThrownBy(() -> board.move(source, target, turn))
@@ -34,8 +34,8 @@ class BoardTest {
     @Test
     void occurExceptionWhenNotExistPiece() {
         Board board = new Board(Map.of());
-        Square source = Square.of(File.b, Rank.THREE);
-        Square target = Square.of(File.b, Rank.FOUR);
+        Square source = new Square(File.b, Rank.THREE);
+        Square target = new Square(File.b, Rank.FOUR);
         PieceColor turn = PieceColor.WHITE;
 
         assertThatThrownBy(() -> board.move(source, target, turn))
@@ -46,8 +46,8 @@ class BoardTest {
     @Test
     void occurExceptionWhenNotMyTurn() {
         Board board = new Board(Map.of());
-        Square source = Square.of(File.b, Rank.SEVEN);
-        Square target = Square.of(File.b, Rank.SIX);
+        Square source = new Square(File.b, Rank.SEVEN);
+        Square target = new Square(File.b, Rank.SIX);
         PieceColor turn = PieceColor.WHITE;
 
         assertThatThrownBy(() -> board.move(source, target, turn))
@@ -58,9 +58,9 @@ class BoardTest {
     @Test
     void occurExceptionWhenCannotMove() {
         Board board = new Board(Map.of(
-                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
-        Square source = Square.of(File.b, Rank.THREE);
-        Square target = Square.of(File.b, Rank.FOUR);
+                new Square(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
+        Square source = new Square(File.b, Rank.THREE);
+        Square target = new Square(File.b, Rank.FOUR);
         PieceColor turn = PieceColor.WHITE;
 
         assertThatThrownBy(() -> board.move(source, target, turn))
@@ -71,11 +71,11 @@ class BoardTest {
     @Test
     void occurExceptionWhenExistObstacleOnPath() {
         Board board = new Board(Map.of(
-                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK),
-                Square.of(File.b, Rank.FOUR), new Piece(PieceType.ROOK, PieceColor.BLACK)
+                new Square(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK),
+                new Square(File.b, Rank.FOUR), new Piece(PieceType.ROOK, PieceColor.BLACK)
         ));
-        Square source = Square.of(File.b, Rank.THREE);
-        Square target = Square.of(File.b, Rank.FIVE);
+        Square source = new Square(File.b, Rank.THREE);
+        Square target = new Square(File.b, Rank.FIVE);
         PieceColor turn = PieceColor.WHITE;
 
         assertThatThrownBy(() -> board.move(source, target, turn))
@@ -86,15 +86,15 @@ class BoardTest {
     @Test
     void movePieceFromSourceToTarget() {
         Board board = new Board(Map.of(
-                Square.of(File.b, Rank.TWO), new Piece(PieceType.ROOK, PieceColor.WHITE),
-                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.WHITE)
+                new Square(File.b, Rank.TWO), new Piece(PieceType.ROOK, PieceColor.WHITE),
+                new Square(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.WHITE)
         ));
 
-        Square source = Square.of(File.b, Rank.TWO);
-        Square target = Square.of(File.b, Rank.THREE);
+        Square source = new Square(File.b, Rank.TWO);
+        Square target = new Square(File.b, Rank.THREE);
         PieceColor turn = PieceColor.WHITE;
         board.move(source, target, turn);
 
-        assertThat(board.getPieces()).containsKey(Square.of(File.b, Rank.THREE));
+        assertThat(board.getPieces()).containsKey(new Square(File.b, Rank.THREE));
     }
 }

@@ -65,8 +65,8 @@ public class ChessGame {
 
     private Square createSquare(final String commandInput) {
         List<String> commandToken = List.of(commandInput.split(FILE_RANK_DELIMITER));
-        File file = File.from(commandToken.get(FILE_INDEX));
-        Rank rank = Rank.from(commandToken.get(RANK_INDEX));
-        return Square.of(file, rank);
+        File file = File.findByValue(commandToken.get(FILE_INDEX));
+        Rank rank = Rank.findByValue(commandToken.get(RANK_INDEX));
+        return new Square(file, rank);
     }
 }
