@@ -7,10 +7,10 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Queen extends SlidingPiece {
-    private static final Set<Direction> directions = Direction.getEightDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getEightDirection();
 
     public Queen(Position position, Color color) {
-        super(position, color, directions);
+        super(position, color, DIRECTIONS);
     }
 
     @Override

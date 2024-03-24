@@ -7,10 +7,10 @@ import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Rook extends SlidingPiece {
-    private static final Set<Direction> directions = Direction.getFourDirection();
+    private static final Set<Direction> DIRECTIONS = Direction.getFourDirection();
 
     public Rook(Position position, Color color) {
-        super(position, color, directions);
+        super(position, color, DIRECTIONS);
     }
 
     @Override
