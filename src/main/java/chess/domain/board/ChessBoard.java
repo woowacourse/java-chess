@@ -40,8 +40,18 @@ public class ChessBoard {
         currentTurnTeamColor = currentTurnTeamColor.convertTurn();
     }
 
-    public boolean isKingCaptured(Color color) {
-        return !chessBoard.containsValue(new King(color));
+    public boolean isKingCaptured() {
+        int kingCount = Math.toIntExact(chessBoard.values().stream()
+                .filter(Piece::isKing)
+                .count());
+        return kingCount == 1;
+    }
+
+    public Color findWinnerByKing() {
+        return chessBoard.values().stream().filter(Piece::isKing)
+                .findFirst()
+                .map(Piece::getColor)
+                .orElseThrow(() -> new UnsupportedOperationException("King이 존재하지 않습니다."));
     }
 
     public Map<Position, Piece> getChessBoard() {

@@ -20,6 +20,10 @@ public abstract class Piece {
         return color == Color.BLACK;
     }
 
+    public boolean isKing() {
+        return this instanceof King;
+    }
+
     public Color getColor() {
         return color;
     }

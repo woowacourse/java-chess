@@ -13,8 +13,6 @@ import chess.domain.position.Rank;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class ChessBoardTest {
     @DisplayName("체스보드가 생성되면 32개의 말이 셋팅된다")
@@ -90,19 +88,33 @@ public class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("해당되는 팀의 왕이 잡혔는지 확인한다")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,true", "WHITE,false"})
-    void isKingCaptured(Color color, boolean expected) {
+    @DisplayName("둘 중 왕이 잡힌 팀이 있는지 확인한다")
+    @Test
+    void isKingCaptured() {
         // given
         ChessBoard chessBoard = new ChessBoard();
         Position blackKingPosition = Position.of(File.E, Rank.EIGHT);
         chessBoard.getChessBoard().remove(blackKingPosition);
 
         // when
-        boolean result = chessBoard.isKingCaptured(color);
+        boolean result = chessBoard.isKingCaptured();
 
         // then
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isTrue();
+    }
+
+    @DisplayName("승리한 팀을 판별한다")
+    @Test
+    void findWinnerByKing() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        Position blackKingPosition = Position.of(File.E, Rank.EIGHT);
+        chessBoard.getChessBoard().remove(blackKingPosition);
+
+        // when
+        Color result = chessBoard.findWinnerByKing();
+
+        // then
+        assertThat(result).isEqualTo(Color.WHITE);
     }
 }

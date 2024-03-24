@@ -19,4 +19,8 @@ public class End implements GameState {
     public boolean isEnd() {
         return true;
     }
+
+    public boolean isEndByKingCaptured() {
+        return chessBoard.isKingCaptured();
+    }
 }
