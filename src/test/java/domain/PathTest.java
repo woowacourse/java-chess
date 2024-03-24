@@ -167,24 +167,4 @@ class PathTest {
 
         assertThat(actual).isEqualTo(expected);
     }
-
-    @DisplayName("주어진 위치가 경로에 포함되어 있다.")
-    @Test
-    void contains() {
-        Path path = new Path(List.of(A1));
-
-        boolean actual = path.contains(A1);
-
-        assertThat(actual).isTrue();
-    }
-
-    @DisplayName("주어진 위치가 경로에 포함되어 있지 않다.")
-    @Test
-    void notContains() {
-        Path path = new Path(List.of(A1));
-
-        boolean actual = path.contains(A2);
-
-        assertThat(actual).isFalse();
-    }
 }
