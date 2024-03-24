@@ -17,7 +17,7 @@ class EndGameTest {
     @DisplayName("이미 종료된 게임은 시작할 수 없다.")
     @Test
     void startGameTest() {
-        assertThatThrownBy(END_GAME::startGame)
+        assertThatThrownBy(() -> END_GAME.startGame(() -> true))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("이미 게임이 종료되었습니다.");
     }

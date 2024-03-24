@@ -3,6 +3,7 @@ package chess.domain.chessGame;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class InitialGame implements ChessGame {
 
@@ -12,7 +13,7 @@ public class InitialGame implements ChessGame {
     }
 
     @Override
-    public ChessGame startGame() {
+    public ChessGame startGame(Supplier<Boolean> checkRestart) {
         return new PlayingGame();
     }
 

@@ -2,7 +2,6 @@ package chess.domain.chessGame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.location.Column;
 import chess.domain.location.Location;
@@ -17,12 +16,18 @@ class PlayingGameTest {
     public static final Location B2 = new Location(Column.B, Row.TWO);
     public static final Location B3 = new Location(Column.B, Row.THREE);
 
-    @DisplayName("진행중인 게임은 게임을 시작할 수 없다.")
+    @DisplayName("진행중인 게임은 게임을 시작할 수 있다.")
     @Test
     void startGameTest() {
-        assertThatThrownBy(PLAYING_GAME::startGame)
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("게임이 진행중입니다. 게임을 재시작 할 수 없습니다.");
+        ChessGame restartGame = PLAYING_GAME.startGame(() -> true);
+        assertThat(restartGame).isNotEqualTo(PLAYING_GAME);
+    }
+
+    @DisplayName("진행중인 게임에서 재시작을 요청후 재시작 하지 않으면 이전 게임이 유지된다.")
+    @Test
+    void restartGameTest() {
+        ChessGame notRestartGame = PLAYING_GAME.startGame(() -> false);
+        assertThat(notRestartGame).isEqualTo(PLAYING_GAME);
     }
 
     @DisplayName("진행중인 게임은 게임을 종료할 수 있다.")

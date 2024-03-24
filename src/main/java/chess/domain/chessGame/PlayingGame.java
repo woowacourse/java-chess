@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class PlayingGame implements ChessGame {
     private final Board board;
@@ -18,8 +19,11 @@ public class PlayingGame implements ChessGame {
     }
 
     @Override
-    public ChessGame startGame() {
-        throw new IllegalStateException("게임이 진행중입니다. 게임을 재시작 할 수 없습니다.");
+    public ChessGame startGame(Supplier<Boolean> checkRestart) {
+        if (checkRestart.get()) {
+            return new PlayingGame();
+        }
+        return this;
     }
 
     @Override

@@ -15,4 +15,10 @@ public class InputView {
     public String readLocation() {
         return SCANNER.next();
     }
+
+    public boolean checkRestartGame() {
+        System.out.println("정말 게임을 재시작 하겠습니까? (y/n)");
+        String input = SCANNER.next();
+        return "y".equalsIgnoreCase(input);
+    }
 }

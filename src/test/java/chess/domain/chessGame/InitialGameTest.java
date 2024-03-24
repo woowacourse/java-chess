@@ -18,7 +18,7 @@ class InitialGameTest {
     @DisplayName("초기 게임은 게임을 시작할 수 있다.")
     @Test
     void startGameTest() {
-        ChessGame startGame = INITIAL_GAME.startGame();
+        ChessGame startGame = INITIAL_GAME.startGame(() -> true);
         assertThat(startGame).isInstanceOf(PlayingGame.class);
     }
 
