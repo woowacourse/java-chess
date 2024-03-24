@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Movement;
 import chess.domain.square.Square;
@@ -37,10 +38,8 @@ class KnightTest {
         Piece knight = new Knight(Color.WHITE);
         Movement movement = new Movement(source, destination);
 
-        //when
-        boolean canMove = knight.canMove(movement, null);
-
-        //then
-        assertThat(canMove).isFalse();
+        //when & then
+        assertThatThrownBy(() -> knight.canMove(movement, null))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

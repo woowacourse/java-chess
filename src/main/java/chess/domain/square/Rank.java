@@ -22,7 +22,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK));
     }
 
-    public Rank move(final int rankMoveStep) {
+    public Rank from(final int rankMoveStep) {
         return indexOf(this.ordinal() + rankMoveStep);
     }
 

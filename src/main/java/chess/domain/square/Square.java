@@ -15,8 +15,8 @@ public class Square {
 
     public static Square from(final String square) {
         String[] splitSquare = square.split(SQUARE_DELIMITER);
-        File file = File.from(splitSquare[0]);
         Rank rank = Rank.from(splitSquare[1]);
+        File file = File.from(splitSquare[0]);
         return new Square(rank, file);
     }
 
@@ -24,10 +24,10 @@ public class Square {
         return new Square(rank, file);
     }
 
-    public Square move(final int fileMoveStep, final int rankMoveStep) {
-        File newFile = file.move(fileMoveStep);
-        Rank newRank = rank.move(rankMoveStep);
-        return new Square(newRank, newFile);
+    public Square move(final int nextFileIndex, final int nextRankIndex) {
+        Rank nextRank = rank.from(nextRankIndex);
+        File nextFile = file.from(nextFileIndex);
+        return new Square(nextRank, nextFile);
     }
 
     public int getRankIndex() {

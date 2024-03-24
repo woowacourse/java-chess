@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Movement;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public abstract class Piece {
     private final Color color;
@@ -13,6 +14,16 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(final Movement movement, final Piece destinationPiece);
+
+//    public boolean canMove(final Movement movement, final Piece destinationPiece, final Predicate<> predicate) {
+//        if (this == null) {
+//            throw new IllegalArgumentException();
+//        }
+//        if (!this.isSameColor(this.color)) {
+//            throw new IllegalArgumentException();
+//        }
+//        return
+//    }
 
     public boolean isSameColor(final Piece piece) {
         if (piece == null) {

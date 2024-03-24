@@ -22,7 +22,7 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
 
-    public File move(final int fileMoveStep) {
+    public File from(final int fileMoveStep) {
         return indexOf(this.ordinal() + fileMoveStep);
     }
 

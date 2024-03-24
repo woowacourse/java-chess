@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 import chess.domain.square.Square;
 import java.util.Collections;
 import java.util.Map;
@@ -48,8 +49,10 @@ public class Board {
     }
 
     private void validateDestinationMove(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
-        checkCanMove(sourcePiece, destinationPiece, movement);
-        checkRoute(movement);
+        if (!sourcePiece.type().equals(Type.KNIGHT)) {
+            checkCanMove(sourcePiece, destinationPiece, movement);
+            checkRoute(movement);
+        }
     }
 
     private void checkCanMove(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
@@ -61,11 +64,11 @@ public class Board {
     private void checkRoute(final Movement movement) {
         Set<Square> squares = movement.findRoute();
         for (Square square : squares) {
-            checkIsEmpty(square);
+            checkPieceExist(square);
         }
     }
 
-    private void checkIsEmpty(final Square square) {
+    private void checkPieceExist(final Square square) {
         if (pieces.containsKey(square)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }

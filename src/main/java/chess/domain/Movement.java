@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.square.Square;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -13,43 +12,38 @@ public class Movement {
     private final Square target;
 
     public Movement(final Square source, final Square target) {
-        validate(source, target);
+        validateSameSquare(source, target);
         this.source = source;
         this.target = target;
     }
 
-    private void validate(final Square source, final Square target) {
+
+    private void validateSameSquare(final Square source, final Square target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
         }
     }
 
     public Set<Square> findRoute() {
-        if (!(isCross() || isDiagonal())) {
-            return Collections.emptySet();
-        }
-        int distance = findDistance();
+        int maxDistance = calculateMaxDistance();
         Set<Square> route = new HashSet<>();
-        IntStream.range(1, distance)
-                .forEach(i -> route.add(calculateRoute(distance, i)));
+        IntStream.range(1, maxDistance)
+                .forEach(distance -> route.add(calculateRoute(direction(), distance)));
         return route;
     }
 
-    public boolean isCross() {
-        return getFileDifference() * getRankDifference() == 0;
+    public Direction direction() {
+        int maxDistance = calculateMaxDistance();
+        return Direction.of(getFileDifference() / maxDistance, getRankDifference() / maxDistance);
     }
 
-    public boolean isDiagonal() {
-        return Math.abs(getFileDifference()) == Math.abs(getRankDifference());
-    }
-
-    public int findDistance() {
+    public int calculateMaxDistance() {
         return Math.max(Math.abs(getFileDifference()), Math.abs(getRankDifference()));
     }
 
-    private Square calculateRoute(final int distance, final int index) {
-        int fileMoveUnit = (getFileDifference() / distance) * index;
-        int rankMoveUnit = (getRankDifference() / distance) * index;
+    private Square calculateRoute(final Direction direction, final int distance) {
+        int fileMoveUnit = direction.file() * distance;
+        int rankMoveUnit = direction.rank() * distance;
         return source.move(fileMoveUnit, rankMoveUnit);
     }
 
