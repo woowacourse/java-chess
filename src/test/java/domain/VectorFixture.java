@@ -1,6 +1,6 @@
 package domain;
 
-import domain.piece.info.Vector;
+import domain.board.position.Vector;
 
 public class VectorFixture {
     public static final Vector UP = Vector.of(0, 1);

@@ -1,7 +1,5 @@
-package domain.piece.info;
+package domain.board.position;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -11,6 +9,15 @@ public class Position {
     public Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public static Position from(final String command) {
+        if (command.length() != 2) {
+            throw new IllegalArgumentException(String.format("입력된 명령어: %s, 명령어는 파일, 랭크로 구성되어 있어야 합니다", command));
+        }
+        final File file = File.from(command.substring(0, 1));
+        final Rank rank = Rank.from(command.substring(1, 2));
+        return new Position(file, rank);
     }
 
     public Position next(final int fileDelta, final int rankDelta) {

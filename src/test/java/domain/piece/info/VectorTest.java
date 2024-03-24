@@ -1,9 +1,37 @@
 package domain.piece.info;
 
-import static domain.PositionFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static domain.PositionFixture.A_FOUR;
+import static domain.PositionFixture.A_ONE;
+import static domain.PositionFixture.A_SEVEN;
+import static domain.PositionFixture.B_FOUR;
+import static domain.PositionFixture.B_SIX;
+import static domain.PositionFixture.B_TWO;
+import static domain.PositionFixture.C_FIVE;
+import static domain.PositionFixture.C_FOUR;
+import static domain.PositionFixture.C_THREE;
+import static domain.PositionFixture.C_TWO;
+import static domain.PositionFixture.D_FIVE;
+import static domain.PositionFixture.D_FOUR;
+import static domain.PositionFixture.D_ONE;
+import static domain.PositionFixture.D_SEVEN;
+import static domain.PositionFixture.D_SIX;
+import static domain.PositionFixture.D_THREE;
+import static domain.PositionFixture.D_TWO;
+import static domain.PositionFixture.E_FIVE;
+import static domain.PositionFixture.E_FOUR;
+import static domain.PositionFixture.E_THREE;
+import static domain.PositionFixture.F_SIX;
+import static domain.PositionFixture.F_TWO;
+import static domain.PositionFixture.G_FOUR;
+import static domain.PositionFixture.G_ONE;
+import static domain.PositionFixture.G_SEVEN;
+import static domain.PositionFixture.H_FOUR;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.board.position.Position;
+import domain.board.position.Vector;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +43,7 @@ class VectorTest {
     void isSamePosition() {
         assertThatThrownBy(() -> new Vector(A_ONE, A_ONE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("두 위치가 같습니다");
+                .hasMessage("두 위치는 같을 수 없습니다.");
     }
 
 
@@ -78,14 +106,14 @@ class VectorTest {
     @DisplayName("주어진 두 위치가 인접해 있는지 확인한다")
     void isNearest() {
         assertAll(
-                () -> assertThat(new Vector(D_FOUR, D_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FOUR).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, D_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_THREE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FOUR).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FIVE).isAllAbsoluteValueSmallerOrEqualThanOne()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, D_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FOUR).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, D_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FOUR).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue()
         );
     }
 

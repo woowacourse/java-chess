@@ -1,9 +1,9 @@
 package domain;
 
-import static domain.piece.info.File.*;
-import static domain.piece.info.Rank.*;
+import static domain.board.position.File.*;
+import static domain.board.position.Rank.*;
 
-import domain.piece.info.Position;
+import domain.board.position.Position;
 
 public class PositionFixture {
 

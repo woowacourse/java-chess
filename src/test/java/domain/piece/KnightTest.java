@@ -1,15 +1,11 @@
 package domain.piece;
 
 import static domain.PositionFixture.*;
-import static domain.piece.info.Color.*;
-import static domain.piece.info.File.*;
-import static domain.piece.info.Rank.*;
+import static domain.board.Color.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.piece.info.Position;
-import domain.piece.info.Vector;
-import org.assertj.core.api.Assertions;
+import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

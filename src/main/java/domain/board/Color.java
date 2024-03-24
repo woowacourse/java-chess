@@ -1,4 +1,4 @@
-package domain.piece.info;
+package domain.board;
 
 public enum Color {
     BLACK,

@@ -1,10 +1,27 @@
 package domain.board;
 
-import static domain.piece.info.Color.BLACK;
-import static domain.piece.info.Color.WHITE;
-import static domain.piece.info.File.*;
-import static domain.piece.info.Rank.*;
+import static domain.board.Color.BLACK;
+import static domain.board.Color.WHITE;
+import static domain.board.position.File.A;
+import static domain.board.position.File.B;
+import static domain.board.position.File.C;
+import static domain.board.position.File.D;
+import static domain.board.position.File.E;
+import static domain.board.position.File.F;
+import static domain.board.position.File.G;
+import static domain.board.position.File.H;
+import static domain.board.position.Rank.EIGHT;
+import static domain.board.position.Rank.FIVE;
+import static domain.board.position.Rank.FOUR;
+import static domain.board.position.Rank.ONE;
+import static domain.board.position.Rank.SEVEN;
+import static domain.board.position.Rank.SIX;
+import static domain.board.position.Rank.THREE;
+import static domain.board.position.Rank.TWO;
 
+import domain.board.position.File;
+import domain.board.position.Position;
+import domain.board.position.Rank;
 import domain.piece.Bishop;
 import domain.piece.Empty;
 import domain.piece.InitPawn;
@@ -13,40 +30,36 @@ import domain.piece.Knight;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
-import domain.piece.info.File;
-import domain.piece.info.Position;
-import domain.piece.info.Rank;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public enum BoardInitiator {
 
-    WHITE_KING(List.of(E), List.of(ONE), () -> new King(WHITE)),
-    WHITE_QUEEN(List.of(D), List.of(ONE), () -> new Queen(WHITE)),
-    WHITE_BISHOP(List.of(C, F), List.of(ONE), () -> new Bishop(WHITE)),
-    WHITE_KNIGHT(List.of(B, G), List.of(ONE), () -> new Knight(WHITE)),
-    WHITE_ROOK(List.of(A, H), List.of(ONE), () -> new Rook(WHITE)),
-    WHITE_PAWN(List.of(A, B, C, D, E, F, G, H), List.of(TWO), () -> new InitPawn(WHITE)),
+    WHITE_KING(List.of(E), List.of(ONE), new King(WHITE)),
+    WHITE_QUEEN(List.of(D), List.of(ONE), new Queen(WHITE)),
+    WHITE_BISHOP(List.of(C, F), List.of(ONE), new Bishop(WHITE)),
+    WHITE_KNIGHT(List.of(B, G), List.of(ONE), new Knight(WHITE)),
+    WHITE_ROOK(List.of(A, H), List.of(ONE), new Rook(WHITE)),
+    WHITE_PAWN(List.of(A, B, C, D, E, F, G, H), List.of(TWO), new InitPawn(WHITE)),
 
-    BLACK_KING(List.of(E), List.of(EIGHT), () -> new King(BLACK)),
-    BLACK_QUEEN(List.of(D), List.of(EIGHT), () -> new Queen(BLACK)),
-    BLACK_BISHOP(List.of(C, F), List.of(EIGHT), () -> new Bishop(BLACK)),
-    BLACK_KNIGHT(List.of(B, G), List.of(EIGHT), () -> new Knight(BLACK)),
-    BLACK_ROOK(List.of(A, H), List.of(EIGHT), () -> new Rook(BLACK)),
-    BLACK_PAWN(List.of(A, B, C, D, E, F, G, H), List.of(SEVEN), () -> new InitPawn(BLACK)),
+    BLACK_KING(List.of(E), List.of(EIGHT), new King(BLACK)),
+    BLACK_QUEEN(List.of(D), List.of(EIGHT), new Queen(BLACK)),
+    BLACK_BISHOP(List.of(C, F), List.of(EIGHT), new Bishop(BLACK)),
+    BLACK_KNIGHT(List.of(B, G), List.of(EIGHT), new Knight(BLACK)),
+    BLACK_ROOK(List.of(A, H), List.of(EIGHT), new Rook(BLACK)),
+    BLACK_PAWN(List.of(A, B, C, D, E, F, G, H), List.of(SEVEN), new InitPawn(BLACK)),
 
-    EMPTY(List.of(A, B, C, D, E, F, G, H), List.of(THREE, FOUR, FIVE, SIX), () -> Empty.INSTANCE),
+    EMPTY(List.of(A, B, C, D, E, F, G, H), List.of(THREE, FOUR, FIVE, SIX), Empty.INSTANCE),
     ;
 
 
     private final List<File> files;
     private final List<Rank> rank;
-    private final Supplier<Piece> piece;
+    private final Piece piece;
 
-    BoardInitiator(final List<File> files, final List<Rank> rank, final Supplier<Piece> piece) {
+    BoardInitiator(final List<File> files, final List<Rank> rank, final Piece piece) {
         this.files = files;
         this.rank = rank;
         this.piece = piece;
@@ -65,7 +78,7 @@ public enum BoardInitiator {
         final List<Position> positions = makePositions(value.files, value.rank);
 
         for (final Position position : positions) {
-            squares.put(position, value.piece.get());
+            squares.put(position, value.piece);
         }
     }
 

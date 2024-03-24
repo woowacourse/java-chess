@@ -1,8 +1,7 @@
 package domain.piece;
 
-import domain.piece.info.Color;
-import domain.piece.info.Type;
-import domain.piece.info.Vector;
+import domain.board.Color;
+import domain.board.position.Vector;
 
 public class Bishop extends Piece {
 

@@ -10,7 +10,8 @@ import static domain.VectorFixture.RIGHT_DOWN;
 import static domain.VectorFixture.UP;
 import static domain.VectorFixture.UP_RIGHT;
 import static domain.VectorFixture.UP_UP;
-import static domain.piece.info.Color.*;
+import static domain.board.Color.BLACK;
+import static domain.board.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Assertions;
@@ -57,16 +58,6 @@ class MovedPawnTest {
         );
 
 
-    }
-
-    @Test
-    @DisplayName("처음 움직이는 폰은 앞으로 두 칸 움직일 수 있다")
-    void initPawn() {
-        final Piece whitePawn = new InitPawn(WHITE);
-        final Piece blackPawn = new InitPawn(BLACK);
-
-        assertThat(whitePawn.isReachable(UP_UP, Empty.INSTANCE)).isTrue();
-        assertThat(blackPawn.isReachable(DOWN_DOWN, Empty.INSTANCE)).isTrue();
     }
 
     @Test

@@ -5,10 +5,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import domain.piece.Empty;
 import domain.piece.Knight;
-import domain.piece.Piece;
-import domain.piece.info.File;
-import domain.piece.info.Position;
-import domain.piece.info.Rank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +18,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(B_THREE, B_FOUR))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("현재 차례가 아닙니다.");
+                .hasMessage("현재 차례: BLACK, 현재 차례의 말만 움직일 수 있습니다");
     }
 
     @Test
@@ -45,6 +41,7 @@ class BoardTest {
                 .hasMessage("해당 말로 해당 위치를 갈 수 없습니다");
 
     }
+
     @Test
     @DisplayName("체스판에서 빈칸을 이동시키려고 하면 예외가 발생한다")
     void emptySource() {
@@ -85,6 +82,28 @@ class BoardTest {
                     board.move(D_ONE, E_TWO);
                     board.move(G_EIGHT, F_SIX);
                     board.move(E_FOUR, D_SIX);
+                }
+        ).doesNotThrowAnyException();
+
+    }
+
+    @Test
+    @DisplayName("문자열로 시작과 끝 위치가 주어져도 보드에서 말이 잘 움직여진다.")
+    void playChess2() {
+        final Board board = new Board(BoardInitiator.init());
+
+        Assertions.assertThatCode(() -> {
+                    board.move("e2", "e4");
+                    board.move("c7", "c6");
+                    board.move("d2", "d4");
+                    board.move("d7", "d5");
+                    board.move("b1", "c3");
+                    board.move("d5", "e4");
+                    board.move("c3", "e4");
+                    board.move("b8", "d7");
+                    board.move("d1", "e2");
+                    board.move("g8", "f6");
+                    board.move("e4", "d6");
                 }
         ).doesNotThrowAnyException();
 

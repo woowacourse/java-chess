@@ -11,7 +11,7 @@ public enum PieceShape {
     PAWN("P", "p"),
     EMPTY(".", ".");
 
-    public static final String PIECE_SHAPE_NOT_FOUND = "잘못된 기물 모양입니다.";
+    public static final String PIECE_SHAPE_NOT_FOUND = "찾으려는 모양이 존재하지 않습니다.";
     private final String blackShape;
     private final String whiteShape;
 
@@ -19,14 +19,6 @@ public enum PieceShape {
         this.blackShape = blackShape;
         this.whiteShape = whiteShape;
     }
-
-    public static PieceShape of(final String shape) {
-        return Arrays.stream(PieceShape.values())
-                .filter(pieceShape -> pieceShape.name().equals(shape))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(PIECE_SHAPE_NOT_FOUND));
-    }
-
 
     public static String whiteShapeOf(final String shape) {
         return Arrays.stream(values())

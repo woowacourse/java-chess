@@ -1,4 +1,4 @@
-package domain.piece.info;
+package domain.board.position;
 
 import java.util.Arrays;
 
@@ -19,19 +19,17 @@ public enum File {
         this.index = index;
     }
 
-    public static File of(final String fileName) {
-        return Arrays.stream(values())
-                .filter(file -> file.name().equals(fileName))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("입력된 값: %s, 해당하는 파일이 없습니다", fileName)));
-    }
-
     public static File of(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.toIndex() == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("입력된 값: %d, 해당하는 파일이 없습니다", index)));
     }
+
+    public static File from(final String substring) {
+        return of(substring.charAt(0) - 'a');
+    }
+
 
     public int toIndex() {
         return index;

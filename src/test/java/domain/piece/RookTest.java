@@ -5,15 +5,11 @@ import static domain.PositionFixture.D_FOUR;
 import static domain.PositionFixture.D_ONE;
 import static domain.PositionFixture.D_SEVEN;
 import static domain.PositionFixture.H_FOUR;
-import static domain.piece.info.Color.*;
-import static domain.piece.info.File.*;
-import static domain.piece.info.Rank.*;
+import static domain.board.Color.BLACK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.piece.info.Position;
-import domain.piece.info.Vector;
-import org.assertj.core.api.Assertions;
+import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

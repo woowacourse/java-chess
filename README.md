@@ -1,4 +1,4 @@
-# java-chess
+# java-controller
 
 체스 미션 저장소
 

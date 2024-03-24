@@ -1,8 +1,8 @@
 package dto;
 
 import domain.board.Board;
+import domain.board.position.Position;
 import domain.piece.Piece;
-import domain.piece.info.Position;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,14 +15,23 @@ public class DtoMapper {
     private DtoMapper() {
     }
 
-    public static RankInfo getPieceShapeOfRank(final Board board, final int rank) {
+    public static BoardResponse generateBoardResponse(final Board board) {
+        final List<RankResponse> rankResponses = new ArrayList<>();
+        for (int rank = 7; rank >= 0; rank--) {
+            final RankResponse pieceShapeOfRank = DtoMapper.getPieceShapeOfRank(board, rank);
+            rankResponses.add(pieceShapeOfRank);
+        }
+        return new BoardResponse(rankResponses);
+    }
+
+    private static RankResponse getPieceShapeOfRank(final Board board, final int rank) {
         final List<Piece> pieces = findPiecesByOrderOfRank(board, rank);
         final List<String> pieceShapes = new ArrayList<>();
 
         for (final Piece piece : pieces) {
             addByPieceColor(piece, pieceShapes);
         }
-        return new RankInfo(pieceShapes);
+        return new RankResponse(pieceShapes);
     }
 
     private static List<Piece> findPiecesByOrderOfRank(final Board board, final int rank) {

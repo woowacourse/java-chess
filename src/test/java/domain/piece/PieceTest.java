@@ -3,15 +3,10 @@ package domain.piece;
 
 import static domain.PositionFixture.A_ONE;
 import static domain.PositionFixture.A_TWO;
-import static domain.piece.info.Color.*;
+import static domain.board.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.piece.info.Color;
-import domain.piece.info.File;
-import domain.piece.info.Position;
-import domain.piece.info.Rank;
-import domain.piece.info.Type;
-import domain.piece.info.Vector;
+import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

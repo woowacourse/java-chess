@@ -1,8 +1,9 @@
-package domain.piece.info;
+package domain.board.position;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Vector {
     private final int fileDifference;
@@ -29,7 +30,7 @@ public class Vector {
 
     private void validateZeroVector(final int fileDifference, final int rankDifference) {
         if (fileDifference == 0 && rankDifference == 0) {
-            throw new IllegalArgumentException("두 위치가 같습니다");
+            throw new IllegalArgumentException("두 위치는 같을 수 없습니다.");
         }
     }
 
@@ -49,7 +50,7 @@ public class Vector {
         return isStraight() || isDiagonal();
     }
 
-    public boolean isAllAbsoluteValueSmallerOrEqualThanOne() {
+    public boolean allAbsoluteValueSmallerOrEqualThanOne() {
         return Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) <= 1;
     }
 
@@ -61,7 +62,7 @@ public class Vector {
         return Math.abs(fileDifference) == value || Math.abs(rankDifference) == value;
     }
 
-    public boolean hasAbsoluteValueMoreOrEqualThan(final int value) {
+    public boolean allAbsoluteValueMoreOrEqualThan(final int value) {
         return Math.abs(fileDifference) >= value || Math.abs(rankDifference) >= value;
     }
 
@@ -69,14 +70,12 @@ public class Vector {
         final int maxAbsoluteValue = maxAbsoluteValue();
         final int unitFile = fileDifference / maxAbsoluteValue;
         final int unitRank = rankDifference / maxAbsoluteValue;
-        final LinkedList<Position> ret = new LinkedList<>();
-        ret.add(source);
-        for (int counter = 0; counter < maxAbsoluteValue; counter++) {
-            ret.add(ret.getLast().next(unitFile, unitRank));
-        }
-        ret.removeLast();
-        ret.removeFirst();
-        return ret;
+        final LinkedList<Position> path = new LinkedList<>();
+
+        path.add(source.next(unitFile, unitRank));
+        IntStream.range(2, maxAbsoluteValue).forEach(counter -> path.add(path.getLast().next(unitFile, unitRank)));
+
+        return path;
     }
 
     private int maxAbsoluteValue() {

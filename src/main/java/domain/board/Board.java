@@ -1,10 +1,9 @@
 package domain.board;
 
+import domain.board.position.Position;
+import domain.board.position.Vector;
 import domain.piece.Empty;
 import domain.piece.Piece;
-import domain.piece.info.Color;
-import domain.piece.info.Position;
-import domain.piece.info.Vector;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +15,10 @@ public class Board {
     public Board(final Map<Position, Piece> squares) {
         this.currentTurnColor = Color.WHITE;
         this.squares = squares;
+    }
+
+    public void move(final String source, final String target) {
+        move(Position.from(source), Position.from(target));
     }
 
     public void move(final Position source, final Position target) {
@@ -48,7 +51,7 @@ public class Board {
     }
 
     private boolean isPiecesPossiblyExistOnPath(final Vector vector) {
-        return vector.hasAbsoluteValueMoreOrEqualThan(2) && vector.isStraightOrDiagonal();
+        return vector.allAbsoluteValueMoreOrEqualThan(2) && vector.isStraightOrDiagonal();
     }
 
     private void validateReachability(final Vector vector, final Piece currentPiece, final Piece targetPiece) {
@@ -68,7 +71,8 @@ public class Board {
 
     private void validateTurn(final Piece currentPiece) {
         if (!currentPiece.hasColor(currentTurnColor)) {
-            throw new IllegalArgumentException("현재 차례가 아닙니다.");
+            throw new IllegalArgumentException(
+                    String.format("현재 차례: %s, 현재 차례의 말만 움직일 수 있습니다", currentTurnColor.name()));
         }
     }
 
