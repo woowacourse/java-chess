@@ -48,8 +48,8 @@ public class ChessMachine {
     }
 
     private void movePiece(ChessBoard chessBoard) {
-        Position from = Position.of(inputView.getMoveCommand());
-        Position to = Position.of(inputView.getMoveCommand());
+        Position from = inputView.getMovePosition();
+        Position to = inputView.getMovePosition();
         chessBoard.move(from, to);
     }
 
