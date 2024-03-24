@@ -38,6 +38,6 @@ public record ChessBoardDTO(List<String> pieces) {
         } else if (piece instanceof Pawn) {
             return piece.isBlack() ? "P" : "p";
         }
-        throw new IllegalStateException("존재하지 않는 피스 타입 출력을 시도했습니다.");
+        throw new IllegalStateException("존재하지 않는 피스타입을 참조했습니다.");
     }
 }
