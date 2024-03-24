@@ -23,10 +23,6 @@ public class Row {
         return CACHE.get(value.charAt(0) - 'a');
     }
 
-    public Row update(int direction) {
-        return CACHE.get(this.value + direction);
-    }
-
     private static void validate(String value) {
         validateAlphabet(value);
         validateSize(value);
@@ -43,6 +39,10 @@ public class Row {
         if (value.length() != 1) {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
+    }
+
+    public Row update(int direction) {
+        return CACHE.get(this.value + direction);
     }
 
     public int subtractRow(Row row) {
