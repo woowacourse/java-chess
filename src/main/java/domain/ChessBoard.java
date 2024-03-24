@@ -3,7 +3,6 @@ package domain;
 import domain.piece.Piece;
 import domain.piece.Pieces;
 import domain.piece.attribute.point.Point;
-import dto.RouteDto;
 import factory.ChessBoardGenerator;
 
 import java.util.List;
@@ -20,16 +19,16 @@ public class ChessBoard {
         return piece.orElseThrow(() -> new IllegalArgumentException("해당 포인트에는 기물이 없습니다"));
     }
 
-    public void move(final RouteDto dto) {
-        final Point startPoint = dto.getStartPoint();
-        final Point endPoint = dto.getEndPoint();
-        final Piece piece = findPieceByPoint(startPoint);
-
-        if (pieces.check(piece, endPoint)) {
-            pieces.move(piece, endPoint);
+    public void move(final Point startPoint, final Point endPoint) {
+        if (startPoint.equals(endPoint)) {
+            throw new IllegalArgumentException("같은 위치로 이동할 수 없습니다.");
         }
-        throw new IllegalArgumentException(
-                String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.getStatus(), startPoint, endPoint));
+        if (this.pieces.findPieceWithPoint(startPoint)
+                       .isEmpty()) {
+            throw new IllegalArgumentException(String.format("%s에는 기물이 없습니다", startPoint));
+        }
+        this.pieces.findPieceWithPoint(startPoint)
+                   .ifPresent(piece -> pieces.move(piece, endPoint));
     }
 
     public static ChessBoard createDefaultBoard() {

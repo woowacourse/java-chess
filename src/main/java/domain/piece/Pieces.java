@@ -23,16 +23,14 @@ public class Pieces {
         return findPieceWithPoint(point).isPresent();
     }
 
-    public boolean check(final Piece piece, final Point endPoint) {
-        return piece.canMove(endPoint, value);
-    }
-
     public void move(final Piece piece, final Point point) {
+        if (!piece.canMove(point, value)) {
+            throw new IllegalStateException(String.format("%s를 %s로 이동할 수 없습니다.", piece, point));
+        }
         final Optional<Piece> optionalPiece = findPieceWithPoint(point);
         optionalPiece.ifPresent(value::remove);
         piece.move(point);
     }
-
 
     public int size() {
         return value.size();
