@@ -1,41 +1,48 @@
 package model.piece.state;
 
-import static model.direction.MovingPattern.N;
-import static model.direction.MovingPattern.S;
+import model.direction.Direction;
+import model.direction.ShiftPattern;
+import model.piece.Color;
+import model.position.Position;
+import model.position.Route;
+import model.shift.SingleShift;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import model.position.Position;
-import model.position.Route;
-import model.direction.MovingPattern;
-import model.piece.Color;
 
 public final class Pawn extends Role {
-    private static final List<MovingPattern> movingPatterns = List.of(N, S);
-    private boolean isInitialMove;
+    private static int WHITE_INITIAL_RANK = 2;
+    private static int BLACK_INITIAL_RANK = 7;
 
     public Pawn(Color color) {
-        super(color, movingPatterns);
-        this.isInitialMove = true;
+        super(color, new SingleShift(matchShiftPatternBy(color)));
+    }
+
+    private static ShiftPattern matchShiftPatternBy(Color color) {
+        if (color == Color.BLACK) {
+            return ShiftPattern.BLACK_PAWN;
+        }
+        return ShiftPattern.WHITE_PAWN;
     }
 
     @Override
-    public Set<Route> possibleRoutes(Position position) {
-        if (color == Color.WHITE) {
-            return possiblePawnMovingPostions(N, position);
+    public Set<Route> findPossibleAllRoute(Position position) {
+        if (position.rank() == WHITE_INITIAL_RANK) {
+            return routes(Direction.N, position);
         }
-        return possiblePawnMovingPostions(S, position);
+        if (position.rank() == BLACK_INITIAL_RANK) {
+            return routes(Direction.S, position);
+        }
+        return super.findPossibleAllRoute(position);
     }
 
-    private Set<Route> possiblePawnMovingPostions(MovingPattern movingPattern, Position position) {
-        List<Position> positions = new ArrayList<>();
-        Position nextPosition = position.getNextPosition(movingPattern);
-        positions.add(nextPosition);
-        if (isInitialMove) {
-            Position doubleMovePosition = nextPosition.getNextPosition(movingPattern);
-            positions.add(doubleMovePosition);
+    public Set<Route> routes(Direction direction, Position position) {
+        List<Position> sequentialPositions = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            position = position.getNextPosition(direction);
+            sequentialPositions.add(position);
         }
-        return Set.of(new Route(positions));
+        return Set.of(new Route(direction, sequentialPositions));
     }
 }

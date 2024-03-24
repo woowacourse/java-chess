@@ -1,23 +1,15 @@
 package model.piece.state;
 
-import java.util.List;
-import java.util.Set;
 import model.piece.Color;
-import model.position.Position;
-import model.position.Route;
+import model.shift.NoneShift;
 
 public final class Square extends Role {
     public Square() {
-        super(Color.UN_COLORED, List.of());
+        super(Color.UN_COLORED, new NoneShift());
     }
 
     @Override
-    public Set<Route> possibleRoutes(Position position) {
-        return Set.of(new Route(List.of(position)));
-    }
-
-    @Override
-    public boolean isOccupied(){
+    public boolean isOccupied() {
         return false;
     }
 }
