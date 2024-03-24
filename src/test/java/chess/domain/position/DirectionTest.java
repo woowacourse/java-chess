@@ -84,8 +84,20 @@ class DirectionTest {
     void determineNegativeFileSameRankTest() {
         // given
         Position destination = Position.of(File.B, Rank.FOUR);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.NEGATIVE_FILE_SAME_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.NEGATIVE_FILE_SAME_RANK);
+    }
+
+    @Test
+    @DisplayName("해당 방향의 다음 Position을 반환한다.")
+    void nextPositionTest() {
+        // given
+        Position destination = Position.of(File.F, Rank.SIX);
+        // when
+        Position nextPosition = Direction.POSITIVE_FILE_POSITIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
     }
 }
