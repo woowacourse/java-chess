@@ -37,6 +37,6 @@ public class InputView {
                     PositionConverter.generate(inputTokenizer.nextToken()),
                     PositionConverter.generate(inputTokenizer.nextToken()));
         }
-        throw new IllegalArgumentException("잘못된 명령어입니다.");
+        throw new IllegalArgumentException("체스 보드 내에 존재하지 않는 위치입니다.");
     }
 }

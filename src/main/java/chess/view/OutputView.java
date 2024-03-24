@@ -32,11 +32,12 @@ public class OutputView {
     }
 
     public static void printCheck(CheckState checkState) {
-        if (checkState == CheckState.CHECK) {
-            System.out.println(System.lineSeparator() + "체크 !");
-        }
-        if (checkState == CheckState.CHECK_MATE) {
-            System.out.println(System.lineSeparator() + "체크 메이트 !");
-        }
+        String checkMessage = switch(checkState) {
+            case CHECK -> "체크 !\n";
+            case CHECK_MATE -> "체크 메이트 !\n";
+            case SAFE -> "";
+        };
+
+        System.out.print(checkMessage);
     }
 }
