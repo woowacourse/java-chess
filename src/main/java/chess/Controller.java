@@ -1,13 +1,16 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import chess.domain.board.Board;
+import chess.domain.board.Coordinate;
 import chess.view.InputView;
-import chess.view.MoveCommand;
 import chess.view.OutputView;
+import chess.view.command.MoveCommand;
+import chess.view.command.StartCommand;
 
-
-// TODO: 컨트롤러 이름, 패키지 포함해서 더욱 개선해볼 것!
 class Controller {
 
     private final InputView inputView;
@@ -20,36 +23,49 @@ class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        boolean isPlayable = handleException(inputView::readStartCommand);
-
-        if (isPlayable) {
+        StartCommand startCommand = handleException(inputView::readWannaStart);
+        if (startCommand.isStart()) {
             Board board = new Board();
             outputView.printBoard(board);
-            play(board, handleException(inputView::readMoveCommand));
+            handleException(this::move, board);
         }
     }
 
-    //TODO: 재귀가 아니고 할 수 있는 방법은?
-    private void play(Board board, MoveCommand moveCommand) {
-        if (moveCommand.isEnd()) {
-            return;
-        }
-
-        try {
-            board.move(moveCommand.source(), moveCommand.target());
+    private void move(Board board) {
+        MoveCommand moveCommand = inputView.readMoveCommand();
+        while (!moveCommand.isEnd()) {
+            Coordinate source = createCoordinate(moveCommand.source());
+            board.move(source, createCoordinate(moveCommand.target()));
             outputView.printBoard(board);
-            play(board, handleException(inputView::readMoveCommand));
-        } catch (Exception e) {
-            System.out.println("[ERROR] " + e.getMessage());
-            play(board, handleException(inputView::readMoveCommand));
+            moveCommand = inputView.readMoveCommand();
+        }
+    }
+
+    private Coordinate createCoordinate(String input) {
+        List<String> coordinateInput = Arrays.asList(input.split(""));
+        if (coordinateInput.size() != 2) {
+            throw new IllegalArgumentException("올바른 형식의 좌표를 입력해주세요. ex) a2");
+        }
+        int rankValue = Integer.parseInt(coordinateInput.get(1));
+        char fileValue = coordinateInput.get(0).charAt(0);
+
+        return new Coordinate(rankValue, fileValue);
+    }
+
+    private <T> void handleException(Consumer<T> consumer, T target) {
+        try {
+            consumer.accept(target);
+        } catch (Exception exception) {
+            outputView.printExceptionMessage(exception);
+            handleException(consumer, target);
         }
     }
 
     private <T> T handleException(Supplier<T> supplier) {
         try {
             return supplier.get();
-        } catch (Exception e) {
-            System.out.println("[ERROR] " + e.getMessage());
+        } catch (Exception exception) {
+            outputView.printExceptionMessage(exception);
             return handleException(supplier);
         }
     }
