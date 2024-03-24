@@ -1,10 +1,10 @@
 package chess.controller;
 
 import chess.dto.BoardDTO;
-import chess.dto.PositionDTO;
 import chess.model.board.Board;
 import chess.model.board.InitialBoardGenerator;
 import chess.model.position.Movement;
+import chess.model.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -57,9 +57,9 @@ public class ChessGameController {
     }
 
     private void move(Board board) {
-        PositionDTO sourcePositionDTO = inputView.askPosition();
-        PositionDTO targetPositionDTO = inputView.askPosition();
-        Movement movement = new Movement(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
+        Position source = inputView.askPosition();
+        Position destination = inputView.askPosition();
+        Movement movement = new Movement(source, destination);
         board.move(movement);
     }
 

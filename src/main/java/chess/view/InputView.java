@@ -1,6 +1,7 @@
 package chess.view;
 
-import chess.dto.PositionDTO;
+import chess.model.position.Position;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -16,7 +17,7 @@ public class InputView {
         return Command.findBy(input);
     }
 
-    public PositionDTO askPosition() {
+    public Position askPosition() {
         String input = SCANNER.next();
         validatePositionLength(input);
         return convertToPosition(input);
@@ -28,9 +29,9 @@ public class InputView {
         }
     }
 
-    private PositionDTO convertToPosition(String input) {
+    private Position convertToPosition(String input) {
         int file = input.charAt(FILE_INDEX) - FILE_START_ASCII;
         int rank = input.charAt(RANK_INDEX) - RANK_START_ASCII;
-        return new PositionDTO(file, rank);
+        return Position.of(file, rank);
     }
 }
