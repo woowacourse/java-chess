@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PieceGenerator {
 
-    public static List<Piece> makeSpecialPieces(Color color) {
+    public List<Piece> makeSpecialPieces(Color color) {
         return List.of(
                 new Rook(color),
                 new Knight(color),

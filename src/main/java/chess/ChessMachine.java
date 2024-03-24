@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessSpaceGenerator;
+import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -22,7 +23,7 @@ public class ChessMachine {
 
         validateFirstCommand();
 
-        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
+        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator(new PieceGenerator()));
         outputView.printChessBoard(chessBoard.getSpaces());
 
         playChess(chessBoard);

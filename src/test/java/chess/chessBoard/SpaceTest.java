@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessSpaceGenerator;
+import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -95,12 +95,9 @@ class SpaceTest {
     @Test
     @DisplayName("이동경로에 피스가 있으면 움직일 수 없다")
     void should_not_move_when_route_has_piece() {
-        Piece piece1 = new Rook(Color.WHITE);
-        Piece piece2 = new Pawn(Color.BLACK);
-
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.a, Rank.THREE);
-        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
+        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator(new PieceGenerator()));
 
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
