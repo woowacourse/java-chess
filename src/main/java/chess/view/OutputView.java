@@ -5,7 +5,7 @@ import chess.domain.board.Board;
 
 public class OutputView {
 
-    private final Converter converter = new Converter();
+    private final ViewDataConverter converter = new ViewDataConverter();
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");

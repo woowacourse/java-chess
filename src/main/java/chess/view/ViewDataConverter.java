@@ -8,9 +8,7 @@ import chess.domain.board.Coordinate;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
-//TODO:
-class Converter {
-
+class ViewDataConverter {
 
     List<List<String>> convertToViewData(Board board) {
         List<List<String>> viewData = new ArrayList<>();
@@ -26,13 +24,12 @@ class Converter {
         return IntStream.rangeClosed('a', 'h')
                 .mapToObj(operand -> new Coordinate(rankValue, (char) operand))
                 .map(board::findByCoordinate)
-                .map(this::convert)
+                .map(this::convertToViewData)
                 .toList();
     }
 
-
-    private String convert(Piece piece) {
-        String shape = PieceShape.valueOf(piece.getType()).getShape();
+    private String convertToViewData(Piece piece) {
+        String shape = PieceShapeSelector.selectShape(piece.getType());
         if (piece.getTeam() == Team.BLACK) {
             return shape.toUpperCase();
         }

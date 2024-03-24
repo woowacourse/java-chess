@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import chess.domain.piece.PieceType;
 
-enum PieceShape {
+enum PieceShapeSelector {
 
     KING(PieceType.KING, "k"),
     QUEEN(PieceType.QUEEN, "q"),
@@ -17,19 +17,16 @@ enum PieceShape {
     private final PieceType pieceType;
     private final String shape;
 
-    PieceShape(PieceType pieceType, String shape) {
+    PieceShapeSelector(PieceType pieceType, String shape) {
         this.pieceType = pieceType;
         this.shape = shape;
     }
 
-    public static PieceShape valueOf(PieceType pieceType) {
-        return Arrays.stream(PieceShape.values())
+    public static String selectShape(PieceType pieceType) {
+        return Arrays.stream(PieceShapeSelector.values())
                 .filter(it -> it.pieceType == pieceType)
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 기물입니다."));
-    }
-
-    public String getShape() {
-        return shape;
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 기물입니다."))
+                .shape;
     }
 }
