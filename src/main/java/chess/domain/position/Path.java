@@ -129,9 +129,8 @@ public class Path {
         return positions;
     }
 
-    // TODO: 최대 rankValue로 인한 버그 고치기
     private List<Position> findDownhill() {
-        int maxRankValue = Math.max(start.getRankValue(), target.getRankValue()) + 1;
+        int maxRankValue = Math.max(start.getRankValue(), target.getRankValue()) - 1;
         int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
         int distance = fileDistance() - 1;
 
