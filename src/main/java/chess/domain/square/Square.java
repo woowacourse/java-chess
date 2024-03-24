@@ -39,7 +39,7 @@ public class Square {
     }
 
     private static String generateSquareKey(File file, Rank rank) {
-        return file.name().toLowerCase() + rank.ordinal();
+        return file.name().toLowerCase() + rank.toInput();
     }
 
     public List<Square> generatePath(Square target) {

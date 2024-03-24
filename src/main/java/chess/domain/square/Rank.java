@@ -38,4 +38,8 @@ public enum Rank {
     public int distance(Rank other) {
         return Math.abs(compareTo(other));
     }
+
+    public char toInput() {
+        return (char) (FIRST_INPUT - ordinal());
+    }
 }
