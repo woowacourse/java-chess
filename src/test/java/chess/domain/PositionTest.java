@@ -29,6 +29,27 @@ class PositionTest {
     }
 
     @Test
+    @DisplayName("이동 거리만큼 이동할 수 있다.")
+    void moveByDistance() {
+        Position position = new Position(2, 2);
+        assertAll(
+                () -> assertThat(position.moveByDistance(new MoveDistance(1, 2))).isEqualTo(new Position(3, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(-1, 2))).isEqualTo(new Position(1, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(0, 2))).isEqualTo(new Position(2, 4)),
+                () -> assertThat(position.moveByDistance(new MoveDistance(0, 0))).isEqualTo(new Position(2, 2))
+        );
+    }
+
+    @Test
+    @DisplayName("이동 거리만큼 이동하였을 때, 범위를 초과한 경우 예외가 발생한다.")
+    void notMoveByDistance() {
+        Position position = new Position(2, 2);
+        assertThatThrownBy(() -> assertThat(position.moveByDistance(new MoveDistance(-7, 2))))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("이동이 불가능합니다.");
+    }
+
+    @Test
     @DisplayName("위치의 file이 최소인 경우 참을 반환한다.")
     void isMinimumFile() {
         Position position = new Position(1, 3);
