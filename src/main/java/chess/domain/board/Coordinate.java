@@ -40,10 +40,6 @@ public class Coordinate {
         return rank.getValue();
     }
 
-    public char getFile() {
-        return file.getValue();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
