@@ -1,6 +1,9 @@
 package chess.model.piece;
 
-public abstract class Piece implements MoveStrategy {
+import chess.model.position.ChessPosition;
+import java.util.List;
+
+public abstract class Piece {
     protected final Side side;
 
     protected Piece(Side side) {
@@ -8,6 +11,8 @@ public abstract class Piece implements MoveStrategy {
     }
 
     public abstract String getText();
+
+    public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
     public boolean isSameSide(Piece other) {
         return this.side == other.side;
