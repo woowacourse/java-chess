@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.state.End;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.dto.ChessBoardDto;
@@ -21,12 +22,20 @@ public class ChessGameController {
     private void playGame() {
         ChessBoard chessBoard = new ChessBoard();
         GameState gameState = new Ready(chessBoard);
-        
+
         while (!gameState.isEnd()) {
             GameState currentGameState = gameState;
             gameState = repeatUntilSuccess(() -> playEachTurn(currentGameState));
 
             printChessBoardInProgress(gameState, chessBoard);
+        }
+        printResulByKingCaptured((End) gameState, chessBoard);
+    }
+
+    private void printResulByKingCaptured(End gameState, ChessBoard chessBoard) {
+        if (gameState.isEndByKingCaptured()) {
+            outputView.printChessBoard(new ChessBoardDto(chessBoard));
+            outputView.printResultWithKingCaptured(chessBoard.findWinnerByKing());
         }
     }
 

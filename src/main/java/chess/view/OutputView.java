@@ -4,6 +4,7 @@ import static chess.utils.Constant.END_COMMAND;
 import static chess.utils.Constant.MOVE_COMMAND;
 import static chess.utils.Constant.START_COMMAND;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -36,6 +37,10 @@ public class OutputView {
 
     public void printErrorMessage(String message) {
         System.out.println(ERROR_HEADER + message);
+    }
+
+    public void printResultWithKingCaptured(Color winnerColor) {
+        System.out.printf("King을 잡았습니다. %s팀이 승리하였습니다.", winnerColor.name());
     }
 
     private void printEachRank(Map<Position, Piece> chessBoard, Rank rank) {
