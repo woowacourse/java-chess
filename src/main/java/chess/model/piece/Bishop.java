@@ -19,4 +19,9 @@ public class Bishop extends Piece {
         Direction direction = Direction.findDirection(source, target);
         return direction == UP_LEFT || direction == DOWN_LEFT || direction == UP_RIGHT || direction == DOWN_RIGHT;
     }
+
+    @Override
+    public boolean canJump() {
+        return false;
+    }
 }

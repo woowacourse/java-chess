@@ -21,4 +21,9 @@ public class Knight extends Piece {
         }
         return columnDifference == FIRST_MOVEMENT && rowDifference == SECOND_MOVEMENT;
     }
+
+    @Override
+    public boolean canJump() {
+        return true;
+    }
 }

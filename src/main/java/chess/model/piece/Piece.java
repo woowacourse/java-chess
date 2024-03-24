@@ -24,6 +24,8 @@ public abstract class Piece implements MoveStrategy {
         this.type = pieceType;
     }
 
+    public abstract boolean canJump();
+
     public static Piece from(PieceType pieceType) {
         if (pieceType == BLACK_PAWN || pieceType == WHITE_PAWN) {
             return new Pawn(pieceType);
@@ -80,10 +82,6 @@ public abstract class Piece implements MoveStrategy {
 
     public boolean isPawn() {
         return type.isPawn();
-    }
-
-    public boolean isKnight() {
-        return type.isKnight();
     }
 
     @Override

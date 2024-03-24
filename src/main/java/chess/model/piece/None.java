@@ -12,4 +12,9 @@ public class None extends Piece {
     public boolean canMove(Position source, Position target) {
         return false;
     }
+
+    @Override
+    public boolean canJump() {
+        return false;
+    }
 }

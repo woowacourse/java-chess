@@ -26,4 +26,9 @@ public class Queen extends Piece {
         }
         return direction == UP || direction == DOWN || direction == LEFT || direction == RIGHT;
     }
+
+    @Override
+    public boolean canJump() {
+        return false;
+    }
 }

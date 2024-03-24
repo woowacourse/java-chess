@@ -16,4 +16,9 @@ public class King extends Piece {
         int columnDifference = Math.abs(calculateColumnDifference(source, target));
         return rowDifference <= MAX_MOVE_RANGE && columnDifference <= MAX_MOVE_RANGE;
     }
+
+    @Override
+    public boolean canJump() {
+        return false;
+    }
 }

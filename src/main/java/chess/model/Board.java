@@ -105,7 +105,7 @@ public class Board {
     }
 
     private void validatePieceRoute(Piece sourcePiece, Position source, Position target) {
-        if (sourcePiece.isKnight()) {
+        if (sourcePiece.canJump()) {
             return;
         }
         int rowDifference = target.getRow() - source.getRow();
