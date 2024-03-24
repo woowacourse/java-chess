@@ -99,6 +99,26 @@ public enum File {
         }
     }
 
+    public File left() {
+        int leftOrdinal = this.ordinal() - 1;
+        File[] files = File.values();
+        try {
+            return files[leftOrdinal];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalStateException("해당 칸의 왼쪽 칸이 존재하지 않습니다.");
+        }
+    }
+
+    public File right() {
+        int rightOrdinal = this.ordinal() + 1;
+        File[] files = File.values();
+        try {
+            return files[rightOrdinal];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new IllegalStateException("해당 칸의 오른쪽 칸이 존재하지 않습니다.");
+        }
+    }
+
     public static boolean isInRange(final int column) {
         return FILE_MIN <= column && column <= FILE_MAX;
     }
