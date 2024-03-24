@@ -13,36 +13,30 @@ import chess.domain.piece.Team;
 
 public class BoardFactory {
 
+    private static final int INITIAL_WHITE_SPECIAL_RANK = 1;
+    private static final int INITIAL_WHITE_PAWN_RANK = 2;
+    private static final int INITIAL_BLACK_SPECIAL_RANK = 8;
+    private static final int INITIAL_BLACK_PAWN_RANK = 7;
+
     private BoardFactory() {
     }
 
-    public static Map<Coordinate, Piece> createInitialPieces(
-            int initialWhiteSpecialRank,
-            int initialWhitePawnRank,
-            int initialBlackSpecialRank,
-            int initialBlackPawnRank) {
-
+    public static Map<Coordinate, Piece> createInitialPieces() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        initializeWhitePiece(initialWhiteSpecialRank, initialWhitePawnRank, pieces);
-        initializeBlackPiece(initialBlackSpecialRank, initialBlackPawnRank, pieces);
+        initializeWhitePiece(pieces);
+        initializeBlackPiece(pieces);
 
         return pieces;
     }
 
-    private static void initializeWhitePiece(
-            int initialWhiteSpecialRank,
-            int initialWhitePawnRank,
-            HashMap<Coordinate, Piece> pieces) {
-        initializeSpecialPiece(initialWhiteSpecialRank, Team.WHITE, pieces);
-        initializePawn(initialWhitePawnRank, Team.WHITE, pieces);
+    private static void initializeWhitePiece(HashMap<Coordinate, Piece> pieces) {
+        initializeSpecialPiece(INITIAL_WHITE_SPECIAL_RANK, Team.WHITE, pieces);
+        initializePawn(INITIAL_WHITE_PAWN_RANK, Team.WHITE, pieces);
     }
 
-    private static void initializeBlackPiece(
-            int initialBlackSpecialRank,
-            int initialBlackPawnRank,
-            HashMap<Coordinate, Piece> pieces) {
-        initializeSpecialPiece(initialBlackSpecialRank, Team.BLACK, pieces);
-        initializePawn(initialBlackPawnRank, Team.BLACK, pieces);
+    private static void initializeBlackPiece(HashMap<Coordinate, Piece> pieces) {
+        initializeSpecialPiece(INITIAL_BLACK_SPECIAL_RANK, Team.BLACK, pieces);
+        initializePawn(INITIAL_BLACK_PAWN_RANK, Team.BLACK, pieces);
     }
 
     private static void initializePawn(

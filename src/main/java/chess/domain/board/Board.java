@@ -8,10 +8,6 @@ import chess.domain.piece.Piece;
 
 public class Board {
 
-    private static final int INITIAL_WHITE_SPECIAL_RANK = 1;
-    private static final int INITIAL_WHITE_PAWN_RANK = 2;
-    private static final int INITIAL_BLACK_SPECIAL_RANK = 8;
-    private static final int INITIAL_BLACK_PAWN_RANK = 7;
     private static final Piece EMPTY_PIECE = new Empty();
 
     private final Map<Coordinate, Piece> pieces = new HashMap<>();
@@ -21,12 +17,7 @@ public class Board {
     }
 
     public Board() {
-        this(BoardFactory.createInitialPieces(
-                INITIAL_WHITE_SPECIAL_RANK,
-                INITIAL_WHITE_PAWN_RANK,
-                INITIAL_BLACK_SPECIAL_RANK,
-                INITIAL_BLACK_PAWN_RANK
-        ));
+        this(BoardFactory.createInitialPieces());
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {
