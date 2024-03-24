@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class KingTest {
 
-    @DisplayName("킹은 한 칸만 이동할 수 있다.")
+    @DisplayName("킹은 두 칸 이상 이동할 수 없다.")
     @Test
     void cantMove() {
         King king = new King(Color.WHITE);
