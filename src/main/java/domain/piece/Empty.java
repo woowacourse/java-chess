@@ -6,8 +6,14 @@ import domain.Side;
 
 public class Empty extends Piece {
 
+    private static final Empty INSTANCE = new Empty();
+
     public Empty() {
         super(Side.EMPTY);
+    }
+
+    public static Empty getInstance() {
+        return INSTANCE;
     }
 
     @Override
