@@ -25,7 +25,7 @@ public class Knight extends Piece {
     }
 
     boolean isNotReachable(Position start, Position destination) {
-        return !(start.squaredDistanceWith(destination) == L_SHAPE_DISTANCE);
+        return start.squaredDistanceWith(destination) != L_SHAPE_DISTANCE;
     }
 
     boolean isPathNotClear(Position start, Position destination, ChessBoard chessBoard) {
