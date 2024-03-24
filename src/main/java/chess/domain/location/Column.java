@@ -2,6 +2,7 @@ package chess.domain.location;
 
 import chess.domain.board.Direction;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Column {
     A(1),
@@ -13,7 +14,7 @@ public enum Column {
     G(7),
     H(8);
 
-    private static final Column[] columns = new Column[]{A, B, C, D, E, F, G, H};
+    private static final List<Column> columns = List.of(A, B, C, D, E, F, G, H);
     private final int index;
 
     Column(int index) {
@@ -37,19 +38,19 @@ public enum Column {
         return this;
     }
 
-    private Column next() {
+    private Column previous() {
         int ordinalIndex = this.index - 1;
         try {
-            return columns[ordinalIndex + 1];
+            return columns.get(ordinalIndex - 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
     }
 
-    private Column previous() {
+    private Column next() {
         int ordinalIndex = this.index - 1;
         try {
-            return columns[ordinalIndex - 1];
+            return columns.get(ordinalIndex + 1);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
