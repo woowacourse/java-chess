@@ -17,10 +17,10 @@ public enum Direction {
 
     public static Direction of(final Position source, final Position target) {
         if (source.indexOfFile() == target.indexOfFile()) {
-            return calculateTD(source, target);
+            return calculateVertical(source, target);
         }
         if (source.indexOfRank() == target.indexOfRank()) {
-            return calculateLR(source, target);
+            return calculateHorizontal(source, target);
         }
         if (source.calculateFileDistanceTo(target) == source.calculateRankDistanceTo(target)) {
             return calculateDiagonal(source, target);
@@ -30,33 +30,33 @@ public enum Direction {
 
     private static Direction calculateDiagonal(final Position source, final Position target) {
         if (source.indexOfRank() < target.indexOfRank()) {
-            return calculateTRTL(source, target);
+            return calculateTopDiagonal(source, target);
         }
-        return calculateDRDL(source, target);
+        return calculateDownDiagonal(source, target);
     }
 
-    private static Direction calculateDRDL(final Position source, final Position target) {
+    private static Direction calculateDownDiagonal(final Position source, final Position target) {
         if (source.indexOfFile() < target.indexOfFile()) {
             return Direction.DOWN_RIGHT;
         }
         return Direction.DOWN_LEFT;
     }
 
-    private static Direction calculateTRTL(final Position source, final Position target) {
+    private static Direction calculateTopDiagonal(final Position source, final Position target) {
         if (source.indexOfFile() < target.indexOfFile()) {
             return Direction.TOP_RIGHT;
         }
         return Direction.TOP_LEFT;
     }
 
-    private static Direction calculateLR(final Position source, final Position target) {
+    private static Direction calculateHorizontal(final Position source, final Position target) {
         if (source.indexOfFile() > target.indexOfFile()) {
             return Direction.LEFT;
         }
         return Direction.RIGHT;
     }
 
-    private static Direction calculateTD(final Position source, final Position target) {
+    private static Direction calculateVertical(final Position source, final Position target) {
         if (source.indexOfRank() < target.indexOfRank()) {
             return Direction.TOP;
         }
