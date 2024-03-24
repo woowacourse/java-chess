@@ -1,11 +1,10 @@
 package domain.piece;
 
 import domain.board.Position;
-import domain.game.PieceType;
 
 import java.util.Map;
 
-import static domain.game.PieceType.KING;
+import static domain.piece.PieceType.KING;
 import static domain.piece.CommonMovementDirection.calculateDirection;
 
 public class King extends Piece {

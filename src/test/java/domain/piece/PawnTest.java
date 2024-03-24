@@ -111,7 +111,7 @@ class PawnTest {
         // When & Then
         assertThatThrownBy(() -> pawn.checkMovable(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물이 존재하는 칸으로 이동할 수 없습니다.");
+                .hasMessage("전진시 기물이 존재하는 경로 혹은 목적지로 이동할 수 없습니다.");
     }
 
     private static Stream<Arguments> throwExceptionWhenForwardPathHasPieceTestCase() {

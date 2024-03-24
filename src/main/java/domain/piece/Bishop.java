@@ -1,13 +1,12 @@
 package domain.piece;
 
 import domain.board.Position;
-import domain.game.PieceType;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static domain.game.PieceType.BISHOP;
+import static domain.piece.PieceType.BISHOP;
 import static domain.piece.CommonMovementDirection.*;
 
 public class Bishop extends Piece {

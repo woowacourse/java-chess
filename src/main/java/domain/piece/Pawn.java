@@ -1,13 +1,12 @@
 package domain.piece;
 
 import domain.board.Position;
-import domain.game.PieceType;
 
 import java.util.Map;
 
 import static domain.board.Rank.SEVEN;
 import static domain.board.Rank.TWO;
-import static domain.game.PieceType.PAWN;
+import static domain.piece.PieceType.PAWN;
 import static domain.piece.PawnMovementDirection.calculateDirection;
 import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
@@ -60,7 +59,7 @@ public class Pawn extends Piece {
 
     private void checkPathHasPiece(final Position path, final Map<Position, Piece> piecePositions) {
         if (piecePositions.containsKey(path)) {
-            throw new IllegalArgumentException("기물이 존재하는 칸으로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("전진시 기물이 존재하는 경로 혹은 목적지로 이동할 수 없습니다.");
         }
     }
 
