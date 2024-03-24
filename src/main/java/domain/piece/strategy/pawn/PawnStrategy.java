@@ -24,7 +24,6 @@ public enum PawnStrategy {
     }
 
     public static PawnStrategy getMoveStrategy(int rowDifference, int columnDifference) {
-        System.out.println(rowDifference + " " + columnDifference);
         return Arrays.stream(PawnStrategy.values())
                 .filter(enumValue -> enumValue.rowDifference == rowDifference
                         && enumValue.columnDifference == columnDifference)
