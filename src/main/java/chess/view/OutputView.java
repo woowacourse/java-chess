@@ -13,7 +13,7 @@ public class OutputView {
     public void printBoard(Map<Point, Piece> board) {
         StringBuilder builder = new StringBuilder();
 
-        for (int rank = Rank.maxValue(); rank > Rank.minValue(); rank--) {
+        for (int rank = Rank.maxValue(); rank >= Rank.minValue(); rank--) {
             for (char file = File.minValue(); file <= File.maxValue(); file++) {
                 Piece piece = board.get(new Point(file, rank));
                 builder.append(PieceCharacters.characterFrom(piece));

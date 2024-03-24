@@ -85,8 +85,8 @@ public class Point {
     public Direction findUnitDirection(Point point) {
         int fileDistance = point.file.distance(this.file);
         int rankDistance = point.rank.distance(this.rank);
-
-        if (multiplyAxis(point) == SlOPE_TWO) {
+        if (Math.abs(multiplyAxis(point)) == SlOPE_TWO) {
+            System.out.println(fileDistance + " " + rankDistance);
             return Direction.of(fileDistance, rankDistance);
         }
         return Direction.of(unitDistance(fileDistance), unitDistance(rankDistance));

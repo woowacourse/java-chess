@@ -56,7 +56,6 @@ public class Board {
 
     private void validateMovableRoute(Point currentPoint, Point destination) {
         Direction unitDirection = currentPoint.findUnitDirection(destination);
-
         Point nextPoint = currentPoint.add(unitDirection.file(), unitDirection.rank());
         while (!nextPoint.equals(destination)) {
             if (!Piece.empty().equals(board.get(nextPoint))) {

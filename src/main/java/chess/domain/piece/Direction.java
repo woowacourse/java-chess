@@ -32,6 +32,7 @@ public enum Direction {
         this.directionOfRank = directionOfRank;
     }
 
+    // TODO: orElseThrow 들 예외 명백하게
     public static Direction of(int file, int rank) {
         return Arrays.stream(values())
                 .filter(direction -> direction.isMatch(file, rank))
