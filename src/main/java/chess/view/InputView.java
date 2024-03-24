@@ -19,6 +19,15 @@ public class InputView {
     public boolean checkRestartGame() {
         System.out.println("정말 게임을 재시작 하겠습니까? (y/n)");
         String input = SCANNER.next();
-        return "y".equalsIgnoreCase(input);
+        if ("y".equalsIgnoreCase(input)){
+            return true;
+        }
+        if ("n".equalsIgnoreCase(input)) {
+            return false;
+        }
+        throw new IllegalArgumentException(
+                String.format("잘못된 입력입니다. y 또는 n을 입력해 주세요 (현재 입력 : %s)", input)
+        );
     }
+
 }
