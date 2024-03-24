@@ -24,21 +24,11 @@ public class Board {
         return new Board(squares);
     }
 
-    public List<Piece> extractPiecesByOrder() {
-        List<Piece> pieces = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                pieces.add(findPieceByPosition(file, rank));
-            }
-        }
-        return pieces;
-    }
-
     public Piece findPieceByPosition(Position position) {
         return squares.get(position);
     }
 
-    private Piece findPieceByPosition(File file, Rank rank) {
+    public Piece findPieceByPosition(File file, Rank rank) {
         return squares.get(Position.generate(file, rank));
     }
 

@@ -3,6 +3,9 @@ package view;
 import domain.board.Board;
 import domain.board.Turn;
 import domain.piece.Piece;
+import domain.position.File;
+import domain.position.Rank;
+import java.util.Arrays;
 import java.util.List;
 
 public class OutputView {
@@ -15,13 +18,19 @@ public class OutputView {
     }
 
     public void printBoard(Board board) {
-        List<Piece> pieces = board.extractPiecesByOrder();
+        List<Piece> pieces = resolvePiecesByOrder(board);
         for (int i = 0; i < pieces.size(); i++) {
             String piece = pieces.get(i).display();
             System.out.print(piece);
             separateLineByFileIndex(i);
         }
         printNewLine();
+    }
+
+    private List<Piece> resolvePiecesByOrder(Board board) {
+        return Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(File.values()).map(file -> board.findPieceByPosition(file, rank)))
+                .toList();
     }
 
     private void separateLineByFileIndex(int fileIndex) {
