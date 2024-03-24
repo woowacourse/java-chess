@@ -11,18 +11,18 @@ public class Route {
         this.steps = createSteps(directions, squareStates);
     }
 
+    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
+        if (directions.size() != squareStates.size()) {
+            throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
+        }
+    }
+
     private List<Step> createSteps(List<Direction> directions, List<SquareState> squareStates) {
         List<Step> steps = new ArrayList<>();
         for (int i = 0; i < directions.size(); i++) {
             steps.add(new Step(directions.get(i), squareStates.get(i)));
         }
         return steps;
-    }
-
-    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
-        if (directions.size() != squareStates.size()) {
-            throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
-        }
     }
 
     private void validatePathDistance(List<Step> steps) {

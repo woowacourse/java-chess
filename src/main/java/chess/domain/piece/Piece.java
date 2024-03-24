@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Route;
-import java.util.NavigableMap;
 
 public abstract class Piece {
     private final Color color;

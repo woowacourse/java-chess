@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Route;
 import chess.domain.board.SquareState;
-import chess.domain.board.Step;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -52,8 +51,10 @@ class QueenTest {
     @Test
     void maxDistanceMoveTest() {
         Route manyDirectionRoute = new Route(
-                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN),
-                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
+                List.of(Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN, Direction.DOWN,
+                        Direction.DOWN),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY,
+                        SquareState.EMPTY, SquareState.EMPTY)
         );
 
         Assertions.assertThat(QUEEN.canMove(manyDirectionRoute))

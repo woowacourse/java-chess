@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.location.Location;
 import chess.view.InputView;
 import chess.view.OutputView;
 

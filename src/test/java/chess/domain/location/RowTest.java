@@ -14,6 +14,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class RowTest {
 
+    @DisplayName("Row의 거리를 계산한다.")
+    @Test
+    void calculateDistanceTest() {
+        Row source = Row.SIX;
+        Row target = Row.ONE;
+        assertThat(source.calculateDistance(target)).isEqualTo(-5);
+    }
+
     @DisplayName("Row를 잘 생성한다.")
     @Nested
     class ConstructTest {
@@ -72,14 +80,5 @@ class RowTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("잘못된 방향 입력입니다.");
         }
-    }
-
-
-    @DisplayName("Row의 거리를 계산한다.")
-    @Test
-    void calculateDistanceTest() {
-        Row source = Row.SIX;
-        Row target = Row.ONE;
-        assertThat(source.calculateDistance(target)).isEqualTo(-5);
     }
 }

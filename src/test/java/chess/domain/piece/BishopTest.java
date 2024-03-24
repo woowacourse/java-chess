@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Direction;
 import chess.domain.board.Route;
 import chess.domain.board.SquareState;
-import chess.domain.board.Step;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -65,8 +64,10 @@ class BishopTest {
     @Test
     void maxDistanceMoveTest() {
         Route manyDirectionRoute = new Route(
-                List.of(Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT),
-                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
+                List.of(Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT,
+                        Direction.DOWN_RIGHT, Direction.DOWN_RIGHT, Direction.DOWN_RIGHT),
+                List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY,
+                        SquareState.EMPTY, SquareState.EMPTY)
         );
 
         Assertions.assertThat(BISHOP.canMove(manyDirectionRoute))

@@ -27,6 +27,15 @@ public class Location {
         }
     }
 
+    private static void validateInput(String input) {
+        if (input == null || input.isBlank()) {
+            throw WRONG_LOCATION_INPUT_EXCEPTION;
+        }
+        if (input.length() != LOCATION_INPUT_LENGTH) {
+            throw WRONG_LOCATION_INPUT_EXCEPTION;
+        }
+    }
+
     public Location move(Direction direction) {
         Column movedColumn = this.column.move(direction);
         Row movedRow = this.row.move(direction);
@@ -39,15 +48,6 @@ public class Location {
 
     public int calculateHorizontalDistance(Location target) {
         return this.column.calculateDistance(target.column);
-    }
-
-    private static void validateInput(String input) {
-        if (input == null || input.isBlank()) {
-            throw WRONG_LOCATION_INPUT_EXCEPTION;
-        }
-        if (input.length() != LOCATION_INPUT_LENGTH) {
-            throw WRONG_LOCATION_INPUT_EXCEPTION;
-        }
     }
 
     @Override

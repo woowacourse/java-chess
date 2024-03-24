@@ -1,14 +1,5 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.util.Collections;
-import java.util.List;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 class RouteTest {
     /*
     @DisplayName("경로의 길이는 7칸을 넘을 수 없다.")
