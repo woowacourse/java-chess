@@ -6,6 +6,7 @@ import domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
     protected final Team team;
@@ -14,34 +15,37 @@ public abstract class Piece {
         this.team = team;
     }
 
-    protected boolean checkMovable(final Square source, final Square target, final List<Direction> movableDirections) {
+    protected boolean checkMovable(final Square source, final Square target, final List<Direction> movableDirections, final Map<Square, Piece> pieces) {
         final List<Square> movableSquares = new ArrayList<>();
         for (final Direction movableDirection : movableDirections) {
-            addMovableSquares(source, movableDirection, movableSquares);
+            addMovableSquares(source, movableDirection, movableSquares, pieces);
         }
         return movableSquares.contains(target);
     }
 
-    protected void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares) {
+    protected void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares, final Map<Square, Piece> pieces) {
         Square movableSource = source;
         while (movableSource.canMove(direction)) {
-            movableSource = movableSource.next2(direction);
+            movableSource = movableSource.next(direction);
+            if (pieces.containsKey(movableSource)) {
+                break;
+            }
             movableSquares.add(movableSource);
         }
     }
 
-    public boolean canNotMove(final Square source, final Square target) {
-        return !canMove(source, target);
+    public boolean canNotMove(final Square source, final Square target, final Map<Square, Piece> pieces) {
+        return !canMove(source, target, pieces);
     }
 
-    protected abstract boolean canMove(Square source, Square target);
+    protected abstract boolean canMove(Square source, Square target, Map<Square, Piece> pieces);
 
-    public boolean canNotAttack(final Square source, final Square target) {
-        return !canAttack(source, target);
+    public boolean canNotAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
+        return !canAttack(source, target, pieces);
     }
 
-    protected boolean canAttack(final Square source, final Square target) {
-        return canMove(source, target);
+    protected boolean canAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
+        return canMove(source, target, pieces);
     }
 
     public boolean isSameTeam(final Piece other) {

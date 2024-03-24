@@ -5,6 +5,7 @@ import domain.Square;
 import domain.Team;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Queen extends Piece {
@@ -23,8 +24,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square source, final Square target) {
-        return checkMovable(source, target, movableDirections);
+    public boolean canMove(final Square source, final Square target, final Map<Square, Piece> pieces) {
+        return checkMovable(source, target, movableDirections, pieces);
     }
 
     @Override

@@ -80,13 +80,13 @@ class ChessBoardTest {
         final Square source = new Square(File.D, Rank.TWO);
         final Square target = new Square(File.D, Rank.FOUR);
 
-        final Piece sourcePiece = chessBoard.getPieceSquares().get(source);
+        final Piece sourcePiece = chessBoard.getPieces().get(source);
 
         // when &
         chessBoard.move(source, target);
 
         //then
-        final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
+        final Map<Square, Piece> pieceSquares = chessBoard.getPieces();
 
         assertAll(
                 () -> assertThat(pieceSquares.containsKey(source)).isFalse(),
@@ -103,20 +103,20 @@ class ChessBoardTest {
 
         final Square whiteSource = new Square(File.D, Rank.TWO);
         final Square whiteTarget = new Square(File.D, Rank.FOUR);
-        final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
+        final Piece whitePiece = chessBoard.getPieces().get(whiteSource);
 
         chessBoard.move(whiteSource, whiteTarget);
 
         final Square blackSource = new Square(File.E, Rank.SEVEN);
         final Square blackTarget = new Square(File.E, Rank.FIVE);
-        final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
+        final Piece blackPiece = chessBoard.getPieces().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 
         // when
         chessBoard.move(whiteTarget, blackTarget);
 
         //then
-        final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
+        final Map<Square, Piece> pieceSquares = chessBoard.getPieces();
 
         assertAll(
                 () -> assertThat(pieceSquares.values()).hasSize(31),
@@ -147,18 +147,16 @@ class ChessBoardTest {
 
         final Square whiteSource = new Square(File.D, Rank.TWO);
         final Square whiteTarget = new Square(File.D, Rank.FOUR);
-        final Piece whitePiece = chessBoard.getPieceSquares().get(whiteSource);
 
         chessBoard.move(whiteSource, whiteTarget);
 
         final Square blackSource = new Square(File.D, Rank.SEVEN);
         final Square blackTarget = new Square(File.D, Rank.FIVE);
-        final Piece blackPiece = chessBoard.getPieceSquares().get(blackSource);
         chessBoard.move(blackSource, blackTarget);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(whiteTarget, blackTarget))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("공격할 수 없는 경로입니다.");
+                .hasMessage("갈 수 없는 경로입니다.");
     }
 }

@@ -1,9 +1,6 @@
 package domain.piece;
 
-import domain.File;
-import domain.Rank;
-import domain.Square;
-import domain.Team;
+import domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,7 +20,7 @@ class BishopTest {
         final Square source = new Square(File.D, Rank.FOUR);
 
         // when
-        final boolean canMove = bishop.canMove(source, target);
+        final boolean canMove = bishop.canMove(source, target, new ChessBoard().getPieces());
 
         // then
         assertThat(canMove).isEqualTo(expected);
@@ -49,7 +46,7 @@ class BishopTest {
         final Square source = new Square(File.D, Rank.FOUR);
 
         // when
-        final boolean canMove = bishop.canMove(source, target);
+        final boolean canMove = bishop.canMove(source, target, new ChessBoard().getPieces());
 
         // then
         assertThat(canMove).isEqualTo(expected);

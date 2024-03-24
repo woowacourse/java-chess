@@ -5,7 +5,6 @@ import domain.piece.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class ChessBoard {
     private static final Map<File, Piece> BLACK_PIECE_TYPE_ORDERS = Map.of(
@@ -21,15 +20,15 @@ public class ChessBoard {
             File.G, new Knight(Team.WHITE), File.H, new Rook(Team.WHITE)
     );
 
-    private final Map<Square, Piece> pieceSquares;
+    private final Map<Square, Piece> pieces;
     private Team team;
 
     public ChessBoard() {
-        this.pieceSquares = new HashMap<>();
+        this.pieces = new HashMap<>();
     }
 
-    private ChessBoard(final Map<Square, Piece> pieceSquares) {
-        this.pieceSquares = pieceSquares;
+    private ChessBoard(final Map<Square, Piece> pieces) {
+        this.pieces = pieces;
         this.team = Team.WHITE;
     }
 
@@ -49,25 +48,23 @@ public class ChessBoard {
     public void move(final Square source, final Square target) {
         validateEmptySource(source);
 
-        final Piece sourcePiece = pieceSquares.get(source);
+        final Piece sourcePiece = pieces.get(source);
 
         validateTeam(sourcePiece);
 
-        if (pieceSquares.containsKey(target)) {
+        if (pieces.containsKey(target)) {
             validateAttack(source, target, sourcePiece);
         } else {
             validateMove(source, target, sourcePiece);
         }
 
-        validateBlocking(source, target);
-
-        pieceSquares.put(target, sourcePiece);
-        pieceSquares.remove(source);
+        pieces.put(target, sourcePiece);
+        pieces.remove(source);
         team = team.turn();
     }
 
     private void validateEmptySource(final Square source) {
-        if (!pieceSquares.containsKey(source)) {
+        if (!pieces.containsKey(source)) {
             throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
         }
     }
@@ -79,40 +76,22 @@ public class ChessBoard {
     }
 
     private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
-        final Piece targetPiece = pieceSquares.get(target);
+        final Piece targetPiece = pieces.get(target);
         if (targetPiece.isSameTeam(sourcePiece)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
-        if (sourcePiece.canNotAttack(source, target)) {
-            throw new IllegalArgumentException("공격할 수 없는 경로입니다.");
+        if (sourcePiece.canNotAttack(source, target, pieces)) {
+            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
     }
 
     private void validateMove(final Square source, final Square target, final Piece sourcePiece) {
-        if (sourcePiece.canNotMove(source, target)) {
+        if (sourcePiece.canNotMove(source, target, pieces)) {
             throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
     }
 
-    private void validateBlocking(final Square source, final Square target) {
-        if (isBlocked(source, target)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
-        }
-    }
-
-    private boolean isBlocked(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        final ChessVector direction = chessVector.scaleDown();
-        final long count = chessVector.divide(direction);
-
-        return Stream.iterate(source.next(direction), square -> square.next(direction))
-                .limit(count)
-                .filter(square -> !square.equals(target))
-                .anyMatch(pieceSquares::containsKey);
-    }
-
-    public Map<Square, Piece> getPieceSquares() {
-        return Collections.unmodifiableMap(pieceSquares);
+    public Map<Square, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }

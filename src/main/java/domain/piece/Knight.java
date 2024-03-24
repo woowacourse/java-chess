@@ -5,6 +5,7 @@ import domain.Square;
 import domain.Team;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Knight extends Piece {
@@ -24,9 +25,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square source, final Square target) {
+    public boolean canMove(final Square source, final Square target, final Map<Square, Piece> pieces) {
         for (final Direction movableDirection : movableDirections) {
-            if (source.next2(movableDirection).equals(target)) {
+            if (source.next(movableDirection).equals(target)) {
                 return true;
             }
         }

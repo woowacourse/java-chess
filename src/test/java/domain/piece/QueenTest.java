@@ -1,9 +1,6 @@
 package domain.piece;
 
-import domain.File;
-import domain.Rank;
-import domain.Square;
-import domain.Team;
+import domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,7 +19,7 @@ class QueenTest {
         final Queen queen = new Queen(Team.BLACK);
 
         // when
-        final boolean canMove = queen.canMove(source, target);
+        final boolean canMove = queen.canMove(source, target, new ChessBoard().getPieces());
 
         // then
         assertThat(canMove).isEqualTo(expected);

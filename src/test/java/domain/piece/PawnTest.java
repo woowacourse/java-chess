@@ -1,9 +1,6 @@
 package domain.piece;
 
-import domain.File;
-import domain.Rank;
-import domain.Square;
-import domain.Team;
+import domain.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,7 +18,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.WHITE);
         final Square source = new Square(File.D, Rank.TWO);
 
-        final boolean canMove = pawn.canMove(source, target);
+        final boolean canMove = pawn.canMove(source, target, new ChessBoard().getPieces());
 
         assertThat(canMove).isEqualTo(result);
     }
@@ -41,7 +38,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.BLACK);
         final Square source = new Square(File.D, Rank.SEVEN);
 
-        final boolean canMove = pawn.canMove(source, target);
+        final boolean canMove = pawn.canMove(source, target, new ChessBoard().getPieces());
 
         assertThat(canMove).isEqualTo(result);
     }
@@ -60,7 +57,7 @@ class PawnTest {
         final Pawn pawn = new Pawn(Team.WHITE);
         final Square source = new Square(File.D, Rank.TWO);
 
-        final boolean canMove = pawn.canAttack(source, target);
+        final boolean canMove = pawn.canAttack(source, target, new ChessBoard().getPieces());
 
         assertThat(canMove).isEqualTo(result);
     }
@@ -78,7 +75,7 @@ class PawnTest {
     void canAttack(final Square target, final boolean result) {
         final Pawn pawn = new Pawn(Team.BLACK);
         final Square source = new Square(File.D, Rank.SEVEN);
-        final boolean canMove = pawn.canAttack(source, target);
+        final boolean canMove = pawn.canAttack(source, target, new ChessBoard().getPieces());
 
         assertThat(canMove).isEqualTo(result);
     }
@@ -97,7 +94,7 @@ class PawnTest {
     void canNotAttack(final Team team, final Square source, final Square target, final boolean result) {
         final Pawn pawn = new Pawn(team);
 
-        final boolean canMove = pawn.canAttack(source, target);
+        final boolean canMove = pawn.canAttack(source, target, new ChessBoard().getPieces());
 
         assertThat(canMove).isEqualTo(result);
     }

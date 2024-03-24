@@ -23,7 +23,7 @@ public class ChessController {
 
                 if (menu.isStart()) {
                     chessBoard = ChessBoard.create();
-                    outputView.printChessTable(chessBoard.getPieceSquares());
+                    outputView.printChessTable(chessBoard.getPieces());
                 }
                 if (menu.isEnd()) {
                     break;
@@ -45,7 +45,7 @@ public class ChessController {
 
         chessBoard.move(source, target);
 
-        outputView.printChessTable(chessBoard.getPieceSquares());
+        outputView.printChessTable(chessBoard.getPieces());
     }
 
     private Square readSquare() {
@@ -54,7 +54,7 @@ public class ChessController {
     }
 
     private static void validateGameState(final ChessBoard chessBoard) {
-        if (chessBoard.getPieceSquares().isEmpty()) {
+        if (chessBoard.getPieces().isEmpty()) {
             throw new IllegalStateException("게임을 시작해주세요.");
         }
     }

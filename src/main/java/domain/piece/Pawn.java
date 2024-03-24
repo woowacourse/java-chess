@@ -5,6 +5,7 @@ import domain.Rank;
 import domain.Square;
 import domain.Team;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Pawn extends Piece {
@@ -13,23 +14,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Square source, final Square target) {
+    public boolean canMove(final Square source, final Square target, final Map<Square, Piece> pieces) {
         if (this.team == Team.BLACK) {
-            return source.next2(Direction.SOUTH).equals(target) ||
-                    (source.next2(Direction.SOUTH_SOUTH).equals(target) && source.isRank(Rank.SEVEN));
+            return source.next(Direction.SOUTH).equals(target) ||
+                    (source.next(Direction.SOUTH_SOUTH).equals(target) && source.isRank(Rank.SEVEN));
         }
-        return source.next2(Direction.NORTH).equals(target) ||
-                (source.next2(Direction.NORTH_NORTH).equals(target) && source.isRank(Rank.TWO));
+        return source.next(Direction.NORTH).equals(target) ||
+                (source.next(Direction.NORTH_NORTH).equals(target) && source.isRank(Rank.TWO));
     }
 
     @Override
-    public boolean canAttack(final Square source, final Square target) {
+    public boolean canAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
         if (this.team == Team.BLACK) {
-            return source.next2(Direction.SOUTH_EAST).equals(target) ||
-                    source.next2(Direction.SOUTH_WEST).equals(target);
+            return source.next(Direction.SOUTH_EAST).equals(target) ||
+                    source.next(Direction.SOUTH_WEST).equals(target);
         }
-        return source.next2(Direction.NORTH_EAST).equals(target) ||
-                source.next2(Direction.NORTH_WEST).equals(target);
+        return source.next(Direction.NORTH_EAST).equals(target) ||
+                source.next(Direction.NORTH_WEST).equals(target);
     }
 
     @Override
