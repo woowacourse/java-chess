@@ -39,8 +39,7 @@ public class Column {
     }
 
     public Column update(int direction) {
-        int columnDirection = direction;
-        return CACHE.get(this.value + columnDirection);
+        return CACHE.get(this.value + direction);
     }
 
 
@@ -60,10 +59,10 @@ public class Column {
     }
 
     public int compare(Column column) {
-        if(value > column.value) {
+        if (value > column.value) {
             return -1;
         }
-        if(value == column.value) {
+        if (value == column.value) {
             return 0;
         }
         return 1;
