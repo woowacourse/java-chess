@@ -2,9 +2,6 @@ package controller;
 
 import domain.chessboard.ChessBoard;
 import domain.coordinate.Coordinate;
-import domain.piece.Color;
-import domain.position.Column;
-import domain.position.Row;
 import view.InputView;
 import view.OutputView;
 import view.dto.Commands;
@@ -12,8 +9,6 @@ import view.dto.CoordinateRequest;
 import view.util.Command;
 
 public class ChessGameController {
-
-    private static final Color DEFAULT_START_COLOR = Color.WHITE;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -42,27 +37,18 @@ public class ChessGameController {
     }
 
     private void startGame(ChessBoard chessBoard) {
-        Color currentTurn = DEFAULT_START_COLOR;
-
         boolean isPlaying;
+
         do {
-            isPlaying = playGame(chessBoard, currentTurn);
-            currentTurn = changeTurn(currentTurn);
+            isPlaying = playGame(chessBoard);
         } while (isPlaying);
     }
 
-    private Color changeTurn(Color currentTurn) {
-        if (currentTurn == Color.BLACK) {
-            return Color.WHITE;
-        }
-        return Color.BLACK;
-    }
-
-    private boolean playGame(ChessBoard chessBoard, Color currentTurn) {
+    private boolean playGame(ChessBoard chessBoard) {
         Commands commands = inputView.receiveCommands();
 
         if (isCommandMove(commands)) {
-            move(chessBoard, currentTurn, commands);
+            move(chessBoard, commands);
             outputView.printBoard(chessBoard.getBoard());
             return true;
         }
@@ -79,14 +65,14 @@ public class ChessGameController {
         return true;
     }
 
-    private void move(ChessBoard chessBoard, Color currentTurn, Commands commands) {
+    private void move(ChessBoard chessBoard, Commands commands) {
         Coordinate start = createCoordinate(commands.startCoordinate());
         Coordinate destination = createCoordinate(commands.destinationCoordinate());
 
-        chessBoard.playTurn(start, destination, currentTurn);
+        chessBoard.playTurn(start, destination);
     }
 
     private Coordinate createCoordinate(CoordinateRequest coordinateRequest) {
-        return new Coordinate(new Row(coordinateRequest.row()), new Column(coordinateRequest.column()));
+        return new Coordinate(coordinateRequest.row(), coordinateRequest.column());
     }
 }
