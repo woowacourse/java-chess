@@ -161,4 +161,17 @@ class PositionTest {
     private Position createPositionByNameAndNumber(String fileName, int rankNumber) {
         return Position.of(File.from(fileName), Rank.from(rankNumber));
     }
+
+    @Test
+    @DisplayName("파일과 랭크의 차이를 받아 올바른 Position을 반환한다.")
+    void createPositionByDifferencesOfTest() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        Position back = source.createPositionByDifferencesOf(1, 1);
+        Position front = source.createPositionByDifferencesOf(-1, -1);
+        // then
+        assertThat(back).isEqualTo(Position.of(File.E, Rank.FOUR));
+        assertThat(front).isEqualTo(Position.of(File.C, Rank.TWO));
+    }
 }
