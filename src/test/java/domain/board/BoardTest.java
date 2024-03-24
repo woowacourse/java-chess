@@ -66,7 +66,7 @@ class BoardTest {
 
         board.move(source, target, Turn.makeInitialTurn());
         assertAll(
-                () -> assertThat(board.findPieceAt(source)).isNull(),
+                () -> assertThat(board.findPieceAt(source).isEmpty()).isTrue(),
                 () -> assertThat(board.findPieceAt(target)).isEqualTo(knight)
         );
     }
@@ -87,7 +87,7 @@ class BoardTest {
 
         board.move(source, target, Turn.makeInitialTurn());
         assertAll(
-                () -> assertThat(board.findPieceAt(source)).isNull(),
+                () -> assertThat(board.findPieceAt(source).isEmpty()).isTrue(),
                 () -> assertThat(board.findPieceAt(target)).isEqualTo(king)
         );
     }
@@ -247,7 +247,7 @@ class BoardTest {
         board.move(source, target, Turn.makeInitialTurn());
 
         assertAll(
-                () -> assertThat(board.findPieceAt(source)).isNull(),
+                () -> assertThat(board.findPieceAt(source).isEmpty()).isTrue(),
                 () -> assertThat(board.findPieceAt(target)).isEqualTo(pawn)
         );
     }
