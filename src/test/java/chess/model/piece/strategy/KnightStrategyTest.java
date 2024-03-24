@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightStrategyTest {
-    private PieceStrategy knightStrategy = new KnightStrategy();
+    private final PieceStrategy knightStrategy = new KnightStrategy();
 
     @ParameterizedTest
     @CsvSource({"1,1,2,3", "1,1,3,2", "2,2,1,4", "4,5,3,3"})
