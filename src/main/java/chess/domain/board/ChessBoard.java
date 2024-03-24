@@ -37,7 +37,7 @@ public class ChessBoard {
     }
 
     private void validateCanMove(Square startSquare, Path path) {
-        if (!startSquare.canMove(path, squares)) {
+        if (!startSquare.canArrive(path, squares)) {
             throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
     }

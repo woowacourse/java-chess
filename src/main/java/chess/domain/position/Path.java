@@ -15,11 +15,11 @@ public class Path {
         this.target = target;
     }
 
-    public int calculateRankDistance() {
+    public int rankDistance() {
         return start.calculateRankDistance(target);
     }
 
-    public int calculateFileDistance() {
+    public int fileDistance() {
         return start.calculateFileDistance(target);
     }
 
@@ -28,23 +28,23 @@ public class Path {
     }
 
     public boolean isStraight(int maxDistance) {
-        return isStraight() && Math.max(calculateFileDistance(), calculateRankDistance()) <= maxDistance;
+        return isStraight() && Math.max(fileDistance(), rankDistance()) <= maxDistance;
     }
 
     private boolean isStraightRank() {
-        return calculateRankDistance() > 0 && calculateFileDistance() == 0;
+        return rankDistance() > 0 && fileDistance() == 0;
     }
 
     private boolean isStraightFile() {
-        return calculateRankDistance() == 0 && calculateFileDistance() > 0;
+        return rankDistance() == 0 && fileDistance() > 0;
     }
 
     public boolean isDiagonal() {
-        return calculateRankDistance() == calculateFileDistance();
+        return rankDistance() == fileDistance();
     }
 
     public boolean isDiagonal(int maxDistance) {
-        return isDiagonal() && calculateRankDistance() <= maxDistance;
+        return isDiagonal() && rankDistance() <= maxDistance;
     }
 
     public int subtractRank() {
@@ -120,7 +120,7 @@ public class Path {
     private List<Position> findUphill() {
         int minRankValue = Math.min(start.getRankValue(), target.getRankValue()) + 1;
         int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
-        int distance = calculateFileDistance() - 1;
+        int distance = fileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
         for (int i = 0; i < distance; i++) {
@@ -129,10 +129,11 @@ public class Path {
         return positions;
     }
 
+    // TODO: 최대 rankValue로 인한 버그 고치기
     private List<Position> findDownhill() {
         int maxRankValue = Math.max(start.getRankValue(), target.getRankValue()) + 1;
         int minFileValue = Math.min(start.getFileValue(), target.getFileValue()) + 1;
-        int distance = calculateFileDistance() - 1;
+        int distance = fileDistance() - 1;
 
         List<Position> positions = new ArrayList<>();
         for (int i = 0; i < distance; i++) {

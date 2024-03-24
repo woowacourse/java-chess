@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
+import chess.domain.square.piece.unified.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -49,7 +50,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -62,7 +63,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -79,7 +80,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -96,7 +97,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -111,7 +112,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -126,7 +127,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -141,7 +142,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -160,7 +161,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
         // when
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -179,7 +180,7 @@ public class QueenTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
         // when
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 }

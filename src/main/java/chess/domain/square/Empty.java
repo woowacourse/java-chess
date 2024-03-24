@@ -17,7 +17,7 @@ public class Empty implements Square {
     }
 
     @Override
-    public boolean canMove(Path path, Map<Position, Square> board) {
+    public boolean canArrive(Path path, Map<Position, Square> board) {
         return false;
     }
 

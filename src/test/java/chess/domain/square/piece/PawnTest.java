@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
+import chess.domain.square.piece.divided.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.FIFTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -53,7 +54,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.FIFTH, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -66,7 +67,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -79,7 +80,7 @@ class PawnTest {
         board.put(new Position(Rank.SEVENTH, File.B), piece);
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -102,7 +103,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -115,7 +116,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.FOURTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -128,7 +129,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -141,7 +142,7 @@ class PawnTest {
         board.put(new Position(Rank.SECOND, File.B), piece);
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -167,7 +168,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -183,7 +184,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -199,7 +200,7 @@ class PawnTest {
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -225,7 +226,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -240,7 +241,7 @@ class PawnTest {
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -256,7 +257,7 @@ class PawnTest {
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 

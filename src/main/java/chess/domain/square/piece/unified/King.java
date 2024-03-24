@@ -1,10 +1,11 @@
-package chess.domain.square.piece;
+package chess.domain.square.piece.unified;
 
 import chess.domain.position.Path;
+import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class King extends Piece {
-    private static final int MOVABLE_MAX_DIFF = 1;
+public class King extends UnifiedArriveWay {
+    private static final int MOVABLE_DISTANCE = 1;
     private static final Map<Color, King> KING_POOL = Map.of(
             Color.WHITE, new King(Color.WHITE),
             Color.BLACK, new King(Color.BLACK));
@@ -18,7 +19,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
-        return path.isStraight(MOVABLE_MAX_DIFF) || path.isDiagonal(MOVABLE_MAX_DIFF);
+    protected boolean canMove(Path path) {
+        return path.isStraight(MOVABLE_DISTANCE) || path.isDiagonal(MOVABLE_DISTANCE);
     }
 }

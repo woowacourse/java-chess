@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
+import chess.domain.square.piece.unified.King;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -49,7 +50,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -62,7 +63,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
+        assertThat(piece.canArrive(path, board))
                 .isFalse();
     }
 
@@ -77,7 +78,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -94,7 +95,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isTrue();
     }
 
@@ -111,7 +112,7 @@ class KingTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(attackerPiece.canMove(path, board))
+        assertThat(attackerPiece.canArrive(path, board))
                 .isFalse();
     }
 }

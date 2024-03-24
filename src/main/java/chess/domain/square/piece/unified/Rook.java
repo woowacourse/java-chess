@@ -1,9 +1,10 @@
-package chess.domain.square.piece;
+package chess.domain.square.piece.unified;
 
 import chess.domain.position.Path;
+import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class Rook extends Piece {
+public class Rook extends UnifiedArriveWay {
     private static final Map<Color, Rook> ROOK_POOL = Map.of(
             Color.WHITE, new Rook(Color.WHITE),
             Color.BLACK, new Rook(Color.BLACK));
@@ -17,7 +18,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
+    protected boolean canMove(Path path) {
         return path.isStraight();
     }
 }

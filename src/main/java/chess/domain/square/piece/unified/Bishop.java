@@ -1,9 +1,10 @@
-package chess.domain.square.piece;
+package chess.domain.square.piece.unified;
 
 import chess.domain.position.Path;
+import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class Bishop extends Piece {
+public class Bishop extends UnifiedArriveWay {
     private static final Map<Color, Bishop> BISHOP_POOL = Map.of(
             Color.WHITE, new Bishop(Color.WHITE),
             Color.BLACK, new Bishop(Color.BLACK));
@@ -17,7 +18,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
+    protected boolean canMove(Path path) {
         return path.isDiagonal();
     }
 }

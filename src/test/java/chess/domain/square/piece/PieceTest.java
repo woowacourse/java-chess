@@ -6,6 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
+import chess.domain.square.piece.unified.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class PieceTest {
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attacker.canMove(path, board))
+        assertThat(attacker.canArrive(path, board))
                 .isFalse();
     }
 }

@@ -14,16 +14,7 @@ public abstract class Piece implements Square {
         this.color = color;
     }
 
-    @Override
-    public boolean canMove(Path path, Map<Position, Square> board) {
-        final Square targetSquare = board.get(path.getTargetPosition());
-        if (targetSquare.isColor(color)) {
-            return false;
-        }
-        return isValidMovePath(path) && isNotObstructed(path, board);
-    }
-
-    protected abstract boolean isValidMovePath(Path path);
+    protected abstract boolean canMove(Path path);
 
     protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
         return path.findRoute()
@@ -32,7 +23,7 @@ public abstract class Piece implements Square {
     }
 
     @Override
-    public boolean isColor(Color color) {
+    public final boolean isColor(Color color) {
         return this.color == color;
     }
 

@@ -7,7 +7,7 @@ import chess.domain.square.piece.Color;
 import java.util.Map;
 
 public interface Square {
-    boolean canMove(Path path, Map<Position, Square> board);
+    boolean canArrive(Path path, Map<Position, Square> board);
 
     boolean isColor(Color color);
 }
