@@ -9,7 +9,7 @@ public class InputView {
     private static final Pattern PATTERN = Pattern.compile(REGEX);
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public static CommendDto readCommend() {
+    public CommendDto readCommend() {
         String input = SCANNER.nextLine();
         validate(input);
         Matcher matcher = PATTERN.matcher(input);
@@ -19,7 +19,7 @@ public class InputView {
         return CommendDto.from(input);
     }
 
-    private static void validate(String value) {
+    private void validate(String value) {
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("올바르지 않은 위치 값입니다.");
         }
