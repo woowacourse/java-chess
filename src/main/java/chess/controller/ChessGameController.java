@@ -27,7 +27,7 @@ public class ChessGameController {
     }
 
     private void waitStartCommand() {
-        String command = inputView.readCommand().trim();
+        String command = inputView.readCommand();
         if ("start".equals(command)) {
             final ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
             outputView.printBoard(chessGame.collectBoard());
@@ -48,7 +48,7 @@ public class ChessGameController {
     }
 
     private void doOneRound(ChessGame chessGame) {
-        String command = inputView.readCommand().trim();
+        String command = inputView.readCommand();
         if (command.equals("end")) {
             System.exit(0);
         }

@@ -8,7 +8,7 @@ public class InputView {
     public String readCommand() {
         String input = scanner.nextLine();
         validateNull(input);
-        return input;
+        return input.trim();
     }
 
     private void validateNull(String input) {
