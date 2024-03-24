@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;

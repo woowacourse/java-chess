@@ -1,7 +1,7 @@
-package chess.domain.strategy;
+package chess.domain.strategy.pawn;
 
-import chess.domain.Direction;
-import chess.domain.Row;
+import chess.domain.position.Direction;
+import chess.domain.position.Row;
 import java.util.List;
 
 public class BlackPawnMoveStrategy extends PawnMoveStrategy{

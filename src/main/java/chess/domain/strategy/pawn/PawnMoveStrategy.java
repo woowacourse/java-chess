@@ -1,8 +1,9 @@
-package chess.domain.strategy;
+package chess.domain.strategy.pawn;
 
-import chess.domain.Direction;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
+import chess.domain.strategy.MoveStrategy;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;

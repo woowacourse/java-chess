@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.position.Position;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

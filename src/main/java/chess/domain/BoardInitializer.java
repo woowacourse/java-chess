@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.HashMap;
 
 public class BoardInitializer {

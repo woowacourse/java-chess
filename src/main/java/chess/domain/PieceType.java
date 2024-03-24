@@ -1,13 +1,15 @@
 package chess.domain;
 
-import chess.domain.strategy.BishopMoveStrategy;
-import chess.domain.strategy.BlackPawnMoveStrategy;
-import chess.domain.strategy.KingMoveStrategy;
-import chess.domain.strategy.KnightMoveStrategy;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+import chess.domain.strategy.speical.BishopMoveStrategy;
+import chess.domain.strategy.pawn.BlackPawnMoveStrategy;
+import chess.domain.strategy.speical.KingMoveStrategy;
+import chess.domain.strategy.speical.KnightMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
-import chess.domain.strategy.QueenMoveStrategy;
-import chess.domain.strategy.RookMoveStrategy;
-import chess.domain.strategy.WhitePawnMoveStrategy;
+import chess.domain.strategy.speical.QueenMoveStrategy;
+import chess.domain.strategy.speical.RookMoveStrategy;
+import chess.domain.strategy.pawn.WhitePawnMoveStrategy;
 import java.util.Deque;
 import java.util.Map;
 

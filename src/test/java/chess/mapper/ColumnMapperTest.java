@@ -1,10 +1,10 @@
-package chess.domain.mapper;
+package chess.mapper;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.domain.Column;
+import chess.domain.position.Column;
 import chess.view.ColumnMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

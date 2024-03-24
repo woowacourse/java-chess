@@ -3,10 +3,11 @@ package chess.domain.strategy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Column;
-import chess.domain.Direction;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.position.Column;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
+import chess.domain.strategy.speical.QueenMoveStrategy;
 import java.util.Deque;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;

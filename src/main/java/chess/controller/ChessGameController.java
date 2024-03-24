@@ -2,9 +2,9 @@ package chess.controller;
 
 import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.view.ColumnMapper;
 import chess.view.Commend;
 import chess.view.CommandDto;
