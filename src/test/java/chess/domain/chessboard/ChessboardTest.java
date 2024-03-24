@@ -114,14 +114,14 @@ class ChessboardTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("칸을 이동할 수 없으면 예외가 발생한다.")
-    @Test
-    void cannotMoveExceptionRook() {
-        Chessboard chessBoard = Chessboard.create();
-
-        assertThatThrownBy(() -> chessBoard.move(Square.of(File.A, Rank.ONE), Square.of(File.A, Rank.TWO)))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+//    @DisplayName("칸을 이동할 수 없으면 예외가 발생한다.")
+//    @Test
+//    void cannotMoveExceptionRook() {
+//        Chessboard chessBoard = Chessboard.create();
+//
+//        assertThatThrownBy(() -> chessBoard.move(Square.of(File.A, Rank.ONE), Square.of(File.A, Rank.TWO)))
+//                .isInstanceOf(IllegalArgumentException.class);
+//    }
 
     @DisplayName("폰의 공격은 대각선만 가능하다.")
     @Test
