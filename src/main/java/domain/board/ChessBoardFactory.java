@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ChessBoardFactory {
-    private static final Map<File, Function<Color, Piece>> INITIAL_FILE_PIECES = Map.of(
+    private static final Map<File, Function<Color, Piece>> INITIAL_NON_PAWN_PIECES = Map.of(
             File.A, Rook::new,
             File.B, Knight::new,
             File.C, Bishop::new,
@@ -31,16 +31,27 @@ public class ChessBoardFactory {
     }
 
     public static ChessBoard createInitialChessBoard() {
-        Map<Position, Piece> positionPiece = new HashMap<>();
-        INITIAL_FILE_PIECES.forEach((file, pieceGenerator) -> {
-            positionPiece.put(new Position(file, Rank.EIGHT), pieceGenerator.apply(Color.BLACK));
-            positionPiece.put(new Position(file, Rank.ONE), pieceGenerator.apply(Color.WHITE));
-        });
+        Map<Position, Piece> positionAndPieces = new HashMap<>();
+        positionAndPieces.putAll(createNonPawnPieces());
+        positionAndPieces.putAll(createPawnPieces());
+        return new ChessBoard(positionAndPieces);
+    }
 
+    private static Map<Position, Piece> createNonPawnPieces() {
+        Map<Position, Piece> nonPawnPieces = new HashMap<>();
+        INITIAL_NON_PAWN_PIECES.forEach((file, pieceGenerator) -> {
+            nonPawnPieces.put(new Position(file, Rank.EIGHT), pieceGenerator.apply(Color.BLACK));
+            nonPawnPieces.put(new Position(file, Rank.ONE), pieceGenerator.apply(Color.WHITE));
+        });
+        return nonPawnPieces;
+    }
+
+    private static Map<Position, Piece> createPawnPieces() {
+        Map<Position, Piece> pawnPieces = new HashMap<>();
         for (File file : File.values()) {
-            positionPiece.put(new Position(file, Rank.SEVEN), new BlackPawn());
-            positionPiece.put(new Position(file, Rank.TWO), new WhitePawn());
+            pawnPieces.put(new Position(file, Rank.SEVEN), new BlackPawn());
+            pawnPieces.put(new Position(file, Rank.TWO), new WhitePawn());
         }
-        return new ChessBoard(positionPiece);
+        return pawnPieces;
     }
 }
