@@ -26,6 +26,7 @@ public class OutputView {
         for (int j = 0; j < CHESS_BOARD_WIDTH; j++) {
             printOneRankBoard(spaces, j);
         }
+        System.out.println();
     }
 
     private void printOneRankBoard(List<Space> spaces, int j) {
