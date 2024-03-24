@@ -5,8 +5,6 @@ public class Rook extends Piece {
     private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Rook(final Color color) {
         super(color);
         initDirections();
@@ -29,6 +27,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }

@@ -5,8 +5,6 @@ public class Pawn extends Piece {
     private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
     private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = false;
-
     private Pawn(final Color color) {
         super(color);
         initDirections();
@@ -31,6 +29,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return false;
     }
 }

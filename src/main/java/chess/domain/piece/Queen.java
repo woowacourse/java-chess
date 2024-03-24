@@ -5,8 +5,6 @@ public class Queen extends Piece {
     private static final Queen BLACK_QUEEN = new Queen(Color.BLACK);
     private static final Queen WHITE_QUEEN = new Queen(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Queen(final Color color) {
         super(color);
         initDirections();
@@ -33,6 +31,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }

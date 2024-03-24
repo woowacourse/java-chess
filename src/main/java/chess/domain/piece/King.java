@@ -5,8 +5,6 @@ public class King extends Piece {
     private static final King BLACK_KING = new King(Color.BLACK);
     private static final King WHITE_KING = new King(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = false;
-
     private King(final Color color) {
         super(color);
         initDirections();
@@ -33,6 +31,6 @@ public class King extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return this.canMoveMoreThenOnce;
+        return false;
     }
 }

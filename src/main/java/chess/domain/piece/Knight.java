@@ -5,8 +5,6 @@ public class Knight extends Piece {
     private static final Knight BLACK_KNIGHT = new Knight(Color.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = false;
-
     private Knight(final Color color) {
         super(color);
         initDirections();
@@ -33,6 +31,6 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return false;
     }
 }

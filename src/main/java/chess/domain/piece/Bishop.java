@@ -5,8 +5,6 @@ public class Bishop extends Piece {
     private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
 
-    private final boolean canMoveMoreThenOnce = true;
-
     private Bishop(final Color color) {
         super(color);
         initDirections();
@@ -29,6 +27,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMoveMoreThenOnce() {
-        return canMoveMoreThenOnce;
+        return true;
     }
 }
