@@ -12,11 +12,11 @@ import chess.view.output.OutputView;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class ChessController {
+public class ChessGame {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -28,14 +28,14 @@ public class ChessController {
         }
         ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.INITIAL_BOARD);
         outputView.printChessBoard(chessBoard);
-        retryOnException(() -> playChess(chessBoard));
+        retryOnException(() -> play(chessBoard));
     }
 
     private GameCommand getFirstGameCommand() {
         return GameCommand.createInStart(inputView.readGameCommand());
     }
 
-    private void playChess(ChessBoard chessBoard) {
+    private void play(ChessBoard chessBoard) {
         while (true) {
             GameArguments gameArguments = inputView.readMoveArguments();
             GameCommand gameCommand = gameArguments.gameCommand();
