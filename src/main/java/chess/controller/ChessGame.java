@@ -46,29 +46,29 @@ public final class ChessGame {
             return gameStatus.changeEnd();
         }
         if (command.isStart()) {
-            gameStatus = gameStatus.changeStart();
-            executeStart(board);
-            return gameStatus;
+            return executeStart(board, gameStatus);
         }
         if (command.isMove()) {
-            gameStatus = gameStatus.changeMove();
-            executeMove(commands, board);
-            return gameStatus;
+            return executeMove(commands, board, gameStatus);
         }
         return gameStatus;
     }
 
-    private void executeStart(Board board) {
+    private GameStatus executeStart(Board board, GameStatus gameStatus) {
+        gameStatus = gameStatus.changeStart();
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
+        return gameStatus;
     }
 
-    private void executeMove(List<String> commands, Board board) {
+    private GameStatus executeMove(List<String> commands, Board board, GameStatus gameStatus) {
+        gameStatus = gameStatus.changeMove();
         String source = commands.get(SOURCE_INDEX);
         String target = commands.get(TARGET_INDEX);
         board.move(source, target);
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
+        return gameStatus;
     }
 
     private <T> T retryOnException(Supplier<T> operation) {
