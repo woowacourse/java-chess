@@ -79,4 +79,8 @@ public class ChessBoard {
     public Map<Square, Piece> getPieces() {
         return Collections.unmodifiableMap(pieces);
     }
+
+    public boolean isEmpty() {
+        return pieces.isEmpty();
+    }
 }

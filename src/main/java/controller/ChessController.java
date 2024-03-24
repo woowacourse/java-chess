@@ -36,7 +36,7 @@ public class ChessController {
                 if (menu.isMove()) {
                     play(chessBoard);
                 }
-                
+
                 prevMenu = menu;
             } catch (final Exception e) {
                 outputView.printError(e.getMessage());
@@ -61,7 +61,7 @@ public class ChessController {
     }
 
     private static void validateGameState(final ChessBoard chessBoard) {
-        if (chessBoard.getPieces().isEmpty()) {
+        if (chessBoard.isEmpty()) {
             throw new IllegalStateException("게임을 시작해주세요.");
         }
     }
