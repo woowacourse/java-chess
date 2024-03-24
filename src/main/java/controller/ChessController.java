@@ -20,6 +20,10 @@ public class ChessController {
 
         outputView.printStartHeader();
 
+        play(chessGame);
+    }
+
+    private void play(final ChessGame chessGame) {
         while (true) {
             final ChessCommand chessCommand = inputView.readCommand();
             try {

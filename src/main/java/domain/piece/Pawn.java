@@ -27,33 +27,34 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        final ChessVector chessVector = target.calculateVector(source);
-
-        Rank startRank = BLACK_START_RANK;
-        ChessVector startChessVector = BLACK_START_VECTOR;
-        ChessVector moveChessVector = BLACK_MOVE_VECTOR;
-
-        if (team == Team.WHITE) {
-            startRank = WHITE_START_RANK;
-            startChessVector = WHITE_START_VECTOR;
-            moveChessVector = WHITE_MOVE_VECTOR;
+        if (team == Team.BLACK) {
+            return canBlackMove(source, target);
         }
-
-        return (source.isRank(startRank) && startChessVector.equals(chessVector))
-                || chessVector.equals(moveChessVector);
+        return canWhiteMove(source, target);
     }
 
     @Override
     public boolean canAttack(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        List<ChessVector> attackChessVectors = BLACK_ATTACK_VECTORS;
-
-        if (team == Team.WHITE) {
-            attackChessVectors = WHITE_ATTACK_VECTORS;
+        if (team == Team.BLACK) {
+            return BLACK_ATTACK_VECTORS.contains(chessVector);
         }
+        return WHITE_ATTACK_VECTORS.contains(chessVector);
+    }
 
-        return attackChessVectors.contains(chessVector);
+    private boolean canBlackMove(final Square source, final Square target) {
+        final ChessVector chessVector = target.calculateVector(source);
+
+        return (source.isRank(BLACK_START_RANK) && BLACK_START_VECTOR.equals(chessVector))
+                || chessVector.equals(BLACK_MOVE_VECTOR);
+    }
+
+    private boolean canWhiteMove(final Square source, final Square target) {
+        final ChessVector chessVector = target.calculateVector(source);
+
+        return (source.isRank(WHITE_START_RANK) && WHITE_START_VECTOR.equals(chessVector))
+                || chessVector.equals(WHITE_MOVE_VECTOR);
     }
 
     @Override
