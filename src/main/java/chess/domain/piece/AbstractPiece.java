@@ -6,8 +6,8 @@ import chess.domain.board.Coordinate;
 
 abstract class AbstractPiece implements Piece {
 
-    private final PieceType type;
-    private final Team team;
+    protected final PieceType type;
+    protected final Team team;
 
     public AbstractPiece(PieceType type, Team team) {
         this.type = type;
