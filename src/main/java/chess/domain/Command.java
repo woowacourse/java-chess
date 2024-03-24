@@ -18,7 +18,7 @@ public enum Command {
         return Arrays.stream(values())
                 .filter(command -> command.isExpressionMatch(expression))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("start, end, move 명령만 입력할 수 있습니다."));
     }
 
     private boolean isExpressionMatch(String expression) {
