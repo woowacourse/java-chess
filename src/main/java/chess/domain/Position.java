@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,23 +9,31 @@ public class Position {
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
 
-    private final char file;
-    private final int rank;
+    private final File file;
+    private final Rank rank;
 
     static {
-        for (char i = 'a'; i <= 'h'; i++) {
-            for (int j = 1; j <= 8; j++) {
-                CACHE.put(toKey(i, j), new Position(i, j));
-            }
+        for (File file : File.values()) {
+            cacheAllRankWithFile(file);
         }
     }
 
-    private Position(final char file, final int rank) {
+    private static void cacheAllRankWithFile(File file) {
+        for (Rank rank : Rank.values()) {
+            CACHE.put(toKey(file, rank), new Position(file, rank));
+        }
+    }
+
+    private static String toKey(final File file, final Rank rank) {
+        return file.name() + rank.name();
+    }
+
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(final char file, final int rank) {
+    public static Position of(final File file, final Rank rank) {
         Position position = CACHE.get(toKey(file, rank));
         if (position == null) {
             throw new IllegalArgumentException("[ERROR] 범위를 벗어난 위치입니다.");
@@ -33,19 +42,17 @@ public class Position {
         return position;
     }
 
-    private static String toKey(final char file, final int rank) {
-        return String.valueOf(file) + rank;
-    }
-
     public Position moveTowardDirection(final Direction direction) {
-        char x = (char) direction.calculateNextX(this.file);
-        int y = direction.calculateNextY(this.rank);
-        return Position.of(x, y);
+        File file = direction.moveFile(this.file);
+        Rank rank = direction.moveRank(this.rank);
+        return Position.of(file, rank);
     }
 
     public Direction calculateDirection(final Position target) {
-        int dx = target.file - this.file;
-        int dy = target.rank - this.rank;
+        File targetFile = target.file;
+        Rank targetRank = target.rank;
+        int dx = targetFile.calculateDifference(this.file);
+        int dy = targetRank.calculateDifference(this.rank);
 
         return Direction.find(dx, dy);
     }

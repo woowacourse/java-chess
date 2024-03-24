@@ -1,15 +1,14 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import chess.domain.piece.Direction;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
 
@@ -24,30 +23,22 @@ class PositionTest {
 
     static Stream<Arguments> getMovementResult() {
         return Stream.of(
-                Arguments.of(Position.of('d', 5), Direction.UP, Position.of('d', 6)),
-                Arguments.of(Position.of('d', 5), Direction.DOWN, Position.of('d', 4)),
-                Arguments.of(Position.of('d', 5), Direction.LEFT, Position.of('c', 5)),
-                Arguments.of(Position.of('d', 5), Direction.RIGHT, Position.of('e', 5)),
-                Arguments.of(Position.of('d', 5), Direction.LEFT_UP, Position.of('c', 6)),
-                Arguments.of(Position.of('d', 5), Direction.LEFT_DOWN, Position.of('c', 4)),
-                Arguments.of(Position.of('d', 5), Direction.RIGHT_UP, Position.of('e', 6)),
-                Arguments.of(Position.of('d', 5), Direction.RIGHT_DOWN, Position.of('e', 4)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_LEFT_UP, Position.of('b', 6)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_LEFT_DOWN, Position.of('b', 4)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_RIGHT_UP, Position.of('f', 6)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_RIGHT_DOWN, Position.of('f', 4)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_UP_LEFT, Position.of('c', 7)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_UP_RIGHT, Position.of('e', 7)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_LEFT, Position.of('c', 3)),
-                Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_RIGHT, Position.of('e', 3))
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.UP, Position.of(File.D, Rank.SIX)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.DOWN, Position.of(File.D, Rank.FOUR)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.LEFT, Position.of(File.C, Rank.FIVE)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.RIGHT, Position.of(File.E, Rank.FIVE)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.LEFT_UP, Position.of(File.C, Rank.SIX)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.LEFT_DOWN, Position.of(File.C, Rank.FOUR)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.RIGHT_UP, Position.of(File.E, Rank.SIX)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.RIGHT_DOWN, Position.of(File.E, Rank.FOUR)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_LEFT_UP, Position.of(File.B, Rank.SIX)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_LEFT_DOWN, Position.of(File.B, Rank.FOUR)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_RIGHT_UP, Position.of(File.F, Rank.SIX)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_RIGHT_DOWN, Position.of(File.F, Rank.FOUR)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_UP_LEFT, Position.of(File.C, Rank.SEVEN)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_UP_RIGHT, Position.of(File.E, Rank.SEVEN)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_DOWN_LEFT, Position.of(File.C, Rank.THREE)),
+                Arguments.of(Position.of(File.D, Rank.FIVE), Direction.KNIGHT_DOWN_RIGHT, Position.of(File.E, Rank.THREE))
         );
-    }
-
-    @Test
-    @DisplayName("범위를 벗어난 위치는 예외를 발생시킨다.")
-    void findPositionFail() {
-        assertThatCode(() -> Position.of('i', 8))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 범위를 벗어난 위치입니다.");
     }
 }

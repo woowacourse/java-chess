@@ -1,82 +1,82 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Color;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoardFactory {
 
+    private ChessBoardFactory() {
+    }
+
     public static ChessBoard makeChessBoard() {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-        chessBoard.putAll(getBlackPiecesExceptPawn());
-        chessBoard.putAll(getBlackPawns());
-        chessBoard.putAll(getBlankPieces());
-        chessBoard.putAll(getWhitePawns());
-        chessBoard.putAll(getWhitePiecesExceptPawn());
+        chessBoard.putAll(makeBlackPiecesExceptPawn());
+        chessBoard.putAll(makeBlackPawns());
+        chessBoard.putAll(makeBlankPieces());
+        chessBoard.putAll(makeWhitePawns());
+        chessBoard.putAll(makeWhitePiecesExceptPawn());
 
         return new ChessBoard(chessBoard);
     }
 
-    private static Map<Position, Piece> getBlackPiecesExceptPawn() {
+    private static Map<Position, Piece> makeBlackPiecesExceptPawn() {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-        chessBoard.put(Position.of('a', 8), Rook.of(Color.BLACK));
-        chessBoard.put(Position.of('b', 8), Knight.of(Color.BLACK));
-        chessBoard.put(Position.of('c', 8), Bishop.of(Color.BLACK));
-        chessBoard.put(Position.of('d', 8), Queen.of(Color.BLACK));
-        chessBoard.put(Position.of('e', 8), King.of(Color.BLACK));
-        chessBoard.put(Position.of('f', 8), Bishop.of(Color.BLACK));
-        chessBoard.put(Position.of('g', 8), Knight.of(Color.BLACK));
-        chessBoard.put(Position.of('h', 8), Rook.of(Color.BLACK));
+        chessBoard.put(Position.of(File.A, Rank.EIGHT), Rook.of(Color.BLACK));
+        chessBoard.put(Position.of(File.B, Rank.EIGHT), Knight.of(Color.BLACK));
+        chessBoard.put(Position.of(File.C, Rank.EIGHT), Bishop.of(Color.BLACK));
+        chessBoard.put(Position.of(File.D, Rank.EIGHT), Queen.of(Color.BLACK));
+        chessBoard.put(Position.of(File.E, Rank.EIGHT), King.of(Color.BLACK));
+        chessBoard.put(Position.of(File.F, Rank.EIGHT), Bishop.of(Color.BLACK));
+        chessBoard.put(Position.of(File.G, Rank.EIGHT), Knight.of(Color.BLACK));
+        chessBoard.put(Position.of(File.H, Rank.EIGHT), Rook.of(Color.BLACK));
 
         return chessBoard;
     }
 
-    private static Map<Position, Piece> getBlackPawns() {
+    private static Map<Position, Piece> makeBlackPawns() {
         Map<Position, Piece> blackPawns = new LinkedHashMap<>();
-        for (char file = 'a'; file <= 'h'; file++) {
-            blackPawns.put(Position.of(file, 7), Pawn.of(Color.BLACK));
+        File[] files = File.values();
+        for (File file : files) {
+            blackPawns.put(Position.of(file, Rank.SEVEN), Pawn.of(Color.BLACK));
         }
 
         return blackPawns;
     }
 
-    private static Map<Position, Piece> getBlankPieces() {
+    private static Map<Position, Piece> makeBlankPieces() {
         Map<Position, Piece> blankPieces = new LinkedHashMap<>();
-        for (int rank = 6; rank >= 3; rank--) {
-            for (char file = 'a'; file <= 'h'; file++) {
-                blankPieces.put(Position.of(file, rank), null);
-            }
+        File[] files = File.values();
+        for (File file : files) {
+            blankPieces.put(Position.of(file, Rank.FIVE), null);
+            blankPieces.put(Position.of(file, Rank.FOUR), null);
+            blankPieces.put(Position.of(file, Rank.THREE), null);
         }
 
         return blankPieces;
     }
 
-    private static Map<Position, Piece> getWhitePawns() {
+    private static Map<Position, Piece> makeWhitePawns() {
         Map<Position, Piece> whitePawns = new LinkedHashMap<>();
-        for (char file = 'a'; file <= 'h'; file++) {
-            whitePawns.put(Position.of(file, 2), Pawn.of(Color.WHITE));
+        File[] files = File.values();
+        for (File file : files) {
+            whitePawns.put(Position.of(file, Rank.TWO), Pawn.of(Color.WHITE));
         }
 
         return whitePawns;
     }
 
-    private static Map<Position, Piece> getWhitePiecesExceptPawn() {
+    private static Map<Position, Piece> makeWhitePiecesExceptPawn() {
         Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-        chessBoard.put(Position.of('a', 1), Rook.of(Color.WHITE));
-        chessBoard.put(Position.of('b', 1), Knight.of(Color.WHITE));
-        chessBoard.put(Position.of('c', 1), Bishop.of(Color.WHITE));
-        chessBoard.put(Position.of('d', 1), Queen.of(Color.WHITE));
-        chessBoard.put(Position.of('e', 1), King.of(Color.WHITE));
-        chessBoard.put(Position.of('f', 1), Bishop.of(Color.WHITE));
-        chessBoard.put(Position.of('g', 1), Knight.of(Color.WHITE));
-        chessBoard.put(Position.of('h', 1), Rook.of(Color.WHITE));
+        chessBoard.put(Position.of(File.A, Rank.ONE), Rook.of(Color.WHITE));
+        chessBoard.put(Position.of(File.B, Rank.ONE), Knight.of(Color.WHITE));
+        chessBoard.put(Position.of(File.C, Rank.ONE), Bishop.of(Color.WHITE));
+        chessBoard.put(Position.of(File.D, Rank.ONE), Queen.of(Color.WHITE));
+        chessBoard.put(Position.of(File.E, Rank.ONE), King.of(Color.WHITE));
+        chessBoard.put(Position.of(File.F, Rank.ONE), Bishop.of(Color.WHITE));
+        chessBoard.put(Position.of(File.G, Rank.ONE), Knight.of(Color.WHITE));
+        chessBoard.put(Position.of(File.H, Rank.ONE), Rook.of(Color.WHITE));
 
         return chessBoard;
     }

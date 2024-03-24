@@ -1,11 +1,10 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.ChessBoardFactory;
-import chess.domain.Position;
+import chess.domain.*;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.function.Consumer;
 
 public class ChessController {
@@ -45,8 +44,10 @@ public class ChessController {
     private Position readPosition() {
         String position = inputView.readPosition();
 
-        char file = position.substring(0, 1).charAt(0);
-        int rank = Integer.parseInt(position.substring(1, 2));
+        int fileIdx = Integer.parseInt(position.substring(0, 1));
+        int rankIdx = Integer.parseInt(position.substring(1, 2));
+        File file = File.values()[fileIdx];
+        Rank rank = Rank.values()[rankIdx];
 
         return Position.of(file, rank);
     }

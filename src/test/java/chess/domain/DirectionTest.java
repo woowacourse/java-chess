@@ -1,36 +1,36 @@
 package chess.domain;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class DirectionTest {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
+class DirectionTest {
 
     @ParameterizedTest
     @DisplayName("Direction 방향으로 이동한 X 좌표와 Y 좌표를 계산한다.")
     @CsvSource(value = {
-            "LEFT,-1,0", "RIGHT,1,0", "UP,0,1", "DOWN,0,-1",
-            "LEFT_UP,-1,1", "LEFT_DOWN,-1,-1", "RIGHT_UP,1,1", "RIGHT_DOWN,1,-1",
-            "KNIGHT_LEFT_UP,-2,1", "KNIGHT_LEFT_DOWN,-2,-1",
-            "KNIGHT_RIGHT_UP,2,1", "KNIGHT_RIGHT_DOWN,2,-1",
-            "KNIGHT_UP_LEFT,-1,2", "KNIGHT_UP_RIGHT,1,2",
-            "KNIGHT_DOWN_LEFT,-1,-2", "KNIGHT_DOWN_RIGHT,1,-2"
+            "LEFT,B,THREE,", "RIGHT,D,THREE", "UP,C,FOUR", "DOWN,C,TWO",
+            "LEFT_UP,B,FOUR", "LEFT_DOWN,B,TWO", "RIGHT_UP,D,FOUR", "RIGHT_DOWN,D,TWO",
+            "KNIGHT_LEFT_UP,A,FOUR", "KNIGHT_LEFT_DOWN,A,TWO",
+            "KNIGHT_RIGHT_UP,E,FOUR", "KNIGHT_RIGHT_DOWN,E,TWO",
+            "KNIGHT_UP_LEFT,B,FIVE", "KNIGHT_UP_RIGHT,D,FIVE",
+            "KNIGHT_DOWN_LEFT,B,ONE", "KNIGHT_DOWN_RIGHT,D,ONE"
     })
-    void calculateNewCoordinates(Direction direction, int directionX, int directionY) {
-        int currentX = 1;
-        int currentY = 1;
+    void calculateNewCoordinates(Direction direction, File expectedFile, Rank extectdRank) {
+        File currentFile = File.C;
+        Rank currentRank = Rank.THREE;
 
-        int nextX = direction.calculateNextX(currentX);
-        int nextY = direction.calculateNextY(currentY);
+        File nextFile = direction.moveFile(currentFile);
+        Rank nextRank = direction.moveRank(currentRank);
 
-        assertThat(nextX).isEqualTo(currentX + directionX);
-        assertThat(nextY).isEqualTo(currentY + directionY);
+        assertThat(nextFile).isEqualTo(expectedFile);
+        assertThat(nextRank).isEqualTo(extectdRank);
     }
 
     @ParameterizedTest

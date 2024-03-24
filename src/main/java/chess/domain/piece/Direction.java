@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.File;
+import chess.domain.Rank;
+
 import java.util.Arrays;
 
 public enum Direction {
@@ -37,12 +40,12 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다."));
     }
 
-    public int calculateNextX(final int currentX) {
-        return currentX + this.x;
+    public File moveFile(final File currentFile) {
+        return currentFile.moveByOffset(this.x);
     }
 
-    public int calculateNextY(final int currentY) {
-        return currentY + this.y;
+    public Rank moveRank(final Rank currentRank) {
+        return currentRank.moveByOffset(this.y);
     }
 
     private boolean isSameGradiant(int dx, int dy) {
