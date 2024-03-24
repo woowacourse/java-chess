@@ -20,7 +20,7 @@ class MoveStateTest {
 
     @TestFactory
     @DisplayName("선택된 말에 따라 전략을 선택한다.")
-    Collection<DynamicTest> zz() {
+    Collection<DynamicTest> changeState() {
         Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
                 new Position(4, 4), new King(new Position(4, 4), Color.WHITE),
                 new Position(4, 3), new WhiteFirstPawn(new Position(4, 3))
