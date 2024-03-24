@@ -17,4 +17,8 @@ public class InputView {
     public static String inputChessPoint() {
         return scanner.next();
     }
+
+    public static void clear() {
+        scanner.nextLine();
+    }
 }

@@ -13,6 +13,11 @@ public class OutputView {
         }
     }
 
+    public static void printException(final String exceptionMessage) {
+        System.out.println(exceptionMessage);
+    }
+
+
     private static void printHorizontalLine(final BoardDto boardDto, final int vertical) {
         final StringBuilder sb = new StringBuilder();
         for (int horizontal = 0; horizontal < BoardDto.HORIZONTAL_END_INDEX; horizontal++) {
