@@ -38,8 +38,4 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 좌표입니다."));
     }
-
-    public int getCoordinate() {
-        return coordinate;
-    }
 }

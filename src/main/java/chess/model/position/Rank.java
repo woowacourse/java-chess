@@ -40,8 +40,4 @@ public enum Rank {
     public static int length() {
         return values().length;
     }
-
-    public int getCoordinate() {
-        return coordinate;
-    }
 }
