@@ -22,7 +22,7 @@ class PrepareTest {
     void 기물_이동_시_예외가_발생한다() {
         GameState prepare = new Prepare(board);
         assertThatThrownBy(() -> prepare.move(null, null))
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임 시작 전입니다.");
     }
 
@@ -30,7 +30,7 @@ class PrepareTest {
     void 게임을_종료하면_예외가_발생한다() {
         GameState prepare = new Prepare(board);
         assertThatThrownBy(prepare::end)
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임 시작 전입니다.");
     }
 }

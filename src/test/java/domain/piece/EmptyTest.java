@@ -19,13 +19,13 @@ class EmptyTest {
         Piece other = new BlackPawn();
 
         assertThatThrownBy(() -> empty.validateMovement(source, target, other))
-                .isExactlyInstanceOf(UnsupportedOperationException.class);
+                .isExactlyInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void Empty_기물의_타입을_호출하면_예외가_발생한다() {
         assertThatThrownBy(empty::type)
-                .isExactlyInstanceOf(UnsupportedOperationException.class);
+                .isExactlyInstanceOf(IllegalStateException.class);
     }
 
     @Test

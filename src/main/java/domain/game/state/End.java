@@ -10,17 +10,17 @@ public class End extends GameState {
 
     @Override
     public GameState start() {
-        throw new UnsupportedOperationException("게임이 종료되었습니다.");
+        throw new IllegalStateException("게임이 종료되었습니다.");
     }
 
     @Override
     public GameState move(Position source, Position target) {
-        throw new UnsupportedOperationException("게임이 종료되었습니다.");
+        throw new IllegalStateException("게임이 종료되었습니다.");
     }
 
     @Override
     public GameState end() {
-        throw new UnsupportedOperationException("게임이 종료되었습니다.");
+        throw new IllegalStateException("게임이 종료되었습니다.");
     }
 
     @Override

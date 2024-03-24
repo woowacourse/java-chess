@@ -15,11 +15,11 @@ public class Prepare extends GameState {
 
     @Override
     public GameState move(Position source, Position target) {
-        throw new UnsupportedOperationException("게임 시작 전입니다.");
+        throw new IllegalStateException("게임 시작 전입니다.");
     }
 
     @Override
     public GameState end() {
-        throw new UnsupportedOperationException("게임 시작 전입니다.");
+        throw new IllegalStateException("게임 시작 전입니다.");
     }
 }

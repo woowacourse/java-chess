@@ -11,7 +11,7 @@ public class BlackPlay extends GameState {
 
     @Override
     public GameState start() {
-        throw new UnsupportedOperationException("이미 게임이 시작되었습니다.");
+        throw new IllegalStateException("이미 게임이 시작되었습니다.");
     }
 
     @Override

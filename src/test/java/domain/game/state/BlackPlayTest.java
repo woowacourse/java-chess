@@ -17,7 +17,7 @@ class BlackPlayTest {
     void 게임을_시작하면_예외가_발생한다() {
         GameState blackPlay = new BlackPlay(board);
         assertThatThrownBy(blackPlay::start)
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("이미 게임이 시작되었습니다.");
     }
 

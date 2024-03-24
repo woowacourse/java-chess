@@ -14,7 +14,7 @@ public class Empty implements Piece {
 
     @Override
     public void validateMovement(Position source, Position target, Piece other) {
-        throw new UnsupportedOperationException("빈 칸입니다.");
+        throw new IllegalStateException("빈 칸입니다.");
     }
 
     @Override
@@ -24,6 +24,6 @@ public class Empty implements Piece {
 
     @Override
     public Type type() {
-        throw new UnsupportedOperationException("빈 칸입니다.");
+        throw new IllegalStateException("빈 칸입니다.");
     }
 }

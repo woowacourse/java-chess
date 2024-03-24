@@ -14,7 +14,7 @@ class EndTest {
         GameState end = new End(board);
 
         assertThatThrownBy(end::start)
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임이 종료되었습니다.");
     }
 
@@ -23,7 +23,7 @@ class EndTest {
         GameState end = new End(board);
 
         assertThatThrownBy(() -> end.move(null, null))
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임이 종료되었습니다.");
     }
 
@@ -32,7 +32,7 @@ class EndTest {
         GameState end = new End(board);
 
         assertThatThrownBy(end::end)
-                .isExactlyInstanceOf(UnsupportedOperationException.class)
+                .isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("게임이 종료되었습니다.");
     }
 }
