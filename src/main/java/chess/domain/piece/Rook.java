@@ -10,7 +10,7 @@ import java.util.List;
 import static chess.domain.position.Direction.*;
 
 public class Rook extends Piece {
-    private static final List<Direction> PASSING = List.of(N,S,E,W);
+    private static final List<Direction> PASSING = List.of(N, S, E, W);
 
     public Rook(Team team) {
         super(team);
@@ -18,11 +18,11 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position start, Position destination, ChessBoard board) {
-        try{
+        try {
             return PASSING.contains(DirectionJudge.judge(start, destination))
                     && board.pathIsAllEmpty(start.findPath(destination));
-        }catch(IllegalStateException e){
-            throw new IllegalArgumentException("룩은 직선으로만 움직일 수 있습니다.");
+        } catch (IllegalStateException e) {
+            return false;
         }
     }
 }

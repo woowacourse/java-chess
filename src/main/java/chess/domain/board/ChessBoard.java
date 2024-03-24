@@ -51,7 +51,7 @@ public class ChessBoard {
     }
 
     public boolean piecesIsOtherTeam(Position start, Position destination) {
-        if(positionIsEmpty(start) || positionIsEmpty(destination)){
+        if (positionIsEmpty(start) || positionIsEmpty(destination)) {
             return false;
         }
 

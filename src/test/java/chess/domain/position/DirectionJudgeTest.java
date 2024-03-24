@@ -83,10 +83,10 @@ class DirectionJudgeTest {
     @DisplayName("목적지가 8방향 중 아무 곳에도 속하지 않으면 오류를 발생시킨다")
     @Test
     void should_ThrowIllegalStateException_When_DestinationIsNotContatinsInDirections() {
-        Position start = Position.of(1,1);
-        Position destination = Position.of(0,3);
+        Position start = Position.of(1, 1);
+        Position destination = Position.of(0, 3);
 
-        assertThatThrownBy(()->DirectionJudge.judge(start, destination))
+        assertThatThrownBy(() -> DirectionJudge.judge(start, destination))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("두 위치의 방향을 특정할 수 없습니다.");
     }
