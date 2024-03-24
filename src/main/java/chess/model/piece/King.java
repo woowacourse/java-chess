@@ -1,8 +1,8 @@
 package chess.model.piece;
 
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Position;
 
 public class King extends Piece {
 

@@ -1,6 +1,7 @@
 package chess.dto;
 
 import chess.model.board.Board;
+import chess.model.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public class BoardDto {
     public static BoardDto from(Board board) {
         List<RankDto> ranks = new ArrayList<>();
         for (int i = 0; i <= MAX_INDEX; i++) {
-            ranks.add(RankDto.of(board, i));
+            Row row = Row.findRow(i);
+            ranks.add(RankDto.of(board, row));
         }
         return new BoardDto(ranks);
     }

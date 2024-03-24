@@ -1,5 +1,7 @@
 package chess.model;
 
+import static chess.model.Fixtures.B1;
+import static chess.model.Fixtures.C3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -134,15 +136,12 @@ class BoardTest {
     @Test
     void moveSuccess() {
         Board board = boardFactory.generate();
-        Position sourcePosition = Position.from("b1");
-        Piece sourcePiece = board.findPiece(sourcePosition);
+        Piece sourcePiece = board.findPiece(B1);
 
         board.move("b1", "c3");
 
-        Position targetPosition = Position.from("c3");
-        Piece targetPiece = board.findPiece(targetPosition);
-
-        Piece emptyPiece = board.findPiece(sourcePosition);
+        Piece targetPiece = board.findPiece(C3);
+        Piece emptyPiece = board.findPiece(B1);
 
         assertAll(
             () -> assertThat(targetPiece).isEqualTo(sourcePiece),

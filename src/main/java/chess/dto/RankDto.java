@@ -1,8 +1,10 @@
 package chess.dto;
 
-import chess.model.Position;
 import chess.model.board.Board;
 import chess.model.piece.Piece;
+import chess.model.position.Column;
+import chess.model.position.Position;
+import chess.model.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +18,11 @@ public class RankDto {
         this.rank = rank;
     }
 
-    public static RankDto of(Board board, int row) {
+    public static RankDto of(Board board, Row row) {
         List<String> rank = new ArrayList<>();
         for (int i = 0; i <= MAX_INDEX; i++) {
-            Position position = new Position(row, i);
+            Column column = Column.findColumn(i);
+            Position position = new Position(column, row);
             Piece piece = board.findPiece(position);
             rank.add(PieceMapper.serialize(piece));
         }

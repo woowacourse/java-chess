@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.Position;
+import chess.model.position.Position;
 
 public interface MoveStrategy {
 

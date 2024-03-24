@@ -4,35 +4,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.position.Column;
+import chess.model.position.Position;
+import chess.model.position.Row;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PositionTest {
 
-    @DisplayName("x와 y좌표에 해당하는 Position 객체를 생성한다")
-    @Test
-    void createValidPosition() {
-        assertThatCode(() -> new Position(3, 6))
+    @DisplayName("좌표에 해당하는 Position 객체를 생성한다")
+    @ParameterizedTest
+    @ValueSource(strings = {"a1", "h8"})
+    void createValidPosition(String coordinate) {
+        assertThatCode(() -> Position.from(coordinate))
             .doesNotThrowAnyException();
     }
 
-    @DisplayName("0 이상 7 이하의 좌표 값이 아니면 예외가 발생한다")
+    @DisplayName("좌표 표현 범위를 벗어나면 예외가 발생한다")
     @ParameterizedTest
-    @MethodSource("provideInvalidPosition")
-    void createInvalidPosition(int x, int y) {
-        assertThatThrownBy(() -> new Position(x, y))
+    @ValueSource(strings = {"i6", "a0", "g9"})
+    void createInvalidPosition(String coordinate) {
+        assertThatThrownBy(() -> Position.from(coordinate))
             .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    public static Stream<Arguments> provideInvalidPosition() {
-        return Stream.of(
-            Arguments.of(-1, 6),
-            Arguments.of(3, 8)
-        );
     }
 
     @DisplayName("문자열 좌표를 받아 Position 객체를 생성한다")
@@ -44,9 +41,9 @@ class PositionTest {
 
     public static Stream<Arguments> provideValidCoordinate() {
         return Stream.of(
-            Arguments.of("b2", new Position(6, 1)),
-            Arguments.of("h8", new Position(0, 7)),
-            Arguments.of("a1", new Position(7, 0))
+            Arguments.of("b2", new Position(Column.B, Row.TWO)),
+            Arguments.of("h8", new Position(Column.H, Row.EIGHT)),
+            Arguments.of("a1", new Position(Column.A, Row.ONE))
         );
     }
 }

@@ -1,5 +1,8 @@
 package chess.model;
 
+import chess.model.position.Column;
+import chess.model.position.Position;
+import chess.model.position.Row;
 import java.util.Arrays;
 
 public enum Direction {
@@ -22,8 +25,8 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position source, Position target) {
-        int deltaX = calculateDifference(source.getRow(), target.getRow());
-        int deltaY = calculateDifference(source.getColumn(), target.getColumn());
+        int deltaX = differenceRow(source.getRow(), target.getRow());
+        int deltaY = differenceColumn(source.getColumn(), target.getColumn());
         if (Math.abs(deltaY) - Math.abs(deltaX) != 0 && deltaX != 0 && deltaY != 0) {
             return NONE;
         }
@@ -35,8 +38,12 @@ public enum Direction {
             .orElse(NONE);
     }
 
-    private static int calculateDifference(int source, int target) {
-        return target - source;
+    private static int differenceRow(Row source, Row target) {
+        return target.getIndex() - source.getIndex();
+    }
+
+    private static int differenceColumn(Column source, Column target) {
+        return target.getIndex() - source.getIndex();
     }
 
     private static int normalize(int delta) {

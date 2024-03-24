@@ -1,9 +1,12 @@
 package chess.model.piece;
 
+import static chess.model.Fixtures.D5;
+import static chess.model.Fixtures.E5;
+import static chess.model.Fixtures.F4;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Type.KING;
 
-import chess.model.Position;
+import chess.model.position.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,8 +27,8 @@ class KingTest {
 
     public static Stream<Arguments> provideSourceAndTargetWithExpected() {
         return Stream.of(
-            Arguments.of(new Position(3, 3), new Position(3, 4), true),
-            Arguments.of(new Position(3, 3), new Position(5, 4), false)
+            Arguments.of(D5, E5, true),
+            Arguments.of(D5, F4, false)
         );
     }
 }

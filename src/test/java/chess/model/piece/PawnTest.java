@@ -1,11 +1,27 @@
 package chess.model.piece;
 
+import static chess.model.Fixtures.A2;
+import static chess.model.Fixtures.A3;
+import static chess.model.Fixtures.A6;
+import static chess.model.Fixtures.A7;
+import static chess.model.Fixtures.A8;
+import static chess.model.Fixtures.B3;
+import static chess.model.Fixtures.B5;
+import static chess.model.Fixtures.B7;
+import static chess.model.Fixtures.C6;
+import static chess.model.Fixtures.G1;
+import static chess.model.Fixtures.G2;
+import static chess.model.Fixtures.G4;
+import static chess.model.Fixtures.H1;
+import static chess.model.Fixtures.H2;
+import static chess.model.Fixtures.H7;
+import static chess.model.Fixtures.H8;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
 import static chess.model.material.Type.PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.Position;
+import chess.model.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,8 +42,8 @@ class PawnTest {
 
     public static Stream<Arguments> provideBlackPawnSourceAndTargetWithExpected() {
         return Stream.of(
-            Arguments.of(new Position(1, 0), new Position(2, 0), true),
-            Arguments.of(new Position(1, 7), new Position(0, 7), false)
+            Arguments.of(A7, A6, true),
+            Arguments.of(H7, H8, false)
         );
     }
 
@@ -42,8 +58,8 @@ class PawnTest {
 
     public static Stream<Arguments> provideWhitePawnSourceAndTargetWithExpected() {
         return Stream.of(
-            Arguments.of(new Position(6, 0), new Position(5, 0), true),
-            Arguments.of(new Position(6, 7), new Position(7, 7), false)
+            Arguments.of(A2, A3, true),
+            Arguments.of(G1, H1, false)
         );
     }
 
@@ -51,9 +67,7 @@ class PawnTest {
     @Test
     void whitePawnCanInitialMove() {
         Piece piece = new Pawn(PAWN, WHITE);
-        Position source = new Position(6, 0);
-        Position target = new Position(4, 0);
-        boolean canMove = piece.canMove(source, target);
+        boolean canMove = piece.canMove(G2, G4);
         assertThat(canMove).isTrue();
     }
 
@@ -61,9 +75,7 @@ class PawnTest {
     @Test
     void blackPawnCanInitialMove() {
         Piece piece = new Pawn(PAWN, BLACK);
-        Position source = new Position(1, 0);
-        Position target = new Position(3, 0);
-        boolean canMove = piece.canMove(source, target);
+        boolean canMove = piece.canMove(B7, B5);
         assertThat(canMove).isTrue();
     }
 
@@ -78,8 +90,8 @@ class PawnTest {
 
     public static Stream<Arguments> provideWhitePawnAttackMovePosition() {
         return Stream.of(
-            Arguments.of(new Position(6, 0), new Position(5, 1), true),
-            Arguments.of(new Position(6, 7), new Position(7, 6), false)
+            Arguments.of(A2, B3, true),
+            Arguments.of(H2, G1, false)
         );
     }
 
@@ -94,8 +106,8 @@ class PawnTest {
 
     public static Stream<Arguments> provideBlackPawnAttackMovePosition() {
         return Stream.of(
-            Arguments.of(new Position(1, 0), new Position(2, 1), true),
-            Arguments.of(new Position(1, 0), new Position(0, 1), false)
+            Arguments.of(B7, C6, true),
+            Arguments.of(B7, A8, false)
         );
     }
 }

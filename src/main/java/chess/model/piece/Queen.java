@@ -10,9 +10,9 @@ import static chess.model.Direction.UP_LEFT;
 import static chess.model.Direction.UP_RIGHT;
 
 import chess.model.Direction;
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Position;
 
 public class Queen extends Piece {
 
@@ -23,7 +23,8 @@ public class Queen extends Piece {
     @Override
     public boolean canMove(Position source, Position target) {
         Direction direction = Direction.findDirection(source, target);
-        if (direction == UP_LEFT || direction == DOWN_LEFT || direction == UP_RIGHT || direction == DOWN_RIGHT) {
+        if (direction == UP_LEFT || direction == DOWN_LEFT || direction == UP_RIGHT
+            || direction == DOWN_RIGHT) {
             return true;
         }
         return direction == UP || direction == DOWN || direction == LEFT || direction == RIGHT;

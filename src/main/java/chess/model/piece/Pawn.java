@@ -1,8 +1,9 @@
 package chess.model.piece;
 
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Position;
+import chess.model.position.Row;
 
 public class Pawn extends Piece {
 
@@ -12,8 +13,8 @@ public class Pawn extends Piece {
     private static final int UP_DOUBLE_MOVE = -2;
     private static final int DOWN_SINGLE_MOVE = 1;
     private static final int DOWN_DOUBLE_MOVE = 2;
-    private static final int WHITE_INITIAL_ROW = 6;
-    private static final int BLACK_INITIAL_ROW = 1;
+    private static final Row WHITE_INITIAL_ROW = Row.TWO;
+    private static final Row BLACK_INITIAL_ROW = Row.SEVEN;
 
     public Pawn(Type type, Color color) {
         super(type, color);

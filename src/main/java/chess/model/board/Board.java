@@ -1,10 +1,10 @@
 package chess.model.board;
 
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.position.Position;
 import java.util.Map;
 
 public class Board {
@@ -71,14 +71,16 @@ public class Board {
         if (sourcePiece.isKnight()) {
             return;
         }
-        int rowDifference = target.getRow() - source.getRow();
-        int columnDifference = target.getColumn() - source.getColumn();
+        int columnOffset = target.getColumn().getIndex() - source.getColumn().getIndex();
+        int rowOffset = target.getRow().getIndex() - source.getRow().getIndex();
 
-        while (Math.abs(rowDifference) > 1 || Math.abs(columnDifference) > 1) {
-            rowDifference = consumeRow(rowDifference);
-            columnDifference = consumeColumn(columnDifference);
-            Position position = new Position(source.getRow() + rowDifference,
-                source.getColumn() + columnDifference);
+        while (Math.abs(rowOffset) > 1 || Math.abs(columnOffset) > 1) {
+            columnOffset = consumeColumn(columnOffset);
+            rowOffset = consumeRow(rowOffset);
+            Position position = new Position(
+                source.getColumn().add(columnOffset),
+                source.getRow().add(rowOffset)
+            );
             Piece targetPiece = pieces.get(position);
             if (targetPiece.isExist()) {
                 throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");

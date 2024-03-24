@@ -1,9 +1,12 @@
 package chess.model.piece;
 
+import static chess.model.Fixtures.D5;
+import static chess.model.Fixtures.H1;
+import static chess.model.Fixtures.H5;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Type.BISHOP;
 
-import chess.model.Position;
+import chess.model.position.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,8 +27,8 @@ class BishopTest {
 
     public static Stream<Arguments> provideSourceAndTargetWithExpected() {
         return Stream.of(
-            Arguments.of(new Position(3, 3), new Position(7, 7), true),
-            Arguments.of(new Position(3, 3), new Position(3, 7), false)
+            Arguments.of(D5, H1, true),
+            Arguments.of(D5, H5, false)
         );
     }
 }

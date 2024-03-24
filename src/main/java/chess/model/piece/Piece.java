@@ -1,8 +1,8 @@
 package chess.model.piece;
 
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Position;
 
 public abstract class Piece implements MoveStrategy {
 
@@ -37,11 +37,11 @@ public abstract class Piece implements MoveStrategy {
     }
 
     protected final int calculateRowDifference(Position source, Position target) {
-        return target.getRow() - source.getRow();
+        return target.getRow().getIndex() - source.getRow().getIndex();
     }
 
     protected final int calculateColumnDifference(Position source, Position target) {
-        return target.getColumn() - source.getColumn();
+        return target.getColumn().getIndex() - source.getColumn().getIndex();
     }
 
     public boolean isEnemy(int turnCount) {

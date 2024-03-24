@@ -6,9 +6,9 @@ import static chess.model.Direction.RIGHT;
 import static chess.model.Direction.UP;
 
 import chess.model.Direction;
-import chess.model.Position;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Position;
 
 public class Rook extends Piece {
 
