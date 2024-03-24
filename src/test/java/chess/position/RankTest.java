@@ -3,7 +3,6 @@ package chess.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.Rank;
-import chess.domain.position.RankDifference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +14,6 @@ class RankTest {
         Rank rankOne = Rank.ONE;
         Rank rankTwo = Rank.TWO;
 
-        RankDifference expectedDistance = rankOne.calculateDifferenceTo(rankTwo);
-
-        assertThat(expectedDistance).isEqualTo(new RankDifference(1));
+        assertThat(rankOne.calculateDifferenceTo(rankTwo)).isEqualTo(1);
     }
 }

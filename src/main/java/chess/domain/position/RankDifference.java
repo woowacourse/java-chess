@@ -2,7 +2,7 @@ package chess.domain.position;
 
 public class RankDifference extends Difference {
 
-    public RankDifference(int difference) {
-        super(difference);
+    public RankDifference(Rank from, Rank to) {
+        super(from.calculateDifferenceTo(to));
     }
 }

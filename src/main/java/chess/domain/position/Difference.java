@@ -10,6 +10,10 @@ public abstract class Difference {
         this.difference = difference;
     }
 
+    public boolean hasSameDifference(int difference) {
+        return this.difference == difference;
+    }
+
     public boolean hasDistance(int distance) {
         return Math.abs(difference) == distance;
     }

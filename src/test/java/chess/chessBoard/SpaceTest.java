@@ -3,7 +3,6 @@ package chess.chessBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.view.PieceSign;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
@@ -76,7 +75,7 @@ class SpaceTest {
 
         assertThatThrownBy(() -> space1.movePiece(space2, List.of(space1, space2)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 피스가 이미 있습니다.");
+                .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
 
     @Test

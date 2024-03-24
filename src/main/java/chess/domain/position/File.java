@@ -19,8 +19,8 @@ public enum File {
         this.value = value;
     }
 
-    public FileDifference calculateDifferenceTo(File file) {
-        return new FileDifference(file.value - value);
+    public int calculateDifferenceTo(File file) {
+        return file.value - value;
     }
 
     public List<File> getFileRoute(File to) {

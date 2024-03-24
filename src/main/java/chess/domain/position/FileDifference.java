@@ -2,7 +2,7 @@ package chess.domain.position;
 
 public class FileDifference extends Difference {
 
-    public FileDifference(int difference) {
-        super(difference);
+    public FileDifference(File from, File to) {
+        super(from.calculateDifferenceTo(to));
     }
 }

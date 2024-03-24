@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
 import chess.domain.position.FileDifference;
 import chess.domain.position.RankDifference;
 
@@ -12,12 +11,12 @@ public class Rook extends Piece {
 
     private static Rule decideRule() {
         return (fileDifference, rankDifference) ->
-                (!fileDifference.equals(new FileDifference(0)) && rankDifference.equals(new RankDifference(0))) ||
-                        (fileDifference.equals(new FileDifference(0)) && !rankDifference.equals(new RankDifference(0)));
+                ((!fileDifference.hasDistance(0) && rankDifference.hasDistance(0))) ||
+                        ((fileDifference.hasDistance(0)) && !rankDifference.hasDistance(0));
     }
 
     @Override
-    public boolean isCatchable(Position from, Position to) {
-        return isMovable(from, to);
+    public boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference) {
+        return isMovable(fileDifference, rankDifference);
     }
 }

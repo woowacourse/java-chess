@@ -3,7 +3,6 @@ package chess.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.File;
-import chess.domain.position.FileDifference;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +14,6 @@ class FileTest {
         File fileA = File.a;
         File fileB = File.b;
 
-        FileDifference expectedDistance = fileA.calculateDifferenceTo(fileB);
-
-        assertThat(expectedDistance).isEqualTo(new FileDifference(1));
+        assertThat(fileA.calculateDifferenceTo(fileB)).isEqualTo(1);
     }
 }

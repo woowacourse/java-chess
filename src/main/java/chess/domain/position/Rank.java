@@ -20,8 +20,8 @@ public enum Rank {
         this.value = value;
     }
 
-    public RankDifference calculateDifferenceTo(Rank rank) {
-        return new RankDifference(rank.value - value);
+    public int calculateDifferenceTo(Rank rank) {
+        return rank.value - value;
     }
 
     public List<Rank> getRankRoute(Rank to) {

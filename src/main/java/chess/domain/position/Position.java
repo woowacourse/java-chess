@@ -14,19 +14,12 @@ public class Position {
         this.rank = rank;
     }
 
-    public PositionDifference calculateDifferenceTo(Position position) {
-        return new PositionDifference(
-                file.calculateDifferenceTo(position.file),
-                rank.calculateDifferenceTo(position.rank)
-        );
+    public FileDifference calculateFileDifferenceTo(Position position) {
+        return new FileDifference(file, position.file);
     }
 
-    public FileDifference calculateFileDifference(Position position) {
-        return file.calculateDifferenceTo(position.file);
-    }
-
-    public RankDifference calculateRankDifference(Position position) {
-        return rank.calculateDifferenceTo(position.rank);
+    public RankDifference calculateRankDifferenceTo(Position position) {
+        return new RankDifference(rank, position.rank);
     }
 
     public List<Position> findRoute(Position position) {
