@@ -14,8 +14,8 @@ class CoordinateRequestTest {
         CoordinateRequest coordinateRequest = CoordinateRequest.fromCommand("b1");
 
         Assertions.assertAll(
-                () -> assertThat(coordinateRequest.row()).isEqualTo(7),
-                () -> assertThat(coordinateRequest.column()).isEqualTo(1)
+                () -> assertThat(coordinateRequest.row()).isEqualTo(1),
+                () -> assertThat(coordinateRequest.column()).isEqualTo(2)
         );
     }
 }

@@ -6,10 +6,10 @@ import java.util.List;
 
 public enum PawnAttackStrategy {
 
-    UP_RIGHT_DIAGONAL(-1, 1, List.of(-1, 1), Color.WHITE),
-    UP_LEFT_DIAGONAL(-1, -1, List.of(-1, -1), Color.WHITE),
-    DOWN_LEFT_DIAGONAL(1, -1, List.of(1, -1), Color.BLACK),
-    DOWN_RIGHT_DIAGONAL(1, 1, List.of(1, 1), Color.BLACK);
+    UP_RIGHT_DIAGONAL(1, 1, List.of(1, 1), Color.WHITE),
+    UP_LEFT_DIAGONAL(1, -1, List.of(1, -1), Color.WHITE),
+    DOWN_LEFT_DIAGONAL(-1, -1, List.of(-1, -1), Color.BLACK),
+    DOWN_RIGHT_DIAGONAL(-1, 1, List.of(-1, 1), Color.BLACK);
 
     final int rowDifference;
     final int columnDifference;

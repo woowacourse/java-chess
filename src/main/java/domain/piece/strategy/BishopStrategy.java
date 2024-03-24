@@ -5,10 +5,10 @@ import java.util.List;
 
 public enum BishopStrategy {
 
-    UP_LEFT_DIAGONAL(-1, -1, List.of(-1, -1)),
-    UP_RIGHT_DIAGONAL(-1, 1, List.of(-1, 1)),
-    DOWN_LEFT_DIAGONAL(1, -1, List.of(1, -1)),
-    DOWN_RIGHT_DIAGONAL(1, 1, List.of(1, 1));
+    UP_LEFT_DIAGONAL(-1, 1, List.of(-1, 1)),
+    UP_RIGHT_DIAGONAL(1, 1, List.of(1, 1)),
+    DOWN_LEFT_DIAGONAL(-1, -1, List.of(-1, -1)),
+    DOWN_RIGHT_DIAGONAL(1, -1, List.of(1, -1));
 
     private final int rowDifference;
     private final int columnDifference;

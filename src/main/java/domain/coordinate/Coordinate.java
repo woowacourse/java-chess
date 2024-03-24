@@ -3,15 +3,24 @@ package domain.coordinate;
 import domain.position.Column;
 import domain.position.Row;
 import java.util.Objects;
+import view.util.ColumnSymbol;
 
 public class Coordinate {
 
-    private final Row row;
     private final Column column;
+    private final Row row;
 
     public Coordinate(Row row, Column column) {
         this.row = row;
         this.column = column;
+    }
+
+    public static Coordinate from(String coordinate) {
+        String[] splitCoordinate = coordinate.split("");
+        int column = ColumnSymbol.from(splitCoordinate[0]).getPosition();
+        int row = Integer.parseInt(splitCoordinate[1]);
+
+        return new Coordinate(new Row(row), new Column(column));
     }
 
     public int calculateRowDifference(Coordinate coordinate) {

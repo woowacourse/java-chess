@@ -13,12 +13,12 @@ class PawnTest {
     @DisplayName("폰의 움직임 방향을 가져온다")
     @Test
     void getPawnDirection() {
-        Coordinate coordinate = new Coordinate(new Row(0), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(1));
+        Coordinate coordinate = new Coordinate(new Row(7), new Column(1));
+        Coordinate nextCoordinate = new Coordinate(new Row(6), new Column(1));
 
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false)).isEqualTo(List.of(1, 0));
+        Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false)).isEqualTo(List.of(-1, 0));
     }
 
     @DisplayName("폰이 첫 움직임이 아닐경우 2칸을 이동할 수 없다.")
@@ -38,7 +38,7 @@ class PawnTest {
     @Test
     void canMoveDiagonalWhenCanAttack() {
         Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
+        Coordinate nextCoordinate = new Coordinate(new Row(3), new Column(2));
 
         Pawn pawn = new Pawn(Color.WHITE);
 

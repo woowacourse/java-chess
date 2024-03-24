@@ -17,8 +17,8 @@ class CommandsTest {
 
         Assertions.assertAll(
                 () -> assertThat(commands.command()).isEqualTo(Command.MOVE),
-                () -> assertThat(commands.startCoordinate()).isEqualTo(new CoordinateRequest(6, 0)),
-                () -> assertThat(commands.destinationCoordinate()).isEqualTo(new CoordinateRequest(5, 0))
+                () -> assertThat(commands.startCoordinate()).isEqualTo(new CoordinateRequest(2, 1)),
+                () -> assertThat(commands.destinationCoordinate()).isEqualTo(new CoordinateRequest(3, 1))
         );
     }
 }

@@ -6,10 +6,10 @@ import java.util.List;
 
 public enum PawnStrategy {
 
-    UP(-1, 0, List.of(-1, 0), Color.WHITE),
-    DOWN(1, 0, List.of(1, 0), Color.BLACK),
-    UP_UP(-2, 0, List.of(-1, 0), Color.WHITE),
-    DOWN_DOWN(2, 0, List.of(1, 0), Color.BLACK);
+    UP(1, 0, List.of(1, 0), Color.WHITE),
+    DOWN(-1, 0, List.of(-1, 0), Color.BLACK),
+    UP_UP(2, 0, List.of(1, 0), Color.WHITE),
+    DOWN_DOWN(-2, 0, List.of(-1, 0), Color.BLACK);
 
     final int rowDifference;
     final int columnDifference;
@@ -24,6 +24,7 @@ public enum PawnStrategy {
     }
 
     public static PawnStrategy getMoveStrategy(int rowDifference, int columnDifference) {
+        System.out.println(rowDifference + " " + columnDifference);
         return Arrays.stream(PawnStrategy.values())
                 .filter(enumValue -> enumValue.rowDifference == rowDifference
                         && enumValue.columnDifference == columnDifference)

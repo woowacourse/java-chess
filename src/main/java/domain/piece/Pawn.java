@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Pawn extends ChessPieceBase {
 
-    private static final int BLACK_PAWN_FIRST_POSITION = 1;
-    private static final int WHITE_PAWN_FIRST_POSITION = 6;
+    private static final int BLACK_PAWN_FIRST_POSITION = 7;
+    private static final int WHITE_PAWN_FIRST_POSITION = 2;
     private static final int MAX_PAWN_DISTANCE_DIFFERENCE = 2;
 
     public Pawn(Color color) {

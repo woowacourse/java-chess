@@ -5,10 +5,10 @@ import java.util.List;
 
 public enum RookStrategy {
 
-    UP(-1, 0, List.of(-1, 0)),
-    DOWN(1, 0, List.of(1, 0)),
-    LEFT(0, -1, List.of(0, -1)),
-    RIGHT(0, 1, List.of(0, 1));
+    UP(1, 0, List.of(1, 0)),
+    DOWN(-1, 0, List.of(-1, 0)),
+    LEFT(0, 1, List.of(0, 1)),
+    RIGHT(0, -1, List.of(0, -1));
 
     private final int rowDifference;
     private final int columnDifference;

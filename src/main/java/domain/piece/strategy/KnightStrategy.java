@@ -5,14 +5,14 @@ import java.util.List;
 
 public enum KnightStrategy {
 
-    UP_UP_RIGHT_DIAGONAL(-2, 1, List.of(-2, 1)),
-    UP_UP_LEFT_DIAGONAL(-2, -1, List.of(-2, -1)),
-    LEFT_LEFT_UP_DIAGONAL(-1, -2, List.of(-1, -2)),
+    UP_UP_RIGHT_DIAGONAL(2, 1, List.of(2, 1)),
+    UP_UP_LEFT_DIAGONAL(2, -1, List.of(2, -1)),
+    LEFT_LEFT_UP_DIAGONAL(1, -2, List.of(1, -2)),
     LEFT_LEFT_DOWN_DIAGONAL(1, -2, List.of(1, -2)),
-    RIGHT_RIGHT_UP_DIAGONAL(-1, 2, List.of(-1, 2)),
-    RIGHT_RIGHT_DOWN_DIAGONAL(1, 2, List.of(1, 2)),
-    DOWN_DOWN_RIGHT_DIAGONAL(2, -1, List.of(2, -1)),
-    DOWN_DOWN_LEFT_DIAGONAL(2, 1, List.of(2, 1));
+    RIGHT_RIGHT_UP_DIAGONAL(-1, -2, List.of(-1, -2)),
+    RIGHT_RIGHT_DOWN_DIAGONAL(-1, -2, List.of(-1, -2)),
+    DOWN_DOWN_RIGHT_DIAGONAL(-2, 1, List.of(-2, 1)),
+    DOWN_DOWN_LEFT_DIAGONAL(-2, -1, List.of(-2, -1));
 
     final int rowDifference;
     final int columnDifference;

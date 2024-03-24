@@ -9,7 +9,7 @@ import view.util.PieceTranslator;
 
 public class OutputView {
 
-    private static final int CHESS_BOARD_SIZE = 8;
+    private static final int CHESS_BOARD_SIZE = 9;
 
     public void printGameGuide() {
         System.out.print("""
@@ -21,14 +21,14 @@ public class OutputView {
     }
 
     public void printBoard(Map<Coordinate, ChessPiece> board) {
-        for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
+        for (int row = 8; row > 0; row--) {
             printRow(board, row);
             System.out.println();
         }
     }
 
     private void printRow(Map<Coordinate, ChessPiece> board, int row) {
-        for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
+        for (int column = 1; column < CHESS_BOARD_SIZE; column++) {
             Coordinate coordinate = new Coordinate(new Row(row), new Column(column));
             ChessPiece piece = board.get(coordinate);
             System.out.print(PieceTranslator.getName(piece));
