@@ -1,13 +1,17 @@
 package chess.model.board;
 
+import static chess.model.Fixture.A1;
+import static chess.model.Fixture.A6;
+import static chess.model.Fixture.B2;
+import static chess.model.Fixture.B4;
+import static chess.model.Fixture.C5;
+import static chess.model.Fixture.D2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
-import chess.model.position.File;
-import chess.model.position.Rank;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +29,8 @@ class ChessBoardTest {
     @DisplayName("Source 위치의 기물을 Target 위치로 이동한다.")
     void move() {
         //given
-        ChessPosition source = new ChessPosition(File.B, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.B, Rank.FOUR);
+        ChessPosition source = B2;
+        ChessPosition target = B4;
 
         //when
         chessBoard.move(source, target);
@@ -44,36 +48,24 @@ class ChessBoardTest {
     @Test
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
     void moveEmptySource() {
-        //given
-        ChessPosition source = new ChessPosition(File.C, Rank.FIVE);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
-
         //when //then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(C5, D2))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("경로가 비어있다면 예외가 발생한다.")
     void moveWhenPathEmpty() {
-        //given
-        ChessPosition source = new ChessPosition(File.A, Rank.ONE);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
-
         //when //then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(A1, D2))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("이동 경로에 기물이 존재한다면 예외가 발생한다.")
     void moveWhenPathContainsPiece() {
-        //given
-        ChessPosition source = new ChessPosition(File.A, Rank.ONE);
-        ChessPosition target = new ChessPosition(File.A, Rank.SIX);
-
         //when //then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(A1, A6))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

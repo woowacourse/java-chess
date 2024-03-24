@@ -1,11 +1,20 @@
 package chess.model.piece;
 
+import static chess.model.Fixture.C2;
+import static chess.model.Fixture.C3;
+import static chess.model.Fixture.C5;
+import static chess.model.Fixture.D2;
+import static chess.model.Fixture.D3;
+import static chess.model.Fixture.D6;
+import static chess.model.Fixture.E4;
+import static chess.model.Fixture.F2;
+import static chess.model.Fixture.F6;
+import static chess.model.Fixture.G3;
+import static chess.model.Fixture.G5;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.model.position.ChessPosition;
-import chess.model.position.File;
-import chess.model.position.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -20,11 +29,10 @@ class KnightTest {
     @DisplayName("Knight가 타켓 위치까지 움직이는 경로를 찾는다.")
     void findPath(ChessPosition target, List<ChessPosition> expected) {
         // given
-        ChessPosition source = new ChessPosition(File.E, Rank.FOUR);
         Knight knight = new Knight(Side.WHITE);
 
         // when
-        List<ChessPosition> path = knight.findPath(source, target, new Empty());
+        List<ChessPosition> path = knight.findPath(E4, target, new Empty());
 
         // then
         assertThat(path).isEqualTo(expected);
@@ -34,13 +42,11 @@ class KnightTest {
     @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
     void findPathWhenInvalidTarget() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.D, Rank.THREE);
         Knight knight = new Knight(Side.WHITE);
         Pawn targetPiece = new Pawn(Side.WHITE);
 
         // when // then
-        assertThatThrownBy(() -> knight.findPath(source, target, targetPiece))
+        assertThatThrownBy(() -> knight.findPath(C2, D3, targetPiece))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -48,12 +54,10 @@ class KnightTest {
     @DisplayName("Knight 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
-        ChessPosition source = new ChessPosition(File.C, Rank.TWO);
-        ChessPosition target = new ChessPosition(File.D, Rank.TWO);
         Knight knight = new Knight(Side.BLACK);
 
         // when
-        List<ChessPosition> path = knight.findPath(source, target, new Empty());
+        List<ChessPosition> path = knight.findPath(C2, D2, new Empty());
 
         // then
         assertThat(path).isEmpty();
@@ -61,38 +65,14 @@ class KnightTest {
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
         return Stream.of(
-                Arguments.of(
-                        new ChessPosition(File.C, Rank.THREE),
-                        List.of(new ChessPosition(File.C, Rank.THREE))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.C, Rank.FIVE),
-                        List.of(new ChessPosition(File.C, Rank.FIVE))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.D, Rank.TWO),
-                        List.of(new ChessPosition(File.D, Rank.TWO))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.D, Rank.SIX),
-                        List.of(new ChessPosition(File.D, Rank.SIX))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.F, Rank.TWO),
-                        List.of(new ChessPosition(File.F, Rank.TWO))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.F, Rank.SIX),
-                        List.of(new ChessPosition(File.F, Rank.SIX))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.G, Rank.THREE),
-                        List.of(new ChessPosition(File.G, Rank.THREE))
-                ),
-                Arguments.of(
-                        new ChessPosition(File.G, Rank.FIVE),
-                        List.of(new ChessPosition(File.G, Rank.FIVE))
-                )
+                Arguments.of(C3, List.of(C3)),
+                Arguments.of(C5, List.of(C5)),
+                Arguments.of(D2, List.of(D2)),
+                Arguments.of(D6, List.of(D6)),
+                Arguments.of(F2, List.of(F2)),
+                Arguments.of(F6, List.of(F6)),
+                Arguments.of(G3, List.of(G3)),
+                Arguments.of(G5, List.of(G5))
         );
     }
 }
