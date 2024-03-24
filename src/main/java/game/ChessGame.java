@@ -36,8 +36,8 @@ public class ChessGame {
         chessGameStatus = ChessGameStatus.END;
     }
 
-    public boolean isEnd() {
-        return chessGameStatus == ChessGameStatus.END;
+    public boolean isNotEnd() {
+        return chessGameStatus != ChessGameStatus.END;
     }
 
     public Map<Square, Piece> getPieceSquares() {

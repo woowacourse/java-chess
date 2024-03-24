@@ -1,9 +1,13 @@
 package controller;
 
+import domain.piece.Piece;
+import domain.square.Square;
 import game.ChessGame;
 import game.command.ChessCommand;
 import view.InputView;
 import view.OutputView;
+
+import java.util.Map;
 
 public class ChessController {
 
@@ -24,17 +28,18 @@ public class ChessController {
     }
 
     private void play(final ChessGame chessGame) {
-        while (true) {
+        while (chessGame.isNotEnd()) {
             try {
                 final ChessCommand chessCommand = inputView.readCommand();
-                chessCommand.execute(chessGame);
-                if (chessGame.isEnd()) {
-                    break;
-                }
-                outputView.printChessBoard(chessGame.getPieceSquares());
+                chessCommand.execute(chessGame, this::printChessBoard);
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
         }
+    }
+
+    private void printChessBoard(final ChessGame chessGame) {
+        final Map<Square, Piece> pieceSquares = chessGame.getPieceSquares();
+        outputView.printChessBoard(pieceSquares);
     }
 }

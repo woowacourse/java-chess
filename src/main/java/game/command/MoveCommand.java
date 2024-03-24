@@ -3,6 +3,8 @@ package game.command;
 import domain.square.Square;
 import game.ChessGame;
 
+import java.util.function.Consumer;
+
 public class MoveCommand implements ChessCommand {
 
     private final String sourceInput;
@@ -14,10 +16,12 @@ public class MoveCommand implements ChessCommand {
     }
 
     @Override
-    public void execute(final ChessGame chessGame) {
+    public void execute(final ChessGame chessGame, final Consumer<ChessGame> callBack) {
         final Square source = Square.from(sourceInput);
         final Square target = Square.from(targetInput);
 
         chessGame.move(source, target);
+
+        callBack.accept(chessGame);
     }
 }
