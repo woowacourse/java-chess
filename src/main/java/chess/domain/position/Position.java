@@ -29,14 +29,12 @@ public class Position {
         return fileDistance == rankDistance;
     }
 
-    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
     public int squaredDistanceWith(Position other) {
         int fileDistance = file.calculateDistanceWith(other.file);
         int rankDistance = rank.calculateDistanceWith(other.rank);
         return (int) Math.pow(fileDistance, 2) + (int) Math.pow(rankDistance, 2);
     }
 
-    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
     public boolean isRankSameWith(Rank rank) {
         return this.rank == rank;
     }

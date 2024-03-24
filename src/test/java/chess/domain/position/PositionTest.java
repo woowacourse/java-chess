@@ -127,4 +127,16 @@ class PositionTest {
     void should_CalculateCellDistance_When_DestinationIsGiven() {
         assertThat(A1.calculateDistance(B4)).isEqualTo(3);
     }
+
+    @DisplayName("포지션 간 제곱 거리를 계산할 수 있다")
+    @Test
+    void should_CalculateSquaredDistance_When_DestinationIsGiven() {
+        assertThat(A1.squaredDistanceWith(B3)).isEqualTo(5);
+    }
+
+    @DisplayName("포지션이 특정 랭크를 가지는지 확인할 수 있다")
+    @Test
+    void should_CompareRank_When_RankIsGiven() {
+        assertThat(A1.isRankSameWith(Rank.ONE)).isTrue();
+    }
 }
