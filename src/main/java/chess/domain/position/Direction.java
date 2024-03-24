@@ -26,9 +26,13 @@ public enum Direction {
         int columnDirection = source.findColumnDirection(target);
 
         return Arrays.stream(values())
-                .filter(value -> value.rowDirection == rowDirection && value.columnDirection == columnDirection)
+                .filter(value -> isSameDirection(value, rowDirection, columnDirection))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 방향입니다."));
+    }
+
+    private static boolean isSameDirection(Direction value, int rowDirection, int columnDirection) {
+        return value.rowDirection == rowDirection && value.columnDirection == columnDirection;
     }
 
     public static boolean isUpDown(Position source, Position target) {
