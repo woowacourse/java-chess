@@ -31,20 +31,17 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
     }
 
     private List<Coordinate> createSlidingPath(Coordinate start, Direction direction) {
-        List<Coordinate> coordinates = new ArrayList<>();
-        Weight weight = direction.getValue();
-        int rankWeight = weight.rankWeight();
-        int fileWeight = weight.fileWeight();
-        int nextRank = start.getRank() + rankWeight;
-        char nextFile = (char) (start.getFile() + fileWeight);
+        List<Coordinate> slidingPath = new ArrayList<>();
+        Weight weight = direction.getWeight();
+        Coordinate nowCoordinate = start;
 
-        while (nextRank >= 1 && nextRank <= 8 && nextFile >= 'a' && nextFile <= 'h') {
-            coordinates.add(new Coordinate(nextRank, nextFile));
-            nextRank += rankWeight;
-            nextFile += fileWeight;
+        //TODO: 쓰기 시 복사하는 패턴이 숨겨지는데, 사용처에서 알 수 있을까?
+        while (nowCoordinate.isApplicable(weight)) {
+            nowCoordinate = nowCoordinate.apply(weight);
+            slidingPath.add(nowCoordinate);
         }
 
-        return coordinates;
+        return slidingPath;
     }
 
     private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {

@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
 import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
@@ -23,29 +22,11 @@ abstract class AbstractNonSlidingPiece extends AbstractPiece {
         }
     }
 
-    /**
-     * TODO: 이런 느낌으로 해보고 싶다..!
-     *    if(coordinate.canApply(Weight weight)) {
-     *        source.apply(Weight weight);
-     *    };
-     */
     private List<Coordinate> createPath(Coordinate source) {
-        List<Coordinate> possibleCoordinate = new ArrayList<>();
-        int startRank = source.getRank();
-        char startFile = source.getFile();
-
-        for (Direction direction : directions) {
-            Weight weight = direction.getValue();
-            int nextRank = startRank + weight.rankWeight();
-            char nextFile = (char) (startFile + weight.fileWeight());
-
-            try {
-                Coordinate coordinate = new Coordinate(nextRank, nextFile);
-                possibleCoordinate.add(coordinate);
-            } catch (IllegalArgumentException ignored) {
-            }
-        }
-
-        return possibleCoordinate;
+        return directions.stream()
+                .map(Direction::getWeight)
+                .filter(source::isApplicable)
+                .map(source::apply)
+                .toList();
     }
 }
