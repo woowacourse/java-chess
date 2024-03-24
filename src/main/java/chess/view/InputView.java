@@ -1,5 +1,6 @@
 package chess.view;
 
+import java.awt.Point;
 import java.util.Scanner;
 
 public class InputView {
@@ -10,10 +11,10 @@ public class InputView {
         return GameCommand.getGameCommand(scanner.next());
     }
 
-    public String getPosition() {
+    public Point getPosition() {
         String input = scanner.next();
         validateEmpty(input);
-        return input;
+        return PointConverter.convert(input);
     }
 
     private void validateEmpty(final String input) {

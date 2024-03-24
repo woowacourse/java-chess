@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.awt.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,6 +25,20 @@ class PositionTest {
     @CsvSource({"0,1", "1,0", "1, 9", "9, 1"})
     void createPositionThrowException(int file, int rank) {
         assertThatThrownBy(() -> new Position(file, rank))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("위치의 가로, 세로 범위는 각각 1 ~ 8이여야 합니다.");
+    }
+
+    @Test
+    @DisplayName("point로부터 위치를 생성한다.")
+    void of() {
+        assertThat(Position.of(new Point(1, 2))).isEqualTo(new Position(1, 2));
+    }
+
+    @Test
+    @DisplayName("point의 범위가 보드 범위를 벗어난 경우 예외가 발생한다.")
+    void ofThrowException() {
+        assertThatThrownBy(() -> Position.of(new Point(9, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("위치의 가로, 세로 범위는 각각 1 ~ 8이여야 합니다.");
     }

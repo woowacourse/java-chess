@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.awt.Point;
+
 public record Position(int file, int rank) {
 
     private static final int MIN_POSITION_RANGE = 1;
@@ -8,6 +10,10 @@ public record Position(int file, int rank) {
     public Position {
         validateRange(file);
         validateRange(rank);
+    }
+
+    public static Position of(final Point point) {
+        return new Position(point.x, point.y);
     }
 
     private void validateRange(final int position) {
