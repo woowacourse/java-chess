@@ -1,6 +1,16 @@
 package domain.game;
 
 public enum PieceType {
-    BLACK_PAWN, BLACK_ROOK, BLACK_KNIGHT, BLACK_BISHOP, BLACK_QUEEN, BLACK_KING,
-    WHITE_PAWN, WHITE_ROOK, WHITE_KNIGHT, WHITE_BISHOP, WHITE_QUEEN, WHITE_KING
+    BLACK_PAWN(1), BLACK_KNIGHT(2.5), BLACK_BISHOP(3), BLACK_ROOK(5), BLACK_QUEEN(9), BLACK_KING(0),
+    WHITE_PAWN(1), WHITE_KNIGHT(2.5), WHITE_BISHOP(3), WHITE_ROOK(5), WHITE_QUEEN(9), WHITE_KING(0);
+
+    private final double value;
+
+    PieceType(double value) {
+        this.value = value;
+    }
+
+    public double value() {
+        return value;
+    }
 }
