@@ -11,9 +11,9 @@ import static chess.domain.position.Direction.*;
 
 public class Pawn extends Piece {
     public static final int KILL_PASSING_DISTANCE = 2;
-    public static final int FORWARDING_PASSING_DISTANCE = 1;
-    public static final int FIRST_FORWADING_PASSING_DISTANCE = 4;
-    private static List<Direction> KILL_PASSING = List.of(NW, NE, SW, SE);
+    public static final int FORWARDING_SQUARED_DISTANCE = 1;
+    public static final int FIRST_FORWADING_SQUARED_DISTANCE = 4;
+    private static final List<Direction> KILL_PASSING = List.of(NW, NE, SW, SE);
 
     public Pawn(Team team) {
         super(team);
@@ -27,25 +27,25 @@ public class Pawn extends Piece {
                 || isKillPassing(start, destination, board);
     }
 
+    private boolean isFowardPassing(Position start, Position destination, ChessBoard board) {
+        return isForward(start, destination)
+                && start.squaredDistanceWith(destination) == FORWARDING_SQUARED_DISTANCE
+                && board.positionIsEmpty(destination);
+    }
+
+    private boolean isFirstFowardPassing(Position start, Position destination, ChessBoard board) {
+        return isForward(start, destination)
+                && start.squaredDistanceWith(destination) == FIRST_FORWADING_SQUARED_DISTANCE
+                && start.rowIs(teamInitialPawnRow())
+                && board.pathIsAllEmpty(start.findPath(destination));
+    }
+
     //TODO: 테스트 구현하기
     private boolean isKillPassing(Position start, Position destination, ChessBoard board) {
         return isForward(start, destination)
                 && KILL_PASSING.contains(DirectionJudge.judge(start, destination))
                 && start.squaredDistanceWith(destination) == KILL_PASSING_DISTANCE
                 && board.piecesIsOtherTeam(start, destination);
-    }
-
-    private boolean isFowardPassing(Position start, Position destination, ChessBoard board) {
-        return isForward(start, destination)
-                && start.squaredDistanceWith(destination) == FORWARDING_PASSING_DISTANCE
-                && board.positionIsEmpty(destination);
-    }
-
-    private boolean isFirstFowardPassing(Position start, Position destination, ChessBoard board) {
-        return isForward(start, destination)
-                && start.squaredDistanceWith(destination) == FIRST_FORWADING_PASSING_DISTANCE
-                && start.rowIs(teamInitialPawnRow())
-                && board.pathIsAllEmpty(start.findPath(destination));
     }
 
     private boolean isForward(Position start, Position destination) {
