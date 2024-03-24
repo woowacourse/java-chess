@@ -20,6 +20,8 @@ public class ColumnTest {
     @Test
     @DisplayName("1~8이 아닌 숫자로 만들어진 세로는 존재하지 않는다.")
     void Column_validate_with_range_number() {
-        assertThatThrownBy(() -> Column.valueOf("10")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Column.valueOf("10"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("1~8까지 가능합니다.");
     }
 }

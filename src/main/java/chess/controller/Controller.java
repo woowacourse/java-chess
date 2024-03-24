@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessboard.ChessBoard;
 import chess.view.Command;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -21,7 +21,7 @@ public class Controller {
     }
 
     private void processGame(Command command, ChessBoard chessBoard) {
-        if(command.isMove()) {
+        if (command.isMove()) {
             List<String> positions = InputView.readPositions();
             chessBoard.move(Position.of(positions.get(0)), Position.of(positions.get(1)));
         }

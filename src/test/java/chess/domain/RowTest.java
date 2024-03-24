@@ -21,7 +21,9 @@ public class RowTest {
     @Test
     @DisplayName("a~h가 아닌 알파벳으로 만들어진 가로는 존재하지 않는다.")
     void testValueOf() {
-        assertThatThrownBy(() -> Row.valueOf("z")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Row.valueOf("z"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("a~h까지 가능합니다.");
     }
 
 }

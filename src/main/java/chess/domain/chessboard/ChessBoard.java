@@ -1,4 +1,4 @@
-package chess.domain.chessBoard;
+package chess.domain.chessboard;
 
 import chess.domain.position.Direction;
 import chess.domain.chesspiece.*;
@@ -18,6 +18,7 @@ public class ChessBoard {
     private ChessBoard(Map<Column, Line> chessBoard) {
         this.chessBoard = chessBoard;
     }
+
     //TODO: 한칸 생각해보기
     public static ChessBoard initializeChessBoard() {
         Map<Column, Line> board = new LinkedHashMap<>();

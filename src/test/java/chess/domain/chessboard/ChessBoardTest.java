@@ -1,4 +1,4 @@
-package chess.domain.chessBoard;
+package chess.domain.chessboard;
 
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
+
     @Test
     @DisplayName("폰은 직진으로 전진할 때 어떠한 말도 있어선 안된다._비어있을 경우")
     void ChessBoard_Check_moveStraight_empty() {
@@ -26,7 +27,8 @@ class ChessBoardTest {
         chessBoard.move(Position.of("a5"), Position.of("a6"));
 
         assertThatThrownBy(() -> chessBoard.move(Position.of("a6"), Position.of("a7")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
 
     }
 
@@ -38,7 +40,8 @@ class ChessBoardTest {
         chessBoard.move(Position.of("a4"), Position.of("a5"));
 
         assertThatThrownBy(() -> chessBoard.move(Position.of("a5"), Position.of("b6")))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("공격 대상이 없습니다.");
     }
 
     @Test

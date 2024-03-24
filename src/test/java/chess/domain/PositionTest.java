@@ -17,9 +17,10 @@ public class PositionTest {
 
     @Test
     @DisplayName("잘못된 Position을 넘기면 에러가 발생한다.")
-    void wrongValueTest () {
-       assertThatThrownBy(()->{
-           Position.of("x5");
-       }).isInstanceOf(IllegalArgumentException.class);
+    void wrongValueTest() {
+        assertThatThrownBy(() -> {
+            Position.of("x5");
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("a~h까지 가능합니다.");
     }
 }
