@@ -1,9 +1,11 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.nonpawn.Knight;
+import domain.piece.Color;
+import domain.piece.Empty;
+import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;

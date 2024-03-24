@@ -1,16 +1,18 @@
-package domain.piece;
+package domain.piece.nonpawn;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.nonpawn.Rook;
+import domain.piece.Color;
+import domain.piece.Empty;
+import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
 import org.junit.jupiter.api.Test;
 
-class RookTest {
-    private final Piece rook = new Rook(Color.WHITE);
+class QueenTest {
+    private final Piece queen = new Queen(Color.WHITE);
     private final Piece other = Empty.create();
 
     @Test
@@ -18,18 +20,18 @@ class RookTest {
         Position source = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.D, Rank.EIGHT);
 
-        assertThatCode(() -> rook.validateMovement(source, target, other))
+        assertThatCode(() -> queen.validateMovement(source, target, other))
                 .doesNotThrowAnyException();
     }
 
     @Test
-    void 대각선_방향으로_이동하면_예외가_발생한다() {
+    void 대각선_방향으로_이동할_수_있다() {
         Position source = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.G, Rank.SEVEN);
 
-        assertThatThrownBy(() -> rook.validateMovement(source, target, other))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("직선 방향으로 이동해야 합니다.");
+        assertThatCode(() -> queen.validateMovement(source, target, other))
+                .doesNotThrowAnyException();
+
     }
 
     @Test
@@ -37,9 +39,9 @@ class RookTest {
         Position source = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.F, Rank.THREE);
 
-        assertThatThrownBy(() -> rook.validateMovement(source, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(source, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("직선 방향으로 이동해야 합니다.");
+                .hasMessageContaining("대각선 또는 직선 방향으로 이동해야 합니다.");
     }
 
     @Test
@@ -47,9 +49,9 @@ class RookTest {
         Position source = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.A, Rank.TWO);
 
-        assertThatThrownBy(() -> rook.validateMovement(source, target, other))
+        assertThatThrownBy(() -> queen.validateMovement(source, target, other))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("직선 방향으로 이동해야 합니다.");
+                .hasMessageContaining("대각선 또는 직선 방향으로 이동해야 합니다.");
     }
 
     @Test
@@ -57,7 +59,7 @@ class RookTest {
         Position source = new Position(File.D, Rank.FOUR);
         Position target = new Position(File.D, Rank.EIGHT);
 
-        assertThatCode(() -> rook.validateMovement(source, target, other))
+        assertThatCode(() -> queen.validateMovement(source, target, other))
                 .doesNotThrowAnyException();
     }
 }

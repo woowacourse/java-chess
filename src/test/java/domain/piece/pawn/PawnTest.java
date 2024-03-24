@@ -1,10 +1,10 @@
-package domain.piece;
+package domain.piece.pawn;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.pawn.BlackPawn;
-import domain.piece.pawn.WhitePawn;
+import domain.piece.Empty;
+import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
