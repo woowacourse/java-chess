@@ -1,28 +1,30 @@
 package chess.domain.piece;
 
 import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import chess.domain.position.RowPosition;
 
-import static chess.domain.position.Direction.N;
-import static chess.domain.position.Direction.S;
+import java.util.List;
+
+import static chess.domain.position.Direction.*;
 
 public enum Team {
-    WHITE(N, RowPosition.SIX),
-    BLACK(S, RowPosition.ONE);
+    WHITE(List.of(N, NW, NE), RowPosition.SIX),
+    BLACK(List.of(S, SW, SE), RowPosition.ONE);
 
-    private final Direction direction;
+    private final List<Direction> forwardDirections;
     private final RowPosition initialPawnRow;
 
-    Team(Direction direction, RowPosition initialPawnRow) {
-        this.direction = direction;
+    Team(List<Direction> forwardDirections, RowPosition initialPawnRow) {
+        this.forwardDirections = forwardDirections;
         this.initialPawnRow = initialPawnRow;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public boolean isForward(Direction direction) {
+        return forwardDirections.contains(direction);
     }
 
-    public RowPosition getInitialPawnRow() {
-        return initialPawnRow;
+    public boolean isInitialPawnRow(Position position) {
+        return position.rowIs(initialPawnRow);
     }
 }
