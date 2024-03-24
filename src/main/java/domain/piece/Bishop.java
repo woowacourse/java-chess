@@ -1,6 +1,8 @@
-package domain;
+package domain.piece;
 
-import domain.piece.Piece;
+import domain.MovePath;
+import domain.Position;
+import domain.Side;
 
 public class Bishop extends Piece {
 

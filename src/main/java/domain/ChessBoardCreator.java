@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Bishop;
 import domain.piece.Empty;
 import domain.piece.King;
 import domain.piece.Knight;
