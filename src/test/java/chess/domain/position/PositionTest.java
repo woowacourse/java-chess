@@ -9,14 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PositionTest {
-    @DisplayName("포지션은 x축 대칭인 포지션을 반환할 수 있다")
-    @Test
-    void should_ReturnVerticalReversePosition() {
-        Position testPosition = Position.of(0, 0);
-
-        assertThat(testPosition.verticalReversePosition()).isEqualTo(Position.of(7, 0));
-    }
-
     @DisplayName("한 포지션에서 다른 포지션까지의 연결이 직선인지 확인할 수 있다")
     @Test
     void should_CheckVerticalRelationShipWithPositions() {
@@ -47,18 +39,6 @@ class PositionTest {
         Position position2 = Position.of(2, 3);
 
         assertThat(position1.squaredDistanceWith(position2)).isEqualTo(5);
-    }
-
-    @DisplayName("다른 포지션으로의 위 아래 방향을 계산할 수 있다.")
-    @Test
-    void should_CalculateDirectionToTargetPosition() {
-        Position higherPosition = Position.of(0, 0);
-        Position lowerPosition = Position.of(1, 0);
-
-        assertAll(
-                () -> assertThat(lowerPosition.directionTo(higherPosition)).isEqualTo(Direction.UP),
-                () -> assertThat(higherPosition.directionTo(lowerPosition)).isEqualTo(Direction.DOWN)
-        );
     }
 
     @DisplayName("포지션이 같은 행에 있는지 확인할 수 있다")

@@ -38,10 +38,6 @@ public class Position {
         return String.valueOf(rowPosition) + colPosition;
     }
 
-    public Position verticalReversePosition() {
-        return POOL.get(toKey(rowPosition.reverse(), this.columnPosition));
-    }
-
     public boolean isStraightWith(Position target) {
         return rowPosition.equals(target.rowPosition) || columnPosition.equals(target.columnPosition);
     }
@@ -50,11 +46,6 @@ public class Position {
         int rowInterval = rowPosition.intervalWith(target.rowPosition);
         int colInterval = columnPosition.intervalWith(target.columnPosition);
         return rowInterval == colInterval;
-    }
-
-    public Direction directionTo(Position target) {
-        boolean destinationIsAbove = target.rowPosition.isLowerThan(rowPosition);
-        return Direction.from(destinationIsAbove);
     }
 
     public int squaredDistanceWith(Position target) {
@@ -132,6 +123,22 @@ public class Position {
             nextPosition = nextPosition.movePosition(nextRowStep, nextColumnStep);
         }
         return path;
+    }
+
+    public boolean isUpPosition(Position target) {
+        return rowPosition.isLowerThan(target.rowPosition);
+    }
+
+    public boolean isDownPosition(Position target) {
+        return rowPosition.isHigherThan(target.rowPosition);
+    }
+
+    public boolean isLeftPosition(Position target) {
+        return columnPosition.isLeft(target.columnPosition);
+    }
+
+    public boolean isRightPosition(Position target) {
+        return columnPosition.isRight(target.columnPosition);
     }
 
     private Position movePosition(int rowMove, int columnMove) {

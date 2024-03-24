@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.position.DirectionJudge;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -25,12 +26,12 @@ public class Pawn extends Piece {
     }
 
     //TODO: 테스트 구현하기
-    public boolean isKillPassing(Position start, Position destination) {
+    private boolean isKillPassing(Position start, Position destination) {
         return isForward(start, destination) && start.isDiagonalWith(destination)
                 && start.squaredDistanceWith(destination) == KILL_PASSING_DISTANCE;
     }
 
     private boolean isForward(Position start, Position destination) {
-        return start.directionTo(destination) == teamForwardDirection();
+        return DirectionJudge.judge(start, destination) == teamForwardDirection();
     }
 }
