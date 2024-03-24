@@ -12,6 +12,8 @@ import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class ProgressTest {
     @DisplayName("Progress는 command로 \"start\"를 받으면 예외가 발생한다.")
@@ -72,6 +74,22 @@ class ProgressTest {
 
         // then
         assertThat(result).isInstanceOf(End.class);
+    }
+
+    @DisplayName("현재 점수를 통해 승리한 팀을 판단한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"ONE,BLACK", "EIGHT,WHITE", "FIVE,NONE"})
+    void getWinnerColor(Rank removeRank, Color expectedWinnerColor) {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.getChessBoard().remove(Position.of(File.B, removeRank));
+        Progress progress = new Progress(chessBoard);
+
+        // when
+        Color result = progress.getWinnerColor();
+
+        // then
+        assertThat(result).isEqualTo(expectedWinnerColor);
     }
 
     @DisplayName("Progress는 command로 적절하지 않은 입력을 받으면 예외가 발생한다.")

@@ -5,6 +5,7 @@ import static chess.utils.Constant.MOVE_COMMAND;
 import static chess.utils.Constant.START_COMMAND;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -40,5 +41,23 @@ public class Progress implements GameState {
     @Override
     public boolean isEnd() {
         return false;
+    }
+
+    @Override
+    public double calculateScore(Color color) {
+        return chessBoard.calculateScore(color);
+    }
+
+    @Override
+    public Color getWinnerColor() {
+        double blackColor = chessBoard.calculateScore(Color.BLACK);
+        double whiteColor = chessBoard.calculateScore(Color.WHITE);
+        if (blackColor > whiteColor) {
+            return Color.BLACK;
+        }
+        if (blackColor < whiteColor) {
+            return Color.WHITE;
+        }
+        return Color.NONE;
     }
 }

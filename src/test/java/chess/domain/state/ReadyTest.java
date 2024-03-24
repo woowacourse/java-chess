@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,5 +67,25 @@ class ReadyTest {
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @DisplayName("시작되지 않은 게임은 점수를 계산할 수 없다.")
+    @Test
+    void calculateScore() {
+        // given
+        Ready ready = new Ready(new ChessBoard());
+
+        // when, then
+        assertThatThrownBy(() -> ready.calculateScore(Color.BLACK)).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @DisplayName("시작되지 않은 게임은 승패를 판단할 수 없다.")
+    @Test
+    void getWinnerColor() {
+        // given
+        Ready ready = new Ready(new ChessBoard());
+
+        // when, then
+        assertThatThrownBy(ready::getWinnerColor).isInstanceOf(UnsupportedOperationException.class);
     }
 }

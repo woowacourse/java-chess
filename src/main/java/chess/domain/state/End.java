@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import java.util.List;
 
 public class End implements GameState {
@@ -18,6 +19,16 @@ public class End implements GameState {
     @Override
     public boolean isEnd() {
         return true;
+    }
+
+    @Override
+    public double calculateScore(Color color) {
+        throw new UnsupportedOperationException("종료된 게임은 점수를 계산할 수 없습니다.");
+    }
+
+    @Override
+    public Color getWinnerColor() {
+        throw new UnsupportedOperationException("종료된 게임은 승패를 판단할 수 없습니다.");
     }
 
     public boolean isEndByKingCaptured() {
