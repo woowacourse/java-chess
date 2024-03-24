@@ -34,7 +34,10 @@ public class GameController {
         try {
             play();
         } catch (IllegalArgumentException | IllegalStateException exception) {
-            OUTPUT_VIEW.printException(exception);
+            OUTPUT_VIEW.printExceptionMessage(exception.getMessage());
+        } catch (RuntimeException exception) {
+            OUTPUT_VIEW.printExceptionMessage("예기치 못한 동작입니다. 다시 명령어를 입력해 주세요.");
+        } finally {
             runOrRetry();
         }
     }

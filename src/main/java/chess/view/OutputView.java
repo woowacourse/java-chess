@@ -63,7 +63,7 @@ public class OutputView {
         return "p";
     }
 
-    public void printException(RuntimeException exception) {
-        System.out.println(exception.getMessage());
+    public void printExceptionMessage(String exceptionMessage) {
+        System.out.println(exceptionMessage);
     }
 }
