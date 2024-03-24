@@ -11,7 +11,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 class BishopTest {
-
     @DisplayName("성공 : 비숍은 대각선 관계에 있는 포지션으로 이동할 수 있다")
     @Test
     void should_CanMove_When_DestinationIsDiagonal_From_StartPosition() {

@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
-
     @DisplayName("체스보드의 특정위치에 기물이 없는 지 확인할 수 있다")
     @Test
     void should_CheckPositionEmptiness_When_GivenPosition() {

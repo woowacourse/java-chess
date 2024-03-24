@@ -94,8 +94,9 @@ public class Position {
         return movePosition(nextRowStep, nextColumnStep);
     }
 
-    private Position movePosition(int rowMove, int columnMove) {
-        return Position.of(rowPosition.findRowIntervalWith(rowMove), columnPosition.findColumnIntervalWith(columnMove));
+    private Position movePosition(int rowInterval, int columnInterval) {
+        return Position.of(rowPosition.findRowIntervalWith(rowInterval)
+                , columnPosition.findColumnIntervalWith(columnInterval));
     }
 
 
