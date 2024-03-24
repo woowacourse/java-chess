@@ -34,16 +34,26 @@ public class ChessController {
                     game = new ChessGame(BoardFactory.createInitialChessBoard());
                 }
                 if (Command.MOVE == command) {
-                    String[] splitCommand = readCommand.split(" ");
-                    Point departure = parsePoint(splitCommand[1]);
-                    Point destination = parsePoint(splitCommand[2]);
-                    game.move(departure, destination);
+                    pieceMove(readCommand, game);
                 }
                 outputView.printBoard(game.getBoard());
             } catch (Exception e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private void pieceMove(String readCommand, ChessGame game) {
+        Point departure;
+        Point destination;
+        try {
+            String[] splitCommand = readCommand.split(" ");
+            departure = parsePoint(splitCommand[1]);
+            destination = parsePoint(splitCommand[2]);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
+        }
+        game.move(departure, destination);
     }
 
     private Point parsePoint(String splitedCommand) {
