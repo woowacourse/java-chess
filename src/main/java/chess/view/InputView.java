@@ -1,18 +1,18 @@
 package chess.view;
 
-import java.util.Arrays;
-import java.util.List;
+import chess.Command;
 import java.util.Scanner;
 
 public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public String getCommand() {
-        return scanner.nextLine();
+    public Command getCommand() {
+        String command = scanner.next();
+        return Command.of(command);
     }
 
-    public List<String> getMoveCommand() {
-        return Arrays.stream(scanner.nextLine().split(" ")).toList();
+    public String getMoveCommand() {
+        return scanner.next();
     }
 }

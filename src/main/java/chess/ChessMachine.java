@@ -5,13 +5,8 @@ import chess.domain.chessBoard.ChessSpaceGenerator;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class ChessMachine {
-
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String END_COMMAND = "end";
 
     private final OutputView outputView;
     private final InputView inputView;
@@ -34,23 +29,33 @@ public class ChessMachine {
     }
 
     private void validateFirstCommand() {
-        if (!inputView.getCommand().equals(START_COMMAND)) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+        if (inputView.getCommand() != Command.START) {
+            throw new IllegalArgumentException("게임을 먼저 시작해야합니다.");
         }
     }
 
     private void playChess(ChessBoard chessBoard) {
-        while (true) {
-            List<String> fromTo = inputView.getMoveCommand();
-            String command = fromTo.get(0);
-            if (command.equals(END_COMMAND)) {
-                break;
-            }
+        Command command = inputView.getCommand();
+        while (command != Command.END) {
+            validateCommandIsMove(command);
+            movePiece(chessBoard);
 
-            if (command.equals(MOVE_COMMAND)) {
-                chessBoard.move(Position.of(fromTo.get(1)), Position.of(fromTo.get(2)));
-                outputView.printChessBoard(chessBoard.getSpaces());
-            }
+            outputView.printChessBoard(chessBoard.getSpaces());
+
+            command = inputView.getCommand();
+        }
+    }
+
+    private void movePiece(ChessBoard chessBoard) {
+        Position from = Position.of(inputView.getMoveCommand());
+        Position to = Position.of(inputView.getMoveCommand());
+        chessBoard.move(from, to);
+    }
+
+    private void validateCommandIsMove(Command command) {
+        if (command != Command.MOVE) {
+            throw new IllegalArgumentException("잘못된 명령어 입니다.");
         }
     }
 }
+
