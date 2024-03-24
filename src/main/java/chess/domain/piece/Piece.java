@@ -27,7 +27,7 @@ public class Piece {
                            final boolean firstMove, final Map<Position, Piece> pieces) {
         return pieceType.getMovements()
                 .stream()
-                .filter(movement -> movement.isSatisfied(color, firstMove, existEnemy(target, pieces)))
+                .filter(movement -> movement.isSatisfied(color, firstMove, existEnemyAtTarget(target, pieces)))
                 .map(Movement::getDirection)
                 .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
     }
@@ -47,7 +47,7 @@ public class Piece {
     private void removeKillableDestinationObstacle(final Position source, final Map<Position, Piece> pieces,
                                                    final List<Position> obstacles) {
         if (obstacles.contains(source)
-                && pieces.getOrDefault(source, Piece.getEmptyPiece()).isNotSameColor(color)) {
+                && color.isNotSameTeam(pieces.getOrDefault(source, Piece.getEmptyPiece()))) {
             obstacles.remove(source);
         }
     }
@@ -70,14 +70,9 @@ public class Piece {
         return source.file() == target.file();
     }
 
-    private boolean existEnemy(final Position target, final Map<Position, Piece> pieces) {
+    private boolean existEnemyAtTarget(final Position target, final Map<Position, Piece> pieces) {
         return pieces.containsKey(target)
-                && pieces.get(target).isNotEmpty()
-                && pieces.get(target).isNotSameColor(color);
-    }
-
-    private boolean isNotSameColor(final Color color) {
-        return this.color != color;
+                && color.isNotSameTeam(pieces.get(target));
     }
 
     private boolean isNotEmpty() {
