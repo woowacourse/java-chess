@@ -21,7 +21,7 @@ public class Rook extends Piece {
         try {
             return PASSING.contains(DirectionJudge.judge(start, destination))
                     && board.pathIsAllEmpty(start.findPath(destination));
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }

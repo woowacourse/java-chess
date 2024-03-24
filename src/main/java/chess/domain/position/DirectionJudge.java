@@ -36,7 +36,7 @@ public enum DirectionJudge {
         return Stream.of(values())
                 .filter(condition -> condition.directionCondition.test(start, destination))
                 .findAny()
-                .orElseThrow(() -> new IllegalStateException("두 위치의 방향을 특정할 수 없습니다."))
+                .orElseThrow(() -> new IllegalArgumentException("두 위치의 방향을 특정할 수 없습니다."))
                 .direction;
     }
 }
