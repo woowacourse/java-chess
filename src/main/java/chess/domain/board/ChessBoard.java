@@ -43,8 +43,8 @@ public class ChessBoard {
         return findPieceByPosition(start).canMove(start, destination, this);
     }
 
-    public boolean isPathClear(List<Position> path) {
-        return path.stream()
+    public boolean isPathHasObstacle(List<Position> path) {
+        return !path.stream()
                 .allMatch(this::positionIsEmpty);
     }
 

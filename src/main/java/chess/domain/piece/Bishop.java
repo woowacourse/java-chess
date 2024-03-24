@@ -15,6 +15,6 @@ public class Bishop extends Piece {
 
     @Override
     boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard) {
-        return !chessBoard.isPathClear(start.calculateSlidingPath(destination));
+        return chessBoard.isPathHasObstacle(start.calculateSlidingPath(destination));
     }
 }

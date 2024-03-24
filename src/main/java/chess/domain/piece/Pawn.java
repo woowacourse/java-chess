@@ -39,7 +39,7 @@ public class Pawn extends Piece {
     boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard) {
         int distance = start.calculateDistance(destination);
         // 폰의 이동 경로에 기물이 있다면 이동할 수 없다
-        if (!chessBoard.isPathClear(start.calculateSlidingPath(destination))) {
+        if (chessBoard.isPathHasObstacle(start.calculateSlidingPath(destination))) {
             return true;
         }
         // 폰이 수직으로 이동했고 도착지에 기물이 있다면 이동할 수 없다
