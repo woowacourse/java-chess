@@ -17,7 +17,7 @@ public class ChessPosition {
     }
 
     public static ChessPosition of(File file, Rank rank) {
-        String key = file.name() + rank.name();
+        int key = Objects.hash(file, rank);
         return ChessPositionCache.CACHE.get(key);
     }
 
@@ -59,11 +59,11 @@ public class ChessPosition {
     }
 
     private static class ChessPositionCache {
-        static final Map<String, ChessPosition> CACHE = Arrays.stream(File.values())
+        static final Map<Integer, ChessPosition> CACHE = Arrays.stream(File.values())
                 .flatMap(file -> Arrays.stream(Rank.values())
                         .map(rank -> new ChessPosition(file, rank)))
                 .collect(toMap(
-                        chessPosition -> chessPosition.getFile().name() + chessPosition.getRank().name(),
+                        chessPosition -> Objects.hash(chessPosition.getFile(), chessPosition.getRank()),
                         identity()));
 
         private ChessPositionCache() {
