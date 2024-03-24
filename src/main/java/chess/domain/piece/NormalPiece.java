@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 public abstract class NormalPiece extends Piece {
 
-    public NormalPiece(PieceType pieceType, Color color) {
+    protected NormalPiece(PieceType pieceType, Color color) {
         super(pieceType, color);
     }
 
