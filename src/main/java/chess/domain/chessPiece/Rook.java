@@ -32,7 +32,7 @@ public class Rook extends Piece{
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        if(source.isDifferentColumn(target) && source.isDifferentRow(target)) {
+        if(!source.isSameColumn(target) && !source.isSameRow(target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

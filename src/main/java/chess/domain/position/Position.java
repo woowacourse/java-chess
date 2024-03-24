@@ -42,15 +42,6 @@ public class Position {
         return this.row == target.row;
     }
 
-    public boolean isDifferentRow(Position target) {
-        return !isSameRow(target);
-    }
-
-    public boolean isDifferentColumn(Position target) {
-        return !isSameColumn(target);
-    }
-
-
     public int findRowDirection(Position target) {
         return row.findDirection(target.row);
     }
