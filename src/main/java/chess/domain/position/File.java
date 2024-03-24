@@ -4,50 +4,50 @@ import java.util.Arrays;
 
 public enum File {
 
-    A(1),
-    B(2),
-    C(3),
-    D(4),
-    E(5),
-    F(6),
-    G(7),
-    H(8);
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7);
 
-    private static final int MIN_WEST_TO_EAST = 1;
-    private static final int MAX_WEST_TO_EAST = 8;
+    private static final int MIN_INDEX = 0;
+    private static final int MAX_INDEX = 7;
     private static final int TO_EAST = 1;
     private static final int TO_WEST = -1;
 
-    private final int westToEast;
+    private final int index;
 
-    File(int westToEast) {
-        this.westToEast = westToEast;
+    File(int index) {
+        this.index = index;
     }
 
     public File toEast() {
-        if (westToEast >= MAX_WEST_TO_EAST) {
+        if (index >= MAX_INDEX) {
             throw new IllegalStateException("동쪽으로 이동할 수 없습니다.");
         }
 
-        return find(westToEast + TO_EAST);
+        return findFile(index + TO_EAST);
     }
 
     public File toWest() {
-        if (westToEast <= MIN_WEST_TO_EAST) {
+        if (index <= MIN_INDEX) {
             throw new IllegalStateException("서쪽으로 이동할 수 없습니다.");
         }
 
-        return find(westToEast + TO_WEST);
+        return findFile(index + TO_WEST);
     }
 
-    private File find(int westToEast) {
+    private File findFile(int index) {
         return Arrays.stream(File.values())
-                .filter(column -> column.westToEast == westToEast)
+                .filter(column -> column.index == index)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치가 없습니다."));
     }
 
     public int calculateDifference(File file) {
-        return file.westToEast - this.westToEast;
+        return file.index - this.index;
     }
 }
