@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import chess.domain.board.Board;
@@ -27,29 +25,19 @@ class Controller {
         if (startCommand.isStart()) {
             Board board = new Board();
             outputView.printBoard(board);
-            handleException(this::move, board);
+            handleException(this::tryMove, board);
         }
     }
 
-    private void move(Board board) {
+    private void tryMove(Board board) {
         MoveCommand moveCommand = inputView.readMoveCommand();
         while (!moveCommand.isEnd()) {
-            Coordinate source = createCoordinate(moveCommand.source());
-            board.move(source, createCoordinate(moveCommand.target()));
+            Coordinate source = moveCommand.source();
+            Coordinate target = moveCommand.target();
+            board.move(source, target);
             outputView.printBoard(board);
             moveCommand = inputView.readMoveCommand();
         }
-    }
-
-    private Coordinate createCoordinate(String input) {
-        List<String> coordinateInput = Arrays.asList(input.split(""));
-        if (coordinateInput.size() != 2) {
-            throw new IllegalArgumentException("올바른 형식의 좌표를 입력해주세요. ex) a2");
-        }
-        int rankValue = Integer.parseInt(coordinateInput.get(1));
-        char fileValue = coordinateInput.get(0).charAt(0);
-
-        return new Coordinate(rankValue, fileValue);
     }
 
     private <T> void handleException(Consumer<T> consumer, T target) {
