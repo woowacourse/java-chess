@@ -40,7 +40,7 @@ public class MessageResolver {
     }
 
     public String resolveBoard(ChessBoard board) {
-        List<String> boardMessage = IntStream.range(1, 8)
+        List<String> boardMessage = IntStream.rangeClosed(1, 8)
                 .mapToObj(rank -> resolveOneRank(board, Rank.fromNumber(rank)))
                 .collect(Collectors.toList());
         Collections.reverse(boardMessage);
