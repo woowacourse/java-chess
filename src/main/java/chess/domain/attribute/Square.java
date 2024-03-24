@@ -81,6 +81,38 @@ public class Square {
         return Square.of(file.right(), rank.down());
     }
 
+    public boolean canMoveUp() {
+        return rank.canMoveUp();
+    }
+
+    public boolean canMoveDown() {
+        return rank.canMoveDown();
+    }
+
+    public boolean canMoveLeft() {
+        return file.canMoveLeft();
+    }
+
+    public boolean canMoveRight() {
+        return file.canMoveRight();
+    }
+
+    public boolean canMoveLeftUp() {
+        return file.canMoveLeft() && rank.canMoveUp();
+    }
+
+    public boolean canMoveLeftDown() {
+        return file.canMoveLeft() && rank.canMoveDown();
+    }
+
+    public boolean canMoveRightUp() {
+        return file.canMoveRight() && rank.canMoveUp();
+    }
+
+    public boolean canMoveRightDown() {
+        return file.canMoveRight() && rank.canMoveDown();
+    }
+
     public Optional<Square> move(final Direction direction) {
         int row = rank.getValue() + direction.getRow();
         int column = file.getColumn() + direction.getColumn();

@@ -1,6 +1,12 @@
 package chess.domain.attribute;
 
+import static chess.domain.attribute.File.*;
+import static chess.domain.attribute.Rank.*;
+import static chess.domain.chessboard.attribute.Direction.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.chessboard.attribute.Direction;
 import java.util.Optional;
@@ -16,14 +22,14 @@ class SquareTest {
 
     private static Stream<Arguments> stringConstructor() {
         return Stream.of(
-                Arguments.of("a1", Square.of(File.A, Rank.ONE)),
-                Arguments.of("b2", Square.of(File.B, Rank.TWO)),
-                Arguments.of("c3", Square.of(File.C, Rank.THREE)),
-                Arguments.of("d4", Square.of(File.D, Rank.FOUR)),
-                Arguments.of("e5", Square.of(File.E, Rank.FIVE)),
-                Arguments.of("f6", Square.of(File.F, Rank.SIX)),
-                Arguments.of("g7", Square.of(File.G, Rank.SEVEN)),
-                Arguments.of("h8", Square.of(File.H, Rank.EIGHT))
+                Arguments.of("a1", Square.of(A, ONE)),
+                Arguments.of("b2", Square.of(B, TWO)),
+                Arguments.of("c3", Square.of(C, THREE)),
+                Arguments.of("d4", Square.of(D, FOUR)),
+                Arguments.of("e5", Square.of(E, FIVE)),
+                Arguments.of("f6", Square.of(F, SIX)),
+                Arguments.of("g7", Square.of(G, SEVEN)),
+                Arguments.of("h8", Square.of(H, EIGHT))
         );
     }
 
@@ -36,14 +42,14 @@ class SquareTest {
 
     private static Stream<Arguments> move() {
         return Stream.of(
-                Arguments.of(Direction.UP, Square.of(File.D, Rank.FIVE)),
-                Arguments.of(Direction.UP_LEFT, Square.of(File.C, Rank.FIVE)),
-                Arguments.of(Direction.UP_RIGHT, Square.of(File.E, Rank.FIVE)),
-                Arguments.of(Direction.DOWN, Square.of(File.D, Rank.THREE)),
-                Arguments.of(Direction.DOWN_LEFT, Square.of(File.C, Rank.THREE)),
-                Arguments.of(Direction.DOWN_RIGHT, Square.of(File.E, Rank.THREE)),
-                Arguments.of(Direction.LEFT, Square.of(File.C, Rank.FOUR)),
-                Arguments.of(Direction.RIGHT, Square.of(File.E, Rank.FOUR))
+                Arguments.of(UP, Square.of(D, FIVE)),
+                Arguments.of(UP_LEFT, Square.of(C, FIVE)),
+                Arguments.of(UP_RIGHT, Square.of(E, FIVE)),
+                Arguments.of(DOWN, Square.of(D, THREE)),
+                Arguments.of(DOWN_LEFT, Square.of(C, THREE)),
+                Arguments.of(DOWN_RIGHT, Square.of(E, THREE)),
+                Arguments.of(LEFT, Square.of(C, FOUR)),
+                Arguments.of(RIGHT, Square.of(E, FOUR))
         );
     }
 
@@ -51,21 +57,21 @@ class SquareTest {
     @ParameterizedTest
     @MethodSource
     void move(Direction direction, Square next) {
-        Square current = Square.of(File.D, Rank.FOUR);
+        Square current = Square.of(D, FOUR);
         Square actual = current.move(direction).get();
         assertThat(actual).isEqualTo(next);
     }
 
     private static Stream<Arguments> moveException() {
         return Stream.of(
-                Arguments.of(Square.of(File.D, Rank.EIGHT), Direction.UP),
-                Arguments.of(Square.of(File.A, Rank.EIGHT), Direction.UP_LEFT),
-                Arguments.of(Square.of(File.H, Rank.EIGHT), Direction.UP_RIGHT),
-                Arguments.of(Square.of(File.D, Rank.ONE), Direction.DOWN),
-                Arguments.of(Square.of(File.A, Rank.ONE), Direction.DOWN_LEFT),
-                Arguments.of(Square.of(File.H, Rank.ONE), Direction.DOWN_RIGHT),
-                Arguments.of(Square.of(File.A, Rank.FOUR), Direction.LEFT),
-                Arguments.of(Square.of(File.H, Rank.FOUR), Direction.RIGHT)
+                Arguments.of(Square.of(D, EIGHT), UP),
+                Arguments.of(Square.of(A, EIGHT), UP_LEFT),
+                Arguments.of(Square.of(H, EIGHT), UP_RIGHT),
+                Arguments.of(Square.of(D, ONE), DOWN),
+                Arguments.of(Square.of(A, ONE), DOWN_LEFT),
+                Arguments.of(Square.of(H, ONE), DOWN_RIGHT),
+                Arguments.of(Square.of(A, FOUR), LEFT),
+                Arguments.of(Square.of(H, FOUR), RIGHT)
         );
     }
 
@@ -80,64 +86,136 @@ class SquareTest {
     @DisplayName("현재 위치에서 위로 이동한다.")
     @Test
     void moveUp() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveUp()).isEqualTo(Square.of(File.F, Rank.THREE));
+        Assertions.assertThat(square.moveUp()).isEqualTo(Square.of(F, THREE));
     }
 
     @DisplayName("현재 위치에서 아래로 이동한다.")
     @Test
     void moveDown() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveDown()).isEqualTo(Square.of(File.F, Rank.ONE));
+        Assertions.assertThat(square.moveDown()).isEqualTo(Square.of(F, ONE));
     }
 
     @DisplayName("현재 위치에서 왼쪽으로 이동한다.")
     @Test
     void moveLeft() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveLeft()).isEqualTo(Square.of(File.E, Rank.TWO));
+        Assertions.assertThat(square.moveLeft()).isEqualTo(Square.of(E, TWO));
     }
 
     @DisplayName("현재 위치에서 오른쪽으로 이동한다.")
     @Test
     void moveRight() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveRight()).isEqualTo(Square.of(File.G, Rank.TWO));
+        Assertions.assertThat(square.moveRight()).isEqualTo(Square.of(G, TWO));
     }
 
     @DisplayName("현재 위치에서 왼쪽_위로 이동한다.")
     @Test
     void moveLeftUp() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveLeftUp()).isEqualTo(Square.of(File.E, Rank.THREE));
+        Assertions.assertThat(square.moveLeftUp()).isEqualTo(Square.of(E, THREE));
     }
 
     @DisplayName("현재 위치에서 왼쪽_아래로 이동한다.")
     @Test
     void moveLeftDown() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveLeftDown()).isEqualTo(Square.of(File.E, Rank.ONE));
+        Assertions.assertThat(square.moveLeftDown()).isEqualTo(Square.of(E, ONE));
     }
 
     @DisplayName("현재 위치에서 오른쪽_위로 이동한다.")
     @Test
     void moveRightUp() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveRightUp()).isEqualTo(Square.of(File.G, Rank.THREE));
+        Assertions.assertThat(square.moveRightUp()).isEqualTo(Square.of(G, THREE));
     }
 
     @DisplayName("현재 위치에서 오른쪽_아래로 이동한다.")
     @Test
     void moveRightDown() {
-        Square square = Square.of(File.F, Rank.TWO);
+        Square square = Square.of(F, TWO);
 
-        Assertions.assertThat(square.moveRightDown()).isEqualTo(Square.of(File.G, Rank.ONE));
+        Assertions.assertThat(square.moveRightDown()).isEqualTo(Square.of(G, ONE));
+    }
+
+    @DisplayName("위로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveUp() {
+        assertAll(
+                () -> assertTrue(Square.of(F, ONE)::canMoveUp),
+                () -> assertFalse(Square.of(F, EIGHT)::canMoveUp)
+        );
+    }
+
+    @DisplayName("아래로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveDown() {
+        assertAll(
+                () -> assertTrue(Square.of(F, EIGHT)::canMoveDown),
+                () -> assertFalse(Square.of(F, ONE)::canMoveDown)
+        );
+    }
+
+    @DisplayName("왼쪽으로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveLeft() {
+        assertAll(
+                () -> assertTrue(Square.of(H, TWO)::canMoveLeft),
+                () -> assertFalse(Square.of(A, TWO)::canMoveLeft)
+        );
+    }
+
+    @DisplayName("오른쪽으로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveRight() {
+        assertAll(
+                () -> assertTrue(Square.of(A, TWO)::canMoveRight),
+                () -> assertFalse(Square.of(H, TWO)::canMoveRight)
+        );
+    }
+
+    @DisplayName("왼쪽_아래로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveLeftDown() {
+        assertAll(
+                () -> assertTrue(Square.of(B, TWO)::canMoveLeftDown),
+                () -> assertFalse(Square.of(A, ONE)::canMoveLeftDown)
+        );
+    }
+
+    @DisplayName("왼쪽_위로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveLeftUp() {
+        assertAll(
+                () -> assertTrue(Square.of(B, SEVEN)::canMoveLeftUp),
+                () -> assertFalse(Square.of(A, EIGHT)::canMoveLeftUp)
+        );
+    }
+
+    @DisplayName("오른쪽_아래로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveRightDown() {
+        assertAll(
+                () -> assertTrue(Square.of(F, TWO)::canMoveRightDown),
+                () -> assertFalse(Square.of(H, ONE)::canMoveRightDown)
+        );
+    }
+
+    @DisplayName("오른쪽_위로 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveRightUp() {
+        assertAll(
+                () -> assertTrue(Square.of(G, SEVEN)::canMoveRightUp),
+                () -> assertFalse(Square.of(H, EIGHT)::canMoveRightUp)
+        );
     }
 }
