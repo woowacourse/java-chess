@@ -104,8 +104,11 @@ public class Board {
     }
 
     private boolean isMovablePosition(Team team, Position position) {
-        return !pieces.containsKey(position)
-                || (pieces.containsKey(position) && pieces.get(position).isOppositeTeamWith(team));
+        if(pieces.containsKey(position)) {
+            return pieces.get(position)
+                    .isOppositeTeamWith(team);
+        }
+        return true;
     }
 
     private boolean isDoubleCheck(Team team, Position kingPosition) {
