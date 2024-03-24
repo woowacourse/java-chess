@@ -25,14 +25,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "n";
-        }
-        return "N";
-    }
-
-    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Movement movement = target.calculateMovement(source);

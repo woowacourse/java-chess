@@ -12,7 +12,6 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract String getText();
     public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
     protected final boolean isSameSide(Piece other) {

@@ -23,14 +23,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "b";
-        }
-        return "B";
-    }
-
-    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Movement movement = target.calculateMovement(source);

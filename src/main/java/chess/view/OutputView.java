@@ -3,50 +3,60 @@ package chess.view;
 import chess.model.board.ChessBoard;
 import chess.model.position.ChessPosition;
 import chess.model.piece.Piece;
+import chess.model.position.File;
+import chess.model.position.Rank;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
-    private static final int BOARD_SIZE = 8;
-    private static final String NONE = ".";
 
     public void printChessBoard(ChessBoard chessBoard) {
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
-        List<List<String>> result = new ArrayList<>();
-        initializeChessBoard(result);
-        changeNoneToPiece(board, result);
-        String text = convertChessBoardTextInOneLine(result);
+        List<List<String>> outputBoard = createOutputBoard(board);
+        String text = convertToText(outputBoard);
         System.out.println(text);
     }
 
-    private void initializeChessBoard(List<List<String>> result) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            List<String> strings = IntStream.range(0, BOARD_SIZE)
-                    .mapToObj(index -> NONE)
-                    .collect(Collectors.toList());
-            result.add(strings);
+    private List<List<String>> createOutputBoard(Map<ChessPosition, Piece> board) {
+        List<List<String>> outputBoard = new ArrayList<>();
+        List<Rank> reversedRanks = reverseRanks();
+        for (Rank rank : reversedRanks) {
+            List<String> line = getLineByRank(rank, board);
+            outputBoard.add(line);
         }
+        return outputBoard;
     }
 
-    private void changeNoneToPiece(Map<ChessPosition, Piece> board, List<List<String>> result) {
-        for (Entry<ChessPosition, Piece> entry : board.entrySet()) {
-            int file = entry.getKey().getFile().getCoordinate();
-            int rank = entry.getKey().getRank().getCoordinate();
-            List<String> nowFile = result.get(BOARD_SIZE - rank);
-            nowFile.set(file - 1, getPieceText(entry));
+    private List<Rank> reverseRanks() {
+        List<Rank> ranks = Arrays.asList(Rank.values());
+        Collections.reverse(ranks);
+        return ranks;
+    }
+
+    private List<String> getLineByRank(Rank rank, Map<ChessPosition, Piece> board) {
+        List<String> line = new ArrayList<>();
+        for (File file : File.values()) {
+            Piece piece = findByPosition(rank, file, board);
+            String shape = getPieceShape(piece);
+            line.add(shape);
         }
+        return line;
     }
 
-    private String getPieceText(Entry<ChessPosition, Piece> entry) {
-        return entry.getValue().getText();
+    private Piece findByPosition(Rank rank, File file, Map<ChessPosition, Piece> board) {
+        ChessPosition position = board.keySet().stream()
+                .filter(chessPosition -> chessPosition.getRank() == rank && chessPosition.getFile() == file)
+                .findFirst().orElseThrow(() -> new NoSuchElementException("주어진 좌표에 출력을 위한 Piece가 존재하지 않습니다."));
+        return board.get(position);
     }
 
-    private String convertChessBoardTextInOneLine(List<List<String>> result) {
+    private String getPieceShape(Piece piece) {
+        return PieceShape.from(piece)
+                .getShape();
+    }
+
+    private String convertToText(List<List<String>> result) {
         return result.stream()
                 .map(strings -> String.join("", strings))
                 .collect(Collectors.joining(System.lineSeparator()));

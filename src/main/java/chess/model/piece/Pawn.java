@@ -27,14 +27,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "p";
-        }
-        return "P";
-    }
-
-    @Override
     public List<ChessPosition> findPath(ChessPosition sourcePosition, ChessPosition targetPosition, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Movement movement = targetPosition.calculateMovement(sourcePosition);
