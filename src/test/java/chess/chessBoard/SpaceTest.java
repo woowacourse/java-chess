@@ -106,4 +106,17 @@ class SpaceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("루트에 피스가 있습니다.");
     }
+
+    @Test
+    @DisplayName("폰은 반대색이 대각선한칸에 있다면, 대각선으로 움직일 수 있다")
+    void should_move_two_space_when_first_move2() {
+        Piece piece1 = new Pawn(Color.WHITE);
+        Piece piece2 = new Pawn(Color.BLACK);
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.b, Rank.TWO));
+
+        space1.movePiece(space2);
+
+        assertThat(space2.getPiece()).isEqualTo(piece1);
+    }
 }
