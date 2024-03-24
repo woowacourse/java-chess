@@ -30,20 +30,20 @@ public class Piece {
     }
 
     public boolean isForward(Direction direction) {
-        if (pieceType == PieceType.BLACK_PAWN) {
+        if (pieceType.isBlackPawn()) {
             return direction == Direction.S;
         }
-        if (pieceType == PieceType.WHITE_PAWN) {
+        if (pieceType.isWhitePawn()) {
             return direction == Direction.N;
         }
         return true;
     }
 
     public boolean isAttack(Direction direction) {
-        if (pieceType == PieceType.BLACK_PAWN) {
+        if (pieceType.isBlackPawn()) {
             return direction == Direction.SW || direction == Direction.SE;
         }
-        if (pieceType == PieceType.WHITE_PAWN) {
+        if (pieceType.isWhitePawn()) {
             return direction == Direction.NE || direction == Direction.NW;
         }
         return true;

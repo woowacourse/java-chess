@@ -31,4 +31,12 @@ public enum PieceType {
     public Map<Direction, Deque<Position>> calculateAllDirectionPositions(Position currentPosition) {
         return this.moveStrategy.generateMovablePositions(currentPosition);
     }
+
+    public boolean isBlackPawn() {
+        return this == BLACK_PAWN;
+    }
+
+    public boolean isWhitePawn() {
+        return this == WHITE_PAWN;
+    }
 }
