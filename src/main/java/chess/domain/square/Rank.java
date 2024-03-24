@@ -10,11 +10,13 @@ public enum Rank {
     TWO,
     ONE;
 
+    private static final char FIRST_INPUT = '8';
     private static final String ERROR_OUT_OF_RANGE = "범위 밖의 랭크 입니다.";
 
-    public static Rank from(int value) {
-        validateRange(value);
-        return values()[value];
+    public static Rank from(char input) {
+        int index = FIRST_INPUT - input;
+        validateRange(index);
+        return values()[index];
     }
 
     private static void validateRange(int value) {

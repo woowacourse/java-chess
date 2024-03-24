@@ -1,16 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.square.File;
-import chess.domain.square.Square;
 import chess.domain.square.Rank;
+import chess.domain.square.Square;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BoardFactory {
 
@@ -41,16 +33,16 @@ public class BoardFactory {
     }
 
     private static Set<Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
-        return IntStream.range(0, PIECES_ARRANGEMENT.size())
-                .mapToObj(file -> PIECES_ARRANGEMENT.get(file).apply(
+        return Arrays.stream(File.values())
+                .map(file -> PIECES_ARRANGEMENT.get(file.ordinal()).apply(
                         pieceColor,
-                        new Square(File.from(file), rank)))
+                        Square.of(file, rank)))
                 .collect(Collectors.toSet());
     }
 
     private static Set<Piece> createPawns(Rank rank, PieceColor pieceColor) {
         return Arrays.stream(File.values())
-                .map(file -> new Pawn(pieceColor, new Square(file, rank)))
+                .map(file -> new Pawn(pieceColor, Square.of(file, rank)))
                 .collect(Collectors.toSet());
     }
 }

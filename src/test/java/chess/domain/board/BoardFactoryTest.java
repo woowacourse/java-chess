@@ -29,12 +29,12 @@ class BoardFactoryTest {
 
         // when
         for (int i = 0; i < piecesArrangement.size(); i++) {
-            expected.add(piecesArrangement.get(i).apply(PieceColor.BLACK, new Square(File.values()[i], Rank.EIGHT)));
-            expected.add(piecesArrangement.get(i).apply(PieceColor.WHITE, new Square(File.values()[i], Rank.ONE)));
+            expected.add(piecesArrangement.get(i).apply(PieceColor.BLACK, Square.of(File.values()[i], Rank.EIGHT)));
+            expected.add(piecesArrangement.get(i).apply(PieceColor.WHITE, Square.of(File.values()[i], Rank.ONE)));
         }
         for (File file : File.values()) {
-            expected.add(new Pawn(PieceColor.BLACK, new Square(file, Rank.SEVEN)));
-            expected.add(new Pawn(PieceColor.WHITE, new Square(file, Rank.TWO)));
+            expected.add(new Pawn(PieceColor.BLACK, Square.of(file, Rank.SEVEN)));
+            expected.add(new Pawn(PieceColor.WHITE, Square.of(file, Rank.TWO)));
         }
 
         // then

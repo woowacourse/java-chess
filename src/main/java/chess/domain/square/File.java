@@ -11,11 +11,13 @@ public enum File {
     G,
     H;
 
+    private static final char FIRST_INPUT = 'a';
     private static final String ERROR_OUT_OF_RANGE = "범위 밖의 파일 입니다.";
 
-    public static File from(int value) {
-        validateRange(value);
-        return values()[value];
+    public static File from(char input) {
+        int index = input - FIRST_INPUT;
+        validateRange(index);
+        return values()[index];
     }
 
     private static void validateRange(int value) {
