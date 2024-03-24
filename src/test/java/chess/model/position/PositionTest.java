@@ -23,7 +23,7 @@ class PositionTest {
 
     @DisplayName("좌표 표현 범위를 벗어나면 예외가 발생한다")
     @ParameterizedTest
-    @ValueSource(strings = {"i6", "a0", "g9"})
+    @ValueSource(strings = {"i6", "a0", "g9", "a"})
     void createInvalidPosition(String coordinate) {
         assertThatThrownBy(() -> Position.from(coordinate))
             .isInstanceOf(IllegalArgumentException.class);
