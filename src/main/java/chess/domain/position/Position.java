@@ -23,12 +23,12 @@ public class Position {
         return this.rank == rank;
     }
 
-    public int calculateFileDifference(Position position) {
-        return this.file.calculateDifference(position.file);
+    public int calculateFileDifference(Position other) {
+        return this.file.calculateDifference(other.file);
     }
 
-    public int calculateRankDifference(Position position) {
-        return this.rank.calculateDifference(position.rank);
+    public int calculateRankDifference(Position other) {
+        return this.rank.calculateDifference(other.rank);
     }
 
     public Position moveToEast() {
