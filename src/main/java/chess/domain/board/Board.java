@@ -48,6 +48,9 @@ public class Board {
     }
 
     private void validateNoPiecesBetween(Position source, Position destination) {
+        if (source.isOnKnightRoute(destination)) {
+            return;
+        }
         Path path = Path.createExcludingBothEnds(source, destination);
         if (path.hasPieceOnRoute(pieces)) {
             throw new IllegalArgumentException("경로에 기물이 있습니다.");

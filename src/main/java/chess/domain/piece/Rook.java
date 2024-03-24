@@ -20,7 +20,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected int getMaxUnitMove() {
+    public int getMaxUnitMove() {
         return MAX_UNIT_MOVE;
     }
 }

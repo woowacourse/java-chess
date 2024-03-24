@@ -10,10 +10,12 @@ public abstract class Piece {
     private final PieceAttributes pieceAttributes;
     private final List<Direction> directions;
 
-    protected Piece(PieceType pieceType, Color color, List<Direction> directions) {
+    public Piece(PieceType pieceType, Color color, List<Direction> directions) {
         this.pieceAttributes = new PieceAttributes(pieceType, color);
         this.directions = directions;
     }
+
+    public abstract int getMaxUnitMove();
 
     public boolean isMovable(Position source, Position destination) {
         Direction direction = Direction.calculateBetween(source, destination);
@@ -21,19 +23,17 @@ public abstract class Piece {
                 isReachable(source, destination, direction);
     }
 
-    protected boolean matchesDirection(Direction direction) {
+    private boolean matchesDirection(Direction direction) {
         return directions.contains(direction);
     }
 
-    protected boolean isReachable(Position source, Position destination, Direction direction) {
+    private boolean isReachable(Position source, Position destination, Direction direction) {
         int distance = (int) Stream.iterate(source,
                         position -> position.isNotEquals(destination),
                         direction::nextPosition)
                 .count();
         return distance <= getMaxUnitMove();
     }
-
-    protected abstract int getMaxUnitMove();
 
     public boolean isAttackable(Position source, Position destination) {
         return isMovable(source, destination);

@@ -9,7 +9,7 @@ public class MovedPawn extends Pawn {
     }
 
     @Override
-    protected int getMaxUnitMove() {
+    public int getMaxUnitMove() {
         return MAX_UNIT_MOVE;
     }
 }

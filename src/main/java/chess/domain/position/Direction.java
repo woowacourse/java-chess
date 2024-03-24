@@ -38,22 +38,21 @@ public enum Direction {
             (source, destination) -> source.isOnSameRank(destination) &&
                     source.hasHigherFileThan(destination),
             position -> position.createPositionByDifferencesOf(-1, 0)),
-    KNIGHT(Position::isOnKnightRoute, UnaryOperator.identity()),
     ;
 
-    private final BiPredicate<Position, Position> predicate;
+    private final BiPredicate<Position, Position> checkDirection;
     private final UnaryOperator<Position> nextPositionGenerator;
 
-    Direction(BiPredicate<Position, Position> predicate, UnaryOperator<Position> nextPositionGenerator) {
-        this.predicate = predicate;
+    Direction(BiPredicate<Position, Position> checkDirection, UnaryOperator<Position> nextPositionGenerator) {
+        this.checkDirection = checkDirection;
         this.nextPositionGenerator = nextPositionGenerator;
     }
 
     public static Direction calculateBetween(Position source, Position destination) {
         return Arrays.stream(values())
-                .filter(direction -> direction.predicate.test(source, destination))
+                .filter(direction -> direction.checkDirection.test(source, destination))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 경로입니다."));
     }
 
     public Position nextPosition(Position position) {

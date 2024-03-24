@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -18,9 +17,6 @@ public class Path {
 
     public static Path createExcludingBothEnds(Position source, Position destination) {
         Direction direction = Direction.calculateBetween(source, destination);
-        if (direction == Direction.KNIGHT) {
-            return new Path(Collections.emptyList());
-        }
         List<Position> positions = getPositionsBetween(source, destination, direction);
         return new Path(positions);
     }
