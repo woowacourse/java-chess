@@ -16,4 +16,9 @@ public class Knight extends Piece {
         return (Math.abs(fileDifference) == 1 && Math.abs(rankDifference) == 2)
                 || (Math.abs(fileDifference) == 2 && Math.abs(rankDifference) == 1);
     }
+
+    @Override
+    public String asString() {
+        return "N";
+    }
 }

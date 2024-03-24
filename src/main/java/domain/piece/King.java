@@ -14,4 +14,9 @@ public class King extends Piece {
         int fileDifference = source.calculateFileDifference(target);
         return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
     }
+
+    @Override
+    public String asString() {
+        return "K";
+    }
 }

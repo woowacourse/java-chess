@@ -2,7 +2,7 @@ package view;
 
 import domain.board.Board;
 import domain.board.Position;
-import domain.piece.*;
+import domain.piece.Piece;
 
 public class OutputView {
 
@@ -34,32 +34,9 @@ public class OutputView {
     }
 
     private String pieceToString(Piece piece) {
-        String pieceText = "";
-        if (piece instanceof Empty) {
-            pieceText = ".";
-        }
-        if (piece instanceof Bishop) {
-            pieceText = "B";
-        }
-        if (piece instanceof King) {
-            pieceText = "K";
-        }
-        if (piece instanceof Knight) {
-            pieceText = "N";
-        }
-        if (piece instanceof Pawn) {
-            pieceText = "P";
-        }
-        if (piece instanceof Queen) {
-            pieceText = "Q";
-        }
-        if (piece instanceof Rook) {
-            pieceText = "R";
-        }
-
         if (piece.isWhite()) {
-            return pieceText.toLowerCase();
+            return piece.asString().toLowerCase();
         }
-        return pieceText;
+        return piece.asString();
     }
 }

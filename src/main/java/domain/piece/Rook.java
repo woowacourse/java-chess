@@ -13,4 +13,9 @@ public class Rook extends Piece {
         return source.isOnSameRankAs(target)
                 || source.isOnSameFileAs(target);
     }
+
+    @Override
+    public String asString() {
+        return "R";
+    }
 }

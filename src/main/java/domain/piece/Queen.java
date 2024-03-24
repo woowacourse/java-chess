@@ -14,4 +14,9 @@ public class Queen extends Piece {
                 || source.isOnSameRankAs(target)
                 || source.isOnSameFileAs(target);
     }
+
+    @Override
+    public String asString() {
+        return "Q";
+    }
 }

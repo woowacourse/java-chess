@@ -20,4 +20,9 @@ public class Pawn extends Piece {
         return (source.isBlackPawnInitialPosition() && rankDifference == -2)
                 || (rankDifference == -1 && Math.abs(fileDifference) <= 1);
     }
+
+    @Override
+    public String asString() {
+        return "P";
+    }
 }
