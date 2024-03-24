@@ -20,7 +20,7 @@ public class InputView {
         return input;
     }
 
-    public GameArguments readMoveArguments() {
+    public GameArguments readGameArguments() {
         String input = scanner.nextLine();
         List<String> inputs = Arrays.stream(input.split(" "))
                 .toList();

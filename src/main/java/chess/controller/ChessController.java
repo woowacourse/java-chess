@@ -34,7 +34,7 @@ public class ChessController {
 
     private void playChess(ChessBoard chessBoard) {
         while (true) {
-            GameArguments gameArguments = inputView.readMoveArguments();
+            GameArguments gameArguments = inputView.readGameArguments();
             GameCommand gameCommand = gameArguments.gameCommand();
             if (gameCommand.isEnd()) {
                 break;
