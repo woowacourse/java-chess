@@ -22,7 +22,7 @@ public class Board {
         pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
     }
 
-    public void movePieceAndRenewBoard(Position source, Position target) {
+    public boolean movePieceAndRenewBoard(Position source, Position target) {
         Piece piece = board.get(source);
 
         Piece movedPiece = movePiece(source, target, piece);
@@ -30,6 +30,8 @@ public class Board {
         PieceInfo pieceInfo = movedPiece.getPieceInfo();
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
         board.put(pieceInfo.getPosition(), movedPiece);
+
+        return target == pieceInfo.getPosition();
     }
 
     public boolean isSameTeamFromPosition(Position position, Team team) {

@@ -11,6 +11,7 @@ public class OutputView {
         for (int i = 7; i >= 0; i--) {
             rawBoardRow(rawBoard, i);
         }
+        System.out.println();
     }
 
     private static void rawBoardRow(List<List<String>> rawBoard, int index) {

@@ -23,8 +23,8 @@ public class ChessGame {
     public Map<Position, Piece> move(Position source, Position target) {
         validateMove(source, target);
         if (checkTurn(source, turn)) {
-            board.movePieceAndRenewBoard(source, target);
-            turn = turnChange();
+            boolean isMoved = board.movePieceAndRenewBoard(source, target);
+            turn = turnChange(isMoved);
             return board.getBoard();
         }
         throw new IllegalArgumentException(String.format("%s의 차례입니다.", turn.name()));
@@ -47,7 +47,10 @@ public class ChessGame {
         return board.isSameTeamFromPosition(source, turn);
     }
 
-    private Team turnChange() {
+    private Team turnChange(boolean isMoved) {
+        if (!isMoved) {
+            throw new IllegalArgumentException("입력한 움직임을 수행할 수 없습니다. 다시 시도해 주십시오.");
+        }
         if (turn == Team.WHITE) {
             return Team.BLACK;
         }
