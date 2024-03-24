@@ -37,22 +37,20 @@ class KnightTest {
 
     abcdefgh
      */
-    public static final List<Position> MOVABLE_POSITIONS = List.of(B3, B5, C2, C6, E2, E6, F3, F5);
+    private static final List<Position> MOVABLE_POSITIONS = List.of(B3, B5, C2, C6, E2, E6, F3, F5);
 
     private static Stream<Arguments> movableTargets() {
-        return MOVABLE_POSITIONS.stream()
-                .map(Arguments::arguments);
+        return PositionFixture.movablePositions(MOVABLE_POSITIONS);
     }
 
     private static Stream<Arguments> immovableTargets() {
-        return PositionFixture.exclude(MOVABLE_POSITIONS)
-                .map(Arguments::arguments);
+        return PositionFixture.immovablePositions(MOVABLE_POSITIONS);
     }
 
     @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸 움직인다.")
     @ParameterizedTest
     @MethodSource("movableTargets")
-    void canMoveTest(Position target) {
+    void hasFollowedRule(Position target) {
         Knight knight = new Knight(Side.BLACK);
 
         boolean actual = knight.hasFollowedRule(D4, target, MovePathFixture.noPieces());
@@ -63,7 +61,7 @@ class KnightTest {
     @DisplayName("나이트는 수평으로 두 칸 수직으로 한 칸, 또는 수직으로 두 칸 수평으로 한 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("immovableTargets")
-    void cantMoveTest(Position target) {
+    void hasViolatedRule(Position target) {
         Knight knight = new Knight(Side.BLACK);
 
         boolean actual = knight.hasFollowedRule(D4, target, MovePathFixture.noPieces());

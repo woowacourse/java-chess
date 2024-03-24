@@ -5,6 +5,7 @@ import domain.Position;
 import domain.Rank;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.params.provider.Arguments;
 
 public class PositionFixture {
 
@@ -80,13 +81,14 @@ public class PositionFixture {
     public static final Position H7 = new Position(File.H, Rank.SEVEN);
     public static final Position H8 = new Position(File.H, Rank.EIGHT);
 
-    public static Stream<Position> exclude(List<Position> movablePositions) {
-        List<Position> positions = Stream.of(File.values())
-                .flatMap(file -> Stream.of(Rank.values())
-                        .map(rank -> new Position(file, rank)))
-                .toList();
+    public static Stream<Arguments> movablePositions(List<Position> movablePositions) {
+        return movablePositions.stream()
+                .map(Arguments::arguments);
+    }
 
-        return positions.stream()
-                .filter(position -> !movablePositions.contains(position));
+    public static Stream<Arguments> immovablePositions(List<Position> movablePositions) {
+        return Position.allPositions().stream()
+                .filter(position -> !movablePositions.contains(position))
+                .map(Arguments::arguments);
     }
 }
