@@ -1,9 +1,6 @@
 package chess.domain.square.piece;
 
 import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Square;
-
 import java.util.Map;
 
 public class King extends Piece {
@@ -23,10 +20,5 @@ public class King extends Piece {
     @Override
     protected boolean isValidMovePath(Path path) {
         return path.isStraight(MOVABLE_MAX_DIFF) || path.isDiagonal(MOVABLE_MAX_DIFF);
-    }
-
-    @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return true;
     }
 }

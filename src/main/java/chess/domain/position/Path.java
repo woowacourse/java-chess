@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // TODO: 단위테스트 작성
@@ -64,7 +65,17 @@ public class Path {
         return isStraight() && diff <= maxDiff && diff > 0;
     }
 
-    public List<Position> findStraight() {
+    public List<Position> findRoute() {
+        if (isStraight()) {
+            return findStraightRoute();
+        }
+        if (isDiagonal()) {
+            return findDiagonalRoute();
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Position> findStraightRoute() {
         if (isStraightRank()) {
             return findRankStraight();
         }
@@ -95,7 +106,7 @@ public class Path {
         return positions;
     }
 
-    public List<Position> findDiagonal() {
+    public List<Position> findDiagonalRoute() {
         if (isUphill()) {
             return findUphill();
         }

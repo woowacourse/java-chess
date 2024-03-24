@@ -4,7 +4,6 @@ import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
-
 import java.util.Map;
 
 public class Pawn extends Piece {
@@ -54,15 +53,12 @@ public class Pawn extends Piece {
         return MOVED_MAX_DISTANCE;
     }
 
-    @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return true;
-    }
-
     private boolean isValidAttackPath(Path path) {
         if (isColor(Color.BLACK)) {
-            return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
+            return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE
+                    && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
         }
-        return path.subtractRank() == ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
+        return path.subtractRank() == ATTACKABLE_RANK_DISTANCE
+                && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
     }
 }

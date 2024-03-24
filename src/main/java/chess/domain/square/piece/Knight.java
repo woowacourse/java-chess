@@ -1,9 +1,6 @@
 package chess.domain.square.piece;
 
 import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Square;
-
 import java.util.Map;
 
 public class Knight extends Piece {
@@ -25,10 +22,5 @@ public class Knight extends Piece {
     protected boolean isValidMovePath(Path path) {
         return (path.calculateRankDistance() == MIN_MOVABLE_DIFF && path.calculateFileDistance() == MAX_MOVABLE_DIFF) ||
                 (path.calculateRankDistance() == MAX_MOVABLE_DIFF && path.calculateFileDistance() == MIN_MOVABLE_DIFF);
-    }
-
-    @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return true;
     }
 }

@@ -2,8 +2,8 @@ package chess.domain.square.piece;
 
 import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.square.Empty;
 import chess.domain.square.Square;
-
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,7 +25,11 @@ public abstract class Piece implements Square {
 
     protected abstract boolean isValidMovePath(Path path);
 
-    protected abstract boolean isNotObstructed(Path path, Map<Position, Square> board);
+    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
+        return path.findRoute()
+                .stream()
+                .allMatch(position -> board.get(position) == Empty.getInstance());
+    }
 
     @Override
     public boolean isColor(Color color) {
@@ -41,8 +45,12 @@ public abstract class Piece implements Square {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Piece piece = (Piece) o;
 

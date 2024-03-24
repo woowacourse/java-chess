@@ -1,10 +1,6 @@
 package chess.domain.square.piece;
 
 import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
-
 import java.util.Map;
 
 public class Queen extends Piece {
@@ -23,15 +19,5 @@ public class Queen extends Piece {
     @Override
     protected boolean isValidMovePath(Path path) {
         return path.isStraight() || path.isDiagonal();
-    }
-
-    @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        if (path.isStraight()) {
-            return path.findStraight().stream()
-                    .allMatch(position -> board.get(position) == Empty.getInstance());
-        }
-        return path.findDiagonal().stream()
-                .allMatch(position -> board.get(position) == Empty.getInstance());
     }
 }
