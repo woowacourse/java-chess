@@ -27,7 +27,7 @@ public enum Direction {
 
         return Arrays.stream(values())
                 .filter(value -> value.rowDirection == rowDirection && value.columnDirection == columnDirection)
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 방향입니다."));
     }
 

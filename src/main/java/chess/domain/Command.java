@@ -23,7 +23,7 @@ public enum Command {
     public static Command getProcessCommand(String command) {
         Command inputCommand = Arrays.stream(values())
                 .filter(value -> value.command.equals(command))
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
 
         if(inputCommand == START) {
