@@ -28,8 +28,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnSameRank(destination)).isTrue();
+        // when
+        boolean isOnSameRank = source.isOnSameRank(destination);
+        // then
+        assertThat(isOnSameRank).isTrue();
     }
 
     @ParameterizedTest
@@ -40,8 +42,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnSameRank(destination)).isFalse();
+        // when
+        boolean isOnSameRank = source.isOnSameRank(destination);
+        // then
+        assertThat(isOnSameRank).isFalse();
     }
 
     @ParameterizedTest
@@ -52,8 +56,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnSameFile(destination)).isTrue();
+        // when
+        boolean isOnSameFile = source.isOnSameFile(destination);
+        // then
+        assertThat(isOnSameFile).isTrue();
     }
 
     @ParameterizedTest
@@ -64,8 +70,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnSameFile(destination)).isFalse();
+        // when
+        boolean isOnSameFile = source.isOnSameFile(destination);
+        // then
+        assertThat(isOnSameFile).isFalse();
     }
 
     @ParameterizedTest
@@ -76,8 +84,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnPositiveSlopeDiagonal(destination)).isTrue();
+        // when
+        boolean isOnPositiveSlopeDiagonal = source.isOnPositiveSlopeDiagonal(destination);
+        // then
+        assertThat(isOnPositiveSlopeDiagonal).isTrue();
     }
 
     @ParameterizedTest
@@ -88,8 +98,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnPositiveSlopeDiagonal(destination)).isFalse();
+        // when
+        boolean isOnPositiveSlopeDiagonal = source.isOnPositiveSlopeDiagonal(destination);
+        // then
+        assertThat(isOnPositiveSlopeDiagonal).isFalse();
     }
 
     @ParameterizedTest
@@ -100,8 +112,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnNegativeSlopeDiagonal(destination)).isTrue();
+        // when
+        boolean isOnNegativeSlopeDiagonal = source.isOnNegativeSlopeDiagonal(destination);
+        // then
+        assertThat(isOnNegativeSlopeDiagonal).isTrue();
     }
 
     @ParameterizedTest
@@ -112,8 +126,10 @@ class PositionTest {
         // given
         Position source = createPositionByNameAndNumber(sourceFileName, sourceRankNumber);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnNegativeSlopeDiagonal(destination)).isFalse();
+        // when
+        boolean isOnNegativeSlopeDiagonal = source.isOnNegativeSlopeDiagonal(destination);
+        // then
+        assertThat(isOnNegativeSlopeDiagonal).isFalse();
     }
 
     @ParameterizedTest
@@ -123,8 +139,10 @@ class PositionTest {
         // given
         Position source = Position.of(File.E, Rank.FOUR);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnKnightRoute(destination)).isTrue();
+        // when
+        boolean isOnKnightRoute = source.isOnKnightRoute(destination);
+        // then
+        assertThat(isOnKnightRoute).isTrue();
     }
 
     @ParameterizedTest
@@ -134,8 +152,10 @@ class PositionTest {
         // given
         Position source = Position.of(File.E, Rank.FOUR);
         Position destination = createPositionByNameAndNumber(destinationFileName, destinationFileNumber);
-        // when, then
-        assertThat(source.isOnKnightRoute(destination)).isFalse();
+        // when
+        boolean isOnKnightRoute = source.isOnKnightRoute(destination);
+        // then
+        assertThat(isOnKnightRoute).isFalse();
     }
 
     private Position createPositionByNameAndNumber(String fileName, int rankNumber) {

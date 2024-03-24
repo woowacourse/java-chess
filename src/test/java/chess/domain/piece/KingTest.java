@@ -36,7 +36,9 @@ class KingTest {
         // given
         King king = new King(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
-        // when, then
-        assertThat(king.isMovable(source, Position.of(File.D, Rank.SIX))).isFalse();
+        // when,
+        boolean movable = king.isMovable(source, Position.of(File.D, Rank.SIX));
+        // then
+        assertThat(movable).isFalse();
     }
 }

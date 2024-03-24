@@ -24,8 +24,10 @@ class PathTest {
                 Position.of(File.D, Rank.FOUR), new Rook(Color.WHITE)
         );
         Path path = Path.createExcludingBothEnds(source, destination);
-        // when, then
-        assertThat(path.hasPieceOnRoute(pieces)).isTrue();
+        // when
+        boolean hasPieceOnRoute = path.hasPieceOnRoute(pieces);
+        // then
+        assertThat(hasPieceOnRoute).isTrue();
     }
 
     @Test
@@ -36,7 +38,9 @@ class PathTest {
         Position destination = Position.of(File.H, Rank.EIGHT);
         Map<Position, Piece> pieces = Map.of();
         Path path = Path.createExcludingBothEnds(source, destination);
-        // when, then
-        assertThat(path.hasPieceOnRoute(pieces)).isFalse();
+        // when
+        boolean hasPieceOnRoute = path.hasPieceOnRoute(pieces);
+        // then
+        assertThat(hasPieceOnRoute).isFalse();
     }
 }

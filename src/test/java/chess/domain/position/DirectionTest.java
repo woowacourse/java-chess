@@ -101,7 +101,7 @@ class DirectionTest {
     @DisplayName("해당 방향의 다음 Position을 반환한다.")
     void nextPositionTest() {
         // given
-        Position destination = Position.of(File.F, Rank.SIX);
+        Position destination = Position.of(File.E, Rank.FIVE);
         // when
         Position nextPosition = Direction.POSITIVE_FILE_POSITIVE_RANK.nextPosition(source);
         // then

@@ -38,7 +38,9 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
         Position destination = direction.nextPosition(source);
-        // when, then
-        assertThat(rook.isMovable(source, destination)).isFalse();
+        // when
+        boolean movable = rook.isMovable(source, destination);
+        // then
+        assertThat(movable).isFalse();
     }
 }

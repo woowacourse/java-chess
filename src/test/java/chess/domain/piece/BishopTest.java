@@ -36,8 +36,10 @@ class BishopTest {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
         Position source = Position.of(File.A, Rank.ONE);
-        // when, then
-        assertThat(bishop.isMovable(source, Position.of(File.H, Rank.EIGHT))).isTrue();
+        // when
+        boolean movable = bishop.isMovable(source, Position.of(File.H, Rank.EIGHT));
+        // then
+        assertThat(movable).isTrue();
     }
 
     @ParameterizedTest
@@ -48,7 +50,9 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
         Position destination = direction.nextPosition(source);
-        // when, then
-        assertThat(bishop.isMovable(source, destination)).isFalse();
+        // when
+        boolean movable = bishop.isMovable(source, destination);
+        // then
+        assertThat(movable).isFalse();
     }
 }

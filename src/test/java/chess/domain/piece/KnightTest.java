@@ -41,7 +41,9 @@ class KnightTest {
         Knight knight = new Knight(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
         Position destination = direction.nextPosition(source);
-        // when, then
-        assertThat(knight.isMovable(source, destination)).isFalse();
+        // when
+        boolean movable = knight.isMovable(source, destination);
+        // then
+        assertThat(movable).isFalse();
     }
 }
