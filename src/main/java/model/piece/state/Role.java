@@ -1,20 +1,20 @@
 package model.piece.state;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import model.direction.MovingPattern;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Route;
+import model.shift.Shift;
+
+import java.util.Set;
 
 public abstract class Role {
-    protected Color color;
-    private List<MovingPattern> movingPatterns;
 
-    protected Role(Color color, List<MovingPattern> movingPatternList) {
+    private Color color;
+    private Shift shift;
+
+    protected Role(Color color, Shift shift) {
         this.color = color;
-        this.movingPatterns = new ArrayList<>(movingPatternList);
+        this.shift = shift;
     }
 
     public void checkSameCamp(Role role) {
@@ -28,22 +28,16 @@ public abstract class Role {
     }
 
     public Route findRoute(Position source, Position destination) {
-        return possibleRoutes(source).stream()
+        return findPossibleAllRoute(source)
+                .stream()
                 .filter(route -> route.contains(destination))
                 .map(route -> route.subRoute(destination))
                 .findAny()
-                .orElseThrow(() ->  new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }
 
-    protected abstract Set<Route> possibleRoutes(Position position);
-
-    protected Route getRoute(MovingPattern movingPattern, Position movedPosition) {
-        List<Position> sequentialPositions = new ArrayList<>();
-        while (movedPosition.isAvailablePosition(movingPattern)) {
-            movedPosition = movedPosition.getNextPosition(movingPattern);
-            sequentialPositions.add(movedPosition);
-        }
-        return new Route(sequentialPositions);
+    public Set<Route> findPossibleAllRoute(Position position) {
+        return shift.routes(position);
     }
 
     public Color getColor() {
