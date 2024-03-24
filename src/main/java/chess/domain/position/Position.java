@@ -50,13 +50,10 @@ public class Position {
     }
 
     private List<Position> findStraightRoute(List<File> files, List<Rank> ranks) {
-        List<Position> positions = new ArrayList<>();
-        for (File routeFile : files) {
-            for (Rank routeRank : ranks) {
-                positions.add(new Position(routeFile, routeRank));
-            }
-        }
-        return positions;
+        return files.stream()
+                .flatMap(file -> ranks.stream()
+                        .map(rank -> new Position(file, rank)))
+                .toList();
     }
 
     public boolean isSameRank(Rank otherRank) {
