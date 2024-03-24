@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,22 +10,8 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PositionTest {
-
-    static Stream<Arguments> findTargetDirectionArguments() {
-        return Stream.of(
-                Arguments.arguments(Position.of("b2"), Position.of("b3"), Direction.UP),
-                Arguments.arguments(Position.of("b2"), Position.of("b1"), Direction.DOWN),
-                Arguments.arguments(Position.of("b2"), Position.of("a2"), Direction.LEFT),
-                Arguments.arguments(Position.of("b2"), Position.of("c2"), Direction.RIGHT),
-                Arguments.arguments(Position.of("b2"), Position.of("c3"), Direction.UP_RIGHT),
-                Arguments.arguments(Position.of("b2"), Position.of("a3"), Direction.UP_LEFT),
-                Arguments.arguments(Position.of("b2"), Position.of("c1"), Direction.DOWN_RIGHT),
-                Arguments.arguments(Position.of("b2"), Position.of("a1"), Direction.DOWN_LEFT)
-        );
-    }
 
     static Stream<Arguments> calculateDistanceArguments() {
         return Stream.of(
@@ -38,19 +23,6 @@ public class PositionTest {
                 Arguments.arguments(Position.of("f6"), Position.of("b2"), 4),
                 Arguments.arguments(Position.of("b2"), Position.of("a1"), 1),
                 Arguments.arguments(Position.of("b2"), Position.of("c1"), 1)
-        );
-    }
-
-    static Stream<Arguments> findWrongDirectionArguments() {
-        return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("c2")),
-                Arguments.arguments(Position.of("d4"), Position.of("e2")),
-                Arguments.arguments(Position.of("d4"), Position.of("c6")),
-                Arguments.arguments(Position.of("d4"), Position.of("e6")),
-                Arguments.arguments(Position.of("d4"), Position.of("f3")),
-                Arguments.arguments(Position.of("d4"), Position.of("f5")),
-                Arguments.arguments(Position.of("d4"), Position.of("b5")),
-                Arguments.arguments(Position.of("d4"), Position.of("b3"))
         );
     }
 
@@ -81,26 +53,7 @@ public class PositionTest {
         assertThat(position).isEqualTo(expectedPosition);
     }
 
-    @DisplayName("주어진 Target이 Source의 어느 방향에 있는 지 반환한다.")
-    @ParameterizedTest
-    @MethodSource("findTargetDirectionArguments")
-    void findTargetDirection(Position source, Position target, Direction expectedDirection) {
-        // when
-        Direction result = source.findDirectionTo(target);
 
-        // then
-        assertThat(result).isEqualTo(expectedDirection);
-    }
-
-    @DisplayName("주어진 Target이 잘못된 방향에 있다면 예외를 발생한다.")
-    @ParameterizedTest
-    @MethodSource("findWrongDirectionArguments")
-    void findWrongDirection(Position source, Position target) {
-        // when & then
-        assertThatThrownBy(() -> source.findDirectionTo(target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("올바르지 않은 방향입니다.");
-    }
 
     @DisplayName("주어진 Source에서 Target까지의 거리를 계산한다.")
     @ParameterizedTest

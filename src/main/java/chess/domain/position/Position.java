@@ -23,33 +23,8 @@ public class Position {
         ));
     }
 
-    // TODO : 리팩터링
     public Direction findDirectionTo(Position target) {
-        if (file.index() == target.file.index() && rank.index() < target.rank.index()) {
-            return Direction.UP;
-        }
-        if (file.index() == target.file.index() && rank.index() > target.rank.index()) {
-            return Direction.DOWN;
-        }
-        if (file.index() > target.file.index() && rank.index() == target.rank.index()) {
-            return Direction.LEFT;
-        }
-        if (file.index() < target.file.index() && rank.index() == target.rank.index()) {
-            return Direction.RIGHT;
-        }
-        if (file.index() < target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.UP_RIGHT;
-        }
-        if (file.index() > target.file.index() && rank.index() < target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.UP_LEFT;
-        }
-        if (file.index() < target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.DOWN_RIGHT;
-        }
-        if (file.index() > target.file.index() && rank.index() > target.rank.index() && calculateFileDistanceTo(target) == calculateRankDistanceTo(target)) {
-            return Direction.DOWN_LEFT;
-        }
-        throw new IllegalArgumentException("올바르지 않은 방향입니다.");
+        return Direction.findDirection(calculateFileDistanceTo(target), calculateRankDistanceTo(target));
     }
 
     public boolean isRank(ChessRank rank) {
@@ -59,10 +34,10 @@ public class Position {
     public int calculateDistanceTo(Position target) {
         int fileDistance = calculateFileDistanceTo(target);
         int rankDistance = calculateRankDistanceTo(target);
-
         if (fileDistance > 0) {
             return fileDistance;
         }
+
         return rankDistance;
     }
 
@@ -74,27 +49,6 @@ public class Position {
         return Math.abs(target.rank.index() - rank.index());
     }
 
-
-    public int indexOfFile() {
-        return file.index();
-    }
-
-    public int indexOfRank() {
-        return rank.index();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return file == position.file && rank == position.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
-    }
 
     public Set<Position> findBetween(Position target) {
         Set<Position> positions = new HashSet<>();
@@ -146,5 +100,26 @@ public class Position {
             files.add(ChessFile.findByIndex(index));
         }
         return files;
+    }
+
+    public int indexOfFile() {
+        return file.index();
+    }
+
+    public int indexOfRank() {
+        return rank.index();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
     }
 }

@@ -5,12 +5,12 @@ import chess.domain.piece.PieceColor;
 public class Turn {
     private PieceColor turn;
 
-    public static Turn first() {
-        return new Turn(PieceColor.WHITE);
-    }
-
     private Turn(PieceColor turn) {
         this.turn = turn;
+    }
+
+    public static Turn first() {
+        return new Turn(PieceColor.WHITE);
     }
 
     public void next() {

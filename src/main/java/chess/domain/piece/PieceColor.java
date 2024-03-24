@@ -13,7 +13,7 @@ public enum PieceColor {
     }
 
     public PieceColor reverse() {
-        if(this==WHITE){
+        if (this == WHITE) {
             return BLACK;
         }
         return WHITE;
