@@ -19,10 +19,7 @@ public class Square {
     }
 
     public boolean canMove(final Direction direction) {
-        if (file.canMove(direction.row()) && rank.canMove(direction.column())) {
-            return true;
-        }
-        return false;
+        return file.canMove(direction.row()) && rank.canMove(direction.column());
     }
 
     public boolean isRank(final Rank rank) {
