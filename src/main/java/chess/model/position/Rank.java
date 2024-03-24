@@ -4,14 +4,14 @@ import chess.model.piece.Side;
 import java.util.Arrays;
 
 public enum Rank {
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
+    EIGHT(8),
     SEVEN(7),
-    EIGHT(8);
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
 
     private final int coordinate;
 
@@ -43,9 +43,5 @@ public enum Rank {
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 Rank 좌표입니다."));
-    }
-
-    public int getCoordinate() {
-        return coordinate;
     }
 }

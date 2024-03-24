@@ -3,16 +3,13 @@ package chess.view;
 import chess.model.board.ChessBoard;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
-import java.util.ArrayList;
-import java.util.List;
+import chess.model.position.File;
+import chess.model.position.Rank;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OutputView {
-    private static final int BOARD_SIZE = 8;
-    private static final String NONE = ".";
 
     public void printException(String message) {
         System.out.println("[ERROR] " + message);
@@ -20,38 +17,16 @@ public class OutputView {
 
     public void printChessBoard(ChessBoard chessBoard) {
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
-        List<List<String>> result = new ArrayList<>();
-        initializeChessBoard(result);
-        changeNoneToPiece(board, result);
-        String text = convertChessBoardTextInOneLine(result);
-        System.out.println(text);
+        System.out.println(convertChessBoardText(board));
     }
 
-    private void initializeChessBoard(List<List<String>> result) {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            List<String> strings = IntStream.range(0, BOARD_SIZE)
-                    .mapToObj(index -> NONE)
-                    .collect(Collectors.toList());
-            result.add(strings);
-        }
-    }
-
-    private void changeNoneToPiece(Map<ChessPosition, Piece> board, List<List<String>> result) {
-        for (Entry<ChessPosition, Piece> entry : board.entrySet()) {
-            int file = entry.getKey().getFile().getCoordinate();
-            int rank = entry.getKey().getRank().getCoordinate();
-            List<String> nowFile = result.get(BOARD_SIZE - rank);
-            nowFile.set(file - 1, getPieceText(entry));
-        }
-    }
-
-    private String convertChessBoardTextInOneLine(List<List<String>> result) {
-        return result.stream()
-                .map(strings -> String.join("", strings))
+    private String convertChessBoardText(final Map<ChessPosition, Piece> board) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> Arrays.stream(File.values())
+                        .map(file -> new ChessPosition(file, rank))
+                        .map(board::get)
+                        .map(Piece::getText)
+                        .collect(Collectors.joining("")))
                 .collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    private String getPieceText(Entry<ChessPosition, Piece> entry) {
-        return entry.getValue().getText();
     }
 }
