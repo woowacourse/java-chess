@@ -8,14 +8,14 @@ public class OutputView {
     }
 
     public static void printBoard(final BoardDto boardDto) {
-        for (int vertical = BoardDto.VERTICAL_START_INDEX; vertical >= 0; vertical--) {
+        for (var vertical = BoardDto.VERTICAL_START_INDEX; vertical >= 0; vertical--) {
             printHorizontalLine(boardDto, vertical);
         }
     }
 
     private static void printHorizontalLine(final BoardDto boardDto, int vertical) {
-        final StringBuilder sb = new StringBuilder();
-        for (int horizontal = 0; horizontal < BoardDto.HORIZONTAL_END_INDEX; horizontal++) {
+        final var sb = new StringBuilder();
+        for (var horizontal = 0; horizontal < BoardDto.HORIZONTAL_END_INDEX; horizontal++) {
             sb.append(boardDto.getWithVerticalAndHorizontal(vertical, horizontal));
         }
         System.out.println(sb);

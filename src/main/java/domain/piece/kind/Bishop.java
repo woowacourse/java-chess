@@ -22,7 +22,7 @@ public class Bishop extends Piece {
     }
 
     public boolean canMove(final Point point) {
-        final Direction direction = this.point.calculate(point);
+        final var direction = this.point.calculate(point);
         return directionList.contains(direction);
     }
 }

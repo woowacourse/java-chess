@@ -31,7 +31,7 @@ public class Pieces {
     }
 
     public void move(final Piece piece, final Point point) {
-        final Optional<Piece> optionalPiece = findPieceWithPoint(point);
+        final var optionalPiece = findPieceWithPoint(point);
         optionalPiece.ifPresent(value::remove);
         piece.move(point);
     }
@@ -42,7 +42,7 @@ public class Pieces {
     }
 
     public Map<Point, Piece> toMap() {
-        Map<Point, Piece> map = new HashMap<>();
+        final var map = new HashMap<Point, Piece>();
 
         for (final Piece piece : value) {
             map.put(piece.getPoint(), piece);
@@ -51,12 +51,8 @@ public class Pieces {
     }
 
     private boolean isFriend(Piece piece, Point point) {
-        Optional<Piece> optionalPiece = findPieceWithPoint(point);
-        if (optionalPiece.isEmpty()) {
-            return false;
-        }
-        Piece toPiece = optionalPiece.get();
-        return piece.sameColor(toPiece);
+        final var optionalPiece = findPieceWithPoint(point);
+        return optionalPiece.filter(piece::sameColor).isPresent();
     }
 
     private boolean hasAnyPiece(Point startPoint, Point endPoint) {

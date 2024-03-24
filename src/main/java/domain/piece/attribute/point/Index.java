@@ -29,7 +29,7 @@ public record Index(int vertical, int horizontal) {
     }
 
     public Index move(final Direction direction, final int count) {
-        Index index = this;
+        var index = this;
         for (int i = 0; i < count; i++) {
             index = index.move(direction);
         }
@@ -37,8 +37,8 @@ public record Index(int vertical, int horizontal) {
     }
 
     public List<Index> findMovePath(final Direction direction, Index other) {
-        final List<Index> pathIndexes = new ArrayList<>();
-        Index current = direction.move(this);
+        final var pathIndexes = new ArrayList<Index>();
+        var current = direction.move(this);
         while (!current.equals(other)) {
             pathIndexes.add(current);
             current = direction.move(current);

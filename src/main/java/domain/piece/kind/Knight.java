@@ -35,7 +35,7 @@ public class Knight extends Piece {
     }
 
     private Index moveIndex(final List<Direction> directions) {
-        Index index = this.point.toIndex();
+        var index = this.point.toIndex();
         for (final var direction : directions) {
             index = index.move(direction);
         }

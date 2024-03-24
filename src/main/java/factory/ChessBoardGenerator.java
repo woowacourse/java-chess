@@ -19,7 +19,7 @@ public class ChessBoardGenerator {
     }
 
     public static ChessBoard createDefaultBoard() {
-        final ArrayList<Piece> list = new ArrayList<>();
+        final var list = new ArrayList<Piece>();
         list.addAll(selectPiece(Rank.EIGHT, Color.BLACK));
         list.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
 

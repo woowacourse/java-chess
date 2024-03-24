@@ -20,7 +20,7 @@ public enum File {
     }
 
     public static File from(final char value) {
-        for (final File file : File.values()) {
+        for (final var file : File.values()) {
             if (file.value == value) {
                 return file;
             }

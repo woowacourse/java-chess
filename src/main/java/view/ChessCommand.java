@@ -13,7 +13,7 @@ public enum ChessCommand {
     }
 
     public static ChessCommand from(final String commandText){
-        for (ChessCommand value : values()) {
+        for (final var value : values()) {
             if (value.commandText.equals(commandText)) {
                 return value;
             }

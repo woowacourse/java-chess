@@ -24,7 +24,7 @@ public class Pawn extends Piece {
 
 
     public boolean canMove(final Point point) {
-        final Direction direction = this.point.calculate(point);
+        final var direction = this.point.calculate(point);
 
         if (!containDirection(direction)) {
             return false;
@@ -47,7 +47,7 @@ public class Pawn extends Piece {
 
     private boolean doubleCase(final Point point, final Direction direction) {
         if (specialCase(direction)) {
-            Index index = this.point.toIndex();
+            final var index = this.point.toIndex();
             return Point.fromIndex(index.move(direction, DOUBLE_COUNT))
                         .equals(point);
         }

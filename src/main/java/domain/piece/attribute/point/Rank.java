@@ -16,7 +16,7 @@ public enum Rank {
     }
 
     public static Rank from(final int value) {
-        for (final Rank rank : Rank.values()) {
+        for (final var rank : Rank.values()) {
             if (rank.value == value) {
                 return rank;
             }
