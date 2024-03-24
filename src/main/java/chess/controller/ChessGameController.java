@@ -2,8 +2,9 @@ package chess.controller;
 
 import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
+import chess.domain.Position;
 import chess.view.Commend;
-import chess.view.CommendDto;
+import chess.view.CommandDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -32,13 +33,13 @@ public class ChessGameController {
 
     private boolean processGame(ChessGame chessGame) {
         try {
-            CommendDto commendDto = inputView.readCommend();
-            Commend commend = commendDto.commend();
+            CommandDto commandDto = inputView.readCommend();
+            Commend commend = commandDto.commend();
             if (commend == Commend.START) {
                 handleStartCommend(chessGame);
             }
             if (commend == Commend.MOVE) {
-                handleMoveCommend(chessGame, commendDto);
+                handleMoveCommend(chessGame, commandDto);
             }
             if (commend == Commend.END) {
                 return false;
@@ -54,8 +55,8 @@ public class ChessGameController {
         outputView.printBoard(chessGame.getBoard());
     }
 
-    private void handleMoveCommend(ChessGame chessGame, CommendDto commendDto) {
-        chessGame.handleMove(commendDto);
+    private void handleMoveCommend(ChessGame chessGame, CommandDto commandDto) {
+        chessGame.handleMove(Position.from(commandDto.from()), Position.from(commandDto.to()));
         outputView.printBoard(chessGame.getBoard());
     }
 }

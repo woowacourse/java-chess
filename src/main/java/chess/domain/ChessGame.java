@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.view.CommendDto;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -23,9 +22,7 @@ public class ChessGame {
         this.currentTurn = currentTurn;
     }
 
-    public void handleMove(CommendDto commendDto) {
-        Position from = Position.from(commendDto.from());
-        Position to = Position.from(commendDto.to());
+    public void handleMove(Position from, Position to) {
         List<Position> movablePositions = generateMovablePositions(from);
         movePiece(movablePositions, from, to);
         this.currentTurn = this.currentTurn.opposite();
@@ -34,7 +31,7 @@ public class ChessGame {
     public List<Position> generateMovablePositions(Position fromPosition) {
         Piece fromPiece = board.findPieceByPosition(fromPosition);
         if (fromPiece.isSameTeam(currentTurn.opposite())) {
-            throw new IllegalArgumentException("다른 팀의 기물을 움직일 수 없습니다.");
+            throw new IllegalArgumentException("다른 팀의 기물을 움직일 수 없습니다. 현재 턴 : " + currentTurn.name());
         }
         Map<Direction, Deque<Position>> expectedAllPositions = fromPiece.calculateAllDirectionPositions(fromPosition);
         return generateValidPositions(expectedAllPositions, fromPiece);

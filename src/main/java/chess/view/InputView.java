@@ -9,14 +9,14 @@ public class InputView {
     private static final Pattern PATTERN = Pattern.compile(REGEX);
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public CommendDto readCommend() {
+    public CommandDto readCommend() {
         String input = SCANNER.nextLine();
         validate(input);
         Matcher matcher = PATTERN.matcher(input);
         if (!matcher.matches()) {
             throw new IllegalArgumentException("올바르지 않은 명령어입니다.");
         }
-        return CommendDto.from(input);
+        return CommandDto.from(input);
     }
 
     private void validate(String value) {
