@@ -24,12 +24,8 @@ public class Piece {
         }
     }
 
-    public boolean isType(Type type) {
-        return this.type == type;
-    }
-
     public boolean isEmpty() {
-        return isType(Type.NONE);
+        return Type.NONE == type;
     }
 
     public boolean hasColor(Color color) {
