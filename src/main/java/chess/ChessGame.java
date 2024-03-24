@@ -51,7 +51,7 @@ public class ChessGame {
     private void executeMove(Board board) {
         Position start = inputView.readPosition();
         Position end = inputView.readPosition();
-        board.move(start, end);
+        board.tryMove(start, end);
         showBoard(board);
     }
 

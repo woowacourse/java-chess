@@ -64,7 +64,7 @@ class BoardTest {
         void moveTest() {
             Position possibleEnd = new Position(File.E, Rank.THREE);
 
-            board.move(START_KING, possibleEnd);
+            board.tryMove(START_KING, possibleEnd);
 
             assertAll(
                     () -> assertThat(board.find(possibleEnd)).isEqualTo(Optional.of(KING)),
@@ -78,7 +78,7 @@ class BoardTest {
             Position emptyPosition = new Position(File.F, Rank.EIGHT);
             Position end = new Position(File.F, Rank.TWO);
 
-            assertThatThrownBy(() -> board.move(emptyPosition, end))
+            assertThatThrownBy(() -> board.tryMove(emptyPosition, end))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("해당 위치에 말이 없습니다.");
         }
@@ -88,7 +88,7 @@ class BoardTest {
         void moveTest_whenOutOfMovement_throwException() {
             Position impossibleEnd = new Position(File.F, Rank.EIGHT);
 
-            assertThatThrownBy(() -> board.move(START_KING, impossibleEnd))
+            assertThatThrownBy(() -> board.tryMove(START_KING, impossibleEnd))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("불가능한 경로입니다.");
         }
@@ -98,7 +98,7 @@ class BoardTest {
         void moveTest_whenBlocked_throwException() {
             Position impossibleEnd = new Position(File.E, Rank.FIVE);
 
-            assertThatThrownBy(() -> board.move(START_QUEEN, impossibleEnd))
+            assertThatThrownBy(() -> board.tryMove(START_QUEEN, impossibleEnd))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("다른 말이 있어 이동 불가능합니다.");
         }

@@ -25,4 +25,8 @@ public abstract class Piece {
                 .map(movementRule -> movementRule.findPath(start, end))
                 .orElseThrow(() -> new IllegalArgumentException("불가능한 경로입니다."));
     }
+
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
+    }
 }
