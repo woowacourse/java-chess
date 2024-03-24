@@ -3,7 +3,7 @@ package chess.view;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public enum GameCommand {
+public enum Command {
 
     START("start"),
     END("end"),
@@ -12,11 +12,11 @@ public enum GameCommand {
 
     private final String command;
 
-    GameCommand(final String command) {
+    Command(final String command) {
         this.command = command;
     }
 
-    public static GameCommand map(final String rawInput) {
+    public static Command of(final String rawInput) {
         if (START.command.equals(rawInput)) {
             return START;
         }
@@ -28,7 +28,7 @@ public enum GameCommand {
         }
 
         String candidates = Arrays.stream(values())
-                .map(GameCommand::toString)
+                .map(Command::toString)
                 .collect(Collectors.joining(", "));
 
         throw new IllegalArgumentException(String.format("[ERROR] %s만 입력할 수 있습니다.", candidates));

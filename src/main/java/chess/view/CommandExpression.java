@@ -8,10 +8,10 @@ import java.util.List;
 
 public class CommandExpression {
 
-    private final GameCommand gameCommand;
+    private final Command gameCommand;
     private final List<Position> positions;
 
-    private CommandExpression(GameCommand gameCommand, List<Position> positions) {
+    private CommandExpression(Command gameCommand, List<Position> positions) {
         this.gameCommand = gameCommand;
         this.positions = positions;
     }
@@ -19,23 +19,23 @@ public class CommandExpression {
     public static CommandExpression of(String rawInput) {
         List<String> parsedInput = Arrays.stream(rawInput.split(" ")).toList();
         String commandInput = parsedInput.get(0);
-        GameCommand gameCommand = GameCommand.of(commandInput);
+        Command gameCommand = Command.of(commandInput);
         validateCommandArgumentsSize(gameCommand, parsedInput);
 
         List<Position> positions = new ArrayList<>();
-        if (gameCommand == GameCommand.MOVE) {
+        if (gameCommand == Command.MOVE) {
             positions.addAll(makePositions(parsedInput));
         }
 
         return new CommandExpression(gameCommand, positions);
     }
 
-    private static void validateCommandArgumentsSize(GameCommand gameCommand, List<String> commands) {
-        if ((gameCommand == GameCommand.START && commands.size() != 1) ||
-                (gameCommand == GameCommand.END && commands.size() != 1) ||
-                (gameCommand == GameCommand.MOVE && commands.size() != 3)
+    private static void validateCommandArgumentsSize(Command gameCommand, List<String> commands) {
+        if ((gameCommand == Command.START && commands.size() != 1) ||
+                (gameCommand == Command.END && commands.size() != 1) ||
+                (gameCommand == Command.MOVE && commands.size() != 3)
         ) {
-            throw new IllegalArgumentException("명령어에 맞는 인자의 갯수가 아닙니다.");
+            throw new IllegalArgumentException("[ERROR] 명령어에 맞는 인자의 갯수가 아닙니다.");
         }
     }
 
@@ -53,15 +53,15 @@ public class CommandExpression {
     }
 
     public boolean isStart() {
-        return this.gameCommand == GameCommand.START;
+        return this.gameCommand == Command.START;
     }
 
     public boolean isMove() {
-        return this.gameCommand == GameCommand.MOVE;
+        return this.gameCommand == Command.MOVE;
     }
 
     public boolean isEnd() {
-        return this.gameCommand == GameCommand.END;
+        return this.gameCommand == Command.END;
     }
 
     public Position getSourcePosition() {

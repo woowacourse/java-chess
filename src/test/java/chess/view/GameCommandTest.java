@@ -1,10 +1,10 @@
 package chess.view;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class GameCommandTest {
 
@@ -13,9 +13,9 @@ class GameCommandTest {
     void mapStart() {
         String input = "start";
 
-        GameCommand command = GameCommand.map(input);
+        Command command = Command.of(input);
 
-        assertThat(command).isEqualTo(GameCommand.START);
+        assertThat(command).isEqualTo(Command.START);
     }
 
     @Test
@@ -23,9 +23,9 @@ class GameCommandTest {
     void mapEnd() {
         String input = "end";
 
-        GameCommand command = GameCommand.map(input);
+        Command command = Command.of(input);
 
-        assertThat(command).isEqualTo(GameCommand.END);
+        assertThat(command).isEqualTo(Command.END);
     }
 
     @Test
@@ -33,7 +33,7 @@ class GameCommandTest {
     void mapFail() {
         String input = "invalidCommand";
 
-        assertThatThrownBy(() -> GameCommand.map(input))
+        assertThatThrownBy(() -> Command.of(input))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] start, end, move만 입력할 수 있습니다.");
     }
