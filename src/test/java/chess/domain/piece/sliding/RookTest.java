@@ -13,19 +13,19 @@ class RookTest {
 
     @Test
     @DisplayName("오른쪽으로 이동시 중간 경로를 찾는다.")
-    void findMovablePositionsRight() {
+    void findPathToRight() {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = rook.findPathTo(new Position(4, 1));
-        assertThat(movablePositions)
+        Set<Position> pathTo = rook.findPathTo(new Position(4, 1));
+        assertThat(pathTo)
                 .containsExactlyInAnyOrder(new Position(2, 1), new Position(3, 1));
     }
 
     @Test
     @DisplayName("위쪽으로 이동시 중간 경로를 찾는다.")
-    void findMovablePositionsUp() {
+    void findPathToUp() {
         Rook rook = new Rook(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = rook.findPathTo(new Position(1, 4));
-        assertThat(movablePositions)
+        Set<Position> pathTo = rook.findPathTo(new Position(1, 4));
+        assertThat(pathTo)
                 .containsExactlyInAnyOrder(new Position(1, 2), new Position(1, 3));
     }
 

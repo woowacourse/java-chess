@@ -25,7 +25,7 @@ class WhitePawnTest {
 
     @Test
     @DisplayName("왼쪽, 오른쪽으로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationLeftRight() {
+    void findPathToByInvalidDestinationLeftRight() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
 
         assertAll(
@@ -40,7 +40,7 @@ class WhitePawnTest {
 
     @Test
     @DisplayName("(2, 2)일 때 (2, 4)으로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationUpUp() {
+    void findPathToByInvalidDestinationUpUp() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
         Position destination = new Position(2, 4);
 
@@ -53,7 +53,7 @@ class WhitePawnTest {
 
     @Test
     @DisplayName("(2, 2)일 때 (2, 1)으로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidDestinationDown() {
+    void findPathToByInvalidDestinationDown() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
         Position destination = new Position(2, 1);
 
@@ -64,7 +64,7 @@ class WhitePawnTest {
 
     @Test
     @DisplayName("(2, 2)일 때 (2, 5)로는 이동할 수 없다.")
-    void findMovablePositionsByInvalidFarDestination() {
+    void findPathToByInvalidFarDestination() {
         WhitePawn whitePawn = new WhitePawn(new Position(2, 2));
         Position destination = new Position(2, 5);
 

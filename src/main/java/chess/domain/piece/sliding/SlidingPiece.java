@@ -20,7 +20,7 @@ public abstract class SlidingPiece extends Piece {
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.findCourses(destination);
+        return position.findPath(destination);
     }
 
     public abstract PieceType pieceType();

@@ -16,12 +16,12 @@ public abstract class Pawn extends Piece {
 
     @Override
     public Set<Position> findPathTo(Position destination) {
-        Set<Position> movable = position.findMovablePositions(directions);
+        Set<Position> path = position.findPathTo(directions);
 
-        if (!movable.contains(destination)) {
+        if (!path.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return position.findCourses(destination);
+        return position.findPath(destination);
     }
 
     public abstract boolean isCaptureMove(Position destination);

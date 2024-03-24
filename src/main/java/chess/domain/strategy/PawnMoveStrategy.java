@@ -19,7 +19,7 @@ public class PawnMoveStrategy extends MoveStrategy {
         Pawn currentPiece = (Pawn) board.get(source);
         checkTurnOf(currentPiece, turnColor);
         Piece destinationPiece = board.get(destination);
-        validateMovable(destination, currentPiece);
+        validatePath(destination, currentPiece);
         validateWithCapture(destination, currentPiece, destinationPiece);
         updateBoard(source, destination, currentPiece);
     }
@@ -33,9 +33,9 @@ public class PawnMoveStrategy extends MoveStrategy {
         }
     }
 
-    private void validateMovable(Position destination, Pawn currentPiece) {
-        Set<Position> movablePositions = currentPiece.findPathTo(destination);
-        if (!isAllBlankCourses(movablePositions)) {
+    private void validatePath(Position destination, Pawn currentPiece) {
+        Set<Position> path = currentPiece.findPathTo(destination);
+        if (!isAllBlankCourses(path)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
     }

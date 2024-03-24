@@ -17,16 +17,16 @@ public class GeneralMoveStrategy extends MoveStrategy {
         Piece currentPiece = board.get(source);
         checkTurnOf(currentPiece, turnColor);
         Piece destinationPiece = board.get(destination);
-        Set<Position> movablePositions = currentPiece.findPathTo(destination);
-        validateMovable(turnColor, movablePositions, destinationPiece);
+        Set<Position> path = currentPiece.findPathTo(destination);
+        validatePath(turnColor, path, destinationPiece);
         updateBoard(source, destination, currentPiece);
     }
 
-    private void validateMovable(Color turnColor, Set<Position> movablePositions, Piece destinationPiece) {
+    private void validatePath(Color turnColor, Set<Position> path, Piece destinationPiece) {
         if (destinationPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
         }
-        if (!isAllBlankCourses(movablePositions)) {
+        if (!isAllBlankCourses(path)) {
             throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
         }
     }

@@ -35,7 +35,7 @@ public class Position {
         }
     }
 
-    public Set<Position> findMovablePositions(Set<Direction> directions) {
+    public Set<Position> findPathTo(Set<Direction> directions) {
         return directions.stream()
                 .filter(this::isInRange)
                 .map(direction -> new Position(direction.getDx() + x, direction.getDy() + y))
@@ -76,7 +76,7 @@ public class Position {
         return dx;
     }
 
-    public Set<Position> findCourses(Position other) {
+    public Set<Position> findPath(Position other) {
         Set<Position> positions = new HashSet<>();
         Direction direction = findDirectionTo(other);
         int newX = x + direction.getDx();

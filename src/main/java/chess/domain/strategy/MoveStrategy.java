@@ -36,8 +36,8 @@ public abstract class MoveStrategy {
         }
     }
 
-    protected boolean isAllBlankCourses(Set<Position> movablePositions) {
-        return movablePositions.stream()
+    protected boolean isAllBlankCourses(Set<Position> path) {
+        return path.stream()
                 .map(board::get)
                 .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
     }

@@ -15,8 +15,8 @@ class BishopTest {
     @DisplayName("대각선 이동시 중간경로를 찾는다.")
     void findPathToDiagonal() {
         Bishop bishop = new Bishop(new Position(1, 1), Color.WHITE);
-        Set<Position> movablePositions = bishop.findPathTo(new Position(4, 4));
-        assertThat(movablePositions)
+        Set<Position> pathTo = bishop.findPathTo(new Position(4, 4));
+        assertThat(pathTo)
                 .containsExactlyInAnyOrder(new Position(2, 2), new Position(3, 3));
     }
 

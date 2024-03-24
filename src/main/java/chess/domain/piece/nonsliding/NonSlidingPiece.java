@@ -16,9 +16,9 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     public Set<Position> findPathTo(Position destination) {
-        Set<Position> movable = position.findMovablePositions(directions);
+        Set<Position> path = position.findPathTo(directions);
 
-        if (!movable.contains(destination)) {
+        if (!path.contains(destination)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
         return Set.of();

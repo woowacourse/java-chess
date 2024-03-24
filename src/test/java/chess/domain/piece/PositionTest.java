@@ -3,8 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.piece.Direction;
-import chess.domain.piece.Position;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -41,18 +39,18 @@ class PositionTest {
 
     @Test
     @DisplayName("현재 위치가 (1, 1)이고, Direction이 DOWN이면 움직일 수 있는 좌표가 없다.")
-    void findMovablePositions() {
+    void findPathToDown() {
         Position position = new Position(1, 1);
 
-        assertThat(position.findMovablePositions(Set.of(Direction.DOWN))).hasSize(0);
+        assertThat(position.findPathTo(Set.of(Direction.DOWN))).hasSize(0);
     }
 
     @Test
     @DisplayName("현재 위치가 (1, 1)이고, Direction이 UP, RIGHT이면 (2, 1), (1, 2)로 이동할 수 있다.")
-    void findPathToMovableDirections() {
+    void findPathToUpRight() {
         Position position = new Position(1, 1);
 
-        assertThat(position.findMovablePositions(Set.of(Direction.UP, Direction.RIGHT)))
+        assertThat(position.findPathTo(Set.of(Direction.UP, Direction.RIGHT)))
                 .containsExactly(new Position(2, 1), new Position(1, 2));
     }
 
@@ -87,7 +85,7 @@ class PositionTest {
     void forwardToDirection() {
         Position position = new Position(1, 1);
 
-        assertThat(position.findCourses(new Position(1, 3))).containsExactlyInAnyOrder(
+        assertThat(position.findPath(new Position(1, 3))).containsExactlyInAnyOrder(
                 new Position(1, 2));
     }
 
@@ -96,7 +94,7 @@ class PositionTest {
     void forwardToDirectionRightUp() {
         Position position = new Position(1, 1);
 
-        assertThat(position.findCourses(new Position(4, 4))).containsExactlyInAnyOrder(
+        assertThat(position.findPath(new Position(4, 4))).containsExactlyInAnyOrder(
                 new Position(2, 2), new Position(3, 3));
     }
 }
