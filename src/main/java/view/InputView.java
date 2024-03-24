@@ -9,14 +9,14 @@ import domain.position.Position;
 import java.util.Scanner;
 
 public class InputView {
-    private final Scanner SCANNER;
+    private final Scanner scanner;
 
     public InputView() {
-        this.SCANNER = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     public Command readStartCommand() {
-        String[] rawInput = SCANNER.nextLine().trim().split(" ");
+        String[] rawInput = scanner.nextLine().trim().split(" ");
         if (hasSize(rawInput, 1) && "start".equals(rawInput[0])) {
             return new StartOnCommand();
         }
@@ -24,7 +24,7 @@ public class InputView {
     }
 
     public Command readCommand() {
-        String[] rawInput = SCANNER.nextLine().trim().split(" ");
+        String[] rawInput = scanner.nextLine().trim().split(" ");
         if (hasSize(rawInput, 1) && "start".equals(rawInput[0])) {
             return new StartOnCommand();
         }
