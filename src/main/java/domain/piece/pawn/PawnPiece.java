@@ -6,8 +6,8 @@ import domain.piece.Type;
 import domain.position.Position;
 
 public abstract class PawnPiece implements Piece {
-    private static final int DISTANCE_TWO = 2;
-    private static final int DISTANCE_ONE = 1;
+    private static final int INITIAL_MOVE_DISTANCE = 2;
+    private static final int NORMAL_MOVE_DISTANCE = 1;
 
     private final Color color;
 
@@ -22,7 +22,7 @@ public abstract class PawnPiece implements Piece {
     }
 
     private void validateColorDifference(final Piece other) {
-        if (this.color().equals(other.color())) {
+        if (this.color() == other.color()) {
             throw new IllegalArgumentException("같은 팀의 말을 잡을 수 없습니다.");
         }
     }
@@ -43,13 +43,13 @@ public abstract class PawnPiece implements Piece {
 
     private boolean isMovingTwoDistanceForward(final Position source, final Position target, final Piece other) {
         return isAtSameRank(source) && source.isStraightAt(target)
-                && source.isDistanceAt(target, DISTANCE_TWO) && nonPieceExist(other);
+                && source.isDistanceAt(target, INITIAL_MOVE_DISTANCE) && nonPieceExist(other);
     }
 
     protected abstract boolean isAtSameRank(final Position source);
 
     private boolean isMovingOneDistanceForward(final Position source, final Position target, final Piece other) {
-        return source.isStraightAt(target) && source.isDistanceAt(target, DISTANCE_ONE) && nonPieceExist(other);
+        return source.isStraightAt(target) && source.isDistanceAt(target, NORMAL_MOVE_DISTANCE) && nonPieceExist(other);
     }
 
     private boolean isMovingOneDistanceDiagonal(final Position source, final Position target, final Piece other) {
