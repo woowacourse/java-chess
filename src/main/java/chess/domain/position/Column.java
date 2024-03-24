@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.chessPiece.Team;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -48,7 +46,7 @@ public class Column {
         return this.value - column.value;
     }
 
-    public int compare(Column column) {
+    public int findDirection(Column column) {
         return Integer.compare(column.value, value);
     }
 

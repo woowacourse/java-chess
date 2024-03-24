@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.chessPiece.Team;
-
 import java.util.Objects;
 
 public class Position {
@@ -54,11 +52,11 @@ public class Position {
 
 
     public int findRowDirection(Position target) {
-        return row.compare(target.row);
+        return row.findDirection(target.row);
     }
 
     public int findColumnDirection(Position target) {
-        return column.compare(target.column);
+        return column.findDirection(target.column);
     }
 
     public Row getRow() {

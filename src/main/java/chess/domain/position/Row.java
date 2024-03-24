@@ -51,7 +51,7 @@ public class Row {
         return this.value - row.value;
     }
 
-    public int compare(Row row) {
+    public int findDirection(Row row) {
         return Integer.compare(row.value, value);
     }
 
