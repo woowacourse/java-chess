@@ -19,6 +19,7 @@ public class Board {
             "pppppppp",
             "rnbqkbnr"
     );
+    private static final Piece EMPTY_PIECE =  Piece.from(PieceType.NONE);
 
     private final Map<Position, Piece> board;
     private int turnCount;
@@ -64,7 +65,7 @@ public class Board {
         validate(sourcePiece, targetPiece, source, target);
 
         board.put(target, sourcePiece);
-        board.put(source, Piece.from(PieceType.NONE));
+        board.put(source, EMPTY_PIECE);
         turnCount++;
     }
 
