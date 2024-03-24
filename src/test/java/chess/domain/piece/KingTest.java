@@ -3,12 +3,14 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @DisplayName("킹")
 class KingTest {
@@ -28,5 +30,53 @@ class KingTest {
 
         // then
         assertThat(king.getSquare()).isEqualTo(target);
+    }
+
+    @Test
+    @DisplayName("두 칸 이상 이동하면 예외가 발생한다.")
+    void validateStepCount() {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from("c4");
+        King king = new King(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(king));
+
+        // when & then
+        assertThatCode(() -> king.move(board, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("킹의 이동 방법으로 갈 수 없는 곳입니다.");
+    }
+
+    @Test
+    @DisplayName("목적지에 적 기물이 존재하면 공격이 가능하다.")
+    void attackOnTargetSquare() {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from("c5");
+        King king = new King(PieceColor.BLACK, source);
+        Bishop enemy = new Bishop(PieceColor.WHITE, Square.from("c5"));
+        Board board = new Board(Set.of(king, enemy));
+
+        // when
+        king.move(board, target);
+
+        // then
+        assertThat(king.getSquare()).isEqualTo(target);
+    }
+
+    @Test
+    @DisplayName("목적지에 아군 기물이 존재하면 예외가 발생한다.")
+    void validateFriendly() {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from("c5");
+        King king = new King(PieceColor.BLACK, source);
+        Bishop friendly = new Bishop(PieceColor.BLACK, Square.from("c5"));
+        Board board = new Board(Set.of(king, friendly));
+
+        // when & then
+        assertThatCode(() -> king.move(board, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("킹의 목적지에 같은 색 기물이 존재합니다.");
     }
 }

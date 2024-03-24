@@ -7,8 +7,9 @@ import java.util.List;
 
 public class Bishop extends Piece {
 
-    public static final String ERROR_OBSTACLE_ON_PATH = "이동 경로 중 장애물이 존재합니다.";
     private static final String ERROR_CANNOT_REACH = "비숍의 이동 방법으로 갈 수 없는 곳입니다.";
+    private static final String ERROR_FRIENDLY_ON_TARGET = "비숍의 목적지에 같은 색 기물이 존재합니다.";
+    private static final String ERROR_OBSTACLE_ON_PATH = "비숍의 이동 경로 중 장애물이 존재합니다.";
 
     public Bishop(PieceColor color, Square square) {
         super(color, square);
@@ -17,6 +18,7 @@ public class Bishop extends Piece {
     @Override
     public void move(Board board, Square target) {
         validateDirection(target);
+        validateFriendly(board, target);
         validateObstacle(board, target);
         square = target;
     }
@@ -24,6 +26,12 @@ public class Bishop extends Piece {
     private void validateDirection(Square target) {
         if (!square.isSameDiagonal(target)) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
+        }
+    }
+
+    private void validateFriendly(Board board, Square target) {
+        if (board.existOnSquareWithColor(target, getColor())) {
+            throw new IllegalArgumentException(ERROR_FRIENDLY_ON_TARGET);
         }
     }
 

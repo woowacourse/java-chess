@@ -31,6 +31,21 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("제자리로 이동할 경우 예외가 발생한다.")
+    void validateStay() {
+        // given
+        Square source = Square.from("b3");
+        Square target = Square.from("b4");
+        Rook piece = new Rook(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(piece));
+
+        // when & then
+        assertThatCode(() -> board.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("제자리로 이동할 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("출발지 스퀘어에 기물이 존재하지 않을 경우 예외가 발생한다.")
     void exceptionOnMoveWhenNoPieceOnSourceSquare() {
         // given

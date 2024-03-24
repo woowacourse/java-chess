@@ -17,7 +17,7 @@ class RookTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"a6", "h6", "c1", "c8"})
-    @DisplayName("상하좌우로 이동한다.")
+    @DisplayName("상하좌우로 이동한 뒤 위치 상태를 목적지로 변경한다.")
     void move(String targetInput) {
         // given
         Square source = Square.from("c6");
@@ -33,7 +33,7 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("상하좌우가 아닌 곳으로 이동하려 하면 예외가 발생한다.")
+    @DisplayName("상하좌우가 아닌 곳으로 이동하면 예외가 발생한다.")
     void validateDirection() {
         // given
         Square source = Square.from("c6");
@@ -45,22 +45,6 @@ class RookTest {
         assertThatCode(() -> rook.move(board, target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("룩의 이동 방법으로 갈 수 없는 곳입니다.");
-    }
-
-    @Test
-    @DisplayName("출발지와 목적지 사이에 기물이 존재할 경우 예외가 발생한다.")
-    void validateObstacle() {
-        // given
-        Square source = Square.from("c6");
-        Square target = Square.from("c1");
-        Rook rook = new Rook(PieceColor.BLACK, source);
-        Bishop obstacle = new Bishop(PieceColor.WHITE, Square.from("c3"));
-        Board board = new Board(Set.of(rook, obstacle));
-
-        // when & then
-        assertThatCode(() -> rook.move(board, target))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이동 경로 중 장애물이 존재합니다.");
     }
 
     @Test
@@ -78,5 +62,37 @@ class RookTest {
 
         // then
         assertThat(rook.getSquare()).isEqualTo(target);
+    }
+
+    @Test
+    @DisplayName("목적지에 아군 기물이 존재하면 예외가 발생한다.")
+    void validateFriendly() {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from("c1");
+        Rook rook = new Rook(PieceColor.BLACK, source);
+        Bishop friendly = new Bishop(PieceColor.BLACK, Square.from("c1"));
+        Board board = new Board(Set.of(rook, friendly));
+
+        // when & then
+        assertThatCode(() -> rook.move(board, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("룩의 목적지에 같은 색 기물이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("출발지와 목적지 사이에 기물이 존재할 경우 예외가 발생한다.")
+    void validateObstacle() {
+        // given
+        Square source = Square.from("c6");
+        Square target = Square.from("c1");
+        Rook rook = new Rook(PieceColor.BLACK, source);
+        Bishop obstacle = new Bishop(PieceColor.WHITE, Square.from("c3"));
+        Board board = new Board(Set.of(rook, obstacle));
+
+        // when & then
+        assertThatCode(() -> rook.move(board, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("룩의 이동 경로 중 장애물이 존재합니다.");
     }
 }
