@@ -21,7 +21,10 @@ public abstract class Pawn extends AbstractPiece {
         List<Coordinate> legalNextCoordinates = new ArrayList<>();
         legalNextCoordinates.addAll(straightLegalNextCoordinates(now));
         legalNextCoordinates.addAll(diagonalLegalNextCoordinates(now));
-        return legalNextCoordinates;
+        if (legalNextCoordinates.contains(destination)) {
+            return legalNextCoordinates;
+        }
+        throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
     }
 
     private Set<Coordinate> straightLegalNextCoordinates(final Coordinate now) {

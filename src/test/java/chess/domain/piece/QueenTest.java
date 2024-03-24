@@ -8,6 +8,7 @@ import static chess.domain.fixture.CoordinateFixture.E6;
 import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
 import java.util.List;
@@ -26,17 +27,16 @@ class QueenTest {
     @DisplayName("퀸은 대각과 가로, 세로로 제한없이 움직일 수 있다.")
     @Test
     void findMovablePath() {
-        List<Coordinate> result = WHITE_QUEEN.findMovablePath(D4, A7);
+        List<Coordinate> result = WHITE_QUEEN.legalNextCoordinates(D4, A7);
 
         List<Coordinate> expected = List.of(C5, B6, A7);
         assertThat(result).containsExactlyElementsOf(expected);
     }
 
-    @DisplayName("퀸이 목적지로 갈 수 없는 경우, 빈 컬렉션을 반환한다.")
+    @DisplayName("퀸이 목적지로 갈 수 없는 경우, 예외가 발생한다.")
     @Test
     void noPath() {
-        List<Coordinate> result = WHITE_QUEEN.findMovablePath(D4, E6);
-
-        assertThat(result).isEmpty();
+        assertThatThrownBy(() -> WHITE_QUEEN.legalNextCoordinates(D4, E6))
+                .isInstanceOf(IllegalStateException.class);
     }
 }

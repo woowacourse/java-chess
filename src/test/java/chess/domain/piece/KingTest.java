@@ -7,6 +7,7 @@ import static chess.domain.fixture.CoordinateFixture.E5;
 import static chess.domain.fixture.PieceFixture.WHITE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
 import java.util.List;
@@ -25,18 +26,17 @@ class KingTest {
     @DisplayName("킹은 가로, 세로 및 대각선으로도 1칸씩 움직일 수 있다.")
     @Test
     void findMovablePath() {
-        List<Coordinate> result = WHITE_KING.findMovablePath(E4, E5);
+        List<Coordinate> result = WHITE_KING.legalNextCoordinates(E4, E5);
 
         List<Coordinate> expected = List.of(E5);
         assertThat(result)
                 .containsExactlyElementsOf(expected);
     }
 
-    @DisplayName("킹이 목적지로 갈 수 없는 경우, 빈 컬렉션을 반환한다.")
+    @DisplayName("킹이 목적지로 갈 수 없는 경우, 예외를 발생한다.")
     @Test
     void noPath() {
-        List<Coordinate> result = WHITE_KING.findMovablePath(A1, A3);
-
-        assertThat(result).isEmpty();
+        assertThatThrownBy(() -> WHITE_KING.legalNextCoordinates(A1, A3))
+                .isInstanceOf(IllegalStateException.class);
     }
 }
