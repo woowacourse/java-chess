@@ -1,7 +1,7 @@
-package domain.command;
+package game.command;
 
-import domain.ChessBoard;
 import domain.square.Square;
+import game.ChessGame;
 
 public class MoveCommand implements ChessCommand {
 
@@ -14,12 +14,10 @@ public class MoveCommand implements ChessCommand {
     }
 
     @Override
-    public boolean run(final ChessBoard chessBoard) {
+    public void execute(final ChessGame chessGame) {
         final Square source = Square.from(sourceInput);
         final Square target = Square.from(targetInput);
 
-        chessBoard.move(source, target);
-
-        return true;
+        chessGame.move(source, target);
     }
 }

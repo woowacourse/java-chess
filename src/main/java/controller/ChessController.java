@@ -1,7 +1,7 @@
 package controller;
 
-import domain.ChessBoard;
-import domain.command.ChessCommand;
+import game.ChessGame;
+import game.command.ChessCommand;
 import view.InputView;
 import view.OutputView;
 
@@ -16,33 +16,21 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessBoard chessBoard = ChessBoard.create();
+        final ChessGame chessGame = new ChessGame();
 
-        if (isStart(chessBoard)) {
-            outputView.printChessTable(chessBoard.getPieceSquares());
-            play(chessBoard);
-        }
-    }
+        outputView.printStartHeader();
 
-    private boolean isStart(final ChessBoard chessBoard) {
-        final ChessCommand chessStartOrEndCommand = inputView.readStartCommand();
-        return chessStartOrEndCommand.run(chessBoard);
-    }
-
-    private void play(final ChessBoard chessBoard) {
-        try {
-            if (isEnd(chessBoard)) {
-                return;
+        while (true) {
+            final ChessCommand chessCommand = inputView.readCommand();
+            try {
+                chessCommand.execute(chessGame);
+                if (chessGame.isEnd()) {
+                    break;
+                }
+                outputView.printChessTable(chessGame.getPieceSquares());
+            } catch (final IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
             }
-            outputView.printChessTable(chessBoard.getPieceSquares());
-        } catch (final IllegalArgumentException e) {
-            outputView.printError(e.getMessage());
         }
-        play(chessBoard);
-    }
-
-    private boolean isEnd(final ChessBoard chessBoard) {
-        final ChessCommand chessMoveOrEndCommand = inputView.readMoveCommand();
-        return !chessMoveOrEndCommand.run(chessBoard);
     }
 }

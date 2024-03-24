@@ -1,16 +1,16 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessVectorTest {
 
     @DisplayName("벡터를 최소 비율로 스케일 다운 할 수 있다.")
     @ParameterizedTest
-    @CsvSource(value = {"5,0,1,0", "0,5,0,1", "4,4,1,1", "4,2,2,1", "1,1,1,1"})
+    @CsvSource(value = {"5,0,1,0", "0,-5,0,-1", "-4,4,-1,1", "-4,-2,-2,-1", "1,1,1,1"})
     void scaleDown(final int x, final int y, final int resultX, final int resultY) {
         // given
         final ChessVector vector = new ChessVector(x, y);
@@ -23,7 +23,7 @@ class ChessVectorTest {
 
     @DisplayName("벡터의 x,y요소 절댓값의 최대 공약수를 구한다.")
     @ParameterizedTest
-    @CsvSource(value = {"5,0,5", "0,3,3", "4,4,4", "4,2,2", "1,2,1"})
+    @CsvSource(value = {"5,0,5", "0,-3,3", "-4,4,4", "-4,-2,2", "1,2,1"})
     void findAbsGCD(final int x, final int y, final int expected) {
         // given
         final ChessVector vector = new ChessVector(x, y);

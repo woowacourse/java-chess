@@ -1,8 +1,8 @@
 package view;
 
-import domain.command.ChessCommand;
-import domain.command.EndCommand;
-import domain.command.MoveCommand;
+import game.command.ChessCommand;
+import game.command.EndCommand;
+import game.command.MoveCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class CommandFormatTest {
         final String input = "move b4 b5";
 
         // when
-        final ChessCommand moveCommand = CommandFormat.createMoveCommand(input);
+        final ChessCommand moveCommand = CommandFormat.createCommand(input);
 
         // then
         assertThat(moveCommand).isInstanceOf(MoveCommand.class);
@@ -32,7 +32,7 @@ class CommandFormatTest {
         final String input = "move bb cc";
 
         // when & then
-        assertThatThrownBy(() -> CommandFormat.createMoveCommand(input))
+        assertThatThrownBy(() -> CommandFormat.createCommand(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 커맨드입니다.");
 
@@ -45,7 +45,7 @@ class CommandFormatTest {
         final String input = "end";
 
         // when
-        final ChessCommand moveCommand = CommandFormat.createMoveCommand(input);
+        final ChessCommand moveCommand = CommandFormat.createCommand(input);
 
         // then
         assertThat(moveCommand).isInstanceOf(EndCommand.class);

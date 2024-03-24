@@ -1,9 +1,9 @@
 package view;
 
-import domain.command.ChessCommand;
-import domain.command.EndCommand;
-import domain.command.MoveCommand;
-import domain.command.StartCommand;
+import game.command.ChessCommand;
+import game.command.EndCommand;
+import game.command.MoveCommand;
+import game.command.StartCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,19 +22,12 @@ public class CommandFormat {
     private CommandFormat() {
     }
 
-    public static ChessCommand createStartCommand(final String input) {
+    public static ChessCommand createCommand(final String input) {
         if (END_FORMAT.equals(input)) {
             return new EndCommand();
         }
         if (START_FORMAT.equals(input)) {
             return new StartCommand();
-        }
-        throw new IllegalArgumentException("잘못된 커맨드입니다.");
-    }
-
-    public static ChessCommand createMoveCommand(final String input) {
-        if (END_FORMAT.equals(input)) {
-            return new EndCommand();
         }
 
         final Matcher matcher = MOVE_FORMAT.matcher(input);
