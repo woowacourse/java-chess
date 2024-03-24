@@ -34,8 +34,4 @@ public class Queen extends Piece {
         return path.findDiagonal().stream()
                 .allMatch(position -> board.get(position) == Empty.getInstance());
     }
-
-    @Override
-    public void recognizeMoved() {
-    }
 }

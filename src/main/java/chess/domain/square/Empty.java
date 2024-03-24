@@ -22,10 +22,6 @@ public class Empty implements Square {
     }
 
     @Override
-    public void recognizeMoved() {
-    }
-
-    @Override
     public boolean isColor(final Color color) {
         return false;
     }

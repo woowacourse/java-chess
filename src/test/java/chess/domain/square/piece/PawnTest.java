@@ -35,9 +35,9 @@ class PawnTest {
     @Test
     void blackCanMoveTwoStraightTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.BLACK);
-        board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.SEVENTH, File.A), piece);
+        Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.FIFTH, File.A));
 
         // when & then
         assertThat(piece.canMove(path, board))
@@ -48,10 +48,9 @@ class PawnTest {
     @Test
     void blackCanNotMoveTwoStraightTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.BLACK);
-        piece.recognizeMoved();
-        board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.FIFTH, File.A), piece);
+        Path path = new Path(new Position(Rank.FIFTH, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
         assertThat(piece.canMove(path, board))
@@ -62,21 +61,21 @@ class PawnTest {
     @Test
     void blackCanStraightMoveTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.BLACK);
-        board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SEVENTH, File.A));
+        Piece piece = Pawn.from(Color.BLACK);
+        board.put(new Position(Rank.SEVENTH, File.A), piece);
+        Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
         assertThat(piece.canMove(path, board))
                 .isTrue();
     }
 
-    @DisplayName("블랙 폰은 밑으로 한 칸을 제외하고 움직일 수 없다.")
+    @DisplayName("블랙 폰은 밑으로 한 칸 또는 두 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForBlack")
     void blackCanNotStraightMoveTest(Path path) {
         // given
-        Piece piece = Pawn.createOnStart(Color.BLACK);
+        Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), piece);
 
         // when & then
@@ -89,7 +88,8 @@ class PawnTest {
                 new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
                 new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
                 new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A))
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A)),
+                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C))
         );
     }
 
@@ -97,7 +97,7 @@ class PawnTest {
     @Test
     void whiteCanMoveTwoStraightTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.WHITE);
+        Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 
@@ -106,14 +106,13 @@ class PawnTest {
                 .isTrue();
     }
 
-    @DisplayName("이동한적이 있는 화이트 폰은 밑으로 두 칸 움직일 수 없다.")
+    @DisplayName("이동한적이 있는 화이트 폰은 위로 두 칸 움직일 수 없다.")
     @Test
     void whiteCanNotMoveTwoStraightTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.WHITE);
-        piece.recognizeMoved();
-        board.put(new Position(Rank.SECOND, File.A), piece);
-        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+        Piece piece = Pawn.from(Color.WHITE);
+        board.put(new Position(Rank.FOURTH, File.A), piece);
+        Path path = new Path(new Position(Rank.FOURTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
         assertThat(piece.canMove(path, board))
@@ -124,21 +123,21 @@ class PawnTest {
     @Test
     void whiteCanStraightMoveTest() {
         // given
-        Piece piece = Pawn.createOnStart(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        Piece piece = Pawn.from(Color.WHITE);
+        board.put(new Position(Rank.SECOND, File.A), piece);
+        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
         assertThat(piece.canMove(path, board))
                 .isTrue();
     }
 
-    @DisplayName("화이트 폰은 위로 한 칸을 제외하고 움직일 수 없다.")
+    @DisplayName("화이트 폰은 위로 한 칸 또는 두 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForWhite")
     void canStraightNotMoveTest(Path path) {
         // given
-        Piece piece = Pawn.createOnStart(Color.WHITE);
+        Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.B), piece);
 
         // when & then
@@ -151,7 +150,8 @@ class PawnTest {
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.B)),
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
                 new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A))
+                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A)),
+                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.C))
         );
     }
 
@@ -159,8 +159,8 @@ class PawnTest {
     @Test
     void blackCanLeftDownAttackTest() {
         // given
-        Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
-        Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
+        Piece attackerPiece = Pawn.from(Color.BLACK);
+        Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
         board.put(new Position(Rank.SEVENTH, File.A), attackedPiece);
 
@@ -175,8 +175,8 @@ class PawnTest {
     @Test
     void blackCanRightDownAttackTest() {
         // given
-        Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
-        Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
+        Piece attackerPiece = Pawn.from(Color.BLACK);
+        Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
         board.put(new Position(Rank.SEVENTH, File.C), attackedPiece);
 
@@ -193,8 +193,8 @@ class PawnTest {
     void blackCanNotAttackTest(Position attackedPosition) {
         // given
         Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
-        Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
-        Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
+        Piece attackerPiece = Pawn.from(Color.BLACK);
+        Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 
@@ -218,8 +218,8 @@ class PawnTest {
     @Test
     void whiteCanLeftDownAttackTest() {
         // given
-        Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
-        Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
+        Piece attackerPiece = Pawn.from(Color.WHITE);
+        Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
@@ -233,8 +233,8 @@ class PawnTest {
     @Test
     void whiteCanRightDownAttackTest() {
         // given
-        Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
-        Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
+        Piece attackerPiece = Pawn.from(Color.WHITE);
+        Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.C), attackedPiece);
         Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
@@ -250,8 +250,8 @@ class PawnTest {
     void whiteCanNotAttackTest(Position attackedPosition) {
         // given
         Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
-        Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
-        Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
+        Piece attackerPiece = Pawn.from(Color.WHITE);
+        Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 

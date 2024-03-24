@@ -30,8 +30,4 @@ public class Rook extends Piece {
         return path.findStraight().stream()
                 .allMatch(position -> board.get(position) == Empty.getInstance());
     }
-
-    @Override
-    public void recognizeMoved() {
-    }
 }

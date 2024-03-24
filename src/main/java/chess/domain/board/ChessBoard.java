@@ -26,7 +26,6 @@ public class ChessBoard {
 
         squares.put(path.getTargetPosition(), startSquare);
         squares.put(path.getStartPosition(), Empty.getInstance());
-        startSquare.recognizeMoved();
 
         currentTurn.change();
     }

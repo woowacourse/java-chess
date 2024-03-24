@@ -7,11 +7,11 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class Knight extends Piece {
+    private static final int MIN_MOVABLE_DIFF = 1;
+    private static final int MAX_MOVABLE_DIFF = 2;
     private static final Map<Color, Knight> KNIGHT_POOL = Map.of(
             Color.WHITE, new Knight(Color.WHITE),
             Color.BLACK, new Knight(Color.BLACK));
-    private static final int MIN_MOVABLE_DIFF = 1;
-    private static final int MAX_MOVABLE_DIFF = 2;
 
     private Knight(Color color) {
         super(color);
@@ -30,9 +30,5 @@ public class Knight extends Piece {
     @Override
     protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
         return true;
-    }
-
-    @Override
-    public void recognizeMoved() {
     }
 }

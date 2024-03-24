@@ -12,20 +12,19 @@ public class Pawn extends Piece {
     private static final int MOVED_MAX_DISTANCE = 1;
     private static final int NOT_MOVED_MAX_DISTANCE = 2;
     private static final int ATTACKABLE_RANK_DISTANCE = 1;
+    private static final int BLACK_START_RANK = 7;
+    private static final int WHITE_START_RANK = 2;
 
-    private boolean isMoved;
+    private static final Map<Color, Pawn> PAWN_POOL = Map.of(
+            Color.WHITE, new Pawn(Color.WHITE),
+            Color.BLACK, new Pawn(Color.BLACK));
 
-    private Pawn(Color color, boolean isMoved) {
+    private Pawn(Color color) {
         super(color);
-        this.isMoved = isMoved;
     }
 
-    public static Pawn createOnStart(Color color) {
-        return new Pawn(color, false);
-    }
-
-    public static Pawn of(Color color, boolean isMoved) {
-        return new Pawn(color, isMoved);
+    public static Pawn from(Color color) {
+        return PAWN_POOL.get(color);
     }
 
     @Override
@@ -43,16 +42,16 @@ public class Pawn extends Piece {
     @Override
     protected boolean isValidMovePath(Path path) {
         if (isColor(Color.BLACK)) {
-            return path.isDown(maxDistance());
+            return path.isDown(maxDistance(path, BLACK_START_RANK));
         }
-        return path.isUp(maxDistance());
+        return path.isUp(maxDistance(path, WHITE_START_RANK));
     }
 
-    private int maxDistance() {
-        if (isMoved) {
-            return MOVED_MAX_DISTANCE;
+    private int maxDistance(Path path, int startRank) {
+        if (path.isStartRank(startRank)) {
+            return NOT_MOVED_MAX_DISTANCE;
         }
-        return NOT_MOVED_MAX_DISTANCE;
+        return MOVED_MAX_DISTANCE;
     }
 
     @Override
@@ -60,33 +59,10 @@ public class Pawn extends Piece {
         return true;
     }
 
-    @Override
-    public void recognizeMoved() {
-        isMoved = true;
-    }
-
     private boolean isValidAttackPath(Path path) {
         if (isColor(Color.BLACK)) {
             return path.subtractRank() == -ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
         }
         return path.subtractRank() == ATTACKABLE_RANK_DISTANCE && path.calculateFileDistance() == ATTACKABLE_FILE_DISTANCE;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Pawn pawn = (Pawn) o;
-
-        return isMoved == pawn.isMoved;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (isMoved ? 1 : 0);
-        return result;
     }
 }

@@ -56,7 +56,7 @@ public class ChessBoardMaker {
     private List<Square> makePawns(Color color) {
         List<Square> squares = new ArrayList<>();
         for (int file = 0; file < FILE_SIZE; file++) {
-            squares.add(Pawn.createOnStart(color));
+            squares.add(Pawn.from(color));
         }
 
         return squares;

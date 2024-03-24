@@ -9,7 +9,5 @@ import java.util.Map;
 public interface Square {
     boolean canMove(Path path, Map<Position, Square> board);
 
-    void recognizeMoved();
-
     boolean isColor(Color color);
 }

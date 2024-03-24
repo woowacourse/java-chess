@@ -130,6 +130,10 @@ public class Path {
         return positions;
     }
 
+    public boolean isStartRank(int rankValue) {
+        return start.getRankValue() == rankValue;
+    }
+
     @Override
     public String toString() {
         return "Path{" +

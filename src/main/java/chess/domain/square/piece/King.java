@@ -7,10 +7,10 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class King extends Piece {
+    public static final int MOVABLE_MAX_DIFF = 1;
     private static final Map<Color, King> KING_POOL = Map.of(
             Color.WHITE, new King(Color.WHITE),
             Color.BLACK, new King(Color.BLACK));
-    public static final int MOVABLE_MAX_DIFF = 1;
 
     private King(Color color) {
         super(color);
@@ -28,9 +28,5 @@ public class King extends Piece {
     @Override
     protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
         return true;
-    }
-
-    @Override
-    public void recognizeMoved() {
     }
 }

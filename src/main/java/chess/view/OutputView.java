@@ -19,8 +19,7 @@ import java.util.Map;
 public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
     private static final Map<Square, String> BLACK_SQUARE_VIEWS = Map.of(
-            Pawn.of(Color.BLACK, true), "P",
-            Pawn.of(Color.BLACK, false), "P",
+            Pawn.from(Color.BLACK), "P",
             Knight.from(Color.BLACK), "N",
             Bishop.from(Color.BLACK), "B",
             Rook.from(Color.BLACK), "R",
@@ -28,8 +27,7 @@ public class OutputView {
             King.from(Color.BLACK), "K"
     );
     private static final Map<Square, String> WHITE_SQUARE_VIEWS = Map.of(
-            Pawn.of(Color.WHITE, true), "p",
-            Pawn.of(Color.WHITE, false), "p",
+            Pawn.from(Color.WHITE), "p",
             Knight.from(Color.WHITE), "n",
             Bishop.from(Color.WHITE), "b",
             Rook.from(Color.WHITE), "r",

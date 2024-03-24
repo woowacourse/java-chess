@@ -27,9 +27,6 @@ public abstract class Piece implements Square {
 
     protected abstract boolean isNotObstructed(Path path, Map<Position, Square> board);
 
-    // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
-    public abstract void recognizeMoved();
-
     @Override
     public boolean isColor(Color color) {
         return this.color == color;
