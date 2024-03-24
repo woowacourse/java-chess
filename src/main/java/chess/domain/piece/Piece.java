@@ -35,7 +35,7 @@ public abstract class Piece {
         return position;
     }
 
-    public abstract Set<Position> move(final Position source, final Position target);
+    public abstract Piece move(final Position source, final Position target);
 
     @Override
     public boolean equals(final Object object) {

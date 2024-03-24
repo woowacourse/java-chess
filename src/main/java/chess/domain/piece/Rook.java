@@ -2,10 +2,6 @@ package chess.domain.piece;
 
 import static chess.domain.piece.attribute.Color.BLACK;
 import static chess.domain.piece.attribute.Color.WHITE;
-import static chess.domain.chessboard.attribute.File.A;
-import static chess.domain.chessboard.attribute.File.H;
-import static chess.domain.chessboard.attribute.Rank.EIGHT;
-import static chess.domain.chessboard.attribute.Rank.ONE;
 
 import java.util.Set;
 
@@ -30,7 +26,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public Set<Position> move(final Position source, final Position target) {
+    public Piece move(final Position source, final Position target) {
         return null;
     }
 }

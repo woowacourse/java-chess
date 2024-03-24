@@ -26,7 +26,7 @@ public class Knight extends UnslidingPiece {
     }
 
     @Override
-    public Set<Position> move(final Position source, final Position target) {
+    public Piece move(final Position source, final Position target) {
         return null;
     }
 }

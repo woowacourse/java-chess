@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -9,6 +10,10 @@ public class King extends UnslidingPiece {
 
     private static final Position WHITE_INITIAL_POSITION = Position.from("e1");
     private static final Position BLACK_INITIAL_POSITION = Position.from("e8");
+
+    private static final Set<Direction> DIRECTIONS = Set.of(
+
+    );
 
     public King(final Color color, final Position position) {
         super(color, position);
@@ -22,7 +27,7 @@ public class King extends UnslidingPiece {
     }
 
     @Override
-    public Set<Position> move(final Position source, final Position target) {
+    public Piece move(final Position source, final Position target) {
         return null;
     }
 }

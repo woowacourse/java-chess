@@ -1,11 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.chessboard.attribute.File.D;
-import static chess.domain.chessboard.attribute.Rank.EIGHT;
-import static chess.domain.chessboard.attribute.Rank.ONE;
-
-import java.util.Set;
-
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -26,7 +20,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public Set<Position> move(final Position source, final Position target) {
+    public Piece move(final Position source, final Position target) {
         return null;
     }
 }

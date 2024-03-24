@@ -1,6 +1,6 @@
 package chess.domain.chessboard.attribute;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import chess.domain.piece.Piece;
 
@@ -17,10 +17,14 @@ public class Square {
     }
 
     public static Square from(final Piece piece) {
-        return new Square(piece);
+        return new Square(Objects.requireNonNull(piece));
     }
 
-    public Optional<Piece> piece() {
-        return Optional.ofNullable(piece);
+    public boolean isEmpty() {
+        return piece == null;
+    }
+
+    public Piece piece() {
+        return Objects.requireNonNull(piece);
     }
 }
