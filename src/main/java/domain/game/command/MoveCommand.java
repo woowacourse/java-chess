@@ -1,7 +1,7 @@
-package game.command;
+package domain.game.command;
 
+import domain.game.ChessGame;
 import domain.square.Square;
-import game.ChessGame;
 
 import java.util.function.Consumer;
 

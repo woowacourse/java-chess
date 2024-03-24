@@ -1,8 +1,8 @@
 package view;
 
-import game.command.ChessCommand;
-import game.command.EndCommand;
-import game.command.MoveCommand;
+import domain.game.command.ChessCommand;
+import domain.game.command.EndCommand;
+import domain.game.command.MoveCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

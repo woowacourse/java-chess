@@ -1,4 +1,4 @@
-package game;
+package domain.game;
 
 import domain.ChessBoard;
 import domain.piece.Piece;
@@ -42,5 +42,11 @@ public class ChessGame {
 
     public Map<Square, Piece> getPieceSquares() {
         return chessBoard.getPieceSquares();
+    }
+
+    private enum ChessGameStatus {
+        INIT,
+        RUNNING,
+        END
     }
 }
