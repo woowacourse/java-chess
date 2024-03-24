@@ -56,11 +56,11 @@ public enum Column {
         }
     }
 
-    private boolean equalName(String name) {
-        return this.name().equalsIgnoreCase(name);
-    }
-
     public int calculateDistance(Column other) {
         return other.index - this.index;
+    }
+
+    private boolean equalName(String name) {
+        return this.name().equalsIgnoreCase(name);
     }
 }
