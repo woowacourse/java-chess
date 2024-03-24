@@ -71,7 +71,7 @@ public class ChessGameController {
 
     private List<Position> readPositions(String command) {
         List<Position> positions = new ArrayList<>();
-        List<String> rawPositions = parseDepartureDestination(command);
+        List<String> rawPositions = parseSourceDestination(command);
         positions.add(parsePosition(rawPositions.get(SOURCE_INDEX)));
         positions.add(parsePosition(rawPositions.get(DESTINATION_INDEX)));
         return positions;
@@ -83,7 +83,7 @@ public class ChessGameController {
         return new Position(departureColumn, departureRank);
     }
 
-    private List<String> parseDepartureDestination(String command) {
+    private List<String> parseSourceDestination(String command) {
         Matcher matcher = MOVE_COMMAND_PATTERN.matcher(command);
 
         if (!matcher.find()) {

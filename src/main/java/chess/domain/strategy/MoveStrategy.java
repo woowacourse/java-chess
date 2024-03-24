@@ -17,8 +17,8 @@ public abstract class MoveStrategy {
         this.board = new HashMap<>(board);
     }
 
-    public MoveStrategy changeStrategy(Position from) {
-        PieceType pieceType = board.get(from).pieceType();
+    public MoveStrategy changeStrategy(Position source) {
+        PieceType pieceType = board.get(source).pieceType();
         if (pieceType == PieceType.BLANK) {
             return new BlankMoveStrategy(board);
         }
@@ -28,7 +28,7 @@ public abstract class MoveStrategy {
         return new GeneralMoveStrategy(board);
     }
 
-    public abstract void move(Color turnColor, Position from, Position to);
+    public abstract void move(Color turnColor, Position source, Position destination);
 
     public void checkTurnOf(Piece currentPiece, Color turnColor) {
         if (!currentPiece.isSameColor(turnColor)) {
@@ -42,9 +42,9 @@ public abstract class MoveStrategy {
                 .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
     }
 
-    protected void updateBoard(Position from, Position to, Piece currentPiece) {
-        board.replace(to, currentPiece.update(to));
-        board.replace(from, new Blank(from));
+    protected void updateBoard(Position source, Position destination, Piece currentPiece) {
+        board.replace(destination, currentPiece.update(destination));
+        board.replace(source, new Blank(source));
     }
 
     public Map<Position, PieceType> collectBoard() {

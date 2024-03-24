@@ -13,13 +13,13 @@ public class GeneralMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public void move(Color turnColor, Position from, Position to) {
-        Piece currentPiece = board.get(from);
+    public void move(Color turnColor, Position source, Position destination) {
+        Piece currentPiece = board.get(source);
         checkTurnOf(currentPiece, turnColor);
-        Piece destinationPiece = board.get(to);
-        Set<Position> movablePositions = currentPiece.findPathTo(to);
+        Piece destinationPiece = board.get(destination);
+        Set<Position> movablePositions = currentPiece.findPathTo(destination);
         validateMovable(turnColor, movablePositions, destinationPiece);
-        updateBoard(from, to, currentPiece);
+        updateBoard(source, destination, currentPiece);
     }
 
     private void validateMovable(Color turnColor, Set<Position> movablePositions, Piece destinationPiece) {

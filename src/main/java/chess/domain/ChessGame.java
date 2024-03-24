@@ -17,9 +17,9 @@ public class ChessGame {
         this.turnColor = Color.WHITE;
     }
 
-    public void move(Position from, Position to) {
-        moveStrategy = moveStrategy.changeStrategy(from);
-        moveStrategy.move(turnColor, from, to);
+    public void move(Position source, Position destination) {
+        moveStrategy = moveStrategy.changeStrategy(source);
+        moveStrategy.move(turnColor, source, destination);
         changeTurnColor();
     }
 

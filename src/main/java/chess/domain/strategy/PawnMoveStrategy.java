@@ -15,26 +15,26 @@ public class PawnMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public void move(Color turnColor, Position from, Position to) {
-        Pawn currentPiece = (Pawn) board.get(from);
+    public void move(Color turnColor, Position source, Position destination) {
+        Pawn currentPiece = (Pawn) board.get(source);
         checkTurnOf(currentPiece, turnColor);
-        Piece destinationPiece = board.get(to);
-        validateMovable(to, currentPiece);
-        validateWithCapture(to, currentPiece, destinationPiece);
-        updateBoard(from, to, currentPiece);
+        Piece destinationPiece = board.get(destination);
+        validateMovable(destination, currentPiece);
+        validateWithCapture(destination, currentPiece, destinationPiece);
+        updateBoard(source, destination, currentPiece);
     }
 
-    private void validateWithCapture(Position to, Pawn currentPiece, Piece destinationPiece) {
-        if (!currentPiece.isCaptureMove(to) && destinationPiece.pieceType() != PieceType.BLANK) {
+    private void validateWithCapture(Position destination, Pawn currentPiece, Piece destinationPiece) {
+        if (!currentPiece.isCaptureMove(destination) && destinationPiece.pieceType() != PieceType.BLANK) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
-        if (currentPiece.isCaptureMove(to) && !currentPiece.isOppositeColor(destinationPiece)) {
+        if (currentPiece.isCaptureMove(destination) && !currentPiece.isOppositeColor(destinationPiece)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
     }
 
-    private void validateMovable(Position to, Pawn currentPiece) {
-        Set<Position> movablePositions = currentPiece.findPathTo(to);
+    private void validateMovable(Position destination, Pawn currentPiece) {
+        Set<Position> movablePositions = currentPiece.findPathTo(destination);
         if (!isAllBlankCourses(movablePositions)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }

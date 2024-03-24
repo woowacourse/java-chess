@@ -12,7 +12,7 @@ public class BlankMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public void move(Color turnColor, Position from, Position to) {
+    public void move(Color turnColor, Position source, Position destination) {
         throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
     }
 }
