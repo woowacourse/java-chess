@@ -50,8 +50,8 @@ public class Vector {
         return isStraight() || isDiagonal();
     }
 
-    public boolean allAbsoluteValueSmallerOrEqualThanOne() {
-        return Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) <= 1;
+    public boolean allAbsoluteValueSmallerOrEqualThan(final int value) {
+        return Math.abs(fileDifference) <= value && Math.abs(rankDifference) <= value;
     }
 
     public int absoluteSum() {
@@ -62,7 +62,7 @@ public class Vector {
         return Math.abs(fileDifference) == value || Math.abs(rankDifference) == value;
     }
 
-    public boolean allAbsoluteValueMoreOrEqualThan(final int value) {
+    public boolean hasAbsoluteValueMoreOrEqualThan(final int value) {
         return Math.abs(fileDifference) >= value || Math.abs(rankDifference) >= value;
     }
 

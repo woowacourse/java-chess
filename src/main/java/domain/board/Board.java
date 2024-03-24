@@ -51,7 +51,7 @@ public class Board {
     }
 
     private boolean isPiecesPossiblyExistOnPath(final Vector vector) {
-        return vector.allAbsoluteValueMoreOrEqualThan(2) && vector.isStraightOrDiagonal();
+        return vector.hasAbsoluteValueMoreOrEqualThan(2) && vector.isStraightOrDiagonal();
     }
 
     private void validateReachability(final Vector vector, final Piece currentPiece, final Piece targetPiece) {

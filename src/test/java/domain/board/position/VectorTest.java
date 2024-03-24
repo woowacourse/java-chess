@@ -30,8 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.board.position.Position;
-import domain.board.position.Vector;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -106,14 +104,14 @@ class VectorTest {
     @DisplayName("주어진 두 위치가 인접해 있는지 확인한다")
     void isNearest() {
         assertAll(
-                () -> assertThat(new Vector(D_FOUR, D_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_FOUR).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, E_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, D_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_THREE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FOUR).allAbsoluteValueSmallerOrEqualThanOne()).isTrue(),
-                () -> assertThat(new Vector(D_FOUR, C_FIVE).allAbsoluteValueSmallerOrEqualThanOne()).isTrue()
+                () -> assertThat(new Vector(D_FOUR, D_FIVE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FIVE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_FOUR).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, E_THREE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, D_THREE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_THREE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FOUR).allAbsoluteValueSmallerOrEqualThan(1)).isTrue(),
+                () -> assertThat(new Vector(D_FOUR, C_FIVE).allAbsoluteValueSmallerOrEqualThan(1)).isTrue()
         );
     }
 
