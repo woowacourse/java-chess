@@ -18,10 +18,8 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace) {
-        FileDifference fileDifference = position.calculateFileDifferenceTo(targetSpace.position);
-        RankDifference rankDifference = position.calculateRankDifferenceTo(targetSpace.position);
-        if ((piece.isCatchable(fileDifference, rankDifference)
-                || piece.isMovable(fileDifference, rankDifference))
+        if ((piece.isCatchable(position, targetSpace.position)
+                || piece.isMovable(position, targetSpace.position))
                 && !piece.isSameColor(targetSpace.piece)) {
             targetSpace.piece = piece;
             piece = new EmptyPiece();

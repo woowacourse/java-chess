@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.FileDifference;
+import chess.domain.position.Position;
 import chess.domain.position.RankDifference;
 
 public class Pawn extends Piece {
@@ -41,25 +42,29 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(FileDifference fileDifference, RankDifference rankDifference) {
+    public boolean isMovable(Position from, Position to) {
         if (!isMoved) {
             isMoved = true;
-            return proceedFirstMove(fileDifference, rankDifference);
+            return proceedFirstMove(from, to);
         }
-        return super.isMovable(fileDifference, rankDifference);
+        return super.isMovable(from, to);
     }
 
-    private boolean proceedFirstMove(FileDifference fileDifference, RankDifference rankDifference) {
+    private boolean proceedFirstMove(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
         if (super.isSameColor(Color.BLACK)) {
             return decideFirstMoveRule(Color.BLACK).obey(fileDifference, rankDifference)
-                    || super.isMovable(fileDifference, rankDifference);
+                    || super.isMovable(from, to);
         }
         return decideFirstMoveRule(Color.WHITE).obey(fileDifference, rankDifference)
-                || super.isMovable(fileDifference, rankDifference);
+                || super.isMovable(from, to);
     }
 
     @Override
-    public boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference) {
+    public boolean isCatchable(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
         return catchRule.obey(fileDifference, rankDifference);
     }
 }

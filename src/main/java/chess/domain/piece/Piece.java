@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.FileDifference;
+import chess.domain.position.Position;
 import chess.domain.position.RankDifference;
 
 public abstract class Piece {
@@ -13,6 +14,8 @@ public abstract class Piece {
         this.moveRule = moveRule;
     }
 
+    public abstract boolean isCatchable(Position from, Position to);
+
     public boolean isSameColor(Piece piece) {
         return color == piece.color;
     }
@@ -21,9 +24,9 @@ public abstract class Piece {
         return color == otherColor;
     }
 
-    public boolean isMovable(FileDifference fileDifference, RankDifference rankDifference) {
+    public boolean isMovable(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
         return moveRule.obey(fileDifference, rankDifference);
     }
-
-    public abstract boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference);
 }

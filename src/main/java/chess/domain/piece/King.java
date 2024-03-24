@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.FileDifference;
+import chess.domain.position.Position;
 import chess.domain.position.RankDifference;
 
 public class King extends Piece {
@@ -15,7 +16,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference) {
-        return isMovable(fileDifference, rankDifference);
+    public boolean isCatchable(Position from, Position to) {
+        return isMovable(from, to);
     }
 }

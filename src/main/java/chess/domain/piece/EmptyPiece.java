@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.position.FileDifference;
-import chess.domain.position.RankDifference;
+import chess.domain.position.Position;
 
 public class EmptyPiece extends Piece {
 
@@ -10,7 +9,7 @@ public class EmptyPiece extends Piece {
     }
 
     @Override
-    public boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference) {
+    public boolean isCatchable(Position from, Position to) {
         return false;
     }
 }

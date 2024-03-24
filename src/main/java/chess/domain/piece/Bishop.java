@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Difference;
-import chess.domain.position.FileDifference;
-import chess.domain.position.RankDifference;
+import chess.domain.position.Position;
 
 public class Bishop extends Piece {
 
@@ -11,7 +10,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isCatchable(FileDifference fileDifference, RankDifference rankDifference) {
-        return isMovable(fileDifference, rankDifference);
+    public boolean isCatchable(Position from, Position to) {
+        return isMovable(from, to);
     }
 }
