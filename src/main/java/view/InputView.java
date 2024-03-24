@@ -11,12 +11,7 @@ public class InputView {
     public ChessCommand readCommand() {
         System.out.println();
 
-        try {
-            final String input = SCANNER.nextLine();
-            return CommandFormat.createCommand(input);
-        } catch (final IllegalArgumentException e) {
-            System.out.println("[ERROR] " + e.getMessage());
-            return readCommand();
-        }
+        final String input = SCANNER.nextLine();
+        return CommandFormat.createCommand(input);
     }
 }

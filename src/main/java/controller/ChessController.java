@@ -25,8 +25,8 @@ public class ChessController {
 
     private void play(final ChessGame chessGame) {
         while (true) {
-            final ChessCommand chessCommand = inputView.readCommand();
             try {
+                final ChessCommand chessCommand = inputView.readCommand();
                 chessCommand.execute(chessGame);
                 if (chessGame.isEnd()) {
                     break;
