@@ -30,7 +30,10 @@ public class Distance {
         if (side.isBlack()) {
             return rankDifference < 0;
         }
-        return rankDifference > 0;
+        if (side.isWhite()) {
+            return rankDifference > 0;
+        }
+        return false;
     }
 
     public boolean isCrossMovement() {
