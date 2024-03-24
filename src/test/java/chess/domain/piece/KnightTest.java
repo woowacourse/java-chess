@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 class KnightTest {
     @DisplayName("나이트는 L자 모양으로 이동할 수 있다")
     @Test
-    void should_CanMoveLShapePosition() {
+    void should_isNotReachableLShapePosition() {
         Position start = B1;
         Position dest = A3;
         Knight knight = new Knight(Team.BLACK);
 
-        assertThat(knight.canMove(start, dest)).isTrue();
+        assertThat(knight.isNotReachable(start, dest)).isFalse();
     }
 
     @DisplayName("실패 : 나이트가 행마법을 벗어난 목적지로 이동할 수 없다")
@@ -27,6 +27,6 @@ class KnightTest {
         Position dest = B2;
         Knight knight = new Knight(Team.BLACK);
 
-        assertThat(knight.canMove(start, dest)).isFalse();
+        assertThat(knight.isNotReachable(start, dest)).isTrue();
     }
 }

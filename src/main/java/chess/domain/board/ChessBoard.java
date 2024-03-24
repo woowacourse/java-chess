@@ -46,7 +46,7 @@ public class ChessBoard {
 
         //TODO: instanceOf 말고 같은 타입으로 다룰 수 있는 방법 없는지 확인하기
         if (piece instanceof Pawn) {
-            if (piece.canMove(start, destination) && positionIsEmpty(destination)) {
+            if (piece.canMove(start, destination, this) && positionIsEmpty(destination)) {
                 return true;
             }
             if (((Pawn) piece).isKillPassing(start, destination) && !positionIsEmpty(destination) && piece.isOtherTeam(
@@ -58,21 +58,21 @@ public class ChessBoard {
 
         if (piece instanceof SlidingPiece) {
             List<Position> path = ((SlidingPiece) piece).searchPath(start, destination);
-            if (piece.canMove(start, destination) && isEmpty(path) && (positionIsEmpty(destination)
+            if (piece.canMove(start, destination, this) && isPathClear(path) && (positionIsEmpty(destination)
                     || piece.isOtherTeam(findPieceByPosition(destination)))) {
                 return true;
             }
             return false;
         }
 
-        if (piece.canMove(start, destination) && (positionIsEmpty(destination) || piece.isOtherTeam(
+        if (piece.canMove(start, destination, this) && (positionIsEmpty(destination) || piece.isOtherTeam(
                 findPieceByPosition(destination)))) {
             return true;
         }
         return false;
     }
 
-    private boolean isEmpty(List<Position> path) {
+    public boolean isPathClear(List<Position> path) {
         return path.stream()
                 .allMatch(this::positionIsEmpty);
     }

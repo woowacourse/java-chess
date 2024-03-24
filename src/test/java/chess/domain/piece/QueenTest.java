@@ -12,22 +12,22 @@ import org.junit.jupiter.api.Test;
 class QueenTest {
     @DisplayName("퀸은 대각선 관계에 있는 포지션으로 이동할 수 있다")
     @Test
-    void should_CanMove_When_DestinationIsDiagonal_From_StartPosition() {
+    void should_isNotReachable_When_DestinationIsDiagonal_From_StartPosition() {
         Queen queen = new Queen(Team.WHITE);
-        assertThat(queen.canMove(A1, H8)).isTrue();
+        assertThat(queen.isNotReachable(A1, H8)).isFalse();
     }
 
     @DisplayName("퀸은 수직관계에 있는 포지션으로 이동할 수 있다")
     @Test
-    void should_CanMove_When_DestinationIsStraight_From_StartPosition() {
+    void should_isNotReachable_When_DestinationIsStraight_From_StartPosition() {
         Queen queen = new Queen(Team.WHITE);
-        assertThat(queen.canMove(A1, H1)).isTrue();
+        assertThat(queen.isNotReachable(A1, H1)).isFalse();
     }
 
     @DisplayName("퀸은 대각선 혹은 직선 관계에 있는 포지션이 아니면 이동할 수 없다")
     @Test
     void should_CanNotMove_When_DestinationIsNotDiagonalAndIsNotStraight_From_StartPosition() {
         Queen queen = new Queen(Team.WHITE);
-        assertThat(queen.canMove(A1, B3)).isFalse();
+        assertThat(queen.isNotReachable(A1, B3)).isTrue();
     }
 }
