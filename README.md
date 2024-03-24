@@ -2,9 +2,15 @@
 
 체스 미션 저장소
 
-## 우아한테크코스 코드리뷰
+## STEP3 기능 명세
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+- [ ] King이 잡히면 게임 종료
+- [ ] 남아있는 말의 점수 구하기
+    - [ ] queen: 9점, rook: 5점, bishop: 3점, knight: 2.5점, king: 0점
+    - [ ] pawn: 1점, 세로줄에 같은 색 pawn 있는 경우 0.5점
+- [ ] 'status' 명령어 입력받기
+- [ ] 점수 출력
+- [ ] 승패 출력
 
 ## STEP2 기능 명세
 
