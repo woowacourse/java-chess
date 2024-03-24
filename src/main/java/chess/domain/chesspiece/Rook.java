@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Role.*;
 
-public class King extends Piece {
+public class Rook extends Piece{
 
-    public King(Team team) {
+    public Rook(Team team) {
         super(team);
     }
 
-    //TODO : 리팩토링
     @Override
     public List<Position> getRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
@@ -33,18 +32,16 @@ public class King extends Piece {
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        int rowDistance = source.calculateRowDistance(target);
-        int columnDistance = source.calculateColumnDistance(target);
-        if (rowDistance != 1 && columnDistance != 1) {
+        if(!source.isSameColumn(target) && !source.isSameRow(target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
     @Override
     public Role getRole() {
-        if (team.isWhite()) {
-            return WHITE_KING;
+        if(team.isWhite()) {
+            return WHITE_ROOK;
         }
-        return BLACK_KING;
+        return BLACK_ROOK;
     }
 }

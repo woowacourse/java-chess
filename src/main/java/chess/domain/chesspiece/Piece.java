@@ -1,11 +1,11 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.BLACK_PAWN;
-import static chess.domain.chessPiece.Role.WHITE_PAWN;
+import static chess.domain.chesspiece.Role.BLACK_PAWN;
+import static chess.domain.chesspiece.Role.WHITE_PAWN;
 
 public abstract class Piece {
     protected Team team;

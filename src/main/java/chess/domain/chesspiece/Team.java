@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 public enum Team {
     WHITE,

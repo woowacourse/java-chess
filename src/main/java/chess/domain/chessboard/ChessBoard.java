@@ -1,16 +1,16 @@
-package chess.domain.chessBoard;
+package chess.domain.chessboard;
 
 import chess.domain.position.Direction;
-import chess.domain.chessPiece.*;
+import chess.domain.chesspiece.*;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.*;
 
-import static chess.domain.chessPiece.Team.BLACK;
-import static chess.domain.chessPiece.Team.WHITE;
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Team.BLACK;
+import static chess.domain.chesspiece.Team.WHITE;
+import static chess.domain.chesspiece.Role.*;
 
 public class ChessBoard {
     private final Map<Column, Line> chessBoard;

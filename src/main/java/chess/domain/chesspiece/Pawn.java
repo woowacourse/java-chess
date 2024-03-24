@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Column;
 import chess.domain.position.Direction;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.*;
-import static chess.domain.chessPiece.Team.WHITE;
+import static chess.domain.chesspiece.Role.*;
+import static chess.domain.chesspiece.Team.WHITE;
 
 public class Pawn extends Piece {
     private static Column WHITE_PAWN_START_COLUMN = Column.valueOf("2");

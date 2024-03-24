@@ -1,11 +1,11 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
 
 import java.util.List;
 
-import static chess.domain.chessPiece.Team.NOTHING;
-import static chess.domain.chessPiece.Role.EMPTY;
+import static chess.domain.chesspiece.Team.NOTHING;
+import static chess.domain.chesspiece.Role.EMPTY;
 
 public class Empty extends Piece{
 

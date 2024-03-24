@@ -1,4 +1,4 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Role.BLACK_BISHOP;
+import static chess.domain.chesspiece.Role.WHITE_BISHOP;
 
-public class Rook extends Piece{
+public class Bishop extends Piece{
 
-    public Rook(Team team) {
+    public Bishop(Team team) {
         super(team);
     }
 
@@ -32,7 +33,9 @@ public class Rook extends Piece{
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        if(!source.isSameColumn(target) && !source.isSameRow(target)) {
+        int rowDistance = source.calculateRowDistance(target);
+        int columnDistance = source.calculateColumnDistance(target);
+        if(rowDistance!=columnDistance){
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
@@ -40,8 +43,8 @@ public class Rook extends Piece{
     @Override
     public Role getRole() {
         if(team.isWhite()) {
-            return WHITE_ROOK;
+            return WHITE_BISHOP;
         }
-        return BLACK_ROOK;
+        return BLACK_BISHOP;
     }
 }

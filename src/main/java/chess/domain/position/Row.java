@@ -41,7 +41,6 @@ public class Row {
     }
 
     public Row update(int direction) {
-        System.out.println(toChar(value) + direction);
         return CACHE.get(String.valueOf((char) (toChar(value) + direction)));
     }
 

@@ -1,17 +1,16 @@
-package chess.domain.chessPiece;
+package chess.domain.chesspiece;
 
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chessPiece.Role.*;
+import static chess.domain.chesspiece.Role.*;
 
-public class Queen extends Piece {
+public class Knight extends Piece {
 
-    public Queen(Team team) {
+    public Knight(Team team) {
         super(team);
     }
 
@@ -19,22 +18,15 @@ public class Queen extends Piece {
     public List<Position> getRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
-
-        Direction direction = Direction.findDirection(source, target);
-        Position movingPosition = direction.move(source);
-
-        while (!movingPosition.equals(target)) {
-            route.add(movingPosition);
-            movingPosition = direction.move(movingPosition);
-        }
         return Collections.unmodifiableList(route);
     }
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
         int rowDistance = source.calculateRowDistance(target);
-        int columnDistance = source.calculateColumnDistance(target);
-        if (!source.isSameRow(target) && !source.isSameColumn(target) && rowDistance != columnDistance) {
+        int colDistance = source.calculateColumnDistance(target);
+
+        if (!(rowDistance == 2 && colDistance == 1 || rowDistance == 1 && colDistance == 2)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
@@ -42,8 +34,8 @@ public class Queen extends Piece {
     @Override
     public Role getRole() {
         if (team.isWhite()) {
-            return WHITE_QUEEN;
+            return WHITE_KNIGHT;
         }
-        return BLACK_QUEEN;
+        return BLACK_KNIGHT;
     }
 }

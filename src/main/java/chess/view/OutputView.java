@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.chessBoard.Line;
+import chess.domain.chessboard.Line;
 import chess.domain.position.Column;
-import chess.domain.chessPiece.Role;
-import chess.domain.chessPiece.Piece;
+import chess.domain.chesspiece.Role;
+import chess.domain.chesspiece.Piece;
 
 import java.util.EnumMap;
 import java.util.List;
