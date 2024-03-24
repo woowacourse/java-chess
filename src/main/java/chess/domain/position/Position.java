@@ -34,12 +34,6 @@ public class Position {
     }
 
     //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
-    public Direction directionTo(Position target) {
-        boolean destinationIsAbove = target.rank.isAbove(rank);
-        return Direction.from(destinationIsAbove);
-    }
-
-    //TODO: 테스트 없음 후에 리팩토링 과정에서 개선
     public int squaredDistanceWith(Position other) {
         int fileDistance = file.calculateDistanceWith(other.file);
         int rankDistance = rank.calculateDistanceWith(other.rank);

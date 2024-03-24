@@ -6,30 +6,21 @@ import static chess.domain.position.BoardDirection.NW;
 import static chess.domain.position.BoardDirection.S;
 import static chess.domain.position.BoardDirection.SE;
 import static chess.domain.position.BoardDirection.SW;
-import static chess.domain.position.Direction.DOWN;
-import static chess.domain.position.Direction.UP;
 
 import chess.domain.position.BoardDirection;
-import chess.domain.position.Direction;
 import chess.domain.position.Rank;
 import java.util.List;
 
 public enum Team {
-    WHITE(UP, List.of(NW, N, NE), Rank.TWO),
-    BLACK(DOWN, List.of(SW, S, SE), Rank.SEVEN);
+    WHITE(List.of(NW, N, NE), Rank.TWO),
+    BLACK(List.of(SW, S, SE), Rank.SEVEN);
 
-    private final Direction direction;
-    private final List<BoardDirection> teamForwardDirections;
+    private final List<BoardDirection> forwardDirections;
     private final Rank initialPawnRank;
 
-    Team(Direction direction, List<BoardDirection> teamForwardDirections, Rank initialPawnRank) {
-        this.direction = direction;
-        this.teamForwardDirections = teamForwardDirections;
+    Team(List<BoardDirection> forwardDirections, Rank initialPawnRank) {
+        this.forwardDirections = forwardDirections;
         this.initialPawnRank = initialPawnRank;
-    }
-
-    public Direction getDirection() {
-        return direction;
     }
 
     public Rank getInitialPawnRank() {
@@ -37,10 +28,6 @@ public enum Team {
     }
 
     public boolean isTeamForwardDirectionsContains(BoardDirection direction) {
-        return teamForwardDirections.contains(direction);
-    }
-
-    public boolean isInitialPawnRankSameWith(Rank rank) {
-        return initialPawnRank == rank;
+        return forwardDirections.contains(direction);
     }
 }

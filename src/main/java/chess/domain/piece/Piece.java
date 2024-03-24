@@ -1,8 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.position.BoardDirection;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -19,15 +17,6 @@ public abstract class Piece {
         return team == Team.BLACK;
     }
 
-    public boolean isTeamForwardDirectionsContains(BoardDirection direction) {
-        return team.isTeamForwardDirectionsContains(direction);
-    }
-
-    public Direction teamForwardDirection() {
-        return team.getDirection();
-    }
-
-    //TODO: 기물 하나가 팀의 전략을 아는 느낌인데 개선 가능한지 확인해보기
     public Rank teamInitialPawnRow() {
         return team.getInitialPawnRank();
     }

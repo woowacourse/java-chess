@@ -27,7 +27,6 @@ public class Pawn extends Piece {
 
     boolean isNotReachable(Position start, Position destination, ChessBoard chessBoard) {
         BoardDirection direction = BoardDirection.of(start, destination);
-        System.out.println("direction = " + direction);
         //팀의 전진방향과 맞도록 위로 한칸 움직이는 것은 가능하다
         if (team.isTeamForwardDirectionsContains(direction) && start.squaredDistanceWith(destination) == 1
                 && start.isOrthogonalWith(destination)) {
@@ -60,15 +59,5 @@ public class Pawn extends Piece {
             return false;
         }
         return true;
-    }
-
-    //TODO: 테스트 구현하
-    public boolean isKillPassing(Position start, Position destination) {
-        return isForward(start, destination) && start.isDiagonalWith(destination)
-                && start.squaredDistanceWith(destination) == KILL_PASSING_DISTANCE;
-    }
-
-    private boolean isForward(Position start, Position destination) {
-        return start.directionTo(destination) == teamForwardDirection();
     }
 }
