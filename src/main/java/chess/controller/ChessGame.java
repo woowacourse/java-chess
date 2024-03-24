@@ -28,40 +28,39 @@ public final class ChessGame {
     public void run() {
         inputView.printGameIntro();
         GameStatus gameStatus = new GameStatus();
-        Board board = null;
+        BoardFactory boardFactory = new InitialBoardFactory();
+        Board board = boardFactory.generate();
         while (gameStatus.isRunning()) {
-            board = executeGame(board, gameStatus);
+            gameStatus = executeGame(board, gameStatus);
         }
     }
 
-    private Board executeGame(Board board, GameStatus gameStatus) {
+    private GameStatus executeGame(Board board, GameStatus gameStatus) {
         return retryOnException(() -> executeCommand(board, gameStatus));
     }
 
-    private Board executeCommand(Board board, GameStatus gameStatus) {
+    private GameStatus executeCommand(Board board, GameStatus gameStatus) {
         List<String> commands = inputView.askGameCommands();
         Command command = Command.findCommand(commands.get(COMMAND_INDEX));
         if (command.isEnd()) {
-            gameStatus.changeEnd();
-            return null;
+            return gameStatus.changeEnd();
         }
         if (command.isStart()) {
-            gameStatus.changeStart();
-            return executeStart();
+            gameStatus = gameStatus.changeStart();
+            executeStart(board);
+            return gameStatus;
         }
         if (command.isMove()) {
-            gameStatus.changeMove();
+            gameStatus = gameStatus.changeMove();
             executeMove(commands, board);
+            return gameStatus;
         }
-        return board;
+        return gameStatus;
     }
 
-    private Board executeStart() {
-        BoardFactory boardFactory = new InitialBoardFactory();
-        Board board = boardFactory.generate();
+    private void executeStart(Board board) {
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
-        return board;
     }
 
     private void executeMove(List<String> commands, Board board) {

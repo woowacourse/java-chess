@@ -2,7 +2,7 @@ package chess.model.game;
 
 public class GameStatus {
 
-    private Status status;
+    private final Status status;
 
     public GameStatus() {
         status = Status.READY;
@@ -12,27 +12,25 @@ public class GameStatus {
         this.status = status;
     }
 
-    public void changeStart() {
+    public GameStatus changeStart() {
         if (status.isReady()) {
-            status = Status.START;
-            return;
+            return new GameStatus(Status.START);
         }
         throw new UnsupportedOperationException("게임이 이미 진행 중 입니다.");
     }
 
-    public void changeMove() {
+    public GameStatus changeMove() {
         if (status.isMove()) {
-            return;
+            return this;
         }
         if (status.isStart()) {
-            status = Status.MOVE;
-            return;
+            return new GameStatus(Status.MOVE);
         }
         throw new UnsupportedOperationException("게임을 start 해 주세요.");
     }
 
-    public void changeEnd() {
-        status = Status.END;
+    public GameStatus changeEnd() {
+        return new GameStatus(Status.END);
     }
 
     public boolean isRunning() {
