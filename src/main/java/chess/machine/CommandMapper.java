@@ -24,9 +24,9 @@ public class CommandMapper {
 
         private static Command findCommand(String inputCommand) {
             return Arrays.stream(values())
-                    .filter(value -> inputCommand.contains(value.inputCommand))
+                    .filter(value -> inputCommand.startsWith(value.inputCommand))
                     .map(value -> value.commandFunction)
-                    .map(value -> value.apply(inputCommand))
+                    .map(function -> function.apply(inputCommand))
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Command 입력입니다"));
         }
