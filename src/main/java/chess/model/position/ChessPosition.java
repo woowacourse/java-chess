@@ -1,6 +1,5 @@
 package chess.model.position;
 
-import chess.model.piece.Side;
 import java.util.Objects;
 
 public class ChessPosition {
@@ -10,10 +9,6 @@ public class ChessPosition {
     public ChessPosition(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    public boolean isPawnInitialPosition(Side side) {
-        return rank.isPawnInitialRank(side);
     }
 
     public Distance calculateDistance(ChessPosition other) {

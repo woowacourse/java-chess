@@ -14,12 +14,12 @@ public abstract class Piece {
 
     public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
-    public boolean isSameSide(Piece other) {
-        return this.side == other.side;
+    public boolean isEmpty() {
+        return this.side.isEmpty();
     }
 
-    public boolean isEmpty() {
-        return side.isEmpty();
+    public boolean isSameSide(Piece other) {
+        return this.side == other.side;
     }
 
     public boolean isEnemy(Piece other) {
