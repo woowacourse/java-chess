@@ -1,14 +1,14 @@
 package chess.domain.position;
 
-import static chess.domain.position.BoardDirection.E;
-import static chess.domain.position.BoardDirection.N;
-import static chess.domain.position.BoardDirection.NE;
-import static chess.domain.position.BoardDirection.NW;
-import static chess.domain.position.BoardDirection.S;
-import static chess.domain.position.BoardDirection.SE;
-import static chess.domain.position.BoardDirection.SW;
-import static chess.domain.position.BoardDirection.W;
-import static chess.domain.position.BoardDirection.of;
+import static chess.domain.position.Direction.E;
+import static chess.domain.position.Direction.N;
+import static chess.domain.position.Direction.NE;
+import static chess.domain.position.Direction.NW;
+import static chess.domain.position.Direction.S;
+import static chess.domain.position.Direction.SE;
+import static chess.domain.position.Direction.SW;
+import static chess.domain.position.Direction.W;
+import static chess.domain.position.Direction.of;
 import static chess.fixture.PositionFixtures.A1;
 import static chess.fixture.PositionFixtures.A2;
 import static chess.fixture.PositionFixtures.B1;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardDirectionTest {
+class DirectionTest {
 
     @DisplayName("방향을 계산할 수 있다 : a1 -> a2 = N")
     @Test

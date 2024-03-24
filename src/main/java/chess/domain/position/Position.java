@@ -74,20 +74,20 @@ public class Position {
     }
 
     public List<Position> calculateSlidingPath(Position destination) {
-        BoardDirection boardDirection = BoardDirection.of(this, destination);
+        Direction direction = Direction.of(this, destination);
         Position start = this;
         List<Position> path = new ArrayList<>();
         while (!start.equals(destination)) {
-            start = start.moveOneSpace(boardDirection);
+            start = start.moveOneSpace(direction);
             path.add(start);
         }
         path.remove(path.size() - 1);
         return path;
     }
 
-    private Position moveOneSpace(BoardDirection boardDirection) {
-        File movedFile = file.move(boardDirection.getMoveOnceFileWeight());
-        Rank movedRank = rank.move(boardDirection.getMoveOnceRankWeight());
+    private Position moveOneSpace(Direction direction) {
+        File movedFile = file.move(direction.getMoveOnceFileWeight());
+        Rank movedRank = rank.move(direction.getMoveOnceRankWeight());
         return new Position(movedFile, movedRank);
     }
 

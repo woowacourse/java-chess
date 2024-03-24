@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import static chess.domain.position.BoardDirection.N;
-import static chess.domain.position.BoardDirection.NE;
-import static chess.domain.position.BoardDirection.NW;
-import static chess.domain.position.BoardDirection.S;
-import static chess.domain.position.BoardDirection.SE;
-import static chess.domain.position.BoardDirection.SW;
+import static chess.domain.position.Direction.N;
+import static chess.domain.position.Direction.NE;
+import static chess.domain.position.Direction.NW;
+import static chess.domain.position.Direction.S;
+import static chess.domain.position.Direction.SE;
+import static chess.domain.position.Direction.SW;
 
-import chess.domain.position.BoardDirection;
+import chess.domain.position.Direction;
 import chess.domain.position.Rank;
 import java.util.List;
 
@@ -15,10 +15,10 @@ public enum Team {
     WHITE(List.of(NW, N, NE), Rank.TWO),
     BLACK(List.of(SW, S, SE), Rank.SEVEN);
 
-    private final List<BoardDirection> forwardDirections;
+    private final List<Direction> forwardDirections;
     private final Rank initialPawnRank;
 
-    Team(List<BoardDirection> forwardDirections, Rank initialPawnRank) {
+    Team(List<Direction> forwardDirections, Rank initialPawnRank) {
         this.forwardDirections = forwardDirections;
         this.initialPawnRank = initialPawnRank;
     }
@@ -27,7 +27,7 @@ public enum Team {
         return initialPawnRank;
     }
 
-    public boolean isTeamForwardDirectionsContains(BoardDirection direction) {
+    public boolean isTeamForwardDirectionsContains(Direction direction) {
         return forwardDirections.contains(direction);
     }
 }

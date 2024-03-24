@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.function.BiPredicate;
 
-public enum BoardDirection {
+public enum Direction {
     N((start, destination) -> start.isOrthogonalWith(destination) && start.isBelow(destination), 0, -1),
     S((start, destination) -> start.isOrthogonalWith(destination) && start.isAbove(destination), 0, 1),
     E((start, destination) -> start.isOrthogonalWith(destination) && start.isFurtherLeftThan(destination), 1, 0),
@@ -18,14 +18,14 @@ public enum BoardDirection {
     private final int moveOnceFileWeight;
     private final int moveOnceRankWeight;
 
-    BoardDirection(BiPredicate<Position, Position> matchCondition, int moveOnceFileWeight,
-                   int moveOnceRankWeight) {
+    Direction(BiPredicate<Position, Position> matchCondition, int moveOnceFileWeight,
+              int moveOnceRankWeight) {
         this.matchCondition = matchCondition;
         this.moveOnceFileWeight = moveOnceFileWeight;
         this.moveOnceRankWeight = moveOnceRankWeight;
     }
 
-    public static BoardDirection of(Position start, Position destination) {
+    public static Direction of(Position start, Position destination) {
         return Arrays.stream(values())
                 .filter(boardDirection -> boardDirection.matchCondition.test(start, destination))
                 .findAny()
