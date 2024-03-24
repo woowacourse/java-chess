@@ -27,7 +27,7 @@ public class ChessBoard {
         this.pieces = new HashMap<>();
     }
 
-    private ChessBoard(final Map<Square, Piece> pieces) {
+    public ChessBoard(final Map<Square, Piece> pieces) {
         this.pieces = pieces;
         this.team = Team.WHITE;
     }
@@ -51,12 +51,7 @@ public class ChessBoard {
         final Piece sourcePiece = pieces.get(source);
 
         validateTeam(sourcePiece);
-
-        if (pieces.containsKey(target)) {
-            validateAttack(source, target, sourcePiece);
-        } else {
-            validateMove(source, target, sourcePiece);
-        }
+        validateMove(source, target, sourcePiece);
 
         pieces.put(target, sourcePiece);
         pieces.remove(source);
@@ -72,16 +67,6 @@ public class ChessBoard {
     private void validateTeam(final Piece sourcePiece) {
         if (sourcePiece.isOppositeTeam(team)) {
             throw new IllegalArgumentException("자기 말이 아닙니다.");
-        }
-    }
-
-    private void validateAttack(final Square source, final Square target, final Piece sourcePiece) {
-        final Piece targetPiece = pieces.get(target);
-        if (targetPiece.isSameTeam(sourcePiece)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
-        }
-        if (sourcePiece.canNotAttack(source, target, pieces)) {
-            throw new IllegalArgumentException("갈 수 없는 경로입니다.");
         }
     }
 

@@ -16,21 +16,27 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(final Square source, final Square target, final Map<Square, Piece> pieces) {
         if (this.team == Team.BLACK) {
+            if (pieces.containsKey(target)) {
+                final Piece targetPiece = pieces.get(target);
+                final Piece sourcePiece = pieces.get(source);
+                if (targetPiece.isSameTeam(sourcePiece)) {
+                    return false;
+                }
+                return source.next(Direction.SOUTH_EAST).equals(target) || source.next(Direction.SOUTH_WEST).equals(target);
+            }
             return source.next(Direction.SOUTH).equals(target) ||
                     (source.next(Direction.SOUTH_SOUTH).equals(target) && source.isRank(Rank.SEVEN));
         }
+        if (pieces.containsKey(target)) {
+            final Piece targetPiece = pieces.get(target);
+            final Piece sourcePiece = pieces.get(source);
+            if (targetPiece.isSameTeam(sourcePiece)) {
+                return false;
+            }
+            return source.next(Direction.NORTH_EAST).equals(target) || source.next(Direction.NORTH_WEST).equals(target);
+        }
         return source.next(Direction.NORTH).equals(target) ||
                 (source.next(Direction.NORTH_NORTH).equals(target) && source.isRank(Rank.TWO));
-    }
-
-    @Override
-    public boolean canAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
-        if (this.team == Team.BLACK) {
-            return source.next(Direction.SOUTH_EAST).equals(target) ||
-                    source.next(Direction.SOUTH_WEST).equals(target);
-        }
-        return source.next(Direction.NORTH_EAST).equals(target) ||
-                source.next(Direction.NORTH_WEST).equals(target);
     }
 
     @Override

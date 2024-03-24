@@ -17,14 +17,17 @@ public abstract class Piece {
 
     protected boolean checkMovable(final Square source, final Square target, final List<Direction> movableDirections, final Map<Square, Piece> pieces) {
         final List<Square> movableSquares = new ArrayList<>();
+
         for (final Direction movableDirection : movableDirections) {
             addMovableSquares(source, movableDirection, movableSquares, pieces);
         }
+        
         return movableSquares.contains(target);
     }
 
     protected void addMovableSquares(final Square source, final Direction direction, final List<Square> movableSquares, final Map<Square, Piece> pieces) {
         Square movableSource = source;
+
         while (movableSource.canMove(direction)) {
             movableSource = movableSource.next(direction);
             if (pieces.containsKey(movableSource)) {
@@ -39,14 +42,6 @@ public abstract class Piece {
     }
 
     protected abstract boolean canMove(Square source, Square target, Map<Square, Piece> pieces);
-
-    public boolean canNotAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
-        return !canAttack(source, target, pieces);
-    }
-
-    protected boolean canAttack(final Square source, final Square target, final Map<Square, Piece> pieces) {
-        return canMove(source, target, pieces);
-    }
 
     public boolean isSameTeam(final Piece other) {
         return this.team == other.team;
