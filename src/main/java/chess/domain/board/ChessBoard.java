@@ -13,6 +13,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoard {
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
@@ -40,12 +41,9 @@ public class ChessBoard {
     }
 
     private boolean canMove(Piece sourcePiece, Position source, Position target) {
-        Color targetPieceColor = Color.NONE;
-
-        if (chessBoard.containsKey(target)) {
-            Piece targetPiece = chessBoard.get(target);
-            targetPieceColor = targetPiece.getColor();
-        }
+        Piece targetPiece = chessBoard.get(target);
+        Color targetPieceColor = Optional.ofNullable(targetPiece)
+                .map(Piece::getColor).orElse(Color.NONE);
 
         if (sourcePiece.canMove(source, target, targetPieceColor)) {
             return sourcePiece.searchPath(source, target).stream().noneMatch(chessBoard::containsKey);
