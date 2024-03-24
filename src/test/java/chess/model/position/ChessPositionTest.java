@@ -1,6 +1,7 @@
 package chess.model.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,9 @@ class ChessPositionTest {
         Distance distance = now.calculateDistance(other);
 
         // then
-        assertThat(distance.getFileDifference()).isEqualTo(2);
-        assertThat(distance.getRankDifference()).isEqualTo(5);
+        assertAll(
+                () -> assertThat(distance.getFileDifference()).isEqualTo(2),
+                () -> assertThat(distance.getRankDifference()).isEqualTo(5)
+        );
     }
 }

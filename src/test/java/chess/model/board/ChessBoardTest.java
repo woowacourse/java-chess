@@ -2,6 +2,7 @@ package chess.model.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
@@ -32,8 +33,10 @@ class ChessBoardTest {
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
 
         //then
-        assertThat(board.get(source)).isNull();
-        assertThat(board.get(target)).isNotNull();
+        assertAll(
+                () -> assertThat(board.get(source)).isNull(),
+                () -> assertThat(board.get(target)).isNotNull()
+        );
     }
 
     @Test
