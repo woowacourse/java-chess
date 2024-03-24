@@ -1,11 +1,13 @@
 package chess;
 
-import java.util.List;
+import java.util.function.Supplier;
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
 import chess.view.InputView;
+import chess.view.MoveCommand;
 import chess.view.OutputView;
 
+
+// TODO: 컨트롤러 이름, 패키지 포함해서 더욱 개선해볼 것!
 class Controller {
 
     private final InputView inputView;
@@ -18,52 +20,37 @@ class Controller {
 
     public void run() {
         outputView.printStartMessage();
-        play(new Board());
+        boolean isPlayable = handleException(inputView::readStartCommand);
+
+        if (isPlayable) {
+            Board board = new Board();
+            outputView.printBoard(board);
+            play(board, handleException(inputView::readMoveCommand));
+        }
     }
 
-    private void play(Board board) {
-        String command = inputView.readCommand();
-        if (command.equals("start")) {
-            playChess(board);
+    //TODO: 재귀가 아니고 할 수 있는 방법은?
+    private void play(Board board, MoveCommand moveCommand) {
+        if (moveCommand.isEnd()) {
             return;
         }
 
-        if (command.equals("end")) {
-            return;
+        try {
+            board.move(moveCommand.source(), moveCommand.target());
+            outputView.printBoard(board);
+            play(board, handleException(inputView::readMoveCommand));
+        } catch (Exception e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            play(board, handleException(inputView::readMoveCommand));
         }
-
-        throw new IllegalArgumentException("잘못된 입력입니다.");
     }
 
-    private void playChess(Board board) {
-        outputView.printBoard(board);
-        String read = inputView.readCommand();
-        if (read.startsWith("move ")) {
-            List<Coordinate> coordinates = parseToCoordinates(read);
-            board.move(coordinates.get(0), coordinates.get(1));
-            playChess(board);
-            return;
+    private <T> T handleException(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (Exception e) {
+            System.out.println("[ERROR] " + e.getMessage());
+            return handleException(supplier);
         }
-
-        if (read.equals("end")) {
-            return;
-        }
-
-        throw new IllegalArgumentException("잘못된 입력입니다.");
-    }
-
-    private List<Coordinate> parseToCoordinates(String read) {
-        String[] moveCommand = read.split("move ");
-        String[] coordinates = moveCommand[1].split(" ");
-        if (coordinates.length != 2) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
-        }
-
-        return List.of(parseToCoordinate(coordinates[0]), parseToCoordinate(coordinates[1]));
-    }
-
-    private Coordinate parseToCoordinate(String input) {
-        String[] split = input.split("");
-        return new Coordinate(Integer.parseInt(split[1]), split[0].charAt(0));
     }
 }
