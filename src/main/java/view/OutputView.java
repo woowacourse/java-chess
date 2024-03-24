@@ -2,8 +2,6 @@ package view;
 
 import domain.coordinate.Coordinate;
 import domain.piece.base.ChessPiece;
-import domain.position.Column;
-import domain.position.Row;
 import java.util.Map;
 import view.util.PieceTranslator;
 
@@ -29,7 +27,7 @@ public class OutputView {
 
     private void printRow(Map<Coordinate, ChessPiece> board, int row) {
         for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
-            Coordinate coordinate = new Coordinate(new Row(row), new Column(column));
+            Coordinate coordinate = new Coordinate(row, column);
             ChessPiece piece = board.get(coordinate);
             System.out.print(PieceTranslator.getName(piece));
         }
