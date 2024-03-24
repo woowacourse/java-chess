@@ -21,9 +21,9 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.A, Rank.ONE);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(queen.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(queen.findPath(start, end, isAttack))
                 .containsExactly(
                         new Position(File.C, Rank.THREE),
                         new Position(File.B, Rank.TWO),
@@ -37,9 +37,9 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatCode(() -> queen.findPath(start, end, isEnemyExistAtEnd)).doesNotThrowAnyException();
+        assertThatCode(() -> queen.findPath(start, end, isAttack)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -49,9 +49,9 @@ class QueenTest {
         Queen queen = new Queen(Team.BLACK);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatThrownBy(() -> queen.findPath(start, end, isEnemyExistAtEnd))
+        assertThatThrownBy(() -> queen.findPath(start, end, isAttack))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

@@ -16,9 +16,9 @@ class EastMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.E, Rank.FOUR);
         EastMovement eastMovement = new EastMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(eastMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
+        assertThat(eastMovement.isMovable(start, end, isAttack)).isTrue();
     }
 
     @Test
@@ -27,9 +27,9 @@ class EastMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.E, Rank.THREE);
         EastMovement eastMovement = new EastMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(eastMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(eastMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
@@ -38,9 +38,9 @@ class EastMovementTest {
         Position start = new Position(File.C, Rank.FOUR);
         Position end = new Position(File.E, Rank.FOUR);
         EastMovement eastMovement = new EastMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(eastMovement.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(eastMovement.findPath(start, end, isAttack))
                 .containsExactly(new Position(File.D, Rank.FOUR), new Position(File.E, Rank.FOUR));
     }
 }

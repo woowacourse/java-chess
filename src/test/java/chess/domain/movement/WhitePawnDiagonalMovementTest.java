@@ -19,9 +19,9 @@ class WhitePawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.THREE);
         Position end = new Position(file, rank);
         WhitePawnDiagonalMovement whitePawnDiagonalMovement = new WhitePawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
+        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isAttack)).isTrue();
     }
 
     @ParameterizedTest
@@ -31,20 +31,20 @@ class WhitePawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.THREE);
         Position end = new Position(file, rank);
         WhitePawnDiagonalMovement whitePawnDiagonalMovement = new WhitePawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
     @DisplayName("상대 말이 이동하고자 하는 곳에 없을 때, 이동이 불가능하다.")
-    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+    void isMovableTest_whenisAttack_false() {
         Position start = new Position(File.D, Rank.THREE);
         Position end = new Position(File.C, Rank.FOUR);
         WhitePawnDiagonalMovement whitePawnDiagonalMovement = new WhitePawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(whitePawnDiagonalMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
@@ -53,9 +53,9 @@ class WhitePawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.THREE);
         Position end = new Position(File.C, Rank.FOUR);
         WhitePawnDiagonalMovement whitePawnDiagonalMovement = new WhitePawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(whitePawnDiagonalMovement.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(whitePawnDiagonalMovement.findPath(start, end, isAttack))
                 .containsExactly(end);
     }
 }

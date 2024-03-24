@@ -9,11 +9,11 @@ public final class WhitePawnFirstMovement implements MovementRule {
     private static final Rank WHITE_PAWN_INIT_RANK = Rank.TWO;
 
     @Override
-    public boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd) {
+    public boolean isMovable(Position start, Position end, boolean isAttack) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
 
-        boolean isEmptyAtEnd = !isEnemyExistAtEnd;
+        boolean isEmptyAtEnd = !isAttack;
         boolean isExistInitPosition = start.isSameRank(WHITE_PAWN_INIT_RANK);
         boolean isMatchDifference = rankDifference == 2 && fileDifference == 0;
 
@@ -21,8 +21,8 @@ public final class WhitePawnFirstMovement implements MovementRule {
     }
 
     @Override
-    public List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd) {
-        if (!isMovable(start, end, isEnemyExistAtEnd)) {
+    public List<Position> findPath(Position start, Position end, boolean isAttack) {
+        if (!isMovable(start, end, isAttack)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
 

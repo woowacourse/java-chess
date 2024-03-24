@@ -6,17 +6,17 @@ import java.util.List;
 public final class WhitePawnDiagonalMovement implements MovementRule {
 
     @Override
-    public boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd) {
+    public boolean isMovable(Position start, Position end, boolean isAttack) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
 
         boolean isMatchDifference = rankDifference == 1 && Math.abs(fileDifference) == 1;
-        return isEnemyExistAtEnd && isMatchDifference;
+        return isAttack && isMatchDifference;
     }
 
     @Override
-    public List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd) {
-        if (!isMovable(start, end, isEnemyExistAtEnd)) {
+    public List<Position> findPath(Position start, Position end, boolean isAttack) {
+        if (!isMovable(start, end, isAttack)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
 

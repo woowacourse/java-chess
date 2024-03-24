@@ -21,9 +21,9 @@ class BishopTest {
         Bishop bishop = new Bishop(Team.WHITE);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.A, Rank.ONE);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(bishop.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(bishop.findPath(start, end, isAttack))
                 .containsExactly(
                         new Position(File.C, Rank.THREE),
                         new Position(File.B, Rank.TWO),
@@ -37,9 +37,9 @@ class BishopTest {
         Bishop bishop = new Bishop(Team.WHITE);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatCode(() -> bishop.findPath(start, end, isEnemyExistAtEnd)).doesNotThrowAnyException();
+        assertThatCode(() -> bishop.findPath(start, end, isAttack)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -49,9 +49,9 @@ class BishopTest {
         Bishop bishop = new Bishop(Team.WHITE);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatThrownBy(() -> bishop.findPath(start, end, isEnemyExistAtEnd))
+        assertThatThrownBy(() -> bishop.findPath(start, end, isAttack))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

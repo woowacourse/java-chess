@@ -19,11 +19,11 @@ public abstract class Piece {
         return team.isBlack();
     }
 
-    public final List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd) {
+    public final List<Position> findPath(Position start, Position end, boolean isAttack) {
         return movementRules.stream()
-                .filter(movementRule -> movementRule.isMovable(start, end, isEnemyExistAtEnd))
+                .filter(movementRule -> movementRule.isMovable(start, end, isAttack))
                 .findAny()
-                .map(movementRule -> movementRule.findPath(start, end, isEnemyExistAtEnd))
+                .map(movementRule -> movementRule.findPath(start, end, isAttack))
                 .orElseThrow(() -> new IllegalArgumentException("불가능한 경로입니다."));
     }
 

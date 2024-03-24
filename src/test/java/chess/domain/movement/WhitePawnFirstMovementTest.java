@@ -18,9 +18,9 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(File.D, Rank.TWO);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isAttack)).isTrue();
     }
 
     @ParameterizedTest
@@ -30,20 +30,20 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(File.D, Rank.TWO);
         Position end = new Position(file, rank);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
     @DisplayName("상대 말이 이동하고자 하는 곳에 있을 때, 이동이 불가능하다.")
-    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+    void isMovableTest_whenisAttack_false() {
         Position start = new Position(File.D, Rank.TWO);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @ParameterizedTest
@@ -53,9 +53,9 @@ class WhitePawnFirstMovementTest {
         Position start = new Position(file, rank);
         Position end = start.moveToNorth().moveToNorth();
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
@@ -65,9 +65,9 @@ class WhitePawnFirstMovementTest {
         Position middle = new Position(File.D, Rank.THREE);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(whitePawnFirstMovement.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(whitePawnFirstMovement.findPath(start, end, isAttack))
                 .containsExactly(middle, end);
     }
 }

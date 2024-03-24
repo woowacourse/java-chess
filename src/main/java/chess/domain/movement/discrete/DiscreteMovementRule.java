@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class DiscreteMovementRule implements MovementRule {
 
     @Override
-    public final boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd) {
+    public final boolean isMovable(Position start, Position end, boolean isAttack) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
 
@@ -15,8 +15,8 @@ public abstract class DiscreteMovementRule implements MovementRule {
     }
 
     @Override
-    public final List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd) {
-        if (!isMovable(start, end, isEnemyExistAtEnd)) {
+    public final List<Position> findPath(Position start, Position end, boolean isAttack) {
+        if (!isMovable(start, end, isAttack)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
 

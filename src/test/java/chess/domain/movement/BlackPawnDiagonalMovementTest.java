@@ -19,9 +19,9 @@ class BlackPawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.SIX);
         Position end = new Position(file, rank);
         BlackPawnDiagonalMovement blackPawnDiagonalMovement = new BlackPawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isTrue();
+        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isAttack)).isTrue();
     }
 
     @ParameterizedTest
@@ -31,20 +31,20 @@ class BlackPawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.SIX);
         Position end = new Position(file, rank);
         BlackPawnDiagonalMovement blackPawnDiagonalMovement = new BlackPawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
     @DisplayName("상대 말이 이동하고자 하는 곳에 없을 때, 이동이 불가능하다.")
-    void isMovableTest_whenIsEnemyExistAtEnd_false() {
+    void isMovableTest_whenisAttack_false() {
         Position start = new Position(File.D, Rank.SIX);
         Position end = new Position(File.C, Rank.FIVE);
         BlackPawnDiagonalMovement blackPawnDiagonalMovement = new BlackPawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isEnemyExistAtEnd)).isFalse();
+        assertThat(blackPawnDiagonalMovement.isMovable(start, end, isAttack)).isFalse();
     }
 
     @Test
@@ -53,9 +53,9 @@ class BlackPawnDiagonalMovementTest {
         Position start = new Position(File.D, Rank.SIX);
         Position end = new Position(File.C, Rank.FIVE);
         BlackPawnDiagonalMovement blackPawnDiagonalMovement = new BlackPawnDiagonalMovement();
-        boolean isEnemyExistAtEnd = true;
+        boolean isAttack = true;
 
-        assertThat(blackPawnDiagonalMovement.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(blackPawnDiagonalMovement.findPath(start, end, isAttack))
                 .containsExactly(end);
     }
 }

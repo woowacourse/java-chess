@@ -6,19 +6,19 @@ import java.util.List;
 public final class WhitePawnDefaultMovement implements MovementRule {
 
     @Override
-    public final boolean isMovable(Position start, Position end, boolean isEnemyExistAtEnd) {
+    public final boolean isMovable(Position start, Position end, boolean isAttack) {
         int rankDifference = start.calculateRankDifference(end);
         int fileDifference = start.calculateFileDifference(end);
 
-        boolean isEmptyAtEnd = !isEnemyExistAtEnd;
+        boolean isEmptyAtEnd = !isAttack;
         boolean isMatchDifference = rankDifference == 1 && fileDifference == 0;
 
         return isEmptyAtEnd && isMatchDifference;
     }
 
     @Override
-    public final List<Position> findPath(Position start, Position end, boolean isEnemyExistAtEnd) {
-        if (!isMovable(start, end, isEnemyExistAtEnd)) {
+    public final List<Position> findPath(Position start, Position end, boolean isAttack) {
+        if (!isMovable(start, end, isAttack)) {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
 

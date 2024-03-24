@@ -21,9 +21,9 @@ class RookTest {
         Rook rook = new Rook(Team.BLACK);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.A, Rank.FOUR);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThat(rook.findPath(start, end, isEnemyExistAtEnd))
+        assertThat(rook.findPath(start, end, isAttack))
                 .containsExactly(
                         new Position(File.C, Rank.FOUR),
                         new Position(File.B, Rank.FOUR),
@@ -37,9 +37,9 @@ class RookTest {
         Rook rook = new Rook(Team.BLACK);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatCode(() -> rook.findPath(start, end, isEnemyExistAtEnd)).doesNotThrowAnyException();
+        assertThatCode(() -> rook.findPath(start, end, isAttack)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -49,9 +49,9 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
-        boolean isEnemyExistAtEnd = false;
+        boolean isAttack = false;
 
-        assertThatThrownBy(() -> rook.findPath(start, end, isEnemyExistAtEnd))
+        assertThatThrownBy(() -> rook.findPath(start, end, isAttack))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }
