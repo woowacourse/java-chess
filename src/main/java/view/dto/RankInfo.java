@@ -1,5 +1,6 @@
 package view.dto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class RankInfo {
@@ -10,7 +11,7 @@ public class RankInfo {
         this.piecesOfRank = piecesOfRank;
     }
 
-    public List<String> piecesOfRank() {
-        return piecesOfRank;
+    public List<String> getPieces() {
+        return Collections.unmodifiableList(piecesOfRank);
     }
 }
