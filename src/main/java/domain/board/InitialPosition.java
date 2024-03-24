@@ -1,5 +1,9 @@
-package domain;
+package domain.board;
 
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
+import domain.piece.Side;
 import java.util.List;
 import java.util.function.Function;
 

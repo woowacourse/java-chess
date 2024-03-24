@@ -1,5 +1,8 @@
-package domain;
+package domain.route;
 
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -1,9 +1,8 @@
 package domain.piece;
 
-import domain.InitialPosition;
-import domain.MovePath;
-import domain.Position;
-import domain.Side;
+import domain.board.InitialPosition;
+import domain.route.MovePath;
+import domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Piece {

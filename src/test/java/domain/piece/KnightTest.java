@@ -11,8 +11,7 @@ import static fixture.PositionFixture.F3;
 import static fixture.PositionFixture.F5;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Position;
-import domain.Side;
+import domain.position.Position;
 import fixture.MovePathFixture;
 import fixture.PositionFixture;
 import java.util.List;

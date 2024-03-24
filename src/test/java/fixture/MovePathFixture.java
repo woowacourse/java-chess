@@ -1,7 +1,7 @@
 package fixture;
 
-import domain.MovePath;
-import domain.Pieces;
+import domain.route.MovePath;
+import domain.route.Pieces;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.Arrays;

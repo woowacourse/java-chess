@@ -1,9 +1,9 @@
 package controller;
 
-import domain.ChessBoard;
-import domain.ChessBoardCreator;
+import domain.board.ChessBoard;
+import domain.board.ChessBoardCreator;
 import domain.Command;
-import domain.Position;
+import domain.position.Position;
 import domain.Turn;
 import view.InputView;
 import view.OutputView;

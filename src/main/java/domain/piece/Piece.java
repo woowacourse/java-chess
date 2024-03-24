@@ -1,8 +1,7 @@
 package domain.piece;
 
-import domain.MovePath;
-import domain.Position;
-import domain.Side;
+import domain.route.MovePath;
+import domain.position.Position;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

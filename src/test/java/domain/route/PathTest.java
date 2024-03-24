@@ -1,4 +1,4 @@
-package domain;
+package domain.route;
 
 import static fixture.PositionFixture.A1;
 import static fixture.PositionFixture.A2;
@@ -30,6 +30,7 @@ import static fixture.PositionFixture.H1;
 import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.route.Path;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

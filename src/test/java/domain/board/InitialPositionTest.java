@@ -1,4 +1,4 @@
-package domain;
+package domain.board;
 
 import static fixture.PositionFixture.A1;
 import static fixture.PositionFixture.A2;
@@ -34,6 +34,8 @@ import static fixture.PositionFixture.H7;
 import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.position.Position;
+import domain.piece.Side;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

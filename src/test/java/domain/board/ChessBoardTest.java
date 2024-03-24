@@ -1,5 +1,8 @@
-package domain;
+package domain.board;
 
+import domain.route.Path;
+import domain.route.Pieces;
+import domain.piece.Side;
 import domain.piece.Empty;
 import domain.piece.Pawn;
 import java.util.List;

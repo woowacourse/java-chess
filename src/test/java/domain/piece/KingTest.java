@@ -1,7 +1,6 @@
 package domain.piece;
 
-import domain.Position;
-import domain.Side;
+import domain.position.Position;
 import fixture.MovePathFixture;
 import fixture.PositionFixture;
 import java.util.List;

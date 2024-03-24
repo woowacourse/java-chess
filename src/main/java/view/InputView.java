@@ -1,9 +1,9 @@
 package view;
 
 import domain.Command;
-import domain.File;
-import domain.Position;
-import domain.Rank;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import view.mapper.CommandMapper;
 import view.mapper.FileMapper;
 import view.mapper.RankMapper;

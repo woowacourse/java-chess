@@ -1,4 +1,4 @@
-package domain;
+package domain.route;
 
 import domain.piece.Piece;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package domain;
+package domain.piece;
 
 import static fixture.PositionFixture.A1;
 import static fixture.PositionFixture.A2;
@@ -8,6 +8,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Rook;
+import domain.piece.Side;
+import domain.position.Position;
+import domain.route.MovePath;
 import fixture.MovePathFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.board.ChessBoard;
+import domain.board.ChessBoardCreator;
 import fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

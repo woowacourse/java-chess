@@ -1,6 +1,9 @@
 package domain;
 
+import domain.board.ChessBoard;
 import domain.piece.Piece;
+import domain.piece.Side;
+import domain.position.Position;
 
 public class Turn {
 

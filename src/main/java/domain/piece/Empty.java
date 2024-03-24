@@ -1,8 +1,7 @@
 package domain.piece;
 
-import domain.MovePath;
-import domain.Position;
-import domain.Side;
+import domain.route.MovePath;
+import domain.position.Position;
 
 public class Empty extends Piece {
 

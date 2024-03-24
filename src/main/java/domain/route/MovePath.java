@@ -1,6 +1,9 @@
-package domain;
+package domain.route;
 
+import domain.board.ChessBoard;
 import domain.piece.Piece;
+import domain.piece.Side;
+import domain.position.Position;
 import java.util.Objects;
 
 public class MovePath {

@@ -1,5 +1,9 @@
-package domain;
+package domain.board;
 
+import domain.route.MovePath;
+import domain.route.Path;
+import domain.route.Pieces;
+import domain.position.Position;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.LinkedHashMap;

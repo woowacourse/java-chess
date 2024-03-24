@@ -1,6 +1,6 @@
 package view;
 
-import domain.ChessBoard;
+import domain.board.ChessBoard;
 
 public class OutputView {
 

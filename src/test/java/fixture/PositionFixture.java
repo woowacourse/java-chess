@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.File;
-import domain.Position;
-import domain.Rank;
+import domain.position.File;
+import domain.position.Position;
+import domain.position.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;
