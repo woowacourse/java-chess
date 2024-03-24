@@ -1,37 +1,24 @@
 package chess.domain.square.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import chess.domain.square.piece.unified.Knight;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class KnightTest {
-    private static final Map<Position, Square> board = new HashMap<>();
-
-    @BeforeEach
-    void setUp() {
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                board.put(new Position(rank, file), Empty.getInstance());
-            }
-        }
-    }
-
     @DisplayName("나이트는 파일 두칸, 랭크 한칸만큼 떨어진 칸으로 갈 수 있다.")
     @Test
     void canTwoFileOneRankMoveTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
@@ -45,6 +32,7 @@ public class KnightTest {
     @Test
     void canOneFileTwoRankMoveTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
@@ -58,6 +46,7 @@ public class KnightTest {
     @Test
     void canNotMoveTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
@@ -71,6 +60,7 @@ public class KnightTest {
     @Test
     void canTwoFileOneRankAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Knight.from(Color.WHITE);
         Piece attackedPiece = Knight.from(Color.BLACK);
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
@@ -87,6 +77,7 @@ public class KnightTest {
     @Test
     void canOneFileTwoRankAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Knight.from(Color.WHITE);
         Piece attackedPiece = Knight.from(Color.BLACK);
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
@@ -103,6 +94,7 @@ public class KnightTest {
     @Test
     void canNotAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Knight.from(Color.WHITE);
         Piece attackedPiece = Knight.from(Color.BLACK);
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);

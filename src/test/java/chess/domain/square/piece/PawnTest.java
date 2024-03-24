@@ -1,41 +1,28 @@
 package chess.domain.square.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
 import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import chess.domain.square.piece.divided.Pawn;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Map;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class PawnTest {
-    private static final Map<Position, Square> board = new HashMap<>();
-
-    @BeforeEach
-    void setUp() {
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                board.put(new Position(rank, file), Empty.getInstance());
-            }
-        }
-    }
-
     // TODO: @Nested 로 분리하기
     @DisplayName("한 번도 이동하지 않은 블랙 폰은 밑으로 두 칸 움직일 수 있다.")
     @Test
     void blackCanMoveTwoStraightTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.A), piece);
         Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.FIFTH, File.A));
@@ -49,6 +36,7 @@ class PawnTest {
     @Test
     void blackCanNotMoveTwoStraightTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.FIFTH, File.A), piece);
         Path path = new Path(new Position(Rank.FIFTH, File.A), new Position(Rank.THIRD, File.A));
@@ -62,6 +50,7 @@ class PawnTest {
     @Test
     void blackCanStraightMoveTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.A), piece);
         Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.SIXTH, File.A));
@@ -76,6 +65,7 @@ class PawnTest {
     @MethodSource("provideUnValidPathForBlack")
     void blackCanNotStraightMoveTest(Path path) {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), piece);
 
@@ -98,6 +88,7 @@ class PawnTest {
     @Test
     void whiteCanMoveTwoStraightTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
@@ -111,6 +102,7 @@ class PawnTest {
     @Test
     void whiteCanNotMoveTwoStraightTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.FOURTH, File.A), piece);
         Path path = new Path(new Position(Rank.FOURTH, File.A), new Position(Rank.SIXTH, File.A));
@@ -124,6 +116,7 @@ class PawnTest {
     @Test
     void whiteCanStraightMoveTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
         Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A));
@@ -138,6 +131,7 @@ class PawnTest {
     @MethodSource("provideUnValidPathForWhite")
     void canStraightNotMoveTest(Path path) {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.B), piece);
 
@@ -160,6 +154,7 @@ class PawnTest {
     @Test
     void blackCanLeftDownAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Pawn.from(Color.BLACK);
         Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
@@ -176,6 +171,7 @@ class PawnTest {
     @Test
     void blackCanRightDownAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Pawn.from(Color.BLACK);
         Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
@@ -193,6 +189,7 @@ class PawnTest {
     @MethodSource("provideUnValidAttackedPositionForBlack")
     void blackCanNotAttackTest(Position attackedPosition) {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.from(Color.BLACK);
         Piece attackedPiece = Pawn.from(Color.WHITE);
@@ -219,6 +216,7 @@ class PawnTest {
     @Test
     void whiteCanLeftDownAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Pawn.from(Color.WHITE);
         Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
@@ -234,6 +232,7 @@ class PawnTest {
     @Test
     void whiteCanRightDownAttackTest() {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Pawn.from(Color.WHITE);
         Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
@@ -250,6 +249,7 @@ class PawnTest {
     @MethodSource("provideUnValidAttackedPositionForWhite")
     void whiteCanNotAttackTest(Position attackedPosition) {
         // given
+        final Map<Position, Square> board = EmptySquaresMaker.make();
         Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.from(Color.WHITE);
         Piece attackedPiece = Pawn.from(Color.BLACK);
