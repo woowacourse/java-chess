@@ -4,7 +4,7 @@ import chess.domain.board.Route;
 
 public class Knight extends Piece {
 
-    public static final String KNIGHT_NAME = "N";
+    private static final String KNIGHT_NAME = "N";
 
     public Knight(Color color) {
         super(color, KNIGHT_NAME);

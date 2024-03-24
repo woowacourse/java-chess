@@ -3,8 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Route;
 
 public class Queen extends Piece {
-
-    public static final String QUEEN_NAME = "Q";
+    private static final String QUEEN_NAME = "Q";
 
     public Queen(Color color) {
         super(color, QUEEN_NAME);
