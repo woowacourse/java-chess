@@ -7,6 +7,7 @@ import chess.domain.piece.Color;
 import chess.domain.state.End;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
+import chess.domain.vo.Score;
 import chess.dto.ChessBoardDto;
 import chess.dto.CurrentResultDto;
 import chess.view.InputView;
@@ -53,8 +54,8 @@ public class ChessGameController {
     }
 
     private void printCurrentScore(GameState gameState) {
-        double blackScore = gameState.calculateScore(Color.BLACK);
-        double whiteScore = gameState.calculateScore(Color.WHITE);
+        Score blackScore = gameState.calculateScore(Color.BLACK);
+        Score whiteScore = gameState.calculateScore(Color.WHITE);
         Color winnerColor = gameState.getWinnerColor();
         CurrentResultDto currentResultDto = new CurrentResultDto(blackScore, whiteScore, winnerColor);
         outputView.printEachTeamScore(currentResultDto);

@@ -66,7 +66,8 @@ public class OutputView {
                         + "승리팀: %s" + NEW_LINE
                         + "게임을 계속 진행하시려면 이동 명령어를, 종료하시려면 종료 명령어를 입력하세요." + NEW_LINE
                         + NEW_LINE,
-                currentResultDto.blackScore(), currentResultDto.whiteScore(), currentResultDto.winnerColor().name());
+                currentResultDto.getBlackScore(), currentResultDto.getWhiteScore(),
+                currentResultDto.winnerColor().name());
     }
 
 }

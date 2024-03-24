@@ -11,6 +11,7 @@ import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.vo.Score;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class ChessBoard {
                 .orElseThrow(() -> new UnsupportedOperationException("King이 존재하지 않습니다."));
     }
 
-    public double calculateScore(Color color) {
+    public Score calculateScore(Color color) {
         double score = chessBoard.values().stream().filter(piece -> piece.getColor() == color)
                 .mapToDouble(Piece::getScore).sum();
         for (File file : File.values()) {
@@ -64,7 +65,7 @@ public class ChessBoard {
                 score -= 0.5 * pawnCount;
             }
         }
-        return score;
+        return new Score(score);
     }
 
     private double getPawnCount(File file, Color color) {

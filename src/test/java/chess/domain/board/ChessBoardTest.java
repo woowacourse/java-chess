@@ -11,6 +11,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.vo.Score;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -126,10 +127,10 @@ public class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
 
         // when
-        double score = chessBoard.calculateScore(Color.BLACK);
+        Score score = chessBoard.calculateScore(Color.BLACK);
 
         // then
-        assertThat(score).isEqualTo(38);
+        assertThat(score).isEqualTo(new Score(38));
     }
 
     /*
@@ -151,9 +152,9 @@ public class ChessBoardTest {
         chessBoard.getChessBoard().put(Position.of(File.A, Rank.FIVE), new Pawn(Color.BLACK));
 
         // when
-        double score = chessBoard.calculateScore(Color.BLACK);
+        Score score = chessBoard.calculateScore(Color.BLACK);
 
         // then
-        assertThat(score).isEqualTo(36.5);
+        assertThat(score).isEqualTo(new Score(36.5));
     }
 }

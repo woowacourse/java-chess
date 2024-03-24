@@ -2,6 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
+import chess.domain.vo.Score;
 import java.util.List;
 
 public class End implements GameState {
@@ -22,7 +23,7 @@ public class End implements GameState {
     }
 
     @Override
-    public double calculateScore(Color color) {
+    public Score calculateScore(Color color) {
         throw new UnsupportedOperationException("종료된 게임은 점수를 계산할 수 없습니다.");
     }
 

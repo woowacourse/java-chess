@@ -7,6 +7,7 @@ import static chess.utils.Constant.START_COMMAND;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import java.util.List;
 
 public class Progress implements GameState {
@@ -44,18 +45,18 @@ public class Progress implements GameState {
     }
 
     @Override
-    public double calculateScore(Color color) {
+    public Score calculateScore(Color color) {
         return chessBoard.calculateScore(color);
     }
 
     @Override
     public Color getWinnerColor() {
-        double blackColor = chessBoard.calculateScore(Color.BLACK);
-        double whiteColor = chessBoard.calculateScore(Color.WHITE);
-        if (blackColor > whiteColor) {
+        Score blackScore = chessBoard.calculateScore(Color.BLACK);
+        Score whiteScore = chessBoard.calculateScore(Color.WHITE);
+        if (blackScore.isGreaterThan(whiteScore)) {
             return Color.BLACK;
         }
-        if (blackColor < whiteColor) {
+        if (whiteScore.isGreaterThan(blackScore)) {
             return Color.WHITE;
         }
         return Color.NONE;

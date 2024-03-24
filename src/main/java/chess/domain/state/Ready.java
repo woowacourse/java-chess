@@ -4,6 +4,7 @@ import static chess.utils.Constant.START_COMMAND;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
+import chess.domain.vo.Score;
 import java.util.List;
 
 public class Ready implements GameState {
@@ -28,7 +29,7 @@ public class Ready implements GameState {
     }
 
     @Override
-    public double calculateScore(Color color) {
+    public Score calculateScore(Color color) {
         throw new UnsupportedOperationException("시작되지 않은 게임은 점수를 계산할 수 없습니다.");
     }
 
