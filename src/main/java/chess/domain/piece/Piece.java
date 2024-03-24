@@ -21,11 +21,7 @@ public abstract class Piece {
         return team.getInitialPawnRank();
     }
 
-    public boolean isSameTeam(Piece otherPiece) {
-        return this.team == otherPiece.team;
-    }
-
-    public boolean isOtherTeam(Piece otherPiece) {
-        return !isSameTeam(otherPiece);
+    public boolean isOtherTeam(Piece other) {
+        return this.team != other.team;
     }
 }
