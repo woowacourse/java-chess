@@ -36,7 +36,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 좌표입니다."));
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 file 좌표입니다."));
     }
 
     public int getCoordinate() {
