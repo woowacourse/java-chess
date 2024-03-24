@@ -2,6 +2,7 @@ package chess.domain.square;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.PieceColor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -84,6 +85,30 @@ class SquareTest {
         Square target = Square.of(File.c, Rank.FIVE);
 
         boolean actual = source.isStraightAndDiagonal(target);
+
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("검정색 폰이 아래로 이동하면 True를 리턴한다.")
+    @Test
+    void returnTrueWhenBlackPawnMoveDown() {
+        PieceColor color = PieceColor.BLACK;
+        Square source = Square.of(File.e, Rank.SEVEN);
+        Square target = Square.of(File.e, Rank.FIVE);
+
+        boolean actual = source.isNotBackward(target, color);
+
+        assertThat(actual).isTrue();
+    }
+
+    @DisplayName("흰색 폰이 위로 이동하면 True를 리턴한다.")
+    @Test
+    void returnTrueWhenWhitePawnMoveUp() {
+        PieceColor color = PieceColor.WHITE;
+        Square source = Square.of(File.e, Rank.TWO);
+        Square target = Square.of(File.e, Rank.FOUR);
+
+        boolean actual = source.isNotBackward(target, color);
 
         assertThat(actual).isTrue();
     }

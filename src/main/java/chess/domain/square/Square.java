@@ -1,5 +1,7 @@
 package chess.domain.square;
 
+import chess.domain.piece.PieceColor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -35,8 +37,14 @@ public record Square(File file, Rank rank) {
                 && rank.calculateDistance(target.rank) == ONE_STEP;
     }
 
+    public boolean isNotBackward(final Square target, final PieceColor color) {
+        if (color.isBlack()) {
+            return rank.calculateDirection(target.rank) > 0;
+        }
+        return rank.calculateDirection(target.rank) < 0;
+    }
+
     public boolean isOnlyForward(final Square target) {
-        // TODO: 뒤로 가는 경우 ~ 블랙은 아래로만, 화이트는 위로만 전진 가능
         if (isFirstMove()) {
             return rank.calculateDistance(target.rank) <= TWO_STEP
                     && file.isSameFile(target.file);
