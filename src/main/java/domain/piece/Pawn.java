@@ -6,7 +6,6 @@ import domain.Square;
 import domain.Team;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class Pawn extends Piece {
     public Pawn(final Team team) {
@@ -39,21 +38,5 @@ public class Pawn extends Piece {
         }
         return source.next(Direction.NORTH).equals(target)
                 || (source.next(Direction.NORTH_NORTH).equals(target) && source.isRank(Rank.TWO));
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof final Pawn piece)) {
-            return false;
-        }
-        return this.team == piece.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team, Pawn.class);
     }
 }

@@ -51,10 +51,6 @@ public abstract class Piece {
         return team != other;
     }
 
-    public abstract boolean equals(final Object o);
-
-    public abstract int hashCode();
-
     public boolean isBlack() {
         return this.team == Team.BLACK;
     }
