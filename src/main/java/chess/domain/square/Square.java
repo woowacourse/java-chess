@@ -24,12 +24,6 @@ public class Square {
         return new Square(rank, file);
     }
 
-    public Square move(final int nextFileIndex, final int nextRankIndex) {
-        Rank nextRank = rank.from(nextRankIndex);
-        File nextFile = file.from(nextFileIndex);
-        return new Square(nextRank, nextFile);
-    }
-
     public int getRankIndex() {
         return rank.ordinal();
     }

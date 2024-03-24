@@ -22,13 +22,9 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK));
     }
 
-    public Rank from(final int rankMoveStep) {
-        return indexOf(this.ordinal() + rankMoveStep);
-    }
-
-    private Rank indexOf(final int index) {
+    public static Rank of(final int sourceIndex, final int targetIndex) {
         return Arrays.stream(values())
-                .filter(rank -> rank.ordinal() == index)
+                .filter(rank -> rank.ordinal() == Math.abs(sourceIndex - targetIndex))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_RANK));
     }

@@ -20,23 +20,22 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void move(final Square from, final Square to, final Color turn) {
-        Piece sourcePiece = pieces.get(from);
-        Piece destinationPiece = pieces.get(to);
-        Movement movement = new Movement(from, to);
+    public void move(final Square source, final Square target, final Color turn) {
+        Piece sourcePiece = pieces.get(source);
+        Piece destinationPiece = pieces.get(target);
+        Movement movement = new Movement(source, target);
         validateSourcePiece(sourcePiece, turn);
         validateDestinationColor(sourcePiece, destinationPiece);
         validateDestinationMove(sourcePiece, destinationPiece, movement);
 
-        pieces.remove(from);
-        pieces.put(to, sourcePiece);
+        pieces.remove(source);
+        pieces.put(target, sourcePiece);
     }
 
     private void validateSourcePiece(final Piece piece, final Color turn) {
         if (piece == null) {
             throw new IllegalArgumentException(NO_PIECE_EXCEPTION);
         }
-
         if (!piece.isSameColor(turn)) {
             throw new IllegalArgumentException(INVALID_TURN);
         }
@@ -48,7 +47,8 @@ public class Board {
         }
     }
 
-    private void validateDestinationMove(final Piece sourcePiece, final Piece destinationPiece, final Movement movement) {
+    private void validateDestinationMove(final Piece sourcePiece, final Piece destinationPiece,
+                                         final Movement movement) {
         if (!sourcePiece.type().equals(Type.KNIGHT)) {
             checkCanMove(sourcePiece, destinationPiece, movement);
             checkRoute(movement);

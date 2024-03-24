@@ -22,13 +22,9 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
 
-    public File from(final int fileMoveStep) {
-        return indexOf(this.ordinal() + fileMoveStep);
-    }
-
-    private File indexOf(final int index) {
+    public static File of(final int sourceIndex, final int targetIndex) {
         return Arrays.stream(values())
-                .filter(file -> file.ordinal() == index)
+                .filter(file -> file.ordinal() == Math.abs(sourceIndex - targetIndex))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_FILE));
     }
