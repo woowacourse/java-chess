@@ -4,7 +4,6 @@ import java.util.List;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 
-// TODO: depth 정리는 했는데, 아직도 개선할 점이 많아 보임!
 public class Pawn extends AbstractPiece {
 
     private final List<Direction> forwardDirections = List.of(
@@ -27,15 +26,18 @@ public class Pawn extends AbstractPiece {
 
     @Override
     void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
-        List<Coordinate> diagonalPath = createPath(source, diagonalDirections);
         List<Coordinate> forwardPath = createPath(source, forwardDirections);
+        List<Coordinate> diagonalPath = createPath(source, diagonalDirections);
+
         validateReachable(target, diagonalPath, forwardPath);
+        validateForwardAttack(target, board, forwardPath);
+        if (isTwoStep(source, target)) {
+            validateInitialCoordinate(source);
+            validateBlocked(target, forwardPath, board);
+        }
         validateDiagonal(target, board, diagonalPath);
-        validateForward(source, target, board, forwardPath);
     }
 
-
-    // TODO: AbstractNonSlidingPiece와 중복
     private List<Coordinate> createPath(Coordinate source, List<Direction> directions) {
         int forwardDirection = team.getForwardDirection();
 
@@ -53,6 +55,33 @@ public class Pawn extends AbstractPiece {
         }
     }
 
+    private void validateForwardAttack(Coordinate target, Board board, List<Coordinate> forwardPath) {
+        if (forwardPath.contains(target) && isEnemy(board.findByCoordinate(target))) {
+            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
+        }
+    }
+
+    private boolean isTwoStep(Coordinate source, Coordinate target) {
+        return Math.abs(source.getRank() - target.getRank()) == 2;
+    }
+
+    private void validateInitialCoordinate(Coordinate source) {
+        if (!(source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK)) {
+            throw new IllegalStateException("초기 상태의 폰이 아닌 경우, 2칸 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {
+        Coordinate blockedCoordinate = slidingPath.stream()
+                .filter(board::isPiecePresent)
+                .findFirst()
+                .orElse(target);
+
+        if (!blockedCoordinate.equals(target)) {
+            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
+        }
+    }
+
     private void validateDiagonal(Coordinate target, Board board, List<Coordinate> diagonalPath) {
         if (diagonalPath.contains(target)) {
             validateEnemyExist(target, board);
@@ -66,36 +95,6 @@ public class Pawn extends AbstractPiece {
 
         if (!isEnemy(board.findByCoordinate(target))) {
             throw new IllegalStateException("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
-        }
-    }
-
-    private void validateForward(Coordinate source, Coordinate target, Board board, List<Coordinate> forwardPath) {
-        if (forwardPath.contains(target)) {
-            validateInitialCoordinate(source, target);
-            validateBlocked(target, forwardPath, board);
-        }
-    }
-
-    private void validateInitialCoordinate(Coordinate source, Coordinate target) {
-        if (isTwoStep(source, target) &&
-                !(source.getRank() == INITIAL_BLACK_PAWN_RANK || source.getRank() == INITIAL_WHITE_PAWN_RANK)) {
-            throw new IllegalStateException("초기 상태의 폰이 아닌 경우, 2칸 이동할 수 없습니다.");
-        }
-    }
-
-    private boolean isTwoStep(Coordinate source, Coordinate target) {
-        return Math.abs(source.getRank() - target.getRank()) == 2;
-    }
-
-    // TODO: AbstractSlidingPiece와 중복
-    private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {
-        Coordinate blockedCoordinate = slidingPath.stream()
-                .filter(board::isPiecePresent)
-                .findFirst()
-                .orElse(target);
-
-        if (!blockedCoordinate.equals(target)) {
-            throw new IllegalStateException("기물로 막혀있어 이동할 수 없습니다.");
         }
     }
 }

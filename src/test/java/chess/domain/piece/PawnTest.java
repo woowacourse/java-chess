@@ -80,6 +80,22 @@ class PawnTest {
                     .doesNotThrowAnyException();
         }
 
+        @DisplayName("1칸 전진하는 위치에 적군 기물이 있다면 움직일 수 없다.")
+        @Test
+        void noOneStep() {
+            HashMap<Coordinate, Piece> pieces = new HashMap<>();
+            Coordinate source = new Coordinate(3, 'e');
+            Coordinate target = new Coordinate(4, 'e');
+            pieces.put(source, sut);
+            pieces.put(target, new Pawn(Team.BLACK));
+
+            Board board = new Board(pieces);
+
+            assertThatThrownBy(() -> sut.validateMovable(source, target, board))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
+        }
+
         @DisplayName("초기 위치에 있을 경우, 적진 방향으로 2칸 움직일 수 있다.")
         @Test
         void twoStep() {
@@ -128,6 +144,21 @@ class PawnTest {
             Coordinate target = new Coordinate(4, 'd');
             pieces.put(source, sut);
             pieces.put(obstacle, new Pawn(Team.WHITE));
+            pieces.put(target, new Pawn(Team.BLACK));
+            Board board = new Board(pieces);
+
+            assertThatThrownBy(() -> sut.validateMovable(source, target, board))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
+        }
+
+        @DisplayName("초기 위치지만, target에 적군 기물이 존재하면 2칸 움직일 수 없다.")
+        @Test
+        void noTwoStepBecauseCantAttack() {
+            HashMap<Coordinate, Piece> pieces = new HashMap<>();
+            Coordinate source = new Coordinate(2, 'd');
+            Coordinate target = new Coordinate(4, 'd');
+            pieces.put(source, sut);
             pieces.put(target, new Pawn(Team.BLACK));
             Board board = new Board(pieces);
 
@@ -227,7 +258,7 @@ class PawnTest {
 
         @DisplayName("적진 방향으로 1칸 전진할 수 있다.")
         @Test
-        void oneStepBlack() {
+        void oneStep() {
             HashMap<Coordinate, Piece> pieces = new HashMap<>();
             Coordinate source = new Coordinate(7, 'e');
             Coordinate target = new Coordinate(6, 'e');
@@ -236,6 +267,23 @@ class PawnTest {
 
             assertThatCode(() -> sut.validateMovable(source, target, board))
                     .doesNotThrowAnyException();
+        }
+
+
+        @DisplayName("1칸 전진하는 위치에 적군 기물이 있다면 움직일 수 없다.")
+        @Test
+        void noOneStep() {
+            HashMap<Coordinate, Piece> pieces = new HashMap<>();
+            Coordinate source = new Coordinate(4, 'e');
+            Coordinate target = new Coordinate(3, 'e');
+            pieces.put(source, sut);
+            pieces.put(target, new Pawn(Team.WHITE));
+
+            Board board = new Board(pieces);
+
+            assertThatThrownBy(() -> sut.validateMovable(source, target, board))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
         }
 
         @DisplayName("초기 위치에 있을 경우, 적진 방향으로 2칸 움직일 수 있다.")
@@ -286,6 +334,21 @@ class PawnTest {
             Coordinate target = new Coordinate(5, 'd');
             pieces.put(source, sut);
             pieces.put(obstacle, new Pawn(Team.BLACK));
+            pieces.put(target, new Pawn(Team.WHITE));
+            Board board = new Board(pieces);
+
+            assertThatThrownBy(() -> sut.validateMovable(source, target, board))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
+        }
+
+        @DisplayName("초기 위치지만, target에 적군 기물이 존재하면 2칸 움직일 수 없다.")
+        @Test
+        void noTwoStepBecauseCantAttack() {
+            HashMap<Coordinate, Piece> pieces = new HashMap<>();
+            Coordinate source = new Coordinate(7, 'd');
+            Coordinate target = new Coordinate(5, 'd');
+            pieces.put(source, sut);
             pieces.put(target, new Pawn(Team.WHITE));
             Board board = new Board(pieces);
 
