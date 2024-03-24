@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Map;
-
 public class Rook extends Piece {
 
-    private static final Map<Color, Rook> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Rook(Color.BLACK)),
-            Map.entry(Color.WHITE, new Rook(Color.WHITE))
-    );
+    private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
+    private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
 
     private final boolean canMoveMoreThenOnce = true;
 
@@ -17,9 +13,12 @@ public class Rook extends Piece {
     }
 
     public static Rook of(final Color color) {
-        return CACHE.get(color);
-    }
+        if (color.isBlack()) {
+            return BLACK_ROOK;
+        }
 
+        return WHITE_ROOK;
+    }
 
     private void initDirections() {
         this.directions.add(Direction.LEFT);

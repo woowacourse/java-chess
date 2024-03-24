@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Map;
-
 public class Pawn extends Piece {
 
-    private static final Map<Color, Pawn> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Pawn(Color.BLACK)),
-            Map.entry(Color.WHITE, new Pawn(Color.WHITE))
-    );
+    private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
+    private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
 
     private final boolean canMoveMoreThenOnce = false;
 
@@ -16,8 +12,12 @@ public class Pawn extends Piece {
         initDirections();
     }
 
-    public static Pawn of(final Color team) {
-        return CACHE.get(team);
+    public static Pawn of(final Color color) {
+        if (color.isBlack()) {
+            return BLACK_PAWN;
+        }
+
+        return WHITE_PAWN;
     }
 
     private void initDirections() {

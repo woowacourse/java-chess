@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Map;
-
 public class Bishop extends Piece {
 
-    private static final Map<Color, Bishop> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Bishop(Color.BLACK)),
-            Map.entry(Color.WHITE, new Bishop(Color.WHITE))
-    );
+    private static final Bishop BLACK_BISHOP = new Bishop(Color.BLACK);
+    private static final Bishop WHITE_BISHOP = new Bishop(Color.WHITE);
 
     private final boolean canMoveMoreThenOnce = true;
 
@@ -16,8 +12,12 @@ public class Bishop extends Piece {
         initDirections();
     }
 
-    public static Bishop of(final Color team) {
-        return CACHE.get(team);
+    public static Bishop of(final Color color) {
+        if (color.isBlack()) {
+            return BLACK_BISHOP;
+        }
+
+        return WHITE_BISHOP;
     }
 
     private void initDirections() {

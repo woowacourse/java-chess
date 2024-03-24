@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import java.util.Map;
-
 public class Knight extends Piece {
 
-    private static final Map<Color, Knight> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Knight(Color.BLACK)),
-            Map.entry(Color.WHITE, new Knight(Color.WHITE))
-    );
+    private static final Knight BLACK_KNIGHT = new Knight(Color.BLACK);
+    private static final Knight WHITE_KNIGHT = new Knight(Color.WHITE);
 
     private final boolean canMoveMoreThenOnce = false;
 
@@ -17,7 +13,11 @@ public class Knight extends Piece {
     }
 
     public static Knight of(final Color color) {
-        return CACHE.get(color);
+        if (color.isBlack()) {
+            return BLACK_KNIGHT;
+        }
+
+        return WHITE_KNIGHT;
     }
 
     private void initDirections() {
