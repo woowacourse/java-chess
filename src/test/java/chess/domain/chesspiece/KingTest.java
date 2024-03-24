@@ -1,7 +1,5 @@
 package chess.domain.chesspiece;
 
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,9 +43,8 @@ class KingTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들이 아니면 예외를 발생한다.")
     void King_Validate_route() {
         Piece piece = new King(WHITE);
-        assertThatThrownBy(() -> {
-            piece.getRoute(Position.of("a1"), Position.of("a3"));
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> piece.getRoute(Position.of("a1"), Position.of("a3")))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없습니다.");
 
     }
@@ -60,10 +57,4 @@ class KingTest {
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }
 
-    @Test
-    @DisplayName("자신이 폰인지 확인한다.")
-    void King_Check_pawn() {
-        Piece piece = new King(WHITE);
-        assertThat(piece.isPawn()).isFalse();
-    }
 }

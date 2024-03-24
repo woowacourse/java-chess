@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.chesspiece.Role.*;
-
 public abstract class Piece {
     protected Team team;
 
@@ -16,7 +14,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public List<Position> getRoute(Position source, Position target){
+    public List<Position> getRoute(Position source, Position target) {
         validateMovingRule(source, target);
         List<Position> route = new ArrayList<>();
 
@@ -36,13 +34,5 @@ public abstract class Piece {
 
     public boolean isTeam(Piece piece) {
         return team == piece.team;
-    }
-
-    public boolean isPawn() {
-        return getRole() == BLACK_PAWN || getRole() == WHITE_PAWN;
-    }
-
-    public boolean isEmpty() {
-        return getRole() == EMPTY;
     }
 }

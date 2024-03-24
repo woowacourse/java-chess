@@ -58,7 +58,7 @@ public class ChessBoard {
         Piece piece = findChessPiece(source);
         piece.getRoute(source, target)
                 .forEach(this::checkObstacle);
-        if (piece.isPawn()) {
+        if (isPawn(piece)) {
             checkPawnStrategy(source, target);
         }
         checkTeam(target, piece);
@@ -73,13 +73,21 @@ public class ChessBoard {
         }
     }
 
+    private boolean isPawn(Piece piece) {
+        return piece.getRole() == BLACK_PAWN || piece.getRole() == WHITE_PAWN;
+    }
+
     private void checkPawnStrategy(Position source, Position target) {
         if (Direction.isUpDown(source, target)) {
             checkObstacle(target);
         }
-        if (Direction.isDiagonal(source, target) && findChessPiece(target).isEmpty()) {
+        if (Direction.isDiagonal(source, target) && isEmpty(findChessPiece(target))) {
             throw new IllegalArgumentException("공격 대상이 없습니다.");
         }
+    }
+
+    private boolean isEmpty(Piece piece) {
+        return piece.getRole() == EMPTY;
     }
 
     private void checkTeam(Position target, Piece piece) {

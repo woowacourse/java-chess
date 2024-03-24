@@ -1,8 +1,5 @@
 package chess.domain.chesspiece;
 
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.Queen;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,9 +43,8 @@ class QueenTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들이 아니면 예외를 발생한다.")
     void Bishop_Validate_route() {
         Piece piece = new Queen(WHITE);
-        assertThatThrownBy(() -> {
-            piece.getRoute(Position.of("a1"), Position.of("b4"));
-        }).isInstanceOf(IllegalArgumentException.class)
+        assertThatThrownBy(() -> piece.getRoute(Position.of("a1"), Position.of("b4")))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없습니다.");
     }
 
@@ -60,10 +56,4 @@ class QueenTest {
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }
 
-    @Test
-    @DisplayName("자신이 폰인지 확인한다.")
-    void Queen_Check_pawn() {
-        Piece piece = new Queen(WHITE);
-        assertThat(piece.isPawn()).isFalse();
-    }
 }
