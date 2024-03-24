@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class WhiteFirstPawnTest {
 
     @Test
-    @DisplayName("왼쪽 위, 오른쪽 위 방향으로 움직이는지 확인한다.")
+    @DisplayName("왼쪽 위, 오른쪽 위 방향의 공격 음직임인지 확인한다")
     void checkIsCaptureMove() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn(new Position(2, 2));
         assertAll(
