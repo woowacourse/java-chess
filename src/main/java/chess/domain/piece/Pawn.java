@@ -29,7 +29,7 @@ public class Pawn extends Piece {
         }
         //폰이 초기위치에 있고 팀의 전진방향과 맞도록 두칸 움직이는 것은 가능 하다
         if (start.calculateDistance(destination) == INITIAL_MOVE_DISTANCE && start.isOrthogonalWith(destination)
-                && start.isRankSameWith(teamInitialPawnRank())) {
+                && team.isPositionOnTeamInitialPawnRank(start)) {
             return false;
         }
         //팀의 전진방향과 맞고 대각선으로 1칸 움직일 때 목적지에 적이 있으면 움직일 수 있다

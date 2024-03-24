@@ -8,6 +8,7 @@ import static chess.domain.position.Direction.SE;
 import static chess.domain.position.Direction.SW;
 
 import chess.domain.position.Direction;
+import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public enum Team {
         this.initialPawnRank = initialPawnRank;
     }
 
-    public Rank getInitialPawnRank() {
-        return initialPawnRank;
+    public boolean isPositionOnTeamInitialPawnRank(Position position) {
+        return position.isRankSameWith(initialPawnRank);
     }
 
     public boolean isTeamForwardDirectionsContains(Direction direction) {
