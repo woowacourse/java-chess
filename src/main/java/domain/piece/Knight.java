@@ -52,11 +52,13 @@ public class Knight extends Piece {
     }
 
     private boolean distanceOneFileTwoRank(Position source, Position target) {
-        return source.isLegalFileStep(target, ONE_STEP) && source.isLegalRankStep(target, TWO_STEP);
+        return source.isLegalFileStep(target, ONE_STEP)
+                && source.isLegalRankStep(target, TWO_STEP);
     }
 
     private boolean distanceTwoFileOneRank(Position source, Position target) {
-        return source.isLegalFileStep(target, TWO_STEP) && source.isLegalRankStep(target, ONE_STEP);
+        return source.isLegalFileStep(target, TWO_STEP)
+                && source.isLegalRankStep(target, ONE_STEP);
     }
 
     @Override

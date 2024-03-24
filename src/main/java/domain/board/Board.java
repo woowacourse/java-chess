@@ -51,10 +51,12 @@ public class Board {
     public boolean isBlocked(Position source, Position target) {
         List<Position> betweenPositions = new ArrayList<>();
         if (source.isStraight(target)) {
-            betweenPositions.addAll(source.findBetweenStraightPositions(target));
+            List<Position> betweenStraightPositions = source.findBetweenStraightPositions(target);
+            betweenPositions.addAll(betweenStraightPositions);
         }
         if (source.isDiagonal(target)) {
-            betweenPositions.addAll(source.findBetweenDiagonalPositions(target));
+            List<Position> betweenDiagonalPositions = source.findBetweenDiagonalPositions(target);
+            betweenPositions.addAll(betweenDiagonalPositions);
         }
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)

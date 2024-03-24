@@ -109,12 +109,20 @@ public class Position {
     }
 
     public List<Position> findBetweenStraightPositions(Position target) {
-        if (file.isSame(target.file)) {
-            return rank.betweenRanks(target.rank).stream()
-                    .map(rank -> generate(file, rank))
-                    .toList();
+        if (hasFile(target.file)) {
+            return findBetweenVerticalPositions(target.rank);
         }
-        return file.betweenFiles(target.file).stream()
+        return findBetweenHorizontalPositions(target.file);
+    }
+
+    private List<Position> findBetweenVerticalPositions(Rank targetRank) {
+        return rank.betweenRanks(targetRank).stream()
+                .map(rank -> generate(file, rank))
+                .toList();
+    }
+
+    private List<Position> findBetweenHorizontalPositions(File targetFile) {
+        return file.betweenFiles(targetFile).stream()
                 .map(file -> generate(file, rank))
                 .toList();
     }

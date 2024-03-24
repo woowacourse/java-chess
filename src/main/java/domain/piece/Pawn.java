@@ -13,7 +13,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public boolean canMove(Position source, Position target) { // TODO: indent 줄이기
         if (isBlack()) {
             if (source.hasRank(Rank.SEVEN)) {
                 return source.isDown(target) && source.isLegalRankStep(target, ONE_STEP, TWO_STEP);
@@ -37,7 +37,8 @@ public class Pawn extends Piece {
     }
 
     private boolean distanceOneRankOneFile(Position source, Position target) {
-        return source.isLegalRankStep(target, ONE_STEP) && source.isLegalFileStep(target, ONE_STEP);
+        return source.isLegalRankStep(target, ONE_STEP)
+                && source.isLegalFileStep(target, ONE_STEP);
     }
 
     @Override

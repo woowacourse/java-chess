@@ -34,9 +34,14 @@ public class SquaresGenerator {
         return squares;
     }
 
-    private void initPiece(PiecePosition piece, Function<Color, Piece> makePiece, Map<Position, Piece> squares) {
-        List<Position> initPositions = piece.initPositions();
-        initPositions.forEach(position -> squares.put(position, makePiece.apply(ColorPosition.asColor(position))));
+    private void initPiece(PiecePosition piecePosition, Function<Color, Piece> makePiece,
+                           Map<Position, Piece> squares) {
+        List<Position> initPositions = piecePosition.initPositions();
+        for (Position initPosition : initPositions) {
+            Color color = ColorPosition.asColor(initPosition);
+            Piece piece = makePiece.apply(color);
+            squares.put(initPosition, piece);
+        }
     }
 
     private enum PiecePosition {
