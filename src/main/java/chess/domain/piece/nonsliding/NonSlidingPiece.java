@@ -10,7 +10,7 @@ import java.util.Set;
 public abstract class NonSlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    public NonSlidingPiece(Position position, Color color, Set<Direction> directions) {
+    protected NonSlidingPiece(Position position, Color color, Set<Direction> directions) {
         super(position, color);
         this.directions = directions;
     }

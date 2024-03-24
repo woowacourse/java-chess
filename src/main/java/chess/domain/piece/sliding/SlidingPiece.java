@@ -10,7 +10,7 @@ import java.util.Set;
 public abstract class SlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    public SlidingPiece(Position position, Color color, Set<Direction> directions) {
+    protected SlidingPiece(Position position, Color color, Set<Direction> directions) {
         super(position, color);
         this.directions = directions;
     }
