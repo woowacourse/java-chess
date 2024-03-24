@@ -1,11 +1,11 @@
 package chess.domain.board;
 
-import chess.domain.Color;
-import chess.domain.Column;
-import chess.domain.Piece;
-import chess.domain.PieceType;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.piece.Color;
+import chess.domain.board.position.Column;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Row;
 
 public class BoardFactory {
 

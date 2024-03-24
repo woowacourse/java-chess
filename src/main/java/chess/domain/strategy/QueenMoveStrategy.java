@@ -1,6 +1,6 @@
 package chess.domain.strategy;
 
-import chess.domain.Direction;
+import chess.domain.board.position.Direction;
 import java.util.List;
 
 public class QueenMoveStrategy extends SpecialPieceMoveStrategy{

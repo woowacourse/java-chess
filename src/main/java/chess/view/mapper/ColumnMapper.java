@@ -1,6 +1,6 @@
 package chess.view.mapper;
 
-import chess.domain.Column;
+import chess.domain.board.position.Column;
 import java.util.Arrays;
 
 public enum ColumnMapper {

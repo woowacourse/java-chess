@@ -1,17 +1,16 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.Column;
-import chess.domain.Position;
-import chess.domain.Row;
 import chess.domain.board.Board;
+import chess.domain.board.position.Column;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Row;
+import chess.domain.game.ChessGame;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.MoveRequestDto;
 import chess.view.OutputView;
 import chess.view.mapper.ColumnMapper;
 import chess.view.mapper.RowMapper;
-import java.util.List;
 
 public class ChessGameController {
     private final InputView inputView = new InputView();
@@ -57,9 +56,7 @@ public class ChessGameController {
         Position from = createPosition(moveRequestDto.getFromColumn(), moveRequestDto.getFromRow());
         Position to = createPosition(moveRequestDto.getToColumn(), moveRequestDto.getToRow());
 
-        List<Position> movablePositions = chessGame.generateMovablePositions(from);
-        chessGame.movePiece(movablePositions, from, to);
-
+        chessGame.movePiece(from, to);
         outputView.printBoard(board);
     }
 

@@ -1,7 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.Direction;
-import chess.domain.Row;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Row;
 import java.util.List;
 
 public class WhitePawnMoveStrategy extends PawnMoveStrategy{

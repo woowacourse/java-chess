@@ -1,7 +1,7 @@
 package chess.view.mapper;
 
-import chess.domain.Piece;
-import chess.domain.PieceType;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 
 public enum PieceMapper {

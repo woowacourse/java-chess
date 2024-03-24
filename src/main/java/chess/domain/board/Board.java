@@ -1,7 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.Piece;
-import chess.domain.Position;
+import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,18 +26,18 @@ public class Board {
     }
 
     public Piece findPieceByPosition(Position position) {
-        if (hasPiece(position)) {
+        if (existPiece(position)) {
             return board.get(position);
         }
         throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
     }
 
-    public boolean hasPiece(Position position) {
-        return board.containsKey(position);
+    public boolean isEmptySpace(Position position) {
+        return !existPiece(position);
     }
 
-    public boolean isEmptySpace(Position position) {
-        return !hasPiece(position);
+    public boolean existPiece(Position position) {
+        return board.containsKey(position);
     }
 
     public Map<Position, Piece> getBoard() {

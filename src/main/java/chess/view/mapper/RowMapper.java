@@ -1,6 +1,6 @@
 package chess.view.mapper;
 
-import chess.domain.Row;
+import chess.domain.board.position.Row;
 import java.util.Arrays;
 
 public enum RowMapper {

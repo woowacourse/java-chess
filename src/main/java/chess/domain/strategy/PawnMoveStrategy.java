@@ -1,8 +1,8 @@
 package chess.domain.strategy;
 
-import chess.domain.Direction;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Row;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.piece;
 
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
 import java.util.Map;
 import java.util.Queue;
 

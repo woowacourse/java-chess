@@ -2,10 +2,10 @@ package chess.domain.strategy;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Column;
-import chess.domain.Direction;
-import chess.domain.Position;
-import chess.domain.Row;
+import chess.domain.board.position.Column;
+import chess.domain.board.position.Direction;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Row;
 import java.util.Map;
 import java.util.Queue;
 import org.assertj.core.api.Assertions;

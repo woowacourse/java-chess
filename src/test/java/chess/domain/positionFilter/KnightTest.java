@@ -1,15 +1,15 @@
-package chess.domain.chessGame;
+package chess.domain.positionFilter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.ChessGame;
-import chess.domain.Color;
-import chess.domain.Column;
-import chess.domain.Piece;
-import chess.domain.PieceType;
-import chess.domain.Position;
-import chess.domain.Row;
 import chess.domain.board.Board;
+import chess.domain.board.position.Column;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Row;
+import chess.domain.game.PositionsFilter;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -31,10 +31,11 @@ class KnightTest {
     @Test
     @DisplayName("실제로 움직일 수 있는 위치를 모두 가져온다.")
     void generateMovablePositions() {
-        Position targetPosition = new Position(Row.FOUR, Column.D);
-        ChessGame chessGame = new ChessGame(new Board(
+        Position position = new Position(Row.FOUR, Column.D);
+        Piece piece = new Piece(PieceType.KNIGHT, Color.WHITE);
+        Board board = new Board(
                 Map.of(
-                        targetPosition, new Piece(PieceType.KNIGHT, Color.WHITE),
+                        position, piece,
                         new Position(Row.THREE, Column.F), new Piece(PieceType.QUEEN, Color.WHITE),
                         new Position(Row.SIX, Column.C), new Piece(PieceType.ROOK, Color.WHITE),
                         new Position(Row.FOUR, Column.E), new Piece(PieceType.WHITE_PAWN, Color.WHITE),
@@ -45,11 +46,12 @@ class KnightTest {
                         new Position(Row.FIVE, Column.E), new Piece(PieceType.BLACK_PAWN, Color.BLACK),
                         new Position(Row.THREE, Column.B), new Piece(PieceType.BISHOP, Color.BLACK)
                 )
-        ));
+        );
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition);
+        List<Position> movablePositions = new PositionsFilter().generateValidPositions(
+                piece.generateAllDirectionPositions(position), piece, board);
 
-        assertThat(result).containsExactlyInAnyOrder(
+        assertThat(movablePositions).containsExactlyInAnyOrder(
                 new Position(Row.SIX, Column.E),
                 new Position(Row.FIVE, Column.F),
                 new Position(Row.TWO, Column.E),

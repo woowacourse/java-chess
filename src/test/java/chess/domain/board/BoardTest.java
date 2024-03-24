@@ -1,8 +1,10 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.Board;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,6 @@ class BoardTest {
 
         Map<Position, Piece> boardMap = board.getBoard();
 
-        Assertions.assertThat(boardMap).hasSize(32);
+        assertThat(boardMap).hasSize(32);
     }
 }
