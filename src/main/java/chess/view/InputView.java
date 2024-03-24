@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public String getPosition() {
-        String input = scanner.nextLine();
+        String input = scanner.next();
         validateEmpty(input);
         validatePosition(input);
         return input;
