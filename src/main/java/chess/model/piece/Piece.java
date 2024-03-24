@@ -2,8 +2,8 @@ package chess.model.piece;
 
 import chess.model.position.Movement;
 
-public abstract class Piece {
-    private final Color color;
+public class Piece {
+    protected final Color color;
     private final Type type;
 
     Piece(Color color, Type type) {
@@ -11,14 +11,15 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract boolean isValid(Movement movement);
+    public boolean canMove(Movement movement, Piece target) {
+        validateTargetColor(target);
+        return type.canMove(movement);
+    }
 
-    public String getSignature() {
-        Signature signature = type.getSignature();
-        if (Color.BLACK == color) {
-            return signature.getBlack();
+    protected void validateTargetColor(Piece target) {
+        if (target.hasColor(color)) {
+            throw new IllegalArgumentException("동일한 색상의 기물이 있는 위치로 움직일 수 없습니다.");
         }
-        return signature.getWhite();
     }
 
     public boolean isType(Type type) {
@@ -27,10 +28,6 @@ public abstract class Piece {
 
     public boolean isEmpty() {
         return isType(Type.NONE);
-    }
-
-    public boolean isSameColorWith(Piece piece) {
-        return color == piece.color;
     }
 
     public boolean hasColor(Color color) {

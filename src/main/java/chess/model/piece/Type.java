@@ -1,21 +1,24 @@
 package chess.model.piece;
 
+import chess.model.piece.strategy.*;
+import chess.model.position.Movement;
+
 public enum Type {
-    BISHOP("b"),
-    ROOK("r"),
-    QUEEN("q"),
-    KNIGHT("n"),
-    PAWN("p"),
-    KING("k"),
-    NONE(".");
+    BISHOP(new BishopStrategy()),
+    ROOK(new RookStrategy()),
+    QUEEN(new QueenStrategy()),
+    KNIGHT(new KnightStrategy()),
+    PAWN(new UnsupportedStrategy()),
+    KING(new KingStrategy()),
+    NONE(new UnsupportedStrategy());
 
-    private final Signature signature;
+    private final PieceStrategy pieceStrategy;
 
-    Type(String signature) {
-        this.signature = new Signature(signature);
+    Type(PieceStrategy pieceStrategy) {
+        this.pieceStrategy = pieceStrategy;
     }
 
-    public Signature getSignature() {
-        return signature;
+    public boolean canMove(Movement movement) {
+        return pieceStrategy.canMove(movement);
     }
 }

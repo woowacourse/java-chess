@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.position.RankDirection;
 import chess.model.position.Movement;
 
 public class Pawn extends Piece {
@@ -7,22 +8,6 @@ public class Pawn extends Piece {
     private static final Piece BLACK_PAWN = new Pawn(Color.BLACK, RankDirection.DOWN, 7);
     private static final int START_JUMP_DISTANCE = 2;
     private static final int COMMON_RANK_DISTANCE = 1;
-
-    private enum RankDirection {
-        UP(1),
-        DOWN(-1);
-
-        private final int direction;
-
-        RankDirection(int direction) {
-            this.direction = direction;
-        }
-
-        public boolean match(Movement movement) {
-            int rankGap = movement.getRankGap();
-            return direction == Integer.signum(rankGap);
-        }
-    }
 
     private final RankDirection validRankDirection;
     private final int startRank;
@@ -41,28 +26,33 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isValid(Movement movement) {
+    public boolean canMove(Movement movement, Piece target) {
+        validateTargetColor(target);
         if (!isValidDirection(movement)) {
             return false;
         }
         if (movement.isDiagonal()) {
-            return movement.getRankDistance() == COMMON_RANK_DISTANCE;
+            return canMoveDiagonally(movement, target);
         }
-        return isValidVerticalMove(movement);
+        return isValidVerticalMove(movement, target);
     }
 
     private boolean isValidDirection(Movement movement) {
         return validRankDirection.match(movement);
     }
 
-    private boolean isValidVerticalMove(Movement movement) {
-        if (!movement.isSameFile()) {
+    private boolean canMoveDiagonally(Movement movement, Piece target) {
+        Color oppositeColor = color.getOpposite();
+        boolean canAttack = target.hasColor(oppositeColor);
+        return canAttack && movement.getRankDistance() == COMMON_RANK_DISTANCE;
+    }
+
+    private boolean isValidVerticalMove(Movement movement, Piece target) {
+        if (!movement.isSameFile() || !target.isEmpty()) {
             return false;
         }
         int rankDistance = movement.getRankDistance();
-        if (rankDistance == COMMON_RANK_DISTANCE) {
-            return true;
-        }
-        return rankDistance == START_JUMP_DISTANCE && movement.isSourceRankMatch(startRank);
+        return rankDistance == COMMON_RANK_DISTANCE ||
+                (rankDistance == START_JUMP_DISTANCE && movement.isSourceRankMatch(startRank));
     }
 }

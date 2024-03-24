@@ -1,8 +1,8 @@
 package chess.model.board;
 
 import chess.model.piece.Color;
-import chess.model.piece.Empty;
 import chess.model.piece.Piece;
+import chess.model.piece.PieceFactory;
 import chess.model.piece.Type;
 import chess.model.position.Movement;
 import chess.model.position.Position;
@@ -15,6 +15,7 @@ public class Board {
     public static final int MIN_LENGTH = 1;
     public static final int MAX_LENGTH = 8;
     private static final Color START_COLOR = Color.WHITE;
+    private static final Piece EMPTY = PieceFactory.of(Color.NONE, Type.NONE);
     private static final List<Position> ALL_POSITIONS = Position.values();
 
     private final Map<Position, Piece> squares;
@@ -22,7 +23,7 @@ public class Board {
 
     public Board(Map<Position, Piece> squares) {
         this.squares = new HashMap<>(squares);
-        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Empty.getInstance()));
+        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, EMPTY));
     }
 
     public Piece getPiece(int file, int rank) {
@@ -45,36 +46,16 @@ public class Board {
     }
 
     private void validateMove(Movement movement) {
-        validateOppositeColor(movement);
         validateMovementByPiece(movement);
         validateIntermediatePositions(movement);
     }
 
-    private void validateOppositeColor(Movement movement) {
-        Piece sourcePiece = getSourcePiece(movement);
-        Piece destinationPiece = getDestinationOf(movement);
-        if (sourcePiece.isSameColorWith(destinationPiece)) {
-            throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
-        }
-    }
-
     private void validateMovementByPiece(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (!sourcePiece.isValid(movement)) {
+        Piece destinationPiece = getDestinationOf(movement);
+        if (!sourcePiece.canMove(movement, destinationPiece)) {
             throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
         }
-        if (sourcePiece.isType(Type.PAWN)) {
-            validatePawn(movement);
-        }
-    }
-
-    private void validatePawn(Movement movement) {
-        Piece destinationPiece = getDestinationOf(movement);
-        if (destinationPiece.isEmpty() && movement.isSameFile()
-                || !destinationPiece.isEmpty() && movement.isDiagonal()) {
-            return;
-        }
-        throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
     }
 
     private void validateIntermediatePositions(Movement movement) {
@@ -91,7 +72,7 @@ public class Board {
         Position destination = movement.getDestination();
         Position source = movement.getSource();
         squares.put(destination, getSourcePiece(movement));
-        squares.put(source, Empty.getInstance());
+        squares.put(source, EMPTY);
     }
 
     private Piece getSourcePiece(Movement movement) {

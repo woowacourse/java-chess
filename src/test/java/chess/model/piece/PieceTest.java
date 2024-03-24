@@ -1,33 +1,28 @@
 package chess.model.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.stream.Stream;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import chess.model.position.Movement;
+import chess.model.position.Position;
+import org.junit.jupiter.api.Test;
 
 class PieceTest {
-    @ParameterizedTest
-    @MethodSource("providePieceWithSignature")
-    void 기물_타입과_색깔에_맞는_시그니처를_반환한다(Piece piece, String signature) {
-        assertThat(piece.getSignature()).isEqualTo(signature);
+    @Test
+    void 목적지_기물이_자신과_동일한_색상이면_예외가_발생한다() {
+        Movement movement = new Movement(Position.of(1, 1), Position.of(1, 2));
+        Piece piece = PieceFactory.of(Color.WHITE, Type.ROOK);
+        Piece target = PieceFactory.of(Color.WHITE, Type.PAWN);
+        assertThatThrownBy(() -> piece.canMove(movement, target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private static Stream<Arguments> providePieceWithSignature() {
-        return Stream.of(
-                Arguments.of(Bishop.from(Color.BLACK), "B"),
-                Arguments.of(Rook.from(Color.BLACK), "R"),
-                Arguments.of(Queen.from(Color.BLACK), "Q"),
-                Arguments.of(Knight.from(Color.BLACK), "N"),
-                Arguments.of(Pawn.from(Color.BLACK), "P"),
-                Arguments.of(King.from(Color.BLACK), "K"),
-                Arguments.of(Bishop.from(Color.WHITE), "b"),
-                Arguments.of(Rook.from(Color.WHITE), "r"),
-                Arguments.of(Queen.from(Color.WHITE), "q"),
-                Arguments.of(Knight.from(Color.WHITE), "n"),
-                Arguments.of(Pawn.from(Color.WHITE), "p"),
-                Arguments.of(King.from(Color.WHITE), "k")
-        );
+    @Test
+    void 목적지_기물이_자신과_다른_색상이면_예외가_발생하지_않는다() {
+        Movement movement = new Movement(Position.of(1, 1), Position.of(1, 2));
+        Piece piece = PieceFactory.of(Color.WHITE, Type.ROOK);
+        Piece target = PieceFactory.of(Color.BLACK, Type.PAWN);
+        assertThatCode(() -> piece.canMove(movement, target))
+                .doesNotThrowAnyException();
     }
 }
