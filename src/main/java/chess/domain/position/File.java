@@ -13,6 +13,7 @@ public enum File {
     f(6),
     g(7),
     h(8);
+
     private final int value;
 
     File(int value) {
