@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toMap;
@@ -9,10 +10,7 @@ import static java.util.stream.Collectors.toMap;
 public class Row {
     private static final Map<Integer, Row> CACHE = IntStream.rangeClosed(0, 7)
             .boxed()
-            .collect(toMap(
-                    i -> i,
-                    Row::new
-            ));
+            .collect(toMap(Function.identity(), Row::new));
 
     private final int value;
 
