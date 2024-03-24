@@ -18,4 +18,16 @@ class PieceTest {
                 () -> assertThat(whitePiece.isBlackTeam()).isFalse()
         );
     }
+
+    @DisplayName("기물간 서로 같은 팀인지 다른 팀인지 확인할 수 있다")
+    @Test
+    void should_ComparePieceTeam() {
+        King blackPiece = new King(Team.BLACK);
+        King whitePiece = new King(Team.WHITE);
+
+        assertAll(
+                () -> assertThat(blackPiece.isOtherTeam(whitePiece)).isTrue(),
+                () -> assertThat(whitePiece.isOtherTeam(whitePiece)).isFalse()
+        );
+    }
 }

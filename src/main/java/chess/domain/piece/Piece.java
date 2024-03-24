@@ -11,13 +11,41 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean canMove(Position start, Position destination, ChessBoard chessBoard);
+    public final boolean canMove(Position start, Position destination, ChessBoard chessBoard) {
+        if (start == destination) {
+            return false;
+        }
+        if (isFriendlyPieceAtDestination(destination, chessBoard)) {
+            return false;
+        }
+        if (canNotMoveByItsOwnInPassing(start, destination)) {
+            return false;
+        }
+        if (canNotMoveByBoardStatus(start, destination, chessBoard)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFriendlyPieceAtDestination(Position destination, ChessBoard chessBoard) {
+        if (chessBoard.positionIsEmpty(destination)) {
+            return false;
+        }
+        if (chessBoard.findPieceByPosition(destination).isOtherTeam(this)) {
+            return false;
+        }
+        return true;
+    }
+
+    abstract boolean canNotMoveByItsOwnInPassing(Position start, Position destination);
+
+    abstract boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard);
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;
     }
 
-    public Rank teamInitialPawnRow() {
+    public Rank teamInitialPawnRank() {
         return team.getInitialPawnRank();
     }
 

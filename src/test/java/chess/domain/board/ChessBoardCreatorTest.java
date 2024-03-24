@@ -25,7 +25,7 @@ class ChessBoardCreatorTest {
     }
 
     @Test
-    public void testPawnsPlacement() {
+    void testPawnsPlacement() {
         for (File file : File.values()) {
             assertThat(chessBoard.findPieceByPosition(new Position(file, Rank.TWO))).isInstanceOf(Pawn.class);
             assertThat(chessBoard.findPieceByPosition(new Position(file, Rank.SEVEN))).isInstanceOf(Pawn.class);
@@ -33,7 +33,7 @@ class ChessBoardCreatorTest {
     }
 
     @Test
-    public void testRooksPlacement() {
+    void testRooksPlacement() {
         assertThat(chessBoard.findPieceByPosition(new Position(File.A, Rank.ONE))).isInstanceOf(Rook.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.H, Rank.ONE))).isInstanceOf(Rook.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.A, Rank.EIGHT))).isInstanceOf(Rook.class);
@@ -41,7 +41,7 @@ class ChessBoardCreatorTest {
     }
 
     @Test
-    public void testKnightsPlacement() {
+    void testKnightsPlacement() {
         assertThat(chessBoard.findPieceByPosition(new Position(File.B, Rank.ONE))).isInstanceOf(Knight.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.G, Rank.ONE))).isInstanceOf(Knight.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.B, Rank.EIGHT))).isInstanceOf(Knight.class);
@@ -49,7 +49,7 @@ class ChessBoardCreatorTest {
     }
 
     @Test
-    public void testBishopsPlacement() {
+    void testBishopsPlacement() {
         assertThat(chessBoard.findPieceByPosition(new Position(File.C, Rank.ONE))).isInstanceOf(Bishop.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.F, Rank.ONE))).isInstanceOf(Bishop.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.C, Rank.EIGHT))).isInstanceOf(Bishop.class);
@@ -57,13 +57,13 @@ class ChessBoardCreatorTest {
     }
 
     @Test
-    public void testQueensPlacement() {
+    void testQueensPlacement() {
         assertThat(chessBoard.findPieceByPosition(new Position(File.D, Rank.ONE))).isInstanceOf(Queen.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.D, Rank.EIGHT))).isInstanceOf(Queen.class);
     }
 
     @Test
-    public void testKingsPlacement() {
+    void testKingsPlacement() {
         assertThat(chessBoard.findPieceByPosition(new Position(File.E, Rank.ONE))).isInstanceOf(King.class);
         assertThat(chessBoard.findPieceByPosition(new Position(File.E, Rank.EIGHT))).isInstanceOf(King.class);
     }
