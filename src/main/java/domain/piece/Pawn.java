@@ -13,17 +13,33 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target) { // TODO: indent 줄이기
+    public boolean canMove(Position source, Position target) {
         if (isBlack()) {
-            if (source.hasRank(Rank.SEVEN)) {
-                return source.isDown(target) && source.isLegalRankStep(target, ONE_STEP, TWO_STEP);
-            }
-            return source.isDown(target) && source.isLegalRankStep(target, ONE_STEP);
+            return canMoveWhenBlack(source, target);
         }
-        if (source.hasRank(Rank.TWO)) {
+        return canMoveWhenWhite(source, target);
+    }
+
+    private boolean canMoveWhenBlack(Position source, Position target) {
+        if (isFirstMoveOfBlack(source)) {
+            return source.isDown(target) && source.isLegalRankStep(target, ONE_STEP, TWO_STEP);
+        }
+        return source.isDown(target) && source.isLegalRankStep(target, ONE_STEP);
+    }
+
+    private boolean isFirstMoveOfBlack(Position source) {
+        return source.hasRank(Rank.SEVEN);
+    }
+
+    private boolean canMoveWhenWhite(Position source, Position target) {
+        if (isFirstMoveOfWhite(source)) {
             return source.isUp(target) && source.isLegalRankStep(target, ONE_STEP, TWO_STEP);
         }
         return source.isUp(target) && source.isLegalRankStep(target, ONE_STEP);
+    }
+
+    private boolean isFirstMoveOfWhite(Position source) {
+        return source.hasRank(Rank.TWO);
     }
 
     @Override
