@@ -18,22 +18,22 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovable(Position source, Position target) {
-        return moveForwardTwice(source, target)
-                || moveForward(source, target)
-                || attack(source, target);
+        return canMoveForwardTwice(source, target)
+                || canMoveForward(source, target)
+                || canAttack(source, target);
     }
 
-    private boolean moveForwardTwice(Position source, Position target) {
+    private boolean canMoveForwardTwice(Position source, Position target) {
         int columnDistance = source.calculatePawnColumnDistance(target, team);
         return source.isPawnStartPosition(team) && source.isSameRow(target) && columnDistance == 2;
     }
 
-    private boolean moveForward(Position source, Position target) {
+    private boolean canMoveForward(Position source, Position target) {
         int columnDistance = source.calculatePawnColumnDistance(target, team);
         return source.isSameRow(target) && columnDistance == 1;
     }
 
-    private boolean attack(Position source, Position target) {
+    private boolean canAttack(Position source, Position target) {
         int rowDistance = source.calculateRowDistance(target);
         int colDistance = source.calculatePawnColumnDistance(target, team);
         return rowDistance == 1 && colDistance == 1;
