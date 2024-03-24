@@ -1,10 +1,13 @@
 package domain.piece;
 
 import domain.piece.attribute.Color;
+import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
 import domain.piece.kind.PieceStatus;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class Piece implements Movable {
 
@@ -46,6 +49,33 @@ public abstract class Piece implements Movable {
     public boolean isDirectionDiagonal(final Point point) {
         return this.point.calculate(point)
                          .isDiagonal();
+    }
+
+
+    protected final boolean hasAnyPieceInPath(final Point endPoint, final Pieces pieces) {
+        final Direction direction = this.point.calculate(endPoint);
+        final Point pathPoint = direction.movePoint(this.point);
+
+        final Stream<Point> pathPoints = Stream.iterate(
+                pathPoint,
+                direction::canMovePoint,
+                direction::movePoint);
+        
+        return pathPoints
+                .anyMatch(pieces::containPieceWithPoint);
+    }
+
+    protected final boolean hasAnyPiece(final Point endPoint, final Pieces pieces) {
+        return pieces.containPieceWithPoint(endPoint);
+    }
+
+    protected final boolean hasFriendPiece(final Point endPoint, final Pieces pieces) {
+        final Optional<Piece> optionalPiece = pieces.findPieceWithPoint(endPoint);
+        if (optionalPiece.isEmpty()) {
+            return false;
+        }
+        final Piece toPiece = optionalPiece.get();
+        return sameColor(toPiece);
     }
 
 
