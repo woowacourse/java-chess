@@ -36,6 +36,10 @@ public class Position {
         }
     }
 
+    public Position makeRemotePosition(int rowDifference, int columnDifference) {
+        return new Position(this.row + rowDifference, this.column + columnDifference);
+    }
+
     public int getRow() {
         return row;
     }

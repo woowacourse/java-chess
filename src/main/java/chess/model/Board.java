@@ -113,11 +113,8 @@ public class Board {
         while (Math.abs(rowDifference) > 1 || Math.abs(columnDifference) > 1) {
             rowDifference = consumeRow(rowDifference);
             columnDifference = consumeColumn(columnDifference);
-            Position position = new Position(source.getRow() + rowDifference, source.getColumn() + columnDifference);
-            Piece targetPiece = board.get(position);
-            if (targetPiece.isExist()) {
-                throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
-            }
+            Position position = source.makeRemotePosition(rowDifference, columnDifference);
+            validateEmptyPosition(position);
         }
     }
 
@@ -139,6 +136,13 @@ public class Board {
             columnDifference++;
         }
         return columnDifference;
+    }
+
+    private void validateEmptyPosition(Position position) {
+        Piece targetPiece = board.get(position);
+        if (targetPiece.isExist()) {
+            throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
+        }
     }
 
     public Piece findPiece(Position position) {
