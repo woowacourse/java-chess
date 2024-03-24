@@ -1,8 +1,5 @@
-package chess.model;
+package chess.model.position;
 
-import chess.model.position.Column;
-import chess.model.position.Position;
-import chess.model.position.Row;
 import java.util.Arrays;
 
 public enum Direction {

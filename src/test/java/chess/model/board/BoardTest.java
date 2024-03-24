@@ -1,4 +1,4 @@
-package chess.model;
+package chess.model.board;
 
 import static chess.model.Fixtures.B1;
 import static chess.model.Fixtures.C3;

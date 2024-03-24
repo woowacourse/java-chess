@@ -1,18 +1,18 @@
 package chess.model.piece;
 
-import static chess.model.Direction.DOWN;
-import static chess.model.Direction.DOWN_DOWN;
-import static chess.model.Direction.DOWN_LEFT;
-import static chess.model.Direction.DOWN_RIGHT;
-import static chess.model.Direction.UP;
-import static chess.model.Direction.UP_LEFT;
-import static chess.model.Direction.UP_UP;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
+import static chess.model.position.Direction.DOWN;
+import static chess.model.position.Direction.DOWN_DOWN;
+import static chess.model.position.Direction.DOWN_LEFT;
+import static chess.model.position.Direction.DOWN_RIGHT;
+import static chess.model.position.Direction.UP;
+import static chess.model.position.Direction.UP_LEFT;
+import static chess.model.position.Direction.UP_UP;
 
-import chess.model.Direction;
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.position.Direction;
 import chess.model.position.Position;
 import chess.model.position.Row;
 import java.util.List;

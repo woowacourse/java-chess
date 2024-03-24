@@ -1,9 +1,10 @@
-package chess.model;
+package chess.model.game;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.model.game.Command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +14,7 @@ class CommandTest {
 
     @DisplayName("올바르지 않은 게임 명령어가 들어오면 예외가 발생한다")
     @ParameterizedTest
-    @ValueSource(strings = {"", "starts", "END", "시작"})
+    @ValueSource(strings = {"", "starts", "END", "시작", "이동"})
     void findInvalidGameCommand(String command) {
         assertThatThrownBy(() -> Command.findCommand(command))
             .isInstanceOf(IllegalArgumentException.class)
@@ -24,8 +25,9 @@ class CommandTest {
     @Test
     void findValidGameCommand() {
         assertAll(
-            () -> assertThat(Command.findCommand("start")).isEqualTo(Command.START),
-            () -> assertThat(Command.findCommand("end")).isEqualTo(Command.END)
+            () -> assertThat(Command.findCommand("start").isStart()).isTrue(),
+            () -> assertThat(Command.findCommand("end").isEnd()).isTrue(),
+            () -> assertThat(Command.findCommand("move").isMove()).isTrue()
         );
     }
 }

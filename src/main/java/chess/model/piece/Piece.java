@@ -2,10 +2,10 @@ package chess.model.piece;
 
 import static chess.model.material.Color.NONE;
 
-import chess.model.Route;
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.position.Position;
+import chess.model.position.Route;
 import java.util.Map;
 
 public abstract class Piece implements MoveStrategy {
