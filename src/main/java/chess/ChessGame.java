@@ -40,7 +40,7 @@ public class ChessGame {
         playUntilEnd(board);
     }
 
-    public boolean isStart(UserCommand command) {
+    private boolean isStart(UserCommand command) {
         return command.gameStatus().equals(GameStatus.START);
     }
 
