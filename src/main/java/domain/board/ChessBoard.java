@@ -32,14 +32,14 @@ public class ChessBoard {
     }
 
     private void validateEmptyPiece(final Position source) {
-        Piece piece = findPieceByPosition(source);
+        final Piece piece = findPieceByPosition(source);
         if (piece.color().isNeutrality()) {
             throw new IllegalArgumentException("피스가 없습니다.");
         }
     }
 
     private void validateTurn(final Position source) {
-        Piece piece = findPieceByPosition(source);
+        final Piece piece = findPieceByPosition(source);
         if (this.turn.isOpponentTurn(piece.color())) {
             throw new IllegalArgumentException("상대 턴입니다.");
         }
