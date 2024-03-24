@@ -79,9 +79,9 @@ public class ChessGameController {
     }
 
     private Position parsePosition(String rawPosition) {
-        int departureColumn = Column.findColumn(String.valueOf(rawPosition.charAt(COLUMN_INDEX)));
-        int departureRank = parseRank(String.valueOf(rawPosition.charAt(RANK_INDEX)));
-        return new Position(departureColumn, departureRank);
+        int column = Column.findColumn(String.valueOf(rawPosition.charAt(COLUMN_INDEX)));
+        int rank = parseRank(String.valueOf(rawPosition.charAt(RANK_INDEX)));
+        return new Position(column, rank);
     }
 
     private List<String> parseSourceDestination(String command) {
