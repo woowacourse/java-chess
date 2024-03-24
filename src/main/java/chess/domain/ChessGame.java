@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ChessGame {
 
-    public static final Color START_COLOR = Color.WHITE;
+    private static final Color START_COLOR = Color.WHITE;
 
     public final Board board;
     private Color currentTurn;

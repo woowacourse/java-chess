@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.view.ColumnMapper;
-import chess.view.RowMapper;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
