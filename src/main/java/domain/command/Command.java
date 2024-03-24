@@ -7,10 +7,6 @@ public enum Command {
     END,
     ;
 
-    public boolean isNotStart() {
-        return this != START;
-    }
-
     public boolean isStart() {
         return this == START;
     }
