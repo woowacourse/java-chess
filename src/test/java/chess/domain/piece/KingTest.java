@@ -14,7 +14,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -91,7 +90,7 @@ class KingTest {
         board.put(A1, king);
         ChessBoard chessBoard = new ChessBoard(board);
 
-        AssertionsForClassTypes.assertThat(king.canMove(A1, A1, chessBoard)).isFalse();
+        assertThat(king.canMove(A1, A1, chessBoard)).isFalse();
     }
 
     @DisplayName("킹은 도착 위치에 같은 팀 기물이 있으면 이동할 수 없다")
@@ -104,6 +103,6 @@ class KingTest {
         board.put(H8, friendlyPiece);
         ChessBoard chessBoard = new ChessBoard(board);
 
-        AssertionsForClassTypes.assertThat(king.canMove(A1, H8, chessBoard)).isFalse();
+        assertThat(king.canMove(A1, H8, chessBoard)).isFalse();
     }
 }
