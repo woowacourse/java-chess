@@ -46,9 +46,9 @@ class KnightTest {
                         new Position(Row.RANK5, Column.E), new Piece(PieceType.BLACK_PAWN, currentTurn.opposite()),
                         new Position(Row.RANK3, Column.B), new Piece(PieceType.BISHOP, currentTurn.opposite())
                 )
-        ));
+        ), currentTurn);
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         assertThat(result).containsExactlyInAnyOrder(
                 new Position(Row.RANK6, Column.E),

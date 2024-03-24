@@ -18,14 +18,12 @@ public class ChessGameController {
     private void process() {
         boolean isRunning = true;
         ChessGame chessGame = new ChessGame(BoardInitializer.initialize());
-        Color turnColor = Color.BLACK;
         while (isRunning) {
-            isRunning = processGame(chessGame, turnColor);
-            turnColor = turnColor.opposite();
+            isRunning = processGame(chessGame);
         }
     }
 
-    private boolean processGame(ChessGame chessGame, Color currentTurn) {
+    private boolean processGame(ChessGame chessGame) {
         try {
             CommendDto commendDto = InputView.readCommend();
             Commend commend = commendDto.commend();
@@ -33,7 +31,7 @@ public class ChessGameController {
                 handleStartCommend(chessGame);
             }
             if (commend == Commend.MOVE) {
-                handleMoveCommend(chessGame, commendDto, currentTurn);
+                handleMoveCommend(chessGame, commendDto);
             }
             if (commend == Commend.END) {
                 return false;
@@ -41,7 +39,7 @@ public class ChessGameController {
             return true;
         } catch (IllegalArgumentException error) {
             OutputView.printError(error);
-            return processGame(chessGame, currentTurn);
+            return processGame(chessGame);
         }
     }
 
@@ -49,8 +47,8 @@ public class ChessGameController {
         OutputView.printBoard(chessGame.getBoard());
     }
 
-    private void handleMoveCommend(ChessGame chessGame, CommendDto commendDto, Color currentTurn) {
-        chessGame.handleMove(commendDto, currentTurn);
+    private void handleMoveCommend(ChessGame chessGame, CommendDto commendDto) {
+        chessGame.handleMove(commendDto);
         OutputView.printBoard(chessGame.getBoard());
     }
 }

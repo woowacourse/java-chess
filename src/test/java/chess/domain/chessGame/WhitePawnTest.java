@@ -39,9 +39,9 @@ class WhitePawnTest {
                         new Position(Row.RANK3, Column.C), new Piece(PieceType.ROOK, currentTurn.opposite()),
                         new Position(Row.RANK3, Column.E), new Piece(PieceType.ROOK, currentTurn.opposite())
                 )
-        ));
+        ), currentTurn);
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         assertThat(result).containsExactlyInAnyOrder(
                 new Position(Row.RANK3, Column.C),
@@ -73,9 +73,9 @@ class WhitePawnTest {
                         targetPosition, new Piece(PieceType.WHITE_PAWN, currentTurn),
                         new Position(Row.RANK3, Column.C), new Piece(PieceType.WHITE_PAWN, currentTurn)
                 )
-        ));
+        ), currentTurn);
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         assertThat(result).containsExactlyInAnyOrder(
                 new Position(Row.RANK3, Column.D),
@@ -106,9 +106,9 @@ class WhitePawnTest {
                         new Position(Row.RANK3, Column.C), new Piece(PieceType.WHITE_PAWN, currentTurn),
                         new Position(Row.RANK3, Column.D), new Piece(PieceType.BLACK_PAWN, currentTurn.opposite())
                 )
-        ));
+        ), currentTurn);
 
-        List<Position> result = chessGame.generateMovablePositions(targetPosition, currentTurn);
+        List<Position> result = chessGame.generateMovablePositions(targetPosition);
 
         assertThat(result).isEmpty();
     }
