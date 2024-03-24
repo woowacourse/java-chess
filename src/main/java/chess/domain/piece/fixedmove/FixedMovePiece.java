@@ -1,13 +1,16 @@
-package chess.domain.piece;
+package chess.domain.piece.fixedmove;
 
 import chess.domain.board.Coordinate;
+import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 abstract class FixedMovePiece extends AbstractPiece {
 
-    protected FixedMovePiece(final PieceType type, Team team) {
+    FixedMovePiece(final PieceType type, Team team) {
         super(type, team);
     }
 

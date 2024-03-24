@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.pawn;
 
 import chess.domain.board.Coordinate;
+import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -8,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class Pawn extends AbstractPiece {
-    protected Pawn(final Team team) {
+    Pawn(final Team team) {
         super(PieceType.PAWN, team);
     }
 

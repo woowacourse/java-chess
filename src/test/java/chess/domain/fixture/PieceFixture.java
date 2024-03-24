@@ -3,16 +3,16 @@ package chess.domain.fixture;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.InitialBlackPawn;
-import chess.domain.piece.InitialWhitePawn;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.NormalBlackPawn;
-import chess.domain.piece.NormalWhitePawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.directionmove.Bishop;
+import chess.domain.piece.directionmove.Queen;
+import chess.domain.piece.directionmove.Rook;
+import chess.domain.piece.fixedmove.King;
+import chess.domain.piece.fixedmove.Knight;
+import chess.domain.piece.pawn.InitialBlackPawn;
+import chess.domain.piece.pawn.InitialWhitePawn;
+import chess.domain.piece.pawn.NormalBlackPawn;
+import chess.domain.piece.pawn.NormalWhitePawn;
 
 public class PieceFixture {
     public static final Piece WHITE_KING = new King(WHITE);

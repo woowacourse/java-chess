@@ -1,13 +1,16 @@
-package chess.domain.piece;
+package chess.domain.piece.directionmove;
 
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
+import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.List;
 import java.util.Set;
 
 abstract class DirectionMovePiece extends AbstractPiece {
 
-    public DirectionMovePiece(PieceType type, Team team) {
+    DirectionMovePiece(PieceType type, Team team) {
         super(type, team);
     }
 

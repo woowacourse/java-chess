@@ -1,5 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.fixedmove;
 
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;

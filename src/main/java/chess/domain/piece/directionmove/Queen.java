@@ -1,6 +1,8 @@
-package chess.domain.piece;
+package chess.domain.piece.directionmove;
 
 import chess.domain.board.Direction;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
