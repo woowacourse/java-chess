@@ -1,6 +1,6 @@
-package domain.game.command;
+package service.command;
 
-import domain.game.ChessGame;
+import service.ChessGame;
 
 import java.util.function.Consumer;
 

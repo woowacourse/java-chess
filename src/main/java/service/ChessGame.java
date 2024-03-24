@@ -1,4 +1,4 @@
-package domain.game;
+package service;
 
 import domain.ChessBoard;
 import domain.piece.Piece;

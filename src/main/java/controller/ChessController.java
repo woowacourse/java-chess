@@ -1,9 +1,9 @@
 package controller;
 
-import domain.game.ChessGame;
-import domain.game.command.ChessCommand;
 import domain.piece.Piece;
 import domain.square.Square;
+import service.ChessGame;
+import service.command.ChessCommand;
 import view.InputView;
 import view.OutputView;
 

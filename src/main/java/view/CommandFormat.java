@@ -1,9 +1,9 @@
 package view;
 
-import domain.game.command.ChessCommand;
-import domain.game.command.EndCommand;
-import domain.game.command.MoveCommand;
-import domain.game.command.StartCommand;
+import service.command.ChessCommand;
+import service.command.EndCommand;
+import service.command.MoveCommand;
+import service.command.StartCommand;
 
 import java.util.Arrays;
 import java.util.List;

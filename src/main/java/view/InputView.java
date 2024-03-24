@@ -1,6 +1,6 @@
 package view;
 
-import domain.game.command.ChessCommand;
+import service.command.ChessCommand;
 
 import java.util.Scanner;
 
