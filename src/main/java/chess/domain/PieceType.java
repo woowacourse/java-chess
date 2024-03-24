@@ -8,8 +8,8 @@ import chess.domain.strategy.MoveStrategy;
 import chess.domain.strategy.QueenMoveStrategy;
 import chess.domain.strategy.RookMoveStrategy;
 import chess.domain.strategy.WhitePawnMoveStrategy;
-import java.util.Queue;
 import java.util.Map;
+import java.util.Queue;
 
 public enum PieceType {
     BLACK_PAWN(new BlackPawnMoveStrategy()),
@@ -26,7 +26,7 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
     }
 
-    public Map<Direction, Queue<Position>> calculateAllDirectionPositions(Position currentPosition) {
+    public Map<Direction, Queue<Position>> generateAllDirectionPositions(Position currentPosition) {
         return this.moveStrategy.generateMovablePositions(currentPosition);
     }
 }

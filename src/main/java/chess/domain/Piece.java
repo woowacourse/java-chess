@@ -1,7 +1,7 @@
 package chess.domain;
 
-import java.util.Queue;
 import java.util.Map;
+import java.util.Queue;
 
 public class Piece {
 
@@ -13,20 +13,36 @@ public class Piece {
         this.color = color;
     }
 
-    public Map<Direction, Queue<Position>> calculateAllDirectionPositions(Position currentPosition) {
-        return pieceType.calculateAllDirectionPositions(currentPosition);
+    public Map<Direction, Queue<Position>> generateAllDirectionPositions(Position currentPosition) {
+        return pieceType.generateAllDirectionPositions(currentPosition);
     }
 
-    public boolean isSameTeam(Piece piece) {
-        return this.color == piece.color;
+    public boolean isEnemy(Piece piece) {
+        return this.color != piece.color;
     }
 
     public boolean isBlack() {
         return this.color == Color.BLACK;
     }
 
-    public boolean isPawn() {
-        return this.pieceType == PieceType.BLACK_PAWN || this.pieceType == PieceType.WHITE_PAWN;
+    public boolean isPawnAttackPossible(Direction direction) {
+        if (pieceType == PieceType.BLACK_PAWN) {
+            return direction == Direction.SW || direction == Direction.SE;
+        }
+        if (pieceType == PieceType.WHITE_PAWN) {
+            return direction == Direction.NW || direction == Direction.NE;
+        }
+        return true;
+    }
+
+    public boolean isPawnMovePossible(Direction direction) {
+        if (pieceType == PieceType.BLACK_PAWN) {
+            return direction == Direction.S;
+        }
+        if (pieceType == PieceType.WHITE_PAWN) {
+            return direction == Direction.N;
+        }
+        return true;
     }
 
     public PieceType getPieceType() {

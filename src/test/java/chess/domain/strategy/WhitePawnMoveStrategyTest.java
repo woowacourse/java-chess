@@ -32,7 +32,7 @@ class WhitePawnMoveStrategyTest {
     void canMoveTwoDistanceAtStartPositionTest() {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
-        Map<Direction, Queue<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = whitePawn.generateAllDirectionPositions(
                 new Position(Row.TWO, Column.G));
 
         assertAll(
@@ -64,7 +64,7 @@ class WhitePawnMoveStrategyTest {
     void canMoveOneDistancePositionTest() {
         PieceType whitePawn = PieceType.WHITE_PAWN;
 
-        Map<Direction, Queue<Position>> directionListMap = whitePawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = whitePawn.generateAllDirectionPositions(
                 new Position(Row.THREE, Column.H));
 
         assertAll(

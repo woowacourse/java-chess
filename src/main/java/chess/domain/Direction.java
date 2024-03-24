@@ -28,6 +28,10 @@ public enum Direction {
         this.columnDirection = columnDirection;
     }
 
+    public boolean isStraight() {
+        return this == Direction.N || this == Direction.S || this == Direction.E || this == Direction.W;
+    }
+
     public int calculateRowDistance(int weight) {
         return rowDirection * weight;
     }

@@ -32,7 +32,7 @@ class BlackPawnMoveStrategyTest {
     void canMoveTwoDistanceAtStartPositionTest() {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
-        Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = blackPawn.generateAllDirectionPositions(
                 new Position(Row.SEVEN, Column.G));
 
         assertAll(
@@ -58,7 +58,7 @@ class BlackPawnMoveStrategyTest {
     void canMoveOneDistancePositionTest() {
         PieceType blackPawn = PieceType.BLACK_PAWN;
 
-        Map<Direction, Queue<Position>> directionListMap = blackPawn.calculateAllDirectionPositions(
+        Map<Direction, Queue<Position>> directionListMap = blackPawn.generateAllDirectionPositions(
                 new Position(Row.SIX, Column.H));
 
         assertAll(
