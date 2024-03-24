@@ -2,6 +2,8 @@ package chess.model.piece;
 
 import chess.model.position.Movement;
 
+import java.util.Objects;
+
 public class Piece {
     protected final Color color;
     private final Type type;
@@ -32,5 +34,18 @@ public class Piece {
 
     public boolean hasColor(Color color) {
         return this.color == color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return color == piece.color && type == piece.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, type);
     }
 }
