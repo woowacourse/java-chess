@@ -10,8 +10,6 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract String getText();
-
     public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
     public boolean isEmpty() {
@@ -30,5 +28,9 @@ public abstract class Piece {
         if (!other.isEmpty() && isSameSide(other)) {
             throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
+    }
+
+    public Side getSide() {
+        return side;
     }
 }

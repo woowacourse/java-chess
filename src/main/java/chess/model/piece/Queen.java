@@ -10,14 +10,6 @@ public class Queen extends Piece {
     }
 
     @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "q";
-        }
-        return "Q";
-    }
-
-    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);

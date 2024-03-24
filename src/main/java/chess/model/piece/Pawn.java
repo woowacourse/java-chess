@@ -22,14 +22,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public String getText() {
-        if (side.isWhite()) {
-            return "p";
-        }
-        return "P";
-    }
-
-    @Override
     public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);

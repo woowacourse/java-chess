@@ -9,11 +9,6 @@ public class Empty extends Piece {
     }
 
     @Override
-    public String getText() {
-        return ".";
-    }
-
-    @Override
     public List<ChessPosition> findPath(
             final ChessPosition source, final ChessPosition target, final Piece targetPiece
     ) {

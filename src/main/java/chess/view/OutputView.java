@@ -25,7 +25,7 @@ public class OutputView {
                 .map(rank -> Arrays.stream(File.values())
                         .map(file -> new ChessPosition(file, rank))
                         .map(board::get)
-                        .map(Piece::getText)
+                        .map(PieceTextConverter::convertToText)
                         .collect(Collectors.joining("")))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
