@@ -1,9 +1,9 @@
 package domain;
 
 import domain.piece.Empty;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Piece;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

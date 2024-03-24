@@ -67,6 +67,7 @@ import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.Empty;
+import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Piece;
 import java.util.Map;
