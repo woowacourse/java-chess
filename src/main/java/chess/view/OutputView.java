@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -8,12 +10,11 @@ public class OutputView {
 
     private static final String ERROR_SUFFIX = "[ERROR]";
 
-    // TODO: 하드코딩 값 없애기
     public void printBoard(Map<Point, Piece> board) {
         StringBuilder builder = new StringBuilder();
 
-        for (int rank = 8; rank > 0; rank--) {
-            for (char file = 'a'; file <= 'h'; file++) {
+        for (int rank = Rank.maxValue(); rank > Rank.minValue(); rank--) {
+            for (char file = File.minValue(); file <= File.maxValue(); file++) {
                 Piece piece = board.get(new Point(file, rank));
                 builder.append(PieceCharacters.characterFrom(piece));
             }

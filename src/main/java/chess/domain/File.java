@@ -33,17 +33,25 @@ public enum File {
         return POOL.get(lowerChar);
     }
 
-    public int distance(File file) {
+    int distance(File file) {
         return this.file - file.file;
     }
 
-    public File add(int fileValue) {
+    File add(int fileValue) {
         char file = (char) (this.file + fileValue);
         return File.of(file);
     }
 
-    public boolean addable(int fileValue) {
+    boolean addable(int fileValue) {
         int addedFile = this.file + fileValue;
         return addedFile >= MIN_FILE && addedFile <= MAX_FILE;
+    }
+
+    public static char maxValue() {
+        return MAX_FILE;
+    }
+
+    public static char minValue() {
+        return MIN_FILE;
     }
 }

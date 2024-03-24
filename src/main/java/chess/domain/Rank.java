@@ -23,7 +23,6 @@ public enum Rank {
 
     private final int rank;
 
-
     Rank(int rank) {
         this.rank = rank;
     }
@@ -35,23 +34,30 @@ public enum Rank {
         return POOL.get(rank);
     }
 
-    private boolean isOutOfRange(int rank) {
-        return rank < MIN_RANK || rank > MAX_RANK;
-    }
-
     public int distance(Rank rank) {
         return this.rank - rank.rank;
     }
 
+    // TODO: 기물 특화 로직 제거
+
     public boolean isFirstRank() {
         return rank == 2 || rank == 7;
     }
-
     public Rank add(int directionOfRank) {
         return Rank.of(rank + directionOfRank);
     }
 
     public boolean addable(int addRank) {
-        return !isOutOfRange(this.rank + addRank);
+        int addedRank = this.rank + addRank;
+
+        return addedRank >= MIN_RANK && addedRank <= MAX_RANK;
+    }
+
+    public static int maxValue() {
+        return MAX_RANK;
+    }
+
+    public static int minValue() {
+        return MIN_RANK;
     }
 }

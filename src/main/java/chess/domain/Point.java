@@ -62,6 +62,7 @@ public class Point {
         return fileDistance * rankDistance;
     }
 
+    // TODO: 기물 의존 로직 제거
     public boolean isInitialPointOfPawn() {
         return rank.isFirstRank();
     }
