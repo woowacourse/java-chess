@@ -22,10 +22,10 @@ public class King extends Piece {
         if (this.color == color) {
             return false;
         }
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        return Math.abs(rankDiff) <= ONE_SQUARE && Math.abs(fileDiff) <= ONE_SQUARE;
+        return Math.abs(fileDiff) <= ONE_SQUARE && Math.abs(rankDiff) <= ONE_SQUARE;
     }
 
     @Override

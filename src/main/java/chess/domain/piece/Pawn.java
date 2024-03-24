@@ -6,6 +6,7 @@ import static chess.utils.Constant.TWO_SQUARE;
 import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,44 +34,45 @@ public class Pawn extends Piece {
     @Override
     public List<Position> searchPath(Position source, Position target) {
         int rankDiff = source.calculateRankDifference(target);
-        List<Position> path = new ArrayList<>();
+        int rankUnit = UnitCalculator.getUnit(rankDiff);
 
-        if (Math.abs(rankDiff) == TWO_SQUARE) {
-            source = source.move(ZERO_SQUARE, rankDiff / TWO_SQUARE);
+        List<Position> path = new ArrayList<>();
+        for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
+            source = source.move(ZERO_SQUARE, rankUnit);
             path.add(source);
         }
         return path;
     }
 
     private boolean checkBlack(Position source, Position target, Color color) {
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        if (rankDiff == -ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
+        if (Math.abs(fileDiff) == ONE_SQUARE && rankDiff == -ONE_SQUARE) {
             return color == Color.WHITE;
         }
         if (color == Color.WHITE) {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARE) && (fileDiff == ZERO_SQUARE);
+            return (fileDiff == ZERO_SQUARE) && (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARE);
         }
-        return rankDiff == -ONE_SQUARE && fileDiff == ZERO_SQUARE;
+        return fileDiff == ZERO_SQUARE && rankDiff == -ONE_SQUARE;
     }
 
     private boolean checkWhite(Position source, Position target, Color color) {
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        if (rankDiff == ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
+        if (Math.abs(fileDiff) == ONE_SQUARE && rankDiff == ONE_SQUARE) {
             return color == Color.BLACK;
         }
         if (color == Color.BLACK) {
             return false;
         }
         if (source.isPawnFirstTry(this.color)) {
-            return (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARE) && (fileDiff == ZERO_SQUARE);
+            return (fileDiff == ZERO_SQUARE) && (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARE);
         }
-        return rankDiff == ONE_SQUARE && fileDiff == ZERO_SQUARE;
+        return fileDiff == ZERO_SQUARE && rankDiff == ONE_SQUARE;
     }
 }

@@ -4,6 +4,7 @@ import static chess.domain.piece.Type.BISHOP;
 import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
+import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +23,18 @@ public class Bishop extends Piece {
         if (this.color == color) {
             return false;
         }
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
-        return Math.abs(rankDiff) == Math.abs(fileDiff);
+        int rankDiff = source.calculateRankDifference(target);
+        return Math.abs(fileDiff) == Math.abs(rankDiff);
     }
 
     @Override
     public List<Position> searchPath(Position source, Position target) {
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        int rankUnit = rankDiff / Math.abs(rankDiff);
-        int fileUnit = fileDiff / Math.abs(fileDiff);
+        int fileUnit = UnitCalculator.getUnit(fileDiff);
+        int rankUnit = UnitCalculator.getUnit(rankDiff);
 
         List<Position> path = new ArrayList<>();
         for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {

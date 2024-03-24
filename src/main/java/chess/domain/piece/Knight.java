@@ -22,10 +22,10 @@ public class Knight extends Piece {
         if (this.color == color) {
             return false;
         }
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        return Math.abs(rankDiff) * Math.abs(fileDiff) == TWO_SQUARE;
+        return Math.abs(fileDiff) * Math.abs(rankDiff) == TWO_SQUARE;
     }
 
     @Override
