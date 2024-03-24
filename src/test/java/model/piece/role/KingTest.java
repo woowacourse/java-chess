@@ -1,4 +1,4 @@
-package model.piece.state;
+package model.piece.role;
 
 import static model.direction.Direction.E;
 import static model.direction.Direction.N;

@@ -1,13 +1,9 @@
-package model.piece.state;
+package model.piece.role;
 
 import static model.direction.Direction.N;
 import static model.direction.Direction.S;
 import static model.direction.Direction.E;
 import static model.direction.Direction.W;
-import static model.direction.Direction.NE;
-import static model.direction.Direction.NW;
-import static model.direction.Direction.SE;
-import static model.direction.Direction.SW;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

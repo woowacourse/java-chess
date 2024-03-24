@@ -1,4 +1,4 @@
-package model.piece.state;
+package model.piece.role;
 
 import model.direction.ShiftPattern;
 import model.piece.Color;

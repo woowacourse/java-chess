@@ -1,4 +1,4 @@
-package model.piece.state;
+package model.piece.role;
 
 import java.util.HashSet;
 import java.util.List;

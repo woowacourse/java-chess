@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import java.util.Map;
 import model.piece.PieceHolder;
-import model.piece.state.King;
-import model.piece.state.Pawn;
-import model.piece.state.Queen;
-import model.piece.state.Rook;
-import model.piece.state.Square;
+import model.piece.role.King;
+import model.piece.role.Pawn;
+import model.piece.role.Queen;
+import model.piece.role.Rook;
+import model.piece.role.Square;
 import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

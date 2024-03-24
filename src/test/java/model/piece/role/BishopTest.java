@@ -1,4 +1,4 @@
-package model.piece.state;
+package model.piece.role;
 
 import static model.direction.Direction.NE;
 import static model.direction.Direction.NW;
@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Route;

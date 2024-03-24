@@ -4,8 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
-import model.piece.state.Role;
-import model.piece.state.Square;
+import model.piece.role.Role;
+import model.piece.role.Square;
 import model.position.Position;
 import model.position.Route;
 
