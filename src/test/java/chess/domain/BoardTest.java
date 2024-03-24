@@ -34,10 +34,13 @@ class BoardTest {
         assertThat(board.getBoard().get(Point.of(File.A, Rank.FIRST))).isEqualTo(Piece.empty());
     }
 
-    @DisplayName("나이트를 a1에서 c2로 이동시킬 수 있다.")
+    @DisplayName("나이트를 a1에서 b1, b2, c1의 기물 뛰어넘고 c2로 이동시킬 수 있다.")
     @Test
     void move2() {
         tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.knightFrom(Team.WHITE));
+        tempBoard.put(Point.of(File.B, Rank.FIRST), Piece.knightFrom(Team.WHITE));
+        tempBoard.put(Point.of(File.B, Rank.SECOND), Piece.knightFrom(Team.WHITE));
+        tempBoard.put(Point.of(File.C, Rank.FIRST), Piece.knightFrom(Team.WHITE));
         Board board = new Board(tempBoard);
 
         board.move(new Player(Team.WHITE),
