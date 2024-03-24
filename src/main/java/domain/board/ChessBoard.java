@@ -76,6 +76,10 @@ public class ChessBoard {
         return board.getOrDefault(position, Empty.getInstance());
     }
 
+    public Score calculateScore() {
+        return Score.calculate(board);
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
