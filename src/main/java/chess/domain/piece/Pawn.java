@@ -11,12 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
-    public static final int WHITE_NORMAL_MOVEMENT = 1;
-    public static final int WHITE_START_MOVEMENT = 2;
-    public static final int BLACK_NORMAL_MOVEMENT = -1;
-    public static final int BLACK_START_MOVEMENT = -2;
+    public static final int NORMAL_MOVEMENT = 1;
+    public static final int START_MOVEMENT = 2;
     public static final int ATTACK_COLUMN_MOVEMENT = 1;
-
 
     public Pawn(Team team) {
         this(team, false);
@@ -57,7 +54,7 @@ public class Pawn extends Piece {
     @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
-        if (Math.abs(rowDifference) == WHITE_START_MOVEMENT) {
+        if (Math.abs(rowDifference) == START_MOVEMENT) {
             positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
             return positions;
         }
@@ -69,17 +66,13 @@ public class Pawn extends Piece {
         if (columnDifference != 0) {
             return false;
         }
-        if (team == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT || (!hasMoved && rowDifference == WHITE_START_MOVEMENT);
-        }
-        return rowDifference == BLACK_NORMAL_MOVEMENT || (!hasMoved && rowDifference == BLACK_START_MOVEMENT);
+        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
+                || (!hasMoved && rowDifference == START_MOVEMENT * team.attackDirection());
     }
 
     @Override
     protected boolean isAttackable(int rowDifference, int columnDifference) {
-        if (team == Team.WHITE) {
-            return rowDifference == WHITE_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
-        }
-        return rowDifference == BLACK_NORMAL_MOVEMENT && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
+        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
+                && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
     }
 }
