@@ -6,9 +6,13 @@ import chess.domain.position.Position;
 public abstract class Piece {
     protected final Team team;
 
-    public Piece(Team team) {
+    protected Piece(Team team) {
         this.team = team;
     }
+
+    abstract boolean canNotMoveByItsOwnInPassing(Position start, Position destination);
+
+    abstract boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard);
 
     public final boolean canMove(Position start, Position destination, ChessBoard chessBoard) {
         if (start == destination) {
@@ -35,10 +39,6 @@ public abstract class Piece {
         }
         return true;
     }
-
-    abstract boolean canNotMoveByItsOwnInPassing(Position start, Position destination);
-
-    abstract boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard);
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;
