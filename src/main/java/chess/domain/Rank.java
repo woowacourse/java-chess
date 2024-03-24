@@ -38,11 +38,6 @@ public enum Rank {
         return this.rank - rank.rank;
     }
 
-    // TODO: 기물 특화 로직 제거
-
-    public boolean isFirstRank() {
-        return rank == 2 || rank == 7;
-    }
     public Rank add(int directionOfRank) {
         return Rank.of(rank + directionOfRank);
     }

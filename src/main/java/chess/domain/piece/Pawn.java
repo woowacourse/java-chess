@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Point;
+import chess.domain.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +35,17 @@ public final class Pawn extends Piece {
         List<Point> points = new ArrayList<>();
         int forwardDirection = team.forwardDirection();
 
-        if (currentPoint.isInitialPointOfPawn()) {
+        if (isStartPosition(currentPoint)) {
             findMovablePoint(points, currentPoint, 0, TWO_RANK * forwardDirection);
         }
         for (Direction direction : Direction.findPawnDirections()) {
             findMovablePoint(points, currentPoint, direction.file(), direction.rank() * forwardDirection);
         }
         return points;
+    }
+
+    private boolean isStartPosition(Point currentPoint) {
+        return currentPoint.isSameRank(Rank.SECOND) || currentPoint.isSameRank(Rank.SEVENTH);
     }
 
     private void findMovablePoint(List<Point> points, Point currentPoint, int addFile, int addRank) {

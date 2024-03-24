@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Point {
 
-    private static final int KNIGHT_VALUE = 2;
+    private static final int SlOPE_TWO = 2;
 
     private final File file;
     private final Rank rank;
@@ -29,7 +29,12 @@ public class Point {
         if (this.equals(point) || rankDistance == 0) {
             return false;
         }
-        return Math.abs((double) fileDistance / rankDistance) == 1;
+
+        return isSlopeOne(fileDistance, rankDistance);
+    }
+
+    private boolean isSlopeOne(int fileDistance, int rankDistance) {
+        return Math.abs(fileDistance / rankDistance) == 1;
     }
 
     public boolean isStraight(Point point) {
@@ -62,9 +67,8 @@ public class Point {
         return fileDistance * rankDistance;
     }
 
-    // TODO: 기물 의존 로직 제거
-    public boolean isInitialPointOfPawn() {
-        return rank.isFirstRank();
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
     }
 
     public Point add(int addFile, int addRank) {
@@ -82,7 +86,7 @@ public class Point {
         int fileDistance = point.file.distance(this.file);
         int rankDistance = point.rank.distance(this.rank);
 
-        if (multiplyAxis(point) == KNIGHT_VALUE) {
+        if (multiplyAxis(point) == SlOPE_TWO) {
             return Direction.of(fileDistance, rankDistance);
         }
         return Direction.of(unitDistance(fileDistance), unitDistance(rankDistance));
