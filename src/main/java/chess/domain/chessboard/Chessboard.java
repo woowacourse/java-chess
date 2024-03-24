@@ -3,14 +3,11 @@ package chess.domain.chessboard;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
-import chess.domain.chessboard.attribute.Square;
-import chess.domain.piece.attribute.Color;
 import chess.domain.chessboard.attribute.File;
-import chess.domain.piece.attribute.Position;
 import chess.domain.chessboard.attribute.Rank;
+import chess.domain.chessboard.attribute.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -18,6 +15,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.StartingPawn;
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Position;
 
 public class Chessboard {
 
@@ -76,17 +75,17 @@ public class Chessboard {
         return File.isInRange(column) && Rank.isInRange(row);
     }
 
-    public Optional<Piece> pieceIn(final Position position) {
+    public Piece pieceIn(final Position position) {
         return pieceIn(position.rank(), position.file());
     }
 
-    public Optional<Piece> pieceIn(final Rank rank, final File file) {
+    public Piece pieceIn(final Rank rank, final File file) {
         List<Square> row = chessboard.get(rank.toRow());
         Square square = row.get(file.toColumn());
         return square.piece();
     }
 
-    public List<List<Square>> getChessboard() {
+    public List<List<Square>> getSquares() {
         return List.copyOf(chessboard.stream()
                 .map(List::copyOf)
                 .toList());
