@@ -50,13 +50,17 @@ public class ChessBoard {
                 .allMatch(this::positionIsEmpty);
     }
 
-    private boolean isMovablePosition(Position start, Position destination) {
-        return positionIsEmpty(destination) || piecesIsOtherTeam(start, destination);
-    }
+    public boolean piecesIsOtherTeam(Position start, Position destination) {
+        if(positionIsEmpty(start) || positionIsEmpty(destination)){
+            return false;
+        }
 
-    private boolean piecesIsOtherTeam(Position start, Position destination) {
         Piece startPiece = findPieceByPosition(start);
         Piece desinationPiece = findPieceByPosition(destination);
         return startPiece.isOtherTeam(desinationPiece);
+    }
+
+    private boolean isMovablePosition(Position start, Position destination) {
+        return positionIsEmpty(destination) || piecesIsOtherTeam(start, destination);
     }
 }
