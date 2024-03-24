@@ -1,0 +1,37 @@
+package chess.domain.piece;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.Position;
+import java.util.Map;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+class KnightTest {
+    @ParameterizedTest
+    @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
+    @DisplayName("나이트는 도착 위치가 비어있는 경우 이동할 수 있다.")
+    void canMoveWhenTargetIsEmpty(int file, int rank) {
+        Piece piece = new Knight(Color.WHITE);
+        assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), Map.of())).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
+    @DisplayName("나이트는 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
+    void canMoveWhenTargetIsOtherColor(int file, int rank) {
+        Piece piece = new Knight(Color.WHITE);
+        assertThat(piece.canMove(new Position(4, 4), new Position(file, rank),
+                Map.of(new Position(file, rank), new Queen(Color.BLACK)))).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
+    @DisplayName("나이트는 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
+    void canNotMoveWhenTargetIsSameColor(int file, int rank) {
+        Piece piece = new Knight(Color.WHITE);
+        assertThat(piece.canMove(new Position(4, 4), new Position(file, rank),
+                Map.of(new Position(file, rank), new Queen(Color.WHITE)))).isFalse();
+    }
+}

@@ -6,8 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +23,9 @@ class BoardTest {
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
                 () -> assertThat(boardPieces.get(new Position(1, 2)))
-                        .isEqualTo(new Piece(PieceType.EMPTY, Color.NONE)),
+                        .isEqualTo(new Empty()),
                 () -> assertThat(boardPieces.get(new Position(1, 4)))
-                        .isEqualTo(new Piece(PieceType.PAWN, Color.WHITE)));
+                        .isEqualTo(new Pawn(Color.WHITE)));
     }
 
     @Test

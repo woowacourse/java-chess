@@ -1,9 +1,8 @@
 package chess.domain.board;
 
 import chess.domain.Position;
-import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import java.util.Collections;
 import java.util.Map;
 
@@ -19,16 +18,12 @@ public class Board {
 
     public void move(final Position source, final Position target) {
         Piece piece = board.get(source);
-        if (!piece.canMove(source, target, isFirstMove(source, piece), getBoard())) {
+        if (!piece.canMove(source, target, getBoard())) {
             throw new IllegalArgumentException("이동이 불가능한 위치입니다.");
         }
 
         board.put(target, piece);
-        board.put(source, new Piece(PieceType.EMPTY, Color.NONE));
-    }
-
-    private boolean isFirstMove(final Position source, final Piece piece) {
-        return boardInitializer.isFirstMove(source, piece);
+        board.put(source, new Empty());
     }
 
     public Map<Position, Piece> getBoard() {

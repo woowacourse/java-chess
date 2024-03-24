@@ -1,9 +1,15 @@
 package chess.domain.board;
 
 import chess.domain.Position;
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -44,7 +50,7 @@ public class BoardInitializer {
     private Collector<Position, ?, Map<Position, Piece>> generateEntry() {
         return Collectors.toMap(
                 position -> position,
-                position -> new Piece(PieceType.EMPTY, Color.NONE)
+                position -> new Empty()
         );
     }
 
@@ -63,30 +69,24 @@ public class BoardInitializer {
     }
 
     private Map<Position, Piece> getNotPawnsPieces(final Color color, final int rank) {
-        return Map.of(new Position(1, rank), new Piece(PieceType.ROOK, color),
-                new Position(2, rank), new Piece(PieceType.KNIGHT, color),
-                new Position(3, rank), new Piece(PieceType.BISHOP, color),
-                new Position(4, rank), new Piece(PieceType.QUEEN, color),
-                new Position(5, rank), new Piece(PieceType.KING, color),
-                new Position(6, rank), new Piece(PieceType.BISHOP, color),
-                new Position(7, rank), new Piece(PieceType.KNIGHT, color),
-                new Position(8, rank), new Piece(PieceType.ROOK, color));
+        return Map.of(new Position(1, rank), new Rook(color),
+                new Position(2, rank), new Knight(color),
+                new Position(3, rank), new Bishop(color),
+                new Position(4, rank), new Queen(color),
+                new Position(5, rank), new King(color),
+                new Position(6, rank), new Bishop(color),
+                new Position(7, rank), new Knight(color),
+                new Position(8, rank), new Rook(color));
     }
-
 
     private Map<Position, Piece> getPawnsPieces(final Color color, final int rank) {
-        return Map.of(new Position(1, rank), new Piece(PieceType.PAWN, color),
-                new Position(2, rank), new Piece(PieceType.PAWN, color),
-                new Position(3, rank), new Piece(PieceType.PAWN, color),
-                new Position(4, rank), new Piece(PieceType.PAWN, color),
-                new Position(5, rank), new Piece(PieceType.PAWN, color),
-                new Position(6, rank), new Piece(PieceType.PAWN, color),
-                new Position(7, rank), new Piece(PieceType.PAWN, color),
-                new Position(8, rank), new Piece(PieceType.PAWN, color));
-    }
-
-    public boolean isFirstMove(final Position position, final Piece piece) {
-        Piece initialPiece = initialPiecePositions.getOrDefault(position, new Piece(PieceType.EMPTY, Color.NONE));
-        return initialPiece.equals(piece);
+        return Map.of(new Position(1, rank), new Pawn(color),
+                new Position(2, rank), new Pawn(color),
+                new Position(3, rank), new Pawn(color),
+                new Position(4, rank), new Pawn(color),
+                new Position(5, rank), new Pawn(color),
+                new Position(6, rank), new Pawn(color),
+                new Position(7, rank), new Pawn(color),
+                new Position(8, rank), new Pawn(color));
     }
 }
