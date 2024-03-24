@@ -41,13 +41,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isWhiteAttack(final Movement movement) {
-        System.out.println(movement.direction());
         return WHITE_ATTACK_DIRECTION.contains(movement.direction())
                 && movement.calculateMaxDistance() == DEFAULT_MOVE_DISTANCE;
     }
 
     private boolean isBlackAttack(final Movement movement) {
-        System.out.println(movement.direction());
         return BLACK_ATTACK_DIRECTION.contains(movement.direction())
                 && movement.calculateMaxDistance() == DEFAULT_MOVE_DISTANCE;
     }
