@@ -52,7 +52,7 @@ public class Board {
 
     private void validateTurn(Movement movement, Color color) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (!sourcePiece.hasColor(color)) {
+        if (sourcePiece.isNotSameColor(color)) {
             throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
         }
     }

@@ -33,7 +33,7 @@ public abstract class Piece {
         return color == piece.color;
     }
 
-    public boolean hasColor(Color color) {
-        return this.color == color;
+    public boolean isNotSameColor(Color color) {
+        return this.color != color;
     }
 }
