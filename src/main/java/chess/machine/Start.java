@@ -7,7 +7,7 @@ public class Start implements Command {
     private static final String INPUT_COMMAND = "start";
 
     private Start(String input) {
-        if (!input.startsWith(INPUT_COMMAND)) {
+        if (!input.equals(INPUT_COMMAND)) {
             throw new IllegalArgumentException("시작 명령이 아닙니다");
         }
     }
