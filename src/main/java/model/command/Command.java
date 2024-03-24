@@ -11,7 +11,6 @@ public enum Command {
     START(Pattern.compile("start"), 0),
     MOVE(Pattern.compile("move"), 2),
     POSITION(Pattern.compile("[a-hA-H][1-8]"), 0),
-    EMPTY(Pattern.compile("empty"), -1), // TODO 이거 맞을까
     END(Pattern.compile("end"), 0);
 
     public static final int HEAD_INDEX = 0;

@@ -43,7 +43,7 @@ public class ChessController {
     private GameStatus play(final GameStatus gameStatus, final ChessBoard chessBoard) {
         try {
             return gameStatus.play(readCommandLine(), chessBoard);
-        } catch (CustomException exception) {
+        } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return play(gameStatus, chessBoard);
         }
@@ -54,20 +54,12 @@ public class ChessController {
     }
 
     private CommandLine readCommandLine() {
-        CommandLine command = CommandLine.empty();
-        while (command.isEmpty()) {
-            command = readCommand();
-        }
-        return command;
-    }
-
-    private CommandLine readCommand() {
         try {
             List<String> command = inputView.readCommandList();
             return CommandLine.from(command);
-        } catch (CustomException exception) {
+        } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
         }
-        return CommandLine.empty();
+        return readCommandLine();
     }
 }

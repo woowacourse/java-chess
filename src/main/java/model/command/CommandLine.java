@@ -21,14 +21,10 @@ public class CommandLine {
     //TODO List<String> 으로 받아올지 그냥 String을 받아와 쪼갤지 고민하기
     public static CommandLine from(final List<String> input) {
         validateEmpty(input);
-        validateCommand(input); // TODO 더 좋은 이름으로 변경하기
+        validateCommand(input);
         Command command = Command.from(input.get(HEAD_INDEX));
         validateSize(command, input);
         return new CommandLine(command, input.subList(1, input.size()));
-    }
-
-    public static CommandLine empty() {
-        return new CommandLine(Command.EMPTY, List.of());
     }
 
     private static void validateEmpty(final List<String> input) {
@@ -57,10 +53,6 @@ public class CommandLine {
 
     public boolean isMove() {
         return head == Command.MOVE;
-    }
-
-    public boolean isEmpty() {
-        return head == Command.EMPTY;
     }
 
     public List<String> getBody() {
