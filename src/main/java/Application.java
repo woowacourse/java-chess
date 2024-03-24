@@ -1,9 +1,9 @@
-import controller.GameManager;
+import controller.GameMachine;
 
 public class Application {
 
     public static void main(String[] args) {
-        GameManager gameManager = new GameManager();
-        gameManager.start();
+        GameMachine gameMachine = new GameMachine();
+        gameMachine.start();
     }
 }

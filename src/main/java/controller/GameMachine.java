@@ -11,7 +11,7 @@ import view.mapper.CommandInput;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameManager {
+public class GameMachine {
 
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
@@ -25,19 +25,19 @@ public class GameManager {
         }
         Chess chess = new Chess();
         outputView.printBoard(chess.getBoard());
-        manage(chess);
+        play(chess);
     }
 
-    private void manage(Chess chess) {
+    private void play(Chess chess) {
         String rawCommand = requestCommand();
         Command command = CommandInput.asCommand(rawCommand);
         if (isNotMove(command)) {
             return;
         }
         List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
-        playChess(chess, moveCommands);
+        move(chess, moveCommands);
         outputView.printBoard(chess.getBoard());
-        manage(chess);
+        play(chess);
     }
 
     private boolean isNotMove(Command command) {
@@ -50,11 +50,11 @@ public class GameManager {
         return true;
     }
 
-    private void playChess(Chess chess, List<String> moveTokens) {
+    private void move(Chess chess, List<String> moveTokens) {
         PositionGenerator positionGenerator = new PositionGenerator();
         Position sourcePosition = positionGenerator.generate(moveTokens.get(1));
         Position targetPosition = positionGenerator.generate(moveTokens.get(2));
-        chess.play(sourcePosition, targetPosition);
+        chess.movePiece(sourcePosition, targetPosition);
     }
 
     private String requestCommand() {

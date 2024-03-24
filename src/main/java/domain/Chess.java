@@ -8,7 +8,7 @@ public class Chess {
 
     private final Board board = new Board();
 
-    public void play(Position sourcePosition, Position targetPosition) {
+    public void movePiece(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
         if (canMove(sourcePosition, targetPosition, sourcePiece, targetPiece)) {
