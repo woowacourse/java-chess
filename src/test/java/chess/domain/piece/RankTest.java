@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.Rank;
+import chess.domain.position.Rank;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

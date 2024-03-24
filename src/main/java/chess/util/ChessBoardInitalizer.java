@@ -2,23 +2,23 @@ package chess.util;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.Color;
-import chess.domain.piece.File;
+import chess.domain.position.File;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.piece.type.Bishop;
 import chess.domain.piece.type.King;
 import chess.domain.piece.type.Knight;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoardInitalizer {
 
     public static ChessBoard init() {
-        final Map<Position, Piece> pieces = new HashMap<>();
+        final Map<Position, Piece> pieces = new LinkedHashMap<>();
 
         createPieceWithoutPawn(pieces, Color.BLACK, Rank.EIGHT);
         createPawn(pieces, Color.BLACK, Rank.SEVEN);

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
+import chess.domain.position.Movement;
+import chess.domain.position.Position;
 import java.util.Objects;
 import java.util.Set;
 

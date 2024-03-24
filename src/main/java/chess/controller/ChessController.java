@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.ChessBoard;
 import chess.util.ChessBoardInitalizer;
 import chess.domain.Command;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

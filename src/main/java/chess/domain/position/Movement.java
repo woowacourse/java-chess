@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 
 public class Movement {
 

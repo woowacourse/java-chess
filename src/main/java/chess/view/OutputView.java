@@ -1,8 +1,9 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
+import chess.domain.piece.type.Knight;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,9 @@ public class OutputView {
 
     private String convertToMark(final Piece piece) {
         if (piece.isBlack()) {
+            if (piece instanceof Knight) {
+                return String.valueOf(Character.toUpperCase(piece.getClass().getSimpleName().charAt(0)));
+            }
             return String.valueOf(Character.toUpperCase(piece.getClass().getSimpleName().charAt(0)));
         }
         return String.valueOf(Character.toLowerCase(piece.getClass().getSimpleName().charAt(0)));

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.File;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

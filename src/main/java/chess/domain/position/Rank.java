@@ -1,8 +1,8 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import java.util.Arrays;
 
-public enum Rank {
+public enum Rank{
 
     ONE(1),
     TWO(2),
@@ -26,7 +26,7 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
     }
 
-    public Rank addIndex(int index) {
+    public Rank addIndex(final int index) {
         return from(this.index + index);
     }
 

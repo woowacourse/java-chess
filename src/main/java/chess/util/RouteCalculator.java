@@ -1,7 +1,7 @@
 package chess.util;
 
-import chess.domain.Movement;
-import chess.domain.piece.Position;
+import chess.domain.position.Movement;
+import chess.domain.position.Position;
 import java.util.HashSet;
 import java.util.Set;
 

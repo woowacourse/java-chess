@@ -1,11 +1,11 @@
 package chess.domain.piece.type;
 
-import chess.domain.Movement;
+import chess.domain.position.Movement;
 import chess.util.RouteCalculator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.Set;
 
 public class Pawn extends Piece {

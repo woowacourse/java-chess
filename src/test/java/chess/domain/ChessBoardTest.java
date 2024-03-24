@@ -3,10 +3,10 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.File;
+import chess.domain.position.File;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.util.ChessBoardInitalizer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,14 +2,6 @@ package chess.domain.piece.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Color;
-import chess.domain.piece.File;
-import chess.domain.piece.Position;
-import chess.domain.piece.Rank;
-import java.util.Set;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 class PawnTest {
 
 //    @DisplayName("화이트폰은 처음에는 앞으로 두칸 이동할 수 있다.")
