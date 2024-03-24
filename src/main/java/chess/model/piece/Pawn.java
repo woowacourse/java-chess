@@ -1,7 +1,7 @@
 package chess.model.piece;
 
-import chess.model.position.RankDirection;
 import chess.model.position.Movement;
+import chess.model.position.RankDirection;
 
 public class Pawn extends Piece {
     private static final Piece WHITE_PAWN = new Pawn(Color.WHITE, RankDirection.UP, 2);

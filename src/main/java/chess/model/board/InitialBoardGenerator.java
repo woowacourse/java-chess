@@ -1,6 +1,9 @@
 package chess.model.board;
 
-import chess.model.piece.*;
+import chess.model.piece.Color;
+import chess.model.piece.Piece;
+import chess.model.piece.PieceFactory;
+import chess.model.piece.Type;
 import chess.model.position.Position;
 
 import java.util.HashMap;

@@ -9,8 +9,8 @@ public class PieceFactory {
 
     static {
         for (Type type : Type.values()) {
-            PIECES.put(convertToKey(Color.WHITE, type),new Piece(Color.WHITE, type));
-            PIECES.put(convertToKey(Color.BLACK, type),new Piece(Color.BLACK, type));
+            PIECES.put(convertToKey(Color.WHITE, type), new Piece(Color.WHITE, type));
+            PIECES.put(convertToKey(Color.BLACK, type), new Piece(Color.BLACK, type));
         }
         PIECES.put(convertToKey(Color.WHITE, Type.PAWN), Pawn.from(Color.WHITE));
         PIECES.put(convertToKey(Color.BLACK, Type.PAWN), Pawn.from(Color.BLACK));
@@ -20,6 +20,7 @@ public class PieceFactory {
     private static int convertToKey(Color color, Type type) {
         return Objects.hash(color, type);
     }
+
     public static Piece of(Color color, Type type) {
         return PIECES.get(convertToKey(color, type));
     }
