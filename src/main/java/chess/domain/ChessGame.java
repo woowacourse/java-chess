@@ -4,22 +4,22 @@ import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.strategy.BlankMoveStrategy;
-import chess.domain.strategy.MoveStrategy;
+import chess.domain.state.BlankMoveState;
+import chess.domain.state.MoveState;
 import java.util.Map;
 
 public class ChessGame {
-    private MoveStrategy moveStrategy;
+    private MoveState moveState;
     private Color turnColor;
 
     public ChessGame(Map<Position, Piece> board) {
-        this.moveStrategy = new BlankMoveStrategy(board);
+        this.moveState = new BlankMoveState(board);
         this.turnColor = Color.WHITE;
     }
 
     public void move(Position source, Position destination) {
-        moveStrategy = moveStrategy.changeStrategy(source);
-        moveStrategy.move(turnColor, source, destination);
+        moveState = moveState.changeState(source);
+        moveState.move(turnColor, source, destination);
         changeTurnColor();
     }
 
@@ -28,6 +28,6 @@ public class ChessGame {
     }
 
     public Map<Position, PieceType> collectBoard() {
-        return moveStrategy.collectBoard();
+        return moveState.collectBoard();
     }
 }

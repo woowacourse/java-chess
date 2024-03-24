@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.state;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
@@ -10,22 +10,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class MoveStrategy {
+public abstract class MoveState {
     protected final Map<Position, Piece> board;
 
-    public MoveStrategy(Map<Position, Piece> board) {
+    public MoveState(Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
-    public MoveStrategy changeStrategy(Position source) {
+    public MoveState changeState(Position source) {
         PieceType pieceType = board.get(source).pieceType();
         if (pieceType == PieceType.BLANK) {
-            return new BlankMoveStrategy(board);
+            return new BlankMoveState(board);
         }
         if (pieceType == PieceType.BLACK_PAWN || pieceType == PieceType.WHITE_PAWN) {
-            return new PawnMoveStrategy(board);
+            return new PawnMoveState(board);
         }
-        return new GeneralMoveStrategy(board);
+        return new GeneralMoveState(board);
     }
 
     public abstract void move(Color turnColor, Position source, Position destination);

@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.state;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
@@ -8,9 +8,9 @@ import chess.domain.piece.pawn.Pawn;
 import java.util.Map;
 import java.util.Set;
 
-public class PawnMoveStrategy extends MoveStrategy {
+public class PawnMoveState extends MoveState {
 
-    public PawnMoveStrategy(Map<Position, Piece> board) {
+    public PawnMoveState(Map<Position, Piece> board) {
         super(board);
     }
 
