@@ -16,7 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-public class MoveStrategyTest {
+class MoveStrategyTest {
 
     @TestFactory
     @DisplayName("선택된 말에 따라 전략을 선택한다.")
