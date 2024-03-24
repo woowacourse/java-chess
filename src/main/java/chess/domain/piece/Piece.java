@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.position.Direction;
 import chess.domain.board.position.Position;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 
 public class Piece {
@@ -49,5 +50,22 @@ public class Piece {
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }
