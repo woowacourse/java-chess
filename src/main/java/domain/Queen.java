@@ -15,7 +15,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
+    protected boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
         return false;
     }
 

@@ -9,7 +9,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean hasFollowedRule(Position source, Position target, MovePath movePath) {
+    protected boolean hasFollowedRule(Position source, Position target, MovePath movePath) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
 

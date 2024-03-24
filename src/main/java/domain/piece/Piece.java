@@ -15,7 +15,7 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract boolean hasFollowedRule(Position current, Position target, MovePath movePath);
+    protected abstract boolean hasFollowedRule(Position current, Position target, MovePath movePath);
 
     public void checkValidMove(Position source, Position target, MovePath movePath) {
         checkDifferentPosition(source, target);

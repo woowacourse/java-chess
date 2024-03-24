@@ -1,61 +1,69 @@
 package domain;
 
+import fixture.MovePathFixture;
 import fixture.PositionFixture;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.LinkedHashMap;
 import java.util.stream.Stream;
 
+import static fixture.PositionFixture.C3;
+import static fixture.PositionFixture.C4;
+import static fixture.PositionFixture.C5;
+import static fixture.PositionFixture.D3;
+import static fixture.PositionFixture.D4;
+import static fixture.PositionFixture.D5;
+import static fixture.PositionFixture.E3;
+import static fixture.PositionFixture.E4;
+import static fixture.PositionFixture.E5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {
 
-    private static Stream<Arguments> movableTargetPosition() {
-        return Stream.of(
-                Arguments.arguments(File.C, Rank.FOUR),
-                Arguments.arguments(File.D, Rank.FIVE),
-                Arguments.arguments(File.C, Rank.FIVE),
-                Arguments.arguments(File.E, Rank.FIVE)
-        );
+    /*
+    ........  8
+    ........  7
+    ........  6
+    ..***...  5
+    ..*K*...  4
+    ..***...  3
+    ........  2
+    ........  1
+
+    abcdefgh
+     */
+    private static final List<Position> MOVABLE_POSITIONS = List.of(C3, C4, C5, D3, D5, E3, E4, E5);
+
+    private static Stream<Arguments> movableTargets() {
+        return PositionFixture.movablePositions(MOVABLE_POSITIONS);
     }
 
-    private static Stream<Arguments> immovableTargetPosition() {
-        return Stream.of(
-                Arguments.arguments(File.B, Rank.FOUR),
-                Arguments.arguments(File.D, Rank.SIX),
-                Arguments.arguments(File.B, Rank.SIX),
-                Arguments.arguments(File.F, Rank.SIX)
-        );
+    private static Stream<Arguments> immovableTargets() {
+        return PositionFixture.immovablePositions(MOVABLE_POSITIONS);
     }
 
     @DisplayName("킹은 수직, 수평 또는 대각선 방향으로 한 칸 움직인다.")
     @ParameterizedTest
-    @MethodSource("movableTargetPosition")
-    void canMoveTest(File targetFile, Rank targetRank) {
+    @MethodSource("movableTargets")
+    void hasFollowedRule(Position target) {
         King king = new King(Side.BLACK);
 
-        Position current = PositionFixture.D4;
-        Position target = new Position(targetFile, targetRank);
+        boolean actual = king.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
-//        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());
-//
-//        assertThat(actual).isTrue();
+        assertThat(actual).isTrue();
     }
 
-    @DisplayName("킹은 수직, 수평 또는 대각선 방향으로 두 칸 이상 움직일 수 없다.")
+    @DisplayName("킹은 수직, 수평 또는 대각선 방향으로 한 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
-    @MethodSource("immovableTargetPosition")
-    void cantMoveTest(File targetFile, Rank targetRank) {
+    @MethodSource("immovableTargets")
+    void hasViolatedRule(Position target) {
         King king = new King(Side.BLACK);
 
-        Position current = PositionFixture.D4;
-        Position target = new Position(targetFile, targetRank);
+        boolean actual = king.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
-//        boolean actual = king.isRuleBroken(current, target, new LinkedHashMap<>());
-//
-//        assertThat(actual).isFalse();
+        assertThat(actual).isFalse();
     }
 }
