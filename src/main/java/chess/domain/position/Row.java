@@ -8,19 +8,19 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public class Row {
-    private static final Map<Integer, Row> CACHE = IntStream.rangeClosed(0, 7)
-            .boxed()
+    private static final Map<String, Row> CACHE = IntStream.rangeClosed('a', 'h')
+            .mapToObj(i -> String.valueOf((char) i))
             .collect(toMap(Function.identity(), Row::new));
 
-    private final int value;
+    private final String value;
 
-    private Row(int value) {
+    private Row(String value) {
         this.value = value;
     }
 
     public static Row valueOf(String value) {
         validate(value);
-        return CACHE.get(value.charAt(0) - 'a');
+        return CACHE.get(value);
     }
 
     private static void validate(String value) {
@@ -29,8 +29,7 @@ public class Row {
     }
 
     private static void validateAlphabet(String value) {
-        char row = value.charAt(0);
-        if (!CACHE.containsKey(row - 'a')) {
+        if (!CACHE.containsKey(value)) {
             throw new IllegalArgumentException("a~h까지 가능합니다.");
         }
     }
@@ -42,19 +41,24 @@ public class Row {
     }
 
     public Row update(int direction) {
-        return CACHE.get(this.value + direction);
+        System.out.println(toChar(value) + direction);
+        return CACHE.get(String.valueOf((char) (toChar(value) + direction)));
     }
 
     public int subtractRow(Row row) {
-        return this.value - row.value;
+        return toChar(value) - toChar(row.value);
     }
 
     public int findDirection(Row row) {
-        return Integer.compare(row.value, value);
+        return Integer.compare(toChar(row.value), toChar(value));
+    }
+
+    private int toChar(String value) {
+        return value.charAt(0);
     }
 
     public int getValue() {
-        return value;
+        return toChar(value) - 'a';
     }
 
     @Override

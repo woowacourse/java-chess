@@ -15,7 +15,7 @@ public class ColumnTest {
     @Test
     @DisplayName("세로는 1~8 사이의 숫자로 생성된다.")
     void Column_create_with_valid_range_number() {
-        var result = Column.valueOf("1");
+        var result = Column.valueOf("8");
         assertThat(result).isInstanceOf(Column.class);
     }
 

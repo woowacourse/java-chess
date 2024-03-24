@@ -8,46 +8,47 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public class Column {
-    private static final Map<Integer, Column> CACHE = IntStream.rangeClosed(0, 7)
-            .boxed()
+    private static final Map<String, Column> CACHE = IntStream.rangeClosed(1, 8)
+            .mapToObj(String::valueOf)
             .collect(toMap(Function.identity(), Column::new));
 
-    private final int value;
+    private final String value;
 
-    private Column(int value) {
+    private Column(String value) {
         this.value = value;
     }
 
     public static Column valueOf(String value) {
         validate(value);
-        return CACHE.get(Integer.parseInt(value) - 1);
+        return CACHE.get(value);
     }
 
     private static void validate(String value) {
         try {
-            int number = Integer.parseInt(value);
-            validateInRange(number);
+            Integer.parseInt(value);
+            validateInRange(value);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
 
-    private static void validateInRange(int value) {
-        if(!CACHE.containsKey(value - 1)) {
+    private static void validateInRange(String value) {
+        if(!CACHE.containsKey(value)) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
 
     public Column update(int value) {
-        return CACHE.get(this.value + value);
+        int index = Integer.parseInt(this.value) + value;
+        return CACHE.get(String.valueOf(index));
     }
 
     public int subtractColumn(Column column) {
-        return this.value - column.value;
+        return Integer.parseInt(this.value) - Integer.parseInt(column.value);
     }
 
     public int findDirection(Column column) {
-        return Integer.compare(column.value, value);
+        return Integer.compare(Integer.parseInt(column.value), Integer.parseInt(value));
     }
 
     @Override
