@@ -20,7 +20,7 @@ class StraightDirectionTest {
         void getDirection_WhenSameCoordinate() {
             assertThatThrownBy(() -> StraightDirection.getDirection(0, 0))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
 
         @ParameterizedTest
@@ -29,7 +29,7 @@ class StraightDirectionTest {
         void getDirection_WhenOtherCase(int rowDifference, int columnDifference) {
             assertThatThrownBy(() -> StraightDirection.getDirection(rowDifference, columnDifference))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
     }
 

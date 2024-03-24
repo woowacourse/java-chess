@@ -20,7 +20,7 @@ class KnightDirectionTest {
         void getDirection_WhenSameCoordinate() {
             assertThatThrownBy(() -> KnightDirection.getDirection(0, 0))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
 
         @ParameterizedTest
@@ -29,7 +29,7 @@ class KnightDirectionTest {
         void getDirection_WhenOnlyUpOrDown(int rowDifference, int columnDifference) {
             assertThatThrownBy(() -> KnightDirection.getDirection(rowDifference, columnDifference))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
 
         @ParameterizedTest
@@ -38,7 +38,7 @@ class KnightDirectionTest {
         void getDirection_WhenOnlyLeftOrRight(int rowDifference, int columnDifference) {
             assertThatThrownBy(() -> KnightDirection.getDirection(rowDifference, columnDifference))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
 
         @ParameterizedTest
@@ -47,7 +47,7 @@ class KnightDirectionTest {
         void getDirection_WhenOtherCase(int rowDifference, int columnDifference) {
             assertThatThrownBy(() -> KnightDirection.getDirection(rowDifference, columnDifference))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("이동할 수 없는 방향입니다.");
+                    .hasMessage("이동할 수 없는 위치입니다.");
         }
     }
 

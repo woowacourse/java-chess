@@ -20,7 +20,7 @@ public enum KnightDirection implements Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.isSameDirection(rowDifference, columnDifference))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 위치입니다."));
     }
 
     @Override
