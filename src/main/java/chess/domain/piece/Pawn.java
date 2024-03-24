@@ -9,7 +9,7 @@ public class Pawn extends Piece {
     private boolean isMoved = false;
 
     public Pawn(Color color) {
-        super(color);
+        super(color, PieceType.PAWN);
     }
 
     private boolean canFirstMove(Position from, Position to) {

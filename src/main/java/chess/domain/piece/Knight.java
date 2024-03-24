@@ -7,7 +7,7 @@ import chess.domain.position.RankDifference;
 public class Knight extends Piece {
 
     public Knight(Color color) {
-        super(color);
+        super(color, PieceType.KNIGHT);
     }
 
     @Override

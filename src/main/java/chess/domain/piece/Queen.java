@@ -7,15 +7,15 @@ import chess.domain.position.RankDifference;
 public class Queen extends Piece {
 
     public Queen(Color color) {
-        super(color);
+        super(color, PieceType.QUEEN);
     }
 
     @Override
     public boolean isMovable(Position from, Position to) {
         FileDifference fileDifference = from.calculateFileDifferenceTo(to);
         RankDifference rankDifference = from.calculateRankDifferenceTo(to);
-        return isVerticalMove(fileDifference,rankDifference)||
-                isHorizontalMove(fileDifference,rankDifference)
+        return isVerticalMove(fileDifference, rankDifference) ||
+                isHorizontalMove(fileDifference, rankDifference)
                 || isDiagonalMove(fileDifference, rankDifference);
     }
 
