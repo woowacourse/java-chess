@@ -26,7 +26,7 @@ public class GeneralMoveState extends MoveState {
         if (destinationPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
         }
-        if (!isAllBlankCourses(path)) {
+        if (isNotBlankPath(path)) {
             throw new IllegalArgumentException("이동할 수 없는 경로 입니다.");
         }
     }

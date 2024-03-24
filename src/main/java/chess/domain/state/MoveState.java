@@ -36,8 +36,8 @@ public abstract class MoveState {
         }
     }
 
-    protected boolean isAllBlankCourses(final Set<Position> path) {
-        return path.stream()
+    protected boolean isNotBlankPath(final Set<Position> path) {
+        return !path.stream()
                 .map(board::get)
                 .allMatch(piece -> piece.pieceType() == PieceType.BLANK);
     }

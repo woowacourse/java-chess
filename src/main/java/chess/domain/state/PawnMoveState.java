@@ -36,7 +36,7 @@ public class PawnMoveState extends MoveState {
 
     private void validatePath(final Position destination, final Pawn currentPiece) {
         final Set<Position> path = currentPiece.findPathTo(destination);
-        if (!isAllBlankCourses(path)) {
+        if (isNotBlankPath(path)) {
             throw new IllegalArgumentException("이동 할 수 없는 위치입니다.");
         }
     }
