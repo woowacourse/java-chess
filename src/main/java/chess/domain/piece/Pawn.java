@@ -13,9 +13,24 @@ public class Pawn extends Piece {
         super(team);
     }
 
+
     @Override
     boolean canNotMoveByItsOwnInPassing(Position start, Position destination) {
-        if (team.isTeamForwardDirectionsContains(Direction.of(start, destination))) {
+        int distance = start.calculateDistance(destination);
+        //폰의 이동 방향이 팀의 전진 방향과 다르다면 이동할 수 없다
+        if (!team.isTeamForwardDirectionsContains(Direction.of(start, destination))) {
+            return true;
+        }
+        //폰은 팀의 수직 전진 방향으로 한 칸 이동할 수 있다
+        if (distance == DEFAULT_MOVE_DISTANCE && start.isOrthogonalWith(destination)) {
+            return false;
+        }
+        //폰은 팀의 수직 전진 방향으로 두 칸 이동할 수 있다
+        if (distance == INITIAL_MOVE_DISTANCE && start.isOrthogonalWith(destination)) {
+            return false;
+        }
+        // 폰은 대각선으로 한 칸 이동할 수 있다
+        if (distance == DEFAULT_MOVE_DISTANCE && start.isDiagonalWith(destination)) {
             return false;
         }
         return true;
@@ -23,21 +38,24 @@ public class Pawn extends Piece {
 
     @Override
     boolean canNotMoveByBoardStatus(Position start, Position destination, ChessBoard chessBoard) {
-        //팀의 전진방향과 맞도록 한칸 움직이는 것은 가능하다
-        if (start.calculateDistance(destination) == DEFAULT_MOVE_DISTANCE && start.isOrthogonalWith(destination)) {
-            return false;
+        int distance = start.calculateDistance(destination);
+        // 폰의 이동 경로에 기물이 있다면 이동할 수 없다
+        if (!chessBoard.isPathClear(start.calculateSlidingPath(destination))) {
+            return true;
         }
-        //폰이 초기위치에 있고 팀의 전진방향과 맞도록 두칸 움직이는 것은 가능 하다
-        if (start.calculateDistance(destination) == INITIAL_MOVE_DISTANCE && start.isOrthogonalWith(destination)
-                && team.isPositionOnTeamInitialPawnRank(start)) {
-            return false;
+        // 폰이 수직으로 이동했고 도착지에 기물이 있다면 이동할 수 없다
+        if (!chessBoard.positionIsEmpty(destination) && start.isOrthogonalWith(destination)) {
+            return true;
         }
-        //팀의 전진방향과 맞고 대각선으로 1칸 움직일 때 목적지에 적이 있으면 움직일 수 있다
-        if (start.calculateDistance(destination) == KILL_PASSING_DISTANCE && start.isDiagonalWith(destination)
-                && !chessBoard.positionIsEmpty(destination)
-                && chessBoard.findPieceByPosition(destination).isOtherTeam(this)) {
-            return false;
+        // 폰이 두칸 수직으로 이동할 때 초기 위치에서 움직이지 않았다면 이동할 수 없다
+        if (distance == INITIAL_MOVE_DISTANCE) {
+            return !team.isPositionOnTeamInitialPawnRank(start);
         }
-        return true;
+        // 다른 팀의 기물이 목적지에 존재하지 않을 경우 폰은 대각선으로 이동할 수 없다.
+        if (distance == DEFAULT_MOVE_DISTANCE && start.isDiagonalWith(destination)) {
+            return chessBoard.positionIsEmpty(destination) || !chessBoard.findPieceByPosition(destination)
+                    .isOtherTeam(this);
+        }
+        return false;
     }
 }
