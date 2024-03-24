@@ -1,14 +1,22 @@
 package chess.model.piece;
 
 import static chess.model.Fixtures.D1;
+import static chess.model.Fixtures.D4;
 import static chess.model.Fixtures.D5;
-import static chess.model.Fixtures.H1;
-import static chess.model.material.Color.BLACK;
+import static chess.model.Fixtures.E1;
+import static chess.model.Fixtures.E4;
+import static chess.model.Fixtures.E5;
+import static chess.model.Fixtures.EMPTY_PIECES;
+import static chess.model.Fixtures.F6;
+import static chess.model.Fixtures.G2;
+import static chess.model.Fixtures.H4;
+import static chess.model.material.Color.WHITE;
 import static chess.model.material.Type.ROOK;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.model.position.Position;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,19 +24,60 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class RookTest {
 
+    /*
+    ........
+    ........
+    ........
+    ....*...
+    ...*r..*
+    ........
+    ........
+    ....*...
+     */
     @DisplayName("Rook이 상하좌우 이동이면 움직일 수 있다")
     @ParameterizedTest
-    @MethodSource("provideSourceAndTargetWithExpected")
-    void rookCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Rook(ROOK, BLACK);
-        boolean canMove = piece.canMove(source, target);
-        Assertions.assertThat(canMove).isEqualTo(expected);
+    @MethodSource("provideValidSourceAndTarget")
+    void rookCanMove(Position source, Position target) {
+        Piece piece = new Rook(ROOK, WHITE);
+        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+            .doesNotThrowAnyException();
     }
 
-    public static Stream<Arguments> provideSourceAndTargetWithExpected() {
+    public static Stream<Arguments> provideValidSourceAndTarget() {
         return Stream.of(
-            Arguments.of(D5, D1, true),
-            Arguments.of(D5, H1, false)
+            Arguments.of(E4, D4),
+            Arguments.of(E4, E5),
+            Arguments.of(E4, E1),
+            Arguments.of(E4, H4)
+        );
+    }
+
+    /*
+    ........
+    ........
+    .....*..
+    ...*....
+    ....r...
+    ........
+    ......*.
+    ...*....
+    */
+    @DisplayName("Rook이 상하좌우 이동이 아니면 예외가 발생한다")
+    @ParameterizedTest
+    @MethodSource("provideInvalidSourceAndTarget")
+    void rookCanNotMove(Position source, Position target) {
+        Piece piece = new Rook(ROOK, WHITE);
+        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Rook은 상하좌우 이동만 가능합니다.");
+    }
+
+    public static Stream<Arguments> provideInvalidSourceAndTarget() {
+        return Stream.of(
+            Arguments.of(E4, D5),
+            Arguments.of(E4, D1),
+            Arguments.of(E4, F6),
+            Arguments.of(E4, G2)
         );
     }
 }

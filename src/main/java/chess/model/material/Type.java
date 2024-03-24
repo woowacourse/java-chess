@@ -33,12 +33,4 @@ public enum Type {
     public boolean isNone() {
         return this == NONE;
     }
-
-    public boolean isPawn() {
-        return this == PAWN;
-    }
-
-    public boolean isKnight() {
-        return this == KNIGHT;
-    }
 }

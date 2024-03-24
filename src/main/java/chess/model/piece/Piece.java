@@ -1,8 +1,12 @@
 package chess.model.piece;
 
+import static chess.model.material.Color.NONE;
+
+import chess.model.Route;
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.position.Position;
+import java.util.Map;
 
 public abstract class Piece implements MoveStrategy {
 
@@ -36,44 +40,42 @@ public abstract class Piece implements MoveStrategy {
         return new None(type, color);
     }
 
-    protected final int calculateRowDifference(Position source, Position target) {
-        return target.getRow().getIndex() - source.getRow().getIndex();
+    protected void validateRoute(Position source, Position target, Map<Position, Piece> pieces) {
+        Route route = Route.of(source, target);
+        if (route.isBlocked(pieces)) {
+            throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
+        }
     }
 
-    protected final int calculateColumnDifference(Position source, Position target) {
-        return target.getColumn().getIndex() - source.getColumn().getIndex();
-    }
-
-    public boolean isEnemy(int turnCount) {
+    public boolean isEnemyTurn(int turnCount) {
         return color.isDifferentColor(turnCount);
     }
 
-    public boolean isAlly(int turnCount) {
-        return color.isSameColor(turnCount);
+    public boolean isEnemy(Piece piece) {
+        return piece.isDifferentColor(color) && piece.isDifferentColor(NONE);
     }
 
-    public boolean isExist() {
-        return type.isNotNone();
+    public boolean isAlly(Piece piece) {
+        return piece.isSameColor(color);
     }
 
-    public boolean isNone() {
-        return type.isNone();
+    private boolean isDifferentColor(Color color) {
+        return this.color != color;
     }
 
-    public boolean isPawn() {
-        return type.isPawn();
-    }
-
-    public boolean isKnight() {
-        return type.isKnight();
+    public boolean isSameColor(Color color) {
+        return this.color == color;
     }
 
     public boolean isSameType(Type type) {
         return this.type == type;
     }
 
+    public boolean isNone() {
+        return type.isNone();
+    }
 
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    public boolean isExist() {
+        return type.isNotNone();
     }
 }

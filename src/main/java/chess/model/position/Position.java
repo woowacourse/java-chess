@@ -25,6 +25,20 @@ public class Position {
         return new Position(column, row);
     }
 
+    public int calculateColumnOffSet(Position target) {
+        Column targetColumn = target.column;
+        return targetColumn.getIndex() - column.getIndex();
+    }
+
+    public int calculateRowOffSet(Position target) {
+        Row targetRow = target.row;
+        return targetRow.getIndex() - row.getIndex();
+    }
+
+    public boolean isSameRow(Row row) {
+        return this.row == row;
+    }
+
     public Column getColumn() {
         return column;
     }
@@ -48,5 +62,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    @Override
+    public String toString() {
+        return column.toString() + row.toString();
     }
 }

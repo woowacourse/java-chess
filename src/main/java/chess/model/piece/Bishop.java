@@ -9,17 +9,30 @@ import chess.model.Direction;
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.position.Position;
+import java.util.List;
+import java.util.Map;
 
 public class Bishop extends Piece {
+
+    private static final List<Direction> DIRECTIONS = List.of(
+        UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
+    );
 
     public Bishop(Type type, Color color) {
         super(type, color);
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public void move(Position source, Position target, Map<Position, Piece> pieces) {
+        validateDirection(source, target);
+        validateRoute(source, target, pieces);
+    }
+
+    public void validateDirection(Position source, Position target) {
         Direction direction = Direction.findDirection(source, target);
-        return direction == UP_LEFT || direction == DOWN_LEFT || direction == UP_RIGHT
-            || direction == DOWN_RIGHT;
+        if (DIRECTIONS.contains(direction)) {
+            return;
+        }
+        throw new IllegalArgumentException("Bishop은 대각선 이동만 가능합니다.");
     }
 }

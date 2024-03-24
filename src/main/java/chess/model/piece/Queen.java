@@ -13,20 +13,31 @@ import chess.model.Direction;
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.position.Position;
+import java.util.List;
+import java.util.Map;
 
 public class Queen extends Piece {
+
+    private static final List<Direction> DIRECTIONS = List.of(
+        UP, DOWN, LEFT, RIGHT,
+        UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
+    );
 
     public Queen(Type type, Color color) {
         super(type, color);
     }
 
     @Override
-    public boolean canMove(Position source, Position target) {
+    public void move(Position source, Position target, Map<Position, Piece> pieces) {
+        validateDirection(source, target);
+        validateRoute(source, target, pieces);
+    }
+
+    public void validateDirection(Position source, Position target) {
         Direction direction = Direction.findDirection(source, target);
-        if (direction == UP_LEFT || direction == DOWN_LEFT || direction == UP_RIGHT
-            || direction == DOWN_RIGHT) {
-            return true;
+        if (DIRECTIONS.contains(direction)) {
+            return;
         }
-        return direction == UP || direction == DOWN || direction == LEFT || direction == RIGHT;
+        throw new IllegalArgumentException("Queen은 상하좌우 대각선 이동만 가능합니다.");
     }
 }

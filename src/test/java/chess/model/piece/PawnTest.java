@@ -1,113 +1,191 @@
 package chess.model.piece;
 
-import static chess.model.Fixtures.A2;
-import static chess.model.Fixtures.A3;
-import static chess.model.Fixtures.A6;
-import static chess.model.Fixtures.A7;
-import static chess.model.Fixtures.A8;
-import static chess.model.Fixtures.B3;
-import static chess.model.Fixtures.B5;
-import static chess.model.Fixtures.B7;
-import static chess.model.Fixtures.C6;
-import static chess.model.Fixtures.G1;
-import static chess.model.Fixtures.G2;
+import static chess.model.Fixtures.B4;
+import static chess.model.Fixtures.C2;
+import static chess.model.Fixtures.C3;
+import static chess.model.Fixtures.C4;
+import static chess.model.Fixtures.C5;
+import static chess.model.Fixtures.D2;
+import static chess.model.Fixtures.D3;
+import static chess.model.Fixtures.EMPTY_PIECES;
+import static chess.model.Fixtures.F6;
+import static chess.model.Fixtures.F7;
 import static chess.model.Fixtures.G4;
-import static chess.model.Fixtures.H1;
-import static chess.model.Fixtures.H2;
-import static chess.model.Fixtures.H7;
-import static chess.model.Fixtures.H8;
+import static chess.model.Fixtures.G5;
+import static chess.model.Fixtures.G6;
+import static chess.model.Fixtures.G7;
+import static chess.model.Fixtures.G8;
+import static chess.model.Fixtures.H6;
+import static chess.model.Fixtures.initiation;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
+import static chess.model.material.Type.KNIGHT;
 import static chess.model.material.Type.PAWN;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.model.material.Color;
 import chess.model.position.Position;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
 
-    @DisplayName("Black Pawn이 전진 1칸 이동이면 canMove true를 반환하고, 아니면 false를 반환한다")
+    /*
+        ........
+        ......P.
+        ......*.
+        ........
+        ..*.....
+        ..p.....
+        ........
+        ........
+         */
+    @DisplayName("전진 1칸 이동이면 움직일 수 있다")
     @ParameterizedTest
-    @MethodSource("provideBlackPawnSourceAndTargetWithExpected")
-    void blackPawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(PAWN, BLACK);
-        boolean canMove = piece.canMove(source, target);
-        assertThat(canMove).isEqualTo(expected);
+    @MethodSource("provideSingleMoveWithColor")
+    void pawnCanSingleMove(Position source, Position target, Color color) {
+        Piece piece = new Pawn(PAWN, color);
+        EMPTY_PIECES.put(source, piece);
+        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+            .doesNotThrowAnyException();
     }
 
-    public static Stream<Arguments> provideBlackPawnSourceAndTargetWithExpected() {
+    public static Stream<Arguments> provideSingleMoveWithColor() {
         return Stream.of(
-            Arguments.of(A7, A6, true),
-            Arguments.of(H7, H8, false)
+            Arguments.of(C3, C4, WHITE),
+            Arguments.of(G7, G6, BLACK)
         );
     }
 
-    @DisplayName("White Pawn이 전진 1칸 이동이면 canMove true를 반환하고, 아니면 false를 반환한다")
+    /*
+    ........
+    ......P.
+    ........
+    ......*.
+    ..*.....
+    ........
+    ..p.....
+    ........
+    */
+    @DisplayName("최초 2칸 전진 이동이면 이동할 수 있다")
     @ParameterizedTest
-    @MethodSource("provideWhitePawnSourceAndTargetWithExpected")
-    void whitePawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(PAWN, WHITE);
-        boolean canMove = piece.canMove(source, target);
-        assertThat(canMove).isEqualTo(expected);
+    @MethodSource("provideDoubleMoveWithColor")
+    void pawnCanDoubleMove(Position source, Position target, Color color) {
+        Piece piece = new Pawn(PAWN, color);
+        EMPTY_PIECES.put(source, piece);
+        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+            .doesNotThrowAnyException();
     }
 
-    public static Stream<Arguments> provideWhitePawnSourceAndTargetWithExpected() {
+    public static Stream<Arguments> provideDoubleMoveWithColor() {
         return Stream.of(
-            Arguments.of(A2, A3, true),
-            Arguments.of(G1, H1, false)
+            Arguments.of(C2, C4, WHITE),
+            Arguments.of(G7, G5, BLACK)
         );
     }
 
-    @DisplayName("White Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
-    @Test
-    void whitePawnCanInitialMove() {
-        Piece piece = new Pawn(PAWN, WHITE);
-        boolean canMove = piece.canMove(G2, G4);
-        assertThat(canMove).isTrue();
-    }
-
-    @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 움직일 수 있다")
-    @Test
-    void blackPawnCanInitialMove() {
-        Piece piece = new Pawn(PAWN, BLACK);
-        boolean canMove = piece.canMove(B7, B5);
-        assertThat(canMove).isTrue();
-    }
-
-    @DisplayName("White Pawn이 전방 대각선 1칸 공격이면 움직일 수 있다")
+    /*
+    ......*.
+    .....*P.
+    .......*
+    ..*.....
+    .*....*.
+    ..p*....
+    ..*.....
+    ........
+    */
+    @DisplayName("전진 1칸 이동 혹은 최초 2칸 이동이 아니면 예외가 발생한다")
     @ParameterizedTest
-    @MethodSource("provideWhitePawnAttackMovePosition")
-    void whitePawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Pawn piece = new Pawn(PAWN, WHITE);
-        boolean canMove = piece.canAttack(source, target);
-        assertThat(canMove).isEqualTo(expected);
+    @MethodSource("provideInvalidMoveWithColor")
+    void kingCanNotMove(Position source, Position target, Color color) {
+        Piece piece = new Pawn(PAWN, color);
+        EMPTY_PIECES.put(source, piece);
+        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Pawn은 1칸 전진 이동 혹은 최초 2칸 전진 이동만 가능합니다.");
     }
 
-    public static Stream<Arguments> provideWhitePawnAttackMovePosition() {
+    public static Stream<Arguments> provideInvalidMoveWithColor() {
         return Stream.of(
-            Arguments.of(A2, B3, true),
-            Arguments.of(H2, G1, false)
+            Arguments.of(C3, B4, WHITE),
+            Arguments.of(C3, C5, WHITE),
+            Arguments.of(C3, C2, WHITE),
+            Arguments.of(C3, D3, WHITE),
+            Arguments.of(G7, F7, BLACK),
+            Arguments.of(G7, G8, BLACK),
+            Arguments.of(G7, G4, BLACK),
+            Arguments.of(G7, H6, BLACK)
         );
     }
 
-    @DisplayName("Black Pawn이 전방 대각선 1칸 공격이면 움직일 수 있다")
+    /*
+    ........
+    ......P.
+    .....n..
+    ........
+    .N......
+    ..p.....
+    ........
+    ........
+    */
+    @DisplayName("전방 대각선 1칸 공격이면 이동할 수 있다")
     @ParameterizedTest
-    @MethodSource("provideBlackPawnAttackMovePosition")
-    void blackPawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Pawn piece = new Pawn(PAWN, BLACK);
-        boolean canMove = piece.canAttack(source, target);
-        assertThat(canMove).isEqualTo(expected);
+    @MethodSource("provideAttackMoveWithColor")
+    void pawnCanAttackMove(Position source, Position target, Color color) {
+        Piece piece = Pawn.of(PAWN, color);
+        EMPTY_PIECES.put(source, piece);
+        EMPTY_PIECES.put(B4, Piece.of(KNIGHT, BLACK));
+        EMPTY_PIECES.put(F6, Piece.of(KNIGHT, WHITE));
+
+        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+            .doesNotThrowAnyException();
     }
 
-    public static Stream<Arguments> provideBlackPawnAttackMovePosition() {
+    public static Stream<Arguments> provideAttackMoveWithColor() {
         return Stream.of(
-            Arguments.of(B7, C6, true),
-            Arguments.of(B7, A8, false)
+            Arguments.of(C3, B4, WHITE),
+            Arguments.of(G7, F6, BLACK)
         );
+    }
+
+    /*
+    ........
+    ......P.
+    ......n.
+    ........
+    ........
+    ..p.....
+    ...N....
+    ........
+    */
+    @DisplayName("전방 대각선 1칸 공격이 아니면 예외가 발생한다")
+    @ParameterizedTest
+    @MethodSource("provideInvalidAttackMoveWithColor")
+    void pawnCanNotAttackMove(Position source, Position target, Color color) {
+        Piece piece = Pawn.of(PAWN, color);
+        EMPTY_PIECES.put(source, piece);
+        EMPTY_PIECES.put(D2, Piece.of(KNIGHT, BLACK));
+        EMPTY_PIECES.put(G6, Piece.of(KNIGHT, WHITE));
+
+        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");
+    }
+
+    public static Stream<Arguments> provideInvalidAttackMoveWithColor() {
+        return Stream.of(
+            Arguments.of(C3, D2, WHITE),
+            Arguments.of(G7, G6, BLACK)
+        );
+    }
+
+    @AfterEach
+    void afterEach() {
+        EMPTY_PIECES = initiation();
     }
 }

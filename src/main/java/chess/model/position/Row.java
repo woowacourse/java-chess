@@ -1,20 +1,22 @@
 package chess.model.position;
 
 public enum Row {
-    EIGHT(0),
-    SEVEN(1),
-    SIX(2),
-    FIVE(3),
-    FOUR(4),
-    THREE(5),
-    TWO(6),
-    ONE(7);
+    EIGHT("8", 0),
+    SEVEN("7", 1),
+    SIX("6", 2),
+    FIVE("5", 3),
+    FOUR("4", 4),
+    THREE("3", 5),
+    TWO("2", 6),
+    ONE("1", 7);
 
     private static final char START_ROW = '8';
 
+    private final String displayName;
     private final int index;
 
-    Row(int index) {
+    Row(String displayName, int index) {
+        this.displayName = displayName;
         this.index = index;
     }
 
@@ -37,5 +39,10 @@ public enum Row {
 
     public int getIndex() {
         return index;
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
