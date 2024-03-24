@@ -5,7 +5,6 @@ import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
-    private static final int KILL_PASSING_DISTANCE = 1;
     private static final int DEFAULT_MOVE_DISTANCE = 1;
     private static final int INITIAL_MOVE_DISTANCE = 2;
 
