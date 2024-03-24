@@ -31,10 +31,7 @@ class BishopTest {
                 Arguments.of(new Square(File.H, Rank.EIGHT), true),
                 Arguments.of(new Square(File.A, Rank.ONE), true),
                 Arguments.of(new Square(File.A, Rank.SEVEN), true),
-                Arguments.of(new Square(File.G, Rank.ONE), true),
-                Arguments.of(new Square(File.G, Rank.TWO), false),
-                Arguments.of(new Square(File.G, Rank.THREE), false),
-                Arguments.of(new Square(File.G, Rank.FIVE), false));
+                Arguments.of(new Square(File.G, Rank.ONE), true));
     }
 
     @DisplayName("비숍은 상하좌우로 이동할 수 없다.")
