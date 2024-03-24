@@ -1,7 +1,5 @@
 package view.util;
 
-import java.util.Arrays;
-
 public enum Command {
 
     START("start"),
@@ -14,10 +12,15 @@ public enum Command {
         this.identifier = identifier;
     }
 
-    public static Command from(String identifier) {
-        return Arrays.stream(values())
-                .filter(command -> command.identifier.equals(identifier))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당되는 식별자가 존재하지 않습니다."));
+    public static boolean isStartCommand(String identifier) {
+        return START.identifier.equals(identifier);
+    }
+
+    public static boolean isMoveCommand(String identifier) {
+        return MOVE.identifier.equals(identifier);
+    }
+
+    public static boolean isEndCommand(String identifier) {
+        return END.identifier.equals(identifier);
     }
 }

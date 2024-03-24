@@ -10,30 +10,30 @@ import domain.piece.Pawn;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.base.ChessPiece;
-import domain.position.Column;
-import domain.position.Row;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoardInitializer {
 
-    private static final int BLACK_FIRST_RANK = 8;
-    private static final int BLACK_SECOND_RANK = 7;
-    private static final int WHITE_FIRST_RANK = 1;
-    private static final int WHITE_SECOND_RANK = 2;
-    private static final int CHESS_BOARD_SIZE = 9;
+    private static final String BLACK_FIRST_RANK = "8";
+    private static final String BLACK_SECOND_RANK = "7";
+    private static final String WHITE_FIRST_RANK = "1";
+    private static final String WHITE_SECOND_RANK = "2";
+    private static final String CHESS_BOARD_COLUMNS = "abcdefgh";
 
     public static Map<Coordinate, ChessPiece> createInitialBoard() {
         Map<Coordinate, ChessPiece> board = new HashMap<>();
 
-        for (int i = 1; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_FIRST_RANK), new Column(i)), createFirstRank(Color.BLACK).get(i));
-            board.put(new Coordinate(new Row(WHITE_FIRST_RANK), new Column(i)), createFirstRank(Color.WHITE).get(i));
+        for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_FIRST_RANK),
+                    createFirstRank(Color.BLACK).get(i));
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_FIRST_RANK),
+                    createFirstRank(Color.WHITE).get(i));
         }
-        for (int i = 1; i < CHESS_BOARD_SIZE; i++) {
-            board.put(new Coordinate(new Row(BLACK_SECOND_RANK), new Column(i)), new Pawn(Color.BLACK));
-            board.put(new Coordinate(new Row(WHITE_SECOND_RANK), new Column(i)), new Pawn(Color.WHITE));
+        for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_SECOND_RANK), new Pawn(Color.BLACK));
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_SECOND_RANK), new Pawn(Color.WHITE));
         }
         return board;
     }

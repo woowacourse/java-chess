@@ -22,7 +22,7 @@ public enum ColumnSymbol {
 
     public static ColumnSymbol from(String identifier) {
         return Arrays.stream(ColumnSymbol.values())
-                .filter(columnSymbol -> identifier.equals(columnSymbol.identifier))
+                .filter(columnSymbol -> identifier.toLowerCase().equals(columnSymbol.identifier))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하는 식별자가 아닙니다."));
     }

@@ -2,14 +2,12 @@ package view;
 
 import domain.coordinate.Coordinate;
 import domain.piece.base.ChessPiece;
-import domain.position.Column;
-import domain.position.Row;
 import java.util.Map;
 import view.util.PieceTranslator;
 
 public class OutputView {
 
-    private static final int CHESS_BOARD_SIZE = 9;
+    private static final String CHESS_BOARD_COLUMNS = "abcdefgh";
 
     public void printGameGuide() {
         System.out.print("""
@@ -22,14 +20,14 @@ public class OutputView {
 
     public void printBoard(Map<Coordinate, ChessPiece> board) {
         for (int row = 8; row > 0; row--) {
-            printRow(board, row);
+            printRow(board, String.valueOf(row));
             System.out.println();
         }
     }
 
-    private void printRow(Map<Coordinate, ChessPiece> board, int row) {
-        for (int column = 1; column < CHESS_BOARD_SIZE; column++) {
-            Coordinate coordinate = new Coordinate(new Row(row), new Column(column));
+    private void printRow(Map<Coordinate, ChessPiece> board, String row) {
+        for (String column : CHESS_BOARD_COLUMNS.split("")) {
+            Coordinate coordinate = Coordinate.from(column + row);
             ChessPiece piece = board.get(coordinate);
             System.out.print(PieceTranslator.getName(piece));
         }

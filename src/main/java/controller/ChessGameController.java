@@ -3,12 +3,9 @@ package controller;
 import domain.chessboard.ChessBoard;
 import domain.coordinate.Coordinate;
 import domain.piece.Color;
-import domain.position.Column;
-import domain.position.Row;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
-import view.dto.Commands;
-import view.dto.CoordinateRequest;
 import view.util.Command;
 
 public class ChessGameController {
@@ -33,12 +30,11 @@ public class ChessGameController {
     }
 
     private ChessBoard initializeBoard() {
-        Commands commands = inputView.receiveCommands();
-
-        if (Command.START != commands.command()) {
-            throw new IllegalArgumentException("게임을 먼저 시작하세요.");
+        List<String> commands = inputView.receiveCommands();
+        if (Command.isStartCommand(commands.get(0))) {
+            return new ChessBoard();
         }
-        return new ChessBoard();
+        throw new IllegalArgumentException("게임을 먼저 시작하세요.");
     }
 
     private void startGame(ChessBoard chessBoard) {
@@ -59,9 +55,9 @@ public class ChessGameController {
     }
 
     private boolean playGame(ChessBoard chessBoard, Color currentTurn) {
-        Commands commands = inputView.receiveCommands();
+        List<String> commands = inputView.receiveCommands();
 
-        if (isCommandMove(commands)) {
+        if (isCommandMove(commands.get(0))) {
             move(chessBoard, currentTurn, commands);
             outputView.printBoard(chessBoard.getBoard());
             return true;
@@ -69,24 +65,20 @@ public class ChessGameController {
         return false;
     }
 
-    private static boolean isCommandMove(Commands commands) {
-        if (commands.command() == Command.END) {
+    private static boolean isCommandMove(String commandIdentifier) {
+        if (Command.isEndCommand(commandIdentifier)) {
             return false;
         }
-        if (commands.command() == Command.START) {
+        if (Command.isStartCommand(commandIdentifier)) {
             throw new IllegalArgumentException("이미 시작한 상태 입니다.");
         }
         return true;
     }
 
-    private void move(ChessBoard chessBoard, Color currentTurn, Commands commands) {
-        Coordinate start = createCoordinate(commands.startCoordinate());
-        Coordinate destination = createCoordinate(commands.destinationCoordinate());
+    private void move(ChessBoard chessBoard, Color currentTurn, List<String> commands) {
+        Coordinate start = Coordinate.from(commands.get(1));
+        Coordinate destination = Coordinate.from(commands.get(2));
 
         chessBoard.playTurn(start, destination, currentTurn);
-    }
-
-    private Coordinate createCoordinate(CoordinateRequest coordinateRequest) {
-        return new Coordinate(new Row(coordinateRequest.row()), new Column(coordinateRequest.column()));
     }
 }

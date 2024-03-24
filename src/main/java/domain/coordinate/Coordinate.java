@@ -10,7 +10,7 @@ public class Coordinate {
     private final Column column;
     private final Row row;
 
-    public Coordinate(Row row, Column column) {
+    private Coordinate(Row row, Column column) {
         this.row = row;
         this.column = column;
     }

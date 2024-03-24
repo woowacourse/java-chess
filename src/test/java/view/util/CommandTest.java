@@ -1,24 +1,26 @@
 package view.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CommandTest {
 
-    @DisplayName("동일한 식별자가 있는지 확인한다.")
+    @DisplayName("START 커멘드의 식별자와 일치하는지 확인한다.")
     @Test
-    void isSameIdentifier() {
-        assertThat(Command.from("start")).isEqualTo(Command.START);
+    void isStartCommand() {
+        Assertions.assertThat(Command.isStartCommand("start")).isTrue();
     }
 
-    @DisplayName("동일한 식별자가 존재하지 않는다.")
+    @DisplayName("MOVE 커멘드의 식별자와 일치하는지 확인한다.")
     @Test
-    void isNotSameIdentifier() {
-        assertThatThrownBy(() -> Command.from("pola"))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당되는 식별자가 존재하지 않습니다.");
+    void isMoveCommand() {
+        Assertions.assertThat(Command.isMoveCommand("move")).isTrue();
+    }
+
+    @DisplayName("END 커멘드의 식별자와 일치하는지 확인한다.")
+    @Test
+    void isEndCommand() {
+        Assertions.assertThat(Command.isEndCommand("end")).isTrue();
     }
 }

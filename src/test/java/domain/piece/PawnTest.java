@@ -1,8 +1,6 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
-import domain.position.Column;
-import domain.position.Row;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +11,8 @@ class PawnTest {
     @DisplayName("폰의 움직임 방향을 가져온다")
     @Test
     void getPawnDirection() {
-        Coordinate coordinate = new Coordinate(new Row(7), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(6), new Column(1));
+        Coordinate coordinate = Coordinate.from("A7");
+        Coordinate nextCoordinate = Coordinate.from("A6");
 
         Pawn pawn = new Pawn(Color.BLACK);
 
@@ -24,8 +22,8 @@ class PawnTest {
     @DisplayName("폰이 첫 움직임이 아닐경우 2칸을 이동할 수 없다.")
     @Test
     void cantMoveTwoWhenNotInitial() {
-        Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(4), new Column(1));
+        Coordinate coordinate = Coordinate.from("A2");
+        Coordinate nextCoordinate = Coordinate.from("A4");
 
         Pawn pawn = new Pawn(Color.BLACK);
 
@@ -37,8 +35,8 @@ class PawnTest {
     @DisplayName("폰이 공격이 가능한 상태라면 대각선으로도 갈 수 있다.")
     @Test
     void canMoveDiagonalWhenCanAttack() {
-        Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(3), new Column(2));
+        Coordinate coordinate = Coordinate.from("a2");
+        Coordinate nextCoordinate = Coordinate.from("b3");
 
         Pawn pawn = new Pawn(Color.WHITE);
 
@@ -49,8 +47,8 @@ class PawnTest {
     @DisplayName("폰이 공격이 가능한 상태가 아니라면 대각선으로 갈 수 없다.")
     @Test
     void canNotMoveDiagonalWhenNotAttack() {
-        Coordinate coordinate = new Coordinate(new Row(2), new Column(1));
-        Coordinate nextCoordinate = new Coordinate(new Row(1), new Column(2));
+        Coordinate coordinate = Coordinate.from("a2");
+        Coordinate nextCoordinate = Coordinate.from("b1");
 
         Pawn pawn = new Pawn(Color.WHITE);
 

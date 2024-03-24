@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
-import view.dto.Commands;
 
 public class InputView {
 
@@ -12,8 +11,8 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public Commands receiveCommands() {
-        return new Commands(splitCommand(scanner.nextLine()));
+    public List<String> receiveCommands() {
+        return splitCommand(scanner.nextLine());
     }
 
     private List<String> splitCommand(String input) {
