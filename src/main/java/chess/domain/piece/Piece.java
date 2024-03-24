@@ -24,7 +24,7 @@ public abstract class Piece {
         return color == other.color;
     }
 
-    protected Square locateSquare() {
+    protected Square currentSquare() {
         return square;
     }
 
@@ -37,17 +37,21 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(final Object object) {
+    public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        return object instanceof Piece other
-                && color == other.color
-                && pieceType == other.pieceType;
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) object;
+        return getColor() == piece.getColor()
+                && getPieceType() == piece.getPieceType()
+                && Objects.equals(square, piece.square);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, pieceType);
+        return Objects.hash(getColor(), getPieceType(), square);
     }
 }
