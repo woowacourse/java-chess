@@ -7,6 +7,8 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
+import static chess.domain.piece.Team.BLACK;
+import static chess.domain.piece.Team.WHITE;
 import static chess.domain.position.Direction.*;
 
 public class Pawn extends Piece {
@@ -36,7 +38,7 @@ public class Pawn extends Piece {
     private boolean isFirstFowardPassing(Position start, Position destination, ChessBoard board) {
         return isForward(start, destination)
                 && start.squaredDistanceWith(destination) == FIRST_FORWADING_SQUARED_DISTANCE
-                && start.rowIs(teamInitialPawnRow())
+                && isInitialPawnRow(start)
                 && board.pathIsAllEmpty(start.findPath(destination));
     }
 
@@ -48,7 +50,17 @@ public class Pawn extends Piece {
                 && board.piecesIsOtherTeam(start, destination);
     }
 
+    private boolean isInitialPawnRow(Position start) {
+        if (isBlackTeam()) {
+            return start.rowIs(BLACK.getInitialPawnRow());
+        }
+        return start.rowIs(WHITE.getInitialPawnRow());
+    }
+
     private boolean isForward(Position start, Position destination) {
-        return DirectionJudge.judge(start, destination) == teamForwardDirection();
+        if (isBlackTeam()) {
+            return BLACK.getDirection() == DirectionJudge.judge(start, destination);
+        }
+        return WHITE.getDirection() == DirectionJudge.judge(start, destination);
     }
 }
