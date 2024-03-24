@@ -17,7 +17,8 @@ public class ChessController {
 
         while (InputView.hasNextMove()) {
             Positions positions = InputView.inputPositions();
-            Map<Position, Character> chessBoard = chessGame.movePiece(positions, OutputView::printCheck);
+            Map<Position, Character> chessBoard = chessGame.movePiece(positions);
+            OutputView.printCheck(chessGame.findCheck());
             OutputView.printChessBoard(chessBoard);
         }
     }

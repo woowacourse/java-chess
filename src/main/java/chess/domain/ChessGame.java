@@ -4,7 +4,6 @@ import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class ChessGame {
     private final Board board;
@@ -15,18 +14,17 @@ public class ChessGame {
         this.currentTeam = Team.WHITE;
     }
 
-    public Map<Position, Character> movePiece(Positions positions, Consumer<CheckState> printCheck) {
+    public Map<Position, Character> movePiece(Positions positions) {
         board.validateSameTeamByPosition(positions.source(), currentTeam);
         board.move(positions);
-        printCheck.accept(validateCheck());
         currentTeam = currentTeam.opponent();
         return board.mapPositionToCharacter();
     }
 
-    private CheckState validateCheck() {
-        if (board.findCheckState(currentTeam) != CheckState.SAFE) {
+    public CheckState findCheck() {
+        if (board.findCheckState(currentTeam.opponent()) != CheckState.SAFE) {
             throw new IllegalArgumentException("체크 상태를 벗어나지 않았습니다.");
         }
-        return board.findCheckState(currentTeam.opponent());
+        return board.findCheckState(currentTeam);
     }
 }
