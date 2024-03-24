@@ -15,7 +15,7 @@ public class InputView {
         System.out.println("> 게임 이동 : %s source위치 target위치 - 예. %s b2 b3"
                 .formatted(Command.MOVE.getValue(), Command.MOVE.getValue()));
 
-        String commandValue = SCANNER.nextLine();
+        String commandValue = SCANNER.next();
         if (Command.START != Command.find(commandValue)) {
             throw new IllegalArgumentException("게임 시작 전, 다른 명령어를 입력할 수 없습니다.");
         }
