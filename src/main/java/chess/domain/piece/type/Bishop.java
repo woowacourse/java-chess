@@ -15,12 +15,8 @@ public class Bishop extends Piece {
 
     @Override
     public Set<Position> getRoute(final Movement movement) {
-        if (movement.isDiagonalRightUp()) {
-            return RouteCalculator.getRightDiagonalMiddlePositions(movement);
-        }
-
-        if (movement.isDiagonalLeftUp()) {
-            return RouteCalculator.getLeftDiagonalMiddlePositions(movement);
+        if (movement.isDiagonal()) {
+            return RouteCalculator.getDiagonalPositions(movement);
         }
 
         throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");

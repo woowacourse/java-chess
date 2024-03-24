@@ -16,11 +16,11 @@ public class Rook extends Piece {
     @Override
     public Set<Position> getRoute(final Movement movement) {
         if (movement.isVertical()) {
-            return RouteCalculator.getVerticalMiddlePositions(movement);
+            return RouteCalculator.getVerticalPositions(movement);
         }
 
         if (movement.isHorizontal()) {
-            return RouteCalculator.getHorizontalMiddlePositions(movement);
+            return RouteCalculator.getHorizontalPositions(movement);
         }
 
         throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");

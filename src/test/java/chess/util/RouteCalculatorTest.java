@@ -19,7 +19,7 @@ class RouteCalculatorTest {
         final Movement movement = new Movement(new Position(File.F, Rank.EIGHT), new Position(File.F, Rank.ONE));
 
         // when
-        final Set<Position> positions = RouteCalculator.getVerticalMiddlePositions(movement);
+        final Set<Position> positions = RouteCalculator.getVerticalPositions(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -39,7 +39,7 @@ class RouteCalculatorTest {
         final Movement movement = new Movement(new Position(File.H, Rank.FOUR), new Position(File.D, Rank.FOUR));
 
         // when
-        final Set<Position> positions = RouteCalculator.getHorizontalMiddlePositions(movement);
+        final Set<Position> positions = RouteCalculator.getHorizontalPositions(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -56,7 +56,7 @@ class RouteCalculatorTest {
         final Movement movement = new Movement(new Position(File.C, Rank.THREE), new Position(File.F, Rank.SIX));
 
         // when
-        final Set<Position> positions = RouteCalculator.getRightDiagonalMiddlePositions(movement);
+        final Set<Position> positions = RouteCalculator.getDiagonalPositions(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(
@@ -72,7 +72,7 @@ class RouteCalculatorTest {
         final Movement movement = new Movement(new Position(File.B, Rank.SIX), new Position(File.E, Rank.THREE));
 
         // when
-        final Set<Position> positions = RouteCalculator.getLeftDiagonalMiddlePositions(movement);
+        final Set<Position> positions = RouteCalculator.getDiagonalPositions(movement);
 
         // then
         assertThat(positions).containsExactlyInAnyOrder(

@@ -26,7 +26,7 @@ public class Pawn extends Piece {
     @Override
     public Set<Position> getRoute(final Movement movement) {
         if (canMove(movement)) {
-            return RouteCalculator.getVerticalMiddlePositions(movement);
+            return RouteCalculator.getVerticalPositions(movement);
         }
 
         throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");

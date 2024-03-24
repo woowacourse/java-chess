@@ -10,7 +10,7 @@ public class RouteCalculator {
     private RouteCalculator() {
     }
 
-    public static Set<Position> getVerticalMiddlePositions(final Movement movement) {
+    public static Set<Position> getVerticalPositions(final Movement movement) {
         Position position = movement.getLowerPosition();
 
         final Set<Position> positions = new HashSet<>();
@@ -22,7 +22,7 @@ public class RouteCalculator {
         return positions;
     }
 
-    public static Set<Position> getHorizontalMiddlePositions(final Movement movement) {
+    public static Set<Position> getHorizontalPositions(final Movement movement) {
         Position position = movement.getLefterPosition();
 
         final Set<Position> positions = new HashSet<>();
@@ -33,23 +33,19 @@ public class RouteCalculator {
         return positions;
     }
 
-    public static Set<Position> getRightDiagonalMiddlePositions(final Movement movement) {
+    public static Set<Position> getDiagonalPositions(final Movement movement) {
+        int dx = 1;
+        int dy = 1;
+
         Position position = movement.getLowerPosition();
 
-        final Set<Position> positions = new HashSet<>();
-        for (int i = 1; i < movement.getRankDistance(); i++) {
-            position = position.move(1, 1);
-            positions.add(position);
+        if (movement.isDown() && movement.isRight() || movement.isUp() && movement.isLeft()) {
+            dx = -1;
         }
-        return positions;
-    }
-
-    public static Set<Position> getLeftDiagonalMiddlePositions(final Movement movement) {
-        Position position = movement.getLowerPosition();
 
         final Set<Position> positions = new HashSet<>();
         for (int i = 1; i < movement.getRankDistance(); i++) {
-            position = position.move(-1, 1);
+            position = position.move(dx, dy);
             positions.add(position);
         }
         return positions;
