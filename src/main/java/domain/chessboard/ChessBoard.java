@@ -11,21 +11,41 @@ public class ChessBoard {
 
     private static final int ROW_DIRECTION = 0;
     private static final int COLUMN_DIRECTION = 1;
-    private static final Map<Coordinate, ChessPiece> board = ChessBoardInitializer.createInitialBoard();
 
-    public void playTurn(Coordinate start, Coordinate destination, Color currentTurn) {
+    private final Map<Coordinate, ChessPiece> board;
+
+    private Color currentTurn = Color.WHITE;
+
+    public ChessBoard() {
+        board = ChessBoardInitializer.createInitialBoard();
+    }
+
+    public void playTurn(Coordinate start, Coordinate destination) {
         ChessPiece piece = findPiece(start);
         Coordinate startPosition = start.copied();
 
         validateBeforePlay(destination, currentTurn, piece);
 
-        List<Integer> direction = piece.getDirection(start, destination,
-                canAttack(currentTurn, destination));
+        List<Integer> direction = piece.getDirection(start, destination, canAttack(currentTurn, destination));
 
         validateCanMove(start, destination, direction);
+        movePiece(destination, startPosition, piece);
+
+        currentTurn = changeTurn();
+    }
+
+    private void movePiece(Coordinate destination, Coordinate startPosition, ChessPiece piece) {
         board.remove(startPosition);
         board.put(destination, piece);
     }
+
+    private Color changeTurn() {
+        if (currentTurn == Color.BLACK) {
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+    }
+
 
     private void validateBeforePlay(Coordinate destination, Color currentTurn, ChessPiece piece) {
         validateDestination(destination, currentTurn);
