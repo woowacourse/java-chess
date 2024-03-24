@@ -2,8 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,27 +16,27 @@ class KingMovementStrategyTest {
 
     static Stream<Arguments> canKingMoveAllDirectionOneStepArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.THREE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.THREE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.THREE))
+                Arguments.arguments(Position.D4, Position.D3),
+                Arguments.arguments(Position.D4, Position.E4),
+                Arguments.arguments(Position.D4, Position.D5),
+                Arguments.arguments(Position.D4, Position.C4),
+                Arguments.arguments(Position.D4, Position.E5),
+                Arguments.arguments(Position.D4, Position.C5),
+                Arguments.arguments(Position.D4, Position.E3),
+                Arguments.arguments(Position.D4, Position.C3)
         );
     }
 
     static Stream<Arguments> cannotKingMoveAllDirectionMoreThanTwoStepArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.TWO)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.SIX)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.SIX)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.SIX)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.TWO)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.TWO))
+                Arguments.arguments(Position.D4, Position.D2),
+                Arguments.arguments(Position.D4, Position.F4),
+                Arguments.arguments(Position.D4, Position.D6),
+                Arguments.arguments(Position.D4, Position.B4),
+                Arguments.arguments(Position.D4, Position.F6),
+                Arguments.arguments(Position.D4, Position.B6),
+                Arguments.arguments(Position.D4, Position.F2),
+                Arguments.arguments(Position.D4, Position.B2)
         );
     }
 

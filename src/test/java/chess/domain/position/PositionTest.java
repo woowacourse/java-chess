@@ -17,53 +17,53 @@ public class PositionTest {
 
     static Stream<Arguments> findTargetDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.B, ChessRank.THREE), Direction.TOP),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.B, ChessRank.ONE), Direction.DOWN),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.A, ChessRank.TWO), Direction.LEFT),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.C, ChessRank.TWO), Direction.RIGHT),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.C, ChessRank.THREE), Direction.TOP_RIGHT),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.A, ChessRank.THREE), Direction.TOP_LEFT),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.C, ChessRank.ONE), Direction.DOWN_RIGHT),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.A, ChessRank.ONE), Direction.DOWN_LEFT)
+                Arguments.arguments(Position.B2, Position.B3, Direction.TOP),
+                Arguments.arguments(Position.B2, Position.B1, Direction.DOWN),
+                Arguments.arguments(Position.B2, Position.A2, Direction.LEFT),
+                Arguments.arguments(Position.B2, Position.C2, Direction.RIGHT),
+                Arguments.arguments(Position.B2, Position.C3, Direction.TOP_RIGHT),
+                Arguments.arguments(Position.B2, Position.A3, Direction.TOP_LEFT),
+                Arguments.arguments(Position.B2, Position.C1, Direction.DOWN_RIGHT),
+                Arguments.arguments(Position.B2, Position.A1, Direction.DOWN_LEFT)
         );
     }
 
     static Stream<Arguments> calculateDistanceArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.B, ChessRank.THREE), 1),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.SIX), Position.of(ChessFile.B, ChessRank.TWO), 4),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.H, ChessRank.TWO), 6),
-                Arguments.arguments(Position.of(ChessFile.H, ChessRank.TWO), Position.of(ChessFile.A, ChessRank.TWO), 7),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.F, ChessRank.SIX), 4),
-                Arguments.arguments(Position.of(ChessFile.F, ChessRank.SIX), Position.of(ChessFile.B, ChessRank.TWO), 4),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.A, ChessRank.ONE), 1),
-                Arguments.arguments(Position.of(ChessFile.B, ChessRank.TWO), Position.of(ChessFile.C, ChessRank.ONE), 1)
+                Arguments.arguments(Position.B2, Position.B3, 1),
+                Arguments.arguments(Position.B6, Position.B2, 4),
+                Arguments.arguments(Position.B2, Position.H2, 6),
+                Arguments.arguments(Position.H2, Position.A2, 7),
+                Arguments.arguments(Position.B2, Position.F6, 4),
+                Arguments.arguments(Position.F6, Position.B2, 4),
+                Arguments.arguments(Position.B2, Position.A1, 1),
+                Arguments.arguments(Position.B2, Position.C1, 1)
         );
     }
 
     static Stream<Arguments> findWrongDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.TWO)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.TWO)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.SIX)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.SIX)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.THREE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.B, ChessRank.THREE))
+                Arguments.arguments(Position.D4, Position.C2),
+                Arguments.arguments(Position.D4, Position.E2),
+                Arguments.arguments(Position.D4, Position.C6),
+                Arguments.arguments(Position.D4, Position.E6),
+                Arguments.arguments(Position.D4, Position.F3),
+                Arguments.arguments(Position.D4, Position.F5),
+                Arguments.arguments(Position.D4, Position.B5),
+                Arguments.arguments(Position.D4, Position.B3)
         );
     }
 
     static Stream<Arguments> findBetweenArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.ONE), Set.of(Position.of(ChessFile.D, ChessRank.THREE), Position.of(ChessFile.D, ChessRank.TWO))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.FOUR), Set.of(Position.of(ChessFile.E, ChessRank.FOUR), Position.of(ChessFile.F, ChessRank.FOUR))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.SEVEN), Set.of(Position.of(ChessFile.D, ChessRank.FIVE), Position.of(ChessFile.D, ChessRank.SIX))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.FOUR), Set.of(Position.of(ChessFile.B, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.FOUR))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.SEVEN), Set.of(Position.of(ChessFile.E, ChessRank.FIVE), Position.of(ChessFile.F, ChessRank.SIX))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.SEVEN), Set.of(Position.of(ChessFile.C, ChessRank.FIVE), Position.of(ChessFile.B, ChessRank.SIX))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.ONE), Set.of(Position.of(ChessFile.E, ChessRank.THREE), Position.of(ChessFile.F, ChessRank.TWO))),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.ONE), Set.of(Position.of(ChessFile.C, ChessRank.THREE), Position.of(ChessFile.B, ChessRank.TWO)))
+                Arguments.arguments(Position.D4, Position.D1, Set.of(Position.D3, Position.D2)),
+                Arguments.arguments(Position.D4, Position.G4, Set.of(Position.E4, Position.F4)),
+                Arguments.arguments(Position.D4, Position.D7, Set.of(Position.D5, Position.D6)),
+                Arguments.arguments(Position.D4, Position.A4, Set.of(Position.B4, Position.C4)),
+                Arguments.arguments(Position.D4, Position.G7, Set.of(Position.E5, Position.F6)),
+                Arguments.arguments(Position.D4, Position.A7, Set.of(Position.C5, Position.B6)),
+                Arguments.arguments(Position.D4, Position.G1, Set.of(Position.E3, Position.F2)),
+                Arguments.arguments(Position.D4, Position.A1, Set.of(Position.C3, Position.B2))
         );
     }
 
@@ -71,11 +71,10 @@ public class PositionTest {
     @Test
     void createPosition() {
         //given
-        Position source = Position.of(ChessFile.B, ChessRank.TWO);
-        Position expectedPosition = Position.of(ChessFile.B, ChessRank.TWO);
+        Position source = Position.B2;
+        Position expectedPosition = Position.B2;
 
-        //when
-        //then
+        //when & then
         assertThat(source).isEqualTo(expectedPosition);
     }
 

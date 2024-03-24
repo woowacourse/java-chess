@@ -52,8 +52,20 @@ class ChessFileTest {
 
     private static Stream<Arguments> findFileBetweenArguments() {
         return Stream.of(
-                Arguments.of(ChessFile.A, ChessFile.H, List.of(ChessFile.B, ChessFile.C, ChessFile.D, ChessFile.E, ChessFile.F, ChessFile.G)),
-                Arguments.of(ChessFile.H, ChessFile.A, List.of(ChessFile.B, ChessFile.C, ChessFile.D, ChessFile.E, ChessFile.F, ChessFile.G))
+                Arguments.of(ChessFile.A, ChessFile.H,
+                        List.of(ChessFile.B,
+                                ChessFile.C,
+                                ChessFile.D,
+                                ChessFile.E,
+                                ChessFile.F,
+                                ChessFile.G)),
+                Arguments.of(ChessFile.H, ChessFile.A,
+                        List.of(ChessFile.B,
+                                ChessFile.C,
+                                ChessFile.D,
+                                ChessFile.E,
+                                ChessFile.F,
+                                ChessFile.G))
         );
     }
 }

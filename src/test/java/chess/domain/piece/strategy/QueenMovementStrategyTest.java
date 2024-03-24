@@ -2,8 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,14 +16,14 @@ class QueenMovementStrategyTest {
 
     static Stream<Arguments> canQueenMoveAllDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.ONE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.SEVEN)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.SEVEN)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.SEVEN)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.G, ChessRank.ONE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.ONE))
+                Arguments.arguments(Position.D4, Position.D1),
+                Arguments.arguments(Position.D4, Position.G4),
+                Arguments.arguments(Position.D4, Position.D7),
+                Arguments.arguments(Position.D4, Position.A4),
+                Arguments.arguments(Position.D4, Position.G7),
+                Arguments.arguments(Position.D4, Position.A7),
+                Arguments.arguments(Position.D4, Position.G1),
+                Arguments.arguments(Position.D4, Position.A1)
         );
     }
 

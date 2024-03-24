@@ -2,8 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,19 +16,19 @@ class BishopMovementStrategyTest {
 
     static Stream<Arguments> cannotBishopMoveCrossArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.THREE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.H, ChessRank.FOUR)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.D, ChessRank.SEVEN)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.A, ChessRank.FOUR))
+                Arguments.arguments(Position.D4, Position.D3),
+                Arguments.arguments(Position.D4, Position.H4),
+                Arguments.arguments(Position.D4, Position.D7),
+                Arguments.arguments(Position.D4, Position.A4)
         );
     }
 
     static Stream<Arguments> canBishopMoveDiagonalArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.FIVE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.E, ChessRank.THREE)),
-                Arguments.arguments(Position.of(ChessFile.D, ChessRank.FOUR), Position.of(ChessFile.C, ChessRank.THREE))
+                Arguments.arguments(Position.D4, Position.E5),
+                Arguments.arguments(Position.D4, Position.C5),
+                Arguments.arguments(Position.D4, Position.E3),
+                Arguments.arguments(Position.D4, Position.C3)
         );
     }
 

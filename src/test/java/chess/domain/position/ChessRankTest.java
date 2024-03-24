@@ -52,8 +52,20 @@ class ChessRankTest {
 
     private static Stream<Arguments> findRankBetweenArguments() {
         return Stream.of(
-                Arguments.of(ChessRank.ONE, ChessRank.EIGHT, List.of(ChessRank.TWO, ChessRank.THREE, ChessRank.FOUR, ChessRank.FIVE, ChessRank.SIX, ChessRank.SEVEN)),
-                Arguments.of(ChessRank.EIGHT, ChessRank.ONE, List.of(ChessRank.TWO, ChessRank.THREE, ChessRank.FOUR, ChessRank.FIVE, ChessRank.SIX, ChessRank.SEVEN))
+                Arguments.of(ChessRank.ONE, ChessRank.EIGHT,
+                        List.of(ChessRank.TWO,
+                                ChessRank.THREE,
+                                ChessRank.FOUR,
+                                ChessRank.FIVE,
+                                ChessRank.SIX,
+                                ChessRank.SEVEN)),
+                Arguments.of(ChessRank.EIGHT, ChessRank.ONE,
+                        List.of(ChessRank.TWO,
+                                ChessRank.THREE,
+                                ChessRank.FOUR,
+                                ChessRank.FIVE,
+                                ChessRank.SIX,
+                                ChessRank.SEVEN))
         );
     }
 }

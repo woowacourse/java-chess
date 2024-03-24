@@ -2,8 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.ChessFile;
-import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +15,8 @@ class WhitePawnMovementStrategyTest {
     void canWhitePawnMoveOneStep() {
         // given
         Piece pawn = new Piece(PieceType.WHITE_PAWN);
-        Position source = Position.of(ChessFile.A, ChessRank.TWO);
-        Position target = Position.of(ChessFile.A, ChessRank.THREE);
+        Position source = Position.A2;
+        Position target = Position.A3;
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -32,8 +30,8 @@ class WhitePawnMovementStrategyTest {
     void canWhitePawnMoveTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.WHITE_PAWN);
-        Position source = Position.of(ChessFile.A, ChessRank.TWO);
-        Position target = Position.of(ChessFile.A, ChessRank.FOUR);
+        Position source = Position.A2;
+        Position target = Position.A4;
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -47,8 +45,8 @@ class WhitePawnMovementStrategyTest {
     void cannotWhitePawnMoveTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.WHITE_PAWN);
-        Position source = Position.of(ChessFile.A, ChessRank.THREE);
-        Position target = Position.of(ChessFile.A, ChessRank.FIVE);
+        Position source = Position.A3;
+        Position target = Position.A5;
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -62,8 +60,8 @@ class WhitePawnMovementStrategyTest {
     void canWhitePawnMoveDiagonalOneStep() {
         // given
         Piece pawn = new Piece(PieceType.WHITE_PAWN);
-        Position source = Position.of(ChessFile.A, ChessRank.THREE);
-        Position target = Position.of(ChessFile.B, ChessRank.FOUR);
+        Position source = Position.A3;
+        Position target = Position.B4;
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
@@ -77,8 +75,8 @@ class WhitePawnMovementStrategyTest {
     void cannotWhitePawnMoveDiagonalTwoStep() {
         // given
         Piece pawn = new Piece(PieceType.WHITE_PAWN);
-        Position source = Position.of(ChessFile.A, ChessRank.TWO);
-        Position target = Position.of(ChessFile.C, ChessRank.FOUR);
+        Position source = Position.A2;
+        Position target = Position.C4;
 
         // when
         boolean result = pawn.isInMovableRange(source, target);
