@@ -20,7 +20,7 @@ class RouteTest {
             Position target = new Position(File.F, Rank.SIX);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -29,7 +29,7 @@ class RouteTest {
             Position target = new Position(File.E, Rank.FIVE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -63,7 +63,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.FIVE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -140,7 +140,7 @@ class RouteTest {
             Position target = new Position(File.D, Rank.SIX);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -149,7 +149,7 @@ class RouteTest {
             Position target = new Position(File.F, Rank.SIX);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -158,7 +158,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.FIVE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -167,7 +167,7 @@ class RouteTest {
             Position target = new Position(File.G, Rank.THREE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -176,7 +176,7 @@ class RouteTest {
             Position target = new Position(File.F, Rank.TWO);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -185,7 +185,7 @@ class RouteTest {
             Position target = new Position(File.D, Rank.TWO);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -194,7 +194,7 @@ class RouteTest {
             Position target = new Position(File.C, Rank.THREE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test
@@ -203,7 +203,7 @@ class RouteTest {
             Position target = new Position(File.C, Rank.FIVE);
 
             Route route = Route.create(source, target);
-            assertThat(route.getRoute()).hasSize(0);
+            assertThat(route.getRoute()).isEmpty();
         }
 
         @Test

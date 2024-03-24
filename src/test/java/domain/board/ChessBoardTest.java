@@ -8,7 +8,6 @@ import domain.piece.pawn.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -28,6 +27,7 @@ class ChessBoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("피스가 없습니다.");
     }
+
     @Test
     void 기물을_움직일_때_중간에_다른_기물이_있으면_예외가_발생한다() {
         Position source = new Position(File.F, Rank.FOUR);
@@ -79,7 +79,7 @@ class ChessBoardTest {
         ChessBoard board = new ChessBoard(Map.of(resource, new Queen(Color.WHITE)));
         board.move(resource, target);
 
-        Assertions.assertThatThrownBy(() -> board.move(target, resource))
+        assertThatThrownBy(() -> board.move(target, resource))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("상대 턴입니다.");
     }
