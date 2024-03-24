@@ -26,7 +26,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfKing() {
         return Stream.of(
                 Arguments.of(
-                        new King(WHITE),
+                        new King(WHITE, null),
                         Square.of(File.startKingFile(), Rank.startRankOf(WHITE)),
                         Set.of(
                                 Square.of(File.D, Rank.ONE),
@@ -42,7 +42,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfQueen() {
         return Stream.of(
                 Arguments.of(
-                        new Queen(WHITE),
+                        new Queen(WHITE, null),// todo null 문제 해결
                         Square.of(File.D, Rank.FIVE),
                         Set.of(
                                 Square.of(File.D, EIGHT),
@@ -80,7 +80,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfBishop() {
         return Stream.of(
                 Arguments.of(
-                        new Bishop(WHITE),
+                        new Bishop(WHITE, null),//todo
                         Square.of(File.D, FIVE),
                         Set.of(
                                 Square.of(File.A, EIGHT),
@@ -104,7 +104,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfKnight() {
         return Stream.of(
                 Arguments.of(
-                        new Knight(WHITE),
+                        new Knight(WHITE, null), //todo
                         Square.of(File.startKnightFileOf(0), Rank.startRankOf(WHITE)),
                         Set.of(
                                 Square.of(File.A, Rank.THREE),
@@ -118,7 +118,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfRook() {
         return Stream.of(
                 Arguments.of(
-                        new Rook(WHITE),
+                        new Rook(WHITE, null),//todo
                         Square.of(File.D, FIVE),
                         Set.of(
                                 Square.of(File.D, EIGHT),
@@ -143,7 +143,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfStartingPawn() {
         return Stream.of(
                 Arguments.of(
-                        new StartingPawn(WHITE),
+                        new StartingPawn(WHITE, null), //todo
                         Square.of(File.startPawnFileOf(0), Rank.startPawnRankOf(WHITE)),
                         Set.of(
                                 Square.of(File.A, Rank.THREE),
@@ -152,7 +152,7 @@ class PieceTest {
                         )
                 ),
                 Arguments.of(
-                        new StartingPawn(WHITE),
+                        new StartingPawn(WHITE, null),//todo
                         Square.of(File.startPawnFileOf(1), Rank.startPawnRankOf(WHITE)),
                         Set.of(
                                 Square.of(File.A, Rank.THREE),
@@ -167,7 +167,7 @@ class PieceTest {
     private static Stream<Arguments> movableSquaresOfPawn() {
         return Stream.of(
                 Arguments.of(
-                        new Pawn(WHITE),
+                        new Pawn(WHITE, null), //todo
                         Square.of(File.B, Rank.THREE),
                         Set.of(
                                 Square.of(File.A, Rank.FOUR),

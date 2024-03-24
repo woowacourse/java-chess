@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Pawn extends AbstractPawn {
-    public Pawn(final Color color) {
-        super(color);
+    public Pawn(final Color color, final Square square) {
+        super(color, square);
     }
 
     @Override

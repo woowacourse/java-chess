@@ -6,8 +6,8 @@ import chess.domain.chessboard.attribute.Direction;
 import java.util.Set;
 
 public class Queen extends SlidingPiece {
-    public Queen(final Color color) {
-        super(color, PieceType.QUEEN);
+    public Queen(final Color color, final Square square) {
+        super(color, PieceType.QUEEN, square);
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.Optional;
 
 public abstract class UnslidingPiece extends Piece {
-    protected UnslidingPiece(final Color color, final PieceType pieceType) {
-        super(color, pieceType);
+    protected UnslidingPiece(final Color color, final PieceType pieceType, final Square square) {
+        super(color, pieceType, square);
     }
 
     protected Optional<Square> movableSquare(final Collection<Direction> directions, final Square source) {

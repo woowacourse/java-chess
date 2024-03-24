@@ -45,12 +45,12 @@ public class Chessboard {
 
     private static Set<Piece> createPieces(final Color color) {
         Set<Piece> pieces = new HashSet<>();
-        pieces.add(new King(color));
-        pieces.add(new Queen(color));
-        pieces.add(new Bishop(color));
-        pieces.add(new Knight(color));
-        pieces.add(new Rook(color));
-        pieces.add(new StartingPawn(color));
+        pieces.add(new King(color, null));//todo 문제 해결
+        pieces.add(new Queen(color, null));
+        pieces.add(new Bishop(color, null));
+        pieces.add(new Knight(color, null));
+        pieces.add(new Rook(color, null));
+        pieces.add(new StartingPawn(color, null));
         return pieces;
     }
 

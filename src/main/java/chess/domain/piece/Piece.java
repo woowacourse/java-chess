@@ -10,15 +10,22 @@ public abstract class Piece {
     protected final Color color;
     protected final PieceType pieceType;
 
-    protected Piece(final Color color, final PieceType pieceType) {
+    private final Square square;
+
+    protected Piece(final Color color, final PieceType pieceType, Square square) {
         this.color = color;
         this.pieceType = pieceType;
+        this.square = square;
     }
 
     public abstract Set<Square> movableSquaresFrom(final Square source);
 
     public boolean isAllyOf(Piece other) {
         return color == other.color;
+    }
+
+    protected Square locateSquare() {
+        return square;
     }
 
     public Color getColor() {

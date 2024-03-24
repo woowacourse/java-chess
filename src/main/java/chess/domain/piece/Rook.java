@@ -6,8 +6,8 @@ import chess.domain.chessboard.attribute.Direction;
 import java.util.Set;
 
 public class Rook extends SlidingPiece {
-    public Rook(final Color color) {
-        super(color, PieceType.ROOK);
+    public Rook(final Color color, Square square) {
+        super(color, PieceType.ROOK, square);
     }
 
     @Override

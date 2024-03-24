@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class Bishop extends SlidingPiece {
 
-    public Bishop(final Color color) {
-        super(color, PieceType.BISHOP);
+    public Bishop(final Color color, final Square square) {
+        super(color, PieceType.BISHOP, square);
     }
 
     @Override

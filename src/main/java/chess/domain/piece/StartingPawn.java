@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 
 public class StartingPawn extends AbstractPawn {
 
-    public StartingPawn(final Color color) {
-        super(color);
+    public StartingPawn(final Color color, final Square square) {
+        super(color, square);
     }
 
     @Override

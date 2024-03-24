@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public abstract class SlidingPiece extends Piece {
-    protected SlidingPiece(final Color color, final PieceType pieceType) {
-        super(color, pieceType);
+    protected SlidingPiece(final Color color, final PieceType pieceType, final Square square) {
+        super(color, pieceType, square);
     }
 
     protected Set<Square> movableSquaresOf(final Set<Direction> directions, final Square source) {

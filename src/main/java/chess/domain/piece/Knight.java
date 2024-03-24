@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Knight extends UnslidingPiece {
-    public Knight(final Color color) {
-        super(color, PieceType.KNIGHT);
+    public Knight(final Color color, final Square square) {
+        super(color, PieceType.KNIGHT, square);
     }
 
     @Override
