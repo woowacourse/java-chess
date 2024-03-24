@@ -13,7 +13,7 @@ public enum GameCommand {
         this.text = text;
     }
 
-    public static GameCommand createFirstGameCommand(String input) {
+    public static GameCommand createInStart(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
                 .filter(value -> value != MOVE)
@@ -21,7 +21,7 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException("start 혹은 end를 입력해주세요."));
     }
 
-    public static GameCommand createMoveCommand(String input) {
+    public static GameCommand createInProgress(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
                 .filter(value -> value != START)
