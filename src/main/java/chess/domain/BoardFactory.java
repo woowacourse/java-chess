@@ -16,7 +16,6 @@ import java.util.Map;
 public class BoardFactory {
 
     private BoardFactory() {
-
     }
 
     public static Board createInitBoard() {
