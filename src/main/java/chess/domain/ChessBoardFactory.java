@@ -47,11 +47,19 @@ public class ChessBoardFactory {
 
     private static Map<Position, Piece> makeBlankPieces() {
         Map<Position, Piece> blankPieces = new LinkedHashMap<>();
+        blankPieces.putAll(makeBlankPiecesForRank(Rank.SIX));
+        blankPieces.putAll(makeBlankPiecesForRank(Rank.FIVE));
+        blankPieces.putAll(makeBlankPiecesForRank(Rank.FOUR));
+        blankPieces.putAll(makeBlankPiecesForRank(Rank.THREE));
+
+        return blankPieces;
+    }
+
+    private static Map<Position, Piece> makeBlankPiecesForRank(Rank rank) {
+        Map<Position, Piece> blankPieces = new LinkedHashMap<>();
         File[] files = File.values();
         for (File file : files) {
-            blankPieces.put(Position.of(file, Rank.FIVE), null);
-            blankPieces.put(Position.of(file, Rank.FOUR), null);
-            blankPieces.put(Position.of(file, Rank.THREE), null);
+            blankPieces.put(Position.of(file, rank), null);
         }
 
         return blankPieces;
