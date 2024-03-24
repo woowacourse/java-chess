@@ -28,7 +28,7 @@ public enum ChessFileMatcher {
                 .filter(file -> file.text.equals(inputText))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(String.format("%s에 해당하는 ChessFile을 찾을 수 없습니다.", inputText)))
+                        new IllegalArgumentException(String.format("해당 ChessFile을 찾을 수 없습니다.")))
                 .file;
     }
 }

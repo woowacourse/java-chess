@@ -17,12 +17,12 @@ public enum CommandMatcher {
         this.command = command;
     }
 
-    public static Command matchByText(final String text) {
+    public static Command matchByText(final String inputText) {
         return Arrays.stream(values())
-                .filter(command -> command.text.equals(text))
+                .filter(command -> command.text.equals(inputText))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException("존재하지 않는 명령어 입니다."))
+                        new IllegalArgumentException("존재하지 않는 명령어입니다."))
                 .command;
     }
 }

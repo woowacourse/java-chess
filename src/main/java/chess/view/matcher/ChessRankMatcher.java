@@ -28,7 +28,7 @@ public enum ChessRankMatcher {
                 .filter(rankMatcher -> rankMatcher.text.equals(inputText))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(String.format("%s에 해당하는 ChessRank를 찾을 수 없습니다.", inputText)))
+                        new IllegalArgumentException("해당 ChessRank를 찾을 수 없습니다."))
                 .rank;
     }
 }
