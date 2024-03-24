@@ -14,10 +14,6 @@ public class Board {
         this.chessBoard = chessBoard;
     }
 
-    public Map<Position, Piece> getChessBoard() {
-        return Collections.unmodifiableMap(chessBoard);
-    }
-
     public void movePiece(final TeamColor teamColor, final Position source, final Position destination) {
         validateMoveRequest(teamColor, source, destination);
 
@@ -74,5 +70,9 @@ public class Board {
 
     private boolean isPieceExist(Position position) {
         return chessBoard.containsKey(position);
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return Collections.unmodifiableMap(chessBoard);
     }
 }
