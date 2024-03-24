@@ -1,10 +1,14 @@
 package chess.controller;
 
+import static chess.utils.Constant.STATUS_COMMAND;
+
 import chess.domain.board.ChessBoard;
+import chess.domain.piece.Color;
 import chess.domain.state.End;
 import chess.domain.state.GameState;
 import chess.domain.state.Ready;
 import chess.dto.ChessBoardDto;
+import chess.dto.CurrentResultDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -41,7 +45,19 @@ public class ChessGameController {
 
     private GameState playEachTurn(GameState gameState) {
         List<String> command = inputView.readCommand();
+        if (command.get(0).equals(STATUS_COMMAND)) {
+            printCurrentScore(gameState);
+            return gameState;
+        }
         return gameState.play(command);
+    }
+
+    private void printCurrentScore(GameState gameState) {
+        double blackScore = gameState.calculateScore(Color.BLACK);
+        double whiteScore = gameState.calculateScore(Color.WHITE);
+        Color winnerColor = gameState.getWinnerColor();
+        CurrentResultDto currentResultDto = new CurrentResultDto(blackScore, whiteScore, winnerColor);
+        outputView.printEachTeamScore(currentResultDto);
     }
 
     private void printChessBoardInProgress(GameState gameState, ChessBoard chessBoard) {

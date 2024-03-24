@@ -10,6 +10,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessBoardDto;
+import chess.dto.CurrentResultDto;
 import java.util.Map;
 
 public class OutputView {
@@ -58,4 +59,14 @@ public class OutputView {
         }
         System.out.print(PieceSymbol.printEmptySymbol());
     }
+
+    public void printEachTeamScore(CurrentResultDto currentResultDto) {
+        System.out.printf(
+                "현재 점수: BLACK - %.1f점, WHITE - %.1f점" + NEW_LINE
+                        + "승리팀: %s" + NEW_LINE
+                        + "게임을 계속 진행하시려면 이동 명령어를, 종료하시려면 종료 명령어를 입력하세요." + NEW_LINE
+                        + NEW_LINE,
+                currentResultDto.blackScore(), currentResultDto.whiteScore(), currentResultDto.winnerColor().name());
+    }
+
 }
