@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.location.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -43,6 +44,22 @@ class StepTest {
     void isEnemyTest(SquareState state, boolean expected) {
         Step step = new Step(Direction.DOWN, state);
         assertThat(step.isEnemy()).isEqualTo(expected);
+    }
+
+    @DisplayName("경로가 위쪽 방향인지 확인할 수 있다.")
+    @ParameterizedTest
+    @EnumSource(value = Direction.class, names = {"UP", "UP_RIGHT", "UP_LEFT"})
+    void isUpsideTest(Direction direction) {
+        Step step = new Step(direction, SquareState.EMPTY);
+        assertThat(step.isUpside()).isTrue();
+    }
+
+    @DisplayName("경로가 아래 방향인지 확인할 수 있다.")
+    @ParameterizedTest
+    @EnumSource(value = Direction.class, names = {"DOWN", "DOWN_RIGHT", "DOWN_LEFT"})
+    void isDownsideTest(Direction direction) {
+        Step step = new Step(direction, SquareState.EMPTY);
+        assertThat(step.isDownside()).isTrue();
     }
 }
 

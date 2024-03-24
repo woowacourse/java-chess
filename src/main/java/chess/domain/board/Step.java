@@ -9,10 +9,6 @@ public class Step {
         this.squareState = squareState;
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
     public boolean isDiagonal() {
         return direction.isDiagonal();
     }
@@ -35,5 +31,9 @@ public class Step {
 
     public boolean isDownside() {
         return direction.isDownside();
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }
