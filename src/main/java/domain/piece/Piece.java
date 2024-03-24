@@ -34,7 +34,7 @@ public abstract class Piece {
     }
 
     private void checkNoAllyPieceAtTarget(Piece targetPiece) {
-        if (targetPiece.isAlly(side)) {
+        if (targetPiece.isSame(side)) {
             throw new IllegalArgumentException("target 위치에 같은 색의 기물이 존재하면 이동할 수 없습니다.");
         }
     }
@@ -50,7 +50,7 @@ public abstract class Piece {
     }
 
     public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target) && !pieces.get(target).isOpponent(this)) {
+        if (pieces.containsKey(target) && !pieces.get(target).isNotSame(this)) {
             throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
         }
         List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
@@ -95,12 +95,20 @@ public abstract class Piece {
         return side.isBlack();
     }
 
-    public boolean isAlly(Side otherSide) {
+    public boolean isWhite() {
+        return side.isWhite();
+    }
+
+    public boolean isSame(Side otherSide) {
         return side == otherSide;
     }
 
-    public boolean isOpponent(Piece other) {
+    public boolean isNotSame(Piece other) {
         return side != other.side;
+    }
+
+    public boolean isNotSame(Side otherSide) {
+        return !isSame(otherSide);
     }
 
     private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {

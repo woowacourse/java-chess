@@ -4,6 +4,7 @@ import domain.piece.Bishop;
 import domain.piece.Empty;
 import domain.piece.King;
 import domain.piece.Knight;
+import domain.piece.Pawn;
 import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;

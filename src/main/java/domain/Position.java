@@ -73,6 +73,14 @@ public class Position {
         return hasTwoRankGap(other) && isSameFile(other);
     }
 
+    public boolean hasHigherRankByOne(Position other) {
+        return rank.difference(other.rank) == 1;
+    }
+
+    public boolean hasHigherRankByTwo(Position other) {
+        return rank.difference(other.rank) == 2;
+    }
+
     public boolean isRankIncreased(Position target) {
         return target.rank.isBigger(rank);
     }

@@ -1,6 +1,7 @@
 package domain;
 
 import domain.piece.Empty;
+import domain.piece.Pawn;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

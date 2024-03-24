@@ -18,22 +18,22 @@ public enum Rank {
     ONE(1),
     ;
 
-    private final int order;
+    private final int value;
 
-    Rank(int order) {
-        this.order = order;
+    Rank(int value) {
+        this.value = value;
     }
 
     public static int max() {
         return Arrays.stream(values())
-                .mapToInt(it -> it.order)
+                .mapToInt(it -> it.value)
                 .max()
                 .orElseThrow();
     }
 
     public static Rank find(int order) {
         return Arrays.stream(values())
-                .filter(it -> it.order == order)
+                .filter(it -> it.value == order)
                 .findFirst()
                 .orElseThrow();
     }
@@ -43,20 +43,23 @@ public enum Rank {
     }
 
     public int gap(Rank other) {
-        int otherOrder = other.order;
-        return Math.abs(order - otherOrder);
+        return Math.abs(difference(other));
+    }
+
+    public int difference(Rank other) {
+        return value - other.value;
     }
 
     public boolean isBigger(Rank other) {
-        return order > other.order;
+        return value > other.value;
     }
 
     public boolean isLess(Rank other) {
-        return order < other.order;
+        return value < other.value;
     }
 
     public List<Rank> findBetween(Rank target) {
-        if (this.order > target.order) {
+        if (this.value > target.value) {
             return makeBetween(targetToCurrent(target));
         }
         List<Rank> files = makeBetween(currentToTarget(target));
@@ -71,10 +74,10 @@ public enum Rank {
     }
 
     private Predicate<Rank> targetToCurrent(Rank target) {
-        return rank -> rank.order < this.order && rank.order > target.order;
+        return rank -> rank.value < this.value && rank.value > target.value;
     }
 
     private Predicate<Rank> currentToTarget(Rank target) {
-        return rank -> rank.order > this.order && rank.order < target.order;
+        return rank -> rank.value > this.value && rank.value < target.value;
     }
 }

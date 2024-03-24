@@ -28,6 +28,10 @@ public class MovePath {
         return pathPieces.notAllEmpty();
     }
 
+    public boolean isOpponentTargetPiece(Side side) {
+        return targetPiece.isNotEmpty() && targetPiece.isNotSame(side);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -44,5 +48,9 @@ public class MovePath {
     @Override
     public int hashCode() {
         return Objects.hash(pathPieces, targetPiece);
+    }
+
+    public boolean isTargetPieceEmpty() {
+        return targetPiece.isEmpty();
     }
 }
