@@ -1,9 +1,14 @@
 package domain.piece.kind;
 
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static domain.piece.attribute.Color.BLACK;
+import static domain.piece.attribute.Color.WHITE;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,6 +61,39 @@ class RookTest {
 
         final var result = sut.canMove(E7);
 
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("룩은 가는길에 기물이 없으면 참을 반환한다.")
+    void true_if_rook_piece_can_move() {
+        final var pieceList = List.of(
+                new Rook(A1, BLACK),
+                new Bishop(C1, WHITE),
+                new Queen(E1, WHITE));
+
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                              .get();
+
+        final var result = sut.canMove(A6, pieceList);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("룩은 가는길에 기물이 있으면 거짓을 반환한다.")
+    void false_if_rook_piece_can_move() {
+        final var pieceList = List.of(
+                new Rook(A1, BLACK),
+                new Bishop(C1, WHITE),
+                new Queen(E5, WHITE));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                              .get();
+
+        final var result = sut.canMove(E1, pieceList);
         assertThat(result).isFalse();
     }
 }

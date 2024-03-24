@@ -1,6 +1,7 @@
 package domain.piece.kind;
 
 import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
@@ -21,8 +22,12 @@ public class Bishop extends Piece {
         return PieceStatus.BISHOP;
     }
 
-    public boolean canMove(final Point point) {
-        final Direction direction = this.point.calculate(point);
-        return directionList.contains(direction);
+    public boolean canMove(final Point movePoint, final List<Piece> pieceList) {
+        final Direction direction = this.point.calculate(movePoint);
+        if (directionList.contains(direction)) {
+            final Pieces pieces = new Pieces(pieceList);
+            return notExistPieceInPath(movePoint, pieces) && hasEnemyPieceOrEmpty(movePoint, pieces);
+        }
+        return false;
     }
 }

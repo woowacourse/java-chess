@@ -1,5 +1,6 @@
 package domain.piece.kind;
 
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
@@ -7,6 +8,10 @@ import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static domain.piece.attribute.Color.BLACK;
+import static domain.piece.attribute.Color.WHITE;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,4 +65,36 @@ class BishopTest {
 
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("비숍은 가는 경로에 기물이 없으면 참을 반환한다.")
+    void true_if_bishop_piece_can_move() {
+        final var pieceList = List.of(
+                new Bishop(A1, BLACK),
+                new Queen(F6, WHITE));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                              .get();
+
+        final var result = sut.canMove(E5, pieceList);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("비숍은 가는 경로에 기물이 있으면 거짓을 반환한다.")
+    void false_if_bishop_piece_can_move() {
+        final var pieceList = List.of(
+                new Bishop(A1, BLACK),
+                new Bishop(C3, WHITE),
+                new Queen(E5, WHITE));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                             .get();
+
+        final var result = sut.canMove(E5,pieceList);
+        assertThat(result).isFalse();
+    }
+
 }

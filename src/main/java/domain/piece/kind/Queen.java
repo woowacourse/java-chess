@@ -1,8 +1,11 @@
 package domain.piece.kind;
 
 import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
+
+import java.util.List;
 
 public class Queen extends Piece {
     public Queen(final Point point, final Color color) {
@@ -14,9 +17,8 @@ public class Queen extends Piece {
         return PieceStatus.QUEEN;
     }
 
-    //TODO : 현재 방향을 계산해야만 검증 로직 가능 좀 더 생각해봐야함
-    public boolean canMove(final Point point) {
-        this.point.calculate(point);
-        return true;
+    public boolean canMove(final Point movePoint, final List<Piece> pieceList) {
+        final Pieces pieces = new Pieces(pieceList);
+        return notExistPieceInPath(movePoint, pieces) && hasEnemyPieceOrEmpty(movePoint, pieces);
     }
 }

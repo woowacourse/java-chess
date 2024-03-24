@@ -1,6 +1,7 @@
 package domain.piece.kind;
 
 import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
@@ -25,11 +26,15 @@ public class Knight extends Piece {
     }
 
 
-    public boolean canMove(final Point point) {
+    public boolean canMove(final Point movePoint, final List<Piece> pieceList) {
+        return canMovePoint(movePoint) && hasEnemyPieceOrEmpty(movePoint, new Pieces(pieceList));
+    }
+
+    private boolean canMovePoint(final Point movePoint) {
         return directionList.stream()
                             .filter(direction -> direction.canMovePoint(this.point))
                             .map(direction -> direction.movePoint(this.point))
-                            .anyMatch(point::equals);
+                            .anyMatch(movePoint::equals);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package domain.piece.kind;
 
 import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
@@ -17,15 +18,31 @@ public class Pawn extends Piece {
         super(point, color);
     }
 
+    public boolean canMove(final Point movePoint, final List<Piece> piecesList) {
+        final Pieces pieces = new Pieces(piecesList);
+        return canMovePoint(movePoint, pieces) || canMovePointWithAttack(movePoint, pieces);
+    }
 
-    public boolean canMove(final Point point) {
-        final Direction direction = this.point.calculate(point);
-
-        if (!containDirection(direction)) {
+    private boolean canMovePoint(final Point movePoint, final Pieces pieces) {
+        final Direction direction = this.point.calculate(movePoint);
+        if (notContainDirection(direction) || direction.isDiagonal()) {
             return false;
         }
-        return singleCase(point, direction);
+        return singleCase(movePoint, direction) && notExistPiece(movePoint, pieces);
     }
+
+    private boolean canMovePointWithAttack(final Point movePoint, final Pieces pieces) {
+        final Direction direction = this.point.calculate(movePoint);
+        if (notContainDirection(direction) || direction.isStraight()) {
+            return false;
+        }
+        return singleCase(movePoint, direction) && hasEnemyPieceOrEmpty(movePoint, pieces);
+    }
+
+    private boolean notContainDirection(final Direction direction) {
+        return !containDirection(direction);
+    }
+
 
     private boolean containDirection(final Direction direction) {
         if (this.isBlack()) {

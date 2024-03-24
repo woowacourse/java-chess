@@ -1,5 +1,6 @@
 package domain.piece.kind;
 
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
@@ -7,6 +8,10 @@ import domain.piece.attribute.point.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static domain.piece.attribute.Color.BLACK;
+import static domain.piece.attribute.Color.WHITE;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -110,4 +115,38 @@ class KingTest {
 
         assertThat(result).isFalse();
     }
+
+
+    @Test
+    @DisplayName("킹은 도착하는 위치에 아군 기물이 있으면 거짓을 반환한다.")
+    void false_if_king_piece_move_friend_point() {
+        final var pieceList = List.of(
+                new King(A1, BLACK),
+                new Queen(B2, BLACK));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                              .get();
+
+        final var result = sut.canMove(B2, pieceList);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("킹은 도착하는 위치에 아군 기물이 아니면 참을 반환한다.")
+    void true_if_king_piece_move_friend_point() {
+
+        final var pieceList = List.of(
+                new King(A1, BLACK),
+                new Queen(B2, WHITE));
+
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A1)
+                              .get();
+
+        final var result = sut.canMove(B2, pieceList);
+        assertThat(result).isTrue();
+    }
+
 }

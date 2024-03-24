@@ -1,9 +1,14 @@
 package domain.piece.kind;
 
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static domain.piece.attribute.Color.BLACK;
+import static domain.piece.attribute.Color.WHITE;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,5 +75,65 @@ class PawnTest {
 
         final var result = sut.canMove(B5);
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 직진 하는 위치에 기물이 있으면 거짓을 반환한다.")
+    void false_if_pawn_piece_move_point_in_any_piece() {
+        final var pieceList = List.of(
+                new Pawn(A4, BLACK),
+                new Queen(A3, BLACK));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A4)
+                              .get();
+
+        final var result = sut.canMove(A3, pieceList);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰은 직진 하는 위치에 기물이 없으면 참을 반환한다")
+    void true_if_pawn_piece_move_point_not_in_piece() {
+        final var pieceList = List.of(
+                new Pawn(A4, BLACK),
+                new Queen(A1, BLACK));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A4)
+                              .get();
+
+        final var result = sut.canMove(A3, pieceList);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 대각선 위치에 적 기물이 있으면 참을 반환한다.")
+    void true_if_pawn_piece_move_diagonal_enemy_point() {
+        final var pieceList = List.of(
+                new Pawn(A4, BLACK),
+                new Queen(B3, WHITE));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A4)
+                              .get();
+
+        final var result = sut.canMove(B3, pieceList);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰은 대각선 위치에 아군 기물이 있으면 거짓을 반환한다.")
+    void false_if_pawn_piece_move_diagonal_enemy_point() {
+        final var pieceList = List.of(
+                new Pawn(A4, BLACK),
+                new Queen(B3, BLACK));
+        final var pieces = new Pieces(pieceList);
+
+        final var sut = pieces.findPieceWithPoint(A4)
+                              .get();
+
+        final var result = sut.canMove(B3, pieceList);
+        assertThat(result).isFalse();
     }
 }
