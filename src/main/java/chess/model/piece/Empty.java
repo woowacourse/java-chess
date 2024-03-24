@@ -17,6 +17,6 @@ public class Empty extends Piece {
     public List<ChessPosition> findPath(
             final ChessPosition source, final ChessPosition target, final Piece targetPiece
     ) {
-        return List.of();
+        throw new IllegalStateException("해당 경로로 이동할 수 없습니다.");
     }
 }

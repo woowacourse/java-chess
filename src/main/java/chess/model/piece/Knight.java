@@ -26,7 +26,7 @@ public class Knight extends Piece {
         if (canMove(distance)) {
             return List.of(target);
         }
-        return List.of();
+        throw new IllegalStateException("나이트는 해당 경로로 이동할 수 없습니다.");
     }
 
     private boolean canMove(Distance distance) {

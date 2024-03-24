@@ -24,7 +24,7 @@ public class Queen extends Piece {
         if (canMove(distance)) {
             return distance.findPath(source);
         }
-        return List.of();
+        throw new IllegalStateException("퀸은 해당 경로로 이동할 수 없습니다.");
     }
 
     private boolean canMove(Distance distance) {

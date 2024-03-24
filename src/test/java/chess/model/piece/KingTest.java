@@ -55,11 +55,9 @@ class KingTest {
         // given
         King king = new King(Side.BLACK);
 
-        // when
-        List<ChessPosition> path = king.findPath(C2, H3, new Empty());
-
-        // then
-        assertThat(path).isEmpty();
+        // when // then
+        assertThatThrownBy(() -> king.findPath(C2, H3, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {

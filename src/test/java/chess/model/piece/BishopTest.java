@@ -49,16 +49,14 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("Bishop 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
+    @DisplayName("Bishop 움직임으로 타겟 위치에 도달할 수 없다면 예외를 발생한다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
         Bishop bishop = new Bishop(Side.BLACK);
 
-        // when
-        List<ChessPosition> path = bishop.findPath(C2, D2, new Empty());
-
-        // then
-        assertThat(path).isEmpty();
+        // when //then
+        assertThatThrownBy(() -> bishop.findPath(C2, D2, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {

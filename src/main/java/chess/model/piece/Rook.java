@@ -24,6 +24,6 @@ public class Rook extends Piece {
         if (distance.isCrossMovement()) {
             return distance.findPath(source);
         }
-        return List.of();
+        throw new IllegalStateException("룩은 해당 경로로 이동할 수 없습니다.");
     }
 }

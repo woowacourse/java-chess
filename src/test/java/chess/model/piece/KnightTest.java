@@ -56,11 +56,9 @@ class KnightTest {
         // given
         Knight knight = new Knight(Side.BLACK);
 
-        // when
-        List<ChessPosition> path = knight.findPath(C2, D2, new Empty());
-
-        // then
-        assertThat(path).isEmpty();
+        // when // then
+        assertThatThrownBy(() -> knight.findPath(C2, D2, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {

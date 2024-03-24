@@ -28,7 +28,7 @@ public class Pawn extends Piece {
         if (canCrossMove(source, distance) || canDiagonalMove(targetPiece, distance)) {
             return distance.findPath(source);
         }
-        return List.of();
+        throw new IllegalStateException("폰은 해당 경로로 이동할 수 없습니다.");
     }
 
     private void validateForwardPath(ChessPosition source, Piece targetPiece, Distance distance) {

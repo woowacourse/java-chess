@@ -58,11 +58,9 @@ class RookTest {
         // given
         Rook rook = new Rook(Side.BLACK);
 
-        // when
-        List<ChessPosition> path = rook.findPath(C2, H3, new Empty());
-
-        // then
-        assertThat(path).isEmpty();
+        // when // then
+        assertThatThrownBy(() -> rook.findPath(C2, H3, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {

@@ -24,6 +24,6 @@ public class Bishop extends Piece {
         if (distance.isDiagonalMovement()) {
             return distance.findPath(source);
         }
-        return List.of();
+        throw new IllegalStateException("비숍은 해당 경로로 이동할 수 없습니다.");
     }
 }

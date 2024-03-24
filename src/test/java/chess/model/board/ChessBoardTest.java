@@ -54,14 +54,6 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("경로가 비어있다면 예외가 발생한다.")
-    void moveWhenPathEmpty() {
-        //when //then
-        assertThatThrownBy(() -> chessBoard.move(A1, D2))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("이동 경로에 기물이 존재한다면 예외가 발생한다.")
     void moveWhenPathContainsPiece() {
         //when //then

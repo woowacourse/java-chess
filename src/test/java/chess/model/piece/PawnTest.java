@@ -92,11 +92,9 @@ class PawnTest {
         // given
         Piece pawn = new Pawn(Side.BLACK);
 
-        // when
-        List<ChessPosition> path = pawn.findPath(C2, H3, new Empty());
-
-        // then
-        assertThat(path).isEmpty();
+        // when // then
+        assertThatThrownBy(() -> pawn.findPath(C2, H3, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResultInInitialPosition() {

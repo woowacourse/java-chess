@@ -65,10 +65,10 @@ class QueenTest {
         Queen queen = new Queen(Side.BLACK);
 
         // when
-        List<ChessPosition> path = queen.findPath(C2, D4, new Empty());
 
         // then
-        assertThat(path).isEmpty();
+        assertThatThrownBy(() -> queen.findPath(C2, D4, new Empty()))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {

@@ -26,6 +26,6 @@ public class King extends Piece {
         if (distance.hasSame(DISPLACEMENT)) {
             return List.of(target);
         }
-        return List.of();
+        throw new IllegalStateException("왕은 해당 경로로 이동할 수 없습니다.");
     }
 }

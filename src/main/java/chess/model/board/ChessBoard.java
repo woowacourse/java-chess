@@ -20,7 +20,6 @@ public class ChessBoard {
         validateSourcePiece(sourcePiece);
 
         List<ChessPosition> path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
-        validatePathIsEmpty(path);
         validatePathContainsPiece(path);
         changePositions(sourcePosition, targetPosition, sourcePiece, targetPiece);
     }
@@ -36,12 +35,6 @@ public class ChessBoard {
     private void validateSourcePiece(Piece sourcePiece) {
         if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("Source에 기물이 존재하지 않습니다.");
-        }
-    }
-
-    private void validatePathIsEmpty(List<ChessPosition> path) {
-        if (path.isEmpty()) {
-            throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
     }
 

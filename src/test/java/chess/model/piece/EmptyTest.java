@@ -2,10 +2,8 @@ package chess.model.piece;
 
 import static chess.model.Fixture.F2;
 import static chess.model.Fixture.F4;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.position.ChessPosition;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +15,8 @@ class EmptyTest {
         Piece sourcePiece = new Empty();
         Piece targetPiece = new Empty();
 
-        //when
-        List<ChessPosition> result = sourcePiece.findPath(F2, F4, targetPiece);
-
-        //then
-        assertThat(result).isEmpty();
+        //when //then
+        assertThatThrownBy(() -> sourcePiece.findPath(F2, F4, targetPiece))
+                .isInstanceOf(IllegalStateException.class);
     }
 }
