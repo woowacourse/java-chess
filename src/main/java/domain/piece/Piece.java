@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public abstract class Piece {
 
-    protected final Color color; // TODO: 접근제어자 열어도 괜찮을까?
+    protected final Color color;
 
     public Piece(Color color) {
         this.color = color;
@@ -18,7 +18,7 @@ public abstract class Piece {
         return canMove(source, target);
     }
 
-    public abstract String display(); // TODO: view 로직 분리
+    public abstract String display();
 
     public boolean isBlank() {
         return false;
