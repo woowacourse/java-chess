@@ -6,7 +6,7 @@ public enum PieceColor {
     WHITE;
 
     public PieceColor next() {
-        if (this.equals(BLACK)) {
+        if (this == BLACK) {
             return WHITE;
         }
         return BLACK;
