@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +15,7 @@ class PawnTest {
     void isMovable1() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(new Point('a', 3), new Point('a', 4));
+        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.A, Rank.FOURTH));
 
         assertThat(result).isTrue();
     }
@@ -23,7 +25,7 @@ class PawnTest {
     void isMovable2() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(new Point('a', 2), new Point('a', 4));
+        boolean result = pawn.isMovable(Point.of(File.A, Rank.SECOND), Point.of(File.A, Rank.FOURTH));
 
         assertThat(result).isTrue();
     }
@@ -33,7 +35,7 @@ class PawnTest {
     void isMovable3() {
         Pawn pawn = Pawn.from(Team.BLACK);
 
-        boolean result = pawn.isMovable(new Point('a', 3), new Point('b', 2));
+        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.B, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -43,7 +45,7 @@ class PawnTest {
     void invalidIsMovable1() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(new Point('a', 2), new Point('a', 1));
+        boolean result = pawn.isMovable(Point.of(File.A, Rank.SECOND), Point.of(File.A, Rank.FIRST));
 
         assertThat(result).isFalse();
     }
@@ -53,7 +55,7 @@ class PawnTest {
     void invalidIsMovable2() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(new Point('a', 3), new Point('a', 5));
+        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.A, Rank.FIFTH));
 
         assertThat(result).isFalse();
     }

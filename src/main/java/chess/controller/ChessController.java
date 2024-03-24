@@ -3,7 +3,9 @@ package chess.controller;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -33,9 +35,8 @@ public class ChessController {
                 }
                 if (Command.MOVE == command) {
                     String[] splitCommand = readCommand.split(" ");
-
-                    Point departure = new Point(splitCommand[1]);
-                    Point destination = new Point(splitCommand[2]);
+                    Point departure = parsePoint(splitCommand[1]);
+                    Point destination = parsePoint(splitCommand[2]);
                     game.move(departure, destination);
                 }
                 outputView.printBoard(game.getBoard());
@@ -43,5 +44,11 @@ public class ChessController {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private Point parsePoint(String splitedCommand) {
+        File file = File.of(splitedCommand.charAt(0));
+        Rank rank = Rank.of(Integer.parseInt(String.valueOf(splitedCommand.charAt(1))));
+        return Point.of(file, rank);
     }
 }

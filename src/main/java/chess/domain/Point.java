@@ -1,26 +1,34 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
-import java.util.Objects;
+import java.util.EnumMap;
 
 public class Point {
 
     private static final int SlOPE_TWO = 2;
+    private static final EnumMap<File, EnumMap<Rank, Point>> POOL;
+
+    static {
+        POOL = new EnumMap<>(File.class);
+        for (File file : File.values()) {
+            EnumMap<Rank, Point> rankPoints = new EnumMap<>(Rank.class);
+            for (Rank rank : Rank.values()) {
+                rankPoints.put(rank, new Point(file, rank));
+            }
+            POOL.put(file, rankPoints);
+        }
+    }
 
     private final File file;
     private final Rank rank;
 
-    public Point(File file, Rank rank) {
+    private Point(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public Point(char file, int rank) {
-        this(File.of(file), Rank.of(rank));
-    }
-
-    public Point(String point) {
-        this(File.of(point.charAt(0)), Rank.of(point.charAt(1) - '0'));
+    public static Point of(File file, Rank rank) {
+        return POOL.get(file).get(rank);
     }
 
     public boolean isDiagonal(Point point) {
@@ -75,7 +83,7 @@ public class Point {
         File addedFile = file.add(addFile);
         Rank addedRank = rank.add(addRank);
 
-        return new Point(addedFile, addedRank);
+        return Point.of(addedFile, addedRank);
     }
 
     public boolean addable(int addFile, int addRank) {
@@ -86,7 +94,6 @@ public class Point {
         int fileDistance = point.file.distance(this.file);
         int rankDistance = point.rank.distance(this.rank);
         if (Math.abs(multiplyAxis(point)) == SlOPE_TWO) {
-            System.out.println(fileDistance + " " + rankDistance);
             return Direction.of(fileDistance, rankDistance);
         }
         return Direction.of(unitDistance(fileDistance), unitDistance(rankDistance));
@@ -97,22 +104,5 @@ public class Point {
             return 0;
         }
         return distance < 0 ? -1 : 1;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Point point = (Point) o;
-        return Objects.equals(file, point.file) && Objects.equals(rank, point.rank);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
     }
 }

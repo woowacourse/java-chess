@@ -52,30 +52,30 @@ public class BoardFactory {
     private static Map<Point, Piece> lineOfPawn(int rank, Team team) {
         Map<Point, Piece> line = new HashMap<>();
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), Piece.pawnFrom(team));
+        for (char c = File.minValue(); c <= File.maxValue(); c++) {
+            line.put(Point.of(File.of(c), Rank.of(rank)), Piece.pawnFrom(team));
         }
         return line;
     }
 
     private static Map<Point, Piece> lineOfKing(int rank, Team team) {
         return Map.of(
-                new Point('a', rank), Piece.rookFrom(team),
-                new Point('b', rank), Piece.knightFrom(team),
-                new Point('c', rank), Piece.bishopFrom(team),
-                new Point('d', rank), Piece.queenFrom(team),
-                new Point('e', rank), Piece.kingFrom(team),
-                new Point('f', rank), Piece.bishopFrom(team),
-                new Point('g', rank), Piece.knightFrom(team),
-                new Point('h', rank), Piece.rookFrom(team)
+                Point.of(File.A, Rank.of(rank)), Piece.rookFrom(team),
+                Point.of(File.B, Rank.of(rank)), Piece.knightFrom(team),
+                Point.of(File.C, Rank.of(rank)), Piece.bishopFrom(team),
+                Point.of(File.D, Rank.of(rank)), Piece.queenFrom(team),
+                Point.of(File.E, Rank.of(rank)), Piece.kingFrom(team),
+                Point.of(File.F, Rank.of(rank)), Piece.bishopFrom(team),
+                Point.of(File.G, Rank.of(rank)), Piece.knightFrom(team),
+                Point.of(File.H, Rank.of(rank)), Piece.rookFrom(team)
         );
     }
 
     private static Map<Point, Piece> lineOfEmpty(int rank) {
         Map<Point, Piece> line = new HashMap<>();
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), Piece.empty());
+        for (char c = File.minValue(); c <= File.maxValue(); c++) {
+            line.put(Point.of(File.of(c), Rank.of(rank)), Piece.empty());
         }
         return line;
     }

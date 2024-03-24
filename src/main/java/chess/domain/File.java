@@ -13,8 +13,6 @@ public enum File {
     G('g'),
     H('h');
 
-    private static final char MIN_FILE = 'a';
-    private static final char MAX_FILE = 'h';
     private static final Map<Character, File> POOL = Map.of(
             'a', A, 'b', B, 'c', C, 'd', D, 'e', E, 'f', F, 'g', G, 'h', H
     );
@@ -28,7 +26,7 @@ public enum File {
     public static File of(char character) {
         char lowerChar = Character.toLowerCase(character);
         if (!POOL.containsKey(lowerChar)) {
-            throw new IllegalArgumentException(String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", MIN_FILE, MAX_FILE));
+            throw new IllegalArgumentException(String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", minValue(), maxValue()));
         }
         return POOL.get(lowerChar);
     }
@@ -44,14 +42,14 @@ public enum File {
 
     boolean addable(int fileValue) {
         int addedFile = this.file + fileValue;
-        return addedFile >= MIN_FILE && addedFile <= MAX_FILE;
+        return addedFile >= minValue() && addedFile <= maxValue();
     }
 
     public static char maxValue() {
-        return MAX_FILE;
+        return 'h';
     }
 
     public static char minValue() {
-        return MIN_FILE;
+        return 'a';
     }
 }

@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
 
         boolean result = king.isMovable(
-                new Point('a', 1),
-                new Point('a', 2));
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.A, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -26,8 +28,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
 
         boolean result = king.isMovable(
-                new Point('a', 8),
-                new Point('a', 7));
+                Point.of(File.A, Rank.EIGHTH),
+                Point.of(File.A, Rank.SEVENTH));
 
         assertThat(result).isTrue();
     }
@@ -38,8 +40,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
 
         boolean result = king.isMovable(
-                new Point('b', 1),
-                new Point('a', 1));
+                Point.of(File.B, Rank.FIRST),
+                Point.of(File.A, Rank.FIRST));
 
         assertThat(result).isTrue();
     }
@@ -50,8 +52,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
 
         boolean result = king.isMovable(
-                new Point('a', 1),
-                new Point('b', 1));
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.B, Rank.FIRST));
 
         assertThat(result).isTrue();
     }
@@ -61,8 +63,8 @@ class KingTest {
     void isMovable5() {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
-                new Point('a', 1),
-                new Point('b', 2));
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.B, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -72,8 +74,8 @@ class KingTest {
     void isMovable6() {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
-                new Point('c', 4),
-                new Point('d', 3));
+                Point.of(File.C, Rank.FOURTH),
+                Point.of(File.D, Rank.THIRD));
 
         assertThat(result).isTrue();
     }
@@ -83,8 +85,8 @@ class KingTest {
     void isMovable7() {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
-                new Point('b', 1),
-                new Point('a', 2));
+                Point.of(File.B, Rank.FIRST),
+                Point.of(File.A, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -94,8 +96,8 @@ class KingTest {
     void isMovable8() {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
-                new Point('c', 3),
-                new Point('b', 2));
+                Point.of(File.C, Rank.THIRD),
+                Point.of(File.B, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -105,8 +107,8 @@ class KingTest {
     void invalidIsMovable() {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
-                new Point('c', 3),
-                new Point('c', 5));
+                Point.of(File.C, Rank.THIRD),
+                Point.of(File.C, Rank.FIFTH));
 
         assertThat(result).isFalse();
     }

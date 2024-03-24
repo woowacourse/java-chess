@@ -15,7 +15,7 @@ public class OutputView {
 
         for (int rank = Rank.maxValue(); rank >= Rank.minValue(); rank--) {
             for (char file = File.minValue(); file <= File.maxValue(); file++) {
-                Piece piece = board.get(new Point(file, rank));
+                Piece piece = board.get(Point.of(File.of(file), Rank.of(rank)));
                 builder.append(PieceCharacters.characterFrom(piece));
             }
             builder.append(System.lineSeparator());

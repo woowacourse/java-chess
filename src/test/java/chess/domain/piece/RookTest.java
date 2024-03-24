@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,8 @@ class RookTest {
         Rook rook = Rook.from(Team.WHITE);
 
         boolean result = rook.isMovable(
-                new Point('a', 1),
-                new Point('a', 8)
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.A, Rank.EIGHTH)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +29,8 @@ class RookTest {
         Rook rook = Rook.from(Team.WHITE);
 
         boolean result = rook.isMovable(
-                new Point('a', 8),
-                new Point('a', 1)
+                Point.of(File.A, Rank.EIGHTH),
+                Point.of(File.A, Rank.FIRST)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +42,8 @@ class RookTest {
         Rook rook = Rook.from(Team.WHITE);
 
         boolean result = rook.isMovable(
-                new Point('h', 1),
-                new Point('a', 1)
+                Point.of(File.H, Rank.FIRST),
+                Point.of(File.A, Rank.FIRST)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +55,8 @@ class RookTest {
         Rook rook = Rook.from(Team.WHITE);
 
         boolean result = rook.isMovable(
-                new Point('a', 1),
-                new Point('h', 1)
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.H, Rank.FIRST)
         );
 
         assertThat(result).isTrue();
@@ -66,8 +68,8 @@ class RookTest {
         Rook rook = Rook.from(Team.WHITE);
 
         boolean result = rook.isMovable(
-                new Point('a', 1),
-                new Point('b', 2)
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.B, Rank.SECOND)
         );
 
         assertThat(result).isFalse();

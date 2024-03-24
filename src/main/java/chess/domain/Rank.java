@@ -13,9 +13,6 @@ public enum Rank {
     SEVENTH(7),
     EIGHTH(8);
 
-
-    private static final int MIN_RANK = 1;
-    private static final int MAX_RANK = 8;
     private static final Map<Integer, Rank> POOL = Map.of(
             1, FIRST, 2, SECOND, 3, THIRD, 4, FOURTH,
             5, FIFTH, 6, SIXTH, 7, SEVENTH, 8, EIGHTH
@@ -29,7 +26,7 @@ public enum Rank {
 
     public static Rank of(int rank) {
         if (!POOL.containsKey(rank)) {
-            throw new IllegalArgumentException(String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", MIN_RANK, MAX_RANK));
+            throw new IllegalArgumentException(String.format("세로 위치는 %d ~ %d 사이의 값이어야 합니다.", minValue(), maxValue()));
         }
         return POOL.get(rank);
     }
@@ -45,14 +42,14 @@ public enum Rank {
     public boolean addable(int addRank) {
         int addedRank = this.rank + addRank;
 
-        return addedRank >= MIN_RANK && addedRank <= MAX_RANK;
+        return addedRank >= minValue() && addedRank <= maxValue();
     }
 
     public static int maxValue() {
-        return MAX_RANK;
+        return 8;
     }
 
     public static int minValue() {
-        return MIN_RANK;
+        return 1;
     }
 }

@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.Map;
@@ -17,8 +16,8 @@ class ChessGameTest {
         Map<Point, Piece> board = BoardFactory.createInitialChessBoard();
         ChessGame chessGame = new ChessGame(board);
 
-        Point departure = new Point('b', 2);
-        Point destination = new Point('b', 3);
+        Point departure = Point.of(File.B, Rank.SECOND);
+        Point destination = Point.of(File.B, Rank.THIRD);
         chessGame.move(departure, destination);
 
         assertThat(board.get(departure)).isEqualTo(Piece.empty());

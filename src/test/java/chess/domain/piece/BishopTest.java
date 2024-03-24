@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +15,8 @@ class BishopTest {
     void isMovable1() {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
-                new Point('a', 1),
-                new Point('b', 2));
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.B, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -24,8 +26,8 @@ class BishopTest {
     void isMovable2() {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
-                new Point('c', 4),
-                new Point('e', 2));
+                Point.of(File.C, Rank.FOURTH),
+                Point.of(File.E, Rank.SECOND));
 
         assertThat(result).isTrue();
     }
@@ -35,8 +37,8 @@ class BishopTest {
     void isMovable3() {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
-                new Point('h', 1),
-                new Point('a', 8));
+                Point.of(File.H, Rank.FIRST),
+                Point.of(File.A, Rank.EIGHTH));
 
         assertThat(result).isTrue();
     }
@@ -46,8 +48,8 @@ class BishopTest {
     void isMovable4() {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
-                new Point('h', 8),
-                new Point('b', 2));
+                Point.of(File.H, Rank.EIGHTH),
+                Point.of(File.B, Rank.SECOND));
 
         assertThat(result).isTrue();
     }

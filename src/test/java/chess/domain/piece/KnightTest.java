@@ -2,7 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.File;
 import chess.domain.Point;
+import chess.domain.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('d', 6)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.D, Rank.SIXTH)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +29,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('f', 6)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.F, Rank.SIXTH)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +42,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('d', 2)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.D, Rank.SECOND)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +55,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('f', 2)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.F, Rank.SECOND)
         );
 
         assertThat(result).isTrue();
@@ -66,8 +68,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('g', 5)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.G, Rank.FIFTH)
         );
 
         assertThat(result).isTrue();
@@ -79,8 +81,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('g', 3)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.G, Rank.THIRD)
         );
 
         assertThat(result).isTrue();
@@ -92,8 +94,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('c', 5)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.C, Rank.FIFTH)
         );
 
         assertThat(result).isTrue();
@@ -105,8 +107,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('g', 3)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.G, Rank.THIRD)
         );
 
         assertThat(result).isTrue();
@@ -118,8 +120,8 @@ class KnightTest {
         Knight knight = Knight.from(Team.WHITE);
 
         boolean result = knight.isMovable(
-                new Point('e', 4),
-                new Point('g', 2)
+                Point.of(File.E, Rank.FOURTH),
+                Point.of(File.G, Rank.SECOND)
         );
 
         assertThat(result).isFalse();
