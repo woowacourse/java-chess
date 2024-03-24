@@ -3,7 +3,8 @@ package view;
 public enum Menu {
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    DEFAULT("default");
 
     private final String command;
 

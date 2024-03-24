@@ -18,11 +18,15 @@ public class ChessController {
     public void run() {
         outputView.printHeader();
         ChessBoard chessBoard = new ChessBoard();
+        Menu prevMenu = Menu.DEFAULT;
         while (true) {
             try {
                 final Menu menu = inputView.readMenu();
 
                 if (menu.isStart()) {
+                    if (prevMenu.isMove() || prevMenu.isStart()) {
+                        outputView.printReplayMessage();
+                    }
                     chessBoard = ChessBoard.create();
                     outputView.printChessBoard(ChessBoardDTO.from(chessBoard.getPieces()));
                 }
@@ -32,6 +36,8 @@ public class ChessController {
                 if (menu.isMove()) {
                     play(chessBoard);
                 }
+                
+                prevMenu = menu;
             } catch (final Exception e) {
                 outputView.printError(e.getMessage());
             }
