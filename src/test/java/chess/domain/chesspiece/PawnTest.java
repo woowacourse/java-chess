@@ -1,5 +1,8 @@
 package chess.domain.chesspiece;
 
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,17 +47,18 @@ class PawnTest {
     @ParameterizedTest
     @CsvSource(value = {"a1, a3", "a1, b3", "b1, a1", "b2, b1"})
     @DisplayName("목적지 제외 갈 수 있는 위치들이 아니면 예외를 발생한다.")
-    void Pawn_Validate_route(Position source,Position target) {
+    void Pawn_Validate_route(Position source, Position target) {
         Piece piece = new Pawn(WHITE);
         assertThatThrownBy(() -> {
             piece.getRoute(source, target);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
     }
 
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void Pawn_Validate_team() {
-        Piece piece=new Pawn(WHITE);
+        Piece piece = new Pawn(WHITE);
         assertThat(piece.isTeam(new King(WHITE))).isTrue();
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }

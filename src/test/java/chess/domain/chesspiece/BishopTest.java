@@ -1,5 +1,8 @@
 package chess.domain.chesspiece;
 
+import chess.domain.chesspiece.Bishop;
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,15 +34,16 @@ class BishopTest {
         Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> {
             piece.getRoute(source, target);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
     }
 
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void Bishop_Validate_team() {
-      Piece piece=new Bishop(WHITE);
-      assertThat(piece.isTeam(new King(WHITE))).isTrue();
-      assertThat(piece.isTeam(new King(BLACK))).isFalse();
+        Piece piece = new Bishop(WHITE);
+        assertThat(piece.isTeam(new King(WHITE))).isTrue();
+        assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }
 
     @Test

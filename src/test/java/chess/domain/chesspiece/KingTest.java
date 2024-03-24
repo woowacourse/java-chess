@@ -1,5 +1,7 @@
 package chess.domain.chesspiece;
 
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,13 +47,15 @@ class KingTest {
         Piece piece = new King(WHITE);
         assertThatThrownBy(() -> {
             piece.getRoute(Position.of("a1"), Position.of("a3"));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
+
     }
 
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void King_Validate_team() {
-        Piece piece=new King(WHITE);
+        Piece piece = new King(WHITE);
         assertThat(piece.isTeam(new King(WHITE))).isTrue();
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }

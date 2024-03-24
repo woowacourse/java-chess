@@ -1,5 +1,8 @@
 package chess.domain.chesspiece;
 
+import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +24,7 @@ class RookTest {
                 Position.of("d1"));
         assertThat(route).isEqualTo(positions);
     }
+
     @Test
     @DisplayName("목적지 제외 가로로 갈 수 있는 위치들을 반환한다.")
     void Rook_Check_horizontal_route() {
@@ -37,13 +41,14 @@ class RookTest {
         Piece piece = new Rook(WHITE);
         assertThatThrownBy(() -> {
             piece.getRoute(Position.of("a1"), Position.of("c4"));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없습니다.");
     }
 
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void Rook_Validate_team() {
-        Piece piece=new Rook(WHITE);
+        Piece piece = new Rook(WHITE);
         assertThat(piece.isTeam(new King(WHITE))).isTrue();
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }
