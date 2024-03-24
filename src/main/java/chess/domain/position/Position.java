@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Position {
 
     private static final Map<String, Position> POSITION_POOL;
+    private static final int KNIGHT_CALCULATE_NUMBER = 2;
 
     static {
         POSITION_POOL = new HashMap<>();
@@ -96,7 +97,7 @@ public class Position {
     }
 
     public boolean isOnKnightRoute(Position other) {
-        return Math.abs(rank.subtract(other.rank) * file.subtract(other.file)) == 2;
+        return Math.abs(rank.subtract(other.rank) * file.subtract(other.file)) == KNIGHT_CALCULATE_NUMBER;
     }
 
     public boolean isNotEquals(Position other) {
