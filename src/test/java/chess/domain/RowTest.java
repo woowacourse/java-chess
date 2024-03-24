@@ -17,9 +17,8 @@ public class RowTest {
     @Test
     @DisplayName("가로는 a~h의 알파벳으로 생성된다.")
     void makeRowTest() {
-        assertThatCode(() -> {
-            Row.valueOf("a");
-        }).doesNotThrowAnyException();
+        var result = Row.valueOf("a");
+        assertThat(result).isInstanceOf(Row.class);
     }
 
     @Test

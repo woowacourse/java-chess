@@ -34,12 +34,12 @@ public class Position {
         return column.subtractColumn(target.column);
     }
 
-    public boolean isSameRow(Position target) {
-        return this.row == target.row;
-    }
-
     public boolean isSameColumn(Position target) {
         return this.column == target.column;
+    }
+
+    public boolean isSameRow(Position target) {
+        return this.row == target.row;
     }
 
     public boolean isDifferentRow(Position target) {
