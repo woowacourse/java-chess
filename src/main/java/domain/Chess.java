@@ -6,7 +6,7 @@ import domain.position.Position;
 
 public class Chess {
 
-    private final Board board = Board.create();
+    private final Board board = new Board();
 
     public void play(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);

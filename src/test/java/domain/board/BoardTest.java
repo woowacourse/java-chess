@@ -1,7 +1,5 @@
 package domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.Type;
@@ -12,12 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BoardTest {
     private Board board;
 
     @BeforeEach
     void setUp() {
-        board = Board.create();
+        board = new Board();
     }
 
     @Test

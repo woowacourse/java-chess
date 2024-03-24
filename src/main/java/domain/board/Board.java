@@ -4,22 +4,18 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.Type;
 import domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
 
+    private final SquaresGenerator squaresGenerator = new SquaresGenerator();
     private final Map<Position, Piece> squares;
 
-    public Board(Map<Position, Piece> squares) {
-        this.squares = squares;
-    }
-
-    public static Board create() {
-        SquaresGenerator squaresGenerator = new SquaresGenerator();
-        Map<Position, Piece> squares = squaresGenerator.generate();
-        return new Board(squares);
+    public Board() {
+        this.squares = squaresGenerator.generate();
     }
 
     public List<Piece> extractPieces() {
