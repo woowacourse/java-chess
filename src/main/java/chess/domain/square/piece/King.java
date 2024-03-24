@@ -7,7 +7,7 @@ import chess.domain.square.Square;
 import java.util.Map;
 
 public class King extends Piece {
-    public static final int MOVABLE_MAX_DIFF = 1;
+    private static final int MOVABLE_MAX_DIFF = 1;
     private static final Map<Color, King> KING_POOL = Map.of(
             Color.WHITE, new King(Color.WHITE),
             Color.BLACK, new King(Color.BLACK));
