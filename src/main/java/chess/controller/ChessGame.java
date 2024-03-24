@@ -3,72 +3,70 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.PieceColor;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 public class ChessGame {
 
-    public void run() {
+    private static final String MOVE_COMMAND_DELIMITER = " ";
+    private static final String FILE_RANK_DELIMITER = "";
+    private static final int SOURCE_SQUARE_INDEX = 1;
+    private static final int TARGET_SQUARE_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
+
+    public void start() {
         OutputView.printStartMessage();
-        Command command = Command.START;
+        String commandInput = InputView.readCommand();
+        Command command = Command.from(commandInput);
+
+        if (command.isEnd()) {
+            return;
+        }
+        if (command.isMove()) {
+            throw new IllegalStateException("게임을 먼저 시작해 주세요.");
+        }
+
+        Board board = BoardFactory.createBoard();
+        OutputView.printBoard(board.getPieces());
+        playChess(board);
+    }
+
+    private void playChess(final Board board) {
         PieceColor turn = PieceColor.WHITE;
-        Board board = new Board(Map.of());
+        String commandInput = InputView.readCommand();
+        Command command = Command.from(commandInput);
+        if (command.isStart()) {
+            throw new IllegalStateException("이미 게임이 시작되었습니다.");
+        }
 
-        while (command != Command.END) {
-            final List<String> arguments = InputView.readCommand();
-            command = requestUntilValid(() -> Command.from(arguments.get(0)));
-
-            if (command == Command.START) {
-                board = BoardFactory.createBoard();
-                OutputView.printBoard(board.getPieces());
-            }
-            if (command == Command.MOVE) {
-                turn = tryMove(board, arguments.get(1), arguments.get(2), turn);
-            }
+        while (command.isNotEnd()) {
+            turn = playTurn(board, commandInput, turn);
+            commandInput = InputView.readCommand();
+            command = Command.from(commandInput);
         }
     }
 
-    private PieceColor tryMove(Board board, String source, String target, PieceColor turn) {
-        try {
-            if (isNotTurn(board, source, turn)) {
-                throw new IllegalArgumentException("현재는 " + turn + "팀의 턴입니다.");
-            }
-            board.move(
-                    Square.from(source),
-                    Square.from(target));
-            OutputView.printBoard(board.getPieces());
-            return turn.next();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            OutputView.printErrorMessage(e.getMessage());
-        }
-        return turn;
+    private PieceColor playTurn(final Board board, final String commandInput, final PieceColor turn) {
+        List<String> splitCommand = List.of(commandInput.split(MOVE_COMMAND_DELIMITER));
+        Square source = createSquare(splitCommand.get(SOURCE_SQUARE_INDEX));
+        Square target = createSquare(splitCommand.get(TARGET_SQUARE_INDEX));
+
+        board.move(source, target, turn);
+        OutputView.printBoard(board.getPieces());
+        return turn.next();
     }
 
-    private boolean isNotTurn(Board board, String source, PieceColor turn) {
-        return !board.isExistPieceWithColor(Square.from(source), turn);
-    }
-
-    public <T> T requestUntilValid(Supplier<T> supplier) {
-        Optional<T> result = Optional.empty();
-        while (result.isEmpty()) {
-            result = tryGet(supplier);
-        }
-        return result.get();
-    }
-
-    private <T> Optional<T> tryGet(Supplier<T> supplier) {
-        try {
-            return Optional.of(supplier.get());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return Optional.empty();
-        }
+    private Square createSquare(final String commandInput) {
+        List<String> commandToken = List.of(commandInput.split(FILE_RANK_DELIMITER));
+        File file = File.from(commandToken.get(FILE_INDEX));
+        Rank rank = Rank.from(commandToken.get(RANK_INDEX));
+        return Square.of(file, rank);
     }
 }

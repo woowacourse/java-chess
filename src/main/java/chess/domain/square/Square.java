@@ -9,15 +9,7 @@ public record Square(File file, Rank rank) {
     private static final int ONE_STEP = 1;
     private static final int TWO_STEP = 2;
 
-    public static Square from(final String square) {
-        // TODO : 파싱 로직 개선
-        String[] splitSquare = square.split("");
-        File file = File.from(splitSquare[0]);
-        Rank rank = Rank.from(splitSquare[1]);
-        return new Square(file, rank);
-    }
-
-    private static Square of(final File file, final Rank rank) {
+    public static Square of(final File file, final Rank rank) {
         return new Square(file, rank);
     }
 

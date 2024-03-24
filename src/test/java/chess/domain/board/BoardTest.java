@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,11 +20,12 @@ class BoardTest {
     @Test
     void occurExceptionWhenSourceAndTargetAreSameSquare() {
         Board board = new Board(Map.of(
-                Square.from("b3"), new Piece(PieceType.ROOK, PieceColor.BLACK)));
-        Square source = Square.from("b3");
-        Square target = Square.from("b3");
+                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
+        Square source = Square.of(File.b, Rank.THREE);
+        Square target = Square.of(File.b, Rank.THREE);
+        PieceColor turn = PieceColor.WHITE;
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -30,10 +33,23 @@ class BoardTest {
     @DisplayName("해당 위치에 기물이 존재하지 않으면 예외가 발생한다.")
     void occurExceptionWhenNotExistPiece() {
         Board board = new Board(Map.of());
-        Square source = Square.from("b3");
-        Square target = Square.from("b4");
+        Square source = Square.of(File.b, Rank.THREE);
+        Square target = Square.of(File.b, Rank.FOUR);
+        PieceColor turn = PieceColor.WHITE;
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, turn))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("상대방 팀의 기물을 이동하려는 경우 예외가 발생한다.")
+    void occurExceptionWhenNotMyTurn() {
+        Board board = new Board(Map.of());
+        Square source = Square.of(File.b, Rank.SEVEN);
+        Square target = Square.of(File.b, Rank.SIX);
+        PieceColor turn = PieceColor.WHITE;
+
+        assertThatThrownBy(() -> board.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,11 +57,12 @@ class BoardTest {
     @DisplayName("각 기물의 이동 방식으로 갈 수 없는 목적지인 경우 예외가 발생한다.")
     void occurExceptionWhenCannotMove() {
         Board board = new Board(Map.of(
-                Square.from("b3"), new Piece(PieceType.ROOK, PieceColor.BLACK)));
-        Square source = Square.from("b3");
-        Square target = Square.from("c4");
+                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK)));
+        Square source = Square.of(File.b, Rank.THREE);
+        Square target = Square.of(File.b, Rank.FOUR);
+        PieceColor turn = PieceColor.WHITE;
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,13 +70,14 @@ class BoardTest {
     @DisplayName("이동 경로에 다른 기물이 있으면 예외가 발생한다.")
     void occurExceptionWhenExistObstacleOnPath() {
         Board board = new Board(Map.of(
-                Square.from("b3"), new Piece(PieceType.ROOK, PieceColor.BLACK),
-                Square.from("b4"), new Piece(PieceType.ROOK, PieceColor.BLACK)
+                Square.of(File.b, Rank.THREE), new Piece(PieceType.ROOK, PieceColor.BLACK),
+                Square.of(File.b, Rank.FOUR), new Piece(PieceType.ROOK, PieceColor.BLACK)
         ));
-        Square source = Square.from("b3");
-        Square target = Square.from("b5");
+        Square source = Square.of(File.b, Rank.THREE);
+        Square target = Square.of(File.b, Rank.FIVE);
+        PieceColor turn = PieceColor.WHITE;
 
-        assertThatThrownBy(() -> board.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

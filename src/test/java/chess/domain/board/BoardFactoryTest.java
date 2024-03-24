@@ -20,9 +20,9 @@ class BoardFactoryTest {
     @Test
     @DisplayName("보드를 생성한다.")
     void createBoard() {
-        Board actual = BoardFactory.createBoard();
+        final Board actual = BoardFactory.createBoard();
 
-        Map<Square, Piece> expected = new HashMap<>();
+        final Map<Square, Piece> expected = new HashMap<>();
         expected.put(new Square(File.a, Rank.EIGHT), new Piece(PieceType.ROOK, PieceColor.BLACK));
         expected.put(new Square(File.b, Rank.EIGHT), new Piece(PieceType.KNIGHT, PieceColor.BLACK));
         expected.put(new Square(File.c, Rank.EIGHT), new Piece(PieceType.BISHOP, PieceColor.BLACK));

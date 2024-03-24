@@ -12,6 +12,10 @@ public class Piece {
         this.color = color;
     }
 
+    public boolean isSameColor(final PieceColor other) {
+        return color == other;
+    }
+
     public boolean canMove(final Square source, final Square target) {
         return type.findMoveStrategy(source, target);
     }
