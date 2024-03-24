@@ -27,12 +27,10 @@ public class RowPosition {
         return Math.abs(rowNumber - otherRowPosition.rowNumber);
     }
 
-    //TODO: 인덱스가 높은지 넘버가 높은지 직관적으로 알 수 있는 메서드명 생각하기
     public boolean isHigherThan(RowPosition target) {
         return rowNumber > target.rowNumber;
     }
 
-    //TODO: 인덱스가 높은지 넘버가 높은지 직관적으로 알 수 있는 메서드명 생각하기
     public boolean isLowerThan(RowPosition target) {
         return rowNumber < target.rowNumber;
     }

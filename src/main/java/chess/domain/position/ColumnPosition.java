@@ -21,12 +21,10 @@ public class ColumnPosition {
         return Math.abs(columnNumber - otherColumnPosition.columnNumber);
     }
 
-    //TODO: 더 나은 메서드 명 고민해보기
     public boolean isLeft(ColumnPosition otherColumnPosition) {
         return columnNumber < otherColumnPosition.columnNumber;
     }
 
-    //TODO: 더 나은 메서드 명 고민해보기
     public boolean isRight(ColumnPosition otherColumnPosition) {
         return columnNumber > otherColumnPosition.columnNumber;
     }

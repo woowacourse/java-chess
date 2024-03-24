@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DirectionJudgeTest {
-
     @DisplayName("목적지가 수직 위에 있다면 움직이는 방향은 N이다")
     @Test
     void should_DirectionIsN_When_DestinationIsStarightHigherThanStart() {
@@ -87,7 +86,9 @@ class DirectionJudgeTest {
         Position destination = Position.of(0, 3);
 
         assertThatThrownBy(() -> DirectionJudge.judge(start, destination))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("두 위치의 방향을 특정할 수 없습니다.");
     }
 }
+
+
