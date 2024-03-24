@@ -4,7 +4,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
 
-public class WhitePawnFirstMovement implements MovementRule {
+public final class WhitePawnFirstMovement implements MovementRule {
 
     @Override
     public boolean isMovable(Position start, Position end) {

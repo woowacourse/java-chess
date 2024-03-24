@@ -2,7 +2,7 @@ package chess.domain.movement.continuous;
 
 import chess.domain.position.Position;
 
-public class SouthWestMovement extends ContinuousMovementRule {
+public final class SouthWestMovement extends ContinuousMovementRule {
 
     @Override
     protected boolean isMovable(int rankDifference, int fileDifference) {

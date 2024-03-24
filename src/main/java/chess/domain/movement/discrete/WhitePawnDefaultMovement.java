@@ -1,6 +1,6 @@
 package chess.domain.movement.discrete;
 
-public class WhitePawnDefaultMovement extends DiscreteMovementRule {
+public final class WhitePawnDefaultMovement extends DiscreteMovementRule {
 
     @Override
     protected boolean isMovable(int rankDifference, int fileDifference) {
