@@ -49,6 +49,38 @@ public class Square {
         return File.isInRange(column) && Rank.isInRange(row);
     }
 
+    public Square moveUp() {
+        return Square.of(file, rank.up());
+    }
+
+    public Square moveDown() {
+        return Square.of(file, rank.down());
+    }
+
+    public Square moveLeft() {
+        return Square.of(file.left(), rank);
+    }
+
+    public Square moveRight() {
+        return Square.of(file.right(), rank);
+    }
+
+    public Square moveLeftUp() {
+        return Square.of(file.left(), rank.up());
+    }
+
+    public Square moveLeftDown() {
+        return Square.of(file.left(), rank.down());
+    }
+
+    public Square moveRightUp() {
+        return Square.of(file.right(), rank.up());
+    }
+
+    public Square moveRightDown() {
+        return Square.of(file.right(), rank.down());
+    }
+
     public Optional<Square> move(final Direction direction) {
         int row = rank.getValue() + direction.getRow();
         int column = file.getColumn() + direction.getColumn();

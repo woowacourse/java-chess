@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.chessboard.attribute.Direction;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -73,5 +75,69 @@ class SquareTest {
     void moveException(Square current, Direction direction) {
         Optional<Square> square = current.move(direction);
         assertThat(square).isEmpty();
+    }
+
+    @DisplayName("현재 위치에서 위로 이동한다.")
+    @Test
+    void moveUp() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveUp()).isEqualTo(Square.of(File.F, Rank.THREE));
+    }
+
+    @DisplayName("현재 위치에서 아래로 이동한다.")
+    @Test
+    void moveDown() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveDown()).isEqualTo(Square.of(File.F, Rank.ONE));
+    }
+
+    @DisplayName("현재 위치에서 왼쪽으로 이동한다.")
+    @Test
+    void moveLeft() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveLeft()).isEqualTo(Square.of(File.E, Rank.TWO));
+    }
+
+    @DisplayName("현재 위치에서 오른쪽으로 이동한다.")
+    @Test
+    void moveRight() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveRight()).isEqualTo(Square.of(File.G, Rank.TWO));
+    }
+
+    @DisplayName("현재 위치에서 왼쪽_위로 이동한다.")
+    @Test
+    void moveLeftUp() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveLeftUp()).isEqualTo(Square.of(File.E, Rank.THREE));
+    }
+
+    @DisplayName("현재 위치에서 왼쪽_아래로 이동한다.")
+    @Test
+    void moveLeftDown() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveLeftDown()).isEqualTo(Square.of(File.E, Rank.ONE));
+    }
+
+    @DisplayName("현재 위치에서 오른쪽_위로 이동한다.")
+    @Test
+    void moveRightUp() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveRightUp()).isEqualTo(Square.of(File.G, Rank.THREE));
+    }
+
+    @DisplayName("현재 위치에서 오른쪽_아래로 이동한다.")
+    @Test
+    void moveRightDown() {
+        Square square = Square.of(File.F, Rank.TWO);
+
+        Assertions.assertThat(square.moveRightDown()).isEqualTo(Square.of(File.G, Rank.ONE));
     }
 }
