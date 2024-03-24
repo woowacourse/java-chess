@@ -25,9 +25,7 @@ public class ChessGame {
 
     public void run() {
         outputView.printGameIntro();
-        while (getValidCommand() != Command.START) {
-            outputView.printException("게임을 시작하려면 start를 입력하세요.");
-        }
+        retryOnException(inputView::askStartCommand);
         start();
     }
 
@@ -48,10 +46,7 @@ public class ChessGame {
     }
 
     private void playTurn(GameStatus gameStatus, Board board, Color color) {
-        Command command = inputView.askCommand();
-        if (command == Command.START) {
-            throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
-        }
+        Command command = inputView.askMoveOrEndCommand();
         if (command == Command.END) {
             gameStatus.stop();
             return;
@@ -65,10 +60,6 @@ public class ChessGame {
         PositionDTO targetPositionDTO = inputView.askPosition();
         Movement movement = new Movement(sourcePositionDTO.toEntity(), targetPositionDTO.toEntity());
         board.move(movement, color);
-    }
-
-    private Command getValidCommand() {
-        return retryOnException(inputView::askCommand);
     }
 
     private <T> void retryOnException(Consumer<T> action, T value) {
