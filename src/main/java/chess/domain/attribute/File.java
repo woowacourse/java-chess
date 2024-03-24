@@ -119,6 +119,23 @@ public enum File {
         }
     }
 
+    public boolean canMoveLeft() {
+        try {
+            left();
+        } catch (IllegalStateException exception) {
+            return false;
+        }
+        return true;
+    }
+    public boolean canMoveRight() {
+        try {
+            right();
+        } catch (IllegalStateException exception) {
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isInRange(final int column) {
         return FILE_MIN <= column && column <= FILE_MAX;
     }

@@ -3,6 +3,9 @@ package chess.domain.attribute;
 import static chess.domain.attribute.File.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -44,5 +47,23 @@ class FileTest {
     void rightException() {
         assertThatThrownBy(H::right)
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("왼쪽으로 이동할 수 있는지 여부를 반환한다.")
+    @Test
+    void canMoveLeft() {
+        assertAll(
+                () -> assertTrue(H::canMoveLeft),
+                () -> assertFalse(A::canMoveLeft)
+        );
+    }
+
+    @DisplayName("오른쪽으로 이동할 수 있는지 여부를 반환한다.")
+    @Test
+    void canMoveRight() {
+        assertAll(
+                () -> assertTrue(A::canMoveRight),
+                () -> assertFalse(H::canMoveRight)
+        );
     }
 }
