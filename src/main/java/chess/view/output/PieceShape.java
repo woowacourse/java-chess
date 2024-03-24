@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.output;
 
 import chess.model.piece.*;
 

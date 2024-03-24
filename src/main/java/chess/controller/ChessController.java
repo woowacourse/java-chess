@@ -3,11 +3,11 @@ package chess.controller;
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
 import chess.model.position.ChessPosition;
-import chess.view.GameArguments;
-import chess.view.GameCommand;
-import chess.view.InputView;
-import chess.view.MoveArguments;
-import chess.view.OutputView;
+import chess.view.input.GameArguments;
+import chess.view.input.GameCommand;
+import chess.view.input.InputView;
+import chess.view.input.MoveArguments;
+import chess.view.output.OutputView;
 
 import java.util.Objects;
 import java.util.function.Supplier;

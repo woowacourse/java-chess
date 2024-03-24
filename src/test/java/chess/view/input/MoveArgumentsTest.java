@@ -1,5 +1,6 @@
-package chess.view;
+package chess.view.input;
 
+import chess.view.input.MoveArguments;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

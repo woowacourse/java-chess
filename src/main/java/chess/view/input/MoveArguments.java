@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.input;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.File;

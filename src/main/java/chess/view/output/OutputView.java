@@ -1,4 +1,4 @@
-package chess.view;
+package chess.view.output;
 
 import chess.model.board.ChessBoard;
 import chess.model.position.ChessPosition;
