@@ -9,7 +9,7 @@ public final class OutputView {
     private static final CharSequence RANK_DELIMITER = "";
     private static final String ERROR_PREFIX = "[ERROR] ";
 
-    public void printException(IllegalArgumentException e) {
+    public void printException(Exception e) {
         System.out.println(ERROR_PREFIX + e.getMessage() + NEWLINE);
     }
 

@@ -8,10 +8,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dto.BoardDto;
-import chess.model.board.Board;
-import chess.model.board.BoardFactory;
-import chess.model.board.CustomBoardFactory;
-import chess.model.board.InitialBoardFactory;
 import chess.model.piece.Piece;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -5,6 +5,7 @@ import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.board.InitialBoardFactory;
 import chess.model.game.Command;
+import chess.model.game.GameStatus;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -26,26 +27,30 @@ public final class ChessGame {
 
     public void run() {
         inputView.printGameIntro();
+        GameStatus gameStatus = new GameStatus();
         Board board = null;
-        do {
-            board = executeGame(board);
-        } while (isRunning(board));
+        while (gameStatus.isRunning()) {
+            board = executeGame(board, gameStatus);
+        }
     }
 
-    private Board executeGame(Board board) {
-        return retryOnException(() -> executeCommand(board));
+    private Board executeGame(Board board, GameStatus gameStatus) {
+        return retryOnException(() -> executeCommand(board, gameStatus));
     }
 
-    private Board executeCommand(Board board) {
+    private Board executeCommand(Board board, GameStatus gameStatus) {
         List<String> commands = inputView.askGameCommands();
         Command command = Command.findCommand(commands.get(COMMAND_INDEX));
         if (command.isEnd()) {
+            gameStatus.changeEnd();
             return null;
         }
         if (command.isStart()) {
+            gameStatus.changeStart();
             return executeStart();
         }
-        if (command.isMove() && board != null) {
+        if (command.isMove()) {
+            gameStatus.changeMove();
             executeMove(commands, board);
         }
         return board;
@@ -67,14 +72,10 @@ public final class ChessGame {
         outputView.printChessBoard(boardDto);
     }
 
-    private boolean isRunning(Board board) {
-        return board != null;
-    }
-
     private <T> T retryOnException(Supplier<T> operation) {
         try {
             return operation.get();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             outputView.printException(e);
             return retryOnException(operation);
         }
