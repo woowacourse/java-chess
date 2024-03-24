@@ -26,8 +26,8 @@ public class BoardFactory {
 
     private static Map<Position, Piece> createPawnRow(int row, Team team) {
         Map<Position, Piece> pawnRow = new HashMap<>();
-        for (int column = 1; column <= 8; column++) {
-            pawnRow.put(Position.of(row, column), new Pawn(team));
+        for (int i = 1; i <= 8; i++) {
+            pawnRow.put(Position.of(row, i), new Pawn(team));
         }
         return pawnRow;
     }

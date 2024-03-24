@@ -10,15 +10,11 @@ public class OutputView {
     public static final String EMPTY_POSITION = ".";
 
     public static void printChessBoard(Map<Position, Character> piecesCharacter) {
-        for (int row = 8; row >= 1; row--) {
-            printChessRow(piecesCharacter, row);
-        }
-        System.out.println();
-    }
-
-    private static void printChessRow(Map<Position, Character> piecesCharacter, int row) {
-        for (int column = 1; column <= 8; column++) {
-            System.out.print(pieceToString(piecesCharacter, Position.of(row, column)));
+        for (int i = 8; i >= 1; i--) {
+            for (int j = 1; j <= 8; j++) {
+                System.out.print(pieceToString(piecesCharacter, Position.of(i, j)));
+            }
+            System.out.println();
         }
         System.out.println();
     }

@@ -16,9 +16,9 @@ public class Position {
 
     static {
         positions = new ConcurrentHashMap<>();
-        for (int row = MIN_ROW; row <= MAX_ROW; row++) {
-            for (int column = MIN_COLUMN; column <= MAX_COLUMN; column++) {
-                positions.put(toKey(row, column), new Position(row, column));
+        for (int i = MIN_ROW; i <= MAX_ROW; i++) {
+            for (int j = MIN_COLUMN; j <= MAX_COLUMN; j++) {
+                positions.put(toKey(i, j), new Position(i, j));
             }
         }
     }
