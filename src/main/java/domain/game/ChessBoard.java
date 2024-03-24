@@ -12,6 +12,7 @@ import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
 import domain.position.Position;
+import java.util.Collections;
 import java.util.Map;
 
 public class ChessBoard {
@@ -151,6 +152,6 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getPieceByPosition() {
-        return pieceByPosition;
+        return Collections.unmodifiableMap(pieceByPosition);
     }
 }
