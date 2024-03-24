@@ -14,9 +14,10 @@ class DirectionTest {
     void determinePositiveFilePositiveRankTest() {
         // given
         Position destination = Position.of(File.F, Rank.SIX);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.POSITIVE_FILE_POSITIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.POSITIVE_FILE_POSITIVE_RANK);
     }
 
     @Test
@@ -24,9 +25,10 @@ class DirectionTest {
     void determineNegativeFileNegativeRankTest() {
         // given
         Position destination = Position.of(File.B, Rank.TWO);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.NEGATIVE_FILE_NEGATIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.NEGATIVE_FILE_NEGATIVE_RANK);
     }
 
     @Test
@@ -34,9 +36,10 @@ class DirectionTest {
     void determineNegativeFilePositiveRankTest() {
         // given
         Position destination = Position.of(File.B, Rank.SIX);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.NEGATIVE_FILE_POSITIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.NEGATIVE_FILE_POSITIVE_RANK);
     }
 
     @Test
@@ -44,9 +47,10 @@ class DirectionTest {
     void determinePositiveFileNegativeRankTest() {
         // given
         Position destination = Position.of(File.F, Rank.TWO);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.POSITIVE_FILE_NEGATIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.POSITIVE_FILE_NEGATIVE_RANK);
     }
 
     @Test
@@ -54,9 +58,10 @@ class DirectionTest {
     void determineSameFilePositiveRankTest() {
         // given
         Position destination = Position.of(File.D, Rank.SIX);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.SAME_FILE_POSITIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.SAME_FILE_POSITIVE_RANK);
     }
 
     @Test
@@ -64,9 +69,10 @@ class DirectionTest {
     void determineSameFileNegativeRankTest() {
         // given
         Position destination = Position.of(File.D, Rank.TWO);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.SAME_FILE_NEGATIVE_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.SAME_FILE_NEGATIVE_RANK);
     }
 
     @Test
@@ -74,9 +80,10 @@ class DirectionTest {
     void determinePositiveFileSameRankTest() {
         // given
         Position destination = Position.of(File.F, Rank.FOUR);
-        // when, then
-        assertThat(Direction.calculateBetween(source, destination))
-                .isEqualTo(Direction.POSITIVE_FILE_SAME_RANK);
+        // when
+        Direction direction = Direction.calculateBetween(source, destination);
+        // then
+        assertThat(direction).isEqualTo(Direction.POSITIVE_FILE_SAME_RANK);
     }
 
     @Test
