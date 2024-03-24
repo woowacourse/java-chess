@@ -13,7 +13,7 @@ public class Queen extends Piece {
 
 
     public Queen(Color color) {
-        super(color);
+        super(color, 9);
     }
 
     @Override

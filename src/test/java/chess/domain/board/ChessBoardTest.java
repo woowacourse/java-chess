@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -116,5 +117,43 @@ public class ChessBoardTest {
 
         // then
         assertThat(result).isEqualTo(Color.WHITE);
+    }
+
+    @DisplayName("점수를 계산한다")
+    @Test
+    void calculateScore() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+
+        // when
+        double score = chessBoard.calculateScore(Color.BLACK);
+
+        // then
+        assertThat(score).isEqualTo(38);
+    }
+
+    /*
+     * 체스판 상태
+     * RNBQKBNR  8 (rank 8)
+     * P..PPPPP  7
+     * P.......  6
+     * P.......  5
+     * abcdefgh
+     */
+    @DisplayName("같은 file에 2개 이상의 pawn이 있으면 0.5점으로 계산한다.")
+    @Test
+    void calculatePawnScore() {
+        // given
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.getChessBoard().remove(Position.of(File.B, Rank.SEVEN));
+        chessBoard.getChessBoard().remove(Position.of(File.C, Rank.SEVEN));
+        chessBoard.getChessBoard().put(Position.of(File.A, Rank.SIX), new Pawn(Color.BLACK));
+        chessBoard.getChessBoard().put(Position.of(File.A, Rank.FIVE), new Pawn(Color.BLACK));
+
+        // when
+        double score = chessBoard.calculateScore(Color.BLACK);
+
+        // then
+        assertThat(score).isEqualTo(36.5);
     }
 }

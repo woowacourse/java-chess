@@ -5,9 +5,11 @@ import java.util.List;
 
 public abstract class Piece {
     protected final Color color;
+    protected final double score;
 
-    public Piece(Color color) {
+    public Piece(Color color, double score) {
         this.color = color;
+        this.score = score;
     }
 
     public abstract String identifyType();
@@ -24,7 +26,15 @@ public abstract class Piece {
         return this instanceof King;
     }
 
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

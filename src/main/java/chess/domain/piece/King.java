@@ -9,7 +9,7 @@ import java.util.List;
 
 public class King extends Piece {
     public King(Color color) {
-        super(color);
+        super(color, 0);
     }
 
     @Override
