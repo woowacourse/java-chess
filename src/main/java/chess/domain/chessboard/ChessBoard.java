@@ -22,28 +22,28 @@ public class ChessBoard {
     //TODO: 한칸 생각해보기
     public static ChessBoard initializeChessBoard() {
         Map<Column, Line> board = new LinkedHashMap<>();
-        board.put(Column.valueOf("8"), new Line(List.of(new Rook(BLACK), new Knight(BLACK),
+        board.put(Column.from("8"), new Line(List.of(new Rook(BLACK), new Knight(BLACK),
                 new Bishop(BLACK), new Queen(BLACK), new King(BLACK),
                 new Bishop(BLACK), new Knight(BLACK), new Rook(BLACK))));
-        board.put(Column.valueOf("7"), new Line(List.of(new Pawn(BLACK), new Pawn(BLACK),
+        board.put(Column.from("7"), new Line(List.of(new Pawn(BLACK), new Pawn(BLACK),
                 new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK),
                 new Pawn(BLACK), new Pawn(BLACK), new Pawn(BLACK))));
-        board.put(Column.valueOf("6"), new Line(List.of(new Empty(), new Empty(),
+        board.put(Column.from("6"), new Line(List.of(new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty())));
-        board.put(Column.valueOf("5"), new Line(List.of(new Empty(), new Empty(),
+        board.put(Column.from("5"), new Line(List.of(new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty())));
-        board.put(Column.valueOf("4"), new Line(List.of(new Empty(), new Empty(),
+        board.put(Column.from("4"), new Line(List.of(new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty())));
-        board.put(Column.valueOf("3"), new Line(List.of(new Empty(), new Empty(),
+        board.put(Column.from("3"), new Line(List.of(new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty(),
                 new Empty(), new Empty(), new Empty())));
-        board.put(Column.valueOf("2"), new Line(List.of(new Pawn(WHITE), new Pawn(WHITE),
+        board.put(Column.from("2"), new Line(List.of(new Pawn(WHITE), new Pawn(WHITE),
                 new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE),
                 new Pawn(WHITE), new Pawn(WHITE), new Pawn(WHITE))));
-        board.put(Column.valueOf("1"), new Line(List.of(new Rook(WHITE), new Knight(WHITE),
+        board.put(Column.from("1"), new Line(List.of(new Rook(WHITE), new Knight(WHITE),
                 new Bishop(WHITE), new Queen(WHITE), new King(WHITE),
                 new Bishop(WHITE), new Knight(WHITE), new Rook(WHITE))));
 

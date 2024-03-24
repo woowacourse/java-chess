@@ -1,30 +1,27 @@
 package chess.domain.position;
 
-import java.util.Map;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
-import static java.util.stream.Collectors.toMap;
+public enum Row {
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7),
+    ;
 
-public class Row {
-    private final int value;
-    private static final Map<Integer, Row> CACHE = IntStream.rangeClosed(0, 7)
-            .boxed()
-            .collect(toMap(
-                    i -> i,
-                    Row::new
-            ));
+    private final int index;
 
-    private Row(int value) {
-        this.value = value;
+    Row(int index) {
+        this.index = index;
     }
 
-    public static Row valueOf(String value) {
+    public static Row from(String value) {
         validate(value);
-        return CACHE.get(value.charAt(0) - 'a');
-    }
-
-    public Row update(int direction) {
-        return CACHE.get(this.value + direction);
+        return find(value.charAt(0) - 'a');
     }
 
     private static void validate(String value) {
@@ -45,11 +42,25 @@ public class Row {
         }
     }
 
-    public int getValue() {
-        return value;
+    private static Row find(int index) {
+        return Arrays.stream(values())
+                .filter(row -> row.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("a~h까지 가능합니다."));
+    }
+
+    public Row update(int direction) {
+        return Arrays.stream(values())
+                .filter(row -> row.index == this.index + direction)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("a~h까지 가능합니다."));
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public int compare(Row row) {
-        return Integer.compare(row.value, value);
+        return Integer.compare(row.index, index);
     }
 }

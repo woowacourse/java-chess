@@ -19,12 +19,12 @@ public class Line {
     }
 
     public Piece getChessPiece(Row row) {
-        return line.get(row.getValue());
+        return line.get(row.getIndex());
     }
 
     public Line update(Row row, Piece chessPiece) {
         List<Piece> line = new ArrayList<>(this.line);
-        line.set(row.getValue(), chessPiece);
+        line.set(row.getIndex(), chessPiece);
         return new Line(line);
     }
 }

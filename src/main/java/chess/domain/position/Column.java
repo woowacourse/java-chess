@@ -2,25 +2,27 @@ package chess.domain.position;
 
 import chess.domain.chesspiece.Team;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.IntStream;
+import java.util.Arrays;
 
-import static java.util.stream.Collectors.toMap;
+public enum Column {
+    ONE(0),
+    TWO(1),
+    THREE(2),
+    FOUR(3),
+    FIVE(4),
+    SIX(5),
+    SEVEN(6),
+    EIGHT(7),
+    ;
+    private final int index;
 
-public class Column {
-    private final int value;
-    private static final Map<Integer, Column> CACHE = IntStream.rangeClosed(0, 7)
-            .boxed()
-            .collect(toMap(Function.identity(), Column::new));
-
-    private Column(int value) {
-        this.value = value;
+    Column(int index) {
+        this.index = index;
     }
 
-    public static Column valueOf(String value) {
+    public static Column from(String value) {
         validate(value);
-        return CACHE.get(Integer.parseInt(value) - 1);
+        return find(Integer.parseInt(value) - 1);
     }
 
     private static void validate(String value) {
@@ -38,27 +40,36 @@ public class Column {
         }
     }
 
-    public Column update(int direction) {
-        return CACHE.get(this.value + direction);
+    private static Column find(int index) {
+        return Arrays.stream(values())
+                .filter(column -> column.index == index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("1~8까지 가능합니다."));
     }
 
+    public Column update(int direction) {
+        return Arrays.stream(values())
+                .filter(column -> column.index == this.index + direction)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("1~8까지 가능합니다."));
+    }
 
     public boolean isPawnStartPosition(Team team) {
         if (team.isWhite()) {
-            return value == 1;
+            return index == 1;
         }
-        return value == 6;
+        return index == 6;
     }
 
     public int subtractColumn(Column column) {
-        return this.value - column.value;
+        return this.index - column.index;
     }
 
-    public int getValue() {
-        return value;
+    public int getIndex() {
+        return index;
     }
 
     public int compare(Column column) {
-        return Integer.compare(column.value, value);
+        return Integer.compare(column.index, index);
     }
 }

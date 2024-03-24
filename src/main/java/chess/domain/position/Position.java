@@ -14,8 +14,8 @@ public class Position {
     }
 
     public static Position of(String position) {
-        Row row = Row.valueOf(position.substring(0, 1));
-        Column column = Column.valueOf(position.substring(1));
+        Row row = Row.from(position.substring(0, 1));
+        Column column = Column.from(position.substring(1));
 
         return new Position(row, column);
     }
@@ -46,11 +46,11 @@ public class Position {
     }
 
     public int calculateRowDistance(Position target) {
-        return Math.abs(row.getValue() - target.row.getValue());
+        return Math.abs(row.getIndex() - target.row.getIndex());
     }
 
     public int calculateColumnDistance(Position target) {
-        return Math.abs(column.getValue() - target.getColumn().getValue());
+        return Math.abs(column.getIndex() - target.getColumn().getIndex());
     }
 
     public int calculatePawnColumnDistance(Position target, Team team) {
