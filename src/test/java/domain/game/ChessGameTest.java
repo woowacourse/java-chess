@@ -42,4 +42,46 @@ class ChessGameTest {
         // Then
         assertThat(chessGame.currentPlayingTeam()).isEqualTo(TeamColor.BLACK);
     }
+
+    @Test
+    @DisplayName("게임이 진행중인 상태에서는 전달받은 출발지와 목적지에 따라 말을 이동시킨다.")
+    void movePieceTest() {
+        // Given
+        ChessGame chessGame = new ChessGame();
+
+        // When
+        Position source = A2;
+        Position destination = A4;
+
+        // Then
+        assertThatCode(() -> chessGame.move(source, destination))
+                .doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @MethodSource("kingCaughtCase")
+    @DisplayName("한 팀의 킹이 잡히면 게임을 종료하고 승자를 판단할 수 있다.")
+    void gameEndTest(Map<Position, Piece> piecePositions, Position source, Position destination, TeamColor expectedWinner) {
+        // Given
+        Board board = new Board(new HashMap<>(piecePositions));
+        TestableChessGame chessGame = piecePositions.get(source).hasColor(TeamColor.WHITE)
+                ? TestableChessGame.whiteTurnOf(board)
+                : TestableChessGame.blackTurnOf(board);
+
+        // When
+        chessGame.move(source, destination);
+
+        // Then
+        assertAll(
+                () -> assertThat(chessGame.isGameEnd()).isTrue(),
+                () -> assertThat(chessGame.getWinner()).isEqualTo(expectedWinner)
+        );
+    }
+
+    static Stream<Arguments> kingCaughtCase() {
+        return Stream.of(
+                Arguments.of(Map.of(D4, BLACK_KING_PIECE, D3, WHITE_QUEEN_PIECE), D3, D4, TeamColor.WHITE),
+                Arguments.of(Map.of(D4, WHITE_KING_PIECE, D3, BLACK_QUEEN_PIECE), D3, D4, TeamColor.BLACK)
+        );
+    }
 }
