@@ -22,42 +22,50 @@ public class Point {
     }
 
     public Direction findRoute(Point destination) {
-        int fileDistance = file.calculateDistanceFrom(destination.file);
-        int rankDistance = rank.calculateDistanceFrom(destination.rank);
+        int fileDistance = calculateFileDistance(destination);
+        int rankDistance = calculateRankDistance(destination);
         int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
         int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
 
         if (fileDistance == 0 || rankDistance == 0) {
             return Direction.of(unitFile, unitRank);
         }
-        if (isDiagonal(destination)) {
+        if (isDiagonalWithSlopeOfOne(destination)) {
             return Direction.of(unitFile, unitRank);
         }
         return Direction.of(fileDistance, rankDistance);
     }
 
-    public boolean isDiagonal(Point destination) {
-        int fileDistance = this.file.calculateDistanceFrom(destination.file);
-        int rankDistance = this.rank.calculateDistanceFrom(destination.rank);
-        if (this.equals(destination) || rankDistance == 0) {
+    public boolean isDiagonalWithSlopeOfOne(Point destination) {
+        if (this.equals(destination)) {
             return false;
         }
-        return Math.abs((double) fileDistance / rankDistance) == 1;
+        return Math.abs(calculateSlope(destination)) == 1;
+    }
+
+    private double calculateSlope(final Point destination) {
+        int fileDistance = calculateFileDistance(destination);
+        int rankDistance = calculateRankDistance(destination);
+
+        if (rankDistance == 0) {
+            return Double.MAX_VALUE;
+        }
+        return (double) fileDistance / rankDistance;
     }
 
     public boolean isStraight(Point destination) {
         if (this.equals(destination)) {
             return false;
         }
-        return this.file.equals(destination.file) || this.rank.equals(destination.rank);
+        return this.file == destination.file || this.rank == destination.rank;
     }
 
     public boolean isAround(Point destination) {
         if (this.equals(destination)) {
             return false;
         }
-        int fileDistance = this.file.calculateDistanceFrom(destination.file);
-        int rankDistance = this.rank.calculateDistanceFrom(destination.rank);
+        int fileDistance = calculateFileDistance(destination);
+        int rankDistance = calculateRankDistance(destination);
         int distance = getDistance(fileDistance, rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
             return distance == 2;
@@ -69,10 +77,18 @@ public class Point {
         return Math.abs(fileDistance) + Math.abs(rankDistance);
     }
 
-    public int multiplyAxis(Point point) {
-        int fileDistance = this.file.calculateDistanceFrom(point.file);
-        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
+    public int multiplyAxis(Point destination) {
+        int fileDistance = calculateFileDistance(destination);
+        int rankDistance = calculateRankDistance(destination);
         return fileDistance * rankDistance;
+    }
+
+    private int calculateFileDistance(final Point destination) {
+        return file.calculateDistanceFrom(destination.file);
+    }
+
+    private int calculateRankDistance(final Point destination) {
+        return rank.calculateDistanceFrom(destination.rank);
     }
 
     public boolean isInitialPointOfPawn() {

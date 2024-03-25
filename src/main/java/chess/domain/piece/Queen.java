@@ -12,6 +12,6 @@ public final class Queen extends Piece {
 
     @Override
     public boolean isMovable(Point departure, Point destination) {
-        return departure.isStraight(destination) || departure.isDiagonal(destination);
+        return departure.isStraight(destination) || departure.isDiagonalWithSlopeOfOne(destination);
     }
 }
