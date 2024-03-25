@@ -16,7 +16,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Movement movement) {
+    public boolean canMove(final Movement movement) {
         return movement.getRankDistance() == DEFAULT_STEP_TWO && movement.getFileDistance() == DEFAULT_STEP_ONE
                 || movement.getRankDistance() == DEFAULT_STEP_ONE && movement.getFileDistance() == DEFAULT_STEP_TWO;
     }

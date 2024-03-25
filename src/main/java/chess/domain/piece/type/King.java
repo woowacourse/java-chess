@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Movement movement) {
+    public boolean canMove(final Movement movement) {
         return movement.isVertical() && movement.getRankDistance() == DEFAULT_STEP
                 || movement.isHorizontal() && movement.getFileDistance() == DEFAULT_STEP
                 || movement.isDiagonal() && movement.getRankDistance() == DEFAULT_STEP;
