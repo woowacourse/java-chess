@@ -125,9 +125,13 @@ public class ChessGame {
 
     private void validateRouteIsContainPiece(Set<Position> positions) {
         for (Position position : positions) {
-            if (board.containsKey(position)) {
-                throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
-            }
+            validateContainPiece(position);
+        }
+    }
+
+    private void validateContainPiece(Position position) {
+        if (board.containsKey(position)) {
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
         }
     }
 
