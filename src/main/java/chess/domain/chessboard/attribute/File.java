@@ -6,9 +6,6 @@ import java.util.function.Predicate;
 public enum File {
     A, B, C, D, E, F, G, H;
 
-    private static final int FILE_MIN = 1;
-    private static final int FILE_MAX = 8;
-
     public static File from(final char value) {
         return from(String.valueOf(value));
     }
@@ -26,11 +23,11 @@ public enum File {
                 .filter(predicate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "파일은 %d~%d 사이로 입력해주세요: %s".formatted(FILE_MIN, FILE_MAX, value)));
+                        "파일은 a~h 사이로 입력해주세요: %s".formatted(value)));
     }
 
     public static boolean isInRange(final int column) {
-        return FILE_MIN <= column && column <= FILE_MAX;
+        return A.toColumn() <= column && column <= H.toColumn();
     }
 
     public int toColumn() {
