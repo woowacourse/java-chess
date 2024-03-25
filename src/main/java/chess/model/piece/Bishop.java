@@ -5,12 +5,14 @@ import chess.model.position.Distance;
 import java.util.List;
 
 public class Bishop extends Piece {
-    public Bishop(Side side) {
+    public Bishop(final Side side) {
         super(side);
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+    public List<ChessPosition> findPath(
+            final ChessPosition source, final ChessPosition target, final Piece targetPiece
+    ) {
         checkValidTargetPiece(targetPiece);
         Distance distance = target.calculateDistance(source);
         if (distance.isDiagonalMovement()) {

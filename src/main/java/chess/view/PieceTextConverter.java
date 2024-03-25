@@ -13,7 +13,7 @@ public class PieceTextConverter {
     private PieceTextConverter() {
     }
 
-    public static String convertToText(Piece piece) {
+    public static String convertToText(final Piece piece) {
         if (piece instanceof King) {
             return getText(piece, "k", "K");
         }

@@ -8,14 +8,14 @@ public class Distance {
     private final int fileDifference;
     private final int rankDifference;
 
-    public Distance(int fileDifference, int rankDifference) {
+    public Distance(final int fileDifference, final int rankDifference) {
         this.fileDifference = fileDifference;
         this.rankDifference = rankDifference;
     }
 
-    public boolean hasSame(int displacement) {
-        int fileDistance = Math.abs(fileDifference);
-        int rankDistance = Math.abs(rankDifference);
+    public boolean hasSame(final int displacement) {
+        final int fileDistance = Math.abs(fileDifference);
+        final int rankDistance = Math.abs(rankDifference);
 
         if (isCrossMovement() || isDiagonalMovement()) {
             return fileDistance == displacement || rankDistance == displacement;
@@ -23,7 +23,7 @@ public class Distance {
         return fileDistance + rankDistance == displacement;
     }
 
-    public boolean isForward(Side side) {
+    public boolean isForward(final Side side) {
         if (fileDifference != 0) {
             return false;
         }
@@ -50,20 +50,20 @@ public class Distance {
         return Math.abs(fileDifference) == Math.abs(rankDifference);
     }
 
-    public List<ChessPosition> findPath(ChessPosition source) {
+    public List<ChessPosition> findPath(final ChessPosition source) {
         if (!isCrossMovement() && !isDiagonalMovement()) {
             return List.of();
         }
-        int fileOffset = calculateIncrement(fileDifference);
-        int rankOffset = calculateIncrement(rankDifference);
-        int repeatCount = calculateRepeatCount();
+        final int fileOffset = calculateIncrement(fileDifference);
+        final int rankOffset = calculateIncrement(rankDifference);
+        final int repeatCount = calculateRepeatCount();
 
-        List<ChessPosition> path = new ArrayList<>();
+        final List<ChessPosition> path = new ArrayList<>();
         addPath(source, repeatCount, fileOffset, rankOffset, path);
         return path;
     }
 
-    private int calculateIncrement(int difference) {
+    private int calculateIncrement(final int difference) {
         return Integer.compare(difference, 0);
     }
 
@@ -74,8 +74,11 @@ public class Distance {
         return Math.abs(fileDifference);
     }
 
-    private void addPath(ChessPosition source, int repeatCount, int fileOffset, int rankOffset,
-                         List<ChessPosition> path) {
+    private void addPath(
+            final ChessPosition source,
+            int repeatCount, final int fileOffset, final int rankOffset,
+            final List<ChessPosition> path
+    ) {
         ChessPosition prevPosition = source;
         while (repeatCount-- > 0) {
             File nextFile = prevPosition.findNextFile(fileOffset);

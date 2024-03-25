@@ -9,11 +9,11 @@ public enum GameCommand {
 
     private final String text;
 
-    GameCommand(String text) {
+    GameCommand(final String text) {
         this.text = text;
     }
 
-    public static GameCommand createFirstGameCommand(String input) {
+    public static GameCommand createFirstGameCommand(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
                 .filter(value -> !MOVE.equals(value))
@@ -21,7 +21,7 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException("start 혹은 end를 입력해주세요."));
     }
 
-    public static GameCommand createMoveCommand(String input) {
+    public static GameCommand createMoveCommand(final String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
                 .filter(value -> !START.equals(value))

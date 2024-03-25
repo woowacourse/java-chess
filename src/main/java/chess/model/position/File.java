@@ -15,31 +15,27 @@ public enum File {
     private final int coordinate;
     private final String name;
 
-    File(int coordinate, String name) {
+    File(final int coordinate, final String name) {
         this.coordinate = coordinate;
         this.name = name;
     }
 
-    public static File from(String name) {
+    public static File from(final String name) {
         return Arrays.stream(values())
                 .filter(file -> file.name.equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 file 이름입니다."));
     }
 
-    public int minus(File other) {
+    public int minus(final File other) {
         return this.coordinate - other.coordinate;
     }
 
-    public File findNextFile(int offset) {
-        int nextCoordinate = offset + coordinate;
+    public File findNextFile(final int offset) {
+        final int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 file 좌표입니다."));
-    }
-
-    public int getCoordinate() {
-        return coordinate;
     }
 }

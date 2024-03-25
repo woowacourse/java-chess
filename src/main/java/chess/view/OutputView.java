@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printException(String message) {
+    public void printException(final String message) {
         System.out.println("[ERROR] " + message);
     }
 
-    public void printChessBoard(ChessBoard chessBoard) {
-        Map<ChessPosition, Piece> board = chessBoard.getBoard();
+    public void printChessBoard(final ChessBoard chessBoard) {
+        final Map<ChessPosition, Piece> board = chessBoard.getBoard();
         System.out.println(convertChessBoardText(board));
     }
 

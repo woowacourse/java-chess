@@ -15,30 +15,30 @@ public enum Rank {
 
     private final int coordinate;
 
-    Rank(int coordinate) {
+    Rank(final int coordinate) {
         this.coordinate = coordinate;
     }
 
-    public static Rank from(int coordinate) {
+    public static Rank from(final int coordinate) {
         return Arrays.stream(values())
                 .filter(rank -> rank.coordinate == coordinate)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
-    public int minus(Rank other) {
+    public int minus(final Rank other) {
         return this.coordinate - other.coordinate;
     }
 
-    public boolean isPawnInitialRank(Side side) {
+    public boolean isPawnInitialRank(final Side side) {
         if (side.isWhite()) {
             return TWO.equals(this);
         }
         return SEVEN.equals(this);
     }
 
-    public Rank findNextRank(int offset) {
-        int nextCoordinate = offset + coordinate;
+    public Rank findNextRank(final int offset) {
+        final int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == nextCoordinate)
                 .findFirst()

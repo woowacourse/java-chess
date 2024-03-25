@@ -17,7 +17,7 @@ public enum Side {
         return EMPTY.equals(this);
     }
 
-    public boolean isEnemy(Side other) {
+    public boolean isEnemy(final Side other) {
         if (isWhite()) {
             return other.isBlack();
         }

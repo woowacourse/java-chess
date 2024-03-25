@@ -19,21 +19,23 @@ public class MoveArguments {
     private final String sourceFile;
     private final String targetFile;
 
-    private MoveArguments(String sourceFile, int sourceRank, String targetFile, int targetRank) {
+    private MoveArguments(
+            final String sourceFile, final int sourceRank, final String targetFile, final int targetRank
+    ) {
         this.sourceFile = sourceFile;
         this.sourceRank = sourceRank;
         this.targetFile = targetFile;
         this.targetRank = targetRank;
     }
 
-    public static MoveArguments from(List<String> inputs) {
+    public static MoveArguments from(final List<String> inputs) {
         List<String> arguments = convertArguments(inputs);
         validateArgumentsSize(arguments);
         return new MoveArguments(arguments.get(0), parseInt(arguments.get(1)),
                 arguments.get(2), parseInt(arguments.get(3)));
     }
 
-    private static List<String> convertArguments(List<String> arguments) {
+    private static List<String> convertArguments(final List<String> arguments) {
         return arguments.stream()
                 .skip(1)
                 .filter(MoveArguments::validateMoveArgument)
@@ -41,18 +43,18 @@ public class MoveArguments {
                 .toList();
     }
 
-    private static void validateArgumentsSize(List<String> results) {
+    private static void validateArgumentsSize(final List<String> results) {
         if (results.size() != ARGUMENTS_SIZE) {
             throw new IllegalArgumentException("Source 위치와 Target 위치가 정확하지 않습니다.");
         }
     }
 
-    private static boolean validateMoveArgument(String argument) {
-        Matcher matcher = MOVE_PATTERN.matcher(argument);
+    private static boolean validateMoveArgument(final String argument) {
+        final Matcher matcher = MOVE_PATTERN.matcher(argument);
         return matcher.matches();
     }
 
-    private static int parseInt(String value) {
+    private static int parseInt(final String value) {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {

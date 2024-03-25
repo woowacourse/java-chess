@@ -17,14 +17,16 @@ public class Pawn extends Piece {
             .map(file -> new ChessPosition(file, Rank.SEVEN))
             .toList();
 
-    public Pawn(Side side) {
+    public Pawn(final Side side) {
         super(side);
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+    public List<ChessPosition> findPath(
+            final ChessPosition source, final ChessPosition target, final Piece targetPiece
+    ) {
         checkValidTargetPiece(targetPiece);
-        Distance distance = target.calculateDistance(source);
+        final Distance distance = target.calculateDistance(source);
         validateForwardPath(source, targetPiece, distance);
         if (canCrossMove(source, distance) || canDiagonalMove(targetPiece, distance)) {
             return distance.findPath(source);
@@ -32,13 +34,15 @@ public class Pawn extends Piece {
         throw new IllegalStateException("폰은 해당 경로로 이동할 수 없습니다.");
     }
 
-    private void validateForwardPath(ChessPosition source, Piece targetPiece, Distance distance) {
+    private void validateForwardPath(
+            final ChessPosition source, final Piece targetPiece, final Distance distance
+    ) {
         if (!targetPiece.isEmpty() && canCrossMove(source, distance)) {
             throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 전진할 수 없습니다.");
         }
     }
 
-    private boolean canCrossMove(ChessPosition source, Distance distance) {
+    private boolean canCrossMove(final ChessPosition source, final Distance distance) {
         if (isPawnInitialPosition(source)) {
             return canMoveForwardWith(distance, DISPLACEMENT) ||
                     canMoveForwardWith(distance, INITIAL_SPECIAL_DISPLACEMENT);
@@ -46,7 +50,7 @@ public class Pawn extends Piece {
         return canMoveForwardWith(distance, DISPLACEMENT);
     }
 
-    private boolean isPawnInitialPosition(ChessPosition source) {
+    private boolean isPawnInitialPosition(final ChessPosition source) {
         if (side.isWhite()) {
             return INITIAL_WHITE_POSITION.contains(source);
         }
@@ -56,17 +60,17 @@ public class Pawn extends Piece {
         throw new IllegalStateException("Source 위치가 비어있습니다.");
     }
 
-    private boolean canDiagonalMove(Piece targetPiece, Distance distance) {
+    private boolean canDiagonalMove(final Piece targetPiece, final Distance distance) {
         return isPossibleDiagonal(distance)
                 && !targetPiece.isEmpty()
                 && !isSameSide(targetPiece);
     }
 
-    private boolean canMoveForwardWith(Distance distance, int displacement) {
+    private boolean canMoveForwardWith(final Distance distance, final int displacement) {
         return distance.isForward(side) && distance.hasSame(displacement);
     }
 
-    private boolean isPossibleDiagonal(Distance distance) {
+    private boolean isPossibleDiagonal(final Distance distance) {
         return distance.isDiagonalMovement() && distance.hasSame(DISPLACEMENT);
     }
 }

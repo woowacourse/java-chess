@@ -22,7 +22,7 @@ public class ChessBoardInitializer {
     }
 
     public static Map<ChessPosition, Piece> create() {
-        Map<ChessPosition, Piece> board = createInitialBoard();
+        final Map<ChessPosition, Piece> board = createInitialBoard();
         board.putAll(createSpecialPieces(Side.BLACK));
         board.putAll(createPawns(Side.BLACK));
         board.putAll(createSpecialPieces(Side.WHITE));
@@ -37,8 +37,8 @@ public class ChessBoardInitializer {
                 .collect(Collectors.toMap(Function.identity(), chessPosition -> new Empty()));
     }
 
-    private static Map<ChessPosition, Piece> createSpecialPieces(Side side) {
-        Rank rank = convertSpecialPieceRankWithSide(side);
+    private static Map<ChessPosition, Piece> createSpecialPieces(final Side side) {
+        final Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Rook(side),
                 new ChessPosition(File.B, rank), new Knight(side),
@@ -51,8 +51,8 @@ public class ChessBoardInitializer {
         );
     }
 
-    private static Map<ChessPosition, Piece> createPawns(Side side) {
-        Rank rank = convertPawnRanksWithSide(side);
+    private static Map<ChessPosition, Piece> createPawns(final Side side) {
+        final Rank rank = convertPawnRanksWithSide(side);
         return Map.of(
                 new ChessPosition(File.A, rank), new Pawn(side),
                 new ChessPosition(File.B, rank), new Pawn(side),
@@ -65,14 +65,14 @@ public class ChessBoardInitializer {
         );
     }
 
-    private static Rank convertSpecialPieceRankWithSide(Side side) {
+    private static Rank convertSpecialPieceRankWithSide(final Side side) {
         if (side == Side.BLACK) {
             return Rank.EIGHT;
         }
         return Rank.ONE;
     }
 
-    private static Rank convertPawnRanksWithSide(Side side) {
+    private static Rank convertPawnRanksWithSide(final Side side) {
         if (side == Side.BLACK) {
             return Rank.SEVEN;
         }

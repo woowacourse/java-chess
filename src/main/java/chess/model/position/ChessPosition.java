@@ -6,22 +6,22 @@ public class ChessPosition {
     private final File file;
     private final Rank rank;
 
-    public ChessPosition(File file, Rank rank) {
+    public ChessPosition(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public Distance calculateDistance(ChessPosition other) {
-        int fileDifference = file.minus(other.file);
-        int rankDifference = rank.minus(other.rank);
+    public Distance calculateDistance(final ChessPosition other) {
+        final int fileDifference = file.minus(other.file);
+        final int rankDifference = rank.minus(other.rank);
         return new Distance(fileDifference, rankDifference);
     }
 
-    public File findNextFile(int offset) {
+    public File findNextFile(final int offset) {
         return file.findNextFile(offset);
     }
 
-    public Rank findNextRank(int offset) {
+    public Rank findNextRank(final int offset) {
         return rank.findNextRank(offset);
     }
 
