@@ -1,10 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -15,7 +15,7 @@ public class Position {
     private static final Map<Integer, Position> positions;
 
     static {
-        positions = new ConcurrentHashMap<>();
+        positions = new HashMap<>();
         for (int i = MIN_ROW; i <= MAX_ROW; i++) {
             for (int j = MIN_COLUMN; j <= MAX_COLUMN; j++) {
                 positions.put(toKey(i, j), new Position(i, j));
