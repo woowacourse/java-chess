@@ -4,6 +4,7 @@ import static domain.PieceMoveResult.*;
 import static domain.Position.*;
 import static domain.Team.*;
 
+import domain.piece.Pawn;
 import java.util.List;
 import java.util.stream.Stream;
 

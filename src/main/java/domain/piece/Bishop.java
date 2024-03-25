@@ -1,12 +1,16 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.FAILURE;
-import static domain.PieceType.BISHOP;
+import static domain.piece.PieceType.BISHOP;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.Optional;
 
-final class Bishop extends AbstractStraightMovePiece {
-    Bishop(Position position, Team team) {
+public final class Bishop extends AbstractStraightMovePiece {
+    public Bishop(Position position, Team team) {
         super(position, team);
     }
 

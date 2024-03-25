@@ -1,7 +1,11 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.FAILURE;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.List;
 import java.util.Optional;
 

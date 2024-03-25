@@ -3,6 +3,7 @@ package domain;
 import static domain.Position.A1;
 import static domain.Position.A2;
 
+import domain.command.MoveCommand;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

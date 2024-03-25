@@ -1,6 +1,6 @@
 package domain;
 
-import static domain.StartCommand.START_COMMAND;
+import static domain.command.StartCommand.START_COMMAND;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

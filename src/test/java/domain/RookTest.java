@@ -21,6 +21,8 @@ import static domain.Position.H4;
 import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
+import domain.piece.Pawn;
+import domain.piece.Rook;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

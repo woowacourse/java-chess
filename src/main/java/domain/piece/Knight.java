@@ -1,13 +1,17 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.FAILURE;
-import static domain.PieceType.KNIGHT;
+import static domain.piece.PieceType.KNIGHT;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.Optional;
 
-final class Knight extends AbstractCatchOnMovePiece {
+public final class Knight extends AbstractCatchOnMovePiece {
 
-    Knight(Position position, Team team) {
+    public Knight(Position position, Team team) {
         super(position, team);
     }
 

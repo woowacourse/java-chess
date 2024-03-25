@@ -34,6 +34,8 @@ import static domain.Position.H8;
 import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
+import domain.piece.Pawn;
+import domain.piece.Queen;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

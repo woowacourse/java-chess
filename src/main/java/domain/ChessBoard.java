@@ -5,6 +5,7 @@ import static domain.PieceMoveResult.CATCH;
 import static domain.PieceMoveResult.FAILURE;
 import static domain.Team.WHITE;
 
+import domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

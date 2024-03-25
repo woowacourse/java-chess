@@ -1,18 +1,22 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.CATCH;
 import static domain.PieceMoveResult.FAILURE;
 import static domain.PieceMoveResult.SUCCESS;
-import static domain.PieceType.PAWN;
+import static domain.piece.PieceType.PAWN;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.List;
 import java.util.Optional;
 
-final class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     private final Position initialPosition;
 
-    Pawn(Position position, Team team) {
+    public Pawn(Position position, Team team) {
         super(position, team);
         this.initialPosition = position;
     }

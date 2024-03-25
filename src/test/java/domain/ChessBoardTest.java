@@ -25,6 +25,13 @@ import static domain.Position.H1;
 import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
+import domain.piece.Bishop;
+import domain.piece.King;
+import domain.piece.Knight;
+import domain.piece.Pawn;
+import domain.piece.Piece;
+import domain.piece.Queen;
+import domain.piece.Rook;
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;

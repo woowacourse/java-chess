@@ -1,7 +1,7 @@
 package view;
 
-import domain.Piece;
-import domain.PieceType;
+import domain.piece.Piece;
+import domain.piece.PieceType;
 import domain.Team;
 import java.util.ArrayList;
 import java.util.List;

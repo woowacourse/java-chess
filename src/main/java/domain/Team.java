@@ -3,7 +3,7 @@ package domain;
 public enum Team {
 	WHITE, BLACK;
 
-	Team otherTeam() {
+	public Team otherTeam() {
 		if (this.equals(WHITE)) {
 			return BLACK;
 		}

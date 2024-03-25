@@ -1,6 +1,6 @@
 package domain;
 
-import static domain.EndCommand.END_COMMAND;
+import static domain.command.EndCommand.END_COMMAND;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

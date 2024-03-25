@@ -1,9 +1,13 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.CATCH;
 import static domain.PieceMoveResult.FAILURE;
 import static domain.PieceMoveResult.SUCCESS;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.Optional;
 
 abstract class AbstractCatchOnMovePiece extends Piece {

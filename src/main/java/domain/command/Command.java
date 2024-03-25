@@ -1,4 +1,4 @@
-package domain;
+package domain.command;
 
 import java.util.List;
 

@@ -1,12 +1,16 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.FAILURE;
-import static domain.PieceType.QUEEN;
+import static domain.piece.PieceType.QUEEN;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.Optional;
 
-final class Queen extends AbstractStraightMovePiece {
-    Queen(Position position, Team team) {
+public final class Queen extends AbstractStraightMovePiece {
+    public Queen(Position position, Team team) {
         super(position, team);
     }
 

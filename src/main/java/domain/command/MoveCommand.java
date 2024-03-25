@@ -1,5 +1,6 @@
-package domain;
+package domain.command;
 
+import domain.Position;
 import java.util.Arrays;
 import java.util.List;
 

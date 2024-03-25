@@ -1,12 +1,16 @@
-package domain;
+package domain.piece;
 
 import static domain.PieceMoveResult.FAILURE;
-import static domain.PieceType.ROOK;
+import static domain.piece.PieceType.ROOK;
 
+import domain.PieceMoveResult;
+import domain.PiecesOnChessBoard;
+import domain.Position;
+import domain.Team;
 import java.util.Optional;
 
-final class Rook extends AbstractStraightMovePiece {
-    Rook(Position position, Team team) {
+public final class Rook extends AbstractStraightMovePiece {
+    public Rook(Position position, Team team) {
         super(position, team);
     }
 

@@ -1,10 +1,10 @@
 package view;
 
-import static domain.EndCommand.END_COMMAND;
-import static domain.StartCommand.START_COMMAND;
+import static domain.command.EndCommand.END_COMMAND;
+import static domain.command.StartCommand.START_COMMAND;
 
-import domain.Command;
-import domain.MoveCommand;
+import domain.command.Command;
+import domain.command.MoveCommand;
 import java.util.Scanner;
 
 public class InputView {

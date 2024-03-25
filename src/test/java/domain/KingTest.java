@@ -4,6 +4,8 @@ import static domain.PieceMoveResult.*;
 import static domain.Position.*;
 import static domain.Team.*;
 
+import domain.piece.King;
+import domain.piece.Pawn;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

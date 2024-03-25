@@ -4,6 +4,8 @@ import static domain.Position.D2;
 import static domain.Team.BLACK;
 import static domain.Team.WHITE;
 
+import domain.piece.Pawn;
+import domain.piece.Piece;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
