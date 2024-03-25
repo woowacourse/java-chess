@@ -19,7 +19,10 @@ public enum Side {
         if (isBlack()) {
             return WHITE;
         }
-        return BLACK;
+        if (isWhite()) {
+            return BLACK;
+        }
+        return EMPTY;
     }
 
     public boolean isSame(Side side) {
