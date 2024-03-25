@@ -16,13 +16,15 @@ import static chess.model.piece.PieceType.WHITE_ROOK;
 
 import chess.model.Position;
 
-public abstract class Piece implements MoveStrategy {
+public abstract class Piece{
 
     protected final PieceType type;
 
     protected Piece(PieceType pieceType) {
         this.type = pieceType;
     }
+
+    public abstract boolean canMove(Position source, Position target);
 
     public abstract boolean canAttack(Position source, Position target);
 
