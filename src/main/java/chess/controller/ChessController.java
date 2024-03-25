@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.point.File;
@@ -42,10 +43,11 @@ public class ChessController {
     }
 
     private void runGame() {
-        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
+        Board board = new Board(BoardFactory.createInitialChessBoard());
+        ChessGame game = new ChessGame(board);
         while (true) {
             try {
-                outputView.printBoard(game.getBoard());
+                outputView.printBoard(board.getBoard());
 
                 String readCommand = inputView.readCommand();
                 if (COMMAND_END.equals(readCommand)) {
@@ -69,7 +71,7 @@ public class ChessController {
         } catch (Exception e) {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
         }
-        game.move(departure, destination);
+        game.currentTurnPlayerMove(departure, destination);
     }
 
     private Point parsePoint(String splitedCommand) {

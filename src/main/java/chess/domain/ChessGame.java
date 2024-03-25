@@ -1,30 +1,30 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.player.Player;
-import chess.domain.player.Players;
 import chess.domain.point.Point;
 import java.util.Map;
 
 public class ChessGame {
 
-    private final Board board;
-    private final Players players;
+    private final Map<Team, Player> players;
+    private Team turn;
 
-    public ChessGame(Map<Point, Piece> board) {
-        this.board = new Board(board);
-        this.players = new Players(new Player(Team.WHITE), new Player(Team.BLACK));
+    public ChessGame(Board board) {
+        this.players = Map.of(
+                Team.WHITE, new Player(Team.WHITE, board),
+                Team.BLACK, new Player(Team.BLACK, board));
+        this.turn = Team.WHITE;
     }
 
-    public void move(Point departure, Point destination) {
-        Player player = players.playerOfCurrentTurn();
+    public void currentTurnPlayerMove(Point departure, Point destination) {
+        Player player = this.players.get(turn);
+        player.move(departure, destination);
 
-        board.move(player, departure, destination);
-        players.turnOver();
+        this.turn = turn.opponent();
     }
 
-    public Map<Point, Piece> getBoard() {
-        return board.getBoard();
-    }
+//    public Map<Point, Piece> getBoard() {
+//        return board.getBoard();
+//    }
 }

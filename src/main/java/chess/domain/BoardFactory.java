@@ -21,7 +21,7 @@ public class BoardFactory {
         return board;
     }
 
-    static Map<Point, Piece> createEmptyBoard() {
+    public static Map<Point, Piece> createEmptyBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
         putEmptyLines(1, 8, board);
