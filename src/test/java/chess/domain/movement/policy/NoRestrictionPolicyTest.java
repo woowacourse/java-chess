@@ -12,7 +12,7 @@ class NoRestrictionPolicyTest {
     @ParameterizedTest
     @EnumSource(Color.class)
     @DisplayName("조건과 상관 없이 참이 반환된다.")
-    void isSatisfied(Color color) {
+    void Given_NoRestrictionPolicy_When_IsSatisfiedWhateverFlagAndColor_Then_True(Color color) {
         NoRestrictionPolicy policy = new NoRestrictionPolicy();
 
         assertAll(

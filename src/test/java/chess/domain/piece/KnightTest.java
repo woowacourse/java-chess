@@ -12,16 +12,20 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
     @DisplayName("나이트는 도착 위치가 비어있는 경우 이동할 수 있다.")
-    void canMoveWhenTargetIsEmpty(int file, int rank) {
+    void Given_Knight_When_CanMovePositionEmpty_Then_True(int file, int rank) {
+        //given
         Piece piece = new Knight(Color.WHITE);
+        //when, then
         assertThat(piece.canMove(new Position(4, 4), new Position(file, rank), Map.of())).isTrue();
     }
 
     @ParameterizedTest
     @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
     @DisplayName("나이트는 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
-    void canMoveWhenTargetIsOtherColor(int file, int rank) {
+    void Given_Knight_When_CanMovePositionEnemyPiece_Then_True(int file, int rank) {
+        //given
         Piece piece = new Knight(Color.WHITE);
+        //when, then
         assertThat(piece.canMove(new Position(4, 4), new Position(file, rank),
                 Map.of(new Position(file, rank), new Queen(Color.BLACK)))).isTrue();
     }
@@ -29,8 +33,10 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
     @DisplayName("나이트는 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
-    void canNotMoveWhenTargetIsSameColor(int file, int rank) {
+    void Given_Knight_When_CanNotMovePositionOurTeamPiece_Then_False(int file, int rank) {
+        //given
         Piece piece = new Knight(Color.WHITE);
+        //when, then
         assertThat(piece.canMove(new Position(4, 4), new Position(file, rank),
                 Map.of(new Position(file, rank), new Queen(Color.WHITE)))).isFalse();
     }
