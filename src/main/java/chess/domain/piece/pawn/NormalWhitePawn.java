@@ -1,5 +1,6 @@
 package chess.domain.piece.pawn;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,5 +22,10 @@ public class NormalWhitePawn extends Pawn {
                 Map.entry(1, 1),
                 Map.entry(-1, 1)
         );
+    }
+
+    @Override
+    public Piece updateAfterMove() {
+        return this;
     }
 }

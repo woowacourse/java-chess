@@ -50,4 +50,9 @@ abstract class DirectionMovePiece extends AbstractPiece {
                 .map(Entry::getKey)
                 .toList();
     }
+
+    @Override
+    public Piece updateAfterMove() {
+        return this;
+    }
 }

@@ -39,4 +39,9 @@ abstract class FixedMovePiece extends AbstractPiece {
                     return piece == null || isNotSameTeam(piece);
                 });
     }
+
+    @Override
+    public Piece updateAfterMove() {
+        return this;
+    }
 }

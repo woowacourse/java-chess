@@ -9,6 +9,7 @@ import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.D3;
 import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
 import static chess.domain.fixture.PieceFixture.INITIAL_WHITE_PAWN;
+import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -70,5 +71,11 @@ class InitialWhitePawnTest {
         boardInformation.put(C4, WHITE_KNIGHT);
 
         assertThat(INITIAL_WHITE_PAWN.canMove(C2, C4, boardInformation)).isFalse();
+    }
+
+    @DisplayName("초기 흰색 폰이 한번 이동하면, 평범한 흰색 폰이 된다.")
+    @Test
+    void updateAfterMove() {
+        assertThat(INITIAL_WHITE_PAWN.updateAfterMove()).isInstanceOf(NORMAL_WHITE_PAWN.getClass());
     }
 }

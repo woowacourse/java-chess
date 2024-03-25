@@ -74,4 +74,9 @@ class InitialBlackPawnTest {
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, D4, boardInformation)).isFalse();
     }
 
+    @DisplayName("초기 검은색 폰이 한번 이동하면, 평범한 검은색 폰이 된다.")
+    @Test
+    void updateAfterMove() {
+        assertThat(INITIAL_BLACK_PAWN.updateAfterMove()).isInstanceOf(NORMAL_BLACK_PAWN.getClass());
+    }
 }

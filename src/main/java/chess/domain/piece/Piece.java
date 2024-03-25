@@ -10,6 +10,8 @@ public interface Piece {
 
     boolean canMove(Coordinate now, Coordinate destination, Map<Coordinate, Piece> boardInformation);
 
+    Piece updateAfterMove();
+
     PieceType getType();
 
     Team getTeam();
