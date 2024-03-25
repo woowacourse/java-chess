@@ -29,10 +29,6 @@ public class ChessPosition {
         return file;
     }
 
-    public Rank getRank() {
-        return rank;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
