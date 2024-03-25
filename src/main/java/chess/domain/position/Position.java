@@ -3,7 +3,6 @@ package chess.domain.position;
 import chess.domain.piece.Color;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Position {
     private static final Map<String, Position> CACHE;
@@ -23,12 +22,13 @@ public class Position {
         this.rank = rank;
     }
 
-    public boolean findPosition(File file, Rank rank) {
-        return file == this.file && rank == this.rank;
     public static Position of(File file, Rank rank) {
         return CACHE.get(toKey(file, rank));
     }
 
+    public static Position from(String moveCommand) {
+        return CACHE.get(moveCommand.toLowerCase());
+    }
 
     private static void createRankPosition(File file) {
         for (Rank rank : Rank.values()) {

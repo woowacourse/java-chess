@@ -1,9 +1,7 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public enum Rank {
     EIGHT(8),

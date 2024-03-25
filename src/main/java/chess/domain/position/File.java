@@ -1,9 +1,7 @@
 package chess.domain.position;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 
 public enum File {
     A(1, "a"),

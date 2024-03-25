@@ -23,8 +23,8 @@ public class Progress implements GameState {
             throw new UnsupportedOperationException("이미 시작한 게임은 다시 시작할 수 없습니다.");
         }
         if (command.equals(MOVE_COMMAND)) {
-            Position source = Positions.findByInput(inputCommand.get(1));
-            Position target = Positions.findByInput(inputCommand.get(2));
+            Position source = Position.from(inputCommand.get(1));
+            Position target = Position.from(inputCommand.get(2));
 
             chessBoard.move(source, target);
             return new Progress(chessBoard);
