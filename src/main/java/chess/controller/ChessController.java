@@ -26,8 +26,7 @@ public class ChessController {
 
     public void run() {
         startGame();
-        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
-        runGame(game);
+        runGame();
     }
 
     private void startGame() {
@@ -42,7 +41,8 @@ public class ChessController {
         }
     }
 
-    private void runGame(ChessGame game) {
+    private void runGame() {
+        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
         while (true) {
             try {
                 outputView.printBoard(game.getBoard());

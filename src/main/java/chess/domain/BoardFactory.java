@@ -10,14 +10,6 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    public static Map<Point, Piece> createEmptyBoard() {
-        Map<Point, Piece> board = new HashMap<>();
-
-        putEmptyLines(1, 8, board);
-
-        return board;
-    }
-
     public static Map<Point, Piece> createInitialChessBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
@@ -26,6 +18,14 @@ public class BoardFactory {
         putEmptyLines(3, 4, board);
         board.putAll(BlackSecondLine());
         board.putAll(BlackFirstLine());
+        return board;
+    }
+
+    static Map<Point, Piece> createEmptyBoard() {
+        Map<Point, Piece> board = new HashMap<>();
+
+        putEmptyLines(1, 8, board);
+
         return board;
     }
 

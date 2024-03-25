@@ -17,15 +17,9 @@ class BoardFactoryTest {
     void create() {
         Map<Point, Piece> pieces = BoardFactory.createInitialChessBoard();
 
-        long emptyCount = pieces.values().stream()
-                .filter(piece -> Piece.empty().equals(piece))
-                .count();
-        long WhiteKingCount = pieces.values().stream()
-                .filter(piece -> Piece.kingFrom(Team.WHITE).equals(piece))
-                .count();
-        long BlackKingCount = pieces.values().stream()
-                .filter(piece -> Piece.kingFrom(Team.BLACK).equals(piece))
-                .count();
+        long emptyCount = piecesCount(pieces, Piece.empty());
+        long WhiteKingCount = piecesCount(pieces, Piece.kingFrom(Team.WHITE));
+        long BlackKingCount = piecesCount(pieces, Piece.kingFrom(Team.BLACK));
 
         Assertions.assertAll(
                 () -> assertThat(pieces).hasSize(64),
@@ -33,5 +27,11 @@ class BoardFactoryTest {
                 () -> assertThat(WhiteKingCount).isEqualTo(1),
                 () -> assertThat(BlackKingCount).isEqualTo(1)
         );
+    }
+
+    private long piecesCount(Map<Point, Piece> pieces, Piece piece) {
+        return pieces.values().stream()
+                .filter(piece::equals)
+                .count();
     }
 }
