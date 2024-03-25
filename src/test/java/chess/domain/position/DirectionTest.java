@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class DirectionTest {
 
-    Position source = Position.of(File.D, Rank.FOUR);
+    private Position source = Position.of(File.D, Rank.FOUR);
 
     @Test
     @DisplayName("오른쪽 위 대각 방향을 올바르게 판단한다.")
