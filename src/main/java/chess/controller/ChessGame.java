@@ -41,16 +41,16 @@ public class ChessGame {
         return command;
     }
 
+    private Command requestCommand() {
+        return requestUntilValid(() -> Command.from(InputView.readCommand()));
+    }
+
     private Command requestMove() {
         Command command = requestCommand();
         if (command.isType(CommandType.START)) {
             throw new IllegalArgumentException(ERROR_ALREADY_STARTED);
         }
         return command;
-    }
-
-    private Command requestCommand() {
-        return requestUntilValid(() -> Command.from(InputView.readCommand()));
     }
 
     private PieceColor processMoveAndGetNextTurn(Command command, Board board, PieceColor turn) {
@@ -66,7 +66,7 @@ public class ChessGame {
         return turn.opposite();
     }
 
-    public <T> T requestUntilValid(Supplier<T> supplier) {
+    private <T> T requestUntilValid(Supplier<T> supplier) {
         Optional<T> result = Optional.empty();
         while (result.isEmpty()) {
             result = tryGet(supplier);

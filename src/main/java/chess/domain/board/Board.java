@@ -51,7 +51,7 @@ public class Board {
                 .anyMatch(piece -> piece.isLocated(square) && piece.getColor() == pieceColor);
     }
 
-    public Optional<Piece> findPiece(Square square) {
+    private Optional<Piece> findPiece(Square square) {
         return pieces.stream()
                 .filter(piece -> piece.isLocated(square))
                 .findAny();
