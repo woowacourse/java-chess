@@ -1,13 +1,13 @@
 package domain.piece.piecerole;
 
-import static domain.move.Direction.DOWN_LEFT;
-import static domain.move.Direction.DOWN_RIGHT;
-import static domain.move.Direction.LEFT_DOWN;
-import static domain.move.Direction.LEFT_UP;
-import static domain.move.Direction.RIGHT_DOWN;
-import static domain.move.Direction.RIGHT_UP;
-import static domain.move.Direction.UP_LEFT;
-import static domain.move.Direction.UP_RIGHT;
+import static domain.move.Direction.SSW;
+import static domain.move.Direction.SSE;
+import static domain.move.Direction.WSW;
+import static domain.move.Direction.WNW;
+import static domain.move.Direction.ESE;
+import static domain.move.Direction.ENE;
+import static domain.move.Direction.NNW;
+import static domain.move.Direction.NNE;
 
 import domain.move.Movable;
 import domain.position.Position;
@@ -20,14 +20,14 @@ public class Knight implements PieceRole {
 
     public Knight() {
         routes = List.of(
-                new Movable(MAX_MOVEMENT, DOWN_LEFT),
-                new Movable(MAX_MOVEMENT, DOWN_RIGHT),
-                new Movable(MAX_MOVEMENT, LEFT_DOWN),
-                new Movable(MAX_MOVEMENT, LEFT_UP),
-                new Movable(MAX_MOVEMENT, RIGHT_DOWN),
-                new Movable(MAX_MOVEMENT, RIGHT_UP),
-                new Movable(MAX_MOVEMENT, UP_LEFT),
-                new Movable(MAX_MOVEMENT, UP_RIGHT)
+                new Movable(MAX_MOVEMENT, SSW),
+                new Movable(MAX_MOVEMENT, SSE),
+                new Movable(MAX_MOVEMENT, WSW),
+                new Movable(MAX_MOVEMENT, WNW),
+                new Movable(MAX_MOVEMENT, ESE),
+                new Movable(MAX_MOVEMENT, ENE),
+                new Movable(MAX_MOVEMENT, NNW),
+                new Movable(MAX_MOVEMENT, NNE)
         );
     }
 

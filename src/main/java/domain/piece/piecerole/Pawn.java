@@ -15,16 +15,16 @@ public class Pawn implements PieceRole {
         moveCount = 1;
         if (color == Color.BLACK) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(moveCount), Direction.SOUTH),
-                    new Movable(getMaxMovement(moveCount), Direction.SOUTH_EAST),
-                    new Movable(getMaxMovement(moveCount), Direction.SOUTH_WEST)
+                    new Movable(getMaxMovement(moveCount), Direction.S),
+                    new Movable(getMaxMovement(moveCount), Direction.SE),
+                    new Movable(getMaxMovement(moveCount), Direction.SW)
             );
         }
         if (color == Color.WHITE) {
             this.routes = List.of(
-                    new Movable(getMaxMovement(moveCount), Direction.NORTH),
-                    new Movable(getMaxMovement(moveCount), Direction.NORTH_EAST),
-                    new Movable(getMaxMovement(moveCount), Direction.NORTH_WEST)
+                    new Movable(getMaxMovement(moveCount), Direction.N),
+                    new Movable(getMaxMovement(moveCount), Direction.NE),
+                    new Movable(getMaxMovement(moveCount), Direction.NW)
             );
         }
     }

@@ -1,9 +1,9 @@
 package domain.piece.piecerole;
 
-import static domain.move.Direction.EAST;
-import static domain.move.Direction.NORTH;
-import static domain.move.Direction.SOUTH;
-import static domain.move.Direction.WEST;
+import static domain.move.Direction.E;
+import static domain.move.Direction.N;
+import static domain.move.Direction.S;
+import static domain.move.Direction.W;
 
 import domain.move.Movable;
 import domain.position.Position;
@@ -17,10 +17,10 @@ public class Rook implements PieceRole {
 
     public Rook() {
         routes = List.of(
-                new Movable(MAX_MOVEMENT, NORTH),
-                new Movable(MAX_MOVEMENT, EAST),
-                new Movable(MAX_MOVEMENT, SOUTH),
-                new Movable(MAX_MOVEMENT, WEST)
+                new Movable(MAX_MOVEMENT, N),
+                new Movable(MAX_MOVEMENT, E),
+                new Movable(MAX_MOVEMENT, S),
+                new Movable(MAX_MOVEMENT, W)
         );
     }
 

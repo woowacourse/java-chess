@@ -6,23 +6,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
-    NORTH(0, 1),
-    NORTH_EAST(1, 1),
-    EAST(1, 0),
-    SOUTH_EAST(1, -1),
-    SOUTH(0, -1),
-    SOUTH_WEST(-1, -1),
-    WEST(-1, 0),
-    NORTH_WEST(-1, 1),
+    N(0, 1),
+    E(1, 0),
+    S(0, -1),
+    W(-1, 0),
 
-    UP_RIGHT(1, 2),
-    UP_LEFT(-1, 2),
-    RIGHT_UP(2, 1),
-    RIGHT_DOWN(2, -1),
-    LEFT_DOWN(-2, -1),
-    LEFT_UP(-2, 1),
-    DOWN_RIGHT(1, -2),
-    DOWN_LEFT(-1, -2);
+    NE(1, 1),
+    SE(1, -1),
+    SW(-1, -1),
+    NW(-1, 1),
+
+    NNE(1, 2),
+    NNW(-1, 2),
+    ENE(2, 1),
+    ESE(2, -1),
+    WSW(-2, -1),
+    WNW(-2, 1),
+    SSE(1, -2),
+    SSW(-1, -2);
 
     private final int fileVector;
     private final int rankVector;
@@ -33,11 +34,11 @@ public enum Direction {
     }
 
     public boolean isNorthOrSouth() {
-        return this == Direction.NORTH || this == Direction.SOUTH;
+        return this == Direction.N || this == Direction.S;
     }
 
     public boolean isDiagonalDirection() {
-        return List.of(Direction.SOUTH_EAST, Direction.SOUTH_WEST, Direction.NORTH_EAST, Direction.NORTH_WEST)
+        return List.of(Direction.SE, Direction.SW, Direction.NE, Direction.NW)
                 .contains(this);
     }
 

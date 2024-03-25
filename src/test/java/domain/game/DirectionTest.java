@@ -17,6 +17,6 @@ class DirectionTest {
         Position targetPosition = createC2();
 
         Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
-        Assertions.assertThat(findDirection).isEqualTo(Direction.NORTH_EAST);
+        Assertions.assertThat(findDirection).isEqualTo(Direction.NE);
     }
 }

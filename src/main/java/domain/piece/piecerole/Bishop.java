@@ -1,9 +1,9 @@
 package domain.piece.piecerole;
 
-import static domain.move.Direction.NORTH_EAST;
-import static domain.move.Direction.NORTH_WEST;
-import static domain.move.Direction.SOUTH_EAST;
-import static domain.move.Direction.SOUTH_WEST;
+import static domain.move.Direction.NE;
+import static domain.move.Direction.NW;
+import static domain.move.Direction.SE;
+import static domain.move.Direction.SW;
 
 import domain.move.Movable;
 import domain.position.Position;
@@ -17,10 +17,10 @@ public class Bishop implements PieceRole {
 
     public Bishop() {
         routes = List.of(
-                new Movable(MAX_MOVEMENT, NORTH_EAST),
-                new Movable(MAX_MOVEMENT, NORTH_WEST),
-                new Movable(MAX_MOVEMENT, SOUTH_EAST),
-                new Movable(MAX_MOVEMENT, SOUTH_WEST)
+                new Movable(MAX_MOVEMENT, NE),
+                new Movable(MAX_MOVEMENT, NW),
+                new Movable(MAX_MOVEMENT, SE),
+                new Movable(MAX_MOVEMENT, SW)
         );
     }
 
