@@ -39,7 +39,7 @@ public class ChessBoard {
 
     public void checkColor(Position source, Color color) {
         checkSourcePosition(source);
-        if (pieceByPosition.get(source).isNotEqualColor(color)) {
+        if (pieceByPosition.get(source).isNotSameColor(color)) {
             throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다.");
         }
     }
@@ -72,7 +72,7 @@ public class ChessBoard {
 
         if (isNotEmptyAt(targetPosition)) {
             Piece targetPiece = pieceByPosition.get(targetPosition);
-            return sourcePiece.isEqualColor(targetPiece.getColor());
+            return sourcePiece.isSameColor(targetPiece);
         }
         return false;
     }

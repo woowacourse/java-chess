@@ -13,12 +13,13 @@ public class Piece {
         this.color = color;
     }
 
-    public boolean isEqualColor(final Color target) {
-        return this.color == target;
+    public boolean isSameColor(final Piece target) {
+        return this.color == target.color;
     }
 
-    public boolean isNotEqualColor(final Color target) {
-        return this.color != target;}
+    public boolean isNotSameColor(final Color color) {
+        return this.color != color;
+    }
 
     public boolean canMove(final Position source, final Position target) {
         return pieceRole.canMove(source, target);
@@ -26,10 +27,6 @@ public class Piece {
 
     public PieceRole getPieceRole() {
         return pieceRole;
-    }
-
-    public Color getColor() {
-        return color;
     }
 
 
