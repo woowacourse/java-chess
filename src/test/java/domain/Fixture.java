@@ -9,6 +9,9 @@ import static domain.position.UnitVector.UP;
 import static domain.position.UnitVector.UP_LEFT;
 import static domain.position.UnitVector.UP_RIGHT;
 
+import domain.game.Piece;
+import domain.game.PieceFactory;
+import domain.game.PieceType;
 import domain.game.TeamColor;
 import domain.position.File;
 import domain.position.Position;
@@ -106,6 +109,22 @@ public class Fixture {
         public static final Set<UnitVector> ORTHOGONAL_VECTORS = Set.of(UP, RIGHT, DOWN, LEFT);
         public static final Set<UnitVector> DIAGONAL_VECTORS = Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
         public static final Set<UnitVector> OMNIDIRECTIONAL_VECTORS = Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+    }
+
+    public static class Pieces {
+        public static final Piece BLACK_PAWN_PIECE = PieceFactory.create(PieceType.BLACK_PAWN);
+        public static final Piece BLACK_KNIGHT_PIECE = PieceFactory.create(PieceType.BLACK_KNIGHT);
+        public static final Piece BLACK_BISHOP_PIECE = PieceFactory.create(PieceType.BLACK_BISHOP);
+        public static final Piece BLACK_ROOK_PIECE = PieceFactory.create(PieceType.BLACK_ROOK);
+        public static final Piece BLACK_QUEEN_PIECE = PieceFactory.create(PieceType.BLACK_QUEEN);
+        public static final Piece BLACK_KING_PIECE = PieceFactory.create(PieceType.BLACK_KING);
+        public static final Piece WHITE_PAWN_PIECE = PieceFactory.create(PieceType.WHITE_PAWN);
+        public static final Piece WHITE_KNIGHT_PIECE = PieceFactory.create(PieceType.WHITE_KNIGHT);
+        public static final Piece WHITE_BISHOP_PIECE = PieceFactory.create(PieceType.WHITE_BISHOP);
+        public static final Piece WHITE_ROOK_PIECE = PieceFactory.create(PieceType.WHITE_ROOK);
+        public static final Piece WHITE_QUEEN_PIECE = PieceFactory.create(PieceType.WHITE_QUEEN);
+        public static final Piece WHITE_KING_PIECE = PieceFactory.create(PieceType.WHITE_KING);
+
     }
 
     public static class Strategies {
