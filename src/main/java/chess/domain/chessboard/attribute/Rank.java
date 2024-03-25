@@ -37,4 +37,9 @@ public enum Rank {
     public int toRow() {
         return ordinal();
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(RANK_MAX - toRow());
+    }
 }
