@@ -29,29 +29,6 @@ public class InputView {
         return INSTANCE;
     }
 
-    public Command readStartCommand() {
-        String input = scanner.nextLine();
-        validateStartCommand(input);
-        return Command.createNoArgCommand(COMMANDS.get(input));
-    }
-
-    private void validateStartCommand(String input) {
-        List<String> commandTypeAndArgs = Arrays.asList(input.split(COMMAND_DELIMITER));
-        String commandText = commandTypeAndArgs.get(0);
-
-        validateExistCommand(commandText);
-        CommandType commandType = COMMANDS.get(commandText);
-        if (commandType != CommandType.START && commandType != CommandType.END) {
-            throw new IllegalArgumentException("시작 커맨드는 start 또는 end만 가능합니다.");
-        }
-    }
-
-    private void validateExistCommand(String commandText) {
-        if (!COMMANDS.containsKey(commandText)) {
-            throw new IllegalArgumentException("존재하지 않는 커맨드입니다.");
-        }
-    }
-
     public Command readCommand() {
         String input = scanner.nextLine();
         List<String> commandTypeAndArgs = Arrays.asList(input.split(COMMAND_DELIMITER));
@@ -68,15 +45,12 @@ public class InputView {
     private CommandType makeCommandType(List<String> splittedCommand) {
         String commandTypeText = splittedCommand.get(COMMAND_TYPE_INDEX);
         validateExistCommand(commandTypeText);
-        CommandType commandType = COMMANDS.get(commandTypeText);
-        validateNotStart(commandType);
-        return commandType;
+        return COMMANDS.get(commandTypeText);
     }
 
-    // TODO: 해당 로직 컨트롤러로 이동
-    private void validateNotStart(CommandType commandType) {
-        if (commandType == CommandType.START) {
-            throw new IllegalArgumentException("게임이 이미 진행중입니다.");
+    private void validateExistCommand(String commandText) {
+        if (!COMMANDS.containsKey(commandText)) {
+            throw new IllegalArgumentException("존재하지 않는 커맨드입니다.");
         }
     }
 }

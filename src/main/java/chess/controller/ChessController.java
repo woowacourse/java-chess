@@ -23,14 +23,21 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        Command command = receiveStartCommand();
+        Command command = receiveCommand();
+        validateStartOrEnd(command.getType());
         if (command.getType() == CommandType.START) {
             startGame();
         }
     }
 
-    private Command receiveStartCommand() {
-        return ExceptionRetryHandler.handle(inputView::readStartCommand);
+    private Command receiveCommand() {
+        return ExceptionRetryHandler.handle(inputView::readCommand);
+    }
+
+    private static void validateStartOrEnd(CommandType commandType) {
+        if (commandType != CommandType.START && commandType != CommandType.END) {
+            throw new IllegalArgumentException("게임을 시작하거나 끝내는 것만 가능합니다.");
+        }
     }
 
     // TODO: 게임을 진행하는 로직(ex: turn 관리)을 ChessGame으로 분리
@@ -38,7 +45,7 @@ public class ChessController {
         ChessBoard chessBoard = makeChessBoard();
         Turn turn = new Turn(Color.WHITE);
 
-        ExceptionRetryHandler.handle(() -> tryProcessUntilValid(chessBoard, turn));
+        ExceptionRetryHandler.handle(() -> processGame(chessBoard, turn));
     }
 
     private ChessBoard makeChessBoard() {
@@ -49,23 +56,35 @@ public class ChessController {
         return chessBoard;
     }
 
-    private void tryProcessUntilValid(ChessBoard chessBoard, Turn turn) {
-        Command command = inputView.readCommand();
+    private void processGame(ChessBoard chessBoard, Turn turn) {
+        Command command = receiveProcessCommand();
 
         while (command.getType() != CommandType.END) {
-            tryProcess(command, chessBoard, turn);
-            command = inputView.readCommand();
+            tryTurn(command, chessBoard, turn);
+            command = receiveProcessCommand();
         }
     }
 
-    private void tryProcess(Command command, ChessBoard chessBoard, Turn turn) {
+    private Command receiveProcessCommand() {
+        Command command = inputView.readCommand();
+        validateNotStart(command.getType());
+        return command;
+    }
+
+    private void validateNotStart(CommandType commandType) {
+        if (commandType == CommandType.START) {
+            throw new IllegalArgumentException("게임이 이미 진행중입니다.");
+        }
+    }
+
+    private void tryTurn(Command command, ChessBoard chessBoard, Turn turn) {
         if (command.getType() == CommandType.MOVE) {
-            processTurn(command, chessBoard, turn);
+            movePiece(command, chessBoard, turn);
             turn.change();
         }
     }
 
-    private void processTurn(Command command, ChessBoard chessBoard, Turn turn) {
+    private void movePiece(Command command, ChessBoard chessBoard, Turn turn) {
         TerminalPosition terminalPosition = TerminalPositionView.of(command.getArguments());
         chessBoard.move(terminalPosition, turn.getCurrentTurn());
 
