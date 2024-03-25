@@ -2,10 +2,12 @@ package chess.domain.piece.pawn;
 
 import chess.domain.board.Coordinate;
 import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,6 +30,19 @@ public abstract class Pawn extends AbstractPiece {
             return legalNextCoordinates;
         }
         throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
+    }
+
+    @Override
+    public boolean canMove(final Coordinate now, final Coordinate destination,
+                           final Map<Coordinate, Piece> boardInformation) {
+        Set<Coordinate> coordinates = straightLegalNextCoordinates(now).stream()
+                .filter(coordinate -> boardInformation.get(destination) == null)
+                .collect(Collectors.toSet());
+        coordinates.addAll(diagonalLegalNextCoordinates(now).stream()
+                .filter(coordinate -> boardInformation.get(destination) != null && boardInformation.get(destination)
+                        .isNotSameTeam(this))
+                .collect(Collectors.toSet()));
+        return coordinates.contains(destination);
     }
 
     private Set<Coordinate> straightLegalNextCoordinates(final Coordinate now) {
