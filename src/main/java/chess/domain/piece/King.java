@@ -39,6 +39,11 @@ public class King extends Piece {
     }
 
     @Override
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return isMovable(rowDifference, columnDifference);
+    }
+
+    @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
     }

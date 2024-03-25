@@ -62,17 +62,17 @@ public class Pawn extends Piece {
     }
 
     @Override
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
+                && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
+    }
+
+    @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         if (columnDifference != 0) {
             return false;
         }
         return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
                 || (!hasMoved && rowDifference == START_MOVEMENT * team.attackDirection());
-    }
-
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
-                && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
     }
 }

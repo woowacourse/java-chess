@@ -40,6 +40,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return isMovable(rowDifference, columnDifference);
+    }
+
+    @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
         return differenceList.containsAll(MOVE_DIFFERENCES);

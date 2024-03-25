@@ -46,6 +46,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    protected boolean isAttackable(int rowDifference, int columnDifference) {
+        return isMovable(rowDifference, columnDifference);
+    }
+
+    @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         return (rowDifference == 0 || columnDifference == 0)
                 || Math.abs(rowDifference) == Math.abs(columnDifference);
