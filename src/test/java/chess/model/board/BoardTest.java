@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.model.piece.Color;
+import chess.model.piece.PieceFixture;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import java.util.HashMap;
@@ -17,7 +18,9 @@ class BoardTest {
         Board board = new Board(new HashMap<>());
 
         // when, then
-        assertThat(board.getSignatures().size()).isEqualTo(64);
+        int rowSize = board.getLines().size();
+        int columnSize = board.getLines().get(0).size();
+        assertThat(rowSize * columnSize).isEqualTo(64);
     }
 
     @Test
@@ -36,12 +39,10 @@ class BoardTest {
         // given
         Board board = new InitialBoardGenerator().create();
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
-        board.move(movement, Color.WHITE);
 
         // when, then
-        List<String> boardLines = board.getLines().stream()
-                .map(line -> String.join("", line))
-                .toList();
+        board.move(movement, Color.WHITE);
+        List<String> boardLines = PieceFixture.mappingBoard(board);
         assertThat(boardLines).containsExactly(
                 "RNBQKBNR",
                 "PPPPPPPP",
