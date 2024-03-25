@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.Point;
 import chess.domain.piece.Piece;
+
 import java.util.Map;
 
 public class OutputView {

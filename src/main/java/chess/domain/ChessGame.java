@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.player.Player;
 import chess.domain.player.Players;
+
 import java.util.Map;
 
 public class ChessGame {

@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.BoardFactory;
 import chess.domain.Point;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardFactoryTest {
 

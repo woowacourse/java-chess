@@ -1,13 +1,12 @@
 package chess.domain.player;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PlayersTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
+class PlayersTest {
 
     @DisplayName("현재 턴의 플레이어를 반환한다.")
     @Test

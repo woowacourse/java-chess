@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+
 import java.util.Objects;
 
 public class Point {
