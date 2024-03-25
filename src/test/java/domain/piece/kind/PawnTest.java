@@ -192,4 +192,12 @@ class PawnTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    @DisplayName("폰이 아직 이동하지 않았더라도 앞에 기물이 있으면 두 칸 이동할 수 없다.")
+    void pawn_can_not_move_double_when_blocked_path() {
+        final var sut = new Pawn(C2, Color.WHITE);
+
+        final var result = sut.canMove(C4, List.of(new Pawn(C3, BLACK)));
+        assertThat(result).isFalse();
+    }
 }

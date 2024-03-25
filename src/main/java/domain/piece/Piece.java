@@ -64,13 +64,14 @@ public abstract class Piece implements Movable {
                 .anyMatch(pieces::containPieceWithPoint);
     }
 
-    protected final boolean notExistPiece(final Point findPoint, final Pieces pieces) {
-        return !hasAnyPiece(findPoint, pieces);
-    }
 
     protected final boolean notExistPieces(final Pieces pieces, final Point... points) {
         return Arrays.stream(points)
-                     .anyMatch(value -> notExistPiece(value, pieces));
+                     .allMatch(value -> notExistPiece(value, pieces));
+    }
+
+    protected final boolean notExistPiece(final Point findPoint, final Pieces pieces) {
+        return !hasAnyPiece(findPoint, pieces);
     }
 
 
