@@ -29,12 +29,12 @@ public class Pawn extends AbstractPiece {
         List<Coordinate> diagonalPath = createPath(source, diagonalDirections);
 
         validateReachable(target, diagonalPath, forwardPath);
-        validateForwardAttack(target, board, forwardPath);
+        validateForwardAttack(target, forwardPath, board);
         if (isTwoStep(source, target)) {
             validateInitialCoordinate(source);
             validateBlocked(target, forwardPath, board);
         }
-        validateDiagonal(target, board, diagonalPath);
+        validateDiagonal(target, diagonalPath, board);
     }
 
     private List<Coordinate> createPath(Coordinate source, List<Direction> directions) {
@@ -54,7 +54,7 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateForwardAttack(Coordinate target, Board board, List<Coordinate> forwardPath) {
+    private void validateForwardAttack(Coordinate target, List<Coordinate> forwardPath, Board board) {
         if (forwardPath.contains(target) && isEnemy(board.findByCoordinate(target))) {
             throw new ObstacleException();
         }
@@ -81,7 +81,7 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateDiagonal(Coordinate target, Board board, List<Coordinate> diagonalPath) {
+    private void validateDiagonal(Coordinate target, List<Coordinate> diagonalPath, Board board) {
         if (diagonalPath.contains(target)) {
             validateEnemyExist(target, board);
         }
