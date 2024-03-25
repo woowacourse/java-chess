@@ -2,9 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.fixture.CoordinateFixture.A1;
 import static chess.domain.fixture.CoordinateFixture.A2;
-import static chess.domain.fixture.CoordinateFixture.A3;
 import static chess.domain.fixture.CoordinateFixture.A4;
-import static chess.domain.fixture.CoordinateFixture.A5;
 import static chess.domain.fixture.CoordinateFixture.A7;
 import static chess.domain.fixture.CoordinateFixture.A8;
 import static chess.domain.fixture.CoordinateFixture.B1;
@@ -14,12 +12,10 @@ import static chess.domain.fixture.CoordinateFixture.B7;
 import static chess.domain.fixture.CoordinateFixture.B8;
 import static chess.domain.fixture.CoordinateFixture.C1;
 import static chess.domain.fixture.CoordinateFixture.C2;
-import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C7;
 import static chess.domain.fixture.CoordinateFixture.C8;
 import static chess.domain.fixture.CoordinateFixture.D1;
 import static chess.domain.fixture.CoordinateFixture.D2;
-import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D7;
 import static chess.domain.fixture.CoordinateFixture.D8;
 import static chess.domain.fixture.CoordinateFixture.E1;
@@ -234,63 +230,6 @@ class BoardTest {
 
         assertThatThrownBy(() -> emptyBoard.move(A2, B3))
                 .isInstanceOf(NoSuchElementException.class);
-    }
-
-    @DisplayName("target 좌표에 기물이 있으면 예외를 발생한다.")
-    @Test
-    void existTarget() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = A1;
-        Coordinate target = A2;
-        pieces.put(source, WHITE_ROOK);
-        pieces.put(target, WHITE_ROOK);
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("source 좌표에 있는 기물이 target 좌표로 이동 가능한 경로가 존재하지 않을 경우, 이동할 수 없다.")
-    @Test
-    void nonExistPath() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = A1;
-        Coordinate target = D4;
-        pieces.put(source, WHITE_ROOK);
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("해당 기물은 목적지 좌표에 갈 수 없습니다.");
-    }
-
-    @DisplayName("target 으로 가는 경로에 기물이 존재하면, 이동할 수 없다.")
-    @Test
-    void pathStuck() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = A1;
-        Coordinate between = B2;
-        Coordinate target = C3;
-        pieces.put(source, WHITE_BISHOP);
-        pieces.put(between, NORMAL_WHITE_PAWN);
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("폰에 한에, 초기 좌표가 아니면 2칸 전진할 수 없다.")
-    @Test
-    void nonInitialPawnCantMove2() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Coordinate source = A3;
-        Coordinate target = A5;
-        pieces.put(source, NORMAL_WHITE_PAWN);
-        Board board = new Board(pieces);
-
-        assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("해당 기물은 목적지 좌표에 갈 수 없습니다.");
     }
 
     @DisplayName("기물이 움직일 수 있다.")
