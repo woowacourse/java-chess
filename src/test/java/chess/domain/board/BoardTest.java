@@ -24,10 +24,10 @@ class BoardTest {
         Board board = new Board(Set.of(piece));
 
         // when
-        board.move(source, target);
+        board.move(source, target, piece.getColor());
 
         // then
-        assertThat(board.findPiece(target)).hasValue(piece);
+        assertThat(board.existOnSquare(target)).isTrue();
     }
 
     @Test
@@ -40,7 +40,7 @@ class BoardTest {
         Board board = new Board(Set.of(piece));
 
         // when & then
-        assertThatCode(() -> board.move(source, target))
+        assertThatCode(() -> board.move(source, target, piece.getColor()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("제자리로 이동할 수 없습니다.");
     }
@@ -54,7 +54,7 @@ class BoardTest {
         Square target = Square.from("b4");
 
         // when & then
-        assertThatCode(() -> board.move(source, target))
+        assertThatCode(() -> board.move(source, target, PieceColor.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("해당 위치에 기물이 존재하지 않습니다.");
     }
