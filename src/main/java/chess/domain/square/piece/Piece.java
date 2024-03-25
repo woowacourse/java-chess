@@ -1,6 +1,6 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
@@ -14,10 +14,10 @@ public abstract class Piece implements Square {
         this.color = color;
     }
 
-    protected abstract boolean canMove(Path path);
+    protected abstract boolean canMove(PathFinder pathFinder);
 
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return path.findRoute()
+    protected boolean isNotObstructed(PathFinder pathFinder, Map<Position, Square> board) {
+        return pathFinder.find()
                 .stream()
                 .allMatch(position -> board.get(position) == Empty.getInstance());
     }

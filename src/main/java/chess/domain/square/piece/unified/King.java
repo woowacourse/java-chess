@@ -1,6 +1,6 @@
 package chess.domain.square.piece.unified;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class King extends UnifiedArriveWay {
     }
 
     @Override
-    protected boolean canMove(Path path) {
-        return path.isStraight(MOVABLE_DISTANCE) || path.isDiagonal(MOVABLE_DISTANCE);
+    protected boolean canMove(PathFinder pathFinder) {
+        return pathFinder.isStraight(MOVABLE_DISTANCE) || pathFinder.isDiagonal(MOVABLE_DISTANCE);
     }
 }

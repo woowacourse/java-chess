@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Square;
@@ -25,10 +25,10 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.A), piece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.FIFTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.A), new Position(Rank.FIFTH, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -39,10 +39,10 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.FIFTH, File.A), piece);
-        Path path = new Path(new Position(Rank.FIFTH, File.A), new Position(Rank.THIRD, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIFTH, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
@@ -53,34 +53,34 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.A), piece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.A), new Position(Rank.SIXTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
     @DisplayName("블랙 폰은 밑으로 한 칸 또는 두 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForBlack")
-    void blackCanNotStraightMoveTest(Path path) {
+    void blackCanNotStraightMoveTest(PathFinder pathFinder) {
         // given
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), piece);
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
-    static Stream<Path> provideUnValidPathForBlack() {
+    static Stream<PathFinder> provideUnValidPathForBlack() {
         return Stream.of(
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C))
+                new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
+                new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
+                new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C)),
+                new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A)),
+                new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C))
         );
     }
 
@@ -91,10 +91,10 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
-        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -105,10 +105,10 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.FOURTH, File.A), piece);
-        Path path = new Path(new Position(Rank.FOURTH, File.A), new Position(Rank.SIXTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FOURTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
@@ -119,34 +119,34 @@ class PawnTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
-        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
     @DisplayName("화이트 폰은 위로 한 칸 또는 두 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForWhite")
-    void canStraightNotMoveTest(Path path) {
+    void canStraightNotMoveTest(PathFinder pathFinder) {
         // given
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.B), piece);
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
-    static Stream<Path> provideUnValidPathForWhite() {
+    static Stream<PathFinder> provideUnValidPathForWhite() {
         return Stream.of(
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.B)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.C))
+                new PathFinder(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.B)),
+                new PathFinder(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
+                new PathFinder(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
+                new PathFinder(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A)),
+                new PathFinder(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.C))
         );
     }
 
@@ -160,10 +160,10 @@ class PawnTest {
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
         board.put(new Position(Rank.SEVENTH, File.A), attackedPiece);
 
-        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -177,10 +177,10 @@ class PawnTest {
         board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
         board.put(new Position(Rank.SEVENTH, File.C), attackedPiece);
 
-        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -190,14 +190,14 @@ class PawnTest {
     void blackCanNotAttackTest(Position attackedPosition) {
         // given
         final Map<Position, Square> board = EmptySquaresMaker.make();
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.from(Color.BLACK);
         Piece attackedPiece = Pawn.from(Color.WHITE);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
@@ -221,10 +221,10 @@ class PawnTest {
         Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -237,10 +237,10 @@ class PawnTest {
         Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.C), attackedPiece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -250,14 +250,14 @@ class PawnTest {
     void whiteCanNotAttackTest(Position attackedPosition) {
         // given
         final Map<Position, Square> board = EmptySquaresMaker.make();
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
+        PathFinder pathFinder = new PathFinder(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.from(Color.WHITE);
         Piece attackedPiece = Pawn.from(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isFalse();
     }
 

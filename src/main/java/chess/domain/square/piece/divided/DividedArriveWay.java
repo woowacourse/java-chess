@@ -1,6 +1,6 @@
 package chess.domain.square.piece.divided;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
@@ -15,16 +15,16 @@ public abstract class DividedArriveWay extends Piece {
     }
 
     @Override
-    public boolean canArrive(Path path, Map<Position, Square> board) {
-        final Square targetSquare = board.get(path.getTargetPosition());
+    public boolean canArrive(PathFinder pathFinder, Map<Position, Square> board) {
+        final Square targetSquare = board.get(pathFinder.targetPosition());
         if (targetSquare.isColor(getColor())) {
             return false;
         }
         if (targetSquare == Empty.getInstance()) {
-            return canMove(path) && isNotObstructed(path, board);
+            return canMove(pathFinder) && isNotObstructed(pathFinder, board);
         }
-        return canAttack(path) && isNotObstructed(path, board);
+        return canAttack(pathFinder) && isNotObstructed(pathFinder, board);
     }
 
-    protected abstract boolean canAttack(final Path path);
+    protected abstract boolean canAttack(final PathFinder pathFinder);
 }

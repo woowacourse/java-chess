@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Square;
@@ -21,10 +21,10 @@ public class KnightTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -35,10 +35,10 @@ public class KnightTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -49,10 +49,10 @@ public class KnightTest {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(piece.canArrive(path, board))
+        assertThat(piece.canArrive(pathFinder, board))
                 .isFalse();
     }
 
@@ -66,10 +66,10 @@ public class KnightTest {
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.SECOND, File.C), attackedPiece);
 
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -83,10 +83,10 @@ public class KnightTest {
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.THIRD, File.B), attackedPiece);
 
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isTrue();
     }
 
@@ -100,10 +100,10 @@ public class KnightTest {
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.SECOND, File.A), attackedPiece);
 
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attackerPiece.canArrive(path, board))
+        assertThat(attackerPiece.canArrive(pathFinder, board))
                 .isFalse();
     }
 }

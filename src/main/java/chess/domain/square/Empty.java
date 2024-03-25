@@ -1,6 +1,6 @@
 package chess.domain.square;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 
 import chess.domain.square.piece.Color;
@@ -17,7 +17,7 @@ public class Empty implements Square {
     }
 
     @Override
-    public boolean canArrive(Path path, Map<Position, Square> board) {
+    public boolean canArrive(PathFinder pathFinder, Map<Position, Square> board) {
         return false;
     }
 

@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.CurrentTurn;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
@@ -19,13 +19,13 @@ public class ChessBoard {
         this.currentTurn = currentTurn;
     }
 
-    public void move(Path path) {
-        Square startSquare = squares.get(path.getStartPosition());
+    public void move(PathFinder pathFinder) {
+        Square startSquare = squares.get(pathFinder.startPosition());
         validateIsFriendly(startSquare);
-        validateCanMove(startSquare, path);
+        validateCanMove(startSquare, pathFinder);
 
-        squares.put(path.getTargetPosition(), startSquare);
-        squares.put(path.getStartPosition(), Empty.getInstance());
+        squares.put(pathFinder.targetPosition(), startSquare);
+        squares.put(pathFinder.startPosition(), Empty.getInstance());
 
         currentTurn.change();
     }
@@ -36,8 +36,8 @@ public class ChessBoard {
         }
     }
 
-    private void validateCanMove(Square startSquare, Path path) {
-        if (!startSquare.canArrive(path, squares)) {
+    private void validateCanMove(Square startSquare, PathFinder pathFinder) {
+        if (!startSquare.canArrive(pathFinder, squares)) {
             throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
         }
     }

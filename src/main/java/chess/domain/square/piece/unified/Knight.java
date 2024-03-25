@@ -1,6 +1,6 @@
 package chess.domain.square.piece.unified;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
@@ -20,8 +20,8 @@ public class Knight extends UnifiedArriveWay {
     }
 
     @Override
-    protected boolean canMove(Path path) {
-        return (path.rankDistance() == MIN_MOVABLE_DISTANCE && path.fileDistance() == MAX_MOVABLE_DISTANCE) ||
-                (path.rankDistance() == MAX_MOVABLE_DISTANCE && path.fileDistance() == MIN_MOVABLE_DISTANCE);
+    protected boolean canMove(PathFinder pathFinder) {
+        return (pathFinder.rankDistance() == MIN_MOVABLE_DISTANCE && pathFinder.fileDistance() == MAX_MOVABLE_DISTANCE) ||
+                (pathFinder.rankDistance() == MAX_MOVABLE_DISTANCE && pathFinder.fileDistance() == MIN_MOVABLE_DISTANCE);
     }
 }

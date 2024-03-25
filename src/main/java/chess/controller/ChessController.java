@@ -5,7 +5,7 @@ import chess.command.CommandType;
 import chess.domain.CurrentTurn;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.square.piece.Color;
 import chess.dto.MoveArgumentDto;
@@ -67,14 +67,14 @@ public class ChessController {
 
     private void movePlayerPiece(Command command, ChessBoard chessBoard) {
         MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
-        Path path = makePath(moveArgumentDto);
-        chessBoard.move(path);
+        PathFinder pathFinder = makePathFinder(moveArgumentDto);
+        chessBoard.move(pathFinder);
 
         outputView.printChessBoard(chessBoard.getSquares());
     }
 
-    private Path makePath(MoveArgumentDto moveArgumentDto) {
-        return new Path(
+    private PathFinder makePathFinder(MoveArgumentDto moveArgumentDto) {
+        return new PathFinder(
                 new Position(moveArgumentDto.startRank(), moveArgumentDto.startFile()),
                 new Position(moveArgumentDto.endRank(), moveArgumentDto.endFile()));
     }

@@ -1,6 +1,6 @@
 package chess.domain.square.piece.unified;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public class Queen extends UnifiedArriveWay {
     }
 
     @Override
-    protected boolean canMove(Path path) {
-        return path.isStraight() || path.isDiagonal();
+    protected boolean canMove(PathFinder pathFinder) {
+        return pathFinder.isStraight() || pathFinder.isDiagonal();
     }
 }

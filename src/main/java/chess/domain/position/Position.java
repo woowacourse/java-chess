@@ -11,7 +11,7 @@ public class Position {
         this.file = file;
     }
 
-    public int calculateRankDistance(Position position) {
+    public int rankDistance(Position position) {
         return rank.calculateDistance(position.rank);
     }
 
@@ -19,7 +19,7 @@ public class Position {
         return rank.subtract(position.rank);
     }
 
-    public int calculateFileDistance(Position position) {
+    public int fileDistance(Position position) {
         return file.calculateDistance(position.file);
     }
 
@@ -51,19 +51,19 @@ public class Position {
                 '}';
     }
 
-    public int getRankValue() {
+    public int rankValue() {
         return rank.getValue();
     }
 
-    public int getFileValue() {
+    public int fileValue() {
         return file.getValue();
     }
 
-    public Rank getRank() {
+    public Rank rank() {
         return rank;
     }
 
-    public File getFile() {
+    public File file() {
         return file;
     }
 }

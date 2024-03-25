@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.CurrentTurn;
 import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Square;
@@ -23,10 +23,10 @@ public class ChessBoardTest {
     void startEmptyExceptionTest() {
         // given
         ChessBoard chessBoard = new ChessBoard(EmptySquaresMaker.make(), new CurrentTurn(Color.WHITE));
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(path))
+        assertThatThrownBy(() -> chessBoard.move(pathFinder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작 위치에 아군 체스말이 존재해야 합니다.");
     }
@@ -42,7 +42,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
+        chessBoard.move(new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);
@@ -60,7 +60,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
+        chessBoard.move(new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)));
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);

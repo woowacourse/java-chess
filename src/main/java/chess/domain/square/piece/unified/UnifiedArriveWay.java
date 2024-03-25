@@ -1,6 +1,6 @@
 package chess.domain.square.piece.unified;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.square.Square;
 import chess.domain.square.piece.Color;
@@ -14,11 +14,11 @@ public abstract class UnifiedArriveWay extends Piece {
     }
 
     @Override
-    public final boolean canArrive(Path path, Map<Position, Square> board) {
-        final Square targetSquare = board.get(path.getTargetPosition());
+    public final boolean canArrive(PathFinder pathFinder, Map<Position, Square> board) {
+        final Square targetSquare = board.get(pathFinder.targetPosition());
         if (targetSquare.isColor(getColor())) {
             return false;
         }
-        return canMove(path) && isNotObstructed(path, board);
+        return canMove(pathFinder) && isNotObstructed(pathFinder, board);
     }
 }

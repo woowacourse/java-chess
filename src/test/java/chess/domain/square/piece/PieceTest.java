@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.EmptySquaresMaker;
 import chess.domain.position.File;
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Square;
@@ -23,10 +23,10 @@ class PieceTest {
         Piece attackedPiece = Rook.from(Color.BLACK);
         board.put(new Position(Rank.FIRST, File.A), attacker);
         board.put(new Position(Rank.SECOND, File.A), attackedPiece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attacker.canArrive(path, board))
+        assertThat(attacker.canArrive(pathFinder, board))
                 .isFalse();
     }
 }

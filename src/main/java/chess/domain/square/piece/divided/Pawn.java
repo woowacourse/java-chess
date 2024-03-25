@@ -1,6 +1,6 @@
 package chess.domain.square.piece.divided;
 
-import chess.domain.position.Path;
+import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
@@ -25,27 +25,27 @@ public class Pawn extends DividedArriveWay {
     }
 
     @Override
-    protected boolean canMove(Path path) {
+    protected boolean canMove(PathFinder pathFinder) {
         if (isColor(Color.BLACK)) {
-            return path.isDown(maxDistance(path, BLACK_START_RANK));
+            return pathFinder.isDown(maxDistance(pathFinder, BLACK_START_RANK));
         }
-        return path.isUp(maxDistance(path, WHITE_START_RANK));
+        return pathFinder.isUp(maxDistance(pathFinder, WHITE_START_RANK));
     }
 
-    private int maxDistance(Path path, int startRank) {
-        if (path.isStartRank(startRank)) {
+    private int maxDistance(PathFinder pathFinder, int startRank) {
+        if (pathFinder.isStartRank(startRank)) {
             return FIRST_MOVABLE_MAX_DISTANCE;
         }
         return NORMAL_MOVABLE_DISTANCE;
     }
 
     @Override
-    protected boolean canAttack(Path path) {
+    protected boolean canAttack(PathFinder pathFinder) {
         int attackableRankDiff = ATTACKABLE_RANK_DISTANCE;
         if (isColor(Color.BLACK)) {
             attackableRankDiff *= DOWN_DIRECTION;
         }
-        return path.subtractRank() == attackableRankDiff
-                && path.fileDistance() == ATTACKABLE_FILE_DISTANCE;
+        return (pathFinder.subtractRank() == attackableRankDiff) &&
+                (pathFinder.fileDistance() == ATTACKABLE_FILE_DISTANCE);
     }
 }
