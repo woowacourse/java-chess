@@ -22,26 +22,41 @@ public class Pawn extends Piece {
 
     @Override
     public void move(Board board, Square target) {
-        validateDirection(target);
-        validateStepLimit(target);
-        validateObstacle(board, target);
+        if (isForwardDiagonal(target) && existEnemyOnTarget(board, target)) {
+            validateAttackStepLimit(target);
+            square = target;
+            return;
+        }
+        validateMove(board, target);
         square = target;
     }
 
-    private void validateDirection(Square target) {
+    private void validateAttackStepLimit(Square target) {
+        if (square.distanceRankFrom(target) > STEP_LIMIT) {
+            throw new IllegalArgumentException(ERROR_CANNOT_REACH);
+        }
+    }
+
+    private void validateMove(Board board, Square target) {
+        validateMoveDirection(target);
+        validateMoveStepLimit(target);
+        validateMoveObstacle(board, target);
+    }
+
+    private void validateMoveDirection(Square target) {
         if (!isForward(target) || !square.isSameFile(target)) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
         }
     }
 
-    private void validateStepLimit(Square target) {
+    private void validateMoveStepLimit(Square target) {
         if ((!isFirstStep() && square.distanceRankFrom(target) > STEP_LIMIT) ||
                 square.distanceRankFrom(target) > FIRST_STEP_LIMIT) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
         }
     }
 
-    private void validateObstacle(Board board, Square target) {
+    private void validateMoveObstacle(Board board, Square target) {
         List<Square> path = new ArrayList<>(square.generatePath(target));
         path.add(target);
         if (path.stream().anyMatch(board::existOnSquare)) {
@@ -61,6 +76,14 @@ public class Pawn extends Piece {
             return square.isSameRank(FIRST_RANK_BLACK);
         }
         return square.isSameRank(FIRST_RANK_WHITE);
+    }
+
+    private boolean isForwardDiagonal(Square target) {
+        return isForward(target) && square.isSameDiagonal(target);
+    }
+
+    private boolean existEnemyOnTarget(Board board, Square target) {
+        return board.existOnSquareWithColor(target, getColor().opposite());
     }
 
     @Override

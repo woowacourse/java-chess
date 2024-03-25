@@ -106,7 +106,7 @@ class BlackPawnTest {
     void attackDiagonalForBlackPawn() {
         // given
         Square source = Square.from("c7");
-        Square target = Square.from("b8");
+        Square target = Square.from("b6");
         Pawn pawn = new Pawn(PieceColor.BLACK, source);
         Pawn enemy = new Pawn(PieceColor.WHITE, target);
         Board board = new Board(Set.of(pawn, enemy));
