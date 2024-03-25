@@ -35,7 +35,7 @@ public class Board {
 
     private void validateNoPieceToMove(Position sourcePosition) {
         if (isNoPieceAt(sourcePosition)) {
-            throw new IllegalArgumentException("source 위치에 말이 없습니다.");
+            throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
     }
 
@@ -49,7 +49,7 @@ public class Board {
 
     private void validateSamePosition(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("source 위치와 target 위치가 같을 수 없습니다.");
+            throw new IllegalArgumentException("출발점과 도착점은 같을 수 없습니다.");
         }
     }
 

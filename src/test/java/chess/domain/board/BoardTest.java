@@ -27,7 +27,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("source 위치에 말이 없습니다.");
+            .hasMessage("출발점에 말이 없습니다.");
     }
 
     @Test
@@ -51,7 +51,7 @@ class BoardTest {
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("source 위치와 target 위치가 같을 수 없습니다.");
+            .hasMessage("출발점과 도착점은 같을 수 없습니다.");
     }
 
     @Test
