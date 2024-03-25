@@ -23,7 +23,7 @@ public class Board {
     }
 
     public void move(final Coordinate source, final Coordinate target) {
-        validateSourceExist(source);
+        validateCoordinates(source, target);
         Piece sourcePiece = findByCoordinate(source);
         List<Coordinate> coordinates = sourcePiece.legalNextCoordinates(source, target);
         if (sourcePiece.canMove(source, target, makeBoardInformation(coordinates))) {
@@ -44,9 +44,12 @@ public class Board {
         return boardInformation;
     }
 
-    private void validateSourceExist(final Coordinate source) {
+    private void validateCoordinates(final Coordinate source, final Coordinate target) {
         if (!pieces.containsKey(source)) {
             throw new NoSuchElementException("보드에 움직일 대상 기물이 없습니다.");
+        }
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("동일한 위치로 이동할 수 없습니다.");
         }
     }
 }

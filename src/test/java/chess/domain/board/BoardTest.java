@@ -232,6 +232,15 @@ class BoardTest {
                 .isInstanceOf(NoSuchElementException.class);
     }
 
+    @DisplayName("source 좌표와 target 좌표가 같으면 예외를 발생한다.")
+    @Test
+    void targetSameSource() {
+        Board board = new Board();
+
+        assertThatThrownBy(() -> board.move(A2, A2))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("기물이 움직일 수 있다.")
     @Test
     void move() {
