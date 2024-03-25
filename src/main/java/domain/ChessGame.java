@@ -19,17 +19,13 @@ public class ChessGame {
         this.board = new Board(BoardInitiator.init());
     }
 
-    public void fromCommand(final String value) {
+    public void execute(final String value) {
         this.command = this.command.next(Commands.from(value));
+
         if (this.command.isMove()) {
-            moveBoard(value);
+            final StringTokenizer tokens = skipFirstToken(value);
+            board.move(tokens.nextToken(), tokens.nextToken());
         }
-    }
-
-    private void moveBoard(final String command) {
-        final StringTokenizer tokens = skipFirstToken(command);
-
-        board.move(tokens.nextToken(), tokens.nextToken());
     }
 
     private StringTokenizer skipFirstToken(final String command) {

@@ -16,7 +16,7 @@ public class ChessController {
 
     private void play(final ChessGame chessGame) {
         while (chessGame.isRunning()) {
-            chessGame.fromCommand(InputView.inputCommand());
+            chessGame.execute(InputView.inputCommand());
             printChessBoard(chessGame);
         }
     }
