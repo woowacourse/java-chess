@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public enum File {
@@ -13,28 +15,29 @@ public enum File {
     G(7, "g"),
     H(8, "h");
 
-    private final int file;
-    private final String fileSymbol;
+    private static final Map<Integer, File> CACHE;
 
-    File(int file, String fileSymbol) {
-        this.file = file;
+    static{
+        CACHE = new HashMap<>();
+        for (File file : File.values()) {
+            CACHE.put(file.fileColumn, file);
+        }
+    }
+
+    private final int fileColumn;
+    final String fileSymbol;
+
+    File(int fileColumn, String fileSymbol) {
+        this.fileColumn = fileColumn;
         this.fileSymbol = fileSymbol;
     }
 
-    public static File convertToFile(String fileInput) {
-        return Arrays.stream(File.values()).filter(file -> file.fileSymbol.equals(fileInput.toLowerCase()))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 file 값입니다."));
-    }
-
     public int calculateDifference(File file) {
-        return file.file - this.file;
+        return file.fileColumn - this.fileColumn;
     }
 
     public File move(int moveUnit) {
-        int destination = file + moveUnit;
-        return Arrays.stream(File.values()).filter(start -> start.file == destination)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 file 값입니다."));
+        int destination = fileColumn + moveUnit;
+        return CACHE.get(destination);
     }
 }

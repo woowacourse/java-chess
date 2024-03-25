@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public enum Rank {
@@ -13,26 +15,27 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
-    private final int rank;
+    private static final Map<Integer,Rank> CACHE;
 
-    Rank(int rank) {
-        this.rank = rank;
+    static{
+        CACHE = new HashMap<>();
+        for (Rank rank : Rank.values()) {
+            CACHE.put(rank.rankRow, rank);
+        }
     }
 
-    public static Rank convertToRank(String i) {
-        return Arrays.stream(Rank.values()).filter(start -> start.rank == Integer.parseInt(i))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 rank 값입니다."));
+    final int rankRow;
+
+    Rank(int rankRow) {
+        this.rankRow = rankRow;
     }
 
     public int calculateDifference(Rank otherRank) {
-        return otherRank.rank - this.rank;
+        return otherRank.rankRow - this.rankRow;
     }
 
     public Rank move(int moveUnit) {
-        int destination = rank + moveUnit;
-        return Arrays.stream(Rank.values()).filter(m -> m.rank == destination)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("올바르지 않은 rank 값입니다."));
+        int destination = rankRow + moveUnit;
+        return CACHE.get(destination);
     }
 }
