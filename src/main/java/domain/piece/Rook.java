@@ -6,8 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static domain.piece.PieceType.*;
-import static domain.piece.CommonMovementDirection.*;
+import static domain.piece.CommonMovementDirection.UP;
+import static domain.piece.CommonMovementDirection.DOWN;
+import static domain.piece.CommonMovementDirection.RIGHT;
+import static domain.piece.CommonMovementDirection.LEFT;
+import static domain.piece.CommonMovementDirection.calculateDirection;
+import static domain.piece.PieceType.ROOK;
+
 
 public class Rook extends Piece {
     private static final List<CommonMovementDirection> MOVABLE_DIRECTIONS = List.of(UP, DOWN, RIGHT, LEFT);

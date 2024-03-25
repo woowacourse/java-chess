@@ -10,8 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static domain.piece.PieceType.*;
 import static domain.piece.PieceType.PAWN;
+import static domain.piece.PieceType.ROOK;
+import static domain.piece.PieceType.KNIGHT;
+import static domain.piece.PieceType.BISHOP;
+import static domain.piece.PieceType.QUEEN;
+import static domain.piece.PieceType.KING;
 
 public class OutputView {
     private static final Map<PieceType, String> pieceFormat = Map.ofEntries(

@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static domain.piece.CommonMovementDirection.UP_RIGHT;
+import static domain.piece.CommonMovementDirection.UP_LEFT;
+import static domain.piece.CommonMovementDirection.DOWN_RIGHT;
+import static domain.piece.CommonMovementDirection.DOWN_LEFT;
+import static domain.piece.CommonMovementDirection.calculateDirection;
 import static domain.piece.PieceType.BISHOP;
-import static domain.piece.CommonMovementDirection.*;
 
 public class Bishop extends Piece {
     private static final List<CommonMovementDirection> MOVABLE_DIRECTIONS = List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);

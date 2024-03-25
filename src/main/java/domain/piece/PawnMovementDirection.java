@@ -4,7 +4,9 @@ import domain.board.Position;
 
 import java.util.Arrays;
 
-import static domain.piece.PieceColor.*;
+import static domain.piece.PieceColor.BLACK;
+import static domain.piece.PieceColor.WHITE;
+
 
 public enum PawnMovementDirection implements MovementDirection {
     UP_ONE_STEP(-1, 0, WHITE),

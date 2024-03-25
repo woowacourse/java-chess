@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static domain.piece.CommonMovementDirection.calculateDirection;
 import static domain.piece.PieceType.QUEEN;
-import static domain.piece.CommonMovementDirection.*;
 
 public class Queen extends Piece {
     private static final PieceType PIECE_TYPE = QUEEN;
