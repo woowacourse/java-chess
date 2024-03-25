@@ -1,15 +1,28 @@
 package domain.piece;
 
+import static domain.position.File.A;
+import static domain.position.File.B;
+import static domain.position.File.C;
+import static domain.position.File.D;
+import static domain.position.File.E;
+import static domain.position.File.F;
+import static domain.position.File.G;
+import static domain.position.File.H;
+import static domain.position.Rank.EIGHT;
+import static domain.position.Rank.FIVE;
+import static domain.position.Rank.FOUR;
+import static domain.position.Rank.ONE;
+import static domain.position.Rank.SEVEN;
+import static domain.position.Rank.SIX;
+import static domain.position.Rank.THREE;
+import static domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.position.File;
 import domain.position.Position;
 import domain.position.PositionGenerator;
-import domain.position.Rank;
-import java.util.stream.Stream;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class BishopTest {
@@ -25,95 +38,35 @@ public class BishopTest {
         *.....*.
      */
 
-    private static Stream<Arguments> provideValidPosition() {
-        return Stream.of(
-                Arguments.of(File.A, Rank.ONE),
-                Arguments.of(File.B, Rank.TWO),
-                Arguments.of(File.C, Rank.THREE),
-                Arguments.of(File.E, Rank.FIVE),
-                Arguments.of(File.F, Rank.SIX),
-                Arguments.of(File.G, Rank.SEVEN),
-                Arguments.of(File.H, Rank.EIGHT),
-                Arguments.of(File.A, Rank.SEVEN),
-                Arguments.of(File.B, Rank.SIX),
-                Arguments.of(File.C, Rank.FIVE),
-                Arguments.of(File.E, Rank.THREE),
-                Arguments.of(File.F, Rank.TWO),
-                Arguments.of(File.G, Rank.ONE)
+    private static List<Position> validPositions() {
+        return List.of(
+                PositionFixture.get(A, ONE),
+                PositionFixture.get(B, TWO),
+                PositionFixture.get(C, THREE),
+                PositionFixture.get(E, FIVE),
+                PositionFixture.get(F, SIX),
+                PositionFixture.get(G, SEVEN),
+                PositionFixture.get(H, EIGHT),
+                PositionFixture.get(A, SEVEN),
+                PositionFixture.get(B, SIX),
+                PositionFixture.get(C, FIVE),
+                PositionFixture.get(E, THREE),
+                PositionFixture.get(F, TWO),
+                PositionFixture.get(G, ONE)
         );
     }
 
-    private static Stream<Arguments> provideInvalidPosition() {
-        return Stream.of(
-                Arguments.of(File.A, Rank.TWO),
-                Arguments.of(File.A, Rank.THREE),
-                Arguments.of(File.A, Rank.FOUR),
-                Arguments.of(File.A, Rank.FIVE),
-                Arguments.of(File.A, Rank.SIX),
-                Arguments.of(File.A, Rank.EIGHT),
-
-                Arguments.of(File.B, Rank.ONE),
-                Arguments.of(File.B, Rank.THREE),
-                Arguments.of(File.B, Rank.FOUR),
-                Arguments.of(File.B, Rank.FIVE),
-                Arguments.of(File.B, Rank.SEVEN),
-                Arguments.of(File.B, Rank.EIGHT),
-                Arguments.of(File.B, Rank.EIGHT),
-
-                Arguments.of(File.C, Rank.ONE),
-                Arguments.of(File.C, Rank.TWO),
-                Arguments.of(File.C, Rank.FOUR),
-                Arguments.of(File.C, Rank.SIX),
-                Arguments.of(File.C, Rank.SEVEN),
-                Arguments.of(File.C, Rank.EIGHT),
-
-                Arguments.of(File.D, Rank.ONE),
-                Arguments.of(File.D, Rank.TWO),
-                Arguments.of(File.D, Rank.THREE),
-                Arguments.of(File.D, Rank.FIVE),
-                Arguments.of(File.D, Rank.SIX),
-                Arguments.of(File.D, Rank.SEVEN),
-                Arguments.of(File.D, Rank.EIGHT),
-
-                Arguments.of(File.E, Rank.ONE),
-                Arguments.of(File.E, Rank.TWO),
-                Arguments.of(File.E, Rank.FOUR),
-                Arguments.of(File.E, Rank.SIX),
-                Arguments.of(File.E, Rank.SEVEN),
-                Arguments.of(File.E, Rank.EIGHT),
-
-                Arguments.of(File.F, Rank.ONE),
-                Arguments.of(File.F, Rank.THREE),
-                Arguments.of(File.F, Rank.FOUR),
-                Arguments.of(File.F, Rank.FIVE),
-                Arguments.of(File.F, Rank.SEVEN),
-                Arguments.of(File.F, Rank.EIGHT),
-                Arguments.of(File.F, Rank.EIGHT),
-
-                Arguments.of(File.G, Rank.TWO),
-                Arguments.of(File.G, Rank.THREE),
-                Arguments.of(File.G, Rank.FOUR),
-                Arguments.of(File.G, Rank.FIVE),
-                Arguments.of(File.G, Rank.SIX),
-                Arguments.of(File.G, Rank.EIGHT),
-
-                Arguments.of(File.H, Rank.ONE),
-                Arguments.of(File.H, Rank.TWO),
-                Arguments.of(File.H, Rank.THREE),
-                Arguments.of(File.H, Rank.FOUR),
-                Arguments.of(File.H, Rank.FIVE),
-                Arguments.of(File.H, Rank.SIX),
-                Arguments.of(File.H, Rank.SEVEN)
-        );
+    private static List<Position> invalidPositions() {
+        List<Position> validPositions = validPositions();
+        return PositionFixture.otherPositions(validPositions);
     }
 
     @ParameterizedTest
-    @MethodSource("provideValidPosition")
+    @MethodSource("validPositions")
     @DisplayName("목적지가 대각선 경로에 있는 경우 움직일 수 있다.")
-    void canMove_Diagonal_True(File file, Rank rank) {
+    void canMove_Diagonal_True(Position target) {
         Piece piece = new Bishop(Color.WHITE);
-        Position source = PositionGenerator.generate(File.D, Rank.FOUR);
-        Position target = PositionGenerator.generate(file, rank);
+        Position source = PositionGenerator.generate(D, FOUR);
 
         boolean actual = piece.canMove(source, target);
 
@@ -121,12 +74,11 @@ public class BishopTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideInvalidPosition")
+    @MethodSource("invalidPositions")
     @DisplayName("목적지가 대각선 경로에 없는 경우 움직일 수 없다.")
-    void canMove_Diagonal_False(File file, Rank rank) {
+    void canMove_Diagonal_False(Position target) {
         Piece piece = new Bishop(Color.WHITE);
-        Position source = PositionGenerator.generate(File.D, Rank.FOUR);
-        Position target = PositionGenerator.generate(file, rank);
+        Position source = PositionGenerator.generate(D, FOUR);
 
         boolean actual = piece.canMove(source, target);
 
