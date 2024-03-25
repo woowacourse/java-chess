@@ -51,7 +51,7 @@ class RankTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-5, 4})
-    @DisplayName("이동시키려는 행이 1보다 크거나 같고, 8보다 작거나 같으면 이동 가능하다.")
+    @DisplayName("이동시키려는 행이 1보다 작거나, 8보다 크다면 이동 불가능하다.")
     void canMove_false(int distanceToMove) {
         Rank rank = Rank.from(5);
 

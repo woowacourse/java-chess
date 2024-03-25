@@ -1,57 +1,55 @@
 package chess.domain;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-public class File {
+public enum File {
+    A('a'),
+    B('b'),
+    C('c'),
+    D('d'),
+    E('e'),
+    F('f'),
+    G('g'),
+    H('h');
 
-    private static final char MINIMUM_FILE = 'a';
-    private static final char MAXIMUM_FILE = 'h';
+    private static final Map<Character, File> CACHED_FILE = Arrays.stream(values())
+            .collect(Collectors.toMap(file -> file.position, Function.identity()));
 
-    private final char file;
+    private final char position;
 
-    public File(char file) {
-        validateRange(file);
-        this.file = file;
+    File(final char position) {
+        this.position = position;
     }
 
-    private void validateRange(char file) {
-        if (isOutOfRange(file)) {
-            throw new IllegalArgumentException(
-                    String.format("가로 위치는 %c ~ %c 사이의 값이어야 합니다.", MINIMUM_FILE, MAXIMUM_FILE));
+    public static File from(final char position) {
+        if (CACHED_FILE.containsKey(position)) {
+            return CACHED_FILE.get(position);
         }
+        throw new IllegalArgumentException("가로 위치의 범위를 벗어났습니다. 입력된 가로 위치 = " + position);
     }
 
-    private boolean isOutOfRange(char file) {
-        return file < MINIMUM_FILE || file > MAXIMUM_FILE;
+    public File move(final int distanceToMove) {
+        final char movedPosition = addPosition(distanceToMove);
+        return from(movedPosition);
     }
 
-    public int distance(File file) {
-        return this.file - file.file;
+    public boolean canMove(final int distanceToMove) {
+        final char movedPosition = addPosition(distanceToMove);
+        return CACHED_FILE.containsKey(movedPosition);
     }
 
-    public File add(int directionOfFile) {
-        char file = (char) (this.file + directionOfFile);
-        return new File(file);
+    private char addPosition(final int distanceToMove) {
+        return (char) (position + distanceToMove);
     }
 
-    public boolean addable(int addFile) {
-        return !isOutOfRange((char) (this.file + addFile));
+    public int calculateDistanceFrom(final File file) {
+        return file.subtractPosition(position);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        File file1 = (File) o;
-        return Objects.equals(file, file1.file);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file);
+    private int subtractPosition(final char position) {
+        return this.position - position;
     }
 }

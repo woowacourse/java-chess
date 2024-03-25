@@ -14,15 +14,15 @@ public class Point {
     }
 
     public Point(char file, int rank) {
-        this(new File(file), Rank.from(rank));
+        this(File.from(file), Rank.from(rank));
     }
 
     public Point(String point) {
-        this(new File(point.charAt(0)), Rank.from(point.charAt(1) - '0'));
+        this(File.from(point.charAt(0)), Rank.from(point.charAt(1) - '0'));
     }
 
     public Direction findRoute(Point destination) {
-        int fileDistance = destination.file.distance(this.file);
+        int fileDistance = file.calculateDistanceFrom(destination.file);
         int rankDistance = rank.calculateDistanceFrom(destination.rank);
         int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
         int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
@@ -37,7 +37,7 @@ public class Point {
     }
 
     public boolean isDiagonal(Point point) {
-        int fileDistance = this.file.distance(point.file);
+        int fileDistance = this.file.calculateDistanceFrom(point.file);
         int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         if (this.equals(point) || rankDistance == 0) {
             return false;
@@ -56,7 +56,7 @@ public class Point {
         if (this.equals(point)) {
             return false;
         }
-        int fileDistance = this.file.distance(point.file);
+        int fileDistance = this.file.calculateDistanceFrom(point.file);
         int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         int distance = getDistance(fileDistance, rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
@@ -70,7 +70,7 @@ public class Point {
     }
 
     public int multiplyAxis(Point point) {
-        int fileDistance = this.file.distance(point.file);
+        int fileDistance = this.file.calculateDistanceFrom(point.file);
         int rankDistance = this.rank.calculateDistanceFrom(point.rank);
         return fileDistance * rankDistance;
     }
@@ -80,14 +80,14 @@ public class Point {
     }
 
     public Point add(int directionOfFile, int distanceToMove) {
-        File addedFile = file.add(directionOfFile);
+        File addedFile = file.move(directionOfFile);
         Rank addedRank = rank.move(distanceToMove);
 
         return new Point(addedFile, addedRank);
     }
 
     public boolean addable(int addFile, int distanceToMove) {
-        return file.addable(addFile) && rank.canMove(distanceToMove);
+        return file.canMove(addFile) && rank.canMove(distanceToMove);
     }
 
     @Override
