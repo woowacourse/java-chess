@@ -22,7 +22,7 @@ public class Pawn extends AbstractPawn {
     public Piece move(final Chessboard chessboard, final Position target) {
         Set<Position> possiblePositions = new HashSet<>();
         possiblePositions.addAll(attackablePositions(chessboard));
-        possiblePositions.addAll(possiblePositions(chessboard, POSSIBLE_MOVEMENTS));
+        possiblePositions.addAll(movablePositions(chessboard, POSSIBLE_MOVEMENTS));
         validateTarget(possiblePositions, target);
         return new Pawn(color(), target);
     }

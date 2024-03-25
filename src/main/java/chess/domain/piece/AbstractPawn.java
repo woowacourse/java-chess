@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -15,7 +16,11 @@ import chess.domain.piece.attribute.Position;
 
 public abstract class AbstractPawn extends UnslidingPiece {
 
-    protected static final Set<Movement> POSSIBLE_ATTACKS = Set.of(
+    interface PositionConsumer {
+        void accept(Chessboard chessboard, Position position, Set<Position> positions);
+    }
+
+    private static final Set<Movement> POSSIBLE_ATTACKS = Set.of(
             Movement.of(UP_LEFT),
             Movement.of(UP_RIGHT)
     );
@@ -24,19 +29,37 @@ public abstract class AbstractPawn extends UnslidingPiece {
         super(color, position);
     }
 
-    protected Set<Position> attackablePositions(final Chessboard chessboard) {
-        Set<Position> attackablePositions = new HashSet<>();
-        POSSIBLE_ATTACKS.forEach(movement -> addPositionIfPresent(chessboard, movement, attackablePositions));
-        return attackablePositions;
+    @Override
+    protected Set<Position> movablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+        return possiblePositions(chessboard, movements, this::addIfEmpty);
     }
 
-    private void addPositionIfPresent(
+    protected Set<Position> attackablePositions(final Chessboard chessboard) {
+        return possiblePositions(chessboard, POSSIBLE_ATTACKS, this::addIfAttackable);
+    }
+
+    private Set<Position> possiblePositions(
             final Chessboard chessboard,
-            final Movement movement,
+            final Collection<Movement> movements,
+            final PositionConsumer consumer
+    ) {
+        Set<Position> positions = new HashSet<>();
+        movements.forEach(movement -> {
+            Optional<Position> possiblePosition = position().after(movement);
+            possiblePosition.ifPresent(position -> consumer.accept(chessboard, position, positions));
+        });
+        return positions;
+    }
+
+    private void addIfEmpty(
+            final Chessboard chessboard,
+            final Position position,
             final Set<Position> possiblePositions
     ) {
-        Optional<Position> possiblePosition = position().after(movement);
-        possiblePosition.ifPresent(position -> addIfAttackable(chessboard, position, possiblePositions));
+        Square square = chessboard.squareIn(position);
+        if (square.isEmpty()) {
+            possiblePositions.add(position);
+        }
     }
 
     private void addIfAttackable(
@@ -45,8 +68,7 @@ public abstract class AbstractPawn extends UnslidingPiece {
             final Set<Position> possiblePositions
     ) {
         Square square = chessboard.squareIn(position);
-        Piece other = square.piece();
-        if (color() != other.color()) {
+        if (isAttackable(square)) {
             possiblePositions.add(position);
         }
     }

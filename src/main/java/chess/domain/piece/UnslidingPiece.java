@@ -17,7 +17,7 @@ public abstract class UnslidingPiece extends Piece {
         super(color, position);
     }
 
-    protected Set<Position> possiblePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+    protected Set<Position> movablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
         Set<Position> positions = new HashSet<>();
         movements.forEach(movement -> addPositionIfPresent(chessboard, movement, positions));
         return positions;
@@ -26,31 +26,31 @@ public abstract class UnslidingPiece extends Piece {
     private void addPositionIfPresent(
             final Chessboard chessboard,
             final Movement movement,
-            final Set<Position> possiblePositions
+            final Set<Position> positions
     ) {
         Optional<Position> possiblePosition = position().after(movement);
-        possiblePosition.ifPresent(position -> addIfEmptyOrAttackable(chessboard, position, possiblePositions));
+        possiblePosition.ifPresent(position -> addIfEmptyOrAttackable(chessboard, position, positions));
     }
 
     private void addIfEmptyOrAttackable(
             final Chessboard chessboard,
             final Position position,
-            final Set<Position> possiblePositions
+            final Set<Position> positions
     ) {
         Square square = chessboard.squareIn(position);
-        if (addIfEmpty(position, square, possiblePositions)) {
+        if (addIfEmpty(position, square, positions)) {
             return;
         }
-        addIfAttackable(position, square, possiblePositions);
+        addIfAttackable(position, square, positions);
     }
 
     private boolean addIfEmpty(
             final Position position,
             final Square square,
-            final Set<Position> possiblePositions
+            final Set<Position> positions
     ) {
         if (square.isEmpty()) {
-            possiblePositions.add(position);
+            positions.add(position);
             return true;
         }
         return false;
@@ -59,11 +59,11 @@ public abstract class UnslidingPiece extends Piece {
     private void addIfAttackable(
             final Position position,
             final Square square,
-            final Set<Position> possiblePositions
+            final Set<Position> positions
     ) {
         Piece other = square.piece();
         if (color() != other.color()) {
-            possiblePositions.add(position);
+            positions.add(position);
         }
     }
 }

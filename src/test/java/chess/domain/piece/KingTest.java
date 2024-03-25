@@ -10,53 +10,54 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
 class KingTest {
 
-	static Stream<Arguments> move() {
-		return Stream.of(
-				Arguments.of(Position.from("d6"), Position.from("d6")),
-				Arguments.of(Position.from("e6"), Position.from("e6")),
-				Arguments.of(Position.from("e5"), Position.from("e5")),
-				Arguments.of(Position.from("e4"), Position.from("e4")),
-				Arguments.of(Position.from("d4"), Position.from("d4")),
-				Arguments.of(Position.from("c4"), Position.from("c4")),
-				Arguments.of(Position.from("c5"), Position.from("c5")),
-				Arguments.of(Position.from("c6"), Position.from("c6"))
-		);
-	}
+    static Stream<Arguments> move() {
+        return Stream.of(
+                Arguments.of(Position.from("d6"), Position.from("d6")),
+                Arguments.of(Position.from("e6"), Position.from("e6")),
+                Arguments.of(Position.from("e5"), Position.from("e5")),
+                Arguments.of(Position.from("e4"), Position.from("e4")),
+                Arguments.of(Position.from("d4"), Position.from("d4")),
+                Arguments.of(Position.from("c4"), Position.from("c4")),
+                Arguments.of(Position.from("c5"), Position.from("c5")),
+                Arguments.of(Position.from("c6"), Position.from("c6"))
+        );
+    }
 
-	@DisplayName("킹이 이동한다.")
-	@MethodSource
-	@ParameterizedTest
-	void move(Position target, Position expected) {
-		Piece sut = new King(Color.WHITE, Position.from("d5"));
-		Position actual = sut.move(target).position();
-		assertThat(actual).isEqualTo(expected);
-	}
+    @DisplayName("킹이 이동한다.")
+    @MethodSource
+    @ParameterizedTest
+    void move(Position target, Position expected) {
+        Piece sut = new King(Color.WHITE, Position.from("d5"));
+        Position actual = sut.move(Chessboard.empty(), target).position();
+        assertThat(actual).isEqualTo(expected);
+    }
 
-	static Stream<Arguments> moveException() {
-		return Stream.of(
-				Arguments.of(Position.from("b7")),
-				Arguments.of(Position.from("d7")),
-				Arguments.of(Position.from("f7")),
-				Arguments.of(Position.from("f5")),
-				Arguments.of(Position.from("f3")),
-				Arguments.of(Position.from("d3")),
-				Arguments.of(Position.from("b3")),
-				Arguments.of(Position.from("b5"))
-		);
-	}
+    static Stream<Arguments> moveException() {
+        return Stream.of(
+                Arguments.of(Position.from("b7")),
+                Arguments.of(Position.from("d7")),
+                Arguments.of(Position.from("f7")),
+                Arguments.of(Position.from("f5")),
+                Arguments.of(Position.from("f3")),
+                Arguments.of(Position.from("d3")),
+                Arguments.of(Position.from("b3")),
+                Arguments.of(Position.from("b5"))
+        );
+    }
 
-	@DisplayName("이동할 수 없는 위치를 입력하면 예외가 발생한다.")
-	@MethodSource
-	@ParameterizedTest
-	void moveException(Position target) {
-		Piece sut = new King(Color.WHITE, Position.from("d5"));
-		assertThatThrownBy(() -> sut.move(target))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("이동할 수 없는 위치입니다.");
-	}
+    @DisplayName("이동할 수 없는 위치를 입력하면 예외가 발생한다.")
+    @MethodSource
+    @ParameterizedTest
+    void moveException(Position target) {
+        Piece sut = new King(Color.WHITE, Position.from("d5"));
+        assertThatThrownBy(() -> sut.move(Chessboard.empty(), target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다: " + target);
+    }
 }

@@ -25,6 +25,6 @@ public class Square {
     }
 
     public Piece piece() {
-        return Objects.requireNonNull(piece);
+        return Objects.requireNonNull(piece, "해당 칸에 기물이 없습니다.");
     }
 }

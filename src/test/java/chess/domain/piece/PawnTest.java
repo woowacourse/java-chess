@@ -10,11 +10,12 @@ import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
-class StartingPawnTest {
-    @DisplayName("시작 위치의 폰이 이동한다.")
+class PawnTest {
+
+    @DisplayName("폰이 이동한다.")
     @Test
     void move() {
-        Piece sut = new StartingPawn(Color.WHITE, Position.from("d2"));
+        Piece sut = new Pawn(Color.WHITE, Position.from("d3"));
         Position actual = sut.move(Chessboard.empty(), Position.from("d4")).position();
         assertThat(actual).isEqualTo(Position.from("d4"));
     }
@@ -22,7 +23,7 @@ class StartingPawnTest {
     @DisplayName("이동할 수 없는 위치를 입력받으면 예외를 발생한다.")
     @Test
     void moveException() {
-        Piece sut = new StartingPawn(Color.WHITE, Position.from("d2"));
+        Piece sut = new Pawn(Color.WHITE, Position.from("d5"));
         assertThatCode(() -> sut.move(Chessboard.empty(), Position.from("e3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다: E3");

@@ -27,7 +27,7 @@ public class Queen extends SlidingPiece {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(possiblePositionsTo(POSSIBLE_DIRECTIONS), target);
+        validateTarget(movablePositions(chessboard, POSSIBLE_DIRECTIONS), target);
         return new Queen(color(), target);
     }
 }

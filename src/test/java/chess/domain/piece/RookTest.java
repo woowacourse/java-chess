@@ -10,57 +10,58 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
 class RookTest {
 
-	private static final String INITIAL_POSITION = "d5";
+    private static final String INITIAL_POSITION = "d5";
 
-	static Stream<Arguments> move() {
-		return Stream.of(
-				Arguments.of(Position.from("d8"), Position.from("d8")),
-				Arguments.of(Position.from("d7"), Position.from("d7")),
-				Arguments.of(Position.from("d6"), Position.from("d6")),
-				Arguments.of(Position.from("e5"), Position.from("e5")),
-				Arguments.of(Position.from("f5"), Position.from("f5")),
-				Arguments.of(Position.from("g5"), Position.from("g5")),
-				Arguments.of(Position.from("h5"), Position.from("h5")),
-				Arguments.of(Position.from("d4"), Position.from("d4")),
-				Arguments.of(Position.from("d3"), Position.from("d3")),
-				Arguments.of(Position.from("d2"), Position.from("d2")),
-				Arguments.of(Position.from("d1"), Position.from("d1")),
-				Arguments.of(Position.from("a5"), Position.from("a5")),
-				Arguments.of(Position.from("b5"), Position.from("b5")),
-				Arguments.of(Position.from("c5"), Position.from("c5"))
-		);
-	}
+    static Stream<Arguments> move() {
+        return Stream.of(
+                Arguments.of(Position.from("d8"), Position.from("d8")),
+                Arguments.of(Position.from("d7"), Position.from("d7")),
+                Arguments.of(Position.from("d6"), Position.from("d6")),
+                Arguments.of(Position.from("e5"), Position.from("e5")),
+                Arguments.of(Position.from("f5"), Position.from("f5")),
+                Arguments.of(Position.from("g5"), Position.from("g5")),
+                Arguments.of(Position.from("h5"), Position.from("h5")),
+                Arguments.of(Position.from("d4"), Position.from("d4")),
+                Arguments.of(Position.from("d3"), Position.from("d3")),
+                Arguments.of(Position.from("d2"), Position.from("d2")),
+                Arguments.of(Position.from("d1"), Position.from("d1")),
+                Arguments.of(Position.from("a5"), Position.from("a5")),
+                Arguments.of(Position.from("b5"), Position.from("b5")),
+                Arguments.of(Position.from("c5"), Position.from("c5"))
+        );
+    }
 
-	@DisplayName("룩이 이동한다.")
-	@MethodSource
-	@ParameterizedTest
-	void move(Position target, Position expected) {
-		Piece sut = new Rook(Color.WHITE, Position.from(INITIAL_POSITION));
-		Position actual = sut.move(target).position();
-		assertThat(actual).isEqualTo(expected);
-	}
+    @DisplayName("룩이 이동한다.")
+    @MethodSource
+    @ParameterizedTest
+    void move(Position target, Position expected) {
+        Piece sut = new Rook(Color.WHITE, Position.from(INITIAL_POSITION));
+        Position actual = sut.move(Chessboard.empty(), target).position();
+        assertThat(actual).isEqualTo(expected);
+    }
 
-	static Stream<Arguments> moveException() {
-		return Stream.of(
-				Arguments.of(Position.from("e6")),
-				Arguments.of(Position.from("e4")),
-				Arguments.of(Position.from("c4")),
-				Arguments.of(Position.from("c6"))
-		);
-	}
+    static Stream<Arguments> moveException() {
+        return Stream.of(
+                Arguments.of(Position.from("e6")),
+                Arguments.of(Position.from("e4")),
+                Arguments.of(Position.from("c4")),
+                Arguments.of(Position.from("c6"))
+        );
+    }
 
-	@DisplayName("이동할 수 없는 위치를 입력하면 예외가 발생한다.")
-	@MethodSource
-	@ParameterizedTest
-	void moveException(Position target) {
-		Piece sut = new Rook(Color.WHITE, Position.from(INITIAL_POSITION));
-		assertThatThrownBy(() -> sut.move(target))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessage("이동할 수 없는 위치입니다.");
-	}
+    @DisplayName("이동할 수 없는 위치를 입력하면 예외가 발생한다.")
+    @MethodSource
+    @ParameterizedTest
+    void moveException(Position target) {
+        Piece sut = new Rook(Color.WHITE, Position.from(INITIAL_POSITION));
+        assertThatThrownBy(() -> sut.move(Chessboard.empty(), target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동할 수 없는 위치입니다: " + target);
+    }
 }

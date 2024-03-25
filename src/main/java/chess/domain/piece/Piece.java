@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import chess.domain.chessboard.Chessboard;
+import chess.domain.chessboard.attribute.Square;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -29,8 +30,16 @@ public abstract class Piece {
 
     protected void validateTarget(final Set<Position> possiblePositions, final Position target) {
         if (!possiblePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다: %s".formatted(target));
         }
+    }
+
+    protected boolean isAttackable(final Square square) {
+        if (!square.isEmpty()) {
+            Piece piece = square.piece();
+            return color() != piece.color();
+        }
+        return false;
     }
 
     public Color color() {

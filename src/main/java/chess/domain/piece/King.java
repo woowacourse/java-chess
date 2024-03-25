@@ -32,7 +32,7 @@ public class King extends UnslidingPiece {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(possiblePositions(chessboard, POSSIBLE_MOVEMENTS), target);
+        validateTarget(movablePositions(chessboard, POSSIBLE_MOVEMENTS), target);
         return new King(color(), target);
     }
 }

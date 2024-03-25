@@ -38,9 +38,10 @@ public class StartingPawn extends AbstractPawn {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        Set<Position> possiblePositions = new HashSet<>(possiblePositions(chessboard, POSSIBLE_ATTACKS));
-        possiblePositions.addAll(possiblePositions(chessboard, POSSIBLE_MOVEMENTS));
-        validateTarget(possiblePositions, target);
+        Set<Position> positions = new HashSet<>();
+        positions.addAll(movablePositions(chessboard, POSSIBLE_MOVEMENTS));
+        positions.addAll(attackablePositions(chessboard));
+        validateTarget(positions, target);
         return new Pawn(color(), target);
     }
 }
