@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.position.File;
+import domain.square.File;
 
 import java.util.Arrays;
 

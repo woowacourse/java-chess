@@ -1,9 +1,9 @@
 package controller;
 
-import domain.board.ChessBoard;
-import domain.board.ChessBoardCreator;
+import domain.board.Board;
+import domain.board.BoardCreator;
 import domain.Command;
-import domain.position.Position;
+import domain.square.Square;
 import domain.Turn;
 import view.InputView;
 import view.OutputView;
@@ -19,27 +19,30 @@ public class ChessManager {
     }
 
     public void start() {
-        Command command = inputView.readInitCommand();
-        if (command == Command.END) {
+        Command command = inputView.readFirstCommand();
+        if (command.isEnd()) {
             return;
         }
-
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardCreator());
-        outputView.printChessBoard(chessBoard);
-
-        play(chessBoard);
+        Board board = initialize();
+        play(board);
     }
 
-    private void play(ChessBoard chessBoard) {
+    private Board initialize() {
+        Board board = new Board(new BoardCreator());
+        outputView.printBoard(board);
+        return board;
+    }
+
+    private void play(Board board) {
         Turn turn = new Turn();
-        while (inputView.readMoveCommand() == Command.MOVE) {
-            Position current = inputView.readPosition();
-            Position target = inputView.readPosition();
+        while (inputView.readNextCommand() == Command.MOVE) {
+            Square current = inputView.readPosition();
+            Square target = inputView.readPosition();
             inputView.readNextLine();
 
-            turn.check(chessBoard, current);
-            chessBoard.move(current, target);
-            outputView.printChessBoard(chessBoard);
+            turn.check(board, current);
+            board.move(current, target);
+            outputView.printBoard(board);
             turn.end();
         }
     }

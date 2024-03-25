@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.route.MovePath;
-import domain.position.Position;
+import domain.route.Route;
+import domain.square.Square;
 
 public class Empty extends Piece {
 
@@ -16,8 +16,13 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
+    public boolean hasFollowedRule(Square current, Square target, Route route) {
         return false;
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.EMPTY;
     }
 
     @Override

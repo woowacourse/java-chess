@@ -1,4 +1,4 @@
-package domain.position;
+package domain.square;
 
 import static fixture.PositionFixture.A1;
 import static fixture.PositionFixture.A2;
@@ -66,19 +66,18 @@ import static fixture.PositionFixture.H7;
 import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.position.Position;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class PositionTest {
+class SquareTest {
 
     @DisplayName("모든 위치를 생성한다.")
     @Test
     void allPositions() {
-        List<Position> positions = Position.allPositions();
+        List<Square> squares = Square.allPositions();
 
-        assertThat(positions).containsOnlyOnce(
+        assertThat(squares).containsOnlyOnce(
                 A8, B8, C8, D8, E8, F8, G8, H8,
                 A7, B7, C7, D7, E7, F7, G7, H7,
                 A6, B6, C6, D6, E6, F6, G6, H6,

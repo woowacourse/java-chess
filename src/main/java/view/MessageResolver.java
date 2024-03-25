@@ -1,10 +1,12 @@
 package view;
 
-import domain.board.ChessBoard;
+import domain.board.Board;
 import domain.piece.Piece;
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.square.File;
+import domain.square.Square;
+import domain.square.Rank;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import view.mapper.PieceMapper;
 
 public class MessageResolver {
@@ -12,29 +14,37 @@ public class MessageResolver {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String EMPTY = ".";
 
-    public String resolveChessBoardMessage(ChessBoard chessBoard) {
-        StringBuilder message = new StringBuilder();
-        for (int vertical = File.max(); vertical > 0; vertical--) {
-            StringBuilder rank = resolveRankMessage(Rank.find(vertical), chessBoard);
-            message.append(rank);
-        }
-        return message.toString();
+    public String resolveBoardMessage(Board board) {
+        String message = board.pieces().stream()
+                .map(this::resolvePieceMessage)
+                .collect(Collectors.joining(""));
+
+        StringBuilder result = new StringBuilder();
+
+        IntStream.range(0, message.length())
+                .mapToObj(i -> message.charAt(i) + (i % 8 == 7 ? "\n" : ""))
+                .forEach(result::append);
+        return result.toString();
     }
 
-    private StringBuilder resolveRankMessage(Rank rank, ChessBoard chessBoard) {
+    private String resolvePieceMessage(Piece piece) {
+        return PieceMapper.toSymbol(piece);
+    }
+
+    private StringBuilder resolveRankMessage(Rank rank, Board board) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int horizontal = 1; horizontal <= File.max(); horizontal++) {
-            Position position = new Position(File.find(horizontal), rank);
-            String square = resolveSquareMessage(chessBoard, position);
+            Square position = new Square(File.find(horizontal), rank);
+            String square = resolveSquareMessage(board, position);
             stringBuilder.append(square);
         }
         stringBuilder.append(LINE_SEPARATOR);
         return stringBuilder;
     }
 
-    private String resolveSquareMessage(ChessBoard chessBoard, Position position) {
-        if (chessBoard.hasPiece(position)) {
-            Piece piece = chessBoard.findPiece(position);
+    private String resolveSquareMessage(Board board, Square square) {
+        if (board.hasPiece(square)) {
+            Piece piece = board.findPiece(square);
             return PieceMapper.toSymbol(piece);
         }
         return EMPTY;

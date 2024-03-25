@@ -1,6 +1,6 @@
 package fixture;
 
-import domain.route.MovePath;
+import domain.route.Route;
 import domain.route.Pieces;
 import domain.piece.Empty;
 import domain.piece.Piece;
@@ -9,16 +9,16 @@ import java.util.List;
 
 public class MovePathFixture {
 
-    public static MovePath noPieces() {
-        return new MovePath(new Pieces(), new Empty());
+    public static Route noPieces() {
+        return new Route(new Pieces(), new Empty());
     }
 
-    public static MovePath hasPathPieces(Piece... pieces) {
+    public static Route hasPathPieces(Piece... pieces) {
         List<Piece> pathPieces = (List<Piece>) Arrays.asList(pieces);
-        return new MovePath(new Pieces(pathPieces), new Empty());
+        return new Route(new Pieces(pathPieces), new Empty());
     }
 
-    public static MovePath hasTargetPiece(Piece target) {
-        return new MovePath(new Pieces(), target);
+    public static Route hasTargetPiece(Piece target) {
+        return new Route(new Pieces(), target);
     }
 }

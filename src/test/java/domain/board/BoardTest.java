@@ -17,7 +17,7 @@ import static fixture.PositionFixture.A6;
 import static fixture.PositionFixture.A7;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChessBoardTest {
+public class BoardTest {
 
     /*
     RNBQKBNR  8
@@ -34,10 +34,10 @@ public class ChessBoardTest {
     @DisplayName("경로에 있는 기물을 찾는다.")
     @Test
     void findPieces() {
-        ChessBoard chessBoard = new ChessBoard(new ChessBoardCreator());
+        Board board = new Board(new BoardCreator());
         Path path = new Path(List.of(A7, A6, A5, A4, A3, A2));
 
-        Pieces pieces = chessBoard.findPieces(path);
+        Pieces pieces = board.findPieces(path);
 
         assertThat(pieces).isEqualTo(new Pieces(List.of(
                 new Pawn(Side.BLACK),

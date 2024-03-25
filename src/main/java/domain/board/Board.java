@@ -1,9 +1,9 @@
 package domain.board;
 
-import domain.route.MovePath;
+import domain.route.Route;
 import domain.route.Path;
 import domain.route.Pieces;
-import domain.position.Position;
+import domain.square.Square;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.LinkedHashMap;
@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class ChessBoard {
+public class Board {
 
-    private final Map<Position, Piece> board;
+    private final Map<Square, Piece> board;
 
-    public ChessBoard(ChessBoardCreator chessBoardCreator) {
-        this(chessBoardCreator.create());
+    public Board(BoardCreator boardCreator) {
+        this(boardCreator.create());
     }
 
-    public ChessBoard(Map<Position, Piece> board) {
+    public Board(Map<Square, Piece> board) {
         this.board = new LinkedHashMap<>(board);
     }
 
@@ -27,21 +27,21 @@ public class ChessBoard {
 //        Arrays.stream(Side.values()).forEach(this::initSide);
     }
 
-    public boolean hasPiece(Position position) {
-        return board.containsKey(position);
+    public boolean hasPiece(Square square) {
+        return board.containsKey(square);
     }
 
-    public void move(Position source, Position target) {
+    public void move(Square source, Square target) {
         Piece sourcePiece = findPiece(source);
-        MovePath movePath = MovePath.create(source, target, this);
-        sourcePiece.checkValidMove(source, target, movePath);
+        Route route = Route.create(source, target, this);
+        sourcePiece.checkValidMove(source, target, route);
 
         board.put(source, Empty.instance());
         board.put(target, sourcePiece);
     }
 
-    public Piece findPiece(Position position) {
-        return board.get(position);
+    public Piece findPiece(Square square) {
+        return board.get(square);
     }
 
     public Pieces findPieces(Path path) {
@@ -51,5 +51,10 @@ public class ChessBoard {
                 .toList();
 
         return new Pieces(pieces);
+    }
+
+    public List<Piece> pieces() {
+        return board.values().stream()
+                .toList();
     }
 }

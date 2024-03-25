@@ -1,8 +1,8 @@
 package domain.route;
 
-import domain.position.File;
-import domain.position.Position;
-import domain.position.Rank;
+import domain.square.File;
+import domain.square.Square;
+import domain.square.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,17 +10,17 @@ import java.util.stream.IntStream;
 
 public class Path {
 
-    private final List<Position> positions;
+    private final List<Square> squares;
 
     public Path() {
-        this.positions = new ArrayList<>();
+        this.squares = new ArrayList<>();
     }
 
-    public Path(List<Position> positions) {
-        this.positions = new ArrayList<>(positions);
+    public Path(List<Square> squares) {
+        this.squares = new ArrayList<>(squares);
     }
 
-    public static Path of(Position source, Position target) {
+    public static Path of(Square source, Square target) {
         if (source.isDiagonal(target)) {
             return new Path(makeDiagonalPath(source, target));
         }
@@ -33,16 +33,16 @@ public class Path {
         return new Path();
     }
 
-    private static List<Position> makeDiagonalPath(Position source, Position target) {
+    private static List<Square> makeDiagonalPath(Square source, Square target) {
         List<File> files = source.findBetweenFiles(target);
         List<Rank> ranks = source.findBetweenRanks(target);
 
         return IntStream.range(0, files.size())
-                .mapToObj(i -> new Position(files.get(i), ranks.get(i)))
+                .mapToObj(i -> new Square(files.get(i), ranks.get(i)))
                 .toList();
     }
 
-    private static List<Position> makeHorizontalPath(Position source, Position target) {
+    private static List<Square> makeHorizontalPath(Square source, Square target) {
         List<File> files = source.findBetweenFiles(target);
 
         return files.stream()
@@ -50,7 +50,7 @@ public class Path {
                 .toList();
     }
 
-    private static List<Position> makeVerticalPath(Position source, Position target) {
+    private static List<Square> makeVerticalPath(Square source, Square target) {
         List<Rank> ranks = source.findBetweenRanks(target);
 
         return ranks.stream()
@@ -58,8 +58,8 @@ public class Path {
                 .toList();
     }
 
-    public boolean contains(Position position) {
-        return positions.contains(position);
+    public boolean contains(Square square) {
+        return squares.contains(square);
     }
 
     @Override
@@ -71,11 +71,11 @@ public class Path {
             return false;
         }
         Path path = (Path) o;
-        return Objects.equals(positions, path.positions);
+        return Objects.equals(squares, path.squares);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(positions);
+        return Objects.hash(squares);
     }
 }

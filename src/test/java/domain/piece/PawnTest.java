@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.position.Position;
+import domain.square.Square;
 import fixture.MovePathFixture;
 import fixture.PositionFixture;
 import java.util.List;
@@ -42,20 +42,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D3);
+        private static final Square SOURCE = D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(D3);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -65,7 +65,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -76,7 +76,7 @@ public class PawnTest {
 
     @DisplayName("검은색 폰은 초기화 위치에서 한 칸 혹은 두 칸 아래로 움직인다.")
     @Nested
-    class blackPawnMoveAtInitialPosition {
+    class blackPawnMoveAtInitialSquare {
 
         /*
         ........  8
@@ -90,20 +90,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D7;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D6, D5);
+        private static final Square SOURCE = D7;
+        private static final List<Square> MOVABLE_SQUARES = List.of(D6, D5);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -113,7 +113,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -138,20 +138,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(C3, E3);
+        private static final Square SOURCE = D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(C3, E3);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE)));
@@ -161,7 +161,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.BLACK);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE)));
@@ -186,20 +186,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D5);
+        private static final Square SOURCE = D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(D5);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -209,7 +209,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -220,7 +220,7 @@ public class PawnTest {
 
     @DisplayName("흰색 폰은 초기화 위치에서 한 칸 혹은 두 칸 위로 움직인다.")
     @Nested
-    class whitePawnMoveAtInitialPosition {
+    class whitePawnMoveAtInitialSquare {
 
         /*
         ........  8
@@ -234,20 +234,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D2;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D3, D4);
+        private static final Square SOURCE = D2;
+        private static final List<Square> MOVABLE_SQUARES = List.of(D3, D4);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -257,7 +257,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -282,20 +282,20 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(C5, E5);
+        private static final Square SOURCE = D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(C5, E5);
 
         private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
+            return PositionFixture.movablePositions(MOVABLE_SQUARES);
         }
 
         private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
+            return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
         }
 
         @ParameterizedTest
         @MethodSource("movableTargets")
-        void hasFollowedRule(Position target) {
+        void hasFollowedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.BLACK)));
@@ -305,7 +305,7 @@ public class PawnTest {
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
-        void hasViolatedRule(Position target) {
+        void hasViolatedRule(Square target) {
             Pawn pawn = new Pawn(Side.WHITE);
 
             boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.BLACK)));

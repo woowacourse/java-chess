@@ -1,6 +1,6 @@
 package view;
 
-import domain.board.ChessBoard;
+import domain.board.Board;
 
 public class OutputView {
 
@@ -10,7 +10,7 @@ public class OutputView {
         this.messageResolver = messageResolver;
     }
 
-    public void printChessBoard(ChessBoard chessBoard) {
-        System.out.println(messageResolver.resolveChessBoardMessage(chessBoard));
+    public void printBoard(Board board) {
+        System.out.println(messageResolver.resolveBoardMessage(board));
     }
 }

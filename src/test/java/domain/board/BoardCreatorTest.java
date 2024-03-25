@@ -66,7 +66,7 @@ import static fixture.PositionFixture.H7;
 import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.position.Position;
+import domain.square.Square;
 import domain.piece.Side;
 import domain.piece.Bishop;
 import domain.piece.Empty;
@@ -80,7 +80,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChessBoardCreatorTest {
+class BoardCreatorTest {
 
     /*
     RNBQKBNR  8
@@ -97,9 +97,9 @@ class ChessBoardCreatorTest {
     @DisplayName("초기화된 체스판을 생성한다.")
     @Test
     void create() {
-        ChessBoardCreator chessBoardCreator = new ChessBoardCreator();
+        BoardCreator boardCreator = new BoardCreator();
 
-        Map<Position, Piece> board = chessBoardCreator.create();
+        Map<Square, Piece> board = boardCreator.create();
 
         assertThat(board).containsExactly(
                 Map.entry(A8, new Rook(Side.BLACK)),

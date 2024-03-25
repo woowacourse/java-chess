@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.route.MovePath;
-import domain.position.Position;
+import domain.route.Route;
+import domain.square.Square;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,19 +14,21 @@ public abstract class Piece {
         this.side = side;
     }
 
-    protected abstract boolean hasFollowedRule(Position current, Position target, MovePath movePath);
+    protected abstract boolean hasFollowedRule(Square current, Square target, Route route);
 
-    public void checkValidMove(Position source, Position target, MovePath movePath) {
+    public abstract PieceType pieceType();
+
+    public void checkValidMove(Square source, Square target, Route route) {
         checkDifferentPosition(source, target);
-        checkNoAllyPieceAtTarget(movePath.targetPiece());
-        checkNoPathPieces(movePath);
+        checkNoAllyPieceAtTarget(route.targetPiece());
+        checkNoPathPieces(route);
 
-        if (hasViolatedRule(source, target, movePath)) {
+        if (hasViolatedRule(source, target, route)) {
             throw new IllegalArgumentException("이동 규칙을 어기면 이동할 수 없습니다.");
         }
     }
 
-    private void checkDifferentPosition(Position source, Position target) {
+    private void checkDifferentPosition(Square source, Square target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException("source 위치와 target 위치가 같으면 이동할 수 없습니다.");
         }
@@ -38,21 +40,21 @@ public abstract class Piece {
         }
     }
 
-    private void checkNoPathPieces(MovePath movePath) {
-        if (movePath.notAllPathPiecesEmpty()) {
+    private void checkNoPathPieces(Route route) {
+        if (route.notAllPathPiecesEmpty()) {
             throw new IllegalArgumentException("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없습니다.");
         }
     }
 
-    private boolean hasViolatedRule(Position source, Position target, MovePath movePath) {
-        return !hasFollowedRule(source, target, movePath);
+    private boolean hasViolatedRule(Square source, Square target, Route route) {
+        return !hasFollowedRule(source, target, route);
     }
 
-    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
+    public void checkBlockingPiece(Square target, Map<Square, Piece> pieces) {
         if (pieces.containsKey(target) && !pieces.get(target).isNotSame(this)) {
             throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
         }
-        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
+        List<Square> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
         if (!positionsExceptTarget.isEmpty()) {
             throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
         }
@@ -110,7 +112,7 @@ public abstract class Piece {
         return !isSame(otherSide);
     }
 
-    private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
+    private List<Square> filterPositionsExceptTarget(Square target, Map<Square, Piece> pieces) {
         return pieces.keySet().stream()
                 .filter(key -> key != target)
                 .toList();

@@ -5,12 +5,8 @@ import static fixture.PositionFixture.A2;
 import static fixture.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.piece.Pawn;
-import domain.piece.Piece;
-import domain.piece.Rook;
-import domain.piece.Side;
-import domain.position.Position;
-import domain.route.MovePath;
+import domain.square.Square;
+import domain.route.Route;
 import fixture.MovePathFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +20,7 @@ public class PieceTest {
     void setUp() {
         piece = new Piece(Side.WHITE) {
             @Override
-            public boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
+            public boolean hasFollowedRule(Square current, Square target, Route route) {
                 return true;
             }
         };
@@ -33,8 +29,8 @@ public class PieceTest {
     @DisplayName("source 위치와 target 위치가 같으면 이동할 수 없다.")
     @Test
     void checkDifferentPosition() {
-        Position source = A1;
-        Position target = A1;
+        Square source = A1;
+        Square target = A1;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.noPieces()))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -44,8 +40,8 @@ public class PieceTest {
     @DisplayName("target 위치에 같은 색의 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoSameColorPieceAtTarget() {
-        Position source = A1;
-        Position target = A2;
+        Square source = A1;
+        Square target = A2;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE))))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -55,8 +51,8 @@ public class PieceTest {
     @DisplayName("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoPathPieces() {
-        Position source = A1;
-        Position target = A3;
+        Square source = A1;
+        Square target = A3;
 
         assertThatThrownBy(() -> piece.checkValidMove(source, target, MovePathFixture.hasPathPieces(new Rook(Side.BLACK))))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -68,7 +64,7 @@ public class PieceTest {
     void checkHasViolatedRule() {
         Piece piece = new Piece(Side.WHITE) {
             @Override
-            public boolean hasFollowedRule(Position current, Position target, MovePath movePath) {
+            public boolean hasFollowedRule(Square current, Square target, Route movePath) {
                 return false;
             }
         };

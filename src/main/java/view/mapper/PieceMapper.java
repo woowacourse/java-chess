@@ -2,30 +2,31 @@ package view.mapper;
 
 import domain.piece.Piece;
 
+import domain.piece.PieceType;
 import java.util.Arrays;
-import java.util.function.Function;
 
 public enum PieceMapper {
 
-    ROOK(Piece::isRook, "R"),
-    KNIGHT(Piece::isKnight, "N"),
-    BISHOP(Piece::isBishop, "B"),
-    QUEEN(Piece::isQueen, "Q"),
-    KING(Piece::isKing, "K"),
-    PAWN(Piece::isPawn, "P"),
+    ROOK(PieceType.ROOK, "R"),
+    KNIGHT(PieceType.KNIGHT, "N"),
+    BISHOP(PieceType.BISHOP, "B"),
+    QUEEN(PieceType.QUEEN, "Q"),
+    KING(PieceType.KING, "K"),
+    PAWN(PieceType.PAWN, "P"),
+    EMPTY(PieceType.EMPTY, "."),
     ;
 
-    private final Function<Piece, Boolean> function;
+    private final PieceType pieceType;
     private final String symbol;
 
-    PieceMapper(Function<Piece, Boolean> function, String symbol) {
-        this.function = function;
+    PieceMapper(PieceType pieceType, String symbol) {
+        this.pieceType = pieceType;
         this.symbol = symbol;
     }
 
     public static String toSymbol(Piece piece) {
         String symbol = Arrays.stream(values())
-                .filter(it -> it.function.apply(piece))
+                .filter(it -> it.pieceType == piece.pieceType())
                 .findFirst()
                 .map(it -> it.symbol)
                 .orElseThrow();

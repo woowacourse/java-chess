@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.route.MovePath;
-import domain.position.Position;
+import domain.route.Route;
+import domain.square.Square;
 
 public class King extends Piece {
 
@@ -10,9 +10,14 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Position source, Position target, MovePath movePath) {
+    protected boolean hasFollowedRule(Square source, Square target, Route route) {
         return (source.isSameFile(target) || source.hasOneFileGap(target)) &&
                 (source.isSameRank(target) || source.hasOneRankGap(target));
+    }
+
+    @Override
+    public PieceType pieceType() {
+        return PieceType.KING;
     }
 
     @Override

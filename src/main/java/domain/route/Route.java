@@ -1,26 +1,26 @@
 package domain.route;
 
-import domain.board.ChessBoard;
+import domain.board.Board;
 import domain.piece.Piece;
 import domain.piece.Side;
-import domain.position.Position;
+import domain.square.Square;
 import java.util.Objects;
 
-public class MovePath {
+public class Route {
 
     private final Pieces pathPieces;
     private final Piece targetPiece;
 
-    public MovePath(Pieces pathPieces, Piece targetPiece) {
+    public Route(Pieces pathPieces, Piece targetPiece) {
         this.pathPieces = pathPieces;
         this.targetPiece = targetPiece;
     }
 
-    public static MovePath create(Position source, Position target, ChessBoard chessBoard) {
+    public static Route create(Square source, Square target, Board board) {
         Path path = Path.of(source, target);
-        Pieces pathPieces = chessBoard.findPieces(path);
-        Piece targetPiece = chessBoard.findPiece(target);
-        return new MovePath(pathPieces, targetPiece);
+        Pieces pathPieces = board.findPieces(path);
+        Piece targetPiece = board.findPiece(target);
+        return new Route(pathPieces, targetPiece);
     }
 
     public Piece targetPiece() {
@@ -43,9 +43,9 @@ public class MovePath {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MovePath movePath = (MovePath) o;
-        return Objects.equals(pathPieces, movePath.pathPieces) && Objects.equals(targetPiece,
-                movePath.targetPiece);
+        Route route = (Route) o;
+        return Objects.equals(pathPieces, route.pathPieces) && Objects.equals(targetPiece,
+                route.targetPiece);
     }
 
     @Override
