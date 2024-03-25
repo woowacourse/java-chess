@@ -65,8 +65,4 @@ public enum Rank {
     private boolean isBetween(int number, int from, int to) {
         return number > from && number < to;
     }
-
-    public boolean isSame(Rank rank) {
-        return this == rank;
-    }
 }

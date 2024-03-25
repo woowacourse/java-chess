@@ -27,7 +27,7 @@ public class Chess {
     }
 
     private void validateMovement(Position sourcePosition, Position targetPosition) {
-        validate(sourcePosition.isSame(targetPosition), "[ERROR] 움직여야 합니다.");
+        validate(sourcePosition.equals(targetPosition), "[ERROR] 움직여야 합니다.");
         validate(board.isBlocked(sourcePosition, targetPosition), "[ERROR] 다른 기물이 길을 막습니다.");
 
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);

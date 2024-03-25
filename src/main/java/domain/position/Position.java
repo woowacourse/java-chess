@@ -16,39 +16,35 @@ public class Position { // TODO: refactoring (너무 무거움)
     }
 
     private boolean hasFile(File file) {
-        return this.file.isSame(file);
+        return this.file == file;
     }
 
     public boolean hasRank(Rank rank) {
-        return this.rank.isSame(rank);
+        return this.rank == rank;
     }
 
     public boolean hasRank(List<Rank> ranks) {
         return ranks.contains(rank);
     }
 
-    public boolean isSame(Position target) {
-        return rank.isSame(target.rank) && file.isSame(target.file);
-    }
-
     public boolean isStraight(Position target) {
         return isVertical(target) || isHorizontal(target);
     }
 
-    private boolean isHorizontal(Position target) {
-        return rank.isSame(target.rank);
+    private boolean isVertical(Position target) {
+        return file == target.file;
     }
 
-    private boolean isVertical(Position target) {
-        return file.isSame(target.file);
+    private boolean isHorizontal(Position target) {
+        return rank == target.rank;
     }
 
     public boolean isUp(Position target) {
-        return file.isSame(target.file) && rank.isUp(target.rank);
+        return file == target.file && rank.isUp(target.rank);
     }
 
     public boolean isDown(Position target) {
-        return file.isSame(target.file) && rank.isDown(target.rank);
+        return file == target.file && rank.isDown(target.rank);
     }
 
     public boolean isDiagonal(Position target) {

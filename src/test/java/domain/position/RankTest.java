@@ -29,22 +29,4 @@ class RankTest {
 
         assertThat(ranks).containsOnly(Rank.TWO, Rank.THREE, Rank.FOUR);
     }
-
-    @Test
-    @DisplayName("두 랭크가 같다면 참을 반환한다.")
-    void isSame_Ranks_True() {
-        Rank source = Rank.ONE;
-        Rank target = Rank.ONE;
-
-        assertThat(source.isSame(target)).isTrue();
-    }
-
-    @Test
-    @DisplayName("두 랭크가 같지 않다면 거짓을 반환한다.")
-    void isSame_Ranks_False() {
-        Rank source = Rank.ONE;
-        Rank target = Rank.TWO;
-
-        assertThat(source.isSame(target)).isFalse();
-    }
 }
