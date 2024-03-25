@@ -18,22 +18,22 @@ public class Board {
 
     public void move(Position sourcePosition, Position targetPosition, Color color) {
         Piece piece = board.get(sourcePosition);
-        validate(sourcePosition, targetPosition, color);
+        validateMove(sourcePosition, targetPosition, color);
         board.remove(sourcePosition);
         board.put(targetPosition, piece);
     }
 
-    private void validate(Position sourcePosition, Position targetPosition, Color color) {
-        validateNoPieceToMove(sourcePosition);
+    private void validateMove(Position sourcePosition, Position targetPosition, Color color) {
+        validateNoPieceAtSource(sourcePosition);
         validateTurn(sourcePosition, color);
-        validateSamePosition(sourcePosition, targetPosition);
-        validateOwnPieceExistAtTargetPosition(sourcePosition, targetPosition);
-        validatePieceCanMove(sourcePosition, targetPosition);
-        validateWhenStraightOrDiagonalMove(sourcePosition, targetPosition);
-        validateWhenPieceIsPawn(sourcePosition, targetPosition);
+        validateMoveToSamePosition(sourcePosition, targetPosition);
+        validateOwnPieceAtTarget(sourcePosition, targetPosition);
+        validatePieceRule(sourcePosition, targetPosition);
+        validateRoute(sourcePosition, targetPosition);
+        validatePawnMove(sourcePosition, targetPosition);
     }
 
-    private void validateNoPieceToMove(Position sourcePosition) {
+    private void validateNoPieceAtSource(Position sourcePosition) {
         if (isNoPieceAt(sourcePosition)) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
@@ -47,19 +47,19 @@ public class Board {
         throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
     }
 
-    private void validateSamePosition(Position sourcePosition, Position targetPosition) {
+    private void validateMoveToSamePosition(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException("출발점과 도착점은 같을 수 없습니다.");
         }
     }
 
-    private void validateOwnPieceExistAtTargetPosition(Position sourcePosition, Position targetPosition) {
+    private void validateOwnPieceAtTarget(Position sourcePosition, Position targetPosition) {
         if (isPieceAt(targetPosition) && (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
     }
 
-    private void validatePieceCanMove(Position sourcePosition, Position targetPosition) {
+    private void validatePieceRule(Position sourcePosition, Position targetPosition) {
         Piece piece = board.get(sourcePosition);
         if (piece.canMove(sourcePosition, targetPosition)) {
             return;
@@ -67,7 +67,7 @@ public class Board {
         throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
     }
 
-    private void validateWhenStraightOrDiagonalMove(Position sourcePosition, Position targetPosition) {
+    private void validateRoute(Position sourcePosition, Position targetPosition) {
         if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
             validatePieceExistOnRoute(sourcePosition, targetPosition);
         }
@@ -88,7 +88,7 @@ public class Board {
         }
     }
 
-    private void validateWhenPieceIsPawn(Position sourcePosition, Position targetPosition) {
+    private void validatePawnMove(Position sourcePosition, Position targetPosition) {
         Piece piece = board.get(sourcePosition);
         if (piece.isPawn()) {
             validatePawnStraightCapture(sourcePosition, targetPosition);
