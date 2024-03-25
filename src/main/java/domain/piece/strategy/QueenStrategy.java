@@ -1,5 +1,6 @@
 package domain.piece.strategy;
 
+import domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public enum QueenStrategy {
         return value / Math.abs(value);
     }
 
-    public List<Integer> getDirection() {
-        return this.direction;
+    public Direction getDirection() {
+        return Direction.from(direction);
     }
 }

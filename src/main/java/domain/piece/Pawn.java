@@ -1,10 +1,10 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.base.ChessPieceBase;
 import domain.piece.strategy.pawn.PawnAttackStrategy;
 import domain.piece.strategy.pawn.PawnStrategy;
-import java.util.List;
 
 public class Pawn extends ChessPieceBase {
 
@@ -17,7 +17,7 @@ public class Pawn extends ChessPieceBase {
     }
 
     @Override
-    public List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack) {
+    public Direction getDirection(Coordinate start, Coordinate destination, boolean canAttack) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
@@ -27,14 +27,14 @@ public class Pawn extends ChessPieceBase {
         return getMoveDirection(start, rowDifference, columnDifference);
     }
 
-    private List<Integer> getAttackDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
+    private Direction getAttackDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
         PawnAttackStrategy pawnPath = PawnAttackStrategy.getMoveStrategy(rowDifference, columnDifference);
         validateAttack(pawnPath, coordinate, rowDifference);
 
         return pawnPath.getDirection();
     }
 
-    private List<Integer> getMoveDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
+    private Direction getMoveDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
         PawnStrategy pawnPath = PawnStrategy.getMoveStrategy(rowDifference, columnDifference);
         validate(pawnPath, coordinate, rowDifference);
 

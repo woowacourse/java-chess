@@ -1,5 +1,6 @@
 package domain.piece.strategy;
 
+import domain.direction.Direction;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public enum KingStrategy {
                 .orElseThrow(() -> new IllegalArgumentException("존재하는 움직임 전략이 없습니다."));
     }
 
-    public List<Integer> getDirection() {
-        return this.direction;
+    public Direction getDirection() {
+        return Direction.from(direction);
     }
 }

@@ -1,8 +1,8 @@
 package domain.piece.base;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.Color;
-import java.util.List;
 
 public interface ChessPiece {
 
@@ -10,5 +10,5 @@ public interface ChessPiece {
 
     boolean isBlack();
 
-    List<Integer> getDirection(Coordinate coordinate, Coordinate destination, boolean canAttack);
+    Direction getDirection(Coordinate coordinate, Coordinate destination, boolean canAttack);
 }

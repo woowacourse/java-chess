@@ -1,5 +1,6 @@
 package domain.coordinate;
 
+import domain.direction.Direction;
 import domain.position.Column;
 import domain.position.Row;
 import java.util.Objects;
@@ -35,9 +36,9 @@ public class Coordinate {
         return row.isSamePosition(otherPosition);
     }
 
-    public void moveByDistances(int rowDistance, int columnDistance) {
-        row.moveBy(rowDistance);
-        column.moveBy(columnDistance);
+    public void moveByDistances(Direction direction) {
+        row.moveBy(direction.rowDirection());
+        column.moveBy(direction.columnDirection());
     }
 
     public Coordinate copied() {

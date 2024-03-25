@@ -1,17 +1,14 @@
 package domain.chessboard;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Color;
 import domain.piece.base.ChessPiece;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
-
-    private static final int ROW_DIRECTION = 0;
-    private static final int COLUMN_DIRECTION = 1;
 
     private final Map<Coordinate, ChessPiece> board;
 
@@ -27,7 +24,7 @@ public class ChessBoard {
 
         validateBeforePlay(destination, currentTurn, piece);
 
-        List<Integer> direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
+        Direction direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
 
         validateCanMove(start, destination, direction);
         movePiece(destination, startPosition, piece);
@@ -70,9 +67,9 @@ public class ChessBoard {
         }
     }
 
-    private void validateCanMove(Coordinate coordinate, Coordinate destination, List<Integer> direction) {
+    private void validateCanMove(Coordinate coordinate, Coordinate destination, Direction direction) {
         while (!coordinate.equals(destination)) {
-            coordinate.moveByDistances(direction.get(ROW_DIRECTION), direction.get(COLUMN_DIRECTION));
+            coordinate.moveByDistances(direction);
 
             hasPieceOnPath(coordinate, destination);
         }

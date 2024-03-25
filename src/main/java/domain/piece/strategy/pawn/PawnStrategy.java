@@ -1,5 +1,6 @@
 package domain.piece.strategy.pawn;
 
+import domain.direction.Direction;
 import domain.piece.Color;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,7 @@ public enum PawnStrategy {
         }
     }
 
-    public List<Integer> getDirection() {
-        return direction;
+    public Direction getDirection() {
+        return Direction.from(direction);
     }
 }

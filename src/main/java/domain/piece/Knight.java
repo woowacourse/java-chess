@@ -1,9 +1,9 @@
 package domain.piece;
 
 import domain.coordinate.Coordinate;
+import domain.direction.Direction;
 import domain.piece.base.ChessPieceBase;
 import domain.piece.strategy.KnightStrategy;
-import java.util.List;
 
 public class Knight extends ChessPieceBase {
 
@@ -12,7 +12,7 @@ public class Knight extends ChessPieceBase {
     }
 
     @Override
-    public List<Integer> getDirection(Coordinate start, Coordinate destination, boolean isAttack) {
+    public Direction getDirection(Coordinate start, Coordinate destination, boolean isAttack) {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
