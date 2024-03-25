@@ -1,31 +1,40 @@
 package domain.position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public enum File {
 
-    A, B, C, D, E, F, G, H;
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
+
+    private final int order;
+
+    File(int order) {
+        this.order = order;
+    }
 
     public int distance(File target) {
-        List<File> files = Arrays.stream(values()).toList();
-        int sourceIndex = files.indexOf(this);
-        int targetIndex = files.indexOf(target);
-        return Math.abs(sourceIndex - targetIndex);
+        return Math.abs(this.order - target.order);
     }
 
     public List<File> betweenFiles(File target) {
-        List<File> files = Arrays.stream(values()).toList();
-        int sourceIndex = files.indexOf(this);
-        int targetIndex = files.indexOf(target);
-        if (sourceIndex < targetIndex) {
-            return files.subList(sourceIndex + 1, targetIndex);
+        List<File> files = List.of(File.values());
+        int sourceOrder = this.order;
+        int targetOrder = target.order;
+        if (sourceOrder < targetOrder) {
+            return files.subList(sourceOrder, targetOrder - 1);
         }
-        List<File> betweenFiles = new ArrayList<>(files.subList(targetIndex + 1, sourceIndex));
+        List<File> betweenFiles = new ArrayList<>(files.subList(targetOrder, sourceOrder - 1));
         Collections.reverse(betweenFiles);
-        return betweenFiles;
+        return Collections.unmodifiableList(betweenFiles);
     }
 
     public boolean isSame(File target) {
