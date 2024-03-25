@@ -1,9 +1,6 @@
-package model;
+package model.position;
 
 import model.direction.Direction;
-import model.position.File;
-import model.position.Position;
-import model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
