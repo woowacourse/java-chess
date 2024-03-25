@@ -175,11 +175,11 @@ class ChessBoardTest {
     @DisplayName("폰은 최초의 이동에서 두칸을 이동할 수 있다.")
     void pawnCanMoveTwiceIfFirstMove() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
-        Position sourcePosition = Position.of(File.A, Rank.TWO);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
-        Position blankPosition = Position.of(File.A, Rank.THREE);
+        Position sourcePosition = Position.of(File.A, Rank.SEVEN);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        Position blankPosition = Position.of(File.A, Rank.SIX);
         positionPiece.put(blankPosition, EmptyPiece.of());
-        Position targetPosition = Position.of(File.A, Rank.FOUR);
+        Position targetPosition = Position.of(File.A, Rank.FIVE);
         positionPiece.put(targetPosition, EmptyPiece.of());
         ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
@@ -191,9 +191,9 @@ class ChessBoardTest {
     @DisplayName("폰은 적이 있다면, 대각선 앞으로 이동할 수 있다.")
     void pawnCanMoveDiagonalIfEnemyThere() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
-        Position sourcePosition = Position.of(File.A, Rank.TWO);
+        Position sourcePosition = Position.of(File.A, Rank.SEVEN);
         positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
-        Position targetPosition = Position.of(File.B, Rank.THREE);
+        Position targetPosition = Position.of(File.B, Rank.SIX);
         positionPiece.put(targetPosition, Pawn.of(Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
@@ -206,7 +206,7 @@ class ChessBoardTest {
     void pawnCanNotMoveTwiceIfItIsNotOnStartPositions() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of(File.A, Rank.THREE);
-        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
         Position targetPosition = Position.of(File.A, Rank.FIVE);
         positionPiece.put(targetPosition, EmptyPiece.of());
         ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
@@ -220,9 +220,9 @@ class ChessBoardTest {
     @Test
     void pawnCanNotMoveDiagonalIfThereIsNoEnemy() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
-        Position sourcePosition = Position.of(File.A, Rank.THREE);
+        Position sourcePosition = Position.of(File.A, Rank.SEVEN);
         positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
-        Position targetPosition = Position.of(File.B, Rank.FOUR);
+        Position targetPosition = Position.of(File.B, Rank.SIX);
         positionPiece.put(targetPosition, EmptyPiece.of());
         ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 

@@ -59,11 +59,30 @@ public class ChessBoard {
         Direction direction = sourcePosition.calculateDirection(targetPosition);
         Piece sourcePiece = chessBoard.get(sourcePosition);
         Piece targetPiece = chessBoard.get(targetPosition);
-        boolean canMoveFromInitialPosition = pawnMovementRule.isPawnCanMoveFromInitialPosition(sourcePosition, targetPosition, direction);
-        boolean canMoveTowardDiagonal = pawnMovementRule.isPawnCanMoveTowardDiagonal(sourcePiece, targetPiece, direction);
-        boolean canMoveFromInitialPositionInValidDirection = sourcePiece.canMoveInTargetDirection(direction) && canMoveFromInitialPosition;
 
-        if (!(canMoveFromInitialPositionInValidDirection || canMoveTowardDiagonal)) {
+        if (sourcePiece.canMoveInTargetDirection(direction)) {
+            validatePawnCanMoveForward(sourcePosition, targetPosition, direction);
+            return;
+        }
+
+        validatePawnCanMoveDiagonal(direction, sourcePiece, targetPiece);
+    }
+
+    private void validatePawnCanMoveForward(Position sourcePosition, Position targetPosition, Direction direction) {
+        Position nextPosition = sourcePosition.moveTowardDirection(direction);
+        boolean canReachTarget = nextPosition.equals(targetPosition);
+        boolean canReachTargetFromInitialPosition
+                = pawnMovementRule.canReachTargetFromInitialPosition(sourcePosition, targetPosition, direction);
+
+        if (!(canReachTarget || canReachTargetFromInitialPosition)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+        }
+    }
+
+    private void validatePawnCanMoveDiagonal(Direction direction, Piece sourcePiece, Piece targetPiece) {
+        boolean canMoveTowardDiagonal = pawnMovementRule.canMoveTowardDiagonal(sourcePiece, targetPiece, direction);
+
+        if (!canMoveTowardDiagonal) {
             throw new IllegalArgumentException("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
         }
     }
