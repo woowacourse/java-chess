@@ -48,13 +48,13 @@ public class TerminalPositionView {
 
     public static Position toStartPosition(String startPositionText) {
         return new Position(
-                RANK_TEXTS.get(startPositionText.substring(RANK_BEGIN_INDEX, RANK_END_INDEX)),
-                FILE_TEXTS.get(startPositionText.substring(FILE_BEGIN_INDEX, FILE_END_INDEX)));
+                FILE_TEXTS.get(startPositionText.substring(FILE_BEGIN_INDEX, FILE_END_INDEX)),
+                RANK_TEXTS.get(startPositionText.substring(RANK_BEGIN_INDEX, RANK_END_INDEX)));
     }
 
     public static Position toEndPosition(String endPositionText) {
         return new Position(
-                RANK_TEXTS.get(endPositionText.substring(RANK_BEGIN_INDEX, RANK_END_INDEX)),
-                FILE_TEXTS.get(endPositionText.substring(FILE_BEGIN_INDEX, FILE_END_INDEX)));
+                FILE_TEXTS.get(endPositionText.substring(FILE_BEGIN_INDEX, FILE_END_INDEX)),
+                RANK_TEXTS.get(endPositionText.substring(RANK_BEGIN_INDEX, RANK_END_INDEX)));
     }
 }

@@ -67,7 +67,7 @@ public class OutputView {
 
     private void printRank(Map<Position, Piece> pieces, Rank rank) {
         for (File file : File.values()) {
-            Piece piece = pieces.get(new Position(rank, file));
+            Piece piece = pieces.get(new Position(file, rank));
             System.out.print(pieceViews.get(piece));
         }
     }

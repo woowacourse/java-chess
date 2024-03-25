@@ -23,7 +23,7 @@ class KingTest {
             // given
             Piece piece = King.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -36,7 +36,7 @@ class KingTest {
             // given
             Piece piece = King.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.SECOND));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -49,7 +49,7 @@ class KingTest {
             // given
             Piece piece = King.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -67,7 +67,7 @@ class KingTest {
             // given
             Piece attackerPiece = King.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -81,7 +81,7 @@ class KingTest {
             Piece attackerPiece = King.from(Color.WHITE);
 
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.SECOND));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -95,7 +95,7 @@ class KingTest {
             Piece attackerPiece = King.from(Color.WHITE);
 
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))

@@ -23,11 +23,11 @@ class BishopTest {
             // given
             Piece piece = Bishop.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.THIRD));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.B)));
+                    .isEqualTo(List.of(new Position(File.B, Rank.SECOND)));
         }
 
         @DisplayName("비숍은 대각선 경로가 아니면 움직일 수 없다.")
@@ -36,7 +36,7 @@ class BishopTest {
             // given
             Piece piece = Bishop.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.FIRST));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -54,11 +54,11 @@ class BishopTest {
             // given
             Piece attackerPiece = Bishop.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.THIRD));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.B)));
+                    .isEqualTo(List.of(new Position(File.B, Rank.SECOND)));
         }
 
         @DisplayName("비숍은 대각선 경로가 아니면 공격할 수 없다.")
@@ -67,7 +67,7 @@ class BishopTest {
             // given
             Piece attackerPiece = Bishop.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.FIRST));
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))

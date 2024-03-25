@@ -2,23 +2,21 @@ package chess.domain.position;
 
 import chess.domain.movement.UnitMovement;
 
-import java.util.Objects;
-
 public class Position {
-    private final Rank rank;
     private final File file;
+    private final Rank rank;
 
-    public Position(Rank rank, File file) {
-        this.rank = rank;
+    public Position(File file, Rank rank) {
         this.file = file;
+        this.rank = rank;
     }
 
     public boolean canMove(UnitMovement unitMovement) {
-        return rank.canMove(unitMovement.getRankDiff()) && file.canMove(unitMovement.getFileDiff());
+        return file.canMove(unitMovement.getFileDiff()) && rank.canMove(unitMovement.getRankDiff());
     }
 
     public Position move(UnitMovement unitMovement) {
-        return new Position(rank.move(unitMovement.getRankDiff()), file.move(unitMovement.getFileDiff()));
+        return new Position(file.move(unitMovement.getFileDiff()), rank.move(unitMovement.getRankDiff()));
     }
 
     @Override
@@ -28,28 +26,30 @@ public class Position {
 
         Position position = (Position) o;
 
-        if (rank != position.rank) return false;
-        return file == position.file;
+        if (file != position.file) return false;
+        return rank == position.rank;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(rank, file);
+        int result = file != null ? file.hashCode() : 0;
+        result = 31 * result + (rank != null ? rank.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Position{" +
-                "rank=" + rank +
-                ", file=" + file +
+                "file=" + file +
+                ", rank=" + rank +
                 '}';
-    }
-
-    public Rank getRank() {
-        return rank;
     }
 
     public File getFile() {
         return file;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

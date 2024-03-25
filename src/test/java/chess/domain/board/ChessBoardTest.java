@@ -32,7 +32,7 @@ public class ChessBoardTest {
 
     private void updateFileByRank(Rank rank) {
         for (File file : File.values()) {
-            pieces.put(new Position(rank, file), Empty.getInstance());
+            pieces.put(new Position(file, rank), Empty.getInstance());
         }
     }
 
@@ -42,7 +42,7 @@ public class ChessBoardTest {
         // given
         ChessBoard chessBoard = new ChessBoard(pieces);
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.SECOND));
         Color currentTurn = Color.BLACK;
 
         // when & then
@@ -55,11 +55,11 @@ public class ChessBoardTest {
     @Test
     void canNotAttack() {
         // given
-        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        pieces.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.A, Rank.FIRST), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.A, Rank.SECOND), Rook.from(Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(pieces);
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
         Color currentTurn = Color.WHITE;
 
         // when & then
@@ -72,15 +72,15 @@ public class ChessBoardTest {
     @Test
     void movePieceTest() {
         // given
-        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.A, Rank.FIRST), Rook.from(Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(pieces);
         Map<Position, Piece> expected = provideEmptyBoard();
-        expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
+        expected.put(new Position(File.B, Rank.FIRST), Rook.from(Color.WHITE));
 
         // when
         chessBoard.move(new TerminalPosition(
-                new Position(Rank.FIRST, File.A),
-                new Position(Rank.FIRST, File.B)), Color.WHITE);
+                new Position(File.A, Rank.FIRST),
+                new Position(File.B, Rank.FIRST)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getPieces()).isEqualTo(expected);
@@ -90,16 +90,16 @@ public class ChessBoardTest {
     @Test
     void moveAttackTest() {
         // given
-        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.B), Queen.from(Color.BLACK));
+        pieces.put(new Position(File.A, Rank.FIRST), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.B, Rank.FIRST), Queen.from(Color.BLACK));
         ChessBoard chessBoard = new ChessBoard(pieces);
         Map<Position, Piece> expected = provideEmptyBoard();
-        expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
+        expected.put(new Position(File.B, Rank.FIRST), Rook.from(Color.WHITE));
 
         // when
         chessBoard.move(new TerminalPosition(
-                new Position(Rank.FIRST, File.A),
-                new Position(Rank.FIRST, File.B)), Color.WHITE);
+                new Position(File.A, Rank.FIRST),
+                new Position(File.B, Rank.FIRST)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getPieces()).isEqualTo(expected);
@@ -111,7 +111,7 @@ public class ChessBoardTest {
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                pieces.put(new Position(rank, file), Empty.getInstance());
+                pieces.put(new Position(file, rank), Empty.getInstance());
             }
         }
 

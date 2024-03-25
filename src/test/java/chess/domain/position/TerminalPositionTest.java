@@ -11,7 +11,7 @@ class TerminalPositionTest {
     @Test
     void sameStartAndEndPointExceptionTest() {
         assertThatThrownBy(() ->
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.A)))
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.FIRST)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작점과 끝점은 같을 수 없습니다.");
     }
@@ -20,7 +20,7 @@ class TerminalPositionTest {
     @Test
     void sameStartAndEndPointNotExceptionTest() {
         assertThatCode(() ->
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A)))
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND)))
                 .doesNotThrowAnyException();
     }
 }

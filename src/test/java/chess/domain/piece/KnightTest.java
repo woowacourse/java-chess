@@ -23,7 +23,7 @@ public class KnightTest {
             // given
             Piece piece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.SECOND));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -36,7 +36,7 @@ public class KnightTest {
             // given
             Piece piece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.THIRD));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -49,7 +49,7 @@ public class KnightTest {
             // given
             Piece piece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -67,7 +67,7 @@ public class KnightTest {
             // given
             Piece attackerPiece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.SECOND));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -80,7 +80,7 @@ public class KnightTest {
             // given
             Piece attackerPiece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.THIRD));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -93,7 +93,7 @@ public class KnightTest {
             // given
             Piece attackerPiece = Knight.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findPassPathTaken(terminalPosition))

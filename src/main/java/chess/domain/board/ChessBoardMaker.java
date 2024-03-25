@@ -79,7 +79,7 @@ public class ChessBoardMaker {
     private Map<Position, Piece> makeRank(Rank rank, Queue<Piece> pieceQueue) {
         Map<Position, Piece> pieces = new HashMap<>();
         for (File file : File.values()) {
-            pieces.put(new Position(rank, file), pieceQueue.poll());
+            pieces.put(new Position(file, rank), pieceQueue.poll());
         }
 
         return pieces;

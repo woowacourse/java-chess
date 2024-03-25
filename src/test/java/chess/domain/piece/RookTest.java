@@ -23,11 +23,11 @@ public class RookTest {
             // given
             Piece piece = Rook.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
 
             // when
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SECOND)));
         }
 
         @DisplayName("룩은 직선 경로가 아니면 이동할 수 없다.")
@@ -36,7 +36,7 @@ public class RookTest {
             // given
             Piece piece = Rook.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -54,11 +54,11 @@ public class RookTest {
             // given
             Piece attackerPiece = Rook.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
 
             // when
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SECOND)));
         }
 
         @DisplayName("룩은 직선 경로가 아니면 공격할 수 없다.")
@@ -67,7 +67,7 @@ public class RookTest {
             // given
             Piece attackerPiece = Rook.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.B, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))

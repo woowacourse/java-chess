@@ -23,11 +23,11 @@ public class QueenTest {
             // given
             Piece piece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FOURTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.THIRD)));
         }
 
         @DisplayName("퀸은 대각선 경로로 이동할 수 있다.")
@@ -36,11 +36,11 @@ public class QueenTest {
             // given
             Piece piece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FOURTH, File.D));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.D, Rank.FOURTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.B), new Position(Rank.THIRD, File.C)));
+                    .isEqualTo(List.of(new Position(File.B, Rank.SECOND), new Position(File.C, Rank.THIRD)));
         }
 
         @DisplayName("퀸은 대각선 또는 직선 경로가 아니면 움직일 수 없다.")
@@ -49,7 +49,7 @@ public class QueenTest {
             // given
             Piece piece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -67,11 +67,11 @@ public class QueenTest {
             // given
             Piece attackerPiece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FOURTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.A), new Position(Rank.THIRD, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.THIRD)));
         }
 
         @DisplayName("퀸은 대각선 경로로 공격할 수 있다.")
@@ -80,11 +80,11 @@ public class QueenTest {
             // given
             Piece attackerPiece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FOURTH, File.D));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.D, Rank.FOURTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SECOND, File.B), new Position(Rank.THIRD, File.C)));
+                    .isEqualTo(List.of(new Position(File.B, Rank.SECOND), new Position(File.C, Rank.THIRD)));
         }
 
         @DisplayName("퀸은 대각선 또는 직선 경로가 아니면 공격할 수 없다.")
@@ -93,7 +93,7 @@ public class QueenTest {
             // given
             Piece attackerPiece = Queen.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.SECOND));
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))

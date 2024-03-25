@@ -26,11 +26,11 @@ class PawnTest {
             // given
             Piece piece = Pawn.createOnStart(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SIXTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.SEVENTH, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SEVENTH)));
         }
 
         @DisplayName("이동한적이 있는 블랙 폰은 밑으로 두 칸 움직일 수 없다.")
@@ -40,7 +40,7 @@ class PawnTest {
             Piece piece = Pawn.createOnStart(Color.BLACK);
             piece.move();
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SIXTH));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -54,7 +54,7 @@ class PawnTest {
             // given
             Piece piece = Pawn.createOnStart(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SEVENTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SEVENTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -67,7 +67,7 @@ class PawnTest {
         void blackCanNotStraightMoveTest(Position endPosition) {
             // given
             Piece piece = Pawn.createOnStart(Color.BLACK);
-            TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), endPosition);
+            TerminalPosition terminalPosition = new TerminalPosition(new Position(File.B, Rank.SEVENTH), endPosition);
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -77,10 +77,10 @@ class PawnTest {
 
         static Stream<Position> provideUnValidEndPositionForBlack() {
             return Stream.of(
-                    new Position(Rank.EIGHTH, File.B),
-                    new Position(Rank.SEVENTH, File.A),
-                    new Position(Rank.SEVENTH, File.C),
-                    new Position(Rank.SIXTH, File.A)
+                    new Position(File.B, Rank.EIGHTH),
+                    new Position(File.A, Rank.SEVENTH),
+                    new Position(File.C, Rank.SEVENTH),
+                    new Position(File.A, Rank.SIXTH)
             );
         }
     }
@@ -94,11 +94,11 @@ class PawnTest {
             // given
             Piece piece = Pawn.createOnStart(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(Rank.THIRD, File.A)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.THIRD)));
         }
 
         @DisplayName("이동한적이 있는 화이트 폰은 밑으로 두 칸 움직일 수 없다.")
@@ -108,7 +108,7 @@ class PawnTest {
             Piece piece = Pawn.createOnStart(Color.WHITE);
             piece.move();
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -122,7 +122,7 @@ class PawnTest {
             // given
             Piece piece = Pawn.createOnStart(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -135,7 +135,7 @@ class PawnTest {
         void canStraightNotMoveTest(Position endPosition) {
             // given
             Piece piece = Pawn.createOnStart(Color.WHITE);
-            TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SECOND, File.B), endPosition);
+            TerminalPosition terminalPosition = new TerminalPosition(new Position(File.B, Rank.SECOND), endPosition);
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -145,10 +145,10 @@ class PawnTest {
 
         static Stream<Position> provideUnValidEndPositionForWhite() {
             return Stream.of(
-                    new Position(Rank.FIRST, File.B),
-                    new Position(Rank.SECOND, File.A),
-                    new Position(Rank.SECOND, File.C),
-                    new Position(Rank.FIRST, File.A)
+                    new Position(File.B, Rank.FIRST),
+                    new Position(File.A, Rank.SECOND),
+                    new Position(File.C, Rank.SECOND),
+                    new Position(File.A, Rank.FIRST)
             );
         }
     }
@@ -162,7 +162,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A));
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.A, Rank.SIXTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -175,7 +175,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C));
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.C, Rank.SIXTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -189,7 +189,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), attackedPosition);
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), attackedPosition);
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))
@@ -199,12 +199,12 @@ class PawnTest {
 
         static Stream<Position> provideUnValidAttackedPositionForBlack() {
             return Stream.of(
-                    new Position(Rank.EIGHTH, File.A),
-                    new Position(Rank.EIGHTH, File.C),
-                    new Position(Rank.SIXTH, File.B),
-                    new Position(Rank.EIGHTH, File.B),
-                    new Position(Rank.SEVENTH, File.A),
-                    new Position(Rank.SEVENTH, File.C)
+                    new Position(File.A, Rank.EIGHTH),
+                    new Position(File.C, Rank.EIGHTH),
+                    new Position(File.B, Rank.SIXTH),
+                    new Position(File.B, Rank.EIGHTH),
+                    new Position(File.A, Rank.SEVENTH),
+                    new Position(File.C, Rank.SEVENTH)
             );
         }
     }
@@ -218,7 +218,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.A, Rank.EIGHTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -231,7 +231,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.C, Rank.EIGHTH));
 
             // when & then
             assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
@@ -245,7 +245,7 @@ class PawnTest {
             // given
             Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(Rank.SEVENTH, File.B), attackedPosition);
+                    new TerminalPosition(new Position(File.B, Rank.SEVENTH), attackedPosition);
 
             // when & then
             assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))
@@ -255,12 +255,12 @@ class PawnTest {
 
         static Stream<Position> provideUnValidAttackedPositionForWhite() {
             return Stream.of(
-                    new Position(Rank.SIXTH, File.A),
-                    new Position(Rank.SIXTH, File.C),
-                    new Position(Rank.SIXTH, File.B),
-                    new Position(Rank.EIGHTH, File.B),
-                    new Position(Rank.SEVENTH, File.A),
-                    new Position(Rank.SEVENTH, File.C)
+                    new Position(File.A, Rank.SIXTH),
+                    new Position(File.C, Rank.SIXTH),
+                    new Position(File.B, Rank.SIXTH),
+                    new Position(File.B, Rank.EIGHTH),
+                    new Position(File.A, Rank.SEVENTH),
+                    new Position(File.C, Rank.SEVENTH)
             );
         }
     }

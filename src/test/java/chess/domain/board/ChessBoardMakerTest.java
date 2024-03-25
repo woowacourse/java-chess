@@ -29,34 +29,34 @@ public class ChessBoardMakerTest {
         ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
 
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.put(new Position(Rank.EIGHTH, File.A), Rook.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.B), Knight.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.C), Bishop.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.D), Queen.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.E), King.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.F), Bishop.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.G), Knight.from(Color.BLACK));
-        pieces.put(new Position(Rank.EIGHTH, File.H), Rook.from(Color.BLACK));
+        pieces.put(new Position(File.A, Rank.EIGHTH), Rook.from(Color.BLACK));
+        pieces.put(new Position(File.B, Rank.EIGHTH), Knight.from(Color.BLACK));
+        pieces.put(new Position(File.C, Rank.EIGHTH), Bishop.from(Color.BLACK));
+        pieces.put(new Position(File.D, Rank.EIGHTH), Queen.from(Color.BLACK));
+        pieces.put(new Position(File.E, Rank.EIGHTH), King.from(Color.BLACK));
+        pieces.put(new Position(File.F, Rank.EIGHTH), Bishop.from(Color.BLACK));
+        pieces.put(new Position(File.G, Rank.EIGHTH), Knight.from(Color.BLACK));
+        pieces.put(new Position(File.H, Rank.EIGHTH), Rook.from(Color.BLACK));
 
         for (File file : File.values()) {
-            pieces.put(new Position(Rank.SEVENTH, file), Pawn.createOnStart(Color.BLACK));
-            pieces.put(new Position(Rank.SECOND, file), Pawn.createOnStart(Color.WHITE));
+            pieces.put(new Position(file, Rank.SEVENTH), Pawn.createOnStart(Color.BLACK));
+            pieces.put(new Position(file, Rank.SECOND), Pawn.createOnStart(Color.WHITE));
         }
 
-        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.B), Knight.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.C), Bishop.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.D), Queen.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.E), King.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.F), Bishop.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.G), Knight.from(Color.WHITE));
-        pieces.put(new Position(Rank.FIRST, File.H), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.A, Rank.FIRST), Rook.from(Color.WHITE));
+        pieces.put(new Position(File.B, Rank.FIRST), Knight.from(Color.WHITE));
+        pieces.put(new Position(File.C, Rank.FIRST), Bishop.from(Color.WHITE));
+        pieces.put(new Position(File.D, Rank.FIRST), Queen.from(Color.WHITE));
+        pieces.put(new Position(File.E, Rank.FIRST), King.from(Color.WHITE));
+        pieces.put(new Position(File.F, Rank.FIRST), Bishop.from(Color.WHITE));
+        pieces.put(new Position(File.G, Rank.FIRST), Knight.from(Color.WHITE));
+        pieces.put(new Position(File.H, Rank.FIRST), Rook.from(Color.WHITE));
 
         for (File file : File.values()) {
-            pieces.put(new Position(Rank.THIRD, file), Empty.getInstance());
-            pieces.put(new Position(Rank.FOURTH, file), Empty.getInstance());
-            pieces.put(new Position(Rank.FIFTH, file), Empty.getInstance());
-            pieces.put(new Position(Rank.SIXTH, file), Empty.getInstance());
+            pieces.put(new Position(file, Rank.THIRD), Empty.getInstance());
+            pieces.put(new Position(file, Rank.FOURTH), Empty.getInstance());
+            pieces.put(new Position(file, Rank.FIFTH), Empty.getInstance());
+            pieces.put(new Position(file, Rank.SIXTH), Empty.getInstance());
         }
         ChessBoard expected = new ChessBoard(pieces);
 

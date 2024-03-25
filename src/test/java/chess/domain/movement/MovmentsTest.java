@@ -19,12 +19,12 @@ public class MovmentsTest {
     void findPassPathTest() {
         // given
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
         Movements movements = new Movements(Set.of(UnitMovement.UP), Set.of());
 
         // when & then
         assertThat(movements.findPassPathTaken(terminalPosition, 2))
-                .isEqualTo(List.of(new Position(Rank.SECOND, File.A)));
+                .isEqualTo(List.of(new Position(File.A, Rank.SECOND)));
     }
 
     @DisplayName("출발지와 목적지가 주어지면 공격 경로를 찾는다.")
@@ -32,12 +32,12 @@ public class MovmentsTest {
     void findAttackPathTest() {
         // given
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.C, Rank.THIRD));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.RIGHT_UP));
 
         // when & then
         assertThat(movements.findAttackPathTaken(terminalPosition, 2))
-                .isEqualTo(List.of(new Position(Rank.SECOND, File.B)));
+                .isEqualTo(List.of(new Position(File.B, Rank.SECOND)));
     }
 
     @DisplayName("출발지에서 목적지를 갈 수 없는 경우 예외를 발생시킨다.")
@@ -45,7 +45,7 @@ public class MovmentsTest {
     void canNotArriveTest() {
         // given
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.EIGHTH, File.H), new Position(Rank.THIRD, File.D));
+                new TerminalPosition(new Position(File.H, Rank.EIGHTH), new Position(File.D, Rank.THIRD));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.RIGHT));
 
         // when & then
@@ -59,7 +59,7 @@ public class MovmentsTest {
     void shortMovementTest() {
         // given
         TerminalPosition terminalPosition =
-                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+                new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.THIRD));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.UP));
 
         // when & then
