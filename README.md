@@ -66,5 +66,39 @@
             - [x] 기물들이 이동할 수 없다면 기물의 위치를 옮기지 않는다
                 - [x] 도착지에 같은 팀의 기물이 있다면 이동할 수 없다
                 - [x] 비숍/룩/퀸은 이동 경로에 다른 기물이 있다면 이동할 수 없다
-          
 
+## 1-2단계 개선사안
+
+### 1차 리뷰 개선 사안
+
+#### domain
+
+- board /ChessBoardCreator : 초기 위치 데이터 와 생성 책임 분리
+    - NomalPieceSetting : 게임 초기 위치 데이터 저장 및 전달
+    - ChesBoardCreator : 보드판 초기화 및 생성
+- piece : 추상화 준위 일관화
+    - 기존 : instanceOf를 통해 객체마다 행마 가능여부 판단
+    - 수정 : chessBoard를 넘겨주어 piece가 행마 가능여부 판단
+    - 수정 이유 : instanceOf 사용 지양 및 추상화 준위 유지를 통한 다형성 활용
+- game/ChessGame : 턴제 도입
+- position / Direction : 8방향 도메인
+- position / DirectionJudge : 두 위치에 따른 방향 판단 책임
+- position / Position
+    - findPath 메서드 : start에서 destination까지의 직선/대각선 경유 경로 반환
+    - 메서드 단순화 및 일관성 확대
+- util/retryHelper : 오류 발생시 재입력을 도와주는 유틸 클래스
+
+#### controller
+
+- 게임 흐름 구체화
+    - start 입력 받기
+        - 예외 입력 시, `start를 입력해야 게임이 시작됩니다.` 안내 메세지 출력
+        - 정상 입력 시, 게임 객체 생성 및 초기 게임판 상태 출력
+    - 잘못된 커멘드 입력 시 오류 발생
+    - end가 입력되기 전까지 game 실행
+        - while(true)로 인한 무한루프 위험 개선
+
+#### 기타 리팩터링 사안
+
+- 테스트 커버리지 확대
+- 클린코드화
