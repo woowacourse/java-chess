@@ -36,18 +36,6 @@ class GameTest {
                 .hasMessage("해당 진영의 차례가 아닙니다.");
     }
 
-    /*
-    RNBQKBNR  8
-    PPPPPPPP  7
-    ........  6
-    ........  5
-    ........  4
-    ........  3
-    pppppppp  2
-    rnbqkbnr  1
-
-    abcdefgh
-     */
     @DisplayName("흰색 진영이 먼저 턴을 진행한다.")
     @Test
     void proceedWhiteTurn() {
@@ -80,18 +68,6 @@ class GameTest {
                 .hasMessage("해당 진영의 차례가 아닙니다.");
     }
 
-    /*
-    RNBQKBNR  8
-    PPPPPPPP  7
-    ........  6
-    ........  5
-    ........  4
-    p.......  3
-    .ppppppp  2
-    rnbqkbnr  1
-
-    abcdefgh
-     */
     @DisplayName("흰색 진영 다음에 검은색 진영이 턴을 진행한다.")
     @Test
     void proceedBlackTurn() {
