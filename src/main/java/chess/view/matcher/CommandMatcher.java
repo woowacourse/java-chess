@@ -25,4 +25,9 @@ public enum CommandMatcher {
                         new IllegalArgumentException("존재하지 않는 명령어입니다."))
                 .command;
     }
+
+    public static boolean isPresentCommand(final Command command) {
+        return Arrays.stream(values())
+                .anyMatch(commandMatcher -> commandMatcher.command == command);
+    }
 }

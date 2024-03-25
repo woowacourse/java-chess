@@ -34,4 +34,9 @@ public enum PieceNameMatcher {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 PieceType 입니다."))
                 .name;
     }
+
+    public static boolean isPresentType(final PieceType type) {
+        return Arrays.stream(values())
+                .anyMatch(pieceNameMatcher -> pieceNameMatcher.type == type);
+    }
 }

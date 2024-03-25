@@ -25,10 +25,15 @@ public enum ChessFileMatcher {
 
     public static ChessFile matchByText(final String inputText) {
         return Arrays.stream(values())
-                .filter(file -> file.text.equals(inputText))
+                .filter(fileMatcher -> fileMatcher.text.equals(inputText))
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(String.format("해당 ChessFile을 찾을 수 없습니다.")))
+                        new IllegalArgumentException("해당 ChessFile을 찾을 수 없습니다."))
                 .file;
+    }
+
+    public static boolean isPresentFile(final ChessFile file) {
+        return Arrays.stream(values())
+                .anyMatch(fileMatcher -> fileMatcher.file == file);
     }
 }

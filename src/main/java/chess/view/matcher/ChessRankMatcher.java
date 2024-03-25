@@ -31,4 +31,9 @@ public enum ChessRankMatcher {
                         new IllegalArgumentException("해당 ChessRank를 찾을 수 없습니다."))
                 .rank;
     }
+
+    public static boolean isPresentRank(final ChessRank rank) {
+        return Arrays.stream(values())
+                .anyMatch(rankMatcher -> rankMatcher.rank == rank);
+    }
 }
