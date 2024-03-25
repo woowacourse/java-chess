@@ -18,7 +18,7 @@ public class ChessGameController {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-    //TODO command 객체를 만들어 다형성을 이용할 수 있는 방안 고민해보기
+    // TODO command 객체를 만들어 다형성을 이용할 수 있는 방안 고민해보기
 
     public void run() {
         GameCommand gameCommand;

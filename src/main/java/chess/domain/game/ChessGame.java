@@ -6,7 +6,6 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class ChessGame {
-    // TODO 테스트 작성
     private final ChessBoard board;
     private Team turn;
 

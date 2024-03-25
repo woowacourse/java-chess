@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class ChessBoard {
-    // TODO : 테스트 커버리지 높이기
     private final Map<Position, Piece> board;
 
     public ChessBoard(Map<Position, Piece> board) {
