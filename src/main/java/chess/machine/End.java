@@ -1,6 +1,7 @@
 package chess.machine;
 
 import chess.domain.chessBoard.ChessBoard;
+import chess.view.OutputView;
 
 public class End implements Command {
 
@@ -17,7 +18,8 @@ public class End implements Command {
     }
 
     @Override
-    public void conductCommand(ChessBoard chessBoard) {
+    public void conductCommand(ChessBoard chessBoard, OutputView outputView) {
         chessBoard.endGame();
+        outputView.printChessBoard(chessBoard);
     }
 }

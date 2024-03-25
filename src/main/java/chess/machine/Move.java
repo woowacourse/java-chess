@@ -3,6 +3,7 @@ package chess.machine;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
+import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,9 +42,10 @@ public class Move implements Command {
     }
 
     @Override
-    public void conductCommand(ChessBoard chessBoard) {
+    public void conductCommand(ChessBoard chessBoard, OutputView outputView) {
         chessBoard.move(
                 Position.fromCoordinate(Coordinate.of(from)),
                 Position.fromCoordinate(Coordinate.of(to)));
+        outputView.printChessBoard(chessBoard);
     }
 }

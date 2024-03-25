@@ -1,7 +1,10 @@
 package chess.domain.chessBoard;
 
 import chess.domain.chessBoard.generator.SpaceGenerator;
+import chess.domain.piece.Color;
+import chess.domain.position.File;
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChessBoard {
@@ -54,6 +57,23 @@ public class ChessBoard {
 
     public boolean isActive() {
         return turn.isActive();
+    }
+
+    public BoardScore calculateScore(Color color) {
+        return Arrays.stream(File.values())
+                .map(file -> calculateScoreInFile(color, file))
+                .map(BoardScore::create)
+                .reduce(BoardScore::concat)
+                .orElse(BoardScore.zero());
+    }
+
+    private FileScore calculateScoreInFile(Color color, File file) {
+        return spaces.stream()
+                .filter(space -> space.isSameFile(file))
+                .filter(space -> space.hasColor(color))
+                .map(space -> FileScore.create(file, space))
+                .reduce(FileScore::concat)
+                .orElse(FileScore.zero(file));
     }
 
     public List<String> showBoard() {

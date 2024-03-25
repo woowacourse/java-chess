@@ -28,4 +28,8 @@ public abstract class Piece {
     }
 
     public abstract boolean isCatchable(Position from, Position to);
+
+    public boolean isPawn() {
+        return false;
+    }
 }

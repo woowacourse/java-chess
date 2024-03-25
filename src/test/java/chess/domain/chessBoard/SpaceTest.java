@@ -1,17 +1,24 @@
 package chess.domain.chessBoard;
 
-import chess.domain.piece.BlackPawn;
-import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.view.PieceSign;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
+import java.util.stream.Stream;
 
+import static chess.domain.chessBoard.PieceFixture.blackBishop;
+import static chess.domain.chessBoard.PieceFixture.blackKing;
 import static chess.domain.chessBoard.PieceFixture.blackKnight;
 import static chess.domain.chessBoard.PieceFixture.blackPawn;
+import static chess.domain.chessBoard.PieceFixture.blackQueen;
+import static chess.domain.chessBoard.PieceFixture.blackRook;
 import static chess.domain.chessBoard.PieceFixture.emptyPiece;
 import static chess.domain.chessBoard.PieceFixture.whiteKing;
 import static chess.domain.chessBoard.PieceFixture.whitePawn;
@@ -94,5 +101,34 @@ class SpaceTest {
         assertThatThrownBy(() -> space1.movePiece(space3, List.of(space1, space2, space3)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("루트에 피스가 있습니다.");
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePiecesAndScores")
+    @DisplayName("보유 중인 Piece의 점수를 반환할 수 있다(specialPiece)")
+    void should_return_score_when_special_piece(Piece piece, Double score) {
+        Space space = new Space(piece, new Position(File.a, Rank.ONE));
+        Score spaceScore = space.score();
+
+        assertThat(spaceScore.asDouble()).isEqualTo(score);
+
+    }
+
+    private static Stream<Arguments> providePiecesAndScores() {
+        return Stream.of(
+                Arguments.of(blackRook, 5.0),
+                Arguments.of(blackKnight, 2.5),
+                Arguments.of(blackBishop, 3.0),
+                Arguments.of(blackQueen, 9.0),
+                Arguments.of(blackKing, 0.0)
+        );
+    }
+
+    @Test
+    @DisplayName("보유 중인 Pawn의 점수를 반환할 수 있다")
+    void should_return_score_when_pawn() {
+        Space space = new Space(blackPawn, new Position(File.a, Rank.ONE));
+
+        assertThat(space.calculateScore()).isEqualTo(1.0);
     }
 }

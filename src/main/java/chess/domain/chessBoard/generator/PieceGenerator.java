@@ -8,7 +8,7 @@ public interface PieceGenerator {
 
     List<Piece> makeSpecialPieces(Color color);
 
-    List<Piece> makePawnPieces(Color color);
+    List<Piece> makePawnPieces(Color color, int amount);
 
-    List<Piece> makeEmptyPieces();
+    List<Piece> makeEmptyPieces(int amount);
 }

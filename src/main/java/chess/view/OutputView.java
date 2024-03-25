@@ -1,6 +1,8 @@
 package chess.view;
 
+import chess.domain.chessBoard.BoardScore;
 import chess.domain.chessBoard.ChessBoard;
+import chess.domain.piece.Color;
 import java.util.List;
 
 public class OutputView {
@@ -27,5 +29,9 @@ public class OutputView {
             System.out.println(boardLine);
         }
         System.out.println();
+    }
+
+    public void printScore(BoardScore boardScore, Color color) {
+        System.out.printf("%s 점수: %.1f%n", color, boardScore.asDouble());
     }
 }

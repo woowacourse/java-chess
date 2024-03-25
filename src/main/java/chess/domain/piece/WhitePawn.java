@@ -37,4 +37,9 @@ public class WhitePawn extends Piece {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);
         return positionDifference.isObeyRule(catchRule);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

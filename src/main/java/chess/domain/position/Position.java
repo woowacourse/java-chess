@@ -56,6 +56,10 @@ public class Position {
                 .toList();
     }
 
+    public boolean isSameFile(File otherFile) {
+        return file == otherFile;
+    }
+
     public boolean isSameRank(Rank otherRank) {
         return rank == otherRank;
     }

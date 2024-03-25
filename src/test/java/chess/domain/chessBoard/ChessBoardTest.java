@@ -1,12 +1,14 @@
 package chess.domain.chessBoard;
 
 import chess.domain.chessBoard.generator.ChessSpaceGenerator;
+import chess.domain.piece.Color;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -61,5 +63,40 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 활성화되지 않았습니다");
+    }
+
+    @Test
+    @DisplayName("해당 색의 총 점수를 계산할 수 있다(초기 상태)")
+    void should_sum_piece_scores_initial_board() {
+        assertThat(chessBoard.calculateScore(Color.WHITE).asDouble())
+                .isEqualTo(38.0);
+    }
+
+    /*
+    Pp......
+    Pp......
+    .p......
+    ........
+    ........
+    ........
+    ........
+    ........
+     */
+    @Test
+    @DisplayName("해당 색의 총 점수를 계산할 수 있다(2개 폰이 같은 file에 있을 때)")
+    void should_sum_piece_scores_two_pawns_in_column() {
+        ChessBoard pawnChessBoard = new ChessBoard(new TestSpaceGenerator());
+
+        assertThat(pawnChessBoard.calculateScore(Color.BLACK).asDouble())
+                .isEqualTo(1.0);
+    }
+
+    @Test
+    @DisplayName("해당 색의 총 점수를 계산할 수 있다(3개 폰이 같은 file에 있을 때)")
+    void should_sum_piece_scores_three_pawns_in_column() {
+        ChessBoard pawnChessBoard = new ChessBoard(new TestSpaceGenerator());
+
+        assertThat(pawnChessBoard.calculateScore(Color.WHITE).asDouble())
+                .isEqualTo(1.5);
     }
 }
