@@ -46,22 +46,12 @@ public class ChessGameController {
     private boolean playGame(ChessBoard chessBoard) {
         List<String> commands = inputView.receiveCommands();
 
-        if (isCommandMove(commands.get(0))) {
+        if (Command.isCommandMove(commands.get(0))) {
             move(chessBoard, commands);
             outputView.printBoard(chessBoard.getBoard());
             return true;
         }
         return false;
-    }
-
-    private static boolean isCommandMove(String commandIdentifier) {
-        if (Command.isEndCommand(commandIdentifier)) {
-            return false;
-        }
-        if (Command.isStartCommand(commandIdentifier)) {
-            throw new IllegalArgumentException("이미 시작한 상태 입니다.");
-        }
-        return true;
     }
 
     private void move(ChessBoard chessBoard, List<String> commands) {
