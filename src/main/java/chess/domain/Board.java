@@ -6,7 +6,7 @@ import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
@@ -44,7 +44,7 @@ public class Board {
     }
 
     public void validateMovable(Piece thisPiece, Movement movement) {
-        if (!thisPiece.isMovable(movement)) {
+        if (!thisPiece.isMovable(movement, pieces.containsKey(movement.target()))) {
             throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
         }
     }
@@ -56,33 +56,70 @@ public class Board {
     }
 
     private void validateBlockingPieceExists(Piece thisPiece, Movement movement) {
-        if (findBetweenPositions(thisPiece, movement).stream()
-                .anyMatch(pieces::containsKey)) {
+        if (isBlocked(thisPiece, movement)) {
             throw new ImpossibleMoveException("이동을 가로막는 기물이 존재합니다.");
         }
     }
 
-    private List<Position> findBetweenPositions(Piece thisPiece, Movement movement) {
-        return thisPiece.findBetweenPositions(movement, pieces.containsKey(movement.target()));
+    private boolean isBlocked(Piece thisPiece, Movement movement) {
+        return thisPiece.findBetweenPositions(movement)
+                .stream()
+                .anyMatch(pieces::containsKey);
     }
 
-    public boolean isChecked(Team team) {
-        Position kingPosition = getKingPosition(team);
-        return isBeingAttacked(team, kingPosition);
+    public boolean isChecked(Team attackedTeam) {
+        Position kingPosition = getKingPosition(attackedTeam);
+        return isBeingAttacked(attackedTeam, kingPosition);
+    }
+
+    private boolean isBeingAttacked(Team team, Position position) {
+        return findSameTeamPieces(team.opponent())
+                .anyMatch(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), position)));
+    }
+
+    private Stream<Entry<Position, Piece>> findSameTeamPieces(Team team) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isSameTeamWith(team));
+    }
+
+    private boolean isAttacking(Piece thisPiece, Movement movement) {
+        if (thisPiece.isMovable(movement, true)) {
+            return !isBlocked(thisPiece, movement);
+        }
+        return false;
     }
 
     public boolean isCheckmate(Team attackedTeam) {
-        Position kingPosition = getKingPosition(attackedTeam);
+        return findSameTeamPieces(attackedTeam)
+                .allMatch(entry -> isCheckedAfterAllMoves(entry.getKey(), entry.getValue()));
+    }
 
-        boolean isImmovable = isImmovable(attackedTeam, kingPosition);
-        if (findAttackingPositions(attackedTeam, kingPosition).count() > 1 && isImmovable) {
-            return true;
-        }
+    private boolean isCheckedAfterAllMoves(Position position, Piece piece) {
+        return findAllMovablePositions(position, piece)
+                .allMatch(movablePosition -> isCheckedAfterMove(piece, new Movement(position, movablePosition)));
+    }
 
-        Position attackingPiecePosition = findAttackingPiecePosition(attackedTeam, kingPosition);
-        return isImmovable
-                && isNotBlockable(attackedTeam, new Movement(attackingPiecePosition, kingPosition))
-                && cannotAttackCheckingPiece(attackedTeam.opponent(), attackingPiecePosition);
+    private Stream<Position> findAllMovablePositions(Position position, Piece piece) {
+        return Stream.concat(findMovablePositions(position, piece), findAttackablePositions(position, piece))
+                .filter(targetPosition -> !isBlocked(piece, new Movement(position, targetPosition)));
+    }
+
+    private Stream<Position> findMovablePositions(Position position, Piece piece) {
+        return position.findAllMovablePosition(piece)
+                .filter(targetPosition -> !pieces.containsKey(targetPosition));
+    }
+
+    private Stream<Position> findAttackablePositions(Position position, Piece piece) {
+        return position.findAllMovablePosition(piece, true)
+                .filter(targetPosition -> pieces.containsKey(targetPosition)
+                        && !piece.isSameTeamWith(pieces.get(targetPosition)));
+    }
+
+    private boolean isCheckedAfterMove(Piece piece, Movement movement) {
+        Board copiedBoard = new Board(new HashMap<>(this.pieces));
+        copiedBoard.move(movement);
+        return copiedBoard.isChecked(piece.character().team());
     }
 
     private Position getKingPosition(Team team) {
@@ -94,72 +131,6 @@ public class Board {
                 .orElseThrow(() -> new IllegalStateException(
                         "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
                 .getKey();
-    }
-
-    private boolean isImmovable(Team attackedTeam, Position kingPosition) {
-        return kingPosition.findAllMovablePosition(pieces.get(kingPosition))
-                .stream()
-                .filter(position -> !(pieces.containsKey(position)
-                        && pieces.get(position).isSameTeamWith(attackedTeam)))
-                .allMatch(position -> isBeingAttacked(attackedTeam, position));
-    }
-
-    private boolean isBeingAttacked(Team team, Position position) {
-        return findAttackingPositions(team, position).findAny().isPresent();
-    }
-
-    private Position findAttackingPiecePosition(Team attackedTeam, Position kingPosition) {
-        return findAttackingPositions(attackedTeam, kingPosition)
-                .findAny()
-                .orElseThrow(() -> new IllegalStateException("체크 상태가 아닙니다."))
-                .getKey();
-    }
-
-    private Stream<Entry<Position, Piece>> findAttackingPositions(Team team, Position position) {
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> !entry.getValue().isSameTeamWith(team))
-                .filter(entry -> entry.getKey() != position)
-                .filter(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), position)));
-    }
-
-    private boolean isAttacking(Piece thisPiece, Movement movement) {
-        if (thisPiece.isMovable(movement, true)) {
-            return findBetweenPositions(thisPiece, movement).stream()
-                    .noneMatch(pieces::containsKey);
-        }
-        return false;
-    }
-
-    private boolean isNotBlockable(Team attackedTeam, Movement movement) {
-        List<Position> attackRoutePositions
-                = pieces.get(movement.source()).findBetweenPositions(movement, true);
-
-//        return pieces.entrySet()
-//                .stream()
-//                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam))
-//                .filter(entry -> entry.getKey() != movement.target())
-//                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
-//                        .stream()
-//                        .anyMatch(attackRoutePositions::contains));
-
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam))
-                .filter(entry -> entry.getKey() != movement.target())
-                .noneMatch(entry -> attackRoutePositions.stream()
-                        .anyMatch(position -> entry.getValue()
-                                .isMovable(new Movement(entry.getKey(), position))));
-    }
-
-    private boolean cannotAttackCheckingPiece(Team attackingTeam, Position attackingPosition) {
-        Character myKingCharacter = new Character(attackingTeam.opponent(), Kind.KING);
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> !entry.getValue().isSameTeamWith(attackingTeam))
-                .filter(entry -> !entry.getValue().isSameCharacter(myKingCharacter))
-                .filter(entry -> entry.getKey() != attackingPosition)
-                .noneMatch(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), attackingPosition)));
     }
 
     public Map<Position, Piece> getPieces() {

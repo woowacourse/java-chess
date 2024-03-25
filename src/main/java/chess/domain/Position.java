@@ -2,9 +2,9 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -63,12 +63,18 @@ public class Position {
         return Position.of(row + rowDifference, column + columnDifference);
     }
 
-    public List<Position> findAllMovablePosition(Piece piece) {
+    public Stream<Position> findAllMovablePosition(Piece piece) {
         return positions.values()
                 .stream()
                 .filter(position -> position != this)
-                .filter(position -> piece.isMovable(new Movement(this, position)))
-                .toList();
+                .filter(position -> piece.isMovable(new Movement(this, position)));
+    }
+
+    public Stream<Position> findAllMovablePosition(Piece piece, boolean isAttack) {
+        return positions.values()
+                .stream()
+                .filter(position -> position != this)
+                .filter(position -> piece.isMovable(new Movement(this, position), isAttack));
     }
 
     public int calculateRowDifference(Position targetPosition) {
