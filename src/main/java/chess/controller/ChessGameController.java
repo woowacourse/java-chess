@@ -28,7 +28,7 @@ public class ChessGameController {
         Board board = initializeBoard();
         while (gameCommand != GameCommand.END) {
             gameCommand = inputView.getGameCommand();
-            run(board, gameCommand);
+            board = run(board, gameCommand);
         }
     }
 
@@ -38,7 +38,7 @@ public class ChessGameController {
         return board;
     }
 
-    private void run(Board board, GameCommand gameCommand) {
+    private Board run(Board board, GameCommand gameCommand) {
         if (gameCommand == GameCommand.START) {
             board = initializeBoard();
         }
@@ -50,5 +50,7 @@ public class ChessGameController {
             board.tryMove(source, target);
             outputView.printBoard(board);
         }
+
+        return board;
     }
 }
