@@ -8,8 +8,8 @@ import model.position.Position;
 
 public abstract class Piece {
 
-    protected final Camp camp;
-    protected final String pieceName;
+    private final Camp camp;
+    private final String pieceName;
 
     protected Piece(final Camp camp, final String pieceName) {
         this.camp = camp;
