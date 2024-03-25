@@ -33,4 +33,18 @@ public class PieceDaoTest {
         assertThat(findPiece.color()).isEqualTo("WHITE");
         assertThat(findPiece.type()).isEqualTo("PAWN");
     }
+
+    @Test
+    void 피스를_모두_찾는다() {
+        final var pieceDtoA = new PieceDto("A", "3", "WHITE", "PAWN");
+        final var pieceDtoB = new PieceDto("B", "5", "BLACK", "PAWN");
+        final var pieceDtoC = new PieceDto("C", "7", "BLACK", "KING");
+        pieceDao.add(pieceDtoA);
+        pieceDao.add(pieceDtoB);
+        pieceDao.add(pieceDtoC);
+
+        assertThat(pieceDao.findAll())
+                .containsExactlyInAnyOrder(pieceDtoA, pieceDtoB, pieceDtoC);
+
+    }
 }

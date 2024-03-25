@@ -1,7 +1,11 @@
 package domain.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PieceDao {
     private final ConnectionManager connectionManager;
@@ -46,6 +50,25 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public List<PieceDto> findAll() {
+        final List<PieceDto> pieces = new ArrayList<>();
+        final String query = "SELECT * FROM piece";
+        try (final Connection connection = connectionManager.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String file = resultSet.getString("board_file");
+                String rank = resultSet.getString("board_rank");
+                String color = resultSet.getString("color");
+                String type = resultSet.getString("type");
+                pieces.add(new PieceDto(file, rank, color, type));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pieces;
     }
 
     public void deleteAll() {
