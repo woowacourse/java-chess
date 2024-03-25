@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class FileTest {
+
     @Test
     @DisplayName("문자에 해당하는 열 번호를 반환한다.")
     void findFile() {
