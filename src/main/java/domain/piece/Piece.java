@@ -36,11 +36,11 @@ public abstract class Piece implements Movable {
     }
 
     public boolean isBlack() {
-        return this.color == Color.BLACK;
+        return this.color.isBlack();
     }
 
     public boolean isWhite() {
-        return this.color == Color.WHITE;
+        return this.color.isWhite();
     }
 
     public boolean canMove(final Point movePoint) {

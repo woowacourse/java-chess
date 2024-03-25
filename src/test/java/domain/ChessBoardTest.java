@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.kind.Pawn;
 import domain.piece.kind.PieceStatus;
 import fixture.PieceImpl;
 import org.assertj.core.api.Assertions;
@@ -19,6 +20,7 @@ import java.util.stream.IntStream;
 import static domain.piece.kind.PieceStatus.*;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardTest {
     @Test
@@ -61,8 +63,20 @@ class ChessBoardTest {
         final var sut = new ChessBoard(pieces);
         final var notExistedPoint = D4;
 
-        Assertions.assertThatThrownBy(() -> sut.findPieceByPoint(notExistedPoint))
-                  .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> sut.findPieceByPoint(notExistedPoint))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("차례와 다른 색깔의 기물을 선택하면 예외를 발생한다.")
+    void throw_exception_when_not_match_piece_in_turn() {
+        final List<Piece> pieceList = List.of(new Pawn(C3, Color.BLACK));
+
+        final var sut = new ChessBoard(new Pieces(pieceList), Color.WHITE);
+
+        assertThatThrownBy(() -> sut.move(C3, C4))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("차례입니다");
     }
 
     @Test
