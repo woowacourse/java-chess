@@ -28,6 +28,12 @@ public class Chessboard {
         put(target, targetPiece);
     }
 
+    public Square squareIn(final Position position) {
+        List<Square> squares = rowIn(position);
+        File file = position.file();
+        return squares.get(file.toColumn());
+    }
+
     public boolean isEmpty(final Position position) {
         return squareIn(position).isEmpty();
     }
@@ -36,12 +42,6 @@ public class Chessboard {
         if (isEmpty(position)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다: %s".formatted(position));
         }
-    }
-
-    public Square squareIn(final Position position) {
-        List<Square> squares = rowIn(position);
-        File file = position.file();
-        return squares.get(file.toColumn());
     }
 
     private void removePieceIn(final Position position) {
