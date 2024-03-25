@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -16,129 +17,118 @@ public class Board {
         return new Board(boardGenerator.generate());
     }
 
-    public void move(Position sourcePosition, Position targetPosition, Color color) {
-        Piece piece = board.get(sourcePosition);
-        validateMove(sourcePosition, targetPosition, color);
-        board.remove(sourcePosition);
-        board.put(targetPosition, piece);
+    public void move(Position source, Position target, Color color) {
+        Piece piece = board.get(source);
+        validateMove(source, target, color);
+        board.put(source, new NoPiece(Color.NO_COLOR));
+        board.put(target, piece);
     }
 
-    private void validateMove(Position sourcePosition, Position targetPosition, Color color) {
-        validateNoPieceAtSource(sourcePosition);
-        validateTurn(sourcePosition, color);
-        validateMoveToSamePosition(sourcePosition, targetPosition);
-        validateOwnPieceAtTarget(sourcePosition, targetPosition);
-        validatePieceRule(sourcePosition, targetPosition);
-        validateRoute(sourcePosition, targetPosition);
-        validatePawnMove(sourcePosition, targetPosition);
+    private void validateMove(Position source, Position target, Color color) {
+        validateNoPieceAtSource(source);
+        validateTurn(source, color);
+        validateMoveToSamePosition(source, target);
+        validateOwnPieceAtTarget(source, target);
+        validatePieceRule(source, target);
+        validateRoute(source, target);
+        validatePawnMove(source, target);
     }
 
-    private void validateNoPieceAtSource(Position sourcePosition) {
-        if (isNoPieceAt(sourcePosition)) {
+    private void validateNoPieceAtSource(Position source) {
+        if (!findPieceAt(source).exists()) {
             throw new IllegalArgumentException("출발점에 말이 없습니다.");
         }
     }
 
-    private void validateTurn(Position sourcePosition, Color color) {
-        Piece piece = board.get(sourcePosition);
-        if (piece.hasColorOf(color)) {
-            return;
+    private void validateTurn(Position source, Color color) {
+        if (!findPieceAt(source).hasColorOf(color)) {
+            throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
         }
-        throw new IllegalArgumentException("자신의 말만 움직일 수 있습니다.");
     }
 
-    private void validateMoveToSamePosition(Position sourcePosition, Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
+    private void validateMoveToSamePosition(Position source, Position target) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException("출발점과 도착점은 같을 수 없습니다.");
         }
     }
 
-    private void validateOwnPieceAtTarget(Position sourcePosition, Position targetPosition) {
-        if (isPieceAt(targetPosition) && (findPieceColorAt(sourcePosition) == findPieceColorAt(targetPosition))) {
+    private void validateOwnPieceAtTarget(Position source, Position target) {
+        if (findPieceAt(target).exists() && (findPieceColorAt(source) == findPieceColorAt(target))) {
             throw new IllegalArgumentException("한 칸에 말이 2개 존재할 수 없습니다.");
         }
     }
 
-    private void validatePieceRule(Position sourcePosition, Position targetPosition) {
-        Piece piece = board.get(sourcePosition);
-        if (piece.canMove(sourcePosition, targetPosition)) {
+    private void validatePieceRule(Position source, Position target) {
+        if (findPieceAt(source).canMove(source, target)) {
             return;
         }
         throw new IllegalArgumentException("말의 규칙에 맞지 않는 이동입니다.");
     }
 
-    private void validateRoute(Position sourcePosition, Position targetPosition) {
-        if (isStraightMove(sourcePosition, targetPosition) || isDiagonalMove(sourcePosition, targetPosition)) {
-            validatePieceExistOnRoute(sourcePosition, targetPosition);
+    private void validateRoute(Position source, Position target) {
+        if (isStraightMove(source, target) || isDiagonalMove(source, target)) {
+            validatePieceExistOnRoute(source, target);
         }
     }
 
-    private void validatePieceExistOnRoute(Position sourcePosition, Position targetPosition) {
-        Direction direction = Direction.of(sourcePosition, targetPosition);
-        Position currentPosition = sourcePosition.nextPosition(direction);
-        while (!currentPosition.equals(targetPosition)) {
+    private void validatePieceExistOnRoute(Position source, Position target) {
+        Direction direction = Direction.of(source, target);
+        Position currentPosition = source.nextPosition(direction);
+        while (!currentPosition.equals(target)) {
             validatePieceExistAt(currentPosition);
             currentPosition = currentPosition.nextPosition(direction);
         }
     }
 
-    private void validatePieceExistAt(Position middlePosition) {
-        if (isPieceAt(middlePosition)) {
+    private void validatePieceExistAt(Position position) {
+        if (findPieceAt(position).exists()) {
             throw new IllegalArgumentException("경로에 말이 있으면 움직일 수 없습니다.");
         }
     }
 
-    private void validatePawnMove(Position sourcePosition, Position targetPosition) {
-        Piece piece = board.get(sourcePosition);
-        if (piece.isPawn()) {
-            validatePawnStraightCapture(sourcePosition, targetPosition);
-            validatePawnDiagonalMove(sourcePosition, targetPosition);
+    private void validatePawnMove(Position source, Position target) {
+        if (findPieceAt(source).isPawn()) {
+            validatePawnStraightCapture(source, target);
+            validatePawnDiagonalMove(source, target);
         }
     }
 
-    private void validatePawnStraightCapture(Position sourcePosition, Position targetPosition) {
-        if (isStraightMove(sourcePosition, targetPosition) && isPieceAt(targetPosition)) {
+    private void validatePawnStraightCapture(Position source, Position target) {
+        if (isStraightMove(source, target) && findPieceAt(target).exists()) {
             throw new IllegalArgumentException("직진으로 잡을 수 없습니다.");
         }
     }
 
-    private void validatePawnDiagonalMove(Position sourcePosition, Position targetPosition) {
-        if (isDiagonalMove(sourcePosition, targetPosition) && isNoPieceAt(targetPosition)) {
+    private void validatePawnDiagonalMove(Position source, Position target) {
+        if (isDiagonalMove(source, target) && pieceDoesNotExistAt(target)) {
             throw new IllegalArgumentException("대각선 방향에 상대방 말이 없으면 움직일 수 없습니다.");
         }
     }
 
-    private boolean isStraightMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameRankAs(targetPosition)
-            || sourcePosition.isOnSameFileAs(targetPosition);
+    private boolean isStraightMove(Position source, Position target) {
+        return source.isOnSameRankAs(target)
+            || source.isOnSameFileAs(target);
     }
 
-    private boolean isDiagonalMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameDiagonalAs(targetPosition);
+    private boolean isDiagonalMove(Position source, Position target) {
+        return source.isOnSameDiagonalAs(target);
     }
 
-    private boolean isPieceAt(Position position) {
-        return board.containsKey(position);
+    private boolean pieceDoesNotExistAt(Position position) {
+        return !findPieceAt(position).exists();
     }
 
-    private boolean isNoPieceAt(Position position) {
-        return !board.containsKey(position);
+    public Piece findPieceAt(Position position) {
+        return board.get(position);
     }
 
     private Color findPieceColorAt(Position position) {
-        if (isNoPieceAt(position)) {
+        if (pieceDoesNotExistAt(position)) {
             throw new IllegalArgumentException("해당 위치에 말이 없습니다.");
         }
         if (board.get(position).isWhite()) {
             return Color.WHITE;
         }
         return Color.BLACK;
-    }
-
-    public Piece findPieceAt(Position position) {
-        if (isNoPieceAt(position)) {
-            return null;
-        }
-        return board.get(position);
     }
 }

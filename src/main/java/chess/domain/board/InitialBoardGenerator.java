@@ -4,6 +4,7 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.NoPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -22,6 +23,7 @@ public class InitialBoardGenerator implements BoardGenerator {
         placeBishops(board);
         placeQueens(board);
         placeKings(board);
+        placeNoPieces(board);
         return board;
     }
 
@@ -61,5 +63,14 @@ public class InitialBoardGenerator implements BoardGenerator {
     private void placeKings(Map<Position, Piece> board) {
         board.put(Position.of(5, 8), new King(Color.BLACK));
         board.put(Position.of(5, 1), new King(Color.WHITE));
+    }
+
+    private void placeNoPieces(Map<Position, Piece> board) {
+        for (int file = 1; file <= 8; file++) {
+            board.put(Position.of(file, 3), new NoPiece(Color.NO_COLOR));
+            board.put(Position.of(file, 4), new NoPiece(Color.NO_COLOR));
+            board.put(Position.of(file, 5), new NoPiece(Color.NO_COLOR));
+            board.put(Position.of(file, 6), new NoPiece(Color.NO_COLOR));
+        }
     }
 }

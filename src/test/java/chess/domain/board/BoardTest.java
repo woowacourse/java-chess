@@ -8,15 +8,29 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.NoPiece;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
+
+    private static final Map<Position, Piece> BOARD_MAP = new HashMap<>();
+
+    @BeforeEach
+    void beforeEach() {
+        for (int file = 1; file <= 8; file++) {
+            for (int rank = 1; rank <= 8; rank++) {
+                BOARD_MAP.put(Position.of(file, rank), new NoPiece(Color.NO_COLOR));
+            }
+        }
+    }
 
     @Test
     @DisplayName("실패: 출발점에 말이 없으면 이동 불가")
@@ -58,15 +72,13 @@ class BoardTest {
     @DisplayName("성공: Knight가 규칙에 맞는 위치로 이동")
     void move_LegalMoveKnight() {
         Position sourcePosition = Position.of(2, 1);
-        Position targetPosition = Position.of(3, 3);
+        Position targetPosition = Position.of(1, 3);
         Knight knight = new Knight(Color.WHITE);
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, knight)
-        ));
+        Board board = Board.generatedBy(new InitialBoardGenerator());
 
         board.move(sourcePosition, targetPosition, Color.WHITE);
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isEqualTo(new NoPiece(Color.NO_COLOR)),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(knight)
         );
     }
@@ -74,16 +86,16 @@ class BoardTest {
     @Test
     @DisplayName("성공: King이 규칙에 맞는 위치로 이동")
     void move_LegalMoveKing() {
+
         Position sourcePosition = Position.of(2, 2);
         Position targetPosition = Position.of(1, 3);
         King king = new King(Color.WHITE);
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, king)
-        ));
+        BOARD_MAP.put(sourcePosition, king);
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         board.move(sourcePosition, targetPosition, Color.WHITE);
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isEqualTo(new NoPiece(Color.NO_COLOR)),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(king)
         );
     }
@@ -93,10 +105,7 @@ class BoardTest {
     void move_IllegalMove() {
         Position sourcePosition = Position.of(2, 1);
         Position targetPosition = Position.of(3, 4);
-        Knight knight = new Knight(Color.WHITE);
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(sourcePosition, knight)
-        ));
+        Board board = Board.generatedBy(new InitialBoardGenerator());
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -113,12 +122,10 @@ class BoardTest {
         Rook rook = new Rook(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, rook,
-                middlePosition, pawn
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, rook);
+        BOARD_MAP.put(middlePosition, pawn);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -135,12 +142,10 @@ class BoardTest {
         Bishop bishop = new Bishop(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, bishop,
-                middlePosition, pawn
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, bishop);
+        BOARD_MAP.put(middlePosition, pawn);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -157,12 +162,10 @@ class BoardTest {
         Queen queen = new Queen(Color.WHITE);
         Pawn pawn = new Pawn(Color.WHITE);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, queen,
-                middlePosition, pawn
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, queen);
+        BOARD_MAP.put(middlePosition, pawn);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -179,12 +182,10 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.WHITE);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                middlePosition, queen
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, pawn);
+        BOARD_MAP.put(middlePosition, queen);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -200,12 +201,10 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.BLACK);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                targetPosition, queen
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, pawn);
+        BOARD_MAP.put(targetPosition, queen);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
@@ -221,17 +220,15 @@ class BoardTest {
         Pawn pawn = new Pawn(Color.WHITE);
         Queen queen = new Queen(Color.BLACK);
 
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn,
-                targetPosition, queen
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, pawn);
+        BOARD_MAP.put(targetPosition, queen);
+
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         board.move(sourcePosition, targetPosition, Color.WHITE);
 
         assertAll(
-            () -> assertThat(board.findPieceAt(sourcePosition)).isNull(),
+            () -> assertThat(board.findPieceAt(sourcePosition)).isEqualTo(new NoPiece(Color.NO_COLOR)),
             () -> assertThat(board.findPieceAt(targetPosition)).isEqualTo(pawn)
         );
     }
@@ -243,12 +240,8 @@ class BoardTest {
         Position targetPosition = Position.of(3, 3);
 
         Pawn pawn = new Pawn(Color.WHITE);
-
-        Board board = Board.generatedBy(() -> new HashMap<>(
-            Map.of(
-                sourcePosition, pawn
-            )
-        ));
+        BOARD_MAP.put(sourcePosition, pawn);
+        Board board = Board.generatedBy(() -> BOARD_MAP);
 
         assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, Color.WHITE))
             .isInstanceOf(IllegalArgumentException.class)

@@ -19,4 +19,9 @@ public class Queen extends Piece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public boolean exists() {
+        return true;
+    }
 }

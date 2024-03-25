@@ -5,6 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.NoPiece;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
@@ -44,10 +45,6 @@ public class OutputView {
     }
 
     private String pieceToString(Piece piece) {
-        if (piece == null) {
-            return ".";
-        }
-
         String pieceText = "";
         if (piece instanceof Bishop) {
             pieceText = "B";
@@ -66,6 +63,9 @@ public class OutputView {
         }
         if (piece instanceof Rook) {
             pieceText = "R";
+        }
+        if (piece instanceof NoPiece) {
+            pieceText = ".";
         }
 
         if (piece.isWhite()) {
