@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class Board {
 
+    private static final String ERROR_CANNOT_STAY = "제자리로 이동할 수 없습니다.";
     private static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
     private final Set<Piece> pieces;
 
@@ -20,9 +21,16 @@ public class Board {
     }
 
     public void move(Square source, Square target) {
+        validateStay(source, target);
         Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PIECE));
         sourcePiece.move(this, target);
         removeTargetPieceIfAttacked(sourcePiece, target);
+    }
+
+    private void validateStay(Square source, Square target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException(ERROR_CANNOT_STAY);
+        }
     }
 
     public boolean existOnSquare(Square square) {

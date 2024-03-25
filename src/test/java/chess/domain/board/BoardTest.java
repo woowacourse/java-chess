@@ -35,7 +35,7 @@ class BoardTest {
     void validateStay() {
         // given
         Square source = Square.from("b3");
-        Square target = Square.from("b4");
+        Square target = Square.from("b3");
         Rook piece = new Rook(PieceColor.BLACK, source);
         Board board = new Board(Set.of(piece));
 
