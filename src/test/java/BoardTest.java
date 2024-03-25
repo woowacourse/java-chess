@@ -9,9 +9,9 @@ import chess.domain.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
@@ -90,7 +90,7 @@ public class BoardTest {
     void checkmate() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
-                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(2, 8), new WhitePawn(),
                 Position.of(1, 6), new Queen(Team.BLACK)
         ));
 
@@ -102,7 +102,7 @@ public class BoardTest {
     void checkmateWhenDoubleCheck() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
-                Position.of(1, 7), new Pawn(Team.WHITE),
+                Position.of(1, 7), new WhitePawn(),
                 Position.of(4, 5), new Queen(Team.BLACK),
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));
@@ -116,7 +116,7 @@ public class BoardTest {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
                 Position.of(1, 7), new Knight(Team.WHITE),
-                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(2, 8), new WhitePawn(),
                 Position.of(2, 7), new Bishop(Team.BLACK)
         ));
 
@@ -128,8 +128,8 @@ public class BoardTest {
     void isNotCheckmatePieceBlockAttackRoute() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
-                Position.of(1, 7), new Pawn(Team.WHITE),
-                Position.of(2, 8), new Pawn(Team.WHITE),
+                Position.of(1, 7), new WhitePawn(),
+                Position.of(2, 8), new WhitePawn(),
                 Position.of(3, 6), new Bishop(Team.BLACK)
         ));
 
@@ -141,7 +141,7 @@ public class BoardTest {
     void isNotCheckmateAttackingAttackPiece() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
-                Position.of(1, 7), new Pawn(Team.WHITE),
+                Position.of(1, 7), new WhitePawn(),
                 Position.of(2, 7), new Knight(Team.WHITE),
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));

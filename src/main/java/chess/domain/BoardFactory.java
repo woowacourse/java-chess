@@ -1,12 +1,13 @@
 package chess.domain;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import chess.domain.piece.character.Team;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +18,17 @@ public class BoardFactory {
 
     public static Map<Position, Piece> generateStartBoard() {
         Map<Position, Piece> pieces = new HashMap<>();
-        pieces.putAll(createPawnRow(2, Team.WHITE));
-        pieces.putAll(createPawnRow(7, Team.BLACK));
+        pieces.putAll(createPawnRow());
         pieces.putAll(createEdgeRow(1, Team.WHITE));
         pieces.putAll(createEdgeRow(8, Team.BLACK));
         return pieces;
     }
 
-    private static Map<Position, Piece> createPawnRow(int row, Team team) {
+    private static Map<Position, Piece> createPawnRow() {
         Map<Position, Piece> pawnRow = new HashMap<>();
         for (int i = 1; i <= 8; i++) {
-            pawnRow.put(Position.of(row, i), new Pawn(team));
+            pawnRow.put(Position.of(7, i), new BlackPawn());
+            pawnRow.put(Position.of(2, i), new WhitePawn());
         }
         return pawnRow;
     }
