@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Positions;
-import chess.domain.piece.character.Character;
+import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,14 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_KING", "WHITE,WHITE_KING"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new King(team).findCharacter())
-                .isEqualTo(character);
-    }
-
     @DisplayName("킹은 한칸 초과하여 움직인 경우, 예외가 발생한다.")
     @Test
     void kingMoveOverOne() {

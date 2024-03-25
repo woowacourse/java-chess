@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
@@ -11,7 +10,6 @@ import java.util.Set;
 
 public class Knight extends Piece {
     private static final Set<Integer> MOVE_DIFFERENCES = Set.of(1, 2);
-
 
     public Knight(Team team) {
         this(team, false);
@@ -27,11 +25,6 @@ public class Knight extends Piece {
             return this;
         }
         return new Knight(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.KNIGHT);
     }
 
     @Override

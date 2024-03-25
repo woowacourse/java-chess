@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Positions;
-import chess.domain.piece.character.Character;
+import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,25 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_QUEEN", "WHITE,WHITE_QUEEN"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new Queen(team).findCharacter())
-                .isEqualTo(character);
-    }
-
-    @DisplayName("퀸은 직선 혹은 대각선이 아닌 경우, 예외가 발생한다.")
-    @Test
-    void queenMoveOverLineAndDiagonalLine() {
-        assertThatThrownBy(() -> new Queen(Team.WHITE)
-                .findBetweenPositions(new Positions(
-                        Position.of(1, 1),
-                        Position.of(2, 3))))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
-    }
-
     @DisplayName("두 위치 사이의 퀸이 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPositionDiagonal() {

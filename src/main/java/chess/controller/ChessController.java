@@ -1,7 +1,8 @@
 package chess.controller;
 
 import chess.domain.*;
-import chess.domain.piece.character.Character;
+import chess.dto.BoardDto;
+import chess.view.Character;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -13,13 +14,13 @@ public class ChessController {
         Board board = new Board(BoardFactory.generateStartBoard());
         ChessGame chessGame = new ChessGame(board);
 
-        OutputView.printChessBoard(board.mapPositionToCharacter());
+        OutputView.printChessBoard(new BoardDto(board));
 
         while (InputView.hasNextMove()) {
             Positions positions = InputView.inputPositions();
-            Map<Position, Character> chessBoard = chessGame.movePiece(positions);
+            chessGame.movePiece(positions);
             OutputView.printCheck(chessGame.findCheck());
-            OutputView.printChessBoard(chessBoard);
+            OutputView.printChessBoard(new BoardDto(chessGame.getBoard()));
         }
     }
 }

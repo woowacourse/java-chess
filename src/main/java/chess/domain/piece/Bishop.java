@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
-import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
@@ -23,11 +22,6 @@ public class Bishop extends Piece {
             return this;
         }
         return new Bishop(team, true);
-    }
-
-    @Override
-    public Character findCharacter() {
-        return Character.findCharacter(team, Kind.BISHOP);
     }
 
     @Override

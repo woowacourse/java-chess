@@ -2,14 +2,13 @@ package chess.domain;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> pieces;
@@ -189,12 +188,7 @@ public class Board {
         return piece.findBetweenPositions(positions);
     }
 
-    public Map<Position, Character> mapPositionToCharacter() {
-        return pieces.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> entry.getValue().findCharacter()
-                ));
+    public Map<Position, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }

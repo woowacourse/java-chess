@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Positions;
-import chess.domain.piece.character.Character;
+import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,14 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @ParameterizedTest
-    @CsvSource(value = {"BLACK,BLACK_KNIGHT", "WHITE,WHITE_KNIGHT"})
-    void findCharacter(Team team, Character character) {
-        assertThat(new Knight(team).findCharacter())
-                .isEqualTo(character);
-    }
-
     @DisplayName("나이트는 날 일 자가 아닌 경우, 예외가 발생한다.")
     @Test
     void knightMoveOverDayHieroglyph() {
