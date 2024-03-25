@@ -23,14 +23,14 @@ public abstract class Piece implements Movable {
         if (point.equals(destination)) {
             throw new IllegalArgumentException("동일한 위치로 이동할 수 없습니다.");
         }
-        final var movablePoints = legalMovePoints(new Pieces(pieces));
+        final var movablePoints = findLegalMovePoints(new Pieces(pieces));
         if (!movablePoints.contains(destination)) {
             throw new IllegalArgumentException("말을 움직일 수 없습니다.");
         }
         return update(destination);
     }
 
-    protected abstract Set<Point> legalMovePoints(Pieces pieces);
+    protected abstract Set<Point> findLegalMovePoints(Pieces pieces);
 
     protected abstract Piece update(Point point);
 
