@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.chessboard.attribute.Direction.DOWN_LEFT;
+import static chess.domain.chessboard.attribute.Direction.DOWN_RIGHT;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 
@@ -20,9 +22,13 @@ public abstract class AbstractPawn extends UnslidingPiece {
         void accept(Chessboard chessboard, Position position, Set<Position> positions);
     }
 
-    private static final Set<Movement> POSSIBLE_ATTACKS = Set.of(
+    protected static final Set<Movement> POSSIBLE_ATTACKS_WHITE = Set.of(
             Movement.of(UP_LEFT),
             Movement.of(UP_RIGHT)
+    );
+    protected static final Set<Movement> POSSIBLE_ATTACKS_BLACK = Set.of(
+            Movement.of(DOWN_LEFT),
+            Movement.of(DOWN_RIGHT)
     );
 
     protected AbstractPawn(final Color color, final Position position) {
@@ -34,8 +40,8 @@ public abstract class AbstractPawn extends UnslidingPiece {
         return possiblePositions(chessboard, movements, this::addIfEmpty);
     }
 
-    protected Set<Position> attackablePositions(final Chessboard chessboard) {
-        return possiblePositions(chessboard, POSSIBLE_ATTACKS, this::addIfAttackable);
+    protected Set<Position> attackablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+        return possiblePositions(chessboard, movements, this::addIfAttackable);
     }
 
     private Set<Position> possiblePositions(
