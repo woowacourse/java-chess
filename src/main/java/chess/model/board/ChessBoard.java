@@ -28,7 +28,7 @@ public class ChessBoard {
         replacePiece(sourcePiece, sourcePosition, targetPosition);
     }
 
-    private void validateSourceIsNull(Piece sourcePiece) {
+    private void validateSourceIsBlank(Piece sourcePiece) {
         if (sourcePiece.equals(Blank.INSTANCE)) {
             throw new IllegalArgumentException("소스 위치에 기물이 존재하지 않습니다.");
         }
