@@ -18,7 +18,7 @@ public class Turn {
     }
 
     public void process() {
-        Collections.rotate(turns, 1);
+        Collections.rotate(turns, -1);
     }
 
     public Color getCurrentTurn() {
