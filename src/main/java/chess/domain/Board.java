@@ -69,7 +69,7 @@ public class Board {
     // TODO 리팩터링
     private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
         if (currentPiece instanceof Pawn) {
-            if (currentPoint.isDiagonal(destination)) {
+            if (currentPoint.isSlopeOneDiagonal(destination)) {
                 if (board.get(destination).equals(Piece.empty())) {
                     throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
                 }

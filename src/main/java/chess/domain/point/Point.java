@@ -31,7 +31,7 @@ public class Point {
         return POOL.get(file).get(rank);
     }
 
-    public boolean isDiagonal(Point point) {
+    public boolean isSlopeOneDiagonal(Point point) {
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
         if (this.equals(point) || rankDistance == 0) {

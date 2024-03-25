@@ -20,6 +20,6 @@ public final class Queen extends Piece {
 
     @Override
     public boolean isMovable(Point currentPoint, Point nextPoint) {
-        return currentPoint.isStraight(nextPoint) || currentPoint.isDiagonal(nextPoint);
+        return currentPoint.isStraight(nextPoint) || currentPoint.isSlopeOneDiagonal(nextPoint);
     }
 }
