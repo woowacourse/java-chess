@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.board.BoardFactory.initialEmpty;
 
+import chess.domain.piece.DummyPiece;
 import chess.domain.piece.Piece;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -37,9 +38,8 @@ public class Board {
 
     private void swap(final Coordinate source, final Coordinate target) {
         Piece sourcePiece = pieces.get(source);
-        Piece targetPiece = pieces.get(target);
         pieces.put(target, sourcePiece.updateAfterMove());
-        pieces.put(source, targetPiece.updateAfterMove());
+        pieces.put(source, new DummyPiece());
     }
 
     private Map<Coordinate, Piece> makeBoardInformation(final List<Coordinate> coordinates) {
