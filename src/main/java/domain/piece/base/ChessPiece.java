@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ChessPiece {
 
-    boolean isSameColor(Color color);
+    boolean isNotSameColor(Color color);
 
     boolean isBlack();
 

@@ -26,7 +26,7 @@ public class ChessBoard {
 
         validateBeforePlay(destination, currentTurn, piece);
 
-        List<Integer> direction = piece.getDirection(start, destination, canAttack(currentTurn, destination));
+        List<Integer> direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
 
         validateCanMove(start, destination, direction);
         movePiece(destination, startPosition, piece);
@@ -58,13 +58,13 @@ public class ChessBoard {
         if (chessPiece == null) {
             return;
         }
-        if (chessPiece.isSameColor(currentTurn)) {
+        if (!chessPiece.isNotSameColor(currentTurn)) {
             throw new IllegalArgumentException("같은 색의 말은 공격할 수 없습니다.");
         }
     }
 
     private void validateTurn(ChessPiece piece, Color currentTurn) {
-        if (!piece.isSameColor(currentTurn)) {
+        if (piece.isNotSameColor(currentTurn)) {
             throw new IllegalArgumentException("상대의 말을 움직일 수 없습니다.");
         }
     }
@@ -87,14 +87,14 @@ public class ChessBoard {
         }
     }
 
-    private ChessPiece findPiece(Coordinate start) {
-        return board.get(start);
+    private ChessPiece findPiece(Coordinate coordinate) {
+        return board.get(coordinate);
     }
 
-    private boolean canAttack(Color current, Coordinate destination) {
+    private boolean isAttack(Color current, Coordinate destination) {
         ChessPiece destinationPiece = board.get(destination);
 
-        return destinationPiece != null && !destinationPiece.isSameColor(current);
+        return destinationPiece != null && destinationPiece.isNotSameColor(current);
     }
 
     public Map<Coordinate, ChessPiece> getBoard() {

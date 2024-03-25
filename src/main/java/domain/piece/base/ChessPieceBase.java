@@ -16,8 +16,8 @@ public abstract class ChessPieceBase implements ChessPiece {
     public abstract List<Integer> getDirection(Coordinate start, Coordinate destination, boolean canAttack);
 
     @Override
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    public boolean isNotSameColor(Color color) {
+        return this.color != color;
     }
 
     @Override
