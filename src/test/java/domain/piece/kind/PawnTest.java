@@ -37,7 +37,7 @@ class PawnTest {
     void black_pawn_can_move_down_right() {
         final var sut = new Pawn(C4, Color.BLACK);
 
-        final var result = sut.canMove(D3);
+        final var result = sut.canMove(D3, List.of(new Pawn(D3, WHITE)));
         assertThat(result).isTrue();
     }
 
@@ -46,7 +46,7 @@ class PawnTest {
     void black_pawn_can_move_down_left() {
         final var sut = new Pawn(C4, Color.BLACK);
 
-        final var result = sut.canMove(B3);
+        final var result = sut.canMove(B3, List.of(new Pawn(B3, WHITE)));
         assertThat(result).isTrue();
     }
 
@@ -73,7 +73,7 @@ class PawnTest {
     void white_pawn_can_move_up_left() {
         final var sut = new Pawn(C4, Color.WHITE);
 
-        final var result = sut.canMove(B5);
+        final var result = sut.canMove(B5, List.of(new Pawn(B5, BLACK)));
         assertThat(result).isTrue();
     }
 
@@ -136,4 +136,60 @@ class PawnTest {
         final var result = sut.canMove(B3, pieceList);
         assertThat(result).isFalse();
     }
+
+    @Test
+    @DisplayName("검은색 폰이 아직 이동하지 않았다면 아래로 두칸 이동할 수 있다.")
+    void black_pawn_can_move_down_double() {
+        final var sut = new Pawn(C7, Color.BLACK);
+
+        final var result = sut.canMove(C5);
+        assertThat(result).isTrue();
+    }
+
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void black_pawn_can_not_move_diagonal_left_double() {
+        final var sut = new Pawn(C7, Color.BLACK);
+
+        final var result = sut.canMove(A5);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void black_pawn_can_not_move_diagonal_right_double() {
+        final var sut = new Pawn(C7, Color.BLACK);
+
+        final var result = sut.canMove(E5);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 아직 이동하지 않았다면 위로 두칸 이동할 수 있다")
+    void white_pawn_can_move_up_double() {
+        final var sut = new Pawn(C2, Color.WHITE);
+
+        final var result = sut.canMove(C4);
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void white_pawn_can_not_move_diagonal_left_double() {
+        final var sut = new Pawn(C2, Color.WHITE);
+
+        final var result = sut.canMove(A4);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("대각선으로 두칸 이동할 수 없다.")
+    void white_pawn_can_not_move_diagonal_right_double() {
+        final var sut = new Pawn(C2, Color.WHITE);
+
+        final var result = sut.canMove(E4);
+        assertThat(result).isFalse();
+    }
+
 }

@@ -26,8 +26,6 @@ public enum Direction {
     LEFT_UP_LEFT(Point::moveLeftUpLeft, Point::canMoveLeftUpLeft),
 
     LEFT_DOWN_LEFT(Point::moveLeftDownLeft, Point::canMoveLeftDownLeft),
-
-
     ;
     private final UnaryOperator<Point> movePointFunction;
     private final Predicate<Point> canMovePredicate;
@@ -40,6 +38,10 @@ public enum Direction {
 
     public Point movePoint(final Point point) {
         return movePointFunction.apply(point);
+    }
+
+    public boolean canNotMovePoint(final Point point) {
+        return !canMovePredicate.test(point);
     }
 
     public boolean canMovePoint(final Point point) {

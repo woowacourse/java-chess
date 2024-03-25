@@ -5,6 +5,7 @@ import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Point;
 import domain.piece.kind.PieceStatus;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -67,12 +68,27 @@ public abstract class Piece implements Movable {
         return !hasAnyPiece(findPoint, pieces);
     }
 
+    protected final boolean notExistPieces(final Pieces pieces, final Point... points) {
+        return Arrays.stream(points)
+                     .anyMatch(value -> notExistPiece(value, pieces));
+    }
+
+
     protected final boolean hasAnyPiece(final Point findPoint, final Pieces pieces) {
         return pieces.containPieceWithPoint(findPoint);
     }
 
     protected final boolean hasEnemyPieceOrEmpty(final Point endPoint, final Pieces pieces) {
         return !hasFriendPiece(endPoint, pieces);
+    }
+
+    protected final boolean hasEnemyPiece(final Point endPoint, final Pieces pieces) {
+        final Optional<Piece> optionalPiece = pieces.findPieceWithPoint(endPoint);
+        if (optionalPiece.isEmpty()) {
+            return false;
+        }
+        final Piece toPiece = optionalPiece.get();
+        return !sameColor(toPiece);
     }
 
     protected final boolean hasFriendPiece(final Point endPoint, final Pieces pieces) {
