@@ -1,14 +1,13 @@
-package chess.domain.square.piece;
+package chess.domain.piece;
 
+import chess.domain.movement.Movements;
 import chess.domain.position.Position;
 import chess.domain.position.TerminalPosition;
-import chess.domain.square.Square;
-import chess.domain.square.piece.movement.Movements;
 
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece implements Square {
+public abstract class Piece {
     private final Color color;
     private final Movements movements;
 
@@ -17,14 +16,12 @@ public abstract class Piece implements Square {
         this.movements = movements;
     }
 
-    @Override
     public final List<Position> findPassPathTaken(TerminalPosition terminalPosition) {
         return movements.findPassPathTaken(terminalPosition, maxPassMoveCount());
     }
 
     protected abstract int maxPassMoveCount();
 
-    @Override
     public final List<Position> findAttackPathTaken(TerminalPosition terminalPosition) {
         return movements.findAttackPathTaken(terminalPosition, maxAttackMoveCount());
     }

@@ -1,4 +1,4 @@
-package chess.domain.square.piece.movement;
+package chess.domain.movement;
 
 public enum UnitMovement {
     UP(1, 0),

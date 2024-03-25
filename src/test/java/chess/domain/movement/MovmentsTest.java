@@ -1,4 +1,4 @@
-package chess.domain.square.piece.movement;
+package chess.domain.movement;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;

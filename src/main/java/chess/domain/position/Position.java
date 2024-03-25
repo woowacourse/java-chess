@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.square.piece.movement.UnitMovement;
+import chess.domain.movement.UnitMovement;
 
 import java.util.Objects;
 
@@ -11,22 +11,6 @@ public class Position {
     public Position(Rank rank, File file) {
         this.rank = rank;
         this.file = file;
-    }
-
-    public int calculateRankDistance(Position position) {
-        return rank.calculateDistance(position.rank);
-    }
-
-    public int subtractRank(Position position) {
-        return rank.subtract(position.rank);
-    }
-
-    public int calculateFileDistance(Position position) {
-        return file.calculateDistance(position.file);
-    }
-
-    public int subtractFile(Position position) {
-        return file.subtract(position.file);
     }
 
     public boolean canMove(UnitMovement unitMovement) {
@@ -59,14 +43,6 @@ public class Position {
                 "rank=" + rank +
                 ", file=" + file +
                 '}';
-    }
-
-    public int getRankValue() {
-        return rank.getValue();
-    }
-
-    public int getFileValue() {
-        return file.getValue();
     }
 
     public Rank getRank() {

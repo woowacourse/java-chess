@@ -1,24 +1,24 @@
 package chess.view;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
-import chess.domain.square.piece.Bishop;
-import chess.domain.square.piece.Color;
-import chess.domain.square.piece.King;
-import chess.domain.square.piece.Knight;
-import chess.domain.square.piece.Pawn;
-import chess.domain.square.piece.Queen;
-import chess.domain.square.piece.Rook;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
-    private static final Map<Square, String> BLACK_SQUARE_VIEWS = Map.of(
+    private static final Map<Piece, String> BLACK_PIECE_VIEWS = Map.of(
             Pawn.createOnStart(Color.BLACK), "P",
             Knight.from(Color.BLACK), "N",
             Bishop.from(Color.BLACK), "B",
@@ -26,7 +26,7 @@ public class OutputView {
             Queen.from(Color.BLACK), "Q",
             King.from(Color.BLACK), "K"
     );
-    private static final Map<Square, String> WHITE_SQUARE_VIEWS = Map.of(
+    private static final Map<Piece, String> WHITE_PIECE_VIEWS = Map.of(
             Pawn.createOnStart(Color.WHITE), "p",
             Knight.from(Color.WHITE), "n",
             Bishop.from(Color.WHITE), "b",
@@ -34,12 +34,12 @@ public class OutputView {
             Queen.from(Color.WHITE), "q",
             King.from(Color.WHITE), "k"
     );
-    private static final Map<Square, String> squareViews = new HashMap<>();
+    private static final Map<Piece, String> pieceViews = new HashMap<>();
 
     static {
-        squareViews.putAll(BLACK_SQUARE_VIEWS);
-        squareViews.putAll(WHITE_SQUARE_VIEWS);
-        squareViews.put(Empty.getInstance(), ".");
+        pieceViews.putAll(BLACK_PIECE_VIEWS);
+        pieceViews.putAll(WHITE_PIECE_VIEWS);
+        pieceViews.put(Empty.getInstance(), ".");
     }
 
 
@@ -57,18 +57,18 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public void printChessBoard(Map<Position, Square> squares) {
+    public void printChessBoard(Map<Position, Piece> pieces) {
         for (Rank rank : Rank.values()) {
-            printRank(squares, rank);
+            printRank(pieces, rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private void printRank(Map<Position, Square> squares, Rank rank) {
+    private void printRank(Map<Position, Piece> pieces, Rank rank) {
         for (File file : File.values()) {
-            Square square = squares.get(new Position(rank, file));
-            System.out.print(squareViews.get(square));
+            Piece piece = pieces.get(new Position(rank, file));
+            System.out.print(pieceViews.get(piece));
         }
     }
 }

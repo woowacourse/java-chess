@@ -33,17 +33,4 @@ public enum File {
     public File move(int diff) {
         return File.from(value + diff);
     }
-
-
-    public int calculateDistance(File file) {
-        return Math.abs(subtract(file));
-    }
-
-    public int subtract(File file) {
-        return value - file.value;
-    }
-
-    public int getValue() {
-        return value;
-    }
 }

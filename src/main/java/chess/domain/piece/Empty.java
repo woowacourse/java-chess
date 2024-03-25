@@ -1,14 +1,10 @@
-package chess.domain.square;
+package chess.domain.piece;
 
-import chess.domain.position.Position;
-import chess.domain.position.TerminalPosition;
-
-import java.util.List;
-
-public class Empty implements Square {
+public class Empty extends Piece {
     private static final Empty INSTANCE = new Empty();
 
     private Empty() {
+        super(null, null);
     }
 
     public static Empty getInstance() {
@@ -16,16 +12,15 @@ public class Empty implements Square {
     }
 
     @Override
-    public List<Position> findPassPathTaken(TerminalPosition terminalPosition) {
+    protected int maxPassMoveCount() {
         throw new IllegalArgumentException("시작 위치가 비어있습니다.");
     }
 
     @Override
-    public List<Position> findAttackPathTaken(TerminalPosition terminalPosition) {
+    protected int maxAttackMoveCount() {
         throw new IllegalArgumentException("시작 위치가 비어있습니다.");
     }
 
-    @Override
     public void move() {
         throw new IllegalArgumentException("시작 위치가 비어있습니다.");
     }

@@ -1,8 +1,11 @@
-package chess.domain.square.piece.movement;
+package chess.domain.movement;
 
 import java.util.Set;
 
 public class MovementsFactory {
+    private MovementsFactory() {
+    }
+
     public static Set<UnitMovement> createStraight() {
         return Set.of(UnitMovement.UP, UnitMovement.DOWN, UnitMovement.RIGHT, UnitMovement.LEFT);
     }

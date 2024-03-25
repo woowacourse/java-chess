@@ -1,7 +1,7 @@
-package chess.domain.square.piece;
+package chess.domain.piece;
 
-import chess.domain.square.piece.movement.Movements;
-import chess.domain.square.piece.movement.UnitMovement;
+import chess.domain.movement.Movements;
+import chess.domain.movement.UnitMovement;
 
 import java.util.Map;
 import java.util.Set;

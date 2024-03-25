@@ -2,9 +2,9 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.TerminalPosition;
-import chess.domain.square.Square;
 
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class ChessGame {
         turn.process();
     }
 
-    public Map<Position, Square> getSquares() {
-        return board.getSquares();
+    public Map<Position, Piece> getPieces() {
+        return board.getPieces();
     }
 }

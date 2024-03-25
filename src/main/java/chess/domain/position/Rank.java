@@ -33,16 +33,4 @@ public enum Rank {
     public Rank move(int diff) {
         return Rank.from(value + diff);
     }
-
-    public int calculateDistance(Rank rank) {
-        return Math.abs(subtract(rank));
-    }
-
-    public int subtract(Rank rank) {
-        return value - rank.value;
-    }
-
-    public int getValue() {
-        return value;
-    }
 }

@@ -40,7 +40,7 @@ public class ChessController {
 
     private void startGame() {
         ChessGame chessGame = ChessGame.createOnStart();
-        outputView.printChessBoard(chessGame.getSquares());
+        outputView.printChessBoard(chessGame.getPieces());
 
         processGameUntilValid(chessGame);
     }
@@ -74,7 +74,7 @@ public class ChessController {
         if (command.getType() == CommandType.MOVE) {
             TerminalPosition terminalPosition = TerminalPositionView.of(command.getArguments());
             chessGame.movePiece(terminalPosition);
-            outputView.printChessBoard(chessGame.getSquares());
+            outputView.printChessBoard(chessGame.getPieces());
         }
     }
 }

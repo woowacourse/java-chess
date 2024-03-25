@@ -1,11 +1,9 @@
-package chess.domain.square.piece;
+package chess.domain.piece;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.position.TerminalPosition;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
-    private static final Map<Position, Square> board = new HashMap<>();
+    private static final Map<Position, Piece> board = new HashMap<>();
 
     @BeforeEach
     void setUp() {

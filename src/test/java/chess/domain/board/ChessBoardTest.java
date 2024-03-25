@@ -1,14 +1,14 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.position.TerminalPosition;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
-import chess.domain.square.piece.Color;
-import chess.domain.square.piece.Queen;
-import chess.domain.square.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessBoardTest {
 
-    private static final Map<Position, Square> squares = new HashMap<>();
+    private static final Map<Position, Piece> pieces = new HashMap<>();
 
     @BeforeEach
     void setUp() {
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                squares.put(new Position(rank, file), Empty.getInstance());
+                pieces.put(new Position(rank, file), Empty.getInstance());
             }
         }
     }
@@ -36,7 +36,7 @@ public class ChessBoardTest {
     @Test
     void startEmptyExceptionTest() {
         // given
-        ChessBoard chessBoard = new ChessBoard(squares);
+        ChessBoard chessBoard = new ChessBoard(pieces);
         TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
         Color currentTurn = Color.BLACK;
 
@@ -50,9 +50,9 @@ public class ChessBoardTest {
     @Test
     void canNotAttack() {
         // given
-        squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        squares.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
-        ChessBoard chessBoard = new ChessBoard(squares);
+        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        pieces.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(pieces);
         TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
         Color currentTurn = Color.WHITE;
 
@@ -66,45 +66,45 @@ public class ChessBoardTest {
     @Test
     void movePieceTest() {
         // given
-        squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        ChessBoard chessBoard = new ChessBoard(squares);
-        Map<Position, Square> expected = provideEmptyBoard();
+        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        ChessBoard chessBoard = new ChessBoard(pieces);
+        Map<Position, Piece> expected = provideEmptyBoard();
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
         chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
-        assertThat(chessBoard.getSquares()).isEqualTo(expected);
+        assertThat(chessBoard.getPieces()).isEqualTo(expected);
     }
 
     @DisplayName("target이 체스말인 경우 공격한다.")
     @Test
     void moveAttackTest() {
         // given
-        squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
-        squares.put(new Position(Rank.FIRST, File.B), Queen.from(Color.BLACK));
-        ChessBoard chessBoard = new ChessBoard(squares);
-        Map<Position, Square> expected = provideEmptyBoard();
+        pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
+        pieces.put(new Position(Rank.FIRST, File.B), Queen.from(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(pieces);
+        Map<Position, Piece> expected = provideEmptyBoard();
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
         chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
-        assertThat(chessBoard.getSquares()).isEqualTo(expected);
+        assertThat(chessBoard.getPieces()).isEqualTo(expected);
     }
 
 
-    static Map<Position, Square> provideEmptyBoard() {
-        Map<Position, Square> squares = new HashMap<>();
+    static Map<Position, Piece> provideEmptyBoard() {
+        Map<Position, Piece> pieces = new HashMap<>();
 
         for (Rank rank : Rank.values()) {
             for (File file : File.values()) {
-                squares.put(new Position(rank, file), Empty.getInstance());
+                pieces.put(new Position(rank, file), Empty.getInstance());
             }
         }
 
-        return squares;
+        return pieces;
     }
 }
