@@ -6,6 +6,8 @@ import java.util.Set;
 import model.direction.Direction;
 
 public class Position {
+    public static final int MIN_POSITION = 1;
+    public static final int MAX_POSITION = 8;
     private final int file;
     private final int rank;
 
@@ -17,13 +19,13 @@ public class Position {
     private static final Set<Position> cache = new HashSet<>();
 
     static {
-        for (int file = 1; file <= 8; file++) {
+        for (int file = MIN_POSITION; file <= MAX_POSITION; file++) {
             initRank(file);
         }
     }
 
     private static void initRank(int file) {
-        for (int rank = 1; rank <= 8; rank++) {
+        for (int rank = MIN_POSITION; rank <= MAX_POSITION; rank++) {
             cache.add(new Position(file, rank));
         }
     }
@@ -31,10 +33,11 @@ public class Position {
     public boolean isAvailablePosition(Direction direction) {
         int movedFile = file + direction.fileDifferential();
         int movedRank = rank + direction.rankDifferential();
-        return 1 <= movedFile && movedFile <= 8 && 1 <= movedRank && movedRank <= 8;
+        return MIN_POSITION <= movedFile && movedFile <= MAX_POSITION && MIN_POSITION <= movedRank
+                && movedRank <= MAX_POSITION;
     }
 
-    public Position getNextPosition(Direction direction){
+    public Position getNextPosition(Direction direction) {
         return Position.of(file + direction.fileDifferential(), rank + direction.rankDifferential());
     }
 
