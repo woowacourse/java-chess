@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.position.Position;
 import chess.position.UnitDirection;
+import chess.score.PieceScore;
 import java.util.Set;
 
 public abstract class Pawn extends Piece {
@@ -22,7 +23,7 @@ public abstract class Pawn extends Piece {
     );
 
     protected Pawn(Color color) {
-        super(color, getPawnDirectionByColor(color));
+        super(color, PieceScore.PAWN, getPawnDirectionByColor(color));
     }
 
     private static Set<UnitDirection> getPawnDirectionByColor(Color color) {

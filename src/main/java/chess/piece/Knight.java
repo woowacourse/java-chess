@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.position.UnitDirection;
+import chess.score.PieceScore;
 import java.util.Set;
 
 public class Knight extends Piece {
@@ -9,6 +10,7 @@ public class Knight extends Piece {
 
     public Knight(Color color) {
         super(color,
+                PieceScore.KNIGHT,
                 Set.of(
                         UnitDirection.differencesOf(2, 1),
                         UnitDirection.differencesOf(2, -1),

@@ -2,16 +2,20 @@ package chess.piece;
 
 import chess.position.Position;
 import chess.position.UnitDirection;
+import chess.score.PieceScore;
+import chess.score.Score;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Piece {
 
     private final Color color;
+    private final PieceScore pieceScore;
     private final Set<UnitDirection> unitDirections;
 
-    protected Piece(Color color, Set<UnitDirection> unitDirections) {
+    protected Piece(Color color, PieceScore pieceScore, Set<UnitDirection> unitDirections) {
         this.color = color;
+        this.pieceScore = pieceScore;
         this.unitDirections = unitDirections;
     }
 
@@ -69,5 +73,9 @@ public abstract class Piece {
 
     public boolean isNotPawn() {
         return !isPawn();
+    }
+
+    public Score getScore() {
+        return pieceScore.asScore();
     }
 }
