@@ -47,19 +47,6 @@ public class Bishop extends SlidingPiece {
         return squares;
     }
 
-    // 현재 위치에 해당하는 실제 기물을 가져오기
-    private Piece getPiece(Set<Piece> entirePieces, Square currentSquare) { //todo 예외를 던지는 것이 아닌, Blank를 반환하기
-        return entirePieces.stream()
-                .filter(piece -> piece.currentSquare() == currentSquare)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 기물이 없습니다."));
-    }
-
-    private boolean isOccupied(Set<Piece> entirePieces, Square currentSquare) {
-        return entirePieces.stream()
-                .anyMatch(piece -> piece.currentSquare() == currentSquare);
-    }
-
     private Set<Square> candidateLeftDownSquares(Set<Piece> entirePieces) {
         Set<Square> squares = new HashSet<>();
         Square currentSquare = currentSquare();
@@ -112,5 +99,17 @@ public class Bishop extends SlidingPiece {
             squares.add(currentSquare);
         }
         return squares;
+    }
+
+    private Piece getPiece(Set<Piece> entirePieces, Square currentSquare) { //todo 예외를 던지는 것이 아닌, Blank를 반환하기
+        return entirePieces.stream()
+                .filter(piece -> piece.currentSquare() == currentSquare)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
+    }
+
+    private boolean isOccupied(Set<Piece> entirePieces, Square currentSquare) {
+        return entirePieces.stream()
+                .anyMatch(piece -> piece.currentSquare() == currentSquare);
     }
 }
