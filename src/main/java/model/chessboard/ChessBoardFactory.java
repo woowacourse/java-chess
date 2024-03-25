@@ -1,6 +1,6 @@
 package model.chessboard;
 
-import model.piece.PieceHolder;
+import model.piece.Piece;
 import model.piece.state.*;
 import model.position.File;
 import model.position.Position;
@@ -13,12 +13,12 @@ import static model.piece.Color.BLACK;
 import static model.piece.Color.WHITE;
 
 public class ChessBoardFactory {
-    private static final Map<Position, PieceHolder> chessBoard = new HashMap<>();
+    private static final Map<Position, Piece> chessBoard = new HashMap<>();
 
     private ChessBoardFactory() {
     }
 
-    public static Map<Position, PieceHolder> create() {
+    public static Map<Position, Piece> create() {
         initRook();
         initBishop();
         initKnight();
@@ -30,49 +30,49 @@ public class ChessBoardFactory {
     }
 
     private static void initRook() {
-        chessBoard.put(Position.of(File.A, Rank.ONE), new PieceHolder(new Rook(WHITE)));
-        chessBoard.put(Position.of(File.H, Rank.ONE), new PieceHolder(new Rook(WHITE)));
-        chessBoard.put(Position.of(File.A, Rank.EIGHT), new PieceHolder(new Rook(BLACK)));
-        chessBoard.put(Position.of(File.H, Rank.EIGHT), new PieceHolder(new Rook(BLACK)));
+        chessBoard.put(Position.of(File.A, Rank.ONE), new Piece(new Rook(WHITE)));
+        chessBoard.put(Position.of(File.H, Rank.ONE), new Piece(new Rook(WHITE)));
+        chessBoard.put(Position.of(File.A, Rank.EIGHT), new Piece(new Rook(BLACK)));
+        chessBoard.put(Position.of(File.H, Rank.EIGHT), new Piece(new Rook(BLACK)));
     }
 
     private static void initBishop() {
-        chessBoard.put(Position.of(File.B, Rank.ONE), new PieceHolder(new Bishop(WHITE)));
-        chessBoard.put(Position.of(File.G, Rank.ONE), new PieceHolder(new Bishop(WHITE)));
-        chessBoard.put(Position.of(File.B, Rank.EIGHT), new PieceHolder(new Bishop(BLACK)));
-        chessBoard.put(Position.of(File.G, Rank.EIGHT), new PieceHolder(new Bishop(BLACK)));
+        chessBoard.put(Position.of(File.B, Rank.ONE), new Piece(new Bishop(WHITE)));
+        chessBoard.put(Position.of(File.G, Rank.ONE), new Piece(new Bishop(WHITE)));
+        chessBoard.put(Position.of(File.B, Rank.EIGHT), new Piece(new Bishop(BLACK)));
+        chessBoard.put(Position.of(File.G, Rank.EIGHT), new Piece(new Bishop(BLACK)));
     }
 
     private static void initKnight() {
-        chessBoard.put(Position.of(File.C, Rank.ONE), new PieceHolder(new Knight(WHITE)));
-        chessBoard.put(Position.of(File.F, Rank.ONE), new PieceHolder(new Knight(WHITE)));
-        chessBoard.put(Position.of(File.C, Rank.EIGHT), new PieceHolder(new Knight(BLACK)));
-        chessBoard.put(Position.of(File.F, Rank.EIGHT), new PieceHolder(new Knight(BLACK)));
+        chessBoard.put(Position.of(File.C, Rank.ONE), new Piece(new Knight(WHITE)));
+        chessBoard.put(Position.of(File.F, Rank.ONE), new Piece(new Knight(WHITE)));
+        chessBoard.put(Position.of(File.C, Rank.EIGHT), new Piece(new Knight(BLACK)));
+        chessBoard.put(Position.of(File.F, Rank.EIGHT), new Piece(new Knight(BLACK)));
     }
 
     private static void initQueen() {
-        chessBoard.put(Position.of(File.D, Rank.ONE), new PieceHolder(new Queen(WHITE)));
-        chessBoard.put(Position.of(File.D, Rank.EIGHT), new PieceHolder(new Queen(BLACK)));
+        chessBoard.put(Position.of(File.D, Rank.ONE), new Piece(new Queen(WHITE)));
+        chessBoard.put(Position.of(File.D, Rank.EIGHT), new Piece(new Queen(BLACK)));
     }
 
     private static void initKing() {
-        chessBoard.put(Position.of(File.E, Rank.ONE), new PieceHolder(new King(WHITE)));
-        chessBoard.put(Position.of(File.E, Rank.EIGHT), new PieceHolder(new King(BLACK)));
+        chessBoard.put(Position.of(File.E, Rank.ONE), new Piece(new King(WHITE)));
+        chessBoard.put(Position.of(File.E, Rank.EIGHT), new Piece(new King(BLACK)));
     }
 
     private static void initPawn() {
         for (File file : File.values()) {
-            chessBoard.put(Position.of(file, Rank.TWO), new PieceHolder(new Pawn(WHITE)));
-            chessBoard.put(Position.of(file, Rank.SEVEN), new PieceHolder(new Pawn(BLACK)));
+            chessBoard.put(Position.of(file, Rank.TWO), new Piece(new Pawn(WHITE)));
+            chessBoard.put(Position.of(file, Rank.SEVEN), new Piece(new Pawn(BLACK)));
         }
     }
 
     private static void initSquare() {
         for (File file : File.values()) {
-            chessBoard.put(Position.of(file, Rank.THREE), new PieceHolder(new Square()));
-            chessBoard.put(Position.of(file, Rank.FOUR), new PieceHolder(new Square()));
-            chessBoard.put(Position.of(file, Rank.FIVE), new PieceHolder(new Square()));
-            chessBoard.put(Position.of(file, Rank.SIX), new PieceHolder(new Square()));
+            chessBoard.put(Position.of(file, Rank.THREE), new Piece(new Square()));
+            chessBoard.put(Position.of(file, Rank.FOUR), new Piece(new Square()));
+            chessBoard.put(Position.of(file, Rank.FIVE), new Piece(new Square()));
+            chessBoard.put(Position.of(file, Rank.SIX), new Piece(new Square()));
         }
     }
 }
