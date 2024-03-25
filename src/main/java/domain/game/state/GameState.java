@@ -1,4 +1,4 @@
-package domain.game.status;
+package domain.game.state;
 
 import domain.game.Board;
 import domain.game.MoveResponse;
