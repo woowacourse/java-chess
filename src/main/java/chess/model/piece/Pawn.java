@@ -13,7 +13,7 @@ public class Pawn extends Piece {
     private final int startRank;
 
     private Pawn(Color color, RankDirection validRankDirection, int startRank) {
-        super(color, Type.PAWN);
+        super(color);
         this.validRankDirection = validRankDirection;
         this.startRank = startRank;
     }
@@ -42,8 +42,7 @@ public class Pawn extends Piece {
     }
 
     private boolean canMoveDiagonally(Movement movement, Piece target) {
-        Color oppositeColor = color.getOpposite();
-        boolean canAttack = target.hasColor(oppositeColor);
+        boolean canAttack = hasOppositeColorWith(target);
         return canAttack && movement.getRankDistance() == COMMON_RANK_DISTANCE;
     }
 

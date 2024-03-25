@@ -2,21 +2,14 @@ package chess.model.piece;
 
 import chess.model.position.Movement;
 
-import java.util.Objects;
+public abstract class Piece {
+    private final Color color;
 
-public class Piece {
-    protected final Color color;
-    private final Type type;
-
-    Piece(Color color, Type type) {
+    Piece(Color color) {
         this.color = color;
-        this.type = type;
     }
 
-    public boolean canMove(Movement movement, Piece target) {
-        validateTargetColor(target);
-        return type.canMove(movement);
-    }
+    public abstract boolean canMove(Movement movement, Piece target);
 
     protected void validateTargetColor(Piece target) {
         if (target.hasColor(color)) {
@@ -24,24 +17,15 @@ public class Piece {
         }
     }
 
+    protected boolean hasOppositeColorWith(Piece piece) {
+        return color.getOpposite() == piece.color;
+    }
+
     public boolean isEmpty() {
-        return Type.NONE == type;
+        return equals(Empty.getInstance());
     }
 
     public boolean hasColor(Color color) {
         return this.color == color;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece = (Piece) o;
-        return color == piece.color && type == piece.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, type);
     }
 }

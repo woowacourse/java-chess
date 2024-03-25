@@ -1,14 +1,14 @@
-package chess.model.piece.strategy;
-
-import static org.assertj.core.api.Assertions.assertThat;
+package chess.model.piece;
 
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class BishopStrategyTest {
-    private final PieceStrategy bishopStrategy = new BishopStrategy();
+import static org.assertj.core.api.Assertions.assertThat;
+
+class BishopTest {
+    private final Piece bishop = Bishop.from(Color.BLACK);
 
     @ParameterizedTest
     @CsvSource({"1,1,2,2", "2,2,3,1", "2,2,1,3", "4,5,5,4"})
@@ -16,7 +16,7 @@ class BishopStrategyTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(bishopStrategy.canMove(movement)).isTrue();
+        assertThat(bishop.canMove(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
@@ -25,6 +25,6 @@ class BishopStrategyTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(bishopStrategy.canMove(movement)).isFalse();
+        assertThat(bishop.canMove(movement, Empty.getInstance())).isFalse();
     }
 }

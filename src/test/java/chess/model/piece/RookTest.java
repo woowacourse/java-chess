@@ -1,14 +1,14 @@
-package chess.model.piece.strategy;
-
-import static org.assertj.core.api.Assertions.assertThat;
+package chess.model.piece;
 
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class RookStrategyTest {
-    private final PieceStrategy rookStrategy = new RookStrategy();
+import static org.assertj.core.api.Assertions.assertThat;
+
+class RookTest {
+    private final Piece rook = Rook.from(Color.BLACK);
 
     @ParameterizedTest
     @CsvSource({"1,1,1,2", "1,1,1,3", "2,2,2,3", "4,5,4,6"})
@@ -16,7 +16,7 @@ class RookStrategyTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(rookStrategy.canMove(movement)).isTrue();
+        assertThat(rook.canMove(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
@@ -25,6 +25,6 @@ class RookStrategyTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(rookStrategy.canMove(movement)).isFalse();
+        assertThat(rook.canMove(movement, Empty.getInstance())).isFalse();
     }
 }

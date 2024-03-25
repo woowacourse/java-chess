@@ -1,8 +1,5 @@
 package chess.model.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import org.junit.jupiter.api.Nested;
@@ -10,10 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 class PawnTest {
-    private final Piece blackPawn = PieceFactory.of(Color.BLACK, Type.PAWN);
-    private final Piece whitePawn = PieceFactory.of(Color.WHITE, Type.PAWN);
-    private final Piece empty = PieceFactory.of(Color.NONE, Type.NONE);
+    private final Piece blackPawn = Pawn.from(Color.BLACK);
+    private final Piece whitePawn = Pawn.from(Color.WHITE);
+    private final Piece empty = Empty.getInstance();
 
     @Nested
     class WhitePawnTest {

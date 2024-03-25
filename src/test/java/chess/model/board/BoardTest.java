@@ -1,9 +1,9 @@
 package chess.model.board;
 
 import chess.model.piece.Color;
+import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceFactory;
-import chess.model.piece.Type;
+import chess.model.piece.Queen;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import org.junit.jupiter.api.Test;
@@ -31,8 +31,8 @@ class BoardTest {
     void 이동_경로에_다른_기물이_있으면_예외가_발생한다() {
         // given
         Map<Position, Piece> piecePosition = Map.of(
-                Position.of(1, 1), PieceFactory.of(Color.WHITE, Type.QUEEN),
-                Position.of(1, 2), PieceFactory.of(Color.WHITE, Type.PAWN)
+                Position.of(1, 1), Queen.from(Color.WHITE),
+                Position.of(1, 2), Pawn.from(Color.WHITE)
         );
         Board board = new Board(piecePosition);
         Movement movement = new Movement(Position.of(1, 1), Position.of(1, 3));
@@ -45,8 +45,8 @@ class BoardTest {
     @Test
     void 기물이_특정_위치로_움직일_수_있다면_움직인다() {
         // given
-        Piece pawn = PieceFactory.of(Color.WHITE, Type.PAWN);
-        Map<Position, Piece> piecePosition =Map.of(Position.of(2, 2), pawn);
+        Piece pawn = Pawn.from(Color.WHITE);
+        Map<Position, Piece> piecePosition = Map.of(Position.of(2, 2), pawn);
         Board board = new Board(piecePosition);
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
 

@@ -1,9 +1,8 @@
 package chess.model.board;
 
 import chess.model.piece.Color;
+import chess.model.piece.Empty;
 import chess.model.piece.Piece;
-import chess.model.piece.PieceFactory;
-import chess.model.piece.Type;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 
@@ -14,7 +13,7 @@ public class Board {
     public static final int MIN_LENGTH = 1;
     public static final int MAX_LENGTH = 8;
     private static final Color START_COLOR = Color.WHITE;
-    private static final Piece EMPTY = PieceFactory.of(Color.NONE, Type.NONE);
+    private static final Piece EMPTY = Empty.getInstance();
 
     private final Map<Position, Piece> squares;
     private Color currentColor = START_COLOR;
