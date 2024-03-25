@@ -82,10 +82,6 @@ public abstract class Piece implements MoveStrategy {
         return type == NONE;
     }
 
-    public boolean isPawn() {
-        return type.isPawn();
-    }
-
     @Override
     public String toString() {
         return type.getDisplayName();

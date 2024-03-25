@@ -1,6 +1,5 @@
 package chess.model;
 
-import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import java.util.HashMap;
