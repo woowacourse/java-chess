@@ -13,9 +13,9 @@ public enum Command {
         this.message = message;
     }
 
-    public static Command from(final String input) {
+    public static Command from(final String message) {
         return Arrays.stream(values())
-                .filter(command -> command.message.equals(input))
+                .filter(command -> command.message.equals(message))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format("[ERROR] 입력은 %s, %s로 해야 합니다.", START.message, END.message)));
