@@ -1,6 +1,7 @@
 package service;
 
-import domain.*;
+import domain.ChessBoard;
+import domain.ChessGameResult;
 import domain.piece.Piece;
 import domain.square.Square;
 
@@ -53,14 +54,8 @@ public class ChessGame {
         }
 
         final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
-        final ChessScoreCalculator chessScoreCalculator = ChessScoreCalculator.from(pieceSquares);
 
-        final Score whiteScore = chessScoreCalculator.score(Team.WHITE);
-        final Score blackScore = chessScoreCalculator.score(Team.BLACK);
-
-        final WinStatus winStatus = WinStatus.of(whiteScore, blackScore);
-
-        return new ChessGameResult(whiteScore, blackScore, winStatus);
+        return ChessGameResult.from(pieceSquares);
     }
 
     public Map<Square, Piece> getPieceSquares() {

@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessScoreCalculatorTest {
+class ChessGameResultTest {
 
     @DisplayName("남아있는 기물의 점수 합을 계산한다.")
     @Test
@@ -31,13 +31,13 @@ class ChessScoreCalculatorTest {
                 new Square(File.D, Rank.FOUR), new Pawn(Team.WHITE)
         );
 
-        final ChessScoreCalculator chessScoreCalculator = ChessScoreCalculator.from(pieceSquares);
+        final ChessGameResult chessGameResult = ChessGameResult.from(pieceSquares);
 
         // when
-        final Score blackScore = chessScoreCalculator.score(team);
+        final double blackScore = chessGameResult.getBlackScore();
 
         // then
-        assertThat(blackScore).isEqualTo(new Score(20));
+        assertThat(blackScore).isEqualTo(20);
     }
 
     @DisplayName("File이 같은 Pawn이 있으면 0.5점으로 계산한다.")
@@ -59,13 +59,13 @@ class ChessScoreCalculatorTest {
                 new Square(File.D, Rank.FOUR), new Pawn(Team.WHITE)
         );
 
-        final ChessScoreCalculator chessScoreCalculator = ChessScoreCalculator.from(pieceSquares);
+        final ChessGameResult chessGameResult = ChessGameResult.from(pieceSquares);
 
         // when
-        final Score blackScore = chessScoreCalculator.score(team);
+        final double blackScore = chessGameResult.getBlackScore();
 
         // then
-        assertThat(blackScore).isEqualTo(new Score(19.5));
+        assertThat(blackScore).isEqualTo(19.5);
     }
 
     @DisplayName("King이 죽으면 0점이다.")
@@ -86,12 +86,12 @@ class ChessScoreCalculatorTest {
                 new Square(File.D, Rank.FOUR), new Pawn(Team.WHITE)
         );
 
-        final ChessScoreCalculator chessScoreCalculator = ChessScoreCalculator.from(pieceSquares);
+        final ChessGameResult chessGameResult = ChessGameResult.from(pieceSquares);
 
         // when
-        final Score blackScore = chessScoreCalculator.score(team);
+        final double blackScore = chessGameResult.getBlackScore();
 
         // then
-        assertThat(blackScore).isEqualTo(new Score(0));
+        assertThat(blackScore).isEqualTo(0);
     }
 }

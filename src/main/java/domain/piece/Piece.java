@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.PieceType;
 import domain.Score;
 import domain.Team;
 import domain.square.Square;
@@ -41,7 +40,6 @@ public abstract class Piece {
         return team == other;
     }
 
-    // TODO : getter 제거
     public Score getScore() {
         return pieceType.getScore();
     }

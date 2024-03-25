@@ -1,4 +1,6 @@
-package domain;
+package domain.piece;
+
+import domain.Score;
 
 public enum PieceType {
     PAWN(1.0),
@@ -14,7 +16,6 @@ public enum PieceType {
         this.score = new Score(value);
     }
 
-    // TODO : getter 제거
     public Score getScore() {
         return score;
     }

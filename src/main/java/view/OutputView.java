@@ -51,7 +51,7 @@ public class OutputView {
 
     public void printStatus(final ChessGameResult chessGameResult) {
         System.out.printf("블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
-                chessGameResult.blackScore().toDouble(), chessGameResult.whiteScore().toDouble(),
-                WinStatusFormat.formatOf(chessGameResult.winStatus()));
+                chessGameResult.getBlackScore(), chessGameResult.getWhiteScore(),
+                WinStatusFormat.formatOf(chessGameResult.getWinStatus()));
     }
 }

@@ -1,7 +1,6 @@
 package domain.piece;
 
 import domain.ChessVector;
-import domain.PieceType;
 import domain.Team;
 import domain.square.Square;
 
