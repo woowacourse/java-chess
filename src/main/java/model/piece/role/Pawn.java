@@ -73,6 +73,9 @@ public final class Pawn extends Role {
 
     @Override
     public void traversalRoles(List<Role> rolesInRoute, Role destinationRole) {
+        if (destinationRole.isSameColor(color)) {
+            throw new IllegalArgumentException("목적지에 같은 색깔의 기물이 위치하여 이동할 수 없습니다.");
+        }
         if (isTryToTake != destinationRole.isOccupied()) {
             throw new IllegalArgumentException("해당 Pawn이 이동할 수 없는 좌표입니다");
         }
