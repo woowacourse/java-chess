@@ -30,7 +30,7 @@ public class Progress implements GameState {
             return new Progress(chessBoard);
         }
         if (command.equals(END_COMMAND)) {
-            return new End(chessBoard);
+            return new End();
         }
         throw new IllegalArgumentException("올바르지 않은 command입니다.");
     }

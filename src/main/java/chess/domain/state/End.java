@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.domain.board.ChessBoard;
 import java.util.List;
 
 public class End implements GameState {
@@ -8,10 +7,7 @@ public class End implements GameState {
     private static final String MOVE_COMMAND = "move";
     private static final String END_COMMAND = "end";
 
-    private final ChessBoard chessBoard;
-
-    public End(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    public End() {
     }
 
     @Override

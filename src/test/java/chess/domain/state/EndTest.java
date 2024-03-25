@@ -13,7 +13,7 @@ class EndTest {
     @Test
     void playWithCommandStart() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("start")))
@@ -24,7 +24,7 @@ class EndTest {
     @Test
     void playWithCommandMove() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("move", "b1", "b2")))
@@ -35,7 +35,7 @@ class EndTest {
     @Test
     void playWithCommandEnd() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("end")))
@@ -46,7 +46,7 @@ class EndTest {
     @Test
     void playWithCommandInvalidValue() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End();
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("ash", "ella")))
@@ -57,7 +57,7 @@ class EndTest {
     @Test
     void isEnd() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End();
 
         // when
         boolean result = end.isEnd();
