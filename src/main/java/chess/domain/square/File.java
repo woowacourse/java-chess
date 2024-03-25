@@ -32,11 +32,11 @@ public enum File {
         return values()[sum];
     }
 
-    public int vectorTo(File other) {
+    public int getVectorTo(File other) {
         return (int) Math.signum(other.compareTo(this));
     }
 
-    public int distance(File other) {
+    public int distanceFrom(File other) {
         return Math.abs(compareTo(other));
     }
 }

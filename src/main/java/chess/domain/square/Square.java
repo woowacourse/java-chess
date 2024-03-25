@@ -44,8 +44,8 @@ public class Square {
 
     public List<Square> generatePath(Square target) {
         List<Square> path = new ArrayList<>();
-        int vectorFile = file.vectorTo(target.file);
-        int vectorRank = rank.vectorTo(target.rank);
+        int vectorFile = file.getVectorTo(target.file);
+        int vectorRank = rank.getVectorTo(target.rank);
 
         Square current = add(vectorFile, vectorRank);
         while (!current.equals(target)) {
@@ -80,11 +80,11 @@ public class Square {
     }
 
     public int distanceFileFrom(Square other) {
-        return file.distance(other.file);
+        return file.distanceFrom(other.file);
     }
 
     public int distanceRankFrom(Square other) {
-        return rank.distance(other.rank);
+        return rank.distanceFrom(other.rank);
     }
 
     public boolean isUpperThan(Square other) {

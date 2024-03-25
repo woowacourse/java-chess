@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+@DisplayName("명령어")
 class CommandTest {
 
     @Test

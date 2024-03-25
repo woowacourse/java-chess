@@ -31,11 +31,11 @@ public enum Rank {
         return values()[sum];
     }
 
-    public int vectorTo(Rank other) {
+    public int getVectorTo(Rank other) {
         return (int) Math.signum(other.compareTo(this));
     }
 
-    public int distance(Rank other) {
+    public int distanceFrom(Rank other) {
         return Math.abs(compareTo(other));
     }
 

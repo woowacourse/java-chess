@@ -6,6 +6,7 @@ import chess.domain.square.Square;
 import java.util.List;
 
 public class Queen extends Piece {
+
     private static final String ERROR_CANNOT_REACT = "퀸의 이동 방법으로 갈 수 없는 곳입니다.";
     private static final String ERROR_FRIENDLY_ON_TARGET = "퀸의 목적지에 같은 색 기물이 존재합니다.";
     private static final String ERROR_OBSTACLE_ON_PATH = "퀸의 이동 경로 중 장애물이 존재합니다.";

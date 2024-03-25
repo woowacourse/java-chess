@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OutputView {
+
     private static final int BOARD_SIZE = 8;
     private static final char EMPTY_PIECE = '.';
     private static final String TITLE_START = "> 체스 게임을 시작합니다.%n" +

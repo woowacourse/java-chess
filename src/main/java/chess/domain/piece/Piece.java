@@ -3,9 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.square.Square;
 
-import java.util.Objects;
-
 public abstract class Piece {
+
     private final PieceColor color;
     protected Square square;
 
@@ -35,6 +34,6 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return color == piece.color && Objects.equals(square, piece.square);
+        return color == piece.color && square.equals(piece.square);
     }
 }
