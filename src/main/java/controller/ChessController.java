@@ -1,6 +1,7 @@
 package controller;
 
 import dto.GameBoardDto;
+import java.util.function.Consumer;
 import model.Camp;
 import model.ChessGame;
 import model.Command;
@@ -21,7 +22,7 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         outputView.printStartMessage();
-        play(chessGame);
+        readWithRetry(this::play, chessGame);
     }
 
     private void play(final ChessGame chessGame) {
@@ -37,5 +38,15 @@ public class ChessController {
     private void printCurrentStatus(final ChessGame chessGame, final Camp camp) {
         outputView.printGameBoard(GameBoardDto.from(chessGame));
         outputView.printCurrentCame(camp);
+    }
+
+    private <T> T readWithRetry(Consumer<ChessGame> consumer, ChessGame chessGame) {
+        try {
+            consumer.accept(chessGame);
+        } catch (IllegalArgumentException e) {
+            outputView.printException(e);
+            return readWithRetry(consumer, chessGame);
+        }
+        return null;
     }
 }
