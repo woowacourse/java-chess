@@ -25,11 +25,11 @@ public abstract class Piece {
     }
 
     final public boolean isEnemy(Piece piece) {
-        if (this.color == Color.BLACK) {
-            return piece.color == Color.WHITE;
+        if (this.color.isBlack()) {
+            return piece.color.isWhite();
         }
-        if (this.color == Color.WHITE) {
-            return piece.color == Color.BLACK;
+        if (this.color.isWhite()) {
+            return piece.color.isBlack();
         }
         return false;
     }
