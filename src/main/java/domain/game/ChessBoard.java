@@ -134,7 +134,7 @@ public class ChessBoard {
     }
 
     private void checkEmptyAtDiagonal(Position target) {
-        if (isNotEmptyAt(target)) {
+        if (isEmptyAt(target)) {
             throw new IllegalArgumentException("이동하려는 곳에 기물이 없어 이동할 수 없습니다.");
         }
     }
