@@ -1,20 +1,22 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Square;
+import chess.domain.square.piece.movement.Movements;
+import chess.domain.square.piece.movement.MovementsFactory;
+import chess.domain.square.piece.movement.UnitMovement;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Knight extends Piece {
+    private static final int MAX_MOVE_COUNT = 1;
+    private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createKnightMovements();
+    private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Knight> KNIGHT_POOL = Map.of(
-            Color.WHITE, new Knight(Color.WHITE),
-            Color.BLACK, new Knight(Color.BLACK));
-    private static final int MIN_MOVABLE_DIFF = 1;
-    private static final int MAX_MOVABLE_DIFF = 2;
+            Color.WHITE, new Knight(Color.WHITE, COMMON_MOVEMENTS),
+            Color.BLACK, new Knight(Color.BLACK, COMMON_MOVEMENTS));
 
-    private Knight(Color color) {
-        super(color);
+    private Knight(Color color, Movements movements) {
+        super(color, movements);
     }
 
     public static Knight from(Color color) {
@@ -22,22 +24,16 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
-        return (path.calculateRankDistance() == MIN_MOVABLE_DIFF && path.calculateFileDistance() == MAX_MOVABLE_DIFF) ||
-                (path.calculateRankDistance() == MAX_MOVABLE_DIFF && path.calculateFileDistance() == MIN_MOVABLE_DIFF);
+    protected int maxPassMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return true;
+    protected int maxAttackMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
     public void move() {
-    }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
     }
 }

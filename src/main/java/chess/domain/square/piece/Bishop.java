@@ -1,19 +1,22 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
+import chess.domain.square.piece.movement.Movements;
+import chess.domain.square.piece.movement.MovementsFactory;
+import chess.domain.square.piece.movement.UnitMovement;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Bishop extends Piece {
+    private static final int MAX_MOVE_COUNT = 8;
+    private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createDiagonal();
+    private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Bishop> BISHOP_POOL = Map.of(
-            Color.WHITE, new Bishop(Color.WHITE),
-            Color.BLACK, new Bishop(Color.BLACK));
+            Color.WHITE, new Bishop(Color.WHITE, COMMON_MOVEMENTS),
+            Color.BLACK, new Bishop(Color.BLACK, COMMON_MOVEMENTS));
 
-    private Bishop(Color color) {
-        super(color);
+    private Bishop(Color color, Movements movements) {
+        super(color, movements);
     }
 
     public static Bishop from(Color color) {
@@ -21,22 +24,16 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
-        return path.isDiagonal();
+    protected int maxPassMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return path.findDiagonal().stream()
-                .allMatch(position -> board.get(position) == Empty.getInstance());
+    protected int maxAttackMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
     public void move() {
-    }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
     }
 }

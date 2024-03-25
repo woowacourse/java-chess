@@ -5,8 +5,8 @@ import chess.command.CommandType;
 import chess.domain.Turn;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.position.TerminalPosition;
 import chess.domain.square.piece.Color;
 import chess.dto.MoveArgumentDto;
 import chess.util.ExceptionRetryHandler;
@@ -69,14 +69,14 @@ public class ChessController {
 
     private void processTurn(Command command, ChessBoard chessBoard, Turn turn) {
         MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
-        Path path = makePath(moveArgumentDto);
-        chessBoard.move(path, turn.getCurrentTurn());
+        TerminalPosition terminalPosition = makePath(moveArgumentDto);
+        chessBoard.move(terminalPosition, turn.getCurrentTurn());
 
         outputView.printChessBoard(chessBoard.getSquares());
     }
 
-    private Path makePath(MoveArgumentDto moveArgumentDto) {
-        return new Path(
+    private TerminalPosition makePath(MoveArgumentDto moveArgumentDto) {
+        return new TerminalPosition(
                 new Position(moveArgumentDto.startRank(), moveArgumentDto.startFile()),
                 new Position(moveArgumentDto.endRank(), moveArgumentDto.endFile()));
     }

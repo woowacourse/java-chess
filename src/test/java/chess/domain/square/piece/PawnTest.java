@@ -1,9 +1,9 @@
 package chess.domain.square.piece;
 
 import chess.domain.position.File;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.TerminalPosition;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,10 +13,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
     private static final Map<Position, Square> board = new HashMap<>();
@@ -37,11 +39,11 @@ class PawnTest {
         // given
         Piece piece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of(new Position(Rank.SEVENTH, File.A)));
     }
 
     @DisplayName("이동한적이 있는 블랙 폰은 밑으로 두 칸 움직일 수 없다.")
@@ -51,11 +53,12 @@ class PawnTest {
         Piece piece = Pawn.createOnStart(Color.BLACK);
         piece.move();
         board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
     @DisplayName("블랙 폰은 항상 밑으로 한 칸 움직일 수 있다.")
@@ -64,32 +67,33 @@ class PawnTest {
         // given
         Piece piece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.EIGHTH, File.A), piece);
-        Path path = new Path(new Position(Rank.EIGHTH, File.A), new Position(Rank.SEVENTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.EIGHTH, File.A), new Position(Rank.SEVENTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("블랙 폰은 밑으로 한 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForBlack")
-    void blackCanNotStraightMoveTest(Path path) {
+    void blackCanNotStraightMoveTest(TerminalPosition terminalPosition) {
         // given
         Piece piece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), piece);
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
-    static Stream<Path> provideUnValidPathForBlack() {
+    static Stream<TerminalPosition> provideUnValidPathForBlack() {
         return Stream.of(
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C)),
-                new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A))
+                new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.B)),
+                new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.A)),
+                new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SEVENTH, File.C)),
+                new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A))
         );
     }
 
@@ -99,11 +103,11 @@ class PawnTest {
         // given
         Piece piece = Pawn.createOnStart(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.A), piece);
-        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of(new Position(Rank.THIRD, File.A)));
     }
 
     @DisplayName("이동한적이 있는 화이트 폰은 밑으로 두 칸 움직일 수 없다.")
@@ -113,11 +117,12 @@ class PawnTest {
         Piece piece = Pawn.createOnStart(Color.WHITE);
         piece.move();
         board.put(new Position(Rank.SECOND, File.A), piece);
-        Path path = new Path(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SECOND, File.A), new Position(Rank.FOURTH, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
     @DisplayName("화이트 폰은 항상 위로 한 칸 움직일 수 있다.")
@@ -126,32 +131,33 @@ class PawnTest {
         // given
         Piece piece = Pawn.createOnStart(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("화이트 폰은 위로 한 칸을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("provideUnValidPathForWhite")
-    void canStraightNotMoveTest(Path path) {
+    void canStraightNotMoveTest(TerminalPosition terminalPosition) {
         // given
         Piece piece = Pawn.createOnStart(Color.WHITE);
         board.put(new Position(Rank.SECOND, File.B), piece);
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
-    static Stream<Path> provideUnValidPathForWhite() {
+    static Stream<TerminalPosition> provideUnValidPathForWhite() {
         return Stream.of(
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.B)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
-                new Path(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A))
+                new TerminalPosition(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.B)),
+                new TerminalPosition(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.A)),
+                new TerminalPosition(new Position(Rank.SECOND, File.B), new Position(Rank.SECOND, File.C)),
+                new TerminalPosition(new Position(Rank.SECOND, File.B), new Position(Rank.FIRST, File.A))
         );
     }
 
@@ -161,14 +167,14 @@ class PawnTest {
         // given
         Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
         Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
-        board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
-        board.put(new Position(Rank.SEVENTH, File.A), attackedPiece);
+        board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
+        board.put(new Position(Rank.SIXTH, File.A), attackedPiece);
 
-        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("블랙 폰은 오른쪽 대각선 한 칸 밑을 공격할 수 있다.")
@@ -177,14 +183,14 @@ class PawnTest {
         // given
         Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
         Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
-        board.put(new Position(Rank.EIGHTH, File.B), attackerPiece);
-        board.put(new Position(Rank.SEVENTH, File.C), attackedPiece);
+        board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
+        board.put(new Position(Rank.SIXTH, File.C), attackedPiece);
 
-        Path path = new Path(new Position(Rank.EIGHTH, File.B), new Position(Rank.SEVENTH, File.C));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.SIXTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("블랙 폰은 왼쪽 또는 오른쪽 대각선 한 칸 밑을 제외하고 공격할 수 없다.")
@@ -192,15 +198,16 @@ class PawnTest {
     @MethodSource("provideUnValidAttackedPositionForBlack")
     void blackCanNotAttackTest(Position attackedPosition) {
         // given
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
         Piece attackedPiece = Pawn.createOnStart(Color.WHITE);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
     static Stream<Position> provideUnValidAttackedPositionForBlack() {
@@ -222,11 +229,11 @@ class PawnTest {
         Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("화이트 폰은 오른쪽 대각선 한 칸 위를 공격할 수 있다.")
@@ -237,11 +244,11 @@ class PawnTest {
         Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(new Position(Rank.EIGHTH, File.C), attackedPiece);
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), new Position(Rank.EIGHTH, File.C));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("화이트 폰은 왼쪽 또는 오른쪽 대각선 한 칸 밑을 제외하고 공격할 수 없다.")
@@ -249,15 +256,16 @@ class PawnTest {
     @MethodSource("provideUnValidAttackedPositionForWhite")
     void whiteCanNotAttackTest(Position attackedPosition) {
         // given
-        Path path = new Path(new Position(Rank.SEVENTH, File.B), attackedPosition);
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.SEVENTH, File.B), attackedPosition);
         Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
         Piece attackedPiece = Pawn.createOnStart(Color.BLACK);
         board.put(new Position(Rank.SEVENTH, File.B), attackerPiece);
         board.put(attackedPosition, attackedPiece);
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
     static Stream<Position> provideUnValidAttackedPositionForWhite() {

@@ -1,9 +1,9 @@
 package chess.domain.square.piece;
 
 import chess.domain.position.File;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.TerminalPosition;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +11,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
     private static final Map<Position, Square> board = new HashMap<>();
@@ -33,11 +35,11 @@ class KingTest {
         // given
         Piece piece = King.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("킹은 한 칸 짜리 대각선 경로이면 움직일 수 있다.")
@@ -46,11 +48,11 @@ class KingTest {
         // given
         Piece piece = King.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isTrue();
+        assertThat(piece.findPassPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("킹은 한 칸 짜리 경로가 아니면 움직일 수 없다.")
@@ -59,11 +61,12 @@ class KingTest {
         // given
         Piece piece = King.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(piece.canMove(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 
     @DisplayName("킹은 한 칸 짜리 직선 경로이면 공격할 수 있다.")
@@ -74,11 +77,11 @@ class KingTest {
         Piece attackedPiece = King.from(Color.BLACK);
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.SECOND, File.A), attackedPiece);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("킹은 한 칸 짜리 대각선 경로이면 공격할 수 있다.")
@@ -91,11 +94,11 @@ class KingTest {
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.SECOND, File.B), attackedPiece);
 
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isTrue();
+        assertThat(attackerPiece.findAttackPathTaken(terminalPosition))
+                .isEqualTo(List.of());
     }
 
     @DisplayName("킹은 한 칸 짜리 경로가 아니면 공격할 수 없다.")
@@ -108,10 +111,11 @@ class KingTest {
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.THIRD, File.A), attackedPiece);
 
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
 
         // when & then
-        assertThat(attackerPiece.canAttack(path, board))
-                .isFalse();
+        assertThatThrownBy(() -> attackerPiece.findAttackPathTaken(terminalPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("도착 위치는 체스 말이 도달할 수 없는 위치입니다.");
     }
 }

@@ -1,37 +1,38 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.position.TerminalPosition;
 import chess.domain.square.Square;
+import chess.domain.square.piece.movement.Movements;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece implements Square {
     private final Color color;
+    private final Movements movements;
 
-    public Piece(Color color) {
+    public Piece(Color color, Movements movements) {
         this.color = color;
+        this.movements = movements;
     }
 
     @Override
-    public final boolean canMove(Path path, Map<Position, Square> board) {
-        return isValidMovePath(path) && isNotObstructed(path, board);
+    public final List<Position> findPassPathTaken(TerminalPosition terminalPosition) {
+        return movements.findPassPathTaken(terminalPosition, maxPassMoveCount());
     }
 
-    protected abstract boolean isValidMovePath(Path path);
+    protected abstract int maxPassMoveCount();
 
-    protected abstract boolean isNotObstructed(Path path, Map<Position, Square> board);
+    @Override
+    public final List<Position> findAttackPathTaken(TerminalPosition terminalPosition) {
+        return movements.findAttackPathTaken(terminalPosition, maxAttackMoveCount());
+    }
+
+    protected abstract int maxAttackMoveCount();
 
     // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
     public abstract void move();
-
-    @Override
-    public boolean canAttack(Path path, Map<Position, Square> board) {
-        return isValidAttackPath(path) && isNotObstructed(path, board);
-    }
-
-    protected abstract boolean isValidAttackPath(Path path);
 
     public boolean isColor(Color color) {
         return this.color == color;

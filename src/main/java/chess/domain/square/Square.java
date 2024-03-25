@@ -1,14 +1,14 @@
 package chess.domain.square;
 
-import chess.domain.position.Path;
 import chess.domain.position.Position;
+import chess.domain.position.TerminalPosition;
 
-import java.util.Map;
+import java.util.List;
 
 public interface Square {
-    boolean canMove(Path path, Map<Position, Square> board);
+    List<Position> findPassPathTaken(TerminalPosition terminalPosition);
 
-    boolean canAttack(Path path, Map<Position, Square> board);
+    List<Position> findAttackPathTaken(TerminalPosition terminalPosition);
 
     void move();
 }

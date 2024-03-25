@@ -25,6 +25,15 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("랭크는 1에서 8 사이의 숫자이어야 합니다."));
     }
 
+    public boolean canMove(int diff) {
+        return Arrays.stream(values())
+                .anyMatch(rank -> rank.value == this.value + diff);
+    }
+
+    public Rank move(int diff) {
+        return Rank.from(value + diff);
+    }
+
     public int calculateDistance(Rank rank) {
         return Math.abs(subtract(rank));
     }

@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.square.piece.movement.UnitMovement;
+
 import java.util.Objects;
 
 public class Position {
@@ -25,6 +27,14 @@ public class Position {
 
     public int subtractFile(Position position) {
         return file.subtract(position.file);
+    }
+
+    public boolean canMove(UnitMovement unitMovement) {
+        return rank.canMove(unitMovement.getRankDiff()) && file.canMove(unitMovement.getFileDiff());
+    }
+
+    public Position move(UnitMovement unitMovement) {
+        return new Position(rank.move(unitMovement.getRankDiff()), file.move(unitMovement.getFileDiff()));
     }
 
     @Override

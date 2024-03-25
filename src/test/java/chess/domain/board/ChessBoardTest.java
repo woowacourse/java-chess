@@ -1,9 +1,9 @@
 package chess.domain.board;
 
 import chess.domain.position.File;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.domain.position.TerminalPosition;
 import chess.domain.square.Empty;
 import chess.domain.square.Square;
 import chess.domain.square.piece.Color;
@@ -37,11 +37,11 @@ public class ChessBoardTest {
     void startEmptyExceptionTest() {
         // given
         ChessBoard chessBoard = new ChessBoard(squares);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
         Color currentTurn = Color.BLACK;
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(path, currentTurn))
+        assertThatThrownBy(() -> chessBoard.move(terminalPosition, currentTurn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작 위치에 아군 체스말이 존재해야 합니다.");
     }
@@ -53,11 +53,11 @@ public class ChessBoardTest {
         squares.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
         squares.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(squares);
-        Path path = new Path(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
         Color currentTurn = Color.WHITE;
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(path, currentTurn))
+        assertThatThrownBy(() -> chessBoard.move(terminalPosition, currentTurn))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("도착 위치에 아군 체스말이 존재할 수 없습니다.");
     }
@@ -72,7 +72,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);
@@ -89,7 +89,7 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new Path(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getSquares()).isEqualTo(expected);

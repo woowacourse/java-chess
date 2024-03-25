@@ -1,19 +1,26 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
+import chess.domain.square.piece.movement.Movements;
+import chess.domain.square.piece.movement.MovementsFactory;
+import chess.domain.square.piece.movement.UnitMovement;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Queen extends Piece {
+    private static final int MAX_MOVE_COUNT = 8;
+    private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS =
+            Stream.concat(MovementsFactory.createStraight().stream(), MovementsFactory.createDiagonal().stream())
+                    .collect(Collectors.toSet());
+    private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Queen> QUEEN_POOL = Map.of(
-            Color.WHITE, new Queen(Color.WHITE),
-            Color.BLACK, new Queen(Color.BLACK));
+            Color.WHITE, new Queen(Color.WHITE, COMMON_MOVEMENTS),
+            Color.BLACK, new Queen(Color.BLACK, COMMON_MOVEMENTS));
 
-    private Queen(Color color) {
-        super(color);
+    private Queen(Color color, Movements movements) {
+        super(color, movements);
     }
 
     public static Queen from(Color color) {
@@ -21,26 +28,16 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
-        return path.isStraight() || path.isDiagonal();
+    protected int maxPassMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        if (path.isStraight()) {
-            return path.findStraight().stream()
-                    .allMatch(position -> board.get(position) == Empty.getInstance());
-        }
-        return path.findDiagonal().stream()
-                .allMatch(position -> board.get(position) == Empty.getInstance());
+    protected int maxAttackMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
     public void move() {
-    }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
     }
 }

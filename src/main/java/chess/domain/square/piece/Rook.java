@@ -1,19 +1,22 @@
 package chess.domain.square.piece;
 
-import chess.domain.position.Path;
-import chess.domain.position.Position;
-import chess.domain.square.Empty;
-import chess.domain.square.Square;
+import chess.domain.square.piece.movement.Movements;
+import chess.domain.square.piece.movement.MovementsFactory;
+import chess.domain.square.piece.movement.UnitMovement;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Rook extends Piece {
+    private static final int MAX_MOVE_COUNT = 8;
+    private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createStraight();
+    private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Rook> ROOK_POOL = Map.of(
-            Color.WHITE, new Rook(Color.WHITE),
-            Color.BLACK, new Rook(Color.BLACK));
+            Color.WHITE, new Rook(Color.WHITE, COMMON_MOVEMENTS),
+            Color.BLACK, new Rook(Color.BLACK, COMMON_MOVEMENTS));
 
-    private Rook(Color color) {
-        super(color);
+    private Rook(Color color, Movements movements) {
+        super(color, movements);
     }
 
     public static Rook from(Color color) {
@@ -21,22 +24,16 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean isValidMovePath(Path path) {
-        return path.isStraight();
+    protected int maxPassMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
-    protected boolean isNotObstructed(Path path, Map<Position, Square> board) {
-        return path.findStraight().stream()
-                .allMatch(position -> board.get(position) == Empty.getInstance());
+    protected int maxAttackMoveCount() {
+        return MAX_MOVE_COUNT;
     }
 
     @Override
     public void move() {
-    }
-
-    @Override
-    protected boolean isValidAttackPath(Path path) {
-        return isValidMovePath(path);
     }
 }
