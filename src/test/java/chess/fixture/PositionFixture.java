@@ -1,4 +1,4 @@
-package fixture;
+package chess.fixture;
 
 import chess.domain.square.File;
 import chess.domain.square.Square;

@@ -1,10 +1,8 @@
-package domain.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Side;
 import chess.domain.square.Square;
-import fixture.MovePathFixture;
-import fixture.PositionFixture;
+import chess.fixture.MovePathFixture;
+import chess.fixture.PositionFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,20 +11,20 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static fixture.PositionFixture.A1;
-import static fixture.PositionFixture.A7;
-import static fixture.PositionFixture.B2;
-import static fixture.PositionFixture.B6;
-import static fixture.PositionFixture.C3;
-import static fixture.PositionFixture.C5;
-import static fixture.PositionFixture.D4;
-import static fixture.PositionFixture.E3;
-import static fixture.PositionFixture.E5;
-import static fixture.PositionFixture.F2;
-import static fixture.PositionFixture.F6;
-import static fixture.PositionFixture.G1;
-import static fixture.PositionFixture.G7;
-import static fixture.PositionFixture.H8;
+import static chess.fixture.PositionFixture.A1;
+import static chess.fixture.PositionFixture.A7;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B6;
+import static chess.fixture.PositionFixture.C3;
+import static chess.fixture.PositionFixture.C5;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.E3;
+import static chess.fixture.PositionFixture.E5;
+import static chess.fixture.PositionFixture.F2;
+import static chess.fixture.PositionFixture.F6;
+import static chess.fixture.PositionFixture.G1;
+import static chess.fixture.PositionFixture.G7;
+import static chess.fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {

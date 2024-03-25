@@ -1,4 +1,4 @@
-package fixture;
+package chess.fixture;
 
 import chess.domain.route.Route;
 import chess.domain.route.Pieces;

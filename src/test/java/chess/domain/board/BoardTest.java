@@ -1,7 +1,5 @@
-package domain.board;
+package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardCreator;
 import chess.domain.route.Path;
 import chess.domain.route.Pieces;
 import chess.domain.piece.Side;
@@ -11,12 +9,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static fixture.PositionFixture.A2;
-import static fixture.PositionFixture.A3;
-import static fixture.PositionFixture.A4;
-import static fixture.PositionFixture.A5;
-import static fixture.PositionFixture.A6;
-import static fixture.PositionFixture.A7;
+import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A3;
+import static chess.fixture.PositionFixture.A4;
+import static chess.fixture.PositionFixture.A5;
+import static chess.fixture.PositionFixture.A6;
+import static chess.fixture.PositionFixture.A7;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {

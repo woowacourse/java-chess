@@ -1,10 +1,8 @@
-package domain.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Side;
 import chess.domain.square.Square;
-import fixture.MovePathFixture;
-import fixture.PositionFixture;
+import chess.fixture.PositionFixture;
+import chess.fixture.MovePathFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,16 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static fixture.PositionFixture.C3;
-import static fixture.PositionFixture.C5;
-import static fixture.PositionFixture.D2;
-import static fixture.PositionFixture.D3;
-import static fixture.PositionFixture.D4;
-import static fixture.PositionFixture.D5;
-import static fixture.PositionFixture.D6;
-import static fixture.PositionFixture.D7;
-import static fixture.PositionFixture.E3;
-import static fixture.PositionFixture.E5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
@@ -44,8 +32,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D4;
-        private static final List<Square> MOVABLE_SQUARES = List.of(D3);
+        private static final Square SOURCE = PositionFixture.D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.D3);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);
@@ -92,8 +80,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D7;
-        private static final List<Square> MOVABLE_SQUARES = List.of(D6, D5);
+        private static final Square SOURCE = PositionFixture.D7;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.D6, PositionFixture.D5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);
@@ -140,8 +128,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D4;
-        private static final List<Square> MOVABLE_SQUARES = List.of(C3, E3);
+        private static final Square SOURCE = PositionFixture.D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.C3, PositionFixture.E3);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);
@@ -188,8 +176,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D4;
-        private static final List<Square> MOVABLE_SQUARES = List.of(D5);
+        private static final Square SOURCE = PositionFixture.D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.D5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);
@@ -236,8 +224,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D2;
-        private static final List<Square> MOVABLE_SQUARES = List.of(D3, D4);
+        private static final Square SOURCE = PositionFixture.D2;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.D3, PositionFixture.D4);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);
@@ -284,8 +272,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Square SOURCE = D4;
-        private static final List<Square> MOVABLE_SQUARES = List.of(C5, E5);
+        private static final Square SOURCE = PositionFixture.D4;
+        private static final List<Square> MOVABLE_SQUARES = List.of(PositionFixture.C5, PositionFixture.E5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_SQUARES);

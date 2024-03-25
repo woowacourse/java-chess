@@ -1,21 +1,19 @@
-package domain.piece;
+package chess.domain.piece;
 
-import static fixture.PositionFixture.B3;
-import static fixture.PositionFixture.B5;
-import static fixture.PositionFixture.C2;
-import static fixture.PositionFixture.C6;
-import static fixture.PositionFixture.D4;
-import static fixture.PositionFixture.E2;
-import static fixture.PositionFixture.E6;
-import static fixture.PositionFixture.F3;
-import static fixture.PositionFixture.F5;
+import static chess.fixture.PositionFixture.B3;
+import static chess.fixture.PositionFixture.B5;
+import static chess.fixture.PositionFixture.C2;
+import static chess.fixture.PositionFixture.C6;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.E2;
+import static chess.fixture.PositionFixture.E6;
+import static chess.fixture.PositionFixture.F3;
+import static chess.fixture.PositionFixture.F5;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Knight;
-import chess.domain.piece.Side;
 import chess.domain.square.Square;
-import fixture.MovePathFixture;
-import fixture.PositionFixture;
+import chess.fixture.MovePathFixture;
+import chess.fixture.PositionFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

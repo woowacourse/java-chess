@@ -1,10 +1,8 @@
-package domain.piece;
+package chess.domain.piece;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Side;
 import chess.domain.square.Square;
-import fixture.MovePathFixture;
-import fixture.PositionFixture;
+import chess.fixture.MovePathFixture;
+import chess.fixture.PositionFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,15 +11,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static fixture.PositionFixture.C3;
-import static fixture.PositionFixture.C4;
-import static fixture.PositionFixture.C5;
-import static fixture.PositionFixture.D3;
-import static fixture.PositionFixture.D4;
-import static fixture.PositionFixture.D5;
-import static fixture.PositionFixture.E3;
-import static fixture.PositionFixture.E4;
-import static fixture.PositionFixture.E5;
+import static chess.fixture.PositionFixture.C3;
+import static chess.fixture.PositionFixture.C4;
+import static chess.fixture.PositionFixture.C5;
+import static chess.fixture.PositionFixture.D3;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.E3;
+import static chess.fixture.PositionFixture.E4;
+import static chess.fixture.PositionFixture.E5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class KingTest {

@@ -1,18 +1,13 @@
-package domain.piece;
+package chess.domain.piece;
 
-import static fixture.PositionFixture.A1;
-import static fixture.PositionFixture.A2;
-import static fixture.PositionFixture.A3;
+import static chess.fixture.PositionFixture.A1;
+import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Side;
 import chess.domain.square.Square;
 import chess.domain.route.Route;
-import fixture.MovePathFixture;
+import chess.fixture.MovePathFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

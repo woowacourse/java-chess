@@ -1,42 +1,10 @@
-package domain.board;
+package chess.domain.board;
 
-import static fixture.PositionFixture.A1;
-import static fixture.PositionFixture.A2;
-import static fixture.PositionFixture.A7;
-import static fixture.PositionFixture.A8;
-import static fixture.PositionFixture.B1;
-import static fixture.PositionFixture.B2;
-import static fixture.PositionFixture.B7;
-import static fixture.PositionFixture.B8;
-import static fixture.PositionFixture.C1;
-import static fixture.PositionFixture.C2;
-import static fixture.PositionFixture.C7;
-import static fixture.PositionFixture.C8;
-import static fixture.PositionFixture.D1;
-import static fixture.PositionFixture.D2;
-import static fixture.PositionFixture.D7;
-import static fixture.PositionFixture.D8;
-import static fixture.PositionFixture.E1;
-import static fixture.PositionFixture.E2;
-import static fixture.PositionFixture.E7;
-import static fixture.PositionFixture.E8;
-import static fixture.PositionFixture.F1;
-import static fixture.PositionFixture.F2;
-import static fixture.PositionFixture.F7;
-import static fixture.PositionFixture.F8;
-import static fixture.PositionFixture.G1;
-import static fixture.PositionFixture.G2;
-import static fixture.PositionFixture.G7;
-import static fixture.PositionFixture.G8;
-import static fixture.PositionFixture.H1;
-import static fixture.PositionFixture.H2;
-import static fixture.PositionFixture.H7;
-import static fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.InitialPosition;
 import chess.domain.square.Square;
 import chess.domain.piece.Side;
+import chess.fixture.PositionFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +16,7 @@ class InitialSquareTest {
     void blackRookPositions() {
         List<Square> squares = InitialPosition.ROOK.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(A8, H8);
+        assertThat(squares).containsOnlyOnce(PositionFixture.A8, PositionFixture.H8);
     }
 
     @DisplayName("흰색 룩은 a1, h1에 위치한다.")
@@ -56,7 +24,7 @@ class InitialSquareTest {
     void whiteRookPositions() {
         List<Square> squares = InitialPosition.ROOK.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(A1, H1);
+        assertThat(squares).containsOnlyOnce(PositionFixture.A1, PositionFixture.H1);
     }
 
     @DisplayName("검은색 나이트는 b8, g8에 위치한다.")
@@ -64,7 +32,7 @@ class InitialSquareTest {
     void blackKnightPosition() {
         List<Square> squares = InitialPosition.KNIGHT.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(B8, G8);
+        assertThat(squares).containsOnlyOnce(PositionFixture.B8, PositionFixture.G8);
     }
 
     @DisplayName("흰색 나이트는 b1, g1에 위치한다.")
@@ -72,7 +40,7 @@ class InitialSquareTest {
     void whiteKnightPosition() {
         List<Square> squares = InitialPosition.KNIGHT.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(B1, G1);
+        assertThat(squares).containsOnlyOnce(PositionFixture.B1, PositionFixture.G1);
     }
 
     @DisplayName("검은색 비숍은 c8, f8에 위치한다.")
@@ -80,7 +48,7 @@ class InitialSquareTest {
     void blackBishopPosition() {
         List<Square> squares = InitialPosition.BISHOP.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(C8, F8);
+        assertThat(squares).containsOnlyOnce(PositionFixture.C8, PositionFixture.F8);
     }
 
     @DisplayName("흰색 비숍은 c1, f1에 위치한다.")
@@ -88,7 +56,7 @@ class InitialSquareTest {
     void whiteBishopPosition() {
         List<Square> squares = InitialPosition.BISHOP.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(C1, F1);
+        assertThat(squares).containsOnlyOnce(PositionFixture.C1, PositionFixture.F1);
     }
 
     @DisplayName("검은색 퀸은 d8에 위치한다.")
@@ -96,7 +64,7 @@ class InitialSquareTest {
     void blackQueenPosition() {
         List<Square> squares = InitialPosition.QUEEN.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(D8);
+        assertThat(squares).containsOnlyOnce(PositionFixture.D8);
     }
 
     @DisplayName("흰색 퀸은 d1에 위치한다.")
@@ -104,7 +72,7 @@ class InitialSquareTest {
     void whiteQueenPosition() {
         List<Square> squares = InitialPosition.QUEEN.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(D1);
+        assertThat(squares).containsOnlyOnce(PositionFixture.D1);
     }
 
     @DisplayName("검은색 킹은 e8에 위치한다.")
@@ -112,7 +80,7 @@ class InitialSquareTest {
     void blackKingPosition() {
         List<Square> squares = InitialPosition.KING.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(E8);
+        assertThat(squares).containsOnlyOnce(PositionFixture.E8);
     }
 
     @DisplayName("흰색 킹은 e1에 위치한다.")
@@ -120,7 +88,7 @@ class InitialSquareTest {
     void whiteKingPosition() {
         List<Square> squares = InitialPosition.KING.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(E1);
+        assertThat(squares).containsOnlyOnce(PositionFixture.E1);
     }
 
     @DisplayName("검은색 폰은 a7~h7에 위치한다.")
@@ -128,7 +96,8 @@ class InitialSquareTest {
     void blackPawnPosition() {
         List<Square> squares = InitialPosition.PAWN.positions(Side.BLACK);
 
-        assertThat(squares).containsOnlyOnce(A7, B7, C7, D7, E7, F7, G7, H7);
+        assertThat(squares).containsOnlyOnce(
+                PositionFixture.A7, PositionFixture.B7, PositionFixture.C7, PositionFixture.D7, PositionFixture.E7, PositionFixture.F7, PositionFixture.G7, PositionFixture.H7);
     }
 
     @DisplayName("흰색 폰은 a2~h2에 위치한다.")
@@ -136,6 +105,7 @@ class InitialSquareTest {
     void whitePawnPosition() {
         List<Square> squares = InitialPosition.PAWN.positions(Side.WHITE);
 
-        assertThat(squares).containsOnlyOnce(A2, B2, C2, D2, E2, F2, G2, H2);
+        assertThat(squares).containsOnlyOnce(
+                PositionFixture.A2, PositionFixture.B2, PositionFixture.C2, PositionFixture.D2, PositionFixture.E2, PositionFixture.F2, PositionFixture.G2, PositionFixture.H2);
     }
 }

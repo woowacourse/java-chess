@@ -1,4 +1,4 @@
-package domain.square;
+package chess.domain.square;
 
 import chess.domain.square.Rank;
 import org.junit.jupiter.api.Assertions;

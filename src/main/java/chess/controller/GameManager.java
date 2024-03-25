@@ -8,12 +8,12 @@ import chess.domain.Turn;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessManager {
+public class GameManager {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessManager(InputView inputView, OutputView outputView) {
+    public GameManager(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

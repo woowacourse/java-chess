@@ -1,9 +1,8 @@
-package domain;
+package chess.domain;
 
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.BoardCreator;
-import fixture.PositionFixture;
+import chess.fixture.PositionFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package domain.square;
+package chess.domain.square;
 
 import chess.domain.square.File;
 import org.junit.jupiter.api.Assertions;

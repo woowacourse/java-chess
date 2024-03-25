@@ -1,4 +1,4 @@
-package domain.route;
+package chess.domain.route;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
