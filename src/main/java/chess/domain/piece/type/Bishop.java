@@ -12,7 +12,7 @@ import java.util.List;
 public final class Bishop extends Piece {
     private static final List<Direction> BISHOP_DIRECTION = Direction.diagonal();
 
-    public Bishop(PieceColor color) {
+    public Bishop(final PieceColor color) {
         super(color, PieceType.BISHOP);
     }
 
@@ -21,7 +21,7 @@ public final class Bishop extends Piece {
         return isMovableDirection(movement.findDirection());
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return BISHOP_DIRECTION.contains(direction);
     }
 }

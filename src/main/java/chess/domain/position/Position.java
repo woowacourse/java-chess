@@ -12,19 +12,19 @@ public class Position {
     private final ChessFile file;
     private final ChessRank rank;
 
-    private Position(ChessFile file, ChessRank rank) {
+    private Position(final ChessFile file, final ChessRank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Position of(String position) {
+    public static Position of(final String position) {
         return CACHE.computeIfAbsent(position, key -> new Position(
                 ChessFile.findByValue(String.valueOf(position.charAt(0))),
                 ChessRank.findByValue(String.valueOf(position.charAt(1)))
         ));
     }
 
-    public static Position of(ChessFile file, ChessRank rank) {
+    public static Position of(final ChessFile file, final ChessRank rank) {
         return CACHE.computeIfAbsent(toKey(file, rank), key -> new Position(file, rank));
     }
 
@@ -32,11 +32,11 @@ public class Position {
         return file.value() + rank.value();
     }
 
-    public boolean isRank(ChessRank rank) {
+    public boolean isRank(final ChessRank rank) {
         return this.rank == rank;
     }
 
-    public int calculateDistanceTo(Position target) {
+    public int calculateDistanceTo(final Position target) {
         int fileDistance = Math.abs(calculateFileDifferenceTo(target));
         int rankDistance = Math.abs(calculateRankDifferenceTo(target));
         if (fileDistance > 0) {
@@ -46,11 +46,11 @@ public class Position {
         return rankDistance;
     }
 
-    public int calculateFileDifferenceTo(Position target) {
+    public int calculateFileDifferenceTo(final Position target) {
         return target.file.index() - file.index();
     }
 
-    public int calculateRankDifferenceTo(Position target) {
+    public int calculateRankDifferenceTo(final Position target) {
         return target.rank.index() - rank.index();
     }
 

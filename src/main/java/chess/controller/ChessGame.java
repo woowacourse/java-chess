@@ -9,6 +9,12 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
+    private static final int INITIAL_TRY_COUNT = 0;
+    private static final int MAXIMUM_TRY_COUNT = 100;
+    private static final String GAME_NOT_STARTED = "아직 게임이 시작되지 않았습니다.";
+    private static final String GAME_ALREADY_STARTED = "게임 도중 start 명령어를 입력할 수 없습니다.";
+    private static final String INVALID_TRY_COUNT = "시도 횟수 제한 초과로 게임을 종료합니다.";
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -19,19 +25,19 @@ public class ChessGame {
 
     private static void validateStartCommand(final CommandInfo commandInfo) {
         if (!commandInfo.command().isStart()) {
-            throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
+            throw new IllegalArgumentException(GAME_NOT_STARTED);
         }
     }
 
     public void start() {
         outputView.printGameStartMessage();
-        CommandInfo commandInfo = readStartCommand(0);
+        CommandInfo commandInfo = readStartCommand(INITIAL_TRY_COUNT);
         Turn turn = Turn.first();
         ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance());
         play(commandInfo, turn, chessBoard);
     }
 
-    private CommandInfo readStartCommand(int tryCount) {
+    private CommandInfo readStartCommand(final int tryCount) {
         try {
             CommandInfo commandInfo = inputView.readCommand();
             validateStartCommand(commandInfo);
@@ -47,14 +53,13 @@ public class ChessGame {
         while (!commandInfo.command().isEnd()) {
             BoardStatus boardStatus = chessBoard.status();
             outputView.printChessBoard(boardStatus);
-            commandInfo = playTurn(turn, chessBoard, 0);
+            commandInfo = playTurn(turn, chessBoard, INITIAL_TRY_COUNT);
         }
     }
 
     private CommandInfo playTurn(final Turn turn, final ChessBoard chessBoard, final int tryCount) {
         try {
-            CommandInfo commandInfo;
-            commandInfo = readCommand(0);
+            CommandInfo commandInfo = readCommand(INITIAL_TRY_COUNT);
             if (commandInfo.command().isMove()) {
                 chessBoard.move(commandInfo.source().get(), commandInfo.target().get(), turn);
                 turn.next();
@@ -67,7 +72,7 @@ public class ChessGame {
         }
     }
 
-    private CommandInfo readCommand(int tryCount) {
+    private CommandInfo readCommand(final int tryCount) {
         try {
             CommandInfo commandInfo = inputView.readCommand();
             validateInvalidCommand(commandInfo);
@@ -81,14 +86,13 @@ public class ChessGame {
 
     private void validateInvalidCommand(final CommandInfo commandInfo) {
         if (commandInfo.command().isStart()) {
-            throw new IllegalArgumentException("게임 도중 start 명령어를 입력할 수 없습니다.");
+            throw new IllegalArgumentException(GAME_ALREADY_STARTED);
         }
     }
 
-
     private void validateTryCount(final int tryCount) {
-        if (tryCount >= 100) {
-            throw new IllegalArgumentException("시도 횟수 제한 초과로 게임을 종료합니다.");
+        if (tryCount >= MAXIMUM_TRY_COUNT) {
+            throw new IllegalArgumentException(INVALID_TRY_COUNT);
         }
     }
 }

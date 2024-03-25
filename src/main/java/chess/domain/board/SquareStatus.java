@@ -12,8 +12,4 @@ public enum SquareStatus {
     public boolean isEnemy() {
         return this == ENEMY;
     }
-
-    public boolean isEmpty() {
-        return this == EMPTY;
-    }
 }

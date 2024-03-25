@@ -12,7 +12,7 @@ import java.util.List;
 public final class King extends Piece {
     private static final List<Direction> KING_DIRECTION = Direction.all();
 
-    public King(PieceColor color) {
+    public King(final PieceColor color) {
         super(color, PieceType.KING);
     }
 
@@ -21,11 +21,11 @@ public final class King extends Piece {
         return isMovableDirection(movement.findDirection()) && isMovableDistance(movement.calculateDistance());
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return KING_DIRECTION.contains(direction);
     }
 
-    private boolean isMovableDistance(int distance) {
+    private boolean isMovableDistance(final int distance) {
         return distance == 1;
     }
 }

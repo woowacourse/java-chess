@@ -7,7 +7,7 @@ public abstract class Piece {
     protected final PieceColor color;
     protected final PieceType type;
 
-    public Piece(final PieceColor color, PieceType type) {
+    public Piece(final PieceColor color, final PieceType type) {
         this.color = color;
         this.type = type;
     }
@@ -18,7 +18,7 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public boolean isType(PieceType pieceType) {
+    public boolean isType(final PieceType pieceType) {
         return this.type == pieceType;
     }
 

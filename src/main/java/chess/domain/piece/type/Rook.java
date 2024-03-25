@@ -12,7 +12,7 @@ import java.util.List;
 public final class Rook extends Piece {
     private static final List<Direction> ROOK_DIRECTION = Direction.cross();
 
-    public Rook(PieceColor color) {
+    public Rook(final PieceColor color) {
         super(color, PieceType.ROOK);
     }
 
@@ -21,7 +21,7 @@ public final class Rook extends Piece {
         return isMovableDirection(movement.findDirection());
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return ROOK_DIRECTION.contains(direction);
     }
 }

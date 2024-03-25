@@ -12,7 +12,7 @@ import java.util.List;
 public final class Queen extends Piece {
     private static final List<Direction> QUEEN_DIRECTION = Direction.all();
 
-    public Queen(PieceColor color) {
+    public Queen(final PieceColor color) {
         super(color, PieceType.QUEEN);
     }
 
@@ -21,7 +21,7 @@ public final class Queen extends Piece {
         return isMovableDirection(movement.findDirection());
     }
 
-    private boolean isMovableDirection(Direction direction) {
+    private boolean isMovableDirection(final Direction direction) {
         return QUEEN_DIRECTION.contains(direction);
     }
 }

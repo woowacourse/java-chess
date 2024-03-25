@@ -10,6 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
+    private static final String INVALID_SOURCE = "source에 이동할 수 있는 기물이 존재하지 않습니다.";
+    private static final String INVALID_TURN = "%s의 차례가 아닙니다.";
+    private static final String INVALID_POSITIONS = "source와 target이 같을 수 없습니다.";
+    private static final String INVALID_TARGET = "target으로 이동할 수 없습니다.";
+    private static final String INVALID_MOVEMENT = "기물이 이동할 수 없는 방식입니다.";
+    private static final String INVALID_PATH = "이동하고자 하는 경로 사이에 기물이 존재합니다.";
+
     private final Map<Position, Piece> board;
 
     public ChessBoard(final BoardGenerator chessBoardGenerator) {
@@ -20,7 +27,7 @@ public class ChessBoard {
         return BoardStatus.from(board);
     }
 
-    public void move(String from, String to, Turn turn) {
+    public void move(final String from, final String to, final Turn turn) {
         Position source = Position.of(from);
         Position target = Position.of(to);
 
@@ -31,7 +38,7 @@ public class ChessBoard {
         board.remove(source);
     }
 
-    private void validate(Position source, Position target, Turn turn) {
+    private void validate(final Position source, final Position target, final Turn turn) {
         validateSource(source);
         validateTurn(source, turn);
         validatePositions(source, target);
@@ -43,27 +50,27 @@ public class ChessBoard {
 
     private void validateSource(final Position source) {
         if (!isExist(source)) {
-            throw new IllegalArgumentException("source에 이동할 수 있는 기물이 존재하지 않습니다.");
+            throw new IllegalArgumentException(INVALID_SOURCE);
         }
     }
 
-    private void validateTurn(Position source, Turn turn) {
+    private void validateTurn(final Position source, final Turn turn) {
         Piece sourcePiece = board.get(source);
         if (!turn.hasTurn(sourcePiece.color())) {
-            throw new IllegalArgumentException(String.format("%s의 차례가 아닙니다.", sourcePiece.color()));
+            throw new IllegalArgumentException(String.format(INVALID_TURN, sourcePiece.color()));
         }
     }
 
     private void validatePositions(final Position source, final Position target) {
         if (source == target) {
-            throw new IllegalArgumentException("source와 target이 같을 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_POSITIONS);
         }
     }
 
-    private void validateTarget(final Position source, Position target) {
+    private void validateTarget(final Position source, final Position target) {
         SquareStatus targetStatus = determineStatus(source, target);
         if (targetStatus.isPeer()) {
-            throw new IllegalArgumentException("target으로 이동할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_TARGET);
         }
     }
 
@@ -71,7 +78,7 @@ public class ChessBoard {
         Piece sourcePiece = board.get(source);
         SquareStatus targetStatus = determineStatus(source, target);
         if (!sourcePiece.isMovable(movement, targetStatus)) {
-            throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
+            throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
     }
 
@@ -88,7 +95,7 @@ public class ChessBoard {
     private void validatePath(final Position source, final Movement movement) {
         Piece sourcePiece = board.get(source);
         if (!sourcePiece.isType(PieceType.KNIGHT) && isBlocked(movement)) {
-            throw new IllegalArgumentException("이동하고자 하는 경로 사이에 기물이 존재합니다.");
+            throw new IllegalArgumentException(INVALID_PATH);
         }
     }
 

@@ -6,6 +6,8 @@ public enum PieceNamePattern {
     WHITE(String::toLowerCase),
     BLACK(String::toUpperCase);
 
+    private static final String UNKNOWN_COLOR = "존재하지 않는 컬러입니다.";
+    
     private final Function<String, String> namingPattern;
 
     PieceNamePattern(Function<String, String> namingPattern) {
@@ -19,6 +21,6 @@ public enum PieceNamePattern {
         if (color == PieceColorView.BLACK) {
             return BLACK.namingPattern.apply(name);
         }
-        throw new IllegalArgumentException("존재하지 않는 컬러입니다.");
+        throw new IllegalArgumentException(UNKNOWN_COLOR);
     }
 }

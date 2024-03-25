@@ -14,7 +14,7 @@ public final class Pawn extends Piece {
     private static final List<Direction> BLACK_DIRECTION = List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
     private static final List<Direction> WHITE_DIRECTION = List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT);
 
-    public Pawn(PieceColor color) {
+    public Pawn(final PieceColor color) {
         super(color, PieceType.PAWN);
     }
 

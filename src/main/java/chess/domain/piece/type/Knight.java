@@ -7,7 +7,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 
 public final class Knight extends Piece {
-    public Knight(PieceColor color) {
+    public Knight(final PieceColor color) {
         super(color, PieceType.KNIGHT);
     }
 

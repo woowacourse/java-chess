@@ -14,10 +14,13 @@ public enum ChessRank {
     SEVEN("7", 6),
     EIGHT("8", 7);
 
+    private static final String UNKNOWN_VALUE = "체스 랭크 범위에 해당하지 않는 값입니다.";
+    private static final String UNKNOWN_INDEX = "체스 랭크 범위에 해당하지 않는 인덱스입니다.";
+
     private final String value;
     private final int index;
 
-    ChessRank(String value, int index) {
+    ChessRank(final String value, final int index) {
         this.value = value;
         this.index = index;
     }
@@ -30,18 +33,18 @@ public enum ChessRank {
         return EIGHT.index();
     }
 
-    public static ChessRank findByValue(String rankValue) {
+    public static ChessRank findByValue(final String rankValue) {
         return Arrays.stream(values())
                 .filter(rank -> rank.value.equals(rankValue))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 값입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(UNKNOWN_VALUE));
     }
 
-    public static ChessRank findByIndex(int rankIndex) {
+    public static ChessRank findByIndex(final int rankIndex) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == rankIndex)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(UNKNOWN_INDEX));
     }
 
     public ChessRank move(final Direction direction) {

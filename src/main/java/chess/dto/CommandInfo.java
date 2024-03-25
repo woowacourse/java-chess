@@ -8,11 +8,11 @@ public record CommandInfo(
         Command command,
         Optional<String> source,
         Optional<String> target) {
-    public static CommandInfo fromNonMovable(Command command) {
+    public static CommandInfo fromNonMovable(final Command command) {
         return new CommandInfo(command, Optional.empty(), Optional.empty());
     }
 
-    public static CommandInfo ofMovable(Command command, String source, String target) {
+    public static CommandInfo ofMovable(final Command command, final String source, final String target) {
         return new CommandInfo(command, Optional.of(source), Optional.of(target));
     }
 }

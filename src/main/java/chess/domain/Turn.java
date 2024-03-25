@@ -5,7 +5,7 @@ import chess.domain.piece.PieceColor;
 public class Turn {
     private PieceColor turn;
 
-    private Turn(PieceColor turn) {
+    private Turn(final PieceColor turn) {
         this.turn = turn;
     }
 
@@ -17,7 +17,7 @@ public class Turn {
         turn = turn.reverse();
     }
 
-    public boolean hasTurn(PieceColor color) {
+    public boolean hasTurn(final PieceColor color) {
         return this.turn == color;
     }
 }
