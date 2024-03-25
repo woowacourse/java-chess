@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiPredicate;
 
 public class Position { // TODO: refactoring (너무 무거움)
 
@@ -15,16 +16,20 @@ public class Position { // TODO: refactoring (너무 무거움)
         this.rank = rank;
     }
 
-    private boolean hasFile(File file) {
-        return this.file == file;
-    }
-
     public boolean hasRank(Rank rank) {
         return this.rank == rank;
     }
 
     public boolean hasRank(List<Rank> ranks) {
         return ranks.contains(rank);
+    }
+
+    private boolean hasFile(File file) {
+        return this.file == file;
+    }
+
+    public Direction direction(Position target) {
+        return Direction.asDirection(this, target);
     }
 
     public boolean isStraight(Position target) {
@@ -67,6 +72,10 @@ public class Position { // TODO: refactoring (너무 무거움)
 
     public boolean isLeftDown(Position target) {
         return rank.isDown(target.rank) && file.isLeft(target.file);
+    }
+
+    public boolean isSameDistance(Position target) {
+        return file.distance(target.file) == rank.distance(target.rank);
     }
 
     public boolean isLegalRankStep(Position target, Integer... step) {
@@ -127,5 +136,45 @@ public class Position { // TODO: refactoring (너무 무거움)
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+    public enum Direction { // TODO: 한 칸 검증을 여기서 하는 게 맞을까?
+
+        UP((source, target) -> source.file.equals(target.file) && source.rank.isUp(target.rank)),
+        DOWN((source, target) -> source.file.equals(target.file) && source.rank.isDown(target.rank)),
+        RIGHT((source, target) -> source.file.isRight(target.file) && source.rank.equals(target.rank)),
+        LEFT((source, target) -> source.file.isLeft(target.file) && source.rank.equals(target.rank)),
+        RIGHT_UP((source, target) -> source.file.isRight(target.file) && source.rank.isUp(target.rank)
+                && source.isSameDistance(target)),
+        RIGHT_DOWN((source, target) -> source.file.isRight(target.file) && source.rank.isDown(target.rank)
+                && source.isSameDistance(target)),
+        LEFT_UP((source, target) -> source.file.isLeft(target.file) && source.rank.isUp(target.rank)
+                && source.isSameDistance(target)),
+        LEFT_DOWN((source, target) -> source.file.isLeft(target.file) && source.rank.isDown(target.rank)
+                && source.isSameDistance(target)),
+        NONE((source, target) -> false),
+        ;
+
+        private final BiPredicate<Position, Position> condition;
+
+        Direction(BiPredicate<Position, Position> condition) {
+            this.condition = condition;
+        }
+
+        private static Direction asDirection(Position source, Position target) {
+            return Arrays.stream(values())
+                    .filter(direction -> direction.meetCondition(source, target))
+                    .findFirst()
+                    .orElse(NONE);
+        }
+
+        public static List<Direction> directions() {
+            List<Direction> values = Arrays.stream(values()).toList();
+            return values.subList(0, values.size() - 1);
+        }
+
+        private boolean meetCondition(Position source, Position target) {
+            return condition.test(source, target);
+        }
     }
 }

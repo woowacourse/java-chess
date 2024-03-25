@@ -1,9 +1,12 @@
 package domain.piece;
 
 import domain.position.Position;
+import domain.position.Position.Direction;
+import java.util.List;
 
 public class King extends Piece {
 
+    private static final List<Direction> VALID_DIRECTIONS = Direction.directions();
     private static final int ZERO_STEP = 0;
     private static final int ONE_STEP = 1;
 
@@ -13,7 +16,9 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        return source.isLegalRankStep(target, ZERO_STEP, ONE_STEP)
+        Direction direction = source.direction(target);
+        return VALID_DIRECTIONS.contains(direction)
+                && source.isLegalRankStep(target, ZERO_STEP, ONE_STEP)
                 && source.isLegalFileStep(target, ZERO_STEP, ONE_STEP);
     }
 }
