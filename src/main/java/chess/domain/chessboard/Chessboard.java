@@ -1,5 +1,6 @@
 package chess.domain.chessboard;
 
+import static chess.domain.attribute.Color.BLACK;
 import static chess.domain.attribute.Color.WHITE;
 import static chess.domain.attribute.File.A;
 import static chess.domain.attribute.File.B;
@@ -66,16 +67,16 @@ public class Chessboard {
 
     private static Set<Piece> createBlackPieces() {
         Set<Piece> pieces = new HashSet<>();
-        pieces.add(new King(WHITE, Square.of(E, EIGHT)));
-        pieces.add(new Queen(WHITE, Square.of(D, EIGHT)));
-        pieces.add(new Bishop(WHITE, Square.of(F, EIGHT)));
-        pieces.add(new Bishop(WHITE, Square.of(C, EIGHT)));
-        pieces.add(new Knight(WHITE, Square.of(B, EIGHT)));
-        pieces.add(new Knight(WHITE, Square.of(G, EIGHT)));
-        pieces.add(new Rook(WHITE, Square.of(A, EIGHT)));
-        pieces.add(new Rook(WHITE, Square.of(H, EIGHT)));
+        pieces.add(new King(BLACK, Square.of(E, EIGHT)));
+        pieces.add(new Queen(BLACK, Square.of(D, EIGHT)));
+        pieces.add(new Bishop(BLACK, Square.of(F, EIGHT)));
+        pieces.add(new Bishop(BLACK, Square.of(C, EIGHT)));
+        pieces.add(new Knight(BLACK, Square.of(B, EIGHT)));
+        pieces.add(new Knight(BLACK, Square.of(G, EIGHT)));
+        pieces.add(new Rook(BLACK, Square.of(A, EIGHT)));
+        pieces.add(new Rook(BLACK, Square.of(H, EIGHT)));
         for (File file : File.values()) {
-            pieces.add(new Pawn(WHITE, Square.of(file, SEVEN)));
+            pieces.add(new Pawn(BLACK, Square.of(file, SEVEN)));
         }
         return pieces;
     }
