@@ -59,7 +59,7 @@ public enum PieceMapper {
         return type.generate.apply(color);
     }
 
-    public static PieceMapper findType(String pieceName) {
+    private static PieceMapper findType(String pieceName) {
         return Arrays.stream(values())
             .filter(pieceMapper -> isSameType(pieceMapper, pieceName))
             .findFirst()
