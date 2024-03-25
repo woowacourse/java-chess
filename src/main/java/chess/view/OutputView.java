@@ -6,6 +6,8 @@ import java.util.List;
 
 public class OutputView {
 
+    public static final String LINE_SEPARATOR = System.lineSeparator();
+
     public void printCommandInformation() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
@@ -20,6 +22,6 @@ public class OutputView {
     }
 
     public void printErrorMessage(final String message) {
-        System.out.println(message);
+        System.out.println(LINE_SEPARATOR + message + LINE_SEPARATOR);
     }
 }
