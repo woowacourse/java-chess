@@ -68,7 +68,7 @@ public class Board {
     }
 
     private void validateAttack(Position source, Position destination, Piece piece) {
-        if (piece.canNotCapture(source, destination)) {
+        if (piece.canNotAttack(source, destination)) {
             throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }

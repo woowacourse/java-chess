@@ -35,12 +35,12 @@ public abstract class Piece {
         return isMovable(source, destination);
     }
 
-    public boolean isNotMovable(Position source, Position destination) {
-        return !isMovable(source, destination);
+    public boolean canNotAttack(Position source, Position destination) {
+        return !canAttack(source, destination);
     }
 
-    public boolean canNotCapture(Position source, Position destination) {
-        return !canAttack(source, destination);
+    public boolean isNotMovable(Position source, Position destination) {
+        return !isMovable(source, destination);
     }
 
     public boolean isInitPawn() {
