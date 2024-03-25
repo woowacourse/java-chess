@@ -7,40 +7,63 @@ import java.util.List;
 
 public enum Rank {
 
-    EIGHT, SEVEN, SIX, FIVE, FOUR, THREE, TWO, ONE;
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    ;
+
+    private final int order;
+
+    Rank(int order) {
+        this.order = order;
+    }
+
+    public static List<Rank> reversedValues() {
+        List<Rank> ranks = new ArrayList<>(List.of(values()));
+        Collections.reverse(ranks);
+        return ranks;
+    }
 
     public int distance(Rank target) {
-        List<Rank> ranks = Arrays.stream(values()).toList();
-        int sourceIndex = ranks.indexOf(this);
-        int targetIndex = ranks.indexOf(target);
-        return Math.abs(sourceIndex - targetIndex);
+        return Math.abs(order - target.order);
     }
 
     public boolean isUp(Rank target) {
-        return forwardDistance(target) > 0;
-    }
-
-    public boolean isDown(Rank target) {
         return forwardDistance(target) < 0;
     }
 
+    public boolean isDown(Rank target) {
+        return forwardDistance(target) > 0;
+    }
+
     private int forwardDistance(Rank target) {
-        List<Rank> ranks = Arrays.stream(values()).toList();
-        int sourceIndex = ranks.indexOf(this);
-        int targetIndex = ranks.indexOf(target);
-        return sourceIndex - targetIndex;
+        return order - target.order;
     }
 
     public List<Rank> betweenRanks(Rank target) {
-        List<Rank> ranks = Arrays.stream(values()).toList();
-        int sourceIndex = ranks.indexOf(this);
-        int targetIndex = ranks.indexOf(target);
-        if (sourceIndex < targetIndex) {
-            return ranks.subList(sourceIndex + 1, targetIndex);
+        int sourceOrder = order;
+        int targetOrder = target.order;
+        if (sourceOrder < targetOrder) {
+            return makeBetweenRanks(sourceOrder, targetOrder);
         }
-        List<Rank> betweenRanks = new ArrayList<>(ranks.subList(targetIndex + 1, sourceIndex));
-        Collections.reverse(betweenRanks);
-        return Collections.unmodifiableList(betweenRanks);
+        List<Rank> ranks = makeBetweenRanks(targetOrder, sourceOrder);
+        Collections.reverse(ranks);
+        return ranks;
+    }
+
+    private List<Rank> makeBetweenRanks(int from, int to) {
+        return new ArrayList<>(Arrays.stream(values())
+                .filter(rank -> isBetween(rank.order, from, to))
+                .toList());
+    }
+
+    private boolean isBetween(int number, int from, int to) {
+        return number > from && number < to;
     }
 
     public boolean isSame(Rank rank) {

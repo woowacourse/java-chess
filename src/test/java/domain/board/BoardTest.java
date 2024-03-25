@@ -45,8 +45,8 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("해당 위치에 다른 기물이 있는 경우 참을 반환한다.")
-    void isNotBlocked_True() {
+    @DisplayName("경로에 다른 기물이 있는 경우 참을 반환한다. - 직선 경로")
+    void isBlocked_Straight_True() {
         Position source = Position.generate(File.A, Rank.ONE);
         Position target = Position.generate(File.A, Rank.THREE);
 
@@ -56,10 +56,33 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("해당 위치에 다른 기물이 없는 경우 거짓을 반환한다.")
-    void isNotBlocked_False() {
+    @DisplayName("경로에 다른 기물이 없는 경우 거짓을 반환한다. - 직선 경로")
+    void isBlocked_Straight_False() {
         Position source = Position.generate(File.A, Rank.TWO);
         Position target = Position.generate(File.A, Rank.FOUR);
+
+        boolean actual = board.isBlocked(source, target);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    @DisplayName("경로에 다른 기물이 있는 경우 참을 반환한다. - 대각선 경로")
+    void isBlocked_Diagonal_True() {
+        Position source = Position.generate(File.C, Rank.ONE);
+        Position target = Position.generate(File.H, Rank.SIX);
+
+        boolean actual = board.isBlocked(source, target);
+
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    @DisplayName("경로에 다른 기물이 없는 경우 거짓을 반환한다. - 대각선 경로")
+    void isBlocked_Diagonal_False() {
+        board.movePiece(Position.generate(File.D, Rank.TWO), Position.generate(File.D, Rank.THREE));
+        Position source = Position.generate(File.C, Rank.ONE);
+        Position target = Position.generate(File.H, Rank.SIX);
 
         boolean actual = board.isBlocked(source, target);
 

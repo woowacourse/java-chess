@@ -28,7 +28,7 @@ public class OutputView {
     }
 
     private List<Piece> resolvePiecesByOrder(Board board) {
-        return Arrays.stream(Rank.values())
+        return Rank.reversedValues().stream()
                 .flatMap(rank -> Arrays.stream(File.values()).map(file -> board.findPieceByPosition(file, rank)))
                 .toList();
     }

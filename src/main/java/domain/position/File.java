@@ -7,15 +7,25 @@ import java.util.List;
 
 public enum File {
 
-    A, B, C, D, E, F, G, H;
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8),
+    ;
 
-    public int distance(File target) {
-        List<File> files = Arrays.stream(values()).toList();
-        int sourceIndex = files.indexOf(this);
-        int targetIndex = files.indexOf(target);
-        return Math.abs(sourceIndex - targetIndex);
+    private final int order;
+
+    File(int order) {
+        this.order = order;
     }
 
+    public int distance(File target) {
+        return Math.abs(order - target.order);
+    }
 
     public boolean isRight(File target) {
         return forwardDistance(target) < 0;
@@ -26,22 +36,28 @@ public enum File {
     }
 
     private int forwardDistance(File target) {
-        List<File> files = Arrays.stream(values()).toList();
-        int sourceIndex = files.indexOf(this);
-        int targetIndex = files.indexOf(target);
-        return sourceIndex - targetIndex;
+        return order - target.order;
     }
 
     public List<File> betweenFiles(File target) {
-        List<File> files = Arrays.stream(values()).toList();
-        int sourceIndex = files.indexOf(this);
-        int targetIndex = files.indexOf(target);
-        if (sourceIndex < targetIndex) {
-            return files.subList(sourceIndex + 1, targetIndex);
+        int sourceOrder = order;
+        int targetOrder = target.order;
+        if (sourceOrder < targetOrder) {
+            return makeBetweenFiles(sourceOrder, targetOrder);
         }
-        List<File> betweenFiles = new ArrayList<>(files.subList(targetIndex + 1, sourceIndex));
-        Collections.reverse(betweenFiles);
-        return betweenFiles;
+        List<File> files = makeBetweenFiles(targetOrder, sourceOrder);
+        Collections.reverse(files);
+        return files;
+    }
+
+    private List<File> makeBetweenFiles(int from, int to) {
+        return new ArrayList<>(Arrays.stream(values())
+                .filter(file -> isBetween(file.order, from, to))
+                .toList());
+    }
+
+    private boolean isBetween(int number, int from, int to) {
+        return number > from && number < to;
     }
 
     public boolean isSame(File target) {
