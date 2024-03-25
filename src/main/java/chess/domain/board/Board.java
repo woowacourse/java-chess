@@ -6,6 +6,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Square;
 import chess.domain.position.SquareDifferent;
+import chess.domain.state.Turn;
+import chess.domain.state.WhiteTurn;
 
 import java.util.Map;
 
@@ -18,95 +20,20 @@ public class Board {
     public static final String PAWN_CANNOT_CATCH_STRAIGHT_ERROR = "폰은 직선 경로로 상대 말을 잡을 수 없습니다.";
 
     private final Map<Square, Piece> board;
-    private final Turn turn;
+    private Turn turn;
 
     public Board() {
         this.board = new BoardFactory().create();
-        this.turn = new Turn();
+        this.turn = new WhiteTurn();
     }
 
     public void move(Square source, Square destination) {
-        checkMovable(source, destination);
-
-        moveOrCatch(source, destination);
-        turn.update();
-    }
-
-    private void checkMovable(Square source, Square destination) {
         Piece sourcePiece = board.get(source);
         Piece destinationPiece = board.get(destination);
 
-        checkTurn(sourcePiece);
-        checkCanMove(source, destination, sourcePiece);
-        checkSameColor(sourcePiece, destinationPiece);
+        turn = turn.checkMovable(board, source, destination, sourcePiece, destinationPiece);
 
-        if (sourcePiece.matches(PieceType.PAWN)) {
-            checkPawnCanCatch(source, destination, destinationPiece);
-        }
-
-        checkPathBlocked(source, destination, sourcePiece);
-    }
-
-    private void checkTurn(Piece sourcePiece) {
-        if (turn.isBlackTurn() && sourcePiece.isWhite()) {
-            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
-        }
-
-        if (turn.isWhiteTurn() && sourcePiece.isBlack()) {
-            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
-        }
-    }
-
-    private void checkCanMove(Square source, Square destination, Piece sourcePiece) {
-        if (!sourcePiece.canMove(source, destination)) {
-            throw new IllegalArgumentException(CANNOT_MOVE_ERROR);
-        }
-    }
-
-    private void checkSameColor(Piece sourcePiece, Piece destinationPiece) {
-        if (sourcePiece.isSameColor(destinationPiece)) {
-            throw new IllegalArgumentException(SAME_COLOR_ERROR);
-        }
-    }
-
-
-    private void checkPawnCanCatch(Square source, Square destination, Piece destinationPiece) {
-        SquareDifferent squareDifferent = source.calculateDiff(destination);
-        Direction direction = Direction.findDirectionByDiff(squareDifferent);
-
-        if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
-            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
-        }
-    }
-
-    private void checkPathBlocked(Square source, Square destination, Piece sourcePiece) {
-        SquareDifferent diff = source.calculateDiff(destination);
-
-        if (needFindPathCondition(source, sourcePiece)) {
-            findPath(source, destination, diff);
-        }
-    }
-
-    private boolean needFindPathCondition(Square source, Piece sourcePiece) {
-        return !sourcePiece.matches(PieceType.KNIGHT)
-                && !(sourcePiece.matches(PieceType.PAWN) && source.isPawnStartSquare())
-                && !sourcePiece.matches(PieceType.KING);
-    }
-
-    private void findPath(Square source, Square destination, SquareDifferent diff) {
-        Square candidate = source;
-        Direction direction = Direction.findDirectionByDiff(diff);
-
-        while (!candidate.equals(destination)) {
-            checkBlocked(source, candidate);
-            candidate = direction.nextSquare(candidate);
-        }
-    }
-
-    private void checkBlocked(Square source, Square candidate) {
-        if (!source.equals(candidate) && board.get(candidate).isNotEmpty()) {
-            throw new IllegalArgumentException(PATH_BLOCKED_ERROR);
-        }
+        moveOrCatch(source, destination);
     }
 
     private void moveOrCatch(Square source, Square destination) {
