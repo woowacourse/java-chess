@@ -18,18 +18,18 @@ public enum Command {
         this.format = Pattern.compile(format);
     }
 
-    public static Command from(final String input) {
+    public static Command findByValue(final String value) {
         return Arrays.stream(values())
-                .filter(command -> command.format.matcher(input).matches())
+                .filter(command -> command.format.matcher(value).matches())
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(input + ERROR_INVALID_COMMAND));
+                .orElseThrow(() -> new IllegalArgumentException(value + ERROR_INVALID_COMMAND));
     }
 
-    public static void validateFormat(final String input) {
+    public static void validateFormat(final String value) {
         boolean isInValidFormat = Arrays.stream(values())
-                .noneMatch(command -> command.format.matcher(input).matches());
+                .noneMatch(command -> command.format.matcher(value).matches());
         if (isInValidFormat) {
-            throw new IllegalArgumentException(input + ERROR_INVALID_COMMAND);
+            throw new IllegalArgumentException(value + ERROR_INVALID_COMMAND);
         }
     }
 

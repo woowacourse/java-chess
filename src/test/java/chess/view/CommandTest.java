@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("커맨드")
 class CommandTest {
 
     @DisplayName("주어진 값에 해당하는 커맨드를 찾는다.")
@@ -13,7 +14,7 @@ class CommandTest {
     void findCommandByValue() {
         final String input = "start";
 
-        Command actual = Command.from(input);
+        Command actual = Command.findByValue(input);
 
         assertThat(actual).isEqualTo(Command.START);
     }
@@ -23,7 +24,7 @@ class CommandTest {
     void occurExceptionWhenNotMatched() {
         final String input = "nyang";
 
-        assertThatThrownBy(() -> Command.from(input))
+        assertThatThrownBy(() -> Command.findByValue(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

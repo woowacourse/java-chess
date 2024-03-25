@@ -46,7 +46,7 @@ public enum File {
 
         List<File> filePath = new ArrayList<>();
         for (int i = start; i < end; i++) {
-            filePath.add(valueOf(i));
+            filePath.add(valueOfIndex(i));
         }
 
         if (start != index) {
@@ -55,7 +55,7 @@ public enum File {
         return filePath;
     }
 
-    private File valueOf(final int value) {
+    private File valueOfIndex(final int value) {
         return Arrays.stream(values())
                 .filter(file -> file.index == value)
                 .findAny()

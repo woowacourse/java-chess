@@ -24,7 +24,7 @@ public class ChessGame {
     public void start() {
         OutputView.printStartMessage();
         String commandInput = InputView.readCommand();
-        Command command = Command.from(commandInput);
+        Command command = Command.findByValue(commandInput);
 
         if (command.isEnd()) {
             return;
@@ -41,7 +41,7 @@ public class ChessGame {
     private void playChess(final Board board) {
         PieceColor turn = PieceColor.WHITE;
         String commandInput = InputView.readCommand();
-        Command command = Command.from(commandInput);
+        Command command = Command.findByValue(commandInput);
         if (command.isStart()) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
@@ -49,7 +49,7 @@ public class ChessGame {
         while (command.isNotEnd()) {
             turn = playTurn(board, commandInput, turn);
             commandInput = InputView.readCommand();
-            command = Command.from(commandInput);
+            command = Command.findByValue(commandInput);
         }
     }
 

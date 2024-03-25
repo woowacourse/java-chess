@@ -60,13 +60,13 @@ public enum Rank {
 
         List<Rank> rankPath = new ArrayList<>();
         for (int i = start; i < end; i++) {
-            rankPath.add(valueOf(i));
+            rankPath.add(valueOfIndex(i));
         }
 
         return rankPath;
     }
 
-    private Rank valueOf(final int value) {
+    private Rank valueOfIndex(final int value) {
         return Arrays.stream(values())
                 .filter(rank -> rank.index == value)
                 .findAny()
