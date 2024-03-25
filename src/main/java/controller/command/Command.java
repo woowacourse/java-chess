@@ -1,9 +1,9 @@
 package controller.command;
 
-import view.CommandShape;
+import java.util.List;
 
 public interface Command {
-    boolean execute();
+    void execute(final List<String> commandTokens);
 
-    boolean isSameAs(final CommandShape commandShape);
+    boolean isSameAs(final String value);
 }

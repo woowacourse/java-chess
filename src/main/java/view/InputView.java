@@ -10,7 +10,7 @@ public class InputView {
     }
 
     public static String inputCommand() {
-        String command = scanner.next();
+        String command = scanner.nextLine();
         validateCommand(command);
         return command;
     }
@@ -19,9 +19,5 @@ public class InputView {
         if (command == null || command.isBlank() || command.isEmpty()) {
             throw new IllegalArgumentException(UNSUPPORTED_COMMAND);
         }
-    }
-
-    public static void clearBuffer() {
-        scanner.nextLine();
     }
 }

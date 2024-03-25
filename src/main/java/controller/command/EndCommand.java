@@ -1,23 +1,32 @@
 package controller.command;
 
 import domain.game.Game;
-import view.CommandShape;
+import java.util.List;
 
 public class EndCommand implements Command {
+    private static final String END = "end";
+    private static EndCommand instance;
+
     private final Game game;
 
-    public EndCommand(final Game game) {
+    private EndCommand(final Game game) {
         this.game = game;
     }
 
-    @Override
-    public boolean execute() {
-        game.end();
-        return false;
+    public static EndCommand of(final Game game) {
+        if (instance == null) {
+            instance = new EndCommand(game);
+        }
+        return instance;
     }
 
     @Override
-    public boolean isSameAs(final CommandShape commandShape) {
-        return CommandShape.END == commandShape;
+    public void execute(final List<String> commandTokens) {
+        game.end();
+    }
+
+    @Override
+    public boolean isSameAs(final String value) {
+        return END.equals(value);
     }
 }

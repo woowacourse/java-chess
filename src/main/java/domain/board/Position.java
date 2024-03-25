@@ -37,21 +37,29 @@ public class Position {
     }
 
     private static Rank convertToRank(final String positionValue) {
-        final int rankNumber = Integer.parseInt(String.valueOf(positionValue.charAt(1))) - 1;
-        return Rank.of(rankNumber);
+        try {
+            final int rankNumber = Integer.parseInt(String.valueOf(positionValue.charAt(1))) - 1;
+            return Rank.of(rankNumber);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("잘못된 위치 값입니다.");
+        }
     }
 
     public Position next(final Direction direction) {
-        return new Position(File.of(fileIndex() + direction.file()),
-                Rank.of(rankIndex() + direction.rank()));
+        try {
+            File nextFile = File.of(fileIndex() + direction.file());
+            Rank nextRank = Rank.of(rankIndex() + direction.rank());
+            return new Position(nextFile, nextRank);
+        } catch (IllegalArgumentException e) {
+            return this;
+        }
     }
 
-    public boolean isMovable(final List<Position> movablePositions) {
+    public void isMovable(final List<Position> movablePositions) {
         boolean isThisPositionMovable = findPositionInMovablePositions(movablePositions);
         if (!isThisPositionMovable) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
-        return true;
     }
 
     private boolean findPositionInMovablePositions(final List<Position> movablePositions) {
