@@ -1,6 +1,6 @@
 package domain.command;
 
-import domain.game.Execute;
+import domain.game.Executable;
 import java.util.List;
 
 public class StartCommand implements Command {
@@ -15,7 +15,7 @@ public class StartCommand implements Command {
     }
 
     @Override
-    public void execute(Execute execute) {
-        execute.start();
+    public void execute(Executable executable) {
+        executable.start();
     }
 }

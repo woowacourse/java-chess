@@ -3,7 +3,6 @@ package domain.command;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public enum CommandType {
     START("start"),
@@ -15,7 +14,9 @@ public enum CommandType {
         this.command = command;
     }
 
-    public static final Map<CommandType, Function<List<String>, Command>> commandByChessCommand;
+    public static final int COMMAND_INDEX = 0;
+
+    public static final Map<CommandType, CommandConstructor> commandByChessCommand;
 
     static {
         commandByChessCommand = Map.of(
@@ -26,8 +27,10 @@ public enum CommandType {
     }
 
     public static Command parse(List<String> arguments) {
-        return commandByChessCommand.get(CommandType.from(arguments.get(0))).apply(parseArguments(arguments));
+        return commandByChessCommand.get(CommandType.from(arguments.get(COMMAND_INDEX)))
+                .generate(parseArguments(arguments));
     }
+
 
     private static CommandType from(String command) {
         return Arrays.stream(CommandType.values())

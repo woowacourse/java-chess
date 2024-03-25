@@ -1,7 +1,7 @@
 package domain.command;
 
-import domain.game.Execute;
+import domain.game.Executable;
 
 public interface Command {
-    void execute(Execute execute);
+    void execute(Executable executable);
 }

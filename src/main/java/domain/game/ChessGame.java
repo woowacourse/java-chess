@@ -5,7 +5,7 @@ import domain.piece.Piece;
 import domain.position.Position;
 import java.util.Map;
 
-public class ChessGame implements Execute {
+public class ChessGame implements Executable {
     private final ChessBoard chessBoard;
     private Color color;
     private GameState gameState;

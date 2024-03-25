@@ -1,6 +1,6 @@
 package domain.command;
 
-import domain.game.Execute;
+import domain.game.Executable;
 import domain.position.Position;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -48,7 +48,7 @@ public class MoveCommand implements Command {
 
 
     @Override
-    public void execute(Execute execute) {
-        execute.move(source, target);
+    public void execute(Executable executable) {
+        executable.move(source, target);
     }
 }

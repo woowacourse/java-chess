@@ -10,7 +10,6 @@ import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
 import domain.position.Position;
-import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
