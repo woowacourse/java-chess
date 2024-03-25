@@ -18,7 +18,7 @@ public class Board {
         validatePosition(pieceColor, source, destination);
 
         Piece targetPiece = piecePositions.get(source);
-        targetPiece.checkMovable(source, destination, parsePiecePositionsIgnoreTargetPiece(source));
+        targetPiece.move(source, destination, parsePiecePositionsIgnoreTargetPiece(source));
 
         piecePositions.put(destination, targetPiece);
         piecePositions.remove(source);

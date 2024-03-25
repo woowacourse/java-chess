@@ -26,7 +26,7 @@ class QueenTest {
         Map<Position, Piece> piecePositions = Map.of(position(File.D, Rank.TWO), new Rook(PieceColor.BLACK));
 
         // When & Then
-        assertThatCode(() -> queen.checkMovable(source, destination, piecePositions))
+        assertThatCode(() -> queen.move(source, destination, piecePositions))
                 .doesNotThrowAnyException();
     }
 
@@ -55,7 +55,7 @@ class QueenTest {
         );
 
         // When & Then
-        assertThatThrownBy(() -> queen.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> queen.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목적지 경로에 기물이 존재하여 이동할 수 없습니다.");
     }
@@ -77,7 +77,7 @@ class QueenTest {
         Map<Position, Piece> piecePositions = Map.of(destination, new Rook(PieceColor.WHITE));
 
         // When & Then
-        assertThatThrownBy(() -> queen.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> queen.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

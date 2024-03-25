@@ -36,7 +36,7 @@ class PawnTest {
         );
 
         // When & Then
-        assertThatCode(() -> pawn.checkMovable(source, destination, piecePositions))
+        assertThatCode(() -> pawn.move(source, destination, piecePositions))
                 .doesNotThrowAnyException();
     }
 
@@ -62,7 +62,7 @@ class PawnTest {
         Map<Position, Piece> piecePositions = Collections.emptyMap();
 
         // When & Then
-        assertThatThrownBy(() -> pawn.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("적 기물이 존재하지 않으면 대각선으로 이동할 수 없습니다");
     }
@@ -85,7 +85,7 @@ class PawnTest {
         Map<Position, Piece> piecePositions = Collections.emptyMap();
 
         // When & Then
-        assertThatThrownBy(() -> pawn.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작 위치가 아니면 두 칸 이동할 수 없습니다.");
     }
@@ -109,7 +109,7 @@ class PawnTest {
         );
 
         // When & Then
-        assertThatThrownBy(() -> pawn.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("전진시 기물이 존재하는 경로 혹은 목적지로 이동할 수 없습니다.");
     }

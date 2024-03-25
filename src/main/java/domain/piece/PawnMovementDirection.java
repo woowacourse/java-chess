@@ -7,7 +7,6 @@ import java.util.Arrays;
 import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
 
-
 public enum PawnMovementDirection implements MovementDirection {
     UP_ONE_STEP(-1, 0, WHITE),
     UP_TWO_STEP(-2, 0, WHITE),

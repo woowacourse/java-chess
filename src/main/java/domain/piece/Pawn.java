@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
         PawnMovementDirection movementDirection = calculateDirection(color, source, destination);
         if (movementDirection.isCrossStep()) {
             checkAlivePositionOfCrossStep(source.next(movementDirection), piecePositions);

@@ -15,11 +15,10 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
         KnightMovementDirection movementDirection = calculateDirection(source, destination);
 
         Position alivePosition = source.next(movementDirection);
-
         checkAlivePosition(alivePosition, piecePositions);
     }
 

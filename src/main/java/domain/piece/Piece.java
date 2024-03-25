@@ -11,7 +11,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions);
+    public abstract void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions);
 
     public abstract PieceType pieceType();
 

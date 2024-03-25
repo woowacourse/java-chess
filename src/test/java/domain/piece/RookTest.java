@@ -27,7 +27,7 @@ class RookTest {
         Map<Position, Piece> piecePositions = Map.of(position(File.D, Rank.TWO), new Rook(PieceColor.BLACK));
 
         // When & Then
-        assertThatCode(() -> rook.checkMovable(source, destination, piecePositions))
+        assertThatCode(() -> rook.move(source, destination, piecePositions))
                 .doesNotThrowAnyException();
     }
 
@@ -49,7 +49,7 @@ class RookTest {
         Map<Position, Piece> piecePositions = Collections.emptyMap();
 
         // When & Then
-        assertThatThrownBy(() ->rook.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() ->rook.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("방향이 유효하지 않아 이동할 수 없는 칸입니다.");
     }
@@ -73,7 +73,7 @@ class RookTest {
         );
 
         // When & Then
-        assertThatThrownBy(() -> rook.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> rook.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목적지 경로에 기물이 존재하여 이동할 수 없습니다.");
     }
@@ -95,7 +95,7 @@ class RookTest {
         Map<Position, Piece> piecePositions = Map.of(destination, new Rook(PieceColor.WHITE));
 
         // When & Then
-        assertThatThrownBy(() -> rook.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> rook.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

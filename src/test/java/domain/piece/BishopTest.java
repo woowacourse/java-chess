@@ -27,7 +27,7 @@ class BishopTest {
         Map<Position, Piece> piecePositions = Map.of(position(File.C, Rank.ONE), new Rook(PieceColor.BLACK));
 
         // When & Then
-        assertThatCode(() -> bishop.checkMovable(source, destination, piecePositions))
+        assertThatCode(() -> bishop.move(source, destination, piecePositions))
                 .doesNotThrowAnyException();
     }
 
@@ -49,7 +49,7 @@ class BishopTest {
         Map<Position, Piece> piecePositions = Collections.emptyMap();
 
         // When & Then
-        assertThatThrownBy(() ->bishop.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() ->bishop.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("방향이 유효하지 않아 이동할 수 없는 칸입니다.");
     }
@@ -72,7 +72,7 @@ class BishopTest {
         );
 
         // When & Then
-        assertThatThrownBy(() -> bishop.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> bishop.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목적지 경로에 기물이 존재하여 이동할 수 없습니다.");
     }
@@ -94,7 +94,7 @@ class BishopTest {
         Map<Position, Piece> piecePositions = Map.of(destination, new Bishop(PieceColor.WHITE));
 
         // When & Then
-        assertThatThrownBy(() -> bishop.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> bishop.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

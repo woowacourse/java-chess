@@ -22,7 +22,7 @@ class KnightTest {
         Map<Position, Piece> piecePositions = Map.of(destination, new Rook(PieceColor.WHITE));
 
         // When & Then
-        assertThatThrownBy(() -> knight.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> knight.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

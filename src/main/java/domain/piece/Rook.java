@@ -23,12 +23,15 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
         CommonMovementDirection movementDirection = calculateDirection(source, destination);
         validateMovementDirection(movementDirection);
 
-        Position alivePosition = move(source, destination, movementDirection, piecePositions);
+        List<Position> movePaths = Stream.iterate(source, current -> current.next(movementDirection))
+                .takeWhile(current -> isContinuable(current, destination, piecePositions))
+                .toList();
 
+        Position alivePosition = movePaths.get(movePaths.size() - 1).next(movementDirection);
         checkAlivePosition(alivePosition, piecePositions);
     }
 
@@ -36,20 +39,6 @@ public class Rook extends Piece {
         if (!MOVABLE_DIRECTIONS.contains(movementDirection)) {
             throw new IllegalArgumentException("방향이 유효하지 않아 이동할 수 없는 칸입니다.");
         }
-    }
-
-    private Position move(
-            final Position source,
-            final Position destination,
-            final CommonMovementDirection movementDirection,
-            final Map<Position, Piece> piecePositions
-    ) {
-        List<Position> movePaths = Stream.iterate(source, current -> current.next(movementDirection))
-                .takeWhile(current -> isContinuable(current, destination, piecePositions))
-                .toList();
-
-        return movePaths.get(movePaths.size() - 1)
-                .next(movementDirection);
     }
 
     private boolean isContinuable(final Position current, final Position destination, final Map<Position, Piece> piecePositions) {

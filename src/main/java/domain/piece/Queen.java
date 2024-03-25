@@ -17,26 +17,15 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
         CommonMovementDirection movementDirection = calculateDirection(source, destination);
 
-        Position alivePosition = move(source, destination, movementDirection, piecePositions);
-
-        checkAlivePosition(alivePosition, piecePositions);
-    }
-
-    private Position move(
-            final Position source,
-            final Position destination,
-            final CommonMovementDirection movementDirection,
-            final Map<Position, Piece> piecePositions
-    ) {
         List<Position> movePaths = Stream.iterate(source, current -> current.next(movementDirection))
                 .takeWhile(current -> isContinuable(current, destination, piecePositions))
                 .toList();
 
-        return movePaths.get(movePaths.size() - 1)
-                .next(movementDirection);
+        Position alivePosition = movePaths.get(movePaths.size() - 1).next(movementDirection);
+        checkAlivePosition(alivePosition, piecePositions);
     }
 
     private boolean isContinuable(final Position current, final Position destination, final Map<Position, Piece> piecePositions) {

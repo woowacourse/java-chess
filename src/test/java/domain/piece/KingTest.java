@@ -27,7 +27,7 @@ class KingTest {
         Map<Position, Piece> piecePositions = Map.of(position(File.D, Rank.TWO), new Rook(PieceColor.BLACK));
 
         // When & Then
-        assertThatCode(() -> king.checkMovable(source, destination, piecePositions))
+        assertThatCode(() -> king.move(source, destination, piecePositions))
                 .doesNotThrowAnyException();
     }
 
@@ -54,7 +54,7 @@ class KingTest {
         Map<Position, Piece> piecePositions = Collections.emptyMap();
 
         // When & Then
-        assertThatThrownBy(() -> king.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> king.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 거리입니다.");
     }
@@ -69,7 +69,7 @@ class KingTest {
         Map<Position, Piece> piecePositions = Map.of(destination, new Rook(PieceColor.WHITE));
 
         // When & Then
-        assertThatThrownBy(() -> king.checkMovable(source, destination, piecePositions))
+        assertThatThrownBy(() -> king.move(source, destination, piecePositions))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

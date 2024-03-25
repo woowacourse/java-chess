@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    public void checkMovable(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
         CommonMovementDirection movementDirection = calculateDirection(source, destination);
         checkMoveDistance(source, destination, movementDirection);
 
