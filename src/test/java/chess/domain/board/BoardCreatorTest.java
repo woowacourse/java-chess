@@ -18,12 +18,13 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardInitializerTest {
+class BoardCreatorTest {
 
     @Test
     @DisplayName("전체 말들의 초기 위치 정보를 반환한다. - 기물들의 위치 확인")
     void initializeAllPieces() {
-        Map<Position, Piece> initialPiecePositions = new BoardInitializer().initialize();
+        Board board = BoardCreator.create();
+        Map<Position, Piece> initialPiecePositions = board.getBoard();
         assertAll(
                 () -> assertThat(initialPiecePositions)
                         .containsAllEntriesOf(Map.of(
@@ -75,7 +76,8 @@ class BoardInitializerTest {
     @Test
     @DisplayName("말의 위치가 비어있는 경우 비어있는 말의 타입을 반환한다.")
     void initializeEmptyPieces() {
-        Map<Position, Piece> initialPiecePositions = new BoardInitializer().initialize();
+        Board board = BoardCreator.create();
+        Map<Position, Piece> initialPiecePositions = board.getBoard();
         IntStream.rangeClosed(3, 6).boxed()
                 .flatMap(rank -> IntStream.rangeClosed(1, 8).boxed()
                         .map(file -> new Position(file, rank)))

@@ -8,12 +8,10 @@ import java.util.Map;
 
 public class Board {
 
-    private final BoardInitializer boardInitializer;
     private final Map<Position, Piece> board;
 
-    public Board(final BoardInitializer boardInitializer) {
-        this.boardInitializer = boardInitializer;
-        this.board = boardInitializer.initialize();
+    public Board(final Map<Position, Piece> board) {
+        this.board = board;
     }
 
     public void move(final Position source, final Position target) {

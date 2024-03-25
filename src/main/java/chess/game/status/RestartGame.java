@@ -1,7 +1,7 @@
 package chess.game.status;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
+import chess.domain.board.BoardCreator;
 import chess.view.input.InputView;
 import chess.view.output.OutputView;
 
@@ -19,7 +19,7 @@ public class RestartGame implements GameStatus {
 
     @Override
     public GameStatus play() {
-        Board board = new Board(new BoardInitializer());
+        Board board = BoardCreator.create();
         OutputView.printBoard(board);
         return new MainGame(inputView, board);
     }
