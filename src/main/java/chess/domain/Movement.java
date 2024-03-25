@@ -18,12 +18,31 @@ public class Movement {
         }
     }
 
+    public int findRowDirection() {
+        return findDirection(calculateRowDifference());
+    }
+
+    public int findColumnDirection() {
+        return findDirection(calculateColumnDifference());
+    }
+
+    public int maxAbsoluteMoveDifference() {
+        return Math.max(Math.abs(calculateRowDifference()), Math.abs(calculateColumnDifference()));
+    }
+
     public int calculateRowDifference() {
         return sourcePosition.calculateRowDifference(targetPosition);
     }
 
     public int calculateColumnDifference() {
         return sourcePosition.calculateColumnDifference(targetPosition);
+    }
+
+    private int findDirection(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 
     public Position source() {

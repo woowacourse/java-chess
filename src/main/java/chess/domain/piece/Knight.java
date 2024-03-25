@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
@@ -37,7 +38,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+    public List<Position> findBetweenPositions(Movement movement) {
         return new ArrayList<>();
     }
 }

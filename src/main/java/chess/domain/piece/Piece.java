@@ -30,34 +30,13 @@ public abstract class Piece {
         return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
     }
 
-    public List<Position> findBetweenPositions(Movement movement, Boolean isAttack) {
-        return findBetweenPositions(movement);
-    }
-
     public List<Position> findBetweenPositions(Movement movement) {
-        int rowDifference = movement.calculateRowDifference();
-        int columnDifference = movement.calculateColumnDifference();
-
-        return findBetweenPositions(movement.source(), rowDifference, columnDifference);
-    }
-
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
-        int rowDirection = findDirection(rowDifference);
-        int columnDirection = findDirection(columnDifference);
-
         List<Position> positions = new ArrayList<>();
-        for (int i = MIN_MOVEMENT; i < absoluteDifference; i++) {
-            positions.add(position.move(rowDirection * i, columnDirection * i));
+        for (int i = MIN_MOVEMENT; i < movement.maxAbsoluteMoveDifference(); i++) {
+            positions.add(movement.source().move(
+                    movement.findRowDirection() * i, movement.findColumnDirection() * i));
         }
         return positions;
-    }
-
-    private int findDirection(int value) {
-        if (value == 0) {
-            return 0;
-        }
-        return value / Math.abs(value);
     }
 
     public boolean isSameTeamWith(Piece piece) {
