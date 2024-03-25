@@ -49,7 +49,7 @@ public class Movement {
         return calculateLength() == displacement;
     }
 
-    private int calculateLength() {
+    public int calculateLength() {
         if (isNotMoved()) {
             return 0;
         }
@@ -62,15 +62,12 @@ public class Movement {
         return fileDifference.absoluteValue();
     }
 
-    public List<ChessPosition> findStraightPath(ChessPosition source) {
-        if (!isDiagonal() && !isOrthogonal()) {
-            return List.of();
-        }
-        int fileOffset = calculateIncrement(fileDifference);
-        int rankOffset = calculateIncrement(rankDifference);
-        int pathLength = calculateLength();
+    public int calculateFileIncrement() {
+        return calculateIncrement(fileDifference);
+    }
 
-        return makePath(source, pathLength, fileOffset, rankOffset);
+    public int calculateRankIncrement() {
+        return calculateIncrement(rankDifference);
     }
 
     private int calculateIncrement(Difference difference) {
@@ -81,17 +78,6 @@ public class Movement {
             return 0;
         }
         return 1;
-    }
-
-    private List<ChessPosition> makePath(ChessPosition source, int pathLength, int fileOffset, int rankOffset) {
-        List<ChessPosition> path = new ArrayList<>();
-        ChessPosition prevPosition = source;
-        while (path.size() < pathLength) {
-            ChessPosition nextPosition = prevPosition.calculateNextPosition(fileOffset, rankOffset);
-            path.add(nextPosition);
-            prevPosition = nextPosition;
-        }
-        return unmodifiableList(path);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.model.piece;
 
 import chess.model.position.ChessPosition;
+import chess.model.position.Path;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +13,7 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract List<ChessPosition> findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
+    public abstract Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
     protected final boolean isSameSide(Piece other) {
         return this.side == other.side;

@@ -2,10 +2,10 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
+import chess.model.position.Path;
 import chess.model.position.Rank;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static java.util.function.Function.identity;
@@ -27,14 +27,14 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<ChessPosition> findPath(ChessPosition sourcePosition, ChessPosition targetPosition, Piece targetPiece) {
+    public Path findPath(ChessPosition sourcePosition, ChessPosition targetPosition, Piece targetPiece) {
         checkValidTargetPiece(targetPiece);
         Movement movement = targetPosition.calculateMovement(sourcePosition);
         validateForwardPath(sourcePosition, targetPiece, movement);
         if (canOrthogonalMove(sourcePosition, movement) || canDiagonalMove(targetPiece, movement)) {
-            return movement.findStraightPath(sourcePosition);
+            return Path.makeStraightPath(sourcePosition, movement);
         }
-        return List.of();
+        return Path.empty();
     }
 
     private void validateForwardPath(ChessPosition source, Piece targetPiece, Movement movement) {

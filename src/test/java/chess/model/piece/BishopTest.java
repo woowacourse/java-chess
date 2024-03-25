@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
+import chess.model.position.Path;
 import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,10 +27,10 @@ class BishopTest {
         Bishop bishop = Bishop.from(Side.WHITE);
 
         // when
-        List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
+        Path path = bishop.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEqualTo(expected);
+        assertThat(path.getChessPositions()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
@@ -99,9 +100,9 @@ class BishopTest {
         Bishop bishop = Bishop.from(Side.BLACK);
 
         // when
-        List<ChessPosition> path = bishop.findPath(source, target, Blank.INSTANCE);
+        Path path = bishop.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEmpty();
+        assertThat(path.isEmpty()).isTrue();
     }
 }

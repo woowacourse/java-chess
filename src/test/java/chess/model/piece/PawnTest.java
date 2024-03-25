@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
+import chess.model.position.Path;
 import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,10 +26,10 @@ class PawnTest {
         Pawn pawn = Pawn.from(side);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
+        Path path = pawn.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEqualTo(expected);
+        assertThat(path.getChessPositions()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> providePositionsAndResultInInitialPosition() {
@@ -79,10 +80,10 @@ class PawnTest {
         Pawn pawn = Pawn.from(Side.WHITE);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
+        Path path = pawn.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEqualTo(List.of(ChessPosition.of(File.C, Rank.FOUR)));
+        assertThat(path.getChessPositions()).isEqualTo(List.of(ChessPosition.of(File.C, Rank.FOUR)));
     }
 
     @Test
@@ -94,10 +95,10 @@ class PawnTest {
         Pawn pawn = Pawn.from(Side.WHITE);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
+        Path path = pawn.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEmpty();
+        assertThat(path.isEmpty()).isTrue();
     }
 
     @Test
@@ -110,10 +111,10 @@ class PawnTest {
         Pawn targetPiece = Pawn.from(Side.BLACK);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, targetPiece);
+        Path path = pawn.findPath(source, target, targetPiece);
 
         // then
-        assertThat(path).isEqualTo(List.of(ChessPosition.of(File.D, Rank.FOUR)));
+        assertThat(path.getChessPositions()).isEqualTo(List.of(ChessPosition.of(File.D, Rank.FOUR)));
     }
 
     @Test
@@ -153,9 +154,9 @@ class PawnTest {
         Pawn pawn = Pawn.from(Side.BLACK);
 
         // when
-        List<ChessPosition> path = pawn.findPath(source, target, Blank.INSTANCE);
+        Path path = pawn.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path).isEmpty();
+        assertThat(path.isEmpty()).isTrue();
     }
 }

@@ -3,6 +3,7 @@ package chess.model.board;
 import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
+import chess.model.position.Path;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,9 @@ public class ChessBoard {
 
     public void move(ChessPosition sourcePosition, ChessPosition targetPosition) {
         Piece sourcePiece = board.get(sourcePosition);
-        validateSourceIsNull(sourcePiece);
+        validateSourceIsBlank(sourcePiece);
         Piece targetPiece = board.get(targetPosition);
-        List<ChessPosition> path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
+        Path path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
         validatePathIsEmpty(path);
         validatePathContainsPiece(path);
         replacePiece(sourcePiece, sourcePosition, targetPosition);
@@ -34,22 +35,14 @@ public class ChessBoard {
         }
     }
 
-    private void validatePathIsEmpty(List<ChessPosition> path) {
+    private void validatePathIsEmpty(Path path) {
         if (path.isEmpty()) {
             throw new IllegalArgumentException("타겟 위치로 이동할 수 없습니다.");
         }
     }
 
-    private void validatePathContainsPiece(List<ChessPosition> path) {
-        int middlePathLength = path.size() - 1;
-        IntStream.range(0, middlePathLength)
-                .mapToObj(path::get)
-                .map(board::get)
-                .forEach(this::validatePathContainsPiece);
-    }
-
-    private void validatePathContainsPiece(Piece found) {
-        if (!found.equals(Blank.INSTANCE)) {
+    private void validatePathContainsPiece(Path path) {
+        if (path.containsPiece(board)) {
             throw new IllegalArgumentException("이동 경로에 기물이 존재하여 움직일 수 없습니다.");
         }
     }

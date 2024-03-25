@@ -125,20 +125,20 @@ class MovementTest {
         );
     }
 
-    @Test
-    @DisplayName("이동량으로 소스 위치부터 타겟 위치까지 직선 경로를 구한다.")
-    void findStraightPath() {
-        // given
-        ChessPosition sourcePosition = ChessPosition.of(File.A, Rank.FOUR); // File.C, Rank.TWO
-        Difference fileDifference = Difference.from(2);
-        Difference rankDifference = Difference.from(-2);
-        Movement movement = new Movement(fileDifference, rankDifference);
-
-        // when
-        List<ChessPosition> path = movement.findStraightPath(sourcePosition);
-
-        // then
-        assertThat(path)
-                .containsExactly(ChessPosition.of(File.B, Rank.THREE), ChessPosition.of(File.C, Rank.TWO));
-    }
+//    @Test
+//    @DisplayName("이동량으로 소스 위치부터 타겟 위치까지 직선 경로를 구한다.")
+//    void findStraightPath() {
+//        // given
+//        ChessPosition sourcePosition = ChessPosition.of(File.A, Rank.FOUR); // File.C, Rank.TWO
+//        Difference fileDifference = Difference.from(2);
+//        Difference rankDifference = Difference.from(-2);
+//        Movement movement = new Movement(fileDifference, rankDifference);
+//
+//        // when
+//        List<ChessPosition> path = movement.findStraightPath(sourcePosition);
+//
+//        // then
+//        assertThat(path)
+//                .containsExactly(ChessPosition.of(File.B, Rank.THREE), ChessPosition.of(File.C, Rank.TWO));
+//    }
 }
