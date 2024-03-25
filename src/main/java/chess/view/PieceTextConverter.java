@@ -11,7 +11,6 @@ import chess.model.piece.Rook;
 
 public class PieceTextConverter {
     private PieceTextConverter() {
-
     }
 
     public static String convertToText(Piece piece) {

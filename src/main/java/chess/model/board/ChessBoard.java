@@ -1,6 +1,5 @@
 package chess.model.board;
 
-import chess.model.piece.Empty;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
 import java.util.HashMap;
@@ -29,16 +28,8 @@ public class ChessBoard {
             ChessPosition sourcePosition, ChessPosition targetPosition,
             Piece sourcePiece, Piece targetPiece
     ) {
-        targetPiece = convertTargetPiece(sourcePiece, targetPiece);
         board.put(targetPosition, sourcePiece);
-        board.put(sourcePosition, targetPiece);
-    }
-
-    private Piece convertTargetPiece(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isEnemy(targetPiece)) {
-            return new Empty();
-        }
-        return targetPiece;
+        board.put(sourcePosition, sourcePiece.catchTargetPiece(targetPiece));
     }
 
     private void validateSourcePiece(Piece sourcePiece) {

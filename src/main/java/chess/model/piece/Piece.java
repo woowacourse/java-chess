@@ -30,6 +30,12 @@ public abstract class Piece {
         }
     }
 
+    public Piece catchTargetPiece(Piece targetPiece) {
+        if (isEnemy(targetPiece)) {
+            return new Empty();
+        }
+        return targetPiece;
+    }
     public Side getSide() {
         return side;
     }
