@@ -17,7 +17,7 @@ class CommandTest {
     void BlankInputThrowException(final String value) {
         Assertions.assertThatThrownBy(() -> Command.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 명령어입니다.");
+                .hasMessage("[ERROR] 입력은 start, end로 해야 합니다.");
     }
 
     @DisplayName("null을 입력하면 예외를 발생시킨다.")
@@ -26,7 +26,7 @@ class CommandTest {
     void nullInputThrowException(final String value) {
         Assertions.assertThatThrownBy(() -> Command.from(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 유효하지 않은 명령어입니다.");
+                .hasMessage("[ERROR] 입력은 start, end로 해야 합니다.");
     }
 
     @DisplayName("지정된 명령어가 아니면 예외를 발생시킨다.")
