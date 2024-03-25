@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
+    private static final String tableName = "pieces";
     private final ConnectionManager connectionManager;
 
     private PieceDao(final ConnectionManager connectionManager) {
@@ -19,7 +20,7 @@ public class PieceDao {
     }
 
     public void add(final PieceDto piece) {
-        final var query = "INSERT INTO piece VALUES(?, ?, ?, ?)";
+        final var query = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?)";
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.boardFile());
@@ -33,7 +34,7 @@ public class PieceDao {
     }
 
     public PieceDto find(final String file, final String rank) {
-        final var query = "SELECT * FROM piece WHERE board_file = ? and board_rank = ?";
+        final var query = "SELECT * FROM " + tableName + " WHERE board_file = ? and board_rank = ?";
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, file);
@@ -54,7 +55,7 @@ public class PieceDao {
 
     public List<PieceDto> findAll() {
         final List<PieceDto> pieces = new ArrayList<>();
-        final String query = "SELECT * FROM piece";
+        final String query = "SELECT * FROM " + tableName;
         try (final Connection connection = connectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -72,7 +73,7 @@ public class PieceDao {
     }
 
     public void deleteAll() {
-        final var query = "DELETE FROM piece";
+        final var query = "DELETE FROM " + tableName;
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
@@ -82,7 +83,7 @@ public class PieceDao {
     }
 
     public int count() {
-        final var query = "SELECT COUNT(*) AS count FROM piece";
+        final var query = "SELECT COUNT(*) AS count FROM " + tableName;
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
