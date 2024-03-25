@@ -98,12 +98,89 @@ class DirectionTest {
     }
 
     @Test
-    @DisplayName("해당 방향의 다음 Position을 반환한다.")
-    void nextPositionTest() {
+    @DisplayName("왼쪽 위 방향의 다음 Position을 반환한다.")
+    void nextPositionOfNegativeFilePositiveRankTest() {
+        // given
+        Position destination = Position.of(File.C, Rank.FIVE);
+        // when
+        Position nextPosition = Direction.NEGATIVE_FILE_POSITIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("오른쪽 아래 방향의 다음 Position을 반환한다.")
+    void nextPositionOfPositiveFileNegativeRankTest() {
+        // given
+        Position destination = Position.of(File.E, Rank.THREE);
+        // when
+        Position nextPosition = Direction.POSITIVE_FILE_NEGATIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("오른쪽 위 방향의 다음 Position을 반환한다.")
+    void nextPositionOfPositiveFilePositiveRankTest() {
         // given
         Position destination = Position.of(File.E, Rank.FIVE);
         // when
         Position nextPosition = Direction.POSITIVE_FILE_POSITIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("왼쪽 아래 방향의 다음 Position을 반환한다.")
+    void nextPositionOfNegativeFileNegativeRankTest() {
+        // given
+        Position destination = Position.of(File.C, Rank.THREE);
+        // when
+        Position nextPosition = Direction.NEGATIVE_FILE_NEGATIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("위쪽 방향의 다음 Position을 반환한다.")
+    void nextPositionOfSameFilePositiveRankTest() {
+        // given
+        Position destination = Position.of(File.D, Rank.FIVE);
+        // when
+        Position nextPosition = Direction.SAME_FILE_POSITIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("아래쪽 방향의 다음 Position을 반환한다.")
+    void nextPositionOfSameFileNegativeRankTest() {
+        // given
+        Position destination = Position.of(File.D, Rank.THREE);
+        // when
+        Position nextPosition = Direction.SAME_FILE_NEGATIVE_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("오른쪽 방향의 다음 Position을 반환한다.")
+    void nextPositionOfPositiveFileSameRankTest() {
+        // given
+        Position destination = Position.of(File.E, Rank.FOUR);
+        // when
+        Position nextPosition = Direction.POSITIVE_FILE_SAME_RANK.nextPosition(source);
+        // then
+        assertThat(nextPosition).isEqualTo(destination);
+    }
+
+    @Test
+    @DisplayName("왼쪽 방향의 다음 Position을 반환한다.")
+    void nextPositionOfNegativeFileSameRankTest() {
+        // given
+        Position destination = Position.of(File.C, Rank.FOUR);
+        // when
+        Position nextPosition = Direction.NEGATIVE_FILE_SAME_RANK.nextPosition(source);
         // then
         assertThat(nextPosition).isEqualTo(destination);
     }
