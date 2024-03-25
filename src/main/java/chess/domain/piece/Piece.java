@@ -14,11 +14,23 @@ public abstract class Piece {
 
     abstract public boolean canMoveMoreThenOnce();
 
+    abstract public boolean isPawn();
+
     final public boolean canMoveInTargetDirection(final Direction targetDirection) {
         return directions.contains(targetDirection);
     }
 
     final public boolean isAlly(Piece piece) {
         return this.color == piece.color;
+    }
+
+    final public boolean isEnemy(Piece piece) {
+        if (this.color == Color.BLACK) {
+            return piece.color == Color.WHITE;
+        }
+        if (this.color == Color.WHITE) {
+            return piece.color == Color.BLACK;
+        }
+        return false;
     }
 }

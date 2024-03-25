@@ -10,6 +10,13 @@ import java.util.Map;
 public class ChessBoard {
 
     private final Map<Position, Piece> chessBoard;
+    private final List<Position> pawnFirstPositions = List.of(
+            Position.of(File.A, Rank.TWO), Position.of(File.B, Rank.TWO), Position.of(File.C, Rank.TWO), Position.of(File.D, Rank.TWO),
+            Position.of(File.E, Rank.TWO), Position.of(File.F, Rank.TWO), Position.of(File.G, Rank.TWO), Position.of(File.H, Rank.TWO),
+            Position.of(File.A, Rank.SIX), Position.of(File.B, Rank.SIX), Position.of(File.C, Rank.SIX), Position.of(File.D, Rank.SIX),
+            Position.of(File.E, Rank.SIX), Position.of(File.F, Rank.SIX), Position.of(File.G, Rank.SIX), Position.of(File.H, Rank.SIX)
+    );
+    private final List<Direction> pawnAttackDirections = List.of(Direction.LEFT_UP, Direction.LEFT_DOWN, Direction.RIGHT_UP, Direction.RIGHT_DOWN);
 
     public ChessBoard(final Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
@@ -26,7 +33,11 @@ public class ChessBoard {
     }
 
     public void move(final Position sourcePosition, final Position targetPosition) {
-        validateCanMove(sourcePosition, targetPosition);
+        if (chessBoard.get(sourcePosition).isPawn()) {
+            validatePawnCanMove(sourcePosition, targetPosition);
+        } else {
+            validateCanMove(sourcePosition, targetPosition);
+        }
 
         Piece sourcePiece = chessBoard.get(sourcePosition);
         chessBoard.put(targetPosition, sourcePiece);
@@ -46,6 +57,29 @@ public class ChessBoard {
         }
 
         validateReachedTarget(targetPosition, nextPosition);
+    }
+
+    private void validatePawnCanMove(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+        Direction direction = sourcePosition.calculateDirection(targetPosition);
+        validateTargetNotAlly(sourcePosition, targetPosition);
+
+        if (pawnFirstPositions.contains(sourcePosition)) {
+            Position nextPosition = sourcePosition.moveTowardDirection(direction);
+            if (nextPosition.equals(targetPosition)) {
+                return;
+            }
+            Position nextNextPosition = nextPosition.moveTowardDirection(direction);
+            if (nextNextPosition.equals(targetPosition)) {
+                return;
+            }
+        }
+
+        if (pawnAttackDirections.contains(direction) && chessBoard.get(targetPosition).isEnemy(sourcePiece)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
     }
 
     private void validateValidDirection(final Piece piece, final Direction direction) {
@@ -68,7 +102,7 @@ public class ChessBoard {
         return nextPosition;
     }
 
-    private static void validateReachedTarget(Position targetPosition, Position nextPosition) {
+    private void validateReachedTarget(Position targetPosition, Position nextPosition) {
         if (!nextPosition.equals(targetPosition)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
         }

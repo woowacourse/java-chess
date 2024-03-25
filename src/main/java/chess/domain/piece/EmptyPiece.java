@@ -16,4 +16,9 @@ public class EmptyPiece extends Piece {
     public boolean canMoveMoreThenOnce() {
         return false;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

@@ -175,4 +175,68 @@ class ChessBoardTest {
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("폰은 최초의 이동에서 두칸을 이동할 수 있다.")
+    void pawnCanMoveTwiceIfFirstMove() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.TWO);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        Position blankPosition = Position.of(File.A, Rank.THREE);
+        positionPiece.put(blankPosition, EmptyPiece.of());
+        Position targetPosition = Position.of(File.A, Rank.FOUR);
+        positionPiece.put(targetPosition, EmptyPiece.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("폰은 적이 있다면, 대각선 앞으로 이동할 수 있다.")
+    void pawnCanMoveDiagonalIfEnemyThere() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.TWO);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        Position targetPosition = Position.of(File.B, Rank.THREE);
+        positionPiece.put(targetPosition, Pawn.of(Color.WHITE));
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .doesNotThrowAnyException();
+    }
+
+    @DisplayName("폰이 시작 위치에 있지 않은데 두 칸을 이동하려 하면, 예외가 발생한다.")
+    @Test
+    void pawnCanNotMoveTwiceIfItIsNotOnStartPositions() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.THREE);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        Position targetPosition = Position.of(File.A, Rank.FIVE);
+        positionPiece.put(targetPosition, EmptyPiece.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+    }
+
+    @DisplayName("폰의 대각선에 적이 없음에도 대각선으로 이동하려 하면, 예외가 발생한다.")
+    @Test
+    void pawnCanNotMoveDiagonalIfThereIsNoEnemy() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.THREE);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        Position targetPosition = Position.of(File.B, Rank.FOUR);
+        positionPiece.put(targetPosition, EmptyPiece.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+    }
 }
