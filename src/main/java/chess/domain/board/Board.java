@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class Board {
 
+    public static final String ERROR_NOT_TURN = "선택한 기물의 팀의 차례가 아닙니다.";
     private static final String ERROR_CANNOT_STAY = "제자리로 이동할 수 없습니다.";
     private static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
     private final Set<Piece> pieces;
@@ -20,11 +21,18 @@ public class Board {
         this.pieces = new HashSet<>(pieces);
     }
 
-    public void move(Square source, Square target) {
-        validateStay(source, target);
+    public void move(Square source, Square target, PieceColor turn) {
         Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PIECE));
+        validateTurn(sourcePiece, turn);
+        validateStay(source, target);
         sourcePiece.move(this, target);
         removeTargetPieceIfAttacked(sourcePiece, target);
+    }
+
+    private void validateTurn(Piece sourcePiece, PieceColor turn) {
+        if (sourcePiece.getColor() != turn) {
+            throw new IllegalArgumentException(ERROR_NOT_TURN);
+        }
     }
 
     private void validateStay(Square source, Square target) {

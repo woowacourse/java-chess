@@ -26,7 +26,7 @@ public record Command(CommandType type, List<String> arguments) {
         return this.type == type;
     }
 
-    public List<String> getArguments() {
-        return arguments;
+    public String getArgument(int index) {
+        return arguments.get(index);
     }
 }
