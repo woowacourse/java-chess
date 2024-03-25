@@ -2,11 +2,8 @@ package chess.controller;
 
 import chess.command.Command;
 import chess.command.CommandType;
-import chess.domain.Turn;
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardMaker;
+import chess.domain.game.ChessGame;
 import chess.domain.position.TerminalPosition;
-import chess.domain.square.piece.Color;
 import chess.util.ExceptionRetryHandler;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -23,14 +20,15 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        Command command = receiveCommand();
+        Command command = receiveStartCommandUntilValid();
         validateStartOrEnd(command.getType());
+
         if (command.getType() == CommandType.START) {
             startGame();
         }
     }
 
-    private Command receiveCommand() {
+    private Command receiveStartCommandUntilValid() {
         return ExceptionRetryHandler.handle(inputView::readCommand);
     }
 
@@ -40,27 +38,22 @@ public class ChessController {
         }
     }
 
-    // TODO: 게임을 진행하는 로직(ex: turn 관리)을 ChessGame으로 분리
     private void startGame() {
-        ChessBoard chessBoard = makeChessBoard();
-        Turn turn = new Turn(Color.WHITE);
+        ChessGame chessGame = ChessGame.createOnStart();
+        outputView.printChessBoard(chessGame.getSquares());
 
-        ExceptionRetryHandler.handle(() -> processGame(chessBoard, turn));
+        processGameUntilValid(chessGame);
     }
 
-    private ChessBoard makeChessBoard() {
-        ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
-        ChessBoard chessBoard = chessBoardMaker.make();
-
-        outputView.printChessBoard(chessBoard.getSquares());
-        return chessBoard;
+    private void processGameUntilValid(ChessGame chessGame) {
+        ExceptionRetryHandler.handle(() -> processGame(chessGame));
     }
 
-    private void processGame(ChessBoard chessBoard, Turn turn) {
+    private void processGame(ChessGame chessGame) {
         Command command = receiveProcessCommand();
 
         while (command.getType() != CommandType.END) {
-            tryTurn(command, chessBoard, turn);
+            processTurn(command, chessGame);
             command = receiveProcessCommand();
         }
     }
@@ -77,17 +70,11 @@ public class ChessController {
         }
     }
 
-    private void tryTurn(Command command, ChessBoard chessBoard, Turn turn) {
+    private void processTurn(Command command, ChessGame chessGame) {
         if (command.getType() == CommandType.MOVE) {
-            movePiece(command, chessBoard, turn);
-            turn.change();
+            TerminalPosition terminalPosition = TerminalPositionView.of(command.getArguments());
+            chessGame.movePiece(terminalPosition);
+            outputView.printChessBoard(chessGame.getSquares());
         }
-    }
-
-    private void movePiece(Command command, ChessBoard chessBoard, Turn turn) {
-        TerminalPosition terminalPosition = TerminalPositionView.of(command.getArguments());
-        chessBoard.move(terminalPosition, turn.getCurrentTurn());
-
-        outputView.printChessBoard(chessBoard.getSquares());
     }
 }
