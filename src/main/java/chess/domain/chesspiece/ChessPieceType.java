@@ -26,6 +26,10 @@ public enum ChessPieceType {
         this.moveStrategySupplier = moveStrategySupplier;
     }
 
+    public static boolean isChessPieceTypeNone(ChessPieceType chessPieceType) {
+        return chessPieceType.equals(NONE);
+    }
+
     public MoveStrategy getMoveStrategy() {
         return moveStrategySupplier.get();
     }

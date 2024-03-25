@@ -1,20 +1,22 @@
 package chess.domain.chessboard;
 
+import chess.domain.chesspiece.Camp;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPieceProperty;
+import chess.domain.chesspiece.ChessPieceType;
+import chess.domain.chesspiece.movestrategy.EmptyMoveStrategy;
 import chess.dto.ChessBoardDto;
 import chess.dto.ChessPieceDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
 
 public class ChessBoard {
 
     private static final BoardGenerator BOARD_GENERATOR = BoardGenerator.getInstance();
 
-    private final Map<Square, Optional<ChessPiece>> board;
+    private final Map<Square, ChessPiece> board;
 
-    private ChessBoard(Map<Square, Optional<ChessPiece>> board) {
+    private ChessBoard(Map<Square, ChessPiece> board) {
         this.board = board;
     }
 
@@ -22,13 +24,8 @@ public class ChessBoard {
         this(BOARD_GENERATOR.generate());
     }
 
-    public Optional<ChessPiece> findChessPieceOnSquare(Square findSquare) {
-        return board.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(findSquare))
-                .map(Entry::getValue)
-                .findFirst()
-                .orElse(Optional.empty());
+    public ChessPiece findChessPieceOnSquare(Square findSquare) {
+        return board.get(findSquare);
     }
 
     public Square findForwardSquare(Square square) {
@@ -76,29 +73,21 @@ public class ChessBoard {
     }
 
     public void movePiece(Square moveSource, Square target) {
-        ChessPiece chessPiece = board.get(moveSource).orElseThrow();
-        board.put(moveSource, Optional.empty());
-        board.put(target, Optional.of(chessPiece));
+        ChessPiece moveSourceChessPiece = board.get(moveSource);
+        ChessPiece emptyChessPiece = new ChessPiece(Camp.NONE,
+                new ChessPieceProperty(ChessPieceType.NONE, new EmptyMoveStrategy()));
+        board.computeIfPresent(moveSource, (k, v) -> emptyChessPiece);
+        board.computeIfPresent(target, (k, v) -> moveSourceChessPiece);
     }
 
     public ChessBoardDto createDto() {
-        Map<Square, Optional<ChessPieceDto>> chessBoardInfo = new LinkedHashMap<>();
+        Map<Square, ChessPieceDto> chessBoardInfo = new LinkedHashMap<>();
 
         for (Square square : board.keySet()) {
-            Optional<ChessPiece> chessPiece = board.get(square);
-            Optional<ChessPieceDto> chessPieceDto = createChessPieceDto(chessPiece);
-            chessBoardInfo.put(square, chessPieceDto);
+            ChessPiece chessPiece = board.get(square);
+            chessBoardInfo.put(square, chessPiece.createDto());
         }
 
         return new ChessBoardDto(chessBoardInfo);
-    }
-
-    private Optional<ChessPieceDto> createChessPieceDto(Optional<ChessPiece> chessPiece) {
-        if (chessPiece.isEmpty()) {
-            return Optional.empty();
-        }
-
-        ChessPiece existChessPiece = chessPiece.get();
-        return Optional.of(existChessPiece.createDto());
     }
 }

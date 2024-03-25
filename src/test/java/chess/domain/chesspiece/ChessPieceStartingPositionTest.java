@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.chessboard.Lettering;
 import chess.domain.chessboard.Numbering;
 import chess.domain.chessboard.Square;
-import chess.domain.chesspiece.ChessPieceStartingPosition;
-import chess.domain.chesspiece.ChessPieceType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -26,10 +24,10 @@ class ChessPieceStartingPositionTest {
         Square square4 = new Square(Lettering.D, Numbering.ONE);
 
         //when
-        ChessPieceType expectedRook = chessPieceStartingPosition.determineChessPieceType(square1).orElse(null);
-        ChessPieceType expectedPawn = chessPieceStartingPosition.determineChessPieceType(square2).orElse(null);
-        ChessPieceType expectedBishop = chessPieceStartingPosition.determineChessPieceType(square3).orElse(null);
-        ChessPieceType expectedQueen = chessPieceStartingPosition.determineChessPieceType(square4).orElse(null);
+        ChessPieceType expectedRook = chessPieceStartingPosition.determineChessPieceType(square1);
+        ChessPieceType expectedPawn = chessPieceStartingPosition.determineChessPieceType(square2);
+        ChessPieceType expectedBishop = chessPieceStartingPosition.determineChessPieceType(square3);
+        ChessPieceType expectedQueen = chessPieceStartingPosition.determineChessPieceType(square4);
 
         //then
         assertAll(
@@ -41,14 +39,14 @@ class ChessPieceStartingPositionTest {
     }
 
     @Test
-    void 주어진_칸에서_시작하는_말이_없는경우_빈값을_반환한다() {
+    void 주어진_칸에서_시작하는_말이_없는경우_말의_타입은_NONE_이다() {
         //given
         Square square = new Square(Lettering.A, Numbering.THREE);
 
         //when
-        ChessPieceType expectedNull = chessPieceStartingPosition.determineChessPieceType(square).orElse(null);
+        ChessPieceType expectedNone = chessPieceStartingPosition.determineChessPieceType(square);
 
         //then
-        assertThat(expectedNull).isNull();
+        assertThat(expectedNone).isEqualTo(ChessPieceType.NONE);
     }
 }

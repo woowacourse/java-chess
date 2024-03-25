@@ -6,7 +6,6 @@ import chess.domain.chessboard.Square;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class ChessPieceStartingPosition {
 
@@ -21,13 +20,14 @@ public class ChessPieceStartingPosition {
         return instance;
     }
 
-    public Optional<ChessPieceType> determineChessPieceType(Square square) {
+    public ChessPieceType determineChessPieceType(Square square) {
         return startingPosition.keySet().stream()
                 .filter(chessPieceType -> {
                     List<Square> squares = startingPosition.get(chessPieceType);
                     return squares.contains(square);
                 })
-                .findFirst();
+                .findFirst()
+                .orElse(ChessPieceType.NONE);
     }
 
     private Map<ChessPieceType, List<Square>> initializeStatingPosition() {

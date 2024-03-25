@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public class OutputView {
 
-    private static final String SQUARE_FORMAT = ".";
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
@@ -26,7 +24,7 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoardDto chessBoardDto) {
-        Map<Square, Optional<ChessPieceDto>> chessBoard = chessBoardDto.chessBoard();
+        Map<Square, ChessPieceDto> chessBoard = chessBoardDto.chessBoard();
         List<Numbering> numbering = reverseNumbering();
 
         for (Numbering number : numbering) {
@@ -42,31 +40,22 @@ public class OutputView {
         return numbering;
     }
 
-    private static List<Square> selectChessRow(Numbering number, Map<Square, Optional<ChessPieceDto>> chessBoard) {
+    private static List<Square> selectChessRow(Numbering number, Map<Square, ChessPieceDto> chessBoard) {
         return chessBoard.keySet().stream()
                 .filter(square -> square.getNumbering() == number)
                 .toList();
     }
 
-    private static void printSquare(List<Square> chessRow, Map<Square, Optional<ChessPieceDto>> chessBoard) {
+    private static void printSquare(List<Square> chessRow, Map<Square, ChessPieceDto> chessBoard) {
         for (Square square : chessRow) {
-            ChessPieceDto chessPieceDto = chessBoard.get(square).orElse(null);
+            ChessPieceDto chessPieceDto = chessBoard.get(square);
             printSquareWithChessPiece(chessPieceDto);
-            printSquareWithoutChessPiece(chessPieceDto);
         }
     }
 
     private static void printSquareWithChessPiece(ChessPieceDto chessPieceDto) {
-        if (chessPieceDto != null) {
-            String chessPieceNotation = ChessPiecePrintFormat.findChessPieceNotation(chessPieceDto);
-            System.out.print(chessPieceNotation);
-        }
-    }
-
-    private static void printSquareWithoutChessPiece(ChessPieceDto chessPieceDto) {
-        if (chessPieceDto == null) {
-            System.out.print(SQUARE_FORMAT);
-        }
+        String chessPieceNotation = ChessPiecePrintFormat.findChessPieceNotation(chessPieceDto);
+        System.out.print(chessPieceNotation);
     }
 
     public static void printErrorMessage(String errorMessage) {

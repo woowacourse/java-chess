@@ -5,7 +5,6 @@ import chess.domain.chessboard.Lettering;
 import chess.domain.chessboard.Numbering;
 import chess.domain.chessboard.Square;
 import chess.domain.chesspiece.ChessPiece;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGame {
@@ -25,10 +24,7 @@ public class ChessGame {
     }
 
     private List<String> extractMoveSquare(List<String> input) {
-        List<String> moveSquare = new ArrayList<>();
-        moveSquare.add(input.get(1));
-        moveSquare.add(input.get(2));
-        return moveSquare;
+        return input.subList(1, input.size());
     }
 
     private List<Square> createMoveSquare(List<String> moveSquare) {
@@ -56,9 +52,8 @@ public class ChessGame {
     }
 
     public void executeTurn(Square moveSource, Square target) {
-        ChessPiece chessPieceOnSquare = chessBoard.findChessPieceOnSquare(moveSource).orElse(null);
+        ChessPiece chessPieceOnSquare = chessBoard.findChessPieceOnSquare(moveSource);
         validateEmptyChessPiece(chessPieceOnSquare);
-
         chessPieceOnSquare.move(chessBoard, moveSource, target);
     }
 

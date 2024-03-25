@@ -26,6 +26,10 @@ public class ChessPiece {
         return chessPieceProperty.getChessPieceType();
     }
 
+    public boolean isEmptyChessPiece() {
+        return ChessPieceType.isChessPieceTypeNone(getChessPieceType());
+    }
+
     public Camp getCamp() {
         return camp;
     }

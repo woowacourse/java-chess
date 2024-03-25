@@ -2,11 +2,8 @@ package chess.domain.chessboard;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.chessboard.BoardGenerator;
-import chess.domain.chessboard.Square;
 import chess.domain.chesspiece.ChessPiece;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,7 +17,7 @@ class BoardGeneratorTest {
     @Test
     void _64개의_칸을_가진_보드를_생성한다() {
         //given, when
-        Map<Square, Optional<ChessPiece>> board = boardGenerator.generate();
+        Map<Square, ChessPiece> board = boardGenerator.generate();
 
         //then
         assertThat(board).hasSize(64);
@@ -29,7 +26,7 @@ class BoardGeneratorTest {
     @Test
     void 보드의_칸은_중복되지_않는다() {
         //given
-        Map<Square, Optional<ChessPiece>> board = boardGenerator.generate();
+        Map<Square, ChessPiece> board = boardGenerator.generate();
 
         //when
         int boardSize = board.size();
@@ -42,11 +39,11 @@ class BoardGeneratorTest {
     @Test
     void 생성된_보드에_말은_32개가_올려져_있어야_한다() {
         //given
-        Map<Square, Optional<ChessPiece>> board = boardGenerator.generate();
+        Map<Square, ChessPiece> board = boardGenerator.generate();
 
         //when
         int chessPieceCount = (int) board.keySet().stream()
-                .filter(square -> board.get(square).isPresent())
+                .filter(square -> !board.get(square).isEmptyChessPiece())
                 .count();
 
         //then
@@ -56,11 +53,11 @@ class BoardGeneratorTest {
     @Test
     void 생성된_보드에_말이_없는_칸은_32개이어야_한다() {
         //given
-        Map<Square, Optional<ChessPiece>> board = boardGenerator.generate();
+        Map<Square, ChessPiece> board = boardGenerator.generate();
 
         //when
         int chessPieceCount = (int) board.keySet().stream()
-                .filter(square -> board.get(square).isEmpty())
+                .filter(square -> board.get(square).isEmptyChessPiece())
                 .count();
 
         //then

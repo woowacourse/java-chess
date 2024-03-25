@@ -1,12 +1,9 @@
 package chess.domain.chesspiece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.chessboard.Numbering;
-import chess.domain.chesspiece.Camp;
-import chess.domain.chesspiece.ChessPieceCampAssignment;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -43,13 +40,19 @@ class ChessPieceCampAssignmentTest {
     }
 
     @Test
-    void 넘버링이_3_4_5_6인_경우_예외를_발생시킨다() {
-        //given, when, then
+    void 넘버링이_3_4_5_6인_경우_진영은_NONE_이다() {
+        //given, when
+        Camp camp1 = instance.determineCamp(Numbering.THREE);
+        Camp camp2 = instance.determineCamp(Numbering.FOUR);
+        Camp camp3 = instance.determineCamp(Numbering.FIVE);
+        Camp camp4 = instance.determineCamp(Numbering.SIX);
+
+        //then
         assertAll(
-                () -> assertThatThrownBy(() -> instance.determineCamp(Numbering.THREE)),
-                () -> assertThatThrownBy(() -> instance.determineCamp(Numbering.FOUR)),
-                () -> assertThatThrownBy(() -> instance.determineCamp(Numbering.FIVE)),
-                () -> assertThatThrownBy(() -> instance.determineCamp(Numbering.SIX))
+                () -> assertThat(camp1).isEqualTo(Camp.NONE),
+                () -> assertThat(camp2).isEqualTo(Camp.NONE),
+                () -> assertThat(camp3).isEqualTo(Camp.NONE),
+                () -> assertThat(camp4).isEqualTo(Camp.NONE)
         );
     }
 }

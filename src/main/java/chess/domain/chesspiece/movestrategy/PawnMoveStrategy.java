@@ -2,6 +2,7 @@ package chess.domain.chesspiece.movestrategy;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
+import chess.domain.chesspiece.ChessPiece;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class PawnMoveStrategy extends MoveDirection implements MoveStrategy {
             return;
         }
         Square leftDiagonalSquare = chessBoard.findLeftForwardDiagonalSquare(startSquare);
-        if (chessBoard.findChessPieceOnSquare(leftDiagonalSquare).isPresent()) {
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftDiagonalSquare);
+        if (!chessPiece.isEmptyChessPiece()) {
             moveRange.add(leftDiagonalSquare);
         }
     }
@@ -48,7 +50,8 @@ public class PawnMoveStrategy extends MoveDirection implements MoveStrategy {
             return;
         }
         Square rightDiagonalSquare = chessBoard.findRightForwardDiagonalSquare(startSquare);
-        if (chessBoard.findChessPieceOnSquare(rightDiagonalSquare).isPresent()) {
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightDiagonalSquare);
+        if (!chessPiece.isEmptyChessPiece()) {
             moveRange.add(rightDiagonalSquare);
         }
     }
