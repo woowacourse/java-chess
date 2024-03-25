@@ -57,14 +57,4 @@ public class Pawn extends Piece {
         }
         return Side.WHITE;
     }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.PAWN;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
 }

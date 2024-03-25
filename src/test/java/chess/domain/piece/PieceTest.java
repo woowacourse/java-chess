@@ -23,11 +23,6 @@ public class PieceTest {
             public boolean hasFollowedRule(Position current, Position target, Route route) {
                 return true;
             }
-
-            @Override
-            public PieceType pieceType() {
-                return null;
-            }
         };
     }
 
@@ -71,11 +66,6 @@ public class PieceTest {
             @Override
             public boolean hasFollowedRule(Position current, Position target, Route movePath) {
                 return false;
-            }
-
-            @Override
-            public PieceType pieceType() {
-                return null;
             }
         };
 

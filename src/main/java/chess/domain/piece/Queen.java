@@ -13,14 +13,4 @@ public class Queen extends Piece {
     protected boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.isSameFile(target) || source.isSameRank(target) || source.isDiagonal(target);
     }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.QUEEN;
-    }
-
-    @Override
-    public boolean isQueen() {
-        return true;
-    }
 }

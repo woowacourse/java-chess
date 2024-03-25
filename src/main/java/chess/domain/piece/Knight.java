@@ -14,14 +14,4 @@ public class Knight extends Piece {
         return source.hasTwoFileGap(target) && source.hasOneRankGap(target) ||
                 source.hasOneFileGap(target) && source.hasTwoRankGap(target);
     }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.KNIGHT;
-    }
-
-    @Override
-    public boolean isKnight() {
-        return true;
-    }
 }

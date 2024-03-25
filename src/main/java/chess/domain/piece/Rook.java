@@ -13,14 +13,4 @@ public class Rook extends Piece {
     protected boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.ROOK;
-    }
-
-    @Override
-    public boolean isRook() {
-        return true;
-    }
 }

@@ -1,39 +1,44 @@
 package chess.view.mapper;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Arrays;
 
 public enum PieceMapper {
 
-    ROOK(PieceType.ROOK, "R"),
-    KNIGHT(PieceType.KNIGHT, "N"),
-    BISHOP(PieceType.BISHOP, "B"),
-    QUEEN(PieceType.QUEEN, "Q"),
-    KING(PieceType.KING, "K"),
-    PAWN(PieceType.PAWN, "P"),
-    EMPTY(PieceType.EMPTY, "."),
+    ROOK(Rook.class, "r"),
+    KNIGHT(Knight.class, "n"),
+    BISHOP(Bishop.class, "b"),
+    QUEEN(Queen.class, "q"),
+    KING(King.class, "k"),
+    PAWN(Pawn.class, "p"),
+    EMPTY(Empty.class, "."),
     ;
 
-    private final PieceType pieceType;
-    private final String symbol;
+    private final Class<? extends Piece> pieceClass;
+    private final String text;
 
-    PieceMapper(PieceType pieceType, String symbol) {
-        this.pieceType = pieceType;
-        this.symbol = symbol;
+    PieceMapper(Class<? extends Piece> pieceClass, String text) {
+        this.pieceClass = pieceClass;
+        this.text = text;
     }
 
-    public static String toSymbol(Piece piece) {
-        String symbol = Arrays.stream(values())
-                .filter(it -> it.pieceType == piece.pieceType())
+    public static String toText(Piece piece) {
+        String text = Arrays.stream(values())
+                .filter(it -> it.pieceClass == piece.getClass())
                 .findFirst()
-                .map(it -> it.symbol)
-                .orElseThrow();
+                .map(it -> it.text)
+                .orElseThrow(IllegalArgumentException::new);
 
         if (piece.isBlack()) {
-            return symbol;
+            return text.toUpperCase();
         }
-        return symbol.toLowerCase();
+        return text;
     }
 }

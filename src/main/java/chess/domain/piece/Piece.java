@@ -2,8 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.route.Route;
 import chess.domain.position.Position;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -15,8 +13,6 @@ public abstract class Piece {
     }
 
     protected abstract boolean hasFollowedRule(Position current, Position target, Route route);
-
-    public abstract PieceType pieceType();
 
     public void checkValidMove(Position source, Position target, Route route) {
         checkDifferentPosition(source, target);
@@ -50,48 +46,6 @@ public abstract class Piece {
         return !hasFollowedRule(source, target, route);
     }
 
-    public void checkBlockingPiece(Position target, Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target) && !pieces.get(target).isNotSame(this)) {
-            throw new IllegalArgumentException("target 위치에 같은 팀 기물이 존재합니다.");
-        }
-        List<Position> positionsExceptTarget = filterPositionsExceptTarget(target, pieces);
-        if (!positionsExceptTarget.isEmpty()) {
-            throw new IllegalArgumentException("target 위치로 이동하는 경로에 기물이 존재합니다.");
-        }
-    }
-
-    public boolean isRook() {
-        return false;
-    }
-
-    public boolean isKnight() {
-        return false;
-    }
-
-    public boolean isBishop() {
-        return false;
-    }
-
-    public boolean isQueen() {
-        return false;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public boolean isNotEmpty() {
-        return !isEmpty();
-    }
-
     public boolean isBlack() {
         return side.isBlack();
     }
@@ -104,18 +58,24 @@ public abstract class Piece {
         return side == otherSide;
     }
 
-    public boolean isNotSame(Piece other) {
-        return side != other.side;
+    public boolean isSameSide(Side otherSide) {
+        return side == otherSide;
+    }
+
+    public boolean isOpposingSide(Side otherSide) {
+        return side.opponent() == otherSide;
+    }
+
+    public boolean isEmpty() {
+        return side == Side.EMPTY;
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
     }
 
     public boolean isNotSame(Side otherSide) {
         return !isSame(otherSide);
-    }
-
-    private List<Position> filterPositionsExceptTarget(Position target, Map<Position, Piece> pieces) {
-        return pieces.keySet().stream()
-                .filter(key -> key != target)
-                .toList();
     }
 
     @Override

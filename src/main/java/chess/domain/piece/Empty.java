@@ -19,14 +19,4 @@ public class Empty extends Piece {
     public boolean hasFollowedRule(Position current, Position target, Route route) {
         return false;
     }
-
-    @Override
-    public PieceType pieceType() {
-        return PieceType.EMPTY;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
 }
