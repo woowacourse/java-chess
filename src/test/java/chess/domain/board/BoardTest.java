@@ -19,7 +19,7 @@ class BoardTest {
 
     @Test
     @DisplayName("빈 스퀘어로 기물을 정상적으로 움직일 수 있다.")
-    void moveToEmptySquare() {
+    void moveToEmptySquareTest() {
         // given
         Square source = Square.from("b3");
         Square target = Square.from("b4");
@@ -35,7 +35,7 @@ class BoardTest {
 
     @Test
     @DisplayName("차례가 아닌 팀의 기물을 움직일 경우 예외가 발생한다.")
-    void validateTurn() {
+    void validateTurnTest() {
         // given
         Square source = Square.from("b3");
         Square target = Square.from("b4");
@@ -51,7 +51,7 @@ class BoardTest {
 
     @Test
     @DisplayName("제자리로 이동할 경우 예외가 발생한다.")
-    void validateStay() {
+    void validateStayTest() {
         // given
         Square source = Square.from("b3");
         Square target = Square.from("b3");
@@ -66,7 +66,7 @@ class BoardTest {
 
     @Test
     @DisplayName("출발지 스퀘어에 기물이 존재하지 않을 경우 예외가 발생한다.")
-    void exceptionOnMoveWhenNoPieceOnSourceSquare() {
+    void exceptionOnMoveWhenNoPieceOnSourceSquareTest() {
         // given
         Board board = new Board(Set.of());
         Square source = Square.from("b3");
@@ -80,7 +80,7 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 위치에 기물이 존재하는지 않는지 확인한다.")
-    void notExistOnSquare() {
+    void notExistOnSquareTest() {
         // given
         Square source = Square.from("b3");
         Board board = new Board(Set.of());
@@ -94,7 +94,7 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 위치에 기물이 존재하는지 확인한다.")
-    void existOnSquare() {
+    void existOnSquareTest() {
         // given
         Square source = Square.from("b3");
         Rook piece = new Rook(PieceColor.BLACK, source);
@@ -109,7 +109,7 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 위치가 비어 있을 때 검은색 기물이 존재하지 않은지 확인한다.")
-    void notExistBlackOnEmptySquare() {
+    void notExistBlackOnEmptySquareTest() {
         // given
         Square source = Square.from("b3");
         Board board = new Board(Set.of());
@@ -123,7 +123,7 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 위치에 흰색 기물이 있을 때 검은색 기물이 존재하지 않은지 확인한다.")
-    void notExistBlackOnSquareHaveWhite() {
+    void notExistBlackOnSquareHaveWhiteTest() {
         // given
         Square source = Square.from("b3");
         Board board = new Board(Set.of(new Rook(PieceColor.WHITE, source)));
@@ -137,7 +137,7 @@ class BoardTest {
 
     @Test
     @DisplayName("해당 위치에 검은색 기물이 있을 때 검은색 기물이 존재하는지 확인한다.")
-    void existBlackOnSquare() {
+    void existBlackOnSquareTest() {
         // given
         Square source = Square.from("b3");
         Board board = new Board(Set.of(new Rook(PieceColor.BLACK, source)));
@@ -151,7 +151,7 @@ class BoardTest {
 
     @Test
     @DisplayName("목적지에 적 기물이 존재하면 해당 기물을 제거한다.")
-    void removeTargetPieceIfAttacked() {
+    void removeTargetPieceIfAttackedTest() {
         // given
         Square source = Square.from("b3");
         Square target = Square.from("b4");
@@ -169,7 +169,7 @@ class BoardTest {
 
     @Test
     @DisplayName("현재 존재하는 기물들에 대해 그리는 데이터를 생성한다.")
-    void generatePieceDrawings() {
+    void generatePieceDrawingsTest() {
         // given
         Square source = Square.from("b3");
         Square target = Square.from("b4");

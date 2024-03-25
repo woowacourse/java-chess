@@ -19,7 +19,7 @@ class BoardFactoryTest {
 
     @Test
     @DisplayName("기물들을 시작위치에 둔 보드를 생성한다.")
-    void createBoard() {
+    void createBoardTest() {
         // given
         Board actual = BoardFactory.createBoard();
         List<BiFunction<PieceColor, Square, Piece>> piecesArrangement = List.of(

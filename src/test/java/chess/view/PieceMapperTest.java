@@ -10,14 +10,14 @@ class PieceMapperTest {
 
     @Test
     @DisplayName("검은색 기물일 때 대문자로 변환한다.")
-    void mapToUpperCaseWhenBlackPiece() {
+    void mapToUpperCaseWhenBlackPieceTest() {
         Character actual = PieceMapper.map("KNIGHT", "BLACK");
         assertThat(actual).isEqualTo('N');
     }
 
     @Test
     @DisplayName("흰색 기물일 때 소문자로 변환한다.")
-    void mapToUpperCaseWhenWhitePiece() {
+    void mapToUpperCaseWhenWhitePieceTest() {
         Character actual = PieceMapper.map("KING", "WHITE");
         assertThat(actual).isEqualTo('k');
     }

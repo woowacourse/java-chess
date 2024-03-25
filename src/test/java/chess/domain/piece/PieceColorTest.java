@@ -10,7 +10,7 @@ class PieceColorTest {
 
     @Test
     @DisplayName("흰색을 반대색으로 변환한다.")
-    void opposite() {
+    void oppositeTest() {
         // given
         PieceColor pieceColor = PieceColor.WHITE;
 

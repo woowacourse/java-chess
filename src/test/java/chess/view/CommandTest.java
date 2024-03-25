@@ -13,7 +13,7 @@ class CommandTest {
 
     @Test
     @DisplayName("생성자를 통해 생성한다.")
-    void createWithConstructor() {
+    void createWithConstructorTest() {
         // given
         CommandType type = CommandType.MOVE;
         List<String> arguments = List.of("move", "b2", "b3");
@@ -25,7 +25,7 @@ class CommandTest {
 
     @Test
     @DisplayName("move 명령어의 인자가 2개 미만일 경우 예외가 발생한다.")
-    void validateMoveArgumentCount() {
+    void validateMoveArgumentCountTest() {
         // given
         List<String> arguments = List.of("move", "b2");
 
@@ -37,7 +37,7 @@ class CommandTest {
 
     @Test
     @DisplayName("타입이 같은지 확인한다.")
-    void isType() {
+    void isTypeTest() {
         // given
         Command command = Command.from(List.of("start"));
 
@@ -50,7 +50,7 @@ class CommandTest {
 
     @Test
     @DisplayName("인덱스를 통해 인자를 가져온다.")
-    void getArgument() {
+    void getArgumentTest() {
         // given
         CommandType type = CommandType.MOVE;
         List<String> arguments = List.of("move", "b2", "b3");

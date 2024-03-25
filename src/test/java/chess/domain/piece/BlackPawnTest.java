@@ -20,7 +20,7 @@ class BlackPawnTest {
     @ParameterizedTest
     @ValueSource(strings = {"c6", "c5"})
     @DisplayName("처음에 아래로 최대 두 칸까지 이동할 수 있다.")
-    void moveUpToTwoStepWhenBlackPawnFirstStep(String targetInput) {
+    void moveUpToTwoStepWhenBlackPawnFirstStepTest(String targetInput) {
         //given
         Square source = Square.from("c7");
         Square target = Square.from(targetInput);
@@ -36,7 +36,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("처음에 아래로 세 칸 이상 이동할 경우 예외가 발생한다.")
-    void validateStepLimitBlackPawnForFirst() {
+    void validateStepLimitBlackPawnForFirstTest() {
         // given
         Square source = Square.from("c7");
         Square target = Square.from("c4");
@@ -51,7 +51,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("두번째 이동부터 아래로 한 칸만 이동할 수 있다.")
-    void moveOneStepWhenBlackPawnAfterFirstStep() {
+    void moveOneStepWhenBlackPawnAfterFirstStepTest() {
         //given
         Square source = Square.from("c7");
         Square stopover = Square.from("c5");
@@ -70,7 +70,7 @@ class BlackPawnTest {
     @ParameterizedTest
     @ValueSource(strings = {"c3", "c2"})
     @DisplayName("두번째 이동부터 아래로 두 칸 이상 이동할 경우 예외가 발생한다.")
-    void validateStepLimitBlackPawnAfterFirst(String targetInput) {
+    void validateStepLimitBlackPawnAfterFirstTest(String targetInput) {
         // given
         Square source = Square.from("c7");
         Square stopover = Square.from("c5");
@@ -90,7 +90,7 @@ class BlackPawnTest {
     @ParameterizedTest
     @ValueSource(strings = {"b7", "b8", "c8", "d8", "d7"})
     @DisplayName("아래가 아닌 곳으로 이동할 경우 예외가 발생한다.")
-    void validateDirectionBlackPawn(String targetInput) {
+    void validateDirectionBlackPawnTest(String targetInput) {
         // given
         Square source = Square.from("c7");
         Square target = Square.from(targetInput);
@@ -105,7 +105,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("아래 대각선 한 칸에 적 기물이 존재하면 이동하여 공격할 수 있다.")
-    void attackDiagonalForBlackPawn() {
+    void attackDiagonalForBlackPawnTest() {
         // given
         Square source = Square.from("c7");
         Square target = Square.from("b6");
@@ -122,7 +122,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("아래 대각선으로 두 칸 이동하여 공격할 경우 예외가 발생한다.")
-    void validateAttackStepLimit() {
+    void validateAttackStepLimitTest() {
         // given
         Square source = Square.from("c7");
         Square target = Square.from("a5");
@@ -138,7 +138,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("목적지에 기물이 존재할 경우 예외가 발생한다.")
-    void validateObstacleTarget() {
+    void validateObstacleTargetTest() {
         // given
         Square source = Square.from("c7");
         Square target = Square.from("c6");
@@ -154,7 +154,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("출발지와 목적지 사이에 기물이 존재할 경우 예외가 발생한다.")
-    void validateObstaclePath() {
+    void validateObstaclePathTest() {
         // given
         Square source = Square.from("c7");
         Square target = Square.from("c5");
@@ -170,7 +170,7 @@ class BlackPawnTest {
 
     @Test
     @DisplayName("타입을 반환한다.")
-    void getType() {
+    void getTypeTest() {
         // given
         Square source = Square.from("c6");
         Pawn pawn = new Pawn(PIECE_COLOR, source);

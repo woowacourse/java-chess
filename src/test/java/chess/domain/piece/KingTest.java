@@ -18,7 +18,7 @@ class KingTest {
     @ParameterizedTest
     @ValueSource(strings = {"b7", "c7", "d7", "d6", "d5", "c5", "b5", "b6"})
     @DisplayName("상하좌우 대각선 중 한칸 이동한 뒤 위치 상태를 목적지로 변경한다.")
-    void move(String targetInput) {
+    void moveTest(String targetInput) {
         // given
         Square source = Square.from("c6");
         Square target = Square.from(targetInput);
@@ -34,7 +34,7 @@ class KingTest {
 
     @Test
     @DisplayName("두 칸 이상 이동할 경우 예외가 발생한다.")
-    void validateStepCount() {
+    void validateStepCountTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c4");
@@ -49,7 +49,7 @@ class KingTest {
 
     @Test
     @DisplayName("목적지에 적 기물이 존재하면 공격이 가능하다.")
-    void attackOnTargetSquare() {
+    void attackOnTargetSquareTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c5");
@@ -66,7 +66,7 @@ class KingTest {
 
     @Test
     @DisplayName("목적지에 아군 기물이 존재할 경우 예외가 발생한다.")
-    void validateFriendly() {
+    void validateFriendlyTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c5");
@@ -82,7 +82,7 @@ class KingTest {
 
     @Test
     @DisplayName("타입을 반환한다.")
-    void getType() {
+    void getTypeTest() {
         // given
         Square source = Square.from("c6");
         King king = new King(PieceColor.BLACK, source);
