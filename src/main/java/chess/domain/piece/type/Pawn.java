@@ -3,7 +3,9 @@ package chess.domain.piece.type;
 import chess.domain.position.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
@@ -16,10 +18,6 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public boolean canCatch(final Movement movement) {
-        return movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP;
-    }
-
     @Override
     public boolean canMove(final Movement movement) {
         if (this.isBlack()) {
@@ -29,13 +27,12 @@ public class Pawn extends Piece {
         return canWhiteMove(movement);
     }
 
-    private boolean canWhiteMove(final Movement movement) {
-        if (isInitPosition(movement)) {
-            return movement.isUp() && movement.getRankDistance() == INIT_AVAILABLE_STEP
-                    || movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+    @Override
+    public Set<Position> getCatchRoute(final Movement movement) {
+        if (!(movement.isDiagonal() && movement.getRankDistance() == Pawn.DEFAULT_STEP)) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선으로만 기물을 잡을 수 있습니다.");
         }
-
-        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+        return getRoute(movement);
     }
 
     private boolean canBlackMove(final Movement movement) {
@@ -44,7 +41,16 @@ public class Pawn extends Piece {
                     || !movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
         }
 
-        return !movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+        return movement.isVertical() && !movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
+    }
+
+    private boolean canWhiteMove(final Movement movement) {
+        if (isInitPosition(movement)) {
+            return movement.isVertical() && movement.getRankDistance() == INIT_AVAILABLE_STEP
+                    || movement.isVertical() && movement.getRankDistance() == DEFAULT_STEP;
+        }
+
+        return movement.isUp() && movement.getRankDistance() == DEFAULT_STEP;
     }
 
     private boolean isInitPosition(final Movement movement) {
@@ -54,6 +60,4 @@ public class Pawn extends Piece {
 
         return movement.getCurrent().isRank(INIT_WHITE_RANK);
     }
-
-
 }

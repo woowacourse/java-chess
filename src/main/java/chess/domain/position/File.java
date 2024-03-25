@@ -43,7 +43,7 @@ public enum File {
         return Math.abs(this.index - other.index);
     }
 
-    public boolean isBigger(final File other) {
+    public boolean isRighter(final File other) {
         return this.index > other.index;
     }
 

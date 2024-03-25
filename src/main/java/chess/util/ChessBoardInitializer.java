@@ -12,7 +12,7 @@ import chess.domain.piece.type.Knight;
 import chess.domain.piece.type.Pawn;
 import chess.domain.piece.type.Queen;
 import chess.domain.piece.type.Rook;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardInitializer {
@@ -21,7 +21,7 @@ public class ChessBoardInitializer {
     }
 
     public static ChessBoard init() {
-        final Map<Position, Piece> pieces = new LinkedHashMap<>();
+        final Map<Position, Piece> pieces = new HashMap<>();
 
         createPieceWithoutPawn(pieces, Color.BLACK, Rank.EIGHT);
         createPawn(pieces, Color.BLACK, Rank.SEVEN);

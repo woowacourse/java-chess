@@ -33,11 +33,11 @@ public class Movement {
     }
 
     public boolean isUp() {
-        return destination.getRank().isUp(current.getRank());
+        return destination.isRankUpper(current);
     }
 
     public boolean isRight() {
-        return destination.getFile().isBigger(current.getFile());
+        return destination.isFileRighter(current);
     }
 
     public int getRankDistance() {

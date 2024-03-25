@@ -36,16 +36,24 @@ public class Position {
         return this.rank.getDistance(other.rank);
     }
 
+    public boolean isRankUpper(final Position other) {
+        return this.rank.isUp(other.rank);
+    }
+
+    public boolean isFileRighter(final Position other) {
+        return this.file.isRighter(other.file);
+    }
+
     public boolean isRank(final Rank rank) {
         return this.rank.equals(rank);
     }
 
-    public File getFile() {
-        return file;
+    public int getFileIndex() {
+        return this.file.getIndex();
     }
 
-    public Rank getRank() {
-        return rank;
+    public int getRankIndex() {
+        return this.rank.getIndex();
     }
 
     @Override

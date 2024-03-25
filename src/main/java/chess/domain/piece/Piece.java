@@ -15,7 +15,9 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract boolean canMove(final Movement movement);
+    public Set<Position> getCatchRoute(final Movement movement) {
+        return getRoute(movement);
+    }
 
     public Set<Position> getRoute(final Movement movement) {
         Position position = movement.getLowerPosition();
@@ -43,6 +45,8 @@ public abstract class Piece {
     public boolean isBlack() {
         return this.color.equals(Color.BLACK);
     }
+
+    public abstract boolean canMove(final Movement movement);
 
     @Override
     public boolean equals(Object o) {
