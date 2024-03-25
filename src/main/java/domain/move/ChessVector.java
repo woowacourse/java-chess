@@ -12,6 +12,12 @@ public class ChessVector {
         this.rankVector = rankVector;
     }
 
+    /**
+    * gcd(최대 공약수)를 구하는 이유: 단위 벡터를 구하기 위해 사용됩니다.
+    * fileVector와 rankVector의 gcd로 양 쪽을 나누어, 방향성을 가진 최소 길이의 벡터를 구합니다.
+    * 단위벡터를 구하는 이유: 두 Position을 통해 단위 벡터를 구한뒤, Direction에 정의된 방향이 있는지 확인합니다.
+    */
+
     public ChessVector toUnitVector() {
         return new ChessVector(fileVector / gcd(), rankVector / gcd());
     }
