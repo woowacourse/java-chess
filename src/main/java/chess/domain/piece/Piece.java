@@ -16,6 +16,10 @@ public interface Piece {
 
     Team getTeam();
 
+    boolean isEmpty();
+
+    boolean isNotEmpty();
+
     boolean isSameTeam(Piece piece);
 
     boolean isNotSameTeam(Piece piece);

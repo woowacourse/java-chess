@@ -36,10 +36,11 @@ public abstract class Pawn extends AbstractPiece {
     public boolean canMove(final Coordinate now, final Coordinate destination,
                            final Map<Coordinate, Piece> boardInformation) {
         Set<Coordinate> coordinates = straightLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination) == null)
+                .filter(coordinate -> boardInformation.get(destination).isEmpty())
                 .collect(Collectors.toSet());
         coordinates.addAll(diagonalLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination) != null && boardInformation.get(destination)
+                .filter(coordinate -> boardInformation.get(destination).isNotEmpty() && boardInformation.get(
+                                destination)
                         .isNotSameTeam(this))
                 .collect(Collectors.toSet()));
         return coordinates.contains(destination);

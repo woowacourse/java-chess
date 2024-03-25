@@ -8,6 +8,7 @@ import static chess.domain.fixture.CoordinateFixture.C7;
 import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D6;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.NORMAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
@@ -51,7 +52,7 @@ class InitialBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C5, null);
+        boardInformation.put(C5, EMPTY_PIECE);
 
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isTrue();
     }

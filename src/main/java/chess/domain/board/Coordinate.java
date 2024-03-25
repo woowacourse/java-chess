@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 public class Coordinate {
 
-    private final static Map<String, Coordinate> POOL;
+    final static Map<String, Coordinate> COORDINATE_POOL;
 
     static {
         List<File> files = Arrays.stream(File.values()).toList();
         List<Rank> ranks = Arrays.stream(Rank.values()).toList();
 
-        POOL = files.stream()
+        COORDINATE_POOL = files.stream()
                 .flatMap(file -> ranks.stream()
                         .map(rank -> new Coordinate(file, rank))
                 )
@@ -35,10 +35,10 @@ public class Coordinate {
     }
 
     public static Coordinate of(File file, Rank rank) {
-        if (POOL.get(toKey(file, rank)) == null) {
+        if (COORDINATE_POOL.get(toKey(file, rank)) == null) {
             throw new IllegalArgumentException("존재하지 않는 좌표 입니다.");
         }
-        return POOL.get(toKey(file, rank));
+        return COORDINATE_POOL.get(toKey(file, rank));
     }
 
     private static String toKey(File file, Rank rank) {

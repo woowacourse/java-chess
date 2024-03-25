@@ -7,6 +7,7 @@ import static chess.domain.fixture.CoordinateFixture.E5;
 import static chess.domain.fixture.CoordinateFixture.F6;
 import static chess.domain.fixture.CoordinateFixture.G7;
 import static chess.domain.fixture.CoordinateFixture.H8;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
@@ -51,7 +52,7 @@ class BishopTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(G7, INITIAL_BLACK_PAWN);
+        boardInformation.put(G7, EMPTY_PIECE);
 
         assertThat(WHITE_BISHOP.canMove(A1, G7, boardInformation)).isTrue();
     }

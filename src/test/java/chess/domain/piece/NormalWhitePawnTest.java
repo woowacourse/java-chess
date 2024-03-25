@@ -8,6 +8,7 @@ import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.D3;
 import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +51,7 @@ class NormalWhitePawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C4, null);
+        boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(NORMAL_WHITE_PAWN.canMove(C3, C4, boardInformation)).isTrue();
     }

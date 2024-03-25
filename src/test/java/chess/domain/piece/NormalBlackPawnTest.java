@@ -5,9 +5,9 @@ import static chess.domain.fixture.CoordinateFixture.B5;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.C6;
-import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D5;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.NORMAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +50,7 @@ class NormalBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C4, null);
+        boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isTrue();
     }
@@ -70,6 +70,6 @@ class NormalBlackPawnTest {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
         boardInformation.put(C4, BLACK_KNIGHT);
 
-        assertThat(NORMAL_BLACK_PAWN.canMove(C5, D4, boardInformation)).isFalse();
+        assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isFalse();
     }
 }

@@ -10,7 +10,7 @@ import static chess.domain.fixture.CoordinateFixture.H1;
 import static chess.domain.fixture.CoordinateFixture.H4;
 import static chess.domain.fixture.CoordinateFixture.H8;
 import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
-import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.WHITE_ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -52,7 +52,7 @@ class RookTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(H1, INITIAL_BLACK_PAWN);
+        boardInformation.put(H1, EMPTY_PIECE);
 
         assertThat(WHITE_ROOK.canMove(A1, H1, boardInformation)).isTrue();
     }

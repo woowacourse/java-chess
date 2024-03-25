@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import static chess.domain.board.Coordinate.COORDINATE_POOL;
+
+import chess.domain.piece.DummyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.piece.directionmove.Bishop;
@@ -20,16 +23,22 @@ public class BoardFactory {
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
     private static final char MIN_FILE_RANGE = 'a';
     private static final char MAX_FILE_RANGE = 'h';
-    private static final HashMap<Coordinate, Piece> INITIAL_BOARD = new HashMap<>();
+    private static final Map<Coordinate, Piece> INITIAL_BOARD = new HashMap<>();
 
     private BoardFactory() {
     }
 
     public static Map<Coordinate, Piece> createInitialPieces() {
-
+        INITIAL_BOARD.putAll(initialEmpty());
         initializeWhitePiece();
         initializeBlackPiece();
         return INITIAL_BOARD;
+    }
+
+    static Map<Coordinate, Piece> initialEmpty() {
+        Map<Coordinate, Piece> emptyBoard = new HashMap<>();
+        COORDINATE_POOL.values().forEach(coordinate -> emptyBoard.put(coordinate, new DummyPiece()));
+        return emptyBoard;
     }
 
     private static void initializeWhitePiece() {

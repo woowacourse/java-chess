@@ -1,21 +1,23 @@
 package chess.domain.board;
 
+import static chess.domain.board.BoardFactory.initialEmpty;
+
 import chess.domain.piece.Piece;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Board {
-    private final Map<Coordinate, Piece> pieces = new HashMap<>();
+    private final Map<Coordinate, Piece> pieces;
 
     public Board(final Map<Coordinate, Piece> pieces) {
+        this.pieces = initialEmpty();
         this.pieces.putAll(pieces);
     }
 
     public Board() {
-        this(BoardFactory.createInitialPieces());
+        pieces = BoardFactory.createInitialPieces();
     }
 
     public Piece findByCoordinate(final Coordinate coordinate) {
@@ -27,15 +29,17 @@ public class Board {
         Piece sourcePiece = findByCoordinate(source);
         List<Coordinate> coordinates = sourcePiece.legalNextCoordinates(source, target);
         if (sourcePiece.canMove(source, target, makeBoardInformation(coordinates))) {
-            swap(source, target, sourcePiece);
+            swap(source, target);
             return;
         }
         throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
     }
 
-    private void swap(final Coordinate source, final Coordinate target, final Piece sourcePiece) {
+    private void swap(final Coordinate source, final Coordinate target) {
+        Piece sourcePiece = pieces.get(source);
+        Piece targetPiece = pieces.get(target);
         pieces.put(target, sourcePiece.updateAfterMove());
-        pieces.remove(source);
+        pieces.put(source, targetPiece.updateAfterMove());
     }
 
     private Map<Coordinate, Piece> makeBoardInformation(final List<Coordinate> coordinates) {
@@ -45,7 +49,7 @@ public class Board {
     }
 
     private void validateCoordinates(final Coordinate source, final Coordinate target) {
-        if (!pieces.containsKey(source)) {
+        if (pieces.get(source).isEmpty()) {
             throw new NoSuchElementException("보드에 움직일 대상 기물이 없습니다.");
         }
         if (source.equals(target)) {

@@ -12,8 +12,6 @@ import java.util.stream.IntStream;
 
 class BoardConverter {
 
-    private static final String DEFAULT_SHAPE = ".";
-
     List<List<String>> convertToViewData(Board board) {
         List<List<String>> viewData = new ArrayList<>();
 
@@ -28,16 +26,8 @@ class BoardConverter {
         return IntStream.rangeClosed('a', 'h')
                 .mapToObj(operand -> Coordinate.of(File.from(operand), Rank.from(rankValue)))
                 .map(board::findByCoordinate)
-                .map(this::getShapeOrDefault)
+                .map(this::convert)
                 .toList();
-    }
-
-    private String getShapeOrDefault(Piece piece) {
-        if (piece == null) {
-            return DEFAULT_SHAPE;
-        }
-
-        return convert(piece);
     }
 
     private String convert(Piece piece) {

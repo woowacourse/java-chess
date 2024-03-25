@@ -21,6 +21,16 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    @Override
     public PieceType getType() {
         return type;
     }

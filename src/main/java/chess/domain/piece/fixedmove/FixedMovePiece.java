@@ -36,7 +36,7 @@ abstract class FixedMovePiece extends AbstractPiece {
         return boardInformation.entrySet().stream()
                 .anyMatch(entry -> {
                     Piece piece = entry.getValue();
-                    return piece == null || isNotSameTeam(piece);
+                    return isNotSameTeam(piece);
                 });
     }
 

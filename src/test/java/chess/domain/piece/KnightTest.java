@@ -7,6 +7,7 @@ import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.F2;
 import static chess.domain.fixture.CoordinateFixture.F3;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
 import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +51,7 @@ class KnightTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C3, null);
+        boardInformation.put(C3, EMPTY_PIECE);
 
         assertThat(WHITE_KNIGHT.canMove(B1, C3, boardInformation)).isTrue();
     }

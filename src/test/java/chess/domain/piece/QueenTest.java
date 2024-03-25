@@ -8,7 +8,7 @@ import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.E6;
 import static chess.domain.fixture.CoordinateFixture.H8;
 import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
-import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
+import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,7 +51,7 @@ class QueenTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(H8, INITIAL_BLACK_PAWN);
+        boardInformation.put(H8, EMPTY_PIECE);
 
         assertThat(WHITE_QUEEN.canMove(A1, H8, boardInformation)).isTrue();
     }

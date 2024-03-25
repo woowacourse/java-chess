@@ -3,6 +3,7 @@ package chess.domain.fixture;
 import static chess.domain.piece.Team.BLACK;
 import static chess.domain.piece.Team.WHITE;
 
+import chess.domain.piece.DummyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.directionmove.Bishop;
 import chess.domain.piece.directionmove.Queen;
@@ -31,4 +32,5 @@ public class PieceFixture {
     public static final Piece NORMAL_BLACK_PAWN = new NormalBlackPawn();
     public static final Piece INITIAL_BLACK_PAWN = new InitialBlackPawn();
 
+    public static final Piece EMPTY_PIECE = new DummyPiece();
 }

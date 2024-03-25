@@ -34,7 +34,7 @@ abstract class DirectionMovePiece extends AbstractPiece {
                            final Map<Coordinate, Piece> boardInformation) {
         List<Coordinate> coordinates = new LinkedList<>(mapUntilEmpty(boardInformation));
         var endPoint = boardInformation.entrySet().stream()
-                .filter(entry -> entry.getValue() != null)
+                .filter(entry -> entry.getValue().isNotEmpty())
                 .findFirst();
         if (endPoint.isPresent() && endPoint.get().getValue().isNotSameTeam(this)) {
             coordinates.add(endPoint.get().getKey());
@@ -44,7 +44,7 @@ abstract class DirectionMovePiece extends AbstractPiece {
 
     private List<Coordinate> mapUntilEmpty(final Map<Coordinate, Piece> boardInformation) {
         return boardInformation.entrySet().stream()
-                .takeWhile(entry -> entry.getValue() == null)
+                .takeWhile(entry -> entry.getValue().isEmpty())
                 .map(Entry::getKey)
                 .toList();
     }
