@@ -10,9 +10,10 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
         int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
+        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
+        return Math.abs(fileDifference) == 1 && Math.abs(rankDifference) <= 1
+            || Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) == 1;
     }
 
     @Override
