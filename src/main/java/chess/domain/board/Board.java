@@ -23,14 +23,6 @@ public class Board {
         this.board = new LinkedHashMap<>(board);
     }
 
-    public void init() {
-//        Arrays.stream(Side.values()).forEach(this::initSide);
-    }
-
-    public boolean hasPiece(Position position) {
-        return board.containsKey(position);
-    }
-
     public void move(Position source, Position target) {
         Piece sourcePiece = findPiece(source);
         Route route = Route.create(source, target, this);
