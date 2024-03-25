@@ -11,7 +11,6 @@ import static chess.model.Fixtures.F6;
 import static chess.model.Fixtures.G1;
 import static chess.model.Fixtures.G3;
 import static chess.model.material.Color.WHITE;
-import static chess.model.material.Type.BISHOP;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -38,7 +37,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void bishopCanMove(Position source, Position target) {
-        Piece piece = new Bishop(BISHOP, WHITE);
+        Piece piece = new Bishop(WHITE);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
     }
@@ -66,7 +65,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void bishopCanNotMove(Position source, Position target) {
-        Piece piece = new Bishop(BISHOP, WHITE);
+        Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Bishop은 대각선 이동만 가능합니다.");

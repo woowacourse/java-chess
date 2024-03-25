@@ -16,7 +16,6 @@ import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.F5;
 import static chess.model.Fixtures.G6;
 import static chess.model.material.Color.BLACK;
-import static chess.model.material.Type.KNIGHT;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -44,7 +43,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void knightCanMove(Position source, Position target) {
-        Piece piece = new Knight(KNIGHT, BLACK);
+        Piece piece = new Knight(BLACK);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
     }
@@ -76,7 +75,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void knightCanNotMove(Position source, Position target) {
-        Piece piece = new Knight(KNIGHT, BLACK);
+        Piece piece = new Knight(BLACK);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Knight는 L자 이동만 가능합니다.");

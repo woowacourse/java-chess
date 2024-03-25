@@ -21,7 +21,6 @@ import static chess.model.Fixtures.initiation;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
 import static chess.model.material.Type.KNIGHT;
-import static chess.model.material.Type.PAWN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -50,7 +49,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideSingleMoveWithColor")
     void pawnCanSingleMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(PAWN, color);
+        Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
@@ -77,7 +76,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideDoubleMoveWithColor")
     void pawnCanDoubleMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(PAWN, color);
+        Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
@@ -104,7 +103,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideInvalidMoveWithColor")
     void kingCanNotMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(PAWN, color);
+        Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
@@ -138,7 +137,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideAttackMoveWithColor")
     void pawnCanAttackMove(Position source, Position target, Color color) {
-        Piece piece = Pawn.of(PAWN, color);
+        Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
         EMPTY_PIECES.put(B4, Piece.of(KNIGHT, BLACK));
         EMPTY_PIECES.put(D4, Piece.of(KNIGHT, BLACK));
@@ -172,7 +171,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideInvalidAttackMoveWithColor")
     void pawnCanNotAttackMove(Position source, Position target, Color color) {
-        Piece piece = Pawn.of(PAWN, color);
+        Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
         EMPTY_PIECES.put(D2, Piece.of(KNIGHT, BLACK));
         EMPTY_PIECES.put(G6, Piece.of(KNIGHT, WHITE));

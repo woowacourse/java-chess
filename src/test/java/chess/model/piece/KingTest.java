@@ -15,7 +15,6 @@ import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.F4;
 import static chess.model.Fixtures.G5;
 import static chess.model.material.Color.WHITE;
-import static chess.model.material.Type.KING;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -42,7 +41,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void kingCanMove(Position source, Position target) {
-        Piece piece = new King(KING, WHITE);
+        Piece piece = new King(WHITE);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
     }
@@ -74,7 +73,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void kingCanNotMove(Position source, Position target) {
-        Piece piece = new King(KING, WHITE);
+        Piece piece = new King(WHITE);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("King은 상하좌우 대각선 1칸 이동만 가능합니다.");

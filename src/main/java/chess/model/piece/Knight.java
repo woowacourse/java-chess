@@ -10,7 +10,6 @@ import static chess.model.position.Direction.UP_UP_LEFT;
 import static chess.model.position.Direction.UP_UP_RIGHT;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 import java.util.List;
@@ -23,8 +22,8 @@ public class Knight extends Piece {
         LEFT_LEFT_UP, LEFT_LEFT_DOWN, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN
     );
 
-    public Knight(Type type, Color color) {
-        super(type, color);
+    public Knight(Color color) {
+        super(color);
     }
 
     @Override
@@ -38,5 +37,10 @@ public class Knight extends Piece {
             return;
         }
         throw new IllegalArgumentException("Knight는 L자 이동만 가능합니다.");
+    }
+
+    @Override
+    public boolean isKnight() {
+        return true;
     }
 }

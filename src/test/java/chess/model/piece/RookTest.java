@@ -11,7 +11,6 @@ import static chess.model.Fixtures.F6;
 import static chess.model.Fixtures.G2;
 import static chess.model.Fixtures.H4;
 import static chess.model.material.Color.WHITE;
-import static chess.model.material.Type.ROOK;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -38,7 +37,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void rookCanMove(Position source, Position target) {
-        Piece piece = new Rook(ROOK, WHITE);
+        Piece piece = new Rook(WHITE);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
     }
@@ -66,7 +65,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void rookCanNotMove(Position source, Position target) {
-        Piece piece = new Rook(ROOK, WHITE);
+        Piece piece = new Rook(WHITE);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Rook은 상하좌우 이동만 가능합니다.");

@@ -12,7 +12,6 @@ import static chess.model.position.Direction.UP_RIGHT;
 import static chess.model.position.Direction.UP_UP;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 import chess.model.position.Row;
@@ -26,8 +25,8 @@ public class Pawn extends Piece {
     private static final Row WHITE_INITIAL_ROW = Row.TWO;
     private static final Row BLACK_INITIAL_ROW = Row.SEVEN;
 
-    public Pawn(Type type, Color color) {
-        super(type, color);
+    public Pawn(Color color) {
+        super(color);
     }
 
     @Override
@@ -76,5 +75,10 @@ public class Pawn extends Piece {
             return true;
         }
         return direction == DOWN;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

@@ -6,7 +6,6 @@ import static chess.model.position.Direction.RIGHT;
 import static chess.model.position.Direction.UP;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 import java.util.List;
@@ -16,8 +15,8 @@ public class Rook extends Piece {
 
     private static final List<Direction> DIRECTIONS = List.of(UP, DOWN, LEFT, RIGHT);
 
-    public Rook(Type type, Color color) {
-        super(type, color);
+    public Rook(Color color) {
+        super(color);
     }
 
     @Override
@@ -32,5 +31,10 @@ public class Rook extends Piece {
             return;
         }
         throw new IllegalArgumentException("Rook은 상하좌우 이동만 가능합니다.");
+    }
+
+    @Override
+    public boolean isRook() {
+        return true;
     }
 }

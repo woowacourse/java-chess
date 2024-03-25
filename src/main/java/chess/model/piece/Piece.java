@@ -10,34 +10,32 @@ import java.util.Map;
 
 public abstract class Piece implements MoveStrategy {
 
-    protected final Type type;
     protected final Color color;
 
-    protected Piece(Type type, Color color) {
-        this.type = type;
+    protected Piece(Color color) {
         this.color = color;
     }
 
     public static Piece of(Type type, Color color) {
         if (Type.PAWN.equals(type)) {
-            return new Pawn(type, color);
+            return new Pawn(color);
         }
         if (Type.ROOK.equals(type)) {
-            return new Rook(type, color);
+            return new Rook(color);
         }
         if (Type.KNIGHT.equals(type)) {
-            return new Knight(type, color);
+            return new Knight(color);
         }
         if (Type.BISHOP.equals(type)) {
-            return new Bishop(type, color);
+            return new Bishop(color);
         }
         if (Type.QUEEN.equals(type)) {
-            return new Queen(type, color);
+            return new Queen(color);
         }
         if (Type.KING.equals(type)) {
-            return new King(type, color);
+            return new King(color);
         }
-        return new None(type, color);
+        return new None(NONE);
     }
 
     protected void validateRoute(Position source, Position target, Map<Position, Piece> pieces) {
@@ -67,15 +65,35 @@ public abstract class Piece implements MoveStrategy {
         return this.color == color;
     }
 
-    public boolean isSameType(Type type) {
-        return this.type == type;
+    public boolean isExist() {
+        return !isNone();
     }
 
     public boolean isNone() {
-        return type.isNone();
+        return false;
     }
 
-    public boolean isExist() {
-        return type.isNotNone();
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isRook() {
+        return false;
+    }
+
+    public boolean isKnight() {
+        return false;
+    }
+
+    public boolean isBishop() {
+        return false;
+    }
+
+    public boolean isQueen() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
     }
 }

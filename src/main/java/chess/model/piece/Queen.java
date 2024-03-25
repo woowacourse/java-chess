@@ -10,7 +10,6 @@ import static chess.model.position.Direction.UP_LEFT;
 import static chess.model.position.Direction.UP_RIGHT;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.position.Direction;
 import chess.model.position.Position;
 import java.util.List;
@@ -23,8 +22,8 @@ public class Queen extends Piece {
         UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
     );
 
-    public Queen(Type type, Color color) {
-        super(type, color);
+    public Queen(Color color) {
+        super(color);
     }
 
     @Override
@@ -39,5 +38,10 @@ public class Queen extends Piece {
             return;
         }
         throw new IllegalArgumentException("Queen은 상하좌우 대각선 이동만 가능합니다.");
+    }
+
+    @Override
+    public boolean isQueen() {
+        return true;
     }
 }

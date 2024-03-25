@@ -16,7 +16,6 @@ import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.G4;
 import static chess.model.Fixtures.G5;
 import static chess.model.material.Color.WHITE;
-import static chess.model.material.Type.QUEEN;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -43,7 +42,7 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void queenCanMove(Position source, Position target) {
-        Piece piece = new Queen(QUEEN, WHITE);
+        Piece piece = new Queen(WHITE);
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
     }
@@ -75,7 +74,7 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void queenCanNotMove(Position source, Position target) {
-        Piece piece = new Queen(QUEEN, WHITE);
+        Piece piece = new Queen(WHITE);
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Queen은 상하좌우 대각선 이동만 가능합니다.");
