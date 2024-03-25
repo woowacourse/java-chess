@@ -34,13 +34,13 @@ public enum Direction {
     }
 
     public static Direction findDirection(Position source, Position target) {
-        Vector vector = source.generateVectorToTargetPosition(target);
+        Vector vector = target.generateVectorToTargetPosition(source);
         Vector unitVector = vector.toUnitVector();
 
         return Arrays.stream(values())
                 .filter(direction -> isSameDirection(direction, unitVector))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR]움직일 수 없는 방향입니다."));
     }
 
     private static boolean isSameDirection(final Direction direction, final Vector vector) {

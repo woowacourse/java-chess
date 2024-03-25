@@ -33,19 +33,19 @@ public class ChessBoard {
 
     private void commonMoveValidate(Position sourcePosition, Position targetPosition) {
         if (!piecePosition.containsKey(sourcePosition)) {
-            throw new IllegalArgumentException("해당 위치에 Piece가 존재하지 않습니다.");
+            throw new IllegalArgumentException("[ERROR]해당 위치에 Piece가 존재하지 않습니다.");
         }
         if (hasSameColorPiece(sourcePosition, targetPosition)) {
-            throw new IllegalArgumentException("같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR]같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
         }
         if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("같은 위치로의 이동입니다. 다시 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR]같은 위치로의 이동입니다. 다시 입력해주세요.");
         }
     }
 
     private void validateCorrectTurn(final Piece findPiece) {
         if (!findPiece.isEqualColor(turn)) {
-            throw new IllegalArgumentException("현재는 " + turn.name() + "의 이동 차례입니다.");
+            throw new IllegalArgumentException("[ERROR]현재는 " + turn.name() + "의 이동 차례입니다.");
         }
     }
 
