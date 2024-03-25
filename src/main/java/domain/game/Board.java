@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final double DUPLICATED_PAWN_PENALTY_RATE = 0.5;
+
     private final Map<Position, Piece> chessBoard;
 
     public Board(final Map<Position, Piece> chessBoard) {
@@ -83,6 +85,10 @@ public class Board {
                 .mapToDouble(Piece::value)
                 .sum();
 
+        return totalPieceValue - calcDuplicatedPawnPenalty(teamPieces);
+    }
+
+    private double calcDuplicatedPawnPenalty(Map<Position, Piece> teamPieces) {
         Map<File, Long> pawnCounts = teamPieces.entrySet().stream()
                 .filter(entry -> entry.getValue().isPawn())
                 .collect(Collectors.groupingBy(entry -> entry.getKey().file(), Collectors.counting()));
@@ -92,7 +98,7 @@ public class Board {
                 .mapToInt(Long::intValue)
                 .sum();
 
-        return totalPieceValue - (duplicatedPawnCount * 0.5);
+        return duplicatedPawnCount * DUPLICATED_PAWN_PENALTY_RATE;
     }
 
     public Map<Position, Piece> getChessBoard() {
