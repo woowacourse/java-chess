@@ -51,7 +51,7 @@ class DirectionTest {
     void true_if_direction_is_up_or_down() {
 
         final Set<Direction> set = EnumSet.of(Direction.UP, Direction.DOWN);
-        set.forEach(direction -> assertThat(direction.isStraight()).isTrue());
+        set.forEach(direction -> assertThat(direction.isVertical()).isTrue());
     }
 
     @Test
@@ -61,6 +61,6 @@ class DirectionTest {
         set.remove(Direction.UP);
         set.remove(Direction.DOWN);
 
-        set.forEach(direction -> assertThat(direction.isStraight()).isFalse());
+        set.forEach(direction -> assertThat(direction.isVertical()).isFalse());
     }
 }

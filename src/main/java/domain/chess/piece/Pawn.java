@@ -67,7 +67,7 @@ public class Pawn extends Piece {
 
     private boolean canMovePointWithAttack(final Point movePoint, final Pieces pieces) {
         final Direction direction = this.point.calculate(movePoint);
-        if (notContainDirection(direction) || direction.isStraight()) {
+        if (notContainDirection(direction) || direction.isVertical()) {
             return false;
         }
         return singleCase(movePoint, direction) && hasEnemyPiece(movePoint, pieces);

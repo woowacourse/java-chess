@@ -48,7 +48,7 @@ public enum Direction {
         return canMovePredicate.test(point);
     }
 
-    public boolean isStraight() {
+    public boolean isVertical() {
         return this == UP || this == DOWN;
     }
 
