@@ -15,7 +15,10 @@ import static chess.fixture.PositionFixture.A4;
 import static chess.fixture.PositionFixture.A5;
 import static chess.fixture.PositionFixture.A6;
 import static chess.fixture.PositionFixture.A7;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B3;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class BoardTest {
 
@@ -47,5 +50,18 @@ public class BoardTest {
                 new Empty(),
                 new Pawn(Side.WHITE)
         )));
+    }
+
+    @DisplayName("기물을 source 위치에서 target 위치로 옮긴다.")
+    @Test
+    void move() {
+        Board board = new Board(new BoardCreator());
+
+        board.move(B2, B3);
+
+        assertAll(
+                () -> assertThat(board.findPiece(B2)).isEqualTo(new Empty()),
+                () -> assertThat(board.findPiece(B3)).isEqualTo(new Pawn(Side.WHITE))
+        );
     }
 }

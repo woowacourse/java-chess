@@ -54,11 +54,11 @@ public enum Rank {
                 .collect(Collectors.toList());
     }
 
-    private Predicate<Rank> targetToSource(Rank target) {
-        return rank -> rank.value < this.value && rank.value > target.value;
+    private Predicate<Rank> targetToSource(Rank other) {
+        return rank -> rank.value < this.value && rank.value > other.value;
     }
 
-    private Predicate<Rank> sourceToTarget(Rank target) {
-        return rank -> rank.value > this.value && rank.value < target.value;
+    private Predicate<Rank> sourceToTarget(Rank other) {
+        return rank -> rank.value > this.value && rank.value < other.value;
     }
 }

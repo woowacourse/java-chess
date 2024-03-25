@@ -54,11 +54,11 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
-    private Predicate<File> targetToSource(File target) {
-        return file -> file.order < this.order && file.order > target.order;
+    private Predicate<File> targetToSource(File other) {
+        return file -> file.order < this.order && file.order > other.order;
     }
 
-    private Predicate<File> sourceToTarget(File target) {
-        return file -> file.order > this.order && file.order < target.order;
+    private Predicate<File> sourceToTarget(File other) {
+        return file -> file.order > this.order && file.order < other.order;
     }
 }
