@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -62,11 +63,10 @@ public class Position {
         return Position.of(row + rowDifference, column + columnDifference);
     }
 
-    public List<Position> findAllMovablePosition(Piece piece) {
+    public Stream<Position> findAllMovablePosition(Piece piece) {
         return positions.stream()
                 .filter(position -> position != this)
-                .filter(position -> piece.isMovable(new Positions(this, position)))
-                .toList();
+                .filter(position -> piece.isMovable(new Positions(this, position)));
     }
 
     public int calculateRowDifference(Position targetPosition) {

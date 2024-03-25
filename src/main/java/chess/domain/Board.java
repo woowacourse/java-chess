@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 public class Board {
     private final Map<Position, Piece> pieces;
@@ -18,7 +19,6 @@ public class Board {
     }
 
     public void validateSameTeamByPosition(Position position, Team team) {
-        validatePieceExistsOnPosition(position);
         if (pieces.get(position).isOppositeTeamWith(team)) {
             throw new IllegalArgumentException("%s 팀이 움직일 차례입니다".formatted(team.name()));
         }
@@ -91,13 +91,12 @@ public class Board {
         Position attackingPiecePosition = findAttackingPiecePosition(team, kingPosition);
         boolean isNotAttackAttackingPiece = isNotAttackAttackingPiece(team.opponent(), attackingPiecePosition);
         boolean isNotBlockAttackingPiece
-                = isNotBlockAttackingPiece(team, new Positions(attackingPiecePosition, kingPosition));
+                = isNotBlockAttackingPiece(team.opponent(), new Positions(attackingPiecePosition, kingPosition));
         return isNotSafePathAvailableForKing && isNotBlockAttackingPiece && isNotAttackAttackingPiece;
     }
 
     private boolean isNotSafePathAvailableForKing(Team team, Position kingPosition) {
         return kingPosition.findAllMovablePosition(new King(team))
-                .stream()
                 .filter(position -> isMovablePosition(team, position))
                 .allMatch(position -> calculateAttackedPositionCount(team, position) != 0);
     }
@@ -115,32 +114,30 @@ public class Board {
     }
 
     private int calculateAttackedPositionCount(Team team, Position position) {
-        return findAttackingPiecePositions(team, position).size();
+        return (int) findAttackingPiecePositions(team, position).count();
     }
 
     private Position findAttackingPiecePosition(Team team, Position position) {
         return findAttackingPiecePositions(team, position)
-                .stream()
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("해당 위치를 공격하는 기물은 없습니다."));
     }
 
-    private List<Position> findAttackingPiecePositions(Team team, Position position) {
-        return pieces.entrySet()
-                .stream()
-                .filter(entry -> !entry.getKey().equals(position) && entry.getValue().isOppositeTeamWith(team))
-                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
-                .map(Entry::getKey)
-                .toList();
+    private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
+        return findAttackingPiecePositions(attackingTeam, attackingPosition)
+                .allMatch(position -> position.equals(getKingPosition(attackingTeam.opponent())));
     }
 
-    private boolean isNotAttackAttackingPiece(Team attackingTeam, Position attackingPosition) {
+    private Stream<Position> findAttackingPiecePositions(Team team, Position position) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> !entry.getKey().equals(getKingPosition(attackingTeam.opponent()))
-                        && !entry.getKey().equals(attackingPosition))
-                .filter(entry -> entry.getValue().isOppositeTeamWith(attackingTeam))
-                .noneMatch(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), attackingPosition)));
+                .filter(entry -> isDifferentPiece(entry.getKey(), position, team))
+                .filter(entry -> isAttacking(entry.getValue(), new Positions(entry.getKey(), position)))
+                .map(Entry::getKey);
+    }
+
+    private boolean isDifferentPiece(Position source, Position target, Team team) {
+        return !source.equals(target) && pieces.get(source).isOppositeTeamWith(team);
     }
 
     private boolean isAttacking(Piece piece, Positions positions) {
@@ -155,21 +152,20 @@ public class Board {
     private boolean isNotBlockAttackingPiece(Team team, Positions positions) {
         List<Position> attackRoutePositions = pieces.get(positions.source())
                 .findBetweenPositionsWhenAttack(positions);
-        List<Position> teamPieceMovablePositions = findTeamPieceMovablePositions(team, positions);
+        Stream<Position> teamPieceMovablePositions = findTeamPieceMovablePositions(team, positions);
 
-        return teamPieceMovablePositions.stream()
+        return teamPieceMovablePositions
                 .noneMatch(attackRoutePositions::contains);
     }
 
-    private List<Position> findTeamPieceMovablePositions(Team team, Positions positions) {
+    private Stream<Position> findTeamPieceMovablePositions(Team team, Positions positions) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(team) && !entry.getKey().equals(positions.target()))
+                .filter(entry -> isDifferentPiece(entry.getKey(), positions.target(), team))
                 .flatMap(entry -> entry.getKey()
                         .findAllMovablePosition(entry.getValue())
-                        .stream()
-                        .filter(position -> !entry.getValue().equals(position) && isMovable(entry.getValue(), new Positions(entry.getKey(), position))))
-                .toList();
+                        .filter(position -> !entry.getKey().equals(position)
+                                && isMovable(entry.getValue(), new Positions(entry.getKey(), position))));
     }
 
     private boolean isMovable(Piece piece, Positions positions) {
