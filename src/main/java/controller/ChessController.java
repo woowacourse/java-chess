@@ -1,7 +1,7 @@
 package controller;
 
 import domain.command.Command;
-import domain.command.CommandParser;
+import domain.command.CommandType;
 import domain.game.ChessGame;
 import view.InputView;
 import view.OutputView;
@@ -34,6 +34,6 @@ public class ChessController {
     }
 
     private Command parseCommand() {
-        return CommandParser.parse(inputView.enterChessCommand());
+        return CommandType.parse(inputView.enterChessCommand());
     }
 }
