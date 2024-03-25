@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.Map;
 
@@ -91,7 +90,7 @@ public class Board {
 
     private void validateWhenPieceIsPawn(Position sourcePosition, Position targetPosition) {
         Piece piece = board.get(sourcePosition);
-        if (piece instanceof Pawn) {
+        if (piece.isPawn()) {
             validatePawnStraightCapture(sourcePosition, targetPosition);
             validatePawnDiagonalMove(sourcePosition, targetPosition);
         }

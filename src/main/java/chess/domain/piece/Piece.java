@@ -12,6 +12,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(Position sourcePosition, Position targetPosition);
 
+    public abstract boolean isPawn();
+
     public boolean isWhite() {
         return color == Color.WHITE;
     }

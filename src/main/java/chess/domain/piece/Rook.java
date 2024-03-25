@@ -13,4 +13,9 @@ public class Rook extends Piece {
         return sourcePosition.isOnSameRankAs(targetPosition)
             || sourcePosition.isOnSameFileAs(targetPosition);
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

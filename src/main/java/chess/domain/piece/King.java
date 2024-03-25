@@ -14,4 +14,9 @@ public class King extends Piece {
         int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
         return Math.abs(rankDifference) <= 1 && Math.abs(fileDifference) <= 1;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

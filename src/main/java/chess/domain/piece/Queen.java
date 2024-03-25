@@ -14,4 +14,9 @@ public class Queen extends Piece {
             || sourcePosition.isOnSameRankAs(targetPosition)
             || sourcePosition.isOnSameFileAs(targetPosition);
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
