@@ -24,4 +24,16 @@ public enum GameCommand {
     private boolean isAvailableCommand(String input) {
         return command.equals(input);
     }
+
+    public static boolean isNotFinishedGame(GameCommand gameCommand) {
+        return !gameCommand.equals(END);
+    }
+
+    public static boolean isGameStarted(GameCommand gameCommand) {
+        return gameCommand.equals(START);
+    }
+
+    public static boolean isMovedChessPiece(GameCommand gameCommand) {
+        return gameCommand.equals(MOVE);
+    }
 }

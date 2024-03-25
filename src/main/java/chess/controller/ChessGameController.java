@@ -32,7 +32,7 @@ public class ChessGameController {
 
     private void executeGameUntilEnd(GameCommand gameCommand, List<String> input) {
         ChessBoard chessBoard = new ChessBoard();
-        while (gameCommand != GameCommand.END) {
+        while (GameCommand.isNotFinishedGame(gameCommand)) {
             executeStartCommand(gameCommand, chessBoard);
             executeMoveCommand(gameCommand, chessBoard, input);
             List<String> updateInput = repeatUntilSuccess(InputView::requestGameCommand);
@@ -41,13 +41,13 @@ public class ChessGameController {
     }
 
     private void executeStartCommand(GameCommand gameCommand, ChessBoard chessBoard) {
-        if (gameCommand.equals(GameCommand.START)) {
+        if (GameCommand.isGameStarted(gameCommand)) {
             printChessBoard(chessBoard);
         }
     }
 
     private void executeMoveCommand(GameCommand gameCommand, ChessBoard chessBoard, List<String> input) {
-        if (gameCommand.equals(GameCommand.MOVE)) {
+        if (GameCommand.isMovedChessPiece(gameCommand)) {
             ChessGame chessGame = new ChessGame(chessBoard);
             List<Square> moveSquare = chessGame.settingMoveSquare(input);
             chessGame.executeTurn(moveSquare.get(0), moveSquare.get(1));
