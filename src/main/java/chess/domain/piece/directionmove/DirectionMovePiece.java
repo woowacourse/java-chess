@@ -39,8 +39,6 @@ abstract class DirectionMovePiece extends AbstractPiece {
         if (endPoint.isPresent() && endPoint.get().getValue().isNotSameTeam(this)) {
             coordinates.add(endPoint.get().getKey());
         }
-        System.out.println("Coordinate : " + coordinates);
-        System.out.println(boardInformation);
         return coordinates.contains(destination);
     }
 
