@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,12 +43,11 @@ public class Position {
         return internalPositions;
     }
 
-    public int getXPosition() {
-        return x.getIndex() - 1;
-    }
-
-    public int getYPosition() {
-        return y.getIndex() - 1;
+    public List<Position> getVerticalInternalPositions() {
+        return Arrays.stream(Rank.values())
+                .filter(value -> value != y)
+                .map(value -> new Position(x, value))
+                .toList();
     }
 
     @Override
@@ -65,5 +65,13 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public int getXPosition() {
+        return x.getIndex() - 1;
+    }
+
+    public int getYPosition() {
+        return y.getIndex() - 1;
     }
 }

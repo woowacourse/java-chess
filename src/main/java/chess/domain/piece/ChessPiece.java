@@ -4,6 +4,8 @@ import chess.domain.PieceInfo;
 import chess.domain.Position;
 import chess.domain.Team;
 import chess.domain.strategy.MoveStrategy;
+
+import java.util.List;
 import java.util.Objects;
 
 public abstract class ChessPiece implements Piece {
@@ -13,10 +15,6 @@ public abstract class ChessPiece implements Piece {
     protected ChessPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
         this.pieceInfo = pieceInfo;
         this.moveStrategy = moveStrategy;
-    }
-
-    public Position getPosition() {
-        return pieceInfo.getPosition();
     }
 
     @Override
@@ -37,8 +35,22 @@ public abstract class ChessPiece implements Piece {
     }
 
     @Override
+    public Position getPosition() {
+        return pieceInfo.getPosition();
+    }
+
+    @Override
     public boolean isSameTeam(Team otherTeam) {
         return pieceInfo.isSameTeam(otherTeam);
+    }
+
+    @Override
+    public boolean isSamePieceWithSameTeam(List<Piece> otherPieces) {
+        return otherPieces.stream().anyMatch(this::isSamePieceWithSameTeamCondition);
+    }
+
+    private boolean isSamePieceWithSameTeamCondition(Piece otherPiece) {
+        return otherPiece.getType() == this.getType() && otherPiece.isSameTeam(this.getTeam());
     }
 
     @Override

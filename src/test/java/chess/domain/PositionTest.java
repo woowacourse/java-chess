@@ -63,4 +63,23 @@ public class PositionTest {
 
         Assertions.assertThat(actualInternalPositions).isEqualTo(expectedInternalPositions);
     }
+
+    @DisplayName("해당 좌표와 같은 세로줄에 있는 좌표들을 반환한다.")
+    @Test
+    void getVerticalInternalPositionsTest() {
+        Position position = Position.of("d4");
+
+        List<Position> expectedOtherPositions = position.getVerticalInternalPositions();
+        List<Position> actualOtherPositions = List.of(
+                Position.of("d1"),
+                Position.of("d2"),
+                Position.of("d3"),
+                Position.of("d5"),
+                Position.of("d6"),
+                Position.of("d7"),
+                Position.of("d8")
+        );
+
+        Assertions.assertThat(expectedOtherPositions).containsAll(actualOtherPositions);
+    }
 }

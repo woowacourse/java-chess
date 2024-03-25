@@ -56,6 +56,12 @@ public class Board {
         return removedPiece.isRecentlyRemovedPieceType(PieceType.KING);
     }
 
+    public List<Piece> getPiecesInVertical(List<Position> positions) {
+        return positions.stream()
+                .map(board::get)
+                .toList();
+    }
+
     boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
         List<Position> internalPositions = currentPosition.getInternalPositions(newPosition);
 
