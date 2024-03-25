@@ -132,4 +132,17 @@ class BoardTest {
                 Point.of(File.B, Rank.SECOND)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("폰은 기물을 뛰어넘을 수 없다.")
+    @Test
+    void invalidMove5() {
+        tempBoard.put(Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.WHITE));
+        tempBoard.put(Point.of(File.A, Rank.THIRD), Piece.pawnFrom(Team.WHITE));
+        Board board = new Board(tempBoard);
+
+        assertThatThrownBy(() -> board.move(new Player(Team.WHITE),
+                Point.of(File.A, Rank.SECOND),
+                Point.of(File.A, Rank.FOURTH)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
