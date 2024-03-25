@@ -2,7 +2,7 @@ package chess.domain.route;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Side;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.domain.piece.Piece;
 import java.util.Objects;
 
@@ -16,7 +16,7 @@ public class Route {
         this.targetPiece = targetPiece;
     }
 
-    public static Route create(Square source, Square target, Board board) {
+    public static Route create(Position source, Position target, Board board) {
         Path path = Path.of(source, target);
         Pieces pathPieces = board.findPieces(path);
         Piece targetPiece = board.findPiece(target);

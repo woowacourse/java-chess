@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.domain.route.Route;
 
 public class Empty extends Piece {
@@ -16,7 +16,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean hasFollowedRule(Square current, Square target, Route route) {
+    public boolean hasFollowedRule(Position current, Position target, Route route) {
         return false;
     }
 

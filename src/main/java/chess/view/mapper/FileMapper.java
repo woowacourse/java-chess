@@ -1,6 +1,6 @@
 package chess.view.mapper;
 
-import chess.domain.square.File;
+import chess.domain.position.File;
 
 import java.util.Arrays;
 
@@ -26,9 +26,9 @@ public enum FileMapper {
 
     public static File from(String input) {
         return Arrays.stream(values())
-                .filter(file -> file.symbol.equals(input))
+                .filter(it -> it.symbol.equals(input))
                 .findFirst()
                 .map(it -> it.file)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가로 위치입니다."));
     }
 }

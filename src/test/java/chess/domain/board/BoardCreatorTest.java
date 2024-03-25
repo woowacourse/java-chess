@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.domain.piece.Side;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
@@ -36,7 +36,7 @@ class BoardCreatorTest {
     void create() {
         BoardCreator boardCreator = new BoardCreator();
 
-        Map<Square, Piece> board = boardCreator.create();
+        Map<Position, Piece> board = boardCreator.create();
 
         assertThat(board).containsExactly(
                 Map.entry(PositionFixture.A8, new Rook(Side.BLACK)),

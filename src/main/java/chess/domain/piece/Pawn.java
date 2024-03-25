@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.InitialPosition;
 import chess.domain.route.Route;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Square source, Square target, Route route) {
+    protected boolean hasFollowedRule(Position source, Position target, Route route) {
         boolean diagonalAttack = isDiagonalAttack(source, target, route);
         boolean notAttack = route.isTargetPieceEmpty();
         boolean forwardTwoAtInitialPosition = isInitialPosition(source) && isForwardTwo(source, target);
@@ -21,30 +21,30 @@ public class Pawn extends Piece {
         return diagonalAttack || notAttack && (forwardTwoAtInitialPosition || forwardOne);
     }
 
-    private boolean isDiagonalAttack(Square source, Square target, Route route) {
+    private boolean isDiagonalAttack(Position source, Position target, Route route) {
         return isAttackableDiagonal(source, target) && route.isOpponentTargetPiece(side());
     }
 
-    private boolean isAttackableDiagonal(Square source, Square target) {
+    private boolean isAttackableDiagonal(Position source, Position target) {
         if (isBlack()) {
             return source.hasHigherRankByOne(target) && source.hasOneFileGap(target);
         }
         return target.hasHigherRankByOne(source) && source.hasOneFileGap(target);
     }
 
-    private boolean isInitialPosition(Square source) {
-        List<Square> squares = InitialPosition.PAWN.positions(side());
-        return squares.contains(source);
+    private boolean isInitialPosition(Position source) {
+        List<Position> positions = InitialPosition.PAWN.positions(side());
+        return positions.contains(source);
     }
 
-    private boolean isForwardTwo(Square source, Square target) {
+    private boolean isForwardTwo(Position source, Position target) {
         if (isBlack()) {
             return source.hasHigherRankByTwo(target) && source.isSameFile(target);
         }
         return target.hasHigherRankByTwo(source) && source.isSameFile(target);
     }
 
-    private boolean isForwardOne(Square source, Square target) {
+    private boolean isForwardOne(Position source, Position target) {
         if (isBlack()) {
             return source.hasHigherRankByOne(target) && source.isSameFile(target);
         }

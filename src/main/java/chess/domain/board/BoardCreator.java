@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Side;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -17,25 +17,25 @@ import java.util.function.Supplier;
 
 public class BoardCreator {
 
-    public Map<Square, Piece> create() {
-        Map<Square, Piece> board = new LinkedHashMap<>();
+    public Map<Position, Piece> create() {
+        Map<Position, Piece> board = new LinkedHashMap<>();
         generateSquares(board);
         initializeSquares(board);
         return board;
     }
 
-    private void generateSquares(Map<Square, Piece> board) {
-        Square.allPositions().forEach(
+    private void generateSquares(Map<Position, Piece> board) {
+        Position.allPositions().forEach(
                 position -> board.put(position, Empty.instance())
         );
     }
 
-    private void initializeSquares(Map<Square, Piece> board) {
+    private void initializeSquares(Map<Position, Piece> board) {
         initializeSide(board, Side.BLACK);
         initializeSide(board, Side.WHITE);
     }
 
-    private void initializeSide(Map<Square, Piece> board, Side side) {
+    private void initializeSide(Map<Position, Piece> board, Side side) {
         initializePieces(board, InitialPosition.ROOK.positions(side), () -> new Rook(side));
         initializePieces(board, InitialPosition.KNIGHT.positions(side), () -> new Knight(side));
         initializePieces(board, InitialPosition.BISHOP.positions(side), () -> new Bishop(side));
@@ -44,8 +44,8 @@ public class BoardCreator {
         initializePieces(board, InitialPosition.PAWN.positions(side), () -> new Pawn(side));
     }
 
-    private void initializePieces(Map<Square, Piece> board, List<Square> initialSquares, Supplier<Piece> pieceProvider) {
-        initialSquares.forEach(
+    private void initializePieces(Map<Position, Piece> board, List<Position> initialPositions, Supplier<Piece> pieceProvider) {
+        initialPositions.forEach(
                 position -> board.put(position, pieceProvider.get())
         );
     }

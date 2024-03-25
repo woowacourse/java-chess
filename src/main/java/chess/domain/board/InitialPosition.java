@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.square.File;
-import chess.domain.square.Square;
-import chess.domain.square.Rank;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.domain.piece.Side;
 import java.util.List;
 import java.util.function.Function;
@@ -53,11 +53,11 @@ public enum InitialPosition {
         throw new IllegalArgumentException("진영은 검은색 또는 흰색이어야 합니다.");
     }
 
-    public List<Square> positions(Side side) {
+    public List<Position> positions(Side side) {
         Rank rank = rank(side);
 
         return files().stream()
-                .map(file -> new Square(file, rank))
+                .map(file -> new Position(file, rank))
                 .toList();
     }
 

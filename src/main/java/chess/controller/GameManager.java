@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.Command;
 import chess.domain.board.Board;
 import chess.domain.board.BoardCreator;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.domain.Turn;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -19,29 +19,25 @@ public class GameManager {
     }
 
     public void start() {
-        Command command = inputView.readFirstCommand();
+        Command command = inputView.readStartOrEndCommand();
         if (command.isEnd()) {
             return;
         }
-        Board board = initialize();
-        play(board);
-    }
 
-    private Board initialize() {
         Board board = new Board(new BoardCreator());
         outputView.printBoard(board);
-        return board;
+
+        play(board);
     }
 
     private void play(Board board) {
         Turn turn = new Turn();
-        while (inputView.readNextCommand() == Command.MOVE) {
-            Square current = inputView.readPosition();
-            Square target = inputView.readPosition();
-            inputView.readNextLine();
+        while (inputView.readMoveOrEndCommand().isMove()) {
+            Position source = inputView.readSourcePosition();
+            Position target = inputView.readTargetPosition();
 
-            turn.check(board, current);
-            board.move(current, target);
+            turn.check(board, source);
+            board.move(source, target);
             outputView.printBoard(board);
             turn.end();
         }

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.route.Route;
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 
 public class Knight extends Piece {
 
@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Square source, Square target, Route route) {
+    protected boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.hasTwoFileGap(target) && source.hasOneRankGap(target) ||
                 source.hasOneFileGap(target) && source.hasTwoRankGap(target);
     }

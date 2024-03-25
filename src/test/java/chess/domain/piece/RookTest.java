@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.square.Square;
+import chess.domain.position.Position;
 import chess.fixture.MovePathFixture;
 import chess.fixture.PositionFixture;
 import java.util.List;
@@ -42,21 +42,21 @@ class RookTest {
 
     abcdefgh
      */
-    private static final Square SOURCE = D4;
-    private static final List<Square> MOVABLE_SQUARES = List.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4);
+    private static final Position SOURCE = D4;
+    private static final List<Position> MOVABLE_POSITIONS = List.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4);
 
     private static Stream<Arguments> movableTargets() {
-        return PositionFixture.movablePositions(MOVABLE_SQUARES);
+        return PositionFixture.movablePositions(MOVABLE_POSITIONS);
     }
 
     private static Stream<Arguments> immovableTargets() {
-        return PositionFixture.immovablePositions(MOVABLE_SQUARES, SOURCE);
+        return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
     }
 
     @DisplayName("룩은 수직 또는 수평 방향으로 한 칸 이상 움직인다.")
     @ParameterizedTest
     @MethodSource("movableTargets")
-    void hasFollowedRule(Square target) {
+    void hasFollowedRule(Position target) {
         Rook rook = new Rook(Side.BLACK);
 
         boolean actual = rook.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
@@ -67,7 +67,7 @@ class RookTest {
     @DisplayName("룩은 수직 또는 수평 방향을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("immovableTargets")
-    void hasViolatedRule(Square target) {
+    void hasViolatedRule(Position target) {
         Rook rook = new Rook(Side.BLACK);
 
         boolean actual = rook.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());

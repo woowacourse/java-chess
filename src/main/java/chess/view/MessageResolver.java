@@ -1,9 +1,9 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.square.File;
-import chess.domain.square.Rank;
-import chess.domain.square.Square;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
+import chess.domain.position.Position;
 import chess.view.mapper.PieceMapper;
 import chess.domain.piece.Piece;
 import java.util.stream.Collectors;
@@ -34,7 +34,7 @@ public class MessageResolver {
     private StringBuilder resolveRankMessage(Rank rank, Board board) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int horizontal = 1; horizontal <= File.max(); horizontal++) {
-            Square position = new Square(File.find(horizontal), rank);
+            Position position = new Position(File.find(horizontal), rank);
             String square = resolveSquareMessage(board, position);
             stringBuilder.append(square);
         }
@@ -42,9 +42,9 @@ public class MessageResolver {
         return stringBuilder;
     }
 
-    private String resolveSquareMessage(Board board, Square square) {
-        if (board.hasPiece(square)) {
-            Piece piece = board.findPiece(square);
+    private String resolveSquareMessage(Board board, Position position) {
+        if (board.hasPiece(position)) {
+            Piece piece = board.findPiece(position);
             return PieceMapper.toSymbol(piece);
         }
         return EMPTY;

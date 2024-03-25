@@ -20,26 +20,26 @@ public enum CommandMapper {
     }
 
     public static Command toStartOrEndCommand(String input) {
-        Command command = from(input);
-        if (command == Command.MOVE) {
-            throw new IllegalArgumentException("시작 명령은 start 혹은 end만 입력 가능합니다.");
+        Command command = toCommand(input);
+        if (command.isMove()) {
+            throw new IllegalArgumentException("게임 시작을 안 했습니다.");
         }
         return command;
     }
 
-    public static Command from(String input) {
+    public static Command toMoveOrEndCommand(String input) {
+        Command command = toCommand(input);
+        if (command.isStart()) {
+            throw new IllegalArgumentException("이미 게임 시작을 했습니다.");
+        }
+        return command;
+    }
+
+    private static Command toCommand(String input) {
         return Arrays.stream(values())
-                .filter(command -> command.input.equals(input))
+                .filter(it -> it.input.equals(input))
                 .findFirst()
                 .map(it -> it.command)
-                .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public static Command toMoveCommand(String input) {
-        Command command = from(input);
-        if (command != Command.MOVE) {
-            throw new IllegalArgumentException("move 명령어를 입력해야 합니다.");
-        }
-        return command;
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
 }

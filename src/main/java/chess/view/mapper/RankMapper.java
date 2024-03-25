@@ -1,6 +1,6 @@
 package chess.view.mapper;
 
-import chess.domain.square.Rank;
+import chess.domain.position.Rank;
 
 import java.util.Arrays;
 
@@ -26,9 +26,9 @@ public enum RankMapper {
 
     public static Rank from(String input) {
         return Arrays.stream(values())
-                .filter(rank -> rank.symbol.equals(input))
+                .filter(it -> it.symbol.equals(input))
                 .findFirst()
                 .map(it -> it.rank)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 세로 위치입니다."));
     }
 }
