@@ -1,6 +1,7 @@
 package domain.chessboard;
 
 import domain.coordinate.Coordinate;
+import domain.piece.Blank;
 import domain.piece.Color;
 import domain.piece.base.ChessPiece;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class ChessBoard {
     }
 
     private void movePiece(Coordinate destination, Coordinate startPosition, ChessPiece piece) {
-        board.remove(startPosition);
+        board.put(startPosition, findPiece(destination));
         board.put(destination, piece);
     }
 
@@ -82,7 +83,7 @@ public class ChessBoard {
             return;
         }
 
-        if (board.get(coordinate) != null) {
+        if (!findPiece(coordinate).getClass().equals(Blank.class)) {
             throw new IllegalArgumentException("이동 경로에 말이 존재합니다.");
         }
     }
@@ -94,7 +95,7 @@ public class ChessBoard {
     private boolean isAttack(Color current, Coordinate destination) {
         ChessPiece destinationPiece = board.get(destination);
 
-        return destinationPiece != null && destinationPiece.isNotSameColor(current);
+        return destinationPiece.getClass() != Blank.class && destinationPiece.isNotSameColor(current);
     }
 
     public Map<Coordinate, ChessPiece> getBoard() {
