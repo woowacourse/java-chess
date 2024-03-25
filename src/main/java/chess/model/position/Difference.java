@@ -21,7 +21,7 @@ public class Difference {
     }
 
     private static void validate(int amount) {
-        if (abs(amount) > DifferenceCache.MAX_AMOUNT) {
+        if (!DifferenceCache.CACHE.containsKey(amount)) {
             throw new IllegalArgumentException("File 혹은 Rank의 좌표차 절댓값은 " + DifferenceCache.MAX_AMOUNT + " 이하입니다.");
         }
     }
