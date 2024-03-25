@@ -36,7 +36,7 @@ public class ChessBoard {
             movePiece(start, destination);
             return;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("잘못된 움직임 명령입니다.");
     }
 
     private void movePiece(Position start, Position destination) {
