@@ -41,9 +41,7 @@ public class Movement {
         Set<Position> route = new HashSet<>();
         Position nextPosition = source;
         for (final Direction direction : findDirections()) {
-            System.out.println(direction.name());
             nextPosition = nextPosition.move(direction);
-            System.out.println(nextPosition.indexOfFile() + " " + nextPosition.indexOfRank());
             if (nextPosition != target) {
                 route.add(nextPosition);
             }

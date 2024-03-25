@@ -29,8 +29,6 @@ public class ChessBoard {
         Piece sourcePiece = board.get(source);
         board.put(target, sourcePiece);
         board.remove(source);
-
-        turn.next();
     }
 
     private void validate(Position source, Position target, Turn turn) {
@@ -95,9 +93,6 @@ public class ChessBoard {
     }
 
     private boolean isBlocked(final Movement movement) {
-        for (final Position position : movement.findRoute()) {
-            System.out.println(position.indexOfFile() + " " + position.indexOfRank());
-        }
         return movement.findRoute().stream().anyMatch(this::isExist);
     }
 

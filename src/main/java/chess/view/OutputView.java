@@ -11,6 +11,9 @@ import java.util.StringJoiner;
 public class OutputView {
 
     private static final OutputView INSTANCE = new OutputView();
+    private static final String EMPTY = ".";
+    private static final String LINE_SEPARATOR = "%n";
+    private static final String ERROR_PREFIX = "[ERROR] ";
 
     private OutputView() {
     }
@@ -32,7 +35,7 @@ public class OutputView {
         String[][] board = createInitBoard();
         applyBoardStatus(status, board);
 
-        StringJoiner boardJoiner = new StringJoiner("%n");
+        StringJoiner boardJoiner = new StringJoiner(LINE_SEPARATOR);
         for (String[] line : board) {
             boardJoiner.add(createBoardLine(line));
         }
@@ -42,7 +45,7 @@ public class OutputView {
     private String[][] createInitBoard() {
         String[][] board = new String[ChessRank.maxIndex() + 1][ChessFile.maxIndex() + 1];
         for (int rank = ChessRank.minIndex(); rank <= ChessRank.maxIndex(); rank++) {
-            Arrays.fill(board[rank], ".");
+            Arrays.fill(board[rank], EMPTY);
         }
         return board;
     }
@@ -62,5 +65,9 @@ public class OutputView {
             lineBuilder.append(point);
         }
         return lineBuilder;
+    }
+
+    public void printGameErrorMessage(final String message) {
+        System.out.println(ERROR_PREFIX + message + System.lineSeparator());
     }
 }
