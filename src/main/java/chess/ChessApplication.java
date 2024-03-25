@@ -6,7 +6,7 @@ import chess.domain.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.dto.MovePositionDto;
+import chess.controller.MovePositionDto;
 
 public class ChessApplication {
 

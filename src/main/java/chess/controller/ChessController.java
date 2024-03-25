@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitialBoardGenerator;
-import chess.view.dto.MovePositionDto;
 
 public class ChessController {
 

@@ -1,4 +1,4 @@
-package chess.view.dto;
+package chess.controller;
 
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
