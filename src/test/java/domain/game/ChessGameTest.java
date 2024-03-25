@@ -2,10 +2,12 @@ package domain.game;
 
 import static domain.Fixture.Pieces.*;
 import static domain.Fixture.Positions.*;
+import static domain.Fixture.PredefinedBoardsOfEachScore.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import domain.game.state.GameEnd;
 import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,6 +84,34 @@ class ChessGameTest {
         return Stream.of(
                 Arguments.of(Map.of(D4, BLACK_KING_PIECE, D3, WHITE_QUEEN_PIECE), D3, D4, TeamColor.WHITE),
                 Arguments.of(Map.of(D4, WHITE_KING_PIECE, D3, BLACK_QUEEN_PIECE), D3, D4, TeamColor.BLACK)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("specificScoreCase")
+    @DisplayName("각 팀별 현재 점수를 계산할 수 있다.")
+    void calculateScoreOfEachTeamTest(Map<Position, Piece> piecePositions, double expectedWhiteScore, double expectedBlackScore) {
+        // Given
+        Board board = new Board(piecePositions);
+        TestableChessGame chessGame = new TestableChessGame(null, board);
+
+        // When
+        double whiteScore = chessGame.currentScoreOf(TeamColor.WHITE);
+        double blackScore = chessGame.currentScoreOf(TeamColor.BLACK);
+
+        // Then
+        assertAll(
+                () -> assertThat(whiteScore).isEqualTo(expectedWhiteScore),
+                () -> assertThat(blackScore).isEqualTo(expectedBlackScore)
+        );
+    }
+
+    static Stream<Arguments> specificScoreCase() {
+        return Stream.of(
+                Arguments.of(BOARD_WHITE_19_5_BLACK_20, 19.5, 20),
+                Arguments.of(BOARD_WHITE_20_5_BLACK_20, 20.5, 20),
+                Arguments.of(BOARD_WHITE_2_BLACK_2_5, 2, 2.5),
+                Arguments.of(BOARD_WHITE_0_BLACK_3_5, 0, 3.5)
         );
     }
 }
