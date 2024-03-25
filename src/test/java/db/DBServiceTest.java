@@ -65,4 +65,13 @@ class DBServiceTest {
         assertThat(dbService.loadPreviousData())
                 .containsExactlyInAnyOrder(A3WhitePawn, B3WhitePawn, C3WhitePawn);
     }
+
+    @Test
+    void 턴_데이터를_갱신한다() {
+        TurnDto blackTurn = new TurnDto("BLACK");
+
+        dbService.updateTurn(blackTurn);
+
+        assertThat(dbService.loadPreviousTurn().getTurn()).isEqualTo(Color.BLACK);
+    }
 }

@@ -27,4 +27,9 @@ public class DBService {
             pieceDao.add(pieceDto);
         }
     }
+
+    public void updateTurn(final TurnDto turnDto) {
+        turnDao.deleteAll();
+        turnDao.update(turnDto);
+    }
 }
