@@ -65,28 +65,12 @@ public class Position {
         return rankGap(other) == 2;
     }
 
-    public boolean hasOneDiagonalGap(Position other) {
-        return this.isDiagonal(other) && hasOneFileGap(other);
-    }
-
-    public boolean hasOnlyTwoRankGap(Position other) {
-        return hasTwoRankGap(other) && isSameFile(other);
-    }
-
     public boolean hasHigherRankByOne(Position other) {
         return rank.difference(other.rank) == 1;
     }
 
     public boolean hasHigherRankByTwo(Position other) {
         return rank.difference(other.rank) == 2;
-    }
-
-    public boolean isRankIncreased(Position target) {
-        return target.rank.isBigger(rank);
-    }
-
-    public boolean isRankDecreased(Position target) {
-        return target.rank.isLess(rank);
     }
 
     public List<File> findBetweenFiles(Position target) {

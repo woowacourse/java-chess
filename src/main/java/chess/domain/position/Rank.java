@@ -39,14 +39,6 @@ public enum Rank {
         return value - other.value;
     }
 
-    public boolean isBigger(Rank other) {
-        return value > other.value;
-    }
-
-    public boolean isLess(Rank other) {
-        return value < other.value;
-    }
-
     public List<Rank> findBetween(Rank target) {
         if (this.value > target.value) {
             return makeBetween(targetToCurrent(target));
