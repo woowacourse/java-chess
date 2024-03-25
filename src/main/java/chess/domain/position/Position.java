@@ -2,7 +2,8 @@ package chess.domain.position;
 
 import chess.domain.Direction;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Position {
@@ -23,8 +24,12 @@ public class Position {
         ));
     }
 
-    public Direction findDirectionTo(Position target) {
-        return Direction.findDirection(calculateFileDistanceTo(target), calculateRankDistanceTo(target));
+    public static Position of(ChessFile file, ChessRank rank) {
+        return CACHE.computeIfAbsent(toKey(file, rank), key -> new Position(file, rank));
+    }
+
+    private static String toKey(final ChessFile file, final ChessRank rank) {
+        return file.value() + rank.value();
     }
 
     public boolean isRank(ChessRank rank) {
@@ -32,8 +37,8 @@ public class Position {
     }
 
     public int calculateDistanceTo(Position target) {
-        int fileDistance = calculateFileDistanceTo(target);
-        int rankDistance = calculateRankDistanceTo(target);
+        int fileDistance = Math.abs(calculateFileDifferenceTo(target));
+        int rankDistance = Math.abs(calculateRankDifferenceTo(target));
         if (fileDistance > 0) {
             return fileDistance;
         }
@@ -41,65 +46,12 @@ public class Position {
         return rankDistance;
     }
 
-    public int calculateFileDistanceTo(Position target) {
-        return Math.abs(target.file.index() - file.index());
+    public int calculateFileDifferenceTo(Position target) {
+        return target.file.index() - file.index();
     }
 
-    public int calculateRankDistanceTo(Position target) {
-        return Math.abs(target.rank.index() - rank.index());
-    }
-
-
-    public Set<Position> findBetween(Position target) {
-        Set<Position> positions = new HashSet<>();
-        List<ChessRank> betweenRanks = findRankBetween(this.rank, target.rank);
-        List<ChessFile> betweenFiles = findFileBetween(this.file, target.file);
-        if (betweenRanks.isEmpty()) {
-            for (ChessFile file : betweenFiles) {
-                positions.add(new Position(file, this.rank));
-            }
-            return positions;
-        }
-
-        if (betweenFiles.isEmpty()) {
-            for (ChessRank rank : betweenRanks) {
-                positions.add(new Position(this.file, rank));
-            }
-            return positions;
-        }
-
-        for (int i = 0; i < betweenFiles.size(); i++) {
-            positions.add(new Position(betweenFiles.get(i), betweenRanks.get(i)));
-        }
-        return positions;
-    }
-
-    private List<ChessRank> findRankBetween(ChessRank start, ChessRank end) {
-        List<ChessRank> ranks = new ArrayList<>();
-        if (start.index() < end.index()) {
-            for (int index = start.index() + 1; index < end.index(); index++) {
-                ranks.add(ChessRank.findByIndex(index));
-            }
-            return ranks;
-        }
-        for (int index = start.index() - 1; index > end.index(); index--) {
-            ranks.add(ChessRank.findByIndex(index));
-        }
-        return ranks;
-    }
-
-    private List<ChessFile> findFileBetween(ChessFile start, ChessFile end) {
-        List<ChessFile> files = new ArrayList<>();
-        if (start.index() < end.index()) {
-            for (int index = start.index() + 1; index < end.index(); index++) {
-                files.add(ChessFile.findByIndex(index));
-            }
-            return files;
-        }
-        for (int index = start.index() - 1; index > end.index(); index--) {
-            files.add(ChessFile.findByIndex(index));
-        }
-        return files;
+    public int calculateRankDifferenceTo(Position target) {
+        return target.rank.index() - rank.index();
     }
 
     public int indexOfFile() {
@@ -108,6 +60,10 @@ public class Position {
 
     public int indexOfRank() {
         return rank.index();
+    }
+
+    public Position move(final Direction direction) {
+        return Position.of(this.file.move(direction), this.rank.move(direction));
     }
 
     @Override

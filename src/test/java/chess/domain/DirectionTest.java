@@ -29,7 +29,7 @@ class DirectionTest {
     @DisplayName("주어진 file 차이와 rank 차이를 이용하여 방향을 찾는다.")
     @ParameterizedTest
     @MethodSource("findDirectionArguments")
-    void findDirection(int fileDiff, int rankDiff, Direction expected){
+    void findDirection(int fileDiff, int rankDiff, Direction expected) {
         //when
         Direction direction = Direction.findDirection(fileDiff, rankDiff);
 
@@ -41,7 +41,7 @@ class DirectionTest {
     @Test
     void findWrongDirection() {
         // when & then
-        assertThatThrownBy(() -> Direction.findDirection(-2,-1))
+        assertThatThrownBy(() -> Direction.findDirection(-2, -1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("올바르지 않은 방향입니다.");
     }

@@ -49,7 +49,23 @@ public enum Direction {
         return diagonal().contains(this);
     }
 
+    public boolean isCross() {
+        return cross().contains(this);
+    }
+
     public boolean isVertical() {
         return Set.of(UP, DOWN).contains(this);
+    }
+
+    public boolean isHorizontal() {
+        return Set.of(LEFT, RIGHT).contains(this);
+    }
+
+    public boolean isUpSide() {
+        return Set.of(UP, UP_LEFT, UP_RIGHT).contains(this);
+    }
+
+    public boolean isLeftSide() {
+        return Set.of(LEFT, UP_LEFT, DOWN_LEFT).contains(this);
     }
 }

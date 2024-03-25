@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.Direction;
+
 import java.util.Arrays;
 
 public enum ChessRank {
@@ -40,6 +42,16 @@ public enum ChessRank {
                 .filter(rank -> rank.index == rankIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 랭크 범위에 해당하지 않는 인덱스입니다."));
+    }
+
+    public ChessRank move(final Direction direction) {
+        if (direction.isUpSide()) {
+            return findByIndex(this.index + 1);
+        }
+        if (direction.isHorizontal()) {
+            return this;
+        }
+        return findByIndex(this.index - 1);
     }
 
     public String value() {

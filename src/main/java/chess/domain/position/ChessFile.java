@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.Direction;
+
 import java.util.Arrays;
 
 public enum ChessFile {
@@ -36,6 +38,16 @@ public enum ChessFile {
                 .filter(file -> file.index == fileIndex)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("체스 파일 범위에 해당하지 않는 인덱스입니다."));
+    }
+
+    public ChessFile move(final Direction direction) {
+        if (direction.isLeftSide()) {
+            return findByIndex(this.index - 1);
+        }
+        if (direction.isVertical()) {
+            return this;
+        }
+        return findByIndex(this.index + 1);
     }
 
     public int index() {
