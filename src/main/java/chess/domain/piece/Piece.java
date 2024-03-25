@@ -13,6 +13,8 @@ public abstract class Piece {
         this.color = color;
     }
 
+    abstract public PieceType getOwnPieceType();
+
     abstract public boolean canMoveMoreThenOnce();
 
     final public boolean canMoveInTargetDirection(final Direction targetDirection) {
@@ -25,5 +27,9 @@ public abstract class Piece {
         }
 
         return this.color == piece.color;
+    }
+
+    final public boolean isBlack() {
+        return this.color == Color.BLACK;
     }
 }

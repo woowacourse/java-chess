@@ -26,6 +26,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public PieceType getOwnPieceType() {
+        return PieceType.BISHOP;
+    }
+
+    @Override
     public boolean canMoveMoreThenOnce() {
         return true;
     }

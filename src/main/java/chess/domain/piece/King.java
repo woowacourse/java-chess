@@ -30,6 +30,11 @@ public class King extends Piece {
     }
 
     @Override
+    public PieceType getOwnPieceType() {
+        return PieceType.KING;
+    }
+
+    @Override
     public boolean canMoveMoreThenOnce() {
         return false;
     }

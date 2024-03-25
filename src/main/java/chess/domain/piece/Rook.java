@@ -27,6 +27,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public PieceType getOwnPieceType() {
+        return PieceType.ROOK;
+    }
+
+    @Override
     public boolean canMoveMoreThenOnce() {
         return true;
     }

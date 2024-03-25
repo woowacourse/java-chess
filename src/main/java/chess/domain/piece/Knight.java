@@ -30,6 +30,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public PieceType getOwnPieceType() {
+        return PieceType.KNIGHT;
+    }
+
+    @Override
     public boolean canMoveMoreThenOnce() {
         return false;
     }

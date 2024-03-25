@@ -28,6 +28,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public PieceType getOwnPieceType() {
+        return PieceType.PAWN;
+    }
+
+    @Override
     public boolean canMoveMoreThenOnce() {
         return false;
     }
