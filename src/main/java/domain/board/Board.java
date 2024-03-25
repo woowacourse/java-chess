@@ -33,7 +33,7 @@ public class Board {
     private List<Position> findMovablePositions(final Position source, final Piece currentPiece,
                                                 final List<Direction> directions) {
         final MoveStrategy strategy = currentPiece.strategy();
-        return strategy.movablePositions(source, directions, this);
+        return strategy.movablePositions(source, directions, squares);
     }
 
     private void validateTurnOfPiece(final Piece currentPiece) {
@@ -47,10 +47,6 @@ public class Board {
         currentPiece.isSameColor(targetPiece.color());
         squares.put(target, currentPiece);
         squares.put(source, new None(Color.NONE, Type.NONE));
-    }
-
-    public Piece findPieceByPosition(final Position position) {
-        return squares.get(position);
     }
 
     public Map<Position, Piece> squares() {

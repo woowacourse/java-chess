@@ -3,14 +3,16 @@ package domain.strategy;
 import static constants.Bound.BOARD_LOWER_BOUND;
 import static constants.Bound.BOARD_UPPER_BOUND;
 
-import domain.board.Board;
 import domain.board.Position;
+import domain.piece.Piece;
 import domain.piece.info.Direction;
 import java.util.List;
+import java.util.Map;
 
 public class AbsoluteMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> movablePositions(final Position source, final List<Direction> directions, final Board board) {
+    public List<Position> movablePositions(final Position source, final List<Direction> directions,
+                                           final Map<Position, Piece> pieces) {
         return findMovablePositions(source, directions);
     }
 

@@ -25,7 +25,7 @@ class SelectiveMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = rook.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, rook.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, rook.movableDirections(), board.squares());
 
         Assertions.assertThat(positions).hasSize(14);
     }
@@ -38,7 +38,8 @@ class SelectiveMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = bishop.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, bishop.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, bishop.movableDirections(),
+                board.squares());
 
         Assertions.assertThat(positions).hasSize(13);
     }
@@ -51,7 +52,8 @@ class SelectiveMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = queen.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, queen.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, queen.movableDirections(),
+                board.squares());
 
         Assertions.assertThat(positions).hasSize(27);
     }

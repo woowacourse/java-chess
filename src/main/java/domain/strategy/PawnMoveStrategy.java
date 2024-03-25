@@ -3,20 +3,21 @@ package domain.strategy;
 import static constants.Bound.BOARD_LOWER_BOUND;
 import static constants.Bound.BOARD_UPPER_BOUND;
 
-import domain.board.Board;
 import domain.board.Position;
 import domain.piece.Piece;
 import domain.piece.info.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class PawnMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> movablePositions(final Position source, final List<Direction> directions, final Board board) {
+    public List<Position> movablePositions(final Position source, final List<Direction> directions,
+                                           final Map<Position, Piece> pieces) {
         final List<Position> positions = new ArrayList<>();
-        final List<Position> positionsPieceNotNone = findPositionsPieceNotNone(source, directions, board);
-        final List<Position> positionsPieceNone = findPositionsPieceNone(source, directions, board);
+        final List<Position> positionsPieceNotNone = findPositionsPieceNotNone(source, directions, pieces);
+        final List<Position> positionsPieceNone = findPositionsPieceNone(source, directions, pieces);
 
         positions.addAll(positionsPieceNotNone);
         positions.addAll(positionsPieceNone);
@@ -27,29 +28,30 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     private List<Position> findPositionsPieceNone(final Position source, final List<Direction> directions,
-                                                  final Board board) {
+                                                  final Map<Position, Piece> pieces) {
         return directions.stream()
                 .filter(direction -> isNextRankInBoard(source, direction))
                 .filter(direction -> isNextFileInBoard(source, direction))
-                .filter(direction -> isPieceOfPositionNone(source, direction, board))
+                .filter(direction -> isPieceOfPositionNone(source, direction, pieces))
                 .filter(this::isNotDiagonalMovable)
                 .map(source::next)
                 .toList();
     }
 
     private List<Position> findPositionsPieceNotNone(final Position source, final List<Direction> directions,
-                                                     final Board board) {
+                                                     final Map<Position, Piece> pieces) {
         return directions.stream()
                 .filter(direction -> isNextRankInBoard(source, direction))
                 .filter(direction -> isNextFileInBoard(source, direction))
-                .filter(direction -> isMovableUpDown(source, board, direction))
+                .filter(direction -> isMovableUpDown(source, direction, pieces))
                 .map(source::next)
                 .toList();
     }
 
-    private boolean isPieceOfPositionNone(final Position source, final Direction direction, final Board board) {
+    private boolean isPieceOfPositionNone(final Position source, final Direction direction,
+                                          final Map<Position, Piece> pieces) {
         final Position next = source.next(direction);
-        return !board.squares().get(next).isNotNone();
+        return !pieces.get(next).isNotNone();
     }
 
     private boolean isNotDiagonalMovable(final Direction direction) {
@@ -60,12 +62,13 @@ public class PawnMoveStrategy implements MoveStrategy {
                 .noneMatch(direction::equals);
     }
 
-    private Boolean isMovableUpDown(final Position source, final Board board, final Direction direction) {
-        final Piece otherPiece = board.squares().get(source.next(direction));
+    private Boolean isMovableUpDown(final Position source, final Direction direction,
+                                    final Map<Position, Piece> pieces) {
+        final Piece otherPiece = pieces.get(source.next(direction));
         if ((isDirectionUpDown(direction) || isDirectionDoubleUpDown(direction) && otherPiece.isNotNone())) {
             return false;
         }
-        return otherPiece.isNotNone() && board.squares().get(source).color() != otherPiece.color();
+        return otherPiece.isNotNone() && pieces.get(source).color() != otherPiece.color();
     }
 
     private boolean isDirectionDoubleUpDown(final Direction direction) {

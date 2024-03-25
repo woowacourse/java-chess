@@ -26,7 +26,8 @@ class AbsoluteMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = knight.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, knight.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, knight.movableDirections(),
+                board.squares());
 
         assertThat(positions).hasSize(8);
     }
@@ -39,7 +40,7 @@ class AbsoluteMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = king.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, king.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, king.movableDirections(), board.squares());
 
         assertThat(positions).hasSize(8);
     }

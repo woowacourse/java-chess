@@ -23,7 +23,7 @@ class PawnMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = pawn.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board.squares());
 
         Assertions.assertThat(positions).hasSize(2);
     }
@@ -36,7 +36,7 @@ class PawnMoveStrategyTest {
         final Board board = new Board(BoardInitiator.init());
         final MoveStrategy strategy = pawn.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board.squares());
 
         Assertions.assertThat(positions).hasSize(2);
     }
@@ -50,7 +50,7 @@ class PawnMoveStrategyTest {
         pawn.movableDirections();
         final MoveStrategy strategy = pawn.strategy();
 
-        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board);
+        final List<Position> positions = strategy.movablePositions(position, pawn.movableDirections(), board.squares());
 
         Assertions.assertThat(positions).hasSize(1);
     }

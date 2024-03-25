@@ -3,30 +3,32 @@ package domain.strategy;
 import static constants.Bound.BOARD_LOWER_BOUND;
 import static constants.Bound.BOARD_UPPER_BOUND;
 
-import domain.board.Board;
 import domain.board.Position;
 import domain.piece.Piece;
 import domain.piece.info.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SelectiveMoveStrategy implements MoveStrategy {
 
     @Override
-    public List<Position> movablePositions(final Position source, final List<Direction> directions, final Board board) {
+    public List<Position> movablePositions(final Position source, final List<Direction> directions,
+                                           final Map<Position, Piece> pieces) {
         final List<Position> positions = new ArrayList<>();
         for (final Direction direction : directions) {
-            positions.addAll(findMovablePositions(board, direction, source));
+            positions.addAll(findMovablePositions(source, direction, pieces));
         }
         return positions;
     }
 
-    private List<Position> findMovablePositions(final Board board, final Direction direction, final Position source) {
+    private List<Position> findMovablePositions(final Position source, final Direction direction,
+                                                final Map<Position, Piece> pieces) {
         final List<Position> positions = new ArrayList<>();
         Position current = source;
         Position next = getValidNextPosition(current, direction);
 
-        while (isNextInboard(direction, current) && isNotPieceOnNextPosition(board, next, positions)) {
+        while (isNextInboard(direction, current) && isNotPieceOnNextPosition(next, positions, pieces)) {
             next = current.next(direction);
             positions.add(next);
             current = next;
@@ -42,8 +44,9 @@ public class SelectiveMoveStrategy implements MoveStrategy {
         return next;
     }
 
-    private boolean isNotPieceOnNextPosition(final Board board, final Position next, final List<Position> positions) {
-        final Piece piece = board.findPieceByPosition(next);
+    private boolean isNotPieceOnNextPosition(final Position next, final List<Position> positions,
+                                             final Map<Position, Piece> pieces) {
+        final Piece piece = pieces.get(next);
         if (piece.isNotNone()) {
             positions.add(next);
             return false;
