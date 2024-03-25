@@ -20,7 +20,7 @@ public class Command {
         this.parameters = parameters;
     }
 
-    public static Command of(String command) {
+    public static Command from(String command) {
         String[] splitCommand = command.split(DELIMITER, 2);
         String prefix = splitCommand[0];
         if (splitCommand.length > 1) {

@@ -11,7 +11,7 @@ public class InputView {
     private final Scanner scanner = new Scanner(System.in);
 
     public Command readGameCommand() {
-        return Command.of(scanner.nextLine());
+        return Command.from(scanner.nextLine());
     }
 
     public Position resolvePosition(String rawPosition) {
