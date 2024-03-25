@@ -36,8 +36,8 @@ public class ChessBoard {
     }
 
     private void movePiece(Coordinate destination, Coordinate startPosition, ChessPiece piece) {
-        board.put(startPosition, findPiece(destination));
-        board.put(destination, piece);
+        board.replace(startPosition, findPiece(destination));
+        board.replace(destination, piece);
     }
 
     private Color changeTurn() {
