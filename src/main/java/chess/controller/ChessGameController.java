@@ -1,8 +1,6 @@
 package chess.controller;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.domain.chessboard.Lettering;
-import chess.domain.chessboard.Numbering;
 import chess.domain.chessboard.Square;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.GameCommand;
@@ -15,8 +13,6 @@ import java.util.function.Supplier;
 public class ChessGameController {
 
     private static final Integer GAME_COMMAND_INDEX = 0;
-    private static final Integer FORMATTING_TO_UPPERCASE_LETTER_ASCII_NUMBER = 64;
-    private static final Integer FORMATTING_TO_LOWERCASE_LETTER_ASCII_NUMBER = 96;
 
     public void run() {
         OutputView.printStartMessage();
@@ -53,34 +49,10 @@ public class ChessGameController {
     private void executeMoveCommand(GameCommand gameCommand, ChessBoard chessBoard, List<String> input) {
         if (gameCommand.equals(GameCommand.MOVE)) {
             ChessGame chessGame = new ChessGame(chessBoard);
-            List<Square> moveSquare = createMoveSquare(extractMoveSquare(input));
+            List<Square> moveSquare = chessGame.settingMoveSquare(input);
             chessGame.executeTurn(moveSquare.get(0), moveSquare.get(1));
             printChessBoard(chessBoard);
         }
-    }
-
-    private List<String> extractMoveSquare(List<String> input) {
-        return input.subList(1, input.size());
-    }
-
-    private List<Square> createMoveSquare(List<String> moveSquare) {
-        Square moveSource = createSquare(moveSquare.get(0));
-        Square target = createSquare(moveSquare.get(1));
-        return List.of(moveSource, target);
-    }
-
-    private Square createSquare(String inputSquare) {
-        char letter = inputSquare.charAt(0);
-        char number = inputSquare.charAt(1);
-        Numbering numbering = Numbering.findNumbering(number - 48);
-        if (Character.isUpperCase(letter)) {
-            return new Square(
-                    Lettering.findLettering(letter - FORMATTING_TO_UPPERCASE_LETTER_ASCII_NUMBER),
-                    numbering);
-        }
-        return new Square(
-                Lettering.findLettering(letter - FORMATTING_TO_LOWERCASE_LETTER_ASCII_NUMBER),
-                numbering);
     }
 
     private void printChessBoard(ChessBoard chessBoard) {
