@@ -41,7 +41,8 @@ public class ChessBoardTest {
     void startEmptyExceptionTest() {
         // given
         ChessBoard chessBoard = new ChessBoard(pieces);
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.B));
         Color currentTurn = Color.BLACK;
 
         // when & then
@@ -57,7 +58,8 @@ public class ChessBoardTest {
         pieces.put(new Position(Rank.FIRST, File.A), Rook.from(Color.WHITE));
         pieces.put(new Position(Rank.SECOND, File.A), Rook.from(Color.WHITE));
         ChessBoard chessBoard = new ChessBoard(pieces);
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
         Color currentTurn = Color.WHITE;
 
         // when & then
@@ -76,7 +78,9 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new TerminalPosition(
+                new Position(Rank.FIRST, File.A),
+                new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getPieces()).isEqualTo(expected);
@@ -93,7 +97,9 @@ public class ChessBoardTest {
         expected.put(new Position(Rank.FIRST, File.B), Rook.from(Color.WHITE));
 
         // when
-        chessBoard.move(new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.B)), Color.WHITE);
+        chessBoard.move(new TerminalPosition(
+                new Position(Rank.FIRST, File.A),
+                new Position(Rank.FIRST, File.B)), Color.WHITE);
 
         // then
         assertThat(chessBoard.getPieces()).isEqualTo(expected);

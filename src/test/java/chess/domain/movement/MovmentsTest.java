@@ -18,7 +18,8 @@ public class MovmentsTest {
     @Test
     void findPassPathTest() {
         // given
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
         Movements movements = new Movements(Set.of(UnitMovement.UP), Set.of());
 
         // when & then
@@ -30,7 +31,8 @@ public class MovmentsTest {
     @Test
     void findAttackPathTest() {
         // given
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.RIGHT_UP));
 
         // when & then
@@ -42,7 +44,8 @@ public class MovmentsTest {
     @Test
     void canNotArriveTest() {
         // given
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.EIGHTH, File.H), new Position(Rank.THIRD, File.D));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.EIGHTH, File.H), new Position(Rank.THIRD, File.D));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.RIGHT));
 
         // when & then
@@ -55,7 +58,8 @@ public class MovmentsTest {
     @Test
     void shortMovementTest() {
         // given
-        TerminalPosition terminalPosition = new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
+        TerminalPosition terminalPosition =
+                new TerminalPosition(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.A));
         Movements movements = new Movements(Set.of(), Set.of(UnitMovement.UP));
 
         // when & then
