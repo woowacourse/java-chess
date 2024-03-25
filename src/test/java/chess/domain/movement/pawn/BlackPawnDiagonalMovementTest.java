@@ -56,6 +56,6 @@ class BlackPawnDiagonalMovementTest {
         BlackPawnDiagonalMovement blackPawnDiagonalMovement = new BlackPawnDiagonalMovement();
 
         assertThat(blackPawnDiagonalMovement.findPath(start, end, EXIST_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

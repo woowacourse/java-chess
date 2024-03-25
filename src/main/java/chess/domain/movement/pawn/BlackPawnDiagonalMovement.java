@@ -15,6 +15,6 @@ public class BlackPawnDiagonalMovement implements MovementRule {
     }
 
     public List<Position> findPath(Position start, Position end, boolean hasEnemy) {
-        return List.of(end);
+        return List.of();
     }
 }

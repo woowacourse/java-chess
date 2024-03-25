@@ -26,8 +26,7 @@ class QueenTest {
         assertThat(queen.findPath(start, end, HAS_ENEMY))
                 .containsExactly(
                         new Position(File.C, Rank.THREE),
-                        new Position(File.B, Rank.TWO),
-                        new Position(File.A, Rank.ONE));
+                        new Position(File.B, Rank.TWO));
     }
 
     @ParameterizedTest

@@ -20,6 +20,6 @@ public final class WhitePawnFirstMovement implements MovementRule {
         }
 
         Position middle = start.moveToNorth();
-        return List.of(middle, end);
+        return List.of(middle);
     }
 }

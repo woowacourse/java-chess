@@ -35,11 +35,11 @@ class SouthWestMovementTest {
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
-        Position start = new Position(File.C, Rank.FOUR);
-        Position end = new Position(File.A, Rank.TWO);
+        Position start = new Position(File.D, Rank.FOUR);
+        Position end = new Position(File.A, Rank.ONE);
         SouthWestMovement southWestMovement = new SouthWestMovement();
 
         assertThat(southWestMovement.findPath(start, end, HAS_ENEMY))
-                .containsExactly(new Position(File.B, Rank.THREE), new Position(File.A, Rank.TWO));
+                .containsExactly(new Position(File.C, Rank.THREE), new Position(File.B, Rank.TWO));
     }
 }

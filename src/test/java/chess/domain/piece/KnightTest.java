@@ -22,7 +22,8 @@ class KnightTest {
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThat(knight.findPath(start, end, HAS_ENEMY)).containsExactly(end);
+        assertThat(knight.findPath(start, end, HAS_ENEMY))
+                .isEmpty();
     }
 
     @ParameterizedTest

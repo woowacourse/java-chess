@@ -67,6 +67,6 @@ class WhitePawnFirstMovementTest {
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
 
         assertThat(whitePawnFirstMovement.findPath(start, end, NOT_EXIST_ENEMY))
-                .containsExactly(middle, end);
+                .containsExactly(middle);
     }
 }

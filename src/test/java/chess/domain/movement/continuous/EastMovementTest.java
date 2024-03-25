@@ -36,7 +36,7 @@ class EastMovementTest {
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
         Position start = new Position(File.C, Rank.FOUR);
-        Position end = new Position(File.E, Rank.FOUR);
+        Position end = new Position(File.F, Rank.FOUR);
         EastMovement eastMovement = new EastMovement();
 
         assertThat(eastMovement.findPath(start, end, HAS_ENEMY))

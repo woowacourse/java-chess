@@ -44,6 +44,6 @@ class KnightMovementTest {
         KnightMovement knightMovement = new KnightMovement();
 
         assertThat(knightMovement.findPath(start, end, HAS_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

@@ -54,6 +54,6 @@ class BlackPawnDefaultMovementTest {
         BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
 
         assertThat(blackPawnDefaultMovement.findPath(start, end, NOT_EXIST_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

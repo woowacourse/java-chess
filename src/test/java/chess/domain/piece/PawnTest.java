@@ -23,9 +23,9 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.SIX), hasEnemy))
-                        .containsExactly(new Position(File.F, Rank.SIX)),
+                        .isEmpty(),
                 () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), hasEnemy))
-                        .containsExactly(new Position(File.F, Rank.SIX), new Position(File.F, Rank.FIVE))
+                        .containsExactly(new Position(File.F, Rank.SIX))
         );
     }
 
@@ -37,7 +37,7 @@ class PawnTest {
         boolean hasEnemy = false;
 
         assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), hasEnemy))
-                .containsExactly(new Position(File.F, Rank.FIVE));
+                .isEmpty();
     }
 
     @Test
@@ -61,9 +61,9 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(pawn.findPath(start, new Position(File.E, Rank.THREE), hasEnemy))
-                        .containsExactly(new Position(File.E, Rank.THREE)),
+                        .isEmpty(),
                 () -> assertThat(pawn.findPath(start, new Position(File.G, Rank.THREE), hasEnemy))
-                        .containsExactly(new Position(File.G, Rank.THREE))
+                        .isEmpty()
         );
     }
 
@@ -93,9 +93,9 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.THREE), hasEnemy))
-                        .containsExactly(new Position(File.F, Rank.THREE)),
+                        .isEmpty(),
                 () -> assertThat(pawn.findPath(start, new Position(File.F, Rank.FOUR), hasEnemy))
-                        .containsExactly(new Position(File.F, Rank.THREE), new Position(File.F, Rank.FOUR))
+                        .containsExactly(new Position(File.F, Rank.THREE))
         );
     }
 
@@ -107,7 +107,7 @@ class PawnTest {
         boolean hasEnemy = false;
 
         assertThat(pawn.findPath(start, new Position(File.F, Rank.FIVE), hasEnemy))
-                .containsExactly(new Position(File.F, Rank.FIVE));
+                .isEmpty();
     }
 
     @Test
@@ -131,9 +131,9 @@ class PawnTest {
 
         assertAll(
                 () -> assertThat(pawn.findPath(start, new Position(File.E, Rank.FIVE), hasEnemy))
-                        .containsExactly(new Position(File.E, Rank.FIVE)),
+                        .isEmpty(),
                 () -> assertThat(pawn.findPath(start, new Position(File.G, Rank.FIVE), hasEnemy))
-                        .containsExactly(new Position(File.G, Rank.FIVE))
+                        .isEmpty()
         );
     }
 

@@ -20,6 +20,6 @@ public final class BlackPawnFirstMovement implements MovementRule {
         }
 
         Position middle = start.moveToSouth();
-        return List.of(middle, end);
+        return List.of(middle);
     }
 }

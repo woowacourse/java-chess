@@ -54,6 +54,6 @@ class WhitePawnDefaultMovementTest {
         WhitePawnDefaultMovement whitePawnDefaultMovement = new WhitePawnDefaultMovement();
 
         assertThat(whitePawnDefaultMovement.findPath(start, end, NOT_EXIST_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

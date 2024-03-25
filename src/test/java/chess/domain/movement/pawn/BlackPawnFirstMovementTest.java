@@ -67,6 +67,6 @@ class BlackPawnFirstMovementTest {
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
         assertThat(blackPawnFirstMovement.findPath(start, end, NOT_EXIST_ENEMY))
-                .containsExactly(middle, end);
+                .containsExactly(middle);
     }
 }

@@ -20,7 +20,7 @@ public abstract class DiscreteMovementRule implements MovementRule {
             throw new IllegalArgumentException("경로가 존재하지 않습니다.");
         }
 
-        return List.of(end);
+        return List.of();
     }
 
     protected abstract boolean isMovable(int rankDifference, int fileDifference);

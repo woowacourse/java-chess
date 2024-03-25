@@ -33,7 +33,7 @@ public abstract class ContinuousMovementRule implements MovementRule {
         int rankDifferenceSize = Math.abs(rankDifference);
         int fileDifferenceSize = Math.abs(fileDifference);
 
-        return Math.max(rankDifferenceSize, fileDifferenceSize);
+        return Math.max(rankDifferenceSize, fileDifferenceSize) - 1;
     }
 
     protected abstract boolean isMovable(int rankDifference, int fileDifference);

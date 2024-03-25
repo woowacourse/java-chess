@@ -44,6 +44,6 @@ class KingMovementTest {
         KingMovement kingMovement = new KingMovement();
 
         assertThat(kingMovement.findPath(start, end, HAS_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

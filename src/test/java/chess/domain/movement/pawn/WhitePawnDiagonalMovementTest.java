@@ -56,6 +56,6 @@ class WhitePawnDiagonalMovementTest {
         WhitePawnDiagonalMovement whitePawnDiagonalMovement = new WhitePawnDiagonalMovement();
 
         assertThat(whitePawnDiagonalMovement.findPath(start, end, EXIST_ENEMY))
-                .containsExactly(end);
+                .isEmpty();
     }
 }

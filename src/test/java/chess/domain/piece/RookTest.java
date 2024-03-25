@@ -26,8 +26,7 @@ class RookTest {
         assertThat(rook.findPath(start, end, HAS_ENEMY))
                 .containsExactly(
                         new Position(File.C, Rank.FOUR),
-                        new Position(File.B, Rank.FOUR),
-                        new Position(File.A, Rank.FOUR));
+                        new Position(File.B, Rank.FOUR));
     }
 
     @ParameterizedTest
