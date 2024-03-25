@@ -1,9 +1,9 @@
 package domain.coordinate;
 
+import domain.coordinate.position.Column;
+import domain.coordinate.position.Position;
+import domain.coordinate.position.Row;
 import domain.direction.Direction;
-import domain.position.Column;
-import domain.position.Position;
-import domain.position.Row;
 import java.util.Objects;
 import view.util.ColumnSymbol;
 

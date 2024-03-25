@@ -1,12 +1,12 @@
-package domain.position;
+package domain.coordinate.position;
 
 import java.util.Objects;
 
-public class Row {
+public class Column {
 
     private final Position position;
 
-    public Row(Position position) {
+    public Column(Position position) {
         this.position = position;
     }
 
@@ -14,16 +14,12 @@ public class Row {
         position.moveBy(distance);
     }
 
-    public int getRowDifference(Row row) {
-        return position.getMinusPosition(row.position);
+    public int getColumnDifference(Column column) {
+        return position.getMinusPosition(column.position);
     }
 
-    public Row copied() {
-        return new Row(position.copied());
-    }
-
-    public boolean isSamePosition(int otherPosition) {
-        return position.isSame(otherPosition);
+    public Column copied() {
+        return new Column(position.copied());
     }
 
     @Override
@@ -34,8 +30,8 @@ public class Row {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Row row = (Row) o;
-        return Objects.equals(position, row.position);
+        Column column = (Column) o;
+        return Objects.equals(position, column.position);
     }
 
     @Override
