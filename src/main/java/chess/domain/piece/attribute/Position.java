@@ -46,6 +46,14 @@ public class Position {
         return Optional.empty();
     }
 
+    public Optional<Position> after(final Movement movement) {
+        Optional<Position> position = Optional.of(this);
+        for (Direction direction : movement.directions()) {
+            position = position.flatMap(presentPosition -> presentPosition.moveTo(direction));
+        }
+        return position;
+    }
+
     public File file() {
         return file;
     }
