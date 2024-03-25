@@ -3,6 +3,10 @@ package chess.util;
 import java.util.function.Supplier;
 
 public class retryHelper {
+
+    private retryHelper(){
+    }
+
     public static <T> T retryUntilNoError(Supplier<T> supplier) {
         T result;
         do {
