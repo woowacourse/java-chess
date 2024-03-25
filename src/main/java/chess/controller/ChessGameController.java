@@ -1,12 +1,11 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
-import chess.domain.Command;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.*;
 import chess.domain.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 import static chess.domain.CommandType.*;
 
@@ -73,7 +72,15 @@ public class ChessGameController {
     }
 
     private void status(ChessGame chessGame) {
+        List<Double> score = chessGame.status();
+        double whiteScore = score.get(0);
+        double blackScore = score.get(1);
+        Team winner = chessGame.findWinner(score.get(0), score.get(1));
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
-        chessGame.status();
+        if (winner.equals(Team.NONE)) {
+            OutputView.printScoreWithDraw(whiteScore, blackScore);
+            return;
+        }
+        OutputView.printScoreWithWinner(whiteScore, blackScore, winner);
     }
 }

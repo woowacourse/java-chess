@@ -3,26 +3,15 @@ package chess.domain;
 import chess.domain.piece.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Stream;
 
-public class ScoreTest {
-
-    private static Stream<Arguments> calculateScoreParameters() {
-        return Stream.of(
-                Arguments.of(Team.WHITE, 52.5),
-                Arguments.of(Team.BLACK, 43.5)
-        );
-    }
+public class ScoreCalculatorTest {
 
     @DisplayName("현재 살아있는 말에 따라 진영에 맞는 점수를 계산한다.")
-    @ParameterizedTest
-    @MethodSource("calculateScoreParameters")
-    void calculateScoreTest(Team team, double expectedScore) {
+    @Test
+    void calculateScoreTest() {
         List<Piece> pieces = List.of(
                 new Queen(new PieceInfo(Position.of("a3"), Team.WHITE)),
                 new Rook(new PieceInfo(Position.of("a4"), Team.WHITE)),
@@ -35,9 +24,15 @@ public class ScoreTest {
 
         Board board = new Board();
         pieces.forEach(piece -> board.placePiece(piece.getPieceInfo().getPosition(), piece));
+        ScoreCalculator scoreCalculator = ScoreCalculator.of(board);
 
-        double actualScore = Score.calculateScore(board, team);
+        double expectedWhiteScore = 52.5;
+        double expectedBlackScore = 43.5;
 
-        Assertions.assertThat(actualScore).isEqualTo(expectedScore);
+        double actualWhiteScore = scoreCalculator.getWhiteScore();
+        double actualBlackScore = scoreCalculator.getBlackScore();
+
+        Assertions.assertThat(actualWhiteScore).isEqualTo(expectedWhiteScore);
+        Assertions.assertThat(actualBlackScore).isEqualTo(expectedBlackScore);
     }
 }

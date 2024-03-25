@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.view.OutputView;
 
+import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -35,11 +35,20 @@ public class ChessGame {
         return board.isKingRemoved();
     }
 
-    public void status() {
+    public List<Double> status() {
         validateStatus();
-        double whiteScore = Score.calculateScore(board, Team.WHITE);
-        double blackScore = Score.calculateScore(board, Team.BLACK);
-        findWinner(whiteScore, blackScore);
+        ScoreCalculator scoreCalculator = ScoreCalculator.of(board);
+        return List.of(scoreCalculator.getWhiteScore(), scoreCalculator.getBlackScore());
+    }
+
+    public Team findWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            return Team.WHITE;
+        }
+        if (whiteScore < blackScore) {
+            return Team.BLACK;
+        }
+        return Team.NONE;
     }
 
     private void validateMove(Position source, Position target) {
@@ -67,18 +76,6 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.WHITE;
-    }
-
-    private static void findWinner(double whiteScore, double blackScore) {
-        if (whiteScore > blackScore) {
-            OutputView.printScoreWithWinner(whiteScore, blackScore, Team.WHITE);
-        }
-        if (whiteScore < blackScore) {
-            OutputView.printScoreWithWinner(whiteScore, blackScore, Team.BLACK);
-        }
-        if (whiteScore == blackScore) {
-            OutputView.printScoreWithDraw(whiteScore, blackScore);
-        }
     }
 
     private void validateStatus() {

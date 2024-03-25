@@ -30,7 +30,8 @@ public class OutputView {
     public static void printCommandGuideMessage() {
         System.out.printf("> 게임 시작 : start%n"
                 + "> 게임 종료 : end%n"
-                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
+                + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n"
+                + "> 게임 점수 : status%n");
     }
 
     public static void printWinner(Team turn) {
@@ -46,6 +47,6 @@ public class OutputView {
     public static void printScoreWithDraw(double whiteScore, double blackScore) {
         System.out.printf("> %s 점수 : %f%n", Team.WHITE, whiteScore);
         System.out.printf("> %s 점수 : %f%n", Team.BLACK, blackScore);
-        System.out.println("> 두 진영이 같은 점수입니다.%n");
+        System.out.printf("> 두 진영이 같은 점수입니다.%n");
     }
 }
