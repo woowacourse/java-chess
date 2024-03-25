@@ -5,28 +5,32 @@ import static chess.domain.piece.attribute.Color.WHITE;
 
 import java.util.Set;
 
+import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 import chess.domain.piece.attribute.Positions;
 
 public class Bishop extends SlidingPiece {
 
-    private static final Set<Position> WHITE_INITIAL_POSITIONS = Positions.of("c1", "f1");
-    private static final Set<Position> BLACK_INITIAL_POSITIONS = Positions.of("c8", "f8");
+	private static final Set<Position> WHITE_INITIAL_POSITIONS = Positions.of("c1", "f1");
+	private static final Set<Position> BLACK_INITIAL_POSITIONS = Positions.of("c8", "f8");
 
-    public Bishop(final Color color, final Position position) {
-        super(color, position);
-    }
+	private static final Set<Direction> POSSIBLE_DIRECTIONS = Direction.diagonal();
 
-    public static Set<Bishop> ofInitialPositions(final Color color) {
-        if (color.isBlack()) {
-            return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Bishop::new);
-        }
-        return initialPiecesOf(WHITE_INITIAL_POSITIONS, WHITE, Bishop::new);
-    }
+	public Bishop(final Color color, final Position position) {
+		super(color, position);
+	}
 
-    @Override
-    public Piece move(final Position source, final Position target) {
-        return null;
-    }
+	public static Set<Bishop> ofInitialPositions(final Color color) {
+		if (color.isBlack()) {
+			return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Bishop::new);
+		}
+		return initialPiecesOf(WHITE_INITIAL_POSITIONS, WHITE, Bishop::new);
+	}
+
+	@Override
+	public Piece move(final Position target) {
+		validateTarget(possiblePositionsTo(POSSIBLE_DIRECTIONS), target);
+		return new Bishop(color(), target);
+	}
 }

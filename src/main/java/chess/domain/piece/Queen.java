@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import java.util.Set;
+
+import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -7,6 +10,8 @@ public class Queen extends SlidingPiece {
 
     private static final Position WHITE_INITIAL_POSITION = Position.from("d1");
     private static final Position BLACK_INITIAL_POSITION = Position.from("d8");
+
+    private static final Set<Direction> POSSIBLE_DIRECTIONS = Direction.all();
 
     public Queen(final Color color, final Position position) {
         super(color, position);
@@ -20,7 +25,8 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public Piece move(final Position source, final Position target) {
-        return null;
+    public Piece move(final Position target) {
+        validateTarget(possiblePositionsTo(POSSIBLE_DIRECTIONS), target);
+        return new Queen(color(), target);
     }
 }
