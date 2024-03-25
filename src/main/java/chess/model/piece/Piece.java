@@ -14,14 +14,8 @@ public abstract class Piece {
 
     public abstract Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
 
-    protected final boolean isSameSide(Piece other) {
+    public final boolean isSameSide(Piece other) {
         return this.side == other.side;
-    }
-
-    protected final void checkValidTargetPiece(Piece other) {
-        if (!other.equals(Blank.INSTANCE) && isSameSide(other)) {
-            throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
-        }
     }
 
     @Override

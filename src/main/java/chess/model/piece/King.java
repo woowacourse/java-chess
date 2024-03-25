@@ -27,7 +27,6 @@ public class King extends Piece {
 
     @Override
     public Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
-        checkValidTargetPiece(targetPiece);
         Movement movement = target.calculateMovement(source);
         if (movement.hasLengthOf(DISPLACEMENT)) {
             return new Path(List.of(target));

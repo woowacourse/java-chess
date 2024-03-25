@@ -21,6 +21,7 @@ public class ChessBoard {
         Piece sourcePiece = board.get(sourcePosition);
         validateSourceIsBlank(sourcePiece);
         Piece targetPiece = board.get(targetPosition);
+        validateTargetPiece(sourcePiece, targetPiece);
         Path path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
         validatePathIsEmpty(path);
         validatePathContainsPiece(path);
@@ -30,6 +31,12 @@ public class ChessBoard {
     private void validateSourceIsBlank(Piece sourcePiece) {
         if (sourcePiece.equals(Blank.INSTANCE)) {
             throw new IllegalArgumentException("소스 위치에 기물이 존재하지 않습니다.");
+        }
+    }
+
+    private void validateTargetPiece(Piece sourcePiece, Piece targetPiece) {
+        if (!targetPiece.equals(Blank.INSTANCE) && sourcePiece.isSameSide(targetPiece)) {
+            throw new IllegalArgumentException("타겟 위치에 아군 기물이 존재합니다.");
         }
     }
 

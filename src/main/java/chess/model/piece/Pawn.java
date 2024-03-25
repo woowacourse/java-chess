@@ -28,7 +28,6 @@ public class Pawn extends Piece {
 
     @Override
     public Path findPath(ChessPosition sourcePosition, ChessPosition targetPosition, Piece targetPiece) {
-        checkValidTargetPiece(targetPiece);
         Movement movement = targetPosition.calculateMovement(sourcePosition);
         validateForwardPath(sourcePosition, targetPiece, movement);
         if (canOrthogonalMove(sourcePosition, movement) || canDiagonalMove(targetPiece, movement)) {

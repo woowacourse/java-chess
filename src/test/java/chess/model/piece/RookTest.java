@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
@@ -78,20 +77,6 @@ class RookTest {
                         )
                 )
         );
-    }
-
-    @Test
-    @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
-    void findPathWhenInvalidTarget() {
-        // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
-        Rook rook = Rook.from(Side.WHITE);
-        Pawn targetPiece = Pawn.from(Side.WHITE);
-
-        // when // then
-        assertThatThrownBy(() -> rook.findPath(source, target, targetPiece))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

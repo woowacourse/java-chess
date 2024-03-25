@@ -41,10 +41,23 @@ class ChessBoardTest {
 
     @Test
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
-    void moveNullSource() {
+    void moveWithBlankSource() {
         // given
         ChessPosition source = ChessPosition.of(File.H, Rank.SEVEN);
         ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("Target 위치에 아군 기물이 존재하면 예외가 발생한다.")
+    void moveWhenTargetIsSameSide() {
+        // given
+        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
+        ChessPosition target = ChessPosition.of(File.A, Rank.TWO);
+        ChessBoard chessBoard = new ChessBoard(Map.of(source, Pawn.from(Side.BLACK), target, Bishop.from(Side.BLACK)));
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move(source, target))

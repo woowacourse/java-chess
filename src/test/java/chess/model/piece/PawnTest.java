@@ -118,20 +118,6 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("타겟 위치에 아군 기물이 존재하면 예외가 발생한다.")
-    void findPathWithInvalidTarget() {
-        // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.D, Rank.THREE);
-        Rook targetPiece = Rook.from(Side.WHITE);
-        Pawn pawn = Pawn.from(Side.WHITE);
-
-        // when & then
-        assertThatThrownBy(() -> pawn.findPath(source, target, targetPiece))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
     @DisplayName("전진하고자 하는 타겟 위치에 기물이 존재하면 예외가 발생한다.")
     void findPathWithInvalidForwardTarget() {
         // given
