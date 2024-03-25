@@ -26,7 +26,7 @@ public class ChessGame implements Executable {
 
     @Override
     public void start() {
-        if (gameState == GameState.RUNNING) {
+        if (gameState.isRunning()) {
             throw new IllegalStateException("이미 게임이 시작되었습니다.");
         }
         this.gameState = GameState.RUNNING;
@@ -34,7 +34,7 @@ public class ChessGame implements Executable {
 
     @Override
     public void move(Position source, Position target) {
-        if (gameState != GameState.RUNNING) {
+        if (gameState.isNotRunning()) {
             throw new IllegalStateException("게임 진행중이 아닙니다.");
         }
         chessBoard.checkColor(source, color);
@@ -46,7 +46,7 @@ public class ChessGame implements Executable {
 
     @Override
     public void end() {
-        if (gameState != GameState.RUNNING) {
+        if (gameState.isNotRunning()) {
             throw new IllegalStateException("게임 진행중이 아닙니다.");
         }
         gameState = GameState.END;
