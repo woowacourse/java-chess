@@ -12,10 +12,6 @@ public class InputView {
         this.commandParser = commandParser;
     }
 
-    public String readGameCommand() {
-        return scanner.nextLine();
-    }
-
     public Command readCommand() {
         return commandParser.parse(scanner.nextLine());
     }

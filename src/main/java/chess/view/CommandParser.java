@@ -9,9 +9,9 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public class CommandParser {
-    private static final String START = "start";
-    private static final String END = "end";
-    private static final String MOVE = "move";
+    static final String START = "start";
+    static final String END = "end";
+    static final String MOVE = "move";
     private static final int START_POSITION_INDEX = 1;
     private static final int DESTINATION_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
