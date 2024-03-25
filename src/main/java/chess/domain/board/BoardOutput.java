@@ -6,7 +6,6 @@ import chess.domain.position.Rank;
 import chess.domain.position.Square;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BoardOutput {

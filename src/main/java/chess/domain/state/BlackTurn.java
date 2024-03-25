@@ -9,18 +9,18 @@ import chess.domain.position.SquareDifferent;
 import java.util.Map;
 
 public class BlackTurn implements Turn {
-    @Override
+
     public Turn checkMovable(Map<Square, Piece> board, Square source, Square destination, Piece sourcePiece, Piece destinationPiece) {
         if (sourcePiece.isWhite()) {
-            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+            throw new IllegalArgumentException(WhiteTurn.NOT_YOUR_TURN_ERROR);
         }
 
         if (!sourcePiece.canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 말의 규칙으로는 도착지로 갈 수 없습니다.");
+            throw new IllegalArgumentException(WhiteTurn.CANNOT_MOVE_ERROR);
         }
 
         if (sourcePiece.isSameColor(destinationPiece)) {
-            throw new IllegalArgumentException("목적지에 같은 편 말이 있어 이동할 수 없습니다.");
+            throw new IllegalArgumentException(WhiteTurn.SAME_COLOR_ERROR);
         }
 
         if (sourcePiece.matches(PieceType.PAWN)) {
@@ -37,7 +37,7 @@ public class BlackTurn implements Turn {
         Direction direction = Direction.findDirectionByDiff(squareDifferent);
 
         if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
-            throw new IllegalArgumentException("폰은 직선 경로로 상대 말을 잡을 수 없습니다.");
+            throw new IllegalArgumentException(WhiteTurn.PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
         }
     }
 
@@ -67,7 +67,7 @@ public class BlackTurn implements Turn {
 
     private void checkBlocked(Map<Square, Piece> board, Square source, Square candidate) {
         if (!source.equals(candidate) && board.get(candidate).isNotEmpty()) {
-            throw new IllegalArgumentException("막힌 경로입니다.");
+            throw new IllegalArgumentException(WhiteTurn.PATH_BLOCKED_ERROR);
         }
     }
 }

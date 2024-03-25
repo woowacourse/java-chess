@@ -1,6 +1,5 @@
 package chess.domain.state;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
@@ -11,18 +10,24 @@ import java.util.Map;
 
 public class WhiteTurn implements Turn {
 
+    protected static final String NOT_YOUR_TURN_ERROR = "움직이려고 하는 말이 본인 진영의 말이 아닙니다.";
+    protected static final String CANNOT_MOVE_ERROR = "해당 말의 규칙으로는 도착지로 갈 수 없습니다.";
+    protected static final String SAME_COLOR_ERROR = "목적지에 같은 편 말이 있어 이동할 수 없습니다.";
+    protected static final String PAWN_CANNOT_CATCH_STRAIGHT_ERROR = "폰은 직선 경로로 상대 말을 잡을 수 없습니다.";
+    protected static final String PATH_BLOCKED_ERROR = "막힌 경로입니다.";
+
     @Override
     public Turn checkMovable(Map<Square, Piece> board, Square source, Square destination, Piece sourcePiece, Piece destinationPiece) {
         if (sourcePiece.isBlack()) {
-            throw new IllegalArgumentException("움직이려고 하는 말이 본인 진영의 말이 아닙니다.");
+            throw new IllegalArgumentException(NOT_YOUR_TURN_ERROR);
         }
 
         if (!sourcePiece.canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 말의 규칙으로는 도착지로 갈 수 없습니다.");
+            throw new IllegalArgumentException(CANNOT_MOVE_ERROR);
         }
 
         if (sourcePiece.isSameColor(destinationPiece)) {
-            throw new IllegalArgumentException("목적지에 같은 편 말이 있어 이동할 수 없습니다.");
+            throw new IllegalArgumentException(SAME_COLOR_ERROR);
         }
 
         if (sourcePiece.matches(PieceType.PAWN)) {
@@ -39,7 +44,7 @@ public class WhiteTurn implements Turn {
         Direction direction = Direction.findDirectionByDiff(squareDifferent);
 
         if (!direction.isDiagonal() && destinationPiece.isNotEmpty()) {
-            throw new IllegalArgumentException("폰은 직선 경로로 상대 말을 잡을 수 없습니다.");
+            throw new IllegalArgumentException(PAWN_CANNOT_CATCH_STRAIGHT_ERROR);
         }
     }
 
@@ -69,7 +74,7 @@ public class WhiteTurn implements Turn {
 
     private void checkBlocked(Map<Square, Piece> board, Square source, Square candidate) {
         if (!source.equals(candidate) && board.get(candidate).isNotEmpty()) {
-            throw new IllegalArgumentException("막힌 경로입니다.");
+            throw new IllegalArgumentException(PATH_BLOCKED_ERROR);
         }
     }
 }

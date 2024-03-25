@@ -2,20 +2,12 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardOutput;
-import chess.domain.piece.Piece;
-import chess.domain.position.File;
-import chess.domain.position.Rank;
 import chess.domain.position.Square;
-import chess.domain.position.MoveInformation;
 import chess.util.RetryUtil;
 import chess.view.GameStatus;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.view.PieceView;
 import chess.view.UserCommand;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ChessGame {
 
