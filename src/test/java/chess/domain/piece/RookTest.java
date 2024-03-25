@@ -95,4 +95,18 @@ class RookTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("룩의 이동 경로 중 장애물이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("타입을 반환한다.")
+    void getType() {
+        // given
+        Square source = Square.from("c6");
+        Rook rook = new Rook(PieceColor.BLACK, source);
+
+        // when
+        PieceType type = rook.getType();
+
+        // then
+        assertThat(type).isEqualTo(PieceType.ROOK);
+    }
 }

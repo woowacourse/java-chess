@@ -1,11 +1,14 @@
 package chess.domain.board;
 
+import chess.domain.piece.Knight;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Rook;
 import chess.domain.square.Square;
+import chess.dto.PieceDrawing;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +31,22 @@ class BoardTest {
 
         // then
         assertThat(board.existOnSquare(target)).isTrue();
+    }
+
+    @Test
+    @DisplayName("차례가 아닌 팀의 기물을 움직일 경우 예외가 발생한다.")
+    void validateTurn() {
+        // given
+        Square source = Square.from("b3");
+        Square target = Square.from("b4");
+        Rook piece = new Rook(PieceColor.BLACK, source);
+        Board board = new Board(Set.of(piece));
+
+        // when & then
+        assertThatCode(() -> board.move(source, target, piece.getColor().opposite()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("선택한 기물의 팀의 차례가 아닙니다.");
+
     }
 
     @Test
@@ -128,5 +147,44 @@ class BoardTest {
 
         // then
         assertThat(exist).isTrue();
+    }
+
+    @Test
+    @DisplayName("목적지에 적 기물이 존재하면 해당 기물을 제거한다.")
+    void removeTargetPieceIfAttacked() {
+        // given
+        Square source = Square.from("b3");
+        Square target = Square.from("b4");
+        Rook piece = new Rook(PieceColor.BLACK, source);
+        Rook enemy = new Rook(PieceColor.WHITE, target);
+        Board board = new Board(Set.of(piece, enemy));
+
+        // when
+        board.move(source, target, piece.getColor());
+        boolean targetColor = board.existOnSquareWithColor(target, piece.getColor());
+
+        // then
+        assertThat(targetColor).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 존재하는 기물들에 대해 그리는 데이터를 생성한다.")
+    void generatePieceDrawings() {
+        // given
+        Square source = Square.from("b3");
+        Square target = Square.from("b4");
+        Rook piece = new Rook(PieceColor.BLACK, source);
+        Knight enemy = new Knight(PieceColor.WHITE, target);
+        Board board = new Board(Set.of(piece, enemy));
+        List<PieceDrawing> expected = List.of(
+                new PieceDrawing(1, 5, "BLACK", "ROOK"),
+                new PieceDrawing(1, 4, "WHITE", "KNIGHT")
+        );
+
+        // when
+        List<PieceDrawing> pieceDrawings = board.generatePieceDrawings();
+
+        // then
+        assertThat(pieceDrawings).containsExactlyInAnyOrderElementsOf(expected);
     }
 }

@@ -95,4 +95,18 @@ class BishopTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("비숍의 이동 경로 중 장애물이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("타입을 반환한다.")
+    void getType() {
+        // given
+        Square source = Square.from("c6");
+        Bishop bishop = new Bishop(PieceColor.BLACK, source);
+
+        // when
+        PieceType type = bishop.getType();
+
+        // then
+        assertThat(type).isEqualTo(PieceType.BISHOP);
+    }
 }

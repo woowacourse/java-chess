@@ -95,4 +95,18 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("퀸의 이동 경로 중 장애물이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("타입을 반환한다.")
+    void getType() {
+        // given
+        Square source = Square.from("c6");
+        Queen queen = new Queen(PieceColor.BLACK, source);
+
+        // when
+        PieceType type = queen.getType();
+
+        // then
+        assertThat(type).isEqualTo(PieceType.QUEEN);
+    }
 }

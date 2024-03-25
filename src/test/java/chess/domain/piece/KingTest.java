@@ -79,4 +79,18 @@ class KingTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("킹의 목적지에 같은 색 기물이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("타입을 반환한다.")
+    void getType() {
+        // given
+        Square source = Square.from("c6");
+        King king = new King(PieceColor.BLACK, source);
+
+        // when
+        PieceType type = king.getType();
+
+        // then
+        assertThat(type).isEqualTo(PieceType.KING);
+    }
 }

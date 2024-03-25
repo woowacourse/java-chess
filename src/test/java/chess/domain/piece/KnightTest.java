@@ -79,4 +79,18 @@ class KnightTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("나이트의 목적지에 같은 색 기물이 존재합니다.");
     }
+
+    @Test
+    @DisplayName("타입을 반환한다.")
+    void getType() {
+        // given
+        Square source = Square.from("c6");
+        Knight knight = new Knight(PieceColor.BLACK, source);
+
+        // when
+        PieceType type = knight.getType();
+
+        // then
+        assertThat(type).isEqualTo(PieceType.KNIGHT);
+    }
 }
