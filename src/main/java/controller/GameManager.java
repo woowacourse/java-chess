@@ -9,8 +9,13 @@ import view.OutputView;
 
 public class GameManager {
 
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    public GameManager(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
 
     public void start() {
         outputView.printStartNotice();
