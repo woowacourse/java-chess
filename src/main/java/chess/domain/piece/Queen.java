@@ -16,8 +16,8 @@ public class Queen extends Piece {
                     .collect(Collectors.toSet());
     private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Queen> QUEEN_POOL = Map.of(
-            Color.WHITE, new Queen(Color.WHITE, COMMON_MOVEMENTS),
-            Color.BLACK, new Queen(Color.BLACK, COMMON_MOVEMENTS));
+            Color.BLACK, new Queen(Color.BLACK, COMMON_MOVEMENTS),
+            Color.WHITE, new Queen(Color.WHITE, COMMON_MOVEMENTS));
 
     private Queen(Color color, Movements movements) {
         super(color, movements);

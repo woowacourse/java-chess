@@ -16,8 +16,8 @@ public class King extends Piece {
                     .collect(Collectors.toSet());
     private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, King> KING_POOL = Map.of(
-            Color.WHITE, new King(Color.WHITE, COMMON_MOVEMENTS),
-            Color.BLACK, new King(Color.BLACK, COMMON_MOVEMENTS));
+            Color.BLACK, new King(Color.BLACK, COMMON_MOVEMENTS),
+            Color.WHITE, new King(Color.WHITE, COMMON_MOVEMENTS));
 
     private King(Color color, Movements movements) {
         super(color, movements);

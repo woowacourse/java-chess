@@ -12,8 +12,8 @@ public class Rook extends Piece {
     private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createStraight();
     private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Rook> ROOK_POOL = Map.of(
-            Color.WHITE, new Rook(Color.WHITE, COMMON_MOVEMENTS),
-            Color.BLACK, new Rook(Color.BLACK, COMMON_MOVEMENTS));
+            Color.BLACK, new Rook(Color.BLACK, COMMON_MOVEMENTS),
+            Color.WHITE, new Rook(Color.WHITE, COMMON_MOVEMENTS));
 
     private Rook(Color color, Movements movements) {
         super(color, movements);

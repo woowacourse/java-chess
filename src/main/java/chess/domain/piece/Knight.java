@@ -12,8 +12,8 @@ public class Knight extends Piece {
     private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createKnightMovements();
     private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Knight> KNIGHT_POOL = Map.of(
-            Color.WHITE, new Knight(Color.WHITE, COMMON_MOVEMENTS),
-            Color.BLACK, new Knight(Color.BLACK, COMMON_MOVEMENTS));
+            Color.BLACK, new Knight(Color.BLACK, COMMON_MOVEMENTS),
+            Color.WHITE, new Knight(Color.WHITE, COMMON_MOVEMENTS));
 
     private Knight(Color color, Movements movements) {
         super(color, movements);

@@ -12,8 +12,8 @@ public class Bishop extends Piece {
     private static final Set<UnitMovement> COMMON_UNIT_MOVEMENTS = MovementsFactory.createDiagonal();
     private static final Movements COMMON_MOVEMENTS = new Movements(COMMON_UNIT_MOVEMENTS, COMMON_UNIT_MOVEMENTS);
     private static final Map<Color, Bishop> BISHOP_POOL = Map.of(
-            Color.WHITE, new Bishop(Color.WHITE, COMMON_MOVEMENTS),
-            Color.BLACK, new Bishop(Color.BLACK, COMMON_MOVEMENTS));
+            Color.BLACK, new Bishop(Color.BLACK, COMMON_MOVEMENTS),
+            Color.WHITE, new Bishop(Color.WHITE, COMMON_MOVEMENTS));
 
     private Bishop(Color color, Movements movements) {
         super(color, movements);

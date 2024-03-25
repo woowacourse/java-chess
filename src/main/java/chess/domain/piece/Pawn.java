@@ -10,15 +10,15 @@ public class Pawn extends Piece {
     private static final int MAX_NOT_MOVED_PASS_MOVE_COUNT = 2;
     private static final int MAX_MOVED_PASS_MOVE_COUNT = 1;
     private static final int MAX_ATTACK_MOVE_COUNT = 1;
-    private static final Movements WHITE_MOVEMENTS = new Movements(
-            Set.of(UnitMovement.UP),
-            Set.of(UnitMovement.LEFT_UP, UnitMovement.RIGHT_UP));
     private static final Movements BLACK_MOVEMENTS = new Movements(
             Set.of(UnitMovement.DOWN),
             Set.of(UnitMovement.LEFT_DOWN, UnitMovement.RIGHT_DOWN));
+    private static final Movements WHITE_MOVEMENTS = new Movements(
+            Set.of(UnitMovement.UP),
+            Set.of(UnitMovement.LEFT_UP, UnitMovement.RIGHT_UP));
     private static final Map<Color, Movements> MOVEMENTS_POOL = Map.of(
-            Color.WHITE, WHITE_MOVEMENTS,
-            Color.BLACK, BLACK_MOVEMENTS);
+            Color.BLACK, BLACK_MOVEMENTS,
+            Color.WHITE, WHITE_MOVEMENTS);
 
     private boolean isMoved;
 

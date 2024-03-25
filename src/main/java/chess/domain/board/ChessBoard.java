@@ -24,7 +24,7 @@ public class ChessBoard {
 
     public void move(TerminalPosition terminalPosition, Color currentTurn) {
         validate(terminalPosition, currentTurn);
-        if (pieces.get(terminalPosition.getEnd()) == Empty.getInstance()) {
+        if (getPiece(terminalPosition.getEnd()) == Empty.getInstance()) {
             passPiece(terminalPosition);
             return;
         }
@@ -49,7 +49,7 @@ public class ChessBoard {
     }
 
     private boolean isEmpty(Position position) {
-        return pieces.get(position) == Empty.getInstance();
+        return getPiece(position) == Empty.getInstance();
     }
 
     private boolean isNotEmpty(Position position) {
@@ -57,7 +57,7 @@ public class ChessBoard {
     }
 
     private boolean isFriendly(Position position, Color friendlyColor) {
-        Piece startPiece = pieces.get(position);
+        Piece startPiece = getPiece(position);
         return startPiece.isColor(friendlyColor);
     }
 
@@ -66,7 +66,7 @@ public class ChessBoard {
     }
 
     private void passPiece(TerminalPosition terminalPosition) {
-        Piece startPiece = pieces.get(terminalPosition.getStart());
+        Piece startPiece = getPiece(terminalPosition.getStart());
         validateObstacle(startPiece.findPassPathTaken(terminalPosition));
         startPiece.move();
 
@@ -74,18 +74,18 @@ public class ChessBoard {
     }
 
     private void exchange(TerminalPosition terminalPosition, Piece startPiece) {
-        Piece temp = pieces.get(terminalPosition.getEnd());
-        pieces.put(terminalPosition.getEnd(), startPiece);
-        pieces.put(terminalPosition.getStart(), temp);
+        Piece temp = getPiece(terminalPosition.getEnd());
+        putPiece(terminalPosition.getEnd(), startPiece);
+        putPiece(terminalPosition.getStart(), temp);
     }
 
     private void attackPiece(TerminalPosition terminalPosition) {
-        Piece startPiece = pieces.get(terminalPosition.getStart());
+        Piece startPiece = getPiece(terminalPosition.getStart());
         validateObstacle(startPiece.findAttackPathTaken(terminalPosition));
         startPiece.move();
 
-        pieces.put(terminalPosition.getEnd(), startPiece);
-        pieces.put(terminalPosition.getStart(), Empty.getInstance());
+        putPiece(terminalPosition.getEnd(), startPiece);
+        putPiece(terminalPosition.getStart(), Empty.getInstance());
     }
 
     private void validateObstacle(List<Position> pathTaken) {
@@ -97,6 +97,14 @@ public class ChessBoard {
     private boolean isObstacleIn(List<Position> pathTaken) {
         return pathTaken.stream()
                 .anyMatch(this::isNotEmpty);
+    }
+
+    private Piece getPiece(Position position) {
+        return pieces.get(position);
+    }
+
+    private void putPiece(Position position, Piece piece) {
+        pieces.put(position, piece);
     }
 
     @Override
