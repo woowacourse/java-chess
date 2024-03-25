@@ -32,10 +32,12 @@ public class ChessBoard {
 
     private final Map<Square, Piece> pieceSquares;
     private Team currentTeam;
+    private final ChessBoardDao chessBoardDao;
 
     private ChessBoard(final Map<Square, Piece> pieceSquares) {
         this.pieceSquares = pieceSquares;
         this.currentTeam = Team.WHITE;
+        this.chessBoardDao = new ChessBoardDao();
     }
 
     public static ChessBoard create() {
@@ -57,6 +59,9 @@ public class ChessBoard {
         final Piece sourcePiece = pieceSquares.get(source);
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
+
+//        chessBoardDao.update(target, sourcePiece);
+        chessBoardDao.deleteBySquare(source);
 
         currentTeam = currentTeam.turn();
     }

@@ -41,4 +41,20 @@ class ChessBoardDaoTest {
         final Piece findPiece = chessBoardDao.findBySquare(square);
         assertThat(findPiece).isEqualTo(piece);
     }
+
+    @DisplayName("위치를 삭제한다.")
+    @Test
+    void deleteBySquare() {
+        // given
+        final Square square = new Square(File.A, Rank.TWO);
+
+        // when
+        chessBoardDao.deleteBySquare(square);
+
+        // then
+        final Piece findPiece = chessBoardDao.findBySquare(square);
+        assertThat(findPiece).isNull();
+    }
+
+
 }

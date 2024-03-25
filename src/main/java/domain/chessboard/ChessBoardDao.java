@@ -41,7 +41,7 @@ public class ChessBoardDao {
     }
 
     public Piece findBySquare(final Square square) {
-        final var query = "SELECT * FROM board WHERE file = ? AND `rank` = ?";
+        final var query = "SELECT * FROM board WHERE file = (?) AND `rank` = (?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
@@ -65,7 +65,8 @@ public class ChessBoardDao {
 
         return null;
     }
-//
+
+    //
 //    public void update(final String userId, final String name) {
 //        final var query = "UPDATE user SET name = (?) where user_id = (?)";
 //        try (final var connection = getConnection();
@@ -79,15 +80,16 @@ public class ChessBoardDao {
 //        }
 //    }
 //
-//    public void delete(final String userId) {
-//        final var query = "DELETE FROM user where user_id = (?)";
-//        try (final var connection = getConnection();
-//             final var preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, userId);
-//
-//            preparedStatement.executeUpdate();
-//        } catch (final SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void deleteBySquare(final Square square) {
+        final var query = "DELETE FROM board where file = (?) AND `rank` = (?)";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, square.file().name());
+            preparedStatement.setString(2, square.rank().name());
+
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
