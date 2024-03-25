@@ -1,33 +1,28 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class KingTest {
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"D, 5", "D, 3", "E, 5", "E, 3", "E, 4", "C, 4", "C, 5", "C, 3"})
     @DisplayName("킹은 상하좌우 및 대각선 방향으로 한 칸 이동할 수 있다.")
-    void kingMoveTest() {
+    void kingMoveTest(String file, int rank) {
         // given
         King king = new King(Color.WHITE);
         Position source = Position.of(File.D, Rank.FOUR);
-        // when, then
-        assertAll(
-                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.FIVE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FIVE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FOUR))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FOUR))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FIVE))).isTrue()
-        );
+        // when
+        boolean movable = king.isMovable(source, Position.of(File.from(file), Rank.from(rank)));
+        // then
+        assertThat(movable).isTrue();
     }
 
     @Test
