@@ -42,9 +42,12 @@ public class Pawn extends Piece {
         return singleCase(movePoint, direction) && notExistPiece(movePoint, pieces);
     }
 
-    private boolean singleCase(final Point point, final Direction direction) {
-        return direction.movePoint(this.point)
-                        .equals(point);
+    private boolean singleCase(final Point movePoint, final Direction direction) {
+        if (direction.canMovePoint(this.point)) {
+            return direction.movePoint(this.point)
+                            .equals(movePoint);
+        }
+        return false;
     }
 
     private boolean doubleCase(final Point movePoint, final Pieces pieces) {

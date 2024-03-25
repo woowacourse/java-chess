@@ -24,7 +24,10 @@ public class King extends Piece {
 
     private boolean canMovePoint(final Point movePoint) {
         final Direction direction = this.point.calculate(movePoint);
-        return direction.movePoint(this.point)
-                        .equals(movePoint);
+        if (direction.canMovePoint(this.point)) {
+            return direction.movePoint(this.point)
+                            .equals(movePoint);
+        }
+        return false;
     }
 }
