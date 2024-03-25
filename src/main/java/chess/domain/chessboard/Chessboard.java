@@ -27,12 +27,16 @@ public class Chessboard {
     }
 
     public static Chessboard create() {
-        List<List<Square>> chessboard = emptyChessboard();
+        List<List<Square>> chessboard = emptySquares();
         putPieces(chessboard);
         return new Chessboard(chessboard);
     }
 
-    private static List<List<Square>> emptyChessboard() {
+    public static Chessboard empty() {
+        return new Chessboard(emptySquares());
+    }
+
+    private static List<List<Square>> emptySquares() {
         List<List<Square>> chessboard = new ArrayList<>();
         for (final Rank ignored : Rank.values()) {
             initialize(chessboard);
@@ -73,6 +77,44 @@ public class Chessboard {
 
     public static boolean isInBoard(final int column, final int row) {
         return File.isInRange(column) && Rank.isInRange(row);
+    }
+
+    public void move(final Position source, final Position target) {
+        validateSource(source);
+        Piece sourcePiece = squareIn(source).piece();
+        Piece targetPiece = sourcePiece.move(this, target);
+        removePieceIn(source);
+        put(target, targetPiece);
+    }
+
+    private void validateSource(final Position position) {
+        if (squareIn(position).isEmpty()) {
+            throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다: %s".formatted(position));
+        }
+    }
+
+    public Square squareIn(final Position position) {
+        List<Square> squares = rowIn(position);
+        File file = position.file();
+        return squares.get(file.toColumn());
+    }
+
+    private void removePieceIn(final Position position) {
+        Rank rank = position.rank();
+        File file = position.file();
+        List<Square> squares = chessboard.get(rank.toRow());
+        squares.set(file.toColumn(), Square.empty());
+    }
+
+    private void put(final Position position, final Piece piece) {
+        List<Square> row = rowIn(piece.position());
+        File file = position.file();
+        row.set(file.toColumn(), Square.from(piece));
+    }
+
+    private List<Square> rowIn(final Position position) {
+        Rank rank = position.rank();
+        return chessboard.get(rank.toRow());
     }
 
     public List<List<Square>> getSquares() {
