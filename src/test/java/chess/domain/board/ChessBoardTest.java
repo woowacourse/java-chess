@@ -26,9 +26,13 @@ public class ChessBoardTest {
     @BeforeEach
     void setUp() {
         for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                pieces.put(new Position(rank, file), Empty.getInstance());
-            }
+            updateFileByRank(rank);
+        }
+    }
+
+    private void updateFileByRank(Rank rank) {
+        for (File file : File.values()) {
+            pieces.put(new Position(rank, file), Empty.getInstance());
         }
     }
 
