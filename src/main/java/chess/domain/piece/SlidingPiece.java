@@ -18,57 +18,37 @@ public abstract class SlidingPiece extends Piece {
 
     protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Direction> directions) {
         Set<Position> positions = new HashSet<>();
-        directions.forEach(direction -> positions.addAll(possiblePositionsTo(chessboard, direction)));
+        directions.forEach(direction -> positions.addAll(movablePositionsOf(chessboard, direction, position())));
         return positions;
     }
 
-    private Set<Position> possiblePositionsTo(final Chessboard chessboard, final Direction direction) {
-        Set<Position> positions = new HashSet<>();
-        addIfEmptyOrAttackable(chessboard, direction, position(), positions);
-        return positions;
-    }
-
-    private void addIfEmptyOrAttackable(
+    private Set<Position> movablePositionsOf(
             final Chessboard chessboard,
             final Direction direction,
-            final Position position,
-            final Set<Position> positions
+            final Position position
     ) {
         Optional<Position> possiblePosition = position.moveTo(direction);
         if (possiblePosition.isEmpty()) {
-            return;
+            return Set.of();
         }
         Position nextPosition = possiblePosition.get();
-        Square square = chessboard.squareIn(nextPosition);
-        if (addIfEmpty(nextPosition, square, positions)) {
-            addIfEmptyOrAttackable(chessboard, direction, nextPosition, positions);
-        }
-        addIfAttackable(nextPosition, square, positions);
+        return concatMovablePositions(chessboard, direction, nextPosition);
     }
 
-    private boolean addIfEmpty(
-            final Position position,
-            final Square square,
-            final Set<Position> positions
+    private Set<Position> concatMovablePositions(
+            final Chessboard chessboard,
+            final Direction direction,
+            final Position position
     ) {
+        Square square = chessboard.squareIn(position);
         if (square.isEmpty()) {
+            Set<Position> positions = new HashSet<>(movablePositionsOf(chessboard, direction, position));
             positions.add(position);
-            return true;
+            return positions;
         }
-        return false;
-    }
-
-    private void addIfAttackable(
-            final Position position,
-            final Square square,
-            final Set<Position> positions
-    ) {
-        if (square.isEmpty()) {
-            return;
+        if (isAttackable(square)) {
+            return Set.of(position);
         }
-        Piece other = square.piece();
-        if (color() != other.color()) {
-            positions.add(position);
-        }
+        return Set.of();
     }
 }

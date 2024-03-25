@@ -19,51 +19,22 @@ public abstract class UnslidingPiece extends Piece {
 
     protected Set<Position> movablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
         Set<Position> positions = new HashSet<>();
-        movements.forEach(movement -> addPositionIfPresent(chessboard, movement, positions));
+        for (final Movement movement : movements) {
+            movablePosition(chessboard, movement).ifPresent(positions::add);
+        }
         return positions;
     }
 
-    private void addPositionIfPresent(
-            final Chessboard chessboard,
-            final Movement movement,
-            final Set<Position> positions
-    ) {
+    private Optional<Position> movablePosition(final Chessboard chessboard, final Movement movement) {
         Optional<Position> possiblePosition = position().after(movement);
-        possiblePosition.ifPresent(position -> addIfEmptyOrAttackable(chessboard, position, positions));
-    }
-
-    private void addIfEmptyOrAttackable(
-            final Chessboard chessboard,
-            final Position position,
-            final Set<Position> positions
-    ) {
+        if (possiblePosition.isEmpty()) {
+            return Optional.empty();
+        }
+        Position position = possiblePosition.get();
         Square square = chessboard.squareIn(position);
-        if (addIfEmpty(position, square, positions)) {
-            return;
+        if (square.isEmpty() || isAttackable(square)) {
+            return Optional.of(position);
         }
-        addIfAttackable(position, square, positions);
-    }
-
-    private boolean addIfEmpty(
-            final Position position,
-            final Square square,
-            final Set<Position> positions
-    ) {
-        if (square.isEmpty()) {
-            positions.add(position);
-            return true;
-        }
-        return false;
-    }
-
-    private void addIfAttackable(
-            final Position position,
-            final Square square,
-            final Set<Position> positions
-    ) {
-        Piece other = square.piece();
-        if (color() != other.color()) {
-            positions.add(position);
-        }
+        return Optional.empty();
     }
 }

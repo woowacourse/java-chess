@@ -93,6 +93,10 @@ public class Chessboard {
         }
     }
 
+    public boolean isEmpty(final Position position) {
+        return squareIn(position).isEmpty();
+    }
+
     public Square squareIn(final Position position) {
         List<Square> squares = rowIn(position);
         File file = position.file();
