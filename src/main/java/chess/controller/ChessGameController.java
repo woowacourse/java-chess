@@ -22,21 +22,24 @@ public class ChessGameController {
     private void gameStart() {
         List<String> input = repeatUntilSuccess(InputView::requestGameCommand);
         String inputCommand = input.get(GAME_COMMAND_INDEX);
+        GameCommand gameCommand = GameCommand.findGameCommand(inputCommand);
         try {
-            executeGameUntilEnd(GameCommand.findGameCommand(inputCommand), input);
+            executeGameUntilEnd(gameCommand, input);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             gameStart();
         }
     }
 
-    private void executeGameUntilEnd(GameCommand gameCommand, List<String> input) {
+    private void executeGameUntilEnd(GameCommand initialGameCommand, List<String> initialInput) {
         ChessBoard chessBoard = new ChessBoard();
+        GameCommand gameCommand = initialGameCommand;
+        List<String> input = initialInput;
         while (GameCommand.isNotFinishedGame(gameCommand)) {
             executeStartCommand(gameCommand, chessBoard);
             executeMoveCommand(gameCommand, chessBoard, input);
-            List<String> updateInput = repeatUntilSuccess(InputView::requestGameCommand);
-            gameCommand = GameCommand.findGameCommand(updateInput.get(GAME_COMMAND_INDEX));
+            input = repeatUntilSuccess(InputView::requestGameCommand);
+            gameCommand = GameCommand.findGameCommand(input.get(GAME_COMMAND_INDEX));
         }
     }
 
