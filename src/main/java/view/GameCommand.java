@@ -2,13 +2,19 @@ package view;
 
 import java.util.Arrays;
 import java.util.List;
+import view.dto.FileInfo;
+import view.dto.RankInfo;
 
 public enum GameCommand {
     START("start"), END("end"), MOVE("move");
 
+    public static final int SOURCE = 1;
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+    public static final int DESTINATION = 2;
     private String command;
 
-    private GameCommand(String command) {
+    GameCommand(String command) {
         this.command = command;
     }
 
@@ -21,26 +27,26 @@ public enum GameCommand {
     }
 
     public static int toSourceFileValue(List<String> inputCommand) {
-        char file = inputCommand.get(1)
-                .charAt(0);
-        return Character.getNumericValue(file - 48);
+        char file = inputCommand.get(SOURCE)
+                .charAt(FILE_INDEX);
+        return FileInfo.from(file).getValue();
     }
 
     public static int toSourceRankValue(List<String> inputCommand) {
-        char rank = inputCommand.get(1)
-                .charAt(1);
-        return Character.getNumericValue(rank);
+        char rank = inputCommand.get(SOURCE)
+                .charAt(RANK_INDEX);
+        return RankInfo.from(rank).getValue();
     }
 
     public static int toDestinationFileValue(List<String> inputCommand) {
-        char file = inputCommand.get(2)
-                .charAt(0);
-        return Character.getNumericValue(file - 48);
+        char file = inputCommand.get(DESTINATION)
+                .charAt(FILE_INDEX);
+        return FileInfo.from(file).getValue();
     }
 
     public static int toDestinationRankValue(List<String> inputCommand) {
-        char rank = inputCommand.get(2)
-                .charAt(1);
-        return Character.getNumericValue(rank);
+        char rank = inputCommand.get(DESTINATION)
+                .charAt(RANK_INDEX);
+        return RankInfo.from(rank).getValue();
     }
 }
