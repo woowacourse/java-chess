@@ -65,7 +65,7 @@ public class Board {
 
     private boolean isBlocked(List<Position> path) {
         return path.stream()
-                .anyMatch(position -> board.get(position) != null);
+                .anyMatch(board::containsKey);
     }
 
     private void move(Position start, Position end, Piece movingPiece) {
