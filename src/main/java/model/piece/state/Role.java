@@ -28,10 +28,10 @@ public abstract class Role {
     }
 
     public Route findRoute(Position source, Position destination) {
-        return findPossibleAllRoute(source)
-                .stream()
+        Set<Route> routes = findPossibleAllRoute(source);
+        routes.forEach(route -> route.removeSourceAndTarget());
+        return routes.stream()
                 .filter(route -> route.contains(destination))
-                .map(route -> route.subRoute(destination))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("해당 기물이 이동할 수 없는 좌표입니다"));
     }

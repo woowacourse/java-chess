@@ -2,17 +2,18 @@ package model.position;
 
 import model.direction.Direction;
 
-import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class Route {
     private final Direction direction;
-    private final List<Position> positions;
+    private final Deque<Position> positions;
 
     public Route(Direction direction, List<Position> positions) {
         this.direction = direction;
-        this.positions = new ArrayList<>(positions);
+        this.positions = new LinkedList<>(positions);
     }
 
     public List<Position> getPositions() {
@@ -23,9 +24,12 @@ public class Route {
         return positions.contains(position);
     }
 
-    public Route subRoute(Position target) {
-        List<Position> subList = positions.subList(0, positions.indexOf(target));
-        return new Route(direction, subList);
+    public void removeSourceAndTarget() {
+        if (positions.size() < 2) {
+            throw new IllegalArgumentException("source위치와 target위치가 지정되어 있지 않습니다.");
+        }
+        positions.removeFirst();
+        positions.removeLast();
     }
 
     @Override

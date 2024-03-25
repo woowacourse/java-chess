@@ -7,27 +7,29 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class RouteTest {
 
     @Test
-    @DisplayName("출발 지점부터 도착 지점 이전까지의 Route를 반환한다.")
+    @DisplayName("출발 지점과 도착 지점을 제외한 Route를 반환한다.")
     void subRoute_ShouldReturnSubListOfHoleRoute_WhenGivenDestination() {
         // When
         List<Position> holePositions = new ArrayList<>();
-        for (int rank = 1; rank <= 8; rank++) {
-            holePositions.add(Position.of(1, rank));
+        for (Rank rank : Rank.values()) {
+            holePositions.add(Position.of(File.A, rank));
         }
         Route initialRoute = new Route(Direction.N, holePositions);
+        initialRoute.removeSourceAndTarget();
 
         List<Position> subPositions = new ArrayList<>();
-        for (int rank = 1; rank < 4; rank++) {
-            subPositions.add(Position.of(1, rank));
-        }
+        subPositions.add(Position.of(File.A, Rank.TWO));
+        subPositions.add(Position.of(File.A, Rank.THREE));
+        subPositions.add(Position.of(File.A, Rank.FOUR));
+        subPositions.add(Position.of(File.A, Rank.FIVE));
+        subPositions.add(Position.of(File.A, Rank.SIX));
+        subPositions.add(Position.of(File.A, Rank.SEVEN));
 
-        Route subRoute = initialRoute.subRoute(Position.of(1, 4));
-
-        assertEquals(subPositions, subRoute.getPositions());
+        assertThat(initialRoute).isEqualTo(new Route(Direction.N, subPositions));
     }
 }
