@@ -19,7 +19,7 @@ class QueenTest {
         assertThat(queen.canMove(source, target)).isTrue();
     }
 
-    @DisplayName("퀸 이동 가능")
+    @DisplayName("퀸 이동 불가")
     @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 없다.")
     @CsvSource({"4,4", "5,6"})
     void cannotMove(int file, int rank) {

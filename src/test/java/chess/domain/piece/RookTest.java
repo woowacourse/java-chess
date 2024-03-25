@@ -4,34 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
 
-    @Test
-    @DisplayName("Rank가 같으면 룩 이동 가능")
-    void canMove_SameRank() {
+    @DisplayName("룩 이동 가능")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 있다.")
+    @CsvSource({"4,6", "4,2", "6,4", "2,4"})
+    void canMove(int file, int rank) {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(8, 1);
-        assertThat(rook.canMove(position1, position2)).isTrue();
+        Position source = Position.of(4, 4);
+        Position target = Position.of(file, rank);
+        assertThat(rook.canMove(source, target)).isTrue();
     }
 
-    @Test
-    @DisplayName("File이 같으면 룩 이동 가능")
-    void canMove_SameFile() {
+    @DisplayName("룩 이동 불가")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 없다.")
+    @CsvSource({"4,4", "5,5"})
+    void cannotMove(int file, int rank) {
         Rook rook = new Rook(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 8);
-        assertThat(rook.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("Rank와 File이 모두 다르면 룩 이동 불가")
-    void cannotMove_DifferentFileDifferentRank() {
-        Rook rook = new Rook(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(8, 8);
-        assertThat(rook.canMove(position1, position2)).isFalse();
+        Position source = Position.of(4, 4);
+        Position target = Position.of(file, rank);
+        assertThat(rook.canMove(source, target)).isFalse();
     }
 }
