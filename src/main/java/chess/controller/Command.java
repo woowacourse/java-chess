@@ -1,0 +1,10 @@
+package chess.controller;
+
+import chess.domain.ChessGame;
+import chess.view.OutputView;
+
+public interface Command {
+    void execute(ChessGame chessGame, OutputView outputView);
+
+    boolean isNotEndCommand();
+}
