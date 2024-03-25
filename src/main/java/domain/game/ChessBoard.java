@@ -25,11 +25,11 @@ public class ChessBoard {
         this.routeValidator = Map.of(
                 new Pawn(Color.WHITE), this::validatePawnMove,
                 new Pawn(Color.BLACK), this::validatePawnMove,
-                new Knight(), this::validateSingleMoveRoute,
+                new Knight(), this::validatePieceMove,
                 new Bishop(), this::validateMultipleMoveRoute,
                 new Rook(), this::validateMultipleMoveRoute,
                 new Queen(), this::validateMultipleMoveRoute,
-                new King(), this::validateSingleMoveRoute
+                new King(), this::validatePieceMove
         );
     }
 
@@ -89,20 +89,16 @@ public class ChessBoard {
         pieceByPosition.remove(source);
     }
 
-    private void validateSingleMoveRoute(Position source, Position target) {
-        checkPieceMove(source, target);
+    private void validateMultipleMoveRoute(Position source, Position target) {
+        validatePieceMove(source, target);
+        validateOtherPieceOnRoute(source, target);
     }
 
-    private void checkPieceMove(final Position source, final Position target) {
+    private void validatePieceMove(Position source, Position target) {
         Piece sourcePiece = pieceByPosition.get(source);
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException("해당 피스가 움직일 수 있는 지점이 아닙니다.");
         }
-    }
-
-    private void validateMultipleMoveRoute(Position source, Position target) {
-        checkPieceMove(source, target);
-        validateOtherPieceOnRoute(source, target);
     }
 
     private void validateOtherPieceOnRoute(Position sourcePosition, Position targetPosition) {
@@ -123,7 +119,7 @@ public class ChessBoard {
 
     private void validatePawnMove(Position source, Position target) {
         Direction direction = Direction.findDirection(source, target);
-        checkPieceMove(source, target);
+        validatePieceMove(source, target);
 
         if (direction.isNorthOrSouth()) {
             checkOtherPieceAt(target);
@@ -139,11 +135,11 @@ public class ChessBoard {
         }
     }
 
-    public boolean isNotEmptyAt(final Position position) {
+    public boolean isNotEmptyAt(Position position) {
         return pieceByPosition.containsKey(position);
     }
 
-    private boolean isEmptyAt(final Position position) {
+    private boolean isEmptyAt(Position position) {
         return !isNotEmptyAt(position);
     }
 
