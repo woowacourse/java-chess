@@ -1,5 +1,7 @@
 USE chess;
 
+DROP TABLE IF EXISTS chessboard_for_test;
+
 CREATE TABLE IF NOT EXISTS chessboard_for_test
 (
     id     int         NOT NULL AUTO_INCREMENT,
@@ -9,9 +11,6 @@ CREATE TABLE IF NOT EXISTS chessboard_for_test
     color  VARCHAR(5)  NOT NULL,
     PRIMARY KEY (id)
 );
-
-DELETE
-FROM chessboard_for_test;
 
 INSERT INTO chessboard_for_test (file, `rank`, type, color)
 VALUES ('a', 1, 'ROOK', 'WHITE'),

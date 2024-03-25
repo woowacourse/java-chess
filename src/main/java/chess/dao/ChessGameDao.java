@@ -23,15 +23,9 @@ public class ChessGameDao {
     private static final String APP_TABLE_NAME = "chessboard";
     private static final String TEST_TABLE_NAME = "chessboard_for_test";
 
-    private Connection connection;
-
     public Connection getConnection() {
         try {
-            if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
-                        PASSWORD);
-            }
-            return connection;
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
