@@ -26,7 +26,7 @@ public class ChessBoard {
 
         Direction direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
 
-        validateCanMove(start, destination, direction);
+        validateNoPieceOnPath(start, destination, direction);
         movePiece(destination, startPosition, piece);
 
         currentTurn = changeTurn();
@@ -67,10 +67,9 @@ public class ChessBoard {
         }
     }
 
-    private void validateCanMove(Coordinate coordinate, Coordinate destination, Direction direction) {
+    private void validateNoPieceOnPath(Coordinate coordinate, Coordinate destination, Direction direction) {
         while (!coordinate.equals(destination)) {
             coordinate.moveByDistances(direction);
-
             hasPieceOnPath(coordinate, destination);
         }
     }
