@@ -31,20 +31,6 @@ public class StartingPawn extends AbstractPawn {
             Movement.of(DOWN)
     );
 
-    private static Set<Movement> possibleMovementsByColor(final Color color) {
-        if (color.isBlack()) {
-            return new HashSet<>(POSSIBLE_MOVEMENTS_BLACK);
-        }
-        return new HashSet<>(POSSIBLE_MOVEMENTS_WHITE);
-    }
-
-    private static Set<Movement> possibleAttacksByColor(final Color color) {
-        if (color.isBlack()) {
-            return new HashSet<>(POSSIBLE_ATTACKS_BLACK);
-        }
-        return new HashSet<>(POSSIBLE_ATTACKS_WHITE);
-    }
-
     public StartingPawn(final Color color, final Position position) {
         super(color, position);
     }
@@ -59,8 +45,9 @@ public class StartingPawn extends AbstractPawn {
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
         Set<Position> positions = new HashSet<>();
-        positions.addAll(movablePositions(chessboard, possibleMovementsByColor(color())));
-        positions.addAll(attackablePositions(chessboard, possibleAttacksByColor(color())));
+        positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
+        positions.addAll(movablePositions(chessboard,
+                possibleMovementsBy(color(), POSSIBLE_MOVEMENTS_WHITE, POSSIBLE_MOVEMENTS_BLACK)));
         validateTarget(positions, target);
         return new Pawn(color(), target);
     }

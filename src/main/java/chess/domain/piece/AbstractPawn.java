@@ -27,6 +27,21 @@ public abstract class AbstractPawn extends UnslidingPiece {
             Movement.of(DOWN_RIGHT)
     );
 
+    protected static Set<Movement> possibleAttacksBy(final Color color) {
+        return possibleMovementsBy(color, POSSIBLE_ATTACKS_WHITE, POSSIBLE_ATTACKS_BLACK);
+    }
+
+    protected static Set<Movement> possibleMovementsBy(
+            final Color color,
+            final Set<Movement> whiteMovements,
+            final Set<Movement> blackMovements
+    ) {
+        if (color.isBlack()) {
+            return blackMovements;
+        }
+        return whiteMovements;
+    }
+
     protected AbstractPawn(final Color color, final Position position) {
         super(color, position);
     }

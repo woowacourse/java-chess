@@ -20,26 +20,13 @@ public class Pawn extends AbstractPawn {
         super(color, position);
     }
 
-    private static Set<Movement> possibleMovementsByColor(final Color color) {
-        if (color.isBlack()) {
-            return new HashSet<>(POSSIBLE_MOVEMENTS_BLACK);
-        }
-        return new HashSet<>(POSSIBLE_MOVEMENTS_WHITE);
-    }
-
-    private static Set<Movement> possibleAttacksByColor(final Color color) {
-        if (color.isBlack()) {
-            return new HashSet<>(POSSIBLE_ATTACKS_BLACK);
-        }
-        return new HashSet<>(POSSIBLE_ATTACKS_WHITE);
-    }
-
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        Set<Position> possiblePositions = new HashSet<>();
-        possiblePositions.addAll(attackablePositions(chessboard, possibleAttacksByColor(color())));
-        possiblePositions.addAll(movablePositions(chessboard, possibleMovementsByColor(color())));
-        validateTarget(possiblePositions, target);
+        Set<Position> positions = new HashSet<>();
+        positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
+        positions.addAll(movablePositions(chessboard,
+                possibleMovementsBy(color(), POSSIBLE_MOVEMENTS_WHITE, POSSIBLE_MOVEMENTS_BLACK)));
+        validateTarget(positions, target);
         return new Pawn(color(), target);
     }
 }
