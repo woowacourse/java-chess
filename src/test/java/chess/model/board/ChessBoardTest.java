@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
@@ -94,11 +95,15 @@ class ChessBoardTest {
 
     private ChessBoard createCustomChessBoard(Knight knight, ChessPosition knightPosition) {
         Map<ChessPosition, Piece> chessBoard = Arrays.stream(File.values())
-                .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> ChessPosition.of(file, rank)))
+                .flatMap(this::createChessPositionStream)
                 .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
         chessBoard.put(knightPosition, knight);
         chessBoard.put(knightPosition.calculateNextPosition(0, 1), Pawn.from(Side.WHITE));
         return new ChessBoard(chessBoard);
+    }
+
+    private Stream<ChessPosition> createChessPositionStream(File file) {
+        return Arrays.stream(Rank.values())
+                .map(rank -> ChessPosition.of(file, rank));
     }
 }

@@ -3,6 +3,7 @@ package chess.model.position;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
@@ -60,11 +61,15 @@ public class ChessPosition {
 
     private static class ChessPositionCache {
         static final Map<Integer, ChessPosition> CACHE = Arrays.stream(File.values())
-                .flatMap(file -> Arrays.stream(Rank.values())
-                        .map(rank -> new ChessPosition(file, rank)))
+                .flatMap(ChessPositionCache::createChessPositionStream)
                 .collect(toMap(
                         chessPosition -> Objects.hash(chessPosition.getFile(), chessPosition.getRank()),
                         identity()));
+
+        private static Stream<ChessPosition> createChessPositionStream(File file) {
+            return Arrays.stream(Rank.values())
+                    .map(rank -> new ChessPosition(file, rank));
+        }
 
         private ChessPositionCache() {
         }

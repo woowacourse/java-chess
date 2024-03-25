@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableMap;
 import static java.util.function.Function.identity;
@@ -69,8 +70,12 @@ public class ChessBoardInitializer {
     public static Map<ChessPosition, Piece> createBlanks() {
         return IntStream.range(FIRST_BLANK_RANK_COORDINATE, LAST_BLANK_RANK_COORDINATE + 1)
                 .boxed()
-                .flatMap(rankCoordinate -> Arrays.stream(File.values())
-                        .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate))))
+                .flatMap(ChessBoardInitializer::createBlankPositionStream)
                 .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
+    }
+
+    private static Stream<ChessPosition> createBlankPositionStream(int rankCoordinate) {
+        return Arrays.stream(File.values())
+                .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate)));
     }
 }
