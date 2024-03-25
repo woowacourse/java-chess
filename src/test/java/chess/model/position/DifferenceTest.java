@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class DifferenceTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {8, 9})
+    @ValueSource(ints = {8, -8})
     @DisplayName("좌표차의 절댓값이 7 초과이면 예외가 발생한다.")
     void validateDifference(int difference) {
         // whe & then
