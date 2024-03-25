@@ -144,6 +144,16 @@ class GeneralMoveStrategyTest {
         );
     }
 
+    /*
+    . . . . . . . .
+    B . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . P . . . .
+    . . . . . . . .
+    . . . . . . . .
+    b . . . . . . .
+    */
     @TestFactory
     @DisplayName("비숍 이동 테스트")
     Collection<DynamicTest> moveBishop() {
@@ -155,6 +165,16 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
+                /*
+                . . . . . . . .
+                B . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . b . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("비숍은 오른쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(1, 1), new Position(4, 4));
                     Assertions.assertAll(
@@ -163,6 +183,17 @@ class GeneralMoveStrategyTest {
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 1))).isEqualTo(
                                     PieceType.BLANK)
                     );
+
+                /*
+                . . . . . . . .
+                b . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 }), dynamicTest("비숍은 왼쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(1, 7));
                     Assertions.assertAll(
@@ -175,6 +206,16 @@ class GeneralMoveStrategyTest {
         );
     }
 
+    /*
+    P . . . . . . P
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    . . . . . . . .
+    r P . . . . . P
+    */
     @TestFactory
     @DisplayName("룩 이동 테스트")
     Collection<DynamicTest> moveRook() {
@@ -188,6 +229,16 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
+                /*
+                r . . . . . . P
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . P . . . . . P
+                */
                 dynamicTest("룩은 위쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(1, 1), new Position(1, 8));
                     Assertions.assertAll(
@@ -197,6 +248,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . r
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . P . . . . . P
+                */
                 dynamicTest("룩은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(1, 8), new Position(8, 8));
                     Assertions.assertAll(
@@ -206,6 +267,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . P . . . . . r
+                */
                 dynamicTest("룩은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(8, 8), new Position(8, 1));
                     Assertions.assertAll(
@@ -215,6 +286,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . r . . . . . .
+                */
                 dynamicTest("룩은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(8, 1), new Position(2, 1));
                     Assertions.assertAll(
@@ -227,6 +308,16 @@ class GeneralMoveStrategyTest {
         );
     }
 
+    /*
+    . . . . . . . .
+    . . . . . . . .
+    . . . . P P . .
+    . . . P . . P .
+    . . . P . . P .
+    . . . . P . P .
+    . . . . q . . .
+    . . . . . . . .
+    */
     @TestFactory
     @DisplayName("퀸 이동 테스트")
     Collection<DynamicTest> moveQueen() {
@@ -240,10 +331,20 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new BlackPawn(),
                 new Position(5, 3), new BlackPawn(),
                 new Position(7, 3), new BlackPawn()
-                ));
+        ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . P P . .
+                . . . P . . P .
+                . . . P . . q .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 오른쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 2), new Position(7, 4));
                     Assertions.assertAll(
@@ -253,6 +354,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . P P . .
+                . . . P . . q .
+                . . . P . . . .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 위 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(7, 4), new Position(7, 5));
                     Assertions.assertAll(
@@ -262,6 +373,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . P q . .
+                . . . P . . . .
+                . . . P . . . .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 왼쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(7, 5), new Position(6, 6));
                     Assertions.assertAll(
@@ -271,6 +392,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . q . . .
+                . . . P . . . .
+                . . . P . . . .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(6, 6), new Position(5, 6));
                     Assertions.assertAll(
@@ -280,6 +411,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . q . . . .
+                . . . P . . . .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 왼쪽 대각선 아래 상대 말을 잡고 이동할 수 있다.", () -> {
 
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 6), new Position(4, 5));
@@ -290,6 +431,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . q . . . .
+                . . . . P . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 5), new Position(4, 4));
                     Assertions.assertAll(
@@ -299,6 +450,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . q . P .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 오른쪽 대각선 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(5, 3));
                     Assertions.assertAll(
@@ -308,6 +469,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . q .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("퀸은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 3), new Position(7, 3));
                     Assertions.assertAll(
@@ -320,6 +491,16 @@ class GeneralMoveStrategyTest {
         );
     }
 
+    /*
+    . . . n P . . .
+    . P . . . . . .
+    . . . . . . . .
+    P . . . . . . P
+    . . . . . . P .
+    . P . . . . P .
+    . . . P n . . .
+    . . . . . . . .
+    */
     @TestFactory
     @DisplayName("나이트 이동 테스트")
     Collection<DynamicTest> moveKnight() {
@@ -338,6 +519,16 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
+                /*
+                . . . n P . . .
+                . P . . . . P .
+                . . . . . . . .
+                P . . . . . . P
+                . . . . . . . .
+                . P . . . . n .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 오른쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 2), new Position(7, 3));
                     Assertions.assertAll(
@@ -347,6 +538,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n P . . .
+                . P . . . . P .
+                . . . . . . . .
+                P . . . . . . n
+                . . . . . . . .
+                . P . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(7, 3), new Position(8, 5));
                     Assertions.assertAll(
@@ -356,6 +557,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n P . . .
+                . P . . . . n .
+                . . . . . . . .
+                P . . . . . . .
+                . . . . . . . .
+                . P . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(8, 5), new Position(7, 7));
                     Assertions.assertAll(
@@ -365,6 +576,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n n . . .
+                . P . . . . . .
+                . . . . . . . .
+                P . . . . . . .
+                . . . . . . . .
+                . P . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(7, 7), new Position(5, 8));
                     Assertions.assertAll(
@@ -374,6 +595,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n . . . .
+                . n . . . . . .
+                . . . . . . . .
+                P . . . . . . .
+                . . . . . . . .
+                . P . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 8), new Position(2, 7));
                     Assertions.assertAll(
@@ -383,6 +614,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n . . . .
+                . . . . . . . .
+                . . . . . . . .
+                n . . . . . . .
+                . . . . . . . .
+                . P . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 아래쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(2, 7), new Position(1, 5));
                     Assertions.assertAll(
@@ -392,6 +633,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . n . . . . . .
+                . . . P . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 아래로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(1, 5), new Position(2, 3));
                     Assertions.assertAll(
@@ -401,6 +652,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . n . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . n . . . .
+                . . . . . . . .
+                */
                 dynamicTest("나이트는 오른쪽로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(2, 3), new Position(4, 2));
                     Assertions.assertAll(
@@ -413,6 +674,16 @@ class GeneralMoveStrategyTest {
         );
     }
 
+    /*
+    . . . . . . . .
+    . . . . . . . .
+    . . . P P . . .
+    . . P . . P . .
+    . . P k . P . .
+    . . . . P . . .
+    . . . . . . . .
+    . . . . . . . .
+    */
     @TestFactory
     @DisplayName("킹 이동 테스트")
     Collection<DynamicTest> moveKing() {
@@ -429,6 +700,16 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         return List.of(
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . P P . . .
+                . . P . . P . .
+                . . P . . P . .
+                . . . . k . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(5, 3));
                     Assertions.assertAll(
@@ -438,6 +719,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . P P . . .
+                . . P . . P . .
+                . . P . . k . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 3), new Position(6, 4));
                     Assertions.assertAll(
@@ -447,6 +738,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . P P . . .
+                . . P . . k . .
+                . . P . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 위 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(6, 4), new Position(6, 5));
                     Assertions.assertAll(
@@ -456,6 +757,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . P k . . .
+                . . P . . . . .
+                . . P . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 왼쪽 위 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(6, 5), new Position(5, 6));
                     Assertions.assertAll(
@@ -465,6 +776,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . k . . . .
+                . . P . . . . .
+                . . P . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(5, 6), new Position(4, 6));
                     Assertions.assertAll(
@@ -474,6 +795,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . k . . . . .
+                . . P . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 왼쪽 아래 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(4, 6), new Position(3, 5));
                     Assertions.assertAll(
@@ -483,6 +814,16 @@ class GeneralMoveStrategyTest {
                                     PieceType.BLANK)
                     );
                 }),
+                /*
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . k . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                . . . . . . . .
+                */
                 dynamicTest("킹은 아래 상대 말을 잡고 이동할 수 있다.", () -> {
                     generalMoveStrategy.move(Color.WHITE, new Position(3, 5), new Position(3, 4));
                     Assertions.assertAll(
