@@ -37,6 +37,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean checkKind(Kind kind) {
+        return Kind.PAWN == kind;
+    }
+
+    @Override
     public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
         int rowDifference = positions.calculateRowDifference();
         int columnDifference = positions.calculateColumnDifference();

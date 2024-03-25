@@ -33,6 +33,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean checkKind(Kind kind) {
+        return Kind.QUEEN == kind;
+    }
+
+    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
         int rowSign = Calculator.calculateSign(rowDifference);

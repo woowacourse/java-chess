@@ -31,6 +31,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean checkKind(Kind kind) {
+        return Kind.BISHOP == kind;
+    }
+
+    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.abs(rowDifference);
         int rowSign = rowDifference / absoluteDifference;

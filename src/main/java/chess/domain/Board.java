@@ -69,10 +69,10 @@ public class Board {
     }
 
     private Position getKingPosition(Team team) {
-        Character character = Character.findCharacter(team, Kind.KING);
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().findCharacter() == character)
+                .filter(entry -> entry.getValue().checkKind(Kind.KING)
+                        && entry.getValue().isSameTeamWith(team))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(
                         "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))

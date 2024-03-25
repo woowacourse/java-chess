@@ -34,6 +34,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean checkKind(Kind kind) {
+        return Kind.KING == kind;
+    }
+
+    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         return new ArrayList<>();
     }

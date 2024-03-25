@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public abstract class Piece {
     public abstract Piece move();
 
     public abstract Character findCharacter();
+
+    public abstract boolean checkKind(Kind kind);
 
     protected abstract List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference);
 
