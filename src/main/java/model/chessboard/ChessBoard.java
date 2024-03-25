@@ -24,17 +24,17 @@ public class ChessBoard {
         changeTurn();
     }
 
+    private void checkTurn(PieceHolder source) {
+        if (!source.isSameColor(currentTurnColor)) {
+            throw new IllegalArgumentException("상대 턴입니다.");
+        }
+    }
+
     private List<PieceHolder> pieceHoldersInRoute(Route route) {
         return route.getPositions()
                 .stream()
                 .map(chessBoard::get)
                 .toList();
-    }
-
-    private void checkTurn(PieceHolder source) {
-        if (!source.isSameColor(currentTurnColor)) {
-            throw new IllegalArgumentException("상대 턴입니다.");
-        }
     }
 
     private void changeTurn(){
