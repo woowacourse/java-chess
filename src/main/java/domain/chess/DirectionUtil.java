@@ -1,8 +1,4 @@
-package util;
-
-import domain.chess.Direction;
-import domain.chess.Point;
-
+package domain.chess;
 
 public class DirectionUtil {
     private DirectionUtil() {

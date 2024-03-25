@@ -4,7 +4,7 @@ import domain.chess.Direction;
 import domain.chess.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.DirectionUtil;
+import domain.chess.DirectionUtil;
 
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
