@@ -1,4 +1,4 @@
-create table piece
+create table pieces
 (
     board_file varchar(1) not null,
     board_rank varchar(1) not null,
