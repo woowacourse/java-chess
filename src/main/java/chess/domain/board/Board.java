@@ -7,7 +7,6 @@ import chess.dto.PieceDrawing;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class Board {
@@ -22,7 +21,7 @@ public class Board {
     }
 
     public void move(Square source, Square target, PieceColor turn) {
-        Piece sourcePiece = findPiece(source).orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PIECE));
+        Piece sourcePiece = findPiece(source);
         validateTurn(sourcePiece, turn);
         validateStay(source, target);
         sourcePiece.move(this, target);
@@ -51,18 +50,19 @@ public class Board {
                 .anyMatch(piece -> piece.isLocated(square) && piece.getColor() == pieceColor);
     }
 
-    private Optional<Piece> findPiece(Square square) {
+    private Piece findPiece(Square square) {
         return pieces.stream()
                 .filter(piece -> piece.isLocated(square))
-                .findAny();
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_NOT_EXIST_PIECE));
     }
 
     private void removeTargetPieceIfAttacked(Piece sourcePiece, Square targetSquare) {
-        findPiece(targetSquare).ifPresent(targetPiece -> {
-            if (sourcePiece.getColor() != targetPiece.getColor()) {
-                pieces.remove(targetPiece);
-            }
-        });
+        pieces.stream()
+                .filter(piece -> piece.isLocated(targetSquare))
+                .filter(piece -> piece.getColor() != sourcePiece.getColor())
+                .findFirst()
+                .ifPresent(pieces::remove);
     }
 
     public List<PieceDrawing> generatePieceDrawings() {
