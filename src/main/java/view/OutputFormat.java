@@ -3,11 +3,12 @@ package view;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -24,14 +25,14 @@ public class OutputFormat {
         pieceSymbol.put(new Piece(new Bishop(), Color.BLACK), "B");
         pieceSymbol.put(new Piece(new Queen(), Color.BLACK), "Q");
         pieceSymbol.put(new Piece(new King(), Color.BLACK), "K");
-        pieceSymbol.put(new Piece(new Pawn(Color.BLACK), Color.BLACK), "P");
+        pieceSymbol.put(new Piece(new BlackPawn(), Color.BLACK), "P");
 
         pieceSymbol.put(new Piece(new Rook(), Color.WHITE), "r");
         pieceSymbol.put(new Piece(new Knight(), Color.WHITE), "n");
         pieceSymbol.put(new Piece(new Bishop(), Color.WHITE), "b");
         pieceSymbol.put(new Piece(new Queen(), Color.WHITE), "q");
         pieceSymbol.put(new Piece(new King(), Color.WHITE), "k");
-        pieceSymbol.put(new Piece(new Pawn(Color.WHITE), Color.WHITE), "p");
+        pieceSymbol.put(new Piece(new WhitePawn(), Color.WHITE), "p");
     }
 
     public String parseChessBoard(final Map<Position, Piece> chessBoard) {

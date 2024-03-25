@@ -3,12 +3,14 @@ package domain.piece;
 import static fixture.PositionFixture.*;
 
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.Position;
 import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
@@ -81,7 +83,7 @@ class PieceRoleTest {
             Position sourcePosition = createC2();
             Position targetPosition = createC3();
 
-            PieceRole pawn = new Pawn(Color.WHITE);
+            PieceRole pawn = new WhitePawn();
 
             Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isTrue();
         }
@@ -151,7 +153,7 @@ class PieceRoleTest {
             Position sourcePosition = createC2();
             Position targetPosition = createC3();
 
-            PieceRole pawn = new Pawn(Color.BLACK);
+            PieceRole pawn = new BlackPawn();
 
             Assertions.assertThat(pawn.canMove(sourcePosition, targetPosition)).isFalse();
         }

@@ -5,12 +5,13 @@ import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceGenerator;
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.Position;
 import java.util.Collections;
 import java.util.Map;
@@ -23,8 +24,8 @@ public class ChessBoard {
     public ChessBoard() {
         this.pieceByPosition = PieceGenerator.generate();
         this.routeValidator = Map.of(
-                new Pawn(Color.WHITE), this::validatePawnMove,
-                new Pawn(Color.BLACK), this::validatePawnMove,
+                new WhitePawn(), this::validatePawnMove,
+                new BlackPawn(), this::validatePawnMove,
                 new Knight(), this::validatePieceMove,
                 new Bishop(), this::validateMultipleMoveRoute,
                 new Rook(), this::validateMultipleMoveRoute,

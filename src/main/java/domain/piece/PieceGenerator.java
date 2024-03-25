@@ -1,12 +1,13 @@
 package domain.piece;
 
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -21,11 +22,11 @@ public class PieceGenerator {
     private static final List<PieceRole> SPECIAL_PIECES = List.of(
             new Rook(), new Knight(), new Bishop(), new Queen(), new King(), new Bishop(), new Knight(), new Rook());
     private static final List<PieceRole> BLACK_PAWN_PIECES = IntStream.range(1, CHESS_BOARD_SIZE + 1)
-            .mapToObj(number -> (PieceRole) new Pawn(Color.BLACK))
+            .mapToObj(number -> (PieceRole) new BlackPawn())
             .toList();
 
     private static final List<PieceRole> WHITE_PAWN_PIECES = IntStream.range(1, CHESS_BOARD_SIZE + 1)
-            .mapToObj(number -> (PieceRole) new Pawn(Color.WHITE))
+            .mapToObj(number -> (PieceRole) new WhitePawn())
             .toList();
 
     private static final Map<Integer, List<Piece>> rankPieces = new HashMap<>();

@@ -21,6 +21,14 @@ public class Rank {
         return new Rank(number + movement);
     }
 
+    public boolean isRank2() {
+        return number == 2;
+    }
+
+    public boolean isRank7() {
+        return number == 7;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

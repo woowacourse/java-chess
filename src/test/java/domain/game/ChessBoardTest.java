@@ -4,11 +4,13 @@ import static fixture.PositionFixture.*;
 
 import domain.piece.Color;
 import domain.piece.Piece;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -82,8 +84,8 @@ class ChessBoardTest {
         Position sourcePosition = createB1();
         Position targetPosition = createB2();
 
-        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(new WhitePawn(), Color.WHITE);
+        Piece targetPiece = new Piece(new BlackPawn(), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourcePosition, sourcePiece);
@@ -99,8 +101,8 @@ class ChessBoardTest {
         Position sourcePosition = createB1();
         Position targetPosition = createC2();
 
-        Piece sourcePiece = new Piece(new Pawn(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece sourcePiece = new Piece(new WhitePawn(), Color.WHITE);
+        Piece targetPiece = new Piece(new BlackPawn(), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourcePosition, sourcePiece);
@@ -122,7 +124,7 @@ class ChessBoardTest {
 
         Piece sourcePiece = new Piece(new Rook(), Color.WHITE);
         Piece targetPiece = new Piece(new Rook(), Color.WHITE);
-        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece blockPiece = new Piece(new BlackPawn(), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourcePosition, sourcePiece);
@@ -142,7 +144,7 @@ class ChessBoardTest {
 
         Piece sourcePiece = new Piece(new Knight(), Color.WHITE);
         Piece targetPiece = new Piece(new Knight(), Color.WHITE);
-        Piece blockPiece = new Piece(new Pawn(Color.BLACK), Color.BLACK);
+        Piece blockPiece = new Piece(new BlackPawn(), Color.BLACK);
 
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.add(sourcePosition, sourcePiece);
