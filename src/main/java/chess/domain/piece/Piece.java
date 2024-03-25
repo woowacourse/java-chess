@@ -28,8 +28,11 @@ public abstract class Piece {
 
     protected abstract int maxAttackMoveCount();
 
-    // TODO: Pawn이 움직인 적이 있는지 확인하는 로직 개선
-    public abstract void move();
+    /**
+     * @ImplSpec 각 Piece의 움직임을 추적해야 하는 경우, move 메소드를 적절히 오버라이딩하여 사용할 수 있다. 기본적인 동작은 아무것도 수행하지 않는 것이다.
+     */
+    public void move() {
+    }
 
     public boolean isColor(Color color) {
         return this.color == color;

@@ -32,8 +32,4 @@ public class Rook extends Piece {
     protected int maxAttackMoveCount() {
         return MAX_MOVE_COUNT;
     }
-
-    @Override
-    public void move() {
-    }
 }

@@ -21,6 +21,7 @@ public class Empty extends Piece {
         throw new IllegalArgumentException("시작 위치가 비어있습니다.");
     }
 
+    @Override
     public void move() {
         throw new IllegalArgumentException("시작 위치가 비어있습니다.");
     }

@@ -36,8 +36,4 @@ public class Queen extends Piece {
     protected int maxAttackMoveCount() {
         return MAX_MOVE_COUNT;
     }
-
-    @Override
-    public void move() {
-    }
 }
