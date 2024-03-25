@@ -105,6 +105,6 @@ public class ChessGameController {
     }
 
     private boolean canContinue(String command) {
-        return !command.equals("end");
+        return !command.equals(END_COMMAND);
     }
 }
