@@ -38,6 +38,7 @@ public class ChessBoard {
     private void validateCanMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = chessBoard.get(sourcePosition);
         Direction direction = sourcePosition.calculateDirection(targetPosition);
+        validateNotSourceItSelf(sourcePosition, targetPosition);
         validateTargetNotAlly(sourcePosition, targetPosition);
 
         if (chessBoard.get(sourcePosition).isPawn()) {
@@ -47,6 +48,12 @@ public class ChessBoard {
         validateValidDirection(sourcePiece, direction);
         Position position = moveUntilTargetOrMeetSomeThing(sourcePosition, targetPosition, direction);
         validateReachedTarget(targetPosition, position);
+    }
+
+    private void validateNotSourceItSelf(Position sourcePosition, Position targetPosition) {
+        if (sourcePosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 제자리로 움직일 수 없습니다.");
+        }
     }
 
     private void validateTargetNotAlly(Position source, Position target) {

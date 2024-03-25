@@ -60,6 +60,18 @@ class ChessBoardTest {
         assertThat(pieceAtSourcePositionAfterMove).isEqualTo(EmptyPiece.of());
     }
 
+    @DisplayName("제자리로 이동하려는 경우 예외기 발생한다.")
+    @Test
+    void canNotMoveToSamePosition() {
+        ChessBoard chessBoard = ChessBoardFactory.makeChessBoard();
+        Position source = Position.of(File.B, Rank.TWO);
+        Position target = Position.of(File.B, Rank.TWO);
+
+        assertThatCode(() -> chessBoard.move(source, target))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 제자리로 움직일 수 없습니다.");
+    }
+
     @Test
     @DisplayName("이동하려는 지점에 같은 팀이 존재하는 경우 예외가 발생한다")
     void cannotMoveIfAllyAlreadyExist() {
