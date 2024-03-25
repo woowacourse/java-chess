@@ -9,23 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Rook extends SlidingPiece {
+public class Rook extends Piece {
     public Rook(final Color color, Square square) {
         super(color, PieceType.ROOK, square);
     }
 
     @Override
-    public Set<Square> movableSquaresFrom(final Square source) {
-        return movableSquaresOf(Direction.ofRook(), source);
-    }
-
-    /*
-    - [ ] 이동 방향은 `위`, `아래`, `왼쪽`, `오른쪽`이다.
-    - [ ] n칸씩 이동한다.
-    - [ ] 이동할 칸에 같은 색 기물이 있다면 이동할 수 없다.
-    - [ ] 이동할 방향에 기물이 있다면 해당 기물 전 칸까지만 이동할 수 있다.
-     */
-
     public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
         return Stream.of(candidateUpSquares(entirePieces),
                         candidateDownSquares(entirePieces),

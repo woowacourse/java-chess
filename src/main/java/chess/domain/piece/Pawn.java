@@ -8,21 +8,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Pawn extends AbstractPawn {
+public class Pawn extends Piece {
     public Pawn(final Color color, final Square square) {
-        super(color, square);
+        super(color, PieceType.PAWN, square);
     }
 
     @Override
-    public Set<Square> movableSquaresFrom(final Square source) {
-        Set<Direction> directions = Direction.ofPawn(color);
-        return directions.stream()
-                .map(source::move)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toUnmodifiableSet());
-    }
-
     public Set<Square> findLegalMoves(Set<Piece> existPieces) {
         if (getColor() == Color.BLACK) {
             return findBlackPawnLegalMoves(existPieces);

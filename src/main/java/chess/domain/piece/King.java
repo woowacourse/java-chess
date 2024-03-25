@@ -8,22 +8,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class King extends UnslidingPiece {
+public class King extends Piece {
 
     public King(final Color color, Square square) {
         super(color, PieceType.KING, square);
     }
 
     @Override
-    public Set<Square> movableSquaresFrom(final Square source) {
-        Set<Direction> directions = Direction.all();
-        return directions.stream()
-                .map(source::move)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toUnmodifiableSet());
-    }
-
     public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
         Set<Square> candidateSquares = candidateSquares();
         for (Piece other : entirePieces) {

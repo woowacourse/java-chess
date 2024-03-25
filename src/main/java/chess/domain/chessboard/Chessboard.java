@@ -8,11 +8,11 @@ import chess.domain.attribute.Square;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.StartingPawn;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class Chessboard {
         pieces.add(new Bishop(color, null));
         pieces.add(new Knight(color, null));
         pieces.add(new Rook(color, null));
-        pieces.add(new StartingPawn(color, null));
+        pieces.add(new Pawn(color, null));
         return pieces;
     }
 
@@ -61,10 +61,14 @@ public class Chessboard {
     public void move(final Square source, final Square target) {
         validateOccupied(source);
         Piece piece = chessboard.get(source);
-        Set<Square> movableTargets = new HashSet<>(piece.movableSquaresFrom(source));
+        Set<Square> movableTargets = new HashSet<>(piece.findLegalMoves(findAllExistPieceOnBoard()));
         removeSquaresOccupiedByAlly(movableTargets, piece);
         validateHasAnyMovable(movableTargets);
         movePieceToSquare(movableTargets, source, target);
+    }
+
+    private Set<Piece> findAllExistPieceOnBoard() {
+        return new HashSet<>(chessboard.values());
     }
 
     private void removeSquaresOccupiedByAlly(final Set<Square> movableTargets, final Piece piece) {
