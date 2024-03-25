@@ -19,8 +19,12 @@ import java.util.stream.Stream;
 
 public class BoardCreator {
 
-    private static final int MINIMUM_BOARD_POSITION = 1;
-    private static final int MAXIMUM_BOARD_POSITION = 8;
+    private static final int MINIMUM_FILE = 1;
+    private static final int MAXIMUM_FILE = 8;
+    private static final int WHITE_PIECE_START_RANK = 1;
+    private static final int WHITE_PAWN_START_RANK = 2;
+    private static final int BLACK_PIECE_START_RANK = 8;
+    private static final int BLACK_PAWN_START_RANK = 7;
     private static final Color START_COLOR = Color.WHITE;
 
     public static Board create() {
@@ -31,14 +35,14 @@ public class BoardCreator {
     }
 
     private static Map<Position, Piece> generateEmptyBoard() {
-        return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
+        return IntStream.rangeClosed(MINIMUM_FILE, MAXIMUM_FILE)
                 .boxed()
                 .flatMap(BoardCreator::generateHorizontalLine)
                 .collect(generateEntry());
     }
 
     private static Stream<Position> generateHorizontalLine(final int rank) {
-        return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
+        return IntStream.rangeClosed(MINIMUM_FILE, MAXIMUM_FILE)
                 .mapToObj(file -> new Position(file, rank));
     }
 
@@ -51,15 +55,15 @@ public class BoardCreator {
 
     private static Map<Position, Piece> getWhitePieces() {
         Map<Position, Piece> initialWhitePiecePositions = new HashMap<>();
-        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.WHITE, 1));
-        initialWhitePiecePositions.putAll(getPawnsPieces(Color.WHITE, 2));
+        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.WHITE, WHITE_PIECE_START_RANK));
+        initialWhitePiecePositions.putAll(getPawnsPieces(Color.WHITE, WHITE_PAWN_START_RANK));
         return initialWhitePiecePositions;
     }
 
     private static Map<Position, Piece> getBlackPieces() {
         Map<Position, Piece> initialWhitePiecePositions = new HashMap<>();
-        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.BLACK, 8));
-        initialWhitePiecePositions.putAll(getPawnsPieces(Color.BLACK, 7));
+        initialWhitePiecePositions.putAll(getNotPawnsPieces(Color.BLACK, BLACK_PIECE_START_RANK));
+        initialWhitePiecePositions.putAll(getPawnsPieces(Color.BLACK, BLACK_PAWN_START_RANK));
         return initialWhitePiecePositions;
     }
 
@@ -75,7 +79,7 @@ public class BoardCreator {
     }
 
     private static Map<Position, Piece> getPawnsPieces(final Color color, final int rank) {
-        return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
+        return IntStream.rangeClosed(MINIMUM_FILE, MAXIMUM_FILE)
                 .boxed()
                 .collect(Collectors.toMap(file -> new Position(file, rank), file -> new Pawn(color)));
     }
