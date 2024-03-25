@@ -25,4 +25,8 @@ public class OutputView {
         rowData.forEach(stringBuilder::append);
         System.out.println(stringBuilder);
     }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
