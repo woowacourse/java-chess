@@ -2,6 +2,7 @@ package chess.view.output;
 
 import chess.domain.Position;
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.view.input.command.GameCommand;
 import java.util.Arrays;
@@ -40,5 +41,12 @@ public class OutputView {
                 .map(PieceSymbol::getDisplay)
                 .collect(Collectors.joining(""));
         System.out.println(rankLine);
+    }
+
+    public static void printWinner(Color winnerColor) {
+        if (winnerColor == Color.BLACK) {
+            System.out.println("흑 색이 이겼습니다.");
+        }
+        System.out.println("백 색이 이겼습니다.");
     }
 }

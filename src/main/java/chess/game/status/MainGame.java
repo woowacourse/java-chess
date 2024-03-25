@@ -45,6 +45,9 @@ public class MainGame implements GameStatus {
     private GameStatus movePiece(List<Position> fromToPositions) {
         Board board = this.board.move(fromToPositions.get(0), fromToPositions.get(1));
         OutputView.printBoard(board);
+        if (board.isGameOver()) {
+            return new EndGame(board);
+        }
         return new MainGame(inputView, board);
     }
 }
