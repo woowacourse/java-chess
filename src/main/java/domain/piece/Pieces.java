@@ -6,10 +6,14 @@ import java.util.*;
 
 public class Pieces {
 
-    private final List<Piece> value;
+    private final Set<Piece> value;
 
     public Pieces(final List<Piece> value) {
-        this.value = new ArrayList<>(value);
+        this.value = new HashSet<>(value);
+    }
+
+    public Pieces(final Set<Piece> pieces) {
+        this.value = new HashSet<>(pieces);
     }
 
     public Optional<Piece> findPieceWithPoint(final Point point) {
