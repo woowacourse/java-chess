@@ -12,12 +12,4 @@ public class Queen extends Piece {
     public boolean canMove(Position source, Position target) {
         return source.isDiagonal(target) || source.isStraight(target);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "Q";
-        }
-        return "q";
-    }
 }

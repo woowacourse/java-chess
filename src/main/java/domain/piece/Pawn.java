@@ -56,12 +56,4 @@ public class Pawn extends Piece {
         return source.isLegalRankStep(target, ONE_STEP)
                 && source.isLegalFileStep(target, ONE_STEP);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "P";
-        }
-        return "p";
-    }
 }

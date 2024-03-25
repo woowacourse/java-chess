@@ -7,6 +7,7 @@ import domain.position.File;
 import domain.position.Rank;
 import java.util.Arrays;
 import java.util.List;
+import view.mapper.PieceOutput;
 
 public class OutputView {
 
@@ -20,8 +21,9 @@ public class OutputView {
     public void printBoard(Board board) {
         List<Piece> pieces = resolvePiecesByOrder(board);
         for (int i = 0; i < pieces.size(); i++) {
-            String piece = pieces.get(i).display();
-            System.out.print(piece);
+            Piece piece = pieces.get(i);
+            String pieceOutput = PieceOutput.asOutput(piece);
+            System.out.print(pieceOutput);
             separateLineByFileIndex(i);
         }
         printNewLine();
@@ -59,4 +61,5 @@ public class OutputView {
     public void printError(String errorMessage) {
         System.out.println(errorMessage);
     }
+
 }

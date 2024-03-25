@@ -25,12 +25,4 @@ public class Knight extends Piece {
         return source.isLegalFileStep(target, TWO_STEP)
                 && source.isLegalRankStep(target, ONE_STEP);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "N";
-        }
-        return "n";
-    }
 }

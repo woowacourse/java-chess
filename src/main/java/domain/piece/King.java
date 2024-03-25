@@ -16,12 +16,4 @@ public class King extends Piece {
         return source.isLegalRankStep(target, ZERO_STEP, ONE_STEP)
                 && source.isLegalFileStep(target, ZERO_STEP, ONE_STEP);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "K";
-        }
-        return "k";
-    }
 }

@@ -12,12 +12,4 @@ public class Rook extends Piece {
     public boolean canMove(Position source, Position target) {
         return source.isStraight(target);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "R";
-        }
-        return "r";
-    }
 }

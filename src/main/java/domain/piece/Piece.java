@@ -18,8 +18,6 @@ public abstract class Piece {
         return canMove(source, target);
     }
 
-    public abstract String display();
-
     public boolean isBlank() {
         return false;
     }

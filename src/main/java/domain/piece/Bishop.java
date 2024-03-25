@@ -12,12 +12,4 @@ public class Bishop extends Piece {
     public boolean canMove(Position source, Position target) {
         return source.isDiagonal(target);
     }
-
-    @Override
-    public String display() {
-        if (isBlack()) {
-            return "B";
-        }
-        return "b";
-    }
 }
