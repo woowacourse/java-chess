@@ -61,4 +61,31 @@ class SquareTest {
         // then
         assertThat(distance).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("파일이 같은지 확인한다.")
+    void isSameFile() {
+        // given
+        Square source = Square.from("b7");
+        File file = File.B;
+
+        // when
+        boolean isSame = source.isSameFile(file);
+
+        // then
+        assertThat(isSame).isTrue();
+    }
+
+    @Test
+    @DisplayName("읽기 좋은 문자열로 변환한다.")
+    void convertToString() {
+        // given
+        Square source = Square.of(File.B, Rank.FIVE);
+
+        // when
+        String readableSource = source.toString();
+
+        // then
+        assertThat(readableSource).isEqualTo("b5");
+    }
 }
