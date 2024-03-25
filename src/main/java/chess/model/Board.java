@@ -96,7 +96,7 @@ public class Board {
     }
 
     private void validatePieceCanMove(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
-        if (targetPiece.isEnemy(turnCount) && sourcePiece.isPawn() && ((Pawn) sourcePiece).canAttack(source, target)) {
+        if (targetPiece.isEnemy(turnCount) && sourcePiece.canAttack(source, target)) {
             return;
         }
         if (!sourcePiece.canMove(source, target)) {

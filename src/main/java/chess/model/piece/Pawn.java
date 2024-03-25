@@ -36,6 +36,7 @@ public class Pawn extends Piece {
         return false;
     }
 
+    @Override
     public boolean canAttack(Position source, Position target) {
         int rowDifference = calculateRowDifference(source, target);
         int columnDifference = calculateColumnDifference(source, target);

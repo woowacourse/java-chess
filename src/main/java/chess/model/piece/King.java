@@ -18,6 +18,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean canAttack(Position source, Position target) {
+        return canMove(source, target);
+    }
+
+    @Override
     public boolean canJump() {
         return false;
     }

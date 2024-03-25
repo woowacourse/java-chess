@@ -24,6 +24,8 @@ public abstract class Piece implements MoveStrategy {
         this.type = pieceType;
     }
 
+    public abstract boolean canAttack(Position source, Position target);
+
     public abstract boolean canJump();
 
     public static Piece from(PieceType pieceType) {
