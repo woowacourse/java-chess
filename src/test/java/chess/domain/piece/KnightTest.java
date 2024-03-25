@@ -1,8 +1,17 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.Color.*;
-import static chess.domain.attribute.File.*;
-import static chess.domain.attribute.Rank.*;
+import static chess.domain.attribute.Color.BLACK;
+import static chess.domain.attribute.Color.WHITE;
+import static chess.domain.attribute.File.C;
+import static chess.domain.attribute.File.D;
+import static chess.domain.attribute.File.E;
+import static chess.domain.attribute.File.F;
+import static chess.domain.attribute.File.G;
+import static chess.domain.attribute.Rank.FIVE;
+import static chess.domain.attribute.Rank.FOUR;
+import static chess.domain.attribute.Rank.SIX;
+import static chess.domain.attribute.Rank.THREE;
+import static chess.domain.attribute.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.attribute.Square;

@@ -1,13 +1,17 @@
 package chess.domain.attribute;
 
-import static chess.domain.attribute.File.*;
+import static chess.domain.attribute.File.A;
+import static chess.domain.attribute.File.C;
+import static chess.domain.attribute.File.D;
+import static chess.domain.attribute.File.E;
+import static chess.domain.attribute.File.H;
+import static chess.domain.attribute.File.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -127,6 +127,7 @@ public enum File {
         }
         return true;
     }
+
     public boolean canMoveRight() {
         try {
             right();
