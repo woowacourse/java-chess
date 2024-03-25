@@ -19,15 +19,22 @@ public enum Rank{
         this.index = index;
     }
 
-    public static Rank from(final int input) {
+    public static Rank fromSymbol(final char symbol) {
         return Arrays.stream(values())
-                .filter(rank -> rank.index == input)
+                .filter(rank -> rank.index == symbol - '0')
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
+    }
+
+    public static Rank fromSymbol(final int index) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 랭크 입력이 아닙니다."));
     }
 
     public Rank addIndex(final int index) {
-        return from(this.index + index);
+        return fromSymbol(this.index + index);
     }
 
     public int getDistance(final Rank other) {

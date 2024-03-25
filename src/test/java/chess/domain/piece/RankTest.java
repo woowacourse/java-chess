@@ -14,7 +14,7 @@ class RankTest {
     @CsvSource(value = {"1, ONE", "2, TWO", "3, THREE", "4, FOUR", "5, FIVE", "6, SIX", "7, SEVEN", "8, EIGHT"})
     void from(final int input, final Rank expected) {
         // given && when
-        final Rank rank = Rank.from(input);
+        final Rank rank = Rank.fromSymbol(input);
 
         // then
         Assertions.assertThat(rank).isEqualTo(expected);
@@ -24,7 +24,7 @@ class RankTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 9, 10, -1})
     void invalidRank(final int input) {
-        Assertions.assertThatThrownBy(() -> Rank.from(input))
+        Assertions.assertThatThrownBy(() -> Rank.fromSymbol(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 유효한 랭크 입력이 아닙니다.");
     }

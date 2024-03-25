@@ -21,16 +21,16 @@ public enum File {
         this.index = index;
     }
 
-    public static File fromSymbol(final char input) {
+    public static File fromSymbol(final char symbol) {
         return Arrays.stream(values())
-                .filter(file -> file.symbol == input)
+                .filter(file -> file.symbol == symbol)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }
 
-    public static File fromIndex(final int input) {
+    public static File fromIndex(final int index) {
         return Arrays.stream(values())
-                .filter(file -> file.index == input)
+                .filter(file -> file.index == index)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 파일 입력이 아닙니다."));
     }

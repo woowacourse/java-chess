@@ -13,7 +13,7 @@ public class Position {
     }
 
     public Position(final String input) {
-        this(File.fromSymbol(input.charAt(0)), Rank.from(input.charAt(1) - '0'));
+        this(File.fromSymbol(input.charAt(0)), Rank.fromSymbol(input.charAt(1)));
     }
 
     public Position move(final int fileIndex, final int rankIndex) {
