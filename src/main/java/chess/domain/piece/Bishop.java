@@ -11,9 +11,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point currentPoint, Point nextPoint) {
-        return currentPoint.isDiagonal(nextPoint);
+    public boolean isMovable(Point departure, Point destination) {
+        return departure.isDiagonal(destination);
     }
 }
-
-

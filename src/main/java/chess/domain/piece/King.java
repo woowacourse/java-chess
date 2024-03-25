@@ -11,7 +11,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point currentPoint, Point nextPoint) {
-        return currentPoint.isAround(nextPoint);
+    public boolean isMovable(Point departure, Point destination) {
+        return departure.isAround(destination);
     }
 }

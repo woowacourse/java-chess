@@ -9,42 +9,41 @@ import chess.domain.player.Player;
 import java.util.Map;
 
 public class Board {
-
     private final Map<Point, Piece> board;
 
     public Board(Map<Point, Piece> board) {
         this.board = board;
     }
 
-    public void move(Player player, Point currentPoint, Point destination) {
-        Piece currentPiece = board.get(currentPoint);
+    public void move(Player player, Point departure, Point destination) {
+        Piece piece = board.get(departure);
 
-        validateMove(player, currentPoint, destination, currentPiece);
+        validateMove(player, departure, destination, piece);
 
-        movePiece(currentPoint, destination, currentPiece);
+        movePiece(departure, destination, piece);
     }
 
-    private void movePiece(Point currentPoint, Point destination, Piece currentPiece) {
-        board.put(currentPoint, new Empty(Team.EMPTY));
-        board.put(destination, currentPiece);
+    private void movePiece(Point departure, Point destination, Piece piece) {
+        board.put(departure, new Empty(Team.EMPTY));
+        board.put(destination, piece);
     }
 
-    private void validateMove(Player player, Point currentPoint, Point destination, Piece currentPiece) {
-        validateMyPiece(player, currentPiece);
-        validateMovablePoint(currentPoint, destination, currentPiece);
+    private void validateMove(Player player, Point departure, Point destination, Piece piece) {
+        validateMyPiece(player, piece);
+        validateMovablePoint(departure, destination, piece);
         validateDestination(player, destination);
-        validateMovableRoute(currentPoint, destination);
-        validatePawn(currentPoint, destination, currentPiece);
+        validateMovableRoute(departure, destination);
+        validatePawn(departure, destination, piece);
     }
 
-    private void validateMyPiece(Player player, Piece currentPiece) {
-        if (!player.isMyPiece(currentPiece)) {
+    private void validateMyPiece(Player player, Piece piece) {
+        if (!player.isMyPiece(piece)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
     }
 
-    private void validateMovablePoint(Point currentPoint, Point destination, Piece currentPiece) {
-        if (!currentPiece.isMovable(currentPoint, destination)) {
+    private void validateMovablePoint(Point departure, Point destination, Piece piece) {
+        if (!piece.isMovable(departure, destination)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
         }
     }
@@ -56,9 +55,9 @@ public class Board {
         }
     }
 
-    private void validateMovableRoute(Point currentPoint, Point destination) {
-        Direction route = currentPoint.findRoute(destination);
-        Point nextPoint = currentPoint.add(route.file(), route.rank());
+    private void validateMovableRoute(Point departure, Point destination) {
+        Direction route = departure.findRoute(destination);
+        Point nextPoint = departure.add(route.file(), route.rank());
         while (!nextPoint.equals(destination)) {
             if (!board.get(nextPoint).equals(new Empty(Team.EMPTY))) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
@@ -68,14 +67,14 @@ public class Board {
     }
 
     // TODO 리팩터링
-    private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
-        if (currentPiece instanceof Pawn) {
-            if (currentPoint.isDiagonal(destination)) {
+    private void validatePawn(Point departure, Point destination, Piece piece) {
+        if (piece instanceof Pawn) {
+            if (departure.isDiagonal(destination)) {
                 if (board.get(destination).equals(new Empty(Team.EMPTY))) {
                     throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
                 }
             }
-            if (currentPoint.isStraight(destination)) {
+            if (departure.isStraight(destination)) {
                 if (!board.get(destination).equals(new Empty(Team.EMPTY))) {
                     throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
                 }

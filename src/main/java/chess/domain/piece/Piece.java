@@ -13,7 +13,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Point currentPoint, Point nextPoint);
+    public abstract boolean isMovable(Point departure, Point destination);
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

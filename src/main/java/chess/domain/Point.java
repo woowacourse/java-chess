@@ -36,28 +36,28 @@ public class Point {
         return Direction.of(fileDistance, rankDistance);
     }
 
-    public boolean isDiagonal(Point point) {
-        int fileDistance = this.file.calculateDistanceFrom(point.file);
-        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
-        if (this.equals(point) || rankDistance == 0) {
+    public boolean isDiagonal(Point destination) {
+        int fileDistance = this.file.calculateDistanceFrom(destination.file);
+        int rankDistance = this.rank.calculateDistanceFrom(destination.rank);
+        if (this.equals(destination) || rankDistance == 0) {
             return false;
         }
         return Math.abs((double) fileDistance / rankDistance) == 1;
     }
 
-    public boolean isStraight(Point point) {
-        if (this.equals(point)) {
+    public boolean isStraight(Point destination) {
+        if (this.equals(destination)) {
             return false;
         }
-        return this.file.equals(point.file) || this.rank.equals(point.rank);
+        return this.file.equals(destination.file) || this.rank.equals(destination.rank);
     }
 
-    public boolean isAround(Point point) {
-        if (this.equals(point)) {
+    public boolean isAround(Point destination) {
+        if (this.equals(destination)) {
             return false;
         }
-        int fileDistance = this.file.calculateDistanceFrom(point.file);
-        int rankDistance = this.rank.calculateDistanceFrom(point.rank);
+        int fileDistance = this.file.calculateDistanceFrom(destination.file);
+        int rankDistance = this.rank.calculateDistanceFrom(destination.rank);
         int distance = getDistance(fileDistance, rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
             return distance == 2;

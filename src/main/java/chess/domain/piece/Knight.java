@@ -11,7 +11,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point currentPoint, Point nextPoint) {
-        return Math.abs(currentPoint.multiplyAxis(nextPoint)) == 2;
+    public boolean isMovable(Point departure, Point destination) {
+        return Math.abs(departure.multiplyAxis(destination)) == 2;
     }
 }

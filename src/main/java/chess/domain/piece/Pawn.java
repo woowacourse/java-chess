@@ -15,11 +15,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point currentPoint, Point nextPoint) {
+    public boolean isMovable(Point departure, Point destination) {
         Team team = getTeam();
-        List<Point> movablePoints = findMovablePoints(currentPoint, team);
+        List<Point> movablePoints = findMovablePoints(departure, team);
 
-        return movablePoints.contains(nextPoint);
+        return movablePoints.contains(destination);
     }
 
     private List<Point> findMovablePoints(Point currentPoint, Team team) {
