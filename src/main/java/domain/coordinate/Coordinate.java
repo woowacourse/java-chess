@@ -2,6 +2,7 @@ package domain.coordinate;
 
 import domain.direction.Direction;
 import domain.position.Column;
+import domain.position.Position;
 import domain.position.Row;
 import java.util.Objects;
 import view.util.ColumnSymbol;
@@ -21,7 +22,7 @@ public class Coordinate {
         int column = ColumnSymbol.from(splitCoordinate[0]).getPosition();
         int row = Integer.parseInt(splitCoordinate[1]);
 
-        return new Coordinate(new Row(row), new Column(column));
+        return new Coordinate(new Row(new Position(row)), new Column(new Position(column)));
     }
 
     public int calculateRowDifference(Coordinate coordinate) {
