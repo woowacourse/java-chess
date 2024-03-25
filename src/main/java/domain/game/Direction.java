@@ -33,39 +33,18 @@ public enum Direction {
         this.rankVector = rankVector;
     }
 
-
     public static Direction findDirection(Position source, Position target) {
-        Vector vector = target.subtract(source);
+        Vector vector = source.generateVectorToTargetPosition(target);
+        Vector unitVector = vector.toUnitVector();
+
         return Arrays.stream(values())
-                .filter(direction -> isSameDirection(direction, vector))
+                .filter(direction -> isSameDirection(direction, unitVector))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
     private static boolean isSameDirection(final Direction direction, final Vector vector) {
-        for (int step = 1; step <= 8; step++) {
-            if (canReach(findDistance(direction.fileVector, step), vector.file()) && canReach(
-                    findDistance(direction.rankVector, step), vector.rank())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static int findDistance(int unitVector, int step) {
-        return unitVector * step;
-    }
-
-    private static boolean canReach(int step, int unitVector) {
-        return step == unitVector;
-    }
-
-    public int getFileVector() {
-        return fileVector;
-    }
-
-    public int getRankVector() {
-        return rankVector;
+        return direction.fileVector == vector.file() && direction.rankVector == vector.rank();
     }
 
     public boolean isForward() {
@@ -84,5 +63,13 @@ public enum Direction {
     private boolean anyMatch(final List<Direction> directions) {
         return directions.stream()
                 .anyMatch(this::equals);
+    }
+
+    public int getFileVector() {
+        return fileVector;
+    }
+
+    public int getRankVector() {
+        return rankVector;
     }
 }

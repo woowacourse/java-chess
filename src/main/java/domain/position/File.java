@@ -15,7 +15,7 @@ public class File {
     }
 
     public int subtract(File target) {
-        return letter - target.getLetter();
+        return letter - target.letter;
     }
 
     public char getLetter() {

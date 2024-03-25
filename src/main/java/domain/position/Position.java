@@ -18,14 +18,14 @@ public class Position {
         this.rank = other.rank;
     }
 
+    public Vector generateVectorToTargetPosition(final Position target) {
+        return new Vector(file.subtract(target.file), rank.subtract(target.rank));
+    }
+
     public Position move(final Direction direction) {
         int dFile = direction.getFileVector();
         int dRank = direction.getRankVector();
         return new Position(file.add(dFile), rank.add(dRank));
-    }
-
-    public Vector subtract(Position target) {
-        return new Vector(file.subtract(target.file), rank.subtract(target.rank));
     }
 
     @Override
