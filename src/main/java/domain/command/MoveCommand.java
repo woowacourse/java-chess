@@ -4,16 +4,24 @@ import domain.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class MoveCommand extends Command {
+public class MoveCommand implements Command {
+    private final Position from;
+    private final Position to;
+
     public MoveCommand(String... options) {
-        super(List.of(options));
+        List<Position> inputOptions = Arrays.stream(options)
+                .map(String::toUpperCase)
+                .map(Position::valueOf)
+                .toList();
+        from = inputOptions.get(0);
+        to = inputOptions.get(1);
     }
 
-    @Override
-    public <T> List<T> getOptions() {
-        return options.stream()
-                .map(String::toUpperCase)
-                .map(s -> (T) Position.valueOf(s))
-                .toList();
+    public Position getFrom() {
+        return from;
+    }
+
+    public Position getTo() {
+        return to;
     }
 }

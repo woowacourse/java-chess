@@ -2,6 +2,7 @@ import static domain.command.EndCommand.END_COMMAND;
 
 import domain.ChessGame;
 import domain.command.Command;
+import domain.command.MoveCommand;
 import domain.piece.Piece;
 import domain.Position;
 import domain.piece.PieceWrapper;
@@ -38,10 +39,10 @@ public class Application {
                 .collect(Collectors.toList());
     }
 
-    private static void playGame(Command moveCommand, ChessGame chessGame) {
-        List<Position> options = moveCommand.getOptions();
-        Position from = options.get(0);
-        Position to = options.get(1);
+    private static void playGame(Command command, ChessGame chessGame) {
+        MoveCommand moveCommand = (MoveCommand) command;
+        Position from = moveCommand.getFrom();
+        Position to = moveCommand.getTo();
         boolean moveSuccess = chessGame.move(from, to);
         List<PieceWrapper> piecesOnBoard = wrapPieces(chessGame.getPiecesOnBoard());
         OutputView.printChessBoard(piecesOnBoard);
