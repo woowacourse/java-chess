@@ -12,7 +12,6 @@ import chess.view.OutputView;
 import java.util.function.Supplier;
 
 public class ChessGameController {
-
     private final OutputView outputView;
     private final InputView inputView;
 

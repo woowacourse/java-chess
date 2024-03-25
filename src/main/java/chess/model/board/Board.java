@@ -8,7 +8,6 @@ import chess.model.position.Movement;
 import chess.model.position.Position;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -16,19 +15,17 @@ public class Board {
     public static final int MAX_LENGTH = 8;
     private static final Color START_COLOR = Color.WHITE;
     private static final Piece EMPTY = PieceFactory.of(Color.NONE, Type.NONE);
-    private static final List<Position> ALL_POSITIONS = Position.values();
 
     private final Map<Position, Piece> squares;
     private Color currentColor = START_COLOR;
 
     public Board(Map<Position, Piece> squares) {
         this.squares = new HashMap<>(squares);
-        ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, EMPTY));
     }
 
     public Piece getPiece(int file, int rank) {
         Position position = Position.of(file, rank);
-        return squares.get(position);
+        return getByPosition(position);
     }
 
     public void move(Movement movement) {
@@ -61,7 +58,7 @@ public class Board {
     private void validateIntermediatePositions(Movement movement) {
         boolean isMovementBlocked = movement.getIntermediatePositions()
                 .stream()
-                .map(squares::get)
+                .map(this::getByPosition)
                 .anyMatch(piece -> !piece.isEmpty());
         if (isMovementBlocked) {
             throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
@@ -72,16 +69,20 @@ public class Board {
         Position destination = movement.getDestination();
         Position source = movement.getSource();
         squares.put(destination, getSourcePiece(movement));
-        squares.put(source, EMPTY);
+        squares.remove(source);
     }
 
     private Piece getSourcePiece(Movement movement) {
         Position source = movement.getSource();
-        return squares.get(source);
+        return getByPosition(source);
     }
 
     private Piece getDestinationOf(Movement movement) {
         Position destination = movement.getDestination();
-        return squares.get(destination);
+        return getByPosition(destination);
+    }
+
+    private Piece getByPosition(Position position) {
+        return squares.getOrDefault(position, EMPTY);
     }
 }
