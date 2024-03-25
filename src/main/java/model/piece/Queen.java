@@ -10,7 +10,7 @@ public final class Queen extends Piece {
     private static final String QUEEN_NAME = "q";
 
     public Queen(final Camp camp) {
-        super(camp, new PieceName(QUEEN_NAME));
+        super(camp, QUEEN_NAME);
     }
 
     @Override

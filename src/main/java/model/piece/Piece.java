@@ -9,9 +9,9 @@ import model.position.Position;
 public abstract class Piece {
 
     protected final Camp camp;
-    protected final PieceName pieceName;
+    protected final String pieceName;
 
-    protected Piece(final Camp camp, final PieceName pieceName) {
+    protected Piece(final Camp camp, final String pieceName) {
         this.camp = camp;
         this.pieceName = pieceName;
     }
@@ -34,9 +34,9 @@ public abstract class Piece {
 
     public String getName() {
         if (camp == Camp.BLACK) {
-            return pieceName.getName().toUpperCase();
+            return pieceName.toUpperCase();
         }
-        return pieceName.getName();
+        return pieceName;
     }
 
     @Override

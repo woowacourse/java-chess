@@ -11,7 +11,7 @@ public final class King extends Piece {
     private static final int KING_DELTA_DISTANCE = 1;
 
     public King(final Camp camp) {
-        super(camp, new PieceName(KING_NAME));
+        super(camp, KING_NAME);
     }
 
     @Override
