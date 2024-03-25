@@ -7,14 +7,13 @@ import chess.domain.point.Point;
 import chess.domain.point.Rank;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class BoardFactory {
 
     public static Map<Point, Piece> createEmptyBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
-        putEmptyLines(8, board);
+        putEmptyLines(1, 8, board);
 
         return board;
     }
@@ -22,19 +21,18 @@ public class BoardFactory {
     public static Map<Point, Piece> createInitialChessBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
-        board.putAll(BlackFirstLine());
-        board.putAll(BlackSecondLine());
-        putEmptyLines(4, board);
-        board.putAll(WhiteSecondLine());
         board.putAll(WhiteFirstLine());
+        board.putAll(WhiteSecondLine());
+        putEmptyLines(3, 4, board);
+        board.putAll(BlackSecondLine());
+        board.putAll(BlackFirstLine());
         return board;
     }
 
-    private static void putEmptyLines(int size, Map<Point, Piece> board) {
-        IntStream.range(0, size)
-                .boxed()
-                .map(BoardFactory::EmptyLine)
-                .forEach(board::putAll);
+    private static void putEmptyLines(int beginRank, int size, Map<Point, Piece> board) {
+        for (int rank = beginRank; rank < beginRank + size; rank++) {
+            board.putAll(EmptyLine(rank));
+        }
     }
 
     private static Map<Point, Piece> BlackFirstLine() {
