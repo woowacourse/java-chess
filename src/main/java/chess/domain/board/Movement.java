@@ -14,7 +14,6 @@ public class Movement {
     private final Position target;
 
     public Movement(final Position source, final Position target) {
-        validate(source, target);
         this.source = source;
         this.target = target;
     }
@@ -36,12 +35,6 @@ public class Movement {
             return Stream.concat(horizontalDirections, verticalDirections).toList();
         }
         return Stream.concat(verticalDirections, horizontalDirections).toList();
-    }
-
-    private void validate(final Position source, final Position target) {
-        if (source == target) {
-            throw new IllegalArgumentException("source와 target이 같을 수 없습니다.");
-        }
     }
 
     public Set<Position> findRoute() {

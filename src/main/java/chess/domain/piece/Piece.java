@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 
 public abstract class Piece {
     protected final PieceColor color;
@@ -11,7 +12,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract boolean isInMovableRange(final Position source, final Position target);
+    public abstract boolean isMovable(final Movement movement, final SquareStatus targetStatus);
 
     public boolean isColor(final PieceColor color) {
         return this.color == color;

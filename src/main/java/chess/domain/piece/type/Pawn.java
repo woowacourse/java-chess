@@ -1,11 +1,12 @@
 package chess.domain.piece.type;
 
 import chess.domain.Direction;
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
-import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -18,25 +19,40 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isInMovableRange(Position source, Position target) {
-        Direction direction = source.findDirectionTo(target);
-        return isMovableDirection(direction) && isMovableDistance(source, target, direction);
+    public boolean isMovable(final Movement movement, final SquareStatus targetStatus) {
+        return isMovableDirection(movement, targetStatus) && isMovableDistance(movement);
     }
 
-    private boolean isMovableDirection(Direction direction) {
-        if (color.isWhite()) {
-            return WHITE_DIRECTION.contains(direction);
+    private boolean isMovableDirection(final Movement movement, final SquareStatus targetStatus) {
+        if (targetStatus.isEnemy()) {
+            return canAttack(movement);
         }
-        return BLACK_DIRECTION.contains(direction);
+        return canMove(movement);
     }
 
-    private boolean isMovableDistance(Position source, Position target, Direction direction) {
-        int distance = source.calculateDistanceTo(target);
+    private boolean canMove(final Movement movement) {
+        Direction direction = movement.findDirection();
+        if (color.isWhite()) {
+            return movement.isCross() && WHITE_DIRECTION.contains(direction);
+        }
+        return movement.isCross() && BLACK_DIRECTION.contains(direction);
+    }
 
-        if (color.isWhite() && source.isRank(ChessRank.TWO) && direction == Direction.UP) {
+    private boolean canAttack(final Movement movement) {
+        Direction direction = movement.findDirection();
+        if (color.isWhite()) {
+            return movement.isDiagonal() && WHITE_DIRECTION.contains(direction);
+        }
+        return movement.isDiagonal() && BLACK_DIRECTION.contains(direction);
+    }
+
+    private boolean isMovableDistance(final Movement movement) {
+        int distance = movement.calculateDistance();
+        Direction direction = movement.findDirection();
+        if (color.isWhite() && movement.isSourceRank(ChessRank.TWO) && direction == Direction.UP) {
             return (distance == 1 || distance == 2);
         }
-        if (color.isBlack() && source.isRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
+        if (color.isBlack() && movement.isSourceRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
             return (distance == 1 || distance == 2);
         }
         return distance == 1;

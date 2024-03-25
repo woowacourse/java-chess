@@ -8,7 +8,6 @@ import chess.dto.BoardStatus;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
@@ -35,16 +34,18 @@ public class ChessBoard {
     }
 
     private void validate(Position source, Position target, Turn turn) {
-        validatePosition(source, target);
+        validateSource(source);
         validateTurn(source, turn);
+        validatePositions(source, target);
         validateTarget(source, target);
-        validateMovement(source, target);
-        validatePath(source, target);
+        Movement movement = new Movement(source, target);
+        validateMovement(source, target, movement);
+        validatePath(source, movement);
     }
 
-    private void validatePosition(Position source, Position target) {
-        if (!isExist(source) || isSamePosition(source, target)) {
-            throw new IllegalArgumentException("입력하신 이동 위치가 올바르지 않습니다.");
+    private void validateSource(final Position source) {
+        if (!isExist(source)) {
+            throw new IllegalArgumentException("source에 이동할 수 있는 기물이 존재하지 않습니다.");
         }
     }
 
@@ -55,48 +56,56 @@ public class ChessBoard {
         }
     }
 
-    private boolean isSamePosition(Position source, Position target) {
-        return source.equals(target);
-    }
-
-    private void validateTarget(Position source, Position target) {
-        if (isExist(target) && isSameColor(board.get(source), board.get(target))) {
-            throw new IllegalArgumentException("이동할 수 없는 target입니다.");
+    private void validatePositions(final Position source, final Position target) {
+        if (source == target) {
+            throw new IllegalArgumentException("source와 target이 같을 수 없습니다.");
         }
     }
 
-    private void validateMovement(Position source, Position target) {
+    private void validateTarget(final Position source, Position target) {
+        SquareStatus targetStatus = determineStatus(source, target);
+        if (targetStatus.isPeer()) {
+            throw new IllegalArgumentException("target으로 이동할 수 없습니다.");
+        }
+    }
+
+    private void validateMovement(final Position source, final Position target, final Movement movement) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isInMovableRange(source, target)) {
+        SquareStatus targetStatus = determineStatus(source, target);
+        if (!sourcePiece.isMovable(movement, targetStatus)) {
             throw new IllegalArgumentException("기물이 이동할 수 없는 방식입니다.");
         }
-        if (sourcePiece.isType(PieceType.PAWN)) {
-            if (source.findDirectionTo(target).isDiagonal() && !isExist(target)) {
-                throw new IllegalArgumentException("폰은 상대 기물이 존재할 때만 대각선 이동이 가능합니다.");
-            }
-            if (source.findDirectionTo(target).isVertical() && isExist(target) && !isSameColor(board.get(source), board.get(target))) {
-                throw new IllegalArgumentException("폰은 대각선으로만 공격할 수 있습니다.");
-            }
+    }
+
+    private SquareStatus determineStatus(final Position source, final Position position) {
+        if (!isExist(position)) {
+            return SquareStatus.EMPTY;
         }
+        if (isSameColor(board.get(position), board.get(source))) {
+            return SquareStatus.PEER;
+        }
+        return SquareStatus.ENEMY;
     }
 
-    private boolean isSameColor(Piece sourcePiece, Piece targetPiece) {
-        return targetPiece.isColor(sourcePiece.color());
-    }
-
-    private void validatePath(Position source, Position target) {
+    private void validatePath(final Position source, final Movement movement) {
         Piece sourcePiece = board.get(source);
-        if (!sourcePiece.isType(PieceType.KNIGHT)) {
-            Set<Position> positions = source.findBetween(target);
-            for (Position position : positions) {
-                if (isExist(position)) {
-                    throw new IllegalArgumentException("이동하고자 하는 경로 사이에 기물이 존재합니다.");
-                }
-            }
+        if (!sourcePiece.isType(PieceType.KNIGHT) && isBlocked(movement)) {
+            throw new IllegalArgumentException("이동하고자 하는 경로 사이에 기물이 존재합니다.");
         }
     }
 
-    private boolean isExist(Position position) {
+    private boolean isBlocked(final Movement movement) {
+        for (final Position position : movement.findRoute()) {
+            System.out.println(position.indexOfFile() + " " + position.indexOfRank());
+        }
+        return movement.findRoute().stream().anyMatch(this::isExist);
+    }
+
+    private boolean isExist(final Position position) {
         return board.containsKey(position);
+    }
+
+    private boolean isSameColor(final Piece sourcePiece, final Piece targetPiece) {
+        return targetPiece.isColor(sourcePiece.color());
     }
 }
