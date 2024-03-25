@@ -10,10 +10,6 @@ public class ChessApplication {
         OutputView outputView = new OutputView();
         ChessGame chessGame = new ChessGame(inputView, outputView);
 
-        try {
-            chessGame.start();
-        } catch (IllegalArgumentException exception) {
-            outputView.printExceptionMessage(exception);
-        }
+        chessGame.tryStart();
     }
 }

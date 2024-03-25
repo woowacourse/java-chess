@@ -18,13 +18,23 @@ public class ChessGame {
         this.outputView = outputView;
     }
 
-    public void start() {
-        outputView.printStartGame();
+    public void tryStart() {
+        try {
+            outputView.printStartGame();
+            start();
+        } catch (IllegalArgumentException exception) {
+            outputView.printExceptionMessage(exception);
+            tryStart();
+        }
+    }
+
+    private void start() {
         GameCommand command = inputView.readCommand();
         if (command == GameCommand.START) {
             Board board = BoardFactory.createInitialBoard();
             showBoard(board);
             play(board);
+            return;
         }
         if (command == GameCommand.MOVE) {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
@@ -32,20 +42,32 @@ public class ChessGame {
     }
 
     private void play(Board board) {
-        while (true) {
-            processTurn(board);
+        boolean gameEnd = false;
+        while (!gameEnd) {
+            gameEnd = tryProcessTurn(board);
         }
     }
 
-    private void processTurn(Board board) {
+    private boolean tryProcessTurn(Board board) {
+        try {
+            return processTurn(board);
+        } catch (IllegalArgumentException exception){
+            outputView.printExceptionMessage(exception);
+            tryProcessTurn(board);
+        }
+        return false;
+    }
+
+    private boolean processTurn(Board board) {
         GameCommand command = inputView.readCommand();
         if (command == GameCommand.START) {
             throw new IllegalArgumentException("이미 게임을 시작했습니다.");
         }
         if (command == GameCommand.END) {
-            System.exit(0);
+            return true;
         }
         executeMove(board);
+        return false;
     }
 
     private void executeMove(Board board) {
