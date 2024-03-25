@@ -20,7 +20,7 @@ public enum GameCommand {
         return Arrays.stream(values())
                 .filter(command -> command.commandStartsWithCode(input))
                 .findAny()
-                .orElseThrow(() -> new NoSuchElementException("해당 커맨드를 찾을 수 없습니다"));
+                .orElseThrow(() -> new IllegalArgumentException(input+ "은 존재하지 않는 커멘드 입니다."));
     }
 
     private boolean commandStartsWithCode(String input) {

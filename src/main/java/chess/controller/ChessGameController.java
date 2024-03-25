@@ -3,12 +3,13 @@ package chess.controller;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardCreator;
 import chess.domain.position.Position;
-import chess.view.GameExecutionCommand;
+import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.MoveCommand;
 import chess.view.OutputView;
 
-import static chess.view.GameExecutionCommand.*;
+import static chess.util.retryHelper.retryUntilNoError;
+import static chess.view.GameCommand.*;
 
 public class ChessGameController {
     private final InputView inputView;
@@ -20,27 +21,22 @@ public class ChessGameController {
     }
 
     public void run() {
+        GameCommand gameCommand;
 
         outputView.printStartMessage();
-        if (!startGame()) {
-            return;
-        }
-
+        retryUntilNoError(() -> readStartCommand());
         ChessBoard chessBoard = initializeChessBoard();
-        // TODO end 명령어 이외에는 종료되지 않도록
-        while (true) {
-            String inputCommand = inputView.readGameCommand();
-            GameExecutionCommand gameCommand = from(inputCommand);
 
-            if (gameCommand == END) {
-                break;
-            }
+        do {
+            String inputCommand = retryUntilNoError(this::readCommand);
+            gameCommand = from(inputCommand);
 
             if (gameCommand == MOVE) {
                 executeMoveCommand(inputCommand, chessBoard);
             }
-        }
+        } while(gameCommand != END);
     }
+
 
     private void executeMoveCommand(String inputCommand, ChessBoard chessBoard) {
         MoveCommand moveCommand = MoveCommand.of(inputCommand);
@@ -58,7 +54,16 @@ public class ChessGameController {
         return chessBoard;
     }
 
-    private boolean startGame() {
-        return inputView.readGameCommand().equals(START.getCode());
+    private boolean readStartCommand() {
+        if (inputView.readGameCommand().equals(START.getCode())) {
+            return true;
+        }
+        throw new IllegalArgumentException(START.getCode() + "를 입력해야 게임이 시작됩니다.");
+    }
+
+    private String readCommand(){
+        String inputCommand = inputView.readGameCommand();
+        from(inputCommand);
+        return inputCommand;
     }
 }
