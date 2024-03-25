@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class Empty extends Piece {
 
-    public Empty(Team team) {
-        super(Type.EMPTY, team);
+    public Empty() {
+        super(Type.EMPTY, Team.EMPTY);
     }
 
     @Override

@@ -28,7 +28,7 @@ public abstract class MultiMovePiece extends Piece {
 
         Point nextPoint = departure.add(route.file(), route.rank());
         while (!nextPoint.equals(destination)) {
-            if (!board.get(nextPoint).equals(new Empty(Team.EMPTY))) {
+            if (!board.get(nextPoint).equals(new Empty())) {
                 return true;
             }
             nextPoint = nextPoint.add(route.file(), route.rank());

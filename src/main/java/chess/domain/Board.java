@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import chess.domain.player.Player;
 
 import java.util.Collections;
@@ -24,7 +23,7 @@ public class Board {
     }
 
     private void movePiece(Point departure, Point destination, Piece piece) {
-        board.put(departure, new Empty(Team.EMPTY));
+        board.put(departure, new Empty());
         board.put(destination, piece);
     }
 

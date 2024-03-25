@@ -31,7 +31,7 @@ class BoardTest {
                 new Point('c', 3));
 
         assertThat(board.getBoard().get(new Point('c', 3))).isEqualTo(new Bishop(Team.WHITE));
-        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty(Team.EMPTY));
+        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty());
     }
 
     @DisplayName("나이트를 a1에서 c2로 이동시킬 수 있다.")
@@ -45,7 +45,7 @@ class BoardTest {
                 new Point('c', 2));
 
         assertThat(board.getBoard().get(new Point('c', 2))).isEqualTo(new Knight(Team.WHITE));
-        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty(Team.EMPTY));
+        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty());
     }
 
     @DisplayName("룩을 a1을 a8으로 이동시킬 수 있다.")
@@ -59,7 +59,7 @@ class BoardTest {
                 new Point('a', 8));
 
         assertThat(board.getBoard().get(new Point('a', 8))).isEqualTo(new Rook(Team.WHITE));
-        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty(Team.EMPTY));
+        assertThat(board.getBoard().get(new Point('a', 1))).isEqualTo(new Empty());
     }
 
     @DisplayName("폰을 a2에서 a3으로 이동시킬 수 있다.")
@@ -73,7 +73,7 @@ class BoardTest {
                 new Point('a', 3));
 
         assertThat(board.getBoard().get(new Point('a', 3))).isEqualTo(new Pawn(Team.WHITE));
-        assertThat(board.getBoard().get(new Point('a', 2))).isEqualTo(new Empty(Team.EMPTY));
+        assertThat(board.getBoard().get(new Point('a', 2))).isEqualTo(new Empty());
     }
 
     @DisplayName("비숍이 이동할 경로에 기물이 있으면 예외가 발생한다.")
