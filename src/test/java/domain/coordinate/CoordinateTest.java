@@ -2,6 +2,7 @@ package domain.coordinate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.direction.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class CoordinateTest {
     @Test
     void move() {
         Coordinate coordinate = Coordinate.from("a1");
-        coordinate.moveByDistances(1, 1);
+        coordinate.moveByDistances(new Direction(1, 1));
 
         assertThat(coordinate).isEqualTo(Coordinate.from("b2"));
     }

@@ -2,6 +2,7 @@ package view.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.piece.Blank;
 import domain.piece.Color;
 import domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +30,6 @@ class PieceTranslatorTest {
     @Test
     void getBlankPieceName() {
 
-        assertThat(PieceTranslator.getName(null)).isEqualTo(".");
+        assertThat(PieceTranslator.getName(new Blank())).isEqualTo(".");
     }
 }

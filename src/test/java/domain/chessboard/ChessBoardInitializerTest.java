@@ -10,6 +10,6 @@ class ChessBoardInitializerTest {
     @DisplayName("보드를 초기화한다.")
     @Test
     void initializeBoard() {
-        assertThat(ChessBoardInitializer.createInitialBoard()).hasSize(32);
+        assertThat(ChessBoardInitializer.createInitialBoard()).hasSize(64);
     }
 }

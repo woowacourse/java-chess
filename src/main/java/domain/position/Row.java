@@ -10,10 +10,6 @@ public class Row {
         this.position = position;
     }
 
-    public Row(int position) {
-        this(new Position(position));
-    }
-
     public void moveBy(int distance) {
         position.moveBy(distance);
     }

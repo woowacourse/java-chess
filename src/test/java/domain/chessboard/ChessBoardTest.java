@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.coordinate.Coordinate;
+import domain.piece.Blank;
+import domain.piece.Knight;
+import domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -26,9 +29,8 @@ class ChessBoardTest {
         chessBoard.playTurn(whitePawnDestination, blackPawnDestination);
 
         assertThat(chessBoard.getBoard().get(Coordinate.from("C5")))
-                .isNotNull();
-        assertThat(chessBoard.getBoard().get(Coordinate.from("b4")))
-                .isNull();
+                .isInstanceOf(Pawn.class);
+        assertThat(chessBoard.getBoard().get(Coordinate.from("b4"))).isInstanceOf(Blank.class);
     }
 
     @DisplayName("빈 칸으로 이동한다.")
@@ -36,12 +38,12 @@ class ChessBoardTest {
     void move() {
         ChessBoard chessBoard = new ChessBoard();
 
-        Coordinate blackKnightStart = Coordinate.from("A2");
-        Coordinate blackKnightDestination = Coordinate.from("A4");
-        chessBoard.playTurn(blackKnightStart.copied(), blackKnightDestination);
+        Coordinate knightStart = Coordinate.from("b1");
+        Coordinate knightDestination = Coordinate.from("a3");
+        chessBoard.playTurn(knightStart.copied(), knightDestination);
 
-        assertThat(chessBoard.getBoard().get(blackKnightStart)).isNull();
-        assertThat(chessBoard.getBoard().get(blackKnightDestination)).isNotNull();
+        assertThat(chessBoard.getBoard().get(knightStart)).isInstanceOf(Blank.class);
+        assertThat(chessBoard.getBoard().get(knightDestination)).isInstanceOf(Knight.class);
     }
 
     @DisplayName("상대의 말을 이동할 수 없다.")

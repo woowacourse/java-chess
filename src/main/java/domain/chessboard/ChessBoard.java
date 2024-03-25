@@ -33,7 +33,7 @@ public class ChessBoard {
     }
 
     private void movePiece(Coordinate destination, Coordinate startPosition, ChessPiece piece) {
-        board.replace(startPosition, findPiece(destination));
+        board.replace(startPosition, new Blank());
         board.replace(destination, piece);
     }
 
@@ -53,7 +53,7 @@ public class ChessBoard {
     private void validateDestination(Coordinate destination, Color currentTurn) {
         ChessPiece chessPiece = findPiece(destination);
 
-        if (chessPiece == null) {
+        if (chessPiece.getClass() == Blank.class) {
             return;
         }
         if (!chessPiece.isNotSameColor(currentTurn)) {
