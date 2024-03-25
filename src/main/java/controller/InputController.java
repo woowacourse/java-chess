@@ -40,4 +40,8 @@ public class InputController {
         }
         return input;
     }
+
+    public List<String> getCommands() {
+        return inputView.readCommandList();
+    }
 }

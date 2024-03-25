@@ -1,16 +1,22 @@
 package model;
 
-import model.piece.*;
-import model.position.Column;
-import model.position.Moving;
-import model.position.Position;
-import model.position.Row;
-
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import model.piece.Bishop;
+import model.piece.BlackPawn;
+import model.piece.King;
+import model.piece.Knight;
+import model.piece.Piece;
+import model.piece.Queen;
+import model.piece.Rook;
+import model.piece.WhitePawn;
+import model.position.Column;
+import model.position.Moving;
+import model.position.Position;
+import model.position.Row;
 
 public class ChessGame {
 
@@ -28,13 +34,25 @@ public class ChessGame {
     }
 
     private final Map<Position, Piece> board;
+    private ChessStatus chessStatus;
 
     private Camp camp;
 
     public ChessGame() {
         this.board = new HashMap<>();
+        this.chessStatus = ChessStatus.INIT;
         this.camp = Camp.WHITE;
         setting();
+    }
+
+    public void start() {
+        if (chessStatus == ChessStatus.INIT) {
+            chessStatus = ChessStatus.RUNNING;
+            this.camp = Camp.WHITE;
+            setting();
+            return;
+        }
+        throw new IllegalArgumentException("이미 게임이 진행중입니다.");
     }
 
     public void setting() {
@@ -71,6 +89,19 @@ public class ChessGame {
         camp = camp.toggle();
     }
 
+    public void move2(Moving moving) {
+        if (chessStatus == ChessStatus.RUNNING) {
+            validate(moving);
+
+            Piece piece = board.get(moving.getCurrentPosition());
+            board.put(moving.getNextPosition(), piece);
+            board.remove(moving.getCurrentPosition());
+            camp = camp.toggle();
+            return;
+        }
+        throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
+    }
+
     private void validate(Moving moving) {
         Position currentPosition = moving.getCurrentPosition();
         validateCurrentPositionIsEmpty(currentPosition);
@@ -97,6 +128,13 @@ public class ChessGame {
         }
     }
 
+    private Set<Position> getRoute(final Moving moving, final Piece piece) {
+        if (board.containsKey(moving.getNextPosition())) {
+            return piece.getAttackRoute(moving);
+        }
+        return piece.getMoveRoute(moving);
+    }
+
     private void validateRouteIsContainPiece(Set<Position> positions) {
         for (Position position : positions) {
             if (board.containsKey(position)) {
@@ -111,11 +149,12 @@ public class ChessGame {
         }
     }
 
-    private Set<Position> getRoute(final Moving moving, final Piece piece) {
-        if (board.containsKey(moving.getNextPosition())) {
-            return piece.getAttackRoute(moving);
-        }
-        return piece.getMoveRoute(moving);
+    public void end() {
+        chessStatus = ChessStatus.END;
+    }
+
+    public boolean isNotEnd() {
+        return chessStatus.isNotEnd();
     }
 
     public Map<Position, Piece> getBoard() {

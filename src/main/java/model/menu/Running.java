@@ -6,10 +6,10 @@ import model.Command;
 import model.position.Moving;
 import model.position.Position;
 
-public class Running implements ChessStatus {
+public class Running implements Menu {
 
     @Override
-    public ChessStatus play(final List<String> input, final ChessGame chessGame) {
+    public Menu play(final List<String> input, final ChessGame chessGame) {
         Command command = Command.from(input.get(0));
         if (command == Command.END) {
             return new End();
@@ -29,5 +29,10 @@ public class Running implements ChessStatus {
     @Override
     public boolean isRunning() {
         return true;
+    }
+
+    @Override
+    public void play2(ChessGame chessGame) {
+
     }
 }

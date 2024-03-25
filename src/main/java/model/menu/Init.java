@@ -9,7 +9,7 @@ public class Init {
 
     }
 
-    public static ChessStatus gameSetting(final List<String> input) {
+    public static Menu gameSetting(final List<String> input) {
         Command command = Command.from(input.get(0));
         if (command == Command.START) {
             return new Running();

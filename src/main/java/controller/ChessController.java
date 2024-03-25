@@ -3,8 +3,9 @@ package controller;
 import dto.GameBoardDto;
 import model.Camp;
 import model.ChessGame;
-import model.menu.ChessStatus;
+import model.Command;
 import model.menu.Init;
+import model.menu.Menu;
 import view.OutputView;
 
 public class ChessController {
@@ -20,14 +21,24 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         outputView.printStartMessage();
-        play(chessGame);
+        play2(chessGame);
     }
 
     private void play(final ChessGame chessGame) {
-        ChessStatus currentChessStatus = Init.gameSetting(inputController.getCommand());
-        while (currentChessStatus.isRunning()) {
+        Menu currentMenu = Init.gameSetting(inputController.getCommand());
+        while (currentMenu.isRunning()) {
             printCurrentStatus(chessGame, chessGame.getCamp());
-            currentChessStatus = currentChessStatus.play(inputController.getCommand(), chessGame);
+            currentMenu = currentMenu.play(inputController.getCommand(), chessGame);
+        }
+    }
+
+    private void play2(final ChessGame chessGame) {
+        Menu status = Command.of(inputController.getCommands());
+        status.play2(chessGame);
+        while (chessGame.isNotEnd()) {
+            printCurrentStatus(chessGame, chessGame.getCamp());
+            status = Command.of(inputController.getCommands());
+            status.play2(chessGame);
         }
     }
 

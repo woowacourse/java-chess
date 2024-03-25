@@ -13,7 +13,7 @@ class EndTest {
     @DisplayName("End상태일 때 어떤 동작도 하지 않는다.")
     @Test
     void play() {
-        final ChessStatus end = new End();
+        final Menu end = new End();
         final List<String> input = List.of("start");
         final ChessGame chessGame = new ChessGame();
 
@@ -25,7 +25,7 @@ class EndTest {
     @DisplayName("상태가 End일 때는 게임 진행 중이 아니다.")
     @Test
     void isRunning() {
-        final ChessStatus end = new End();
+        final Menu end = new End();
 
         assertThat(end.isRunning()).isFalse();
     }

@@ -3,11 +3,11 @@ package model.menu;
 import java.util.List;
 import model.ChessGame;
 
-public class End implements Menu {
+public class Start implements Menu {
 
     @Override
-    public Menu play(final List<String> input, final ChessGame chessGame) {
-        throw new IllegalArgumentException("게임이 종료되었습니다");
+    public Menu play(List<String> command, ChessGame chessGame) {
+        return null;
     }
 
     @Override
@@ -17,6 +17,6 @@ public class End implements Menu {
 
     @Override
     public void play2(ChessGame chessGame) {
-        chessGame.end();
+        chessGame.start();
     }
 }

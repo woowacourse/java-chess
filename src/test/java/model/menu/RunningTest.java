@@ -13,7 +13,7 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 end를 입력하면 End를 반환한다")
     @Test
     void playEnd() {
-        final ChessStatus running = new Running();
+        final Menu running = new Running();
         final List<String> input = List.of("end");
         final ChessGame chessGame = new ChessGame();
 
@@ -23,7 +23,7 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 Move명령어를 입력하면 Running을 반환한다")
     @Test
     void playMove() {
-        final ChessStatus running = new Running();
+        final Menu running = new Running();
         final List<String> input = List.of("move", "a2", "a4");
         final ChessGame chessGame = new ChessGame();
 
@@ -33,7 +33,7 @@ class RunningTest {
     @DisplayName("게임이 진행중일 때 start를 입력하면 예외를 발생시킨다.")
     @Test
     void play() {
-        final ChessStatus running = new Running();
+        final Menu running = new Running();
         final List<String> input = List.of("start");
         final ChessGame chessGame = new ChessGame();
 
@@ -45,7 +45,7 @@ class RunningTest {
     @DisplayName("상태가 Running일 때는 게임이 진행 중이다.")
     @Test
     void isRunning() {
-        final ChessStatus running = new Running();
+        final Menu running = new Running();
 
         assertThat(running.isRunning()).isTrue();
     }
