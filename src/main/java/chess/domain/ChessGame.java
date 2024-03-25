@@ -23,8 +23,4 @@ public class ChessGame {
 
         this.turn = turn.opponent();
     }
-
-//    public Map<Point, Piece> getBoard() {
-//        return board.getBoard();
-//    }
 }
