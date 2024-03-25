@@ -44,7 +44,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(column -> column.westToEast == westToEast)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치가 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치가 없습니다."));
     }
 
     public int calculateDifference(File other) {
