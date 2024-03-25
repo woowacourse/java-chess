@@ -31,7 +31,7 @@ public class ChessController {
                 gameStatus = commandHandler.get(chessCommand)
                                            .get();
                 OutputView.printBoard(BoardMapper.toDto(chessBoard));
-            } catch (final Exception exception) {
+            } catch (final IllegalArgumentException | IllegalStateException exception) {
                 InputView.clear();
                 OutputView.printException(exception.getMessage());
             }
