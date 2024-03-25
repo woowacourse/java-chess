@@ -10,7 +10,7 @@ import domain.piece.Pawn;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.base.ChessPiece;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,26 +23,26 @@ public class ChessBoardInitializer {
     private static final String CHESS_BOARD_COLUMNS = "abcdefgh";
 
     public static Map<Coordinate, ChessPiece> createInitialBoard() {
-        Map<Coordinate, ChessPiece> board = new HashMap<>();
+        Map<Coordinate, ChessPiece> board = new LinkedHashMap<>();
 
-        settingFirstRow(board);
+        settingBlackFirstRow(board);
+        settingSecondBlackRow(board);
         settingAllBlankRows(board);
-        settingSecondRow(board);
+        settingSecondWhiteRow(board);
+        settingFirstWhiteRow(board);
 
         return board;
     }
 
-    private static void settingFirstRow(Map<Coordinate, ChessPiece> board) {
+    private static void settingBlackFirstRow(Map<Coordinate, ChessPiece> board) {
         for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
             board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_FIRST_RANK),
                     createFirstRank(Color.BLACK).get(i));
-            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_FIRST_RANK),
-                    createFirstRank(Color.WHITE).get(i));
         }
     }
 
     private static void settingAllBlankRows(Map<Coordinate, ChessPiece> board) {
-        for (int row = 3; row <= 6; row++) {
+        for (int row = 6; row >= 3; row--) {
             settingBlankRow(board, String.valueOf(row));
         }
     }
@@ -53,12 +53,25 @@ public class ChessBoardInitializer {
         }
     }
 
-    private static void settingSecondRow(Map<Coordinate, ChessPiece> board) {
+    private static void settingSecondBlackRow(Map<Coordinate, ChessPiece> board) {
         for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
             board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_SECOND_RANK), new Pawn(Color.BLACK));
+        }
+    }
+
+    private static void settingSecondWhiteRow(Map<Coordinate, ChessPiece> board) {
+        for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
             board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_SECOND_RANK), new Pawn(Color.WHITE));
         }
     }
+
+    private static void settingFirstWhiteRow(Map<Coordinate, ChessPiece> board) {
+        for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_FIRST_RANK),
+                    createFirstRank(Color.WHITE).get(i));
+        }
+    }
+
 
     private static List<ChessPiece> createFirstRank(Color color) {
         return List.of(
