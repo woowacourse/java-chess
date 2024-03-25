@@ -1,8 +1,18 @@
 package chess.dao;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Type;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
+import chess.dto.ChessGameComponentDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessGameDao {
     private static final String SERVER = "localhost:13306";
@@ -10,14 +20,57 @@ public class ChessGameDao {
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
+    private static final String APP_TABLE_NAME = "chessboard";
+    private static final String TEST_TABLE_NAME = "chessboard_for_test";
+
+    private Connection connection;
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
+                        PASSWORD);
+            }
+            return connection;
         } catch (SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<ChessGameComponentDto> findAll() {
+        String tableName = getTableName();
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName);
+            final ResultSet resultSet = statement.executeQuery();
+
+            final List<ChessGameComponentDto> chessBoardComponents = new ArrayList<>();
+            while (resultSet.next()) {
+                File file = File.convertToFile(resultSet.getString("file"));
+                Rank rank = Rank.convertToRank(resultSet.getInt("rank"));
+                Type type = Type.convertToType(resultSet.getString("type"));
+                Color color = Color.convertToColor(resultSet.getString("color"));
+                ChessGameComponentDto chessGameComponentDto
+                        = new ChessGameComponentDto(Position.of(file, rank), type.generatePiece(color));
+
+                chessBoardComponents.add(chessGameComponentDto);
+            }
+            return chessBoardComponents;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getTableName() {
+        if (isTestEnvironment()) {
+            return TEST_TABLE_NAME;
+        }
+        return APP_TABLE_NAME;
+    }
+
+    private boolean isTestEnvironment() {
+        String testStatus = System.getProperty("TEST_ENV");
+        return testStatus != null && testStatus.equalsIgnoreCase("true");
     }
 }
