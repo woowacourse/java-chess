@@ -16,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import static domain.Fixture.Positions.*;
 import static domain.Fixture.Pieces.*;
-import static domain.game.PieceType.*;
 import static domain.game.TeamColor.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -173,8 +172,8 @@ class BoardTest {
                     Arguments.of(Map.ofEntries(
                             Map.entry(E1, WHITE_ROOK_PIECE),
                             Map.entry(F1, WHITE_KING_PIECE),
-                            Map.entry(F2, WHITE_PAWN_PIECE),
-                            Map.entry(F3, WHITE_PAWN_PIECE),
+                            Map.entry(F2, WHITE_PAWN_PIECE),  // 0.5
+                            Map.entry(F3, WHITE_PAWN_PIECE),  // 0.5
                             Map.entry(F4, WHITE_KNIGHT_PIECE),
                             Map.entry(G2, WHITE_PAWN_PIECE),
                             Map.entry(G4, WHITE_QUEEN_PIECE),
@@ -186,7 +185,25 @@ class BoardTest {
                             Map.entry(C8, BLACK_ROOK_PIECE),
                             Map.entry(D7, BLACK_BISHOP_PIECE),
                             Map.entry(E6, BLACK_QUEEN_PIECE)
-                    ), 19.5, 20)
+                    ), 19.5, 20),
+                    Arguments.of(Map.ofEntries(
+                            Map.entry(A2, WHITE_PAWN_PIECE),  // 0.5
+                            Map.entry(A3, WHITE_PAWN_PIECE),  // 0.5
+                            Map.entry(C2, WHITE_PAWN_PIECE),
+                            Map.entry(D7, BLACK_PAWN_PIECE),  // 0.5
+                            Map.entry(D6, BLACK_PAWN_PIECE),  // 0.5
+                            Map.entry(D5, BLACK_PAWN_PIECE),  // 0.5
+                            Map.entry(C7, BLACK_PAWN_PIECE)
+                    ), 2, 2.5),
+                    Arguments.of(Map.ofEntries(
+                            Map.entry(A2, BLACK_PAWN_PIECE),
+                            Map.entry(A3, BLACK_PAWN_PIECE),
+                            Map.entry(A4, BLACK_PAWN_PIECE),
+                            Map.entry(A5, BLACK_PAWN_PIECE),
+                            Map.entry(A6, BLACK_PAWN_PIECE),
+                            Map.entry(A7, BLACK_PAWN_PIECE),
+                            Map.entry(A8, BLACK_PAWN_PIECE)
+                    ), 0, 3.5)
             );
         }
     }
