@@ -20,14 +20,12 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ChessBoardMakerTest {
+public class PiecePositionsTest {
 
     @DisplayName("체스판을 만든다.")
     @Test
     void createChessBoard() {
         // given
-        ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
-
         Map<Position, Piece> pieces = new HashMap<>();
         pieces.put(new Position(File.A, Rank.EIGHTH), Rook.from(Color.BLACK));
         pieces.put(new Position(File.B, Rank.EIGHTH), Knight.from(Color.BLACK));
@@ -61,7 +59,7 @@ public class ChessBoardMakerTest {
         ChessBoard expected = new ChessBoard(pieces);
 
         // when
-        ChessBoard board = chessBoardMaker.make();
+        ChessBoard board = PiecePositions.createBoard();
 
         // then
         assertThat(board)

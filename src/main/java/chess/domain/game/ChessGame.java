@@ -1,7 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardMaker;
+import chess.domain.board.PiecePositions;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.TerminalPosition;
@@ -18,9 +18,7 @@ public class ChessGame {
     }
 
     public static ChessGame createOnStart() {
-        ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
-
-        return new ChessGame(Turn.createOnStart(), chessBoardMaker.make());
+        return new ChessGame(Turn.createOnStart(), PiecePositions.createBoard());
     }
 
     public void movePiece(TerminalPosition terminalPosition) {
