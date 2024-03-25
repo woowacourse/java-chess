@@ -61,6 +61,10 @@ public class ChessGame {
         return state.getWinner();
     }
 
+    public double currentScoreOf(TeamColor teamColor) {
+        return board.calculateScoreOf(teamColor);
+    }
+
     public TeamColor currentPlayingTeam() {
         return state.currentTurn();
     }
