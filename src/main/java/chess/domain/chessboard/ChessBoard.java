@@ -9,6 +9,7 @@ import java.util.*;
 import static chess.domain.chesspiece.Role.*;
 
 public class ChessBoard {
+
     private final Map<Position, Piece> chessBoard;
 
     private ChessBoard(Map<Position, Piece> chessBoard) {
@@ -22,10 +23,10 @@ public class ChessBoard {
     public void move(Position source, Position target) {
         Piece piece = chessBoard.get(source);
         piece.getRoute(source, target)
-                .forEach(this::checkObstacle);
+             .forEach(this::checkObstacle);
 
-        if (piece.isPawn() && Direction.isUpDown(source, target)) {
-            checkObstacle(target);
+        if (piece.isPawn()) {
+            checkPawnMoving(source, target);
         }
         checkTeam(target, piece);
 
@@ -33,10 +34,25 @@ public class ChessBoard {
         chessBoard.put(target, piece);
     }
 
+    private void checkPawnMoving(Position source, Position target) {
+        if (Direction.isUpDown(source, target)) {
+            checkObstacle(target);
+            return;
+        }
+        checkIsEmpty(target);
+    }
+
     private void checkObstacle(Position position) {
         Piece obstacle = chessBoard.get(position);
         if (obstacle.getRole() != EMPTY) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
+        }
+    }
+
+    private void checkIsEmpty(Position target) {
+        Piece targetPiece = chessBoard.get(target);
+        if(targetPiece.getRole() == EMPTY) {
+            throw new IllegalArgumentException("폰은 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
     }
 
