@@ -42,7 +42,7 @@ public class InputView {
     }
 
     private Position resolvePosition(String position) {
-        String file = position.substring(0, 1);
+        String file = position.substring(0, 1).toUpperCase();
         String rank = position.substring(1);
         try {
             return new Position(file, Integer.parseInt(rank));
