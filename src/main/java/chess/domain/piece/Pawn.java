@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.Calculator;
+import chess.domain.Calculator;
 import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Kind;
@@ -72,7 +72,7 @@ public class Pawn extends Piece {
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         List<Position> positions = new ArrayList<>();
         if (Math.abs(rowDifference) == START_MOVEMENT) {
-            positions.add(position.move(Calculator.calculateSign(rowDifference), 0));
+            positions.add(position.move(Calculator.calculateMinMovement(rowDifference), 0));
             return positions;
         }
         return new ArrayList<>();

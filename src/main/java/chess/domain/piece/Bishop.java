@@ -52,8 +52,8 @@ public class Bishop extends Piece {
         int columnSign = columnDifference / absoluteDifference;
 
         List<Position> positions = new ArrayList<>();
-        for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
-            positions.add(position.move(rowSign * movement, columnSign * movement));
+        for (int i = MIN_MOVEMENT; i < absoluteDifference; i++) {
+            positions.add(position.move(rowSign * i, columnSign * i));
         }
         return positions;
     }

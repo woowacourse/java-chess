@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.Calculator;
+import chess.domain.Calculator;
 import chess.domain.Position;
 import chess.domain.Positions;
 import chess.domain.piece.character.Kind;
@@ -53,12 +53,12 @@ public class Queen extends Piece {
     @Override
     public List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
-        int rowSign = Calculator.calculateSign(rowDifference);
-        int columnSign = Calculator.calculateSign(columnDifference);
+        int rowSign = Calculator.calculateMinMovement(rowDifference);
+        int columnSign = Calculator.calculateMinMovement(columnDifference);
 
         List<Position> positions = new ArrayList<>();
-        for (int movement = MIN_MOVEMENT; movement < absoluteDifference; movement++) {
-            positions.add(position.move(rowSign * movement, columnSign * movement));
+        for (int i = MIN_MOVEMENT; i < absoluteDifference; i++) {
+            positions.add(position.move(rowSign * i, columnSign * i));
         }
         return positions;
     }
