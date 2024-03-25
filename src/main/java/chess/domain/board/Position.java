@@ -43,11 +43,13 @@ public class Position {
     }
 
     public boolean isOnSameFileAs(Position targetPosition) {
-        return file.equals(targetPosition.file);
+        return file.equals(targetPosition.file)
+            && !rank.equals(targetPosition.rank);
     }
 
     public boolean isOnSameRankAs(Position targetPosition) {
-        return rank.equals(targetPosition.rank);
+        return rank.equals(targetPosition.rank)
+            && !file.equals(targetPosition.file);
     }
 
     @Override
