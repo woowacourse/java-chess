@@ -25,6 +25,10 @@ public class ChessGame {
         turn = turn.otherTeam();
     }
 
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
     private void validatePieceExist(Position start) {
         if (chessBoard.positionIsEmpty(start)) {
             throw new IllegalArgumentException("움직임을 시작하는 위치에 기물이 존재하지 않습니다");
