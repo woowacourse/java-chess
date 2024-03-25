@@ -4,52 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
 
-    @Test
-    @DisplayName("오른쪽 위 대각선 방향으로 비숍 이동 가능")
-    void canMove_RightUp() {
+    @DisplayName("비숍 이동 가능")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 있다.")
+    @CsvSource({"6,6", "2,2", "6,2", "2,6"})
+    void canMove(int file, int rank) {
         Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(1, 3);
-        Position position2 = Position.of(6, 8);
-        assertThat(bishop.canMove(position1, position2)).isTrue();
+        Position source = Position.of(4, 4);
+        Position target = Position.of(file, rank);
+        assertThat(bishop.canMove(source, target)).isTrue();
     }
 
-    @Test
-    @DisplayName("오른쪽 아래 대각선 방향으로 비숍 이동 가능")
-    void canMove_RightDown() {
+    @DisplayName("비숍 이동 불가")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 없다.")
+    @CsvSource({"5,4", "4,4"})
+    void cannotMove(int file, int rank) {
         Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(4, 6);
-        Position position2 = Position.of(2, 8);
-        assertThat(bishop.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 위 대각선 방향으로 비숍 이동 가능")
-    void canMove_LeftUp() {
-        Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 7);
-        assertThat(bishop.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 아래 대각선 방향으로 비숍 이동 가능")
-    void canMove_LeftDown() {
-        Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 3);
-        assertThat(bishop.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("같은 대각선상이 아니면 비숍 이동 불가")
-    void cannotMove() {
-        Bishop bishop = new Bishop(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(7, 8);
+        Position position1 = Position.of(4, 4);
+        Position position2 = Position.of(file, rank);
         assertThat(bishop.canMove(position1, position2)).isFalse();
     }
 }
