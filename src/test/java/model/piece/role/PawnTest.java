@@ -7,7 +7,9 @@ import static model.direction.Direction.S;
 import static model.direction.Direction.SE;
 import static model.direction.Direction.SW;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import model.piece.Color;
@@ -101,7 +103,7 @@ class PawnTest {
 
     @Test
     @DisplayName("BLACK Pawn의 초기 위치가 아닌 위치에서 목적지 전까지의 경로인 Route를 반환한다.")
-    void possibleRoute_ReturnPossibleRoute_WhenCurrentPositionIsGiven_AndColorIsBlack() {
+    void findDirectRoute_ReturnPossibleRoute_WhenCurrentPositionIsGiven_AndColorIsBlack() {
         Role pawn = Pawn.from(Color.BLACK);
         Position initialPosition = Position.of(5, 6);
         Position destination1 = Position.of(5, 5);
@@ -120,6 +122,120 @@ class PawnTest {
             assertEquals(expectedRoutes1, actualRoute1);
             assertEquals(expectedRoutes2, actualRoute2);
             assertEquals(expectedRoutes3, actualRoute3);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn이 상대방 기물이 없는 대각선으로 이동할 때, 예외를 던진다.")
+    void traversalRoles_ShouldThrowException_WhenMoveToEmptyDiagonalPosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 3);
+        Position destination = Position.of(6, 4);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of();
+        Role destinationRole = new Square();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pawn.traversalRoles(roles, destinationRole);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn은 상대방 기물을 잡을 때 대각선으로 1칸 이동이 가능하다.")
+    void traversalRoles_ShouldNotThrowException_WhenMoveToCounterDiagonalPosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 3);
+        Position destination = Position.of(6, 4);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of();
+        Role destinationRole = Pawn.from(Color.BLACK);
+
+        assertDoesNotThrow(() -> {
+            pawn.traversalRoles(roles, destinationRole);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn은 상대방 기물을 잡을 때 대각선으로 1칸 이동이 가능하다.")
+    void traversalRoles_ShouldThrowException_WhenMoveToSameColorDiagonalPosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 3);
+        Position destination = Position.of(6, 4);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of();
+        Role destinationRole = Pawn.from(Color.WHITE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            pawn.traversalRoles(roles, destinationRole);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn은 경로에 기물이 없을 때에만 전진이 가능하다 - 1칸 전진.")
+    void traversalRoles_ShouldNotThrowException_WhenMoveForwardToSquarePosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 3);
+        Position destination = Position.of(5, 4);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of();
+        Role destinationRole = new Square();
+
+        assertDoesNotThrow(() -> {
+            pawn.traversalRoles(roles, destinationRole);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn은 경로에 기물이 없을 때에만 전진이 가능하다 - 2칸 전진.")
+    void traversalRoles_ShouldNotThrowException_WhenForwardTwiceToSquarePosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 2);
+        Position destination = Position.of(5, 4);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of(new Square());
+        Role destinationRole = new Square();
+
+        assertDoesNotThrow(() -> {
+            pawn.traversalRoles(roles, destinationRole);
+        });
+    }
+
+    @Test
+    @DisplayName("Pawn은 경로에 모든 색깔의 기물이 있을 때 전진 시도하면 예외를 던진다.")
+    void traversalRoles_ShouldNThrowException_WhenForwardTwiceToOccupiedPosition() {
+        // Given
+        Role pawn = Pawn.from(Color.WHITE);
+        Position initialPosition = Position.of(5, 2);
+        Position destination = Position.of(5, 3);
+
+        // When
+        pawn.findDirectRoute(initialPosition, destination);
+        List<Role> roles = List.of();
+        Role blackRoleIndestination = Pawn.from(Color.BLACK);
+        Role whiteRoleIndestination = Pawn.from(Color.WHITE);
+
+        assertAll(() -> {
+            assertThrows(IllegalArgumentException.class, () -> {
+                pawn.traversalRoles(roles, blackRoleIndestination);
+            });
+            assertThrows(IllegalArgumentException.class, () -> {
+                pawn.traversalRoles(roles, whiteRoleIndestination);
+            });
         });
     }
 }
