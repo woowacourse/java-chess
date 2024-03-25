@@ -4,70 +4,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class QueenTest {
 
-    @Test
-    @DisplayName("오른쪽 위 대각선 방향으로 퀸 이동 가능")
-    void canMove_RightUp() {
+    @DisplayName("퀸 이동 가능")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 있다.")
+    @CsvSource({"6,6", "2,2", "6,2", "2,6", "4,6", "4,2", "6,4", "2,4"})
+    void canMove(int file, int rank) {
         Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 3);
-        Position position2 = Position.of(6, 8);
-        assertThat(queen.canMove(position1, position2)).isTrue();
+        Position source = Position.of(4, 4);
+        Position target = Position.of(file, rank);
+        assertThat(queen.canMove(source, target)).isTrue();
     }
 
-    @Test
-    @DisplayName("오른쪽 아래 대각선 방향으로 퀸 이동 가능")
-    void canMove_RightDown() {
+    @DisplayName("퀸 이동 가능")
+    @ParameterizedTest(name = "(4,4)에서 ({0},{1})로 이동할 수 없다.")
+    @CsvSource({"4,4", "5,6"})
+    void cannotMove(int file, int rank) {
         Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(4, 6);
-        Position position2 = Position.of(2, 8);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 위 대각선 방향으로 퀸 이동 가능")
-    void canMove_LeftUp() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 7);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("왼쪽 아래 대각선 방향으로 퀸 이동 가능")
-    void canMove_LeftDown() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(3, 5);
-        Position position2 = Position.of(1, 3);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("같은 대각선상이 아니면 퀸 이동 불가")
-    void cannotMove() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(7, 8);
+        Position position1 = Position.of(4, 4);
+        Position position2 = Position.of(file, rank);
         assertThat(queen.canMove(position1, position2)).isFalse();
-    }
-
-    @Test
-    @DisplayName("Rank가 같으면 퀸 이동 가능")
-    void canMove_SameRank() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(8, 1);
-        assertThat(queen.canMove(position1, position2)).isTrue();
-    }
-
-    @Test
-    @DisplayName("File이 같으면 퀸 이동 가능")
-    void canMove_SameFile() {
-        Queen queen = new Queen(Color.WHITE);
-        Position position1 = Position.of(1, 1);
-        Position position2 = Position.of(1, 8);
-        assertThat(queen.canMove(position1, position2)).isTrue();
     }
 }
