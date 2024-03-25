@@ -80,50 +80,30 @@ public class Chessboard {
         return pieces;
     }
 
-
     public void move(final Square source, final Square target) {
-        validateOccupied(source);
+        validateSourceSquareOccupied(source);
         Piece piece = chessboard.get(source);
         Set<Square> movableTargets = new HashSet<>(piece.findLegalMoves(findAllExistPieceOnBoard()));
-        removeSquaresOccupiedByAlly(movableTargets, piece);
-        validateHasAnyMovable(movableTargets);
-        movePieceToSquare(movableTargets, source, target);
+        if (!movableTargets.contains(target)) {
+            throw new IllegalArgumentException("기물이 %s에서 %s로 이동할 수 없습니다.".formatted(source, target));
+        }
+        piece.moveTo(target);
+        movePieceToTarget(source, target);
     }
 
     private Set<Piece> findAllExistPieceOnBoard() {
         return new HashSet<>(chessboard.values());
     }
 
-    private void removeSquaresOccupiedByAlly(final Set<Square> movableTargets, final Piece piece) {
-        movableTargets.removeIf(movableTarget -> isOccupiedByAlly(piece, movableTarget));
-    }
-
-    private boolean isOccupiedByAlly(final Piece piece, final Square movableTarget) {
-        if (chessboard.containsKey(movableTarget)) {
-            Piece existPiece = chessboard.get(movableTarget);
-            return existPiece.isAllyOf(piece);
-        }
-        return false;
-    }
-
-    private void validateOccupied(final Square square) {
+    private void validateSourceSquareOccupied(final Square square) {
         if (!isOccupied(square)) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다.");
         }
     }
 
-    private void validateHasAnyMovable(final Set<Square> movableTargets) {
-        if (movableTargets.isEmpty()) {
-            throw new IllegalArgumentException("이동할 수 있는 칸이 없습니다.");
-        }
-    }
-
-    private void movePieceToSquare(final Set<Square> movableTargets, final Square source, final Square target) {
-        if (movableTargets.contains(target)) {
-            Piece tempPiece = chessboard.get(source);
-            chessboard.remove(source);
-            chessboard.put(target, tempPiece);
-        }
+    private void movePieceToTarget(final Square source, final Square target) {
+        chessboard.put(target, chessboard.get(source));
+        chessboard.remove(source);
     }
 
     private boolean isOccupied(final Square square) {

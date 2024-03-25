@@ -9,7 +9,7 @@ public abstract class Piece {
 
     protected final Color color;
     protected final PieceType pieceType;
-    private final Square square;
+    private Square square;
 
     protected Piece(final Color color, final PieceType pieceType, Square square) {
         this.color = color;
@@ -18,6 +18,10 @@ public abstract class Piece {
     }
 
     abstract public Set<Square> findLegalMoves(Set<Piece> entirePieces);
+
+    public void moveTo(Square square) {
+        this.square = square;
+    }
 
     public boolean isAllyOf(Piece other) {
         return color == other.color;
