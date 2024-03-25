@@ -33,7 +33,7 @@ public class Chessboard {
     }
 
     private void validateSource(final Position position) {
-        if (squareIn(position).isEmpty()) {
+        if (isEmpty(position)) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다: %s".formatted(position));
         }
     }
