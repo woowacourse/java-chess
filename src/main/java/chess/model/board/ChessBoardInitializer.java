@@ -45,7 +45,7 @@ public class ChessBoardInitializer {
     }
 
     private static Rank convertSpecialPieceRankWithSide(Side side) {
-        if (side == Side.BLACK) {
+        if (side.isBlack()) {
             return Rank.EIGHT;
         }
         return Rank.ONE;
@@ -61,7 +61,7 @@ public class ChessBoardInitializer {
     }
 
     private static Rank convertPawnRanksWithSide(Side side) {
-        if (side == Side.BLACK) {
+        if (side.isBlack()) {
             return Rank.SEVEN;
         }
         return Rank.TWO;
