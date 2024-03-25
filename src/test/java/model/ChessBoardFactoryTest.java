@@ -1,20 +1,17 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-
-import java.util.Map;
 import model.chessboard.ChessBoardFactory;
 import model.piece.PieceHolder;
-import model.piece.state.King;
-import model.piece.state.Pawn;
-import model.piece.state.Queen;
-import model.piece.state.Rook;
-import model.piece.state.Square;
+import model.piece.state.*;
+import model.position.File;
 import model.position.Position;
+import model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ChessBoardFactoryTest {
 
@@ -30,14 +27,14 @@ class ChessBoardFactoryTest {
     void create_ShouldInitializeRooksCorrectly_WhenCalled() {
         Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         assertAll("룩의 위치와 색상 검증",
-                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(1, 1))
-                        .getRole(), "백색 룩은 a1 위치에 있어야 합니다."),
-                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(8, 1))
-                        .getRole(), "백색 룩은 h1 위치에 있어야 합니다."),
-                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(1, 8))
-                        .getRole(), "흑색 룩은 a8 위치에 있어야 합니다."),
-                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(8, 8))
-                        .getRole(), "흑색 룩은 h8 위치에 있어야 합니다.")
+                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(File.A, Rank.ONE))
+                                                             .getRole(), "백색 룩은 a1 위치에 있어야 합니다."),
+                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(File.H, Rank.ONE))
+                                                             .getRole(), "백색 룩은 h1 위치에 있어야 합니다."),
+                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(File.A, Rank.EIGHT))
+                                                             .getRole(), "흑색 룩은 a8 위치에 있어야 합니다."),
+                () -> assertInstanceOf(Rook.class, chessBoard.get(Position.of(File.H, Rank.EIGHT))
+                                                             .getRole(), "흑색 룩은 h8 위치에 있어야 합니다.")
         );
     }
 
@@ -46,14 +43,14 @@ class ChessBoardFactoryTest {
     void create_ShouldInitializeKingAndQueenCorrectly_WhenCalled() {
         Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
         assertAll("킹과 퀸의 위치와 색상 검증",
-                () -> assertInstanceOf(Queen.class, chessBoard.get(Position.of(4, 1))
-                        .getRole(), "백색 퀸은 d1 위치에 있어야 합니다."),
-                () -> assertInstanceOf(King.class, chessBoard.get(Position.of(5, 1))
-                        .getRole(), "백색 킹은 e1 위치에 있어야 합니다."),
-                () -> assertInstanceOf(Queen.class, chessBoard.get(Position.of(4, 8))
-                        .getRole(), "흑색 퀸은 d8 위치에 있어야 합니다."),
-                () -> assertInstanceOf(King.class, chessBoard.get(Position.of(5, 8))
-                        .getRole(), "흑색 킹은 e8 위치에 있어야 합니다.")
+                () -> assertInstanceOf(Queen.class, chessBoard.get(Position.of(File.D, Rank.ONE))
+                                                              .getRole(), "백색 퀸은 d1 위치에 있어야 합니다."),
+                () -> assertInstanceOf(King.class, chessBoard.get(Position.of(File.E, Rank.ONE))
+                                                             .getRole(), "백색 킹은 e1 위치에 있어야 합니다."),
+                () -> assertInstanceOf(Queen.class, chessBoard.get(Position.of(File.D, Rank.EIGHT))
+                                                              .getRole(), "흑색 퀸은 d8 위치에 있어야 합니다."),
+                () -> assertInstanceOf(King.class, chessBoard.get(Position.of(File.E, Rank.EIGHT))
+                                                             .getRole(), "흑색 킹은 e8 위치에 있어야 합니다.")
         );
     }
 
@@ -61,11 +58,11 @@ class ChessBoardFactoryTest {
     @DisplayName("create 호출 시 모든 폰이 올바르게 초기화되어야 한다.")
     void create_ShouldInitializePawnsCorrectly_WhenCalled() {
         Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
-        for (int file = 1; file <= 8; file++) {
-            assertInstanceOf(Pawn.class, chessBoard.get(Position.of(file, 2))
-                    .getRole(), "백색 폰은 2번 rank에 있어야 합니다.");
-            assertInstanceOf(Pawn.class, chessBoard.get(Position.of(file, 7))
-                    .getRole(), "흑색 폰은 7번 rank에 있어야 합니다.");
+        for (File file : File.values()) {
+            assertInstanceOf(Pawn.class, chessBoard.get(Position.of(file, Rank.TWO))
+                                                   .getRole(), "백색 폰은 2번 rank에 있어야 합니다.");
+            assertInstanceOf(Pawn.class, chessBoard.get(Position.of(file, Rank.SEVEN))
+                                                   .getRole(), "흑색 폰은 7번 rank에 있어야 합니다.");
         }
     }
 
@@ -73,11 +70,17 @@ class ChessBoardFactoryTest {
     @DisplayName("create 호출 시 모든 Square가 올바르게 초기화되어야 한다.")
     void create_ShouldInitializeSquaresCorrectly_WhenCalled() {
         Map<Position, PieceHolder> chessBoard = ChessBoardFactory.create();
-        for (int rank = 3; rank <= 6; rank++) {
-            for (int file = 1; file <= 8; file++) {
-                assertInstanceOf(Square.class, chessBoard.get(Position.of(file, rank))
-                        .getRole(), "Square는 3에서 6번 rank 사이에 초기화되어야 합니다.");
-            }
+        for (File file : File.values()) {
+            assertAll(
+                    () -> assertInstanceOf(Square.class, chessBoard.get(Position.of(file, Rank.THREE))
+                                                                   .getRole(), "Square는 3번 rank에 초기화되어야 합니다."),
+                    () -> assertInstanceOf(Square.class, chessBoard.get(Position.of(file, Rank.FOUR))
+                                                                   .getRole(), "Square는 4번 rank에 초기화되어야 합니다."),
+                    () -> assertInstanceOf(Square.class, chessBoard.get(Position.of(file, Rank.FIVE))
+                                                                   .getRole(), "Square는 5번 rank에 초기화되어야 합니다."),
+                    () -> assertInstanceOf(Square.class, chessBoard.get(Position.of(file, Rank.SIX))
+                                                                   .getRole(), "Square는 6번 rank에 초기화되어야 합니다.")
+            );
         }
     }
 }

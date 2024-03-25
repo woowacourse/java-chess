@@ -4,6 +4,7 @@ import model.direction.Direction;
 import model.direction.ShiftPattern;
 import model.piece.Color;
 import model.position.Position;
+import model.position.Rank;
 import model.position.Route;
 import model.shift.SingleShift;
 
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 public final class Pawn extends Role {
-    private static int WHITE_INITIAL_RANK = 2;
-    private static int BLACK_INITIAL_RANK = 7;
+    private static Rank WHITE_INITIAL_RANK = Rank.TWO;
+    private static Rank BLACK_INITIAL_RANK = Rank.SEVEN;
 
     public Pawn(Color color) {
         super(color, new SingleShift(matchShiftPatternBy(color)));

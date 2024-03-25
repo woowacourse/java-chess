@@ -14,8 +14,8 @@ public class InfoMapper {
                 .entrySet()
                 .stream()
                 .map(entry -> new PieceInfo(
-                        entry.getKey().file(),
-                        entry.getKey().rank(),
+                        entry.getKey().file().index(),
+                        entry.getKey().rank().index(),
                         entry.getValue().getRole().getClass().getSimpleName(),
                         entry.getValue().color().name())
                 )

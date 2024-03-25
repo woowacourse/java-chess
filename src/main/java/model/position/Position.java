@@ -1,15 +1,16 @@
 package model.position;
 
+import model.direction.Direction;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import model.direction.Direction;
 
 public class Position {
-    private final int file;
-    private final int rank;
+    private final File file;
+    private final Rank rank;
 
-    private Position(int file, int rank) {
+    private Position(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
@@ -17,50 +18,45 @@ public class Position {
     private static final Set<Position> cache = new HashSet<>();
 
     static {
-        for (int file = 1; file <= 8; file++) {
+        for (File file : File.values()) {
             initRank(file);
         }
     }
 
-    private static void initRank(int file) {
-        for (int rank = 1; rank <= 8; rank++) {
+    private static void initRank(File file) {
+        for (Rank rank : Rank.values()) {
             cache.add(new Position(file, rank));
         }
     }
 
     public boolean isAvailablePosition(Direction direction) {
-        int movedFile = file + direction.fileDifferential();
-        int movedRank = rank + direction.rankDifferential();
-        return 1 <= movedFile && movedFile <= 8 && 1 <= movedRank && movedRank <= 8;
+        return file.canMoveTo(direction) && rank.canMoveTo(direction);
     }
 
-    public Position getNextPosition(Direction direction){
-        return Position.of(file + direction.fileDifferential(), rank + direction.rankDifferential());
+    public Position getNextPosition(Direction direction) {
+        return Position.of(file.moving(direction), rank.moving(direction));
     }
 
-    public static Position of(int file, int rank) {
+    public static Position of(File file, Rank rank) {
         return cache.stream()
-                .filter(position -> position.file == file && position.rank == rank)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Position 입니다."));
+                    .filter(position -> position.file == file && position.rank == rank)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Position 입니다."));
     }
 
-    public int file() {
+    public File file() {
         return file;
     }
 
-    public int rank() {
+    public Rank rank() {
         return rank;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Position position)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
         return file == position.file && rank == position.rank;
     }
 
