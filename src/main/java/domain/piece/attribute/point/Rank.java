@@ -32,4 +32,48 @@ public enum Rank {
         return values()[ordinalIndex];
     }
 
+    public boolean isTop() {
+        return ordinal() == values().length-1;
+    }
+
+    public boolean isBottom() {
+        return ordinal() == 0;
+    }
+
+    public boolean canMoveUp(final int step) {
+        return ordinal() + step < values().length;
+    }
+
+    public boolean canMoveDown(final int step) {
+        return ordinal() - step >= 0;
+    }
+
+    public Rank moveUp(final int step) {
+        if (canMoveUp(step)) {
+            return values()[ordinal() + step];
+        }
+        throw new IllegalStateException("이동할 수 없는 위치입니다.");
+    }
+
+    public Rank moveUp() {
+        if (canMoveUp(1)) {
+            return values()[ordinal() + 1];
+        }
+        throw new IllegalStateException("이동할 수 없는 위치입니다.");
+    }
+
+    public Rank moveDown(final int step) {
+        if (canMoveDown(step)) {
+            return values()[ordinal() - step];
+        }
+        throw new IllegalStateException("이동할 수 없는 위치입니다.");
+    }
+
+    public Rank moveDown() {
+        if (canMoveDown(1)) {
+            return values()[ordinal() - 1];
+        }
+        throw  new IllegalStateException("이동할 수 없는 위치입니다.");
+    }
+
 }
