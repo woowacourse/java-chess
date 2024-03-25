@@ -10,7 +10,8 @@ public enum PieceMapper {
     ROOK('r'),
     BISHOP('b'),
     KNIGHT('n'),
-    PAWN('p');
+    PAWN('p'),
+    ;
 
     private final char name;
 

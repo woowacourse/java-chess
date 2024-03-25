@@ -12,7 +12,8 @@ public enum PieceType {
     ROOK((source, target) -> source.isStraight(target)),
     BISHOP((source, target) -> source.isDiagonal(target)),
     KNIGHT((source, target) -> source.isStraightAndDiagonal(target)),
-    PAWN((source, target) -> source.isOnlyForward(target) || source.isAttack(target));
+    PAWN((source, target) -> source.isOnlyForward(target) || source.isAttack(target)),
+    ;
 
     private final BiPredicate<Square, Square> moveStrategy;
 

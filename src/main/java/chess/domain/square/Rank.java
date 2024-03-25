@@ -14,7 +14,8 @@ public enum Rank {
     FIVE(5),
     SIX(6),
     SEVEN(7),
-    EIGHT(8);
+    EIGHT(8),
+    ;
 
     private static final String ERROR_NOT_NUMERIC = "랭크는 숫자여야 합니다.";
     private static final String ERROR_NOT_EXIST_RANK = " 은(는) 존재하지 않는 랭크입니다.";

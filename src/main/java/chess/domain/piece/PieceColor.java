@@ -3,7 +3,8 @@ package chess.domain.piece;
 public enum PieceColor {
 
     BLACK,
-    WHITE;
+    WHITE,
+    ;
 
     public PieceColor next() {
         if (this == BLACK) {

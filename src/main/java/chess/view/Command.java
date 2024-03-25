@@ -7,7 +7,8 @@ public enum Command {
 
     START("^start$"),
     MOVE("^move [a-h][1-8] [a-h][1-8]$"),
-    END("^end$");
+    END("^end$"),
+    ;
 
     private static final String ERROR_INVALID_COMMAND = " 은(는) 올바르지 않은 명령어 입니다.";
 
