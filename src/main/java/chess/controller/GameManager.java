@@ -4,7 +4,7 @@ import chess.domain.Command;
 import chess.domain.board.Board;
 import chess.domain.board.BoardCreator;
 import chess.domain.position.Position;
-import chess.domain.Turn;
+import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -31,15 +31,14 @@ public class GameManager {
     }
 
     private void play(Board board) {
-        Turn turn = new Turn();
+        ChessGame chessGame = new ChessGame(board);
+
         while (inputView.readMoveOrEndCommand().isMove()) {
             Position source = inputView.readSourcePosition();
             Position target = inputView.readTargetPosition();
 
-            turn.check(board, source);
-            board.move(source, target);
+            chessGame.movePiece(source, target);
             outputView.printBoard(board);
-            turn.end();
         }
     }
 }
