@@ -41,12 +41,4 @@ public enum Direction {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_DIRECTION));
     }
-
-    public int file() {
-        return fileIndex;
-    }
-
-    public int rank() {
-        return rankIndex;
-    }
 }
