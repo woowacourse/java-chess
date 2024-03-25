@@ -41,7 +41,7 @@ public class ChessGame {
     }
 
     private void showBoard(Board board) {
-        BoardDTO boardDTO = new BoardDTO(board);
+        BoardDTO boardDTO = BoardDTO.from(board);
         outputView.printBoard(boardDTO);
     }
 
