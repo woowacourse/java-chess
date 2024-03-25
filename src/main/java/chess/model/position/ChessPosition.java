@@ -35,7 +35,7 @@ public class ChessPosition {
     public ChessPosition calculateNextPosition(int fileOffset, int rankOffset) {
         File nextFile = file.calculateNextFile(fileOffset);
         Rank nextRank = rank.calculateNextRank(rankOffset);
-        return new ChessPosition(nextFile, nextRank);
+        return ChessPosition.of(nextFile, nextRank);
     }
 
     public File getFile() {
