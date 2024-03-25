@@ -1,24 +1,45 @@
 package service;
 
 import domain.ChessGameResult;
+import domain.Team;
 import domain.chessboard.ChessBoard;
+import domain.chessboard.ChessBoardDao;
 import domain.piece.Piece;
 import domain.square.Square;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessGame {
 
     private ChessBoard chessBoard;
     private ChessGameStatus chessGameStatus;
+    private final ChessBoardDao chessBoardDao;
 
-    public ChessGame() {
+    public ChessGame(final ChessBoardDao chessBoardDao) {
         this.chessGameStatus = ChessGameStatus.INIT;
+        this.chessBoardDao = chessBoardDao;
     }
 
-    public void start() {
+    public void startNewGame() {
         if (chessGameStatus == ChessGameStatus.INIT) {
             chessBoard = ChessBoard.create();
+
+            final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
+            chessBoardDao.addAll(pieceSquares);
+
+            chessGameStatus = ChessGameStatus.RUNNING;
+            return;
+        }
+        throw new IllegalArgumentException("초기 상태에서만 게임을 시작할 수 있습니다.");
+    }
+
+    public void continueGame() {
+        if (chessGameStatus == ChessGameStatus.INIT) {
+            final Map<Square, Piece> pieceSquares = chessBoardDao.findAll();
+
+            chessBoard = new ChessBoard(pieceSquares, Team.WHITE);
+
             chessGameStatus = ChessGameStatus.RUNNING;
             return;
         }
@@ -28,6 +49,20 @@ public class ChessGame {
     public void move(final Square source, final Square target) {
         if (chessGameStatus == ChessGameStatus.RUNNING) {
             chessBoard.move(source, target);
+
+            final Piece piece = chessBoardDao.findBySquare(source)
+                    .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
+
+            final Optional<Piece> targetPiece = chessBoardDao.findBySquare(target);
+
+            if (targetPiece.isEmpty()) {
+                chessBoardDao.addSquarePiece(target, piece);
+            } else {
+                chessBoardDao.update(target, piece);
+            }
+
+            chessBoardDao.deleteBySquare(source);
+
             checkEnd();
             return;
         }
@@ -42,6 +77,7 @@ public class ChessGame {
 
     public void end() {
         chessGameStatus = ChessGameStatus.END;
+
     }
 
     public boolean isNotEnd() {
@@ -60,6 +96,10 @@ public class ChessGame {
 
     public Map<Square, Piece> getPieceSquares() {
         return chessBoard.getPieceSquares();
+    }
+
+    public boolean hasSave() {
+        return !chessBoardDao.isEmpty();
     }
 
     private enum ChessGameStatus {

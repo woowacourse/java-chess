@@ -7,71 +7,107 @@ import domain.piece.Queen;
 import domain.square.File;
 import domain.square.Rank;
 import domain.square.Square;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
+import repository.ChessConnectionGenerator;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 class ChessBoardDaoTest {
-    final ChessBoardDao chessBoardDao = ChessBoardDao.test();
+    final Connection connection = ChessConnectionGenerator.getTestConnection();
+    final ChessBoardDao chessBoardDao = new ChessBoardDao(connection);
 
-    @DisplayName("DB에 연결한다.")
-    @Test
-    void connection() {
-        try (final Connection connection = chessBoardDao.getConnection()) {
-            assertThat(connection).isNotNull();
+    @BeforeEach
+    void before() {
+        try {
+            if (connection != null) {
+                connection.setAutoCommit(false);
+            }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @DisplayName("CRUD")
-    @TestFactory
-    Collection<DynamicTest> move() {
-        return List.of(
-                dynamicTest("기물과 위치를 저장한다.", () -> {
-                    // given
-                    final Square square = new Square(File.A, Rank.TWO);
-                    final Piece piece = new Pawn(Team.BLACK);
+    @AfterEach
+    void after() {
+        try {
+            if (connection != null) {
+                connection.rollback();
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-                    // when
-                    chessBoardDao.addSquarePiece(square, piece);
+    @DisplayName("기물과 위치를 찾는다.")
+    @Test
+    void find() {
+        // given
+        final Square square = new Square(File.A, Rank.TWO);
+        final Piece piece = new Pawn(Team.BLACK);
 
-                    // then
-                    final Piece findPiece = chessBoardDao.findBySquare(square);
-                    assertThat(findPiece).isEqualTo(piece);
-                }),
-                dynamicTest("기물과 위치를 업데이트한다.", () -> {
-                    // given
-                    final Square square = new Square(File.A, Rank.TWO);
-                    final Piece piece = new Queen(Team.WHITE);
+        // when
+        chessBoardDao.addSquarePiece(square, piece);
 
-                    // when
-                    chessBoardDao.update(square, piece);
+        // then
+        final Piece findPiece = chessBoardDao.findBySquare(square).get();
+        assertThat(findPiece).isEqualTo(piece);
+    }
 
-                    // then
-                    final Piece findPiece = chessBoardDao.findBySquare(square);
-                    assertThat(findPiece).isEqualTo(piece);
-                }),
-                dynamicTest("위치를 삭제한다.", () -> {
-                    // given
-                    final Square square = new Square(File.A, Rank.TWO);
+    @DisplayName("기물의 위치를 업데이트한다.")
+    @Test
+    void update() {
+        // given
+        final Square square = new Square(File.A, Rank.TWO);
+        final Piece piece = new Pawn(Team.BLACK);
+        chessBoardDao.addSquarePiece(square, piece);
 
-                    // when
-                    chessBoardDao.deleteBySquare(square);
+        final Piece newPiece = new Queen(Team.WHITE);
 
-                    // then
-                    final Piece findPiece = chessBoardDao.findBySquare(square);
-                    assertThat(findPiece).isNull();
-                })
-        );
+        // when
+        chessBoardDao.update(square, piece);
+
+        // then
+        final Piece findPiece = chessBoardDao.findBySquare(square).get();
+        assertThat(findPiece).isEqualTo(piece);
+    }
+
+    @DisplayName("해당 위치의 기물을 삭제한다.")
+    @Test
+    void delete() {
+        // given
+        final Square square = new Square(File.A, Rank.TWO);
+        final Piece piece = new Pawn(Team.BLACK);
+        chessBoardDao.addSquarePiece(square, piece);
+
+        // when
+        chessBoardDao.deleteBySquare(square);
+
+        // then
+        final Optional<Piece> findPiece = chessBoardDao.findBySquare(square);
+        assertThat(findPiece).isEmpty();
+    }
+
+    @DisplayName("전체 위치 별 기물을 찾는다.")
+    @Test
+    void findAll() {
+        // given
+        final ChessBoard chessBoard = ChessBoard.create();
+        final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
+        chessBoardDao.addAll(pieceSquares);
+
+        // when
+        final Map<Square, Piece> results = chessBoardDao.findAll();
+
+        // then
+        Assertions.assertThat(results.entrySet()).isEqualTo(pieceSquares.entrySet());
     }
 }

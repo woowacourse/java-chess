@@ -4,8 +4,8 @@
 
 ## STEP4 기능 명세
 
-- [ ] Square, Piece 저장
-- [ ] Square, Piece 로딩
+- [x] Square, Piece 저장
+- [x] Square, Piece 로딩
 - 선택 요구 사항
 - [ ] 체스 게임방 생성
 - [ ] 게임방 입장

@@ -32,12 +32,10 @@ public class ChessBoard {
 
     private final Map<Square, Piece> pieceSquares;
     private Team currentTeam;
-    private final ChessBoardDao chessBoardDao;
 
-    private ChessBoard(final Map<Square, Piece> pieceSquares) {
+    public ChessBoard(final Map<Square, Piece> pieceSquares, final Team currentTeam) {
         this.pieceSquares = pieceSquares;
-        this.currentTeam = Team.WHITE;
-        this.chessBoardDao = new ChessBoardDao();
+        this.currentTeam = currentTeam;
     }
 
     public static ChessBoard create() {
@@ -50,7 +48,7 @@ public class ChessBoard {
             chessBoard.put(new Square(file, Rank.ONE), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
 
-        return new ChessBoard(chessBoard);
+        return new ChessBoard(chessBoard, Team.WHITE);
     }
 
     public void move(final Square source, final Square target) {
@@ -59,9 +57,6 @@ public class ChessBoard {
         final Piece sourcePiece = pieceSquares.get(source);
         pieceSquares.put(target, sourcePiece);
         pieceSquares.remove(source);
-
-//        chessBoardDao.update(target, sourcePiece);
-        chessBoardDao.deleteBySquare(source);
 
         currentTeam = currentTeam.turn();
     }

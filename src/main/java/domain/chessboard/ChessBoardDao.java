@@ -5,45 +5,22 @@ import domain.piece.PieceMaker;
 import domain.square.Square;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class ChessBoardDao {
 
-    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
-    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "root"; //  MySQL 서버 아이디
-    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
+    private final Connection connection;
 
-    private final String database;
-
-    public ChessBoardDao() {
-        this.database = DATABASE;
-    }
-
-    private ChessBoardDao(final String database) {
-        this.database = database;
-    }
-
-    static ChessBoardDao test() {
-        return new ChessBoardDao("chess_test");
-    }
-
-    public Connection getConnection() {
-        // 드라이버 연결
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + database + OPTION, USERNAME, PASSWORD);
-        } catch (final SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    public ChessBoardDao(final Connection connection) {
+        this.connection = connection;
     }
 
     public void addSquarePiece(final Square square, final Piece piece) {
         final var query = "INSERT INTO board VALUES(null, ?, ?, ?, ?)";
-        try (final var preparedStatement = getConnection().prepareStatement(query)) {
+        try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
             preparedStatement.setString(3, piece.pieceType().name());
@@ -54,38 +31,36 @@ public class ChessBoardDao {
         }
     }
 
-    public Piece findBySquare(final Square square) {
+    public void addAll(final Map<Square, Piece> pieceSquares) {
+        pieceSquares.forEach((this::addSquarePiece));
+    }
+
+    public Optional<Piece> findBySquare(final Square square) {
         final var query = "SELECT * FROM board WHERE file = (?) AND `rank` = (?)";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
 
-            System.out.println(preparedStatement.toString());
-
             final var resultSet = preparedStatement.executeQuery();
 
-            final boolean next = resultSet.next();
-            System.out.println(next);
-            if (next) {
-                return PieceMaker.of(
+            if (resultSet.next()) {
+                return Optional.of(PieceMaker.of(
                         resultSet.getString("piece_type"),
                         resultSet.getString("team")
-                );
+                ));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public void update(final Square square, final Piece piece) {
         final var query = "UPDATE board SET piece_type = (?), team = (?) " +
                 "where file = (?) AND `rank` = (?)";
 
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.pieceType().name());
             preparedStatement.setString(2, piece.team().name());
             preparedStatement.setString(3, square.file().name());
@@ -99,12 +74,46 @@ public class ChessBoardDao {
 
     public void deleteBySquare(final Square square) {
         final var query = "DELETE FROM board where file = (?) AND `rank` = (?)";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
+        try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
 
             preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Map<Square, Piece> findAll() {
+        final var query = "SELECT * FROM board";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+
+            final Map<Square, Piece> squarePieces = new HashMap<>();
+
+            while (resultSet.next()) {
+                squarePieces.put(Square.of(
+                                resultSet.getString("file"),
+                                resultSet.getString("rank")
+                        ),
+                        PieceMaker.of(
+                                resultSet.getString("piece_type"),
+                                resultSet.getString("team")
+                        ));
+            }
+
+            return squarePieces;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isEmpty() {
+        final var query = "SELECT * FROM board";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+
+            return !resultSet.next();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

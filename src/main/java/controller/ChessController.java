@@ -1,13 +1,16 @@
 package controller;
 
 import domain.ChessGameResult;
+import domain.chessboard.ChessBoardDao;
 import domain.piece.Piece;
 import domain.square.Square;
+import repository.ChessConnectionGenerator;
 import service.ChessGame;
 import service.command.ChessCommand;
 import view.InputView;
 import view.OutputView;
 
+import java.sql.Connection;
 import java.util.Map;
 
 public class ChessController {
@@ -21,7 +24,9 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessGame chessGame = new ChessGame();
+        final Connection connection = ChessConnectionGenerator.getConnection();
+        final ChessBoardDao chessBoardDao = new ChessBoardDao(connection);
+        final ChessGame chessGame = new ChessGame(chessBoardDao);
 
         outputView.printStartHeader();
 

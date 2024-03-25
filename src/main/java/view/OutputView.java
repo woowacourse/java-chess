@@ -54,4 +54,8 @@ public class OutputView {
                 chessGameResult.getBlackScore(), chessGameResult.getWhiteScore(),
                 WinStatusFormat.formatOf(chessGameResult.getWinStatus()));
     }
+
+    public void printContinue() {
+        System.out.println("게임을 이어서 하겠습니다.");
+    }
 }
