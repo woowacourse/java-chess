@@ -4,7 +4,6 @@ import chess.domain.piece.Piece;
 import chess.view.OutputView;
 
 import java.util.Map;
-import java.util.Scanner;
 
 public class ChessGame {
     private final Board board;

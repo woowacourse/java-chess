@@ -23,7 +23,6 @@ public class ScoreTest {
     @ParameterizedTest
     @MethodSource("calculateScoreParameters")
     void calculateScoreTest(Team team, double expectedScore) {
-        Score score = new Score();
         List<Piece> pieces = List.of(
                 new Queen(new PieceInfo(Position.of("a3"), Team.WHITE)),
                 new Rook(new PieceInfo(Position.of("a4"), Team.WHITE)),
@@ -37,7 +36,7 @@ public class ScoreTest {
         Board board = new Board();
         pieces.forEach(piece -> board.placePiece(piece.getPieceInfo().getPosition(), piece));
 
-        double actualScore = score.calculateScore(board, team);
+        double actualScore = Score.calculateScore(board, team);
 
         Assertions.assertThat(actualScore).isEqualTo(expectedScore);
     }
