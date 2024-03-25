@@ -12,22 +12,26 @@ public class ChessGame {
         this.board = new Board();
     }
 
-    public Map<Position, Piece> start() {
+    public void start() {
         if (notStarted()) {
             turn = Team.WHITE;
-            return board.getBoard();
+            return;
         }
         throw new IllegalArgumentException("start는 한 번만 입력될 수 있습니다.");
     }
 
-    public Map<Position, Piece> move(Position source, Position target) {
+    public void move(Position source, Position target) {
         validateMove(source, target);
         if (checkTurn(source, turn)) {
             boolean isMoved = board.movePieceAndRenewBoard(source, target);
             turn = turnChange(isMoved);
-            return board.getBoard();
+            return;
         }
         throw new IllegalArgumentException(String.format("%s의 차례입니다.", turn.name()));
+    }
+
+    public boolean isWin() {
+        return board.isKingRemoved();
     }
 
     private void validateMove(Position source, Position target) {
@@ -55,5 +59,13 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.WHITE;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board.getBoard();
+    }
+
+    public Team getTurn() {
+        return turn;
     }
 }

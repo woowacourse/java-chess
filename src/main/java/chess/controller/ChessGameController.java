@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.Position;
+import chess.domain.Team;
 import chess.domain.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -32,28 +33,39 @@ public class ChessGameController {
     private void playChess(ChessGame chessGame) {
         Command command = Command.of(InputView.inputCommand());
         while(!command.isCommand(END)) {
-            playOneTurn(chessGame, command);
+            boolean isEnd = playOneTurn(chessGame, command);
+            if (isEnd) {
+                break;
+            }
             command = Command.of(InputView.inputCommand());
         }
     }
 
-    private void playOneTurn(ChessGame chessGame, Command command) {
+    private boolean playOneTurn(ChessGame chessGame, Command command) {
+        if (command.isCommand(MOVE)) {
+            return move(chessGame, command);
+        }
         if (command.isCommand(START)) {
             start(chessGame);
-            return;
         }
-        if (command.isCommand(MOVE)) {
-            move(chessGame, command);
-        }
+        return false;
     }
 
     private void start(ChessGame chessGame) {
-        OutputView.printBoard(BoardDto.of(chessGame.start()));
+        chessGame.start();
+        OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
     }
 
-    private void move(ChessGame chessGame, Command command) {
+    private boolean move(ChessGame chessGame, Command command) {
         Position source = Position.of(command.getSource());
         Position target = Position.of(command.getTarget());
-        OutputView.printBoard(BoardDto.of(chessGame.move(source, target)));
+        Team turn = chessGame.getTurn();
+        chessGame.move(source, target);
+        OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
+        if (chessGame.isWin()) {
+            OutputView.printWinner(turn);
+            return true;
+        }
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Team;
 import chess.domain.dto.BoardDto;
 import java.util.List;
 
@@ -30,5 +31,9 @@ public class OutputView {
         System.out.printf("> 게임 시작 : start%n"
                 + "> 게임 종료 : end%n"
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
+    }
+
+    public static void printWinner(Team turn) {
+        System.out.printf("%s 진영이 승리했습니다!%n", turn.name());
     }
 }
