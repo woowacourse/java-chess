@@ -17,6 +17,7 @@ public abstract class SlidingPiece extends Piece {
         this.directions = directions;
     }
 
+    @Override
     public Set<Position> findPath(Position thisPosition, Position destination) {
         Direction direction = thisPosition.findDirectionTo(destination);
         if (!directions.contains(direction)) {
