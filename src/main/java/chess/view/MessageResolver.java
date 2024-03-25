@@ -1,29 +1,35 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.view.mapper.PieceMapper;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
+import chess.domain.position.Rank;
+import chess.view.mapper.PieceMapper;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MessageResolver {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public String resolveBoardMessage(Board board) {
-        String message = board.pieces().stream()
-                .map(this::resolvePieceMessage)
-                .collect(Collectors.joining(""));
-
-        StringBuilder result = new StringBuilder();
-
-        IntStream.range(0, message.length())
-                .mapToObj(i -> message.charAt(i) + (i % 8 == 7 ? LINE_SEPARATOR : ""))
-                .forEach(result::append);
-        return result.toString();
+        List<Piece> pieces = board.pieces();
+        return Arrays.stream(Rank.values())
+                .map(rank -> rankPieces(rank, pieces))
+                .map(this::resolvePiecesMessage)
+                .collect(Collectors.joining(LINE_SEPARATOR, "", LINE_SEPARATOR));
     }
 
-    private String resolvePieceMessage(Piece piece) {
-        return PieceMapper.toSymbol(piece);
+    private List<Piece> rankPieces(Rank rank, List<Piece> pieces) {
+        int fromIndex = rank.ordinal() * File.length();
+        int toIndex = fromIndex + File.length();
+        return pieces.subList(fromIndex, toIndex);
+    }
+
+    private String resolvePiecesMessage(List<Piece> pieces) {
+        return pieces.stream()
+                .map(PieceMapper::toText)
+                .collect(Collectors.joining(""));
     }
 }

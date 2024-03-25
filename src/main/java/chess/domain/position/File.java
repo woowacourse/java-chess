@@ -31,6 +31,10 @@ public enum File {
                 .orElseThrow();
     }
 
+    public static int length() {
+        return values().length;
+    }
+
     public int gap(File other) {
         return Math.abs(order - other.order);
     }
