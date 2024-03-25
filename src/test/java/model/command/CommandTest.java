@@ -44,4 +44,19 @@ class CommandTest {
                 Arguments.of(List.of("move"))
         );
     }
+
+    @DisplayName("각 command 의 body 사이즈를 확인한다.")
+    @ParameterizedTest
+    @MethodSource("checkBodySizeParameterProvider")
+    void checkBodySize(Command command, List<String> body) {
+        assertThat(command.isEqualToBodySize(body.size())).isTrue();
+    }
+
+    static Stream<Arguments> checkBodySizeParameterProvider() {
+        return Stream.of(
+                Arguments.of(Command.START, List.of()),
+                Arguments.of(Command.END, List.of()),
+                Arguments.of(Command.MOVE, List.of("a1", "a2"))
+        );
+    }
 }
