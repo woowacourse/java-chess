@@ -5,7 +5,7 @@ import domain.coordinate.position.Position;
 import domain.coordinate.position.Row;
 import domain.direction.Direction;
 import java.util.Objects;
-import view.util.ColumnSymbol;
+import view.translator.ColumnSymbol;
 
 public class Coordinate {
 

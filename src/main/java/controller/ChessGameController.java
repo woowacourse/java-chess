@@ -5,7 +5,7 @@ import domain.coordinate.Coordinate;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
-import view.util.Command;
+import view.command.Command;
 
 public class ChessGameController {
 

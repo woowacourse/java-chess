@@ -1,4 +1,4 @@
-package view.util;
+package view.translator;
 
 import java.util.Arrays;
 

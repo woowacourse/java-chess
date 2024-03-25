@@ -1,4 +1,4 @@
-package view.util;
+package view.translator;
 
 import domain.piece.Bishop;
 import domain.piece.Blank;

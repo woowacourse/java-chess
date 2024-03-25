@@ -1,4 +1,4 @@
-package view.util;
+package view.translator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -5,7 +5,7 @@ import domain.piece.base.ChessPiece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import view.util.PieceTranslator;
+import view.translator.PieceTranslator;
 
 public class OutputView {
 
