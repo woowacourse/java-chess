@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.Direction;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,19 @@ class MovementTest {
                 Arguments.arguments(Position.of("d4"), Position.of("g1"), Set.of(Position.of("e3"), Position.of("f2"))),
                 Arguments.arguments(Position.of("d4"), Position.of("a1"), Set.of(Position.of("c3"), Position.of("b2"))),
                 Arguments.arguments(Position.of("d4"), Position.of("e6"), Set.of(Position.of("d5"), Position.of("d6")))
+        );
+    }
+
+    static Stream<Arguments> findDirectionArguments() {
+        return Stream.of(
+                Arguments.arguments(Position.of("d4"), Position.of("d1"), Direction.DOWN),
+                Arguments.arguments(Position.of("d4"), Position.of("g4"), Direction.RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("d7"), Direction.UP),
+                Arguments.arguments(Position.of("d4"), Position.of("a4"), Direction.LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("g7"), Direction.UP_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("a7"), Direction.UP_LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("g1"), Direction.DOWN_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("a1"), Direction.DOWN_LEFT)
         );
     }
 
@@ -65,6 +79,17 @@ class MovementTest {
 
         //when & then
         assertThat(movement.isCross()).isTrue();
+    }
+
+    @DisplayName("source에서 target으로의 방향을 찾는다.")
+    @ParameterizedTest
+    @MethodSource("findDirectionArguments")
+    void findDirection(Position source, Position target, Direction expected) {
+        //given
+        Movement movement = new Movement(source, target);
+
+        //when & then
+        assertThat(movement.findDirection()).isEqualTo(expected);
     }
 
     @DisplayName("source의 rank가 주어진 rank와 동일하다.")
