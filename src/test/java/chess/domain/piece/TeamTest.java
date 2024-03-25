@@ -31,4 +31,13 @@ class TeamTest {
                 () -> assertThat(Team.BLACK.isPositionOnTeamInitialPawnRank(A7))
         );
     }
+
+    @DisplayName("팀이 주어진 경우 상태 팀을 반환할 수 있다")
+    @Test
+    void should_CheckOtherTeam_When_TeamIsGiven() {
+        assertAll(
+                () -> assertThat(Team.WHITE.otherTeam()).isEqualTo(Team.BLACK),
+                () -> assertThat(Team.BLACK.otherTeam()).isEqualTo(Team.WHITE)
+        );
+    }
 }

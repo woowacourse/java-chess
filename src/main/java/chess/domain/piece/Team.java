@@ -31,4 +31,11 @@ public enum Team {
     public boolean isTeamForwardDirectionsContains(Direction direction) {
         return forwardDirections.contains(direction);
     }
+
+    public Team otherTeam() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
