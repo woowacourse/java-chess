@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.controller.Command;
-import chess.controller.EndCommand;
-import chess.controller.MoveCommand;
-import chess.controller.StartCommand;
+import chess.controller.command.Command;
+import chess.controller.command.EndCommand;
+import chess.controller.command.MoveCommand;
+import chess.controller.command.StartCommand;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

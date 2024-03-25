@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.controller.command.Command;
 import chess.domain.ChessGame;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardCreator;
