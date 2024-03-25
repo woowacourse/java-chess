@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
-
     UPPER(0, 1),
     LOWER(0, -1),
     LEFT(-1, 0),

@@ -3,7 +3,6 @@ package chess.domain.player;
 import java.util.List;
 
 public class Players {
-
     private final List<Player> players;
     private int turn;
 

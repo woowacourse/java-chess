@@ -13,5 +13,4 @@ public class Application {
 
         controller.run();
     }
-
 }

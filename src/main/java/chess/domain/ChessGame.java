@@ -8,7 +8,6 @@ import chess.domain.player.Players;
 import java.util.Map;
 
 public class ChessGame {
-
     private final Board board;
     private final Players players;
 
