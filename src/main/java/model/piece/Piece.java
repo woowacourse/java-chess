@@ -30,4 +30,8 @@ public class Piece {
     public Role role() {
         return role;
     }
+
+    public Color color() {
+        return role.color();
+    }
 }

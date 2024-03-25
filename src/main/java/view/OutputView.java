@@ -1,8 +1,9 @@
 package view;
 
+import view.dto.PieceInfo;
+
 import java.util.Arrays;
 import java.util.List;
-import view.dto.PieceInfo;
 
 public class OutputView {
 
@@ -28,29 +29,20 @@ public class OutputView {
 
     private static void initializeChessBoard() {
         for (char[] row : chessBoard) {
-            Arrays.fill(row, ChessSymbol.getSymbolForRole("Square"));
+            Arrays.fill(row, ChessSymbol.squareAbbreviation());
         }
     }
 
     private static void placePieceOnBoard(PieceInfo pieceInfo) {
-        int row = 8 - pieceInfo.rank();
-        int column = pieceInfo.file() - 1;
-        chessBoard[row][column] = getPieceSymbol(pieceInfo);
-    }
-
-    private static char getPieceSymbol(PieceInfo pieceInfo) {
-        char symbol = ChessSymbol.getSymbolForRole(pieceInfo.role());
-        if (pieceInfo.color()
-                .equals("WHITE")) {
-            return Character.toLowerCase(symbol);
-        }
-        return symbol;
+        int rowIndex = BOARD_SIZE - pieceInfo.rank().index();
+        int columnIndex = pieceInfo.file().index() - 1;
+        chessBoard[rowIndex][columnIndex] = ChessSymbol.from(pieceInfo.roleStatus(), pieceInfo.color());
     }
 
     private static void printBoard() {
         Arrays.stream(chessBoard)
-                .map(String::valueOf)
-                .forEach(System.out::println);
+              .map(String::valueOf)
+              .forEach(System.out::println);
         System.out.println();
     }
 }

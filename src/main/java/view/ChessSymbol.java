@@ -1,33 +1,40 @@
 package view;
 
+import model.piece.Color;
+import model.piece.role.RoleStatus;
+
 import java.util.Arrays;
 
 public enum ChessSymbol {
-    KING('K'),
-    QUEEN('Q'),
-    PAWN('P'),
-    BISHOP('B'),
-    KNIGHT('N'),
-    ROOK('R'),
-    SQUARE('.');
+    KING('K', 'k'),
+    QUEEN('Q', 'q'),
+    PAWN('P', 'p'),
+    BISHOP('B', 'b'),
+    KNIGHT('N', 'n'),
+    ROOK('R', 'r'),
+    SQUARE('.', '.');
 
-    private final char abbreviation;
+    private final char blackFactionAbbreviation;
+    private final char whiteFactionAbbreviation;
 
-    ChessSymbol(char abbreviation) {
-        this.abbreviation = abbreviation;
+    ChessSymbol(char blackFactionAbbreviation, char whiteFactionAbbreviation) {
+        this.blackFactionAbbreviation = blackFactionAbbreviation;
+        this.whiteFactionAbbreviation = whiteFactionAbbreviation;
     }
 
-    public char getAbbreviation() {
-        return abbreviation;
+    public static char squareAbbreviation() {
+        return SQUARE.blackFactionAbbreviation;
     }
 
-    public static char getSymbolForRole(String role) {
-        return Arrays.stream(ChessSymbol.values())
-                .filter(piece -> piece.name()
-                .equalsIgnoreCase(role))
-                .findFirst()
-                .map(ChessSymbol::getAbbreviation)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Role을 조회하였습니다."));
+    public static char from(RoleStatus roleStatus, Color color) {
+        ChessSymbol chessSymbol = Arrays.stream(values())
+                                        .filter(symbol -> symbol.name().equals(roleStatus.name()))
+                                        .findFirst()
+                                        .orElseThrow(() -> new IllegalArgumentException("해당 Role에 대한 ChessSymbol이 존재하지 않습니다."));
+        if (color == Color.BLACK) {
+            return chessSymbol.blackFactionAbbreviation;
+        }
+        return chessSymbol.whiteFactionAbbreviation;
     }
 }
 

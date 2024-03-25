@@ -17,12 +17,14 @@ import static view.OutputView.printChessBoard;
 import static view.OutputView.printInitialGamePrompt;
 
 public class Controller {
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     public void execute() {
         GameCommand gameCommand = executeInitial();
         ChessBoard chessBoard = new ChessBoard();
         while (gameCommand != GameCommand.END) {
-            List<PieceInfo> pieceInfos = InfoMapper.toPieceInfoMapper(chessBoard);
+            List<PieceInfo> pieceInfos = InfoMapper.toPieceInfo(chessBoard);
             printChessBoard(pieceInfos);
             gameCommand = inputRetryHelper(() -> runGame(chessBoard));
         }
@@ -33,7 +35,7 @@ public class Controller {
         return inputRetryHelper(InputView::inputInitialGameCommand);
     }
 
-    private GameCommand runGame(ChessBoard chessBoard) {
+    private GameCommand runGame(final ChessBoard chessBoard) {
         GameProceedRequest gameProceedRequest = InputView.inputGameProceedCommand();
         if (gameProceedRequest.gameCommand() == GameCommand.START) {
             throw new IllegalArgumentException("이미 진행중인 게임이 존재합니다.");
@@ -44,17 +46,15 @@ public class Controller {
         return gameProceedRequest.gameCommand();
     }
 
-    private void controlChessBoard(ChessBoard chessBoard, GameProceedRequest gameProceedRequest) {
-        File sourceFile = File.from(gameProceedRequest.sourcePosition()
-                                                      .charAt(0));
-        Rank sourceRank = Rank.from(gameProceedRequest.sourcePosition()
-                                                      .charAt(1));
-        Position source = Position.of(sourceFile, sourceRank);
-        File targetFile = File.from(gameProceedRequest.targetPosition()
-                                                      .charAt(0));
-        Rank targetRank = Rank.from(gameProceedRequest.targetPosition()
-                                                      .charAt(1));
-        Position destination = Position.of(targetFile, targetRank);
+    private void controlChessBoard(final ChessBoard chessBoard, final GameProceedRequest gameProceedRequest) {
+        Position source = matchPosition(gameProceedRequest.sourcePosition().get());
+        Position destination = matchPosition(gameProceedRequest.targetPosition().get());
         chessBoard.move(source, destination);
+    }
+
+    private Position matchPosition(final String position) {
+        File sourceFile = File.from(position.charAt(FILE_INDEX));
+        Rank sourceRank = Rank.from(position.charAt(RANK_INDEX));
+        return Position.of(sourceFile, sourceRank);
     }
 }
