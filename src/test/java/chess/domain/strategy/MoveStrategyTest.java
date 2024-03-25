@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import chess.domain.color.Color;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.domain.BlankBoard;
 import chess.domain.piece.pawn.WhiteFirstPawn;
 import java.util.Collection;

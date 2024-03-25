@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.blank.Blank;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.nonsliding.Knight;

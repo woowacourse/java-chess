@@ -3,7 +3,8 @@ package chess.domain.piece.nonsliding;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.strategy.GeneralMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 import java.util.Map;
@@ -18,10 +19,12 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     @Override
-    public Set<Position> findPath(Position thisPosition, Position destination) {
-        Set<Position> movable = thisPosition.findMovablePositions(directions);
+    public Set<Position> findPath(Positions positions) {
+        Position from = positions.from();
+        Position to = positions.to();
+        Set<Position> movable = from.findMovablePositions(directions);
 
-        if (!movable.contains(destination)) {
+        if (!movable.contains(to)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
         return Set.of();

@@ -1,5 +1,6 @@
-package chess.domain.piece;
+package chess.domain.position;
 
+import chess.domain.piece.Direction;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

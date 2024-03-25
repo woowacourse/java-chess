@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.color.Color;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,9 @@ class WhiteFirstPawnTest {
     void checkIsCaptureMove() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn();
         assertAll(
-                () -> assertThat(whiteFirstPawn.isCaptureMove(new Position(2, 2), new Position(1, 3))).isTrue(),
-                () -> assertThat(whiteFirstPawn.isCaptureMove(new Position(2, 2), new Position(2, 3))).isFalse(),
-                () -> assertThat(whiteFirstPawn.isCaptureMove(new Position(2, 2), new Position(3, 3))).isTrue()
+                () -> assertThat(whiteFirstPawn.isCaptureMove(new Positions(new Position(2, 2), new Position(1, 3)))).isTrue(),
+                () -> assertThat(whiteFirstPawn.isCaptureMove(new Positions(new Position(2, 2), new Position(2, 3)))).isFalse(),
+                () -> assertThat(whiteFirstPawn.isCaptureMove(new Positions(new Position(2, 2), new Position(3, 3)))).isTrue()
         );
     }
 
@@ -27,9 +28,10 @@ class WhiteFirstPawnTest {
     @DisplayName("(2, 2) -> (2, 4)로 이동하려고 할 때 중간 경로를 찾는다.")
     void findPathToUpUp() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn();
+        Position departure = new Position(2, 2);
         Position destination = new Position(2, 4);
 
-        assertThat(whiteFirstPawn.findPath(new Position(2, 2), destination)).containsExactly(new Position(2, 3));
+        assertThat(whiteFirstPawn.findPath(new Positions(departure, destination))).containsExactly(new Position(2, 3));
     }
 
     @Test
@@ -39,10 +41,10 @@ class WhiteFirstPawnTest {
 
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whiteFirstPawn.findPath(new Position(2, 2), new Position(1, 2)))
+                        .isThrownBy(() -> whiteFirstPawn.findPath(new Positions(new Position(2, 2), new Position(1, 2))))
                         .withMessage("이동할 수 없습니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> whiteFirstPawn.findPath(new Position(2, 2), new Position(3, 2)))
+                        .isThrownBy(() -> whiteFirstPawn.findPath(new Positions(new Position(2, 2), new Position(1, 2))))
                         .withMessage("이동할 수 없습니다.")
         );
     }
@@ -51,10 +53,11 @@ class WhiteFirstPawnTest {
     @DisplayName("(2, 2)일 때 (2, 1)로는 이동할 수 없다.")
     void findPathToInvalidDestinationDown() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn();
+        Position departure = new Position(2, 2);
         Position destination = new Position(2, 1);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whiteFirstPawn.findPath(new Position(2, 2), destination))
+                .isThrownBy(() -> whiteFirstPawn.findPath(new Positions(departure, destination)))
                 .withMessage("이동할 수 없습니다.");
     }
 
@@ -62,10 +65,11 @@ class WhiteFirstPawnTest {
     @DisplayName("(2, 2)일 때 (2, 5)로는 이동할 수 없다.")
     void findPathToInvalidFarDestination() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn();
+        Position departure = new Position(2, 2);
         Position destination = new Position(2, 5);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> whiteFirstPawn.findPath(new Position(2, 2), destination))
+                .isThrownBy(() -> whiteFirstPawn.findPath(new Positions(departure, destination)))
                 .withMessage("이동할 수 없습니다.");
     }
 

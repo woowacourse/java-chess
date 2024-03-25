@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.color.Color;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ class BishopTest {
     @DisplayName("대각선 이동시 중간경로를 찾는다.")
     void findPathToDiagonal() {
         Bishop bishop = new Bishop(Color.WHITE);
-        Set<Position> path = bishop.findPath(new Position(1, 1), new Position(4, 4));
+        Set<Position> path = bishop.findPath(new Positions(new Position(1, 1), new Position(4, 4)));
         assertThat(path)
                 .containsExactlyInAnyOrder(new Position(2, 2), new Position(3, 3));
     }
@@ -25,7 +26,7 @@ class BishopTest {
     void findPathToInvalidDestination() {
         Bishop bishop = new Bishop(Color.WHITE);
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> bishop.findPath(new Position(1, 1), new Position(2, 1)))
+                .isThrownBy(() -> bishop.findPath(new Positions(new Position(1, 1), new Position(2, 1))))
                 .withMessage("이동할 수 없습니다.");
     }
 }

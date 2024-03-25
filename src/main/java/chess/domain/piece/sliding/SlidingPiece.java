@@ -3,7 +3,8 @@ package chess.domain.piece.sliding;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.strategy.GeneralMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 import java.util.Map;
@@ -18,12 +19,14 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public Set<Position> findPath(Position thisPosition, Position destination) {
-        Direction direction = thisPosition.findDirectionTo(destination);
+    public Set<Position> findPath(Positions positions) {
+        Position from = positions.from();
+        Position to = positions.to();
+        Direction direction = from.findDirectionTo(to);
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return thisPosition.findCourses(direction, destination);
+        return from.findCourses(direction, to);
     }
     @Override
     public boolean isBlank() {

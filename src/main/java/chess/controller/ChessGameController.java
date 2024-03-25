@@ -2,10 +2,9 @@ package chess.controller;
 
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
-import chess.domain.piece.Position;
+import chess.domain.position.Positions;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -73,26 +72,17 @@ public class ChessGameController {
 
     private void movePiece(ChessGame chessGame, String command) {
         try {
-            List<Position> positions = readPositions(command);
-            chessGame.move(positions.get(0), positions.get(1));
+            Positions positions = readPositions(command);
+            chessGame.move(positions);
             outputView.printBoard(chessGame.collectBoard());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private List<Position> readPositions(String command) {
-        List<Position> positions = new ArrayList<>();
+    private Positions readPositions(String command) {
         List<String> rawPositions = parseDepartureDestination(command);
-        positions.add(parsePosition(rawPositions.get(0)));
-        positions.add(parsePosition(rawPositions.get(1)));
-        return positions;
-    }
-
-    private Position parsePosition(String rawPosition) {
-        int departureColumn = File.findFile(String.valueOf(rawPosition.charAt(0)));
-        int departureRank = Rank.findRank(String.valueOf(rawPosition.charAt(1)));
-        return new Position(departureColumn, departureRank);
+        return new Positions(rawPositions);
     }
 
     private List<String> parseDepartureDestination(String command) {

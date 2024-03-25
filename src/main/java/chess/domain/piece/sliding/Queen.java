@@ -3,7 +3,6 @@ package chess.domain.piece.sliding;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
 import java.util.Set;
 
 public class Queen extends SlidingPiece {

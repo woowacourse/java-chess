@@ -5,7 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import chess.domain.BoardFactory;
 import chess.domain.color.Color;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class BlankMoveStrategyTest {
         BlankMoveStrategy blankStrategy = new BlankMoveStrategy(new BoardFactory().getInitialBoard());
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> blankStrategy.move(Color.WHITE, new Position(1, 1), new Position(1, 2)))
+                .isThrownBy(() -> blankStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(1, 2))))
                 .withMessage("이동할 수 있는 말이 없습니다.");
     }
 }

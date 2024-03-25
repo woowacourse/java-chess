@@ -3,7 +3,8 @@ package chess.domain.piece.blank;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.strategy.BlankMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public Set<Position> findPath(Position thisPosition, Position destination) {
+    public Set<Position> findPath(Positions positions) {
         throw new UnsupportedOperationException("해당 위치에 말이 없습니다.");
     }
 

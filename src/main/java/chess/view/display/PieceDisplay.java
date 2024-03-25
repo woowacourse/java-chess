@@ -1,7 +1,7 @@
 package chess.view.display;
 
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

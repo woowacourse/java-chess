@@ -8,13 +8,14 @@ import chess.domain.BlankBoard;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.nonsliding.Knight;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.sliding.Bishop;
 import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
+import chess.domain.position.Positions;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Queen(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
         assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_QUEEN);
@@ -50,7 +51,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Bishop(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
         assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_BISHOP);
@@ -64,7 +65,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Rook(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
         assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_ROOK);
@@ -78,7 +79,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Knight(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
         assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_KNIGHT);
@@ -92,7 +93,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new King(Color.WHITE)
         ));
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(x, y));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
         assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_KING);
@@ -108,7 +109,7 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 1)))
+                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
                 .withMessage("이동할 수 없는 경로 입니다.");
     }
 
@@ -122,7 +123,7 @@ class GeneralMoveStrategyTest {
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 1)))
+                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
                 .withMessage("이동할 수 없는 경로 입니다.");
     }
 
@@ -134,7 +135,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 1), new King(Color.BLACK))
         );
         GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 1));
+        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1)));
 
         Assertions.assertAll(
                 () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 1))).isEqualTo(
@@ -176,7 +177,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("비숍은 오른쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(1, 1), new Position(4, 4));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(4, 4)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.WHITE_BISHOP),
@@ -195,7 +196,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 }), dynamicTest("비숍은 왼쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(1, 7));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(1, 7)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 7))).isEqualTo(
                                     PieceType.WHITE_BISHOP),
@@ -240,7 +241,7 @@ class GeneralMoveStrategyTest {
                 . P . . . . . P
                 */
                 dynamicTest("룩은 위쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(1, 1), new Position(1, 8));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(1, 8)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 8))).isEqualTo(
                                     PieceType.WHITE_ROOK),
@@ -259,7 +260,7 @@ class GeneralMoveStrategyTest {
                 . P . . . . . P
                 */
                 dynamicTest("룩은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(1, 8), new Position(8, 8));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 8), new Position(8, 8)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 8))).isEqualTo(
                                     PieceType.WHITE_ROOK),
@@ -278,7 +279,7 @@ class GeneralMoveStrategyTest {
                 . P . . . . . r
                 */
                 dynamicTest("룩은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(8, 8), new Position(8, 1));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 8), new Position(8, 1)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 1))).isEqualTo(
                                     PieceType.WHITE_ROOK),
@@ -297,7 +298,7 @@ class GeneralMoveStrategyTest {
                 . r . . . . . .
                 */
                 dynamicTest("룩은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(8, 1), new Position(2, 1));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 1), new Position(2, 1)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 1))).isEqualTo(
                                     PieceType.WHITE_ROOK),
@@ -346,7 +347,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 2), new Position(7, 4));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 4)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 4))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -365,7 +366,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(7, 4), new Position(7, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 4), new Position(7, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 5))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -384,7 +385,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 왼쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(7, 5), new Position(6, 6));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 5), new Position(6, 6)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 6))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -403,7 +404,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(6, 6), new Position(5, 6));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 6), new Position(5, 6)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -423,7 +424,7 @@ class GeneralMoveStrategyTest {
                 */
                 dynamicTest("퀸은 왼쪽 대각선 아래 상대 말을 잡고 이동할 수 있다.", () -> {
 
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 6), new Position(4, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -442,7 +443,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 5), new Position(4, 4));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 5), new Position(4, 4)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -461,7 +462,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 대각선 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(5, 3));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -480,7 +481,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 3), new Position(7, 3));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(7, 3)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
@@ -530,7 +531,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 오른쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 2), new Position(7, 3));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 3)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -549,7 +550,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(7, 3), new Position(8, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 3), new Position(8, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 5))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -568,7 +569,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(8, 5), new Position(7, 7));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 5), new Position(7, 7)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 7))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -587,7 +588,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(7, 7), new Position(5, 8));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 7), new Position(5, 8)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 8))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -606,7 +607,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 8), new Position(2, 7));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 8), new Position(2, 7)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 7))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -625,7 +626,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 아래쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(2, 7), new Position(1, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 7), new Position(1, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 5))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -644,7 +645,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 아래로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(1, 5), new Position(2, 3));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 5), new Position(2, 3)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 3))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -663,7 +664,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 오른쪽로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(2, 3), new Position(4, 2));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 3), new Position(4, 2)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 2))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
@@ -711,7 +712,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(5, 3));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -730,7 +731,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 3), new Position(6, 4));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(6, 4)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 4))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -749,7 +750,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(6, 4), new Position(6, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 4), new Position(6, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 5))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -768,7 +769,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 위 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(6, 5), new Position(5, 6));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 5), new Position(5, 6)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -787,7 +788,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(5, 6), new Position(4, 6));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 6)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 6))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -806,7 +807,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 아래 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(4, 6), new Position(3, 5));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 6), new Position(3, 5)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(3, 5))).isEqualTo(
                                     PieceType.WHITE_KING),
@@ -825,7 +826,7 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 아래 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Position(3, 5), new Position(3, 4));
+                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(3, 5), new Position(3, 4)));
                     Assertions.assertAll(
                             () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(3, 4))).isEqualTo(
                                     PieceType.WHITE_KING),

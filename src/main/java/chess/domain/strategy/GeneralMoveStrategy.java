@@ -2,8 +2,9 @@ package chess.domain.strategy;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.blank.Blank;
+import chess.domain.position.Positions;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,13 +15,13 @@ public class GeneralMoveStrategy extends MoveStrategy {
     }
 
     @Override
-    public void move(Color turnColor, Position from, Position to) {
-        Piece currentPiece = board.get(from);
+    public void move(Color turnColor, Positions positions) {
+        Piece currentPiece = board.get(positions.from());
         checkTurnOf(currentPiece, turnColor);
-        Piece destinationPiece = board.get(to);
-        Set<Position> pathToDestination = currentPiece.findPath(from, to);
+        Piece destinationPiece = board.get(positions.to());
+        Set<Position> pathToDestination = currentPiece.findPath(positions);
         validateMovable(turnColor, pathToDestination, destinationPiece);
-        updateBoard(from, to, currentPiece);
+        updateBoard(positions, currentPiece);
     }
 
     private void validateMovable(Color turnColor, Set<Position> pathToDestination, Piece destinationPiece) {
@@ -32,8 +33,8 @@ public class GeneralMoveStrategy extends MoveStrategy {
         }
     }
 
-    public void updateBoard(Position from, Position to, Piece currentPiece) {
-        board.replace(to, currentPiece);
-        board.replace(from, new Blank());
+    public void updateBoard(Positions positions, Piece currentPiece) {
+        board.replace(positions.to(), currentPiece);
+        board.replace(positions.from(), new Blank());
     }
 }

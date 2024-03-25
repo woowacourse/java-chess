@@ -10,11 +10,12 @@ import chess.domain.BoardFactory;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.pawn.BlackFirstPawn;
 import chess.domain.piece.pawn.BlackPawn;
 import chess.domain.piece.pawn.WhiteFirstPawn;
 import chess.domain.piece.pawn.WhitePawn;
+import chess.domain.position.Positions;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(new BoardFactory().getInitialBoard());
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> pawnMoveStrategy.move(Color.BLACK, new Position(2, 2), new Position(2, 3)))
+                .isThrownBy(() -> pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(2, 2), new Position(2, 3))))
                 .withMessage("상대 말은 이동할 수 없습니다.");
     }
 
@@ -40,7 +41,7 @@ class PawnMoveStrategyTest {
     @DisplayName("처음에는 두 칸 이동할 수 있다.")
     void moveByUpUp() {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(new BoardFactory().getInitialBoard());
-        pawnMoveStrategy.move(Color.WHITE, new Position(2, 2), new Position(2, 4));
+        pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 2), new Position(2, 4)));
 
         assertAll(
                 () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(2, 4))).isEqualTo(
@@ -55,10 +56,10 @@ class PawnMoveStrategyTest {
         PawnMoveStrategy pawnMoveStrategy = new PawnMoveStrategy(new BoardFactory().getInitialBoard());
         assertAll(
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawnMoveStrategy.move(Color.WHITE, new Position(2, 2), new Position(3, 3)))
+                        .isThrownBy(() -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 2), new Position(3, 3))))
                         .withMessage("이동 할 수 없는 위치입니다."),
                 () -> assertThatIllegalArgumentException()
-                        .isThrownBy(() -> pawnMoveStrategy.move(Color.WHITE, new Position(2, 2), new Position(1, 3)))
+                        .isThrownBy(() -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 2), new Position(1, 3))))
                         .withMessage("이동 할 수 없는 위치입니다.")
         );
     }
@@ -96,7 +97,7 @@ class PawnMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("폰은 가로막혀 있지 않으면 처음에 앞으로 두 칸 갈 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.WHITE, new Position(4, 2), new Position(4, 4));
+                    pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 2), new Position(4, 4)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.WHITE_PAWN),
@@ -117,7 +118,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("한번이라도 움직인 폰은 앞으로 두 칸 갈 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 6)))
+                                    () -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 6))))
                             .withMessage("이동할 수 없습니다.");
                 }),
                 /*
@@ -131,7 +132,7 @@ class PawnMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("폰은 가로막혀 있지 않으면 앞으로 한 칸 갈 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.WHITE, new Position(4, 4), new Position(4, 5));
+                    pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 5)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
                                     PieceType.WHITE_PAWN),
@@ -152,7 +153,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 오른쪽 위 대각선에 상대 말이 없으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.WHITE, new Position(4, 5), new Position(5, 6)))
+                                    () -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 5), new Position(5, 6))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 }),
                 /*
@@ -166,7 +167,7 @@ class PawnMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("폰은 왼쪽 위에 상대 말을 잡고 이동할 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.WHITE, new Position(4, 5), new Position(3, 6));
+                    pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 5), new Position(3, 6)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(3, 6))).isEqualTo(
                                     PieceType.WHITE_PAWN),
@@ -187,7 +188,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 오른쪽 위 대각선에 상대 말이 없으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.WHITE, new Position(3, 6), new Position(2, 7)))
+                                    () -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(3, 6), new Position(2, 7))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 }),
                 /*
@@ -201,7 +202,7 @@ class PawnMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("폰은 오른쪽 위에 상대 말을 잡고 이동할 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.WHITE, new Position(3, 6), new Position(4, 7));
+                    pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(3, 6), new Position(4, 7)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 7))).isEqualTo(
                                     PieceType.WHITE_PAWN),
@@ -222,7 +223,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 한 칸 앞에 상대 말이 있으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.WHITE, new Position(4, 7), new Position(4, 8)))
+                                    () -> pawnMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 7), new Position(4, 8))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 })
         );
@@ -261,7 +262,7 @@ class PawnMoveStrategyTest {
                 . . . p . . . .
                 */
                 dynamicTest("폰은 가로막혀 있지 않으면 처음에 아래로 두 칸 갈 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.BLACK, new Position(4, 7), new Position(4, 5));
+                    pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 7), new Position(4, 5)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
                                     PieceType.BLACK_PAWN),
@@ -282,8 +283,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("한번이라도 움직인 폰은 아래로 두 칸 갈 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.BLACK, new Position(4, 5),
-                                            new Position(4, 3)))
+                                    () -> pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 5), new Position(4, 3))))
                             .withMessage("이동할 수 없습니다.");
                 }),
                 /*
@@ -297,7 +297,7 @@ class PawnMoveStrategyTest {
                 . . . p . . . .
                 */
                 dynamicTest("폰은 가로막혀 있지 않으면 아래로 한 칸 갈 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.BLACK, new Position(4, 5), new Position(4, 4));
+                    pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 5), new Position(4, 4)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.BLACK_PAWN),
@@ -318,8 +318,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 오른쪽 아래 대각선에 상대 말이 없으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.BLACK, new Position(4, 4),
-                                            new Position(5, 3)))
+                                    () -> pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 4), new Position(5, 3))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 }),
                 /*
@@ -333,7 +332,7 @@ class PawnMoveStrategyTest {
                 . . . p . . . .
                 */
                 dynamicTest("폰은 왼쪽 아래에 상대 말을 잡고 이동할 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.BLACK, new Position(4, 4), new Position(3, 3));
+                    pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 4), new Position(3, 3)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(3, 3))).isEqualTo(
                                     PieceType.BLACK_PAWN),
@@ -354,8 +353,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 왼쪽 아래 대각선에 상대 말이 없으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.BLACK, new Position(3, 3),
-                                            new Position(2, 2)))
+                                    () -> pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(3, 3), new Position(2, 2))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 }),
                 /*
@@ -369,7 +367,7 @@ class PawnMoveStrategyTest {
                 . . . p . . . .
                 */
                 dynamicTest("폰은 오른쪽 아래에 상대 말을 잡고 이동할 수 있다.", () -> {
-                    pawnMoveStrategy.move(Color.BLACK, new Position(3, 3), new Position(4, 2));
+                    pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(3, 3), new Position(4, 2)));
                     Assertions.assertAll(
                             () -> assertThat(pawnMoveStrategy.collectBoard().get(new Position(4, 2))).isEqualTo(
                                     PieceType.BLACK_PAWN),
@@ -390,8 +388,7 @@ class PawnMoveStrategyTest {
                 dynamicTest("폰은 한 칸 앞에 상대 말이 있으면 이동할 수 없다.", () -> {
                     assertThatIllegalArgumentException()
                             .isThrownBy(
-                                    () -> pawnMoveStrategy.move(Color.BLACK, new Position(4, 2),
-                                            new Position(4, 1)))
+                                    () -> pawnMoveStrategy.move(Color.BLACK, new Positions(new Position(4, 2), new Position(4, 1))))
                             .withMessage("이동 할 수 없는 위치입니다.");
                 })
         );

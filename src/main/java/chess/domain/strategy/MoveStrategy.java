@@ -3,7 +3,8 @@ package chess.domain.strategy;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +17,7 @@ public abstract class MoveStrategy {
         this.board = new HashMap<>(board);
     }
 
-    public abstract void move(Color turnColor, Position from, Position to);
+    public abstract void move(Color turnColor, Positions positions);
 
     public MoveStrategy changeStrategy(Position from) {
         Piece selectedPiece = board.get(from);

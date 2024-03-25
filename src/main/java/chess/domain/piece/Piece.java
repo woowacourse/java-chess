@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.color.Color;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
 import chess.domain.strategy.MoveStrategy;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +14,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract Set<Position> findPath(Position thisPosition, Position destination);
+    public abstract Set<Position> findPath(Positions positions);
 
     public abstract MoveStrategy strategy(Map<Position, Piece> board);
 
