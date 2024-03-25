@@ -24,7 +24,7 @@ public abstract class Piece {
         return !isSameTeam(otherPiece);
     }
 
-    public boolean isOtherTeam(Team team){
+    public boolean isOtherTeam(Team team) {
         return this.team != team;
     }
 }

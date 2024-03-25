@@ -42,7 +42,7 @@ class ChessGameTest {
      */
     @DisplayName("턴이 아닌 팀의 기물을 움직일 수 없다")
     @Test
-    void should_ThrowIllegalArgumentException_When_MovePiece_Which_NotBelongTurnTeam(){
+    void should_ThrowIllegalArgumentException_When_MovePiece_Which_NotBelongTurnTeam() {
         ChessGame game = ChessGame.newGame();
         assertThatThrownBy(() -> game.playTurn(B8, C6))
                 .isInstanceOf(IllegalArgumentException.class)

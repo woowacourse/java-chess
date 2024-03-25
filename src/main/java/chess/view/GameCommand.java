@@ -1,7 +1,6 @@
 package chess.view;
 
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 public enum GameCommand {
     START("start"),
@@ -20,7 +19,7 @@ public enum GameCommand {
         return Arrays.stream(values())
                 .filter(command -> command.commandStartsWithCode(input))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(input+ "은 존재하지 않는 커멘드 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(input + "은 존재하지 않는 커멘드 입니다."));
     }
 
     private boolean commandStartsWithCode(String input) {
