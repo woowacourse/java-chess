@@ -22,7 +22,7 @@ public enum Rank {
         return Arrays.stream(values())
                 .filter(rank -> rank.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("랭크는 1에서 8 사이의 숫자이어야 합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("Rank는 1에서 8 사이의 숫자이어야 합니다."));
     }
 
     public boolean canMove(int diff) {

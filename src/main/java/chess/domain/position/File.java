@@ -22,7 +22,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("파일은 1에서 8 사이의 숫자이어야 합니다."));
+                .orElseThrow(() -> new IllegalArgumentException("File은 1에서 8 사이의 숫자이어야 합니다."));
     }
 
     public boolean canMove(int diff) {
