@@ -26,7 +26,7 @@ class ChessBoardTest {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of(File.A, Rank.ONE);
         positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         List<Piece> allPieces = chessBoard.findAllPieces();
 
@@ -68,8 +68,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, King.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.TWO);
         positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
@@ -84,8 +83,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, King.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.THREE);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
@@ -102,7 +100,7 @@ class ChessBoardTest {
         positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.THREE);
         positionPiece.put(targetPosition, EmptyPiece.of());
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -119,8 +117,7 @@ class ChessBoardTest {
         positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.B, Rank.THREE);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
@@ -134,8 +131,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, Rook.of(Color.BLACK));
         Position targetPosition = Position.of(File.C, Rank.THREE);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
@@ -153,8 +149,8 @@ class ChessBoardTest {
         Rook targetPiece = Rook.of(Color.WHITE);
         positionPiece.put(targetPosition, targetPiece);
         positionPiece.put(Position.of(File.A, Rank.TWO), EmptyPiece.of());
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
         chessBoard.move(sourcePosition, targetPosition);
 
         Piece pieceAtTargetPosition = chessBoard.findPieceByPosition(targetPosition);
@@ -169,8 +165,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.EIGHT);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
@@ -181,13 +176,12 @@ class ChessBoardTest {
     void pawnCanMoveTwiceIfFirstMove() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of(File.A, Rank.TWO);
-        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
         Position blankPosition = Position.of(File.A, Rank.THREE);
         positionPiece.put(blankPosition, EmptyPiece.of());
         Position targetPosition = Position.of(File.A, Rank.FOUR);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
@@ -201,8 +195,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.B, Rank.THREE);
         positionPiece.put(targetPosition, Pawn.of(Color.WHITE));
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
@@ -216,8 +209,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.FIVE);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -232,8 +224,7 @@ class ChessBoardTest {
         positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.B, Rank.FOUR);
         positionPiece.put(targetPosition, EmptyPiece.of());
-
-        ChessBoard chessBoard = new ChessBoard(positionPiece);
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)

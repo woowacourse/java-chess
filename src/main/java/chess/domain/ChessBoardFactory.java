@@ -18,7 +18,7 @@ public class ChessBoardFactory {
         chessBoard.putAll(makeWhitePawns());
         chessBoard.putAll(makeWhitePiecesExceptPawn());
 
-        return new ChessBoard(chessBoard);
+        return new ChessBoard(chessBoard, new PawnMovementRule());
     }
 
     private static Map<Position, Piece> makeBlackPiecesExceptPawn() {
