@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
-import chess.domain.Command;
 import chess.domain.point.File;
 import chess.domain.point.Point;
 import chess.domain.point.Rank;
@@ -10,6 +9,12 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+
+    private static final String COMMAND_END = "end";
+    public static final int DEPARTURE_INDEX = 1;
+    public static final int DESTINATION_INDEX = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -20,24 +25,35 @@ public class ChessController {
     }
 
     public void run() {
-        outputView.printGameStart();
+        startGame();
+        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
+        runGame(game);
+    }
 
-        ChessGame game = new ChessGame(BoardFactory.createEmptyBoard());
+    private void startGame() {
+        outputView.printGameStart();
         while (true) {
             try {
-                String readCommand = inputView.readCommand();
-                Command command = Command.from(readCommand);
-                if (command.isEnd()) {
-                    break;
-                }
-                if (Command.START == command) {
-                    game = new ChessGame(BoardFactory.createInitialChessBoard());
-                }
-                if (Command.MOVE == command) {
-                    pieceMove(readCommand, game);
-                }
+                inputView.readStart();
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private void runGame(ChessGame game) {
+        while (true) {
+            try {
                 outputView.printBoard(game.getBoard());
-            } catch (Exception e) {
+
+                String readCommand = inputView.readCommand();
+                if (COMMAND_END.equals(readCommand)) {
+                    outputView.printGameEnd();
+                    return;
+                }
+                pieceMove(readCommand, game);
+            } catch (RuntimeException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
@@ -48,8 +64,8 @@ public class ChessController {
         Point destination;
         try {
             String[] splitCommand = readCommand.split(" ");
-            departure = parsePoint(splitCommand[1]);
-            destination = parsePoint(splitCommand[2]);
+            departure = parsePoint(splitCommand[DEPARTURE_INDEX]);
+            destination = parsePoint(splitCommand[DESTINATION_INDEX]);
         } catch (Exception e) {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
         }
@@ -57,8 +73,8 @@ public class ChessController {
     }
 
     private Point parsePoint(String splitedCommand) {
-        File file = File.of(splitedCommand.charAt(0));
-        Rank rank = Rank.of(Integer.parseInt(String.valueOf(splitedCommand.charAt(1))));
+        File file = File.of(splitedCommand.charAt(FILE_INDEX));
+        Rank rank = Rank.of(Integer.parseInt(String.valueOf(splitedCommand.charAt(RANK_INDEX))));
         return Point.of(file, rank);
     }
 }

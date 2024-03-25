@@ -35,4 +35,8 @@ public class OutputView {
     public void printErrorMessage(String errorMessage) {
         System.out.printf("%s %s%n", ERROR_SUFFIX, errorMessage);
     }
+
+    public void printGameEnd() {
+        System.out.println("게임이 종료되었습니다.");
+    }
 }
