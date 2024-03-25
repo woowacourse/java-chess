@@ -1,7 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class ChessBoard {
 
         Position nextPosition = source.moveTowardDirection(direction);
 
-        while (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) == null) {
+        while (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) == EmptyPiece.of()) {
             nextPosition = nextPosition.moveTowardDirection(direction);
         }
 

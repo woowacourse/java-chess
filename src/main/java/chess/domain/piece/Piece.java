@@ -19,10 +19,6 @@ public abstract class Piece {
     }
 
     final public boolean isAlly(Piece piece) {
-        if (piece == null) {
-            return false;
-        }
-
         return this.color == piece.color;
     }
 }

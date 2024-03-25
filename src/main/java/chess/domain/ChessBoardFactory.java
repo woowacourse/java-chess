@@ -59,7 +59,7 @@ public class ChessBoardFactory {
         Map<Position, Piece> blankPieces = new LinkedHashMap<>();
         File[] files = File.values();
         for (File file : files) {
-            blankPieces.put(Position.of(file, rank), null);
+            blankPieces.put(Position.of(file, rank), EmptyPiece.of());
         }
 
         return blankPieces;

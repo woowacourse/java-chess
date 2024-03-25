@@ -30,7 +30,7 @@ class ChessBoardTest {
 
         List<Piece> allPieces = chessBoard.findAllPieces();
 
-        assertThat(allPieces.size()).isEqualTo(1);
+        assertThat(allPieces).hasSize(1);
     }
 
     @Test
@@ -83,7 +83,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of(File.A, Rank.ONE);
         positionPiece.put(sourcePosition, King.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.THREE);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, EmptyPiece.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -101,7 +101,7 @@ class ChessBoardTest {
         Position obstaclePosition = Position.of(File.A, Rank.TWO);
         positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of(File.B, Rank.THREE);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, EmptyPiece.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -116,7 +116,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of(File.A, Rank.ONE);
         positionPiece.put(sourcePosition, Rook.of(Color.BLACK));
         Position targetPosition = Position.of(File.C, Rank.THREE);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, EmptyPiece.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -135,8 +135,7 @@ class ChessBoardTest {
         Position targetPosition = Position.of(File.A, Rank.THREE);
         Rook targetPiece = Rook.of(Color.WHITE);
         positionPiece.put(targetPosition, targetPiece);
-
-        positionPiece.put(Position.of(File.A, Rank.TWO), null);
+        positionPiece.put(Position.of(File.A, Rank.TWO), EmptyPiece.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
         chessBoard.move(sourcePosition, targetPosition);
@@ -149,10 +148,10 @@ class ChessBoardTest {
     @DisplayName("체스판의 모서리까지 이동할 수 있다.")
     void fromEdgeToEdge() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
-        Position sourcePosition = Position.of(File.A, Rank.ONE);
+        Position sourcePosition = Position.of(File.A, Rank.SEVEN);
         positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
         Position targetPosition = Position.of(File.A, Rank.EIGHT);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, EmptyPiece.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
