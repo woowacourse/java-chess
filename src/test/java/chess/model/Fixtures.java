@@ -3,7 +3,7 @@ package chess.model;
 import static java.util.stream.Collectors.toMap;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
+import chess.model.piece.None;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.List;
@@ -97,7 +97,7 @@ public class Fixtures {
             H1, H2, H3, H4, H5, H6, H7, H8
         );
         return positions.stream()
-            .collect(toMap(position -> position, position -> Piece.of(Type.NONE, Color.NONE)));
+            .collect(toMap(position -> position, position -> new None(Color.NONE)));
     }
 
     private Fixtures() {

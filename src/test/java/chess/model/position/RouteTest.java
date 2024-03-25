@@ -8,10 +8,9 @@ import static chess.model.Fixtures.D6;
 import static chess.model.Fixtures.E7;
 import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.material.Color.BLACK;
-import static chess.model.material.Type.PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.model.piece.Piece;
+import chess.model.piece.Pawn;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ class RouteTest {
     @DisplayName("경로가 막혀있으면 false를 반환한다")
     @Test
     void routeIsBlocked() {
-        EMPTY_PIECES.put(C5, Piece.of(PAWN, BLACK));
+        EMPTY_PIECES.put(C5, new Pawn(BLACK));
         Route route = Route.of(A3, E7);
         assertThat(route.isBlocked(EMPTY_PIECES)).isTrue();
     }

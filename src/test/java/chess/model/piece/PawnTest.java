@@ -20,7 +20,6 @@ import static chess.model.Fixtures.H6;
 import static chess.model.Fixtures.initiation;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
-import static chess.model.material.Type.KNIGHT;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -139,10 +138,10 @@ class PawnTest {
     void pawnCanAttackMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
-        EMPTY_PIECES.put(B4, Piece.of(KNIGHT, BLACK));
-        EMPTY_PIECES.put(D4, Piece.of(KNIGHT, BLACK));
-        EMPTY_PIECES.put(F6, Piece.of(KNIGHT, WHITE));
-        EMPTY_PIECES.put(H6, Piece.of(KNIGHT, WHITE));
+        EMPTY_PIECES.put(B4, new Knight(BLACK));
+        EMPTY_PIECES.put(D4, new Knight(BLACK));
+        EMPTY_PIECES.put(F6, new Knight(WHITE));
+        EMPTY_PIECES.put(H6, new Knight(WHITE));
 
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
@@ -173,8 +172,8 @@ class PawnTest {
     void pawnCanNotAttackMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
         EMPTY_PIECES.put(source, piece);
-        EMPTY_PIECES.put(D2, Piece.of(KNIGHT, BLACK));
-        EMPTY_PIECES.put(G6, Piece.of(KNIGHT, WHITE));
+        EMPTY_PIECES.put(D2, new Knight(BLACK));
+        EMPTY_PIECES.put(G6, new Knight(WHITE));
 
         assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
             .isInstanceOf(IllegalArgumentException.class)

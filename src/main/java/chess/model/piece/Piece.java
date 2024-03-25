@@ -3,7 +3,6 @@ package chess.model.piece;
 import static chess.model.material.Color.NONE;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.position.Position;
 import chess.model.position.Route;
 import java.util.Map;
@@ -14,28 +13,6 @@ public abstract class Piece implements MoveStrategy {
 
     protected Piece(Color color) {
         this.color = color;
-    }
-
-    public static Piece of(Type type, Color color) {
-        if (Type.PAWN.equals(type)) {
-            return new Pawn(color);
-        }
-        if (Type.ROOK.equals(type)) {
-            return new Rook(color);
-        }
-        if (Type.KNIGHT.equals(type)) {
-            return new Knight(color);
-        }
-        if (Type.BISHOP.equals(type)) {
-            return new Bishop(color);
-        }
-        if (Type.QUEEN.equals(type)) {
-            return new Queen(color);
-        }
-        if (Type.KING.equals(type)) {
-            return new King(color);
-        }
-        return new None(NONE);
     }
 
     protected void validateRoute(Position source, Position target, Map<Position, Piece> pieces) {

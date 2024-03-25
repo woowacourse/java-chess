@@ -2,28 +2,38 @@ package chess.dto;
 
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.piece.Bishop;
+import chess.model.piece.King;
+import chess.model.piece.Knight;
+import chess.model.piece.None;
+import chess.model.piece.Pawn;
 import chess.model.piece.Piece;
+import chess.model.piece.Queen;
+import chess.model.piece.Rook;
 import java.util.Arrays;
+import java.util.function.Function;
 
 public enum PieceMapper {
 
-    PAWN("p", "P"),
-    ROOK("r", "R"),
-    KNIGHT("n", "N"),
-    BISHOP("b", "B"),
-    QUEEN("q", "Q"),
-    KING("k", "K"),
-    NONE(".", ".");
+    PAWN("p", "P", Pawn::new),
+    ROOK("r", "R", Rook::new),
+    KNIGHT("n", "N", Knight::new),
+    BISHOP("b", "B", Bishop::new),
+    QUEEN("q", "Q", Queen::new),
+    KING("k", "K", King::new),
+    NONE(".", ".", None::new);
 
     private static final String WHITE_REGEXP = "^[a-z]$";
     private static final String BLACK_REGEXP = "^[A-Z]$";
 
     private final String whitePiece;
     private final String blackPiece;
+    private final Function<Color, Piece> generate;
 
-    PieceMapper(String whitePiece, String blackPiece) {
+    PieceMapper(String whitePiece, String blackPiece, Function<Color, Piece> generate) {
         this.whitePiece = whitePiece;
         this.blackPiece = blackPiece;
+        this.generate = generate;
     }
 
     public static String serialize(Piece piece) {
@@ -44,18 +54,16 @@ public enum PieceMapper {
     }
 
     public static Piece deserialize(String pieceName) {
-        Type type = findType(pieceName);
+        PieceMapper type = findType(pieceName);
         Color color = findColor(pieceName);
-        return Piece.of(type, color);
+        return type.generate.apply(color);
     }
 
-    public static Type findType(String pieceName) {
-        String type = Arrays.stream(values())
+    public static PieceMapper findType(String pieceName) {
+        return Arrays.stream(values())
             .filter(pieceMapper -> isSameType(pieceMapper, pieceName))
             .findFirst()
-            .orElse(NONE)
-            .name();
-        return Type.findType(type);
+            .orElse(NONE);
     }
 
     private static boolean isSameType(PieceMapper mapper, String pieceName) {

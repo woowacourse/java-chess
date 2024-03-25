@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.material.Color;
 import chess.model.material.Type;
+import chess.model.piece.None;
 import chess.model.piece.Piece;
 import chess.model.position.Position;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class Board {
         sourcePiece.move(source, target, pieces);
 
         pieces.put(target, sourcePiece);
-        pieces.put(source, Piece.of(Type.NONE, Color.NONE));
+        pieces.put(source, new None(Color.NONE));
         turnCount++;
     }
 
