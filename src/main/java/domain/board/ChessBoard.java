@@ -1,5 +1,7 @@
 package domain.board;
 
+import domain.dto.PieceDto;
+import domain.dto.TurnDto;
 import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
@@ -9,6 +11,7 @@ import domain.position.Route;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -91,7 +94,13 @@ public class ChessBoard {
         return Collections.unmodifiableMap(board);
     }
 
-    public Color getTurn() {
-        return this.turn;
+    public List<PieceDto> getPieces() {
+        return board.entrySet().stream()
+                .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
+                .toList();
+    }
+
+    public TurnDto getTurn() {
+        return new TurnDto(this.turn.name());
     }
 }

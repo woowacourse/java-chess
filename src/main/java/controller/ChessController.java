@@ -2,14 +2,10 @@ package controller;
 
 import controller.command.Command;
 import controller.command.EndOnCommand;
-import db.PieceDao;
-import db.TurnDao;
+import db.DBService;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardFactory;
-import domain.dto.PieceDto;
-import domain.piece.Color;
-import domain.piece.Piece;
-import domain.position.Position;
+import domain.dto.TurnDto;
 import view.InputView;
 import view.OutputView;
 
@@ -23,11 +19,10 @@ public class ChessController {
     }
 
     public void start() {
-        PieceDao pieceDao = new PieceDao();
-        TurnDao turnDao = new TurnDao();
+        DBService dbService = new DBService();
 
         outputView.printGameGuideMessage();
-        final ChessBoard board = createChessBoard(pieceDao, turnDao);
+        final ChessBoard board = createChessBoard(dbService);
 
         Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
@@ -35,19 +30,13 @@ public class ChessController {
             command = readCommandIfGameNotEnded(board);
         }
 
-        pieceDao.deleteAll();
-        for (var positionAndPiece : board.getBoard().entrySet()) {
-            Position position = positionAndPiece.getKey();
-            Piece piece = positionAndPiece.getValue();
-            pieceDao.add(PieceDto.of(position, piece));
-        }
-        turnDao.update(board.getTurn().name());
+        updateGameStatus(dbService, board);
     }
 
-    private ChessBoard createChessBoard(PieceDao pieceDao, TurnDao turnDao) {
-        if (pieceDao.count() != 0) {
-            String color = turnDao.find();
-            return ChessBoardFactory.loadPreviousChessBoard(pieceDao.findAll(), Color.valueOf(color));
+    private ChessBoard createChessBoard(DBService dbService) {
+        if (dbService.doesPreviousDataExist()) {
+            TurnDto turnDto = dbService.loadPreviousTurn();
+            return ChessBoardFactory.loadPreviousChessBoard(dbService.loadPreviousData(), turnDto.getTurn());
         }
         return ChessBoardFactory.createInitialChessBoard();
     }
@@ -75,5 +64,10 @@ public class ChessController {
             outputView.printErrorMessage(e.getMessage());
             return readCommandUntilValid();
         }
+    }
+
+    private static void updateGameStatus(final DBService dbService, final ChessBoard board) {
+        dbService.updatePiece(board.getPieces());
+        dbService.updateTurn(board.getTurn());
     }
 }
