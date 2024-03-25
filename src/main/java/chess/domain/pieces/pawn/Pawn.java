@@ -19,15 +19,15 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Movement movement, final Piece destinationPiece) {
-        if (hasDestinationPiece(destinationPiece)) {
+    public boolean canMove(final Movement movement, final Piece target) {
+        if (hasTargetPiece(target)) {
             return isAttack(movement);
         }
         return isMove(movement);
     }
 
-    private boolean hasDestinationPiece(final Piece destinationPiece) {
-        return destinationPiece != null;
+    private boolean hasTargetPiece(final Piece target) {
+        return target != null;
     }
 
     private boolean isAttack(final Movement movement) {

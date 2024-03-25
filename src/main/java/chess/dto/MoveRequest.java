@@ -1,4 +1,4 @@
 package chess.dto;
 
-public record MoveRequest(String source, String destination) {
+public record MoveRequest(String source, String target) {
 }

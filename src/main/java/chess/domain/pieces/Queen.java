@@ -12,7 +12,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean canMove(final Movement movement, final Piece destinationPiece) {
+    public boolean canMove(final Movement movement, final Piece target) {
         return movement.isCross() || movement.isDiagonal();
     }
 }

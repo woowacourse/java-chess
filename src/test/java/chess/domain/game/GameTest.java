@@ -13,11 +13,11 @@ class GameTest {
     void invalidTurn() {
         //given
         String source = "a7";
-        String destination = "a6";
+        String target = "a6";
         Game game = new Game();
 
         //when & then
-        assertThatThrownBy(() -> game.movePiece(source, destination))
+        assertThatThrownBy(() -> game.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -26,14 +26,14 @@ class GameTest {
     void exchangeTurn() {
         //given
         String source = "a2";
-        String destination = "a3";
+        String target = "a3";
         Game game = new Game();
 
         //when
-        game.movePiece(source, destination);
+        game.movePiece(source, target);
 
         //then
-        assertThatThrownBy(() -> game.movePiece(source, destination))
+        assertThatThrownBy(() -> game.movePiece(source, target))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -21,9 +21,9 @@ class BlackPawnTest {
         void canMoveTwoStep() {
             //given
             Square blackSource = Square.from("a7");
-            Square blackDestination = Square.from("a5");
+            Square blackTarget = Square.from("a5");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, null);
@@ -37,9 +37,9 @@ class BlackPawnTest {
         void canMoveOneStep() {
             //given
             Square blackSource = Square.from("a6");
-            Square blackDestination = Square.from("a5");
+            Square blackTarget = Square.from("a5");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, null);
@@ -53,9 +53,9 @@ class BlackPawnTest {
         void canAttack() {
             //given
             Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("c6");
+            Square blackTarget = Square.from("c6");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, new WhitePawn());
@@ -74,9 +74,9 @@ class BlackPawnTest {
         void canNotMoveTwoStep() {
             //given
             Square blackSource = Square.from("a5");
-            Square blackDestination = Square.from("a3");
+            Square blackTarget = Square.from("a3");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, null);
@@ -90,9 +90,9 @@ class BlackPawnTest {
         void canNotAttack() {
             //given
             Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("c6");
+            Square blackTarget = Square.from("c6");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, null);
@@ -106,9 +106,9 @@ class BlackPawnTest {
         void canNotAttackOneStep() {
             //given
             Square blackSource = Square.from("d7");
-            Square blackDestination = Square.from("d6");
+            Square blackTarget = Square.from("d6");
             Piece blackPawn = new BlackPawn();
-            Movement blackMovement = new Movement(blackSource, blackDestination);
+            Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
             boolean blackCanMove = blackPawn.canMove(blackMovement, new WhitePawn());

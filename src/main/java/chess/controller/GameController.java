@@ -29,7 +29,7 @@ public class GameController {
         while (command.equals("start")) {
             outputView.printBoard(createBoardResponse(game.getBoardStatus()));
             MoveRequest moveRequest = inputView.readMovement();
-            game.movePiece(moveRequest.source(), moveRequest.destination());
+            game.movePiece(moveRequest.source(), moveRequest.target());
         }
     }
 

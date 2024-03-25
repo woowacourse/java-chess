@@ -29,8 +29,8 @@ class WhitePawnTest {
         void canMoveTwoStep() {
             //given
             Square whiteSource = Square.from("a2");
-            Square whiteDestination = Square.from("a4");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("a4");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
@@ -44,8 +44,8 @@ class WhitePawnTest {
         void canMoveOneStep() {
             //given
             Square whiteSource = Square.from("a3");
-            Square whiteDestination = Square.from("a4");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("a4");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
@@ -59,8 +59,8 @@ class WhitePawnTest {
         void canAttack() {
             //given
             Square whiteSource = Square.from("a2");
-            Square whiteDestination = Square.from("b3");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("b3");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());
@@ -86,8 +86,8 @@ class WhitePawnTest {
         void canNotMoveTwoStep() {
             //given
             Square whiteSource = Square.from("a3");
-            Square whiteDestination = Square.from("a5");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("a5");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
@@ -101,8 +101,8 @@ class WhitePawnTest {
         void canNotAttack() {
             //given
             Square whiteSource = Square.from("a2");
-            Square whiteDestination = Square.from("b3");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("b3");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, null);
@@ -116,8 +116,8 @@ class WhitePawnTest {
         void canNotAttackOneStep() {
             //given
             Square whiteSource = Square.from("a2");
-            Square whiteDestination = Square.from("a3");
-            Movement whiteMovement = new Movement(whiteSource, whiteDestination);
+            Square whiteTarget = Square.from("a3");
+            Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
             boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());

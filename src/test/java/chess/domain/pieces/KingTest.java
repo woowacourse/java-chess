@@ -30,10 +30,10 @@ class KingTest {
         void canMoveOneSquareUp() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("e2");
+            Square target = Square.from("e2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -44,10 +44,10 @@ class KingTest {
         void canMoveOneSquareDown() {
             //given
             Square source = Square.from("e2");
-            Square destination = Square.from("e1");
+            Square target = Square.from("e1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -58,10 +58,10 @@ class KingTest {
         void canMoveOneSquareRight() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("f1");
+            Square target = Square.from("f1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -72,10 +72,10 @@ class KingTest {
         void canMoveOneSquareLeft() {
             //given
             Square source = Square.from("f1");
-            Square destination = Square.from("e1");
+            Square target = Square.from("e1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -86,10 +86,10 @@ class KingTest {
         void canMoveDiagonallyUpLeft() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("d2");
+            Square target = Square.from("d2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -100,10 +100,10 @@ class KingTest {
         void canMoveDiagonallyUpRight() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("f2");
+            Square target = Square.from("f2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -114,10 +114,10 @@ class KingTest {
         void canMoveDiagonallyDownLeft() {
             //given
             Square source = Square.from("e2");
-            Square destination = Square.from("d1");
+            Square target = Square.from("d1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -128,10 +128,10 @@ class KingTest {
         void canMoveDiagonallyDownRight() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("f2");
+            Square target = Square.from("f2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isTrue();
@@ -154,10 +154,10 @@ class KingTest {
         void canNotMoveDiagonally() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("c3");
+            Square target = Square.from("c3");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isFalse();
@@ -168,10 +168,10 @@ class KingTest {
         void canNotMoveTwoSquaresUp() {
             //given
             Square source = Square.from("e1");
-            Square destination = Square.from("e3");
+            Square target = Square.from("e3");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(king.canMove(movement, null)).isFalse();

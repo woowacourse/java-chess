@@ -30,10 +30,10 @@ class RookTest {
         void canMoveHorizontally() {
             //given
             Square source = Square.from("a1");
-            Square destination = Square.from("c1");
+            Square target = Square.from("c1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(rook.canMove(movement, null)).isTrue();
@@ -44,10 +44,10 @@ class RookTest {
         void canMoveVertically() {
             //given
             Square source = Square.from("a1");
-            Square destination = Square.from("a4");
+            Square target = Square.from("a4");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(rook.canMove(movement, null)).isTrue();
@@ -59,11 +59,11 @@ class RookTest {
             //given
             Square source = Square.from("a1");
             Square intermediate = Square.from("b1");
-            Square destination = Square.from("b5");
+            Square target = Square.from("b5");
 
             //when
             Movement movement1 = new Movement(source, intermediate);
-            Movement movement2 = new Movement(intermediate, destination);
+            Movement movement2 = new Movement(intermediate, target);
 
             //then
             assertThat(rook.canMove(movement1, null)).isTrue();
@@ -87,10 +87,10 @@ class RookTest {
         void canNotMoveDiagonally() {
             //given
             Square source = Square.from("a1");
-            Square destination = Square.from("b2");
+            Square target = Square.from("b2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(rook.canMove(movement, null)).isFalse();
@@ -101,10 +101,10 @@ class RookTest {
         void canNotMoveLikeKnight() {
             //given
             Square source = Square.from("a1");
-            Square destination = Square.from("c2");
+            Square target = Square.from("c2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(rook.canMove(movement, null)).isFalse();

@@ -25,13 +25,13 @@ class QueenTest {
     void canMove() {
         //given
         Square crossSource = Square.from("d1");
-        Square crossDestination = Square.from("d3");
+        Square crossTarget = Square.from("d3");
 
         Square diagonalSource = Square.from("d1");
-        Square diagonalDestination = Square.from("b3");
+        Square diagonalTarget = Square.from("b3");
 
-        Movement crossMovement = new Movement(crossSource, crossDestination);
-        Movement diagonalMovement = new Movement(diagonalSource, diagonalDestination);
+        Movement crossMovement = new Movement(crossSource, crossTarget);
+        Movement diagonalMovement = new Movement(diagonalSource, diagonalTarget);
 
         //when
         boolean canCrossMove = queen.canMove(crossMovement, null);
@@ -47,8 +47,8 @@ class QueenTest {
     void canNotMove() {
         //given
         Square source = Square.from("d1");
-        Square destination = Square.from("f4");
-        Movement movement = new Movement(source, destination);
+        Square target = Square.from("f4");
+        Movement movement = new Movement(source, target);
 
         //when
         boolean canMove = queen.canMove(movement, null);

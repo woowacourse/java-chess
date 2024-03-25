@@ -12,7 +12,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(final Movement movement, final Piece destinationPiece) {
+    public boolean canMove(final Movement movement, final Piece target) {
         int fileDiff = Math.abs(movement.getFileDifference());
         int rankDiff = Math.abs(movement.getRankDifference());
 

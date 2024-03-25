@@ -12,7 +12,7 @@ public abstract class Piece {
         this.type = type;
     }
 
-    public abstract boolean canMove(final Movement movement, final Piece destinationPiece);
+    public abstract boolean canMove(final Movement movement, final Piece target);
 
     public boolean isSameColor(final Piece piece) {
         if (piece == null) {

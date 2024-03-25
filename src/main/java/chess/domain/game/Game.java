@@ -17,9 +17,9 @@ public class Game {
         this.board = BoardFactory.createBoard();
     }
 
-    public void movePiece(final String source, final String destination) {
+    public void movePiece(final String source, final String target) {
         Square from = Square.from(source);
-        Square to = Square.from(destination);
+        Square to = Square.from(target);
         validateTurn(from);
         board.move(from, to);
         turn.next();

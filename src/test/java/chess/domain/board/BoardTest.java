@@ -80,7 +80,7 @@ class BoardTest {
 
     @DisplayName("목적지에 있는 기물이 현재 기물과 같은 색이라면 예외가 발생한다")
     @Test
-    void invalidDestination() {
+    void invalidTarget() {
         //given
         Square from = Square.from("a1");
         Square to = Square.from("a2");

@@ -30,10 +30,10 @@ class KnightTest {
         void canMoveUpRight() {
             //given
             Square source = Square.from("e4");
-            Square destination = Square.from("f6");
+            Square target = Square.from("f6");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(knight.canMove(movement, null)).isTrue();
@@ -44,10 +44,10 @@ class KnightTest {
         void canMoveDownRight() {
             //given
             Square source = Square.from("e4");
-            Square destination = Square.from("f2");
+            Square target = Square.from("f2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(knight.canMove(movement, null)).isTrue();
@@ -58,10 +58,10 @@ class KnightTest {
         void canMoveUpLeft() {
             //given
             Square source = Square.from("e4");
-            Square destination = Square.from("d6");
+            Square target = Square.from("d6");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(knight.canMove(movement, null)).isTrue();
@@ -72,10 +72,10 @@ class KnightTest {
         void canMoveDownLeft() {
             //given
             Square source = Square.from("e4");
-            Square destination = Square.from("d2");
+            Square target = Square.from("d2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(knight.canMove(movement, null)).isTrue();
@@ -86,12 +86,12 @@ class KnightTest {
         void canMoveRightUpAndDown() {
             //given
             Square source = Square.from("e4");
-            Square destination1 = Square.from("g5");
-            Square destination2 = Square.from("g3");
+            Square target1 = Square.from("g5");
+            Square target2 = Square.from("g3");
 
             //when
-            Movement movement1 = new Movement(source, destination1);
-            Movement movement2 = new Movement(source, destination2);
+            Movement movement1 = new Movement(source, target1);
+            Movement movement2 = new Movement(source, target2);
 
             //then
             assertThat(knight.canMove(movement1, null)).isTrue();
@@ -103,12 +103,12 @@ class KnightTest {
         void canMoveLeftUpAndDown() {
             //given
             Square source = Square.from("e4");
-            Square destination1 = Square.from("c5");
-            Square destination2 = Square.from("c3");
+            Square target1 = Square.from("c5");
+            Square target2 = Square.from("c3");
 
             //when
-            Movement movement1 = new Movement(source, destination1);
-            Movement movement2 = new Movement(source, destination2);
+            Movement movement1 = new Movement(source, target1);
+            Movement movement2 = new Movement(source, target2);
 
             //then
             assertThat(knight.canMove(movement1, null)).isTrue();
@@ -132,10 +132,10 @@ class KnightTest {
         void canNotMoveDiagonally() {
             //given
             Square source = Square.from("e4");
-            Square destination = Square.from("d5");
+            Square target = Square.from("d5");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(knight.canMove(movement, null)).isFalse();
@@ -146,12 +146,12 @@ class KnightTest {
         void canNotMoveHorizontallyOrVertically() {
             //given
             Square source = Square.from("e4");
-            Square destination1 = Square.from("e6");
-            Square destination2 = Square.from("g4");
+            Square target1 = Square.from("e6");
+            Square target2 = Square.from("g4");
 
             //when
-            Movement movement1 = new Movement(source, destination1);
-            Movement movement2 = new Movement(source, destination2);
+            Movement movement1 = new Movement(source, target1);
+            Movement movement2 = new Movement(source, target2);
 
             //then
             assertThat(knight.canMove(movement1, null)).isFalse();

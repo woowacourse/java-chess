@@ -30,10 +30,10 @@ class BishopTest {
         void canMoveDiagonallyUpRight() {
             //given
             Square source = Square.from("c3");
-            Square destination = Square.from("e5");
+            Square target = Square.from("e5");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isTrue();
@@ -44,10 +44,10 @@ class BishopTest {
         void canMoveDiagonallyUpLeft() {
             //given
             Square source = Square.from("e3");
-            Square destination = Square.from("c5");
+            Square target = Square.from("c5");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isTrue();
@@ -58,10 +58,10 @@ class BishopTest {
         void canMoveDiagonallyDownRight() {
             //given
             Square source = Square.from("c5");
-            Square destination = Square.from("e3");
+            Square target = Square.from("e3");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isTrue();
@@ -72,10 +72,10 @@ class BishopTest {
         void canMoveDiagonallyDownLeft() {
             //given
             Square source = Square.from("e5");
-            Square destination = Square.from("c3");
+            Square target = Square.from("c3");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isTrue();
@@ -98,10 +98,10 @@ class BishopTest {
         void canNotMoveVertically() {
             //given
             Square source = Square.from("c1");
-            Square destination = Square.from("c2");
+            Square target = Square.from("c2");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isFalse();
@@ -112,10 +112,10 @@ class BishopTest {
         void canNotMoveHorizontally() {
             //given
             Square source = Square.from("c1");
-            Square destination = Square.from("d1");
+            Square target = Square.from("d1");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isFalse();
@@ -126,10 +126,10 @@ class BishopTest {
         void canNotMoveInNonDiagonalDirection() {
             //given
             Square source = Square.from("c1");
-            Square destination = Square.from("d3");
+            Square target = Square.from("d3");
 
             //when
-            Movement movement = new Movement(source, destination);
+            Movement movement = new Movement(source, target);
 
             //then
             assertThat(bishop.canMove(movement, null)).isFalse();
