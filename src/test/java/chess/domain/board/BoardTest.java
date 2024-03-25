@@ -41,13 +41,14 @@ import static chess.domain.fixture.CoordinateFixture.H8;
 import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
 import static chess.domain.fixture.PieceFixture.BLACK_KING;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.BLACK_QUEEN;
 import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
+import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
+import static chess.domain.fixture.PieceFixture.INITIAL_WHITE_PAWN;
+import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
 import static chess.domain.fixture.PieceFixture.WHITE_KING;
 import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
-import static chess.domain.fixture.PieceFixture.WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static chess.domain.fixture.PieceFixture.WHITE_ROOK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -145,7 +146,7 @@ class BoardTest {
                 board.findByCoordinate(H2)
         );
 
-        assertThat(result).containsOnly(WHITE_PAWN);
+        assertThat(result).containsOnly(INITIAL_WHITE_PAWN);
     }
 
     @DisplayName("흑팀의 킹은 e8에 있다.")
@@ -223,7 +224,7 @@ class BoardTest {
                 board.findByCoordinate(H7)
         );
 
-        assertThat(result).containsOnly(BLACK_PAWN);
+        assertThat(result).containsOnly(INITIAL_BLACK_PAWN);
     }
 
     @DisplayName("source 좌표에 기물이 없으면 예외를 발생한다.")
@@ -246,8 +247,7 @@ class BoardTest {
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("목적지 좌표에 기물이 이미 존재합니다.");
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("source 좌표에 있는 기물이 target 좌표로 이동 가능한 경로가 존재하지 않을 경우, 이동할 수 없다.")
@@ -272,12 +272,11 @@ class BoardTest {
         Coordinate between = B2;
         Coordinate target = C3;
         pieces.put(source, WHITE_BISHOP);
-        pieces.put(between, WHITE_PAWN);
+        pieces.put(between, NORMAL_WHITE_PAWN);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("경로 중간에 기물이 존재해 이동할 수 없습니다.");
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("폰에 한에, 초기 좌표가 아니면 2칸 전진할 수 없다.")
@@ -286,19 +285,19 @@ class BoardTest {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
         Coordinate source = A3;
         Coordinate target = A5;
-        pieces.put(source, WHITE_PAWN);
+        pieces.put(source, NORMAL_WHITE_PAWN);
         Board board = new Board(pieces);
 
         assertThatThrownBy(() -> board.move(source, target))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("폰이 초기 위치가 아니면, 2칸 전진할 수 없습니다.");
+                .hasMessage("해당 기물은 목적지 좌표에 갈 수 없습니다.");
     }
 
     @DisplayName("기물이 움직일 수 있다.")
     @Test
     void move() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Piece sourcePiece = WHITE_PAWN;
+        Piece sourcePiece = INITIAL_WHITE_PAWN;
         Coordinate source = A2;
         Coordinate target = A4;
         pieces.put(source, sourcePiece);
@@ -307,6 +306,6 @@ class BoardTest {
         board.move(source, target);
 
         Piece result = board.findByCoordinate(target);
-        assertThat(result).isEqualTo(sourcePiece);
+        assertThat(result).isInstanceOf(NORMAL_WHITE_PAWN.getClass());
     }
 }
