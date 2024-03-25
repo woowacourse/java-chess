@@ -49,4 +49,11 @@ public class Pawn extends Piece {
     public void move() {
         isMoved = true;
     }
+
+    @Override
+    public String toString() {
+        return "Pawn{" +
+                "isMoved=" + isMoved +
+                '}';
+    }
 }

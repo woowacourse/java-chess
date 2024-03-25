@@ -24,4 +24,11 @@ public class Turn {
     public Color getCurrentTurn() {
         return turns.get(0);
     }
+
+    @Override
+    public String toString() {
+        return "Turn{" +
+                "turns=" + turns +
+                '}';
+    }
 }

@@ -59,4 +59,12 @@ public class Movements {
 
         return pathTaken;
     }
+
+    @Override
+    public String toString() {
+        return "Movements{" +
+                "passMovements=" + passMovements +
+                ", attackMovements=" + attackMovements +
+                '}';
+    }
 }

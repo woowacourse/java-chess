@@ -98,4 +98,11 @@ public class ChessBoard {
         return pathTaken.stream()
                 .anyMatch(this::isNotEmpty);
     }
+
+    @Override
+    public String toString() {
+        return "ChessBoard{" +
+                "pieces=" + pieces +
+                '}';
+    }
 }

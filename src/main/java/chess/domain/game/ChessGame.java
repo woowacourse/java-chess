@@ -31,4 +31,12 @@ public class ChessGame {
     public Map<Position, Piece> getPieces() {
         return board.getPieces();
     }
+
+    @Override
+    public String toString() {
+        return "ChessGame{" +
+                "turn=" + turn +
+                ", board=" + board +
+                '}';
+    }
 }
