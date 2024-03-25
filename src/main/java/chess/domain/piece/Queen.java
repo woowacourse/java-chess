@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.Calculator;
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
@@ -32,7 +33,25 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
+    public boolean isAttackable(Positions positions) {
+        return isMovable(positions);
+    }
+
+    @Override
+    public boolean isMovable(Positions positions) {
+        int rowDifference = positions.calculateRowDifference();
+        int columnDifference = positions.calculateColumnDifference();
+        return (rowDifference == 0 || columnDifference == 0)
+                || Math.abs(rowDifference) == Math.abs(columnDifference);
+    }
+
+    @Override
+    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
+        return findBetweenPositions(positions);
+    }
+
+    @Override
+    public List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
         int rowSign = Calculator.calculateSign(rowDifference);
         int columnSign = Calculator.calculateSign(columnDifference);
@@ -42,16 +61,5 @@ public class Queen extends Piece {
             positions.add(position.move(rowSign * movement, columnSign * movement));
         }
         return positions;
-    }
-
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return isMovable(rowDifference, columnDifference);
-    }
-
-    @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        return (rowDifference == 0 || columnDifference == 0)
-                || Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 }

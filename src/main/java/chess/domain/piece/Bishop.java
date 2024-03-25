@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
@@ -30,6 +31,21 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public boolean isAttackable(Positions positions) {
+        return isMovable(positions);
+    }
+
+    @Override
+    public boolean isMovable(Positions positions) {
+        return Math.abs(positions.calculateRowDifference()) == Math.abs(positions.calculateColumnDifference());
+    }
+
+    @Override
+    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
+        return findBetweenPositions(positions);
+    }
+
+    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.abs(rowDifference);
         int rowSign = rowDifference / absoluteDifference;
@@ -40,15 +56,5 @@ public class Bishop extends Piece {
             positions.add(position.move(rowSign * movement, columnSign * movement));
         }
         return positions;
-    }
-
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return isMovable(rowDifference, columnDifference);
-    }
-
-    @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 }

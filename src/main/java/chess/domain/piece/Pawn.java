@@ -36,15 +36,33 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isAttackable(Positions positions) {
+        return positions.calculateRowDifference() == NORMAL_MOVEMENT * team.attackDirection()
+                && Math.abs(positions.calculateColumnDifference()) == ATTACK_COLUMN_MOVEMENT;
+    }
+
+    @Override
+    public boolean isMovable(Positions positions) {
+        if (positions.calculateColumnDifference() != 0) {
+            return false;
+        }
+
+        int rowDifference = positions.calculateRowDifference();
+        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
+                || (!hasMoved && rowDifference == START_MOVEMENT * team.attackDirection());
+    }
+
+    @Override
     public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
         int rowDifference = positions.calculateRowDifference();
         int columnDifference = positions.calculateColumnDifference();
-        validateAttackable(rowDifference, columnDifference);
+
+        validateAttackable(positions);
         return findBetweenPositions(positions.source(), rowDifference, columnDifference);
     }
 
-    private void validateAttackable(int rowDifference, int columnDifference) {
-        if (isAttackable(rowDifference, columnDifference)) {
+    private void validateAttackable(Positions positions) {
+        if (isAttackable(positions)) {
             return;
         }
         throw new IllegalArgumentException("해당 위치로 움직일 수 없습니다.");
@@ -58,20 +76,5 @@ public class Pawn extends Piece {
             return positions;
         }
         return new ArrayList<>();
-    }
-
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
-                && Math.abs(columnDifference) == ATTACK_COLUMN_MOVEMENT;
-    }
-
-    @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        if (columnDifference != 0) {
-            return false;
-        }
-        return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
-                || (!hasMoved && rowDifference == START_MOVEMENT * team.attackDirection());
     }
 }

@@ -23,23 +23,13 @@ public abstract class Piece {
 
     public abstract boolean checkKind(Kind kind);
 
+    public abstract boolean isAttackable(Positions positions);
+
+    public abstract boolean isMovable(Positions positions);
+
+    public abstract List<Position> findBetweenPositionsWhenAttack(Positions positions);
+
     protected abstract List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference);
-
-    protected abstract boolean isAttackable(int rowDifference, int columnDifference);
-
-    protected abstract boolean isMovable(int rowDifference, int columnDifference);
-
-    public boolean isAttackable(Positions positions) {
-        return isAttackable(positions.calculateRowDifference(), positions.calculateColumnDifference());
-    }
-
-    public boolean isMovable(Positions positions) {
-        return isMovable(positions.calculateRowDifference(), positions.calculateColumnDifference());
-    }
-
-    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
-        return findBetweenPositions(positions);
-    }
 
     public List<Position> findBetweenPositions(Positions positions) {
         validateMovable(positions);

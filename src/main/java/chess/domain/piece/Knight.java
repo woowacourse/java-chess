@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Positions;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
@@ -33,18 +34,25 @@ public class Knight extends Piece {
     }
 
     @Override
+    public boolean isAttackable(Positions positions) {
+        return isMovable(positions);
+    }
+
+    @Override
+    public boolean isMovable(Positions positions) {
+        List<Integer> differenceList = List.of(
+                Math.abs(positions.calculateRowDifference()),
+                Math.abs(positions.calculateColumnDifference()));
+        return differenceList.containsAll(MOVE_DIFFERENCES);
+    }
+
+    @Override
+    public List<Position> findBetweenPositionsWhenAttack(Positions positions) {
+        return findBetweenPositions(positions);
+    }
+
+    @Override
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         return new ArrayList<>();
-    }
-
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
-        return isMovable(rowDifference, columnDifference);
-    }
-
-    @Override
-    protected boolean isMovable(int rowDifference, int columnDifference) {
-        List<Integer> differenceList = List.of(Math.abs(rowDifference), Math.abs(columnDifference));
-        return differenceList.containsAll(MOVE_DIFFERENCES);
     }
 }
