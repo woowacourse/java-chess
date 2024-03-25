@@ -14,10 +14,7 @@ public class Bishop extends Piece {
     );
 
     public Bishop(Color color) {
-        super(PieceType.BISHOP,
-                color,
-                BISHOP_DIRECTION
-        );
+        super(PieceType.BISHOP, color, BISHOP_DIRECTION);
     }
 
     @Override

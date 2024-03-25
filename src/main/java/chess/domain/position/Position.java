@@ -101,7 +101,7 @@ public class Position {
     }
 
     public boolean isNotEquals(Position other) {
-        return !this.equals(other);
+        return !equals(other);
     }
 
     @Override
