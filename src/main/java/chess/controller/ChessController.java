@@ -26,19 +26,31 @@ public class ChessController {
     public void run() {
         final ChessBoard chessBoard = ChessBoardFactory.makeChessBoard();
         outputView.printCommandInformation();
-        playGame(chessBoard);
-    }
 
-    private void playGame(final ChessBoard chessBoard) {
         List<String> commandArguments = repeat(this::readInitialCommand);
         String gameCommand = commandArguments.get(COMMAND_INDEX);
 
-        while (!GameCommand.isEndCommand(gameCommand)) {
-            outputView.printChessBoard(chessBoard);
-            playTurn(chessBoard, gameCommand, commandArguments);
+        repeat(() -> playTurn(chessBoard, gameCommand, commandArguments));
+    }
 
-            commandArguments = repeat(this::readInGameCommand);
+    private void playTurn(ChessBoard chessBoard, String gameCommand, List<String> commandArguments) {
+        while (!GameCommand.isEndCommand(gameCommand)) {
+            playMoveCommand(chessBoard, gameCommand, commandArguments);
+            outputView.printChessBoard(chessBoard);
+
+            commandArguments = readInGameCommand();
             gameCommand = commandArguments.get(COMMAND_INDEX);
+        }
+    }
+
+    private void playMoveCommand(final ChessBoard chessBoard,
+                                 final String gameCommand,
+                                 final List<String> commandArguments) {
+        if (GameCommand.isMoveCommand(gameCommand)) {
+            Position source = Position.from(commandArguments.get(SOURCE_POSITION_INDEX));
+            Position target = Position.from(commandArguments.get(TARGET_POSITION_INDEX));
+            chessBoard.move(source, target);
+            outputView.printChessBoard(chessBoard);
         }
     }
 
@@ -64,23 +76,21 @@ public class ChessController {
         return commandArguments;
     }
 
-    private void playTurn(final ChessBoard chessBoard,
-                          final String gameCommand,
-                          final List<String> commandArguments) {
-        if (GameCommand.isMoveCommand(gameCommand)) {
-            Position source = Position.from(commandArguments.get(SOURCE_POSITION_INDEX));
-            Position target = Position.from(commandArguments.get(TARGET_POSITION_INDEX));
-            chessBoard.move(source, target);
-            outputView.printChessBoard(chessBoard);
-        }
-    }
-
     private <T> T repeat(final Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return repeat(supplier);
+        }
+    }
+
+    private void repeat(final Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            repeat(runnable);
         }
     }
 }
