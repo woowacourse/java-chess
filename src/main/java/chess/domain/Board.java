@@ -9,12 +9,14 @@ import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
+    private final RemovedPiece removedPiece;
 
     public Board() {
         Map<Position, Piece> board = new HashMap<>();
         initialize(board);
 
         this.board = board;
+        this.removedPiece = new RemovedPiece();
     }
 
     private void initialize(Map<Position, Piece> board) {
@@ -24,14 +26,17 @@ public class Board {
 
     public boolean movePieceAndRenewBoard(Position source, Position target) {
         Piece piece = board.get(source);
-
         Piece movedPiece = movePiece(source, target, piece);
-
         PieceInfo pieceInfo = movedPiece.getPieceInfo();
-        board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
-        board.put(pieceInfo.getPosition(), movedPiece);
+        Position newPosition = pieceInfo.getPosition();
 
-        return target == pieceInfo.getPosition();
+        if (source != newPosition) {
+            removedPiece.addPiece(board.get(newPosition));
+        }
+        board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
+        board.put(newPosition, movedPiece);
+
+        return target == newPosition;
     }
 
     public boolean isSameTeamFromPosition(Position position, Team team) {
@@ -45,6 +50,10 @@ public class Board {
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
                 checkSameTeamPieceExist(piece.getTeam(), target));
+    }
+
+    public boolean isKingRemoved() {
+        return removedPiece.isRecentlyRemovedPieceType(PieceType.KING);
     }
 
     boolean checkObstacleInRange(Position currentPosition, Position newPosition) {

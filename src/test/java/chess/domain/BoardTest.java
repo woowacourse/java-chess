@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.King;
+import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -55,5 +57,25 @@ public class BoardTest {
         boolean actualPieceMovePossible = board.checkSameTeamPieceExist(currentTeam, otherPosition);
 
         Assertions.assertThat(actualPieceMovePossible).isEqualTo(expectedPieceMovePossible);
+    }
+
+    @DisplayName("왕이 잡혔다면 True 를 반환한다.")
+    @Test
+    void isKingRemovedTest() {
+        Position source = Position.of("d4");
+        Position target = Position.of("e5");
+
+        Queen queen = new Queen(new PieceInfo(source, Team.WHITE));
+        King king = new King(new PieceInfo(target, Team.BLACK));
+
+        Board board = new Board();
+        board.placePiece(source, queen);
+        board.placePiece(target, king);
+
+        board.movePieceAndRenewBoard(source, target);
+
+        boolean isKingRemoved = board.isKingRemoved();
+
+        Assertions.assertThat(isKingRemoved).isEqualTo(true);
     }
 }
