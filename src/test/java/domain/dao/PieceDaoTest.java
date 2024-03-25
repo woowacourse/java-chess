@@ -45,6 +45,17 @@ public class PieceDaoTest {
 
         assertThat(pieceDao.findAll())
                 .containsExactlyInAnyOrder(pieceDtoA, pieceDtoB, pieceDtoC);
+    }
 
+    @Test
+    void 저장된_피스_개수를_센다() {
+        final var pieceDtoA = new PieceDto("A", "3", "WHITE", "PAWN");
+        final var pieceDtoB = new PieceDto("B", "5", "BLACK", "PAWN");
+        final var pieceDtoC = new PieceDto("C", "7", "BLACK", "KING");
+        pieceDao.add(pieceDtoA);
+        pieceDao.add(pieceDtoB);
+        pieceDao.add(pieceDtoC);
+
+        assertThat(pieceDao.count()).isEqualTo(3);
     }
 }

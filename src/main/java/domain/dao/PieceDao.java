@@ -80,4 +80,18 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
     }
+
+    public int count() {
+        final var query = "SELECT COUNT(*) AS count FROM piece";
+        try (final var connection = connectionManager.getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Integer.parseInt(resultSet.getString("count"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
 }
