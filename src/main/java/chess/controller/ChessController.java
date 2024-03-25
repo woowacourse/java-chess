@@ -1,5 +1,7 @@
 package chess.controller;
 
+import static chess.domain.Status.NORMAL;
+
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
@@ -16,7 +18,7 @@ public class ChessController {
         validateStartCommand();
         Board board = new Board(BoardFactory.generateStartBoard());
         ChessGame chessGame = new ChessGame(board);
-        OutputView.printChessBoard(board.mapPositionToCharacter());
+        OutputView.printGameStatus(new BoardStatusDto(board.getPieces(), NORMAL));
 
         play(chessGame, board);
     }
@@ -44,7 +46,7 @@ public class ChessController {
         while ((movementDto = InputView.inputCommand()).isMove()) {
             Movement movement = movementDto.toDomain();
             chessGame.movePiece(movement);
-            OutputView.printGameStatus(new BoardStatusDto(board.mapPositionToCharacter(), chessGame.checkStatus()));
+            OutputView.printGameStatus(new BoardStatusDto(board.getPieces(), chessGame.checkStatus()));
         }
     }
 }

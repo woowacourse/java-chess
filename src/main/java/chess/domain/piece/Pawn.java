@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.Calculator;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -46,15 +44,6 @@ public class Pawn extends Piece {
             return;
         }
         throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
-    }
-
-    @Override
-    protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
-        List<Position> positions = new ArrayList<>();
-        if (Math.abs(rowDifference) == WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE) {
-            positions.add(position.move(Calculator.divideAbsoluteValue(rowDifference), 0));
-        }
-        return positions;
     }
 
     @Override

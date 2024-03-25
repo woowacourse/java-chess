@@ -5,10 +5,10 @@ import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
@@ -87,7 +87,7 @@ public class Board {
         Character myKingCharacter = new Character(team, Kind.KING);
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> myKingCharacter.equals(entry.getValue().character()))
+                .filter(entry -> entry.getValue().isSameCharacter(myKingCharacter))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(
                         "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
@@ -147,17 +147,12 @@ public class Board {
         return pieces.entrySet()
                 .stream()
                 .filter(entry -> !entry.getValue().isSameTeamWith(attackingTeam))
-                .filter(entry -> !myKingCharacter.equals(entry.getValue().character()))
+                .filter(entry -> !entry.getValue().isSameCharacter(myKingCharacter))
                 .filter(entry -> entry.getKey() != attackingPosition)
                 .noneMatch(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), attackingPosition)));
     }
 
-    public Map<Position, Character> mapPositionToCharacter() {
-        return pieces.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> entry.getValue().character()
-                ));
+    public Map<Position, Piece> getPieces() {
+        return Collections.unmodifiableMap(pieces);
     }
 }

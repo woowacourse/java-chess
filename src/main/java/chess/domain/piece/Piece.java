@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.Calculator;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
@@ -46,14 +45,21 @@ public abstract class Piece {
 
     protected List<Position> findBetweenPositions(Position position, int rowDifference, int columnDifference) {
         int absoluteDifference = Math.max(Math.abs(rowDifference), Math.abs(columnDifference));
-        int rowSign = Calculator.divideAbsoluteValue(rowDifference);
-        int columnSign = Calculator.divideAbsoluteValue(columnDifference);
+        int rowDirection = findDirection(rowDifference);
+        int columnDirection = findDirection(columnDifference);
 
         List<Position> positions = new ArrayList<>();
         for (int i = MIN_MOVEMENT; i < absoluteDifference; i++) {
-            positions.add(position.move(rowSign * i, columnSign * i));
+            positions.add(position.move(rowDirection * i, columnDirection * i));
         }
         return positions;
+    }
+
+    private int findDirection(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 
     private void validateMovable(Movement movement) {
@@ -73,6 +79,10 @@ public abstract class Piece {
 
     public boolean isSameTeamWith(Team team) {
         return this.character.team() == team;
+    }
+
+    public boolean isSameCharacter(Character character) {
+        return this.character == character;
     }
 
     public Character character() {

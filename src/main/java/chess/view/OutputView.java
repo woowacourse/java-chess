@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.Position;
 import chess.domain.Status;
-import chess.domain.piece.character.Character;
+import chess.domain.piece.Piece;
 import chess.dto.BoardStatusDto;
 import java.util.Map;
 
@@ -13,27 +13,27 @@ public class OutputView {
         System.out.println("[ERROR] " + errorMessage);
     }
 
-    public static void printChessBoard(Map<Position, Character> piecesCharacter) {
+    public static void printGameStatus(BoardStatusDto boardStatusDto) {
+        printChessBoard(boardStatusDto.board());
+        printStatus(boardStatusDto.status());
+    }
+
+    private static void printChessBoard(Map<Position, Piece> pieces) {
         for (int i = 8; i >= 1; i--) {
             for (int j = 1; j <= 8; j++) {
-                System.out.print(pieceToString(piecesCharacter, Position.of(i, j)));
+                System.out.print(pieceToString(pieces, Position.of(i, j)));
             }
             System.out.println();
         }
         System.out.println();
     }
 
-    private static String pieceToString(Map<Position, Character> piecesCharacter, Position position) {
-        if (piecesCharacter.containsKey(position)) {
-            Character character = piecesCharacter.get(position);
-            return CharacterViewer.convertToString(character);
+    private static String pieceToString(Map<Position, Piece> pieces, Position position) {
+        if (pieces.containsKey(position)) {
+            Piece piece = pieces.get(position);
+            return CharacterViewer.convertToString(piece.character());
         }
         return EMPTY_POSITION;
-    }
-
-    public static void printGameStatus(BoardStatusDto boardStatusDto) {
-        printChessBoard(boardStatusDto.board());
-        printStatus(boardStatusDto.status());
     }
 
     private static void printStatus(Status status) {
