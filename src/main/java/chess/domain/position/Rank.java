@@ -41,9 +41,9 @@ public enum Rank {
 
     public List<Rank> findBetween(Rank target) {
         if (this.value > target.value) {
-            return makeBetween(targetToCurrent(target));
+            return makeBetween(targetToSource(target));
         }
-        List<Rank> files = makeBetween(currentToTarget(target));
+        List<Rank> files = makeBetween(sourceToTarget(target));
         Collections.reverse(files);
         return files;
     }
@@ -54,11 +54,11 @@ public enum Rank {
                 .collect(Collectors.toList());
     }
 
-    private Predicate<Rank> targetToCurrent(Rank target) {
+    private Predicate<Rank> targetToSource(Rank target) {
         return rank -> rank.value < this.value && rank.value > target.value;
     }
 
-    private Predicate<Rank> currentToTarget(Rank target) {
+    private Predicate<Rank> sourceToTarget(Rank target) {
         return rank -> rank.value > this.value && rank.value < target.value;
     }
 }

@@ -41,11 +41,11 @@ public enum File {
 
     public List<File> findBetween(File target) {
         if (this.order > target.order) {
-            List<File> files = makeBetween(targetToCurrent(target));
+            List<File> files = makeBetween(targetToSource(target));
             Collections.reverse(files);
             return files;
         }
-        return makeBetween(currentToTarget(target));
+        return makeBetween(sourceToTarget(target));
     }
 
     private List<File> makeBetween(Predicate<File> predicate) {
@@ -54,11 +54,11 @@ public enum File {
                 .collect(Collectors.toList());
     }
 
-    private Predicate<File> targetToCurrent(File target) {
+    private Predicate<File> targetToSource(File target) {
         return file -> file.order < this.order && file.order > target.order;
     }
 
-    private Predicate<File> currentToTarget(File target) {
+    private Predicate<File> sourceToTarget(File target) {
         return file -> file.order > this.order && file.order < target.order;
     }
 }

@@ -19,10 +19,10 @@ class FileTest {
     @DisplayName("source order가 작을 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
     @Test
     void findBetweenAscTest() {
-        File currentFile = File.A;
+        File sourceFile = File.A;
         File targetFile = File.D;
 
-        List<File> files = currentFile.findBetween(targetFile);
+        List<File> files = sourceFile.findBetween(targetFile);
 
         assertThat(files).containsExactly(File.B, File.C);
     }
@@ -30,10 +30,10 @@ class FileTest {
     @DisplayName("source order가 클 때 source 위치와 target 위치 사이의 File 리스트를 찾는다.")
     @Test
     void findBetweenDescTest() {
-        File currentFile = File.D;
+        File sourceFile = File.D;
         File targetFile = File.A;
 
-        List<File> files = currentFile.findBetween(targetFile);
+        List<File> files = sourceFile.findBetween(targetFile);
 
         assertThat(files).containsExactly(File.C, File.B);
     }

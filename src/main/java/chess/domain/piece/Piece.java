@@ -12,7 +12,7 @@ public abstract class Piece {
         this.side = side;
     }
 
-    abstract boolean hasFollowedRule(Position current, Position target, Route route);
+    abstract boolean hasFollowedRule(Position source, Position target, Route route);
 
     public void checkValidMove(Position source, Position target, Route route) {
         checkDifferentPosition(source, target);

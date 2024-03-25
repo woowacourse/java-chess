@@ -19,10 +19,10 @@ class RankTest {
     @DisplayName("source order가 작을 때 source 위치와 target 위치 사이의 Rank 리스트를 찾는다.")
     @Test
     void findBetweenAscTest() {
-        Rank currentRank = Rank.ONE;
+        Rank sourceRank = Rank.ONE;
         Rank targetRank = Rank.FOUR;
 
-        List<Rank> ranks = currentRank.findBetween(targetRank);
+        List<Rank> ranks = sourceRank.findBetween(targetRank);
 
         assertThat(ranks).containsExactly(Rank.TWO, Rank.THREE);
     }
@@ -30,10 +30,10 @@ class RankTest {
     @DisplayName("source order가 클 때 source 위치와 target 위치 사이의 Rank 리스트를 찾는다.")
     @Test
     void findBetweenDescTest() {
-        Rank currentRank = Rank.FOUR;
+        Rank sourceRank = Rank.FOUR;
         Rank targetRank = Rank.ONE;
 
-        List<Rank> ranks = currentRank.findBetween(targetRank);
+        List<Rank> ranks = sourceRank.findBetween(targetRank);
 
         assertThat(ranks).containsExactly(Rank.THREE, Rank.TWO);
     }

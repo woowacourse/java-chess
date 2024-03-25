@@ -16,7 +16,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    boolean hasFollowedRule(Position current, Position target, Route route) {
+    boolean hasFollowedRule(Position source, Position target, Route route) {
         return false;
     }
 }
