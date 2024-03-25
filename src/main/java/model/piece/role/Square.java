@@ -9,6 +9,11 @@ public final class Square extends Role {
     }
 
     @Override
+    public RoleStatus status() {
+        return RoleStatus.SQUARE;
+    }
+
+    @Override
     public boolean isOccupied() {
         return false;
     }

@@ -50,6 +50,11 @@ public final class Pawn extends Role {
     }
 
     @Override
+    public RoleStatus status() {
+        return RoleStatus.PAWN;
+    }
+
+    @Override
     public void validateMoveTo(final Direction direction, final Role target) {
         super.validateMoveTo(direction, target);
         validateCanTakeOtherPiece(direction, target);

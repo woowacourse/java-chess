@@ -18,6 +18,8 @@ public abstract class Role {
         this.shift = shift;
     }
 
+    public abstract RoleStatus status();
+
     public boolean isOccupied() {
         return true;
     }
@@ -37,5 +39,9 @@ public abstract class Role {
 
     public Set<Route> findPossibleAllRoute(final Position position) {
         return shift.routes(position);
+    }
+
+    public Color color() {
+        return color;
     }
 }

@@ -9,4 +9,9 @@ public final class Rook extends Role {
     public Rook(final Color color) {
         super(color, new MultiShift(ShiftPattern.ROOK));
     }
+
+    @Override
+    public RoleStatus status() {
+        return RoleStatus.ROOK;
+    }
 }
