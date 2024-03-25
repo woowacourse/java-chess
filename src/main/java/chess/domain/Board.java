@@ -50,7 +50,7 @@ public class Board {
 
     private void validateDestination(Player player, Point destination) {
         Piece nextPiece = board.get(destination);
-        if (!nextPiece.equals(Piece.empty()) && player.isMyPiece(nextPiece)) {
+        if (Piece.empty() != nextPiece  && player.isMyPiece(nextPiece)) {
             throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
         }
     }
@@ -58,8 +58,9 @@ public class Board {
     private void validateMovableRoute(Point currentPoint, Point destination) {
         Direction unitDirection = currentPoint.findUnitDirection(destination);
         Point nextPoint = currentPoint.move(unitDirection);
-        while (!nextPoint.equals(destination)) {
-            if (!Piece.empty().equals(board.get(nextPoint))) {
+        while (nextPoint != destination) {
+            Piece nextPiece = board.get(nextPoint);
+            if (Piece.empty() != nextPiece) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
             nextPoint = nextPoint.move(unitDirection);
