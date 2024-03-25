@@ -1,5 +1,6 @@
 package view;
 
+import domain.ChessGameResult;
 import domain.piece.Piece;
 import domain.square.File;
 import domain.square.Rank;
@@ -38,7 +39,7 @@ public class OutputView {
 
         if (squarePieces.containsKey(square)) {
             final Piece piece = squarePieces.get(square);
-            return PieceFormat.findFormat(piece);
+            return PieceFormat.formatOf(piece);
         }
 
         return PieceFormat.EMPTY_PIECE;
@@ -46,5 +47,11 @@ public class OutputView {
 
     public void printError(final String message) {
         System.out.println("[ERROR] " + message);
+    }
+
+    public void printStatus(final ChessGameResult chessGameResult) {
+        System.out.printf("블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
+                chessGameResult.blackScore().toDouble(), chessGameResult.whiteScore().toDouble(),
+                WinStatusFormat.formatOf(chessGameResult.winStatus()));
     }
 }

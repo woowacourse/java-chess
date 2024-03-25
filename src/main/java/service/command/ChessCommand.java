@@ -2,9 +2,9 @@ package service.command;
 
 import service.ChessGame;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public interface ChessCommand {
 
-    void execute(ChessGame chessGame, Consumer<ChessGame> callBack);
+    void execute(ChessGame chessGame, BiConsumer<ChessGame, Boolean> callBack);
 }

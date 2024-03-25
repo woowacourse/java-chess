@@ -22,6 +22,10 @@ public class Score implements Comparable<Score> {
         return new Score(value * count);
     }
 
+    public double toDouble() {
+        return value;
+    }
+
     @Override
     public int compareTo(final Score o) {
         return Double.compare(this.value, o.value);

@@ -1,10 +1,11 @@
 package view;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import service.command.ChessCommand;
 import service.command.EndCommand;
 import service.command.MoveCommand;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import service.command.StatusCommand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -45,9 +46,22 @@ class CommandFormatTest {
         final String input = "end";
 
         // when
-        final ChessCommand moveCommand = CommandFormat.createCommand(input);
+        final ChessCommand endCommand = CommandFormat.createCommand(input);
 
         // then
-        assertThat(moveCommand).isInstanceOf(EndCommand.class);
+        assertThat(endCommand).isInstanceOf(EndCommand.class);
+    }
+
+    @DisplayName("status는 StatusCommand를 만든다.")
+    @Test
+    void status() {
+        // given
+        final String input = "status";
+
+        // when
+        final ChessCommand statusCommand = CommandFormat.createCommand(input);
+
+        // then
+        assertThat(statusCommand).isInstanceOf(StatusCommand.class);
     }
 }

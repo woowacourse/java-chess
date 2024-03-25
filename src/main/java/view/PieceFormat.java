@@ -29,7 +29,7 @@ public enum PieceFormat {
         this.piece = piece;
     }
 
-    public static String findFormat(final Piece piece) {
+    public static String formatOf(final Piece piece) {
         return Arrays.stream(values())
                 .filter(type -> type.piece.equals(piece))
                 .map(pieceFormat -> pieceFormat.format)

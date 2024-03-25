@@ -1,5 +1,6 @@
 package controller;
 
+import domain.ChessGameResult;
 import domain.piece.Piece;
 import domain.square.Square;
 import service.ChessGame;
@@ -31,14 +32,21 @@ public class ChessController {
         while (chessGame.isNotEnd()) {
             try {
                 final ChessCommand chessCommand = inputView.readCommand();
-                chessCommand.execute(chessGame, this::printChessBoard);
+                chessCommand.execute(chessGame, this::printResult);
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
         }
+        printResult(chessGame, true);
     }
 
-    private void printChessBoard(final ChessGame chessGame) {
+    private void printResult(final ChessGame chessGame, final boolean isStatus) {
+        if (isStatus) {
+            final ChessGameResult chessGameResult = chessGame.calculateResult();
+            outputView.printStatus(chessGameResult);
+            return;
+        }
+
         final Map<Square, Piece> pieceSquares = chessGame.getPieceSquares();
         outputView.printChessBoard(pieceSquares);
     }

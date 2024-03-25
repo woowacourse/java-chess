@@ -3,7 +3,6 @@ package service;
 import domain.*;
 import domain.piece.Piece;
 import domain.square.Square;
-import dto.ScoreResultDto;
 
 import java.util.Map;
 
@@ -48,11 +47,11 @@ public class ChessGame {
         return chessGameStatus != ChessGameStatus.END;
     }
 
-    public Map<Square, Piece> getPieceSquares() {
-        return chessBoard.getPieceSquares();
-    }
+    public ChessGameResult calculateResult() {
+        if (chessGameStatus == ChessGameStatus.INIT) {
+            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+        }
 
-    public ScoreResultDto calculateScore() {
         final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
         final ChessScoreCalculator chessScoreCalculator = ChessScoreCalculator.from(pieceSquares);
 
@@ -61,7 +60,11 @@ public class ChessGame {
 
         final WinStatus winStatus = WinStatus.of(whiteScore, blackScore);
 
-        return new ScoreResultDto(whiteScore, blackScore);
+        return new ChessGameResult(whiteScore, blackScore, winStatus);
+    }
+
+    public Map<Square, Piece> getPieceSquares() {
+        return chessBoard.getPieceSquares();
     }
 
     private enum ChessGameStatus {

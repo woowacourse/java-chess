@@ -1,9 +1,6 @@
 package view;
 
-import service.command.ChessCommand;
-import service.command.EndCommand;
-import service.command.MoveCommand;
-import service.command.StartCommand;
+import service.command.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +11,7 @@ public class CommandFormat {
 
     private static final String START_FORMAT = "start";
     private static final String END_FORMAT = "end";
+    private static final String STATUS_FORMAT = "status";
     private static final Pattern MOVE_FORMAT = Pattern.compile("^move [a-z]\\d [a-z]\\d$");
     private static final String MOVE_COMMAND_DELIMITER = " ";
     private static final int MOVE_SOURCE_INDEX = 1;
@@ -28,6 +26,9 @@ public class CommandFormat {
         }
         if (START_FORMAT.equals(input)) {
             return new StartCommand();
+        }
+        if (STATUS_FORMAT.equals(input)) {
+            return new StatusCommand();
         }
 
         final Matcher matcher = MOVE_FORMAT.matcher(input);
