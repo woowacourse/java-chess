@@ -17,25 +17,21 @@ import java.util.Objects;
 public class Queen implements PieceRole {
     private static final int MAX_MOVEMENT = 7;
 
-    private final List<Movable> routes;
+    private static final List<Movable> ROUTES = List.of(
+            new Movable(MAX_MOVEMENT, N),
+            new Movable(MAX_MOVEMENT, E),
+            new Movable(MAX_MOVEMENT, S),
+            new Movable(MAX_MOVEMENT, W),
+            new Movable(MAX_MOVEMENT, NE),
+            new Movable(MAX_MOVEMENT, NW),
+            new Movable(MAX_MOVEMENT, SE),
+            new Movable(MAX_MOVEMENT, SW)
 
-    public Queen() {
-        routes = List.of(
-                new Movable(MAX_MOVEMENT, N),
-                new Movable(MAX_MOVEMENT, E),
-                new Movable(MAX_MOVEMENT, S),
-                new Movable(MAX_MOVEMENT, W),
-                new Movable(MAX_MOVEMENT, NE),
-                new Movable(MAX_MOVEMENT, NW),
-                new Movable(MAX_MOVEMENT, SE),
-                new Movable(MAX_MOVEMENT, SW)
-
-        );
-    }
+    );
 
     @Override
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return routes.stream()
+        return ROUTES.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
     }
 
@@ -44,15 +40,11 @@ public class Queen implements PieceRole {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Queen queen = (Queen) o;
-        return Objects.equals(routes, queen.routes);
+        return o != null && getClass() == o.getClass();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(routes);
+        return Objects.hash(ROUTES);
     }
 }

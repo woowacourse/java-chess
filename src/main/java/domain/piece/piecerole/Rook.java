@@ -12,21 +12,16 @@ import java.util.Objects;
 
 public class Rook implements PieceRole {
     private static final int MAX_MOVEMENT = 7;
-
-    private final List<Movable> routes;
-
-    public Rook() {
-        routes = List.of(
-                new Movable(MAX_MOVEMENT, N),
-                new Movable(MAX_MOVEMENT, E),
-                new Movable(MAX_MOVEMENT, S),
-                new Movable(MAX_MOVEMENT, W)
-        );
-    }
+    private static final List<Movable> ROUTES = List.of(
+            new Movable(MAX_MOVEMENT, N),
+            new Movable(MAX_MOVEMENT, E),
+            new Movable(MAX_MOVEMENT, S),
+            new Movable(MAX_MOVEMENT, W)
+    );
 
     @Override
     public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        return routes.stream()
+        return ROUTES.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
     }
 
@@ -40,6 +35,6 @@ public class Rook implements PieceRole {
 
     @Override
     public int hashCode() {
-        return Objects.hash(routes);
+        return Objects.hash(ROUTES);
     }
 }

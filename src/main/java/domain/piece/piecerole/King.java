@@ -12,21 +12,17 @@ import java.util.Objects;
 
 public class King implements PieceRole {
     private static final int MAX_MOVEMENT = 1;
+    private static final List<Movable> ROUTES = List.of(
+            new Movable(MAX_MOVEMENT, N),
+            new Movable(MAX_MOVEMENT, E),
+            new Movable(MAX_MOVEMENT, S),
+            new Movable(MAX_MOVEMENT, W)
+    );
 
-    private final List<Movable> routes;
-
-    public King() {
-        routes = List.of(
-                new Movable(MAX_MOVEMENT, N),
-                new Movable(MAX_MOVEMENT, E),
-                new Movable(MAX_MOVEMENT, S),
-                new Movable(MAX_MOVEMENT, W)
-        );
-    }
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
-        return routes.stream()
+        return ROUTES.stream()
                 .anyMatch(movable -> movable.canMove(sourcePosition, targetPosition));
     }
 
@@ -35,15 +31,11 @@ public class King implements PieceRole {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        King king = (King) o;
-        return Objects.equals(routes, king.routes);
+        return o != null && getClass() == o.getClass();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(routes);
+        return Objects.hash(ROUTES);
     }
 }
