@@ -16,6 +16,8 @@ public class CommandParser {
     private static final int DESTINATION_POSITION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final char RANK_TO_ROW_NUMBER_WEIGHT = '0';
+    private static final char FILE_TO_COLUMN_NUMBER_WEIGHT = 'a';
 
     public Command parse(String input) {
         if (input.startsWith(START)) {
@@ -34,8 +36,8 @@ public class CommandParser {
     }
 
     private Position parsePosition(String input) {
-        Rank rank = Rank.from(8 - (input.charAt(RANK_INDEX) - '0'));
-        File file = File.from(input.charAt(FILE_INDEX) - 'a');
+        Rank rank = Rank.from(8 - (input.charAt(RANK_INDEX) - RANK_TO_ROW_NUMBER_WEIGHT));
+        File file = File.from(input.charAt(FILE_INDEX) - FILE_TO_COLUMN_NUMBER_WEIGHT);
         return new Position(file, rank);
     }
 }
