@@ -51,4 +51,13 @@ class InitStateTest {
         // then
         assertThat(actual).isInstanceOf(TerminatedState.class);
     }
+
+    @Test
+    @DisplayName("게임 진행 여부를 검증하면 예외를 발생한다.")
+    void validatePlayingTest() {
+        InitState initState = new InitState();
+        assertThatThrownBy(initState::validatePlaying)
+                .isInstanceOf(UnsupportedOperationException.class)
+                .hasMessage("게임이 진행되고 있지 않습니다.");
+    }
 }

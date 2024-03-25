@@ -43,6 +43,15 @@ class TerminatedStateTest {
                             .hasMessage("게임이 이미 종료되었습니다.")
             );
         }
+
+        @Test
+        @DisplayName("플레이 중을 검증한다.")
+        void validatePlaying() {
+            TerminatedState state = new TerminatedState();
+            assertThatThrownBy(state::validatePlaying)
+                    .isInstanceOf(UnsupportedOperationException.class)
+                    .hasMessage("게임이 진행되고 있지 않습니다.");
+        }
     }
 
 }

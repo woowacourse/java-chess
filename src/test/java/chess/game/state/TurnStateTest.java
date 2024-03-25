@@ -2,6 +2,7 @@ package chess.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -53,6 +54,12 @@ class TurnStateTest {
             GameState actual = state.terminate();
             // then
             assertThat(actual).isInstanceOf(TerminatedState.class);
+        }
+
+        @Test
+        @DisplayName("플레이 여부를 검증한다.")
+        void validatePlaying() {
+            assertDoesNotThrow(() -> createDummyTurnState().validatePlaying());
         }
     }
 }
