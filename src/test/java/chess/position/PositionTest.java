@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class PositionTest {
 
@@ -63,5 +65,28 @@ class PositionTest {
         UnitDirection unitDirection = source.unitDirectionToward(destination);
         // then
         assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 0));
+    }
+    
+    @ParameterizedTest
+    @EnumSource(value = File.class, names = {"A", "C"})
+    @DisplayName("다른 File에 위치하는 경우를 올바르게 확인한다.")
+    void differentFileTest(File file) {
+        // given
+        Position source = Position.of(File.B, Rank.ONE);
+        // when
+        boolean actual = source.hasFileOf(file);
+        // then
+        assertThat(actual).isFalse();
+    }
+    
+    @Test
+    @DisplayName("같은 File에 위치하는 경우를 올바르게 확인한다.")
+    void sameFileTest() {
+        // given
+        Position source = Position.of(File.B, Rank.ONE);
+        // when
+        boolean actual = source.hasFileOf(File.B);
+        // then
+        assertThat(actual).isTrue();
     }
 }

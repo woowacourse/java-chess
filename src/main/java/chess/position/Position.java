@@ -59,6 +59,10 @@ public class Position {
         return rank.subtract(other.rank);
     }
 
+    public boolean hasFileOf(File file) {
+        return this.file == file;
+    }
+
     public boolean isNotEquals(Position other) {
         return !this.equals(other);
     }
