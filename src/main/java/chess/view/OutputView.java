@@ -23,6 +23,6 @@ public class OutputView {
     }
 
     public void printErrorMessage(final String message) {
-        System.out.printf("%s %s", ERROR_PREFIX, message);
+        System.out.printf("%s %s%n", ERROR_PREFIX, message);
     }
 }

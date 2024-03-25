@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
