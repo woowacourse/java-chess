@@ -1,11 +1,13 @@
 package controller;
 
 import domain.GameCommand;
-import domain.game.Board;
-import domain.game.BoardInitializer;
-import domain.game.Turn;
+import domain.game.ChessGame;
+import domain.game.Piece;
+import domain.game.TeamColor;
+import domain.position.Position;
 import dto.BoardDto;
 import dto.RequestDto;
+import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -23,7 +25,7 @@ public class ChessController {
         outputView.printWelcomeMessage();
         GameCommand command = readUserInput(inputView::inputGameStart);
         if (command.isStart()) {
-            startGame();
+            startGame(command);
         }
     }
 
@@ -37,30 +39,45 @@ public class ChessController {
         }
     }
 
-    private void startGame() {
-        Board board = BoardInitializer.init();
-        printStatus(board);
+    private void startGame(GameCommand command) {
+        ChessGame chessGame = new ChessGame();
+        printBoardStatus(chessGame.getPositionsOfPieces());
 
-        Turn turn = new Turn();
-        RequestDto requestDto = readUserInput(inputView::inputGameCommand);
-        while (requestDto.command().isContinuable()) {
-            doTurn(board, turn, requestDto);
-            printStatus(board);
+        RequestDto requestDto = RequestDto.of(command);  // TODO: 모두 호환되도록 GameRequest 같은 것으로 변경
+        while (requestDto.command().isContinuable() && !chessGame.isGameEnd()) {
+            System.out.print(chessGame.currentPlayingTeam() + " >> ");
             requestDto = readUserInput(inputView::inputGameCommand);
+            playRound(requestDto, chessGame);
         }
+
+        // TODO: "status" 명령을 받을 때 출력하도록 변경
+        printGameResult(chessGame);
     }
 
-    private void doTurn(Board board, Turn turn, RequestDto requestDto) {
+    private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
+        BoardDto boardDto = BoardDto.from(positionOfPieces);
+        outputView.printBoard(boardDto);
+    }
+
+    private void playRound(RequestDto requestDto, ChessGame chessGame) {
         try {
-            board.movePiece(turn.current(), requestDto.source(), requestDto.destination());
-            turn.next();
-        } catch (IllegalArgumentException e) {
+            Position source = requestDto.source();
+            Position destination = requestDto.destination();
+            chessGame.move(source, destination);
+            printBoardStatus(chessGame.getPositionsOfPieces());
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("[오류] " + e.getMessage());
         }
     }
 
-    private void printStatus(Board board) {
-        BoardDto boardDto = BoardDto.from(board);
-        outputView.printBoard(boardDto);
+    private void printGameResult(ChessGame chessGame) {
+        TeamColor winner = chessGame.getWinner();
+        double whiteScore = chessGame.currentScoreOf(TeamColor.WHITE);
+        double blackScore = chessGame.currentScoreOf(TeamColor.BLACK);
+
+        // TODO: View 에게 출력 맡기기
+        System.out.println(winner);
+        System.out.println(whiteScore);
+        System.out.println(blackScore);
     }
 }
