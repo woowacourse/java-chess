@@ -56,13 +56,13 @@ public class ChessBoard {
         if (chessPiece.getClass() == Blank.class) {
             return;
         }
-        if (!chessPiece.isNotSameColor(currentTurn)) {
+        if (!chessPiece.isOpponentColor(currentTurn)) {
             throw new IllegalArgumentException("같은 색의 말은 공격할 수 없습니다.");
         }
     }
 
     private void validateTurn(ChessPiece piece, Color currentTurn) {
-        if (piece.isNotSameColor(currentTurn)) {
+        if (piece.isOpponentColor(currentTurn)) {
             throw new IllegalArgumentException("상대의 말을 움직일 수 없습니다.");
         }
     }
@@ -92,7 +92,7 @@ public class ChessBoard {
     private boolean isAttack(Color current, Coordinate destination) {
         ChessPiece destinationPiece = board.get(destination);
 
-        return destinationPiece.getClass() != Blank.class && destinationPiece.isNotSameColor(current);
+        return destinationPiece.getClass() != Blank.class && destinationPiece.isOpponentColor(current);
     }
 
     public Map<Coordinate, ChessPiece> getBoard() {

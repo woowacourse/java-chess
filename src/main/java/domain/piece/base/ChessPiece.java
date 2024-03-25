@@ -6,7 +6,7 @@ import domain.piece.Color;
 
 public interface ChessPiece {
 
-    boolean isNotSameColor(Color color);
+    boolean isOpponentColor(Color color);
 
     boolean isBlack();
 
