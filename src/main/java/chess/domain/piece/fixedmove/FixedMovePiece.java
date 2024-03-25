@@ -33,11 +33,7 @@ abstract class FixedMovePiece extends AbstractPiece {
     @Override
     public boolean canMove(final Coordinate now, final Coordinate destination,
                            final Map<Coordinate, Piece> boardInformation) {
-        return boardInformation.entrySet().stream()
-                .anyMatch(entry -> {
-                    Piece piece = entry.getValue();
-                    return isNotSameTeam(piece);
-                });
+        return boardInformation.values().stream().anyMatch(this::isNotSameTeam);
     }
 
     @Override
