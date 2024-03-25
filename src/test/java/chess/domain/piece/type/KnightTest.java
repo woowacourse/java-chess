@@ -1,5 +1,7 @@
 package chess.domain.piece.type;
 
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -46,9 +48,11 @@ class KnightTest {
     void canKnightMoveL_ShapeDirection(Position source, Position target) {
         // given
         Piece knight = new Knight(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = knight.isInMovableRange(source, target);
+        boolean result = knight.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isTrue();
@@ -60,9 +64,11 @@ class KnightTest {
     void cannotKnightMoveExceptL_ShapeDirection(Position source, Position target) {
         // given
         Piece knight = new Knight(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = knight.isInMovableRange(source, target);
+        boolean result = knight.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isFalse();

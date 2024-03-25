@@ -1,5 +1,7 @@
 package chess.domain.piece.type;
 
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -27,15 +29,17 @@ class QueenTest {
         );
     }
 
-    @DisplayName("킹은 모든 방향으로 한 칸 움직일 수 있다.")
+    @DisplayName("퀸은 모든 방향으로 원하는 만큼 움직일 수 있다.")
     @ParameterizedTest
     @MethodSource("cannotQueenMoveAllDirectionArguments")
     void canQueenMoveAllDirection(Position source, Position target) {
         // given
         Piece queen = new Queen(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = queen.isInMovableRange(source, target);
+        boolean result = queen.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isTrue();

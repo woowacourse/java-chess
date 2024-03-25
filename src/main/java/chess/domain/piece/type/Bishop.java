@@ -1,10 +1,11 @@
 package chess.domain.piece.type;
 
 import chess.domain.Direction;
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
 
 import java.util.List;
 
@@ -16,17 +17,11 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isInMovableRange(Position source, Position target) {
-        Direction direction = source.findDirectionTo(target);
-        return isMovableDirection(direction) && isMovableDistance(source, target);
+    public boolean isMovable(final Movement movement, final SquareStatus targetStatus) {
+        return isMovableDirection(movement.findDirection());
     }
 
     private boolean isMovableDirection(Direction direction) {
         return BISHOP_DIRECTION.contains(direction);
-    }
-
-    private boolean isMovableDistance(Position source, Position target) {
-        int distance = source.calculateDistanceTo(target);
-        return distance > 0;
     }
 }

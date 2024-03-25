@@ -1,5 +1,7 @@
 package chess.domain.piece.type;
 
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -38,9 +40,11 @@ class BishopTest {
     void cannotBishopMoveCross(Position source, Position target) {
         // given
         Piece bishop = new Bishop(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = bishop.isInMovableRange(source, target);
+        boolean result = bishop.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isFalse();
@@ -52,9 +56,11 @@ class BishopTest {
     void canBishopMoveDiagonal(Position source, Position target) {
         // given
         Piece bishop = new Bishop(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = bishop.isInMovableRange(source, target);
+        boolean result = bishop.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isTrue();

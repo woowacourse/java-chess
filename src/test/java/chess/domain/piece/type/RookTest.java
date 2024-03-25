@@ -1,5 +1,7 @@
 package chess.domain.piece.type;
 
+import chess.domain.board.Movement;
+import chess.domain.board.SquareStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -38,10 +40,11 @@ class RookTest {
     void canRookMoveDirection(Position source, Position target) {
         // given
         Piece rook = new Rook(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = rook.isInMovableRange(source, target);
-
+        boolean result = rook.isMovable(movement, targetStatus);
         // then
         assertThat(result).isTrue();
     }
@@ -52,9 +55,11 @@ class RookTest {
     void cannotRookMoveDiagonal(Position source, Position target) {
         // given
         Piece rook = new Rook(PieceColor.BLACK);
+        Movement movement = new Movement(source, target);
+        SquareStatus targetStatus = SquareStatus.EMPTY;
 
         // when
-        boolean result = rook.isInMovableRange(source, target);
+        boolean result = rook.isMovable(movement, targetStatus);
 
         // then
         assertThat(result).isFalse();
