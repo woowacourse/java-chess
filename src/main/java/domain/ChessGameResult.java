@@ -14,13 +14,11 @@ public class ChessGameResult {
 
     private static final Score SAME_FILE_PAWN_SCORE = new Score(0.5);
 
-    private final Score whiteScore;
-    private final Score blackScore;
+    private final Map<Team, Score> teamScores;
     private final WinStatus winStatus;
 
-    private ChessGameResult(final Score whiteScore, final Score blackScore, final WinStatus winStatus) {
-        this.whiteScore = whiteScore;
-        this.blackScore = blackScore;
+    private ChessGameResult(final Map<Team, Score> teamScores, final WinStatus winStatus) {
+        this.teamScores = teamScores;
         this.winStatus = winStatus;
     }
 
@@ -30,7 +28,7 @@ public class ChessGameResult {
 
         final WinStatus winStatus = WinStatus.of(whiteScore, blackScore);
 
-        return new ChessGameResult(whiteScore, blackScore, winStatus);
+        return new ChessGameResult(Map.of(Team.WHITE, whiteScore, Team.BLACK, blackScore), winStatus);
     }
 
     private static Score sumTotalScore(final Map<Square, Piece> pieceSquares, final Team team) {
@@ -73,11 +71,11 @@ public class ChessGameResult {
     }
 
     public double getWhiteScore() {
-        return whiteScore.toDouble();
+        return teamScores.get(Team.WHITE).toDouble();
     }
 
     public double getBlackScore() {
-        return blackScore.toDouble();
+        return teamScores.get(Team.BLACK).toDouble();
     }
 
     public WinStatus getWinStatus() {
