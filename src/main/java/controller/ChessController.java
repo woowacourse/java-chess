@@ -19,17 +19,15 @@ public class ChessController {
     }
 
     public void start() {
-        DBService dbService = new DBService();
-
         outputView.printGameGuideMessage();
-        final ChessBoard board = createChessBoard(dbService);
 
+        DBService dbService = new DBService();
+        ChessBoard board = createChessBoard(dbService);
         Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
             command.execute(board, outputView);
             command = readCommandIfGameNotEnded(board);
         }
-
         updateGameStatus(dbService, board);
     }
 
@@ -66,7 +64,11 @@ public class ChessController {
         }
     }
 
-    private static void updateGameStatus(final DBService dbService, final ChessBoard board) {
+    private void updateGameStatus(final DBService dbService, final ChessBoard board) {
+        if (board.isKingNotExist()) {
+            dbService.deletePreviousData();
+            return;
+        }
         dbService.updatePiece(board.getPieces());
         dbService.updateTurn(board.getTurn());
     }

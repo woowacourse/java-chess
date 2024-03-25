@@ -32,4 +32,9 @@ public class DBService {
         turnDao.deleteAll();
         turnDao.update(turnDto);
     }
+
+    public void deletePreviousData() {
+        pieceDao.deleteAll();
+        turnDao.deleteAll();
+    }
 }

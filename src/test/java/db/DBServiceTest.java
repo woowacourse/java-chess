@@ -74,4 +74,11 @@ class DBServiceTest {
 
         assertThat(dbService.loadPreviousTurn().getTurn()).isEqualTo(Color.BLACK);
     }
+
+    @Test
+    void 모든_데이터를_삭제한다() {
+        dbService.deletePreviousData();
+
+        assertThat(dbService.doesPreviousDataExist()).isFalse();
+    }
 }
