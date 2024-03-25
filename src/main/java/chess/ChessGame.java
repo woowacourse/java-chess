@@ -1,9 +1,11 @@
 package chess;
 
+import static chess.exception.ExceptionHandler.retry;
+
 import chess.domain.chessboard.Chessboard;
 import chess.view.InputView;
 import chess.view.ResultView;
-import chess.view.command.InitialCommand;
+import chess.view.command.Command;
 import chess.view.command.MoveCommand;
 import chess.view.dto.ChessboardDto;
 
@@ -19,26 +21,33 @@ public class ChessGame {
 
     public void run() {
         resultView.printGameStartMessage();
-        InitialCommand initialCommand = inputView.askCommand();
-        if (initialCommand.isStart()) {
+        Command command = inputView.askCommand();
+        validateStartCommand(command);
+        if (command.isStart()) {
             play();
         }
         resultView.printGameEnd();
     }
 
+    private void validateStartCommand(final Command command) {
+        if (!(command.isStart() || command.isEnd())) {
+            throw new IllegalArgumentException("시작 또는 종료 명령어를 입력해주세요.");
+        }
+    }
+
     private void play() {
         Chessboard chessboard = Chessboard.create();
         resultView.printBoard(new ChessboardDto(chessboard));
-        playByCommand(chessboard);
+        retry(() -> playByCommand(chessboard, inputView.askCommand()));
     }
 
-    private void playByCommand(final Chessboard chessboard) {
-        InitialCommand initialCommand = inputView.askCommand();
-        while (initialCommand.isMove()) {
-            MoveCommand moveCommand = initialCommand.toMoveCommand();
-            chessboard.move(moveCommand.getSource(), moveCommand.getTarget());
-            resultView.printBoard(new ChessboardDto(chessboard));
-            initialCommand = inputView.askCommand();
+    private void playByCommand(final Chessboard chessboard, final Command command) {
+        if (!command.isMove()) {
+            return;
         }
+        MoveCommand moveCommand = command.toMoveCommand();
+        chessboard.move(moveCommand.getSource(), moveCommand.getTarget());
+        resultView.printBoard(new ChessboardDto(chessboard));
+        playByCommand(chessboard, inputView.askCommand());
     }
 }

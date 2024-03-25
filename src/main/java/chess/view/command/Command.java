@@ -1,11 +1,11 @@
 package chess.view.command;
 
-public class InitialCommand {
+public class Command {
 
     private final CommandType commandType;
     private final String description;
 
-    public InitialCommand(CommandType commandType, String description) {
+    public Command(final CommandType commandType, final String description) {
         this.commandType = commandType;
         this.description = description;
     }
@@ -19,6 +19,10 @@ public class InitialCommand {
 
     public boolean isStart() {
         return commandType == CommandType.START;
+    }
+
+    public boolean isEnd() {
+        return commandType == CommandType.END;
     }
 
     public boolean isMove() {
