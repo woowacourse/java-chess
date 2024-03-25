@@ -7,6 +7,7 @@ import domain.command.Command;
 import domain.command.Commands;
 import domain.command.Ready;
 import domain.piece.Piece;
+import java.util.Collections;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -39,6 +40,6 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> getSquares() {
-        return board.getSquares();
+        return Collections.unmodifiableMap(board.getSquares());
     }
 }

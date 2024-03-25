@@ -12,5 +12,4 @@ public class King extends Piece {
     protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
         return vector.allAbsoluteValueSmallerOrEqualThan(1);
     }
-
 }

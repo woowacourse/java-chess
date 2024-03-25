@@ -30,7 +30,6 @@ public enum File {
         return of(substring.charAt(0) - 'a');
     }
 
-
     public int toIndex() {
         return index;
     }

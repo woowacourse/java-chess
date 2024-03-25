@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private Color currentTurnColor;
     private final Map<Position, Piece> squares;
+    private Color currentTurnColor;
 
     public Board(final Map<Position, Piece> squares) {
         this.currentTurnColor = Color.WHITE;
@@ -81,7 +81,6 @@ public class Board {
         squares.put(target, squares.get(source).move());
         squares.put(source, Empty.INSTANCE);
     }
-
 
     private void switchTurn() {
         currentTurnColor = currentTurnColor.reverse();

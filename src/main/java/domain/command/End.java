@@ -1,8 +1,5 @@
 package domain.command;
 
-import domain.board.Board;
-import java.util.function.Supplier;
-
 public final class End extends Command {
     private static final Command instance = new End();
 

@@ -1,7 +1,5 @@
 package domain.board;
 
-import static domain.piece.Color.BLACK;
-import static domain.piece.Color.WHITE;
 import static domain.board.position.File.A;
 import static domain.board.position.File.B;
 import static domain.board.position.File.C;
@@ -18,6 +16,8 @@ import static domain.board.position.Rank.SEVEN;
 import static domain.board.position.Rank.SIX;
 import static domain.board.position.Rank.THREE;
 import static domain.board.position.Rank.TWO;
+import static domain.piece.Color.BLACK;
+import static domain.piece.Color.WHITE;
 
 import domain.board.position.File;
 import domain.board.position.Position;
@@ -53,7 +53,6 @@ public enum BoardInitiator {
 
     EMPTY(List.of(A, B, C, D, E, F, G, H), List.of(THREE, FOUR, FIVE, SIX), Empty.INSTANCE),
     ;
-
 
     private final List<File> files;
     private final List<Rank> rank;

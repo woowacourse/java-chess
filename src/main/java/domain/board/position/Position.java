@@ -32,7 +32,6 @@ public class Position {
         return rank.toIndex();
     }
 
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

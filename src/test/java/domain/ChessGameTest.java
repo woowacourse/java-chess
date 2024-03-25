@@ -35,7 +35,5 @@ class ChessGameTest {
                     chessGame.execute("end");
                 }
         ).doesNotThrowAnyException();
-
     }
-
 }

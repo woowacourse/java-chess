@@ -12,5 +12,4 @@ public class Knight extends Piece {
     protected boolean isInstanceReachable(final Vector vector, final Piece targetPiece) {
         return vector.hasAbsoluteValueOf(1) && vector.hasAbsoluteValueOf(2);
     }
-
 }

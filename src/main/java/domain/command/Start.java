@@ -1,11 +1,5 @@
 package domain.command;
 
-import domain.board.Board;
-import dto.DtoMapper;
-import java.util.StringTokenizer;
-import java.util.function.Supplier;
-import view.OutputView;
-
 public final class Start extends Command {
 
     private static final Command instance = new Start();
@@ -20,7 +14,6 @@ public final class Start extends Command {
         }
         return command;
     }
-
 
     public static Command getInstance() {
         return instance;
