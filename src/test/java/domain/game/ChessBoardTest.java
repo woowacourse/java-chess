@@ -43,7 +43,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard();
 
         Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("옮기고자 하는 위치에 같은 진영의 Piece가 있다면 에러를 반환한다.")
@@ -60,7 +60,7 @@ class ChessBoardTest {
         chessBoard.add(targetPosition, targetPiece);
 
         Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("같은 위치로의 이동이라면 에러를 반환한다.")
@@ -74,7 +74,7 @@ class ChessBoardTest {
         chessBoard.add(sourcePosition, sourcePiece);
 
         Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("앞에 다른 진영의 기물이 있는 경우 폰이 이동하지 못한다.")
@@ -91,7 +91,7 @@ class ChessBoardTest {
         chessBoard.add(targetPosition, targetPiece);
 
         Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("대각선에 다른 진영의 기물이 있는 경우 폰이 이동할 수 있다.")
@@ -131,7 +131,7 @@ class ChessBoardTest {
         chessBoard.add(blockPosition, blockPiece);
 
         Assertions.assertThatThrownBy(() -> chessBoard.checkRoute(sourcePosition, targetPosition))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("나이트는 이동하는 경로에 기물이 있어도 이동할 수 있다.")
