@@ -25,6 +25,10 @@ public enum Rank {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
     }
 
+    public static int length() {
+        return values().length;
+    }
+
     public Rank calculateNextRank(int offset) {
         int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
@@ -35,9 +39,5 @@ public enum Rank {
 
     public Difference minus(Rank other) {
         return Difference.from(this.coordinate - other.coordinate);
-    }
-
-    public static int length() {
-        return values().length;
     }
 }
