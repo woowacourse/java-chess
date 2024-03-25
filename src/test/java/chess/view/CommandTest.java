@@ -3,18 +3,21 @@ package chess.view;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.List;
 
-@DisplayName("명령어")
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 class CommandTest {
 
     @Test
-    @DisplayName("사용자의 입력을 변환한다.")
-    void from() {
+    @DisplayName("move 명령어의 인자가 2개 미만일 경우 예외가 발생한다.")
+    void validateMoveArgumentCount() {
         // given
-        Command command = Command.from("start");
+        List<String> command = List.of("move", "b2");
 
         // when & then
-        assertThat(command).isEqualTo(Command.START);
+        assertThatCode(() -> Command.from(command))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("move 명령어는 인자가 2개 필요합니다.");
     }
 }

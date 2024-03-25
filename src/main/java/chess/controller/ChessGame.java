@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.PieceColor;
 import chess.domain.square.Square;
-import chess.view.Command;
+import chess.view.CommandType;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,19 +17,19 @@ public class ChessGame {
 
     public void run() {
         OutputView.printStartMessage();
-        Command command = Command.START;
+        CommandType commandType = CommandType.START;
         PieceColor turn = PieceColor.WHITE;
         Board board = new Board(Set.of());
 
-        while (command != Command.END) {
+        while (commandType != CommandType.END) {
             final List<String> arguments = InputView.readCommand();
-            command = requestUntilValid(() -> Command.from(arguments.get(0)));
+            commandType = requestUntilValid(() -> CommandType.from(arguments.get(0)));
 
-            if (command == Command.START) {
+            if (commandType == CommandType.START) {
                 board = BoardFactory.createBoard();
                 OutputView.printBoard(board.generatePieceDrawings());
             }
-            if (command == Command.MOVE) {
+            if (commandType == CommandType.MOVE) {
                 turn = tryMove(board, arguments.get(1), arguments.get(2), turn);
             }
         }

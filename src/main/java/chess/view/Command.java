@@ -1,24 +1,32 @@
 package chess.view;
 
-import java.util.Arrays;
+import java.util.List;
 
-public enum Command {
-    START("start"),
-    MOVE("move"),
-    END("end");
+public record Command(CommandType type, List<String> arguments) {
 
-    private static final String ERROR_INVALID_COMMAND = " 은(는) 존재하지 않는 명령어 입니다.";
-    private final String value;
+    private static final int REQUIRE_MOVE_ARGUMENTS_COUNT = 2;
+    private static final String ERROR_MOVE_ARGUMENTS_COUNT =
+            String.format("move 명령어는 인자가 %d개 필요합니다.", REQUIRE_MOVE_ARGUMENTS_COUNT);
 
-
-    Command(String value) {
-        this.value = value;
+    public Command {
+        validateMoveArgumentCount(type, arguments);
     }
 
-    public static Command from(String input) {
-        return Arrays.stream(values())
-                .filter(command -> command.value.equals(input))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(input + ERROR_INVALID_COMMAND));
+    public static Command from(List<String> command) {
+        return new Command(CommandType.from(command.get(0)), command);
+    }
+
+    private void validateMoveArgumentCount(CommandType type, List<String> arguments) {
+        if (type == CommandType.MOVE && arguments.size() <= REQUIRE_MOVE_ARGUMENTS_COUNT) {
+            throw new IllegalArgumentException(ERROR_MOVE_ARGUMENTS_COUNT);
+        }
+    }
+
+    public boolean isType(CommandType type) {
+        return this.type == type;
+    }
+
+    public List<String> getArguments() {
+        return arguments;
     }
 }
