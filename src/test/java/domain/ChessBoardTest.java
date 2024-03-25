@@ -1,23 +1,22 @@
 package domain;
 
-import domain.piece.kind.Pawn;
-import domain.piece.kind.PieceStatus;
+import domain.chess.piece.Pawn;
+import domain.chess.piece.PieceStatus;
 import fixture.PieceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domain.piece.attribute.Color;
-import domain.piece.Piece;
-import domain.piece.Pieces;
-import domain.piece.attribute.point.File;
-import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.Rank;
+import domain.chess.Color;
+import domain.chess.piece.Piece;
+import domain.chess.piece.Pieces;
+import domain.chess.File;
+import domain.chess.Point;
+import domain.chess.Rank;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static domain.piece.kind.PieceStatus.*;
+import static domain.chess.piece.PieceStatus.*;
 import static fixture.PointFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

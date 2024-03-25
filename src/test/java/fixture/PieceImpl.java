@@ -1,9 +1,9 @@
 package fixture;
 
-import domain.piece.attribute.Color;
-import domain.piece.Piece;
-import domain.piece.kind.PieceStatus;
-import domain.piece.attribute.point.Point;
+import domain.chess.Color;
+import domain.chess.piece.Piece;
+import domain.chess.piece.PieceStatus;
+import domain.chess.Point;
 
 import java.util.List;
 

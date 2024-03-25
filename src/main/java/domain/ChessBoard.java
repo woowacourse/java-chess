@@ -1,9 +1,9 @@
 package domain;
 
-import domain.piece.Piece;
-import domain.piece.Pieces;
-import domain.piece.attribute.Color;
-import domain.piece.attribute.point.Point;
+import domain.chess.piece.Piece;
+import domain.chess.piece.Pieces;
+import domain.chess.Color;
+import domain.chess.Point;
 import factory.ChessBoardGenerator;
 
 import java.util.List;

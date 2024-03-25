@@ -1,6 +1,6 @@
 package dto;
 
-import domain.piece.attribute.point.Point;
+import domain.chess.Point;
 
 public record RouteDto(String sourceText, String destinationText ) {
 

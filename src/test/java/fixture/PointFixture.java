@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.piece.attribute.point.File;
-import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.Rank;
+import domain.chess.File;
+import domain.chess.Point;
+import domain.chess.Rank;
 
 public class PointFixture {
     public static final Point A1 = new Point(File.A, Rank.ONE);

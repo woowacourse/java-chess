@@ -1,7 +1,7 @@
 package factory;
 
-import domain.piece.attribute.point.Direction;
-import domain.piece.attribute.point.Point;
+import domain.chess.Direction;
+import domain.chess.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.DirectionUtil;

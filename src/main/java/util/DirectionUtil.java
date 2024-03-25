@@ -1,7 +1,7 @@
 package util;
 
-import domain.piece.attribute.point.Direction;
-import domain.piece.attribute.point.Point;
+import domain.chess.Direction;
+import domain.chess.Point;
 
 
 public class DirectionUtil {

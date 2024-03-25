@@ -1,9 +1,9 @@
 package util;
 
 import domain.ChessBoard;
-import domain.piece.Piece;
-import domain.piece.kind.PieceStatus;
-import domain.piece.attribute.point.Point;
+import domain.chess.piece.Piece;
+import domain.chess.piece.PieceStatus;
+import domain.chess.Point;
 import dto.BoardDto;
 import dto.PointDto;
 
