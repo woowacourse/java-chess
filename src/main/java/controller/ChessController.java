@@ -11,18 +11,12 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-    private final InputView inputView;
-    private final OutputView outputView;
-
-    public ChessController(final InputView inputView, final OutputView outputView) {
-        this.inputView = inputView;
-        this.outputView = outputView;
-    }
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
 
     public void runChessGame() {
         outputView.printCommandMessage();
         ChessCommand initialCommand = enterCommandAndExtractPrefix();
-
         if (initialCommand == ChessCommand.START) {
             ChessBoard chessBoard = new ChessBoard();
             retry(() -> enterAndExecuteCommand(chessBoard, initialCommand));
