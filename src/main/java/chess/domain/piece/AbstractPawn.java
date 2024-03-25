@@ -16,7 +16,7 @@ import chess.domain.piece.attribute.Position;
 
 public abstract class AbstractPawn extends UnslidingPiece {
 
-    interface PositionConsumer {
+    private interface PositionConsumer {
         void accept(Chessboard chessboard, Position position, Set<Position> positions);
     }
 

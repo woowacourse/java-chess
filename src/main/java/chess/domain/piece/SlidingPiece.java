@@ -18,9 +18,7 @@ public abstract class SlidingPiece extends Piece {
 
     protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Direction> directions) {
         Set<Position> positions = new HashSet<>();
-        for (final Direction direction : directions) {
-            positions.addAll(possiblePositionsTo(chessboard, direction));
-        }
+        directions.forEach(direction -> positions.addAll(possiblePositionsTo(chessboard, direction)));
         return positions;
     }
 
