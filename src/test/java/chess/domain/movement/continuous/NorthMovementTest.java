@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 class NorthMovementTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {
@@ -17,7 +19,7 @@ class NorthMovementTest {
         Position end = new Position(File.C, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
 
-        assertThat(northMovement.isMovable(start, end)).isTrue();
+        assertThat(northMovement.isMovable(start, end, HAS_ENEMY)).isTrue();
     }
 
     @Test
@@ -27,7 +29,7 @@ class NorthMovementTest {
         Position end = new Position(File.B, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
 
-        assertThat(northMovement.isMovable(start, end)).isFalse();
+        assertThat(northMovement.isMovable(start, end, HAS_ENEMY)).isFalse();
     }
 
     @Test
@@ -37,7 +39,7 @@ class NorthMovementTest {
         Position end = new Position(File.C, Rank.SIX);
         NorthMovement northMovement = new NorthMovement();
 
-        assertThat(northMovement.findPath(start, end))
+        assertThat(northMovement.findPath(start, end, HAS_ENEMY))
                 .containsExactly(new Position(File.C, Rank.FIVE), new Position(File.C, Rank.SIX));
     }
 }

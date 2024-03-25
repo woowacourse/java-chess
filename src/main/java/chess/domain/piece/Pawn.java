@@ -1,18 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.movement.BlackPawnFirstMovement;
 import chess.domain.movement.MovementRule;
-import chess.domain.movement.WhitePawnFirstMovement;
-import chess.domain.movement.discrete.BlackPawnDefaultMovement;
-import chess.domain.movement.discrete.WhitePawnDefaultMovement;
+import chess.domain.movement.pawn.BlackPawnDefaultMovement;
+import chess.domain.movement.pawn.BlackPawnDiagonalMovement;
+import chess.domain.movement.pawn.BlackPawnFirstMovement;
+import chess.domain.movement.pawn.WhitePawnDefaultMovement;
+import chess.domain.movement.pawn.WhitePawnDiagonalMovement;
+import chess.domain.movement.pawn.WhitePawnFirstMovement;
 import java.util.List;
 
 public final class Pawn extends Piece {
 
     private static final List<MovementRule> BLACK_MOVEMENT_RULES = List.of(
-            new BlackPawnFirstMovement(), new BlackPawnDefaultMovement());
+            new BlackPawnFirstMovement(), new BlackPawnDefaultMovement(), new BlackPawnDiagonalMovement());
     private static final List<MovementRule> WHITE_MOVEMENT_RULES = List.of(
-            new WhitePawnFirstMovement(), new WhitePawnDefaultMovement());
+            new WhitePawnFirstMovement(), new WhitePawnDefaultMovement(), new WhitePawnDiagonalMovement());
 
     public Pawn(Team team) {
         super(team, findMovementRule(team));

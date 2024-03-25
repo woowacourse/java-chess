@@ -27,12 +27,21 @@ public class Board {
         Piece movingPiece = findMovingPiece(start);
         validateTeamRule(movingPiece, end);
 
-        List<Position> path = movingPiece.findPath(start, end);
+        boolean hasEnemy = hasEnemy(end);
+        List<Position> path = movingPiece.findPath(start, end, hasEnemy);
+        validatePath(path);
+
+        move(start, end, movingPiece);
+    }
+
+    private void validatePath(List<Position> path) {
         if (isBlocked(path)) {
             throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
         }
+    }
 
-        move(start, end, movingPiece);
+    private boolean hasEnemy(Position end) {
+        return find(end).isPresent();
     }
 
     private Piece findMovingPiece(Position start) {

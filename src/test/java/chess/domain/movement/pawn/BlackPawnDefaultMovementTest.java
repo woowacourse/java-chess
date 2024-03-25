@@ -1,4 +1,4 @@
-package chess.domain.movement.discrete;
+package chess.domain.movement.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class BlackPawnDefaultMovementTest {
 
+    private static final boolean NOT_EXIST_ENEMY = false;
+
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {
@@ -19,7 +21,7 @@ class BlackPawnDefaultMovementTest {
         Position end = new Position(File.D, Rank.THREE);
         BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
 
-        assertThat(blackPawnDefaultMovement.isMovable(start, end)).isTrue();
+        assertThat(blackPawnDefaultMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isTrue();
     }
 
     @ParameterizedTest
@@ -30,7 +32,18 @@ class BlackPawnDefaultMovementTest {
         Position end = new Position(file, rank);
         BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
 
-        assertThat(blackPawnDefaultMovement.isMovable(start, end)).isFalse();
+        assertThat(blackPawnDefaultMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isFalse();
+    }
+
+    @Test
+    @DisplayName("도착 위치에 적이 있을 경우, 이동 불가능하다.")
+    void isMovableTest_existEnemy() {
+        Position start = new Position(File.B, Rank.FOUR);
+        Position end = start.moveToSouth();
+        boolean hasEnemy = true;
+        BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
+
+        assertThat(blackPawnDefaultMovement.isMovable(start, end, hasEnemy)).isFalse();
     }
 
     @Test
@@ -40,7 +53,7 @@ class BlackPawnDefaultMovementTest {
         Position end = new Position(File.D, Rank.THREE);
         BlackPawnDefaultMovement blackPawnDefaultMovement = new BlackPawnDefaultMovement();
 
-        assertThat(blackPawnDefaultMovement.findPath(start, end))
+        assertThat(blackPawnDefaultMovement.findPath(start, end, NOT_EXIST_ENEMY))
                 .containsExactly(end);
     }
 }

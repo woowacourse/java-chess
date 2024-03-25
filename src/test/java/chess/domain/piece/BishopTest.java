@@ -14,6 +14,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
@@ -21,7 +23,7 @@ class BishopTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.A, Rank.ONE);
 
-        assertThat(bishop.findPath(start, end))
+        assertThat(bishop.findPath(start, end, HAS_ENEMY))
                 .containsExactly(
                         new Position(File.C, Rank.THREE),
                         new Position(File.B, Rank.TWO),
@@ -36,7 +38,7 @@ class BishopTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThatCode(() -> bishop.findPath(start, end)).doesNotThrowAnyException();
+        assertThatCode(() -> bishop.findPath(start, end, HAS_ENEMY)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -47,7 +49,7 @@ class BishopTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThatThrownBy(() -> bishop.findPath(start, end))
+        assertThatThrownBy(() -> bishop.findPath(start, end, HAS_ENEMY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

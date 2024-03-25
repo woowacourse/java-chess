@@ -14,6 +14,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
@@ -21,7 +23,7 @@ class RookTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(File.A, Rank.FOUR);
 
-        assertThat(rook.findPath(start, end))
+        assertThat(rook.findPath(start, end, HAS_ENEMY))
                 .containsExactly(
                         new Position(File.C, Rank.FOUR),
                         new Position(File.B, Rank.FOUR),
@@ -36,7 +38,7 @@ class RookTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThatCode(() -> rook.findPath(start, end)).doesNotThrowAnyException();
+        assertThatCode(() -> rook.findPath(start, end, HAS_ENEMY)).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
@@ -47,7 +49,7 @@ class RookTest {
         Position start = new Position(File.D, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThatThrownBy(() -> rook.findPath(start, end))
+        assertThatThrownBy(() -> rook.findPath(start, end, HAS_ENEMY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KingTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @ParameterizedTest
     @CsvSource({"F, THREE", "F, FIVE", "E, THREE", "E, FOUR", "E, FIVE", "G, THREE", "G, FOUR", "G, FIVE"})
     @DisplayName("이동 경로를 알 수 있다.")
@@ -20,7 +22,7 @@ class KingTest {
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThat(king.findPath(start, end)).containsExactly(end);
+        assertThat(king.findPath(start, end, HAS_ENEMY)).containsExactly(end);
     }
 
     @ParameterizedTest
@@ -31,7 +33,7 @@ class KingTest {
         Position start = new Position(File.F, Rank.FOUR);
         Position end = new Position(file, rank);
 
-        assertThatThrownBy(() -> king.findPath(start, end))
+        assertThatThrownBy(() -> king.findPath(start, end, HAS_ENEMY))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("불가능한 경로입니다.");
     }

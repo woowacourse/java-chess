@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 class SouthEastMovementTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {
@@ -17,7 +19,7 @@ class SouthEastMovementTest {
         Position end = new Position(File.E, Rank.TWO);
         SouthEastMovement southEastMovement = new SouthEastMovement();
 
-        assertThat(southEastMovement.isMovable(start, end)).isTrue();
+        assertThat(southEastMovement.isMovable(start, end, HAS_ENEMY)).isTrue();
     }
 
     @Test
@@ -27,7 +29,7 @@ class SouthEastMovementTest {
         Position end = new Position(File.D, Rank.TWO);
         SouthEastMovement southEastMovement = new SouthEastMovement();
 
-        assertThat(southEastMovement.isMovable(start, end)).isFalse();
+        assertThat(southEastMovement.isMovable(start, end, HAS_ENEMY)).isFalse();
     }
 
     @Test
@@ -37,7 +39,7 @@ class SouthEastMovementTest {
         Position end = new Position(File.E, Rank.TWO);
         SouthEastMovement southEastMovement = new SouthEastMovement();
 
-        assertThat(southEastMovement.findPath(start, end))
+        assertThat(southEastMovement.findPath(start, end, HAS_ENEMY))
                 .containsExactly(new Position(File.D, Rank.THREE), new Position(File.E, Rank.TWO));
     }
 }

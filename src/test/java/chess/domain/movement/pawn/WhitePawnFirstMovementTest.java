@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,25 +12,28 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class WhitePawnFirstMovementTest {
 
+    private static final boolean NOT_EXIST_ENEMY = false;
+    private static final Rank AVAILABLE_START_RANK = Rank.TWO;
+
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {
-        Position start = new Position(File.D, Rank.TWO);
+        Position start = new Position(File.D, AVAILABLE_START_RANK);
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isTrue();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isTrue();
     }
 
     @ParameterizedTest
     @CsvSource({"C, SEVEN", "D, ONE", "D, THREE", "D, FIVE"})
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest_false(File file, Rank rank) {
-        Position start = new Position(File.D, Rank.TWO);
+        Position start = new Position(File.D, AVAILABLE_START_RANK);
         Position end = new Position(file, rank);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isFalse();
     }
 
     @ParameterizedTest
@@ -41,7 +44,18 @@ class WhitePawnFirstMovementTest {
         Position end = start.moveToNorth().moveToNorth();
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
 
-        assertThat(whitePawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(whitePawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isFalse();
+    }
+
+    @Test
+    @DisplayName("도착 위치에 적이 있을 경우, 이동 불가능하다.")
+    void isMovableTest_existEnemy() {
+        Position start = new Position(File.B, AVAILABLE_START_RANK);
+        Position end = start.moveToNorth().moveToNorth();
+        boolean hasEnemy = true;
+        WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
+
+        assertThat(whitePawnFirstMovement.isMovable(start, end, hasEnemy)).isFalse();
     }
 
     @Test
@@ -52,7 +66,7 @@ class WhitePawnFirstMovementTest {
         Position end = new Position(File.D, Rank.FOUR);
         WhitePawnFirstMovement whitePawnFirstMovement = new WhitePawnFirstMovement();
 
-        assertThat(whitePawnFirstMovement.findPath(start, end))
+        assertThat(whitePawnFirstMovement.findPath(start, end, NOT_EXIST_ENEMY))
                 .containsExactly(middle, end);
     }
 }

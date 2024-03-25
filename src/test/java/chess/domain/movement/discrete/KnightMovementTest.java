@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class KnightMovementTest {
 
+    private static final boolean HAS_ENEMY = false;
+
     @ParameterizedTest
     @CsvSource({"B, FIVE", "C, SIX", "E, SIX", "F, FIVE", "B, THREE", "C, TWO", "E, TWO", "F, THREE"})
     @DisplayName("이동 가능한지 확인한다.")
@@ -20,7 +22,7 @@ class KnightMovementTest {
         Position end = new Position(file, rank);
         KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(knightMovement.isMovable(start, end)).isTrue();
+        assertThat(knightMovement.isMovable(start, end, HAS_ENEMY)).isTrue();
     }
 
     @ParameterizedTest
@@ -31,7 +33,7 @@ class KnightMovementTest {
         Position end = new Position(file, rank);
         KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(knightMovement.isMovable(start, end)).isFalse();
+        assertThat(knightMovement.isMovable(start, end, HAS_ENEMY)).isFalse();
     }
 
     @Test
@@ -41,7 +43,7 @@ class KnightMovementTest {
         Position end = new Position(File.B, Rank.FIVE);
         KnightMovement knightMovement = new KnightMovement();
 
-        assertThat(knightMovement.findPath(start, end))
+        assertThat(knightMovement.findPath(start, end, HAS_ENEMY))
                 .containsExactly(end);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.movement;
+package chess.domain.movement.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,25 +12,28 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class BlackPawnFirstMovementTest {
 
+    private static final boolean NOT_EXIST_ENEMY = false;
+    private static final Rank AVAILABLE_START_RANK = Rank.SEVEN;
+
     @Test
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest() {
-        Position start = new Position(File.D, Rank.SEVEN);
+        Position start = new Position(File.D, AVAILABLE_START_RANK);
         Position end = new Position(File.D, Rank.FIVE);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isTrue();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isTrue();
     }
 
     @ParameterizedTest
     @CsvSource({"C, SEVEN", "D, SIX", "D, FOUR", "D, EIGHT"})
     @DisplayName("이동 가능한지 확인한다.")
     void isMovableTest_false(File file, Rank rank) {
-        Position start = new Position(File.D, Rank.SEVEN);
+        Position start = new Position(File.D, AVAILABLE_START_RANK);
         Position end = new Position(file, rank);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isFalse();
     }
 
     @ParameterizedTest
@@ -41,19 +44,29 @@ class BlackPawnFirstMovementTest {
         Position end = start.moveToSouth().moveToSouth();
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
-        assertThat(blackPawnFirstMovement.isMovable(start, end)).isFalse();
+        assertThat(blackPawnFirstMovement.isMovable(start, end, NOT_EXIST_ENEMY)).isFalse();
     }
 
+    @Test
+    @DisplayName("도착 위치에 적이 있을 경우, 이동 불가능하다.")
+    void isMovableTest_existEnemy() {
+        Position start = new Position(File.B, AVAILABLE_START_RANK);
+        Position end = start.moveToSouth().moveToSouth();
+        boolean hasEnemy = true;
+        BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
+
+        assertThat(blackPawnFirstMovement.isMovable(start, end, hasEnemy)).isFalse();
+    }
 
     @Test
     @DisplayName("이동 경로를 알 수 있다.")
     void findPathTest() {
-        Position start = new Position(File.D, Rank.SEVEN);
+        Position start = new Position(File.D, AVAILABLE_START_RANK);
         Position middle = new Position(File.D, Rank.SIX);
         Position end = new Position(File.D, Rank.FIVE);
         BlackPawnFirstMovement blackPawnFirstMovement = new BlackPawnFirstMovement();
 
-        assertThat(blackPawnFirstMovement.findPath(start, end))
+        assertThat(blackPawnFirstMovement.findPath(start, end, NOT_EXIST_ENEMY))
                 .containsExactly(middle, end);
     }
 }
