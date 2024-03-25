@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ChessBoard {
+    private static final int SINGLE_KING = 1;
+    private static final int DOUBLE_PAWN = 2;
     private static final Score HALF_PAWN_SCORE = new Score(0.5);
 
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
@@ -39,16 +41,14 @@ public class ChessBoard {
         if (!canMove(sourcePiece, source, target)) {
             throw new IllegalArgumentException("올바르지 않은 이동입니다.");
         }
-        chessBoard.put(target, sourcePiece);
-        chessBoard.remove(source);
-        currentTurnTeamColor = currentTurnTeamColor.convertTurn();
+        updateChessBoard(source, target, sourcePiece);
     }
 
     public boolean isKingCaptured() {
         int kingCount = Math.toIntExact(chessBoard.values().stream()
                 .filter(Piece::isKing)
                 .count());
-        return kingCount == 1;
+        return kingCount == SINGLE_KING;
     }
 
     public Color findWinnerByKing() {
@@ -63,24 +63,10 @@ public class ChessBoard {
                 .mapToDouble(Piece::getScore).sum();
         Score score = new Score(scoreValue);
         for (File file : File.values()) {
-            double pawnCount = getPawnCount(file, color);
-            if (pawnCount >= 2) {
-                score -= 0.5 * pawnCount;
-            }
             double verticalPawnCount = getVerticalPawnCount(file, color);
             score = applyHalfPawnScore(score, verticalPawnCount);
         }
         return score;
-    }
-
-    private double getPawnCount(File file, Color color) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> Position.of(file, rank))
-                .filter(position -> {
-                    Piece piece = chessBoard.get(position);
-                    return piece != null && piece.isPawn() && piece.getColor() == color;
-                })
-                .count();
     }
 
     public Map<Position, Piece> getChessBoard() {
@@ -88,7 +74,7 @@ public class ChessBoard {
     }
 
     private void validateTurn(Piece sourcePiece) {
-        if (currentTurnTeamColor != sourcePiece.getColor()) {
+        if (!sourcePiece.isSameColor(currentTurnTeamColor)) {
             throw new IllegalArgumentException("해당 팀의 턴이 아닙니다.");
         }
     }
@@ -102,6 +88,12 @@ public class ChessBoard {
             return sourcePiece.searchPath(source, target).stream().noneMatch(chessBoard::containsKey);
         }
         return false;
+    }
+
+    private void updateChessBoard(Position source, Position target, Piece sourcePiece) {
+        chessBoard.put(target, sourcePiece);
+        chessBoard.remove(source);
+        currentTurnTeamColor = currentTurnTeamColor.convertTurn();
     }
 
     private double getVerticalPawnCount(File file, Color color) {

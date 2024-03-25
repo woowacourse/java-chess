@@ -1,12 +1,10 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.BISHOP;
-import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
 import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
@@ -38,12 +36,8 @@ public class Bishop extends Piece {
 
         int fileUnit = UnitCalculator.getUnit(fileDiff);
         int rankUnit = UnitCalculator.getUnit(rankDiff);
+        int moveCount = Math.abs(rankDiff);
 
-        List<Position> path = new ArrayList<>();
-        for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
-            source = source.move(fileUnit, rankUnit);
-            path.add(source);
-        }
-        return path;
+        return combinePath(source, moveCount, fileUnit, rankUnit);
     }
 }

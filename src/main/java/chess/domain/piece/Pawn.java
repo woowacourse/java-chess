@@ -8,7 +8,6 @@ import static chess.utils.Constant.ZERO_SQUARE;
 import chess.domain.position.Position;
 import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -38,13 +37,9 @@ public class Pawn extends Piece {
     public List<Position> searchPath(Position source, Position target) {
         int rankDiff = source.calculateRankDifference(target);
         int rankUnit = UnitCalculator.getUnit(rankDiff);
+        int moveCount = Math.abs(rankDiff);
 
-        List<Position> path = new ArrayList<>();
-        for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
-            source = source.move(ZERO_SQUARE, rankUnit);
-            path.add(source);
-        }
-        return path;
+        return combinePath(source, moveCount, ZERO_SQUARE, rankUnit);
     }
 
     private boolean checkBlack(Position source, Position target, Color color) {

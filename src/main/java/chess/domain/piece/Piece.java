@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.utils.Constant.ONE_SQUARE;
+
 import chess.domain.position.Position;
 import chess.domain.vo.Score;
 import java.util.ArrayList;
@@ -34,6 +36,19 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean isSameColor(Color otherColor) {
+        return color == otherColor;
+    }
+
+    protected List<Position> combinePath(Position source, int moveCount, int fileUnit, int rankUnit) {
+        List<Position> path = new ArrayList<>();
+        for (int i = moveCount; i > ONE_SQUARE; i--) {
+            source = source.move(fileUnit, rankUnit);
+            path.add(source);
+        }
+        return path;
     }
 
     public double getScore() {

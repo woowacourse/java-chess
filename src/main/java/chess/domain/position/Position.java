@@ -11,7 +11,7 @@ public class Position {
     private static final Map<String, Position> CACHE = Arrays.stream(Rank.values())
             .flatMap(rank -> Arrays.stream(File.values()).map(file -> new Position(file, rank)))
             .collect(Collectors.toMap(position -> toKey(position.file, position.rank), Function.identity()));
-    
+
     private final File file;
     private final Rank rank;
 
@@ -62,7 +62,7 @@ public class Position {
         File movedFile = file.move(fileUnit);
         Rank movedRank = rank.move(rankUnit);
 
-        return new Position(movedFile, movedRank);
+        return Position.of(movedFile, movedRank);
     }
 
     public boolean isPawnFirstTry(Color color) {
