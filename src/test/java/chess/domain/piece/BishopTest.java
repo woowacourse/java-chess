@@ -16,7 +16,8 @@ class BishopTest {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -27,7 +28,8 @@ class BishopTest {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
                 Point.of(File.C, Rank.FOURTH),
-                Point.of(File.E, Rank.SECOND));
+                Point.of(File.E, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -38,7 +40,8 @@ class BishopTest {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
                 Point.of(File.H, Rank.FIRST),
-                Point.of(File.A, Rank.EIGHTH));
+                Point.of(File.A, Rank.EIGHTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -49,7 +52,8 @@ class BishopTest {
         Bishop bishop = Bishop.from(Team.WHITE);
         boolean result = bishop.isMovable(
                 Point.of(File.H, Rank.EIGHTH),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }

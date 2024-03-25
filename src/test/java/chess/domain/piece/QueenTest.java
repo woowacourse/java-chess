@@ -15,7 +15,10 @@ class QueenTest {
     void isMovable1() {
         Queen queen = Queen.from(Team.WHITE);
 
-        boolean result = queen.isMovable(Point.of(File.A, Rank.FIRST), Point.of(File.A, Rank.EIGHTH));
+        boolean result = queen.isMovable(
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.A, Rank.EIGHTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -25,7 +28,10 @@ class QueenTest {
     void isMovable2() {
         Queen queen = Queen.from(Team.WHITE);
 
-        boolean result = queen.isMovable(Point.of(File.A, Rank.EIGHTH), Point.of(File.A, Rank.FIRST));
+        boolean result = queen.isMovable(
+                Point.of(File.A, Rank.EIGHTH),
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -35,7 +41,10 @@ class QueenTest {
     void isMovable3() {
         Queen queen = Queen.from(Team.WHITE);
 
-        boolean result = queen.isMovable(Point.of(File.H, Rank.FIRST), Point.of(File.A, Rank.FIRST));
+        boolean result = queen.isMovable(
+                Point.of(File.H, Rank.FIRST),
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -45,7 +54,10 @@ class QueenTest {
     void isMovable4() {
         Queen queen = Queen.from(Team.WHITE);
 
-        boolean result = queen.isMovable(Point.of(File.A, Rank.FIRST), Point.of(File.H, Rank.FIRST));
+        boolean result = queen.isMovable(
+                Point.of(File.A, Rank.FIRST),
+                Point.of(File.H, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -56,7 +68,8 @@ class QueenTest {
         Queen queen = Queen.from(Team.WHITE);
         boolean result = queen.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -67,7 +80,8 @@ class QueenTest {
         Queen queen = Queen.from(Team.WHITE);
         boolean result = queen.isMovable(
                 Point.of(File.C, Rank.FOURTH),
-                Point.of(File.E, Rank.SECOND));
+                Point.of(File.E, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -78,7 +92,8 @@ class QueenTest {
         Queen queen = Queen.from(Team.WHITE);
         boolean result = queen.isMovable(
                 Point.of(File.H, Rank.FIRST),
-                Point.of(File.A, Rank.EIGHTH));
+                Point.of(File.A, Rank.EIGHTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -89,7 +104,8 @@ class QueenTest {
         Queen queen = Queen.from(Team.WHITE);
         boolean result = queen.isMovable(
                 Point.of(File.H, Rank.EIGHTH),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }

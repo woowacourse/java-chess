@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
 import chess.domain.point.Point;
@@ -17,8 +16,9 @@ public class Board {
 
     public void move(Player player, Point currentPoint, Point destination) {
         Piece currentPiece = board.get(currentPoint);
+        Piece targetPiece = board.get(destination);
 
-        validateMove(player, currentPoint, destination, currentPiece);
+        validateMove(player, currentPoint, destination, currentPiece, targetPiece);
 
         movePiece(currentPoint, destination, currentPiece);
     }
@@ -28,12 +28,12 @@ public class Board {
         board.put(destination, currentPiece);
     }
 
-    private void validateMove(Player player, Point currentPoint, Point destination, Piece currentPiece) {
+    private void validateMove(Player player, Point currentPoint, Point destination, Piece currentPiece,
+            Piece targetPiece) {
         validateMyPiece(player, currentPiece);
-        validateMovablePoint(currentPoint, destination, currentPiece);
+        validateMovablePoint(currentPoint, destination, currentPiece, targetPiece);
         validateDestination(player, destination);
         validateMovableRoute(currentPoint, destination);
-        validatePawn(currentPoint, destination, currentPiece);
     }
 
     private void validateMyPiece(Player player, Piece currentPiece) {
@@ -42,8 +42,8 @@ public class Board {
         }
     }
 
-    private void validateMovablePoint(Point currentPoint, Point destination, Piece currentPiece) {
-        if (!currentPiece.isMovable(currentPoint, destination)) {
+    private void validateMovablePoint(Point currentPoint, Point destination, Piece currentPiece, Piece targetPiece) {
+        if (!currentPiece.isMovable(currentPoint, destination, targetPiece)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
         }
     }
@@ -63,22 +63,6 @@ public class Board {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
             nextPoint = nextPoint.add(unitDirection.file(), unitDirection.rank());
-        }
-    }
-
-    // TODO 리팩터링
-    private void validatePawn(Point currentPoint, Point destination, Piece currentPiece) {
-        if (currentPiece instanceof Pawn) {
-            if (currentPoint.isSlopeOneDiagonal(destination)) {
-                if (board.get(destination).equals(Piece.empty())) {
-                    throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
-                }
-            }
-            if (currentPoint.isStraight(destination)) {
-                if (!board.get(destination).equals(Piece.empty())) {
-                    throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
-                }
-            }
         }
     }
 

@@ -15,7 +15,10 @@ class PawnTest {
     void isMovable1() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.A, Rank.FOURTH));
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.THIRD),
+                Point.of(File.A, Rank.FOURTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -25,17 +28,23 @@ class PawnTest {
     void isMovable2() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(Point.of(File.A, Rank.SECOND), Point.of(File.A, Rank.FOURTH));
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.SECOND),
+                Point.of(File.A, Rank.FOURTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
 
     @Test
-    @DisplayName("폰은 팀 진행 방향 대각선으로 한 칸 이동할 수 있다.")
+    @DisplayName("폰은 팀 진행 방향 대각선에 상대 기물이 있으면 한 칸 이동할 수 있다.")
     void isMovable3() {
         Pawn pawn = Pawn.from(Team.BLACK);
 
-        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.B, Rank.SECOND));
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.THIRD),
+                Point.of(File.B, Rank.SECOND),
+                Piece.bishopFrom(Team.WHITE));
 
         assertThat(result).isTrue();
     }
@@ -45,7 +54,10 @@ class PawnTest {
     void invalidIsMovable1() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(Point.of(File.A, Rank.SECOND), Point.of(File.A, Rank.FIRST));
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.SECOND),
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isFalse();
     }
@@ -55,7 +67,36 @@ class PawnTest {
     void invalidIsMovable2() {
         Pawn pawn = Pawn.from(Team.WHITE);
 
-        boolean result = pawn.isMovable(Point.of(File.A, Rank.THIRD), Point.of(File.A, Rank.FIFTH));
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.THIRD),
+                Point.of(File.A, Rank.FIFTH),
+                Piece.empty());
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰은 팀 진행 방향 대각선에 상대 기물이 없으면 이동할 없다.")
+    void invalidIsMovable3() {
+        Pawn pawn = Pawn.from(Team.BLACK);
+
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.THIRD),
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("폰은 팀 진행 방향에 기물이 있으면 이동할 없다.")
+    void invalidIsMovable4() {
+        Pawn pawn = Pawn.from(Team.BLACK);
+
+        boolean result = pawn.isMovable(
+                Point.of(File.A, Rank.THIRD),
+                Point.of(File.A, Rank.SECOND),
+                Piece.bishopFrom(Team.WHITE));
 
         assertThat(result).isFalse();
     }

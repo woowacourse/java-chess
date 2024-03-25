@@ -17,7 +17,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.D, Rank.SIXTH)
+                Point.of(File.D, Rank.SIXTH),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -30,7 +31,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.F, Rank.SIXTH)
+                Point.of(File.F, Rank.SIXTH),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -43,7 +45,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.D, Rank.SECOND)
+                Point.of(File.D, Rank.SECOND),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -56,7 +59,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.F, Rank.SECOND)
+                Point.of(File.F, Rank.SECOND),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -69,7 +73,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.G, Rank.FIFTH)
+                Point.of(File.G, Rank.FIFTH),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -82,7 +87,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.G, Rank.THIRD)
+                Point.of(File.G, Rank.THIRD),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -95,7 +101,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.C, Rank.FIFTH)
+                Point.of(File.C, Rank.FIFTH),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -108,7 +115,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.G, Rank.THIRD)
+                Point.of(File.G, Rank.THIRD),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -121,7 +129,8 @@ class KnightTest {
 
         boolean result = knight.isMovable(
                 Point.of(File.E, Rank.FOURTH),
-                Point.of(File.G, Rank.SECOND)
+                Point.of(File.G, Rank.SECOND),
+                Piece.empty()
         );
 
         assertThat(result).isFalse();

@@ -17,7 +17,8 @@ class RookTest {
 
         boolean result = rook.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.A, Rank.EIGHTH)
+                Point.of(File.A, Rank.EIGHTH),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -30,7 +31,8 @@ class RookTest {
 
         boolean result = rook.isMovable(
                 Point.of(File.A, Rank.EIGHTH),
-                Point.of(File.A, Rank.FIRST)
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -43,7 +45,8 @@ class RookTest {
 
         boolean result = rook.isMovable(
                 Point.of(File.H, Rank.FIRST),
-                Point.of(File.A, Rank.FIRST)
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -56,7 +59,8 @@ class RookTest {
 
         boolean result = rook.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.H, Rank.FIRST)
+                Point.of(File.H, Rank.FIRST),
+                Piece.empty()
         );
 
         assertThat(result).isTrue();
@@ -69,7 +73,8 @@ class RookTest {
 
         boolean result = rook.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.B, Rank.SECOND)
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty()
         );
 
         assertThat(result).isFalse();

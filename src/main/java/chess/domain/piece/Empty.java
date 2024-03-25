@@ -15,7 +15,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point currentPoint, Point nextPoint) {
+    public boolean isMovable(Point currentPoint, Point nextPoint, Piece target) {
         return false;
     }
 }

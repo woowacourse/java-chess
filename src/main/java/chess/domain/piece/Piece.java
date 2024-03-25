@@ -38,7 +38,7 @@ public abstract class Piece {
         return Empty.getEmpty();
     }
 
-    public abstract boolean isMovable(Point currentPoint, Point nextPoint);
+    public abstract boolean isMovable(Point currentPoint, Point nextPoint, Piece target);
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

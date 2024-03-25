@@ -17,7 +17,8 @@ class KingTest {
 
         boolean result = king.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.A, Rank.SECOND));
+                Point.of(File.A, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -29,7 +30,8 @@ class KingTest {
 
         boolean result = king.isMovable(
                 Point.of(File.A, Rank.EIGHTH),
-                Point.of(File.A, Rank.SEVENTH));
+                Point.of(File.A, Rank.SEVENTH),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -41,7 +43,8 @@ class KingTest {
 
         boolean result = king.isMovable(
                 Point.of(File.B, Rank.FIRST),
-                Point.of(File.A, Rank.FIRST));
+                Point.of(File.A, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -53,7 +56,8 @@ class KingTest {
 
         boolean result = king.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.B, Rank.FIRST));
+                Point.of(File.B, Rank.FIRST),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -64,7 +68,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
                 Point.of(File.A, Rank.FIRST),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -75,7 +80,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
                 Point.of(File.C, Rank.FOURTH),
-                Point.of(File.D, Rank.THIRD));
+                Point.of(File.D, Rank.THIRD),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -86,7 +92,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
                 Point.of(File.B, Rank.FIRST),
-                Point.of(File.A, Rank.SECOND));
+                Point.of(File.A, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -97,7 +104,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
                 Point.of(File.C, Rank.THIRD),
-                Point.of(File.B, Rank.SECOND));
+                Point.of(File.B, Rank.SECOND),
+                Piece.empty());
 
         assertThat(result).isTrue();
     }
@@ -108,7 +116,8 @@ class KingTest {
         King king = King.from(Team.WHITE);
         boolean result = king.isMovable(
                 Point.of(File.C, Rank.THIRD),
-                Point.of(File.C, Rank.FIFTH));
+                Point.of(File.C, Rank.FIFTH),
+                Piece.empty());
 
         assertThat(result).isFalse();
     }
