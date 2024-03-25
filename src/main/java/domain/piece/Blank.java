@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Blank extends ChessPieceBase {
 
-    public Blank(Color color) {
-        super(color);
+    public Blank() {
+        super(Color.NONE);
     }
 
     @Override
