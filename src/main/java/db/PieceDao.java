@@ -17,11 +17,11 @@ public class PieceDao {
         this.connectionManager = connectionManager;
     }
 
-    public PieceDao() {
+    PieceDao() {
         this(new ConnectionManager());
     }
 
-    public void add(final PieceDto piece) {
+    void add(final PieceDto piece) {
         final var query = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?)";
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -35,7 +35,7 @@ public class PieceDao {
         }
     }
 
-    public PieceDto find(final String file, final String rank) {
+    PieceDto find(final String file, final String rank) {
         final var query = "SELECT * FROM " + tableName + " WHERE board_file = ? and board_rank = ?";
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -55,7 +55,7 @@ public class PieceDao {
         return null;
     }
 
-    public List<PieceDto> findAll() {
+    List<PieceDto> findAll() {
         final List<PieceDto> pieces = new ArrayList<>();
         final String query = "SELECT * FROM " + tableName;
         try (final Connection connection = connectionManager.getConnection();
@@ -74,7 +74,7 @@ public class PieceDao {
         return pieces;
     }
 
-    public void deleteAll() {
+    void deleteAll() {
         final var query = "DELETE FROM " + tableName;
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -84,7 +84,7 @@ public class PieceDao {
         }
     }
 
-    public int count() {
+    int count() {
         final var query = "SELECT COUNT(*) AS count FROM " + tableName;
         try (final var connection = connectionManager.getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {

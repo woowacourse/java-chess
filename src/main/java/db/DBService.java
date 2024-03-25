@@ -1,11 +1,13 @@
 package db;
 
 import domain.dto.PieceDto;
+import domain.dto.TurnDto;
 
 import java.util.List;
 
 public class DBService {
     private final PieceDao pieceDao = new PieceDao();
+    private final TurnDao turnDao = new TurnDao();
 
     public boolean doesPreviousDataExist() {
         return pieceDao.count() != 0;
@@ -13,6 +15,10 @@ public class DBService {
 
     public List<PieceDto> loadPreviousData() {
         return pieceDao.findAll();
+    }
+
+    public TurnDto loadPreviousTurn() {
+        return turnDao.find();
     }
 
     public void updatePiece(final List<PieceDto> pieceDtos) {

@@ -1,6 +1,8 @@
 package db;
 
 import domain.dto.PieceDto;
+import domain.dto.TurnDto;
+import domain.piece.Color;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,10 @@ class DBServiceTest {
     private static final PieceDto A2WhitePawn = new PieceDto("A", "2", "WHITE", "PAWN");
     private static final PieceDto B2WhitePawn = new PieceDto("B", "2", "WHITE", "PAWN");
     private static final PieceDto C2WhitePawn = new PieceDto("C", "2", "WHITE", "PAWN");
+    private static final TurnDto whiteTurn = new TurnDto("WHITE");
 
     private final PieceDao pieceDao = new PieceDao();
+    private final TurnDao turnDao = new TurnDao();
     private final DBService dbService = new DBService();
 
     @BeforeEach
@@ -22,11 +26,13 @@ class DBServiceTest {
         pieceDao.add(A2WhitePawn);
         pieceDao.add(B2WhitePawn);
         pieceDao.add(C2WhitePawn);
+        turnDao.update(whiteTurn);
     }
 
     @AfterEach
     void rollback() {
         pieceDao.deleteAll();
+        turnDao.deleteAll();
     }
 
     @Test
@@ -38,6 +44,12 @@ class DBServiceTest {
     void 이전_게임_데이터를_불러온다() {
         assertThat(dbService.loadPreviousData())
                 .containsExactlyInAnyOrder(A2WhitePawn, B2WhitePawn, C2WhitePawn);
+    }
+
+    @Test
+    void 이전_게임의_턴_데이터를_불러온다() {
+        assertThat(dbService.loadPreviousTurn().getTurn())
+                .isEqualTo(Color.WHITE);
     }
 
     @Test

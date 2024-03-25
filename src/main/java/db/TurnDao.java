@@ -1,5 +1,7 @@
 package db;
 
+import domain.dto.TurnDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +15,17 @@ public class TurnDao {
         this.connectionManager = connectionManager;
     }
 
-    public TurnDao() {
+    TurnDao() {
         this(new ConnectionManager());
     }
 
-    public String find() {
+    TurnDto find() {
         final var query = "SELECT * FROM " + tableName;
         try (final var connection = connectionManager.getConnection();
              final var prepareStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = prepareStatement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getString("color");
+                return new TurnDto(resultSet.getString("color"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -31,7 +33,7 @@ public class TurnDao {
         return null;
     }
 
-    public void update(String color) {
+    void update(TurnDto turnDto) {
         final String deleteQuery = "DELETE FROM " + tableName;
         final String insertQuery = "INSERT INTO " + tableName + " (color) VALUES (?)";
         try (final Connection connection = connectionManager.getConnection();
@@ -39,8 +41,18 @@ public class TurnDao {
              final PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
             deleteStatement.executeUpdate();
 
-            insertStatement.setString(1, color);
+            insertStatement.setString(1, turnDto.color());
             insertStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteAll() {
+        final String deleteQuery = "DELETE FROM " + tableName;
+        try (final Connection connection = connectionManager.getConnection();
+             final PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+            deleteStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
