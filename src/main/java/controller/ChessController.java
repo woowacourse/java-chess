@@ -2,7 +2,6 @@ package controller;
 
 import dto.GameBoardDto;
 import java.util.function.Consumer;
-import model.Camp;
 import model.ChessGame;
 import model.Command;
 import model.menu.Menu;
@@ -29,18 +28,18 @@ public class ChessController {
         Menu status = Command.of(inputView.readCommandList());
         status.play(chessGame);
         while (chessGame.isNotEnd()) {
-            printCurrentStatus(chessGame, chessGame.getCamp());
+            printCurrentStatus(chessGame);
             status = Command.of(inputView.readCommandList());
             status.play(chessGame);
         }
     }
 
-    private void printCurrentStatus(final ChessGame chessGame, final Camp camp) {
+    private void printCurrentStatus(final ChessGame chessGame) {
         outputView.printGameBoard(GameBoardDto.from(chessGame));
-        outputView.printCurrentCame(camp);
+        outputView.printCurrentCame(chessGame.getCamp());
     }
 
-    private <T> T readWithRetry(Consumer<ChessGame> consumer, ChessGame chessGame) {
+    private <T> T readWithRetry(final Consumer<ChessGame> consumer, final ChessGame chessGame) {
         try {
             consumer.accept(chessGame);
         } catch (IllegalArgumentException e) {
