@@ -11,6 +11,7 @@ import view.OutputView;
 
 public class ChessController {
     public static final String DELIMITER = " ";
+    public static final int COMMAND_INDEX = 0;
 
     public void start() {
         final Board board = new Board(BoardInitiator.init());
@@ -47,7 +48,7 @@ public class ChessController {
     }
 
     private void execute(final Game game, final List<String> commandTokens) {
-        String commandValue = getCommandValue(commandTokens);
+        String commandValue = getCommandValueIn(commandTokens);
         Commands commands = Commands.of(game);
         Command command = commands.find(commandValue);
         command.execute(commandTokens);
@@ -57,7 +58,7 @@ public class ChessController {
         return List.of(value.split(DELIMITER));
     }
 
-    private String getCommandValue(final List<String> commandTokens) {
-        return commandTokens.get(0);
+    private String getCommandValueIn(final List<String> commandTokens) {
+        return commandTokens.get(COMMAND_INDEX);
     }
 }
