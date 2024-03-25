@@ -9,7 +9,7 @@ import static chess.domain.piece.Color.WHITE;
 
 public class PieceExpression {
 
-    private static final Map<Piece, String> pieceExpression = Map.ofEntries(
+    private static final Map<Piece, String> PIECE_EXPRESSION = Map.ofEntries(
             Map.entry(King.of(BLACK), "K"),
             Map.entry(Queen.of(BLACK), "Q"),
             Map.entry(Rook.of(BLACK), "R"),
@@ -26,7 +26,7 @@ public class PieceExpression {
     );
 
     public static String mapToExpression(final Piece piece) {
-        String result = pieceExpression.get(piece);
+        String result = PIECE_EXPRESSION.get(piece);
         if (result == null) {
             throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
         }
