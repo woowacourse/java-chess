@@ -1,8 +1,10 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.view.OutputView;
 
 import java.util.Map;
+import java.util.Scanner;
 
 public class ChessGame {
     private final Board board;
@@ -34,6 +36,12 @@ public class ChessGame {
         return board.isKingRemoved();
     }
 
+    public void status() {
+        double whiteScore = Score.calculateScore(board, Team.WHITE);
+        double blackScore = Score.calculateScore(board, Team.BLACK);
+        findWinner(whiteScore, blackScore);
+    }
+
     private void validateMove(Position source, Position target) {
         if (notStarted()) {
             throw new IllegalArgumentException("start가 입력되지 전에 move를 수행할 수 없습니다.");
@@ -59,6 +67,18 @@ public class ChessGame {
             return Team.BLACK;
         }
         return Team.WHITE;
+    }
+
+    private static void findWinner(double whiteScore, double blackScore) {
+        if (whiteScore > blackScore) {
+            OutputView.printScoreWithWinner(whiteScore, blackScore, Team.WHITE);
+        }
+        if (whiteScore < blackScore) {
+            OutputView.printScoreWithWinner(whiteScore, blackScore, Team.BLACK);
+        }
+        if (whiteScore == blackScore) {
+            OutputView.printScoreWithDraw(whiteScore, blackScore);
+        }
     }
 
     public Map<Position, Piece> getBoard() {

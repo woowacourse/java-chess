@@ -48,6 +48,9 @@ public class ChessGameController {
         if (command.isCommand(START)) {
             start(chessGame);
         }
+        if (command.isCommand(STATUS)) {
+            status(chessGame);
+        }
         return false;
     }
 
@@ -67,5 +70,10 @@ public class ChessGameController {
             return true;
         }
         return false;
+    }
+
+    private void status(ChessGame chessGame) {
+        OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
+        chessGame.status();
     }
 }

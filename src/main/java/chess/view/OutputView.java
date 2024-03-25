@@ -36,4 +36,16 @@ public class OutputView {
     public static void printWinner(Team turn) {
         System.out.printf("%s 진영이 승리했습니다!%n", turn.name());
     }
+
+    public static void printScoreWithWinner(double whiteScore, double blackScore, Team team) {
+        System.out.printf("> %s 점수 : %f", Team.WHITE, whiteScore);
+        System.out.printf("> %s 점수 : %f", Team.BLACK, blackScore);
+        System.out.printf("> %s 진영이 우승하였습니다!", team);
+    }
+
+    public static void printScoreWithDraw(double whiteScore, double blackScore) {
+        System.out.printf("> %s 점수 : %f", Team.WHITE, whiteScore);
+        System.out.printf("> %s 점수 : %f", Team.BLACK, blackScore);
+        System.out.println("> 두 진영이 같은 점수입니다.");
+    }
 }

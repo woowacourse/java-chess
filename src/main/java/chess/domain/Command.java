@@ -24,7 +24,7 @@ public class Command {
     private static void validateCommand(String inputCommand) {
         List<String> commands = Arrays.stream(CommandType.values()).map(CommandType::getCommandType).toList();
         if (!commands.contains(inputCommand)) {
-            throw new IllegalArgumentException(String.format("%s는 올바른 커맨드가 아닙니다. start, move, end 중 하나여야 합니다.", inputCommand));
+            throw new IllegalArgumentException(String.format("%s는 올바른 커맨드가 아닙니다. %s 중 하나여야 합니다.", inputCommand, commands));
         }
     }
 
