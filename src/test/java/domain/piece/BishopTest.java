@@ -8,7 +8,6 @@ import static domain.PositionFixture.G_SEVEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.board.Color;
 import domain.board.position.Position;
 import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;

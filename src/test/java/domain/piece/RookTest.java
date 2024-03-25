@@ -5,7 +5,7 @@ import static domain.PositionFixture.D_FOUR;
 import static domain.PositionFixture.D_ONE;
 import static domain.PositionFixture.D_SEVEN;
 import static domain.PositionFixture.H_FOUR;
-import static domain.board.Color.BLACK;
+import static domain.piece.Color.BLACK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

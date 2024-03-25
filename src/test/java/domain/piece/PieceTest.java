@@ -3,7 +3,7 @@ package domain.piece;
 
 import static domain.PositionFixture.A_ONE;
 import static domain.PositionFixture.A_TWO;
-import static domain.board.Color.*;
+import static domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.board.position.Vector;
@@ -24,7 +24,7 @@ class PieceTest {
     void pieceColor() {
         final Piece piece = new Rook(WHITE);
 
-        assertThat(piece.color()).isEqualTo(WHITE);
+        assertThat(piece.getColor()).isEqualTo(WHITE);
     }
 
     @Test

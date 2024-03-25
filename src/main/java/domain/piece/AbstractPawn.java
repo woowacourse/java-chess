@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.Color;
 import domain.board.position.Vector;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public abstract class AbstractPawn extends Piece {
     }
 
     protected Vector reflectRankIfBlack(final Vector vector) {
-        if (color() == Color.BLACK) {
+        if (getColor() == Color.BLACK) {
             return vector.reflectHorizontally();
         }
         return vector;

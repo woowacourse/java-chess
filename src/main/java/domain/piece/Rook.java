@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.Color;
 import domain.board.position.Vector;
 
 

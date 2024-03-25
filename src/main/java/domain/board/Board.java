@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.board.position.Position;
 import domain.board.position.Vector;
+import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
 import java.util.Collections;
@@ -86,7 +87,7 @@ public class Board {
         currentTurnColor = currentTurnColor.reverse();
     }
 
-    public Map<Position, Piece> squares() {
+    public Map<Position, Piece> getSquares() {
         return Collections.unmodifiableMap(squares);
     }
 }

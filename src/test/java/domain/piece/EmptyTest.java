@@ -4,7 +4,6 @@ import static domain.PositionFixture.D_FOUR;
 import static domain.PositionFixture.D_SEVEN;
 import static org.assertj.core.api.Assertions.*;
 
-import domain.board.Color;
 import domain.board.position.Vector;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

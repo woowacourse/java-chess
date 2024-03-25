@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.board.Color;
 import domain.board.position.Vector;
 import java.util.List;
 import java.util.stream.Stream;
@@ -31,6 +30,6 @@ public class InitPawn extends AbstractPawn {
 
     @Override
     public Piece move() {
-        return new MovedPawn(color());
+        return new MovedPawn(getColor());
     }
 }

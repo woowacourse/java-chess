@@ -1,7 +1,7 @@
 package domain.board;
 
-import static domain.board.Color.BLACK;
-import static domain.board.Color.WHITE;
+import static domain.piece.Color.BLACK;
+import static domain.piece.Color.WHITE;
 import static domain.board.position.File.A;
 import static domain.board.position.File.B;
 import static domain.board.position.File.C;
@@ -70,13 +70,11 @@ public enum BoardInitiator {
         for (final BoardInitiator value : values()) {
             setPositionOnSquare(value, squares);
         }
-
         return squares;
     }
 
     private static void setPositionOnSquare(final BoardInitiator value, final Map<Position, Piece> squares) {
         final List<Position> positions = makePositions(value.files, value.rank);
-
         for (final Position position : positions) {
             squares.put(position, value.piece);
         }

@@ -61,8 +61,8 @@ class BoardTest {
 
         board.move(B_ONE, A_THREE);
 
-        assertThat(board.squares().get(B_ONE)).isInstanceOf(Empty.class);
-        assertThat(board.squares().get(A_THREE)).isInstanceOf(Knight.class);
+        assertThat(board.getSquares().get(B_ONE)).isInstanceOf(Empty.class);
+        assertThat(board.getSquares().get(A_THREE)).isInstanceOf(Knight.class);
     }
 
     @Test

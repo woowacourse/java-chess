@@ -10,8 +10,8 @@ import static domain.VectorFixture.RIGHT_DOWN;
 import static domain.VectorFixture.UP;
 import static domain.VectorFixture.UP_RIGHT;
 import static domain.VectorFixture.UP_UP;
-import static domain.board.Color.BLACK;
-import static domain.board.Color.WHITE;
+import static domain.piece.Color.BLACK;
+import static domain.piece.Color.WHITE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Assertions;

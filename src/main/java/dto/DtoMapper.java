@@ -1,6 +1,5 @@
 package dto;
 
-import domain.board.Board;
 import domain.board.position.Position;
 import domain.piece.Piece;
 import java.util.ArrayList;
@@ -15,17 +14,17 @@ public class DtoMapper {
     private DtoMapper() {
     }
 
-    public static BoardResponse generateBoardResponse(final Board board) {
+    public static BoardResponse generateBoardResponse(final Map<Position, Piece> squares) {
         final List<RankResponse> rankResponses = new ArrayList<>();
         for (int rank = 7; rank >= 0; rank--) {
-            final RankResponse pieceShapeOfRank = DtoMapper.getPieceShapeOfRank(board, rank);
+            final RankResponse pieceShapeOfRank = DtoMapper.generateRankResponse(squares, rank);
             rankResponses.add(pieceShapeOfRank);
         }
         return new BoardResponse(rankResponses);
     }
 
-    private static RankResponse getPieceShapeOfRank(final Board board, final int rank) {
-        final List<Piece> pieces = findPiecesByOrderOfRank(board, rank);
+    private static RankResponse generateRankResponse(final Map<Position, Piece> squares, final int rank) {
+        final List<Piece> pieces = findPiecesByOrderOfRank(squares, rank);
         final List<String> pieceShapes = new ArrayList<>();
 
         for (final Piece piece : pieces) {
@@ -34,8 +33,7 @@ public class DtoMapper {
         return new RankResponse(pieceShapes);
     }
 
-    private static List<Piece> findPiecesByOrderOfRank(final Board board, final int rank) {
-        final Map<Position, Piece> squares = board.squares();
+    private static List<Piece> findPiecesByOrderOfRank(final Map<Position, Piece> squares, final int rank) {
         return squares.entrySet().stream()
                 .filter(entry -> entry.getKey().toRankIndex() == rank)
                 .sorted(Comparator.comparingInt(entry -> entry.getKey().toFileIndex()))

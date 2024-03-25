@@ -1,7 +1,7 @@
 package domain.piece;
 
 import static domain.PositionFixture.*;
-import static domain.board.Color.*;
+import static domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
