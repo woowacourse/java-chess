@@ -13,6 +13,15 @@ public record PieceDto(
         String color,
         String type
 ) {
+    public static PieceDto of(Position position, Piece piece) {
+        return new PieceDto(
+                position.file().name(),
+                position.rank().number(),
+                piece.color().name(),
+                piece.type().name()
+        );
+    }
+
     public Position getPosition() {
         final File file = File.fromName(boardFile);
         final Rank rank = Rank.fromNumber(Integer.parseInt(boardRank));

@@ -1,5 +1,7 @@
 package domain.dao;
 
+import domain.piece.Color;
+import domain.piece.Piece;
 import domain.piece.nonpawn.Bishop;
 import domain.piece.nonpawn.King;
 import domain.piece.nonpawn.Knight;
@@ -16,6 +18,17 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceDtoTest {
+    @Test
+    void 도메인에서_DTO로_변환한다() {
+        Position position = new Position(File.A, Rank.ONE);
+        Piece piece = new King(Color.WHITE);
+
+        PieceDto pieceDto = PieceDto.of(position, piece);
+
+        PieceDto expected = new PieceDto("A", "1", "WHITE", "KING");
+        assertThat(pieceDto).isEqualTo(expected);
+    }
+
     @Nested
     class 피스_변환 {
         @Test
@@ -65,16 +78,6 @@ class PieceDtoTest {
             PieceDto pieceDto = new PieceDto("A", "1", "BLACK", "PAWN");
 
             assertThat(pieceDto.getPiece()).isInstanceOf(BlackPawn.class);
-        }
-    }
-
-    @Nested
-    class 위치_변환 {
-        @Test
-        void 위치를_만든다() {
-            PieceDto pieceDto = new PieceDto("a", "1", "WHITE", "PAWN");
-
-            assertThat(pieceDto.getPosition()).isEqualTo(new Position(File.A, Rank.ONE));
         }
     }
 }
