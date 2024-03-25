@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Point;
+import chess.domain.point.Point;
 
 import java.util.Map;
 import java.util.Objects;

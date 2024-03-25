@@ -1,8 +1,10 @@
 package chess.domain;
 
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

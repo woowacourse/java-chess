@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Point;
+import chess.domain.point.Point;
 
 public final class Knight extends SingleMovePiece {
 

@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.Point;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.piece.Type;
+import chess.domain.point.Point;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.BoardFactory;
-import chess.domain.Point;
+import chess.domain.board.BoardFactory;
+import chess.domain.point.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

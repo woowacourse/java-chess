@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.Command;
-import chess.domain.Point;
+import chess.domain.board.BoardFactory;
+import chess.domain.point.Point;
 import chess.view.InputView;
 import chess.view.OutputView;
 

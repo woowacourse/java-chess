@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.player.Player;
+import chess.domain.point.Point;
 
 import java.util.Collections;
 import java.util.Map;
