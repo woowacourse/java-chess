@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -62,7 +63,7 @@ class ChessBoardTest {
         chessBoard.move(source, target);
 
         Piece pieceAtSourcePositionAfterMove = chessBoard.findPieceByPosition(source);
-        assertThat(pieceAtSourcePositionAfterMove).isNull();
+        assertThat(pieceAtSourcePositionAfterMove.isEmpty()).isTrue();
     }
 
     @Test
@@ -88,7 +89,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 1);
         positionPiece.put(sourcePosition, King.of(Color.BLACK));
         Position targetPosition = Position.of('a', 3);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -106,7 +107,7 @@ class ChessBoardTest {
         Position obstaclePosition = Position.of('a', 2);
         positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
         Position targetPosition = Position.of('b', 3);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -121,7 +122,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 1);
         positionPiece.put(sourcePosition, Rook.of(Color.BLACK));
         Position targetPosition = Position.of('c', 3);
-        positionPiece.put(targetPosition, null);
+        positionPiece.put(targetPosition, Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -141,7 +142,7 @@ class ChessBoardTest {
         Rook targetPiece = Rook.of(Color.WHITE);
         positionPiece.put(targetPosition, targetPiece);
 
-        positionPiece.put(Position.of('a', 2), null);
+        positionPiece.put(Position.of('a', 2), Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
         chessBoard.move(sourcePosition, targetPosition);
@@ -156,10 +157,15 @@ class ChessBoardTest {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
         positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
-        Position targetPosition = Position.of('a', 8);
-        positionPiece.put(targetPosition, null);
+
+        for (int i = 2; i <= 8; i++) {
+            Position emptyPosition = Position.of('a', i);
+            positionPiece.put(emptyPosition, Empty.of());
+        }
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        Position targetPosition = Position.of('a', 8);
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();

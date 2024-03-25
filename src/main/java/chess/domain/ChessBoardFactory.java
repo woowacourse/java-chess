@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -51,7 +52,7 @@ public class ChessBoardFactory {
         Map<Position, Piece> blankPieces = new LinkedHashMap<>();
         for (int rank = 6; rank >= 3; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
-                blankPieces.put(Position.of(file, rank), null);
+                blankPieces.put(Position.of(file, rank), Empty.of());
             }
         }
 

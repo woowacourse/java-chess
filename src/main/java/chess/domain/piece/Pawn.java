@@ -36,4 +36,9 @@ public class Pawn extends Piece {
     public boolean canMoveMoreThenOnce() {
         return false;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

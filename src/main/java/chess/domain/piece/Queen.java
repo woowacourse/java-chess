@@ -38,4 +38,9 @@ public class Queen extends Piece {
     public boolean canMoveMoreThenOnce() {
         return true;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

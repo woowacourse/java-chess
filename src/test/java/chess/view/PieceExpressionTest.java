@@ -5,6 +5,7 @@ import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -42,7 +43,7 @@ class PieceExpressionTest {
                 Arguments.of(Bishop.of(WHITE), "b"),
                 Arguments.of(Knight.of(WHITE), "n"),
                 Arguments.of(Pawn.of(WHITE), "p"),
-                Arguments.of(null, ".")
+                Arguments.of(Empty.of(), ".")
         );
     }
 }

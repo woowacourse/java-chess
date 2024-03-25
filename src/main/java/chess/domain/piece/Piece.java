@@ -17,12 +17,14 @@ public abstract class Piece {
 
     abstract public boolean canMoveMoreThenOnce();
 
+    abstract public boolean isEmpty();
+
     final public boolean canMoveInTargetDirection(final Direction targetDirection) {
         return directions.contains(targetDirection);
     }
 
-    final public boolean isAlly(Piece piece) {
-        if (piece == null) {
+    final public boolean isAlly(final Piece piece) {
+        if (piece.isEmpty()) {
             return false;
         }
 

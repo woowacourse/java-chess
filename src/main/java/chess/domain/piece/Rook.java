@@ -35,4 +35,9 @@ public class Rook extends Piece {
     public boolean canMoveMoreThenOnce() {
         return true;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

@@ -21,10 +21,6 @@ public enum PieceExpression {
     }
 
     public static String mapToExpression(final Piece piece) {
-        if (piece == null) {
-            return EMPTY.expression;
-        }
-
         String foundExpression = findMatchedExpression(piece);
 
         if (piece.isBlack()) {
