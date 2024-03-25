@@ -18,7 +18,7 @@ public class ChessGame {
     }
 
     public void move(Point departure, Point destination) {
-        Player player = players.currentTurnOfPlayer();
+        Player player = players.playerOfCurrentTurn();
 
         board.move(player, departure, destination);
         players.turnOver();

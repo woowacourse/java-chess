@@ -15,8 +15,8 @@ class PlayersTest {
         Player second = new Player(Team.BLACK);
         Players players = new Players(first, second);
 
-        assertThat(players.currentTurnOfPlayer()).isEqualTo(first);
+        assertThat(players.playerOfCurrentTurn()).isEqualTo(first);
         players.turnOver();
-        assertThat(players.currentTurnOfPlayer()).isEqualTo(second);
+        assertThat(players.playerOfCurrentTurn()).isEqualTo(second);
     }
 }

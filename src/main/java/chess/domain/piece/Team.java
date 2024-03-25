@@ -12,4 +12,11 @@ public enum Team {
     public int forwardDirection() {
         return this.isWhite() ? 1 : -1;
     }
+
+    public Team opponent() {
+        if (this == EMPTY) {
+            return this;
+        }
+        return this == WHITE ? BLACK : WHITE;
+    }
 }
