@@ -45,6 +45,14 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 방향입니다."));
     }
 
+    public static List<Direction> upSide() {
+        return List.of(UP, UP_LEFT, UP_RIGHT);
+    }
+
+    public static List<Direction> downSide() {
+        return List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+    }
+
     public boolean isDiagonal() {
         return diagonal().contains(this);
     }
@@ -62,7 +70,11 @@ public enum Direction {
     }
 
     public boolean isUpSide() {
-        return Set.of(UP, UP_LEFT, UP_RIGHT).contains(this);
+        return upSide().contains(this);
+    }
+
+    public boolean isDownSide() {
+        return downSide().contains(this);
     }
 
     public boolean isLeftSide() {

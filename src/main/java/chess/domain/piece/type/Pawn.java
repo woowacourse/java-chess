@@ -8,11 +8,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
 
-import java.util.List;
-
 public final class Pawn extends Piece {
-    private static final List<Direction> BLACK_DIRECTION = List.of(Direction.DOWN, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
-    private static final List<Direction> WHITE_DIRECTION = List.of(Direction.UP, Direction.UP_LEFT, Direction.UP_RIGHT);
 
     public Pawn(final PieceColor color) {
         super(color, PieceType.PAWN);
@@ -33,17 +29,17 @@ public final class Pawn extends Piece {
     private boolean canMove(final Movement movement) {
         Direction direction = movement.findDirection();
         if (color.isWhite()) {
-            return movement.isCross() && WHITE_DIRECTION.contains(direction);
+            return movement.isCross() && type.contains(direction) && direction.isUpSide();
         }
-        return movement.isCross() && BLACK_DIRECTION.contains(direction);
+        return movement.isCross() && type.contains(direction) && direction.isDownSide();
     }
 
     private boolean canAttack(final Movement movement) {
         Direction direction = movement.findDirection();
         if (color.isWhite()) {
-            return movement.isDiagonal() && WHITE_DIRECTION.contains(direction);
+            return movement.isDiagonal() && type.contains(direction) && direction.isUpSide();
         }
-        return movement.isDiagonal() && BLACK_DIRECTION.contains(direction);
+        return movement.isDiagonal() && type.contains(direction) && direction.isDownSide();
     }
 
     private boolean isMovableDistance(final Movement movement) {

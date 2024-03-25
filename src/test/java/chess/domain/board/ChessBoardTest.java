@@ -163,6 +163,7 @@ public class ChessBoardTest {
 
         // when
         chessBoard.move("b2", "b3", turn);
+        turn.next();
 
         // then
         assertThatThrownBy(() -> chessBoard.move("a1", "h1", turn))

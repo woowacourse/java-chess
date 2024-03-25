@@ -7,11 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 
-import java.util.List;
-
 public final class King extends Piece {
-    private static final List<Direction> KING_DIRECTION = Direction.all();
-
     public King(final PieceColor color) {
         super(color, PieceType.KING);
     }
@@ -22,7 +18,7 @@ public final class King extends Piece {
     }
 
     private boolean isMovableDirection(final Direction direction) {
-        return KING_DIRECTION.contains(direction);
+        return type.contains(direction);
     }
 
     private boolean isMovableDistance(final int distance) {
