@@ -1,5 +1,7 @@
 package view;
 
+import view.dto.GameProceedRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,38 +10,45 @@ import java.util.List;
 
 public class InputView {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
-    public static final String POSITION_REGEX = "^[a-h][1-8]$";
+    private static final String NOT_EXIST = "";
+    private static final int GAME_COMMAND_INDEX = 0;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
+    private static final int POSITION_LENGTH = 2;
 
     private InputView() {
     }
 
     public static GameCommand inputInitialGameCommand() {
-        List<String> inputCommand = Arrays.asList(readLine().split(" "));
-        GameCommand initialGameCommand = GameCommand.from(inputCommand);
-        if (initialGameCommand == GameCommand.MOVE) {
-            throw new IllegalArgumentException("게임을 시작해야 이동 명령을 입력할 수 있습니다.");
-        }
-        return initialGameCommand;
-    }
-
-    public static List<String> parseCommand() {
-        List<String> inputMovement = Arrays.asList(readLine().split(" "));
-        GameCommand gameCommand = GameCommand.from(inputMovement);
+        GameCommand gameCommand = GameCommand.from(readLine());
         if (gameCommand == GameCommand.MOVE) {
-            validateInputMovement(inputMovement);
+            throw new IllegalArgumentException("게임을 시작(start)해야 이동 명령을 입력할 수 있습니다.");
         }
-        return inputMovement;
+        return gameCommand;
     }
 
-    private static void validateInputMovement(List<String> inputMovement) {
+    public static GameProceedRequest inputGameProceedCommand() {
+        List<String> inputMovement = Arrays.asList(readLine().split(" "));
+        GameCommand gameCommand = GameCommand.from(inputMovement.get(GAME_COMMAND_INDEX));
+        if (gameCommand == GameCommand.MOVE) {
+            validateInputSize(inputMovement);
+            validateInputPositionSize(inputMovement);
+            return new GameProceedRequest(gameCommand, inputMovement.get(SOURCE_POSITION_INDEX), inputMovement.get(TARGET_POSITION_INDEX));
+        }
+        return new GameProceedRequest(gameCommand, NOT_EXIST, NOT_EXIST);
+    }
+
+    private static void validateInputSize(List<String> inputMovement) {
         if (inputMovement.size() == 3) {
-            inputMovement.subList(1, inputMovement.size())
-                    .stream()
-                    .filter(position -> !position.matches(POSITION_REGEX))
-                    .findAny()
-                    .ifPresent(position -> {
-                        throw new IllegalArgumentException("입력하신 " + position + "은 올바르지 않은 좌표입니다");
-                    });
+            throw new IllegalArgumentException("source위치 target위치를 입력해 주세요. - 예. move b2 b3");
+        }
+    }
+
+    private static void validateInputPositionSize(List<String> inputMovement) {
+        String sourcePosition = inputMovement.get(SOURCE_POSITION_INDEX);
+        String targetPosition = inputMovement.get(TARGET_POSITION_INDEX);
+        if(sourcePosition.length() != POSITION_LENGTH || targetPosition.length() != POSITION_LENGTH){
+            throw new IllegalArgumentException("source위치와 target위치가 올바르지 않습니다.");
         }
     }
 
