@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Position {
-    public static final int MINIMUM_POSITION = 1;
-    public static final int MAXIMUM_POSITION = 8;
+    private static final int MINIMUM_POSITION = 1;
+    private static final int MAXIMUM_POSITION = 8;
 
     private final int x;
     private final int y;
