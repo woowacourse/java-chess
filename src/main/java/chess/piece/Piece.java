@@ -75,6 +75,10 @@ public abstract class Piece {
         return !isPawn();
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public Score getScore() {
         return pieceScore.asScore();
     }

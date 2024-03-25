@@ -28,4 +28,9 @@ public class King extends Piece {
     protected boolean isReachable(int distance) {
         return distance <= MAX_UNIT_MOVE;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
