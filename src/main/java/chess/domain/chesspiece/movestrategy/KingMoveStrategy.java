@@ -7,10 +7,6 @@ import java.util.List;
 
 public class KingMoveStrategy extends MoveDirection implements MoveStrategy {
 
-    public KingMoveStrategy() {
-        super();
-    }
-
     @Override
     public void move(ChessBoard chessBoard, Square startSquare, Square targetSquare) {
         List<Square> moveRange = createMoveRange(chessBoard, startSquare);
