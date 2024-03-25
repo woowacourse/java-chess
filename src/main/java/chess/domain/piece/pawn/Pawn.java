@@ -32,20 +32,6 @@ public abstract class Pawn extends AbstractPiece {
         throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
     }
 
-    @Override
-    public boolean canMove(final Coordinate now, final Coordinate destination,
-                           final Map<Coordinate, Piece> boardInformation) {
-        Set<Coordinate> coordinates = straightLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination).isEmpty())
-                .collect(Collectors.toSet());
-        coordinates.addAll(diagonalLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination).isNotEmpty() && boardInformation.get(
-                                destination)
-                        .isNotSameTeam(this))
-                .collect(Collectors.toSet()));
-        return coordinates.contains(destination);
-    }
-
     private Set<Coordinate> straightLegalNextCoordinates(final Coordinate now) {
         return straightWeights().stream()
                 .filter(entry -> now.canMove(entry.getKey(), entry.getValue()))
@@ -57,6 +43,32 @@ public abstract class Pawn extends AbstractPiece {
         return diagonalWeights().stream()
                 .filter(entry -> now.canMove(entry.getKey(), entry.getValue()))
                 .map(entry -> now.move(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean canMove(final Coordinate now, final Coordinate destination,
+                           final Map<Coordinate, Piece> boardInformation) {
+
+        Set<Coordinate> movableCoordinates = movableStraight(now, destination, boardInformation);
+        if (movableCoordinates.stream().anyMatch(coordinate -> boardInformation.get(coordinate).isNotEmpty())) {
+            return false;
+        }
+        movableCoordinates.addAll(movableDiagonal(now, destination, boardInformation));
+        return movableCoordinates.contains(destination);
+    }
+
+    private Set<Coordinate> movableStraight(final Coordinate now, final Coordinate destination,
+                                            final Map<Coordinate, Piece> boardInformation) {
+        return straightLegalNextCoordinates(now).stream()
+                .filter(coordinate -> boardInformation.get(destination).isEmpty())
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Coordinate> movableDiagonal(final Coordinate now, final Coordinate destination,
+                                            final Map<Coordinate, Piece> boardInformation) {
+        return diagonalLegalNextCoordinates(now).stream()
+                .filter(coordinate -> boardInformation.get(destination).isNotSameTeam(this))
                 .collect(Collectors.toSet());
     }
 }

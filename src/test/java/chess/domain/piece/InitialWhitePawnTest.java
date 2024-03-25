@@ -8,6 +8,7 @@ import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.D3;
 import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
+import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
 import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.INITIAL_WHITE_PAWN;
 import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
@@ -51,6 +52,7 @@ class InitialWhitePawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(C3, EMPTY_PIECE);
         boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(INITIAL_WHITE_PAWN.canMove(C2, C4, boardInformation)).isTrue();
@@ -69,7 +71,18 @@ class InitialWhitePawnTest {
     @Test
     void canMoveCaseStuckCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(C3, EMPTY_PIECE);
         boardInformation.put(C4, WHITE_KNIGHT);
+
+        assertThat(INITIAL_WHITE_PAWN.canMove(C2, C4, boardInformation)).isFalse();
+    }
+
+    @DisplayName("초기 흰색 폰이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다(직진으로 이동하는 방향에 기물이 하나라도 있을 경우).")
+    @Test
+    void canMoveCaseStuck() {
+        HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(C3, BLACK_KNIGHT);
+        boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(INITIAL_WHITE_PAWN.canMove(C2, C4, boardInformation)).isFalse();
     }

@@ -1,17 +1,18 @@
 package chess.domain.piece;
 
 import static chess.domain.fixture.CoordinateFixture.B6;
+import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.C6;
 import static chess.domain.fixture.CoordinateFixture.C7;
-import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D6;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
 import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.NORMAL_BLACK_PAWN;
 import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
+import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,6 +53,7 @@ class InitialBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(C6, EMPTY_PIECE);
         boardInformation.put(C5, EMPTY_PIECE);
 
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isTrue();
@@ -68,11 +70,22 @@ class InitialBlackPawnTest {
 
     @DisplayName("초기 검은색 폰이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다(목적지에 같은 팀이 있는 경우).")
     @Test
-    void canMoveCaseStuckCuzSameTeamPiece() {
+    void canMoveCaseCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(D4, BLACK_KNIGHT);
+        boardInformation.put(C3, EMPTY_PIECE);
+        boardInformation.put(C5, BLACK_KNIGHT);
 
-        assertThat(INITIAL_BLACK_PAWN.canMove(C7, D4, boardInformation)).isFalse();
+        assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isFalse();
+    }
+
+    @DisplayName("초기 검은색 폰이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다(직진으로 이동하는 방향에 기물이 하나라도 있을 경우).")
+    @Test
+    void canMoveCaseStuck() {
+        HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(C6, WHITE_QUEEN);
+        boardInformation.put(C5, EMPTY_PIECE);
+
+        assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isFalse();
     }
 
     @DisplayName("초기 검은색 폰이 한번 이동하면, 평범한 검은색 폰이 된다.")
