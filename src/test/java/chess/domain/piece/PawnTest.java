@@ -56,4 +56,14 @@ class PawnTest {
             Assertions.assertThat(result).isFalse();
         }
     }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        Pawn pawn = Pawn.of(Color.WHITE);
+
+        boolean isPawn = pawn.isPawn();
+
+        Assertions.assertThat(isPawn).isTrue();
+    }
 }

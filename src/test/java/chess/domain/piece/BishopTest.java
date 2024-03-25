@@ -22,6 +22,7 @@ class BishopTest {
     @Nested
     @DisplayName("주어진 방향으로 이동할 수 있는지 반환한다.")
     class canMoveInTargetDirection {
+
         @ParameterizedTest
         @CsvSource(value = {
                 "LEFT_UP", "LEFT_DOWN",
@@ -52,5 +53,15 @@ class BishopTest {
 
             Assertions.assertThat(result).isFalse();
         }
+    }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        Bishop bishop = Bishop.of(Color.WHITE);
+
+        boolean isPawn = bishop.isPawn();
+
+        Assertions.assertThat(isPawn).isFalse();
     }
 }

@@ -53,4 +53,14 @@ class RookTest {
             Assertions.assertThat(result).isFalse();
         }
     }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        Rook rook = Rook.of(Color.WHITE);
+
+        boolean isPawn = rook.isPawn();
+
+        Assertions.assertThat(isPawn).isFalse();
+    }
 }

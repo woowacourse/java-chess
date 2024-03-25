@@ -53,4 +53,14 @@ class QueenTest {
             Assertions.assertThat(result).isFalse();
         }
     }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        Queen queen = Queen.of(Color.WHITE);
+
+        boolean isPawn = queen.isPawn();
+
+        Assertions.assertThat(isPawn).isFalse();
+    }
 }

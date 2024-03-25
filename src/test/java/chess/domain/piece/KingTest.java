@@ -53,4 +53,14 @@ class KingTest {
             Assertions.assertThat(result).isFalse();
         }
     }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        King king = King.of(Color.WHITE);
+
+        boolean isPawn = king.isPawn();
+
+        Assertions.assertThat(isPawn).isFalse();
+    }
 }

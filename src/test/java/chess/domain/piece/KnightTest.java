@@ -53,4 +53,14 @@ class KnightTest {
             Assertions.assertThat(result).isFalse();
         }
     }
+
+    @DisplayName("폰인지를 반환한다.")
+    @Test
+    void isPawn() {
+        Knight knight = Knight.of(Color.WHITE);
+
+        boolean isPawn = knight.isPawn();
+
+        Assertions.assertThat(isPawn).isFalse();
+    }
 }
