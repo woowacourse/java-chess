@@ -31,17 +31,6 @@ public enum File {
                 .orElseThrow();
     }
 
-    public static File find(int order) {
-        return Arrays.stream(values())
-                .filter(it -> it.order == order)
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public boolean confirmGap(File other, int gapSize) {
-        return gap(other) == gapSize;
-    }
-
     public int gap(File other) {
         return Math.abs(order - other.order);
     }

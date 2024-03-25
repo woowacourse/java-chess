@@ -31,17 +31,6 @@ public enum Rank {
                 .orElseThrow();
     }
 
-    public static Rank find(int order) {
-        return Arrays.stream(values())
-                .filter(it -> it.value == order)
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public boolean confirmGap(Rank other, int gapSize) {
-        return gap(other) == gapSize;
-    }
-
     public int gap(Rank other) {
         return Math.abs(difference(other));
     }
