@@ -44,11 +44,11 @@ public abstract class Piece {
         return pieceType.getScore();
     }
 
-    public Team getTeam() {
+    public Team team() {
         return team;
     }
 
-    public PieceType getPieceType() {
+    public PieceType pieceType() {
         return pieceType;
     }
 

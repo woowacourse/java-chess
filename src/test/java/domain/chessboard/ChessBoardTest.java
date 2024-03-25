@@ -1,5 +1,6 @@
-package domain;
+package domain.chessboard;
 
+import domain.Team;
 import domain.piece.Piece;
 import domain.square.File;
 import domain.square.Rank;

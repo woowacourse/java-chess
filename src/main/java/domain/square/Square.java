@@ -42,8 +42,12 @@ public class Square {
         return this.rank == rank;
     }
 
-    public File getFile() {
+    public File file() {
         return file;
+    }
+
+    public Rank rank() {
+        return rank;
     }
 
     @Override

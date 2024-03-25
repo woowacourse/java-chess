@@ -26,7 +26,7 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        if (getTeam() == Team.BLACK) {
+        if (team() == Team.BLACK) {
             return canBlackMove(source, target);
         }
         return canWhiteMove(source, target);
@@ -36,7 +36,7 @@ public class Pawn extends Piece {
     public boolean canAttack(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        if (getTeam() == Team.BLACK) {
+        if (team() == Team.BLACK) {
             return BLACK_ATTACK_VECTORS.contains(chessVector);
         }
         return WHITE_ATTACK_VECTORS.contains(chessVector);

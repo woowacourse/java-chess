@@ -1,7 +1,7 @@
 package service;
 
-import domain.ChessBoard;
 import domain.ChessGameResult;
+import domain.chessboard.ChessBoard;
 import domain.piece.Piece;
 import domain.square.Square;
 

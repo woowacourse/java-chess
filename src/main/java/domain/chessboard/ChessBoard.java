@@ -1,5 +1,7 @@
-package domain;
+package domain.chessboard;
 
+import domain.ChessVector;
+import domain.Team;
 import domain.piece.*;
 import domain.square.File;
 import domain.square.Rank;
@@ -131,7 +133,7 @@ public class ChessBoard {
 
     public boolean isAnyKingDead() {
         return pieceSquares.values().stream()
-                .filter(piece -> piece.getPieceType() == PieceType.KING)
+                .filter(piece -> piece.pieceType() == PieceType.KING)
                 .count() != TOTAL_KING_COUNT;
     }
 

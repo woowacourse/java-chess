@@ -44,7 +44,7 @@ public class ChessGameResult {
 
     private static boolean isKingDead(final Map<Square, Piece> pieceSquares, final Team team) {
         return pieceSquares.values().stream()
-                .noneMatch(piece -> piece.getPieceType() == PieceType.KING && piece.isTeam(team));
+                .noneMatch(piece -> piece.pieceType() == PieceType.KING && piece.isTeam(team));
     }
 
     private static Score sumOriginalScore(final Map<Square, Piece> pieceSquares, final Team team) {
@@ -66,8 +66,8 @@ public class ChessGameResult {
     private static Map<File, Long> countPawnByFile(final Map<Square, Piece> pieceSquares, final Team team) {
         return pieceSquares.entrySet().stream()
                 .filter(entry -> entry.getValue().isTeam(team)
-                        && entry.getValue().getPieceType() == PieceType.PAWN)
-                .collect(groupingBy(entry -> entry.getKey().getFile(), counting()));
+                        && entry.getValue().pieceType() == PieceType.PAWN)
+                .collect(groupingBy(entry -> entry.getKey().file(), counting()));
     }
 
     public double getWhiteScore() {
