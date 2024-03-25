@@ -22,8 +22,11 @@ public class InputView {
         }
     }
 
-    public static MovementDto isInputMove() {
+    public static MovementDto inputCommand() {
         StringTokenizer inputTokenizer = new StringTokenizer(SCANNER.nextLine());
+        if (!inputTokenizer.hasMoreTokens()) {
+            throw new InvalidCommandException("입력이 존재하지 않습니다.");
+        }
         return switch (GameCommand.find(inputTokenizer.nextToken())) {
             case START -> throw new InvalidCommandException("게임이 시작한 이후, 다시 게임을 시작할 수 없습니다.");
             case END -> new MovementDto(false, "", "");

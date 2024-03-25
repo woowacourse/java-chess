@@ -9,6 +9,10 @@ import java.util.Map;
 public class OutputView {
     public static final String EMPTY_POSITION = ".";
 
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println("[ERROR] " + errorMessage);
+    }
+
     public static void printChessBoard(Map<Position, Character> piecesCharacter) {
         for (int i = 8; i >= 1; i--) {
             for (int j = 1; j <= 8; j++) {

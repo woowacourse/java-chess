@@ -18,7 +18,7 @@ public class MovementDto {
         return isMove;
     }
 
-    public Movement movement() {
+    public Movement toDomain() {
         return new Movement(PositionConverter.generate(source), PositionConverter.generate(target));
     }
 }
