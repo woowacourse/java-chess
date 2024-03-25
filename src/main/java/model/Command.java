@@ -41,7 +41,10 @@ public enum Command {
     }
 
     private static Menu toMove(List<String> input) {
-        return new Move(Position.from(input.get(1)), Position.from(input.get(2)));
+        if (input.get(1).length() == 2 && input.get(2).length() == 2) {
+            return new Move(Position.from(input.get(1)), Position.from(input.get(2)));
+        }
+        throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
     }
 
     public static void validate(String input) {
