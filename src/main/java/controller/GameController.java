@@ -1,8 +1,9 @@
 package controller;
 
-import domain.game.*;
+import domain.game.ChessGame;
+import domain.game.GameCommand;
+import domain.game.GameCommandType;
 import dto.BoardDto;
-import dto.MoveRequestDto;
 import view.InputView;
 import view.OutputView;
 
@@ -18,56 +19,44 @@ public class GameController {
     }
 
     public void run() {
-        GameCommand gameCommand = inputGameStartCommand();
-        if (gameCommand.isStartCommand()) {
+        initGame();
+
+        if (chessGame.isGameRunning()) {
             gameStart();
         }
     }
 
-    private GameCommand inputGameStartCommand() {
+    private void initGame() {
         try {
-            return inputView.inputGameStartCommand();
-        } catch (IllegalArgumentException e) {
+            GameCommand gameCommand = inputCommand();
+            gameCommand.execute(chessGame);
+        } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
-            return inputGameStartCommand();
+            initGame();
         }
+    }
+
+    private GameCommand inputCommand() {
+        String[] inputValues = inputView.inputCommand().split(" ");
+        return GameCommandType.of(inputValues);
     }
 
     private void gameStart() {
         outputView.printWelcomeMessage();
-        boolean isContinuable = true;
-
-        while (isContinuable) {
+        while (chessGame.isGameRunning()) {
             BoardDto boardDto = BoardDto.from(chessGame.piecePositions());
             outputView.printBoard(boardDto);
-
-            isContinuable = playTurn();
+            playTurn();
         }
     }
 
-    private MoveRequestDto inputMoveRequest() {
+    private void playTurn() {
         try {
-            return inputView.inputMoveRequest();
+            GameCommand gameCommand = inputCommand();
+            gameCommand.execute(chessGame);
         } catch (Exception e) {
             outputView.printErrorMessage(e.getMessage());
-
-            return inputMoveRequest();
-        }
-    }
-
-    private boolean playTurn() {
-        MoveRequestDto moveRequest = inputMoveRequest();
-        if (moveRequest.isEndCommand()) {
-            return false;
-        }
-
-        try {
-            chessGame.play(moveRequest.sourcePosition(), moveRequest.destinationPosition());
-            return true;
-        } catch (Exception e) {
-            outputView.printErrorMessage(e.getMessage());
-
-            return playTurn();
+            playTurn();
         }
     }
 }

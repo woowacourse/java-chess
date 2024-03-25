@@ -14,8 +14,9 @@ public class ChessGame {
     private final Board board;
 
     private PieceColor currentColor = WHITE;
+    private boolean isGameRunning = false;
 
-    public ChessGame(final Board board) {
+    private ChessGame(final Board board) {
         this.board = board;
     }
 
@@ -23,11 +24,23 @@ public class ChessGame {
         return new ChessGame(BoardInitializer.initBoard());
     }
 
+    public void gameStart() {
+        isGameRunning = true;
+    }
+
+    public void gameEnd() {
+        isGameRunning = false;
+    }
+
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
     public Map<Position, Piece> piecePositions() {
         return board.piecePositions();
     }
 
-    public void play(final Position source, final Position destination) {
+    public void movePiece(final Position source, final Position destination) {
         board.movePiece(currentColor, source, destination);
         currentColor = currentColor.toggle();
     }

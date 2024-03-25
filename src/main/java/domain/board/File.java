@@ -18,6 +18,13 @@ public enum File {
         this.index = index;
     }
 
+    public static File of(final String value) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equals(value.toUpperCase()))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 File 값입니다."));
+    }
+
     public static File of(final int index) {
         return Arrays.stream(values())
                 .filter(file -> file.getIndex() == index)
