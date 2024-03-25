@@ -45,6 +45,6 @@ public class InputView {
         }
         String options = input.substring(OPTION_BEGIN_INDEX);
         String[] splitOptions = options.split(SEPARATOR);
-        return new MoveCommand(splitOptions);
+        return new MoveCommand(splitOptions[0], splitOptions[1]);
     }
 }
