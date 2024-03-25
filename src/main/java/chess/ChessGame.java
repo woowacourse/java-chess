@@ -27,7 +27,7 @@ public class ChessGame {
     }
 
     private void play() {
-        Chessboard chessboard = Chessboard.create();
+        Chessboard chessboard = Chessboard.createChessBoard();
         resultView.printBoard(new ChessboardDto(chessboard));
         playByCommand(chessboard);
     }

@@ -27,7 +27,7 @@ public abstract class Piece {
         return color != other.color;
     }
 
-    protected Square currentSquare() {
+    public Square currentSquare() {
         return square;
     }
 

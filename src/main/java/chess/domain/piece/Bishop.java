@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
-import chess.domain.chessboard.attribute.Direction;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
