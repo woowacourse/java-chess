@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,8 @@ public class BishopTest {
     @DisplayName("목적지가 대각선 경로에 있는 경우 움직일 수 있다.")
     void canMove_Diagonal_True() {
         Piece piece = new Bishop(Color.WHITE);
-        Position source = Position.generate(File.D, Rank.FOUR);
-        Position target = Position.generate(File.H, Rank.EIGHT);
+        Position source = PositionGenerator.generate(File.D, Rank.FOUR);
+        Position target = PositionGenerator.generate(File.H, Rank.EIGHT);
 
         boolean actual = piece.canMove(source, target);
 
@@ -46,8 +47,8 @@ public class BishopTest {
     @DisplayName("목적지가 대각선 경로에 없는 경우 움직일 수 없다.")
     void canMove_Diagonal_False() {
         Piece piece = new Rook(Color.WHITE);
-        Position source = Position.generate(File.A, Rank.ONE);
-        Position target = Position.generate(File.H, Rank.FOUR);
+        Position source = PositionGenerator.generate(File.A, Rank.ONE);
+        Position target = PositionGenerator.generate(File.H, Rank.FOUR);
 
         boolean actual = piece.canMove(source, target);
 

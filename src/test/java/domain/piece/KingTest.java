@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -41,8 +42,8 @@ public class KingTest {
     @DisplayName("목적지가 해당 경로 위에 있는 경우 움직일 수 있다.")
     void canMove_True(File file, Rank rank) {
         Piece piece = new King(Color.WHITE);
-        Position source = Position.generate(File.D, Rank.FOUR);
-        Position target = Position.generate(file, rank);
+        Position source = PositionGenerator.generate(File.D, Rank.FOUR);
+        Position target = PositionGenerator.generate(file, rank);
 
         boolean actual = piece.canMove(source, target);
 
@@ -63,8 +64,8 @@ public class KingTest {
     @DisplayName("목적지가 해당 경로 위에 없는 경우 움직일 수 없다.")
     void canMove_False() {
         Piece piece = new King(Color.WHITE);
-        Position source = Position.generate(File.D, Rank.FOUR);
-        Position target = Position.generate(File.F, Rank.FOUR);
+        Position source = PositionGenerator.generate(File.D, Rank.FOUR);
+        Position target = PositionGenerator.generate(File.F, Rank.FOUR);
 
         boolean actual = piece.canMove(source, target);
 

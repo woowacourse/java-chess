@@ -35,8 +35,8 @@ public class PositionTest {
         @MethodSource("provideFileAndRank")
         @DisplayName("두 위치가 대각선에 존재하면 참을 반환한다.")
         void isDiagonal_True(File file, Rank rank) {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(file, rank);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(file, rank);
 
             assertThat(source.isDiagonal(target)).isTrue();
         }
@@ -44,8 +44,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 대각선에 존재하지 않으면 거짓을 반환한다.")
         void isDiagonal_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.B, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.B, Rank.THREE);
 
             assertThat(source.isDiagonal(target)).isFalse();
         }
@@ -53,8 +53,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 오른쪽 위 대각선에 존재하면 참을 반환한다.")
         void isRightUp_True() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.C, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.C, Rank.THREE);
 
             assertThat(source.isRightUp(target)).isTrue();
         }
@@ -62,8 +62,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 오른쪽 위 대각선에 존재하지 않으면 거짓을 반환한다.")
         void isRightUp_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.B, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.B, Rank.THREE);
 
             assertThat(source.isRightUp(target)).isFalse();
         }
@@ -71,8 +71,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 왼쪽 위 대각선에 존재하면 참을 반환한다.")
         void isLeftUp_True() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.THREE);
 
             assertThat(source.isLeftUp(target)).isTrue();
         }
@@ -80,8 +80,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 왼쪽 위 대각선에 존재하지 않으면 거짓을 반환한다.")
         void isLeftUp_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.B, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.B, Rank.THREE);
 
             assertThat(source.isLeftUp(target)).isFalse();
         }
@@ -89,8 +89,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 오른쪽 아래 대각선에 존재하면 참을 반환한다.")
         void isRightDown_True() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.C, Rank.ONE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.C, Rank.ONE);
 
             assertThat(source.isRightDown(target)).isTrue();
         }
@@ -98,8 +98,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 오른쪽 아래 대각선에 존재하지 않으면 거짓을 반환한다.")
         void isRightDown_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.B, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.B, Rank.THREE);
 
             assertThat(source.isRightDown(target)).isFalse();
         }
@@ -107,8 +107,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 왼쪽 아래 대각선에 존재하면 참을 반환한다.")
         void isLeftDown_True() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.ONE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.ONE);
 
             assertThat(source.isLeftDown(target)).isTrue();
         }
@@ -116,8 +116,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 왼쪽 아래 대각선에 존재하지 않으면 거짓을 반환한다.")
         void isLeftDown_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.B, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.B, Rank.THREE);
 
             assertThat(source.isLeftDown(target)).isFalse();
         }
@@ -148,8 +148,8 @@ public class PositionTest {
         @MethodSource("provideFileAndRank")
         @DisplayName("두 위치가 직선에 존재하면 참을 반환한다.")
         void isStraight_True(File file, Rank rank) {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(file, rank);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(file, rank);
 
             assertThat(source.isStraight(target)).isTrue();
         }
@@ -157,8 +157,8 @@ public class PositionTest {
         @Test
         @DisplayName("두 위치가 직선에 존재하지 않으면 거짓을 반환한다.")
         void isStraight_False() {
-            Position source = Position.generate(File.B, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.THREE);
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.THREE);
 
             assertThat(source.isStraight(target)).isFalse();
         }
@@ -166,8 +166,8 @@ public class PositionTest {
         @Test
         @DisplayName("방향이 위를 가리키면 참을 반환한다.")
         void isUp_True() {
-            Position source = Position.generate(File.A, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.THREE);
+            Position source = PositionGenerator.generate(File.A, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.THREE);
 
             assertThat(source.isUp(target)).isTrue();
         }
@@ -175,8 +175,8 @@ public class PositionTest {
         @Test
         @DisplayName("방향이 위를 가리키지 않으면 거짓을 반환한다.")
         void isUp_False() {
-            Position source = Position.generate(File.A, Rank.THREE);
-            Position target = Position.generate(File.A, Rank.TWO);
+            Position source = PositionGenerator.generate(File.A, Rank.THREE);
+            Position target = PositionGenerator.generate(File.A, Rank.TWO);
 
             assertThat(source.isUp(target)).isFalse();
         }
@@ -184,8 +184,8 @@ public class PositionTest {
         @Test
         @DisplayName("방향이 아래를 가리키면 참을 반환한다.")
         void isDown_True() {
-            Position source = Position.generate(File.A, Rank.THREE);
-            Position target = Position.generate(File.A, Rank.TWO);
+            Position source = PositionGenerator.generate(File.A, Rank.THREE);
+            Position target = PositionGenerator.generate(File.A, Rank.TWO);
 
             assertThat(source.isDown(target)).isTrue();
         }
@@ -193,8 +193,8 @@ public class PositionTest {
         @Test
         @DisplayName("방향이 아래를 가리지 않으면 거짓을 반환한다.")
         void isDown_False() {
-            Position source = Position.generate(File.A, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.THREE);
+            Position source = PositionGenerator.generate(File.A, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.THREE);
 
             assertThat(source.isDown(target)).isFalse();
         }
@@ -206,8 +206,8 @@ public class PositionTest {
         @Test
         @DisplayName("허용하는 랭크 차이라면 참을 반환한다.")
         void isLegalRankStep_True() {
-            Position source = Position.generate(File.A, Rank.TWO);
-            Position target = Position.generate(File.A, Rank.SEVEN);
+            Position source = PositionGenerator.generate(File.A, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.SEVEN);
 
             assertThat(source.isLegalRankStep(target, 5)).isTrue();
         }
@@ -215,8 +215,8 @@ public class PositionTest {
         @Test
         @DisplayName("허용하지 않는 랭크 차이라면 거짓을 반환한다.")
         void isLegalRankStep_False() {
-            Position source = Position.generate(File.A, Rank.ONE);
-            Position target = Position.generate(File.A, Rank.SEVEN);
+            Position source = PositionGenerator.generate(File.A, Rank.ONE);
+            Position target = PositionGenerator.generate(File.A, Rank.SEVEN);
 
             assertThat(source.isLegalRankStep(target, 5)).isFalse();
         }
@@ -224,8 +224,8 @@ public class PositionTest {
         @Test
         @DisplayName("허용하는 파일 차이라면 참을 반환한다.")
         void isLegalFileStep_True() {
-            Position source = Position.generate(File.A, Rank.TWO);
-            Position target = Position.generate(File.F, Rank.SEVEN);
+            Position source = PositionGenerator.generate(File.A, Rank.TWO);
+            Position target = PositionGenerator.generate(File.F, Rank.SEVEN);
 
             assertThat(source.isLegalFileStep(target, 5)).isTrue();
         }
@@ -233,8 +233,8 @@ public class PositionTest {
         @Test
         @DisplayName("허용하지 않는 파일 차이라면 거짓을 반환한다.")
         void isLegalFileStep_False() {
-            Position source = Position.generate(File.A, Rank.TWO);
-            Position target = Position.generate(File.E, Rank.SEVEN);
+            Position source = PositionGenerator.generate(File.A, Rank.TWO);
+            Position target = PositionGenerator.generate(File.E, Rank.SEVEN);
 
             assertThat(source.isLegalFileStep(target, 5)).isFalse();
         }
@@ -246,30 +246,30 @@ public class PositionTest {
         @Test
         @DisplayName("직선 위 두 위치 사이에 존재하는 위치들을 반환한다.")
         void findBetweenStraightPositions() {
-            Position source = Position.generate(File.D, Rank.FOUR);
-            Position target = Position.generate(File.H, Rank.FOUR);
+            Position source = PositionGenerator.generate(File.D, Rank.FOUR);
+            Position target = PositionGenerator.generate(File.H, Rank.FOUR);
 
             List<Position> positions = source.findBetweenStraightPositions(target);
 
             assertThat(positions).containsExactly(
-                    Position.generate(File.E, Rank.FOUR),
-                    Position.generate(File.F, Rank.FOUR),
-                    Position.generate(File.G, Rank.FOUR)
+                    PositionGenerator.generate(File.E, Rank.FOUR),
+                    PositionGenerator.generate(File.F, Rank.FOUR),
+                    PositionGenerator.generate(File.G, Rank.FOUR)
             );
         }
 
         @Test
         @DisplayName("대각선 위 두 위치 사이에 존재하는 위치들을 반환한다.")
         void findBetweenDiagonalPositions() {
-            Position source = Position.generate(File.D, Rank.FOUR);
-            Position target = Position.generate(File.H, Rank.EIGHT);
+            Position source = PositionGenerator.generate(File.D, Rank.FOUR);
+            Position target = PositionGenerator.generate(File.H, Rank.EIGHT);
 
             List<Position> positions = source.findBetweenDiagonalPositions(target);
 
             assertThat(positions).containsExactly(
-                    Position.generate(File.E, Rank.FIVE),
-                    Position.generate(File.F, Rank.SIX),
-                    Position.generate(File.G, Rank.SEVEN)
+                    PositionGenerator.generate(File.E, Rank.FIVE),
+                    PositionGenerator.generate(File.F, Rank.SIX),
+                    PositionGenerator.generate(File.G, Rank.SEVEN)
             );
         }
     }

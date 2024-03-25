@@ -2,48 +2,17 @@ package domain.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import view.mapper.FileInput;
-import view.mapper.RankInput;
 
 public class Position { // TODO: refactoring (너무 무거움)
 
-    private static final Map<File, Map<Rank, Position>> CACHE = new HashMap<>();
-
-    static {
-        for (File file : File.values()) {
-            Map<Rank, Position> rankPosition = rankPosition(file);
-            CACHE.put(file, rankPosition);
-        }
-    }
-
     private final File file;
     private final Rank rank;
-    private Position(File file, Rank rank) {
+
+    public Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    private static Map<Rank, Position> rankPosition(File file) {
-        Map<Rank, Position> rankPosition = new HashMap<>();
-        for (Rank rank : Rank.values()) {
-            Position position = new Position(file, rank);
-            rankPosition.put(rank, position);
-        }
-        return rankPosition;
-    }
-
-    public static Position generate(File file, Rank rank) {
-        return CACHE.get(file).getOrDefault(rank, new Position(file, rank));
-    }
-
-    public static Position generate(String rawFile, String rawRank) {
-        File file = FileInput.asFile(rawFile);
-        Rank rank = RankInput.asRank(rawRank);
-        return generate(file, rank);
     }
 
     private boolean hasFile(File file) {
@@ -125,13 +94,13 @@ public class Position { // TODO: refactoring (너무 무거움)
 
     private List<Position> findBetweenVerticalPositions(Rank targetRank) {
         return rank.betweenRanks(targetRank).stream()
-                .map(rank -> generate(file, rank))
+                .map(rank -> PositionGenerator.generate(file, rank))
                 .toList();
     }
 
     private List<Position> findBetweenHorizontalPositions(File targetFile) {
         return file.betweenFiles(targetFile).stream()
-                .map(file -> generate(file, rank))
+                .map(file -> PositionGenerator.generate(file, rank))
                 .toList();
     }
 
@@ -141,7 +110,7 @@ public class Position { // TODO: refactoring (너무 무거움)
 
         List<Position> positions = new ArrayList<>();
         for (int index = 0; index < ranks.size(); index++) {
-            Position position = generate(files.get(index), ranks.get(index));
+            Position position = PositionGenerator.generate(files.get(index), ranks.get(index));
             positions.add(position);
         }
         return positions;

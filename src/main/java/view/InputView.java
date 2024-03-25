@@ -2,6 +2,7 @@ package view;
 
 import domain.command.Command;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import java.util.Scanner;
 import view.mapper.CommandInput;
 
@@ -28,7 +29,7 @@ public class InputView {
         validatePositionLength(rawPosition);
         String rawFile = String.valueOf(rawPosition.charAt(POSITION_FILE_INDEX));
         String rawRank = String.valueOf(rawPosition.charAt(POSITION_RANK_INDEX));
-        return Position.generate(rawFile, rawRank);
+        return PositionGenerator.generate(rawFile, rawRank);
     }
 
     private void validatePositionLength(String rawPosition) {

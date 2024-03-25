@@ -11,6 +11,7 @@ import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class SquaresGenerator {
 
         private List<Position> initPositions() {
             return this.files.stream()
-                    .flatMap(file -> ranks.stream().map(rank -> Position.generate(file, rank)))
+                    .flatMap(file -> ranks.stream().map(rank -> PositionGenerator.generate(file, rank)))
                     .toList();
         }
     }

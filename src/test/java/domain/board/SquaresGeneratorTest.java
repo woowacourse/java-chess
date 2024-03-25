@@ -13,6 +13,7 @@ import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -39,14 +40,14 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.A, Rank.TWO));
-        Piece actual2 = squares.get(Position.generate(File.B, Rank.TWO));
-        Piece actual3 = squares.get(Position.generate(File.C, Rank.TWO));
-        Piece actual4 = squares.get(Position.generate(File.D, Rank.TWO));
-        Piece actual5 = squares.get(Position.generate(File.E, Rank.TWO));
-        Piece actual6 = squares.get(Position.generate(File.F, Rank.TWO));
-        Piece actual7 = squares.get(Position.generate(File.G, Rank.TWO));
-        Piece actual8 = squares.get(Position.generate(File.H, Rank.TWO));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.A, Rank.TWO));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.B, Rank.TWO));
+        Piece actual3 = squares.get(PositionGenerator.generate(File.C, Rank.TWO));
+        Piece actual4 = squares.get(PositionGenerator.generate(File.D, Rank.TWO));
+        Piece actual5 = squares.get(PositionGenerator.generate(File.E, Rank.TWO));
+        Piece actual6 = squares.get(PositionGenerator.generate(File.F, Rank.TWO));
+        Piece actual7 = squares.get(PositionGenerator.generate(File.G, Rank.TWO));
+        Piece actual8 = squares.get(PositionGenerator.generate(File.H, Rank.TWO));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(Pawn.class);
@@ -67,10 +68,10 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.A, Rank.ONE));
-        Piece actual2 = squares.get(Position.generate(File.A, Rank.EIGHT));
-        Piece actual3 = squares.get(Position.generate(File.A, Rank.ONE));
-        Piece actual4 = squares.get(Position.generate(File.A, Rank.EIGHT));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.A, Rank.ONE));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.A, Rank.EIGHT));
+        Piece actual3 = squares.get(PositionGenerator.generate(File.A, Rank.ONE));
+        Piece actual4 = squares.get(PositionGenerator.generate(File.A, Rank.EIGHT));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(Rook.class);
@@ -87,10 +88,10 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.B, Rank.ONE));
-        Piece actual2 = squares.get(Position.generate(File.B, Rank.EIGHT));
-        Piece actual3 = squares.get(Position.generate(File.G, Rank.ONE));
-        Piece actual4 = squares.get(Position.generate(File.G, Rank.EIGHT));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.B, Rank.ONE));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.B, Rank.EIGHT));
+        Piece actual3 = squares.get(PositionGenerator.generate(File.G, Rank.ONE));
+        Piece actual4 = squares.get(PositionGenerator.generate(File.G, Rank.EIGHT));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(Knight.class);
@@ -107,10 +108,10 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.C, Rank.ONE));
-        Piece actual2 = squares.get(Position.generate(File.C, Rank.EIGHT));
-        Piece actual3 = squares.get(Position.generate(File.F, Rank.ONE));
-        Piece actual4 = squares.get(Position.generate(File.F, Rank.EIGHT));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.C, Rank.ONE));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.C, Rank.EIGHT));
+        Piece actual3 = squares.get(PositionGenerator.generate(File.F, Rank.ONE));
+        Piece actual4 = squares.get(PositionGenerator.generate(File.F, Rank.EIGHT));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(Bishop.class);
@@ -127,8 +128,8 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.D, Rank.ONE));
-        Piece actual2 = squares.get(Position.generate(File.D, Rank.EIGHT));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.D, Rank.ONE));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.D, Rank.EIGHT));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(Queen.class);
@@ -143,8 +144,8 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(File.E, Rank.ONE));
-        Piece actual2 = squares.get(Position.generate(File.E, Rank.EIGHT));
+        Piece actual1 = squares.get(PositionGenerator.generate(File.E, Rank.ONE));
+        Piece actual2 = squares.get(PositionGenerator.generate(File.E, Rank.EIGHT));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(King.class);
@@ -160,10 +161,10 @@ class SquaresGeneratorTest {
 
         Map<Position, Piece> squares = squaresGenerator.generate();
 
-        Piece actual1 = squares.get(Position.generate(file, Rank.THREE));
-        Piece actual2 = squares.get(Position.generate(file, Rank.FOUR));
-        Piece actual3 = squares.get(Position.generate(file, Rank.FIVE));
-        Piece actual4 = squares.get(Position.generate(file, Rank.SIX));
+        Piece actual1 = squares.get(PositionGenerator.generate(file, Rank.THREE));
+        Piece actual2 = squares.get(PositionGenerator.generate(file, Rank.FOUR));
+        Piece actual3 = squares.get(PositionGenerator.generate(file, Rank.FIVE));
+        Piece actual4 = squares.get(PositionGenerator.generate(file, Rank.SIX));
 
         assertAll(() -> {
             assertThat(actual1).isInstanceOf(None.class);

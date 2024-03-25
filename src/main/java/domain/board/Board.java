@@ -5,6 +5,7 @@ import domain.piece.None;
 import domain.piece.Piece;
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Board {
     }
 
     public Piece findPieceByPosition(File file, Rank rank) {
-        return squares.get(Position.generate(file, rank));
+        return squares.get(PositionGenerator.generate(file, rank));
     }
 
     public void movePiece(Position source, Position target) {
