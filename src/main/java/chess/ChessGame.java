@@ -3,6 +3,7 @@ package chess;
 import static chess.exception.ExceptionHandler.retry;
 
 import chess.domain.chessboard.Chessboard;
+import chess.domain.chessboard.ChessboardFactory;
 import chess.view.InputView;
 import chess.view.ResultView;
 import chess.view.command.Command;
@@ -36,7 +37,7 @@ public class ChessGame {
     }
 
     private void play() {
-        Chessboard chessboard = Chessboard.create();
+        Chessboard chessboard = ChessboardFactory.create();
         resultView.printBoard(new ChessboardDto(chessboard));
         retry(() -> playByCommand(chessboard, inputView.askCommand()));
     }

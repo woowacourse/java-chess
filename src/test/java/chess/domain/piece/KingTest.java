@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.chessboard.Chessboard;
+import chess.domain.chessboard.ChessboardFactory;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -34,7 +34,7 @@ class KingTest {
     @ParameterizedTest
     void move(Position target, Position expected) {
         Piece sut = new King(Color.WHITE, Position.from("d5"));
-        Position actual = sut.move(Chessboard.empty(), target).position();
+        Position actual = sut.move(ChessboardFactory.empty(), target).position();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -56,7 +56,7 @@ class KingTest {
     @ParameterizedTest
     void moveException(Position target) {
         Piece sut = new King(Color.WHITE, Position.from("d5"));
-        assertThatThrownBy(() -> sut.move(Chessboard.empty(), target))
+        assertThatThrownBy(() -> sut.move(ChessboardFactory.empty(), target))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다: " + target);
     }

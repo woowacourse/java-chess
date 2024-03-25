@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.chessboard.Chessboard;
+import chess.domain.chessboard.ChessboardFactory;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
 
@@ -15,7 +15,7 @@ class StartingPawnTest {
     @Test
     void move() {
         Piece sut = new StartingPawn(Color.WHITE, Position.from("d2"));
-        Position actual = sut.move(Chessboard.empty(), Position.from("d4")).position();
+        Position actual = sut.move(ChessboardFactory.empty(), Position.from("d4")).position();
         assertThat(actual).isEqualTo(Position.from("d4"));
     }
 
@@ -23,7 +23,7 @@ class StartingPawnTest {
     @Test
     void moveException() {
         Piece sut = new StartingPawn(Color.WHITE, Position.from("d2"));
-        assertThatCode(() -> sut.move(Chessboard.empty(), Position.from("e3")))
+        assertThatCode(() -> sut.move(ChessboardFactory.empty(), Position.from("e3")))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 위치입니다: E3");
     }
