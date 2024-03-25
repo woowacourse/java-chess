@@ -3,8 +3,13 @@ package chess.board;
 import chess.piece.Color;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
+import chess.position.File;
 import chess.position.Position;
+import chess.score.FilePieces;
+import chess.score.Score;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -100,6 +105,21 @@ public class Board {
         }
         Piece pieceOnPosition = pieces.get(position);
         return pieceOnPosition.hasDifferentColorWith(piece);
+    }
+
+    public Score calculateScore(Color color) {
+        return Arrays.stream(File.values())
+                .map(this::getFilePieces)
+                .map(filePieces -> filePieces.calculateScore(color))
+                .reduce(Score.ZERO, Score::add);
+    }
+
+    private FilePieces getFilePieces(File file) {
+        List<Piece> filePieces = pieces.keySet().stream()
+                .filter(position -> position.hasFileOf(file))
+                .map(pieces::get)
+                .toList();
+        return new FilePieces(filePieces);
     }
 
     public Map<Position, Piece> pieces() {
