@@ -58,7 +58,7 @@ public abstract class Pawn extends Piece {
     @Override
     public Set<Position> getMoveRoute(final Moving moving) {
         if (!canMovable(moving)) {
-            throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
+            throw new InvalidMovingException(ErrorCode.INVALID_PAWN_MOVEMENT);
         }
         final Position currentPosition = moving.getCurrentPosition();
         final Position nextPosition = moving.getNextPosition();
@@ -72,7 +72,7 @@ public abstract class Pawn extends Piece {
     @Override
     public Set<Position> getAttackRoute(final Moving moving) {
         if (canAttack(moving)) {
-            throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
+            throw new InvalidMovingException(ErrorCode.INVALID_PAWN_MOVEMENT);
         }
         return Set.of();
     }

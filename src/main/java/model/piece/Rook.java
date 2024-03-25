@@ -18,7 +18,7 @@ public class Rook extends Piece {
         if (canMovable(moving)) {
             return moving.route();
         }
-        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
+        throw new InvalidMovingException(ErrorCode.INVALID_ROOK_MOVEMENT);
     }
 
     @Override

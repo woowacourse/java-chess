@@ -18,7 +18,7 @@ public class Knight extends Piece {
         if (canMovable(moving)) {
             return Set.of();
         }
-        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
+        throw new InvalidMovingException(ErrorCode.INVALID_KNIGHT_MOVEMENT);
     }
 
     @Override

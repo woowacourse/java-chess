@@ -18,7 +18,7 @@ public class King extends Piece {
         if (canMovable(moving)) {
             return Set.of();
         }
-        throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
+        throw new InvalidMovingException(ErrorCode.INVALID_KING_MOVEMENT);
     }
 
     @Override
