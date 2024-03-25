@@ -11,12 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-public class Board {
-    private final Map<Position, Piece> pieces;
-
-    public Board(Map<Position, Piece> pieces) {
-        this.pieces = pieces;
-    }
+public record Board(Map<Position, Piece> pieces) {
 
     public void validateSameTeamByPosition(Position position, Team team) {
         if (pieces.get(position).isOppositeTeamWith(team)) {
@@ -184,7 +179,8 @@ public class Board {
         return piece.findBetweenPositions(positions);
     }
 
-    public Map<Position, Piece> getPieces() {
+    @Override
+    public Map<Position, Piece> pieces() {
         return Collections.unmodifiableMap(pieces);
     }
 }

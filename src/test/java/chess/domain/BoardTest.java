@@ -18,7 +18,7 @@ public class BoardTest {
                 Position.of(2, 1),
                 Position.of(3, 1)));
 
-        Piece piece = board.getPieces().get(Position.of(3, 1));
+        Piece piece = board.pieces().get(Position.of(3, 1));
         assertThat(piece).isInstanceOf(Pawn.class);
     }
 
