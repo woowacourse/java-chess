@@ -3,6 +3,7 @@ package chess.domain.piece;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Movement;
@@ -30,8 +31,8 @@ public class King extends UnslidingPiece {
     }
 
     @Override
-    public Piece move(final Position target) {
-        validateTarget(possiblePositionsAfter(POSSIBLE_MOVEMENTS), target);
+    public Piece move(final Chessboard chessboard, final Position target) {
+        validateTarget(possiblePositions(chessboard, POSSIBLE_MOVEMENTS), target);
         return new King(color(), target);
     }
 }

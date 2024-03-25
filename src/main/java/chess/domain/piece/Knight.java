@@ -44,7 +44,7 @@ public class Knight extends UnslidingPiece {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(possiblePositionsAfter(POSSIBLE_MOVEMENTS), target);
+        validateTarget(possiblePositions(chessboard, POSSIBLE_MOVEMENTS), target);
         return new Knight(color(), target);
     }
 }
