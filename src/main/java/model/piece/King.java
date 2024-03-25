@@ -6,7 +6,6 @@ import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import view.message.PieceType;
 
 public class King extends Piece {
 
@@ -28,10 +27,5 @@ public class King extends Piece {
             return false;
         }
         return moving.isAdjacent();
-    }
-
-    @Override
-    public String toString() {
-        return PieceType.from(this).getValue();
     }
 }

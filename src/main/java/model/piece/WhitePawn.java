@@ -7,8 +7,8 @@ import model.position.Rank;
 
 public class WhitePawn extends Pawn {
 
-    protected WhitePawn(final Camp camp) {
-        super(camp);
+    public WhitePawn() {
+        super(Camp.WHITE);
     }
 
     @Override
@@ -33,5 +33,10 @@ public class WhitePawn extends Pawn {
             return false;
         }
         return differenceRank == 1;
+    }
+
+    @Override
+    public Camp getCamp() {
+        return Camp.WHITE;
     }
 }

@@ -6,7 +6,6 @@ import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import view.message.PieceType;
 
 public abstract class Pawn extends Piece {
 
@@ -16,9 +15,9 @@ public abstract class Pawn extends Piece {
 
     public static Pawn create(Camp camp) {
         if (camp == Camp.BLACK) {
-            return new BlackPawn(Camp.BLACK);
+            return new BlackPawn();
         }
-        return new WhitePawn(Camp.WHITE);
+        return new WhitePawn();
     }
 
     protected abstract boolean isDiagonal(final int differenceRank, final int differenceFile);
@@ -76,10 +75,5 @@ public abstract class Pawn extends Piece {
             throw new InvalidMovingException(ErrorCode.INVALID_MOVEMENT_RULE);
         }
         return Set.of();
-    }
-
-    @Override
-    public String toString() {
-        return PieceType.from(this).getValue();
     }
 }

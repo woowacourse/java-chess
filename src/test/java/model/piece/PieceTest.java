@@ -28,7 +28,7 @@ class PieceTest {
                 Arguments.of(new Bishop(Camp.BLACK)),
                 Arguments.of(new King(Camp.BLACK)),
                 Arguments.of(new Knight(Camp.WHITE)),
-                Arguments.of(Pawn.create(Camp.WHITE)),
+                Arguments.of(new WhitePawn()),
                 Arguments.of(new Queen(Camp.WHITE)),
                 Arguments.of(new Rook(Camp.WHITE))
         );

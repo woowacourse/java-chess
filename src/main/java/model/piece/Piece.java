@@ -35,9 +35,10 @@ public abstract class Piece {
         if (this == target) {
             return true;
         }
-        if (!(target instanceof Piece piece)) {
+        if (target == null || getClass() != target.getClass()) {
             return false;
         }
+        Piece piece = (Piece) target;
         return camp == piece.camp;
     }
 

@@ -48,12 +48,13 @@ import exception.PieceExistInRouteException;
 import java.util.HashMap;
 import java.util.Map;
 import model.piece.Bishop;
+import model.piece.BlackPawn;
 import model.piece.King;
 import model.piece.Knight;
-import model.piece.Pawn;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.piece.Rook;
+import model.piece.WhitePawn;
 import model.position.Moving;
 import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -91,14 +92,14 @@ class ChessGameTest {
         expected.put(F8, new Bishop(Camp.BLACK));
         expected.put(G8, new Knight(Camp.BLACK));
         expected.put(H8, new Rook(Camp.BLACK));
-        expected.put(A7, Pawn.create(Camp.BLACK));
-        expected.put(B7, Pawn.create(Camp.BLACK));
-        expected.put(C7, Pawn.create(Camp.BLACK));
-        expected.put(D7, Pawn.create(Camp.BLACK));
-        expected.put(E7, Pawn.create(Camp.BLACK));
-        expected.put(F7, Pawn.create(Camp.BLACK));
-        expected.put(G7, Pawn.create(Camp.BLACK));
-        expected.put(H7, Pawn.create(Camp.BLACK));
+        expected.put(A7, new BlackPawn());
+        expected.put(B7, new BlackPawn());
+        expected.put(C7, new BlackPawn());
+        expected.put(D7, new BlackPawn());
+        expected.put(E7, new BlackPawn());
+        expected.put(F7, new BlackPawn());
+        expected.put(G7, new BlackPawn());
+        expected.put(H7, new BlackPawn());
 
         //white
         expected.put(A1, new Rook(Camp.WHITE));
@@ -109,14 +110,14 @@ class ChessGameTest {
         expected.put(F1, new Bishop(Camp.WHITE));
         expected.put(G1, new Knight(Camp.WHITE));
         expected.put(H1, new Rook(Camp.WHITE));
-        expected.put(A2, Pawn.create(Camp.WHITE));
-        expected.put(B2, Pawn.create(Camp.WHITE));
-        expected.put(C2, Pawn.create(Camp.WHITE));
-        expected.put(D2, Pawn.create(Camp.WHITE));
-        expected.put(E2, Pawn.create(Camp.WHITE));
-        expected.put(F2, Pawn.create(Camp.WHITE));
-        expected.put(G2, Pawn.create(Camp.WHITE));
-        expected.put(H2, Pawn.create(Camp.WHITE));
+        expected.put(A2, new WhitePawn());
+        expected.put(B2, new WhitePawn());
+        expected.put(C2, new WhitePawn());
+        expected.put(D2, new WhitePawn());
+        expected.put(E2, new WhitePawn());
+        expected.put(F2, new WhitePawn());
+        expected.put(G2, new WhitePawn());
+        expected.put(H2, new WhitePawn());
 
         //then
         assertThat(board).isEqualTo(expected);

@@ -8,12 +8,13 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import model.Camp;
 import model.piece.Bishop;
+import model.piece.BlackPawn;
 import model.piece.King;
 import model.piece.Knight;
-import model.piece.Pawn;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.piece.Rook;
+import model.piece.WhitePawn;
 
 public enum PieceType {
 
@@ -23,8 +24,8 @@ public enum PieceType {
     KING_WHITE(new King(Camp.WHITE), "k"),
     KNIGHT_BLACK(new Knight(Camp.BLACK), "N"),
     KNIGHT_WHITE(new Knight(Camp.WHITE), "n"),
-    PAWN_BLACK(Pawn.create(Camp.BLACK), "P"),
-    PAWN_WHITE(Pawn.create(Camp.WHITE), "p"),
+    PAWN_BLACK(new BlackPawn(), "P"),
+    PAWN_WHITE(new WhitePawn(), "p"),
     QUEEN_BLACK(new Queen(Camp.BLACK), "Q"),
     QUEEN_WHITE(new Queen(Camp.WHITE), "q"),
     ROOK_BLACK(new Rook(Camp.BLACK), "R"),

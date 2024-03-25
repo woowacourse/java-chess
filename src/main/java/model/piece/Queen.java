@@ -6,7 +6,6 @@ import java.util.Set;
 import model.Camp;
 import model.position.Moving;
 import model.position.Position;
-import view.message.PieceType;
 
 public class Queen extends Piece {
 
@@ -28,10 +27,5 @@ public class Queen extends Piece {
             return false;
         }
         return moving.isDiagonal() || moving.isVertical() || moving.isHorizontal();
-    }
-
-    @Override
-    public String toString() {
-        return PieceType.from(this).getValue();
     }
 }
