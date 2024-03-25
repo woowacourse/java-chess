@@ -51,7 +51,7 @@ public class ChessGame {
     private boolean tryProcessTurn(Board board) {
         try {
             return processTurn(board);
-        } catch (IllegalArgumentException exception){
+        } catch (IllegalArgumentException exception) {
             outputView.printExceptionMessage(exception);
             tryProcessTurn(board);
         }
