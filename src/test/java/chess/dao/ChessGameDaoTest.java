@@ -2,6 +2,11 @@ package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Color;
+import chess.domain.piece.Rook;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import chess.dto.ChessGameComponentDto;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -47,6 +52,17 @@ class ChessGameDaoTest {
         List<ChessGameComponentDto> dtos = chessGameDao.findAll();
 
         assertThat(dtos.size()).isEqualTo(16);
+    }
+
+    @DisplayName("데이터베이스에 데이터를 저장한다.")
+    @Test
+    void save() {
+        ChessGameComponentDto chessGameComponentDto = new ChessGameComponentDto(
+                Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+
+        chessGameDao.save(chessGameComponentDto);
+
+        assertThat(chessGameDao.findAll().size()).isEqualTo(17);
     }
 
     private void executeInitScript() throws IOException, SQLException {

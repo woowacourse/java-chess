@@ -72,6 +72,14 @@ public class Position {
         return color == Color.WHITE && rank == Rank.TWO;
     }
 
+    public String getFileSymbol() {
+        return file.getSymbol();
+    }
+
+    public int getRankValue() {
+        return rank.getSymbol();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

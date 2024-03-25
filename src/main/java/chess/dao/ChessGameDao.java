@@ -56,6 +56,21 @@ public class ChessGameDao {
         }
     }
 
+    public void save(ChessGameComponentDto chessGameComponentDto) {
+        String tableName = getTableName();
+        try (final var connection = getConnection()) {
+            final var statement = connection.prepareStatement(
+                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`)VALUES (?,?,?, ?)");
+            statement.setString(1, chessGameComponentDto.position().getFileSymbol());
+            statement.setInt(2, chessGameComponentDto.position().getRankValue());
+            statement.setString(3, chessGameComponentDto.piece().identifyType());
+            statement.setString(4, chessGameComponentDto.piece().getColor().name());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getTableName() {
         if (isTestEnvironment()) {
             return TEST_TABLE_NAME;
