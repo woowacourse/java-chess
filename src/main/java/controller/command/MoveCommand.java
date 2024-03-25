@@ -8,6 +8,8 @@ import view.dto.RankInfos;
 
 public class MoveCommand implements Command {
     private static final String MOVE = "move";
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
     private static MoveCommand instance;
 
     private final Game game;
@@ -26,8 +28,8 @@ public class MoveCommand implements Command {
     @Override
     public void execute(final List<String> commandTokens) {
         try {
-            String sourceValue = commandTokens.get(1);
-            String targetValue = commandTokens.get(2);
+            String sourceValue = commandTokens.get(SOURCE_INDEX);
+            String targetValue = commandTokens.get(TARGET_INDEX);
             moveByPosition(sourceValue, targetValue);
         } catch (IndexOutOfBoundsException e) {
             OutputView.printErrorMessage("이동할 기물의 위치와 목표 위치를 모두 입력해주세요.");
