@@ -1,8 +1,8 @@
 package view;
 
-import domain.piece.Piece;
 import domain.piece.PieceType;
 import domain.Team;
+import domain.piece.PieceWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,16 +14,16 @@ public class OutputView {
                 + "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n");
     }
 
-    public static void printChessBoard(List<Piece> pieces) {
+    public static void printChessBoard(List<PieceWrapper> pieces) {
         List<List<Character>> boardStatus = new ArrayList<>(8);
         for (int i = 0; i < 9; i++) {
             boardStatus.add(new ArrayList<>(List.of(' ', '.', '.', '.', '.', '.', '.', '.', '.')));
         }
 
-        for (Piece piece : pieces) {
-            int column = piece.getColumn();
-            int row = piece.getRow();
-            boardStatus.get(9 - row).set(column, mappingPiece(piece).value);
+        for (PieceWrapper pieceWrapper : pieces) {
+            int column = pieceWrapper.getColumn();
+            int row = pieceWrapper.getRow();
+            boardStatus.get(9 - row).set(column, mappingPiece(pieceWrapper).value);
         }
 
         for (int i = 1; i < boardStatus.size(); i++) {
@@ -34,9 +34,9 @@ public class OutputView {
         }
     }
 
-    private static PieceAsset mappingPiece(Piece piece) {
-        Team pieceTeam = piece.getTeam();
-        PieceType pieceType = piece.getPieceType();
+    private static PieceAsset mappingPiece(PieceWrapper pieceWrapper) {
+        Team pieceTeam = pieceWrapper.getTeam();
+        PieceType pieceType = pieceWrapper.getPieceType();
         return PieceAsset.valueOf(pieceTeam.name() + "_" + pieceType.name());
     }
 
