@@ -1,9 +1,9 @@
 package fixture;
 
-import domain.route.Route;
-import domain.route.Pieces;
-import domain.piece.Empty;
-import domain.piece.Piece;
+import chess.domain.route.Route;
+import chess.domain.route.Pieces;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.List;
 

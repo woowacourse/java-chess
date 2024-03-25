@@ -1,6 +1,8 @@
 package domain.piece;
 
-import domain.square.Square;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Side;
+import chess.domain.square.Square;
 import fixture.MovePathFixture;
 import fixture.PositionFixture;
 import java.util.List;

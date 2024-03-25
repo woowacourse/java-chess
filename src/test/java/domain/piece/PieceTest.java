@@ -5,8 +5,13 @@ import static fixture.PositionFixture.A2;
 import static fixture.PositionFixture.A3;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.square.Square;
-import domain.route.Route;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Side;
+import chess.domain.square.Square;
+import chess.domain.route.Route;
 import fixture.MovePathFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,6 +27,11 @@ public class PieceTest {
             @Override
             public boolean hasFollowedRule(Square current, Square target, Route route) {
                 return true;
+            }
+
+            @Override
+            public PieceType pieceType() {
+                return null;
             }
         };
     }
@@ -66,6 +76,11 @@ public class PieceTest {
             @Override
             public boolean hasFollowedRule(Square current, Square target, Route movePath) {
                 return false;
+            }
+
+            @Override
+            public PieceType pieceType() {
+                return null;
             }
         };
 

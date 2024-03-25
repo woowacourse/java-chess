@@ -1,8 +1,8 @@
 package fixture;
 
-import domain.square.File;
-import domain.square.Square;
-import domain.square.Rank;
+import chess.domain.square.File;
+import chess.domain.square.Square;
+import chess.domain.square.Rank;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.provider.Arguments;

@@ -1,10 +1,12 @@
 package domain.board;
 
-import domain.route.Path;
-import domain.route.Pieces;
-import domain.piece.Side;
-import domain.piece.Empty;
-import domain.piece.Pawn;
+import chess.domain.board.Board;
+import chess.domain.board.BoardCreator;
+import chess.domain.route.Path;
+import chess.domain.route.Pieces;
+import chess.domain.piece.Side;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Pawn;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

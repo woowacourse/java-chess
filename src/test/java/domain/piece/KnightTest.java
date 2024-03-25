@@ -11,7 +11,9 @@ import static fixture.PositionFixture.F3;
 import static fixture.PositionFixture.F5;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.square.Square;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Side;
+import chess.domain.square.Square;
 import fixture.MovePathFixture;
 import fixture.PositionFixture;
 import java.util.List;

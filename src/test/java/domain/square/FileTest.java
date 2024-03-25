@@ -1,5 +1,6 @@
 package domain.square;
 
+import chess.domain.square.File;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
