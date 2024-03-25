@@ -8,6 +8,54 @@ public record Point(File file, Rank rank) {
 
     private static final Pattern pattern = Pattern.compile("[a-h][1-8]");
 
+    public boolean canMoveUp() {
+        return rank.canMoveUp(1);
+    }
+
+    public boolean canMoveDown() {
+        return rank.canMoveDown(1);
+    }
+
+    public boolean canMoveLeft() {
+        return file.canMoveLeft(1);
+    }
+
+    public boolean canMoveRight() {
+        return file.canMoveRight(1);
+    }
+
+    public Point moveUp() {
+        return new Point(file, rank.moveUp(1));
+    }
+
+    public Point moveDown() {
+        return new Point(file, rank.moveDown(1));
+    }
+
+    public Point moveLeft() {
+        return new Point(file.moveLeft(), rank);
+    }
+
+    public Point moveRight() {
+        return new Point(file.moveRight(), rank);
+    }
+
+    public Point moveUpLeft() {
+        return new Point(file.moveLeft(), rank.moveUp());
+    }
+
+    public Point moveUpRight() {
+        return new Point(file.moveRight(), rank.moveUp());
+    }
+
+    public Point moveDownLeft() {
+        return new Point(file.moveLeft(), rank.moveDown());
+    }
+
+    public Point moveDownRight() {
+        return new Point(file.moveRight(), rank().moveDown());
+    }
+
     public int getFileIndex() {
         return this.file.ordinal();
     }

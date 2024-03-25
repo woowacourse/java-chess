@@ -62,4 +62,77 @@ class PointTest {
 
         assertThat(sut).isEqualTo(new Point(File.F, Rank.FOUR));
     }
+
+    @Test
+    @DisplayName("포인트는 아래로 이동할 수 있다.")
+    void point_can_move_to_down() {
+        Point sut = new Point(File.A, Rank.TWO);
+
+        assertThat(sut.moveDown())
+                .isEqualTo(new Point(File.A, Rank.ONE));
+    }
+
+    @Test
+    @DisplayName("포인트는 위로 이동할 수 있다.")
+    void point_can_move_to_up() {
+        Point sut = new Point(File.A, Rank.ONE);
+
+        assertThat(sut.moveUp())
+                .isEqualTo(new Point(File.A, Rank.TWO));
+    }
+
+    @Test
+    @DisplayName("포인트는 왼쪽으로 이동할 수 있다.")
+    void point_can_move_to_left() {
+        Point sut = new Point(File.B, Rank.ONE);
+
+        assertThat(sut.moveLeft())
+                .isEqualTo(new Point(File.A, Rank.ONE));
+    }
+
+    @Test
+    @DisplayName("포인트는 오른쪽으로 이동할 수 있다.")
+    void point_can_move_to_right() {
+        Point sut = new Point(File.A, Rank.ONE);
+
+        assertThat(sut.moveRight())
+                .isEqualTo(new Point(File.B, Rank.ONE));
+    }
+
+    @Test
+    @DisplayName("포인트는 왼&위 대각으로 이동할 수 있다.")
+    void point_can_move_to_left_up() {
+        Point sut = new Point(File.B, Rank.ONE);
+
+        assertThat(sut.moveUpLeft())
+                .isEqualTo(new Point(File.A, Rank.TWO));
+    }
+
+    @Test
+    @DisplayName("포인트는 오른&위 대각으로 이동할 수 있다.")
+    void point_can_move_to_right_up() {
+        Point sut = new Point(File.A, Rank.ONE);
+
+        assertThat(sut.moveUpRight())
+                .isEqualTo(new Point(File.B, Rank.TWO));
+    }
+
+    @Test
+    @DisplayName("포인트는 왼&아래 대각으로 이동할 수 있다.")
+    void point_can_move_to_left_down() {
+        Point sut = new Point(File.B, Rank.TWO);
+
+        assertThat(sut.moveDownLeft())
+                .isEqualTo(new Point(File.A, Rank.ONE));
+    }
+
+    @Test
+    @DisplayName("포인트는 오른&아래 대각으로 이동할 수 있다")
+    void point_can_move_to_right_down() {
+        Point sut = new Point(File.A, Rank.TWO);
+
+        assertThat(sut.moveDownRight())
+                .isEqualTo(new Point(File.B, Rank.ONE));
+    }
+
 }
