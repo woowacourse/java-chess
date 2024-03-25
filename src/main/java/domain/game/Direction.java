@@ -14,8 +14,6 @@ public enum Direction {
     SOUTH_WEST(-1, -1),
     WEST(-1, 0),
     NORTH_WEST(-1, 1),
-
-    // KNIGHT DIRECTION
     UP_RIGHT(1, 2),
     UP_LEFT(-1, 2),
     RIGHT_UP(2, 1),

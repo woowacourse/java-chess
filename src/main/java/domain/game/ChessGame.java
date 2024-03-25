@@ -22,7 +22,7 @@ public class ChessGame {
 
     public void move(final Position source, final Position target) {
         if (gameState.isStopped()) {
-            throw new IllegalStateException("[ERROR][ERROR] 게임이 종료된 상태이므로 이동할 수 없습니다.");
+            throw new IllegalStateException("[ERROR] 게임이 종료된 상태이므로 이동할 수 없습니다.");
         }
         chessBoard.move(source, target);
     }
