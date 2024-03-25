@@ -62,4 +62,12 @@ public abstract class Piece {
     public boolean hasOpponentColorOf(Color currentTurnColor) {
         return color != currentTurnColor;
     }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isNotPawn() {
+        return !isPawn();
+    }
 }

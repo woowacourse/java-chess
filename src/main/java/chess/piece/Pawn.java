@@ -40,4 +40,9 @@ public abstract class Pawn extends Piece {
         }
         return BLACK_PAWN_ATTACK_UNIT_DIRECTION.contains(direction);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

@@ -26,4 +26,28 @@ class PawnTest {
                 () -> assertThat(blackPawn.canAttack(position, Position.of(File.E, Rank.THREE))).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("폰 여부를 올바르게 판단한다.")
+    void isPawnTest() {
+        // given
+        MovedPawn movedPawn = new MovedPawn(Color.WHITE);
+        // when, then
+        assertAll(
+                () -> assertThat(movedPawn.isPawn()).isTrue(),
+                () -> assertThat(movedPawn.isNotPawn()).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("폰이 아닌 경우의 폰 여부를 올바르게 판단한다.")
+    void isPawnOnOtherPieceTest() {
+        // given
+        Bishop bishop = new Bishop(Color.WHITE);
+        // when, then
+        assertAll(
+                () -> assertThat(bishop.isPawn()).isFalse(),
+                () -> assertThat(bishop.isNotPawn()).isTrue()
+        );
+    }
 }
