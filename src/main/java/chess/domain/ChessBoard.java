@@ -3,10 +3,14 @@ package chess.domain;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
+
+    private static final int BLACK_PAWN_INITIAL_RANK = 7;
+    private static final int WHITE_PAWN_INITIAL_RANK = 2;
 
     private final Map<Position, Piece> chessBoard;
 
@@ -36,6 +40,24 @@ public class ChessBoard {
         Piece nextPiece = chessBoard.get(nextPosition);
         while (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && nextPiece.isEmpty()) {
             nextPosition = nextPosition.moveTowardDirection(direction);
+            nextPiece = chessBoard.get(nextPosition);
+        }
+
+        // 폰이고, direction이 대각선 방향이고, 해당 칸에 적이 없는 경우 예외 발생
+        if (isPawn(piece)
+                && direction.isDiagonal()
+                && nextPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 도착 위치에 적이 있는 경우에만 대각선으로 이동할 수 있습니다.");
+        }
+
+        // Pawn한테 주는 한칸 뽀나스 ㅋ
+        if (isPawn(piece)
+                && isPawnOnInitialPosition(piece, source)
+                && !direction.isDiagonal()
+                && !nextPosition.equals(target)
+                && nextPiece.isEmpty()) {
+            nextPosition = nextPosition.moveTowardDirection(direction);
+            nextPiece = chessBoard.get(nextPosition);
         }
 
         if (!nextPosition.equals(target)) {
@@ -46,8 +68,25 @@ public class ChessBoard {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 존재합니다.");
         }
 
+        if (isPawn(piece)
+                && !direction.isDiagonal()
+                && !nextPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 폰은 도착 위치에 적이 있는 경우에만 대각선으로 이동할 수 있습니다.");
+        }
+
         chessBoard.put(target, piece);
         chessBoard.put(source, Empty.of());
+    }
+
+    private boolean isPawn(final Piece piece) {
+        return PieceType.PAWN.name().equals(piece.getOwnPieceType().name());
+    }
+
+    private boolean isPawnOnInitialPosition(final Piece piece, final Position position) {
+        if (piece.isBlack()) {
+            return position.isSameRank(BLACK_PAWN_INITIAL_RANK);
+        }
+        return position.isSameRank(WHITE_PAWN_INITIAL_RANK);
     }
 
     private static void validateEmptyPiece(final Piece piece) {

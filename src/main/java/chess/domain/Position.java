@@ -55,4 +55,8 @@ public class Position {
 
         return Direction.find(fileDifference, rankDifference);
     }
+
+    public boolean isSameRank(final int targetRank) {
+        return this.rank == targetRank;
+    }
 }

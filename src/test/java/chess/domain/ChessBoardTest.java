@@ -170,4 +170,102 @@ class ChessBoardTest {
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .doesNotThrowAnyException();
     }
+
+    @Test
+    @DisplayName("폰은 시작 지점에 있을 때 앞으로 두 칸 전진할 수 있다.")
+    void pawnInitialMove() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position emptyPosition = Position.of('a', 3);
+        Position targetPosition = Position.of('a', 4);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(emptyPosition, Empty.of());
+        positionPiece.put(targetPosition, Empty.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("폰은 시작 지점에 있더라도 경로 상에 기물이 존재하는 경우, 이동할 수 없다.")
+    void pawnInitialMoveWithObstacleOnRoute() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position emptyPosition = Position.of('a', 3);
+        Position targetPosition = Position.of('a', 4);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(emptyPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(targetPosition, Empty.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 시작 지점에 있더라도 도착 지점에 기물이 존재한다면 이동할 수 없다.")
+    void pawnInitialMoveWithObstacleOnTargetPosition() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position emptyPosition = Position.of('a', 3);
+        Position targetPosition = Position.of('a', 4);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(emptyPosition, Empty.of());
+        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 도착 지점에 적 기물이 없다면 대각선으로 이동할 수 없다.")
+    void pawnCannotMoveDiagonalWithoutEnemy() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position targetPosition = Position.of('b', 3);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(targetPosition, Empty.of());
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("폰은 도착 지점에 적 기물이 있다면 대각선으로 이동할 수 있다.")
+    void pawnCanMoveDiagonalWithEnemy() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position targetPosition = Position.of('b', 3);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("폰은 시작 지점에 위치하더라도 대각선 방향으로는 두 칸 전진할 수 없다.")
+    void pawnCantMoveInitialDiagonal() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of('a', 2);
+        Position emptyPosition = Position.of('b', 3);
+        Position targetPosition = Position.of('c', 4);
+        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(emptyPosition, Empty.of());
+        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
 }

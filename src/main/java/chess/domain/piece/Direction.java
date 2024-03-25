@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import java.util.Arrays;
+import java.util.Set;
 
 public enum Direction {
 
@@ -20,6 +21,8 @@ public enum Direction {
     KNIGHT_UP_RIGHT(1, 2),
     KNIGHT_DOWN_LEFT(-1, -2),
     KNIGHT_DOWN_RIGHT(1, -2),
+    PAWN_INITIAL_UP(0, 2),
+    PAWN_INITIAL_DOWN(0, -2),
     ;
 
     private final int file;
@@ -38,6 +41,14 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다."));
     }
 
+    private boolean isSameGradiant(int fileDifference, int rankDifference) {
+        return (double) this.file / this.rank == (double) fileDifference / rankDifference;
+    }
+
+    private boolean isSameSign(int fileDifference, int rankDifference) {
+        return this.file * fileDifference >= 0 && this.rank * rankDifference >= 0;
+    }
+
     public int calculateNextFile(final int currentFile) {
         return currentFile + this.file;
     }
@@ -46,11 +57,8 @@ public enum Direction {
         return currentRank + this.rank;
     }
 
-    private boolean isSameGradiant(int fileDifference, int rankDifference) {
-        return (double) this.file / this.rank == (double) fileDifference / rankDifference;
-    }
-
-    private boolean isSameSign(int fileDifference, int rankDifference) {
-        return this.file * fileDifference >= 0 && this.rank * rankDifference >= 0;
+    public boolean isDiagonal() {
+        Set<Direction> diagonalDirections = Set.of(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+        return diagonalDirections.contains(this);
     }
 }
