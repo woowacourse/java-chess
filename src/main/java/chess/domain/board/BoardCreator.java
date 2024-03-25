@@ -21,12 +21,13 @@ public class BoardCreator {
 
     private static final int MINIMUM_BOARD_POSITION = 1;
     private static final int MAXIMUM_BOARD_POSITION = 8;
+    private static final Color START_COLOR = Color.WHITE;
 
     public static Board create() {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
         initialPiecePositions.putAll(getWhitePieces());
         initialPiecePositions.putAll(getBlackPieces());
-        return new Board(new HashMap<>(initialPiecePositions));
+        return new Board(new HashMap<>(initialPiecePositions), START_COLOR);
     }
 
     private static Map<Position, Piece> generateEmptyBoard() {

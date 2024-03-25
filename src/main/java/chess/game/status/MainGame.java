@@ -43,8 +43,8 @@ public class MainGame implements GameStatus {
     }
 
     private GameStatus movePiece(List<Position> fromToPositions) {
-        board.move(fromToPositions.get(0), fromToPositions.get(1));
+        Board board = this.board.move(fromToPositions.get(0), fromToPositions.get(1));
         OutputView.printBoard(board);
-        return this;
+        return new MainGame(inputView, board);
     }
 }

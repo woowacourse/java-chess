@@ -18,6 +18,6 @@ public abstract class NormalPiece extends Piece {
 
     @Override
     protected boolean filterObstacles(Position source, Position target, Entry<Position, Piece> entry) {
-        return entry.getValue().isSameColor(this);
+        return entry.getValue().isSameColor(this.getColor());
     }
 }

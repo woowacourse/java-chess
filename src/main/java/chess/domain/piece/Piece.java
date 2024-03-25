@@ -38,8 +38,8 @@ public abstract class Piece {
 
     abstract protected boolean filterObstacles(Position source, Position target, Entry<Position, Piece> entry);
 
-    public boolean isSameColor(final Piece piece) {
-        return this.color == piece.color;
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
     }
 
     public boolean isNotEmpty() {

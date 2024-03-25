@@ -28,13 +28,13 @@ public class Pawn extends Piece {
 
     private boolean existEnemy(final Position target, final Map<Position, Piece> pieces) {
         Piece enemyPiece = pieces.getOrDefault(target, new Empty());
-        return enemyPiece.isNotEmpty() && !enemyPiece.isSameColor(this);
+        return enemyPiece.isNotEmpty() && !enemyPiece.isSameColor(this.getColor());
     }
 
     @Override
     protected boolean filterObstacles(Position source, Position target, Entry<Position, Piece> entry) {
         if (isDiagonalMove(source, target) && entry.getValue().isNotEmpty()) {
-            return entry.getValue().isSameColor(this);
+            return entry.getValue().isSameColor(this.getColor());
         }
         return entry.getValue().isNotEmpty();
     }

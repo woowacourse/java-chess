@@ -36,4 +36,13 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
+
+    @Test
+    @DisplayName("보드에서 상대 팀 체스 말을 이동할 경우 예외가 발생한다.")
+    void movePieceOppositeColorThrowException() {
+        Board board = BoardCreator.create();
+        assertThatThrownBy(() -> board.move(new Position(1, 7), new Position(1, 5)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("상대 팀의 기물을 이동시킬 수 없습니다.");
+    }
 }
