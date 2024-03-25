@@ -2,7 +2,7 @@ package chess.domain.state;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
-import chess.domain.position.Positions;
+
 import java.util.List;
 
 public class Progress implements GameState {

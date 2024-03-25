@@ -1,9 +1,20 @@
 package chess.domain.position;
 
 import chess.domain.piece.Color;
-import java.util.Objects;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
+    private static final Map<String, Position> CACHE;
+
+    static {
+        CACHE = new HashMap<>();
+        for (File file : File.values()) {
+            createRankPosition(file);
+        }
+    }
+
     private final File file;
     private final Rank rank;
 
@@ -14,6 +25,19 @@ public class Position {
 
     public boolean findPosition(File file, Rank rank) {
         return file == this.file && rank == this.rank;
+    public static Position of(File file, Rank rank) {
+        return CACHE.get(toKey(file, rank));
+    }
+
+
+    private static void createRankPosition(File file) {
+        for (Rank rank : Rank.values()) {
+            CACHE.put(toKey(file, rank), new Position(file, rank));
+        }
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.fileSymbol + rank.rankRow;
     }
 
     public int calculateFileDifference(Position target) {
@@ -28,7 +52,7 @@ public class Position {
         File movedFile = file.move(fileUnit);
         Rank movedRank = rank.move(rankUnit);
 
-        return Positions.of(movedFile, movedRank);
+        return Position.of(movedFile, movedRank);
     }
 
     public boolean isPawnFirstTry(Color color) {
