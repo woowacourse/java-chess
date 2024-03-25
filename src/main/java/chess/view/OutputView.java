@@ -21,13 +21,13 @@ public class OutputView {
     }
 
     public static void printBoard(final Map<Square, Piece> board) {
-        char[][] result = generateEmptyBoard();
+        final char[][] result = generateEmptyBoard();
         setPiecesOnBoard(board, result);
         printResultBoard(result);
     }
 
     private static char[][] generateEmptyBoard() {
-        char[][] emptyBoard = new char[BOARD_SIZE][BOARD_SIZE];
+        final char[][] emptyBoard = new char[BOARD_SIZE][BOARD_SIZE];
         for (char[] line : emptyBoard) {
             Arrays.fill(line, EMPTY_PIECE);
         }
@@ -49,7 +49,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printErrorMessage(String message) {
+    public static void printErrorMessage(final String message) {
         System.out.println(ERROR_PREFIX + message);
     }
 }

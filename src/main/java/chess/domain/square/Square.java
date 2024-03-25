@@ -70,12 +70,12 @@ public record Square(File file, Rank rank) {
             return List.of();
         }
 
-        List<File> filePath = file.findFilePath(target.file);
-        List<Rank> rankPath = rank.findRankPath(target.rank);
+        final List<File> filePath = file.findFilePath(target.file);
+        final List<Rank> rankPath = rank.findRankPath(target.rank);
         return createPath(filePath, rankPath);
     }
 
-    private List<Square> createPath(List<File> filePath, List<Rank> rankPath) {
+    private List<Square> createPath(final List<File> filePath, final List<Rank> rankPath) {
         if (filePath.isEmpty()) {
             return mapToPathList(rankPath, rank -> new Square(file, rank));
         }
@@ -84,14 +84,14 @@ public record Square(File file, Rank rank) {
             return mapToPathList(filePath, file -> new Square(file, rank));
         }
 
-        List<Square> path = new ArrayList<>();
+        final List<Square> path = new ArrayList<>();
         for (int i = 0; i < filePath.size(); i++) {
             path.add(new Square(filePath.get(i), rankPath.get(i)));
         }
         return path;
     }
 
-    private <T> List<Square> mapToPathList(List<T> list, Function<T, Square> mapper) {
+    private <T> List<Square> mapToPathList(final List<T> list, final Function<T, Square> mapper) {
         return list.stream()
                 .map(mapper)
                 .toList();

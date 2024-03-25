@@ -32,7 +32,7 @@ public class BoardFactory {
     }
 
     public static Board createBoard() {
-        Map<Square, Piece> board = new HashMap<>();
+        final Map<Square, Piece> board = new HashMap<>();
 
         board.putAll(createPiecesWithoutPawn(Rank.EIGHT, PieceColor.BLACK));
         board.putAll(createPawns(Rank.SEVEN, PieceColor.BLACK));
@@ -42,7 +42,7 @@ public class BoardFactory {
         return new Board(board);
     }
 
-    private static Map<Square, Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
+    private static Map<Square, Piece> createPiecesWithoutPawn(final Rank rank, final PieceColor pieceColor) {
         return IntStream.range(0, PIECES_ARRANGEMENT.size())
                 .boxed()
                 .collect(Collectors.toMap(
@@ -51,7 +51,7 @@ public class BoardFactory {
                 ));
     }
 
-    private static Map<Square, Piece> createPawns(Rank rank, PieceColor pieceColor) {
+    private static Map<Square, Piece> createPawns(final Rank rank, final PieceColor pieceColor) {
         return Arrays.stream(File.values())
                 .collect(Collectors.toMap(
                         file -> new Square(file, rank),

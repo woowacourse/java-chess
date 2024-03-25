@@ -13,7 +13,7 @@ class PieceMapperTest {
     @Test
     @DisplayName("흑색 기물일 때 대문자로 변환한다.")
     void mapToUpperCaseWhenBlackPiece() {
-        Character actual = PieceMapper.map(PieceType.KNIGHT, PieceColor.BLACK);
+        final Character actual = PieceMapper.map(PieceType.KNIGHT, PieceColor.BLACK);
         assertThat(actual).isEqualTo('N');
     }
 }

@@ -14,7 +14,7 @@ class CommandTest {
     void findCommandByValue() {
         final String input = "start";
 
-        Command actual = Command.findByValue(input);
+        final Command actual = Command.findByValue(input);
 
         assertThat(actual).isEqualTo(Command.START);
     }

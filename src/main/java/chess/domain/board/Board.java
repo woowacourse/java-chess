@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.square.Square;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class Board {
 
     private final Map<Square, Piece> pieces;
 
-    public Board(Map<Square, Piece> pieces) {
+    public Board(final Map<Square, Piece> pieces) {
         this.pieces = new HashMap<>(pieces);
     }
 
@@ -25,7 +26,7 @@ public class Board {
         validateIsSameSquare(source, target);
         validateIsNonExistentPiece(source);
 
-        Piece sourcePiece = findPieceBySquare(source);
+        final Piece sourcePiece = findPieceBySquare(source);
         validateIsTurn(sourcePiece, turn);
         validateCanMove(source, target, sourcePiece);
         validateExistObstacleOnPath(source, target);
@@ -62,7 +63,7 @@ public class Board {
     }
 
     private void validateExistObstacleOnPath(final Square source, final Square target) {
-        List<Square> path = source.findPath(target);
+        final List<Square> path = source.findPath(target);
         for (Square square : path) {
             checkIsNotEmpty(square);
         }
@@ -75,6 +76,6 @@ public class Board {
     }
 
     public Map<Square, Piece> getPieces() {
-        return pieces;
+        return Collections.unmodifiableMap(pieces);
     }
 }

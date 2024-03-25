@@ -23,10 +23,10 @@ class FileTest {
     @DisplayName("같은 파일인지 확인한다.")
     @ParameterizedTest
     @CsvSource({"a, true", "b, false"})
-    void checkIsSameFile(String other, boolean expected) {
-        File file = File.a;
+    void checkIsSameFile(final String other, final boolean expected) {
+        final File file = File.a;
 
-        boolean actual = file.isSameFile(File.findByValue(other));
+        final boolean actual = file.isSameFile(File.findByValue(other));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -34,10 +34,10 @@ class FileTest {
     @DisplayName("두 파일 간 거리를 구한다.")
     @Test
     void calculateDistanceBetweenTwoFiles() {
-        File file = File.a;
-        File other = File.h;
+        final File file = File.a;
+        final File other = File.h;
 
-        int actual = file.calculateDistance(other);
+        final int actual = file.calculateDistance(other);
 
         assertThat(actual).isEqualTo(7);
     }
@@ -45,10 +45,10 @@ class FileTest {
     @DisplayName("두 파일 간 경로를 찾는다.")
     @Test
     void findPathBetweenTwoFiles() {
-        File file = File.e;
-        File other = File.h;
+        final File file = File.e;
+        final File other = File.h;
 
-        List<File> actual = file.findFilePath(other);
+        final List<File> actual = file.findFilePath(other);
 
         assertThat(actual).containsExactlyInAnyOrder(File.f, File.g);
     }

@@ -15,11 +15,11 @@ public enum PieceMapper {
 
     private final char name;
 
-    PieceMapper(char name) {
+    PieceMapper(final char name) {
         this.name = name;
     }
 
-    public static char map(PieceType pieceType, PieceColor pieceColor) {
+    public static char map(final PieceType pieceType, final PieceColor pieceColor) {
         if (pieceColor == PieceColor.BLACK) {
             return Character.toUpperCase(valueOf(pieceType.name()).name);
         }

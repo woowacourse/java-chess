@@ -23,8 +23,8 @@ public class ChessGame {
 
     public void start() {
         OutputView.printStartMessage();
-        String commandInput = InputView.readCommand();
-        Command command = Command.findByValue(commandInput);
+        final String commandInput = InputView.readCommand();
+        final Command command = Command.findByValue(commandInput);
 
         if (command.isEnd()) {
             return;
@@ -33,7 +33,7 @@ public class ChessGame {
             throw new IllegalStateException("게임을 먼저 시작해 주세요.");
         }
 
-        Board board = BoardFactory.createBoard();
+        final Board board = BoardFactory.createBoard();
         OutputView.printBoard(board.getPieces());
         playChess(board);
     }
@@ -54,9 +54,9 @@ public class ChessGame {
     }
 
     private PieceColor playTurn(final Board board, final String commandInput, final PieceColor turn) {
-        List<String> splitCommand = List.of(commandInput.split(MOVE_COMMAND_DELIMITER));
-        Square source = createSquare(splitCommand.get(SOURCE_SQUARE_INDEX));
-        Square target = createSquare(splitCommand.get(TARGET_SQUARE_INDEX));
+        final List<String> splitCommand = List.of(commandInput.split(MOVE_COMMAND_DELIMITER));
+        final Square source = createSquare(splitCommand.get(SOURCE_SQUARE_INDEX));
+        final Square target = createSquare(splitCommand.get(TARGET_SQUARE_INDEX));
 
         board.move(source, target, turn);
         OutputView.printBoard(board.getPieces());
@@ -64,9 +64,9 @@ public class ChessGame {
     }
 
     private Square createSquare(final String commandInput) {
-        List<String> commandToken = List.of(commandInput.split(FILE_RANK_DELIMITER));
-        File file = File.findByValue(commandToken.get(FILE_INDEX));
-        Rank rank = Rank.findByValue(commandToken.get(RANK_INDEX));
+        final List<String> commandToken = List.of(commandInput.split(FILE_RANK_DELIMITER));
+        final File file = File.findByValue(commandToken.get(FILE_INDEX));
+        final Rank rank = Rank.findByValue(commandToken.get(RANK_INDEX));
         return new Square(file, rank);
     }
 }

@@ -41,10 +41,10 @@ public enum File {
     }
 
     public List<File> findFilePath(final File other) {
-        int start = Math.min(index, other.index) + 1;
-        int end = Math.max(index, other.index);
+        final int start = Math.min(index, other.index) + 1;
+        final int end = Math.max(index, other.index);
 
-        List<File> filePath = new ArrayList<>();
+        final List<File> filePath = new ArrayList<>();
         for (int i = start; i < end; i++) {
             filePath.add(valueOfIndex(i));
         }

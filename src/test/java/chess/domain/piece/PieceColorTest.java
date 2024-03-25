@@ -11,8 +11,8 @@ class PieceColorTest {
     @DisplayName("다음 턴으로 전환한다.")
     @ParameterizedTest
     @CsvSource({"BLACK, WHITE", "WHITE, BLACK"})
-    void changeTurn(PieceColor pieceColor, PieceColor expected) {
-        PieceColor actual = pieceColor.next();
+    void changeTurn(final PieceColor pieceColor, final PieceColor expected) {
+        final PieceColor actual = pieceColor.next();
 
         assertThat(actual).isEqualTo(expected);
     }

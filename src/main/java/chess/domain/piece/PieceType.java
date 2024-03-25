@@ -17,7 +17,7 @@ public enum PieceType {
 
     private final BiPredicate<Square, Square> moveStrategy;
 
-    PieceType(BiPredicate<Square, Square> moveStrategy) {
+    PieceType(final BiPredicate<Square, Square> moveStrategy) {
         this.moveStrategy = moveStrategy;
     }
 

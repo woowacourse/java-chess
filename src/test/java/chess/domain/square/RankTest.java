@@ -24,7 +24,7 @@ class RankTest {
     @DisplayName("좌표가 범위를 벗어날 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(strings = {"0", "9"})
-    void occurExceptionIfRankIsOutOfRange(String rank) {
+    void occurExceptionIfRankIsOutOfRange(final String rank) {
         assertThatCode(() -> Rank.findByValue(rank))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -32,10 +32,10 @@ class RankTest {
     @DisplayName("같은 랭크인지 확인한다.")
     @ParameterizedTest
     @CsvSource({"ONE, true", "TWO, false"})
-    void checkIsSameFile(Rank other, boolean expected) {
-        Rank rank = Rank.ONE;
+    void checkIsSameFile(final Rank other, final boolean expected) {
+        final Rank rank = Rank.ONE;
 
-        boolean actual = rank.isSameRank(other);
+        final boolean actual = rank.isSameRank(other);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -43,10 +43,10 @@ class RankTest {
     @DisplayName("두 랭크 간 거리를 구한다.")
     @Test
     void calculateDistanceBetweenTwoRanks() {
-        Rank rank = Rank.ONE;
-        Rank other = Rank.EIGHT;
+        final Rank rank = Rank.ONE;
+        final Rank other = Rank.EIGHT;
 
-        int actual = rank.calculateDistance(other);
+        final int actual = rank.calculateDistance(other);
 
         assertThat(actual).isEqualTo(7);
     }
@@ -54,10 +54,10 @@ class RankTest {
     @DisplayName("두 랭크 간 거리를 이용해 이동 방향을 구한다.")
     @ParameterizedTest
     @CsvSource({"FOUR, 1", "FIVE, 0", "SIX, -1"})
-    void calculateDirectionUsingDistanceBetweenTwoRanks(Rank other, int expected) {
-        Rank rank = Rank.FIVE;
+    void calculateDirectionUsingDistanceBetweenTwoRanks(final Rank other, final int expected) {
+        final Rank rank = Rank.FIVE;
 
-        int actual = rank.calculateDirection(other);
+        final int actual = rank.calculateDirection(other);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -65,10 +65,10 @@ class RankTest {
     @DisplayName("두 랭크 간 경로를 찾는다.")
     @Test
     void findPathBetweenTwoRanks() {
-        Rank rank = Rank.ONE;
-        Rank other = Rank.FOUR;
+        final Rank rank = Rank.ONE;
+        final Rank other = Rank.FOUR;
 
-        List<Rank> actual = rank.findRankPath(other);
+        final List<Rank> actual = rank.findRankPath(other);
 
         assertThat(actual).containsExactlyInAnyOrder(Rank.TWO, Rank.THREE);
     }

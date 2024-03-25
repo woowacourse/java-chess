@@ -16,7 +16,7 @@ class PieceTest {
         final Piece piece = new Piece(PieceType.ROOK, PieceColor.WHITE);
         final PieceColor other = PieceColor.WHITE;
 
-        boolean actual = piece.isSameColor(other);
+        final boolean actual = piece.isSameColor(other);
 
         assertThat(actual).isTrue();
     }
@@ -28,7 +28,7 @@ class PieceTest {
         final Square source = new Square(File.b, Rank.FOUR);
         final Square target = new Square(File.b, Rank.FIVE);
 
-        boolean actual = piece.canMove(source, target);
+        final boolean actual = piece.canMove(source, target);
 
         assertThat(actual).isTrue();
     }

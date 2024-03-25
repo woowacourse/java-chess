@@ -23,42 +23,42 @@ public enum Rank {
 
     private final int index;
 
-    Rank(int index) {
+    Rank(final int index) {
         this.index = index;
     }
 
-    public static Rank findByValue(String value) {
+    public static Rank findByValue(final String value) {
         validateNumeric(value);
-        int parsedRank = Integer.parseInt(value);
+        final int parsedRank = Integer.parseInt(value);
         return Arrays.stream(values())
                 .filter(rank -> rank.index == parsedRank)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_RANK));
     }
 
-    private static void validateNumeric(String rank) {
+    private static void validateNumeric(final String rank) {
         if (!NUMBER_PATTERN.matcher(rank).matches()) {
             throw new IllegalArgumentException(ERROR_NOT_NUMERIC);
         }
     }
 
-    public boolean isSameRank(Rank other) {
+    public boolean isSameRank(final Rank other) {
         return index == other.index;
     }
 
-    public int calculateDistance(Rank other) {
+    public int calculateDistance(final Rank other) {
         return Math.abs(index - other.index);
     }
 
-    public int calculateDirection(Rank other) {
+    public int calculateDirection(final Rank other) {
         return (int) Math.signum(index - other.index);
     }
 
     public List<Rank> findRankPath(final Rank other) {
-        int start = Math.min(index, other.index) + 1;
-        int end = Math.max(index, other.index);
+        final int start = Math.min(index, other.index) + 1;
+        final int end = Math.max(index, other.index);
 
-        List<Rank> rankPath = new ArrayList<>();
+        final List<Rank> rankPath = new ArrayList<>();
         for (int i = start; i < end; i++) {
             rankPath.add(valueOfIndex(i));
         }
