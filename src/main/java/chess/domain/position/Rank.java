@@ -1,70 +1,47 @@
 package chess.domain.position;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.IntStream;
-
 import static java.util.stream.Collectors.toMap;
 
-public class Rank {
-    private static final Map<String, Rank> CACHE = IntStream.rangeClosed(1, 8)
-                                                            .mapToObj(String::valueOf)
-                                                            .collect(toMap(Function.identity(), Rank::new));
+public enum Rank {
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT;
 
-    private final String value;
-
-    private Rank(String value) {
-        this.value = value;
+    public static Rank from(String value) {
+        int index = getIndex(value);
+        return values()[index];
     }
 
-    public static Rank valueOf(String value) {
-        validate(value);
-        return CACHE.get(value);
-    }
-
-    private static void validate(String value) {
+    private static int getIndex(String value) {
         try {
-            Integer.parseInt(value);
-            validateInRange(value);
+            int index = Integer.parseInt(value) - 1;
+            validateInRange(index);
+            return index;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
 
-    private static void validateInRange(String value) {
-        if(!CACHE.containsKey(value)) {
+    private static void validateInRange(int index) {
+        if(index < 0 || index >= values().length) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
 
     public Rank update(int value) {
-        int index = Integer.parseInt(this.value) + value;
-        return CACHE.get(String.valueOf(index));
+        return values()[ordinal() + value];
     }
 
     public int subtractRank(Rank rank) {
-        return Integer.parseInt(this.value) - Integer.parseInt(rank.value);
+        return ordinal() - rank.ordinal();
     }
 
     public int findDirection(Rank rank) {
-        return Integer.compare(Integer.parseInt(rank.value), Integer.parseInt(value));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Rank rank = (Rank) o;
-        return value == rank.value;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
+        return Integer.compare(rank.ordinal(), ordinal());
     }
 }

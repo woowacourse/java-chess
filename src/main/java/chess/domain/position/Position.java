@@ -12,8 +12,8 @@ public class Position {
     }
 
     public static Position from(String position) {
-        File file = File.valueOf(position.substring(0, 1));
-        Rank rank = Rank.valueOf(position.substring(1));
+        File file = File.from(position.substring(0, 1));
+        Rank rank = Rank.from(position.substring(1));
 
         return new Position(file, rank);
     }
