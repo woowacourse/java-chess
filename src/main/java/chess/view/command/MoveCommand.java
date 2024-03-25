@@ -12,6 +12,8 @@ public class MoveCommand {
     private static final int TARGET_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private static final int SOURCE_DATA_INDEX = 0;
+    private static final int TARGET_DATA_INDEX = 1;
 
     private final boolean isEnd;
     private final List<Coordinate> data;
@@ -55,7 +57,7 @@ public class MoveCommand {
         List<String> coordinateSegments = Arrays.asList(input.split(""));
         validateCoordinateSegmentSize(coordinateSegments);
         int rankValue = Integer.parseInt(coordinateSegments.get(RANK_INDEX));
-        char fileValue = coordinateSegments.get(FILE_INDEX).charAt(0);
+        char fileValue = coordinateSegments.get(FILE_INDEX).charAt(SOURCE_DATA_INDEX);
 
         return new Coordinate(rankValue, fileValue);
     }
@@ -73,13 +75,13 @@ public class MoveCommand {
     public Coordinate source() {
         validateEmptyData();
 
-        return data.get(COMMAND_INDEX);
+        return data.get(SOURCE_DATA_INDEX);
     }
 
     public Coordinate target() {
         validateEmptyData();
 
-        return data.get(SOURCE_INDEX);
+        return data.get(TARGET_DATA_INDEX);
     }
 
     private void validateEmptyData() {
