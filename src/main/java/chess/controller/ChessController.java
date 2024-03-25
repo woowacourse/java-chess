@@ -64,7 +64,9 @@ public class ChessController {
         return commandArguments;
     }
 
-    private void playTurn(final ChessBoard chessBoard, final String gameCommand, final List<String> commandArguments) {
+    private void playTurn(final ChessBoard chessBoard,
+                          final String gameCommand,
+                          final List<String> commandArguments) {
         if (GameCommand.isMoveCommand(gameCommand)) {
             Position source = parsePosition(commandArguments.get(SOURCE_POSITION_INDEX));
             Position target = parsePosition(commandArguments.get(TARGET_POSITION_INDEX));
