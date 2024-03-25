@@ -32,10 +32,13 @@ public enum File {
     }
 
     public File calculateNextFile(int offset) {
-        int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
-                .filter(file -> file.coordinate == nextCoordinate)
+                .filter(file -> hasNextCoordinate(file, offset))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 File 좌표입니다."));
+    }
+
+    private boolean hasNextCoordinate(File file, int offset) {
+        return file.coordinate == this.coordinate + offset;
     }
 }
