@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.abstractPiece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

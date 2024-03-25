@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.abstractPiece;
 
 import chess.domain.Movement;
 import chess.domain.piece.character.Character;

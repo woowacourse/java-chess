@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Movement;
-import chess.domain.Position;
+import chess.domain.piece.abstractPiece.Piece;
+import chess.domain.piece.abstractPiece.UnslidingPiece;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import java.util.ArrayList;
-import java.util.List;
 
-public class King extends Piece {
+public class King extends UnslidingPiece {
     private static final int MAX_MOVE_DIFFERENCE = 1;
 
     public King(Team team) {
@@ -30,10 +28,5 @@ public class King extends Piece {
     @Override
     protected boolean isMovable(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) <= MAX_MOVE_DIFFERENCE && Math.abs(columnDifference) <= MAX_MOVE_DIFFERENCE;
-    }
-
-    @Override
-    public List<Position> findBetweenPositions(Movement movement) {
-        return new ArrayList<>();
     }
 }

@@ -1,10 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.abstractPiece;
 
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -22,21 +21,12 @@ public abstract class Piece {
 
     protected abstract boolean isMovable(int rowDifference, int columnDifference);
 
-    public boolean isMovable(Movement movement, boolean isAttack) {
-        return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
-    }
+    public abstract boolean isMovable(Movement movement, boolean isAttack);
+
+    public abstract List<Position> findBetweenPositions(Movement movement);
 
     public boolean isMovable(Movement movement) {
         return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
-    }
-
-    public List<Position> findBetweenPositions(Movement movement) {
-        List<Position> positions = new ArrayList<>();
-        for (int i = MIN_MOVEMENT; i < movement.maxAbsoluteMoveDifference(); i++) {
-            positions.add(movement.source().move(
-                    movement.findRowDirection() * i, movement.findColumnDirection() * i));
-        }
-        return positions;
     }
 
     public boolean isSameTeamWith(Piece piece) {

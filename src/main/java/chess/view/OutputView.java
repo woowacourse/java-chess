@@ -1,14 +1,9 @@
 package chess.view;
 
-import chess.domain.Position;
 import chess.domain.Status;
-import chess.domain.piece.Piece;
 import chess.dto.BoardStatusDto;
-import java.util.Map;
 
 public class OutputView {
-    public static final String EMPTY_POSITION = ".";
-
     public static void printErrorMessage(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
     }
@@ -26,14 +21,6 @@ public class OutputView {
             System.out.println();
         }
         System.out.println();
-    }
-
-    private static String pieceToString(Map<Position, Piece> pieces, Position position) {
-        if (pieces.containsKey(position)) {
-            Piece piece = pieces.get(position);
-            return CharacterViewer.convertToString(piece.character());
-        }
-        return EMPTY_POSITION;
     }
 
     private static void printStatus(Status status) {

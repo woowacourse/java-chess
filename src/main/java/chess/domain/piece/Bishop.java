@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.piece.abstractPiece.Piece;
+import chess.domain.piece.abstractPiece.SlidingPiece;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
-public class Bishop extends Piece {
+public class Bishop extends SlidingPiece {
     public Bishop(Team team) {
         this(new Character(team, Kind.BISHOP), false);
     }
