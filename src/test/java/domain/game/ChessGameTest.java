@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import domain.game.state.GameEnd;
 import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
