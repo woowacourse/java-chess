@@ -1,9 +1,11 @@
 package domain.game;
 
+import domain.position.File;
 import domain.position.Position;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,27 @@ public class Board {
 
     private boolean isPieceExist(Position position) {
         return chessBoard.containsKey(position);
+    }
+
+    public double calculateScoreOf(TeamColor teamColor) {
+        Map<Position, Piece> teamPieces = chessBoard.entrySet().stream()
+                .filter(entry -> entry.getValue().hasColor(teamColor))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
+        double totalPieceValue = teamPieces.values().stream()
+                .mapToDouble(Piece::value)
+                .sum();
+
+        Map<File, Long> pawnCounts = teamPieces.entrySet().stream()
+                .filter(entry -> entry.getValue().isPawn())
+                .collect(Collectors.groupingBy(entry -> entry.getKey().file(), Collectors.counting()));
+
+        int duplicatedPawnCount = pawnCounts.values().stream()
+                .filter(count -> count > 1)
+                .mapToInt(Long::intValue)
+                .sum();
+
+        return totalPieceValue - (duplicatedPawnCount * 0.5);
     }
 
     public Map<Position, Piece> getChessBoard() {

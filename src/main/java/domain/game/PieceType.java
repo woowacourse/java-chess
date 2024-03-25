@@ -13,4 +13,8 @@ public enum PieceType {
     public double value() {
         return value;
     }
+
+    public boolean isPawn() {
+        return this == BLACK_PAWN || this == WHITE_PAWN;
+    }
 }
