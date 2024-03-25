@@ -4,10 +4,10 @@ import chess.domain.chesspiece.Camp;
 import chess.domain.chesspiece.ChessPieceType;
 import chess.dto.ChessPieceDto;
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum ChessPiecePrintFormat {
 
+    NONE(ChessPieceType.NONE, "."),
     KING(ChessPieceType.KING, "K"),
     QUEEN(ChessPieceType.QUEEN, "Q"),
     BISHOP(ChessPieceType.BISHOP, "B"),

@@ -20,6 +20,6 @@ public class ChessPieceCampAssignment {
         if (numbering == Numbering.SEVEN || numbering == Numbering.EIGHT) {
             return Camp.BLACK;
         }
-        throw new IllegalArgumentException("[ERROR] 진영 배정에 유효한 위치가 아닙니다.");
+        return Camp.NONE;
     }
 }

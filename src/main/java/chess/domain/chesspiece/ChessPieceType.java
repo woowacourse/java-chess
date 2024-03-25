@@ -1,6 +1,7 @@
 package chess.domain.chesspiece;
 
 import chess.domain.chesspiece.movestrategy.BishopMoveStrategy;
+import chess.domain.chesspiece.movestrategy.EmptyMoveStrategy;
 import chess.domain.chesspiece.movestrategy.KingMoveStrategy;
 import chess.domain.chesspiece.movestrategy.KnightMoveStrategy;
 import chess.domain.chesspiece.movestrategy.MoveStrategy;
@@ -11,6 +12,7 @@ import java.util.function.Supplier;
 
 public enum ChessPieceType {
 
+    NONE(EmptyMoveStrategy::new),
     KING(KingMoveStrategy::new),
     QUEEN(QueenMoveStrategy::new),
     BISHOP(BishopMoveStrategy::new),
