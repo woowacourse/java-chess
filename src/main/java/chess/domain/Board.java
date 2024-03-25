@@ -29,6 +29,7 @@ public class Board {
         validatePieceExistsOnPosition(movement.source());
 
         Piece thisPiece = pieces.get(movement.source());
+        validateMovable(thisPiece, movement);
         validateSameTeamPieceExistsOnTargetPosition(movement.target(), thisPiece);
         validateBlockingPieceExists(thisPiece, movement);
 
@@ -42,6 +43,12 @@ public class Board {
         }
     }
 
+    public void validateMovable(Piece thisPiece, Movement movement) {
+        if (!thisPiece.isMovable(movement)) {
+            throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
+        }
+    }
+
     private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece thisPiece) {
         if (pieces.containsKey(targetPosition) && thisPiece.isSameTeamWith(pieces.get(targetPosition))) {
             throw new ImpossibleMoveException("해당 위치에 아군 기물이 존재합니다.");
@@ -49,19 +56,14 @@ public class Board {
     }
 
     private void validateBlockingPieceExists(Piece thisPiece, Movement movement) {
-        List<Position> betweenPositions = findBetweenPositions(thisPiece, movement);
-
-        if (betweenPositions.stream()
+        if (findBetweenPositions(thisPiece, movement).stream()
                 .anyMatch(pieces::containsKey)) {
             throw new ImpossibleMoveException("이동을 가로막는 기물이 존재합니다.");
         }
     }
 
     private List<Position> findBetweenPositions(Piece thisPiece, Movement movement) {
-        if (pieces.containsKey(movement.target())) {
-            return thisPiece.findBetweenPositions(movement, true);
-        }
-        return thisPiece.findBetweenPositions(movement);
+        return thisPiece.findBetweenPositions(movement, pieces.containsKey(movement.target()));
     }
 
     public boolean isChecked(Team team) {
@@ -133,13 +135,21 @@ public class Board {
         List<Position> attackRoutePositions
                 = pieces.get(movement.source()).findBetweenPositions(movement, true);
 
+//        return pieces.entrySet()
+//                .stream()
+//                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam))
+//                .filter(entry -> entry.getKey() != movement.target())
+//                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
+//                        .stream()
+//                        .anyMatch(attackRoutePositions::contains));
+
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam)
-                        && !entry.getKey().equals(movement.target()))
-                .noneMatch(entry -> entry.getKey().findAllMovablePosition(entry.getValue())
-                        .stream()
-                        .anyMatch(attackRoutePositions::contains));
+                .filter(entry -> entry.getValue().isSameTeamWith(attackedTeam))
+                .filter(entry -> entry.getKey() != movement.target())
+                .noneMatch(entry -> attackRoutePositions.stream()
+                        .anyMatch(position -> entry.getValue()
+                                .isMovable(new Movement(entry.getKey(), position))));
     }
 
     private boolean cannotAttackCheckingPiece(Team attackingTeam, Position attackingPosition) {

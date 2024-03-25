@@ -1,15 +1,12 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,60 +21,95 @@ class PawnTest {
                 .isEqualTo(new Character(team, Kind.PAWN));
     }
 
+    @DisplayName("흰색 폰은 1칸 움직일 수 있다.")
+    @Test
+    void whitePawnIsMovable() {
+        assertThat(new Pawn(Team.WHITE).move()
+                .isMovable(new Movement(
+                        Position.of(3, 1),
+                        Position.of(4, 1))))
+                .isTrue();
+    }
+
+    @DisplayName("흰색 폰은 1칸 움직일 수 있다.")
+    @Test
+    void blackPawnIsMovable() {
+        assertThat(new Pawn(Team.BLACK).move()
+                .isMovable(new Movement(
+                        Position.of(6, 1),
+                        Position.of(5, 1))))
+                .isTrue();
+    }
+
+    @DisplayName("흰색 폰은 1칸 초과하여 움직일 수 없다.")
+    @Test
+    void whitePawnMoveIsNotMovableOverTwo() {
+        assertThat(new Pawn(Team.WHITE).move()
+                .isMovable(new Movement(
+                        Position.of(3, 1),
+                        Position.of(5, 1))))
+                .isFalse();
+    }
+
+    @DisplayName("검은색 폰은 1칸 초과하여 움직일 수 없다.")
+    @Test
+    void blackPawnMoveIsNotMovableOverTwo() {
+        assertThat(new Pawn(Team.BLACK).move()
+                .isMovable(new Movement(
+                        Position.of(6, 1),
+                        Position.of(4, 1))))
+                .isFalse();
+    }
+
+    @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 움직일 수 있다.")
+    @Test
+    void whitePawnIsMovableTwo() {
+        assertThat(new Pawn(Team.WHITE)
+                .isMovable(new Movement(
+                        Position.of(2, 1),
+                        Position.of(4, 1))))
+                .isTrue();
+    }
+
+    @DisplayName("검은색 폰은 시작 지점에 있는 경우, 2칸 움직일 수 있다.")
+    @Test
+    void blackPawnIsMovableTwo() {
+        assertThat(new Pawn(Team.BLACK)
+                .isMovable(new Movement(
+                        Position.of(7, 1),
+                        Position.of(5, 1))))
+                .isTrue();
+    }
+
     @DisplayName("흰색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
-    void startWhitePawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Team.WHITE)
-                .findBetweenPositions(new Movement(
+    void startWhitePawnIsNotMovableOverTwo() {
+        assertThat(new Pawn(Team.WHITE)
+                .isMovable(new Movement(
                         Position.of(2, 1),
                         Position.of(5, 1))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
+                .isFalse();
     }
 
     @DisplayName("검은색 폰은 시작 지점에 있는 경우, 2칸 초과시 예외가 발생한다.")
     @Test
-    void startBlackPawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Team.BLACK)
-                .findBetweenPositions(new Movement(
+    void startBlackPawnIsNotMovableOverTwo() {
+        assertThat(new Pawn(Team.BLACK)
+                .isMovable(new Movement(
                         Position.of(7, 1),
                         Position.of(4, 1))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
+                .isFalse();
     }
 
-    @DisplayName("흰색 폰은 1칸 초과시 예외가 발생한다.")
-    @Test
-    void whitePawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Team.WHITE).move()
-                .findBetweenPositions(new Movement(
-                        Position.of(3, 1),
-                        Position.of(5, 1))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
-    }
-
-    @DisplayName("검은색 폰은 1칸 초과시 예외가 발생한다.")
-    @Test
-    void blackPawnMoveOverTwo() {
-        assertThatThrownBy(() -> new Pawn(Team.BLACK).move()
-                .findBetweenPositions(new Movement(
-                        Position.of(6, 1),
-                        Position.of(4, 1))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
-    }
-
-    @DisplayName("흰색 폰은 옆으로 이동할 수 없다.")
+    @DisplayName("폰은 옆으로 이동할 수 없다.")
     @ParameterizedTest
     @EnumSource
-    void whitePawnMoveColumn(Team team) {
-        assertThatThrownBy(() -> new Pawn(team)
-                .findBetweenPositions(new Movement(
+    void whitePawnIsNotMovableColumn(Team team) {
+        assertThat(new Pawn(team)
+                .isMovable(new Movement(
                         Position.of(7, 1),
                         Position.of(7, 2))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
+                .isFalse();
     }
 
     @DisplayName("두 위치 사이의 폰이 갈 수 있는 위치들을 반환한다.")
@@ -110,34 +142,31 @@ class PawnTest {
                 .isEmpty();
     }
 
-    @DisplayName("공격 가능할 때, 대각으로 움직일 수 있다.")
+    @DisplayName("공격할 때, 대각으로 움직일 수 있다.")
     @Test
     void movableDiagonalWhenAttack() {
-        assertThatCode(() -> new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new Movement(
+        assertThat(new Pawn(Team.WHITE).isMovable(new Movement(
                         Position.of(2, 2),
-                        Position.of(3, 3))))
-                .doesNotThrowAnyException();
+                        Position.of(3, 3))
+                , true))
+                .isTrue();
     }
 
-    @DisplayName("공격 가능할 때, 두 위치 사이의 폰이 갈 수 있는 위치는 없다.")
+    @DisplayName("공격할 때, 두 위치 사이의 폰이 갈 수 있는 위치는 없다.")
     @Test
     void noneBetweenPositionWhenAttack() {
-        assertThat(new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new Movement(
-                        Position.of(2, 2),
-                        Position.of(3, 3))))
+        assertThat(new Pawn(Team.WHITE).findBetweenPositions(new Movement(
+                        Position.of(2, 2), Position.of(3, 3)),
+                true))
                 .isEmpty();
     }
 
-    @DisplayName("공격 가능할 때, 직선으로 움직이면 예외가 발생한다.")
+    @DisplayName("공격할 때, 직선으로 움직일 수 없다.")
     @Test
     void cannotMoveStraightWhenAttack() {
-        assertThatThrownBy(() -> new Pawn(Team.WHITE)
-                .findBetweenPositionsWhenAttack(new Movement(
-                        Position.of(2, 2),
-                        Position.of(3, 2))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
+        assertThat(new Pawn(Team.WHITE).isMovable(new Movement(
+                        Position.of(2, 2), Position.of(3, 2)),
+                true))
+                .isFalse();
     }
 }

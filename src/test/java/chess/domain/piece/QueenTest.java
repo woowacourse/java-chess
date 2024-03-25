@@ -1,17 +1,16 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class QueenTest {
@@ -23,15 +22,26 @@ class QueenTest {
                 .isEqualTo(new Character(team, Kind.QUEEN));
     }
 
-    @DisplayName("퀸은 직선 혹은 대각선이 아닌 경우, 예외가 발생한다.")
+    @DisplayName("퀸은 직선 혹은 대각선으로 움직일 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8", "1,7", "2,6", "3,5", "5,3", "6,2", "7,1",
+            "4,1", "4,2", "4,3", "4,5", "4,6", "4,7", "4,8", "1,4", "2,4", "3,4", "5,4", "6,4", "7,4", "8,4"})
+    void queenIsMovable(int row, int column) {
+        assertThat(new Queen(Team.WHITE)
+                .isMovable(new Movement(
+                        Position.of(4, 4),
+                        Position.of(row, column))))
+                .isTrue();
+    }
+
+    @DisplayName("퀸은 직선 혹은 대각선이 아닌 경우, 움직일 수 없다.")
     @Test
-    void queenMoveOverLineAndDiagonalLine() {
-        assertThatThrownBy(() -> new Queen(Team.WHITE)
-                .findBetweenPositions(new Movement(
+    void queenIsNotMovable() {
+        assertThat(new Queen(Team.WHITE)
+                .isMovable(new Movement(
                         Position.of(1, 1),
                         Position.of(2, 3))))
-                .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("해당 위치로 움직일 수 없습니다.");
+                .isFalse();
     }
 
     @DisplayName("두 위치 사이의 퀸이 갈 수 있는 위치들을 반환한다.")

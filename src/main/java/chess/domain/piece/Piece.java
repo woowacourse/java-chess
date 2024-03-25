@@ -4,7 +4,6 @@ import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Team;
-import chess.exception.ImpossibleMoveException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,6 @@ public abstract class Piece {
     }
 
     public List<Position> findBetweenPositions(Movement movement) {
-        validateMovable(movement);
         int rowDifference = movement.calculateRowDifference();
         int columnDifference = movement.calculateColumnDifference();
 
@@ -62,13 +60,6 @@ public abstract class Piece {
         return value / Math.abs(value);
     }
 
-    private void validateMovable(Movement movement) {
-        if (isMovable(movement)) {
-            return;
-        }
-        throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
-    }
-
     public boolean isSameTeamWith(Piece piece) {
         return isSameTeamWith(piece.character.team());
     }
@@ -78,7 +69,7 @@ public abstract class Piece {
     }
 
     public boolean isSameCharacter(Character character) {
-        return this.character == character;
+        return this.character.equals(character);
     }
 
     public Character character() {
