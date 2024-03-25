@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
+import java.util.Map;
+
 public class Empty extends Piece {
 
     private static final String NAME = ".";
@@ -11,7 +13,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point departure, Point destination) {
+    public boolean isMovable(Point departure, Point destination, final Map<Point, Piece> board) {
         return false;
     }
 }

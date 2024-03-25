@@ -5,11 +5,14 @@ public enum Team {
     WHITE,
     EMPTY;
 
-    public boolean isWhite() {
-        return this == WHITE;
+    public int forwardDirection() {
+        if (isWhite()) {
+            return 1;
+        }
+        return -1;
     }
 
-    public int forwardDirection() {
-        return this.isWhite() ? 1 : -1;
+    public boolean isWhite() {
+        return this == WHITE;
     }
 }

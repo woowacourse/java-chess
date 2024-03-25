@@ -1,10 +1,11 @@
 package chess.domain;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.player.Player;
+
+import java.util.Collections;
 import java.util.Map;
 
 public class Board {
@@ -30,7 +31,6 @@ public class Board {
     private void validateMove(Player player, Point departure, Point destination, Piece piece) {
         validateMyPiece(player, piece);
         validateMovePoint(departure, destination, piece);
-        validatePawn(departure, destination, piece);
     }
 
     private void validateMyPiece(Player player, Piece piece) {
@@ -45,23 +45,7 @@ public class Board {
         }
     }
 
-    // TODO 리팩터링
-    private void validatePawn(Point departure, Point destination, Piece piece) {
-        if (piece instanceof Pawn) {
-            if (departure.isDiagonalWithSlopeOfOne(destination)) {
-                if (board.get(destination).equals(new Empty(Team.EMPTY))) {
-                    throw new IllegalArgumentException("폰은 상대방의 기물이 대각선에 위치한 경우만 이동할 수 있습니다.");
-                }
-            }
-            if (departure.isStraight(destination)) {
-                if (!board.get(destination).equals(new Empty(Team.EMPTY))) {
-                    throw new IllegalArgumentException("폰의 이동 경로에 기물이 존재하여 이동할 수 없습니다.");
-                }
-            }
-        }
-    }
-
     public Map<Point, Piece> getBoard() {
-        return board;
+        return Collections.unmodifiableMap(board);
     }
 }

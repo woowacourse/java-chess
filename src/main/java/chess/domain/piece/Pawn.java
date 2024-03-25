@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.Point;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-
-public final class Pawn extends Piece {
+public final class Pawn extends MultiMovePiece {
 
     private static final String NAME = "P";
     private static final int TWO_RANK = 2;
@@ -15,14 +16,14 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point departure, Point destination) {
+    public boolean isMovableDirection(final Point departure, final Point destination) {
         Team team = getTeam();
         List<Point> movablePoints = findMovablePoints(departure, team);
 
         return movablePoints.contains(destination);
     }
 
-    private List<Point> findMovablePoints(Point currentPoint, Team team) {
+    private List<Point> findMovablePoints(Point currentPoint, final Team team) {
         List<Point> points = new ArrayList<>();
         int forwardDirection = team.forwardDirection();
 
@@ -40,5 +41,16 @@ public final class Pawn extends Piece {
             Point point = currentPoint.add(addFile, addRank);
             points.add(point);
         }
+    }
+
+    @Override
+    public boolean isMovable(final Point departure, final Point destination, final Map<Point, Piece> board) {
+        if (departure.isDiagonalWithSlopeOfOne(destination) && board.get(destination).equals(new Empty(Team.EMPTY))) {
+            return false;
+        }
+        if (departure.isStraight(destination) && !board.get(destination).equals(new Empty(Team.EMPTY))) {
+            return false;
+        }
+        return super.isMovable(departure, destination, board);
     }
 }
