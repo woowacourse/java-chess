@@ -5,5 +5,5 @@ import domain.piece.info.Direction;
 import java.util.List;
 
 public interface State {
-    List<Direction> movableDirection(Color color);
+    List<Direction> movableDirection(final Color color);
 }

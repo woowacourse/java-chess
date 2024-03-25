@@ -1,14 +1,5 @@
 package domain.piece.state;
 
-import static domain.piece.info.Direction.DOWN;
-import static domain.piece.info.Direction.DOWN_DOWN;
-import static domain.piece.info.Direction.DOWN_LEFT;
-import static domain.piece.info.Direction.DOWN_RIGHT;
-import static domain.piece.info.Direction.UP;
-import static domain.piece.info.Direction.UP_LEFT;
-import static domain.piece.info.Direction.UP_RIGHT;
-import static domain.piece.info.Direction.UP_UP;
-
 import domain.piece.info.Color;
 import domain.piece.info.Direction;
 import java.util.ArrayList;
@@ -25,13 +16,19 @@ public class PawnInit implements State {
 
     private List<Direction> blackDirections() {
         return new ArrayList<>(List.of(
-                DOWN, DOWN_DOWN, DOWN_RIGHT, DOWN_LEFT
+                Direction.DOWN,
+                Direction.DOWN_DOWN,
+                Direction.DOWN_RIGHT,
+                Direction.DOWN_LEFT
         ));
     }
 
     private ArrayList<Direction> whiteDirections() {
         return new ArrayList<>(List.of(
-                UP, UP_UP, UP_RIGHT, UP_LEFT
+                Direction.UP,
+                Direction.UP_UP,
+                Direction.UP_RIGHT,
+                Direction.UP_LEFT
         ));
     }
 
