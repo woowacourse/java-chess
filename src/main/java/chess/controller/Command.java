@@ -7,4 +7,6 @@ public interface Command {
     void execute(ChessGame chessGame, OutputView outputView);
 
     boolean isNotEndCommand();
+
+    boolean isNotStartCommand();
 }

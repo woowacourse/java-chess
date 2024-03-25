@@ -12,4 +12,9 @@ public class EndCommand implements Command {
     public boolean isNotEndCommand() {
         return false;
     }
+
+    @Override
+    public boolean isNotStartCommand() {
+        return true;
+    }
 }

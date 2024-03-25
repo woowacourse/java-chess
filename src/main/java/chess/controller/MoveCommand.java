@@ -23,4 +23,9 @@ public class MoveCommand implements Command {
     public boolean isNotEndCommand() {
         return true;
     }
+
+    @Override
+    public boolean isNotStartCommand() {
+        return true;
+    }
 }
