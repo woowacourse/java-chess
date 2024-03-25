@@ -6,12 +6,12 @@ import java.util.List;
 
 public class MoveCommand extends Command {
     public MoveCommand(String... options) {
-        super(options);
+        super(List.of(options));
     }
 
     @Override
     public <T> List<T> getOptions() {
-        return Arrays.stream(options)
+        return options.stream()
                 .map(String::toUpperCase)
                 .map(s -> (T) Position.valueOf(s))
                 .toList();

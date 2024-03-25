@@ -9,7 +9,7 @@ public class StartCommand extends Command {
         this(null);
     }
 
-    private StartCommand(String[] options) {
+    private StartCommand(List<String> options) {
         super(options);
     }
 

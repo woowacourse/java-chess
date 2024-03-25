@@ -3,9 +3,9 @@ package domain.command;
 import java.util.List;
 
 public abstract class Command {
-    protected final String[] options;
+    protected final List<String> options;
 
-    public Command(String[] options) {
+    public Command(List<String> options) {
         this.options = options;
     }
 

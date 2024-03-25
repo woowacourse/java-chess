@@ -9,7 +9,7 @@ public class EndCommand extends Command {
         this(null);
     }
 
-    private EndCommand(String[] options) {
+    private EndCommand(List<String> options) {
         super(options);
     }
 
