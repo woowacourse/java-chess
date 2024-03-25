@@ -1,11 +1,11 @@
 package chess.view;
 
-import java.util.List;
 import chess.domain.board.Board;
+import java.util.List;
 
 public class OutputView {
 
-    private final Converter converter = new Converter();
+    private final BoardConverter boardConverter = new BoardConverter();
 
     public void printStartMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -15,7 +15,7 @@ public class OutputView {
     }
 
     public void printBoard(Board board) {
-        converter.convertToViewData(board)
+        boardConverter.convertToViewData(board)
                 .forEach(this::printRow);
         System.out.println();
     }
