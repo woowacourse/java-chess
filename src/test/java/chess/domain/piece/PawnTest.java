@@ -40,8 +40,7 @@ class PawnTest {
         @ParameterizedTest
         @CsvSource(value = {
                 "LEFT", "RIGHT",
-                "LEFT_UP", "LEFT_DOWN",
-                "RIGHT_UP", "RIGHT_DOWN",
+                "LEFT_DOWN", "RIGHT_DOWN",
                 "KNIGHT_LEFT_UP", "KNIGHT_LEFT_DOWN",
                 "KNIGHT_RIGHT_UP", "KNIGHT_RIGHT_DOWN",
                 "KNIGHT_UP_LEFT", "KNIGHT_UP_RIGHT",
