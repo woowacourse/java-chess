@@ -4,6 +4,12 @@ import controller.command.Command;
 import controller.command.EndOnCommand;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardFactory;
+import domain.dao.PieceDao;
+import domain.dao.PieceDto;
+import domain.dao.TurnDao;
+import domain.piece.Color;
+import domain.piece.Piece;
+import domain.position.Position;
 import view.InputView;
 import view.OutputView;
 
@@ -17,14 +23,33 @@ public class ChessController {
     }
 
     public void start() {
+        PieceDao pieceDao = new PieceDao();
+        TurnDao turnDao = new TurnDao();
+
         outputView.printGameGuideMessage();
-        final ChessBoard board = ChessBoardFactory.createInitialChessBoard();
+        final ChessBoard board = createChessBoard(pieceDao, turnDao);
 
         Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
             command.execute(board, outputView);
             command = readCommandIfGameNotEnded(board);
         }
+
+        pieceDao.deleteAll();
+        for (var positionAndPiece : board.getBoard().entrySet()) {
+            Position position = positionAndPiece.getKey();
+            Piece piece = positionAndPiece.getValue();
+            pieceDao.add(PieceDto.of(position, piece));
+        }
+        turnDao.update(board.getTurn().name());
+    }
+
+    private ChessBoard createChessBoard(PieceDao pieceDao, TurnDao turnDao) {
+        if (pieceDao.count() != 0) {
+            String color = turnDao.find();
+            return ChessBoardFactory.loadPreviousChessBoard(pieceDao.findAll(), Color.valueOf(color));
+        }
+        return ChessBoardFactory.createInitialChessBoard();
     }
 
     private Command readStartCommandUntilValid() {

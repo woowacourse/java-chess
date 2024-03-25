@@ -15,7 +15,7 @@ public class ChessBoard {
     private final Map<Position, Piece> board;
     private Color turn;
 
-    private ChessBoard(Map<Position, Piece> board, Color color) {
+    public ChessBoard(Map<Position, Piece> board, Color color) {
         this.board = board;
         this.turn = color;
     }
@@ -89,5 +89,9 @@ public class ChessBoard {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Color getTurn() {
+        return this.turn;
     }
 }
