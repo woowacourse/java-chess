@@ -13,13 +13,13 @@ public class Bishop extends Piece {
         this(team, false);
     }
 
-    private Bishop(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Bishop(Team team, boolean isMoved) {
+        super(team, isMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Bishop(team, true);

@@ -18,13 +18,13 @@ public class Pawn extends Piece {
         this(team, false);
     }
 
-    private Pawn(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Pawn(Team team, boolean isMoved) {
+        super(team, isMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Pawn(team, true);
@@ -49,7 +49,7 @@ public class Pawn extends Piece {
 
         int rowDifference = positions.calculateRowDifference();
         return rowDifference == NORMAL_MOVEMENT * team.attackDirection()
-                || (!hasMoved && rowDifference == START_MOVEMENT * team.attackDirection());
+                || (!isMoved && rowDifference == START_MOVEMENT * team.attackDirection());
     }
 
     @Override

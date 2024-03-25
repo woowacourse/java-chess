@@ -14,13 +14,13 @@ public class Rook extends Piece {
         this(team, false);
     }
 
-    private Rook(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Rook(Team team, boolean isMoved) {
+        super(team, isMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Rook(team, true);

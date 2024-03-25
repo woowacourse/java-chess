@@ -12,11 +12,11 @@ public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
 
     protected final Team team;
-    protected final boolean hasMoved;
+    protected final boolean isMoved;
 
-    protected Piece(Team team, boolean hasMoved) {
+    protected Piece(Team team, boolean isMoved) {
         this.team = team;
-        this.hasMoved = hasMoved;
+        this.isMoved = isMoved;
     }
 
     public abstract Piece move();
@@ -63,11 +63,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return hasMoved == piece.hasMoved && team == piece.team;
+        return isMoved == piece.isMoved && team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team, hasMoved);
+        return Objects.hash(team, isMoved);
     }
 }

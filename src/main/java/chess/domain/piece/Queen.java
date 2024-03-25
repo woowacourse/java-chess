@@ -15,13 +15,13 @@ public class Queen extends Piece {
         this(team, false);
     }
 
-    private Queen(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Queen(Team team, boolean isMoved) {
+        super(team, isMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Queen(team, true);

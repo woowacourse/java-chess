@@ -16,13 +16,13 @@ public class Knight extends Piece {
         this(team, false);
     }
 
-    private Knight(Team team, boolean hasMoved) {
-        super(team, hasMoved);
+    private Knight(Team team, boolean isMoved) {
+        super(team, isMoved);
     }
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Knight(team, true);
