@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.*;
-import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

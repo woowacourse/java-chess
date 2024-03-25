@@ -2,15 +2,11 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Positions;
-import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
     @DisplayName("두 위치 사이의 퀸이 갈 수 있는 위치들을 반환한다.")

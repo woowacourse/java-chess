@@ -2,12 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.Positions;
-import chess.view.Character;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.*;
