@@ -3,7 +3,7 @@ package chess.view;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public enum GameExecutionCommand {
+public enum GameCommand {
     START("start"),
     END("end"),
     MOVE("move");
@@ -12,12 +12,11 @@ public enum GameExecutionCommand {
 
     private final String code;
 
-    GameExecutionCommand(String code) {
+    GameCommand(String code) {
         this.code = code;
     }
 
-    //if 무브 명령어면 -> 무브 커맨드 생성
-    public static GameExecutionCommand from(String input) {
+    public static GameCommand from(String input) {
         return Arrays.stream(values())
                 .filter(command -> command.commandStartsWithCode(input))
                 .findAny()
