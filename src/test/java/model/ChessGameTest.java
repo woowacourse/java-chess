@@ -59,16 +59,16 @@ import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ChessBoardTest {
+class ChessGameTest {
 
     @DisplayName("초기에는 32개의 기물이 생성된다.")
     @Test
     void checkPiecesCount() {
         //given && when
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //then
-        final Map<Position, Piece> board = chessBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
         assertThat(board.keySet()).hasSize(32);
     }
 
@@ -76,9 +76,9 @@ class ChessBoardTest {
     @Test
     void checkStartingPosition() {
         //given && when
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
-        final Map<Position, Piece> board = chessBoard.getBoard();
+        final Map<Position, Piece> board = chessGame.getBoard();
 
         final Map<Position, Piece> expected = new HashMap<>();
 
@@ -126,12 +126,12 @@ class ChessBoardTest {
     @Test
     void failToMoveIfNoPiece() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         final Moving moving = new Moving(E4, E5);
 
         //when & then
-        assertThatThrownBy(() -> chessBoard.move(moving))
+        assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(PieceDoesNotExistException.class);
     }
 
@@ -139,12 +139,12 @@ class ChessBoardTest {
     @DisplayName("자신의 기물이 아니면 예외가 발생한다.")
     void failToMoveIfDifferentCamp() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when && then
         final Moving moving = new Moving(A7, A6);
 
-        assertThatThrownBy(() -> chessBoard.move(moving))
+        assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(InvalidTurnException.class);
     }
 
@@ -152,12 +152,12 @@ class ChessBoardTest {
     @Test
     void failToMoveIfContainPieceInRoute() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when && then
         final Moving moving = new Moving(A1, A3);
 
-        assertThatThrownBy(() -> chessBoard.move(moving))
+        assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(PieceExistInRouteException.class);
     }
 
@@ -165,16 +165,16 @@ class ChessBoardTest {
     @Test
     void failToMoveIfContainsPieceInTargetPosition() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when
-        chessBoard.move(new Moving(A2, A4)); // WHITE
-        chessBoard.move(new Moving(A7, A5)); // BLACK
+        chessGame.move(new Moving(A2, A4)); // WHITE
+        chessGame.move(new Moving(A7, A5)); // BLACK
 
         //then
         final Moving moving = new Moving(A1, A4);
 
-        assertThatThrownBy(() -> chessBoard.move(moving))
+        assertThatThrownBy(() -> chessGame.move(moving))
                 .isInstanceOf(PieceExistInRouteException.class);
     }
 
@@ -182,32 +182,32 @@ class ChessBoardTest {
     @Test
     void checkRemovePiece() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when
-        chessBoard.move(new Moving(A2, A4));
-        chessBoard.move(new Moving(B7, B5));
-        chessBoard.move(new Moving(A4, B5));
+        chessGame.move(new Moving(A2, A4));
+        chessGame.move(new Moving(B7, B5));
+        chessGame.move(new Moving(A4, B5));
 
         //then
-        assertThat(chessBoard.getBoard()).hasSize(31);
+        assertThat(chessGame.getBoard()).hasSize(31);
     }
 
     @DisplayName("선공은 WHITE이다.")
     @Test
     void checkFirstAttack() {
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
-        assertThat(chessBoard.getCamp()).isEqualTo(Camp.WHITE);
+        assertThat(chessGame.getCamp()).isEqualTo(Camp.WHITE);
     }
 
     @DisplayName("후공은 BLACK이다.")
     @Test
     void checkSecondAttack() {
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
-        chessBoard.move(new Moving(A2, A3));
+        chessGame.move(new Moving(A2, A3));
 
-        assertThat(chessBoard.getCamp()).isEqualTo(Camp.BLACK);
+        assertThat(chessGame.getCamp()).isEqualTo(Camp.BLACK);
     }
 }

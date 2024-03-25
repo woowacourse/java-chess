@@ -1,11 +1,11 @@
 package model.status;
 
-import model.ChessBoard;
+import model.ChessGame;
 import model.command.CommandLine;
 
 public interface GameStatus {
 
-    GameStatus play(CommandLine commandLine, ChessBoard chessBoard);
+    GameStatus play(CommandLine commandLine, ChessGame chessGame);
 
     boolean isRunning();
 }

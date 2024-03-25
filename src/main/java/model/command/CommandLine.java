@@ -18,7 +18,6 @@ public class CommandLine {
         this.body = body;
     }
 
-    //TODO List<String> 으로 받아올지 그냥 String을 받아와 쪼갤지 고민하기
     public static CommandLine from(final List<String> input) {
         validateEmpty(input);
         validateCommand(input);

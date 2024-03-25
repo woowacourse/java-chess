@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.InvalidStatusException;
 import java.util.List;
-import model.ChessBoard;
+import model.ChessGame;
 import model.command.CommandLine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,10 +26,10 @@ class RunningTest {
     void checkRunningAfterPlay() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
         final GameStatus gameStatus = Initialization.gameSetting(startCommand);
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         final CommandLine moveCommand = CommandLine.from(List.of("move", "a2", "a3"));
-        assertThat(gameStatus.play(moveCommand, chessBoard))
+        assertThat(gameStatus.play(moveCommand, chessGame))
                 .isInstanceOf(Running.class);
     }
 
@@ -38,10 +38,10 @@ class RunningTest {
     void checkRunningAfterEnd() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
         final GameStatus gameStatus = Initialization.gameSetting(startCommand);
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         final CommandLine endCommand = CommandLine.from(List.of("end"));
-        assertThat(gameStatus.play(endCommand, chessBoard))
+        assertThat(gameStatus.play(endCommand, chessGame))
                 .isInstanceOf(End.class);
     }
 
@@ -51,10 +51,10 @@ class RunningTest {
         //given
         final CommandLine startCommand = CommandLine.from(List.of("start"));
         final GameStatus gameStatus = Initialization.gameSetting(startCommand);
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when && then
-        assertThatThrownBy(() -> gameStatus.play(startCommand, chessBoard))
+        assertThatThrownBy(() -> gameStatus.play(startCommand, chessGame))
                 .isInstanceOf(InvalidStatusException.class);
     }
 }

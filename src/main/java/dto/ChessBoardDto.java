@@ -1,7 +1,7 @@
 package dto;
 
 import java.util.Map;
-import model.ChessBoard;
+import model.ChessGame;
 import model.piece.Piece;
 import model.position.File;
 import model.position.Position;
@@ -23,8 +23,8 @@ public class ChessBoardDto {
         this.currentTurn = currentTurn;
     }
 
-    public static ChessBoardDto from(final ChessBoard chessBoard) {
-        final Map<Position, Piece> pieceOfPosition = chessBoard.getBoard();
+    public static ChessBoardDto from(final ChessGame chessGame) {
+        final Map<Position, Piece> pieceOfPosition = chessGame.getBoard();
 
         final StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -33,7 +33,7 @@ public class ChessBoardDto {
         }
         stringBuilder.append(String.format("%n%s%n", FILE_GUIDE_LINE));
 
-        return new ChessBoardDto(stringBuilder.toString(), chessBoard.getCamp().toString());
+        return new ChessBoardDto(stringBuilder.toString(), chessGame.getCamp().toString());
     }
 
     private static String generateBoardLine(final Map<Position, Piece> pieceOfPosition, final Rank rank) {

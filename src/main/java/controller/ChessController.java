@@ -3,7 +3,7 @@ package controller;
 import dto.ChessBoardDto;
 import exception.CustomException;
 import java.util.List;
-import model.ChessBoard;
+import model.ChessGame;
 import model.command.CommandLine;
 import model.status.GameStatus;
 import model.status.Initialization;
@@ -21,13 +21,13 @@ public class ChessController {
     }
 
     public void run() {
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
         outputView.printStartMessage();
         GameStatus gameStatus = initGame();
 
         while (gameStatus.isRunning()) {
-            printCurrentStatus(chessBoard);
-            gameStatus = play(gameStatus, chessBoard);
+            printCurrentStatus(chessGame);
+            gameStatus = play(gameStatus, chessGame);
         }
     }
 
@@ -40,17 +40,17 @@ public class ChessController {
         }
     }
 
-    private GameStatus play(final GameStatus gameStatus, final ChessBoard chessBoard) {
+    private GameStatus play(final GameStatus gameStatus, final ChessGame chessGame) {
         try {
-            return gameStatus.play(readCommandLine(), chessBoard);
+            return gameStatus.play(readCommandLine(), chessGame);
         } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
-            return play(gameStatus, chessBoard);
+            return play(gameStatus, chessGame);
         }
     }
 
-    private void printCurrentStatus(final ChessBoard chessBoard) {
-        outputView.printChessBoard(ChessBoardDto.from(chessBoard));
+    private void printCurrentStatus(final ChessGame chessGame) {
+        outputView.printChessBoard(ChessBoardDto.from(chessGame));
     }
 
     private CommandLine readCommandLine() {

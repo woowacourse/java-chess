@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.InvalidStatusException;
 import java.util.List;
-import model.ChessBoard;
+import model.ChessGame;
 import model.command.CommandLine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,16 +16,16 @@ class EndTest {
     @Test
     void failToPlayIfStatusEnd() {
         //given
-        final ChessBoard chessBoard = ChessBoard.setupStartingPosition();
+        final ChessGame chessGame = ChessGame.setupStartingPosition();
         final CommandLine startCommand = CommandLine.from(List.of("start"));
         final GameStatus gameStatus = Initialization.gameSetting(startCommand);
         final CommandLine endCommand = CommandLine.from(List.of("end"));
 
         //when
-        final GameStatus play = gameStatus.play(endCommand, chessBoard);
+        final GameStatus play = gameStatus.play(endCommand, chessGame);
 
         //then
-        assertThatThrownBy(() -> play.play(endCommand, chessBoard))
+        assertThatThrownBy(() -> play.play(endCommand, chessGame))
                 .isInstanceOf(InvalidStatusException.class);
     }
 
