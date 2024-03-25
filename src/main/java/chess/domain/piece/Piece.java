@@ -14,6 +14,11 @@ public abstract class Piece {
 
     public abstract Set<Position> findPath(Position thisPosition, Position destination);
 
+    public abstract MoveStrategy strategy(Map<Position, Piece> board);
+
+    public abstract boolean isBlank();
+
+    public abstract PieceType pieceType();
 
     public boolean isSameColor(Color otherColor) {
         return color == otherColor;
@@ -28,10 +33,4 @@ public abstract class Piece {
         }
         return false;
     }
-
-    public abstract MoveStrategy strategy(Map<Position, Piece> board);
-
-    public abstract boolean isBlank();
-
-    public abstract PieceType pieceType();
 }

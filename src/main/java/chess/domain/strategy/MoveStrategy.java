@@ -4,7 +4,6 @@ import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Position;
-import chess.domain.piece.blank.Blank;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -17,12 +16,12 @@ public abstract class MoveStrategy {
         this.board = new HashMap<>(board);
     }
 
+    public abstract void move(Color turnColor, Position from, Position to);
+
     public MoveStrategy changeStrategy(Position from) {
         Piece selectedPiece = board.get(from);
         return selectedPiece.strategy(board);
     }
-
-    public abstract void move(Color turnColor, Position from, Position to);
 
     public void checkTurnOf(Piece currentPiece, Color turnColor) {
         if (!currentPiece.isSameColor(turnColor)) {

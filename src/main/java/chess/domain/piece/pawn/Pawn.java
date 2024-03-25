@@ -17,6 +17,8 @@ public abstract class Pawn extends Piece {
         this.directions = directions;
     }
 
+    public abstract boolean isCaptureMove(Position thisPosition, Position destination);
+
     @Override
     public Set<Position> findPath(Position thisPosition, Position destination) {
         Set<Position> movable = thisPosition.findMovablePositions(directions);
@@ -26,8 +28,6 @@ public abstract class Pawn extends Piece {
         }
         return thisPosition.findCourses(thisPosition.findDirectionTo(destination), destination);
     }
-
-    public abstract boolean isCaptureMove(Position thisPosition, Position destination);
 
     @Override
     public boolean isBlank() {
