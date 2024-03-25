@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class EmptyPieceTest {
 
@@ -23,7 +24,15 @@ class EmptyPieceTest {
 
         boolean result = emptyPiece.canMoveInTargetDirection(direction);
 
-        Assertions.assertThat(result).isFalse();
+        assertThat(result).isFalse();
+    }
+
+    @DisplayName("원하는 만큼 이동할 수 있는지 반환한다.")
+    @Test
+    void canMoveMoreThenOnce() {
+        boolean result = EmptyPiece.of().canMoveMoreThenOnce();
+
+        assertThat(result).isFalse();
     }
 
     @DisplayName("폰인지를 반환한다.")
@@ -33,6 +42,6 @@ class EmptyPieceTest {
 
         boolean isPawn = emptyPiece.isPawn();
 
-        Assertions.assertThat(isPawn).isFalse();
+        assertThat(isPawn).isFalse();
     }
 }
