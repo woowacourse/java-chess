@@ -1,11 +1,11 @@
 package domain.piece;
 
 import domain.ChessVector;
+import domain.PieceType;
 import domain.Team;
 import domain.square.Square;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Knight extends Piece {
 
@@ -14,7 +14,7 @@ public class Knight extends Piece {
             new ChessVector(2, 1), new ChessVector(2, -1), new ChessVector(-2, 1), new ChessVector(-2, -1));
 
     public Knight(final Team team) {
-        super(team);
+        super(team, PieceType.KNIGHT);
     }
 
     @Override
@@ -27,21 +27,5 @@ public class Knight extends Piece {
     @Override
     public boolean canAttack(final Square source, final Square target) {
         return canMove(source, target);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof final Knight piece)) {
-            return false;
-        }
-        return this.team == piece.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team, Knight.class);
     }
 }

@@ -1,12 +1,12 @@
 package domain.piece;
 
 import domain.ChessVector;
+import domain.PieceType;
 import domain.Team;
 import domain.square.Rank;
 import domain.square.Square;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Pawn extends Piece {
 
@@ -22,12 +22,12 @@ public class Pawn extends Piece {
     private static final Rank WHITE_START_RANK = Rank.TWO;
 
     public Pawn(final Team team) {
-        super(team);
+        super(team, PieceType.PAWN);
     }
 
     @Override
     public boolean canMove(final Square source, final Square target) {
-        if (team == Team.BLACK) {
+        if (getTeam() == Team.BLACK) {
             return canBlackMove(source, target);
         }
         return canWhiteMove(source, target);
@@ -37,7 +37,7 @@ public class Pawn extends Piece {
     public boolean canAttack(final Square source, final Square target) {
         final ChessVector chessVector = target.calculateVector(source);
 
-        if (team == Team.BLACK) {
+        if (getTeam() == Team.BLACK) {
             return BLACK_ATTACK_VECTORS.contains(chessVector);
         }
         return WHITE_ATTACK_VECTORS.contains(chessVector);
@@ -55,21 +55,5 @@ public class Pawn extends Piece {
 
         return (source.isRank(WHITE_START_RANK) && WHITE_START_VECTOR.equals(chessVector))
                 || WHITE_MOVE_VECTOR.equals(chessVector);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof final Pawn piece)) {
-            return false;
-        }
-        return this.team == piece.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(team, Pawn.class);
     }
 }
