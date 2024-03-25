@@ -2,6 +2,7 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.piece.Color;
 import chess.piece.InitPawn;
@@ -11,6 +12,7 @@ import chess.piece.Rook;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
+import chess.score.Score;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -166,5 +168,26 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(source, destination, Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대방의 말을 움직일 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("전체 판의 점수를 계산한다.")
+    void boardScoreTest() {
+        // given
+        Map<Position, Piece> pieces = Map.of(
+                Position.of(File.A, Rank.ONE), new Rook(Color.WHITE),
+                Position.of(File.A, Rank.TWO), new Rook(Color.WHITE),
+                Position.of(File.B, Rank.TWO), new MovedPawn(Color.BLACK),
+                Position.of(File.B, Rank.THREE), new InitPawn(Color.BLACK)
+        );
+        Board board = new Board(pieces);
+        // when
+        Score whiteScore = board.calculateScore(Color.WHITE);
+        Score blackScore = board.calculateScore(Color.BLACK);
+        // then
+        assertAll(
+                () -> assertThat(whiteScore.getScore()).isEqualTo(10.0),
+                () -> assertThat(blackScore.getScore()).isEqualTo(1)
+        );
     }
 }
