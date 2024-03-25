@@ -20,7 +20,7 @@ public enum PieceSymbol {
 
     public static String convertToSymbol(Piece piece) {
         String name = Arrays.stream(values())
-                .filter(pieceSymbol -> piece.identifyType() == pieceSymbol.name())
+                .filter(pieceSymbol -> piece.identifyType().equals(pieceSymbol.name()))
                 .findFirst()
                 .orElseThrow()
                 .symbol;
