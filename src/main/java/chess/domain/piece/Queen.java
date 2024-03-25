@@ -5,15 +5,16 @@ import static chess.utils.Constant.ONE_SQUARE;
 import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-
+    private static final Score QUEEN_SCORE = new Score(9);
 
     public Queen(Color color) {
-        super(color, 9);
+        super(color, QUEEN_SCORE);
     }
 
     @Override

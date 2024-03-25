@@ -1,13 +1,15 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
     protected final Color color;
-    protected final double score;
+    protected final Score score;
 
-    public Piece(Color color, double score) {
+    public Piece(Color color, Score score) {
         this.color = color;
         this.score = score;
     }
@@ -35,6 +37,6 @@ public abstract class Piece {
     }
 
     public double getScore() {
-        return score;
+        return score.getValue();
     }
 }

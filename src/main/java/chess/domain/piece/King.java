@@ -4,12 +4,15 @@ import static chess.domain.piece.Type.KING;
 import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+    private static final Score KING_SCORE = new Score(0);
+
     public King(Color color) {
-        super(color, 0);
+        super(color, KING_SCORE);
     }
 
     @Override

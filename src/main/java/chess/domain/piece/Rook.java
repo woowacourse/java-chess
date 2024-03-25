@@ -5,13 +5,16 @@ import static chess.utils.Constant.ONE_SQUARE;
 import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Rook extends Piece {
+    private static final Score ROOK_SCORE = new Score(5);
+
     public Rook(Color color) {
-        super(color, 5);
+        super(color, ROOK_SCORE);
     }
 
     @Override

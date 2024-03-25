@@ -4,12 +4,15 @@ import static chess.domain.piece.Type.KNIGHT;
 import static chess.utils.Constant.TWO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
+    private static final Score KNIGHT_SCORE = new Score(2.5);
+
     public Knight(Color color) {
-        super(color, 2.5);
+        super(color, KNIGHT_SCORE);
     }
 
     @Override

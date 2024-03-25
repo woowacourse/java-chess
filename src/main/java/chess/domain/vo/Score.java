@@ -16,6 +16,10 @@ public class Score {
         return this.score > otherScore.score;
     }
 
+    public Score diminishScore(Score diminishUnit, double diminishCount) {
+        return new Score(score - diminishUnit.score * diminishCount);
+    }
+
     public double getValue() {
         return score;
     }

@@ -4,13 +4,16 @@ import static chess.domain.piece.Type.BISHOP;
 import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
+    private static final Score BISHOP_SCORE = new Score(3);
+
     public Bishop(Color color) {
-        super(color, 3);
+        super(color, BISHOP_SCORE);
     }
 
     @Override

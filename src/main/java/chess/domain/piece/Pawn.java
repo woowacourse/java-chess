@@ -6,13 +6,16 @@ import static chess.utils.Constant.TWO_SQUARE;
 import static chess.utils.Constant.ZERO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import chess.utils.UnitCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
+    private static final Score PAWN_SCORE = new Score(1);
+
     public Pawn(Color color) {
-        super(color, 1);
+        super(color, PAWN_SCORE);
     }
 
     @Override
