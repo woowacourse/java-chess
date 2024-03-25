@@ -1,0 +1,43 @@
+package domain;
+
+
+public enum Direction {
+    NORTH(0, 1),
+    SOUTH(0, -1),
+    EAST(1, 0),
+    WEST(-1, 0),
+
+    NORTH_EAST(1, 1),
+    NORTH_WEST(-1, 1),
+    SOUTH_EAST(1, -1),
+    SOUTH_WEST(-1, -1),
+
+    NORTH_NORTH(0, 2),
+    SOUTH_SOUTH(0, -2),
+
+    NORTH_NORTH_EAST(1, 2),
+    NORTH_NORTH_WEST(-1, 2),
+    SOUTH_SOUTH_EAST(1, -2),
+    SOUTH_SOUTH_WEST(-1, -2),
+    EAST_EAST_NORTH(2, 1),
+    EAST_EAST_SOUTH(2, -1),
+    WEST_WEST_NORTH(-2, 1),
+    WEST_WEST_SOUTH(-2, -1);
+
+
+    private final int row;
+    private final int column;
+
+    Direction(final int row, final int column) {
+        this.row = row;
+        this.column = column;
+    }
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
+    }
+}
