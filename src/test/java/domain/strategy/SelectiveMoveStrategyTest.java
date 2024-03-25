@@ -31,7 +31,7 @@ class SelectiveMoveStrategyTest {
     }
 
     @Test
-    @DisplayName("가운데에서 비숍을 움직였을 때 피스의 유무와 무관하게 이동 가능한 경우의 수는 16가지다")
+    @DisplayName("가운데에서 비숍을 움직였을 때 피스의 유무와 무관하게 이동 가능한 경우의 수는 14가지다")
     void bishopMovablePositions() {
         final Position position = new Position(File.of(4), Rank.of(4));
         final Piece bishop = new Bishop(Color.WHITE, Type.BISHOP);
