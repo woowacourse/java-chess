@@ -12,49 +12,61 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Position source, Position target, Route route) {
-        boolean diagonalAttack = isDiagonalAttack(source, target, route);
-        boolean notAttack = route.isTargetPieceEmpty();
-        boolean forwardTwoAtInitialPosition = isInitialPosition(source) && isForwardTwo(source, target);
-        boolean forwardOne = isForwardOne(source, target);
-
-        return diagonalAttack || notAttack && (forwardTwoAtInitialPosition || forwardOne);
-    }
-
-    private boolean isDiagonalAttack(Position source, Position target, Route route) {
-        return isAttackableDiagonal(source, target) && route.isOpponentTargetPiece(side());
-    }
-
-    private boolean isAttackableDiagonal(Position source, Position target) {
+    boolean hasFollowedRule(Position source, Position target, Route route) {
         if (isBlack()) {
-            return source.hasHigherRankByOne(target) && source.hasOneFileGap(target);
+            return hasFollowedBlackRule(source, target, route);
         }
+        return hasFollowedWhiteRule(source, target, route);
+    }
+
+    private boolean hasFollowedBlackRule(Position source, Position target, Route route) {
+        Side side = Side.BLACK;
+
+        boolean diagonalAttack = isDownDiagonal(source, target) && route.isOpponentTargetPiece(side);
+        boolean notAttack = route.isTargetPieceEmpty();
+        boolean downTwoAtInitialPosition = isInitialPosition(source, side) && isDownTwo(source, target);
+        boolean downOne = isDownOne(source, target);
+
+        return diagonalAttack || notAttack && (downTwoAtInitialPosition || downOne);
+    }
+
+    private boolean hasFollowedWhiteRule(Position source, Position target, Route route) {
+        Side side = Side.WHITE;
+
+        boolean diagonalAttack = isUpDiagonal(source, target) && route.isOpponentTargetPiece(side);
+        boolean notAttack = route.isTargetPieceEmpty();
+        boolean upTwoAtInitialPosition = isInitialPosition(source, side) && isUpTwo(source, target);
+        boolean upOne = isUpOne(source, target);
+
+        return diagonalAttack || notAttack && (upTwoAtInitialPosition || upOne);
+    }
+
+    private boolean isDownDiagonal(Position source, Position target) {
+        return source.hasHigherRankByOne(target) && source.hasOneFileGap(target);
+    }
+
+    private boolean isUpDiagonal(Position source, Position target) {
         return target.hasHigherRankByOne(source) && source.hasOneFileGap(target);
     }
 
-    private boolean isInitialPosition(Position source) {
-        List<Position> positions = InitialPosition.PAWN.positions(side());
+    private boolean isInitialPosition(Position source, Side side) {
+        List<Position> positions = InitialPosition.PAWN.positions(side);
         return positions.contains(source);
     }
 
-    private boolean isForwardTwo(Position source, Position target) {
-        if (isBlack()) {
-            return source.hasHigherRankByTwo(target) && source.isSameFile(target);
-        }
+    private boolean isDownTwo(Position source, Position target) {
+        return source.hasHigherRankByTwo(target) && source.isSameFile(target);
+    }
+
+    private boolean isUpTwo(Position source, Position target) {
         return target.hasHigherRankByTwo(source) && source.isSameFile(target);
     }
 
-    private boolean isForwardOne(Position source, Position target) {
-        if (isBlack()) {
-            return source.hasHigherRankByOne(target) && source.isSameFile(target);
-        }
-        return target.hasHigherRankByOne(source) && source.isSameFile(target);
+    private boolean isDownOne(Position source, Position target) {
+        return source.hasHigherRankByOne(target) && source.isSameFile(target);
     }
 
-    private Side side() {
-        if (isBlack()) {
-            return Side.BLACK;
-        }
-        return Side.WHITE;
+    private boolean isUpOne(Position source, Position target) {
+        return target.hasHigherRankByOne(source) && source.isSameFile(target);
     }
 }

@@ -10,7 +10,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Position source, Position target, Route route) {
+    boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.hasTwoFileGap(target) && source.hasOneRankGap(target) ||
                 source.hasOneFileGap(target) && source.hasTwoRankGap(target);
     }

@@ -10,7 +10,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Position source, Position target, Route route) {
+    boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.isSameFile(target) || source.isSameRank(target);
     }
 }

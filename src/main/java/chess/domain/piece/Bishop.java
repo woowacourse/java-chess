@@ -10,7 +10,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean hasFollowedRule(Position source, Position target, Route route) {
+    boolean hasFollowedRule(Position source, Position target, Route route) {
         return source.isDiagonal(target);
     }
 }
