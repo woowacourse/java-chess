@@ -36,6 +36,7 @@ public class ChessGame {
     }
 
     public void status() {
+        validateStatus();
         double whiteScore = Score.calculateScore(board, Team.WHITE);
         double blackScore = Score.calculateScore(board, Team.BLACK);
         findWinner(whiteScore, blackScore);
@@ -77,6 +78,12 @@ public class ChessGame {
         }
         if (whiteScore == blackScore) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);
+        }
+    }
+
+    private void validateStatus() {
+        if (notStarted()) {
+            throw new IllegalArgumentException("start가 입력되지 전에 status를 수행할 수 없습니다.");
         }
     }
 
