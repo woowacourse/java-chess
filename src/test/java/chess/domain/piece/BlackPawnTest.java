@@ -66,7 +66,7 @@ class BlackPawnTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"c4", "c3"})
+    @ValueSource(strings = {"c3", "c2"})
     @DisplayName("두번째 이동부터 아래로 두 칸 이상 이동할 경우 예외가 발생한다.")
     void validateStepLimitBlackPawnAfterFirst(String targetInput) {
         // given

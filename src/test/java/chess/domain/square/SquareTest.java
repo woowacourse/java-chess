@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -31,5 +32,33 @@ class SquareTest {
         assertThatCode(() -> Square.from(squareInput))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요");
+    }
+
+    @Test
+    @DisplayName("목적지보다 더 위에 있는지 확인한다.")
+    void isUpperThan() {
+        // given
+        Square source = Square.from("b7");
+        Square target = Square.from("b6");
+
+        // when
+        boolean upperThan = source.isUpperThan(target);
+
+        // then
+        assertThat(upperThan).isTrue();
+    }
+
+    @Test
+    @DisplayName("랭크의 거리를 계산한다.")
+    void distanceRankFrom() {
+        // given
+        Square source = Square.from("b7");
+        Square target = Square.from("b6");
+
+        // when
+        int distance = source.distanceRankFrom(target);
+
+        // then
+        assertThat(distance).isEqualTo(1);
     }
 }
