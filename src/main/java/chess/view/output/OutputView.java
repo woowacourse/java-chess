@@ -1,8 +1,8 @@
 package chess.view.output;
 
 import chess.model.board.ChessBoard;
-import chess.model.position.ChessPosition;
 import chess.model.piece.Piece;
+import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
 

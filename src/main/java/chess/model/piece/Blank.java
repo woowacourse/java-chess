@@ -3,8 +3,6 @@ package chess.model.piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
 
-import java.util.List;
-
 public class Blank extends Piece {
     public static final Blank INSTANCE = new Blank();
 

@@ -2,11 +2,7 @@ package chess.model.position;
 
 import chess.model.piece.Side;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import static java.util.Collections.unmodifiableList;
 
 public class Movement {
     private final Difference fileDifference;

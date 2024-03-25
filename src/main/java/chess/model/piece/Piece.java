@@ -3,7 +3,6 @@ package chess.model.piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {

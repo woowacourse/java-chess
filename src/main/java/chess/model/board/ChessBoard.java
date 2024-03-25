@@ -6,9 +6,7 @@ import chess.model.position.ChessPosition;
 import chess.model.position.Path;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import static java.util.Collections.unmodifiableMap;
 
