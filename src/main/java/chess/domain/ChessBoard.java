@@ -25,41 +25,52 @@ public class ChessBoard {
         return chessBoard.get(position);
     }
 
-    public void move(final Position source, final Position target) {
-        Piece piece = chessBoard.get(source);
+    public void move(final Position sourcePosition, final Position targetPosition) {
+        validateCanMove(sourcePosition, targetPosition);
 
-        Direction direction = source.calculateDirection(target);
-
-        validateDirection(piece, direction);
-        validateNotAlly(source, target);
-
-        Position nextPosition = source.moveTowardDirection(direction);
-
-        while (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) == EmptyPiece.of()) {
-            nextPosition = nextPosition.moveTowardDirection(direction);
-        }
-
-        if (!nextPosition.equals(target)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
-        }
-
-        if (piece.canMoveMoreThenOnce() && !nextPosition.equals(target) && chessBoard.get(nextPosition) != null) {
-            throw new IllegalArgumentException("[ERROR] 이동 경로에 기물이 존재합니다.");
-        }
-
-        chessBoard.put(target, piece);
-        chessBoard.put(source, null);
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+        chessBoard.put(targetPosition, sourcePiece);
+        chessBoard.put(sourcePosition, EmptyPiece.of());
     }
 
-    private void validateNotAlly(Position source, Position target) {
+    private void validateCanMove(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+        Direction direction = sourcePosition.calculateDirection(targetPosition);
+
+        validateValidDirection(sourcePiece, direction);
+        validateTargetNotAlly(sourcePosition, targetPosition);
+
+        Position nextPosition = sourcePosition.moveTowardDirection(direction);
+        if (sourcePiece.canMoveMoreThenOnce()) {
+            nextPosition = moveUntilReachTargetOrUntilMeetSomeone(targetPosition, direction, nextPosition);
+        }
+
+        validateReachedTarget(targetPosition, nextPosition);
+    }
+
+    private void validateValidDirection(final Piece piece, final Direction direction) {
+        if (!piece.canMoveInTargetDirection(direction)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+        }
+    }
+
+    private void validateTargetNotAlly(Position source, Position target) {
         if (chessBoard.get(source).isAlly(chessBoard.get(target))) {
             throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
         }
     }
 
-    private void validateDirection(final Piece piece, final Direction direction) {
-        if (!piece.canMoveInTargetDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+    private Position moveUntilReachTargetOrUntilMeetSomeone(Position targetPosition, Direction direction, Position nextPosition) {
+        while (!nextPosition.equals(targetPosition) && chessBoard.get(nextPosition) == EmptyPiece.of()) {
+            nextPosition = nextPosition.moveTowardDirection(direction);
+        }
+
+        return nextPosition;
+    }
+
+    private static void validateReachedTarget(Position targetPosition, Position nextPosition) {
+        if (!nextPosition.equals(targetPosition)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
         }
     }
 }

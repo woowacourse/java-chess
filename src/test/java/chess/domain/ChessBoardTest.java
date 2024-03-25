@@ -57,7 +57,7 @@ class ChessBoardTest {
         chessBoard.move(source, target);
 
         Piece pieceAtSourcePositionAfterMove = chessBoard.findPieceByPosition(source);
-        assertThat(pieceAtSourcePositionAfterMove).isNull();
+        assertThat(pieceAtSourcePositionAfterMove).isEqualTo(EmptyPiece.of());
     }
 
     @Test
@@ -89,6 +89,23 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("이동 경로에 기물이 있는 경우 움직일 수 없다.")
+    void obstacleExistOnRoute() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.ONE);
+        positionPiece.put(sourcePosition, Rook.of(Color.BLACK));
+        Position obstaclePosition = Position.of(File.A, Rank.TWO);
+        positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
+        Position targetPosition = Position.of(File.A, Rank.THREE);
+        positionPiece.put(targetPosition, EmptyPiece.of());
+        ChessBoard chessBoard = new ChessBoard(positionPiece);
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
     }
 
