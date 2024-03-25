@@ -24,6 +24,10 @@ public abstract class Piece {
         return color == other.color;
     }
 
+    public boolean isEnemyOf(Piece other) {
+        return color != other.color;
+    }
+
     protected Square currentSquare() {
         return square;
     }

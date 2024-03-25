@@ -97,4 +97,12 @@ public enum Rank {
         }
         return true;
     }
+
+    public boolean isRankSeven() {
+        return this == SEVEN;
+    }
+
+    public boolean isRankTwo() {
+        return this == TWO;
+    }
 }

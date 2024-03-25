@@ -122,6 +122,14 @@ public class Square {
         return Optional.empty();
     }
 
+    public boolean isStartRankOfBlackPawn() {
+        return rank.isRankSeven();
+    }
+
+    public boolean isStartRankOfWhitePawn() {
+        return rank.isRankTwo();
+    }
+
     @Override
     public boolean equals(final Object object) {
         if (this == object) {
