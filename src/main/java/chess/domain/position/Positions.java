@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Positions {
     private static final List<Position> positions = new ArrayList<>(generate());
 
-    public Positions() {
+    private Positions() {
     }
 
     public static Position of(File file, Rank rank) {
