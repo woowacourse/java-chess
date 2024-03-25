@@ -6,6 +6,8 @@ import domain.game.TeamColor;
 import domain.position.Position;
 
 public class GameEnd implements GameState {
+    private static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
+
     private final TeamColor winner;
 
     public GameEnd(TeamColor winner) {
@@ -19,17 +21,17 @@ public class GameEnd implements GameState {
 
     @Override
     public boolean isTurnOf(TeamColor teamColor) {
-        throw new IllegalStateException("게임이 종료되었습니다.");
+        throw new IllegalStateException(GAME_END_MESSAGE);
     }
 
     @Override
     public TeamColor currentTurn() {
-        throw new IllegalStateException("게임이 종료되었습니다.");
+        throw new IllegalStateException(GAME_END_MESSAGE);
     }
 
     @Override
     public MoveResponse move(Board board, Position source, Position destination) {
-        throw new IllegalStateException("게임이 종료되었습니다.");
+        throw new IllegalStateException(GAME_END_MESSAGE);
     }
 
     @Override
