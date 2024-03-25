@@ -34,7 +34,7 @@ public class Point {
     public boolean isSlopeOneDiagonal(Point point) {
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
-        if (this.equals(point) || rankDistance == 0) {
+        if (this == point || rankDistance == 0) {
             return false;
         }
 
@@ -46,14 +46,14 @@ public class Point {
     }
 
     public boolean isStraight(Point point) {
-        if (this.equals(point)) {
+        if (this == point) {
             return false;
         }
-        return this.file.equals(point.file) || this.rank.equals(point.rank);
+        return this.file == point.file || this.rank == point.rank;
     }
 
     public boolean isAround(Point point) {
-        if (this.equals(point)) {
+        if (this == point) {
             return false;
         }
         int fileDistance = this.file.distance(point.file);
