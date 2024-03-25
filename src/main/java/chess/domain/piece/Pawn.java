@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public final class Pawn extends MultiMovePiece {
-
-    private static final String NAME = "P";
     private static final int TWO_RANK = 2;
 
     public Pawn(Team team) {
-        super(NAME, team);
+        super(Type.PAWN, team);
     }
 
     @Override

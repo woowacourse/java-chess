@@ -4,10 +4,8 @@ import chess.domain.Point;
 
 public final class Rook extends MultiMovePiece {
 
-    private static final String name = "R";
-
     public Rook(Team team) {
-        super(name, team);
+        super(Type.ROOK, team);
     }
 
     @Override

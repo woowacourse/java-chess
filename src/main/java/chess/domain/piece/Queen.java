@@ -4,10 +4,8 @@ import chess.domain.Point;
 
 public final class Queen extends MultiMovePiece {
 
-    private static final String name = "Q";
-
     public Queen(Team team) {
-        super(name, team);
+        super(Type.QUEEN, team);
     }
 
     @Override

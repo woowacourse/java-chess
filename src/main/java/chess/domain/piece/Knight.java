@@ -4,10 +4,8 @@ import chess.domain.Point;
 
 public final class Knight extends SingleMovePiece {
 
-    private static final String name = "N";
-
     public Knight(Team team) {
-        super(name, team);
+        super(Type.KNIGHT, team);
     }
 
     @Override

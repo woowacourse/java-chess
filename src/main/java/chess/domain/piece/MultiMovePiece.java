@@ -6,8 +6,8 @@ import java.util.Map;
 
 public abstract class MultiMovePiece extends Piece {
 
-    public MultiMovePiece(final String name, final Team team) {
-        super(name, team);
+    public MultiMovePiece(final Type type, final Team team) {
+        super(type, team);
     }
 
     public abstract boolean isMovableDirection(final Point departure, final Point destination);

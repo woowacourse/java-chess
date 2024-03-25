@@ -2,12 +2,22 @@ package chess.view;
 
 import chess.domain.Point;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.piece.Type;
 
 import java.util.Map;
 
 public class OutputView {
-
     private static final String ERROR_SUFFIX = "[ERROR]";
+    private static final Map<Type, String> NAME_CLASSIFIER = Map.of(
+            Type.KING, "K",
+            Type.QUEEN, "Q",
+            Type.ROOK, "R",
+            Type.BISHOP, "B",
+            Type.KNIGHT, "N",
+            Type.PAWN, "P",
+            Type.EMPTY, "."
+    );
 
     // TODO
     public void printBoard(Map<Point, Piece> board) {
@@ -16,12 +26,23 @@ public class OutputView {
         for (int rank = 8; rank > 0; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
                 Piece piece = board.get(new Point(file, rank));
-                builder.append(piece.getName());
+                builder.append(findNameOf(piece));
             }
             builder.append(System.lineSeparator());
         }
 
         System.out.println(builder);
+    }
+
+    private String findNameOf(Piece piece) {
+        Type pieceType = piece.getType();
+        String name = NAME_CLASSIFIER.get(pieceType);
+
+        Team team = piece.getTeam();
+        if (team.isWhite()) {
+            return name.toLowerCase();
+        }
+        return name;
     }
 
     public void printGameStart() {

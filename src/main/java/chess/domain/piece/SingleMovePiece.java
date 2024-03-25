@@ -6,8 +6,8 @@ import java.util.Map;
 
 public abstract class SingleMovePiece extends Piece {
 
-    public SingleMovePiece(final String name, final Team team) {
-        super(name, team);
+    public SingleMovePiece(final Type type, final Team team) {
+        super(type, team);
     }
 
     public abstract boolean isMovablePoint(final Point departure, final Point destination);

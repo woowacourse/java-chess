@@ -6,12 +6,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
-
-    private final String name;
+    private final Type type;
     private final Team team;
 
-    public Piece(String name, Team team) {
-        this.name = name;
+    public Piece(Type type, Team team) {
+        this.type = type;
         this.team = team;
     }
 
@@ -25,11 +24,8 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public String getName() {
-        if (team.isWhite()) {
-            return name.toLowerCase();
-        }
-        return name;
+    public Type getType() {
+        return type;
     }
 
     public Team getTeam() {
@@ -37,19 +33,15 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Piece piece = (Piece) o;
-        return Objects.equals(name, piece.name) && team == piece.team;
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Piece piece = (Piece) o;
+        return team == piece.team;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, team);
+        return Objects.hash(team);
     }
 }

@@ -6,10 +6,8 @@ import java.util.Map;
 
 public class Empty extends Piece {
 
-    private static final String NAME = ".";
-
     public Empty(Team team) {
-        super(NAME, team);
+        super(Type.EMPTY, team);
     }
 
     @Override

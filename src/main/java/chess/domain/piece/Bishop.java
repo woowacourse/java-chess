@@ -4,10 +4,8 @@ import chess.domain.Point;
 
 public final class Bishop extends MultiMovePiece {
 
-    private static final String name = "B";
-
     public Bishop(Team team) {
-        super(name, team);
+        super(Type.BISHOP, team);
     }
 
     @Override
