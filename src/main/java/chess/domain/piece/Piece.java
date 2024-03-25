@@ -15,6 +15,8 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public abstract boolean canMove(final Movement movement);
+
     public Set<Position> getRoute(final Movement movement) {
         Position position = movement.getLowerPosition();
 
@@ -30,8 +32,6 @@ public abstract class Piece {
         }
         return positions;
     }
-
-    public abstract boolean canMove(final Movement movement);
 
     private int distance(final Movement movement) {
         return Math.max(movement.getRankDistance(), movement.getFileDistance());

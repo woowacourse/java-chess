@@ -18,26 +18,11 @@ public class ChessBoard {
         final Piece currentPiece = findPieceBy(current);
         final Movement movement = new Movement(current, destination);
 
-        validate(currentPiece, movement);
+        validateStrategy(currentPiece, movement);
+        validatePieceInRoute(currentPiece, movement);
+        validateCatch(currentPiece, movement);
 
         movePiece(currentPiece, movement);
-    }
-
-    private void validate(final Piece currentPiece, final Movement movement) {
-        validateStrategy(currentPiece, movement);
-        validateRoute(currentPiece, movement);
-
-        if (canPawnCatch(currentPiece, movement) || isPieceExist(movement.getDestination())) {
-            validateOpponent(currentPiece, movement);
-        }
-    }
-
-    private void validateStrategy(final Piece currentPiece, final Movement movement) {
-        if (currentPiece.canMove(movement)) {
-            return;
-        }
-
-        throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
     }
 
     public Piece findPieceBy(final Position position) {
@@ -48,29 +33,32 @@ public class ChessBoard {
         return pieces.get(position);
     }
 
-    private void movePiece(final Piece currentPiece, final Movement movement) {
-        pieces.remove(movement.getCurrent());
-        pieces.put(movement.getDestination(), currentPiece);
+    private void validateStrategy(final Piece currentPiece, final Movement movement) {
+        if (!currentPiece.canMove(movement)) {
+            throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+        }
     }
 
-    private boolean isPieceExist(final Position position) {
-        return pieces.containsKey(position);
-    }
-
-    private boolean canPawnCatch(final Piece currentPiece, final Movement movement) {
-        return currentPiece instanceof Pawn
-                && isPieceExist(movement.getDestination())
-                && (((Pawn) currentPiece).canCatch(movement));
-    }
-
-    private void validateRoute(final Piece currentPiece, final Movement movement) {
-        if (existPieceInWay(currentPiece, movement)) {
+    private void validatePieceInRoute(final Piece currentPiece, final Movement movement) {
+        if (existPieceInRoute(currentPiece, movement)) {
             throw new IllegalArgumentException("[ERROR] 경로상 기물이 존재합니다.");
         }
     }
 
-    private boolean existPieceInWay(final Piece currentPiece, final Movement movement) {
-        return pieces.keySet().stream().anyMatch(currentPiece.getRoute(movement)::contains);
+    private void validateCatch(final Piece currentPiece, final Movement movement) {
+        validatePawnCatch(currentPiece, movement);
+
+        if (isPieceExist(movement.getDestination())) {
+            validateOpponent(currentPiece, movement);
+        }
+    }
+
+    private void validatePawnCatch(final Piece currentPiece, final Movement movement) {
+        if (currentPiece instanceof Pawn
+                && isPieceExist(movement.getDestination())
+                && (!(((Pawn) currentPiece).canCatch(movement)))) {
+            throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
+        }
     }
 
     private void validateOpponent(final Piece currentPiece, final Movement movement) {
@@ -80,6 +68,20 @@ public class ChessBoard {
         }
 
         throw new IllegalArgumentException("[ERROR] 잡을 수 없는 기물입니다.");
+    }
+
+    private boolean isPieceExist(final Position position) {
+        return pieces.containsKey(position);
+    }
+
+    private void movePiece(final Piece currentPiece, final Movement movement) {
+        pieces.remove(movement.getCurrent());
+        pieces.put(movement.getDestination(), currentPiece);
+    }
+
+
+    private boolean existPieceInRoute(final Piece currentPiece, final Movement movement) {
+        return pieces.keySet().stream().anyMatch(currentPiece.getRoute(movement)::contains);
     }
 
     public Map<Position, Piece> getPieces() {
