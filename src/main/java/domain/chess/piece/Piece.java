@@ -26,22 +26,6 @@ public abstract class Piece implements Movable {
         this.point = point;
     }
 
-    public boolean isEqualPoint(final Point point) {
-        return this.point.equals(point);
-    }
-
-    public boolean sameColor(final Piece piece) {
-        return this.color == piece.color;
-    }
-
-    public boolean isBlack() {
-        return this.color.isBlack();
-    }
-
-    public boolean isWhite() {
-        return this.color.isWhite();
-    }
-
     public boolean canMove(final Point movePoint) {
         return canMove(movePoint, List.of());
     }
@@ -63,7 +47,6 @@ public abstract class Piece implements Movable {
                 .anyMatch(pieces::containPieceWithPoint);
     }
 
-
     protected final boolean notExistPieces(final Pieces pieces, final Point... points) {
         return Arrays.stream(points)
                      .allMatch(value -> notExistPiece(value, pieces));
@@ -73,22 +56,8 @@ public abstract class Piece implements Movable {
         return !hasAnyPiece(findPoint, pieces);
     }
 
-
     protected final boolean hasAnyPiece(final Point findPoint, final Pieces pieces) {
         return pieces.containPieceWithPoint(findPoint);
-    }
-
-    protected final boolean hasEnemyPieceOrEmpty(final Point endPoint, final Pieces pieces) {
-        return !hasFriendPiece(endPoint, pieces);
-    }
-
-    protected final boolean hasEnemyPiece(final Point endPoint, final Pieces pieces) {
-        final Optional<Piece> optionalPiece = pieces.findPieceWithPoint(endPoint);
-        if (optionalPiece.isEmpty()) {
-            return false;
-        }
-        final Piece toPiece = optionalPiece.get();
-        return !sameColor(toPiece);
     }
 
     protected final boolean hasFriendPiece(final Point endPoint, final Pieces pieces) {
@@ -97,9 +66,33 @@ public abstract class Piece implements Movable {
             return false;
         }
         final Piece toPiece = optionalPiece.get();
-        return sameColor(toPiece);
+        return this.color == toPiece.color;
     }
 
+    protected final boolean hasEnemyPiece(final Point endPoint, final Pieces pieces) {
+        final Optional<Piece> optionalPiece = pieces.findPieceWithPoint(endPoint);
+        if (optionalPiece.isEmpty()) {
+            return false;
+        }
+        final Piece toPiece = optionalPiece.get();
+        return this.color != toPiece.color;
+    }
+
+    protected final boolean hasEnemyPieceOrEmpty(final Point endPoint, final Pieces pieces) {
+        return !hasFriendPiece(endPoint, pieces);
+    }
+
+    public boolean isEqualPoint(final Point point) {
+        return this.point.equals(point);
+    }
+
+    public boolean isBlack() {
+        return this.color.isBlack();
+    }
+
+    public boolean isWhite() {
+        return this.color.isWhite();
+    }
 
     public Point getPoint() {
         return this.point;

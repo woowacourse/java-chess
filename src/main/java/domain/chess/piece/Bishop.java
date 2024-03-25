@@ -9,7 +9,7 @@ import java.util.List;
 import static domain.chess.Direction.*;
 
 public class Bishop extends Piece {
-    private static final List<Direction> directionList = List.of(DOWN_LEFT, DOWN_RIGHT, UP_LEFT, UP_RIGHT);
+    private static final List<Direction> DIRECTION_LIST = List.of(DOWN_LEFT, DOWN_RIGHT, UP_LEFT, UP_RIGHT);
 
     public Bishop(final Point point, final Color color) {
         super(point, color);
@@ -22,7 +22,7 @@ public class Bishop extends Piece {
 
     public boolean canMove(final Point movePoint, final List<Piece> pieceList) {
         final Direction direction = this.point.calculate(movePoint);
-        if (directionList.contains(direction)) {
+        if (DIRECTION_LIST.contains(direction)) {
             final Pieces pieces = new Pieces(pieceList);
             return notExistPieceInPath(movePoint, pieces) && hasEnemyPieceOrEmpty(movePoint, pieces);
         }

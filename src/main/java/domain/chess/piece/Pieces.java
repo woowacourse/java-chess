@@ -12,6 +12,14 @@ public class Pieces {
         this.value = new ArrayList<>(value);
     }
 
+    public void move(final Piece piece, final Point point) {
+        if (!piece.canMove(point, value)) {
+            throw new IllegalStateException(String.format("%s를 %s로 이동할 수 없습니다.", piece, point));
+        }
+        final Optional<Piece> optionalPiece = findPieceWithPoint(point);
+        optionalPiece.ifPresent(value::remove);
+        piece.move(point);
+    }
 
     public Optional<Piece> findPieceWithPoint(final Point point) {
         return value.stream()
@@ -21,15 +29,6 @@ public class Pieces {
 
     public boolean containPieceWithPoint(final Point point) {
         return findPieceWithPoint(point).isPresent();
-    }
-
-    public void move(final Piece piece, final Point point) {
-        if (!piece.canMove(point, value)) {
-            throw new IllegalStateException(String.format("%s를 %s로 이동할 수 없습니다.", piece, point));
-        }
-        final Optional<Piece> optionalPiece = findPieceWithPoint(point);
-        optionalPiece.ifPresent(value::remove);
-        piece.move(point);
     }
 
     public int size() {

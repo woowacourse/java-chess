@@ -10,8 +10,8 @@ import java.util.List;
 import static domain.chess.Direction.*;
 
 public class Pawn extends Piece {
-    private static final List<Direction> blackList = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
-    private static final List<Direction> whiteList = List.of(UP, UP_LEFT, UP_RIGHT);
+    private static final List<Direction> BLACK_DIRECTION_LIST = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+    private static final List<Direction> WHITE_DIRECTION_LIST = List.of(UP, UP_LEFT, UP_RIGHT);
     private static final Rank WHITE_START_POSITION = Rank.TWO;
     private static final Rank BLACK_START_POSITION = Rank.SEVEN;
 
@@ -79,9 +79,9 @@ public class Pawn extends Piece {
 
     private boolean containDirection(final Direction direction) {
         if (this.isBlack()) {
-            return blackList.contains(direction);
+            return BLACK_DIRECTION_LIST.contains(direction);
         }
-        return whiteList.contains(direction);
+        return WHITE_DIRECTION_LIST.contains(direction);
     }
 
     private int getStartIndex() {

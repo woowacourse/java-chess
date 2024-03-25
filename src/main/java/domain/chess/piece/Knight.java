@@ -9,7 +9,7 @@ import java.util.List;
 import static domain.chess.Direction.*;
 
 public class Knight extends Piece {
-    private static final List<Direction> directionList = List.of(
+    private static final List<Direction> DIRECTION_LIST = List.of(
             UP_UP_LEFT,
             UP_UP_RIGHT,
             RIGHT_UP_RIGHT,
@@ -29,10 +29,10 @@ public class Knight extends Piece {
     }
 
     private boolean canMovePoint(final Point movePoint) {
-        return directionList.stream()
-                            .filter(direction -> direction.canMovePoint(this.point))
-                            .map(direction -> direction.movePoint(this.point))
-                            .anyMatch(movePoint::equals);
+        return DIRECTION_LIST.stream()
+                             .filter(direction -> direction.canMovePoint(this.point))
+                             .map(direction -> direction.movePoint(this.point))
+                             .anyMatch(movePoint::equals);
     }
 
     @Override
