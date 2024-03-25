@@ -1,5 +1,6 @@
 package chess.domain.chessBoard;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -35,11 +36,7 @@ public class Space {
     }
 
     public boolean hasPiece() {
-        return !piece.isSameColor(new EmptyPiece());
-    }
-
-    public boolean doesNotHavePiece() {
-        return piece.isSameColor(new EmptyPiece());
+        return !piece.isSameColor(Color.EMPTY);
     }
 
     public Piece getPiece() {
