@@ -15,7 +15,7 @@ public class Bishop extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Bishop(character, true);

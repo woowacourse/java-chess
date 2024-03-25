@@ -12,11 +12,11 @@ public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
 
     protected final Character character;
-    protected final boolean hasMoved;
+    protected final boolean isMoved;
 
-    protected Piece(Character character, boolean hasMoved) {
+    protected Piece(Character character, boolean isMoved) {
         this.character = character;
-        this.hasMoved = hasMoved;
+        this.isMoved = isMoved;
     }
 
     public abstract Piece move();

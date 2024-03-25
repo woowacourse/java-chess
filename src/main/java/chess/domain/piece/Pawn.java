@@ -25,7 +25,7 @@ public class Pawn extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Pawn(character, true);
@@ -48,10 +48,10 @@ public class Pawn extends Piece {
         }
         if (character.team() == Team.WHITE) {
             return rowDifference == WHITE_MOVE_ROW_DIFFERENCE
-                    || (!hasMoved && rowDifference == WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE);
+                    || (!isMoved && rowDifference == WHITE_FIRST_MOVE_MAX_ROW_DIFFERENCE);
         }
         return rowDifference == BLACK_MOVE_ROW_DIFFERENCE
-                || (!hasMoved && rowDifference == BLACK_FIRST_MOVE_MAX_ROW_DIFFERENCE);
+                || (!isMoved && rowDifference == BLACK_FIRST_MOVE_MAX_ROW_DIFFERENCE);
     }
 
     private boolean isAttackable(int rowDifference, int columnDifference) {

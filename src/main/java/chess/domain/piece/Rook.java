@@ -15,7 +15,7 @@ public class Rook extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Rook(character, true);

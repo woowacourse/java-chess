@@ -20,7 +20,7 @@ public class King extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new King(character, true);

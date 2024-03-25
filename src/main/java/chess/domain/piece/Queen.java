@@ -16,7 +16,7 @@ public class Queen extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Queen(character, true);

@@ -23,7 +23,7 @@ public class Knight extends Piece {
 
     @Override
     public Piece move() {
-        if (hasMoved) {
+        if (isMoved) {
             return this;
         }
         return new Knight(character, true);
