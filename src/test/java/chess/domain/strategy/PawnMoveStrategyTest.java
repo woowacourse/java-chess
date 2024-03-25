@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 import chess.domain.BoardFactory;
-import chess.domain.TestBoardFactory;
+import chess.domain.BlankBoard;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -66,7 +66,7 @@ class PawnMoveStrategyTest {
     @TestFactory
     @DisplayName("흰색폰 이동 테스트")
     Collection<DynamicTest> moveWhitePawn() {
-        Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
+        Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 2), new WhiteFirstPawn(),
                 new Position(3, 6), new BlackPawn(),
                 new Position(4, 7), new BlackPawn(),
@@ -141,7 +141,7 @@ class PawnMoveStrategyTest {
     @TestFactory
     @DisplayName("검은색폰 이동 테스트")
     Collection<DynamicTest> moveBlackPawn() {
-        Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
+        Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 7), new BlackFirstPawn(),
                 new Position(3, 3), new WhitePawn(),
                 new Position(4, 2), new WhitePawn(),

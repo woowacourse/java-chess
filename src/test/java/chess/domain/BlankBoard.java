@@ -6,10 +6,10 @@ import chess.domain.piece.blank.Blank;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestBoardFactory {
+public class BlankBoard {
     private final Map<Position, Piece> board = new HashMap<>();
 
-    public TestBoardFactory() {
+    public BlankBoard() {
         createBlankBoard();
     }
 
@@ -26,7 +26,7 @@ public class TestBoardFactory {
         }
     }
 
-    public Map<Position, Piece> getTestBoard(Map<Position, Piece> want) {
+    public Map<Position, Piece> fillWith(Map<Position, Piece> want) {
         for (Position position : want.keySet()) {
             board.replace(position, want.get(position));
         }

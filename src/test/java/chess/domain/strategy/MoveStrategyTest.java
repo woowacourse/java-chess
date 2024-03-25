@@ -6,7 +6,7 @@ import chess.domain.color.Color;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import chess.domain.TestBoardFactory;
+import chess.domain.BlankBoard;
 import chess.domain.piece.pawn.WhiteFirstPawn;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +21,7 @@ public class MoveStrategyTest {
     @TestFactory
     @DisplayName("선택된 말에 따라 전략을 선택한다.")
     Collection<DynamicTest> changeStrategy() {
-        Map<Position, Piece> board = new TestBoardFactory().getTestBoard(Map.of(
+        Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new King(Color.WHITE),
                 new Position(4, 3), new WhiteFirstPawn()
         ));
