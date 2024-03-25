@@ -5,7 +5,7 @@ import domain.game.MoveResponse;
 import domain.game.TeamColor;
 import domain.position.Position;
 
-public class GameEnd implements GameState {
+public final class GameEnd implements GameState {
     private static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
 
     private final TeamColor winner;
