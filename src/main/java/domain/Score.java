@@ -2,7 +2,7 @@ package domain;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
     private final double value;
 
@@ -20,6 +20,11 @@ public class Score {
 
     public Score multiply(final int count) {
         return new Score(value * count);
+    }
+
+    @Override
+    public int compareTo(final Score o) {
+        return Double.compare(this.value, o.value);
     }
 
     @Override

@@ -9,6 +9,7 @@
     - [x] queen: 9점, rook: 5점, bishop: 3점, knight: 2.5점, king: 0점
     - [x] pawn: 1점, 세로줄에 같은 색 pawn 있는 경우 0.5점
 - [ ] 'status' 명령어 입력받기
+- [x] 승패 계산
 - [ ] 점수 출력
 - [ ] 승패 출력
 
