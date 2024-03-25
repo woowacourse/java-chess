@@ -38,8 +38,8 @@ public class Position {
     }
 
     public boolean isOnSameDiagonalAs(Position targetPosition) {
-        return Math.abs(file.subtract(targetPosition.file))
-            == Math.abs(rank.subtract(targetPosition.rank));
+        return (Math.abs(file.subtract(targetPosition.file)) == Math.abs(rank.subtract(targetPosition.rank)))
+            && !this.equals(targetPosition);
     }
 
     public boolean isOnSameFileAs(Position targetPosition) {
