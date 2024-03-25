@@ -1,39 +1,31 @@
 package chess.view.dto;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import chess.domain.chessboard.attribute.File;
-import chess.domain.piece.attribute.Position;
-import chess.domain.chessboard.attribute.Rank;
 import chess.domain.chessboard.Chessboard;
-import chess.domain.piece.Piece;
+import chess.domain.chessboard.attribute.Square;
 
 public class ChessboardDto {
 
-    private final List<List<String>> chessboard;
+	private final List<List<String>> chessboard;
 
-    public ChessboardDto(final Chessboard chessboard) {
-        Map<Position, Piece> board = chessboard.getChessboard();
-        this.chessboard = new ArrayList<>();
-        for (final Rank rank : Rank.values()) {
-            this.chessboard.add(positionsOf(board, rank));
-        }
-    }
+	public ChessboardDto(final Chessboard chessboard) {
+		this.chessboard = initialize(chessboard.getSquares());
+	}
 
-    private List<String> positionsOf(final Map<Position, Piece> board, final Rank rank) {
-        List<String> positions = new ArrayList<>();
-        for (final File file : File.values()) {
-            Position position = Position.of(file, rank);
-            Piece piece = board.get(position);
-            positions.add(PieceTypeDto.of(piece));
-        }
-        return Collections.unmodifiableList(positions);
-    }
+	private List<List<String>> initialize(List<List<Square>> squares) {
+		return squares.stream()
+				.map(this::initializeRow)
+				.toList();
+	}
 
-    public List<List<String>> getChessboard() {
-        return List.copyOf(chessboard);
-    }
+	private List<String> initializeRow(List<Square> row) {
+		return row.stream()
+				.map(SquareCharacter::from)
+				.toList();
+	}
+
+	public List<List<String>> get() {
+		return List.copyOf(chessboard);
+	}
 }

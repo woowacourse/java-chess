@@ -75,16 +75,6 @@ public class Chessboard {
         return File.isInRange(column) && Rank.isInRange(row);
     }
 
-    public Piece pieceIn(final Position position) {
-        return pieceIn(position.rank(), position.file());
-    }
-
-    public Piece pieceIn(final Rank rank, final File file) {
-        List<Square> row = chessboard.get(rank.toRow());
-        Square square = row.get(file.toColumn());
-        return square.piece();
-    }
-
     public List<List<Square>> getSquares() {
         return List.copyOf(chessboard.stream()
                 .map(List::copyOf)
