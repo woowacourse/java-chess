@@ -29,23 +29,11 @@ public class Pawn extends Piece {
         if (notContainDirection(direction) || direction.isDiagonal()) {
             return false;
         }
-        if (direction.canNotMovePoint(this.point)) {
-            return false;
-        }
         return singleCase(movePoint, pieces) || doubleCase(movePoint, pieces);
     }
 
     private boolean singleCase(final Point movePoint, final Pieces pieces) {
-        final Direction direction = this.point.calculate(movePoint);
-        return singleCase(movePoint, direction) && notExistPiece(movePoint, pieces);
-    }
-
-    private boolean singleCase(final Point movePoint, final Direction direction) {
-        if (direction.canMovePoint(this.point)) {
-            return direction.movePoint(this.point)
-                            .equals(movePoint);
-        }
-        return false;
+        return canMovePointOne(movePoint) && notExistPiece(movePoint, pieces);
     }
 
     private boolean doubleCase(final Point movePoint, final Pieces pieces) {
@@ -70,7 +58,7 @@ public class Pawn extends Piece {
         if (notContainDirection(direction) || direction.isVertical()) {
             return false;
         }
-        return singleCase(movePoint, direction) && hasEnemyPiece(movePoint, pieces);
+        return canMovePointOne(movePoint) && hasEnemyPiece(movePoint, pieces);
     }
 
     private boolean notContainDirection(final Direction direction) {

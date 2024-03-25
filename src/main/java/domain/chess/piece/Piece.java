@@ -30,6 +30,15 @@ public abstract class Piece implements Movable {
         return canMove(movePoint, List.of());
     }
 
+    protected boolean canMovePointOne(final Point movePoint) {
+        final Direction direction = this.point.calculate(movePoint);
+        if (direction.canMovePoint(this.point)) {
+            return direction.movePoint(this.point)
+                            .equals(movePoint);
+        }
+        return false;
+    }
+
     protected final boolean notExistPieceInPath(final Point endPoint, final Pieces pieces) {
         return !hasAnyPieceInPath(endPoint, pieces);
     }
