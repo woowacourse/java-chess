@@ -1,7 +1,7 @@
 package model.chessboard;
 
 import model.piece.Piece;
-import model.piece.state.*;
+import model.piece.role.*;
 import model.position.File;
 import model.position.Position;
 import model.position.Rank;

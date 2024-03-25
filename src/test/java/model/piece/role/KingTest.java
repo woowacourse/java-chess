@@ -1,11 +1,11 @@
-package model.piece.state;
+package model.piece.role;
 
 import model.direction.Direction;
+import model.direction.Route;
 import model.piece.Color;
 import model.position.File;
 import model.position.Position;
 import model.position.Rank;
-import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;

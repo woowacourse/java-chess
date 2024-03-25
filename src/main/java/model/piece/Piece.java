@@ -2,8 +2,8 @@ package model.piece;
 
 import model.direction.Direction;
 import model.direction.Route;
-import model.piece.state.Role;
-import model.piece.state.Square;
+import model.piece.role.Role;
+import model.piece.role.Square;
 import model.position.Position;
 
 public class Piece {

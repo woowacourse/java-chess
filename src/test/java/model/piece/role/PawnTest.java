@@ -1,11 +1,11 @@
-package model.piece.state;
+package model.piece.role;
 
 import model.direction.Direction;
+import model.direction.Route;
 import model.piece.Color;
 import model.position.File;
 import model.position.Position;
 import model.position.Rank;
-import model.position.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
@@ -74,5 +75,23 @@ class PawnTest {
         );
 
         assertThat(routes).isEqualTo(expectedRoutes);
+    }
+
+    @DisplayName("특수한 방향으로 이동 시 도착지에 상대편의 기물이 존재하지 않는 경우 예외가 발생한다.")
+    @Test
+    void validateCanTakeOtherPiece() {
+        Role pawn = new Pawn(Color.BLACK);
+        assertThatThrownBy(() -> pawn.validateMoveTo(Direction.SE, new Square()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 방향으로 이동 시 도착지에 상대편의 기물이 존재해야 합니다.");
+    }
+
+    @DisplayName("전진 방향으로 이동 시 도착지에 상대편의 기물이 존재하는 경우 예외가 발생한다.")
+    @Test
+    void validateCanMoveForward() {
+        Role pawn = new Pawn(Color.BLACK);
+        assertThatThrownBy(() -> pawn.validateMoveTo(Direction.S, new Bishop(Color.WHITE)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 방향으로 이동 시 도착지에 상대편의 기물이 존재할 경우 이동이 불가 합니다.");
     }
 }

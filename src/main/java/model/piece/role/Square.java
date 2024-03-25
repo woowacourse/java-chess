@@ -1,4 +1,4 @@
-package model.piece.state;
+package model.piece.role;
 
 import model.piece.Color;
 import model.shift.NoneShift;
