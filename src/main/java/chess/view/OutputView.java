@@ -48,8 +48,4 @@ public class OutputView {
         }
         System.out.println();
     }
-
-    public static void printErrorMessage(final String message) {
-        System.out.println(ERROR_PREFIX + message);
-    }
 }
