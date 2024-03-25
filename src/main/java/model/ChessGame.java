@@ -35,7 +35,6 @@ public class ChessGame {
 
     private final Map<Position, Piece> board;
     private ChessStatus chessStatus;
-
     private Camp camp;
 
     public ChessGame() {
