@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Game;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -13,8 +14,7 @@ public class MessageResolver {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public String resolveBoardMessage(Board board) {
-        List<Piece> pieces = board.pieces();
+    public String resolveBoardMessage(List<Piece> pieces) {
         return Arrays.stream(Rank.values())
                 .map(rank -> rankPieces(rank, pieces))
                 .map(this::resolvePiecesMessage)

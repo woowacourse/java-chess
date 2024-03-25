@@ -1,10 +1,8 @@
 package chess.controller;
 
 import chess.domain.Command;
-import chess.domain.board.Board;
-import chess.domain.board.BoardCreator;
+import chess.domain.Game;
 import chess.domain.position.Position;
-import chess.domain.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -18,27 +16,28 @@ public class GameManager {
         this.outputView = outputView;
     }
 
-    public void start() {
-        Command command = inputView.readStartOrEndCommand();
-        if (command.isEnd()) {
+    public void run() {
+        if (endGame()) {
             return;
         }
+        Game chess = new Game();
+        outputView.printBoard(chess.board());
 
-        Board board = new Board(new BoardCreator());
-        outputView.printBoard(board);
-
-        play(board);
-    }
-
-    private void play(Board board) {
-        ChessGame chessGame = new ChessGame(board);
-
-        while (inputView.readMoveOrEndCommand().isMove()) {
+        while (notEndGame()) {
             Position source = inputView.readSourcePosition();
             Position target = inputView.readTargetPosition();
-
-            chessGame.movePiece(source, target);
-            outputView.printBoard(board);
+            chess.proceedTurn(source, target);
+            outputView.printBoard(chess.board());
         }
+    }
+
+    private boolean endGame() {
+        Command command = inputView.readStartOrEndCommand();
+        return command.isEnd();
+    }
+
+    private boolean notEndGame() {
+        Command command = inputView.readMoveOrEndCommand();
+        return command.isMove();
     }
 }
