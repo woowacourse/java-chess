@@ -1,6 +1,8 @@
-package model.position;
+package model.direction;
 
-import model.direction.Direction;
+import model.position.File;
+import model.position.Position;
+import model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +21,9 @@ class RouteTest {
         for (Rank rank : Rank.values()) {
             holePositions.add(Position.of(File.A, rank));
         }
-        Route initialRoute = new Route(Direction.N, holePositions);
-        initialRoute.removeSourceAndTarget();
+        Route route = new Route(Direction.N, holePositions);
+        route.exclude(Position.of(File.A, Rank.ONE));
+        route.exclude(Position.of(File.A, Rank.EIGHT));
 
         List<Position> subPositions = new ArrayList<>();
         subPositions.add(Position.of(File.A, Rank.TWO));
@@ -30,6 +33,6 @@ class RouteTest {
         subPositions.add(Position.of(File.A, Rank.SIX));
         subPositions.add(Position.of(File.A, Rank.SEVEN));
 
-        assertThat(initialRoute).isEqualTo(new Route(Direction.N, subPositions));
+        assertThat(route).isEqualTo(new Route(Direction.N, subPositions));
     }
 }

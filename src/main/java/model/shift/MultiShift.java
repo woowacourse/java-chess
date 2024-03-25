@@ -3,7 +3,7 @@ package model.shift;
 import model.direction.Direction;
 import model.direction.ShiftPattern;
 import model.position.Position;
-import model.position.Route;
+import model.direction.Route;
 
 import java.util.*;
 
@@ -11,12 +11,12 @@ public class MultiShift implements Shift {
 
     private final ShiftPattern shiftPattern;
 
-    public MultiShift(ShiftPattern shiftPattern) {
+    public MultiShift(final ShiftPattern shiftPattern) {
         this.shiftPattern = shiftPattern;
     }
 
     @Override
-    public Set<Route> routes(Position position) {
+    public Set<Route> routes(final Position position) {
         Set<Route> possibleRoutes = new HashSet<>();
         for (Direction direction : shiftPattern.getDirections()) {
             possibleRoutes.add(route(direction, position));
@@ -24,11 +24,12 @@ public class MultiShift implements Shift {
         return possibleRoutes;
     }
 
-    private Route route(Direction direction, Position position) {
+    private Route route(final Direction direction,final Position position) {
         List<Position> sequentialPositions = new ArrayList<>();
-        while (position.isAvailablePosition(direction)) {
-            position = position.getNextPosition(direction);
-            sequentialPositions.add(position);
+        Position movedPosition = position;
+        while (movedPosition.isAvailablePosition(direction)) {
+            movedPosition = movedPosition.getNextPosition(direction);
+            sequentialPositions.add(movedPosition);
         }
         return new Route(direction, sequentialPositions);
     }
