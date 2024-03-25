@@ -36,18 +36,19 @@ public class ChessBoard {
     }
 
     private void validateCanMove(Position sourcePosition, Position targetPosition) {
-        Piece sourcePiece = chessBoard.get(sourcePosition);
-        Direction direction = sourcePosition.calculateDirection(targetPosition);
         validateNotSourceItSelf(sourcePosition, targetPosition);
+        validateSourcePositionNotEmpty(sourcePosition);
         validateTargetNotAlly(sourcePosition, targetPosition);
 
         if (chessBoard.get(sourcePosition).isPawn()) {
             validatePawnCanMove(sourcePosition, targetPosition);
             return;
         }
+        Piece sourcePiece = chessBoard.get(sourcePosition);
+        Direction direction = sourcePosition.calculateDirection(targetPosition);
         validateValidDirection(sourcePiece, direction);
-        Position position = moveUntilTargetOrMeetSomeThing(sourcePosition, targetPosition, direction);
-        validateReachedTarget(targetPosition, position);
+        Position reachedPosition = moveUntilTargetOrMeetSomeThing(sourcePosition, targetPosition, direction);
+        validateReachedTarget(targetPosition, reachedPosition);
     }
 
     private void validateNotSourceItSelf(Position sourcePosition, Position targetPosition) {
@@ -59,6 +60,12 @@ public class ChessBoard {
     private void validateTargetNotAlly(Position source, Position target) {
         if (chessBoard.get(source).isAlly(chessBoard.get(target))) {
             throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
+        }
+    }
+
+    private void validateSourcePositionNotEmpty(Position position) {
+        if (chessBoard.get(position).equals(EmptyPiece.of())) {
+            throw new IllegalArgumentException("[ERROR] 비어있는 곳에서는 기물을 움직일 수 없습니다.");
         }
     }
 

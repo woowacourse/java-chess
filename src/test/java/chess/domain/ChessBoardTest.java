@@ -63,13 +63,29 @@ class ChessBoardTest {
     @DisplayName("제자리로 이동하려는 경우 예외기 발생한다.")
     @Test
     void canNotMoveToSamePosition() {
-        ChessBoard chessBoard = ChessBoardFactory.makeChessBoard();
-        Position source = Position.of(File.B, Rank.TWO);
-        Position target = Position.of(File.B, Rank.TWO);
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.B, Rank.TWO);
+        positionPiece.put(sourcePosition, Pawn.of(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
 
-        assertThatCode(() -> chessBoard.move(source, target))
+        assertThatCode(() -> chessBoard.move(sourcePosition, sourcePosition))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 제자리로 움직일 수 없습니다.");
+    }
+
+    @DisplayName("비어있는 칸에서 이동하려는 경우 예외가 발생한다.")
+    @Test
+    void canNotMoveAtEmptyPosition() {
+        Map<Position, Piece> positionPiece = new LinkedHashMap<>();
+        Position sourcePosition = Position.of(File.A, Rank.ONE);
+        positionPiece.put(sourcePosition, EmptyPiece.of());
+        Position targetPosition = Position.of(File.A, Rank.TWO);
+        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        ChessBoard chessBoard = new ChessBoard(positionPiece, new PawnMovementRule());
+
+        assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 비어있는 곳에서는 기물을 움직일 수 없습니다.");
     }
 
     @Test
