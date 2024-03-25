@@ -79,15 +79,15 @@ public class Point {
         return this.rank == rank;
     }
 
-    public Point add(int addFile, int addRank) {
-        File addedFile = file.add(addFile);
-        Rank addedRank = rank.add(addRank);
+    public Point move(Direction direction) {
+        File addedFile = file.add(direction.file());
+        Rank addedRank = rank.add(direction.rank());
 
         return Point.of(addedFile, addedRank);
     }
 
-    public boolean addable(int addFile, int addRank) {
-        return file.addable(addFile) && rank.addable(addRank);
+    public boolean addable(Direction direction) {
+        return file.addable(direction.file()) && rank.addable(direction.rank());
     }
 
     public Direction findUnitDirection(Point point) {

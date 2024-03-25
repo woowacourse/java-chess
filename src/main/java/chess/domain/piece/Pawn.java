@@ -36,10 +36,12 @@ public final class Pawn extends Piece {
         int forwardDirection = team.forwardDirection();
 
         if (isStartPosition(currentPoint)) {
-            findMovablePoint(points, currentPoint, 0, TWO_RANK * forwardDirection);
+            findMovablePoint(points, currentPoint,
+                    Direction.of(0, TWO_RANK * forwardDirection));
         }
         for (Direction direction : Direction.findPawnDirections()) {
-            findMovablePoint(points, currentPoint, direction.file(), direction.rank() * forwardDirection);
+            findMovablePoint(points, currentPoint,
+                    Direction.of(direction.file(), direction.rank() * forwardDirection));
         }
         return points;
     }
@@ -48,9 +50,9 @@ public final class Pawn extends Piece {
         return currentPoint.isSameRank(Rank.SECOND) || currentPoint.isSameRank(Rank.SEVENTH);
     }
 
-    private void findMovablePoint(List<Point> points, Point currentPoint, int addFile, int addRank) {
-        if (currentPoint.addable(addFile, addRank)) {
-            Point point = currentPoint.add(addFile, addRank);
+    private void findMovablePoint(List<Point> points, Point currentPoint, Direction direction) {
+        if (currentPoint.addable(direction)) {
+            Point point = currentPoint.move(direction);
             points.add(point);
         }
     }

@@ -9,6 +9,8 @@ public enum Direction {
     LOWER(0, -1),
     LEFT(-1, 0),
     RIGHT(1, 0),
+    TWO_UPPER(0, 2),
+    TWO_LOWER(0, -2),
 
     UPPER_LEFT(-1, 1),
     UPPER_RIGHT(1, 1),

@@ -57,12 +57,12 @@ public class Board {
 
     private void validateMovableRoute(Point currentPoint, Point destination) {
         Direction unitDirection = currentPoint.findUnitDirection(destination);
-        Point nextPoint = currentPoint.add(unitDirection.file(), unitDirection.rank());
+        Point nextPoint = currentPoint.move(unitDirection);
         while (!nextPoint.equals(destination)) {
             if (!Piece.empty().equals(board.get(nextPoint))) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
-            nextPoint = nextPoint.add(unitDirection.file(), unitDirection.rank());
+            nextPoint = nextPoint.move(unitDirection);
         }
     }
 
