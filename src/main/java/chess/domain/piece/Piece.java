@@ -54,16 +54,12 @@ public abstract class Piece {
         return side.isSame(otherSide);
     }
 
-    public boolean isNotSameSide(Side otherSide) {
-        return !isSameSide(otherSide);
-    }
-
     public boolean isOpponentSide(Side otherSide) {
         return side.opponent().isSame(otherSide);
     }
 
     public boolean isEmpty() {
-        return side.isSame(Side.EMPTY);
+        return side.isEmpty();
     }
 
     public boolean isNotEmpty() {

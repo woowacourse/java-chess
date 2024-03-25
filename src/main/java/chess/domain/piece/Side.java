@@ -15,6 +15,10 @@ public enum Side {
         return this == WHITE;
     }
 
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
+
     public Side opponent() {
         if (isBlack()) {
             return WHITE;
