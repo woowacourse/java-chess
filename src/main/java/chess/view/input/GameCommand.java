@@ -13,7 +13,7 @@ public enum GameCommand {
         this.text = text;
     }
 
-    public static GameCommand createInStart(String input) {
+    public static GameCommand createInPreparation(String input) {
         return Arrays.stream(values())
                 .filter(value -> value.text.equals(input))
                 .filter(value -> value != MOVE)

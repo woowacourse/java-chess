@@ -32,7 +32,7 @@ public class ChessGame {
     }
 
     private GameCommand getFirstGameCommand() {
-        return GameCommand.createInStart(inputView.readGameCommand());
+        return GameCommand.createInPreparation(inputView.readGameCommand());
     }
 
     private void play(ChessBoard chessBoard) {

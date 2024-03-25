@@ -1,6 +1,5 @@
 package chess.view.input;
 
-import chess.view.input.GameCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,7 +13,7 @@ class GameCommandTest {
     @DisplayName("게임 시작 시 start 혹은 end를 입력하지 않으면 예외가 발생한다.")
     void createFirstGameCommand(String input) {
         // when & then
-        assertThatThrownBy(() -> GameCommand.createInStart(input))
+        assertThatThrownBy(() -> GameCommand.createInPreparation(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
