@@ -47,7 +47,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("invalidMovingParameterProvider")
     void invalidMoving(final Camp camp, final Moving moving) {
-        final Pawn pawn = new Pawn(camp);
+        final Pawn pawn = Pawn.create(camp);
 
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isFalse(),
@@ -68,7 +68,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("checkRouteParameterProvider")
     void checkRoute(final Camp camp, final Moving moving, final Set<Position> expected) {
-        final Pawn pawn = new Pawn(camp);
+        final Pawn pawn = Pawn.create(camp);
 
         assertAll(
                 () -> assertThat(pawn.canMovable(moving)).isTrue(),

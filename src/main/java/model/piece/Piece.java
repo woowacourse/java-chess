@@ -8,7 +8,7 @@ import model.position.Position;
 
 public abstract class Piece {
 
-    protected final Camp camp;
+    private final Camp camp;
 
     protected Piece(final Camp camp) {
         this.camp = camp;
@@ -35,10 +35,9 @@ public abstract class Piece {
         if (this == target) {
             return true;
         }
-        if (target == null || getClass() != target.getClass()) {
+        if (!(target instanceof Piece piece)) {
             return false;
         }
-        Piece piece = (Piece) target;
         return camp == piece.camp;
     }
 

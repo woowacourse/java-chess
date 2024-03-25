@@ -56,7 +56,7 @@ public class Board {
 
     private static void settingPawn(final Map<Position, Piece> board, final Camp camp, final Rank rank) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), new Pawn(camp));
+            board.put(new Position(file, rank), Pawn.create(camp));
         }
     }
 
