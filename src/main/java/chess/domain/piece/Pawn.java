@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.attribute.Color;
-import chess.domain.attribute.Rank;
 import chess.domain.attribute.Square;
 import chess.domain.chessboard.attribute.Direction;
 import java.util.HashSet;
@@ -107,6 +106,7 @@ public class Pawn extends AbstractPawn {
         }
         return squares;
     }
+
     private Set<Square> findWhitePawnLegalMoves(Set<Piece> existPieces) {
         Set<Square> squares = new HashSet<>();
         Set<Square> capableOfAttack = findWhiteCapableOfAttack(existPieces);
