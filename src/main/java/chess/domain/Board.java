@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -30,9 +29,7 @@ public class Board {
 
     private void validateMove(Player player, Point departure, Point destination, Piece piece) {
         validateMyPiece(player, piece);
-        validateMovablePoint(departure, destination, piece);
-        validateDestination(player, destination);
-        validateMovableRoute(departure, destination);
+        validateMovePoint(departure, destination, piece);
         validatePawn(departure, destination, piece);
     }
 
@@ -42,27 +39,9 @@ public class Board {
         }
     }
 
-    private void validateMovablePoint(Point departure, Point destination, Piece piece) {
-        if (!piece.isMovable(departure, destination)) {
+    private void validateMovePoint(Point departure, Point destination, Piece piece) {
+        if (!piece.isMovable(departure, destination, board)) {
             throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
-        }
-    }
-
-    private void validateDestination(Player player, Point destination) {
-        Piece nextPiece = board.get(destination);
-        if (!nextPiece.equals(new Empty(Team.EMPTY)) && player.isMyPiece(nextPiece)) {
-            throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
-        }
-    }
-
-    private void validateMovableRoute(Point departure, Point destination) {
-        Direction route = departure.findRoute(destination);
-        Point nextPoint = departure.add(route.file(), route.rank());
-        while (!nextPoint.equals(destination)) {
-            if (!board.get(nextPoint).equals(new Empty(Team.EMPTY))) {
-                throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
-            }
-            nextPoint = nextPoint.add(route.file(), route.rank());
         }
     }
 

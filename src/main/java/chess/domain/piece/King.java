@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
-public final class King extends Piece {
+public final class King extends SingleMovePiece {
 
     private static final String name = "K";
 
@@ -11,7 +11,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point departure, Point destination) {
+    public boolean isMovablePoint(final Point departure, final Point destination) {
         return departure.isAround(destination);
     }
 }
