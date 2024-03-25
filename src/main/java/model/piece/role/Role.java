@@ -10,7 +10,7 @@ import model.position.Position;
 import model.position.Route;
 
 public abstract class Role {
-    private final Color color;
+    protected final Color color;
     private final ShiftPattern shiftPattern;
 
     protected Role(Color color, ShiftPattern shiftPattern) {
