@@ -30,7 +30,7 @@ public class ChessBoard {
         turn = turn.reverse();
     }
 
-    public void validatePoint(final Point startPoint, final Point endPoint) {
+    private void validatePoint(final Point startPoint, final Point endPoint) {
         if (startPoint.equals(endPoint)) {
             throw new IllegalArgumentException("같은 위치로 이동할 수 없습니다.");
         }
@@ -53,12 +53,6 @@ public class ChessBoard {
             return;
         }
         throw new IllegalArgumentException(String.format("현재는 %s의 차례입니다.", turn));
-    }
-
-
-    public Piece findPieceByPoint(final Point point) {
-        final var piece = this.pieces.findPieceWithPoint(point);
-        return piece.orElseThrow(() -> new IllegalArgumentException("해당 포인트에는 기물이 없습니다"));
     }
 
     public static ChessBoard createDefaultBoard() {

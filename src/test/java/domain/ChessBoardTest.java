@@ -39,20 +39,6 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("포인트에 기물이 있으면 기물을 반환한다.")
-    void find_piece_with_point() {
-        final var point = F1;
-        final var color = Color.BLACK;
-        final List<Piece> pieceList = List.of(new PieceImpl(point, color));
-        final var pieces = new Pieces(pieceList);
-        final var sut = new ChessBoard(pieces);
-
-        final var result = sut.findPieceByPoint(point);
-
-        assertThat(result).isEqualTo(new PieceImpl(point, color));
-    }
-
-    @Test
     @DisplayName("포인트에 기물이 없으면 예외를 발생한다.")
     void throw_exception_when_not_exist_point() {
         final var point = F1;
@@ -60,9 +46,8 @@ class ChessBoardTest {
         final List<Piece> pieceList = List.of(new PieceImpl(point, color));
         final var pieces = new Pieces(pieceList);
         final var sut = new ChessBoard(pieces);
-        final var notExistedPoint = D4;
 
-        assertThatThrownBy(() -> sut.findPieceByPoint(notExistedPoint))
+        assertThatThrownBy(() -> sut.move(D4, D5))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -76,34 +61,5 @@ class ChessBoardTest {
         assertThatThrownBy(() -> sut.move(C3, C4))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("차례입니다");
-    }
-
-    @Test
-    @DisplayName("기본 체스판을 생성한다.")
-    void create_default_board() {
-        final var sut = ChessBoard.createDefaultBoard();
-
-        final List<Rank> ranks = List.of(Rank.EIGHT, Rank.SEVEN, Rank.TWO, Rank.ONE);
-
-        final var result = ranks.stream()
-                                .map(rank -> getRankPieces(sut, rank))
-                                .toList();
-
-
-        final List<PieceStatus> pieceList = List.of(ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK);
-        final List<PieceStatus> pawnList = IntStream.range(0, 8)
-                                                    .mapToObj(it -> PAWN)
-                                                    .toList();
-
-        final List<List<PieceStatus>> expected = List.of(pieceList, pawnList, pawnList, pieceList);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    private List<PieceStatus> getRankPieces(final ChessBoard chessBoard, final Rank rank) {
-        return Arrays.stream(File.values())
-                     .map(file -> new Point(file, rank))
-                     .map(chessBoard::findPieceByPoint)
-                     .map(Piece::getStatus)
-                     .toList();
     }
 }
