@@ -2,6 +2,7 @@ package chess.domain.piece.fixedmove;
 
 import chess.domain.board.Coordinate;
 import chess.domain.piece.AbstractPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.List;
@@ -27,5 +28,15 @@ abstract class FixedMovePiece extends AbstractPiece {
             throw new IllegalStateException("해당 기물은 목적지 좌표에 갈 수 없습니다.");
         }
         return legalNextCoordinates;
+    }
+
+    @Override
+    public boolean canMove(final Coordinate now, final Coordinate destination,
+                           final Map<Coordinate, Piece> boardInformation) {
+        return boardInformation.entrySet().stream()
+                .anyMatch(entry -> {
+                    Piece piece = entry.getValue();
+                    return piece == null || isNotSameTeam(piece);
+                });
     }
 }

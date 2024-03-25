@@ -2,15 +2,21 @@ package chess.domain.piece;
 
 import static chess.domain.fixture.CoordinateFixture.A1;
 import static chess.domain.fixture.CoordinateFixture.A3;
+import static chess.domain.fixture.CoordinateFixture.D1;
+import static chess.domain.fixture.CoordinateFixture.E1;
+import static chess.domain.fixture.CoordinateFixture.E2;
 import static chess.domain.fixture.CoordinateFixture.E4;
 import static chess.domain.fixture.CoordinateFixture.E5;
+import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
 import static chess.domain.fixture.PieceFixture.WHITE_KING;
+import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
 import chess.domain.piece.fixedmove.King;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,4 +46,32 @@ class KingTest {
         assertThatThrownBy(() -> WHITE_KING.legalNextCoordinates(A1, A3))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+    @DisplayName("킹이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다.")
+    @Test
+    void canMove() {
+        HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(E2, null);
+
+        assertThat(WHITE_KING.canMove(E1, E2, boardInformation)).isTrue();
+    }
+
+    @DisplayName("킹이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다(기물은 잡으며 이동하는 경우).")
+    @Test
+    void canMoveCaseTakeDown() {
+        HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(E2, BLACK_ROOK);
+
+        assertThat(WHITE_KING.canMove(E1, E2, boardInformation)).isTrue();
+    }
+
+    @DisplayName("킹이 경로 정보를 토대로 목적지로 갈 수 있는지 판단한다(목적지에 같은 팀이 있는 경우).")
+    @Test
+    void canMoveCaseStuckCuzSameTeamPiece() {
+        HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(D1, WHITE_QUEEN);
+
+        assertThat(WHITE_KING.canMove(E1, D1, boardInformation)).isFalse();
+    }
+
 }
