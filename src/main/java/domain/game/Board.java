@@ -2,10 +2,10 @@ package domain.game;
 
 import domain.position.File;
 import domain.position.Position;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,13 +18,19 @@ public class Board {
         this.chessBoard = chessBoard;
     }
 
-    public void movePiece(final TeamColor teamColor, final Position source, final Position destination) {
+    public MoveResponse movePiece(final TeamColor teamColor, final Position source, final Position destination) {
         validateMoveRequest(teamColor, source, destination);
 
-        boolean caughtEnemy = isPieceExist(destination);
         Piece piece = chessBoard.get(source);
-        chessBoard.put(destination, piece);
         chessBoard.remove(source);
+        Optional<Piece> caughtPiece = getCaughtPiece(destination);
+        chessBoard.put(destination, piece);
+
+        if (caughtPiece.isPresent()) {
+            PieceType caughtPieceType = caughtPiece.get().getPieceType();
+            return new CaughtMoveResponse(caughtPieceType);
+        }
+        return new NormalMoveResponse();
     }
 
     private void validateMoveRequest(TeamColor teamColor, Position source, Position destination) {
@@ -72,6 +78,13 @@ public class Board {
         return isPieceExist(destination) && (chessBoard.get(destination).hasColor(teamColor));
     }
 
+    private Optional<Piece> getCaughtPiece(Position destination) {
+        if (!chessBoard.containsKey(destination)) {
+            return Optional.empty();
+        }
+        return Optional.of(chessBoard.get(destination));
+    }
+
     private boolean isPieceExist(Position position) {
         return chessBoard.containsKey(position);
     }
@@ -101,7 +114,7 @@ public class Board {
         return duplicatedPawnCount * DUPLICATED_PAWN_PENALTY_RATE;
     }
 
-    public Map<Position, Piece> getChessBoard() {
+    public Map<Position, Piece> getPositionsOfPieces() {
         return Collections.unmodifiableMap(chessBoard);
     }
 }
