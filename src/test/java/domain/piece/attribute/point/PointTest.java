@@ -104,7 +104,7 @@ class PointTest {
     void point_can_move_to_left_up() {
         Point sut = new Point(File.B, Rank.ONE);
 
-        assertThat(sut.moveUpLeft())
+        assertThat(sut.moveLeftUp())
                 .isEqualTo(new Point(File.A, Rank.TWO));
     }
 
@@ -113,7 +113,7 @@ class PointTest {
     void point_can_move_to_right_up() {
         Point sut = new Point(File.A, Rank.ONE);
 
-        assertThat(sut.moveUpRight())
+        assertThat(sut.moveRightUp())
                 .isEqualTo(new Point(File.B, Rank.TWO));
     }
 
@@ -122,7 +122,7 @@ class PointTest {
     void point_can_move_to_left_down() {
         Point sut = new Point(File.B, Rank.TWO);
 
-        assertThat(sut.moveDownLeft())
+        assertThat(sut.moveLeftDown())
                 .isEqualTo(new Point(File.A, Rank.ONE));
     }
 
@@ -131,7 +131,7 @@ class PointTest {
     void point_can_move_to_right_down() {
         Point sut = new Point(File.A, Rank.TWO);
 
-        assertThat(sut.moveDownRight())
+        assertThat(sut.moveRightDown())
                 .isEqualTo(new Point(File.B, Rank.ONE));
     }
 

@@ -40,19 +40,19 @@ public record Point(File file, Rank rank) {
         return new Point(file.moveRight(), rank);
     }
 
-    public Point moveUpLeft() {
+    public Point moveLeftUp() {
         return new Point(file.moveLeft(), rank.moveUp());
     }
 
-    public Point moveUpRight() {
+    public Point moveRightUp() {
         return new Point(file.moveRight(), rank.moveUp());
     }
 
-    public Point moveDownLeft() {
+    public Point moveLeftDown() {
         return new Point(file.moveLeft(), rank.moveDown());
     }
 
-    public Point moveDownRight() {
+    public Point moveRightDown() {
         return new Point(file.moveRight(), rank().moveDown());
     }
 
