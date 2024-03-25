@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Point;
+
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -13,7 +15,11 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(Point departure, Point destination);
+    public abstract boolean isMovable(Point departure, Point destination, final Map<Point, Piece> board);
+
+    public boolean hasSameTeamPieceAtDestination(final Piece pieceAtDeparture, final Piece pieceAtDestination) {
+        return pieceAtDeparture.team == pieceAtDestination.team;
+    }
 
     public boolean isSameTeam(Team team) {
         return this.team == team;

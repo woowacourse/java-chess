@@ -66,15 +66,11 @@ public class Point {
         }
         int fileDistance = calculateFileDistance(destination);
         int rankDistance = calculateRankDistance(destination);
-        int distance = getDistance(fileDistance, rankDistance);
+        int totalDistance = Math.abs(fileDistance) + Math.abs(rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
-            return distance == 2;
+            return totalDistance == 2;
         }
-        return distance == 1;
-    }
-
-    private int getDistance(int fileDistance, int rankDistance) {
-        return Math.abs(fileDistance) + Math.abs(rankDistance);
+        return totalDistance == 1;
     }
 
     public int multiplyAxis(Point destination) {

@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
-public final class Bishop extends Piece {
+public final class Bishop extends MultiMovePiece {
 
     private static final String name = "B";
 
@@ -11,7 +11,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Point departure, Point destination) {
+    public boolean isMovableDirection(final Point departure, final Point destination) {
         return departure.isDiagonalWithSlopeOfOne(destination);
     }
 }

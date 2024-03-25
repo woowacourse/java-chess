@@ -10,10 +10,10 @@ class RookTest {
 
     @Test
     @DisplayName("위로 움직일 수 있다")
-    void isMovable1() {
+    void isMovableDirection1() {
         Rook rook = new Rook(Team.WHITE);
 
-        boolean result = rook.isMovable(
+        boolean result = rook.isMovableDirection(
                 new Point('a', 1),
                 new Point('a', 8)
         );
@@ -23,10 +23,10 @@ class RookTest {
 
     @Test
     @DisplayName("아래로 움직일 수 있다")
-    void isMovable2() {
+    void isMovableDirection2() {
         Rook rook = new Rook(Team.WHITE);
 
-        boolean result = rook.isMovable(
+        boolean result = rook.isMovableDirection(
                 new Point('a', 8),
                 new Point('a', 1)
         );
@@ -36,10 +36,10 @@ class RookTest {
 
     @Test
     @DisplayName("왼쪽으로 움직일 수 있다")
-    void isMovable3() {
+    void isMovableDirection3() {
         Rook rook = new Rook(Team.WHITE);
 
-        boolean result = rook.isMovable(
+        boolean result = rook.isMovableDirection(
                 new Point('h', 1),
                 new Point('a', 1)
         );
@@ -49,10 +49,10 @@ class RookTest {
 
     @Test
     @DisplayName("오른쪽으로 움직일 수 있다")
-    void isMovable4() {
+    void isMovableDirection4() {
         Rook rook = new Rook(Team.WHITE);
 
-        boolean result = rook.isMovable(
+        boolean result = rook.isMovableDirection(
                 new Point('a', 1),
                 new Point('h', 1)
         );
@@ -62,10 +62,10 @@ class RookTest {
 
     @Test
     @DisplayName("대각선으로 움질수 없다")
-    void invalidIsMovable() {
+    void invalidMovableDirection() {
         Rook rook = new Rook(Team.WHITE);
 
-        boolean result = rook.isMovable(
+        boolean result = rook.isMovableDirection(
                 new Point('a', 1),
                 new Point('b', 2)
         );
