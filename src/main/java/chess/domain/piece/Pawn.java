@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public final class Pawn extends Piece {
 
     private static final int TWO_RANK = 2;

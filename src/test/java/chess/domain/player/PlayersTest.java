@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-
     @DisplayName("현재 턴의 플레이어를 반환한다.")
     @Test
     void currentTurnOfPlayer() {

@@ -27,7 +27,6 @@ class BoardFactoryTest {
                 .filter(piece -> Piece.kingFrom(Team.BLACK).equals(piece))
                 .count();
 
-
         Assertions.assertAll(
                 () -> assertThat(pieces).hasSize(64),
                 () -> assertThat(emptyCount).isEqualTo(32),

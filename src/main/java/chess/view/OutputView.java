@@ -35,6 +35,4 @@ public class OutputView {
     public void printErrorMessage(String errorMessage) {
         System.out.printf("%s %s%n", ERROR_SUFFIX, errorMessage);
     }
-
-
 }
