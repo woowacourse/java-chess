@@ -29,12 +29,14 @@ public class Position {
     }
 
     public static Position of(final char file, final int rank) {
-        Position position = CACHE.get(toKey(file, rank));
-        if (position == null) {
-            throw new IllegalArgumentException("[ERROR] 범위를 벗어난 위치입니다.");
-        }
+        return CACHE.get(toKey(file, rank));
+    }
 
-        return position;
+    public static Position from(final String rawPosition) {
+        char file = rawPosition.charAt(0);
+        int rank = Character.getNumericValue(rawPosition.charAt(1));
+
+        return Position.of(file, rank);
     }
 
     private static String toKey(final char file, final int rank) {

@@ -68,18 +68,11 @@ public class ChessController {
                           final String gameCommand,
                           final List<String> commandArguments) {
         if (GameCommand.isMoveCommand(gameCommand)) {
-            Position source = parsePosition(commandArguments.get(SOURCE_POSITION_INDEX));
-            Position target = parsePosition(commandArguments.get(TARGET_POSITION_INDEX));
+            Position source = Position.from(commandArguments.get(SOURCE_POSITION_INDEX));
+            Position target = Position.from(commandArguments.get(TARGET_POSITION_INDEX));
             chessBoard.move(source, target);
             outputView.printChessBoard(chessBoard);
         }
-    }
-
-    private Position parsePosition(final String rawPosition) {
-        char file = rawPosition.substring(0, 1).charAt(0);
-        int rank = Integer.parseInt(rawPosition.substring(1, 2));
-
-        return Position.of(file, rank);
     }
 
     private <T> T repeat(final Supplier<T> supplier) {

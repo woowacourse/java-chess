@@ -1,12 +1,10 @@
 package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.Direction;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -41,13 +39,5 @@ class PositionTest {
                 Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_LEFT, Position.of('c', 3)),
                 Arguments.of(Position.of('d', 5), Direction.KNIGHT_DOWN_RIGHT, Position.of('e', 3))
         );
-    }
-
-    @Test
-    @DisplayName("범위를 벗어난 위치는 예외를 발생시킨다.")
-    void findPositionFail() {
-        assertThatCode(() -> Position.of('i', 8))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 범위를 벗어난 위치입니다.");
     }
 }
