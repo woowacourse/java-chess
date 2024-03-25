@@ -103,7 +103,7 @@ public class Board {
     }
 
     private boolean isMovablePosition(Team team, Position position) {
-        if(pieces.containsKey(position)) {
+        if (pieces.containsKey(position)) {
             return pieces.get(position)
                     .isOppositeTeamWith(team);
         }

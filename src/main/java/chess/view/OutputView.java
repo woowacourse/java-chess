@@ -1,10 +1,7 @@
 package chess.view;
 
 import chess.domain.CheckState;
-import chess.domain.Position;
 import chess.dto.BoardDto;
-
-import java.util.Map;
 
 public class OutputView {
 
@@ -23,7 +20,7 @@ public class OutputView {
     }
 
     public static void printCheck(CheckState checkState) {
-        String checkMessage = switch(checkState) {
+        String checkMessage = switch (checkState) {
             case CHECK -> "체크 !\n";
             case CHECK_MATE -> "체크 메이트 !\n";
             case SAFE -> "";

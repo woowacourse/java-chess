@@ -25,7 +25,7 @@ public class BoardDto {
 
     public String identifyPositionCharacter(int row, int column) {
         Position position = Position.of(row, column);
-        if(pieces.containsKey(position)) {
+        if (pieces.containsKey(position)) {
             return pieces.get(position).getMessage();
         }
         return EMPTY_POSITION;

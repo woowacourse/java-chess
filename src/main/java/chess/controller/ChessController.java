@@ -1,12 +1,12 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.Board;
+import chess.domain.BoardFactory;
+import chess.domain.ChessGame;
+import chess.domain.Positions;
 import chess.dto.BoardDto;
-import chess.view.Character;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.Map;
 
 public class ChessController {
     public void play() {

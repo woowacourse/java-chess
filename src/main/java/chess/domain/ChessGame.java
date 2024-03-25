@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.view.Character;
 import chess.domain.piece.character.Team;
-
-import java.util.Map;
 
 public class ChessGame {
     private final Board board;

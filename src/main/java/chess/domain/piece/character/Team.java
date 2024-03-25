@@ -6,6 +6,7 @@ public enum Team {
     ;
 
     private final int attackDirection;
+
     Team(int attackDirection) {
         this.attackDirection = attackDirection;
     }
