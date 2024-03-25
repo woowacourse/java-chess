@@ -1,6 +1,7 @@
 package view.util;
 
 import domain.piece.Bishop;
+import domain.piece.Blank;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Pawn;
@@ -17,7 +18,7 @@ public enum PieceTranslator {
     BISHOP(Bishop.class, "b"),
     KNIGHT(Knight.class, "n"),
     PAWN(Pawn.class, "p"),
-    NONE(null, ".");
+    NONE(Blank.class, ".");
 
     private final Class<? extends ChessPiece> classType;
     private final String name;
@@ -28,20 +29,20 @@ public enum PieceTranslator {
     }
 
     public static String getName(ChessPiece piece) {
-        if (piece == null) {
-            return NONE.name;
-        }
-
         PieceTranslator pieceTranslator = from(piece);
+
+        if (pieceTranslator.classType == Blank.class) {
+            return pieceTranslator.name;
+        }
         if (piece.isBlack()) {
             return pieceTranslator.name.toUpperCase();
         }
         return pieceTranslator.name;
     }
 
-    private static PieceTranslator from(ChessPiece piece) {
+    private static PieceTranslator from(ChessPiece chessPiece) {
         return Arrays.stream(values())
-                .filter(piece1 -> piece1.classType == piece.getClass())
+                .filter(piece -> piece.classType == chessPiece.getClass())
                 .findAny()
                 .orElseThrow();
     }
