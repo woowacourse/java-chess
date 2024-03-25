@@ -1,5 +1,7 @@
 package chess.view;
 
+import java.util.regex.Pattern;
+
 public enum GameCommand {
 
     START("start"),
@@ -7,28 +9,36 @@ public enum GameCommand {
     MOVE("move"),
     ;
 
-    private final String command;
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^move [a-h][1-8] [a-h][1-8]$");
 
-    GameCommand(final String command) {
-        this.command = command;
+    private final String value;
+
+    GameCommand(final String value) {
+        this.value = value;
     }
 
-    public static GameCommand map(final String rawInput) {
-        if (START.command.equals(rawInput)) {
-            return START;
-        }
-        if (END.command.equals(rawInput)) {
-            return END;
-        }
-        if (MOVE.command.equals(rawInput)) {
-            return MOVE;
-        }
+    public static boolean isStartCommand(final String rawInput) {
+        return START.getValue().equals(rawInput);
+    }
 
-        throw new IllegalArgumentException("[ERROR] start, end, move만 입력할 수 있습니다.");
+    public static boolean isEndCommand(final String rawInput) {
+        return END.getValue().equals(rawInput);
+    }
+
+    public static boolean isMoveCommand(final String rawInput) {
+        return MOVE.getValue().equals(rawInput);
+    }
+
+    public static boolean isMovePattern(final String rawInput) {
+        return MOVE_COMMAND_PATTERN.matcher(rawInput).matches();
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return this.command;
+        return this.value;
     }
 }
