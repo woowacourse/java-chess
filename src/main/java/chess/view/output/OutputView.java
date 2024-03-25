@@ -44,9 +44,16 @@ public class OutputView {
     }
 
     public static void printWinner(Color winnerColor) {
-        if (winnerColor == Color.BLACK) {
-            System.out.println("흑 색이 이겼습니다.");
+        System.out.printf("%s 이 승리하였습니다.%n", buildColor(winnerColor));
+    }
+
+    private static String buildColor(Color color) {
+        if (color == Color.BLACK) {
+            return "흑색";
         }
-        System.out.println("백 색이 이겼습니다.");
+        if (color == Color.WHITE) {
+            return "백색";
+        }
+        throw new IllegalArgumentException("승부를 판단할 수 없습니다.");
     }
 }
