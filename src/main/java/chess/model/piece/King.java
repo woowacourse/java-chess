@@ -6,8 +6,8 @@ public class King extends Piece {
 
     private static final int MAX_MOVE_RANGE = 1;
 
-    public King(PieceType pieceType) {
-        super(pieceType);
+    public King(PieceType pieceType, Color color) {
+        super(pieceType, color);
     }
 
     @Override

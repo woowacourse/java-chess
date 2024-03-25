@@ -1,27 +1,15 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_BISHOP;
-import static chess.model.piece.PieceType.BLACK_KING;
-import static chess.model.piece.PieceType.BLACK_KNIGHT;
-import static chess.model.piece.PieceType.BLACK_PAWN;
-import static chess.model.piece.PieceType.BLACK_QUEEN;
-import static chess.model.piece.PieceType.BLACK_ROOK;
-import static chess.model.piece.PieceType.NONE;
-import static chess.model.piece.PieceType.WHITE_BISHOP;
-import static chess.model.piece.PieceType.WHITE_KING;
-import static chess.model.piece.PieceType.WHITE_KNIGHT;
-import static chess.model.piece.PieceType.WHITE_PAWN;
-import static chess.model.piece.PieceType.WHITE_QUEEN;
-import static chess.model.piece.PieceType.WHITE_ROOK;
-
 import chess.model.Position;
 
 public abstract class Piece{
 
     protected final PieceType type;
+    protected final Color color;
 
-    protected Piece(PieceType pieceType) {
+    protected Piece(PieceType pieceType, Color color) {
         this.type = pieceType;
+        this.color = color;
     }
 
     public abstract boolean canMove(Position source, Position target);
@@ -30,24 +18,24 @@ public abstract class Piece{
 
     public abstract boolean canJump();
 
-    public static Piece from(PieceType pieceType) {
-        if (pieceType == BLACK_PAWN || pieceType == WHITE_PAWN) {
-            return new Pawn(pieceType);
+    public static Piece from(PieceType pieceType, Color pieceColor) {
+        if (pieceType == PieceType.PAWN) {
+            return new Pawn(pieceType, pieceColor);
         }
-        if (pieceType == BLACK_ROOK || pieceType == WHITE_ROOK) {
-            return new Rook(pieceType);
+        if (pieceType == PieceType.ROOK) {
+            return new Rook(pieceType, pieceColor);
         }
-        if (pieceType == BLACK_KNIGHT || pieceType == WHITE_KNIGHT) {
-            return new Knight(pieceType);
+        if (pieceType == PieceType.KNIGHT) {
+            return new Knight(pieceType, pieceColor);
         }
-        if (pieceType == BLACK_BISHOP || pieceType == WHITE_BISHOP) {
-            return new Bishop(pieceType);
+        if (pieceType == PieceType.BISHOP) {
+            return new Bishop(pieceType, pieceColor);
         }
-        if (pieceType == BLACK_QUEEN || pieceType == WHITE_QUEEN) {
-            return new Queen(pieceType);
+        if (pieceType == PieceType.QUEEN) {
+            return new Queen(pieceType, pieceColor);
         }
-        if (pieceType == BLACK_KING || pieceType == WHITE_KING) {
-            return new King(pieceType);
+        if (pieceType == PieceType.KING) {
+            return new King(pieceType, pieceColor);
         }
         return new None(pieceType);
     }
@@ -60,32 +48,24 @@ public abstract class Piece{
         return target.getColumn() - source.getColumn();
     }
 
-    public boolean isEnemy(int turnCount) {
-        return !type.isSameColor(turnCount);
+    public boolean isEnemy(Color turn) {
+        return !color.isSameColor(turn);
     }
 
-    public boolean isAlly(int turnCount) {
-        return type.isSameColor(turnCount);
+    public boolean isAlly(Color turn) {
+        return color.isSameColor(turn);
     }
 
     public boolean isWhite() {
-        return type.isWhite();
+        return color.isWhite();
     }
 
     public boolean isBlack() {
-        return type.isBlack();
-    }
-
-    public boolean isExist() {
-        return type != NONE;
-    }
-
-    public boolean isNone() {
-        return type == NONE;
+        return color.isBlack();
     }
 
     @Override
     public String toString() {
-        return type.getDisplayName();
+        return type.getDisplayName(color);
     }
 }

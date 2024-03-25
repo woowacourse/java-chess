@@ -10,8 +10,8 @@ import chess.model.Position;
 
 public class Bishop extends Piece {
 
-    public Bishop(PieceType pieceType) {
-        super(pieceType);
+    public Bishop(PieceType pieceType, Color color) {
+        super(pieceType, color);
     }
 
     @Override

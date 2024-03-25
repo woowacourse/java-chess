@@ -1,7 +1,5 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_KNIGHT;
-
 import chess.model.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -16,7 +14,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void knightCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Knight(BLACK_KNIGHT);
+        Piece piece = new Knight(PieceType.KNIGHT, Color.BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }

@@ -14,8 +14,8 @@ import chess.model.Position;
 
 public class Queen extends Piece {
 
-    public Queen(PieceType pieceType) {
-        super(pieceType);
+    public Queen(PieceType pieceType, Color color) {
+        super(pieceType, color);
     }
 
     @Override

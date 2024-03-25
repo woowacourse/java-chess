@@ -10,8 +10,8 @@ import chess.model.Position;
 
 public class Rook extends Piece {
 
-    public Rook(PieceType pieceType) {
-        super(pieceType);
+    public Rook(PieceType pieceType, Color color) {
+        super(pieceType, color);
     }
 
     @Override

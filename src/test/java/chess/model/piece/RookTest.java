@@ -1,7 +1,5 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_ROOK;
-
 import chess.model.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -16,7 +14,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void rookCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Rook(BLACK_ROOK);
+        Piece piece = new Rook(PieceType.ROOK, Color.BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }

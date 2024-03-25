@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.piece.Color;
 import chess.model.piece.Piece;
 import chess.model.piece.PieceType;
 import java.util.HashMap;
@@ -18,22 +19,22 @@ public class Board {
             "pppppppp",
             "rnbqkbnr"
     );
-    private static final Piece EMPTY_PIECE =  Piece.from(PieceType.NONE);
+    private static final Piece EMPTY_PIECE =  Piece.from(PieceType.NONE, Color.NONE);
 
     private final Map<Position, Piece> board;
-    private int turnCount;
+    private Color turn;
 
-    private Board(Map<Position, Piece> board, int turnCount) {
+    private Board(Map<Position, Piece> board, Color turn) {
         this.board = board;
-        this.turnCount = turnCount;
+        this.turn = turn;
     }
 
     public static Board createInitialBoard() {
-        return new Board(generateBoard(INITIAL_BOARD), 0);
+        return new Board(generateBoard(INITIAL_BOARD), Color.WHITE);
     }
 
-    public static Board createCustomBoard(List<String> customBoard) {
-        return new Board(generateBoard(customBoard), 0);
+    public static Board createCustomBoard(List<String> customBoard, Color turn) {
+        return new Board(generateBoard(customBoard), turn);
     }
 
     private static Map<Position, Piece> generateBoard(List<String> customBoard) {
@@ -50,9 +51,17 @@ public class Board {
             Position position = new Position(rowIndex, j);
             char pieceName = row.charAt(j);
             PieceType pieceType = PieceType.findPieceTypeByName(String.valueOf(pieceName));
-            Piece piece = Piece.from(pieceType);
+            Color pieceColor = Color.findColorByName(String.valueOf(pieceName));
+            Piece piece = putPieceByType(pieceType, pieceColor);
             board.put(position, piece);
         }
+    }
+
+    private static Piece putPieceByType(PieceType pieceType, Color pieceColor) {
+        if (pieceType.isNone()) {
+            return EMPTY_PIECE;
+        }
+        return Piece.from(pieceType, pieceColor);
     }
 
     public void move(String sourceCoordinate, String targetCoordinate) {
@@ -65,7 +74,7 @@ public class Board {
 
         board.put(target, sourcePiece);
         board.put(source, EMPTY_PIECE);
-        turnCount++;
+        turn = turn.changeColor();
     }
 
     private void validate(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
@@ -76,16 +85,16 @@ public class Board {
     }
 
     private void validatePiecesPosition(Piece sourcePiece, Piece targetPiece) {
-        if (sourcePiece.isNone()) {
+        if (sourcePiece == EMPTY_PIECE) {
             throw new IllegalArgumentException("source위치에 기물이 존재하지 않습니다.");
         }
-        if (targetPiece.isAlly(turnCount)) {
+        if (targetPiece.isAlly(turn)) {
             throw new IllegalArgumentException("target위치에 내 기물이 존재합니다.");
         }
     }
 
     private void validateTurn(Piece sourcePiece) {
-        boolean isEnemy = sourcePiece.isEnemy(turnCount);
+        boolean isEnemy = sourcePiece.isEnemy(turn);
         if (isEnemy && sourcePiece.isWhite()) {
             throw new IllegalArgumentException("지금은 Black 차례입니다.");
         }
@@ -95,7 +104,7 @@ public class Board {
     }
 
     private void validatePieceCanMove(Piece sourcePiece, Piece targetPiece, Position source, Position target) {
-        if (targetPiece.isEnemy(turnCount) && sourcePiece.canAttack(source, target)) {
+        if (targetPiece.isEnemy(turn) && sourcePiece.canAttack(source, target)) {
             return;
         }
         if (!sourcePiece.canMove(source, target)) {
@@ -140,7 +149,7 @@ public class Board {
 
     private void validateEmptyPosition(Position position) {
         Piece targetPiece = findPiece(position);
-        if (targetPiece.isExist()) {
+        if (targetPiece != EMPTY_PIECE) {
             throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
         }
     }

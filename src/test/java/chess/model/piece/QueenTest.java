@@ -1,7 +1,5 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_QUEEN;
-
 import chess.model.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -16,7 +14,7 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void queenCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Queen(BLACK_QUEEN);
+        Piece piece = new Queen(PieceType.QUEEN, Color.BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }

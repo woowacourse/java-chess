@@ -1,7 +1,5 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_PAWN;
-import static chess.model.piece.PieceType.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.Position;
@@ -18,7 +16,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideBlackPawnSourceAndTargetWithExpected")
     void blackPawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(BLACK_PAWN);
+        Piece piece = new Pawn(PieceType.PAWN, Color.BLACK);
         boolean canMove = piece.canMove(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
@@ -34,7 +32,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideWhitePawnSourceAndTargetWithExpected")
     void whitePawnCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(WHITE_PAWN);
+        Piece piece = new Pawn(PieceType.PAWN, Color.WHITE);
         boolean canMove = piece.canMove(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
@@ -49,7 +47,7 @@ class PawnTest {
     @DisplayName("White Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
     @Test
     void whitePawnCanInitialMove() {
-        Piece piece = new Pawn(WHITE_PAWN);
+        Piece piece = new Pawn(PieceType.PAWN, Color.WHITE);
         Position source = new Position(6, 0);
         Position target = new Position(4, 0);
         boolean canMove = piece.canMove(source, target);
@@ -59,7 +57,7 @@ class PawnTest {
     @DisplayName("Black Pawn이 최초 2칸 전진 이동이면 canMove true를 반환한다")
     @Test
     void blackPawnCanInitialMove() {
-        Piece piece = new Pawn(BLACK_PAWN);
+        Piece piece = new Pawn(PieceType.PAWN, Color.BLACK);
         Position source = new Position(1, 0);
         Position target = new Position(3, 0);
         boolean canMove = piece.canMove(source, target);
@@ -70,8 +68,8 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideWhitePawnAttackMovePosition")
     void whitePawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(WHITE_PAWN);
-        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        Piece piece = new Pawn(PieceType.PAWN, Color.WHITE);
+        boolean canMove = piece.canAttack(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 
@@ -86,8 +84,8 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideBlackPawnAttackMovePosition")
     void blackPawnCanDiagonalMove(Position source, Position target, boolean expected) {
-        Piece piece = new Pawn(BLACK_PAWN);
-        boolean canMove = ((Pawn) piece).canAttack(source, target);
+        Piece piece = new Pawn(PieceType.PAWN, Color.BLACK);
+        boolean canMove = piece.canAttack(source, target);
         assertThat(canMove).isEqualTo(expected);
     }
 

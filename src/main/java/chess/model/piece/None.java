@@ -5,7 +5,7 @@ import chess.model.Position;
 public class None extends Piece {
 
     protected None(PieceType pieceType) {
-        super(pieceType);
+        super(pieceType, Color.NONE);
     }
 
     @Override

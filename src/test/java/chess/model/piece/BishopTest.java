@@ -1,7 +1,5 @@
 package chess.model.piece;
 
-import static chess.model.piece.PieceType.BLACK_BISHOP;
-
 import chess.model.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -16,7 +14,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideSourceAndTargetWithExpected")
     void bishopCanMove(Position source, Position target, boolean expected) {
-        Piece piece = new Bishop(BLACK_BISHOP);
+        Piece piece = new Bishop(PieceType.BISHOP, Color.BLACK);
         boolean canMove = piece.canMove(source, target);
         Assertions.assertThat(canMove).isEqualTo(expected);
     }
