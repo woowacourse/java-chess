@@ -20,6 +20,8 @@ public abstract class Pawn extends Piece {
 
     public abstract boolean isCaptureMove(Positions positions);
 
+    public abstract Piece update();
+
     @Override
     public Set<Position> findPath(Positions positions) {
         Position from = positions.from();
@@ -36,8 +38,6 @@ public abstract class Pawn extends Piece {
     public boolean isBlank() {
         return false;
     }
-
-    public abstract Piece update();
 
     @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {
