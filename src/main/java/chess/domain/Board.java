@@ -59,7 +59,7 @@ public class Board {
 
     private List<Position> findBetweenPositions(Piece thisPiece, Movement movement) {
         if (pieces.containsKey(movement.target())) {
-            return thisPiece.findBetweenPositionsWhenAttack(movement);
+            return thisPiece.findBetweenPositions(movement, true);
         }
         return thisPiece.findBetweenPositions(movement);
     }
@@ -122,7 +122,7 @@ public class Board {
     }
 
     private boolean isAttacking(Piece thisPiece, Movement movement) {
-        if (thisPiece.isAttackable(movement)) {
+        if (thisPiece.isMovable(movement, true)) {
             return findBetweenPositions(thisPiece, movement).stream()
                     .noneMatch(pieces::containsKey);
         }
@@ -131,7 +131,7 @@ public class Board {
 
     private boolean isNotBlockable(Team attackedTeam, Movement movement) {
         List<Position> attackRoutePositions
-                = pieces.get(movement.source()).findBetweenPositionsWhenAttack(movement);
+                = pieces.get(movement.source()).findBetweenPositions(movement, true);
 
         return pieces.entrySet()
                 .stream()

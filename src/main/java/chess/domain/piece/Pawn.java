@@ -5,7 +5,7 @@ import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import chess.exception.ImpossibleMoveException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -32,18 +32,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> findBetweenPositionsWhenAttack(Movement movement) {
+    public boolean isMovable(Movement movement, boolean isAttack) {
         int rowDifference = movement.calculateRowDifference();
         int columnDifference = movement.calculateColumnDifference();
-        validateAttackable(rowDifference, columnDifference);
-        return findBetweenPositions(movement.source(), rowDifference, columnDifference);
-    }
-
-    private void validateAttackable(int rowDifference, int columnDifference) {
-        if (isAttackable(rowDifference, columnDifference)) {
-            return;
+        if (isAttack) {
+            return isAttackable(rowDifference, columnDifference);
         }
-        throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
+        return isMovable(rowDifference, columnDifference);
     }
 
     @Override
@@ -59,13 +54,20 @@ public class Pawn extends Piece {
                 || (!hasMoved && rowDifference == BLACK_FIRST_MOVE_MAX_ROW_DIFFERENCE);
     }
 
-    @Override
-    protected boolean isAttackable(int rowDifference, int columnDifference) {
+    private boolean isAttackable(int rowDifference, int columnDifference) {
         if (character.team() == Team.WHITE) {
             return rowDifference == WHITE_MOVE_ROW_DIFFERENCE
                     && Math.abs(columnDifference) == ATTACK_ABSOLUTE_COLUMN_DIFFERENCE;
         }
         return rowDifference == BLACK_MOVE_ROW_DIFFERENCE
                 && Math.abs(columnDifference) == ATTACK_ABSOLUTE_COLUMN_DIFFERENCE;
+    }
+
+    @Override
+    public List<Position> findBetweenPositions(Movement movement, Boolean isAttack) {
+        if (isAttack) {
+            return new ArrayList<>();
+        }
+        return findBetweenPositions(movement);
     }
 }
