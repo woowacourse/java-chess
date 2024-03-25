@@ -8,14 +8,17 @@ import java.util.regex.Pattern;
 public class MoveCommand implements Command {
     private static final String MOVE_COMMAND_REGEX_FORMAT = "^[a-h][1-8]";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(MOVE_COMMAND_REGEX_FORMAT);
+    public static final int SOURCE_INDEX = 0;
+    public static final int TARGET_INDEX = 1;
+    public static final int MOVE_ARGUMENTS_SIZE = 2;
 
     private final Position source;
     private final Position target;
 
     public MoveCommand(List<String> arguments) {
         validate(arguments);
-        this.source = new Position(arguments.get(0));
-        this.target = new Position(arguments.get(1));
+        this.source = new Position(arguments.get(SOURCE_INDEX));
+        this.target = new Position(arguments.get(TARGET_INDEX));
     }
 
 
@@ -25,7 +28,7 @@ public class MoveCommand implements Command {
     }
 
     private void checkArgumentCount(List<String> arguments) {
-        if (arguments.size() != 2) {
+        if (arguments.size() != MOVE_ARGUMENTS_SIZE) {
             throw new IllegalArgumentException("잘못된 move 명령어 입니다.");
         }
     }
