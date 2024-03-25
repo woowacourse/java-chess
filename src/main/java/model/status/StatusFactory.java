@@ -4,12 +4,12 @@ import constant.ErrorCode;
 import exception.InvalidStatusException;
 import model.command.CommandLine;
 
-public class Initialization {
+public class StatusFactory {
 
-    private Initialization() {
+    private StatusFactory() {
     }
 
-    public static GameStatus gameSetting(CommandLine commandLine) {
+    public static GameStatus create(CommandLine commandLine) {
         if (commandLine.isStart()) {
             return new Running();
         }

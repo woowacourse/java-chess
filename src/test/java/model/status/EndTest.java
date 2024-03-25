@@ -18,7 +18,7 @@ class EndTest {
         //given
         final ChessGame chessGame = ChessGame.setupStartingPosition();
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
         final CommandLine endCommand = CommandLine.from(List.of("end"));
 
         //when
@@ -33,7 +33,7 @@ class EndTest {
     @Test
     void checkRunning() {
         final CommandLine endCommand = CommandLine.from(List.of("end"));
-        final GameStatus gameStatus = Initialization.gameSetting(endCommand);
+        final GameStatus gameStatus = StatusFactory.create(endCommand);
 
         assertThat(gameStatus.isRunning()).isFalse();
     }

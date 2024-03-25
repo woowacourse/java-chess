@@ -9,13 +9,13 @@ import model.command.CommandLine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class InitializationTest {
+class StatusFactoryTest {
 
     @DisplayName("start를 입력하면 게임이 시작된다.")
     @Test
     void gameStartWhenCommandIsStart() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
         assertThat(gameStatus).isInstanceOf(Running.class);
     }
 
@@ -23,7 +23,7 @@ class InitializationTest {
     @Test
     void gameEndWhenCommandIsEnd() {
         final CommandLine endCommand = CommandLine.from(List.of("end"));
-        final GameStatus gameStatus = Initialization.gameSetting(endCommand);
+        final GameStatus gameStatus = StatusFactory.create(endCommand);
         assertThat(gameStatus).isInstanceOf(End.class);
     }
 
@@ -31,7 +31,7 @@ class InitializationTest {
     @Test
     void invalidCommand() {
         CommandLine moveCommand = CommandLine.from(List.of("move", "a2", "d3"));
-        assertThatThrownBy(() -> Initialization.gameSetting(moveCommand))
+        assertThatThrownBy(() -> StatusFactory.create(moveCommand))
                 .isInstanceOf(InvalidStatusException.class);
     }
 }

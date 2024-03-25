@@ -6,7 +6,7 @@ import java.util.List;
 import model.ChessGame;
 import model.command.CommandLine;
 import model.status.GameStatus;
-import model.status.Initialization;
+import model.status.StatusFactory;
 import view.InputView;
 import view.OutputView;
 
@@ -33,7 +33,7 @@ public class ChessController {
 
     private GameStatus initGame() {
         try {
-            return Initialization.gameSetting(readCommandLine());
+            return StatusFactory.create(readCommandLine());
         } catch (final CustomException exception) {
             outputView.printException(exception.getErrorCode());
             return initGame();

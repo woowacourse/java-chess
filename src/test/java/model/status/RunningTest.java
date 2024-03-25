@@ -16,7 +16,7 @@ class RunningTest {
     @Test
     void checkRunning() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
 
         assertThat(gameStatus.isRunning()).isTrue();
     }
@@ -25,7 +25,7 @@ class RunningTest {
     @Test
     void checkRunningAfterPlay() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
         final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         final CommandLine moveCommand = CommandLine.from(List.of("move", "a2", "a3"));
@@ -37,7 +37,7 @@ class RunningTest {
     @Test
     void checkRunningAfterEnd() {
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
         final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         final CommandLine endCommand = CommandLine.from(List.of("end"));
@@ -50,7 +50,7 @@ class RunningTest {
     void failToStartIfAlreadyRunning() {
         //given
         final CommandLine startCommand = CommandLine.from(List.of("start"));
-        final GameStatus gameStatus = Initialization.gameSetting(startCommand);
+        final GameStatus gameStatus = StatusFactory.create(startCommand);
         final ChessGame chessGame = ChessGame.setupStartingPosition();
 
         //when && then
