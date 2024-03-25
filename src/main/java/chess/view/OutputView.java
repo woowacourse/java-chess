@@ -1,7 +1,6 @@
 package chess.view;
 
 import chess.dto.BoardDTO;
-import chess.dto.LineDTO;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -13,9 +12,7 @@ public class OutputView {
     }
 
     public void printBoard(BoardDTO boardDTO) {
-        String board = boardDTO.board().stream()
-                .map(LineDTO::line)
-                .map(line -> String.join("", line))
+        String board = PieceRepresentation.mappingBoard(boardDTO).stream()
                 .collect(Collectors.joining(System.lineSeparator()));
         System.out.println(board);
     }

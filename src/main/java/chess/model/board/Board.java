@@ -24,26 +24,6 @@ public class Board {
         ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Empty.getInstance()));
     }
 
-    public List<String> getSignatures() {
-        return squares.values().stream()
-                .map(Piece::getSignature)
-                .toList();
-    }
-
-    public List<List<String>> getLines() {
-        List<List<String>> lines = new ArrayList<>();
-        for (int rank = MAX_LENGTH; rank >= MIN_LENGTH; rank--) {
-            lines.add(getLine(rank));
-        }
-        return lines;
-    }
-
-    private List<String> getLine(int lineIndex) {
-        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
-                .mapToObj(file -> squares.get(Position.of(file, lineIndex)).getSignature())
-                .toList();
-    }
-
     public void move(Movement movement, Color color) {
         validateTurn(movement, color);
         validateMove(movement);
@@ -65,7 +45,7 @@ public class Board {
 
     private void validateOppositeColor(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        Piece destinationPiece = getDestinationOf(movement);
+        Piece destinationPiece = getDestinationPiece(movement);
         if (sourcePiece.isSameColorWith(destinationPiece)) {
             throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
         }
@@ -82,7 +62,7 @@ public class Board {
     }
 
     private void validatePawn(Movement movement) {
-        Piece destinationPiece = getDestinationOf(movement);
+        Piece destinationPiece = getDestinationPiece(movement);
         if (destinationPiece.isEmpty() && movement.isSameFile()
                 || !destinationPiece.isEmpty() && movement.isDiagonal()) {
             return;
@@ -107,12 +87,26 @@ public class Board {
         squares.put(source, Empty.getInstance());
     }
 
+    public List<List<Piece>> getLines() {
+        List<List<Piece>> lines = new ArrayList<>();
+        for (int rank = MAX_LENGTH; rank >= MIN_LENGTH; rank--) {
+            lines.add(getLine(rank));
+        }
+        return lines;
+    }
+
+    private List<Piece> getLine(int lineIndex) {
+        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
+                .mapToObj(file -> squares.get(Position.of(file, lineIndex)))
+                .toList();
+    }
+
     private Piece getSourcePiece(Movement movement) {
         Position source = movement.getSource();
         return squares.get(source);
     }
 
-    private Piece getDestinationOf(Movement movement) {
+    private Piece getDestinationPiece(Movement movement) {
         Position destination = movement.getDestination();
         return squares.get(destination);
     }

@@ -3,6 +3,8 @@ package chess.model.piece;
 import chess.model.position.Movement;
 
 public abstract class Piece {
+    private static final String PIECE_NAME_DELIMITER = "_";
+
     private final Color color;
     private final Type type;
 
@@ -12,14 +14,6 @@ public abstract class Piece {
     }
 
     public abstract boolean isValid(Movement movement);
-
-    public String getSignature() {
-        Signature signature = type.getSignature();
-        if (Color.BLACK == color) {
-            return signature.getBlack();
-        }
-        return signature.getWhite();
-    }
 
     public boolean isType(Type type) {
         return this.type == type;
@@ -35,5 +29,9 @@ public abstract class Piece {
 
     public boolean isNotSameColor(Color color) {
         return this.color != color;
+    }
+
+    public String getName() {
+        return color.name() + PIECE_NAME_DELIMITER + type.name();
     }
 }
