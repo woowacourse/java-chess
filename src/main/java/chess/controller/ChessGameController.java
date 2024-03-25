@@ -1,7 +1,6 @@
 package chess.controller;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardCreator;
+import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.view.GameCommand;
 import chess.view.InputView;
@@ -19,39 +18,38 @@ public class ChessGameController {
         this.inputView = inputView;
         this.outputView = outputView;
     }
+    //TODO command 객체를 만들어 다형성을 이용할 수 있는 방안 고민해보기
 
     public void run() {
         GameCommand gameCommand;
 
         outputView.printStartMessage();
-        retryUntilNoError(() -> readStartCommand());
-        ChessBoard chessBoard = initializeChessBoard();
+        retryUntilNoError(this::readStartCommand);
+        ChessGame game = initializeChessGame();
 
         do {
             String inputCommand = retryUntilNoError(this::readCommand);
             gameCommand = from(inputCommand);
 
             if (gameCommand == MOVE) {
-                executeMoveCommand(inputCommand, chessBoard);
+                executeMoveCommand(MoveCommand.of(inputCommand), game);
             }
-        } while(gameCommand != END);
+        } while (gameCommand != END);
     }
 
 
-    private void executeMoveCommand(String inputCommand, ChessBoard chessBoard) {
-        MoveCommand moveCommand = MoveCommand.of(inputCommand);
+    private void executeMoveCommand(MoveCommand moveCommand, ChessGame game) {
         Position startPosition = moveCommand.getStart();
         Position destinationPosition = moveCommand.getDestination();
 
-        chessBoard.move(startPosition, destinationPosition);
-        outputView.printChessBoardMessage(chessBoard);
+        game.playTurn(startPosition, destinationPosition);
+        outputView.printChessBoardMessage(game.getBoard());
     }
 
-    private ChessBoard initializeChessBoard() {
-        ChessBoardCreator chessBoardCreator = ChessBoardCreator.normalGameCreator();
-        ChessBoard chessBoard = chessBoardCreator.create();
-        outputView.printChessBoardMessage(chessBoard);
-        return chessBoard;
+    private ChessGame initializeChessGame() {
+        ChessGame game = ChessGame.newGame();
+        outputView.printChessBoardMessage(game.getBoard());
+        return game;
     }
 
     private boolean readStartCommand() {
@@ -61,7 +59,7 @@ public class ChessGameController {
         throw new IllegalArgumentException(START.getCode() + "를 입력해야 게임이 시작됩니다.");
     }
 
-    private String readCommand(){
+    private String readCommand() {
         String inputCommand = inputView.readGameCommand();
         from(inputCommand);
         return inputCommand;
