@@ -15,11 +15,11 @@ public class OutputView {
             "> 게임 이동 : move source위치 target위치 - 예. move b2 b3%n";
     private static final String ERROR_PREFIX = "[ERROR] ";
 
-    public static void printStartMessage() {
+    public void printStartMessage() {
         System.out.printf(TITLE_START);
     }
 
-    public static void printBoard(List<PieceDrawing> pieceDrawings) {
+    public void printBoard(List<PieceDrawing> pieceDrawings) {
         char[][] board = generateEmptyBoard();
         setPiecesOnBoard(board, pieceDrawings);
         for (char[] line : board) {
@@ -28,7 +28,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private static char[][] generateEmptyBoard() {
+    private char[][] generateEmptyBoard() {
         char[][] emptyBoard = new char[BOARD_SIZE][BOARD_SIZE];
         for (char[] line : emptyBoard) {
             Arrays.fill(line, EMPTY_PIECE);
@@ -36,14 +36,14 @@ public class OutputView {
         return emptyBoard;
     }
 
-    private static void setPiecesOnBoard(char[][] board, List<PieceDrawing> pieceDrawings) {
+    private void setPiecesOnBoard(char[][] board, List<PieceDrawing> pieceDrawings) {
         for (PieceDrawing pieceDrawing : pieceDrawings) {
             char pieceSymbol = PieceMapper.map(pieceDrawing.typeName(), pieceDrawing.colorName());
             board[pieceDrawing.rankOrdinal()][pieceDrawing.fileOrdinal()] = pieceSymbol;
         }
     }
 
-    public static void printErrorMessage(String message) {
+    public void printErrorMessage(String message) {
         System.out.println(ERROR_PREFIX + message);
     }
 }
