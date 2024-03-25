@@ -15,7 +15,6 @@ public enum CommandType {
     }
 
     public static final int COMMAND_INDEX = 0;
-
     public static final Map<CommandType, CommandConstructor> commandByChessCommand;
 
     static {
@@ -30,7 +29,6 @@ public enum CommandType {
         return commandByChessCommand.get(CommandType.from(arguments.get(COMMAND_INDEX)))
                 .generate(parseArguments(arguments));
     }
-
 
     private static CommandType from(String command) {
         return Arrays.stream(CommandType.values())
