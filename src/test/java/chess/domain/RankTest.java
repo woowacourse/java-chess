@@ -24,6 +24,6 @@ class RankTest {
     void moveByOffsetFail(Rank rank, int offset) {
         assertThatCode(() -> rank.moveByOffset(offset))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 체스판 세로의 범위를 넘어갔습니다.");
+                .hasMessage("체스판 세로의 범위를 넘어갔습니다.");
     }
 }

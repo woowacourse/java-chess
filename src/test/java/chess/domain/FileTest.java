@@ -24,6 +24,6 @@ class FileTest {
     void moveByOffsetFail(File file, int offset) {
         assertThatCode(() -> file.moveByOffset(offset))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 체스판 가로 범위를 넘어갔습니다.");
+                .hasMessage("체스판 가로 범위를 넘어갔습니다.");
     }
 }

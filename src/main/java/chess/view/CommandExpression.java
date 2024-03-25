@@ -35,7 +35,7 @@ public class CommandExpression {
                 (gameCommand == Command.END && commands.size() != 1) ||
                 (gameCommand == Command.MOVE && commands.size() != 3)
         ) {
-            throw new IllegalArgumentException("[ERROR] 명령어에 맞는 인자의 갯수가 아닙니다.");
+            throw new IllegalArgumentException("명령어에 맞는 인자의 갯수가 아닙니다.");
         }
     }
 

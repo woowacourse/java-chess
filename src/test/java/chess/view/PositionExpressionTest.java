@@ -40,6 +40,6 @@ class PositionExpressionTest {
     void validateFormatFail(String input) {
         assertThatCode(() -> PositionExpression.mapToPosition(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 올바르지 않은 형식의 위치 입력입니다.");
+                .hasMessage("올바르지 않은 형식의 위치 입력입니다.");
     }
 }

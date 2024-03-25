@@ -35,6 +35,6 @@ class GameCommandTest {
 
         assertThatThrownBy(() -> Command.of(input))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] start, end, move만 입력할 수 있습니다.");
+                .hasMessage("start, end, move만 입력할 수 있습니다.");
     }
 }

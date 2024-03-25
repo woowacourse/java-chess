@@ -28,7 +28,7 @@ public class PieceExpression {
     public static String mapToExpression(final Piece piece) {
         String result = PIECE_EXPRESSION.get(piece);
         if (result == null) {
-            throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
+            throw new IllegalArgumentException("존재하지 않는 기물입니다.");
         }
 
         return result;

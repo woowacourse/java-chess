@@ -28,7 +28,7 @@ public class PositionExpression {
         boolean matches = matcher.matches();
 
         if (!matches) {
-            throw new IllegalArgumentException("[ERROR] 올바르지 않은 형식의 위치 입력입니다.");
+            throw new IllegalArgumentException("올바르지 않은 형식의 위치 입력입니다.");
         }
     }
 

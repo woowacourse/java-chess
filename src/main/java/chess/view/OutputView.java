@@ -2,9 +2,12 @@ package chess.view;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.Piece;
+
 import java.util.List;
 
 public class OutputView {
+
+    private static final String ERROR_PREFIX = "[ERROR]";
 
     public void printCommandInformation() {
         System.out.println("> 체스 게임을 시작합니다.\n"
@@ -20,6 +23,6 @@ public class OutputView {
     }
 
     public void printErrorMessage(final String message) {
-        System.out.println(message);
+        System.out.printf("%s %s", ERROR_PREFIX, message);
     }
 }

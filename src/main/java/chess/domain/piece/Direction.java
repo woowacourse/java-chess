@@ -37,7 +37,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.isSameGradiant(dx, dy) && direction.isSameSign(dx, dy))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 이동 방향입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이동 방향입니다."));
     }
 
     public File moveFile(final File currentFile) {

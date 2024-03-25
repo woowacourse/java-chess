@@ -36,7 +36,7 @@ public class Position {
     public static Position of(final File file, final Rank rank) {
         Position position = CACHE.get(toKey(file, rank));
         if (position == null) {
-            throw new IllegalArgumentException("[ERROR] 범위를 벗어난 위치입니다.");
+            throw new IllegalArgumentException("범위를 벗어난 위치입니다.");
         }
 
         return position;

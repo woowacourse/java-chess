@@ -70,7 +70,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, sourcePosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 제자리로 움직일 수 없습니다.");
+                .hasMessage("제자리로 움직일 수 없습니다.");
     }
 
     @DisplayName("비어있는 칸에서 이동하려는 경우 예외가 발생한다.")
@@ -85,7 +85,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 비어있는 곳에서는 기물을 움직일 수 없습니다.");
+                .hasMessage("비어있는 곳에서는 기물을 움직일 수 없습니다.");
     }
 
     @Test
@@ -100,7 +100,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
+                .hasMessage("이동하려는 위치에 아군 기물이 존재합니다.");
     }
 
     @Test
@@ -115,7 +115,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
+                .hasMessage("선택한 기물은 해당 위치에 도달할 수 없습니다.");
     }
 
     @Test
@@ -132,7 +132,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
+                .hasMessage("선택한 기물은 해당 위치에 도달할 수 없습니다.");
     }
 
     @Test
@@ -163,7 +163,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+                .hasMessage("선택한 기물이 이동할 수 없는 방향입니다.");
     }
 
     @Test
@@ -241,7 +241,7 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+                .hasMessage("폰은 해당 위치에 도달할 수 없습니다.");
     }
 
     @DisplayName("폰의 대각선에 적이 없음에도 대각선으로 이동하려 하면, 예외가 발생한다.")
@@ -256,6 +256,6 @@ class ChessBoardTest {
 
         assertThatCode(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+                .hasMessage("폰은 해당 위치에 도달할 수 없습니다.");
     }
 }

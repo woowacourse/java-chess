@@ -53,19 +53,19 @@ public class ChessBoard {
 
     private void validateNotSourceItSelf(Position sourcePosition, Position targetPosition) {
         if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 제자리로 움직일 수 없습니다.");
+            throw new IllegalArgumentException("제자리로 움직일 수 없습니다.");
         }
     }
 
     private void validateTargetNotAlly(Position source, Position target) {
         if (chessBoard.get(source).isAlly(chessBoard.get(target))) {
-            throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
+            throw new IllegalArgumentException("이동하려는 위치에 아군 기물이 존재합니다.");
         }
     }
 
     private void validateSourcePositionNotEmpty(Position position) {
         if (chessBoard.get(position).equals(EmptyPiece.of())) {
-            throw new IllegalArgumentException("[ERROR] 비어있는 곳에서는 기물을 움직일 수 없습니다.");
+            throw new IllegalArgumentException("비어있는 곳에서는 기물을 움직일 수 없습니다.");
         }
     }
 
@@ -89,7 +89,7 @@ public class ChessBoard {
                 = pawnMovementRule.canReachTargetFromInitialPosition(sourcePosition, targetPosition, direction);
 
         if (!(canReachTarget || canReachTargetFromInitialPosition)) {
-            throw new IllegalArgumentException("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+            throw new IllegalArgumentException("폰은 해당 위치에 도달할 수 없습니다.");
         }
     }
 
@@ -97,13 +97,13 @@ public class ChessBoard {
         boolean canMoveTowardDiagonal = pawnMovementRule.canMoveTowardDiagonal(sourcePiece, targetPiece, direction);
 
         if (!canMoveTowardDiagonal) {
-            throw new IllegalArgumentException("[ERROR] 폰은 해당 위치에 도달할 수 없습니다.");
+            throw new IllegalArgumentException("폰은 해당 위치에 도달할 수 없습니다.");
         }
     }
 
     private void validateValidDirection(final Piece piece, final Direction direction) {
         if (!piece.canMoveInTargetDirection(direction)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+            throw new IllegalArgumentException("선택한 기물이 이동할 수 없는 방향입니다.");
         }
     }
 
@@ -120,7 +120,7 @@ public class ChessBoard {
 
     private void validateReachedTarget(Position targetPosition, Position nextPosition) {
         if (!nextPosition.equals(targetPosition)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
+            throw new IllegalArgumentException("선택한 기물은 해당 위치에 도달할 수 없습니다.");
         }
     }
 }

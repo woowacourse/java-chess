@@ -54,6 +54,6 @@ class DirectionTest {
     void findDirectionByDeltaFail() {
         assertThatCode(() -> Direction.find(2, 3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 존재하지 않는 이동 방향입니다.");
+                .hasMessage("존재하지 않는 이동 방향입니다.");
     }
 }

@@ -31,7 +31,7 @@ public enum Command {
                 .map(Command::toString)
                 .collect(Collectors.joining(", "));
 
-        throw new IllegalArgumentException(String.format("[ERROR] %s만 입력할 수 있습니다.", candidates));
+        throw new IllegalArgumentException(String.format("%s만 입력할 수 있습니다.", candidates));
     }
 
     @Override
