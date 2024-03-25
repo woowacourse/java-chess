@@ -30,11 +30,14 @@ public enum Rank {
     }
 
     public Rank calculateNextRank(int offset) {
-        int nextCoordinate = offset + coordinate;
         return Arrays.stream(values())
-                .filter(file -> file.coordinate == nextCoordinate)
+                .filter(rank -> hasNextCoordinate(rank, offset))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Rank 좌표입니다."));
+    }
+
+    private boolean hasNextCoordinate(Rank rank, int offset) {
+        return rank.coordinate == this.coordinate + offset;
     }
 
     public Difference minus(Rank other) {
