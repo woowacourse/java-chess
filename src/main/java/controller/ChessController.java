@@ -2,11 +2,11 @@ package controller;
 
 import controller.command.Command;
 import controller.command.EndOnCommand;
+import db.PieceDao;
+import db.TurnDao;
 import domain.board.ChessBoard;
 import domain.board.ChessBoardFactory;
-import domain.dao.PieceDao;
-import domain.dao.PieceDto;
-import domain.dao.TurnDao;
+import domain.dto.PieceDto;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;

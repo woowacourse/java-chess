@@ -1,4 +1,4 @@
-package domain.dao;
+package db;
 
 import domain.piece.Color;
 import org.junit.jupiter.api.Test;

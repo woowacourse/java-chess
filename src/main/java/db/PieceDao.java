@@ -1,4 +1,6 @@
-package domain.dao;
+package db;
+
+import domain.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

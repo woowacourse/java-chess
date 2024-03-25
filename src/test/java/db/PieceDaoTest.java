@@ -1,5 +1,6 @@
-package domain.dao;
+package db;
 
+import domain.dto.PieceDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

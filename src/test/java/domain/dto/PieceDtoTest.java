@@ -1,4 +1,4 @@
-package domain.dao;
+package domain.dto;
 
 import domain.piece.Color;
 import domain.piece.Piece;

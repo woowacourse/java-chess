@@ -1,6 +1,6 @@
 package domain.board;
 
-import domain.dao.PieceDto;
+import domain.dto.PieceDto;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.nonpawn.Bishop;
