@@ -13,6 +13,7 @@ import static chess.domain.piece.attribute.Color.WHITE;
 
 import java.util.Set;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Movement;
 import chess.domain.piece.attribute.Position;
@@ -42,7 +43,7 @@ public class Knight extends UnslidingPiece {
     }
 
     @Override
-    public Piece move(final Position target) {
+    public Piece move(final Chessboard chessboard, final Position target) {
         validateTarget(possiblePositionsAfter(POSSIBLE_MOVEMENTS), target);
         return new Knight(color(), target);
     }

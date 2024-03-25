@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.Set;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Position;
@@ -25,7 +26,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public Piece move(final Position target) {
+    public Piece move(final Chessboard chessboard, final Position target) {
         validateTarget(possiblePositionsTo(POSSIBLE_DIRECTIONS), target);
         return new Queen(color(), target);
     }

@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
 import static chess.domain.chessboard.attribute.Direction.UP;
-import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
-import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 import static chess.domain.piece.attribute.Color.BLACK;
 import static chess.domain.piece.attribute.Color.WHITE;
 
 import java.util.Set;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Movement;
 import chess.domain.piece.attribute.Position;
@@ -22,9 +21,7 @@ public class StartingPawn extends AbstractPawn {
 
     private static final Set<Movement> POSSIBLE_MOVEMENTS = Set.of(
             Movement.of(UP, UP),
-            Movement.of(UP),
-            Movement.of(UP_LEFT),
-            Movement.of(UP_RIGHT)
+            Movement.of(UP)
     );
 
     public StartingPawn(final Color color, final Position position) {
@@ -39,7 +36,7 @@ public class StartingPawn extends AbstractPawn {
     }
 
     @Override
-    public Piece move(final Position target) {
+    public Piece move(final Chessboard chessboard, final Position target) {
         validateTarget(possiblePositionsAfter(POSSIBLE_MOVEMENTS), target);
         return new Pawn(color(), target);
     }

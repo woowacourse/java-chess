@@ -4,6 +4,7 @@ import static chess.domain.chessboard.attribute.Direction.UP;
 
 import java.util.Set;
 
+import chess.domain.chessboard.Chessboard;
 import chess.domain.chessboard.attribute.Direction;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Movement;
@@ -22,7 +23,7 @@ public class Pawn extends AbstractPawn {
     }
 
     @Override
-    public Piece move(final Position target) {
+    public Piece move(final Chessboard chessboard, final Position target) {
         validateTarget(possiblePositionsAfter(POSSIBLE_MOVEMENTS), target);
         return new Pawn(color(), target);
     }
