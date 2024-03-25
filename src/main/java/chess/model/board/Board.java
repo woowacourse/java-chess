@@ -1,7 +1,6 @@
 package chess.model.board;
 
 import chess.model.material.Color;
-import chess.model.material.Type;
 import chess.model.piece.None;
 import chess.model.piece.Piece;
 import chess.model.position.Position;

@@ -4,7 +4,6 @@ import chess.dto.BoardDto;
 import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.board.InitialBoardFactory;
-import chess.model.game.Command;
 import chess.model.game.GameStatus;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -13,7 +12,6 @@ import java.util.function.Supplier;
 
 public final class ChessGame {
 
-    private static final int COMMAND_INDEX = 0;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
 
@@ -27,7 +25,7 @@ public final class ChessGame {
 
     public void run() {
         inputView.printGameIntro();
-        GameStatus gameStatus = new GameStatus();
+        GameStatus gameStatus = new GameStatus(this::executeStart, this::executeMove);
         BoardFactory boardFactory = new InitialBoardFactory();
         Board board = boardFactory.generate();
         while (gameStatus.isRunning()) {
@@ -41,34 +39,20 @@ public final class ChessGame {
 
     private GameStatus executeCommand(Board board, GameStatus gameStatus) {
         List<String> commands = inputView.askGameCommands();
-        Command command = Command.findCommand(commands.get(COMMAND_INDEX));
-        if (command.isEnd()) {
-            return gameStatus.changeEnd();
-        }
-        if (command.isStart()) {
-            return executeStart(board, gameStatus);
-        }
-        if (command.isMove()) {
-            return executeMove(commands, board, gameStatus);
-        }
-        return gameStatus;
+        return gameStatus.action(commands, board);
     }
 
-    private GameStatus executeStart(Board board, GameStatus gameStatus) {
-        gameStatus = gameStatus.changeStart();
+    private void executeStart(Board board) {
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
-        return gameStatus;
     }
 
-    private GameStatus executeMove(List<String> commands, Board board, GameStatus gameStatus) {
-        gameStatus = gameStatus.changeMove();
+    private void executeMove(List<String> commands, Board board) {
         String source = commands.get(SOURCE_INDEX);
         String target = commands.get(TARGET_INDEX);
         board.move(source, target);
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
-        return gameStatus;
     }
 
     private <T> T retryOnException(Supplier<T> operation) {
