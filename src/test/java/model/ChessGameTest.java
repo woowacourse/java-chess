@@ -17,6 +17,7 @@ class ChessGameTest {
     @Test
     void initPieces() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         final Map<Position, Piece> board = chessGame.getBoard();
         assertThat(board.keySet()).hasSize(32);
@@ -26,6 +27,7 @@ class ChessGameTest {
     @Test
     void blankPosition() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         final Moving moving = new Moving(Position.from("e4"), Position.from("e5"));
 
@@ -38,6 +40,7 @@ class ChessGameTest {
     @Test
     void routeContainPiece() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         final Map<Position, Piece> board = chessGame.getBoard();
         board.put(Position.from("e3"), new Queen(Camp.WHITE));
@@ -53,6 +56,7 @@ class ChessGameTest {
     @Test
     void targetPositionIsEqualCamp() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         final Map<Position, Piece> board = chessGame.getBoard();
         board.put(Position.from("f3"), new Queen(Camp.WHITE));
@@ -68,6 +72,7 @@ class ChessGameTest {
     @Test
     void invalidTurn() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.start();
 
         final Moving moving = new Moving(Position.from("a7"), Position.from("a6"));
 

@@ -41,8 +41,6 @@ public class ChessGame {
     public ChessGame() {
         this.board = new HashMap<>();
         this.chessStatus = ChessStatus.INIT;
-        this.camp = Camp.WHITE;
-        setting();
     }
 
     public void start() {
@@ -55,7 +53,7 @@ public class ChessGame {
         throw new IllegalArgumentException("이미 게임이 진행중입니다.");
     }
 
-    public void setting() {
+    private void setting() {
         settingExceptPawn(Camp.BLACK, Row.EIGHTH);
         settingBlackPawn();
         settingWhitePawn();
@@ -81,15 +79,6 @@ public class ChessGame {
     }
 
     public void move(Moving moving) {
-        validate(moving);
-
-        Piece piece = board.get(moving.getCurrentPosition());
-        board.put(moving.getNextPosition(), piece);
-        board.remove(moving.getCurrentPosition());
-        camp = camp.toggle();
-    }
-
-    public void move2(Moving moving) {
         if (chessStatus == ChessStatus.RUNNING) {
             validate(moving);
 

@@ -4,41 +4,33 @@ import dto.GameBoardDto;
 import model.Camp;
 import model.ChessGame;
 import model.Command;
-import model.menu.Init;
 import model.menu.Menu;
+import view.InputView;
 import view.OutputView;
 
 public class ChessController {
 
-    private final InputController inputController;
+    private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(final InputController inputController, final OutputView outputView) {
-        this.inputController = inputController;
+    public ChessController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
         ChessGame chessGame = new ChessGame();
         outputView.printStartMessage();
-        play2(chessGame);
+        play(chessGame);
     }
 
     private void play(final ChessGame chessGame) {
-        Menu currentMenu = Init.gameSetting(inputController.getCommand());
-        while (currentMenu.isRunning()) {
-            printCurrentStatus(chessGame, chessGame.getCamp());
-            currentMenu = currentMenu.play(inputController.getCommand(), chessGame);
-        }
-    }
-
-    private void play2(final ChessGame chessGame) {
-        Menu status = Command.of(inputController.getCommands());
-        status.play2(chessGame);
+        Menu status = Command.of(inputView.readCommandList());
+        status.play(chessGame);
         while (chessGame.isNotEnd()) {
             printCurrentStatus(chessGame, chessGame.getCamp());
-            status = Command.of(inputController.getCommands());
-            status.play2(chessGame);
+            status = Command.of(inputView.readCommandList());
+            status.play(chessGame);
         }
     }
 
