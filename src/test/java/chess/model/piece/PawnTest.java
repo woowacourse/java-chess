@@ -7,6 +7,7 @@ import static chess.model.Fixtures.C4;
 import static chess.model.Fixtures.C5;
 import static chess.model.Fixtures.D2;
 import static chess.model.Fixtures.D3;
+import static chess.model.Fixtures.D4;
 import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F6;
 import static chess.model.Fixtures.F7;
@@ -126,9 +127,9 @@ class PawnTest {
     /*
     ........
     ......P.
-    .....n..
+    .....n.n
     ........
-    .N......
+    .N.N....
     ..p.....
     ........
     ........
@@ -140,7 +141,9 @@ class PawnTest {
         Piece piece = Pawn.of(PAWN, color);
         EMPTY_PIECES.put(source, piece);
         EMPTY_PIECES.put(B4, Piece.of(KNIGHT, BLACK));
+        EMPTY_PIECES.put(D4, Piece.of(KNIGHT, BLACK));
         EMPTY_PIECES.put(F6, Piece.of(KNIGHT, WHITE));
+        EMPTY_PIECES.put(H6, Piece.of(KNIGHT, WHITE));
 
         assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
             .doesNotThrowAnyException();
@@ -149,7 +152,9 @@ class PawnTest {
     public static Stream<Arguments> provideAttackMoveWithColor() {
         return Stream.of(
             Arguments.of(C3, B4, WHITE),
-            Arguments.of(G7, F6, BLACK)
+            Arguments.of(C3, D4, WHITE),
+            Arguments.of(G7, F6, BLACK),
+            Arguments.of(G7, H6, BLACK)
         );
     }
 

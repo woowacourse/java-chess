@@ -8,6 +8,7 @@ import static chess.model.position.Direction.DOWN_LEFT;
 import static chess.model.position.Direction.DOWN_RIGHT;
 import static chess.model.position.Direction.UP;
 import static chess.model.position.Direction.UP_LEFT;
+import static chess.model.position.Direction.UP_RIGHT;
 import static chess.model.position.Direction.UP_UP;
 
 import chess.model.material.Color;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    private static final List<Direction> WHITE_ATTACK_DIRECTIONS = List.of(UP_LEFT, UP_LEFT);
+    private static final List<Direction> WHITE_ATTACK_DIRECTIONS = List.of(UP_LEFT, UP_RIGHT);
     private static final List<Direction> BLACK_ATTACK_DIRECTIONS = List.of(DOWN_LEFT, DOWN_RIGHT);
     private static final Row WHITE_INITIAL_ROW = Row.TWO;
     private static final Row BLACK_INITIAL_ROW = Row.SEVEN;
