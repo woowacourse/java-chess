@@ -1,8 +1,8 @@
-package view.dto;
+package util;
 
 import java.util.Arrays;
 
-public enum RankInfo {
+public enum RankConverter {
     ONE('1', 1),
     TWO('2', 2),
     THREE('3', 3),
@@ -15,14 +15,14 @@ public enum RankInfo {
     private final char rankSymbol;
     private final int rankValue;
 
-    RankInfo(char rankSymbol, int rankValue) {
+    RankConverter(char rankSymbol, int rankValue) {
         this.rankSymbol = rankSymbol;
         this.rankValue = rankValue;
     }
 
-    public static RankInfo from(char inputFileSymbol) {
-        return Arrays.stream(RankInfo.values())
-                .filter(rankInfo -> rankInfo.rankSymbol==inputFileSymbol)
+    public static RankConverter from(char inputFileSymbol) {
+        return Arrays.stream(RankConverter.values())
+                .filter(rankConverter -> rankConverter.rankSymbol==inputFileSymbol)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력한 rank는 올바르지 않은 값입니다."));
     }

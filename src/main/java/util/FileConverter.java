@@ -1,8 +1,8 @@
-package view.dto;
+package util;
 
 import java.util.Arrays;
 
-public enum FileInfo {
+public enum FileConverter {
     A('a', 1),
     B('b', 2),
     C('c', 3),
@@ -15,14 +15,14 @@ public enum FileInfo {
     private final char fileSymbol;
     private final int fileValue;
 
-    FileInfo(char fileSymbol, int fileValue) {
+    FileConverter(char fileSymbol, int fileValue) {
         this.fileSymbol = fileSymbol;
         this.fileValue = fileValue;
     }
 
-    public static FileInfo from(char inputFileSymbol) {
-        return Arrays.stream(FileInfo.values())
-                .filter(fileInfo -> fileInfo.fileSymbol == inputFileSymbol)
+    public static FileConverter from(char inputFileSymbol) {
+        return Arrays.stream(FileConverter.values())
+                .filter(fileConverter -> fileConverter.fileSymbol == inputFileSymbol)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("입력한 File는 올바르지 않은 값입니다"));
     }
