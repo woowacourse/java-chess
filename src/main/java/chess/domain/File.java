@@ -16,7 +16,7 @@ public enum File {
         try {
             return values()[this.ordinal() + offset];
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("[ERROR] 체스판 가로의 범위를 넘어갔습니다.");
+            throw new IllegalArgumentException("[ERROR] 체스판 가로 범위를 넘어갔습니다.");
         }
     }
 
