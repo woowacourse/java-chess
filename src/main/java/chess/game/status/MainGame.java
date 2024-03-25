@@ -1,13 +1,15 @@
-package chess.controller;
+package chess.game.status;
 
 import chess.domain.Position;
 import chess.domain.board.Board;
-import chess.view.GameCommand;
-import chess.view.InputView;
-import chess.view.OutputView;
-import java.awt.Point;
+import chess.view.input.InputView;
+import chess.view.input.command.CommandObject;
+import chess.view.input.command.GameCommand;
+import chess.view.output.OutputView;
+import java.util.List;
 
 public class MainGame implements GameStatus {
+
     private final InputView inputView;
     private final Board board;
 
@@ -23,34 +25,26 @@ public class MainGame implements GameStatus {
 
     @Override
     public GameStatus play() {
-        GameCommand gameCommand = inputView.getGameCommand();
+        return applyCommand(inputView.getCommandObject());
+    }
 
+    private GameStatus applyCommand(CommandObject commandObject) {
+        GameCommand gameCommand = commandObject.getCommand();
         if (gameCommand == GameCommand.START) {
             return new RestartGame(inputView);
         }
-
         if (gameCommand == GameCommand.MOVE) {
-            return movePiece();
+            return movePiece(commandObject.getFromToPositions());
         }
-
         if (gameCommand == GameCommand.END) {
             return new TerminateGame();
         }
-        
         return this;
     }
 
-    private GameStatus movePiece() {
-        Position source = createPosition(inputView.getPosition());
-        Position target = createPosition(inputView.getPosition());
-
-        board.move(source, target);
+    private GameStatus movePiece(List<Position> fromToPositions) {
+        board.move(fromToPositions.get(0), fromToPositions.get(1));
         OutputView.printBoard(board);
         return this;
-    }
-
-    private Position createPosition(final String fileAndRank) {
-        Point point = PointConverter.convert(fileAndRank);
-        return new Position(point.x, point.y);
     }
 }

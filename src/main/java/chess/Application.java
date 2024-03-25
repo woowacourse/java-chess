@@ -1,7 +1,7 @@
 package chess;
 
-import chess.controller.ChessGame;
-import chess.view.InputView;
+import chess.game.ChessGame;
+import chess.view.input.InputView;
 import java.util.Scanner;
 
 public class Application {

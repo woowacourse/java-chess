@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.game.status;
 
 public class TerminateGame implements GameStatus {
 

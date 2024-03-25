@@ -1,7 +1,9 @@
-package chess.controller;
+package chess.game;
 
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.game.status.GameStatus;
+import chess.game.status.InitialGame;
+import chess.view.input.InputView;
+import chess.view.output.OutputView;
 
 public class ChessGame {
     private final InputView inputView;

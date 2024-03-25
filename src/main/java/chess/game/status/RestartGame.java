@@ -1,9 +1,9 @@
-package chess.controller;
+package chess.game.status;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.view.input.InputView;
+import chess.view.output.OutputView;
 
 public class RestartGame implements GameStatus {
     private final InputView inputView;
