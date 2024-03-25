@@ -12,7 +12,7 @@ public abstract class Piece {
         this.side = side;
     }
 
-    protected abstract boolean hasFollowedRule(Position current, Position target, Route route);
+    abstract boolean hasFollowedRule(Position current, Position target, Route route);
 
     public void checkValidMove(Position source, Position target, Route route) {
         checkDifferentPosition(source, target);
@@ -31,7 +31,7 @@ public abstract class Piece {
     }
 
     private void checkNoAllyPieceAtTarget(Piece targetPiece) {
-        if (targetPiece.isSame(side)) {
+        if (targetPiece.isSameSide(side)) {
             throw new IllegalArgumentException("target 위치에 같은 색의 기물이 존재하면 이동할 수 없습니다.");
         }
     }
@@ -50,32 +50,24 @@ public abstract class Piece {
         return side.isBlack();
     }
 
-    public boolean isWhite() {
-        return side.isWhite();
-    }
-
-    public boolean isSame(Side otherSide) {
-        return side == otherSide;
-    }
-
     public boolean isSameSide(Side otherSide) {
-        return side == otherSide;
+        return side.isSame(otherSide);
     }
 
-    public boolean isOpposingSide(Side otherSide) {
-        return side.opponent() == otherSide;
+    public boolean isNotSameSide(Side otherSide) {
+        return !isSameSide(otherSide);
+    }
+
+    public boolean isOpponentSide(Side otherSide) {
+        return side.opponent().isSame(otherSide);
     }
 
     public boolean isEmpty() {
-        return side == Side.EMPTY;
+        return side.isSame(Side.EMPTY);
     }
 
     public boolean isNotEmpty() {
         return !isEmpty();
-    }
-
-    public boolean isNotSame(Side otherSide) {
-        return !isSame(otherSide);
     }
 
     @Override

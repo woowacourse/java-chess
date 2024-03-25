@@ -25,7 +25,7 @@ public enum Side {
         return EMPTY;
     }
 
-    public boolean isSame(Side side) {
-        return this == side;
+    public boolean isSame(Side otherSide) {
+        return this == otherSide;
     }
 }

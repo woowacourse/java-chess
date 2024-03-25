@@ -32,7 +32,7 @@ public class Route {
     }
 
     public boolean isOpponentTargetPiece(Side side) {
-        return targetPiece.isOpposingSide(side);
+        return targetPiece.isOpponentSide(side);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Game {
 
     private void checkTurn(Position source) {
         Piece piece = board.findPiece(source);
-        if (piece.isNotSame(currentSide)) {
+        if (piece.isNotSameSide(currentSide)) {
             throw new IllegalArgumentException("해당 진영의 차례가 아닙니다.");
         }
     }
