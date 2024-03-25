@@ -4,7 +4,7 @@
 
 ## STEP3 기능 명세
 
-- [ ] King이 잡히면 게임 종료
+- [x] King이 잡히면 게임 종료
 - [x] 남아있는 말의 점수 계산
     - [x] queen: 9점, rook: 5점, bishop: 3점, knight: 2.5점, king: 0점
     - [x] pawn: 1점, 세로줄에 같은 색 pawn 있는 경우 0.5점
