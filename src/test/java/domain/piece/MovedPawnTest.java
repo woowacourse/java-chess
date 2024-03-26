@@ -56,8 +56,6 @@ class MovedPawnTest {
                 () -> assertThat(blackPawn.isReachable(UP_RIGHT, Empty.INSTANCE)).isFalse(),
                 () -> assertThat(blackPawn.isReachable(LEFT_UP, Empty.INSTANCE)).isFalse()
         );
-
-
     }
 
     @Test

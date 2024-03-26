@@ -27,6 +27,9 @@ public class ChessGame {
             final StringTokenizer tokens = skipFirstToken(value);
             board.move(tokens.nextToken(), tokens.nextToken());
         }
+//        if(board.isKingDead()){
+//            this.command =
+//        }
     }
 
     private StringTokenizer skipFirstToken(final String command) {

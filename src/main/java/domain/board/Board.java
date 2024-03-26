@@ -8,6 +8,7 @@ import domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
     private final Map<Position, Piece> squares;
@@ -25,7 +26,29 @@ public class Board {
     public void move(final Position source, final Position target) {
         validateMovement(source, target);
         updateBoard(source, target);
+//        if (squares.get(source).isKing()) {
+//
+//        }
         switchTurn();
+    }
+
+    public double calculateScore(final Color color) {
+        final List<Piece> list = squares.values().stream().filter(r -> r.hasColor(color)).toList();
+        double sum = list.stream().map(Piece::getScore).mapToDouble(r -> r).sum();
+        if (isPawnOnSameFile(color)) {
+            sum -= list.stream().filter(Piece::isPawn).count() / 2.0;
+        }
+        return sum;
+    }
+
+    private boolean isPawnOnSameFile(final Color color) {
+        final List<Integer> pawnsFile = squares.entrySet()
+                .stream()
+                .filter(r -> r.getValue().hasColor(color))
+                .filter(r -> r.getValue().isPawn())
+                .map(r -> r.getKey().toFileIndex())
+                .toList();
+        return Set.copyOf(pawnsFile).size() != pawnsFile.size();
     }
 
     private void validateMovement(final Position source, final Position target) {

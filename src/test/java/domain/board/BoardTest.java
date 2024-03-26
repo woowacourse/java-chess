@@ -1,8 +1,31 @@
 package domain.board;
 
-import static domain.PositionFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static domain.PositionFixture.A_ONE;
+import static domain.PositionFixture.A_THREE;
+import static domain.PositionFixture.B_EIGHT;
+import static domain.PositionFixture.B_FOUR;
+import static domain.PositionFixture.B_ONE;
+import static domain.PositionFixture.B_THREE;
+import static domain.PositionFixture.B_TWO;
+import static domain.PositionFixture.C_FOUR;
+import static domain.PositionFixture.C_SEVEN;
+import static domain.PositionFixture.C_SIX;
+import static domain.PositionFixture.C_THREE;
+import static domain.PositionFixture.D_FIVE;
+import static domain.PositionFixture.D_FOUR;
+import static domain.PositionFixture.D_ONE;
+import static domain.PositionFixture.D_SEVEN;
+import static domain.PositionFixture.D_SIX;
+import static domain.PositionFixture.D_TWO;
+import static domain.PositionFixture.E_FOUR;
+import static domain.PositionFixture.E_TWO;
+import static domain.PositionFixture.F_SIX;
+import static domain.PositionFixture.G_EIGHT;
+import static domain.PositionFixture.H_TWO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Knight;
 import org.assertj.core.api.Assertions;
@@ -106,6 +129,23 @@ class BoardTest {
                     board.move("e4", "d6");
                 }
         ).doesNotThrowAnyException();
+    }
 
+    @Test
+    @DisplayName("폰이 세로로 있지 않을 경우 점수를 계산할 수 있다")
+    void pawn() {
+        final Board board = new Board(BoardInitiator.init());
+        assertThat(board.calculateScore(Color.WHITE)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("폰이 세로로 있는 경우 점수를 계산할 수 있다")
+    void pawnOnSameFile() {
+        final Board board = new Board(BoardInitiator.init());
+
+        board.move("b2", "b4");
+        board.move("a7", "a5");
+        board.move("b4", "a5");
+        assertThat(board.calculateScore(Color.WHITE)).isEqualTo(34);
     }
 }

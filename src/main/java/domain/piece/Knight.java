@@ -3,9 +3,10 @@ package domain.piece;
 import domain.board.position.Vector;
 
 public class Knight extends Piece {
+    private static final double SCORE = 2.5;
 
     public Knight(final Color color) {
-        super(color);
+        super(color,SCORE);
     }
 
     @Override
