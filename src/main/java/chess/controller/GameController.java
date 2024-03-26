@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.view.InputView;
+import chess.view.MoveCommand;
 import chess.view.OutputView;
 
 public class GameController {

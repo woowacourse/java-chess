@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.controller.MoveCommand;
+import chess.view.MoveCommand;
 import chess.domain.location.Column;
 import chess.domain.location.Location;
 import chess.domain.location.Row;
@@ -107,10 +107,10 @@ public class Board {
     private List<SquareState> createPathState(Location current, List<Direction> directions) {
         Piece movingPiece = findPieceAt(current);
         List<SquareState> squareStates = new ArrayList<>();
-        Location check = current;
+        Location moved = current;
         for (Direction direction : directions) {
-            check = check.move(direction);
-            squareStates.add(findSquareStates(movingPiece, current));
+            moved = moved.move(direction);
+            squareStates.add(findSquareStates(movingPiece, moved));
         }
         return squareStates;
     }
