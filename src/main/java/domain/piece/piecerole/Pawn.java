@@ -2,42 +2,18 @@ package domain.piece.piecerole;
 
 import domain.game.Direction;
 import domain.game.Movable;
-import domain.piece.Color;
 import domain.piece.Piece;
 import domain.position.Position;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Pawn extends PieceRole {
-    private static final int INITIAL_MAX_MOVEMENT = 2;
+public abstract class Pawn extends PieceRole {
+    protected static final int INITIAL_MAX_MOVEMENT = 2;
+    protected static final int ORIGINAL_MAX_MOVEMENT = 1;
 
-    private boolean hasNotMoved;
-
-    private Pawn(List<Movable> routes) {
+    protected Pawn(final List<Movable> routes) {
         super(routes);
-        this.hasNotMoved = true;
-    }
-
-    public static Pawn from(final Color color) {
-        if (color == Color.WHITE) {
-            List<Movable> routes = List.of(
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH),
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH_EAST),
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.NORTH_WEST)
-            );
-            return new Pawn(routes);
-        }
-        if (color == Color.BLACK) {
-            List<Movable> routes = List.of(
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH),
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH_EAST),
-                    new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH_WEST)
-            );
-            return new Pawn(routes);
-        }
-        return new Pawn(new ArrayList<>());
     }
 
     @Override
@@ -46,10 +22,6 @@ public class Pawn extends PieceRole {
         validateCorrectRouteForPiece(source, target);
         validateHasAnotherPieceOnTarget(source, target, chessBoard);
         validateBlockedRoute(source, target, chessBoard);
-        if (hasNotMoved) {
-            routes.forEach(Movable::decreaseMaxMovement);
-            hasNotMoved = false;
-        }
     }
 
     private void validateHasAnotherPieceOnTarget(
@@ -76,6 +48,8 @@ public class Pawn extends PieceRole {
             throw new IllegalArgumentException("[ERROR]다른 진영의 기물이 있을 때만 대각선으로 이동할 수 있습니다.");
         }
     }
+
+    protected abstract boolean isStartPosition(final Position source);
 
     @Override
     public boolean equals(final Object o) {

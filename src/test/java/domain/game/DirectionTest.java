@@ -2,7 +2,7 @@ package domain.game;
 
 import static fixture.PositionFixture.F1;
 import static fixture.PositionFixture.b1;
-import static fixture.PositionFixture.b2;
+import static fixture.PositionFixture.c2;
 import static fixture.PositionFixture.c3;
 import static fixture.PositionFixture.c4;
 
@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 
 class DirectionTest {
 
-    @DisplayName("(b,1) -> (b,2)로 이동하면, 북동 방향이다.")
+    @DisplayName("(b,1) -> (c,2)로 이동하면, 북동 방향이다.")
     @Test
     void moveToNorthEast() {
-        Direction findDirection = Direction.findDirection(b1(), b2());
+        Direction findDirection = Direction.findDirection(b1(), c2());
         Assertions.assertThat(findDirection).isEqualTo(Direction.NORTH_EAST);
     }
 

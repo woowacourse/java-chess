@@ -18,7 +18,7 @@ import static fixture.PositionFixture.d5;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
+import domain.piece.piecerole.WhitePawn;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class ChessBoardTest {
         chessBoard.move(b2(), b3());
 
         Piece findPiece = chessBoard.findPieceBySquare(b3());
-        Assertions.assertThat(findPiece).isEqualTo(new Piece(Pawn.from(Color.WHITE), Color.WHITE));
+        Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
@@ -84,7 +84,7 @@ class ChessBoardTest {
         chessBoard.move(b4(), c5());
 
         Piece findPiece = chessBoard.findPieceBySquare(c5());
-        Assertions.assertThat(findPiece).isEqualTo(new Piece(Pawn.from(Color.WHITE), Color.WHITE));
+        Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
@@ -102,6 +102,7 @@ class ChessBoardTest {
     void knightCanJump() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.move(b2(), b3());
+        chessBoard.move(b7(), b5());
         chessBoard.move(b1(), c3());
 
         Assertions.assertThat(chessBoard.findPieceBySquare(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));

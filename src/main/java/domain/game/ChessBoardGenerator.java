@@ -3,12 +3,13 @@ package domain.game;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import domain.position.File;
 import domain.position.Position;
 import domain.position.Rank;
@@ -28,11 +29,10 @@ public class ChessBoardGenerator {
             King.from(), Bishop.from(), Knight.from(), Rook.from()
     );
     private static final List<PieceRole> BLACK_PAWNS = IntStream.range(0, toColumnIndex(CHESS_FILE_END) + 1)
-            .mapToObj(number -> (PieceRole) Pawn.from(Color.BLACK))
+            .mapToObj(number -> (PieceRole) BlackPawn.from())
             .toList();
-
     private static final List<PieceRole> WHITE_PAWNS = IntStream.range(0, toColumnIndex(CHESS_FILE_END) + 1)
-            .mapToObj(number -> (PieceRole) Pawn.from(Color.WHITE))
+            .mapToObj(number -> (PieceRole) WhitePawn.from())
             .toList();
     private static final List<Piece> NONE = new ArrayList<>();
     private static final Map<Integer, List<Piece>> rankPieces = new HashMap<>();

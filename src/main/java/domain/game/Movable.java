@@ -4,11 +4,11 @@ import domain.position.Position;
 import java.util.Objects;
 
 public class Movable {
-    private int maxStepSize;
+    private final int maxMovement;
     private final Direction direction;
 
-    public Movable(int maxStepSize, Direction direction) {
-        this.maxStepSize = maxStepSize;
+    public Movable(int maxMovement, Direction direction) {
+        this.maxMovement = maxMovement;
         this.direction = direction;
     }
 
@@ -27,11 +27,7 @@ public class Movable {
             here = here.move(direction);
             step++;
         }
-        return step <= maxStepSize;
-    }
-
-    public void decreaseMaxMovement() {
-        maxStepSize--;
+        return step <= maxMovement;
     }
 
     @Override

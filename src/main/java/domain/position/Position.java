@@ -44,4 +44,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(file, rank);
     }
+
+    public boolean isRank2() {
+        return rank.equals(new Rank(2));
+    }
+
+    public boolean isRank7() {
+        return rank.equals(new Rank(7));
+    }
 }

@@ -14,10 +14,6 @@ public class ChessBoard {
         this.piecePosition = piecePosition;
     }
 
-    public void add(Position position, Piece piece) {
-        piecePosition.put(position, piece);
-    }
-
     public void move(Position sourcePosition, Position targetPosition) {
         commonMoveValidate(sourcePosition, targetPosition);
 

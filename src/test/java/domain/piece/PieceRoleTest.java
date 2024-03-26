@@ -9,12 +9,13 @@ import static fixture.PositionFixture.c3;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.piece.piecerole.Bishop;
+import domain.piece.piecerole.BlackPawn;
 import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
 import domain.piece.piecerole.PieceRole;
 import domain.piece.piecerole.Queen;
 import domain.piece.piecerole.Rook;
+import domain.piece.piecerole.WhitePawn;
 import java.util.HashMap;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -68,7 +69,7 @@ class PieceRoleTest {
         @DisplayName("흰색 폰이 (c,2)에서 (c,3)로 이동한다.")
         @Test
         void canPawnMove() {
-            PieceRole pawn = Pawn.from(Color.WHITE);
+            PieceRole pawn = WhitePawn.from();
 
             assertDoesNotThrow(() -> pawn.validateMovableRoute(c2(), c3(), new HashMap<>()));
         }
@@ -130,7 +131,7 @@ class PieceRoleTest {
         @DisplayName("검은색 폰이 (c,2)에서 (c,3)로 이동하지 못한다.")
         @Test
         void canPawnMove() {
-            PieceRole pawn = Pawn.from(Color.BLACK);
+            PieceRole pawn = BlackPawn.from();
 
             Assertions.assertThatThrownBy(
                     () -> pawn.validateMovableRoute(c2(), c3(), new HashMap<>())
