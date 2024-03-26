@@ -26,6 +26,7 @@ public class BoardCreator {
     private static final int BLACK_PIECE_START_RANK = 8;
     private static final int BLACK_PAWN_START_RANK = 7;
     private static final Color START_COLOR = Color.WHITE;
+    private static final Empty EMPTY = new Empty();
 
     public static Board create() {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
@@ -47,10 +48,7 @@ public class BoardCreator {
     }
 
     private static Collector<Position, ?, Map<Position, Piece>> generateEntry() {
-        return Collectors.toMap(
-                position -> position,
-                position -> new Empty()
-        );
+        return Collectors.toMap(position -> position, position -> EMPTY);
     }
 
     private static Map<Position, Piece> getWhitePieces() {

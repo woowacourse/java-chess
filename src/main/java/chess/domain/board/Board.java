@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Map;
 
 public class Board {
+    private static final Empty EMPTY = new Empty();
 
     private final Map<Position, Piece> board;
     private final Color color;
@@ -24,7 +25,7 @@ public class Board {
         validateMovement(source, target, piece);
 
         board.put(target, piece);
-        board.put(source, new Empty());
+        board.put(source, EMPTY);
 
         return new Board(board, color.opposite());
     }
