@@ -20,7 +20,7 @@ public class ChessGame {
     }
 
     public ChessGame() {
-        this(new WhiteTurn(), BoardInitializer.init());
+        this(WhiteTurn.getInstance(), BoardInitializer.init());
     }
 
     public void move(Position source, Position destination) {
@@ -43,14 +43,14 @@ public class ChessGame {
 
     private GameState winStateOf(GameState state) {
         TeamColor winner = state.currentTurn();
-        return new GameEnd(winner);
+        return GameEnd.getInstance(winner);
     }
 
     private GameState nextStateOf(GameState state) {
         if (state.isTurnOf(TeamColor.WHITE)) {
-            return new BlackTurn();
+            return BlackTurn.getInstance();
         }
-        return new WhiteTurn();
+        return WhiteTurn.getInstance();
     }
 
     public boolean isGameEnd() {

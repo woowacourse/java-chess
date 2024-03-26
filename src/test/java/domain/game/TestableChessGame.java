@@ -10,10 +10,10 @@ public class TestableChessGame extends ChessGame {
     }
 
     public static TestableChessGame whiteTurnOf(Board board) {
-        return new TestableChessGame(new WhiteTurn(), board);
+        return new TestableChessGame(WhiteTurn.getInstance(), board);
     }
 
     public static TestableChessGame blackTurnOf(Board board) {
-        return new TestableChessGame(new BlackTurn(), board);
+        return new TestableChessGame(BlackTurn.getInstance(), board);
     }
 }
