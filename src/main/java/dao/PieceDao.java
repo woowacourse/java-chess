@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PieceDao {
     private static final String TABLE_NAME = "piece";
@@ -30,6 +31,10 @@ public class PieceDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addAll(List<PieceDto> pieceDtos) {
+        pieceDtos.forEach(this::addPiece);
     }
 
     public PieceDto findPiece(int fileIndex, int rankIndex) {

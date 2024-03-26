@@ -1,8 +1,12 @@
 package domain.game;
 
+import dao.DBConnector;
+import dao.PieceDao;
 import domain.position.File;
 import domain.position.Position;
+import dto.PieceDto;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -116,5 +120,16 @@ public class Board {
 
     public Map<Position, Piece> getPositionsOfPieces() {
         return Collections.unmodifiableMap(chessBoard);
+    }
+
+    public void save() {
+        PieceDao pieceDao = new PieceDao(new DBConnector());
+        List<PieceDto> pieceDtos = chessBoard.entrySet().stream()
+                .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
+                .toList();
+
+        pieceDao.addAll(pieceDtos);
+
+
     }
 }

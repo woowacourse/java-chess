@@ -72,4 +72,8 @@ public class ChessGame {
     public Map<Position, Piece> getPositionsOfPieces() {
         return board.getPositionsOfPieces();
     }
+
+    public void save() {
+        board.save();
+    }
 }
