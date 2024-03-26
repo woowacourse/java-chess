@@ -7,7 +7,6 @@ import model.piece.Piece;
 import model.position.Position;
 import model.state.ChessState;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -23,22 +22,14 @@ public class ChessBoard {
         Piece sourcePiece = chessBoard.get(source);
         Piece targetPiece = chessBoard.get(target);
         chessState.checkTheTurn(sourcePiece);
-
         Route route = sourcePiece.findRoute(source, target);
-        WayPoints wayPoints = wayPoints(route, target);
+        WayPoints wayPoints = WayPoints.of(chessBoard, route, target);
         Destination destination = new Destination(target, targetPiece);
-        sourcePiece.moveTo(wayPoints, destination);
-//        chessState.isCheck(chessBoard);
+        sourcePiece.validateMoving(wayPoints, destination);
+        sourcePiece.moveTo(destination);
+        chessState.validateCheck(chessBoard);   // 내 차례에 나의 기물의 이동으로 인해 내가 체크인 경우를 위해
         chessState.passTheTurn();
-    }
-
-    private WayPoints wayPoints(final Route route, final Position target) {
-        Map<Position, Piece> wayPoints = new LinkedHashMap<>();
-        for (Position position : route.positions()) {
-            wayPoints.put(position, chessBoard.get(position));
-        }
-        wayPoints.remove(target);
-        return new WayPoints(route.direction(), wayPoints);
+        chessState.validateCheck(chessBoard);   // 내 기물의 이동으로 인해 체크가 됐다면 상대방이 다음 턴에 바로 체크인 상태를 가지게 하기 위해
     }
 
     public Map<Position, Piece> getChessBoard() {

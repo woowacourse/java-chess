@@ -6,7 +6,7 @@ import model.position.Position;
 
 import java.util.Map;
 
-public final class BlackFaction implements FactionState {
+public final class BlackFactionCheck implements FactionState {
     @Override
     public void checkSameFaction(final Piece piece) {
         if (piece.color() != Color.BLACK) {
@@ -23,13 +23,17 @@ public final class BlackFaction implements FactionState {
     public boolean isCheck(final Map<Position, Piece> chessBoard) {
         Position kingPosition = positionOfKing(chessBoard, Color.BLACK);
         Map<Position, Piece> enemyFaction = factionOf(chessBoard, Color.WHITE);
-        return enemyFaction.entrySet()
-                           .stream()
-                           .anyMatch(entry -> possibleAttacked(chessBoard, kingPosition, entry));
+        boolean isCheck = enemyFaction.entrySet()
+                                      .stream()
+                                      .anyMatch(entry -> possibleAttacked(chessBoard, kingPosition, entry));
+        if (isCheck) {
+            throw new IllegalArgumentException("해당 방향으로의 이동은 Check를 해소할 수 없습니다.");
+        }
+        return false;
     }
 
     @Override
     public FactionState check() {
-        return new BlackFactionCheck();
+        return this;
     }
 }
