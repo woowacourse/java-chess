@@ -17,10 +17,6 @@ public class Point {
         this(File.from(file), Rank.from(rank));
     }
 
-    public Point(String point) {
-        this(File.from(point.charAt(0)), Rank.from(point.charAt(1) - '0'));
-    }
-
     public Direction findRoute(Point destination) {
         int fileDistance = calculateFileDistance(destination);
         int rankDistance = calculateRankDistance(destination);

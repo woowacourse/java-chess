@@ -7,6 +7,8 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -19,28 +21,45 @@ public class ChessController {
     public void run() {
         outputView.printGameStart();
 
-        ChessGame game = new ChessGame(BoardFactory.createEmptyBoard());
-        while (true) {
-            try {
-                String readCommand = inputView.readCommand();
-                Command command = Command.from(readCommand);
-                if (command.isEnd()) {
-                    break;
-                }
-                if (Command.START == command) {
-                    game = new ChessGame(BoardFactory.createInitialChessBoard());
-                }
-                if (Command.MOVE == command) {
-                    String[] splitCommand = readCommand.split(" ");
+        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
 
-                    Point departure = new Point(splitCommand[1]);
-                    Point destination = new Point(splitCommand[2]);
-                    game.move(departure, destination);
-                }
-                outputView.printBoard(game.getBoard());
-            } catch (Exception e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
+        while (game.isPlayable()) {
+            play(game);
         }
+    }
+
+    private void play(final ChessGame game) {
+        try {
+            List<String> readCommand = inputView.readCommand();
+            Command command = Command.from(readCommand.get(0));
+
+            executeCommand(game, command, readCommand);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void executeCommand(ChessGame game, Command command, List<String> readCommand) {
+        if (command.isEnd()) {
+            game.finish();
+            return;
+        }
+        if (command.isStart()) {
+            game.start();
+        }
+        if (command.isMove()) {
+            Point departure = generatePoint(readCommand, 1);
+            Point destination = generatePoint(readCommand, 2);
+            game.move(departure, destination);
+        }
+        outputView.printBoard(game.getBoard());
+    }
+
+    private Point generatePoint(List<String> readCommand, int index) {
+        String pointInfo = readCommand.get(index);
+        char file = pointInfo.charAt(0);
+        int rank = Character.getNumericValue(pointInfo.charAt(1));
+
+        return new Point(file, rank);
     }
 }
