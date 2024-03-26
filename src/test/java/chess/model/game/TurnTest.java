@@ -1,4 +1,4 @@
-package chess.model.rule;
+package chess.model.game;
 
 import chess.model.piece.Side;
 import org.junit.jupiter.api.DisplayName;
