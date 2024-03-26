@@ -56,4 +56,8 @@ public class OutputView {
         }
         throw new IllegalArgumentException("승부를 판단할 수 없습니다.");
     }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
+    }
 }

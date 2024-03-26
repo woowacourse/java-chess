@@ -24,7 +24,7 @@ public class ChessGame {
         try {
             gameStatus = gameStatus.play();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
         }
         return gameStatus;
     }
