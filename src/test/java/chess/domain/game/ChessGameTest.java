@@ -21,8 +21,8 @@ class ChessGameTest {
         ChessGame chessGame = new ChessGame(board);
         chessGame.start();
 
-        Point departure = new Point('b', 2);
-        Point destination = new Point('b', 3);
+        Point departure = Point.of('b', 2);
+        Point destination = Point.of('b', 3);
         chessGame.move(departure, destination);
 
         assertThat(board.get(departure)).isEqualTo(Empty.INSTANCE);

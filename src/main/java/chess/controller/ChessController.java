@@ -60,6 +60,6 @@ public class ChessController {
         final char file = pointInfo.charAt(0);
         final int rank = Character.getNumericValue(pointInfo.charAt(1));
 
-        return new Point(file, rank);
+        return Point.of(file, rank);
     }
 }

@@ -14,8 +14,8 @@ class KingTest {
         King king = new King(Team.WHITE);
 
         boolean result = king.isMovablePoint(
-                new Point('a', 1),
-                new Point('a', 2)
+                Point.of('a', 1),
+                Point.of('a', 2)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +27,8 @@ class KingTest {
         King king = new King(Team.WHITE);
 
         boolean result = king.isMovablePoint(
-                new Point('a', 8),
-                new Point('a', 7)
+                Point.of('a', 8),
+                Point.of('a', 7)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +40,8 @@ class KingTest {
         King king = new King(Team.WHITE);
 
         boolean result = king.isMovablePoint(
-                new Point('b', 1),
-                new Point('a', 1)
+                Point.of('b', 1),
+                Point.of('a', 1)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +53,8 @@ class KingTest {
         King king = new King(Team.WHITE);
 
         boolean result = king.isMovablePoint(
-                new Point('a', 1),
-                new Point('b', 1)
+                Point.of('a', 1),
+                Point.of('b', 1)
         );
 
         assertThat(result).isTrue();
@@ -65,8 +65,8 @@ class KingTest {
     void isMovablePoint5() {
         King king = new King(Team.WHITE);
         boolean result = king.isMovablePoint(
-                new Point('a', 1),
-                new Point('b', 2)
+                Point.of('a', 1),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();
@@ -77,8 +77,8 @@ class KingTest {
     void isMovablePoint6() {
         King king = new King(Team.WHITE);
         boolean result = king.isMovablePoint(
-                new Point('c', 4),
-                new Point('d', 3)
+                Point.of('c', 4),
+                Point.of('d', 3)
         );
 
         assertThat(result).isTrue();
@@ -89,8 +89,8 @@ class KingTest {
     void isMovablePoint7() {
         King king = new King(Team.WHITE);
         boolean result = king.isMovablePoint(
-                new Point('b', 1),
-                new Point('a', 2)
+                Point.of('b', 1),
+                Point.of('a', 2)
         );
 
         assertThat(result).isTrue();
@@ -101,8 +101,8 @@ class KingTest {
     void isMovablePoint8() {
         King king = new King(Team.WHITE);
         boolean result = king.isMovablePoint(
-                new Point('c', 3),
-                new Point('b', 2)
+                Point.of('c', 3),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();
@@ -113,8 +113,8 @@ class KingTest {
     void invalidMovablePoint() {
         King king = new King(Team.WHITE);
         boolean result = king.isMovablePoint(
-                new Point('c', 3),
-                new Point('c', 5)
+                Point.of('c', 3),
+                Point.of('c', 5)
         );
 
         assertThat(result).isFalse();

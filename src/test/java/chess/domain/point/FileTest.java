@@ -33,9 +33,9 @@ class FileTest {
     void move() {
         File file = File.from('a');
 
-        File movedFile = file.move(5);
+        char movedFile = file.addPosition(5);
 
-        assertThat(movedFile).isEqualTo(File.from('f'));
+        assertThat(movedFile).isEqualTo('f');
     }
 
     @ParameterizedTest

@@ -14,8 +14,8 @@ class QueenTest {
         Queen queen = new Queen(Team.WHITE);
 
         boolean result = queen.isMovableDirection(
-                new Point('a', 1),
-                new Point('a', 8)
+                Point.of('a', 1),
+                Point.of('a', 8)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +27,8 @@ class QueenTest {
         Queen queen = new Queen(Team.WHITE);
 
         boolean result = queen.isMovableDirection(
-                new Point('a', 8),
-                new Point('a', 1)
+                Point.of('a', 8),
+                Point.of('a', 1)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +40,8 @@ class QueenTest {
         Queen queen = new Queen(Team.WHITE);
 
         boolean result = queen.isMovableDirection(
-                new Point('h', 1),
-                new Point('a', 1)
+                Point.of('h', 1),
+                Point.of('a', 1)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +53,8 @@ class QueenTest {
         Queen queen = new Queen(Team.WHITE);
 
         boolean result = queen.isMovableDirection(
-                new Point('a', 1),
-                new Point('h', 1)
+                Point.of('a', 1),
+                Point.of('h', 1)
         );
 
         assertThat(result).isTrue();
@@ -65,8 +65,8 @@ class QueenTest {
     void isMovableDirection5() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovableDirection(
-                new Point('a', 1),
-                new Point('b', 2)
+                Point.of('a', 1),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();
@@ -77,8 +77,8 @@ class QueenTest {
     void isMovableDirection6() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovableDirection(
-                new Point('c', 4),
-                new Point('e', 2)
+                Point.of('c', 4),
+                Point.of('e', 2)
         );
 
         assertThat(result).isTrue();
@@ -89,8 +89,8 @@ class QueenTest {
     void isMovableDirection7() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovableDirection(
-                new Point('h', 1),
-                new Point('a', 8)
+                Point.of('h', 1),
+                Point.of('a', 8)
         );
 
         assertThat(result).isTrue();
@@ -101,8 +101,8 @@ class QueenTest {
     void isMovableDirection8() {
         Queen queen = new Queen(Team.WHITE);
         boolean result = queen.isMovableDirection(
-                new Point('h', 8),
-                new Point('b', 2)
+                Point.of('h', 8),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();

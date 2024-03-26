@@ -53,30 +53,30 @@ public class BoardFactory {
     private static Map<Point, Piece> lineOfPawn(final int rank, final Team team) {
         final Map<Point, Piece> line = new HashMap<>();
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), new Pawn(team));
+        for (char file = 'a'; file <= 'h'; file++) {
+            line.put(Point.of(file, rank), new Pawn(team));
         }
         return line;
     }
 
     private static Map<Point, Piece> lineOfKing(final int rank, final Team team) {
         return Map.of(
-                new Point('a', rank), new Rook(team),
-                new Point('b', rank), new Knight(team),
-                new Point('c', rank), new Bishop(team),
-                new Point('d', rank), new Queen(team),
-                new Point('e', rank), new King(team),
-                new Point('f', rank), new Bishop(team),
-                new Point('g', rank), new Knight(team),
-                new Point('h', rank), new Rook(team)
+                Point.of('a', rank), new Rook(team),
+                Point.of('b', rank), new Knight(team),
+                Point.of('c', rank), new Bishop(team),
+                Point.of('d', rank), new Queen(team),
+                Point.of('e', rank), new King(team),
+                Point.of('f', rank), new Bishop(team),
+                Point.of('g', rank), new Knight(team),
+                Point.of('h', rank), new Rook(team)
         );
     }
 
     private static Map<Point, Piece> lineOfEmpty(final int rank) {
         final Map<Point, Piece> line = new HashMap<>();
 
-        for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), Empty.INSTANCE);
+        for (char file = 'a'; file <= 'h'; file++) {
+            line.put(Point.of(file, rank), Empty.INSTANCE);
         }
         return line;
     }

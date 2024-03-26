@@ -14,8 +14,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('d', 6)
+                Point.of('e', 4),
+                Point.of('d', 6)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +27,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('f', 6)
+                Point.of('e', 4),
+                Point.of('f', 6)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +40,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('d', 2)
+                Point.of('e', 4),
+                Point.of('d', 2)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +53,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('f', 2)
+                Point.of('e', 4),
+                Point.of('f', 2)
         );
 
         assertThat(result).isTrue();
@@ -66,8 +66,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('g', 5)
+                Point.of('e', 4),
+                Point.of('g', 5)
         );
 
         assertThat(result).isTrue();
@@ -79,8 +79,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('g', 3)
+                Point.of('e', 4),
+                Point.of('g', 3)
         );
 
         assertThat(result).isTrue();
@@ -92,8 +92,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('c', 5)
+                Point.of('e', 4),
+                Point.of('c', 5)
         );
 
         assertThat(result).isTrue();
@@ -105,8 +105,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('g', 3)
+                Point.of('e', 4),
+                Point.of('g', 3)
         );
 
         assertThat(result).isTrue();
@@ -118,8 +118,8 @@ class KnightTest {
         Knight knight = new Knight(Team.WHITE);
 
         boolean result = knight.isMovablePoint(
-                new Point('e', 4),
-                new Point('g', 2)
+                Point.of('e', 4),
+                Point.of('g', 2)
         );
 
         assertThat(result).isFalse();

@@ -10,8 +10,8 @@ class PointTest {
     @Test
     @DisplayName("행과 열의 정보를 알 수 있다.")
     void createPoint() {
-        Point point = new Point('a', 1);
+        Point point = Point.of('a', 1);
 
-        assertThat(point).isEqualTo(new Point('a', 1));
+        assertThat(point).isEqualTo(Point.of('a', 1));
     }
 }

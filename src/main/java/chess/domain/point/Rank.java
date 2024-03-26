@@ -31,17 +31,12 @@ public enum Rank {
         throw new IllegalArgumentException("세로 위치의 범위를 벗어났습니다. 입력된 세로 위치 = " + position);
     }
 
-    public Rank move(final int distanceToMove) {
-        final int movedPosition = addPositionTo(distanceToMove);
-        return from(movedPosition);
-    }
-
     public boolean canMove(final int distanceToMove) {
-        final int movedPosition = addPositionTo(distanceToMove);
+        final int movedPosition = addPosition(distanceToMove);
         return CACHED_RANK.containsKey(movedPosition);
     }
 
-    private int addPositionTo(final int distanceToMove) {
+    public int addPosition(final int distanceToMove) {
         return position + distanceToMove;
     }
 
@@ -51,5 +46,9 @@ public enum Rank {
 
     private int subtractPosition(final int position) {
         return this.position - position;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

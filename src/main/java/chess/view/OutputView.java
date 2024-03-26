@@ -21,17 +21,17 @@ public class OutputView {
 
     // TODO
     public void printBoard(Map<Point, Piece> board) {
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder boardMessageBuilder = new StringBuilder();
 
         for (int rank = 8; rank > 0; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
-                final Piece piece = board.get(new Point(file, rank));
-                builder.append(findNameOf(piece));
+                final Piece piece = board.get(Point.of(file, rank));
+                boardMessageBuilder.append(findNameOf(piece));
             }
-            builder.append(System.lineSeparator());
+            boardMessageBuilder.append(System.lineSeparator());
         }
 
-        System.out.println(builder);
+        System.out.println(boardMessageBuilder);
     }
 
     private String findNameOf(Piece piece) {

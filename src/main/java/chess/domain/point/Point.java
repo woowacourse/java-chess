@@ -1,18 +1,41 @@
 package chess.domain.point;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Point {
+    private static final Map<String, Point> CACHED_POINT = Arrays.stream(File.values())
+            .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> new Point(file, rank)))
+            .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+
     private final File file;
     private final Rank rank;
 
-    public Point(File file, Rank rank) {
+    private Point(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public Point(char file, int rank) {
-        this(File.from(file), Rank.from(rank));
+    public static Point of(final char file, final int rank) {
+        final String key = toString(file, rank);
+
+        if (CACHED_POINT.containsKey(key)) {
+            return CACHED_POINT.get(key);
+        }
+        throw new IllegalArgumentException("일치하는 값을 찾을 수 없습니다.");
+    }
+
+    private static String toKey(final File file, final Rank rank) {
+        final char filePosition = file.getPosition();
+        final int rankPosition = rank.getPosition();
+
+        return toString(filePosition, rankPosition);
+    }
+
+    private static String toString(final char file, final int rank) {
+        return String.valueOf(file) + rank;
     }
 
     public Direction findRoute(final Point destination) {
@@ -82,10 +105,10 @@ public class Point {
     }
 
     public Point add(final int directionOfFile, final int distanceToMove) {
-        final File addedFile = file.move(directionOfFile);
-        final Rank addedRank = rank.move(distanceToMove);
+        final char addedFilePosition = file.addPosition(directionOfFile);
+        final int addedRankPosition = rank.addPosition(distanceToMove);
 
-        return new Point(addedFile, addedRank);
+        return Point.of(addedFilePosition, addedRankPosition);
     }
 
     public boolean addable(final int addFile, final int distanceToMove) {
@@ -98,18 +121,5 @@ public class Point {
 
     public boolean isSeventhRank() {
         return this.rank == Rank.SEVEN;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Point point = (Point) o;
-        return Objects.equals(file, point.file) && rank == point.rank;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(file, rank);
     }
 }

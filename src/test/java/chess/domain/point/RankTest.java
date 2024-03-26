@@ -33,9 +33,9 @@ class RankTest {
     void move() {
         Rank rank = Rank.from(1);
 
-        Rank movedRank = rank.move(5);
+        int movedRank = rank.addPosition(5);
 
-        assertThat(movedRank).isEqualTo(Rank.from(6));
+        assertThat(movedRank).isEqualTo(6);
     }
 
     @ParameterizedTest

@@ -13,8 +13,8 @@ class BishopTest {
     void isMovableDirection1() {
         Bishop bishop = new Bishop(Team.WHITE);
         boolean result = bishop.isMovableDirection(
-                new Point('a', 1),
-                new Point('b', 2)
+                Point.of('a', 1),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();
@@ -25,8 +25,8 @@ class BishopTest {
     void isMovableDirection2() {
         Bishop bishop = new Bishop(Team.WHITE);
         boolean result = bishop.isMovableDirection(
-                new Point('c', 4),
-                new Point('e', 2)
+                Point.of('c', 4),
+                Point.of('e', 2)
         );
 
         assertThat(result).isTrue();
@@ -37,8 +37,8 @@ class BishopTest {
     void isMovableDirection3() {
         Bishop bishop = new Bishop(Team.WHITE);
         boolean result = bishop.isMovableDirection(
-                new Point('h', 1),
-                new Point('a', 8)
+                Point.of('h', 1),
+                Point.of('a', 8)
         );
 
         assertThat(result).isTrue();
@@ -49,8 +49,8 @@ class BishopTest {
     void isMovableDirection4() {
         Bishop bishop = new Bishop(Team.WHITE);
         boolean result = bishop.isMovableDirection(
-                new Point('h', 8),
-                new Point('b', 2)
+                Point.of('h', 8),
+                Point.of('b', 2)
         );
 
         assertThat(result).isTrue();

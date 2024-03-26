@@ -14,8 +14,8 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
 
         boolean result = rook.isMovableDirection(
-                new Point('a', 1),
-                new Point('a', 8)
+                Point.of('a', 1),
+                Point.of('a', 8)
         );
 
         assertThat(result).isTrue();
@@ -27,8 +27,8 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
 
         boolean result = rook.isMovableDirection(
-                new Point('a', 8),
-                new Point('a', 1)
+                Point.of('a', 8),
+                Point.of('a', 1)
         );
 
         assertThat(result).isTrue();
@@ -40,8 +40,8 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
 
         boolean result = rook.isMovableDirection(
-                new Point('h', 1),
-                new Point('a', 1)
+                Point.of('h', 1),
+                Point.of('a', 1)
         );
 
         assertThat(result).isTrue();
@@ -53,8 +53,8 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
 
         boolean result = rook.isMovableDirection(
-                new Point('a', 1),
-                new Point('h', 1)
+                Point.of('a', 1),
+                Point.of('h', 1)
         );
 
         assertThat(result).isTrue();
@@ -66,8 +66,8 @@ class RookTest {
         Rook rook = new Rook(Team.WHITE);
 
         boolean result = rook.isMovableDirection(
-                new Point('a', 1),
-                new Point('b', 2)
+                Point.of('a', 1),
+                Point.of('b', 2)
         );
 
         assertThat(result).isFalse();
