@@ -9,15 +9,19 @@ public class DBFixtures {
         return new DBConnector("chess_test");
     }
 
-    public static Supplier<Connection> createConnector() {
+    public static Supplier<Connection> createConnectorSupplier() {
         return () -> createDBConnector().getConnection();
     }
 
     public static PiecesDao createPiecesDao() {
-        return new PiecesDao(createConnector());
+        return new PiecesDao(createConnectorSupplier());
     }
 
     public static TurnsDao createTurnsDao() {
-        return new TurnsDao(createConnector());
+        return new TurnsDao(createConnectorSupplier());
+    }
+
+    public static DBService createDBService() {
+        return new DBService(createConnectorSupplier());
     }
 }
