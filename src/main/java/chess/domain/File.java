@@ -15,19 +15,19 @@ public enum File {
     private final String file;
     private final int index;
 
-    File(String file, int index) {
+    File(final String file, final int index) {
         this.file = file;
         this.index = index;
     }
 
-    public static File valueByFileIndex(String fileIndex) {
+    public static File valueByFileIndex(final String fileIndex) {
         return Arrays.stream(values())
                 .filter(value -> value.file.equals(fileIndex))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("보드의 범위를 벗어난 좌표입니다."));
     }
 
-    public static File valueByIndex(int index) {
+    public static File valueByIndex(final int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findFirst()

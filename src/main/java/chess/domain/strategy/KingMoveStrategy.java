@@ -6,7 +6,7 @@ import chess.domain.PositionDifference;
 public class KingMoveStrategy implements MoveStrategy {
 
     @Override
-    public boolean canMove(Position currentPosition, Position newPosition) {
+    public boolean canMove(final Position currentPosition, final Position newPosition) {
         PositionDifference positionDifference = currentPosition.calculateDifference(newPosition);
 
         return positionDifference.isWithinUnitRange();

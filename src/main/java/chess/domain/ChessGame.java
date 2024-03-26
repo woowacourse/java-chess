@@ -21,7 +21,7 @@ public class ChessGame {
         throw new IllegalArgumentException("start는 한 번만 입력될 수 있습니다.");
     }
 
-    public void move(Position source, Position target) {
+    public void move(final Position source, final Position target) {
         validateMove(source, target);
         if (checkTurn(source, turn)) {
             boolean isMoved = board.movePieceAndRenewBoard(source, target);
@@ -41,7 +41,7 @@ public class ChessGame {
         return List.of(scoreCalculator.getWhiteScore(), scoreCalculator.getBlackScore());
     }
 
-    public Team findWinner(double whiteScore, double blackScore) {
+    public Team findWinner(final double whiteScore, final double blackScore) {
         if (whiteScore > blackScore) {
             return Team.WHITE;
         }
@@ -51,7 +51,7 @@ public class ChessGame {
         return Team.NONE;
     }
 
-    private void validateMove(Position source, Position target) {
+    private void validateMove(final Position source, final Position target) {
         if (notStarted()) {
             throw new IllegalArgumentException("start가 입력되기 전에 move를 수행할 수 없습니다.");
         }
@@ -64,11 +64,11 @@ public class ChessGame {
         return turn != Team.WHITE && turn != Team.BLACK;
     }
 
-    private boolean checkTurn(Position source, Team turn) {
+    private boolean checkTurn(final Position source, final Team turn) {
         return board.isSameTeamFromPosition(source, turn);
     }
 
-    private Team turnChange(boolean isMoved) {
+    private Team turnChange(final boolean isMoved) {
         if (!isMoved) {
             throw new IllegalArgumentException("입력한 움직임을 수행할 수 없습니다. 다시 시도해 주십시오.");
         }

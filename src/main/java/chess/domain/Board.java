@@ -19,12 +19,12 @@ public class Board {
         this.removedPiece = new RemovedPiece();
     }
 
-    private void initialize(Map<Position, Piece> board) {
+    private void initialize(final Map<Position, Piece> board) {
         List<Piece> pieces = BoardInitializer.initialize();
         pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
     }
 
-    public boolean movePieceAndRenewBoard(Position source, Position target) {
+    public boolean movePieceAndRenewBoard(final Position source, final Position target) {
         Piece piece = board.get(source);
         Piece movedPiece = movePiece(source, target, piece);
         Position newPosition = movedPiece.getPosition();
@@ -38,13 +38,13 @@ public class Board {
         return target == newPosition;
     }
 
-    public boolean isSameTeamFromPosition(Position position, Team team) {
+    public boolean isSameTeamFromPosition(final Position position, final Team team) {
         Piece piece = board.get(position);
 
         return piece.isSameTeam(team);
     }
 
-    private Piece movePiece(Position source, Position target, Piece piece) {
+    private Piece movePiece(final Position source, final Position target, final Piece piece) {
         return piece.move(target,
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
@@ -55,13 +55,13 @@ public class Board {
         return removedPiece.isRecentlyRemovedPieceType(PieceType.KING);
     }
 
-    public List<Piece> getPiecesInVertical(List<Position> positions) {
+    public List<Piece> getPiecesInVertical(final List<Position> positions) {
         return positions.stream()
                 .map(board::get)
                 .toList();
     }
 
-    boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
+    boolean checkObstacleInRange(final Position currentPosition, final Position newPosition) {
         List<Position> internalPositions = currentPosition.getInternalPositions(newPosition);
 
         return internalPositions.stream()
@@ -69,19 +69,19 @@ public class Board {
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 
-    boolean checkPieceExist(Position position) {
+    boolean checkPieceExist(final Position position) {
         Piece piece = board.get(position);
 
         return piece.getType() != PieceType.EMPTY;
     }
 
-    boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
+    boolean checkSameTeamPieceExist(final Team currentTeam, final Position otherPosition) {
         Piece otherPiece = board.get(otherPosition);
 
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    void placePiece(Position currentPosition, Piece piece) {
+    void placePiece(final Position currentPosition, final Piece piece) {
         board.put(currentPosition, piece);
     }
 

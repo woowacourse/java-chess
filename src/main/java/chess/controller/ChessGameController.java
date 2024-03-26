@@ -20,7 +20,7 @@ public class ChessGameController {
         play(chessGame);
     }
 
-    private void play(ChessGame chessGame) {
+    private void play(final ChessGame chessGame) {
         try {
             playChess(chessGame);
         } catch (IllegalArgumentException e) {
@@ -29,7 +29,7 @@ public class ChessGameController {
         }
     }
 
-    private void playChess(ChessGame chessGame) {
+    private void playChess(final ChessGame chessGame) {
         Command command = Command.of(InputView.inputCommand());
         boolean isEnd = playOneTurn(chessGame, command);
         while (!isEnd) {
@@ -38,7 +38,7 @@ public class ChessGameController {
         }
     }
 
-    private boolean playOneTurn(ChessGame chessGame, Command command) {
+    private boolean playOneTurn(final ChessGame chessGame, final Command command) {
         if (command.isCommand(END)) {
             return true;
         }
@@ -48,7 +48,7 @@ public class ChessGameController {
         return continueCommand(chessGame, command);
     }
 
-    private boolean continueCommand(ChessGame chessGame, Command command) {
+    private boolean continueCommand(final ChessGame chessGame, final Command command) {
         if (command.isCommand(START)) {
             start(chessGame);
         }
@@ -58,12 +58,12 @@ public class ChessGameController {
         return false;
     }
 
-    private void start(ChessGame chessGame) {
+    private void start(final ChessGame chessGame) {
         chessGame.start();
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
     }
 
-    private boolean move(ChessGame chessGame, Command command) {
+    private boolean move(final ChessGame chessGame, final Command command) {
         Position source = Position.of(command.getSource());
         Position target = Position.of(command.getTarget());
         chessGame.move(source, target);
@@ -76,7 +76,7 @@ public class ChessGameController {
         return false;
     }
 
-    private void status(ChessGame chessGame) {
+    private void status(final ChessGame chessGame) {
         List<Double> score = chessGame.status();
         double whiteScore = score.get(0);
         double blackScore = score.get(1);
@@ -84,7 +84,7 @@ public class ChessGameController {
         result(chessGame, winner, whiteScore, blackScore);
     }
 
-    private void result(ChessGame chessGame, Team winner, double whiteScore, double blackScore) {
+    private void result(final ChessGame chessGame, final Team winner, final double whiteScore, final double blackScore) {
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (winner.equals(Team.NONE)) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);

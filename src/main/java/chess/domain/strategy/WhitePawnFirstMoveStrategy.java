@@ -6,7 +6,7 @@ import chess.domain.PositionDifference;
 public class WhitePawnFirstMoveStrategy implements MoveStrategy {
 
     @Override
-    public boolean canMove(Position currentPosition, Position newPosition) {
+    public boolean canMove(final Position currentPosition, final Position newPosition) {
         PositionDifference positionDifference = currentPosition.calculateDifference(newPosition);
 
         boolean canMoveStraight = positionDifference.isWithinVerticalRange(-2, -1);

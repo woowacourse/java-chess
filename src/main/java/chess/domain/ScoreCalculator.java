@@ -10,18 +10,18 @@ public class ScoreCalculator {
     private final double whiteScore;
     private final double blackScore;
 
-    private ScoreCalculator(double whiteScore, double blackScore) {
+    private ScoreCalculator(final double whiteScore, final double blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
-    public static ScoreCalculator of(Board board) {
+    public static ScoreCalculator of(final Board board) {
         double whiteScore = calculateScore(board, Team.WHITE);
         double blackScore = calculateScore(board, Team.BLACK);
         return new ScoreCalculator(whiteScore, blackScore);
     }
 
-    private static double calculateScore(Board board, Team team) {
+    private static double calculateScore(final Board board, final Team team) {
         Map<Position, Piece> rawBoard = board.getBoard();
         return rawBoard.values().stream()
                 .filter(piece -> piece.isSameTeam(team))
@@ -29,7 +29,7 @@ public class ScoreCalculator {
                 .sum();
     }
 
-    private static double scorePiece(Board board, Piece piece) {
+    private static double scorePiece(final Board board, final Piece piece) {
         double basicScore = Score.getScoreByPieceType(piece.getType());
 
         if (piece.getType() == PieceType.PAWN) {
@@ -39,7 +39,7 @@ public class ScoreCalculator {
         return basicScore;
     }
 
-    private static double scorePawn(double basicScore, Board board, Piece piece) {
+    private static double scorePawn(final double basicScore, final Board board, final Piece piece) {
         Position position = piece.getPosition();
         List<Position> otherPositions = position.getVerticalInternalPositions();
         List<Piece> otherPieces = board.getPiecesInVertical(otherPositions);

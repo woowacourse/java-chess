@@ -7,16 +7,17 @@ import chess.domain.strategy.RookMoveStrategy;
 
 public class Rook extends ChessPiece {
 
-    private Rook(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Rook(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public Rook(PieceInfo pieceInfo) {
+    public Rook(final PieceInfo pieceInfo) {
         this(pieceInfo, new RookMoveStrategy());
     }
 
     @Override
-    public Rook move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public Rook move(final Position newPosition, final boolean isDisturbed,
+                     final boolean isOtherPieceExist, final boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

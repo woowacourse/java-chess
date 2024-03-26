@@ -13,11 +13,11 @@ public class RemovedPiece {
         this.removedPiece = new ArrayList<>();
     }
 
-    public void addPiece(Piece piece) {
+    public void addPiece(final Piece piece) {
         removedPiece.add(piece);
     }
 
-    public boolean isRecentlyRemovedPieceType(PieceType pieceType) {
+    public boolean isRecentlyRemovedPieceType(final PieceType pieceType) {
         if (!removedPiece.isEmpty()) {
             Piece recentlyRemovedPiece = removedPiece.get(removedPiece.size() - 1);
             return recentlyRemovedPiece.getType() == pieceType;

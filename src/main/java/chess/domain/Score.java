@@ -15,12 +15,12 @@ public enum Score {
     private final PieceType pieceType;
     private final double score;
 
-    Score(PieceType pieceType, double score) {
+    Score(final PieceType pieceType, final double score) {
         this.pieceType = pieceType;
         this.score = score;
     }
 
-    static double getScoreByPieceType(PieceType pieceType) {
+    static double getScoreByPieceType(final PieceType pieceType) {
         return Arrays.stream(values())
                 .filter(value -> value.pieceType == pieceType)
                 .findFirst()

@@ -10,7 +10,7 @@ public enum CommandType {
 
     private final String commandType;
 
-    CommandType(String commandType) {
+    CommandType(final String commandType) {
         this.commandType = commandType;
     }
 
@@ -18,7 +18,7 @@ public enum CommandType {
         return commandType;
     }
 
-    public static CommandType valueByCommandType(String commandType) {
+    public static CommandType valueByCommandType(final String commandType) {
         return Arrays.stream(values())
                 .filter(value -> value.commandType.equals(commandType))
                 .findFirst()

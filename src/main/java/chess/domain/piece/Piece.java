@@ -7,7 +7,8 @@ import chess.domain.Team;
 import java.util.List;
 
 public interface Piece {
-    Piece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist);
+    Piece move(final Position newPosition, final boolean isDisturbed,
+               final boolean isOtherPieceExist, final boolean isSameTeamExist);
 
     PieceType getType();
 

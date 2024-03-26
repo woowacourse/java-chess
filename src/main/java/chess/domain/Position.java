@@ -9,26 +9,26 @@ public class Position {
     private final File x;
     private final Rank y;
 
-    private Position(File x, Rank y) {
+    private Position(final File x, final Rank y) {
         this.x = x;
         this.y = y;
     }
 
-    public static Position of(String position) {
+    public static Position of(final String position) {
         File x = File.valueByFileIndex(String.valueOf(position.charAt(0)));
         Rank y = Rank.valueByRank(String.valueOf(position.charAt(1)));
 
         return new Position(x, y);
     }
 
-    public PositionDifference calculateDifference(Position otherPosition) {
+    public PositionDifference calculateDifference(final Position otherPosition) {
         int xDifference = this.x.ordinal() - otherPosition.x.ordinal();
         int yDifference = this.y.ordinal() - otherPosition.y.ordinal();
 
         return new PositionDifference(xDifference, yDifference);
     }
 
-    public List<Position> getInternalPositions(Position otherPosition) {
+    public List<Position> getInternalPositions(final Position otherPosition) {
         List<Position> internalPositions = new ArrayList<>();
         int deltaX = otherPosition.x.getIndex() - this.x.getIndex();
         int deltaY = otherPosition.y.getIndex() - this.y.getIndex();

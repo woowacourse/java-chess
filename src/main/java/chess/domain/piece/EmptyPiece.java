@@ -7,17 +7,17 @@ import chess.domain.strategy.MoveStrategy;
 
 public class EmptyPiece extends ChessPiece {
 
-    private EmptyPiece(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private EmptyPiece(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public EmptyPiece(PieceInfo pieceInfo) {
+    public EmptyPiece(final PieceInfo pieceInfo) {
         this(pieceInfo, new EmptyMoveStrategy());
     }
 
     @Override
-    public EmptyPiece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist,
-                           boolean isSameTeamExist) {
+    public EmptyPiece move(final Position newPosition, final boolean isDisturbed,
+                           final boolean isOtherPieceExist, final boolean isSameTeamExist) {
         return this;
     }
 

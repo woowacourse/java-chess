@@ -13,11 +13,11 @@ import java.util.Map;
 public class BoardDto {
     private final List<List<String>> board;
 
-    private BoardDto(List<List<String>> board) {
+    private BoardDto(final List<List<String>> board) {
         this.board = board;
     }
 
-    public static BoardDto of(Map<Position, Piece> board) {
+    public static BoardDto of(final Map<Position, Piece> board) {
         List<List<String>> rawBoard = new ArrayList<>();
 
         for (int i = 0; i < 8; i++) {
@@ -33,7 +33,7 @@ public class BoardDto {
         return new BoardDto(rawBoard);
     }
 
-    private static void makeBoardDtoPiece(Position position, Piece piece, List<List<String>> rawBoard) {
+    private static void makeBoardDtoPiece(final Position position, final Piece piece, final List<List<String>> rawBoard) {
         int realYPosition = position.getYPosition();
         int realXPosition = position.getXPosition();
         PieceType pieceType = piece.getType();

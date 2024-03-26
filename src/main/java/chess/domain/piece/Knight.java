@@ -7,16 +7,17 @@ import chess.domain.strategy.MoveStrategy;
 
 public class Knight extends ChessPiece {
 
-    private Knight(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Knight(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public Knight(PieceInfo pieceInfo) {
+    public Knight(final PieceInfo pieceInfo) {
         this(pieceInfo, new KnightMoveStrategy());
     }
 
     @Override
-    public Knight move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public Knight move(final Position newPosition, final boolean isDisturbed,
+                       final boolean isOtherPieceExist, final boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
