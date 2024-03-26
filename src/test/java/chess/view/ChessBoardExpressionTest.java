@@ -14,7 +14,7 @@ class ChessBoardExpressionTest {
     @Test
     @DisplayName("현재 체스판의 상태를 문자열로 반환한다.")
     void toChessBoardExpression() {
-        Piece piece = King.of(Color.WHITE);
+        Piece piece = King.colorOf(Color.WHITE);
         List<Piece> pieces = Collections.nCopies(64, piece);
 
         String actualExpression = ChessBoardExpression.toExpression(pieces);

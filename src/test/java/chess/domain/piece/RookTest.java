@@ -17,7 +17,7 @@ class RookTest {
         })
         @DisplayName("이동할 수 있는 방향이면 true를 반환한다.")
         void canMove(Direction direction) {
-            Rook rook = Rook.of(Color.WHITE);
+            Rook rook = Rook.colorOf(Color.WHITE);
 
             boolean result = rook.canMoveInTargetDirection(direction);
 
@@ -35,7 +35,7 @@ class RookTest {
         })
         @DisplayName("이동할 수 없는 방향이면 false를 반환한다.")
         void canNotMove(Direction direction) {
-            Rook rook = Rook.of(Color.WHITE);
+            Rook rook = Rook.colorOf(Color.WHITE);
 
             boolean result = rook.canMoveInTargetDirection(direction);
 

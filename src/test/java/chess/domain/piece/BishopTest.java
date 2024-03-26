@@ -18,7 +18,7 @@ class BishopTest {
         })
         @DisplayName("이동할 수 있는 방향이면 true를 반환한다.")
         void canMove(Direction direction) {
-            Bishop bishop = Bishop.of(Color.WHITE);
+            Bishop bishop = Bishop.colorOf(Color.WHITE);
 
             boolean result = bishop.canMoveInTargetDirection(direction);
 
@@ -35,7 +35,7 @@ class BishopTest {
         })
         @DisplayName("이동할 수 없는 방향이면 false를 반환한다.")
         void canNotMove(Direction direction) {
-            Bishop bishop = Bishop.of(Color.WHITE);
+            Bishop bishop = Bishop.colorOf(Color.WHITE);
 
             boolean result = bishop.canMoveInTargetDirection(direction);
 

@@ -19,7 +19,7 @@ class QueenTest {
         })
         @DisplayName("이동할 수 있는 방향이면 true를 반환한다.")
         void canMove(Direction direction) {
-            Queen queen = Queen.of(Color.WHITE);
+            Queen queen = Queen.colorOf(Color.WHITE);
 
             boolean result = queen.canMoveInTargetDirection(direction);
 
@@ -35,7 +35,7 @@ class QueenTest {
         })
         @DisplayName("이동할 수 없는 방향이면 false를 반환한다.")
         void canNotMove(Direction direction) {
-            Queen queen = Queen.of(Color.WHITE);
+            Queen queen = Queen.colorOf(Color.WHITE);
 
             boolean result = queen.canMoveInTargetDirection(direction);
 

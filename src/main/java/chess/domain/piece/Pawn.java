@@ -3,26 +3,25 @@ package chess.domain.piece;
 import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Pawn extends Piece {
 
+    private static final Pawn BLACK_PAWN = new Pawn(Color.BLACK);
+    private static final Pawn WHITE_PAWN = new Pawn(Color.WHITE);
     private static final int BLACK_PAWN_INITIAL_RANK = 7;
     private static final int WHITE_PAWN_INITIAL_RANK = 2;
-
-    private static final Map<Color, Pawn> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Pawn(Color.BLACK)),
-            Map.entry(Color.WHITE, new Pawn(Color.WHITE))
-    );
 
     private Pawn(final Color color) {
         super(color);
         initDirections();
     }
 
-    public static Pawn of(final Color team) {
-        return CACHE.get(team);
+    public static Pawn colorOf(final Color color) {
+        if (color == Color.BLACK) {
+            return BLACK_PAWN;
+        }
+        return WHITE_PAWN;
     }
 
     private void initDirections() {

@@ -31,7 +31,7 @@ class ChessBoardTest {
     void findAllPieces() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Queen.colorOf(Color.BLACK));
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
         List<Piece> allPieces = chessBoard.findAllPieces();
@@ -71,9 +71,9 @@ class ChessBoardTest {
     void cannotMoveIfAllyAlreadyExist() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, King.of(Color.BLACK));
+        positionPiece.put(sourcePosition, King.colorOf(Color.BLACK));
         Position targetPosition = Position.of('a', 2);
-        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(targetPosition, Pawn.colorOf(Color.BLACK));
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -87,7 +87,7 @@ class ChessBoardTest {
     void cannotReachTarget() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, King.of(Color.BLACK));
+        positionPiece.put(sourcePosition, King.colorOf(Color.BLACK));
         Position targetPosition = Position.of('a', 3);
         positionPiece.put(targetPosition, Empty.of());
 
@@ -103,9 +103,9 @@ class ChessBoardTest {
     void knightCanJumpOverPiece() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, Knight.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Knight.colorOf(Color.BLACK));
         Position obstaclePosition = Position.of('a', 2);
-        positionPiece.put(obstaclePosition, Pawn.of(Color.BLACK));
+        positionPiece.put(obstaclePosition, Pawn.colorOf(Color.BLACK));
         Position targetPosition = Position.of('b', 3);
         positionPiece.put(targetPosition, Empty.of());
 
@@ -120,7 +120,7 @@ class ChessBoardTest {
     void invalidDirection() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, Rook.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Rook.colorOf(Color.BLACK));
         Position targetPosition = Position.of('c', 3);
         positionPiece.put(targetPosition, Empty.of());
 
@@ -136,10 +136,10 @@ class ChessBoardTest {
     void kill() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        Rook sourcePiece = Rook.of(Color.BLACK);
+        Rook sourcePiece = Rook.colorOf(Color.BLACK);
         positionPiece.put(sourcePosition, sourcePiece);
         Position targetPosition = Position.of('a', 3);
-        Rook targetPiece = Rook.of(Color.WHITE);
+        Rook targetPiece = Rook.colorOf(Color.WHITE);
         positionPiece.put(targetPosition, targetPiece);
 
         positionPiece.put(Position.of('a', 2), Empty.of());
@@ -156,7 +156,7 @@ class ChessBoardTest {
     void fromEdgeToEdge() {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 1);
-        positionPiece.put(sourcePosition, Queen.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Queen.colorOf(Color.BLACK));
 
         for (int i = 2; i <= 8; i++) {
             Position emptyPosition = Position.of('a', i);
@@ -178,7 +178,7 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 2);
         Position emptyPosition = Position.of('a', 3);
         Position targetPosition = Position.of('a', 4);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
         positionPiece.put(emptyPosition, Empty.of());
         positionPiece.put(targetPosition, Empty.of());
 
@@ -195,8 +195,8 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 2);
         Position emptyPosition = Position.of('a', 3);
         Position targetPosition = Position.of('a', 4);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
-        positionPiece.put(emptyPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
+        positionPiece.put(emptyPosition, Pawn.colorOf(Color.BLACK));
         positionPiece.put(targetPosition, Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
@@ -212,9 +212,9 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 2);
         Position emptyPosition = Position.of('a', 3);
         Position targetPosition = Position.of('a', 4);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
         positionPiece.put(emptyPosition, Empty.of());
-        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(targetPosition, Pawn.colorOf(Color.BLACK));
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -228,7 +228,7 @@ class ChessBoardTest {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 2);
         Position targetPosition = Position.of('b', 3);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
         positionPiece.put(targetPosition, Empty.of());
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
@@ -243,8 +243,8 @@ class ChessBoardTest {
         Map<Position, Piece> positionPiece = new LinkedHashMap<>();
         Position sourcePosition = Position.of('a', 2);
         Position targetPosition = Position.of('b', 3);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
-        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
+        positionPiece.put(targetPosition, Pawn.colorOf(Color.BLACK));
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 
@@ -259,9 +259,9 @@ class ChessBoardTest {
         Position sourcePosition = Position.of('a', 2);
         Position emptyPosition = Position.of('b', 3);
         Position targetPosition = Position.of('c', 4);
-        positionPiece.put(sourcePosition, Pawn.of(Color.WHITE));
+        positionPiece.put(sourcePosition, Pawn.colorOf(Color.WHITE));
         positionPiece.put(emptyPosition, Empty.of());
-        positionPiece.put(targetPosition, Pawn.of(Color.BLACK));
+        positionPiece.put(targetPosition, Pawn.colorOf(Color.BLACK));
 
         ChessBoard chessBoard = new ChessBoard(positionPiece);
 

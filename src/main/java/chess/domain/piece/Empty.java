@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Empty extends Piece {
 
-    private static final Piece piece = Empty.of();
+    private static final Empty empty = new Empty();
 
-    private Empty(final Color color) {
-        super(color);
+    private Empty() {
+        super(null);
     }
 
     public static Empty of() {
-        return new Empty(Color.WHITE);
+        return empty;
     }
 
     @Override
-    public List<Position> findPath(Position source, Position target) {
-        return null;
+    public List<Position> findPath(final Position source, final Position target) {
+        throw new IllegalArgumentException("[ERROR] 빈 기물은 이동할 수 없습니다.");
     }
 
     @Override

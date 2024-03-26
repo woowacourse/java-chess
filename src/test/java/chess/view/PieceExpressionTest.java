@@ -31,18 +31,18 @@ class PieceExpressionTest {
 
     static Stream<Arguments> pieceExpressions() {
         return Stream.of(
-                Arguments.of(King.of(BLACK), "K"),
-                Arguments.of(Queen.of(BLACK), "Q"),
-                Arguments.of(Rook.of(BLACK), "R"),
-                Arguments.of(Bishop.of(BLACK), "B"),
-                Arguments.of(Knight.of(BLACK), "N"),
-                Arguments.of(Pawn.of(BLACK), "P"),
-                Arguments.of(King.of(WHITE), "k"),
-                Arguments.of(Queen.of(WHITE), "q"),
-                Arguments.of(Rook.of(WHITE), "r"),
-                Arguments.of(Bishop.of(WHITE), "b"),
-                Arguments.of(Knight.of(WHITE), "n"),
-                Arguments.of(Pawn.of(WHITE), "p"),
+                Arguments.of(King.colorOf(BLACK), "K"),
+                Arguments.of(Queen.colorOf(BLACK), "Q"),
+                Arguments.of(Rook.colorOf(BLACK), "R"),
+                Arguments.of(Bishop.colorOf(BLACK), "B"),
+                Arguments.of(Knight.colorOf(BLACK), "N"),
+                Arguments.of(Pawn.colorOf(BLACK), "P"),
+                Arguments.of(King.colorOf(WHITE), "k"),
+                Arguments.of(Queen.colorOf(WHITE), "q"),
+                Arguments.of(Rook.colorOf(WHITE), "r"),
+                Arguments.of(Bishop.colorOf(WHITE), "b"),
+                Arguments.of(Knight.colorOf(WHITE), "n"),
+                Arguments.of(Pawn.colorOf(WHITE), "p"),
                 Arguments.of(Empty.of(), ".")
         );
     }

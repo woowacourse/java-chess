@@ -2,23 +2,23 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Rook extends Piece {
 
-    private static final Map<Color, Rook> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new Rook(Color.BLACK)),
-            Map.entry(Color.WHITE, new Rook(Color.WHITE))
-    );
+    private static final Rook BLACK_ROOK = new Rook(Color.BLACK);
+    private static final Rook WHITE_ROOK = new Rook(Color.WHITE);
 
     private Rook(final Color color) {
         super(color);
         initDirections();
     }
 
-    public static Rook of(final Color color) {
-        return CACHE.get(color);
+    public static Rook colorOf(final Color color) {
+        if (color == Color.BLACK) {
+            return BLACK_ROOK;
+        }
+        return WHITE_ROOK;
     }
 
     private void initDirections() {

@@ -19,7 +19,7 @@ class KingTest {
         })
         @DisplayName("이동할 수 있는 방향이면 true를 반환한다.")
         void canMove(Direction direction) {
-            King king = King.of(Color.WHITE);
+            King king = King.colorOf(Color.WHITE);
 
             boolean result = king.canMoveInTargetDirection(direction);
 
@@ -35,7 +35,7 @@ class KingTest {
         })
         @DisplayName("이동할 수 없는 방향이면 false를 반환한다.")
         void canNotMove(Direction direction) {
-            King king = King.of(Color.WHITE);
+            King king = King.colorOf(Color.WHITE);
 
             boolean result = king.canMoveInTargetDirection(direction);
 

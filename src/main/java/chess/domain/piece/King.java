@@ -2,23 +2,23 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class King extends Piece {
 
-    private static final Map<Color, King> CACHE = Map.ofEntries(
-            Map.entry(Color.BLACK, new King(Color.BLACK)),
-            Map.entry(Color.WHITE, new King(Color.WHITE))
-    );
+    private static final King BLACK_KING = new King(Color.BLACK);
+    private static final King WHITE_KING = new King(Color.WHITE);
 
     private King(final Color color) {
         super(color);
         initDirections();
     }
 
-    public static King of(final Color team) {
-        return CACHE.get(team);
+    public static King colorOf(final Color color) {
+        if (color == Color.BLACK) {
+            return BLACK_KING;
+        }
+        return WHITE_KING;
     }
 
     private void initDirections() {

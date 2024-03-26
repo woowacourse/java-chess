@@ -19,7 +19,7 @@ class PawnTest {
         })
         @DisplayName("색에 따라 위, 아래 이동이 가능해진다.")
         void canMove(Color color, Direction direction, boolean canMove) {
-            Pawn pawn = Pawn.of(color);
+            Pawn pawn = Pawn.colorOf(color);
 
             boolean result = pawn.canMoveInTargetDirection(direction);
 
@@ -37,7 +37,7 @@ class PawnTest {
         })
         @DisplayName("이동할 수 없는 방향이면 false를 반환한다.")
         void canNotMove(Direction direction) {
-            Pawn pawn = Pawn.of(Color.WHITE);
+            Pawn pawn = Pawn.colorOf(Color.WHITE);
 
             boolean result = pawn.canMoveInTargetDirection(direction);
 
