@@ -66,7 +66,7 @@ public class Board {
                 .ifPresent(pieces::remove);
     }
 
-    public List<PieceDrawing> generatePieceDrawings() {
+    public List<PieceDrawing> getStatus() {
         return pieces.stream()
                 .map(PieceDrawing::from)
                 .toList();

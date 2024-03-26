@@ -30,14 +30,14 @@ public class ChessGame {
         outputView.printStartMessage();
         Command command = processStartAndGetCommand();
         Board board = BoardFactory.createBoard();
-        outputView.printBoard(board.generatePieceDrawings());
+        outputView.printBoard(board.getStatus());
         processMove(command, board);
     }
 
     private Command processStartAndGetCommand() {
         Command command;
         do {
-            command = requestUntilValid(this::requestStart);
+            command = requestUntilValid(this::requestCommandOnStart);
         } while (!command.isType(CommandType.START));
         return command;
     }
@@ -50,7 +50,7 @@ public class ChessGame {
         }
     }
 
-    private Command requestStart() {
+    private Command requestCommandOnStart() {
         Command command = requestCommand();
         if (command.isType(CommandType.MOVE)) {
             throw new IllegalArgumentException(ERROR_NOT_STARTED);
@@ -75,7 +75,7 @@ public class ChessGame {
             Square source = Square.from(command.getArgument(1));
             Square target = Square.from(command.getArgument(2));
             board.move(source, target, turn);
-            outputView.printBoard(board.generatePieceDrawings());
+            outputView.printBoard(board.getStatus());
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return turn;
