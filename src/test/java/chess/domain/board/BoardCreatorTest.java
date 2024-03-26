@@ -83,9 +83,7 @@ class BoardCreatorTest {
         // when, then
         Map<Position, Piece> initialPiecePositions = board.getBoard();
         IntStream.rangeClosed(3, 6).boxed()
-                .flatMap(rank -> IntStream.rangeClosed(1, 8).boxed()
-                        .map(file -> new Position(file, rank)))
-                .forEach(position -> assertThat(initialPiecePositions.get(position)).isEqualTo(
-                        new Empty()));
+                .flatMap(rank -> IntStream.rangeClosed(1, 8).boxed().map(file -> new Position(file, rank)))
+                .forEach(position -> assertThat(initialPiecePositions.get(position)).isEqualTo(new Empty()));
     }
 }
