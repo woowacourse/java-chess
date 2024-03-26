@@ -27,13 +27,24 @@ class RankTest {
     }
 
     @Test
-    @DisplayName("rank와 rank간 루트를 구할 수 있다")
-    void should_find_route() {
+    @DisplayName("rank와 rank간 증가하는 루트를 구할 수 있다")
+    void should_find_incline_route() {
         Rank from = ONE;
         Rank to = EIGHT;
 
         List<Rank> rankRouteToTargetRank = from.findRankRouteToTargetRank(to);
 
-        assertThat(rankRouteToTargetRank).containsExactly(TWO, THREE, FOUR, FIVE, SIX, SEVEN);
+        assertThat(rankRouteToTargetRank).containsOnly(TWO, THREE, FOUR, FIVE, SIX, SEVEN);
+    }
+
+    @Test
+    @DisplayName("rank와 rank간 감소하는 루트를 구할 수 있다")
+    void should_find_decline_route() {
+        Rank from = EIGHT;
+        Rank to = ONE;
+
+        List<Rank> rankRouteToTargetRank = from.findRankRouteToTargetRank(to);
+
+        assertThat(rankRouteToTargetRank).containsOnly(TWO, THREE, FOUR, FIVE, SIX, SEVEN);
     }
 }

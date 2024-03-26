@@ -27,13 +27,24 @@ class FileTest {
     }
 
     @Test
-    @DisplayName("File과 FIle간 루트를 구할 수 있다")
-    void should_find_route() {
+    @DisplayName("File과 FIle간 증가하는 루트를 구할 수 있다")
+    void should_find_incline_route() {
         File from = a;
         File to = h;
 
         List<File> fileRouteToTargetFile = from.findFileRouteToTargetFile(to);
 
-        assertThat(fileRouteToTargetFile).containsExactly(b, c, d, e, f, g);
+        assertThat(fileRouteToTargetFile).containsOnly(b, c, d, e, f, g);
+    }
+
+    @Test
+    @DisplayName("File과 FIle간 감소하는 루트를 구할 수 있다")
+    void should_find_decline_route() {
+        File from = h;
+        File to = a;
+
+        List<File> fileRouteToTargetFile = from.findFileRouteToTargetFile(to);
+
+        assertThat(fileRouteToTargetFile).containsOnly(b, c, d, e, f, g);
     }
 }
