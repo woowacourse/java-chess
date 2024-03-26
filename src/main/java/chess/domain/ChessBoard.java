@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.position.Movement;
 import chess.domain.position.Position;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,6 +75,6 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getPieces() {
-        return pieces;
+        return Collections.unmodifiableMap(pieces);
     }
 }
