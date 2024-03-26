@@ -2,11 +2,11 @@ package domain.piece;
 
 import domain.position.Position;
 import domain.position.Position.Direction;
-import java.util.List;
+import java.util.Set;
 
 public class King extends Piece {
 
-    private static final List<Direction> VALID_DIRECTIONS = Direction.directions();
+    private static final Set<Direction> VALID_DIRECTIONS = Direction.allDirections();
     private static final int ZERO_STEP = 0;
     private static final int ONE_STEP = 1;
 

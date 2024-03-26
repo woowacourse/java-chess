@@ -1,22 +1,23 @@
 package domain.piece;
 
+import static domain.position.Position.Direction.DOWN;
+import static domain.position.Position.Direction.LEFT_DOWN;
+import static domain.position.Position.Direction.LEFT_UP;
+import static domain.position.Position.Direction.RIGHT_DOWN;
+import static domain.position.Position.Direction.RIGHT_UP;
+import static domain.position.Position.Direction.UP;
+
 import domain.position.Position;
 import domain.position.Position.Direction;
 import domain.position.Rank;
-import java.util.List;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
-    private static final Direction VALID_DIRECTIONS_WHITE_MOVE = Direction.UP;
-    private static final Direction VALID_DIRECTIONS_BLACK_MOVE = Direction.DOWN;
-    private static final List<Direction> VALID_DIRECTIONS_WHITE_ATTACK = List.of(
-            Direction.RIGHT_UP,
-            Direction.LEFT_UP
-    );
-    private static final List<Direction> VALID_DIRECTIONS_BLACK_ATTACK = List.of(
-            Direction.RIGHT_DOWN,
-            Direction.LEFT_DOWN
-    );
+    private static final Direction VALID_DIRECTIONS_WHITE_MOVE = UP;
+    private static final Direction VALID_DIRECTIONS_BLACK_MOVE = DOWN;
+    private static final Set<Direction> VALID_DIRECTIONS_WHITE_ATTACK = Set.of(RIGHT_UP, LEFT_UP);
+    private static final Set<Direction> VALID_DIRECTIONS_BLACK_ATTACK = Set.of(RIGHT_DOWN, LEFT_DOWN);
     private static final Rank INIT_RANK_OF_WHITE = Rank.TWO;
     private static final Rank INIT_RANK_OF_BLACK = Rank.SEVEN;
     private static final int ONE_STEP = 1;

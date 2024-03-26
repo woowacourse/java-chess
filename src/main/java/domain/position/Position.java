@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiPredicate;
+import java.util.stream.Collectors;
 
 public class Position { // TODO: refactoring (너무 무거움)
 
@@ -138,7 +140,7 @@ public class Position { // TODO: refactoring (너무 무거움)
         return Objects.hash(file, rank);
     }
 
-    public enum Direction { // TODO: 한 칸 검증을 여기서 하는 게 맞을까?
+    public enum Direction { // TODO: 한 칸 검증을 여기서 하는 게 맞을까? -> Movement or Vector?
 
         UP((source, target) -> source.file.equals(target.file) && source.rank.isUp(target.rank)),
         DOWN((source, target) -> source.file.equals(target.file) && source.rank.isDown(target.rank)),
@@ -168,9 +170,11 @@ public class Position { // TODO: refactoring (너무 무거움)
                     .orElse(NONE);
         }
 
-        public static List<Direction> directions() {
-            List<Direction> values = Arrays.stream(values()).toList();
-            return values.subList(0, values.size() - 1);
+        public static Set<Direction> allDirections() {
+            Set<Direction> values = Set.of(values());
+            return values.stream()
+                    .filter(direction -> direction != NONE)
+                    .collect(Collectors.toSet());
         }
 
         private boolean meetCondition(Position source, Position target) {
