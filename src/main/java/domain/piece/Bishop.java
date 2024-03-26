@@ -15,7 +15,7 @@ public class Bishop extends Piece {
 
     public Bishop(Color color) {
         super(color);
-    } // TODO: 자동완성 단축키, 터미널 단축키 변경, 탭 넘기기
+    }
 
     @Override
     public boolean canMove(Position source, Position target) {
