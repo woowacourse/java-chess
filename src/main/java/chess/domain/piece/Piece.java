@@ -32,9 +32,7 @@ public abstract class Piece {
         currentPosition = currentPosition.moveTowardDirection(direction);
         positions.add(currentPosition);
 
-        if (!currentPosition.equals(target)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
-        }
+        validateReachability(target, currentPosition);
 
         return positions;
     }
@@ -57,6 +55,12 @@ public abstract class Piece {
     final protected void validateDirection(final Direction direction) {
         if (!directions.contains(direction)) {
             throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+        }
+    }
+
+    final protected void validateReachability(final Position target, final Position currentPosition) {
+        if (!currentPosition.equals(target)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
         }
     }
 

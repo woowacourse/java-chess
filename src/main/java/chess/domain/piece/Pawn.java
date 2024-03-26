@@ -49,9 +49,7 @@ public class Pawn extends Piece {
             positions.add(currentPosition);
         }
 
-        if (currentPosition != target) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물은 해당 위치에 도달할 수 없습니다.");
-        }
+        validateReachability(target, currentPosition);
 
         return positions;
     }
