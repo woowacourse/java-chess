@@ -46,7 +46,7 @@ public class ChessController {
         printBoardStatus(chessGame.getPositionsOfPieces());
 
         RequestDto requestDto = RequestDto.of(command);  // TODO: 모두 호환되도록 GameRequest 같은 것으로 변경
-        while (requestDto.command().isContinuable() && !chessGame.isGameEnd()) {
+        while (shouldProceedGame(requestDto, chessGame)) {
             outputView.printCurrentTurn(chessGame.currentPlayingTeam());
             requestDto = readUserInput(inputView::inputGameCommand);
             playRound(requestDto, chessGame);
@@ -54,6 +54,10 @@ public class ChessController {
 
         // TODO: "status" 명령을 받을 때 출력하도록 변경
         printGameResult(chessGame);
+    }
+
+    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
+        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
