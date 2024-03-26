@@ -107,7 +107,7 @@ class BishopTest {
      * * * * * * * * 1    * o * * * * * o 1
      a b c d e f g h      a b c d e f g h
      */
-    @DisplayName("이동 가능한 모든 위치를 반환한다_기물이 존재하지 않는 경우")
+    @DisplayName("이동 가능한 모든 위치를 반환한다_반대편 기물이 존재하는 경우")
     @Test
     void movableSquareExistEnemy() {
         Bishop bishop = new Bishop(WHITE, Square.of(E, FOUR));
