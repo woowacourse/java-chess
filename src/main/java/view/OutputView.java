@@ -87,7 +87,7 @@ public class OutputView {
     }
 
     public void printScore(TeamColor teamColor, double score) {
-        System.out.printf("%s 의 점수: %f%n", getTeamName(teamColor), score);
+        System.out.printf("%s 의 점수: %.1f%n", getTeamName(teamColor), score);
     }
 
     private String getTeamName(TeamColor teamColor) {
