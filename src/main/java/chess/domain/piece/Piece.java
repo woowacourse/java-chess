@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Movement;
-import chess.domain.board.PieceRelation;
+import chess.domain.position.Movement;
 
 public abstract class Piece {
     protected final PieceColor color;

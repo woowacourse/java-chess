@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.Direction;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;

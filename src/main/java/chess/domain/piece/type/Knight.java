@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
-import chess.domain.board.Movement;
-import chess.domain.board.PieceRelation;
+import chess.domain.position.Movement;
+import chess.domain.piece.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;

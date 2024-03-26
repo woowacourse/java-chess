@@ -1,8 +1,4 @@
-package chess.domain.board;
-
-import chess.domain.Direction;
-import chess.domain.position.ChessRank;
-import chess.domain.position.Position;
+package chess.domain.position;
 
 import java.util.HashSet;
 import java.util.List;

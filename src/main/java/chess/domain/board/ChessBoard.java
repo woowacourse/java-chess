@@ -2,7 +2,9 @@ package chess.domain.board;
 
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRelation;
 import chess.domain.piece.PieceType;
+import chess.domain.position.Movement;
 import chess.domain.position.Position;
 import chess.dto.BoardStatus;
 
