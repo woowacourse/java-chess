@@ -16,7 +16,7 @@ public abstract class Piece {
 
     public void checkValidMove(Position source, Position target, Route route) {
         checkDifferentPosition(source, target);
-        checkNoAllyPieceAtTarget(route.targetPiece());
+        checkNoAllyPieceAtTarget(route);
         checkNoPathPieces(route);
 
         if (hasViolatedRule(source, target, route)) {
@@ -30,8 +30,8 @@ public abstract class Piece {
         }
     }
 
-    private void checkNoAllyPieceAtTarget(Piece targetPiece) {
-        if (targetPiece.isSameSide(side)) {
+    private void checkNoAllyPieceAtTarget(Route route) {
+        if (route.isAllyTargetPiece(side)) {
             throw new IllegalArgumentException("target 위치에 같은 색의 기물이 존재하면 이동할 수 없습니다.");
         }
     }

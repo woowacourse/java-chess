@@ -31,6 +31,10 @@ public class Route {
         return targetPiece.isEmpty();
     }
 
+    public boolean isAllyTargetPiece(Side side) {
+        return targetPiece.isSameSide(side);
+    }
+
     public boolean isOpponentTargetPiece(Side side) {
         return targetPiece.isOpponentSide(side);
     }
