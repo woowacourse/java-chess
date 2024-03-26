@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.attribute.Color.BLACK;
-import static chess.domain.piece.attribute.Color.WHITE;
-
 import java.util.Set;
 
 import chess.domain.chessboard.Chessboard;
@@ -23,10 +20,11 @@ public class Bishop extends SlidingPiece {
     }
 
     public static Set<Bishop> ofInitialPositions(final Color color) {
-        if (color.isBlack()) {
-            return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Bishop::new);
-        }
-        return initialPiecesOf(WHITE_INITIAL_POSITIONS, WHITE, Bishop::new);
+        return initialPiecesOf(
+                selectByColor(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
+                color,
+                Bishop::new
+        );
     }
 
     @Override

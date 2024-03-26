@@ -35,7 +35,7 @@ public class Knight extends UnslidingPiece {
 
     public static Set<Knight> ofInitialPositions(final Color color) {
         return initialPiecesOf(
-                initialPositionsBy(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
+                selectByColor(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
                 color,
                 Knight::new
         );

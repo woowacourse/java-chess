@@ -28,20 +28,12 @@ public abstract class Piece {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected static Set<Position> initialPositionsBy(
+    protected static <T> T selectByColor(
             final Color color,
-            final Set<Position> whitePositions,
-            final Set<Position> blackPositions
+            final T white,
+            final T black
     ) {
-        return (color.isBlack()) ? blackPositions : whitePositions;
-    }
-
-    protected static Position initialPositionBy(
-            final Color color,
-            final Position whitePosition,
-            final Position blackPosition
-    ) {
-        return (color.isBlack()) ? blackPosition : whitePosition;
+        return (color.isBlack()) ? black : white;
     }
 
     protected void validateTarget(final Set<Position> possiblePositions, final Position target) {

@@ -19,7 +19,7 @@ public class Queen extends SlidingPiece {
     }
 
     public static Queen ofInitialPosition(final Color color) {
-        return new Queen(color, initialPositionBy(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
+        return new Queen(color, selectByColor(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
     }
 
     @Override

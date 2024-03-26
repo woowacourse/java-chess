@@ -5,11 +5,11 @@ import static chess.domain.chessboard.attribute.Direction.DOWN_RIGHT;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import chess.domain.chessboard.Chessboard;
 import chess.domain.piece.attribute.Color;
@@ -27,40 +27,25 @@ public abstract class AbstractPawn extends UnslidingPiece {
             Movement.of(DOWN_RIGHT)
     );
 
-    protected static Set<Movement> possibleAttacksBy(final Color color) {
-        return possibleMovementsBy(color, POSSIBLE_ATTACKS_WHITE, POSSIBLE_ATTACKS_BLACK);
-    }
-
-    protected static Set<Movement> possibleMovementsBy(
-            final Color color,
-            final Set<Movement> whiteMovements,
-            final Set<Movement> blackMovements
-    ) {
-        if (color.isBlack()) {
-            return blackMovements;
-        }
-        return whiteMovements;
-    }
-
     protected AbstractPawn(final Color color, final Position position) {
         super(color, position);
     }
 
     protected Set<Position> movablePositions(
             final Chessboard chessboard,
-            final Set<Movement> whiteMovements,
-            final Set<Movement> blackMovements
+            final Set<Movement> movements
     ) {
-        Set<Position> positions = new HashSet<>(possiblePositions(
-                possibleMovementsBy(color(), whiteMovements, blackMovements),
-                chessboard::isEmpty
-        ));
-        positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
-        return positions;
+        return Stream.concat(
+                possiblePositions(movements, chessboard::isEmpty).stream(),
+                attackablePositions(chessboard).stream()
+        ).collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Position> attackablePositions(final Chessboard chessboard, final Set<Movement> movements) {
-        return possiblePositions(movements, position -> isAttackable(chessboard.squareIn(position)));
+    protected Set<Position> attackablePositions(final Chessboard chessboard) {
+        return possiblePositions(
+                selectByColor(color(), POSSIBLE_ATTACKS_WHITE, POSSIBLE_ATTACKS_BLACK),
+                position -> isAttackable(chessboard.squareIn(position))
+        );
     }
 
     private Set<Position> possiblePositions(final Set<Movement> movements, final Predicate<Position> predicate) {

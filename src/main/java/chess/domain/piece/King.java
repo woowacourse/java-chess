@@ -24,7 +24,7 @@ public class King extends UnslidingPiece {
     }
 
     public static King ofInitialPosition(final Color color) {
-        return new King(color, initialPositionBy(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
+        return new King(color, selectByColor(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
     }
 
     @Override

@@ -27,6 +27,6 @@ public class Pawn extends AbstractPawn {
 
     @Override
     public Set<Position> movablePositions(final Chessboard chessboard) {
-        return movablePositions(chessboard, WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS);
+        return movablePositions(chessboard, selectByColor(color(), WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS));
     }
 }

@@ -34,7 +34,7 @@ public class StartingPawn extends AbstractPawn {
 
     public static Set<StartingPawn> ofInitialPositions(final Color color) {
         return initialPiecesOf(
-                initialPositionsBy(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
+                selectByColor(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
                 color,
                 StartingPawn::new
         );
@@ -48,6 +48,6 @@ public class StartingPawn extends AbstractPawn {
 
     @Override
     public Set<Position> movablePositions(final Chessboard chessboard) {
-        return movablePositions(chessboard, WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS);
+        return movablePositions(chessboard, selectByColor(color(), WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS));
     }
 }
