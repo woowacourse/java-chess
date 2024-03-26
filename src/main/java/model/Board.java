@@ -93,7 +93,7 @@ public class Board {
 
     private void validateTargetEnemy(final Camp currentCamp, final Position nextPosition) {
         if (pieces.containsKey(nextPosition) && pieces.get(nextPosition).isSameCamp(currentCamp)) {
-            throw new PieceExistInRouteException(ErrorCode.PIECE_EXIST_IN_ROUTE);
+            throw new PieceExistInRouteException(ErrorCode.OWN_PIECE_EXIST_POSITION);
         }
     }
 

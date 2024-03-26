@@ -20,6 +20,7 @@ public enum ErrorCodeMessage {
     INVALID_QUEEN_MOVEMENT(ErrorCode.INVALID_QUEEN_MOVEMENT, "유효하지 않은 퀸의 이동 경로입니다."),
     INVALID_ROOK_MOVEMENT(ErrorCode.INVALID_ROOK_MOVEMENT, "유효하지 않은 룩의 이동 경로입니다."),
     PIECE_EXIST_IN_ROUTE(ErrorCode.PIECE_EXIST_IN_ROUTE, "이동 경로에 기물이 있습니다."),
+    OWN_PIECE_EXIST_POSITION(ErrorCode.OWN_PIECE_EXIST_POSITION, "도착 위치에 자신의 기물이 있습니다."),
     PIECE_DOES_NOT_EXIST_POSITION(ErrorCode.PIECE_DOES_NOT_EXIST_POSITION, "해당 위치에 기물이 없습니다."),
     INVALID_CAMP_PIECE(ErrorCode.INVALID_CAMP_PIECE, "자신의 기물만 움직일 수 있습니다."),
     NO_MESSAGE(ErrorCode.NO_MESSAGE, "해당 메시지가 없습니다.");
