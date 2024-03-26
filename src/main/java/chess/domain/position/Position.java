@@ -1,10 +1,10 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static chess.domain.position.ColumnPosition.MAX_NUMBER;
 import static chess.domain.position.ColumnPosition.MIN_NUMBER;
@@ -60,14 +60,9 @@ public class Position {
     public List<Position> findPath(Position target) {
         try {
             Direction direction = DirectionJudge.judge(this, target);
-            List<Position> path = new ArrayList<>();
-            Position nextPosition = movePositionDirectionTo(direction);
-
-            while (!target.equals(nextPosition)) {
-                path.add(nextPosition);
-                nextPosition = nextPosition.movePositionDirectionTo(direction);
-            }
-            return path;
+            return Stream.iterate(moveDirectionTo(direction),
+                    p -> !target.equals(p),
+                    p -> p.moveDirectionTo(direction)).toList();
         } catch (IllegalArgumentException e) {
             return List.of();
         }
@@ -89,7 +84,7 @@ public class Position {
         return columnPosition.isRight(target.columnPosition);
     }
 
-    private Position movePositionDirectionTo(Direction direction) {
+    private Position moveDirectionTo(Direction direction) {
         int nextRowStep = direction.getRowWeight();
         int nextColumnStep = direction.getColumnWeight();
         return movePosition(nextRowStep, nextColumnStep);
