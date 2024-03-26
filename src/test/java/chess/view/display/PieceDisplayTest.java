@@ -20,4 +20,13 @@ class PieceDisplayTest {
         // then
         assertThat(display.getNotation()).isEqualTo("k");
     }
+
+    @Test
+    @DisplayName("올바르지 않은 말이 주어지면, 없음을 반환한다.")
+    void emptyNotationTest() {
+        // when
+        PieceDisplay display = PieceDisplay.getNotationByPiece(null);
+        // then
+        assertThat(display.getNotation()).isEqualTo(".");
+    }
 }
