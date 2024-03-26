@@ -56,7 +56,8 @@ public class ChessController {
         if (gameRequest.isStart()) {
             return new ChessGame();
         }
-        return ChessGame.load();
+        int gameId = readUserInput(inputView::inputGameId);
+        return ChessGame.load(gameId);
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {

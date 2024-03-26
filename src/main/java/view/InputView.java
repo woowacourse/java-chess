@@ -54,4 +54,9 @@ public class InputView {
 
         return CommandDto.of(command, source, destination);
     }
+
+    public int inputGameId() {
+        System.out.print("로드할 게임 ID를 입력하세요 >> ");
+        return Integer.parseInt(sc.nextLine());
+    }
 }

@@ -29,11 +29,11 @@ public class ChessGame {
         this(WhiteTurn.getInstance(), BoardInitializer.init());
     }
 
-    public static ChessGame load() {
+    public static ChessGame load(int gameId) {
         GameDao gameDao = new GameDao(new DBConnector());
-        TeamColor savedTurn = gameDao.findLatestGameTurn();
+        TeamColor savedTurn = gameDao.findTurn(gameId);
         PieceDao pieceDao = new PieceDao(new DBConnector());
-        List<PieceDto> allPieces = pieceDao.findAllPieces();
+        List<PieceDto> allPieces = pieceDao.findAllPieces(gameId);
         Map<Position, Piece> piecePositions = allPieces.stream()
                 .collect(Collectors.toMap(
                         PieceDto::getPosition,

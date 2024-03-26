@@ -20,22 +20,23 @@ public class PieceDao {
         return dbConnector.getConnection();
     }
 
-    public void addPiece(PieceDto pieceDto) {
-        final String query = String.format("INSERT INTO %s VALUES(?, ?, ?, ?)", TABLE_NAME);
+    public void addPiece(PieceDto pieceDto, int gameId) {
+        final String query = String.format("INSERT INTO %s VALUES(?, ?, ?, ?, ?)", TABLE_NAME);
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, pieceDto.fileIndex());
             preparedStatement.setInt(2, pieceDto.rankIndex());
             preparedStatement.setString(3, pieceDto.color());
             preparedStatement.setString(4, pieceDto.type());
+            preparedStatement.setInt(5, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addAll(List<PieceDto> pieceDtos) {
-        pieceDtos.forEach(this::addPiece);
+    public void addAll(List<PieceDto> pieceDtos, int gameId) {
+        pieceDtos.forEach(pieceDto -> addPiece(pieceDto, gameId));
     }
 
     public PieceDto findPiece(int fileIndex, int rankIndex) {
@@ -56,11 +57,12 @@ public class PieceDao {
         return null;
     }
 
-    public List<PieceDto> findAllPieces() {
+    public List<PieceDto> findAllPieces(int gameId) {
         final List<PieceDto> pieces = new ArrayList<>();
-        final String query = "SELECT * FROM " + TABLE_NAME;
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE gameId = ?";
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
             final ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int fileIndex = resultSet.getInt("file");

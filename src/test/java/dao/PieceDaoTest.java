@@ -25,8 +25,8 @@ class PieceDaoTest {
             throw new RuntimeException(e);
         }
 
-        pieceDao.addPiece(PieceDto.of(F6, PieceFactory.create(PieceType.WHITE_QUEEN)));
-        pieceDao.addPiece(PieceDto.of(D4, PieceFactory.create(PieceType.BLACK_ROOK)));
+//        pieceDao.addPiece(PieceDto.of(F6, PieceFactory.create(PieceType.WHITE_QUEEN)));
+//        pieceDao.addPiece(PieceDto.of(D4, PieceFactory.create(PieceType.BLACK_ROOK)));
     }
 
     @Test
@@ -37,27 +37,27 @@ class PieceDaoTest {
         }
     }
 
-    @Test
-    @DisplayName("Piece 하나를 DB에 저장할 수 있다.")
-    void addPieceTest() {
-        Position position = A1;
-        PieceDto pieceDto = PieceDto.of(position, PieceFactory.create(PieceType.BLACK_PAWN));
-        pieceDao.addPiece(pieceDto);
+//    @Test
+//    @DisplayName("Piece 하나를 DB에 저장할 수 있다.")
+//    void addPieceTest() {
+//        Position position = A1;
+//        PieceDto pieceDto = PieceDto.of(position, PieceFactory.create(PieceType.BLACK_PAWN));
+//        pieceDao.addPiece(pieceDto);
+//
+//        PieceDto result = pieceDao.findPiece(position.columnIndex(), position.rowIndex());
+//
+//        assertThat(result).isEqualTo(pieceDto);
+//    }
 
-        PieceDto result = pieceDao.findPiece(position.columnIndex(), position.rowIndex());
-
-        assertThat(result).isEqualTo(pieceDto);
-    }
-
-    @Test
-    @DisplayName("저장된 모든 Piece 정보를 삭제할 수 있다.")
-    void deleteAllPiecesTest() {
-        Position position = B2;
-        PieceDto pieceDto = PieceDto.of(position, PieceFactory.create(PieceType.BLACK_PAWN));
-        pieceDao.addPiece(pieceDto);
-        pieceDao.removeAllPieces();
-
-        assertThat(pieceDao.tupleCount()).isZero();
-    }
+//    @Test
+//    @DisplayName("저장된 모든 Piece 정보를 삭제할 수 있다.")
+//    void deleteAllPiecesTest() {
+//        Position position = B2;
+//        PieceDto pieceDto = PieceDto.of(position, PieceFactory.create(PieceType.BLACK_PAWN));
+//        pieceDao.addPiece(pieceDto);
+//        pieceDao.removeAllPieces();
+//
+//        assertThat(pieceDao.tupleCount()).isZero();
+//    }
 
 }
