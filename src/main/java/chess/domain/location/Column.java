@@ -22,7 +22,7 @@ public enum Column {
     }
 
     public static Column of(String input) {
-        return Arrays.stream(values())
+        return columns.stream()
                 .filter(column -> column.equalName(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 Column 입력입니다."));
