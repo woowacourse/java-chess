@@ -51,7 +51,10 @@ public class ChessController {
             requestDto = readUserInput(inputView::inputGameCommand);
             playRound(requestDto, chessGame);
         }
+        finishGame(requestDto, chessGame);
+    }
 
+    private void finishGame(RequestDto requestDto, ChessGame chessGame) {
         outputView.printGameEndMessage();
         if (requestDto.command().isEnd()) {
             return;
