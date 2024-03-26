@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 public class BoardFactory {
 
-    public static final List<Function<PieceColor, Piece>> PIECES_ARRANGEMENT = List.of(
+    private static final List<Function<PieceColor, Piece>> PIECES_ARRANGEMENT = List.of(
             (pieceColor) -> new Piece(PieceType.ROOK, pieceColor),
             (pieceColor) -> new Piece(PieceType.KNIGHT, pieceColor),
             (pieceColor) -> new Piece(PieceType.BISHOP, pieceColor),
