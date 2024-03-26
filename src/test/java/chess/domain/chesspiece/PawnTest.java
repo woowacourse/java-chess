@@ -18,8 +18,8 @@ class PawnTest {
     @DisplayName("폰은 시작 지점에 있을 때 앞으로 2칸 이동할 수 있다.")
     void Pawn_Move_forward_twice_on_start_position() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "2"), Position.from("a", "4"));
-        List<Position> positions = List.of(Position.from("a", "3"));
+        List<Position> route = piece.getRoute(Position.of("a", "2"), Position.of("a", "4"));
+        List<Position> positions = List.of(Position.of("a", "3"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -27,7 +27,7 @@ class PawnTest {
     @DisplayName("폰은 앞으로 한 칸 이동할 수 있다.")
     void Pawn_Move_forward_once() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "2"), Position.from("a", "3"));
+        List<Position> route = piece.getRoute(Position.of("a", "2"), Position.of("a", "3"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -36,7 +36,7 @@ class PawnTest {
     @DisplayName("폰은 대각선으로 이동할 수 있다.")
     void Pawn_Move_diagonal() {
         Piece piece = new Pawn(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "2"), Position.from("b", "3"));
+        List<Position> route = piece.getRoute(Position.of("a", "2"), Position.of("b", "3"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -46,8 +46,8 @@ class PawnTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들이 아니면 예외를 발생한다.")
     void Pawn_Validate_route(String file1, String rank1, String file2, String rank2) {
         Piece piece = new Pawn(WHITE);
-        Position source = Position.from(file1, rank1);
-        Position target = Position.from(file2, rank2);
+        Position source = Position.of(file1, rank1);
+        Position target = Position.of(file2, rank2);
         assertThatThrownBy(() -> {
             piece.getRoute(source, target);
         }).isInstanceOf(IllegalArgumentException.class);

@@ -1,9 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.position.Direction;
-import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -27,8 +24,8 @@ class DirectionTest {
                                                  String file2,
                                                  String rank2,
                                                  Direction inputDirection) {
-        Position source = Position.from(file1, rank1);
-        Position target = Position.from(file2, rank2);
+        Position source = Position.of(file1, rank1);
+        Position target = Position.of(file2, rank2);
         Direction direction = Direction.findDirection(source, target);
 
         assertThat(direction).isEqualTo(inputDirection);
@@ -44,8 +41,8 @@ class DirectionTest {
                                                    String file2,
                                                    String rank2,
                                                    boolean isUpDown) {
-        Position source = Position.from(file1, rank1);
-        Position target = Position.from(file2, rank2);
+        Position source = Position.of(file1, rank1);
+        Position target = Position.of(file2, rank2);
         var result = Direction.isUpDown(source, target);
 
         assertThat(result).isEqualTo(isUpDown);

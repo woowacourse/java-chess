@@ -16,18 +16,18 @@ class RookTest {
     @DisplayName("목적지 제외 세로로 갈 수 있는 위치들을 반환한다.")
     void Rook_Check_vertical_route() {
         Piece piece = new Rook(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "1"), Position.from("e", "1"));
-        List<Position> positions = List.of(Position.from("b", "1"), Position.from("c", "1"),
-                Position.from("d", "1"));
+        List<Position> route = piece.getRoute(Position.of("a", "1"), Position.of("e", "1"));
+        List<Position> positions = List.of(Position.of("b", "1"), Position.of("c", "1"),
+                Position.of("d", "1"));
         assertThat(route).isEqualTo(positions);
     }
     @Test
     @DisplayName("목적지 제외 가로로 갈 수 있는 위치들을 반환한다.")
     void Rook_Check_horizontal_route() {
         Piece piece = new Rook(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "1"), Position.from("a", "5"));
-        List<Position> positions = List.of(Position.from("a", "2"), Position.from("a", "3"),
-                Position.from("a", "4"));
+        List<Position> route = piece.getRoute(Position.of("a", "1"), Position.of("a", "5"));
+        List<Position> positions = List.of(Position.of("a", "2"), Position.of("a", "3"),
+                Position.of("a", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -36,7 +36,7 @@ class RookTest {
     void Rook_Validate_route() {
         Piece piece = new Rook(WHITE);
         assertThatThrownBy(() -> {
-            piece.getRoute(Position.from("a", "1"), Position.from("c", "4"));
+            piece.getRoute(Position.of("a", "1"), Position.of("c", "4"));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

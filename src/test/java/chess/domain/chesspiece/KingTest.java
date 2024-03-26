@@ -16,7 +16,7 @@ class KingTest {
     @DisplayName("왕은 앞뒤로 움직일 수 있다.")
     void King_Move_forward_and_backward() {
         Piece piece = new King(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a", "1"), Position.from("a", "2"));
+        List<Position> route = piece.getRoute(Position.of("a", "1"), Position.of("a", "2"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -25,7 +25,7 @@ class KingTest {
     @DisplayName("왕은 좌우로 움직일 수 있다.")
     void King_Move_side() {
         Piece piece = new King(WHITE);
-        List<Position> route = piece.getRoute(Position.from("b", "2"), Position.from("a", "2"));
+        List<Position> route = piece.getRoute(Position.of("b", "2"), Position.of("a", "2"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -34,7 +34,7 @@ class KingTest {
     @DisplayName("왕은 대각선으로 움직일 수 있다.")
     void King_Move_diagonal() {
         Piece piece = new King(WHITE);
-        List<Position> route = piece.getRoute(Position.from("b", "2"), Position.from("a", "1"));
+        List<Position> route = piece.getRoute(Position.of("b", "2"), Position.of("a", "1"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -44,7 +44,7 @@ class KingTest {
     void King_Validate_route() {
         Piece piece = new King(WHITE);
         assertThatThrownBy(() -> {
-            piece.getRoute(Position.from("a", "1"), Position.from("a", "3"));
+            piece.getRoute(Position.of("a", "1"), Position.of("a", "3"));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
