@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.Position;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import java.util.Collections;
 import java.util.Map;
@@ -51,16 +50,5 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
-    }
-
-    public boolean isGameOver() {
-        return !board.containsValue(new King(color)) && board.containsValue(new King(color.opposite()));
-    }
-
-    public Color getWinnerColor() {
-        if (isGameOver()) {
-            return color.opposite();
-        }
-        throw new IllegalArgumentException("체스 게임의 승부가 나지 않았습니다.");
     }
 }
