@@ -2,6 +2,7 @@ package chess.domain.pieces.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
@@ -21,7 +22,7 @@ class WhitePawnTest {
 
         @BeforeEach
         void setUp() {
-            whitePawn = new WhitePawn();
+            whitePawn = Pawn.of(Color.WHITE);
         }
 
         @DisplayName("시작위치에서는 2칸 전진할 수 있다")
@@ -63,7 +64,7 @@ class WhitePawnTest {
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, Pawn.of(Color.BLACK));
 
             //then
             assertThat(whiteCanMove).isTrue();
@@ -78,7 +79,7 @@ class WhitePawnTest {
 
         @BeforeEach
         void setUp() {
-            whitePawn = new WhitePawn();
+            whitePawn = Pawn.of(Color.WHITE);
         }
 
         @DisplayName("시작위치가 아닌 경우 2칸 이동할 수 없다")
@@ -120,7 +121,7 @@ class WhitePawnTest {
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, new BlackPawn());
+            boolean whiteCanMove = whitePawn.canMove(whiteMovement, Pawn.of(Color.BLACK));
 
             //then
             assertThat(whiteCanMove).isFalse();

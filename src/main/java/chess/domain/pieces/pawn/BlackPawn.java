@@ -8,7 +8,7 @@ public class BlackPawn extends Pawn {
     private static final int DEFAULT_BLACK_PAWN_MOVE = -1;
     private static final int INITIAL_BLACK_PAWN_MOVE = -2;
 
-    public BlackPawn() {
+    BlackPawn() {
         super(Color.BLACK, INITIAL_BLACK_PAWN_RANK, DEFAULT_BLACK_PAWN_MOVE, INITIAL_BLACK_PAWN_MOVE);
     }
 }

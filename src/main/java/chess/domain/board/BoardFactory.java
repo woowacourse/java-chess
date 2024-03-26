@@ -5,8 +5,7 @@ import chess.domain.pieces.King;
 import chess.domain.pieces.Knight;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.Rook;
-import chess.domain.pieces.pawn.BlackPawn;
-import chess.domain.pieces.pawn.WhitePawn;
+import chess.domain.pieces.pawn.Pawn;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.File;
@@ -27,8 +26,8 @@ public class BoardFactory {
     public static Board createBoard() {
         Map<Square, Piece> initialArrangement = new HashMap<>();
         initialArrangement.putAll(createLine(Rank.ONE, createPieceLine(Color.WHITE)));
-        initialArrangement.putAll(createLine(Rank.TWO, createWhitePawnLine()));
-        initialArrangement.putAll(createLine(Rank.SEVEN, createBlackPawnLine()));
+        initialArrangement.putAll(createLine(Rank.TWO, createPawnLine(Color.WHITE)));
+        initialArrangement.putAll(createLine(Rank.SEVEN, createPawnLine(Color.BLACK)));
         initialArrangement.putAll(createLine(Rank.EIGHT, createPieceLine(Color.BLACK)));
         return new Board(initialArrangement);
     }
@@ -51,13 +50,8 @@ public class BoardFactory {
         }};
     }
 
-    private static Map<File, Piece> createWhitePawnLine() {
+    private static Map<File, Piece> createPawnLine(final Color color) {
         return Arrays.stream(File.values())
-                .collect(Collectors.toMap(Function.identity(), file -> new WhitePawn()));
-    }
-
-    private static Map<File, Piece> createBlackPawnLine() {
-        return Arrays.stream(File.values())
-                .collect(Collectors.toMap(Function.identity(), file -> new BlackPawn()));
+                .collect(Collectors.toMap(Function.identity(), file -> Pawn.of(color)));
     }
 }

@@ -11,11 +11,18 @@ public abstract class Pawn extends Piece {
     protected final int defaultMove;
     protected final int initialMove;
 
-    public Pawn(final Color color, final int initialRank, final int defaultMove, final int initialMove) {
+    protected Pawn(final Color color, final int initialRank, final int defaultMove, final int initialMove) {
         super(color, Type.PAWN);
         this.initialRank = initialRank;
         this.defaultMove = defaultMove;
         this.initialMove = initialMove;
+    }
+
+    public static Pawn of(final Color color) {
+        if (color.equals(Color.WHITE)) {
+            return new WhitePawn();
+        }
+        return new BlackPawn();
     }
 
     @Override

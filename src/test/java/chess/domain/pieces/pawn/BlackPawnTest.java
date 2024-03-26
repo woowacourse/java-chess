@@ -2,9 +2,11 @@ package chess.domain.pieces.pawn;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,13 +18,19 @@ class BlackPawnTest {
     @Nested
     class CanMove {
 
+        Piece blackPawn;
+
+        @BeforeEach
+        void setUp() {
+            blackPawn = Pawn.of(Color.BLACK);
+        }
+
         @DisplayName("시작위치에서는 2칸 전진할 수 있다")
         @Test
         void canMoveTwoStep() {
             //given
             Square blackSource = Square.from("a7");
             Square blackTarget = Square.from("a5");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
@@ -38,7 +46,6 @@ class BlackPawnTest {
             //given
             Square blackSource = Square.from("a6");
             Square blackTarget = Square.from("a5");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
@@ -54,11 +61,10 @@ class BlackPawnTest {
             //given
             Square blackSource = Square.from("d7");
             Square blackTarget = Square.from("c6");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
-            boolean blackCanMove = blackPawn.canMove(blackMovement, new WhitePawn());
+            boolean blackCanMove = blackPawn.canMove(blackMovement, Pawn.of(Color.WHITE));
 
             //then
             assertThat(blackCanMove).isTrue();
@@ -69,13 +75,19 @@ class BlackPawnTest {
     @Nested
     class CanNotMove {
 
+        Piece blackPawn;
+
+        @BeforeEach
+        void setUp() {
+            blackPawn = Pawn.of(Color.BLACK);
+        }
+
         @DisplayName("시작위치가 아닌 경우 2칸 이동할 수 없다")
         @Test
         void canNotMoveTwoStep() {
             //given
             Square blackSource = Square.from("a5");
             Square blackTarget = Square.from("a3");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
@@ -91,7 +103,6 @@ class BlackPawnTest {
             //given
             Square blackSource = Square.from("d7");
             Square blackTarget = Square.from("c6");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
@@ -107,11 +118,10 @@ class BlackPawnTest {
             //given
             Square blackSource = Square.from("d7");
             Square blackTarget = Square.from("d6");
-            Piece blackPawn = new BlackPawn();
             Movement blackMovement = new Movement(blackSource, blackTarget);
 
             //when
-            boolean blackCanMove = blackPawn.canMove(blackMovement, new WhitePawn());
+            boolean blackCanMove = blackPawn.canMove(blackMovement, Pawn.of(Color.WHITE));
 
             //then
             assertThat(blackCanMove).isFalse();
