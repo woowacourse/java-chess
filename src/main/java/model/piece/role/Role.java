@@ -42,7 +42,7 @@ public abstract class Role {
     protected abstract Route findRouteByDirection(Direction direction, Position source);
 
     public void traversalRoles(List<Role> rolesInRoute, Role destinationRole) {
-        if (destinationRole.isSameColor(this.color)){
+        if (destinationRole.isSameColor(this.color)) {
             throw new IllegalArgumentException("목적지에 같은 색깔의 기물이 위치하여 이동할 수 없습니다.");
         }
         rolesInRoute.stream()
