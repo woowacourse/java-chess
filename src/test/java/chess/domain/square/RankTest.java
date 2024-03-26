@@ -13,7 +13,7 @@ class RankTest {
 
     @Test
     @DisplayName("숫자 문자를 정상적으로 변환한다.")
-    void from() {
+    void fromTest() {
         // given
         Rank rank = Rank.from('5');
 
@@ -24,7 +24,7 @@ class RankTest {
     @ParameterizedTest
     @ValueSource(chars = {'0', '9'})
     @DisplayName("범위 밖의 값일 경우 예외가 발생한다.")
-    void validateRange(char input) {
+    void validateRangeTest(char input) {
         assertThatCode(() -> Rank.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("범위 밖의 랭크 입니다.");

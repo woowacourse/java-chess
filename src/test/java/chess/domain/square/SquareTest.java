@@ -13,7 +13,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 class SquareTest {
     @Test
     @DisplayName("사용자 입력으로 들어온 좌표를 파일과 랭크로 변환한다.")
-    void convertUserInputToFileAndRank() {
+    void convertUserInputToFileAndRankTest() {
         // given
         Square square = Square.from("b3");
         int expectedFileOrdinal = 1;
@@ -28,7 +28,7 @@ class SquareTest {
     @ParameterizedTest
     @ValueSource(strings = {"", "a", "1", "A1", "aa1", "a10"})
     @DisplayName("유효하지 않은 형식으로 스퀘어를 만들 경우 예외가 발생한다.")
-    void validatePattern(String squareInput) {
+    void validatePatternTest(String squareInput) {
         assertThatCode(() -> Square.from(squareInput))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요");
@@ -36,7 +36,7 @@ class SquareTest {
 
     @Test
     @DisplayName("목적지보다 더 위에 있는지 확인한다.")
-    void isUpperThan() {
+    void isUpperThanTest() {
         // given
         Square source = Square.from("b7");
         Square target = Square.from("b6");
@@ -50,7 +50,7 @@ class SquareTest {
 
     @Test
     @DisplayName("랭크의 거리를 계산한다.")
-    void distanceRankFrom() {
+    void distanceRankFromTest() {
         // given
         Square source = Square.from("b7");
         Square target = Square.from("b6");
@@ -64,7 +64,7 @@ class SquareTest {
 
     @Test
     @DisplayName("파일이 같은지 확인한다.")
-    void isSameFile() {
+    void isSameFileTest() {
         // given
         Square source = Square.from("b7");
         File file = File.B;
@@ -78,7 +78,7 @@ class SquareTest {
 
     @Test
     @DisplayName("읽기 좋은 문자열로 변환한다.")
-    void convertToString() {
+    void toStringTest() {
         // given
         Square source = Square.of(File.B, Rank.FIVE);
 

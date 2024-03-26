@@ -18,7 +18,7 @@ class KnightTest {
     @ParameterizedTest
     @ValueSource(strings = {"a5", "a7", "e5", "e7", "b4", "d4", "b8", "d8"})
     @DisplayName("앞으로 두칸 후 옆으로 한칸 이동한 뒤 위치 상태를 목적지로 변경한다.")
-    void move(String targetInput) {
+    void moveTest(String targetInput) {
         // given
         Square source = Square.from("c6");
         Square target = Square.from(targetInput);
@@ -34,7 +34,7 @@ class KnightTest {
 
     @Test
     @DisplayName("앞으로 두칸 후 옆 한칸이 아닌 곳으로 이동할 경우 예외가 발생한다.")
-    void validateDirection() {
+    void validateDirectionTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("b5");
@@ -49,7 +49,7 @@ class KnightTest {
 
     @Test
     @DisplayName("목적지에 적 기물이 존재하면 공격이 가능하다.")
-    void attackOnTargetSquare() {
+    void attackOnTargetSquareTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("a5");
@@ -66,7 +66,7 @@ class KnightTest {
 
     @Test
     @DisplayName("목적지에 아군 기물이 존재할 경우 예외가 발생한다.")
-    void validateFriendly() {
+    void validateFriendlyTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("a5");
@@ -82,7 +82,7 @@ class KnightTest {
 
     @Test
     @DisplayName("타입을 반환한다.")
-    void getType() {
+    void getTypeTest() {
         // given
         Square source = Square.from("c6");
         Knight knight = new Knight(PieceColor.BLACK, source);

@@ -13,7 +13,7 @@ class FileTest {
 
     @Test
     @DisplayName("알파벳 문자를 정상적으로 변환한다.")
-    void from() {
+    void fromTest() {
         // given
         File file = File.from('c');
 
@@ -24,7 +24,7 @@ class FileTest {
     @ParameterizedTest
     @ValueSource(chars = {'z', 'A'})
     @DisplayName("범위 밖의 값일 경우 예외가 발생한다.")
-    void validateRange(char input) {
+    void validateRangeTest(char input) {
         assertThatCode(() -> File.from(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("범위 밖의 파일 입니다.");

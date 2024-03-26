@@ -18,7 +18,7 @@ class QueenTest {
     @ParameterizedTest
     @ValueSource(strings = {"a8", "c8", "e8", "h6", "h1", "c1", "a4", "a6"})
     @DisplayName("상하좌우 또는 대각선으로 이동한 뒤 위치 상태를 목적지로 변경한다.")
-    void move(String targetInput) {
+    void moveTest(String targetInput) {
         // given
         Square source = Square.from("c6");
         Square target = Square.from(targetInput);
@@ -34,7 +34,7 @@ class QueenTest {
 
     @Test
     @DisplayName("상하좌우 또는 대각선이 아닌 곳으로 이동할 경우 예외가 발생한다.")
-    void validateDirection() {
+    void validateDirectionTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("e5");
@@ -49,7 +49,7 @@ class QueenTest {
 
     @Test
     @DisplayName("목적지에 적 기물이 존재하면 공격이 가능하다.")
-    void attackOnTargetSquare() {
+    void attackOnTargetSquareTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c1");
@@ -66,7 +66,7 @@ class QueenTest {
 
     @Test
     @DisplayName("목적지에 아군 기물이 존재할 경우 예외가 발생한다.")
-    void validateFriendly() {
+    void validateFriendlyTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c1");
@@ -82,7 +82,7 @@ class QueenTest {
 
     @Test
     @DisplayName("출발지와 목적지 사이에 기물이 존재할 경우 예외가 발생한다.")
-    void validateObstacle() {
+    void validateObstacleTest() {
         // given
         Square source = Square.from("c6");
         Square target = Square.from("c1");
@@ -98,7 +98,7 @@ class QueenTest {
 
     @Test
     @DisplayName("타입을 반환한다.")
-    void getType() {
+    void getTypeTest() {
         // given
         Square source = Square.from("c6");
         Queen queen = new Queen(PieceColor.BLACK, source);
