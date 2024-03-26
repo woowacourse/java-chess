@@ -125,7 +125,7 @@ class ChessGameTest {
 
     @DisplayName("King이 잡히면 게임을 종료한다.")
     @Test
-    void name() {
+    void checkKing() {
         final ChessGame chessGame = new ChessGame();
         chessGame.start();
 
