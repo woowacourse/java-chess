@@ -24,7 +24,7 @@ public class Board {
     }
 
     private void movePiece(Point departure, Point destination, Piece piece) {
-        board.put(departure, new Empty());
+        board.put(departure, Empty.INSTANCE);
         board.put(destination, piece);
     }
 

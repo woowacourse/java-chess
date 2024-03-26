@@ -76,7 +76,7 @@ public class BoardFactory {
         Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
-            line.put(new Point(c, rank), new Empty());
+            line.put(new Point(c, rank), Empty.INSTANCE);
         }
         return line;
     }

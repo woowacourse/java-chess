@@ -19,12 +19,13 @@ class ChessGameTest {
     void move() {
         Map<Point, Piece> board = BoardFactory.createInitialChessBoard();
         ChessGame chessGame = new ChessGame(board);
+        chessGame.start();
 
         Point departure = new Point('b', 2);
         Point destination = new Point('b', 3);
         chessGame.move(departure, destination);
 
-        assertThat(board.get(departure)).isEqualTo(new Empty());
+        assertThat(board.get(departure)).isEqualTo(Empty.INSTANCE);
         assertThat(board.get(destination)).isInstanceOf(Pawn.class);
     }
 }
