@@ -30,10 +30,10 @@ public class MoveCommand {
             return new MoveCommand(true, Collections.emptyList());
         }
 
-        return createDataFilledCommand(input);
+        return createFillMoveCommand(input);
     }
 
-    private static MoveCommand createDataFilledCommand(String input) {
+    private static MoveCommand createFillMoveCommand(String input) {
         List<String> commandSegments = Arrays.asList(input.split(" "));
         validateCommandSegmentSize(commandSegments);
         validateCommand(commandSegments.get(COMMAND_INDEX));
