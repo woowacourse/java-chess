@@ -5,7 +5,6 @@ import static chess.domain.chessboard.attribute.Direction.DOWN_RIGHT;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -51,11 +50,11 @@ public abstract class AbstractPawn extends UnslidingPiece {
         return possiblePositions(movements, chessboard::isEmpty);
     }
 
-    protected Set<Position> attackablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+    protected Set<Position> attackablePositions(final Chessboard chessboard, final Set<Movement> movements) {
         return possiblePositions(movements, (position) -> isAttackable(chessboard.squareIn(position)));
     }
 
-    private Set<Position> possiblePositions(final Collection<Movement> movements, final Predicate<Position> predicate) {
+    private Set<Position> possiblePositions(final Set<Movement> movements, final Predicate<Position> predicate) {
         return movements.stream()
                 .map(movement -> position().after(movement))
                 .flatMap(Optional::stream)
