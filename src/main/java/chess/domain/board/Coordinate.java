@@ -13,9 +13,9 @@ public class Coordinate {
         this.file = new File(fileValue);
     }
 
-    public Coordinate apply(Weight weight) {
-        if (!isApplicable(weight)) {
-            throw new IllegalStateException("해당 가중치를 적용할 수 없습니다.");
+    public Coordinate plus(Weight weight) {
+        if (!canPlus(weight)) {
+            throw new IllegalStateException("해당 가중치를 더할 수 없습니다.");
         }
 
         char fileWeight = weight.fileWeight();
@@ -23,7 +23,7 @@ public class Coordinate {
         return new Coordinate(rank.value() + rankWeight, (char) (file.value() + fileWeight));
     }
 
-    public boolean isApplicable(Weight weight) {
+    public boolean canPlus(Weight weight) {
         int rankWeight = weight.rankWeight();
         char fileWeight = weight.fileWeight();
 

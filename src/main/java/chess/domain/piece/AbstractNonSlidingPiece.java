@@ -26,8 +26,8 @@ abstract class AbstractNonSlidingPiece extends AbstractPiece {
     private List<Coordinate> createPath(Coordinate source) {
         return directions.stream()
                 .map(Direction::getWeight)
-                .filter(source::isApplicable)
-                .map(source::apply)
+                .filter(source::canPlus)
+                .map(source::plus)
                 .toList();
     }
 }

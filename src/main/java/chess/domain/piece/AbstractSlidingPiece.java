@@ -37,8 +37,8 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
         Weight weight = direction.getWeight();
         Coordinate nowCoordinate = start;
 
-        while (nowCoordinate.isApplicable(weight)) {
-            nowCoordinate = nowCoordinate.apply(weight);
+        while (nowCoordinate.canPlus(weight)) {
+            nowCoordinate = nowCoordinate.plus(weight);
             slidingPath.add(nowCoordinate);
         }
 

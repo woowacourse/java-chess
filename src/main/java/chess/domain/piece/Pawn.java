@@ -43,8 +43,8 @@ public class Pawn extends AbstractPiece {
         return directions.stream()
                 .map(Direction::getWeight)
                 .map(weight -> weight.multiplyAtRankWeight(forwardDirection))
-                .filter(source::isApplicable)
-                .map(source::apply)
+                .filter(source::canPlus)
+                .map(source::plus)
                 .toList();
     }
 
