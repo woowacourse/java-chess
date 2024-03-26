@@ -53,7 +53,7 @@ public class Position {
         return (int) Math.pow(rowInterval, 2) + (int) Math.pow(colInterval, 2);
     }
 
-    public boolean rowIs(RowPosition rowPosition) {
+    public boolean isSameRowWith(RowPosition rowPosition) {
         return this.rowPosition.equals(rowPosition);
     }
 

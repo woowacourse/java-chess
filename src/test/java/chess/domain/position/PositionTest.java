@@ -146,9 +146,9 @@ class PositionTest {
         RowPosition rowPosition = new RowPosition(5);
 
         assertAll(
-                () -> assertThat(testPosition1.rowIs(rowPosition)),
-                () -> assertThat(testPosition2.rowIs(rowPosition)),
-                () -> assertThat(testPosition3.rowIs(rowPosition))
+                () -> assertThat(testPosition1.isSameRowWith(rowPosition)),
+                () -> assertThat(testPosition2.isSameRowWith(rowPosition)),
+                () -> assertThat(testPosition3.isSameRowWith(rowPosition))
         );
     }
 

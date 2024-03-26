@@ -20,7 +20,7 @@ public final class BlackPawn extends Pawn {
 
     @Override
     boolean isInitialPawnRow(Position start) {
-        return start.rowIs(INITIAL_ROW);
+        return start.isSameRowWith(INITIAL_ROW);
     }
 
     @Override
