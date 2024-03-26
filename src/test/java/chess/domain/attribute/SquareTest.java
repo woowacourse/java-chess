@@ -16,14 +16,6 @@ import static chess.domain.attribute.Rank.SEVEN;
 import static chess.domain.attribute.Rank.SIX;
 import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
-import static chess.domain.chessboard.attribute.Direction.DOWN;
-import static chess.domain.chessboard.attribute.Direction.DOWN_LEFT;
-import static chess.domain.chessboard.attribute.Direction.DOWN_RIGHT;
-import static chess.domain.chessboard.attribute.Direction.LEFT;
-import static chess.domain.chessboard.attribute.Direction.RIGHT;
-import static chess.domain.chessboard.attribute.Direction.UP;
-import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
-import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -58,49 +50,6 @@ class SquareTest {
     @ParameterizedTest
     void stringConstructor(String input, Square expected) {
         assertThat(Square.of(input)).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> move() {
-        return Stream.of(
-                Arguments.of(UP, Square.of(D, FIVE)),
-                Arguments.of(UP_LEFT, Square.of(C, FIVE)),
-                Arguments.of(UP_RIGHT, Square.of(E, FIVE)),
-                Arguments.of(DOWN, Square.of(D, THREE)),
-                Arguments.of(DOWN_LEFT, Square.of(C, THREE)),
-                Arguments.of(DOWN_RIGHT, Square.of(E, THREE)),
-                Arguments.of(LEFT, Square.of(C, FOUR)),
-                Arguments.of(RIGHT, Square.of(E, FOUR))
-        );
-    }
-
-    @DisplayName("현재위치에서 방향을 입력받아 다음 위치를 반환한다.")
-    @ParameterizedTest
-    @MethodSource
-    void move(Direction direction, Square next) {
-        Square current = Square.of(D, FOUR);
-        Square actual = current.move(direction).get();
-        assertThat(actual).isEqualTo(next);
-    }
-
-    private static Stream<Arguments> moveException() {
-        return Stream.of(
-                Arguments.of(Square.of(D, EIGHT), UP),
-                Arguments.of(Square.of(A, EIGHT), UP_LEFT),
-                Arguments.of(Square.of(H, EIGHT), UP_RIGHT),
-                Arguments.of(Square.of(D, ONE), DOWN),
-                Arguments.of(Square.of(A, ONE), DOWN_LEFT),
-                Arguments.of(Square.of(H, ONE), DOWN_RIGHT),
-                Arguments.of(Square.of(A, FOUR), LEFT),
-                Arguments.of(Square.of(H, FOUR), RIGHT)
-        );
-    }
-
-    @DisplayName("이동할 수 없는 칸으로 이동하면 빈 값을 반환한다.")
-    @ParameterizedTest
-    @MethodSource
-    void moveException(Square current, Direction direction) {
-        Optional<Square> square = current.move(direction);
-        assertThat(square).isEmpty();
     }
 
     @DisplayName("현재 위치에서 위로 이동한다.")

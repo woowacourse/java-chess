@@ -8,6 +8,10 @@ public class Square {
 
     private static final Map<String, Square> SQUARES = new HashMap<>();
 
+    static {
+        initializeSquares();
+    }
+
     private final File file;
     private final Rank rank;
 
@@ -17,9 +21,6 @@ public class Square {
     }
 
     public static Square of(final File file, final Rank rank) {
-        if (SQUARES.isEmpty()) {
-            initializeSquares();
-        }
         return SQUARES.get(keyOf(file, rank));
     }
 
