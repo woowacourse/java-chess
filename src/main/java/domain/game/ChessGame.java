@@ -74,6 +74,6 @@ public class ChessGame {
     }
 
     public void save() {
-        board.save();
+        board.save(currentPlayingTeam());
     }
 }

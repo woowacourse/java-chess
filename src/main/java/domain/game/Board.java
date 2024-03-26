@@ -1,6 +1,7 @@
 package domain.game;
 
 import dao.DBConnector;
+import dao.GameDao;
 import dao.PieceDao;
 import domain.position.File;
 import domain.position.Position;
@@ -122,7 +123,7 @@ public class Board {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public void save() {
+    public void save(TeamColor currentPlayingTeam) {
         PieceDao pieceDao = new PieceDao(new DBConnector());
         List<PieceDto> pieceDtos = chessBoard.entrySet().stream()
                 .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
@@ -130,6 +131,8 @@ public class Board {
 
         pieceDao.addAll(pieceDtos);
 
-
+        GameDao gameDao = new GameDao(new DBConnector());
+        int gameId = gameDao.addGame();
+        gameDao.updateTurn(gameId, currentPlayingTeam);
     }
 }
