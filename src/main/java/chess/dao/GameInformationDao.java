@@ -36,7 +36,7 @@ public class GameInformationDao {
 
             final List<GameInformation> gameInfos = new ArrayList<>();
             while (resultSet.next()) {
-                int gameId = resultSet.getInt("info_id");
+                int gameId = resultSet.getInt("game_id");
                 Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
                 GameInformation gameInformation = new GameInformation(gameId, color);
 
@@ -46,6 +46,26 @@ public class GameInformationDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public GameInformation findByGameId(int gameId) {
+        try (final var connection = getConnection()) {
+            String tableName = getTableName();
+            final var statement = connection.prepareStatement(
+                    "SELECT * FROM " + tableName + " WHERE `game_id` = ?");
+            statement.setInt(1, gameId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
+
+                return new GameInformation(gameId, color);
+            }
+        } catch (SQLException e) {
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private String getTableName() {

@@ -10,4 +10,8 @@ public class GameInformation {
         this.gameId = gameId;
         this.curentTurnColor = curentTurnColor;
     }
+
+    public Color getCurentTurnColor() {
+        return curentTurnColor;
+    }
 }

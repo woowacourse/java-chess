@@ -4,9 +4,9 @@ DROP TABLE IF EXISTS game_information_for_test;
 
 CREATE TABLE IF NOT EXISTS game_information_for_test
 (
-    info_id            int        NOT NULL AUTO_INCREMENT,
+    game_id            int        NOT NULL AUTO_INCREMENT,
     current_turn_color VARCHAR(5) NOT NULL,
-    PRIMARY KEY (info_Id)
+    PRIMARY KEY (game_id)
 );
 
 INSERT INTO game_information_for_test (current_turn_color) VALUE ('WHITE');

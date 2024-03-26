@@ -3,6 +3,7 @@ package chess.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.GameInformation;
+import chess.domain.piece.Color;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,5 +25,18 @@ class GameInformationDaoTest implements DaoTest {
 
         // then
         assertThat(dtos.size()).isEqualTo(1);
+    }
+
+    @DisplayName("gameId에 해당되는 게임 정보를 찾아온다.")
+    @Test
+    void findInformationByGameId() {
+        // given
+        int gameId = 1;
+
+        // when
+        GameInformation gameInformation = gameInformationDao.findByGameId(gameId);
+
+        // then
+        assertThat(gameInformation.getCurentTurnColor()).isEqualTo(Color.WHITE);
     }
 }
