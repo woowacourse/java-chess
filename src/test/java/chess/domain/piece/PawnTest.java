@@ -24,7 +24,7 @@ class PawnTest {
     @DisplayName("흰색 폰은 한칸 앞에 아무 기물이 없다면 위쪽으로 전진할 수 있다")
     @Test
     void should_WhitePawnCanForwardToUpPosition_When_NoOtherPieceInDestination() {
-        Pawn whitePawn = new Pawn(Team.WHITE);
+        Pawn whitePawn = Pawn.whitePawn();
         Position startPosition = D3;
 
         assertThat(whitePawn.canMove(startPosition, D4, NullPiece.getInstance())).isTrue();
@@ -44,7 +44,7 @@ class PawnTest {
     @DisplayName("검은색 폰은 한칸 앞에 아무 기물이 없다면 아래쪽으로 전진할 수 있다")
     @Test
     void should_BlackPawnCanForwardToDownPosition_When_NoOtherPieceInDestination() {
-        Pawn blackPawn = new Pawn(Team.BLACK);
+        Pawn blackPawn = Pawn.blackPawn();
         Position startPosition = D3;
 
         assertThat(blackPawn.canMove(startPosition, D2, NullPiece.getInstance())).isTrue();
@@ -64,7 +64,7 @@ class PawnTest {
     @DisplayName("흰색 폰은 아래쪽으로 전진할 수 없다")
     @Test
     void should_WhitePawnCanNotForwardToDownPosition() {
-        Pawn blackPawn = new Pawn(Team.WHITE);
+        Pawn blackPawn = Pawn.whitePawn();
         Position startPosition = D3;
 
         assertThat(blackPawn.canMove(startPosition, D2, NullPiece.getInstance())).isFalse();
@@ -84,7 +84,7 @@ class PawnTest {
     @DisplayName("검은색 폰은 위쪽으로 전진할 수 없다")
     @Test
     void should_BlackPawnCanNotForwardToDownPosition() {
-        Pawn blackPawn = new Pawn(Team.BLACK);
+        Pawn blackPawn = Pawn.blackPawn();
         Position startPosition = D3;
 
         assertThat(blackPawn.canMove(startPosition, D4, NullPiece.getInstance())).isFalse();
@@ -104,7 +104,7 @@ class PawnTest {
     @DisplayName("흰색 폰이 첫 위치에 있다면 한칸 혹은 두칸 전진할 수 있다")
     @Test
     void should_WhitePawnCanForwardOneOrTwoSquare_When_FirstMove() {
-        Pawn whitePawn = new Pawn(Team.WHITE);
+        Pawn whitePawn = Pawn.whitePawn();
         Position startPosition = D2;
 
         assertAll(
@@ -127,7 +127,7 @@ class PawnTest {
     @DisplayName("검은색 폰이 첫 위치에 있다면 한칸 혹은 두칸 전진할 수 있다")
     @Test
     void should_BlackPawnCanForwardOneOrTwoSquare_When_FirstMove() {
-        Pawn blackPawn = new Pawn(Team.BLACK);
+        Pawn blackPawn = Pawn.blackPawn();
         Position startPosition = D7;
 
         assertAll(
@@ -150,7 +150,7 @@ class PawnTest {
     @DisplayName("흰색 폰의 한칸 대각선 경로에 다른 팀의 기물이 있다면 이동할 수 있다")
     @Test
     void should_WhitePawnCanForward_When_OtherTeamPiece_In_OneDiagonalSquare() {
-        Pawn whitePawn = new Pawn(Team.WHITE);
+        Pawn whitePawn = Pawn.whitePawn();
         Position startPosition = D2;
 
         assertAll(
@@ -173,7 +173,7 @@ class PawnTest {
     @DisplayName("흰색 폰의 한칸 대각선 경로에 같은 팀의 기물이 있다면 이동할 수 없다")
     @Test
     void should_WhitePawnCanNotForward_When_SameTeamPiece_In_OneDiagonalSquare() {
-        Pawn whitePawn = new Pawn(Team.WHITE);
+        Pawn whitePawn = Pawn.whitePawn();
         Position startPosition = D2;
 
         assertAll(
@@ -196,7 +196,7 @@ class PawnTest {
     @DisplayName("검은색 폰의 한칸 대각선 경로에 다른 팀의 기물이 있다면 이동할 수 있다")
     @Test
     void should_BlackPawnCanForward_When_OtherTeamPiece_In_OneDiagonalSquare() {
-        Pawn blackPawn = new Pawn(Team.BLACK);
+        Pawn blackPawn = Pawn.blackPawn();
         Position startPosition = D7;
 
         assertAll(
@@ -219,7 +219,7 @@ class PawnTest {
     @DisplayName("검은색 폰의 한칸 대각선 경로에 같은 팀의 기물이 있다면 이동할 수 없다")
     @Test
     void should_BlackPawnCanNotForward_When_SameTeamPiece_In_OneDiagonalSquare() {
-        Pawn blackPawn = new Pawn(Team.BLACK);
+        Pawn blackPawn = Pawn.blackPawn();
         Position startPosition = D7;
 
         assertAll(

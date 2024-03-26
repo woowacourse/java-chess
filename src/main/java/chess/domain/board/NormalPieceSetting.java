@@ -30,7 +30,7 @@ public class NormalPieceSetting {
             List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
                     .mapToObj(col -> Position.of(1, col))
                     .toList();
-            put(new Pawn(Team.BLACK), pawnPositions);
+            put(Pawn.blackPawn(), pawnPositions);
         }
     };
 
@@ -54,7 +54,7 @@ public class NormalPieceSetting {
             List<Position> pawnPositions = IntStream.rangeClosed(ColumnPosition.MIN_NUMBER, ColumnPosition.MAX_NUMBER)
                     .mapToObj(col -> Position.of(6, col))
                     .toList();
-            put(new Pawn(Team.WHITE), pawnPositions);
+            put(Pawn.whitePawn(), pawnPositions);
         }
     };
 

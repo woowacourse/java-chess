@@ -1,19 +1,29 @@
 package chess.domain.piece;
 
-import chess.domain.position.DirectionJudge;
 import chess.domain.position.Position;
 
-import static chess.domain.piece.Team.BLACK;
-import static chess.domain.piece.Team.WHITE;
-
-public class Pawn extends Piece {
-    public static final int FORWARDING_SQUARED_DISTANCE = 1;
-    public static final int KILL_PASSING_DISTANCE = 2;
-    public static final int FIRST_FORWARDING_SQUARED_DISTANCE = 4;
+public sealed abstract class Pawn extends Piece
+        permits BlackPawn, WhitePawn {
+    protected static final int FORWARDING_SQUARED_DISTANCE = 1;
+    protected static final int KILL_PASSING_DISTANCE = 2;
+    protected static final int FIRST_FORWARDING_SQUARED_DISTANCE = 4;
 
     public Pawn(Team team) {
         super(team);
     }
+
+    public static Pawn blackPawn() {
+        return new BlackPawn();
+    }
+
+    public static Pawn whitePawn() {
+        return new WhitePawn();
+    }
+
+
+    abstract boolean isInitialPawnRow(Position start);
+
+    abstract boolean isForward(Position start, Position destination);
 
     @Override
     public boolean canMove(Position start, Position destination, Piece pieceAtDestination) {
@@ -38,19 +48,5 @@ public class Pawn extends Piece {
         return isForward(start, destination)
                 && start.squaredDistanceWith(destination) == KILL_PASSING_DISTANCE
                 && isOtherTeam(pieceAtDestination);
-    }
-
-    private boolean isInitialPawnRow(Position start) {
-        if (isBlackTeam()) {
-            return BLACK.isInitialPawnRow(start);
-        }
-        return WHITE.isInitialPawnRow(start);
-    }
-
-    private boolean isForward(Position start, Position destination) {
-        if (isBlackTeam()) {
-            return BLACK.isForward(DirectionJudge.judge(start, destination));
-        }
-        return WHITE.isForward(DirectionJudge.judge(start, destination));
     }
 }
