@@ -10,7 +10,7 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static chess.view.GameCommand.*;
+import static chess.view.CommandMapper.*;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
