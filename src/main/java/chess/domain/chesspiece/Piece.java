@@ -29,4 +29,6 @@ public abstract class Piece {
     }
 
     public abstract boolean isPawn();
+
+    public abstract boolean isEmpty();
 }

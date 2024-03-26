@@ -1,12 +1,11 @@
 package chess.domain.chessboard;
 
+import chess.domain.chesspiece.Empty;
+import chess.domain.chesspiece.Piece;
 import chess.domain.position.Direction;
-import chess.domain.chesspiece.*;
 import chess.domain.position.Position;
-
-import java.util.*;
-
-import static chess.domain.chesspiece.Role.*;
+import java.util.Collections;
+import java.util.Map;
 
 public class ChessBoard {
 
@@ -47,7 +46,7 @@ public class ChessBoard {
 
     private boolean isEmpty(Position position) {
         return chessBoard.get(position)
-                .getRole() == EMPTY;
+                .isEmpty();
     }
 
     private boolean isTeam(Piece piece, Position position) {
@@ -63,7 +62,7 @@ public class ChessBoard {
 
     private void checkIsEmpty(Position target) {
         Piece targetPiece = chessBoard.get(target);
-        if (targetPiece.getRole() == EMPTY) {
+        if (targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 공격할 때만 대각선으로 이동할 수 있습니다.");
         }
     }

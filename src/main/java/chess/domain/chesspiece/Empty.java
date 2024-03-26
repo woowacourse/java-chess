@@ -31,4 +31,9 @@ public class Empty extends Piece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
 }
