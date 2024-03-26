@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Zeus6768 ###
+/docker/db/
