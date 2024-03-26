@@ -40,6 +40,11 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public final MoveStrategy strategy(Map<Position, Piece> board) {
         return new PawnMoveStrategy(board);
     }

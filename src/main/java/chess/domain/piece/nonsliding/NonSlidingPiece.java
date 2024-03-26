@@ -36,6 +36,11 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public final MoveStrategy strategy(Map<Position, Piece> board) {
         return new GeneralMoveStrategy(board);
     }

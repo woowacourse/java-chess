@@ -20,6 +20,8 @@ public abstract class Piece {
 
     public abstract boolean isBlank();
 
+    public abstract boolean isPawn();
+
     public abstract PieceType pieceType();
 
     public final boolean isSameColor(Color otherColor) {
