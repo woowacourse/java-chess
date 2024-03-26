@@ -1,9 +1,9 @@
 package domain.piece;
 
+import domain.board.Board;
 import domain.board.Position;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static domain.piece.CommonMovementDirection.UP;
@@ -23,16 +23,16 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Board board) {
         CommonMovementDirection movementDirection = calculateDirection(source, destination);
         validateMovementDirection(movementDirection);
 
         List<Position> movePaths = Stream.iterate(source, current -> current.next(movementDirection))
-                .takeWhile(current -> isContinuable(current, destination, piecePositions))
+                .takeWhile(current -> current.equals(source) || isContinuable(current, destination, board))
                 .toList();
 
         Position alivePosition = movePaths.get(movePaths.size() - 1).next(movementDirection);
-        checkAlivePosition(alivePosition, piecePositions);
+        checkAlivePosition(alivePosition, board);
     }
 
     private void validateMovementDirection(final CommonMovementDirection movementDirection) {
@@ -41,20 +41,20 @@ public class Rook extends Piece {
         }
     }
 
-    private boolean isContinuable(final Position current, final Position destination, final Map<Position, Piece> piecePositions) {
+    private boolean isContinuable(final Position current, final Position destination, final Board board) {
         if (current.equals(destination)) {
             return false;
         }
 
-        if (piecePositions.containsKey(current)) {
+        if (board.existPiece(current)) {
             throw new IllegalArgumentException("목적지 경로에 기물이 존재하여 이동할 수 없습니다.");
         }
 
         return true;
     }
 
-    private void checkAlivePosition(final Position alivePosition, final Map<Position, Piece> piecePositions) {
-        if (piecePositions.containsKey(alivePosition) && !checkEnemy(piecePositions.get(alivePosition))) {
+    private void checkAlivePosition(final Position alivePosition, final Board board) {
+        if (board.existPiece(alivePosition) && board.existTeamColor(alivePosition, color)) {
             throw new IllegalArgumentException("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
         }
     }

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.board.Board;
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
@@ -25,9 +26,10 @@ class KingTest {
         // Given
         King king = new King(PieceColor.WHITE);
         Map<Position, Piece> piecePositions = Map.of(position(File.D, Rank.TWO), new Rook(PieceColor.BLACK));
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatCode(() -> king.move(source, destination, piecePositions))
+        assertThatCode(() -> king.move(source, destination, board))
                 .doesNotThrowAnyException();
     }
 
@@ -52,9 +54,10 @@ class KingTest {
         Position destination = position(File.B, Rank.SIX);
         King king = new King(PieceColor.WHITE);
         Map<Position, Piece> piecePositions = Collections.emptyMap();
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatThrownBy(() -> king.move(source, destination, piecePositions))
+        assertThatThrownBy(() -> king.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동할 수 없는 거리입니다.");
     }
@@ -67,9 +70,10 @@ class KingTest {
         Position destination = position(File.B, Rank.THREE);
         King king = new King(PieceColor.WHITE);
         Map<Position, Piece> piecePositions = Map.of(destination, new Rook(PieceColor.WHITE));
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatThrownBy(() -> king.move(source, destination, piecePositions))
+        assertThatThrownBy(() -> king.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
     }

@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.board.Board;
 import domain.board.File;
 import domain.board.Position;
 import domain.board.Rank;
@@ -34,9 +35,10 @@ class PawnTest {
                 position(E, FOUR), new Rook(enemyColor),
                 position(C, FOUR), new Rook(enemyColor)
         );
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatCode(() -> pawn.move(source, destination, piecePositions))
+        assertThatCode(() -> pawn.move(source, destination, board))
                 .doesNotThrowAnyException();
     }
 
@@ -60,9 +62,10 @@ class PawnTest {
         // Given
         Pawn pawn = new Pawn(pieceColor);
         Map<Position, Piece> piecePositions = Collections.emptyMap();
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("적 기물이 존재하지 않으면 대각선으로 이동할 수 없습니다");
     }
@@ -83,9 +86,10 @@ class PawnTest {
         // Given
         Pawn pawn = new Pawn(pieceColor);
         Map<Position, Piece> piecePositions = Collections.emptyMap();
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("시작 위치가 아니면 두 칸 이동할 수 없습니다.");
     }
@@ -107,9 +111,10 @@ class PawnTest {
                 position(D, THREE), new Rook(WHITE),
                 position(C, THREE), new Rook(BLACK)
         );
+        Board board = new Board(piecePositions);
 
         // When & Then
-        assertThatThrownBy(() -> pawn.move(source, destination, piecePositions))
+        assertThatThrownBy(() -> pawn.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("전진시 기물이 존재하는 경로 혹은 목적지로 이동할 수 없습니다.");
     }

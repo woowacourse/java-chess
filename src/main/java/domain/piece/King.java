@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.board.Board;
 import domain.board.Position;
-
-import java.util.Map;
 
 import static domain.piece.PieceType.KING;
 import static domain.piece.CommonMovementDirection.calculateDirection;
@@ -15,13 +14,13 @@ public class King extends Piece {
     }
 
     @Override
-    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Board board) {
         CommonMovementDirection movementDirection = calculateDirection(source, destination);
         checkMoveDistance(source, destination, movementDirection);
 
         Position alivePosition = source.next(movementDirection);
 
-        checkAlivePosition(alivePosition, piecePositions);
+        checkAlivePosition(alivePosition, board);
     }
 
     private void checkMoveDistance(final Position source, final Position destination, final CommonMovementDirection movementDirection) {
@@ -33,8 +32,8 @@ public class King extends Piece {
         }
     }
 
-    private void checkAlivePosition(final Position alivePosition, final Map<Position, Piece> piecePositions) {
-        if (piecePositions.containsKey(alivePosition) && !checkEnemy(piecePositions.get(alivePosition))) {
+    private void checkAlivePosition(final Position alivePosition, final Board board) {
+        if (board.existPiece(alivePosition) && board.existTeamColor(alivePosition, color)) {
             throw new IllegalArgumentException("아군 기물이 위치한 칸으로는 이동할 수 없습니다.");
         }
     }

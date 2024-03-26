@@ -1,8 +1,7 @@
 package domain.piece;
 
+import domain.board.Board;
 import domain.board.Position;
-
-import java.util.Map;
 
 import static domain.board.Rank.SEVEN;
 import static domain.board.Rank.TWO;
@@ -19,21 +18,21 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(final Position source, final Position destination, final Map<Position, Piece> piecePositions) {
+    public void move(final Position source, final Position destination, final Board board) {
         PawnMovementDirection movementDirection = calculateDirection(color, source, destination);
         if (movementDirection.isCrossStep()) {
-            checkAlivePositionOfCrossStep(source.next(movementDirection), piecePositions);
+            checkAlivePositionOfCrossStep(source.next(movementDirection), board);
             return;
         }
 
         if (movementDirection.isTwoStep()) {
             checkIsStartPosition(source);
         }
-        checkMovePaths(source, movementDirection, piecePositions);
+        checkMovePaths(source, movementDirection, board);
     }
 
-    private void checkAlivePositionOfCrossStep(final Position alivePosition, final Map<Position, Piece> piecePositions) {
-        if (!piecePositions.containsKey(alivePosition) || !checkEnemy(piecePositions.get(alivePosition))) {
+    private void checkAlivePositionOfCrossStep(final Position alivePosition, final Board board) {
+        if (!board.existPiece(alivePosition) || board.existTeamColor(alivePosition, color)) {
             throw new IllegalArgumentException("적 기물이 존재하지 않으면 대각선으로 이동할 수 없습니다");
         }
     }
@@ -47,18 +46,18 @@ public class Pawn extends Piece {
     private void checkMovePaths(
             final Position source,
             final PawnMovementDirection movementDirection,
-            final Map<Position, Piece> piecePositions
+            final Board board
     ) {
         Position current = source;
         int moveDistance = Math.abs(movementDirection.getRowDistance());
         for (int i = 0; i < moveDistance; i++) {
             current = current.next(movementDirection.convertOneStep());
-            checkPathHasPiece(current, piecePositions);
+            checkPathHasPiece(current, board);
         }
     }
 
-    private void checkPathHasPiece(final Position path, final Map<Position, Piece> piecePositions) {
-        if (piecePositions.containsKey(path)) {
+    private void checkPathHasPiece(final Position path, final Board board) {
+        if (board.existPiece(path)) {
             throw new IllegalArgumentException("전진시 기물이 존재하는 경로 혹은 목적지로 이동할 수 없습니다.");
         }
     }
