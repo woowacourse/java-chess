@@ -19,12 +19,12 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
 
     @Override
     void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
-        List<Coordinate> slidingPath = createTargetIncludedSlidingPath(source, target);
+        List<Coordinate> path = createPath(source, target);
 
-        validateBlocked(target, slidingPath, board);
+        validateBlocked(target, path, board);
     }
 
-    private List<Coordinate> createTargetIncludedSlidingPath(Coordinate source, Coordinate target) {
+    private List<Coordinate> createPath(Coordinate source, Coordinate target) {
         return directions.stream()
                 .map(direction -> createSlidingPath(source, direction))
                 .filter(coordinates -> coordinates.contains(target))
@@ -45,8 +45,8 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
         return slidingPath;
     }
 
-    private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {
-        Coordinate blockedCoordinate = slidingPath.stream()
+    private void validateBlocked(Coordinate target, List<Coordinate> path, Board board) {
+        Coordinate blockedCoordinate = path.stream()
                 .filter(board::isPiecePresent)
                 .findFirst()
                 .orElse(target);

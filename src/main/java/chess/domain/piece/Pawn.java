@@ -70,8 +70,8 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateBlocked(Coordinate target, List<Coordinate> slidingPath, Board board) {
-        Coordinate blockedCoordinate = slidingPath.stream()
+    private void validateBlocked(Coordinate target, List<Coordinate> path, Board board) {
+        Coordinate blockedCoordinate = path.stream()
                 .filter(board::isPiecePresent)
                 .findFirst()
                 .orElse(target);
