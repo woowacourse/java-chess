@@ -8,6 +8,7 @@ public class InputView {
     private static final InputView INSTANCE = new InputView(new Scanner(System.in));
     private static final String DELIMITER = " ";
     private static final String INVALID_COMMAND_FORMAT = "명령 입력 형식이 올바르지 않습니다.";
+    private static final String POSITION_REGEX = "^[a-z][0-9]$";
     private static final String INVALID_POSITION_FORMAT = "위치 입력 형식이 올바르지 않습니다.";
     private static final int NON_MOVABLE_COMMAND_SIZE = 1;
     private static final int MOVABLE_COMMAND_SIZE = 3;
@@ -35,7 +36,7 @@ public class InputView {
     }
 
     private void validatePosition(String source, String target) {
-        if (source.length() != 2 || target.length() != 2) {
+        if (!source.matches(POSITION_REGEX) || !target.matches(POSITION_REGEX)) {
             throw new IllegalArgumentException(INVALID_POSITION_FORMAT);
         }
     }
