@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.StringJoiner;
 
 public class InputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
@@ -24,10 +25,13 @@ public class InputView {
     }
 
     public String readStartCommand() {
-        System.out.println(GAME_START_MESSAGE);
-        System.out.println(START_INFO_MESSAGE);
-        System.out.println(END_INFO_MESSAGE);
-        System.out.println(MOVE_INFO_MESSAGE);
+        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(GAME_START_MESSAGE);
+        stringJoiner.add(START_INFO_MESSAGE);
+        stringJoiner.add(END_INFO_MESSAGE);
+        stringJoiner.add(MOVE_INFO_MESSAGE);
+        System.out.println(stringJoiner);
+
         String input = scanner.nextLine();
         validateGameCommand(input);
         return input;
