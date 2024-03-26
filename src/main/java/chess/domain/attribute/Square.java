@@ -24,10 +24,6 @@ public class Square {
         return SQUARES.get(keyOf(file, rank));
     }
 
-    public static Square of(final String square) {
-        return of(File.of(square.charAt(0)), Rank.of(square.charAt(1)));
-    }
-
     private static void initializeSquares() {
         for (final Rank rank : Rank.values()) {
             putSquares(rank);
