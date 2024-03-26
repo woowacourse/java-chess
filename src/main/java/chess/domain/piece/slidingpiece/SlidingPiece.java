@@ -42,12 +42,9 @@ public abstract class SlidingPiece extends Piece {
     private boolean isNoPieceOnRoute(Position source, Position target, Map<Position, Piece> board) {
         Direction direction = Direction.of(source, target);
         Position current = source.nextPosition(direction);
-        while (!current.equals(target)) {
-            if (board.get(current).exists()) { // TODO: DEPTH
-                return false;
-            }
+        while (!current.equals(target) && board.get(current).doesNotExist()) {
             current = current.nextPosition(direction);
         }
-        return true;
+        return current.equals(target);
     }
 }

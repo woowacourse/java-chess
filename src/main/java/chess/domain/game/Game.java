@@ -21,10 +21,8 @@ public class Game {
     }
 
     public Game move(Position source, Position target) {
-        board.move(source, target, turn); // 터짐
-        //
-        //
-        return new Game(board, Color.oppose(turn)); // 턴 바꾸는거
+        board.move(source, target, turn);
+        return new Game(board, Color.oppose(turn));
     }
 
     public Board getBoard() {
