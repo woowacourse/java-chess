@@ -14,9 +14,10 @@ import domain.piece.kind.pawn.Pawn;
 import domain.piece.kind.sliding.Bishop;
 import domain.piece.kind.sliding.Queen;
 import domain.piece.kind.sliding.Rook;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChessBoardGenerator {
     private ChessBoardGenerator() {
@@ -24,23 +25,23 @@ public class ChessBoardGenerator {
     }
 
     public static ChessBoard createDefaultBoard() {
-        final var list = new ArrayList<Piece>();
-        list.addAll(selectPiece(Rank.EIGHT, Color.BLACK));
-        list.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
+        final var defaultPieces = new HashSet<Piece>();
+        defaultPieces.addAll(selectPiece(Rank.EIGHT, Color.BLACK));
+        defaultPieces.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
 
-        list.addAll(selectPawn(Rank.TWO, Color.WHITE));
-        list.addAll(selectPiece(Rank.ONE, Color.WHITE));
-        return new ChessBoard(new Pieces(list));
+        defaultPieces.addAll(selectPawn(Rank.TWO, Color.WHITE));
+        defaultPieces.addAll(selectPiece(Rank.ONE, Color.WHITE));
+        return new ChessBoard(new Pieces(defaultPieces));
     }
 
-    private static List<Piece> selectPawn(final Rank rank, final Color color) {
+    private static Set<Piece> selectPawn(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
                      .map(file -> Pawn.from(new Point(file, rank), color))
                      .map(Piece.class::cast)
-                     .toList();
+                     .collect(Collectors.toSet());
     }
 
-    private static List<Piece> selectPiece(final Rank rank, final Color color) {
+    private static Set<Piece> selectPiece(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
                      .map(file -> switch (file) {
                          case A, H -> new Rook(new Point(file, rank), color);
@@ -49,6 +50,6 @@ public class ChessBoardGenerator {
                          case D -> new Queen(new Point(file, rank), color);
                          case E -> new King(new Point(file, rank), color);
                      })
-                     .toList();
+                     .collect(Collectors.toSet());
     }
 }

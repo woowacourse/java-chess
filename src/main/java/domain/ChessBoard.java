@@ -25,7 +25,7 @@ public class ChessBoard {
         final var endPoint = dto.getEndPoint();
         final var piece = findPieceByPoint(startPoint);
 
-        if (pieces.canMove(piece, endPoint)) {
+        if (pieces.canReplace(piece, endPoint)) {
             pieces.replace(piece, endPoint);
             return;
         }

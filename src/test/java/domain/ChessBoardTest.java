@@ -2,6 +2,7 @@ package domain;
 
 import domain.piece.kind.PieceStatus;
 import fixture.PieceImpl;
+import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물들을 통해 체스판을 생성한다")
     void create_with_pieces() {
-        final var point1 = new Point(File.F, Rank.ONE);
-        final var color1 = Color.BLACK;
-
-        final var point2 = new Point(File.F, Rank.ONE);
-        final var color2 = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point1, color1), new PieceImpl(point2, color2));
-        final var pieces = new Pieces(pieceList);
+        final var pieces = new Pieces(Set.of(new PieceImpl(new Point(File.F, Rank.ONE), Color.BLACK),
+                new PieceImpl(new Point(File.F, Rank.TWO), Color.BLACK)));
 
         final var sut = new ChessBoard(pieces);
 
@@ -41,7 +37,7 @@ class ChessBoardTest {
     void find_piece_with_point() {
         final var point = new Point(File.F, Rank.ONE);
         final var color = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point, color));
+        Set<Piece> pieceList = Set.of(new PieceImpl(point, color));
         final var pieces = new Pieces(pieceList);
         final var sut = new ChessBoard(pieces);
 
@@ -55,7 +51,7 @@ class ChessBoardTest {
     void throw_exception_when_not_exist_point() {
         final var point = new Point(File.F, Rank.ONE);
         final var color = Color.BLACK;
-        List<Piece> pieceList = List.of(new PieceImpl(point, color));
+        Set<Piece> pieceList = Set.of(new PieceImpl(point, color));
         final var pieces = new Pieces(pieceList);
         final var sut = new ChessBoard(pieces);
         final var notExistedPoint = new Point(File.D, Rank.FOUR);

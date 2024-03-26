@@ -5,19 +5,12 @@ import domain.piece.attribute.point.Point;
 import java.util.*;
 
 public class Pieces {
-
     private final Set<Piece> value;
-
-    public Pieces(final List<Piece> value) {
-        this.value = new HashSet<>(value);
-    }
-
     public Pieces(final Set<Piece> pieces) {
         this.value = new HashSet<>(pieces);
     }
 
-
-    public boolean canMove(final Piece piece, final Point endPoint) {
+    public boolean canReplace(final Piece piece, final Point endPoint) {
         return piece.findLegalMovePoints(this).contains(endPoint);
     }
 
