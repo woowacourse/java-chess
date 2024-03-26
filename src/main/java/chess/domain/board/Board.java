@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.player.Player;
+import chess.domain.piece.Team;
 import chess.domain.point.Point;
 
 import java.util.Collections;
@@ -15,10 +15,10 @@ public class Board {
         this.board = board;
     }
 
-    public void move(Player player, Point departure, Point destination) {
+    public void move(Team team, Point departure, Point destination) {
         Piece piece = board.get(departure);
 
-        validateMove(player, departure, destination, piece);
+        validateMove(team, departure, destination, piece);
 
         movePiece(departure, destination, piece);
     }
@@ -28,13 +28,13 @@ public class Board {
         board.put(destination, piece);
     }
 
-    private void validateMove(Player player, Point departure, Point destination, Piece piece) {
-        validateMyPiece(player, piece);
+    private void validateMove(Team team, Point departure, Point destination, Piece piece) {
+        validateMyPiece(team, piece);
         validateMovePoint(departure, destination, piece);
     }
 
-    private void validateMyPiece(Player player, Piece piece) {
-        if (!player.isMyPiece(piece)) {
+    private void validateMyPiece(Team team, Piece piece) {
+        if (!piece.isSameTeam(team)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
     }

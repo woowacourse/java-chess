@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
-import chess.domain.player.Player;
 import chess.domain.point.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +26,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 1), new Bishop(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        board.move(new Player(Team.WHITE),
+        board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('c', 3));
 
@@ -41,7 +40,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 1), new Knight(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        board.move(new Player(Team.WHITE),
+        board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('c', 2));
 
@@ -55,7 +54,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 1), new Rook(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        board.move(new Player(Team.WHITE),
+        board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('a', 8));
 
@@ -69,7 +68,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 2), new Pawn(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        board.move(new Player(Team.WHITE),
+        board.move(Team.WHITE,
                 new Point('a', 2),
                 new Point('a', 3));
 
@@ -84,7 +83,7 @@ class BoardTest {
         tempBoard.put(new Point('b', 2), new Bishop(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        assertThatThrownBy(() -> board.move(new Player(Team.WHITE),
+        assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('c', 3)))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -97,7 +96,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 5), new Rook(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        assertThatThrownBy(() -> board.move(new Player(Team.WHITE),
+        assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('a', 8)))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -110,7 +109,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 2), new Pawn(Team.BLACK));
         Board board = new Board(tempBoard);
 
-        assertThatThrownBy(() -> board.move(new Player(Team.WHITE),
+        assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('a', 2)))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -122,7 +121,7 @@ class BoardTest {
         tempBoard.put(new Point('a', 1), new Pawn(Team.WHITE));
         Board board = new Board(tempBoard);
 
-        assertThatThrownBy(() -> board.move(new Player(Team.WHITE),
+        assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('b', 2)))
                 .isInstanceOf(IllegalArgumentException.class);

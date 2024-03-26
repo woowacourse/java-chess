@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import chess.domain.board.BoardFactory;
+import chess.domain.game.ChessGame;
 import chess.domain.point.Point;
 import chess.view.Command;
 import chess.view.InputView;
@@ -34,7 +34,7 @@ public class ChessController {
             Command command = Command.from(readCommand.get(0));
 
             executeCommand(game, command, readCommand);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }

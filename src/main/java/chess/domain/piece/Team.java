@@ -12,6 +12,13 @@ public enum Team {
         return -1;
     }
 
+    public Team opposite() {
+        if (isWhite()) {
+            return BLACK;
+        }
+        return WHITE;
+    }
+
     public boolean isWhite() {
         return this == WHITE;
     }
