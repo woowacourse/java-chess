@@ -12,4 +12,14 @@ public enum Side {
     public boolean isBlack() {
         return this == BLACK;
     }
+
+    public Side getOppositeSide() {
+        if (isWhite()) {
+            return BLACK;
+        }
+        if (isBlack()) {
+            return WHITE;
+        }
+        return NONE;
+    }
 }
