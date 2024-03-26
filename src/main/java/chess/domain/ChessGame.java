@@ -41,7 +41,9 @@ public class ChessGame {
         return List.of(scoreCalculator.getWhiteScore(), scoreCalculator.getBlackScore());
     }
 
-    public Team findWinner(final double whiteScore, final double blackScore) {
+    public Team findWinner(List<Double> score) {
+        double whiteScore = score.get(0);
+        double blackScore = score.get(1);
         if (whiteScore > blackScore) {
             return Team.WHITE;
         }

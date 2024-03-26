@@ -78,13 +78,13 @@ public class ChessGameController {
 
     private void status(final ChessGame chessGame) {
         List<Double> score = chessGame.status();
-        double whiteScore = score.get(0);
-        double blackScore = score.get(1);
-        Team winner = chessGame.findWinner(whiteScore, blackScore);
-        result(chessGame, winner, whiteScore, blackScore);
+        Team winner = chessGame.findWinner(score);
+        result(chessGame, winner, score);
     }
 
-    private void result(final ChessGame chessGame, final Team winner, final double whiteScore, final double blackScore) {
+    private void result(final ChessGame chessGame, final Team winner, final List<Double> score) {
+        double whiteScore = score.get(0);
+        double blackScore = score.get(1);
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (winner.equals(Team.NONE)) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);
