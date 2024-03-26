@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.piece.Color;
 import chess.piece.InitPawn;
+import chess.piece.King;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
 import chess.piece.Rook;
@@ -189,5 +190,23 @@ class BoardTest {
                 () -> assertThat(whiteScore.getScore()).isEqualTo(10.0),
                 () -> assertThat(blackScore.getScore()).isEqualTo(1)
         );
+    }
+
+    @Test
+    @DisplayName("킹이 잡힌 여부를 올바르게 반환한다.")
+    void kingCapturedTest() {
+        // given
+        Position source = Position.of(File.A, Rank.ONE);
+        Position destination = Position.of(File.B, Rank.TWO);
+        Map<Position, Piece> pieces = new HashMap<>();
+        pieces.put(source, new King(Color.WHITE));
+        pieces.put(destination, new King(Color.BLACK));
+
+        Board board = new Board(pieces);
+        // when
+        board.move(source, destination, Color.WHITE);
+        boolean actual = board.isKingCaptured(Color.BLACK);
+        // then
+        assertThat(actual).isTrue();
     }
 }

@@ -1,10 +1,13 @@
 package chess.game.state;
 
+import chess.board.Board;
+import chess.position.Position;
+
 public interface GameState {
 
     GameState start();
 
-    GameState proceedTurn(TurnAction action);
+    GameState proceedTurn(Board board, Position source, Position destination);
 
     GameState terminate();
 

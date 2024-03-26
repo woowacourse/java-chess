@@ -16,7 +16,7 @@ public class Board {
 
     private final Map<Position, Piece> pieces;
 
-    Board(Map<Position, Piece> pieces) {
+    public Board(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
 
@@ -120,6 +120,13 @@ public class Board {
                 .map(pieces::get)
                 .toList();
         return new FilePieces(filePieces);
+    }
+
+    public boolean isKingCaptured(Color color) {
+        return pieces.values()
+                .stream()
+                .filter(Piece::isKing)
+                .noneMatch(piece -> piece.hasColorOf(color));
     }
 
     public Map<Position, Piece> pieces() {

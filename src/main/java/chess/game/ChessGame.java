@@ -67,7 +67,7 @@ public class ChessGame {
         PathDto pathDto = inputView.readPosition();
         Position source = getSourceFrom(pathDto);
         Position destination = getDestinationFrom(pathDto);
-        gameState = gameState.proceedTurn(color -> board.move(source, destination, color));
+        gameState = gameState.proceedTurn(board, source, destination);
         printBoard(board, converter);
     }
 
