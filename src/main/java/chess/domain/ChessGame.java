@@ -7,6 +7,8 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.state.BlankChessState;
 import chess.domain.state.ChessState;
+import chess.score.Score;
+import chess.score.Scores;
 import java.util.Map;
 
 public class ChessGame {
@@ -26,6 +28,12 @@ public class ChessGame {
 
     private void changeTurnColor() {
         turnColor = turnColor.findOppositeColor();
+    }
+
+    public Scores calculateScores() {
+        Score whiteScore = chessState.calculateScore(Color.WHITE);
+        Score blackScore = chessState.calculateScore(Color.BLACK);
+        return new Scores(whiteScore, blackScore);
     }
 
     public Map<Position, PieceType> collectBoard() {

@@ -5,6 +5,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.score.Score;
+import chess.score.ScoreManager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +38,10 @@ public abstract class ChessState {
                 .allMatch(Piece::isBlank);
     }
 
-//    public final
+    public final Score calculateScore(Color color) {
+        ScoreManager scoreManager = new ScoreManager();
+        return scoreManager.calculateScore(board, color);
+    }
 
     public final Map<Position, PieceType> collectBoard() {
         return board.entrySet().stream()
