@@ -17,14 +17,21 @@ public class Space {
     }
 
     public void movePiece(Space targetSpace) {
-        if (((piece.isCatchable(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece))
-                || piece.isMovable(position, targetSpace.position))
-                && !piece.isSameColor(targetSpace.piece)) {
+        if (canCatch(targetSpace) || canMove(targetSpace)) {
             targetSpace.piece = piece;
             piece = new EmptyPiece();
             return;
         }
         throw new IllegalArgumentException("이동 규칙을 위반한 움직임입니다.");
+    }
+
+    private boolean canCatch(Space targetSpace) {
+        return piece.isCatchable(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece)
+                && !piece.isSameColor(targetSpace.piece);
+    }
+
+    private boolean canMove(Space targetSpace) {
+        return piece.isMovable(position, targetSpace.position) && !piece.isSameColor(targetSpace.piece);
     }
 
     public List<Position> findRouteToTarget(Space targetSpace) {
