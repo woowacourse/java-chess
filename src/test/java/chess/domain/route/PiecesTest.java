@@ -1,10 +1,9 @@
 package chess.domain.route;
 
+import static chess.fixture.PieceFixture.BLACK_ROOK;
+import static chess.fixture.PieceFixture.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Side;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ class PiecesTest {
     @DisplayName("모든 기물이 EMPTY는 아니다.")
     @Test
     void notAllEmpty() {
-        Pieces pieces = new Pieces(List.of(new Empty(), new Rook(Side.BLACK)));
+        Pieces pieces = new Pieces(List.of(EMPTY, BLACK_ROOK));
 
         boolean actual = pieces.notAllEmpty();
 
@@ -24,7 +23,7 @@ class PiecesTest {
     @DisplayName("모든 기물이 EMPTY이다.")
     @Test
     void allEmpty() {
-        Pieces pieces = new Pieces(List.of(new Empty(), new Empty()));
+        Pieces pieces = new Pieces(List.of(EMPTY, EMPTY));
 
         boolean actual = pieces.notAllEmpty();
 

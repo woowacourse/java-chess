@@ -14,7 +14,7 @@ public class MovePathFixture {
     }
 
     public static Route hasPathPieces(Piece... pieces) {
-        List<Piece> pathPieces = (List<Piece>) Arrays.asList(pieces);
+        List<Piece> pathPieces = Arrays.asList(pieces);
         return new Route(new Pieces(pathPieces), new Empty());
     }
 

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.fixture.PieceFixture.BLACK_ROOK;
 import static chess.fixture.PositionFixture.A4;
 import static chess.fixture.PositionFixture.B4;
 import static chess.fixture.PositionFixture.C4;
@@ -57,9 +58,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("movableTargets")
     void hasFollowedRule(Position target) {
-        Rook rook = new Rook(Side.BLACK);
-
-        boolean actual = rook.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_ROOK.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
     }
@@ -68,9 +67,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("immovableTargets")
     void hasViolatedRule(Position target) {
-        Rook rook = new Rook(Side.BLACK);
-
-        boolean actual = rook.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_ROOK.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
     }

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.fixture.PieceFixture.BLACK_QUEEN;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A4;
 import static chess.fixture.PositionFixture.A7;
@@ -73,9 +74,7 @@ public class QueenTest {
     @ParameterizedTest
     @MethodSource("movableTargets")
     void hasFollowedRule(Position target) {
-        Queen queen = new Queen(Side.BLACK);
-
-        boolean actual = queen.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_QUEEN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
     }
@@ -84,9 +83,7 @@ public class QueenTest {
     @ParameterizedTest
     @MethodSource("immovableTargets")
     void hasViolatedRule(Position target) {
-        Queen queen = new Queen(Side.BLACK);
-
-        boolean actual = queen.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_QUEEN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
     }

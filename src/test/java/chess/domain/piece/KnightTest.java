@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import static chess.fixture.PieceFixture.BLACK_KNIGHT;
 import static chess.fixture.PositionFixture.B3;
 import static chess.fixture.PositionFixture.B5;
 import static chess.fixture.PositionFixture.C2;
@@ -51,9 +52,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("movableTargets")
     void hasFollowedRule(Position target) {
-        Knight knight = new Knight(Side.BLACK);
-
-        boolean actual = knight.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_KNIGHT.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
     }
@@ -62,9 +61,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("immovableTargets")
     void hasViolatedRule(Position target) {
-        Knight knight = new Knight(Side.BLACK);
-
-        boolean actual = knight.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_KNIGHT.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
     }

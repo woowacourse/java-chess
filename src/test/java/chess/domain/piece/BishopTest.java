@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.fixture.PieceFixture.BLACK_BISHOP;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A7;
 import static chess.fixture.PositionFixture.B2;
@@ -56,9 +57,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("movableTargets")
     void hasFollowedRule(Position target) {
-        Bishop bishop = new Bishop(Side.BLACK);
-
-        boolean actual = bishop.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_BISHOP.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
     }
@@ -67,9 +66,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("immovableTargets")
     void hasViolatedRule(Position target) {
-        Bishop bishop = new Bishop(Side.BLACK);
-
-        boolean actual = bishop.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_BISHOP.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
     }

@@ -2,13 +2,13 @@ package chess.domain.board;
 
 import chess.domain.route.Path;
 import chess.domain.route.Pieces;
-import chess.domain.piece.Side;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static chess.fixture.PieceFixture.BLACK_PAWN;
+import static chess.fixture.PieceFixture.EMPTY;
+import static chess.fixture.PieceFixture.WHITE_PAWN;
 import static chess.fixture.PositionFixture.A2;
 import static chess.fixture.PositionFixture.A3;
 import static chess.fixture.PositionFixture.A4;
@@ -43,12 +43,7 @@ public class BoardTest {
         Pieces pieces = board.findPieces(path);
 
         assertThat(pieces).isEqualTo(new Pieces(List.of(
-                new Pawn(Side.BLACK),
-                new Empty(),
-                new Empty(),
-                new Empty(),
-                new Empty(),
-                new Pawn(Side.WHITE)
+                BLACK_PAWN, EMPTY, EMPTY, EMPTY, EMPTY, WHITE_PAWN
         )));
     }
 
@@ -60,8 +55,8 @@ public class BoardTest {
         board.move(B2, B3);
 
         assertAll(
-                () -> assertThat(board.findPiece(B2)).isEqualTo(new Empty()),
-                () -> assertThat(board.findPiece(B3)).isEqualTo(new Pawn(Side.WHITE))
+                () -> assertThat(board.findPiece(B2)).isEqualTo(EMPTY),
+                () -> assertThat(board.findPiece(B3)).isEqualTo(WHITE_PAWN)
         );
     }
 }

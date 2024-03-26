@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.fixture.PieceFixture.BLACK_PAWN;
+import static chess.fixture.PieceFixture.WHITE_PAWN;
 import static chess.fixture.PositionFixture.A1;
 import static chess.fixture.PositionFixture.A2;
 import static chess.fixture.PositionFixture.A3;
@@ -37,7 +39,7 @@ public class PieceTest {
     @DisplayName("target 위치에 같은 색의 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoSameColorPieceAtTarget() {
-        assertThatThrownBy(() -> piece.checkValidMove(A1, A2, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE))))
+        assertThatThrownBy(() -> piece.checkValidMove(A1, A2, MovePathFixture.hasTargetPiece(WHITE_PAWN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("target 위치에 같은 색의 기물이 존재하면 이동할 수 없습니다.");
     }
@@ -45,7 +47,7 @@ public class PieceTest {
     @DisplayName("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없다.")
     @Test
     void checkNoPathPieces() {
-        assertThatThrownBy(() -> piece.checkValidMove(A1, A3, MovePathFixture.hasPathPieces(new Rook(Side.BLACK))))
+        assertThatThrownBy(() -> piece.checkValidMove(A1, A3, MovePathFixture.hasPathPieces(BLACK_PAWN)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("source 위치에서 target 위치까지의 경로에 기물이 존재하면 이동할 수 없습니다.");
     }

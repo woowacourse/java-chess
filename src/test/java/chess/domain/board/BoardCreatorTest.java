@@ -1,18 +1,86 @@
 package chess.domain.board;
 
+import static chess.fixture.PieceFixture.BLACK_BISHOP;
+import static chess.fixture.PieceFixture.BLACK_KING;
+import static chess.fixture.PieceFixture.BLACK_KNIGHT;
+import static chess.fixture.PieceFixture.BLACK_PAWN;
+import static chess.fixture.PieceFixture.BLACK_QUEEN;
+import static chess.fixture.PieceFixture.BLACK_ROOK;
+import static chess.fixture.PieceFixture.EMPTY;
+import static chess.fixture.PieceFixture.WHITE_BISHOP;
+import static chess.fixture.PieceFixture.WHITE_KING;
+import static chess.fixture.PieceFixture.WHITE_KNIGHT;
+import static chess.fixture.PieceFixture.WHITE_PAWN;
+import static chess.fixture.PieceFixture.WHITE_QUEEN;
+import static chess.fixture.PieceFixture.WHITE_ROOK;
+import static chess.fixture.PositionFixture.A1;
+import static chess.fixture.PositionFixture.A2;
+import static chess.fixture.PositionFixture.A3;
+import static chess.fixture.PositionFixture.A4;
+import static chess.fixture.PositionFixture.A5;
+import static chess.fixture.PositionFixture.A6;
+import static chess.fixture.PositionFixture.A7;
+import static chess.fixture.PositionFixture.A8;
+import static chess.fixture.PositionFixture.B1;
+import static chess.fixture.PositionFixture.B2;
+import static chess.fixture.PositionFixture.B3;
+import static chess.fixture.PositionFixture.B4;
+import static chess.fixture.PositionFixture.B5;
+import static chess.fixture.PositionFixture.B6;
+import static chess.fixture.PositionFixture.B7;
+import static chess.fixture.PositionFixture.B8;
+import static chess.fixture.PositionFixture.C1;
+import static chess.fixture.PositionFixture.C2;
+import static chess.fixture.PositionFixture.C3;
+import static chess.fixture.PositionFixture.C4;
+import static chess.fixture.PositionFixture.C5;
+import static chess.fixture.PositionFixture.C6;
+import static chess.fixture.PositionFixture.C7;
+import static chess.fixture.PositionFixture.C8;
+import static chess.fixture.PositionFixture.D1;
+import static chess.fixture.PositionFixture.D2;
+import static chess.fixture.PositionFixture.D3;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.D6;
+import static chess.fixture.PositionFixture.D7;
+import static chess.fixture.PositionFixture.D8;
+import static chess.fixture.PositionFixture.E1;
+import static chess.fixture.PositionFixture.E2;
+import static chess.fixture.PositionFixture.E3;
+import static chess.fixture.PositionFixture.E4;
+import static chess.fixture.PositionFixture.E5;
+import static chess.fixture.PositionFixture.E6;
+import static chess.fixture.PositionFixture.E7;
+import static chess.fixture.PositionFixture.E8;
+import static chess.fixture.PositionFixture.F1;
+import static chess.fixture.PositionFixture.F2;
+import static chess.fixture.PositionFixture.F3;
+import static chess.fixture.PositionFixture.F4;
+import static chess.fixture.PositionFixture.F5;
+import static chess.fixture.PositionFixture.F6;
+import static chess.fixture.PositionFixture.F7;
+import static chess.fixture.PositionFixture.F8;
+import static chess.fixture.PositionFixture.G1;
+import static chess.fixture.PositionFixture.G2;
+import static chess.fixture.PositionFixture.G3;
+import static chess.fixture.PositionFixture.G4;
+import static chess.fixture.PositionFixture.G5;
+import static chess.fixture.PositionFixture.G6;
+import static chess.fixture.PositionFixture.G7;
+import static chess.fixture.PositionFixture.G8;
+import static chess.fixture.PositionFixture.H1;
+import static chess.fixture.PositionFixture.H2;
+import static chess.fixture.PositionFixture.H3;
+import static chess.fixture.PositionFixture.H4;
+import static chess.fixture.PositionFixture.H5;
+import static chess.fixture.PositionFixture.H6;
+import static chess.fixture.PositionFixture.H7;
+import static chess.fixture.PositionFixture.H8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.position.Position;
-import chess.domain.piece.Side;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.fixture.PositionFixture;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,77 +107,77 @@ class BoardCreatorTest {
         Map<Position, Piece> board = boardCreator.create();
 
         assertThat(board).containsExactly(
-                Map.entry(PositionFixture.A8, new Rook(Side.BLACK)),
-                Map.entry(PositionFixture.B8, new Knight(Side.BLACK)),
-                Map.entry(PositionFixture.C8, new Bishop(Side.BLACK)),
-                Map.entry(PositionFixture.D8, new Queen(Side.BLACK)),
-                Map.entry(PositionFixture.E8, new King(Side.BLACK)),
-                Map.entry(PositionFixture.F8, new Bishop(Side.BLACK)),
-                Map.entry(PositionFixture.G8, new Knight(Side.BLACK)),
-                Map.entry(PositionFixture.H8, new Rook(Side.BLACK)),
+                Map.entry(A8, BLACK_ROOK),
+                Map.entry(B8, BLACK_KNIGHT),
+                Map.entry(C8, BLACK_BISHOP),
+                Map.entry(D8, BLACK_QUEEN),
+                Map.entry(E8, BLACK_KING),
+                Map.entry(F8, BLACK_BISHOP),
+                Map.entry(G8, BLACK_KNIGHT),
+                Map.entry(H8, BLACK_ROOK),
 
-                Map.entry(PositionFixture.A7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.B7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.C7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.D7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.E7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.F7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.G7, new Pawn(Side.BLACK)),
-                Map.entry(PositionFixture.H7, new Pawn(Side.BLACK)),
+                Map.entry(A7, BLACK_PAWN),
+                Map.entry(B7, BLACK_PAWN),
+                Map.entry(C7, BLACK_PAWN),
+                Map.entry(D7, BLACK_PAWN),
+                Map.entry(E7, BLACK_PAWN),
+                Map.entry(F7, BLACK_PAWN),
+                Map.entry(G7, BLACK_PAWN),
+                Map.entry(H7, BLACK_PAWN),
 
-                Map.entry(PositionFixture.A6, new Empty()),
-                Map.entry(PositionFixture.B6, new Empty()),
-                Map.entry(PositionFixture.C6, new Empty()),
-                Map.entry(PositionFixture.D6, new Empty()),
-                Map.entry(PositionFixture.E6, new Empty()),
-                Map.entry(PositionFixture.F6, new Empty()),
-                Map.entry(PositionFixture.G6, new Empty()),
-                Map.entry(PositionFixture.H6, new Empty()),
+                Map.entry(A6, EMPTY),
+                Map.entry(B6, EMPTY),
+                Map.entry(C6, EMPTY),
+                Map.entry(D6, EMPTY),
+                Map.entry(E6, EMPTY),
+                Map.entry(F6, EMPTY),
+                Map.entry(G6, EMPTY),
+                Map.entry(H6, EMPTY),
 
-                Map.entry(PositionFixture.A5, new Empty()),
-                Map.entry(PositionFixture.B5, new Empty()),
-                Map.entry(PositionFixture.C5, new Empty()),
-                Map.entry(PositionFixture.D5, new Empty()),
-                Map.entry(PositionFixture.E5, new Empty()),
-                Map.entry(PositionFixture.F5, new Empty()),
-                Map.entry(PositionFixture.G5, new Empty()),
-                Map.entry(PositionFixture.H5, new Empty()),
+                Map.entry(A5, EMPTY),
+                Map.entry(B5, EMPTY),
+                Map.entry(C5, EMPTY),
+                Map.entry(D5, EMPTY),
+                Map.entry(E5, EMPTY),
+                Map.entry(F5, EMPTY),
+                Map.entry(G5, EMPTY),
+                Map.entry(H5, EMPTY),
 
-                Map.entry(PositionFixture.A4, new Empty()),
-                Map.entry(PositionFixture.B4, new Empty()),
-                Map.entry(PositionFixture.C4, new Empty()),
-                Map.entry(PositionFixture.D4, new Empty()),
-                Map.entry(PositionFixture.E4, new Empty()),
-                Map.entry(PositionFixture.F4, new Empty()),
-                Map.entry(PositionFixture.G4, new Empty()),
-                Map.entry(PositionFixture.H4, new Empty()),
+                Map.entry(A4, EMPTY),
+                Map.entry(B4, EMPTY),
+                Map.entry(C4, EMPTY),
+                Map.entry(D4, EMPTY),
+                Map.entry(E4, EMPTY),
+                Map.entry(F4, EMPTY),
+                Map.entry(G4, EMPTY),
+                Map.entry(H4, EMPTY),
 
-                Map.entry(PositionFixture.A3, new Empty()),
-                Map.entry(PositionFixture.B3, new Empty()),
-                Map.entry(PositionFixture.C3, new Empty()),
-                Map.entry(PositionFixture.D3, new Empty()),
-                Map.entry(PositionFixture.E3, new Empty()),
-                Map.entry(PositionFixture.F3, new Empty()),
-                Map.entry(PositionFixture.G3, new Empty()),
-                Map.entry(PositionFixture.H3, new Empty()),
+                Map.entry(A3, EMPTY),
+                Map.entry(B3, EMPTY),
+                Map.entry(C3, EMPTY),
+                Map.entry(D3, EMPTY),
+                Map.entry(E3, EMPTY),
+                Map.entry(F3, EMPTY),
+                Map.entry(G3, EMPTY),
+                Map.entry(H3, EMPTY),
 
-                Map.entry(PositionFixture.A2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.B2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.C2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.D2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.E2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.F2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.G2, new Pawn(Side.WHITE)),
-                Map.entry(PositionFixture.H2, new Pawn(Side.WHITE)),
+                Map.entry(A2, WHITE_PAWN),
+                Map.entry(B2, WHITE_PAWN),
+                Map.entry(C2, WHITE_PAWN),
+                Map.entry(D2, WHITE_PAWN),
+                Map.entry(E2, WHITE_PAWN),
+                Map.entry(F2, WHITE_PAWN),
+                Map.entry(G2, WHITE_PAWN),
+                Map.entry(H2, WHITE_PAWN),
 
-                Map.entry(PositionFixture.A1, new Rook(Side.WHITE)),
-                Map.entry(PositionFixture.B1, new Knight(Side.WHITE)),
-                Map.entry(PositionFixture.C1, new Bishop(Side.WHITE)),
-                Map.entry(PositionFixture.D1, new Queen(Side.WHITE)),
-                Map.entry(PositionFixture.E1, new King(Side.WHITE)),
-                Map.entry(PositionFixture.F1, new Bishop(Side.WHITE)),
-                Map.entry(PositionFixture.G1, new Knight(Side.WHITE)),
-                Map.entry(PositionFixture.H1, new Rook(Side.WHITE))
+                Map.entry(A1, WHITE_ROOK),
+                Map.entry(B1, WHITE_KNIGHT),
+                Map.entry(C1, WHITE_BISHOP),
+                Map.entry(D1, WHITE_QUEEN),
+                Map.entry(E1, WHITE_KING),
+                Map.entry(F1, WHITE_BISHOP),
+                Map.entry(G1, WHITE_KNIGHT),
+                Map.entry(H1, WHITE_ROOK)
         );
     }
 }

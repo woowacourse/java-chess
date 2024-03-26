@@ -12,6 +12,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static chess.fixture.PieceFixture.BLACK_PAWN;
+import static chess.fixture.PieceFixture.WHITE_PAWN;
+import static chess.fixture.PositionFixture.C5;
+import static chess.fixture.PositionFixture.D2;
+import static chess.fixture.PositionFixture.D3;
+import static chess.fixture.PositionFixture.D4;
+import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.E5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PawnTest {
@@ -32,8 +40,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D3);
+        private static final Position SOURCE = D4;
+        private static final List<Position> MOVABLE_POSITIONS = List.of(D3);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_POSITIONS);
@@ -46,9 +54,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
         }
@@ -56,9 +62,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
         }
@@ -81,7 +85,7 @@ public class PawnTest {
         abcdefgh
          */
         private static final Position SOURCE = PositionFixture.D7;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D6, PositionFixture.D5);
+        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D6, D5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_POSITIONS);
@@ -94,9 +98,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
         }
@@ -104,9 +106,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
         }
@@ -128,7 +128,7 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D4;
+        private static final Position SOURCE = D4;
         private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.C3, PositionFixture.E3);
 
         private static Stream<Arguments> movableTargets() {
@@ -142,9 +142,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE)));
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
 
             assertThat(actual).isTrue();
         }
@@ -152,9 +150,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.BLACK);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.WHITE)));
+            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
 
             assertThat(actual).isFalse();
         }
@@ -176,8 +172,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D5);
+        private static final Position SOURCE = D4;
+        private static final List<Position> MOVABLE_POSITIONS = List.of(D5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_POSITIONS);
@@ -190,9 +186,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
         }
@@ -200,9 +194,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
         }
@@ -224,8 +216,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D2;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D3, PositionFixture.D4);
+        private static final Position SOURCE = D2;
+        private static final List<Position> MOVABLE_POSITIONS = List.of(D3, D4);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_POSITIONS);
@@ -238,9 +230,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
         }
@@ -248,9 +238,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
         }
@@ -272,8 +260,8 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.C5, PositionFixture.E5);
+        private static final Position SOURCE = D4;
+        private static final List<Position> MOVABLE_POSITIONS = List.of(C5, E5);
 
         private static Stream<Arguments> movableTargets() {
             return PositionFixture.movablePositions(MOVABLE_POSITIONS);
@@ -286,9 +274,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.BLACK)));
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
 
             assertThat(actual).isTrue();
         }
@@ -296,9 +282,7 @@ public class PawnTest {
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            Pawn pawn = new Pawn(Side.WHITE);
-
-            boolean actual = pawn.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(new Pawn(Side.BLACK)));
+            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
 
             assertThat(actual).isFalse();
         }
