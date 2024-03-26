@@ -34,7 +34,11 @@ public enum Rank {
     }
 
     public Rank update(int value) {
-        return values()[ordinal() + value];
+        int index = ordinal() + value;
+        if (index >= values().length) {
+            throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
+        }
+        return values()[index];
     }
 
     public int subtractRank(Rank rank) {

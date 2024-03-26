@@ -34,6 +34,16 @@ public class RankTest {
     }
 
     @Test
+    @DisplayName("보드판 밖으로 나가게 되는 경우 예외처리한다.")
+    void Rank_Throw_exception_when_move_out_of_board() {
+        Rank rank = Rank.from("2");
+
+        assertThatThrownBy(() -> {
+                rank.update(7);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("rank과 rank의 차이를 구한다.")
     void Rank_Subtract_with_other_rank() {
         Rank rank = Rank.from("2");

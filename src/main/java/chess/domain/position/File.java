@@ -26,7 +26,11 @@ public enum File {
     }
 
     public File update(int value) {
-        return values()[ordinal() + value];
+        int index = ordinal() + value;
+        if(index >= values().length) {
+            throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
+        }
+        return values()[index];
     }
 
     public int subtractFile(File file) {
@@ -35,9 +39,5 @@ public enum File {
 
     public int findDirection(File file) {
         return Integer.compare(file.ordinal(), ordinal());
-    }
-
-    public int getValue() {
-        return ordinal() - 'a';
     }
 }

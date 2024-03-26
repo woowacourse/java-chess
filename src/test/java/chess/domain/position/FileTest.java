@@ -32,6 +32,17 @@ public class FileTest {
     }
 
     @Test
+    @DisplayName("보드판 밖으로 나가게 되는 경우 예외처리한다.")
+    void File_Throw_exception_when_move_out_of_board() {
+        File file = File.from("b");
+
+        assertThatThrownBy(() -> {
+            file.update(7);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+
+    @Test
     @DisplayName("file과 file의 차이를 구한다.")
     void file_Subtract_with_other_file() {
         File file = File.from("a");
