@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
-@DisplayName("랭크")
 class RankTest {
 
     @DisplayName("좌표가 숫자가 아닐 경우 예외가 발생한다.")

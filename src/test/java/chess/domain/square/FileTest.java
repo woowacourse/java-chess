@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 
-@DisplayName("파일")
 class FileTest {
 
     @DisplayName("좌표가 유효하지 않을 경우 예외가 발생한다.")

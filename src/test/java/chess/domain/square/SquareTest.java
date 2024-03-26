@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-@DisplayName("좌표")
 class SquareTest {
 
     @DisplayName("출발지에서 목적지까지 세로로 이동하면 True를 리턴한다.")

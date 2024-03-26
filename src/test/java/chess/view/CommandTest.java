@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("커맨드")
 class CommandTest {
 
     @DisplayName("주어진 값에 해당하는 커맨드를 찾는다.")

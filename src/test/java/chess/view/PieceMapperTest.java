@@ -7,7 +7,6 @@ import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("기물 출력명")
 class PieceMapperTest {
 
     @Test

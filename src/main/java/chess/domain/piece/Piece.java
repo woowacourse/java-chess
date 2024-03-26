@@ -18,9 +18,9 @@ public class Piece {
 
     public boolean canMove(final Square source, final Square target) {
         if (type == PieceType.PAWN) {
-            return type.findMoveStrategy(source, target) && source.isNotBackward(target, color);
+            return type.canMove(source, target) && source.isNotBackward(target, color);
         }
-        return type.findMoveStrategy(source, target);
+        return type.canMove(source, target);
     }
 
     public PieceType getType() {

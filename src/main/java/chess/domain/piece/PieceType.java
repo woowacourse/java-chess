@@ -1,27 +1,37 @@
 package chess.domain.piece;
 
+import chess.domain.piece.strategy.DiagonalStrategy;
+import chess.domain.piece.strategy.IntersectionStrategy;
+import chess.domain.piece.strategy.KnightStrategy;
+import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.piece.strategy.OnlyForwardStrategy;
+import chess.domain.piece.strategy.PawnAttackStrategy;
+import chess.domain.piece.strategy.StraightStrategy;
+import chess.domain.piece.strategy.UnionStrategy;
+import chess.domain.piece.strategy.WithinOneStepStrategy;
 import chess.domain.square.Square;
 
-import java.util.function.BiPredicate;
+import java.util.List;
 
 public enum PieceType {
 
-    KING((source, target) -> (source.isStraight(target) || source.isDiagonal(target))
-            && source.isWithinOneStep(target)),
-    QUEEN((source, target) -> source.isStraight(target) || source.isDiagonal(target)),
-    ROOK((source, target) -> source.isStraight(target)),
-    BISHOP((source, target) -> source.isDiagonal(target)),
-    KNIGHT((source, target) -> source.isStraightAndDiagonal(target)),
-    PAWN((source, target) -> source.isOnlyForward(target) || source.isAttack(target)),
+    KING(new IntersectionStrategy(List.of(
+            new UnionStrategy(List.of(new StraightStrategy(), new DiagonalStrategy())),
+            new WithinOneStepStrategy()))),
+    QUEEN(new UnionStrategy(List.of(new StraightStrategy(), new DiagonalStrategy()))),
+    ROOK(new StraightStrategy()),
+    BISHOP(new DiagonalStrategy()),
+    KNIGHT(new KnightStrategy()),
+    PAWN(new UnionStrategy(List.of(new OnlyForwardStrategy(), new PawnAttackStrategy()))),
     ;
 
-    private final BiPredicate<Square, Square> moveStrategy;
+    private final MoveStrategy moveStrategy;
 
-    PieceType(final BiPredicate<Square, Square> moveStrategy) {
+    PieceType(MoveStrategy moveStrategy) {
         this.moveStrategy = moveStrategy;
     }
 
-    public boolean findMoveStrategy(final Square source, final Square target) {
-        return moveStrategy.test(source, target);
+    public boolean canMove(final Square source, final Square target) {
+        return moveStrategy.canMove(source, target);
     }
 }

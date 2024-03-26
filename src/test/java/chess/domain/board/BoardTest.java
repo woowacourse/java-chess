@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-@DisplayName("보드")
 class BoardTest {
 
     @DisplayName("기물의 출발지와 목적지가 같으면 예외가 발생한다.")
