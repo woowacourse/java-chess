@@ -14,8 +14,11 @@ class ChessBoardInitializerTest {
     @Test
     @DisplayName("체스판을 초기화한다")
     void initChessBoard() {
+        // given
+        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
+
         // when
-        Map<ChessPosition, Piece> chessBoard = ChessBoardInitializer.INITIAL_BOARD;
+        Map<ChessPosition, Piece> chessBoard = chessBoardInitializer.create();
 
         // then
         assertThat(chessBoard).hasSize(64);

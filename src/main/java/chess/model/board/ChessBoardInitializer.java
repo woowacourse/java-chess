@@ -18,19 +18,18 @@ import static java.util.stream.Collectors.toMap;
 public class ChessBoardInitializer {
     private static final int FIRST_BLANK_RANK_COORDINATE = 3;
     private static final int LAST_BLANK_RANK_COORDINATE = 6;
-    public static final Map<ChessPosition, Piece> INITIAL_BOARD;
 
-    static {
+    public Map<ChessPosition, Piece> create() {
         Map<ChessPosition, Piece> board = new HashMap<>();
         board.putAll(createSpecialPieces(Side.BLACK));
         board.putAll(createPawns(Side.BLACK));
         board.putAll(createSpecialPieces(Side.WHITE));
         board.putAll(createPawns(Side.WHITE));
         board.putAll(createBlanks());
-        INITIAL_BOARD = unmodifiableMap(board);
+        return unmodifiableMap(board);
     }
 
-    private static Map<ChessPosition, Piece> createSpecialPieces(Side side) {
+    private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
         Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
                 ChessPosition.of(File.A, rank), Rook.from(side),
@@ -44,14 +43,14 @@ public class ChessBoardInitializer {
         );
     }
 
-    private static Rank convertSpecialPieceRankWithSide(Side side) {
+    private Rank convertSpecialPieceRankWithSide(Side side) {
         if (side.isBlack()) {
             return Rank.EIGHT;
         }
         return Rank.ONE;
     }
 
-    private static Map<ChessPosition, Piece> createPawns(Side side) {
+    private Map<ChessPosition, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
         return Arrays.stream(File.values())
                 .collect(toMap(
@@ -60,21 +59,21 @@ public class ChessBoardInitializer {
                 );
     }
 
-    private static Rank convertPawnRanksWithSide(Side side) {
+    private Rank convertPawnRanksWithSide(Side side) {
         if (side.isBlack()) {
             return Rank.SEVEN;
         }
         return Rank.TWO;
     }
 
-    public static Map<ChessPosition, Piece> createBlanks() {
+    private Map<ChessPosition, Piece> createBlanks() {
         return IntStream.range(FIRST_BLANK_RANK_COORDINATE, LAST_BLANK_RANK_COORDINATE + 1)
                 .boxed()
-                .flatMap(ChessBoardInitializer::createBlankPositionStream)
+                .flatMap(this::createBlankPositionStream)
                 .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
     }
 
-    private static Stream<ChessPosition> createBlankPositionStream(int rankCoordinate) {
+    private Stream<ChessPosition> createBlankPositionStream(int rankCoordinate) {
         return Arrays.stream(File.values())
                 .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate)));
     }

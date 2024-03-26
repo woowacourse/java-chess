@@ -26,7 +26,8 @@ public class ChessGame {
         if (gameCommand.isEnd()) {
             return;
         }
-        ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.INITIAL_BOARD);
+        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
+        ChessBoard chessBoard = new ChessBoard(chessBoardInitializer.create());
         outputView.printChessBoard(chessBoard);
         retryOnException(() -> play(chessBoard));
     }
