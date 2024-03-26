@@ -8,22 +8,32 @@ import static chess.model.position.Movement.RIGHT;
 import static chess.model.position.Movement.UP;
 import static chess.model.position.Movement.UP_LEFT;
 import static chess.model.position.Movement.UP_RIGHT;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import chess.model.material.Color;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import chess.model.position.Route;
 import java.util.List;
+import java.util.Map;
 
 public class Queen extends Piece {
 
+    private static final Map<Color, Queen> CACHE = Color.allColors()
+        .stream()
+        .collect(toMap(identity(), Queen::new));
     private static final List<Movement> MOVEMENTS = List.of(
         UP, DOWN, LEFT, RIGHT,
         UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
     );
 
-    public Queen(Color color) {
+    private Queen(Color color) {
         super(color);
+    }
+
+    public static Queen of(Color color) {
+        return CACHE.get(color);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package chess.model.material;
 
 import chess.model.piece.Piece;
+import java.util.Arrays;
+import java.util.List;
 
 public enum Color {
     WHITE,
@@ -15,6 +17,12 @@ public enum Color {
             return BLACK;
         }
         return NONE;
+    }
+
+    public static List<Color> allColors() {
+        return Arrays.stream(values())
+            .filter(color -> color != NONE)
+            .toList();
     }
 
     public Color rotate() {

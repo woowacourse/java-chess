@@ -28,7 +28,7 @@ class RouteTest {
     @DisplayName("경로가 막혀있으면 false를 반환한다")
     @Test
     void routeIsBlocked() {
-        EMPTY_PIECES.put(C5, new Pawn(BLACK));
+        EMPTY_PIECES.put(C5, Pawn.of(BLACK));
         Route route = Route.of(A3, E7);
         assertThat(route.isBlocked(EMPTY_PIECES)).isTrue();
     }

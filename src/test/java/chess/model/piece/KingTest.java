@@ -40,7 +40,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void kingCanMove(Position source, Position target) {
-        Piece piece = new King(WHITE);
+        Piece piece = King.of(WHITE);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -72,7 +72,7 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void kingCanNotMove(Position source, Position target) {
-        Piece piece = new King(WHITE);
+        Piece piece = King.of(WHITE);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("King은 상하좌우 대각선 1칸 이동만 가능합니다.");

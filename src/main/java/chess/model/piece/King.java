@@ -8,22 +8,32 @@ import static chess.model.position.Movement.RIGHT;
 import static chess.model.position.Movement.UP;
 import static chess.model.position.Movement.UP_LEFT;
 import static chess.model.position.Movement.UP_RIGHT;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import chess.model.material.Color;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import chess.model.position.Route;
 import java.util.List;
+import java.util.Map;
 
 public class King extends Piece {
 
+    private static final Map<Color, King> CACHE = Color.allColors()
+        .stream()
+        .collect(toMap(identity(), King::new));
     private static final List<Movement> MOVEMENTS = List.of(
         UP, DOWN, LEFT, RIGHT,
         UP_LEFT, DOWN_LEFT, UP_RIGHT, DOWN_RIGHT
     );
 
-    public King(Color color) {
+    private King(Color color) {
         super(color);
+    }
+
+    public static King of(Color color) {
+        return CACHE.get(color);
     }
 
     @Override

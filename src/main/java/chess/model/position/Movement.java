@@ -44,13 +44,13 @@ public enum Movement {
     private static int differenceRow(Position source, Position target) {
         Row sourceRow = source.getRow();
         Row targetRow = target.getRow();
-        return sourceRow.getIndex() - targetRow.getIndex();
+        return targetRow.getIndex() - sourceRow.getIndex();
     }
 
     private static int differenceColumn(Position source, Position target) {
         Column sourceColumn = source.getColumn();
         Column targetColumn = target.getColumn();
-        return sourceColumn.getIndex() - targetColumn.getIndex();
+        return targetColumn.getIndex() - sourceColumn.getIndex();
     }
 
     private static Movement findValue(int deltaX, int deltaY) {

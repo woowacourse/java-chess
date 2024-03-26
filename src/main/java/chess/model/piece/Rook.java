@@ -4,19 +4,29 @@ import static chess.model.position.Movement.DOWN;
 import static chess.model.position.Movement.LEFT;
 import static chess.model.position.Movement.RIGHT;
 import static chess.model.position.Movement.UP;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import chess.model.material.Color;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import chess.model.position.Route;
 import java.util.List;
+import java.util.Map;
 
 public class Rook extends Piece {
 
+    private static final Map<Color, Rook> CACHE = Color.allColors()
+        .stream()
+        .collect(toMap(identity(), Rook::new));
     private static final List<Movement> MOVEMENTS = List.of(UP, DOWN, LEFT, RIGHT);
 
-    public Rook(Color color) {
+    private Rook(Color color) {
         super(color);
+    }
+
+    public static Rook of(Color color) {
+        return CACHE.get(color);
     }
 
     @Override

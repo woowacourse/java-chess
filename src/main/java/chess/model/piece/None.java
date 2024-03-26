@@ -6,8 +6,14 @@ import chess.model.position.Route;
 
 public class None extends Piece {
 
-    public None() {
+    private static final None CACHE = new None();
+
+    private None() {
         super(Color.NONE);
+    }
+
+    public static None of() {
+        return CACHE;
     }
 
     @Override

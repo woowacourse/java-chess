@@ -41,7 +41,7 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void queenCanMove(Position source, Position target) {
-        Piece piece = new Queen(WHITE);
+        Piece piece = Queen.of(WHITE);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -73,7 +73,7 @@ class QueenTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void queenCanNotMove(Position source, Position target) {
-        Piece piece = new Queen(WHITE);
+        Piece piece = Queen.of(WHITE);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Queen은 상하좌우 대각선 이동만 가능합니다.");

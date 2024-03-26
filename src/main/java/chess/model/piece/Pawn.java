@@ -10,6 +10,8 @@ import static chess.model.position.Movement.UP;
 import static chess.model.position.Movement.UP_LEFT;
 import static chess.model.position.Movement.UP_RIGHT;
 import static chess.model.position.Movement.UP_UP;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 import chess.model.material.Color;
 import chess.model.position.Movement;
@@ -17,16 +19,25 @@ import chess.model.position.Position;
 import chess.model.position.Route;
 import chess.model.position.Row;
 import java.util.List;
+import java.util.Map;
 
 public class Pawn extends Piece {
+
+    private static final Map<Color, Pawn> CACHE = Color.allColors()
+        .stream()
+        .collect(toMap(identity(), Pawn::new));
 
     private static final List<Movement> WHITE_ATTACK_MOVEMENTS = List.of(UP_LEFT, UP_RIGHT);
     private static final List<Movement> BLACK_ATTACK_MOVEMENTS = List.of(DOWN_LEFT, DOWN_RIGHT);
     private static final Row WHITE_INITIAL_ROW = Row.TWO;
     private static final Row BLACK_INITIAL_ROW = Row.SEVEN;
 
-    public Pawn(Color color) {
+    private Pawn(Color color) {
         super(color);
+    }
+
+    public static Pawn of(Color color) {
+        return CACHE.get(color);
     }
 
     @Override

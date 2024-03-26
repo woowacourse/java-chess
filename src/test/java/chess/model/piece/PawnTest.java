@@ -45,7 +45,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideSingleMoveWithColor")
     void pawnCanSingleMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -71,7 +71,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideDoubleMoveWithColor")
     void pawnCanDoubleMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -97,7 +97,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideInvalidMoveWithColor")
     void kingCanNotMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Pawn은 1칸 전진 이동 혹은 최초 2칸 전진 이동만 가능합니다.");
@@ -130,7 +130,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideAttackMoveWithColor")
     void pawnCanAttackMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         assertThatCode(() -> piece.canAttack(source, target))
             .doesNotThrowAnyException();
     }
@@ -158,7 +158,7 @@ class PawnTest {
     @ParameterizedTest
     @MethodSource("provideInvalidAttackMoveWithColor")
     void pawnCanNotAttackMove(Position source, Position target, Color color) {
-        Piece piece = new Pawn(color);
+        Piece piece = Pawn.of(color);
         assertThatThrownBy(() -> piece.canAttack(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");

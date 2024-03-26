@@ -42,7 +42,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void knightCanMove(Position source, Position target) {
-        Piece piece = new Knight(BLACK);
+        Piece piece = Knight.of(BLACK);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -74,7 +74,7 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void knightCanNotMove(Position source, Position target) {
-        Piece piece = new Knight(BLACK);
+        Piece piece = Knight.of(BLACK);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Knight는 L자 이동만 가능합니다.");

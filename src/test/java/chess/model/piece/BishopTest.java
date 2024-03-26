@@ -36,7 +36,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void bishopCanMove(Position source, Position target) {
-        Piece piece = new Bishop(WHITE);
+        Piece piece = Bishop.of(WHITE);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -64,7 +64,7 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void bishopCanNotMove(Position source, Position target) {
-        Piece piece = new Bishop(WHITE);
+        Piece piece = Bishop.of(WHITE);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Bishop은 대각선 이동만 가능합니다.");

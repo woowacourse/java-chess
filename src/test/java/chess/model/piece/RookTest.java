@@ -36,7 +36,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("provideValidSourceAndTarget")
     void rookCanMove(Position source, Position target) {
-        Piece piece = new Rook(WHITE);
+        Piece piece = Rook.of(WHITE);
         assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
@@ -64,7 +64,7 @@ class RookTest {
     @ParameterizedTest
     @MethodSource("provideInvalidSourceAndTarget")
     void rookCanNotMove(Position source, Position target) {
-        Piece piece = new Rook(WHITE);
+        Piece piece = Rook.of(WHITE);
         assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Rook은 상하좌우 이동만 가능합니다.");

@@ -18,13 +18,13 @@ import java.util.function.Function;
 
 public enum PieceMapper {
 
-    PAWN("p", "P", Pawn::new),
-    ROOK("r", "R", Rook::new),
-    KNIGHT("n", "N", Knight::new),
-    BISHOP("b", "B", Bishop::new),
-    QUEEN("q", "Q", Queen::new),
-    KING("k", "K", King::new),
-    NONE(".", ".", color -> new None());
+    PAWN("p", "P", Pawn::of),
+    ROOK("r", "R", Rook::of),
+    KNIGHT("n", "N", Knight::of),
+    BISHOP("b", "B", Bishop::of),
+    QUEEN("q", "Q", Queen::of),
+    KING("k", "K", King::of),
+    NONE(".", ".", color -> None.of());
 
     private final String whitePiece;
     private final String blackPiece;

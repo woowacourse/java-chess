@@ -12,7 +12,7 @@ class NoneTest {
     @DisplayName("빈 기물을 이동하면 예외가 발생한다")
     @Test
     void noneCanNotMove() {
-        Piece piece = new None();
+        Piece piece = None.of();
         assertThatThrownBy(() -> piece.findRoute(A3, A4))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이동할 기물이 존재하지 않습니다.");
