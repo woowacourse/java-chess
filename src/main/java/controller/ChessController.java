@@ -49,9 +49,34 @@ public class ChessController {
         while (shouldProceedGame(requestDto, chessGame)) {
             outputView.printCurrentTurn(chessGame.currentPlayingTeam());
             requestDto = readUserInput(inputView::inputGameCommand);
-            playRound(requestDto, chessGame);
+            processRequest(requestDto, chessGame);
         }
         finishGame(requestDto, chessGame);
+    }
+
+    private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
+        BoardDto boardDto = BoardDto.from(positionOfPieces);
+        outputView.printBoard(boardDto);
+    }
+
+    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
+        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
+    }
+
+    private void processRequest(RequestDto requestDto, ChessGame chessGame) {
+        if (!requestDto.command().isContinuable()) {
+            return;
+        }
+        playRound(requestDto, chessGame);
+    }
+
+    private void playRound(RequestDto requestDto, ChessGame chessGame) {
+        try {
+            chessGame.move(requestDto.source(), requestDto.destination());
+            printBoardStatus(chessGame.getPositionsOfPieces());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private void finishGame(RequestDto requestDto, ChessGame chessGame) {
@@ -64,27 +89,6 @@ public class ChessController {
         requestDto = readUserInput(inputView::inputGameCommand);
         if (requestDto.command().isStatus()) {
             printGameResult(chessGame);
-        }
-    }
-
-    private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
-        BoardDto boardDto = BoardDto.from(positionOfPieces);
-        outputView.printBoard(boardDto);
-    }
-
-    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
-        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
-    }
-
-    private void playRound(RequestDto requestDto, ChessGame chessGame) {
-        if (!requestDto.command().isContinuable()) {
-            return;
-        }
-        try {
-            chessGame.move(requestDto.source(), requestDto.destination());
-            printBoardStatus(chessGame.getPositionsOfPieces());
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.printErrorMessage(e.getMessage());
         }
     }
 
