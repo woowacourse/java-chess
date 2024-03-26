@@ -47,10 +47,6 @@ public class Command {
         return prefix.equals(END_COMMAND);
     }
 
-    public boolean isMove() {
-        return prefix.equals(MOVE_COMMAND);
-    }
-
     public String sourcePosition() {
         if (prefix.equals(MOVE_COMMAND)) {
             return parameters.split(DELIMITER)[0];
