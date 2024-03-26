@@ -4,7 +4,7 @@ import chess.domain.Score;
 import chess.domain.color.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.strategy.MoveStrategy;
+import chess.domain.state.ChessState;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ public abstract class Piece {
 
     public abstract Set<Position> findPath(Positions positions);
 
-    public abstract MoveStrategy strategy(Map<Position, Piece> board);
+    public abstract ChessState state(Map<Position, Piece> board);
 
     public abstract boolean isBlank();
 

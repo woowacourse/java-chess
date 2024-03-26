@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.state;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
@@ -10,18 +10,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class MoveStrategy {
+public abstract class ChessState {
     protected final Map<Position, Piece> board;
 
-    protected MoveStrategy(Map<Position, Piece> board) {
+    protected ChessState(Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
     public abstract void move(Color turnColor, Positions positions);
 
-    public final MoveStrategy changeStrategy(Position from) {
+    public final ChessState changeStrategy(Position from) {
         Piece selectedPiece = board.get(from);
-        return selectedPiece.strategy(board);
+        return selectedPiece.state(board);
     }
 
     protected final void checkTurnOf(Piece currentPiece, Color turnColor) {

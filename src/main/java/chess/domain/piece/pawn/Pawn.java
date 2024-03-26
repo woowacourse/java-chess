@@ -6,8 +6,8 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.strategy.MoveStrategy;
-import chess.domain.strategy.PawnMoveStrategy;
+import chess.domain.state.ChessState;
+import chess.domain.state.PawnChessState;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,8 +46,8 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public final MoveStrategy strategy(Map<Position, Piece> board) {
-        return new PawnMoveStrategy(board);
+    public final ChessState state(Map<Position, Piece> board) {
+        return new PawnChessState(board);
     }
 
     @Override

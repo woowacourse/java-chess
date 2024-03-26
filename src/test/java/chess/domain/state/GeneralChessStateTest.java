@@ -1,4 +1,4 @@
-package chess.domain.strategy;
+package chess.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class GeneralMoveStrategyTest {
+class GeneralChessStateTest {
 
     @ParameterizedTest(name = "[{index}] 퀸이 (4, 4) 위치에 있을 때 ({0}, {1})로 이동할 수 있다.")
     @CsvSource(value = {"4,8", "8,4", "4,1", "1,4", "1,1", "8,8", "1,7", "7,1"})
@@ -36,10 +36,10 @@ class GeneralMoveStrategyTest {
         Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new Queen(Color.WHITE)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
-        assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
+        assertThat(generalChessStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_QUEEN);
     }
 
@@ -50,10 +50,10 @@ class GeneralMoveStrategyTest {
         Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new Bishop(Color.WHITE)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
-        assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
+        assertThat(generalChessStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_BISHOP);
     }
 
@@ -64,10 +64,10 @@ class GeneralMoveStrategyTest {
         Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new Rook(Color.WHITE)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
-        assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
+        assertThat(generalChessStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_ROOK);
     }
 
@@ -78,10 +78,10 @@ class GeneralMoveStrategyTest {
         Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new Knight(Color.WHITE)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
-        assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
+        assertThat(generalChessStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_KNIGHT);
     }
 
@@ -92,10 +92,10 @@ class GeneralMoveStrategyTest {
         Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
                 new Position(4, 4), new King(Color.WHITE)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(x, y)));
 
-        assertThat(generalMoveStrategy.collectBoard().get(new Position(x, y)))
+        assertThat(generalChessStrategy.collectBoard().get(new Position(x, y)))
                 .isEqualTo(PieceType.WHITE_KING);
     }
 
@@ -106,10 +106,10 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Queen(Color.WHITE),
                 new Position(4, 3), new Queen(Color.BLACK))
         );
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
+                .isThrownBy(() -> generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
                 .withMessage("이동할 수 없는 경로 입니다.");
     }
 
@@ -120,10 +120,10 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Queen(Color.WHITE),
                 new Position(4, 1), new King(Color.WHITE))
         );
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
+                .isThrownBy(() -> generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1))))
                 .withMessage("이동할 수 없는 경로 입니다.");
     }
 
@@ -134,14 +134,14 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new Queen(Color.WHITE),
                 new Position(4, 1), new King(Color.BLACK))
         );
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
-        generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1)));
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
+        generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(4, 1)));
 
         Assertions.assertAll(
-                () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 1))).isEqualTo(
+                () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 1))).isEqualTo(
                         PieceType.WHITE_QUEEN),
-                () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(PieceType.BLANK),
-                () -> assertThat(generalMoveStrategy.collectBoard()).doesNotContainValue(PieceType.BLACK_KING)
+                () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(PieceType.BLANK),
+                () -> assertThat(generalChessStrategy.collectBoard()).doesNotContainValue(PieceType.BLACK_KING)
         );
     }
 
@@ -163,7 +163,7 @@ class GeneralMoveStrategyTest {
                 new Position(4, 4), new BlackPawn(),
                 new Position(1, 7), new Bishop(Color.BLACK)
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         return List.of(
                 /*
@@ -177,11 +177,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("비숍은 오른쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(4, 4)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(4, 4)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.WHITE_BISHOP),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 1))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 1))).isEqualTo(
                                     PieceType.BLANK)
                     );
 
@@ -196,11 +196,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 }), dynamicTest("비숍은 왼쪽 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(1, 7)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(1, 7)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 7))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 7))).isEqualTo(
                                     PieceType.WHITE_BISHOP),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 })
@@ -227,7 +227,7 @@ class GeneralMoveStrategyTest {
                 new Position(8, 1), new BlackPawn(),
                 new Position(2, 1), new BlackPawn())
         );
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         return List.of(
                 /*
@@ -241,11 +241,11 @@ class GeneralMoveStrategyTest {
                 . P . . . . . P
                 */
                 dynamicTest("룩은 위쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(1, 8)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(1, 1), new Position(1, 8)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 8))).isEqualTo(
                                     PieceType.WHITE_ROOK),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 1))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 1))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -260,11 +260,11 @@ class GeneralMoveStrategyTest {
                 . P . . . . . P
                 */
                 dynamicTest("룩은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 8), new Position(8, 8)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(1, 8), new Position(8, 8)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 8))).isEqualTo(
                                     PieceType.WHITE_ROOK),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 8))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -279,11 +279,11 @@ class GeneralMoveStrategyTest {
                 . P . . . . . r
                 */
                 dynamicTest("룩은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 8), new Position(8, 1)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(8, 8), new Position(8, 1)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 1))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 1))).isEqualTo(
                                     PieceType.WHITE_ROOK),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 8))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -298,11 +298,11 @@ class GeneralMoveStrategyTest {
                 . r . . . . . .
                 */
                 dynamicTest("룩은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 1), new Position(2, 1)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(8, 1), new Position(2, 1)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 1))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(2, 1))).isEqualTo(
                                     PieceType.WHITE_ROOK),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 1))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 1))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 })
@@ -333,7 +333,7 @@ class GeneralMoveStrategyTest {
                 new Position(5, 3), new BlackPawn(),
                 new Position(7, 3), new BlackPawn()
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         return List.of(
                 /*
@@ -347,11 +347,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 4)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 4)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 4))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 2))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 2))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -366,11 +366,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 4), new Position(7, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(7, 4), new Position(7, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 5))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 4))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -385,11 +385,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 왼쪽 대각선 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 5), new Position(6, 6)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(7, 5), new Position(6, 6)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 6))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -404,11 +404,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 6), new Position(5, 6)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(6, 6), new Position(5, 6)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 6))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -424,11 +424,11 @@ class GeneralMoveStrategyTest {
                 */
                 dynamicTest("퀸은 왼쪽 대각선 아래 상대 말을 잡고 이동할 수 있다.", () -> {
 
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -443,11 +443,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 5), new Position(4, 4)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 5), new Position(4, 4)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -462,11 +462,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 대각선 아래쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -481,11 +481,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("퀸은 오른쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(7, 3)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(7, 3)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
                                     PieceType.WHITE_QUEEN),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 })
@@ -517,7 +517,7 @@ class GeneralMoveStrategyTest {
                 new Position(2, 3), new BlackPawn(),
                 new Position(4, 2), new BlackPawn()
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         return List.of(
                 /*
@@ -531,11 +531,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 오른쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 3)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 2), new Position(7, 3)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 2))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 2))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -550,11 +550,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 3), new Position(8, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(7, 3), new Position(8, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 5))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 3))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -569,11 +569,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 위쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(8, 5), new Position(7, 7)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(8, 5), new Position(7, 7)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 7))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 7))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(8, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(8, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -588,11 +588,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(7, 7), new Position(5, 8)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(7, 7), new Position(5, 8)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 8))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(7, 7))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(7, 7))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -607,11 +607,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 왼쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 8), new Position(2, 7)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 8), new Position(2, 7)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 7))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(2, 7))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 8))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 8))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -626,11 +626,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 아래쪽으로 한 번 이동하고 왼쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 7), new Position(1, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(2, 7), new Position(1, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 5))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 7))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(2, 7))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -645,11 +645,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 아래로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(1, 5), new Position(2, 3)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(1, 5), new Position(2, 3)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(2, 3))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(1, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(1, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -664,11 +664,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("나이트는 오른쪽로 한 번 이동하고 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(2, 3), new Position(4, 2)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(2, 3), new Position(4, 2)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 2))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 2))).isEqualTo(
                                     PieceType.WHITE_KNIGHT),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(2, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(2, 3))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 })
@@ -698,7 +698,7 @@ class GeneralMoveStrategyTest {
                 new Position(3, 5), new BlackPawn(),
                 new Position(3, 4), new BlackPawn()
         ));
-        GeneralMoveStrategy generalMoveStrategy = new GeneralMoveStrategy(board);
+        GeneralChessState generalChessStrategy = new GeneralChessState(board);
 
         return List.of(
                 /*
@@ -712,11 +712,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 오른쪽 아래 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 4), new Position(5, 3)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 4))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -731,11 +731,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 오른쪽 위 대각선의 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(6, 4)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 3), new Position(6, 4)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 4))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 3))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -750,11 +750,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 위 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 4), new Position(6, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(6, 4), new Position(6, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 5))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 4))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -769,11 +769,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 위 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(6, 5), new Position(5, 6)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(6, 5), new Position(5, 6)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(6, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(6, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -788,11 +788,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 6)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(5, 6), new Position(4, 6)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 6))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(5, 6))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -807,11 +807,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 왼쪽 아래 대각선 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(4, 6), new Position(3, 5)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(4, 6), new Position(3, 5)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(3, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(3, 5))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(4, 6))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(4, 6))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 }),
@@ -826,11 +826,11 @@ class GeneralMoveStrategyTest {
                 . . . . . . . .
                 */
                 dynamicTest("킹은 아래 상대 말을 잡고 이동할 수 있다.", () -> {
-                    generalMoveStrategy.move(Color.WHITE, new Positions(new Position(3, 5), new Position(3, 4)));
+                    generalChessStrategy.move(Color.WHITE, new Positions(new Position(3, 5), new Position(3, 4)));
                     Assertions.assertAll(
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(3, 4))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(3, 4))).isEqualTo(
                                     PieceType.WHITE_KING),
-                            () -> assertThat(generalMoveStrategy.collectBoard().get(new Position(3, 5))).isEqualTo(
+                            () -> assertThat(generalChessStrategy.collectBoard().get(new Position(3, 5))).isEqualTo(
                                     PieceType.BLANK)
                     );
                 })
