@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Position;
+import java.util.List;
 import java.util.Map;
 
 public class Knight extends Piece {
@@ -27,6 +29,11 @@ public class Knight extends Piece {
         this.directions.add(Direction.KNIGHT_UP_RIGHT);
         this.directions.add(Direction.KNIGHT_DOWN_LEFT);
         this.directions.add(Direction.KNIGHT_DOWN_RIGHT);
+    }
+
+    @Override
+    public List<Position> findPath(final Position source, final Position target) {
+        return findPathOfSingleMovePiece(source, target);
     }
 
     @Override

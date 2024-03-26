@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Position;
+import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
@@ -24,6 +26,11 @@ public class Rook extends Piece {
         this.directions.add(Direction.RIGHT);
         this.directions.add(Direction.UP);
         this.directions.add(Direction.DOWN);
+    }
+
+    @Override
+    public List<Position> findPath(final Position source, final Position target) {
+        return findPathOfMultipleMovePiece(source, target);
     }
 
     @Override

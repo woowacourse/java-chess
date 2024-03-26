@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.Position;
+import java.util.List;
+
 public class Empty extends Piece {
 
     private static final Piece piece = Empty.of();
@@ -10,6 +13,11 @@ public class Empty extends Piece {
 
     public static Empty of() {
         return new Empty(Color.WHITE);
+    }
+
+    @Override
+    public List<Position> findPath(Position source, Position target) {
+        return null;
     }
 
     @Override
