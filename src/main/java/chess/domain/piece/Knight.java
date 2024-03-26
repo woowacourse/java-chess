@@ -44,11 +44,6 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMoveMoreThenOnce() {
-        return false;
-    }
-
-    @Override
     public boolean isEmpty() {
         return false;
     }

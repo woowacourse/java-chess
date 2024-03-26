@@ -3,21 +3,10 @@ package chess.domain.piece;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class KingTest {
-
-    @Test
-    @DisplayName("원하는 만큼 움직일 수 있는지 반환한다.")
-    void canMoveMoreThenOnce() {
-        King king = King.of(Color.WHITE);
-
-        boolean canMoveMoreThenOnce = king.canMoveMoreThenOnce();
-
-        Assertions.assertThat(canMoveMoreThenOnce).isFalse();
-    }
 
     @Nested
     @DisplayName("주어진 방향으로 이동할 수 있는지 반환한다.")

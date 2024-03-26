@@ -40,11 +40,6 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMoveMoreThenOnce() {
-        return true;
-    }
-
-    @Override
     public boolean isEmpty() {
         return false;
     }

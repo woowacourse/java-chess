@@ -20,8 +20,6 @@ public abstract class Piece {
 
     abstract public String getOwnPieceTypeName();
 
-    abstract public boolean canMoveMoreThenOnce();
-
     abstract public boolean isEmpty();
 
     final protected List<Position> findPathOfSingleMovePiece(final Position source, final Position target) {
