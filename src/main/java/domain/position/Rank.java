@@ -3,10 +3,20 @@ package domain.position;
 import java.util.Objects;
 
 public class Rank {
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 8;
+
     private final int number;
 
     public Rank(int number) {
+        validateNumberRange(number);
         this.number = number;
+    }
+
+    private void validateNumberRange(int number) {
+        if (number < MIN_NUMBER || number > MAX_NUMBER) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public Rank(char number) {

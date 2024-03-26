@@ -5,15 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.piecerole.BlackPawn;
-import domain.piece.piecerole.King;
-import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.Pawn;
-import domain.piece.piecerole.Queen;
-import domain.piece.piecerole.Rook;
 import domain.piece.piecerole.WhitePawn;
 import domain.position.Position;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

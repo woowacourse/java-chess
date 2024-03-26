@@ -1,8 +1,7 @@
-package domain.game;
+package domain.movement;
 
 import static fixture.PositionFixture.*;
 
-import domain.movement.Direction;
 import domain.position.Position;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

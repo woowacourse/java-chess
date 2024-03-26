@@ -1,13 +1,13 @@
 package domain.piece.piecerole;
 
-import static domain.movement.Direction.SSW;
-import static domain.movement.Direction.SSE;
-import static domain.movement.Direction.WSW;
-import static domain.movement.Direction.WNW;
-import static domain.movement.Direction.ESE;
 import static domain.movement.Direction.ENE;
-import static domain.movement.Direction.NNW;
+import static domain.movement.Direction.ESE;
 import static domain.movement.Direction.NNE;
+import static domain.movement.Direction.NNW;
+import static domain.movement.Direction.SSE;
+import static domain.movement.Direction.SSW;
+import static domain.movement.Direction.WNW;
+import static domain.movement.Direction.WSW;
 
 import domain.movement.Movable;
 import domain.position.Position;

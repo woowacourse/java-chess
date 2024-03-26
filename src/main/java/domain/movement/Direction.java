@@ -1,7 +1,6 @@
 package domain.movement;
 
 import domain.position.Position;
-
 import java.util.Arrays;
 import java.util.List;
 
