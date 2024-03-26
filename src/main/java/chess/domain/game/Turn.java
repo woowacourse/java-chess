@@ -5,8 +5,12 @@ import chess.domain.pieces.piece.Color;
 public class Turn {
     private Color turn;
 
-    public Turn() {
+    private Turn() {
         turn = Color.WHITE;
+    }
+
+    public static Turn first() {
+        return new Turn();
     }
 
     public void next() {

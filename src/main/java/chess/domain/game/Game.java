@@ -13,7 +13,7 @@ public class Game {
     private final Turn turn;
 
     public Game() {
-        this.turn = new Turn();
+        this.turn = Turn.first();
         this.board = BoardFactory.createBoard();
     }
 
