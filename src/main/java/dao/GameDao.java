@@ -65,6 +65,16 @@ public class GameDao {
         }
     }
 
+    public void removeAllGames() {
+        final String query = "DELETE FROM " + TABLE_NAME;
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public int tupleCount() {
         final var query = "SELECT COUNT(*) AS count FROM " + TABLE_NAME;
         try (final Connection connection = getConnection();

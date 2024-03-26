@@ -62,10 +62,13 @@ public class ChessController {
     }
 
     private void processRequest(GameRequest gameRequest, ChessGame chessGame) {
-        if (!gameRequest.isContinuable()) {
+        if (gameRequest.isSave()) {
+            saveCurrentStatus(chessGame);
             return;
         }
-        playRound(gameRequest, chessGame);
+        if (gameRequest.isContinuable()) {
+            playRound(gameRequest, chessGame);
+        }
     }
 
     private void playRound(GameRequest gameRequest, ChessGame chessGame) {
@@ -75,6 +78,11 @@ public class ChessController {
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printErrorMessage(e.getMessage());
         }
+    }
+
+    private void saveCurrentStatus(ChessGame chessGame) {
+        int gameId = chessGame.save();
+        outputView.printSaveResult(gameId);
     }
 
     private void finishGame(GameRequest gameRequest, ChessGame chessGame) {

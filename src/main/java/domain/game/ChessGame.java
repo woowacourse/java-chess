@@ -73,7 +73,7 @@ public class ChessGame {
         return board.getPositionsOfPieces();
     }
 
-    public void save() {
-        board.save(currentPlayingTeam());
+    public int save() {
+        return board.save(currentPlayingTeam());
     }
 }

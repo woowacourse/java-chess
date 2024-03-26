@@ -49,6 +49,10 @@ public class GameRequest {
         return commandType.isStatus();
     }
 
+    public boolean isSave() {
+        return commandType.isSave();
+    }
+
     public boolean isEnd() {
         return commandType.isEnd();
     }

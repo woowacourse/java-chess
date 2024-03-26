@@ -13,17 +13,19 @@ public class InputView {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
+    private static final String SAVE_COMMAND = "save";
     private static final String END_COMMAND = "end";
     private static final Map<String, GameCommand> gameCommands = Map.of(
             START_COMMAND, GameCommand.START,
             MOVE_COMMAND, GameCommand.MOVE,
             STATUS_COMMAND, GameCommand.STATUS,
+            SAVE_COMMAND, GameCommand.SAVE,
             END_COMMAND, GameCommand.END
     );
     private static final String COMMAND_DELIMITER = " ";
     private static final int COMMAND_TYPE_POSITION = 0;
-    private static final int MOVE_COMMAND_SOURCE_POSITION = 0;
-    private static final int MOVE_COMMAND_DESTINATION_POSITION = 0;
+    private static final int MOVE_COMMAND_SOURCE_POSITION = 1;
+    private static final int MOVE_COMMAND_DESTINATION_POSITION = 2;
 
     private final Scanner sc = new Scanner(System.in);
 

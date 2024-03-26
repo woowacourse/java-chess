@@ -1,7 +1,7 @@
 package domain;
 
 public enum GameCommand {
-    START, MOVE, STATUS, END;
+    START, MOVE, STATUS, SAVE, END;
 
     public boolean isContinuable() {
         return this != END;
@@ -13,6 +13,10 @@ public enum GameCommand {
 
     public boolean isStatus() {
         return this == STATUS;
+    }
+
+    public boolean isSave() {
+        return this == SAVE;
     }
 
     public boolean isEnd() {

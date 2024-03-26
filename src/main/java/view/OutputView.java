@@ -112,4 +112,8 @@ public class OutputView {
     public void printGameEndMessage() {
         System.out.println("게임이 종료되었습니다.");
     }
+
+    public void printSaveResult(int gameId) {
+        System.out.println("게임 진행 상황이 저장되었습니다. ID: " + gameId);
+    }
 }

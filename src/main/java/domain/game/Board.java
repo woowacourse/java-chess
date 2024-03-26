@@ -123,8 +123,9 @@ public class Board {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public void save(TeamColor currentPlayingTeam) {
+    public int save(TeamColor currentPlayingTeam) {
         PieceDao pieceDao = new PieceDao(new DBConnector());
+        pieceDao.removeAllPieces();
         List<PieceDto> pieceDtos = chessBoard.entrySet().stream()
                 .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
                 .toList();
@@ -132,7 +133,10 @@ public class Board {
         pieceDao.addAll(pieceDtos);
 
         GameDao gameDao = new GameDao(new DBConnector());
+        gameDao.removeAllGames();
         int gameId = gameDao.addGame();
         gameDao.updateTurn(gameId, currentPlayingTeam);
+
+        return gameId;
     }
 }
