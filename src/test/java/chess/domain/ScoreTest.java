@@ -15,4 +15,13 @@ class ScoreTest {
 
         assertThat(base.add(increment)).isEqualTo(new Score(2.5));
     }
+
+    @Test
+    @DisplayName("Score에서 특정 값을 뺀 새로운 Score를 반환한다.")
+    void subtractScore() {
+        Score base = new Score(2);
+        double subtrahend = 0.5;
+
+        assertThat(base.subtract(subtrahend)).isEqualTo(new Score(1.5));
+    }
 }
