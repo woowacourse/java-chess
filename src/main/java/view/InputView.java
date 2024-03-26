@@ -2,7 +2,7 @@ package view;
 
 import domain.GameCommand;
 import domain.position.Position;
-import dto.RequestDto;
+import dto.CommandDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,20 +20,16 @@ public class InputView {
             STATUS_COMMAND, GameCommand.STATUS,
             END_COMMAND, GameCommand.END
     );
+    private static final String COMMAND_DELIMITER = " ";
+    private static final int COMMAND_TYPE_POSITION = 0;
+    private static final int MOVE_COMMAND_SOURCE_POSITION = 0;
+    private static final int MOVE_COMMAND_DESTINATION_POSITION = 0;
 
     private final Scanner sc = new Scanner(System.in);
 
-    public GameCommand inputGameStart() {
-        String input = sc.nextLine();
-        if (!gameCommands.containsKey(input)) {
-            throw new IllegalArgumentException("잘못된 명령입니다.");
-        }
-        return gameCommands.get(input);
-    }
-
-    public RequestDto inputGameCommand() {
-        List<String> input = Arrays.stream(sc.nextLine().split(" ")).toList();
-        String commandType = input.get(0);
+    public CommandDto inputGameCommand() {
+        List<String> input = Arrays.stream(sc.nextLine().split(COMMAND_DELIMITER)).toList();
+        String commandType = input.get(COMMAND_TYPE_POSITION);
 
         if (!gameCommands.containsKey(commandType)) {
             throw new IllegalArgumentException("유효하지 않은 명령입니다.");
@@ -41,17 +37,17 @@ public class InputView {
         GameCommand command = gameCommands.get(commandType);
 
         if (input.size() == 3) {
-            return createRequestDtoFromInput(input, command);
+            return includePositionToCommand(input, command);
         }
-        return RequestDto.of(command);
+        return CommandDto.of(command);
     }
 
-    private RequestDto createRequestDtoFromInput(List<String> input, GameCommand command) {
-        String sourcePosition = input.get(1);
-        String destinationPosition = input.get(2);
+    private CommandDto includePositionToCommand(List<String> input, GameCommand command) {
+        String sourcePosition = input.get(MOVE_COMMAND_SOURCE_POSITION);
+        String destinationPosition = input.get(MOVE_COMMAND_DESTINATION_POSITION);
         Position source = PositionConvertor.convertPosition(sourcePosition);
         Position destination = PositionConvertor.convertPosition(destinationPosition);
 
-        return RequestDto.of(command, source, destination);
+        return CommandDto.of(command, source, destination);
     }
 }

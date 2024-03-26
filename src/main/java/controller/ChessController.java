@@ -1,12 +1,11 @@
 package controller;
 
-import domain.GameCommand;
 import domain.game.ChessGame;
+import domain.game.GameRequest;
 import domain.game.Piece;
 import domain.game.TeamColor;
 import domain.position.Position;
 import dto.BoardDto;
-import dto.RequestDto;
 import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
@@ -23,11 +22,11 @@ public class ChessController {
 
     public void run() {
         outputView.printWelcomeMessage();
-        GameCommand command = readUserInput(inputView::inputGameStart);
-        while (command.isStart()) {
-            startGame(command);
+        GameRequest gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+        while (gameRequest.isStart()) {
+            startGame(gameRequest);
             outputView.printRestartMessage();
-            command = readUserInput(inputView::inputGameStart);
+            gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
         }
     }
 
@@ -41,17 +40,16 @@ public class ChessController {
         }
     }
 
-    private void startGame(GameCommand command) {
+    private void startGame(GameRequest gameRequest) {
         ChessGame chessGame = new ChessGame();
         printBoardStatus(chessGame.getPositionsOfPieces());
 
-        RequestDto requestDto = RequestDto.of(command);  // TODO: 모두 호환되도록 GameRequest 같은 것으로 변경
-        while (shouldProceedGame(requestDto, chessGame)) {
+        while (shouldProceedGame(gameRequest, chessGame)) {
             outputView.printCurrentTurn(chessGame.currentPlayingTeam());
-            requestDto = readUserInput(inputView::inputGameCommand);
-            processRequest(requestDto, chessGame);
+            gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+            processRequest(gameRequest, chessGame);
         }
-        finishGame(requestDto, chessGame);
+        finishGame(gameRequest, chessGame);
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
@@ -59,35 +57,35 @@ public class ChessController {
         outputView.printBoard(boardDto);
     }
 
-    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
-        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
+    private boolean shouldProceedGame(GameRequest gameRequest, ChessGame chessGame) {
+        return gameRequest.isContinuable() && !chessGame.isGameEnd();
     }
 
-    private void processRequest(RequestDto requestDto, ChessGame chessGame) {
-        if (!requestDto.command().isContinuable()) {
+    private void processRequest(GameRequest gameRequest, ChessGame chessGame) {
+        if (!gameRequest.isContinuable()) {
             return;
         }
-        playRound(requestDto, chessGame);
+        playRound(gameRequest, chessGame);
     }
 
-    private void playRound(RequestDto requestDto, ChessGame chessGame) {
+    private void playRound(GameRequest gameRequest, ChessGame chessGame) {
         try {
-            chessGame.move(requestDto.source(), requestDto.destination());
+            chessGame.move(gameRequest.source(), gameRequest.destination());
             printBoardStatus(chessGame.getPositionsOfPieces());
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void finishGame(RequestDto requestDto, ChessGame chessGame) {
+    private void finishGame(GameRequest gameRequest, ChessGame chessGame) {
         outputView.printGameEndMessage();
-        if (requestDto.command().isEnd()) {
+        if (gameRequest.isEnd()) {
             return;
         }
 
         outputView.printStatusInputMessage();
-        requestDto = readUserInput(inputView::inputGameCommand);
-        if (requestDto.command().isStatus()) {
+        gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+        if (gameRequest.isStatus()) {
             printGameResult(chessGame);
         }
     }
