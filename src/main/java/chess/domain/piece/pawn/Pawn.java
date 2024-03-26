@@ -1,6 +1,6 @@
 package chess.domain.piece.pawn;
 
-import chess.domain.Score;
+import chess.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;

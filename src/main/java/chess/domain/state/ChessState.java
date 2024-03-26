@@ -36,6 +36,8 @@ public abstract class ChessState {
                 .allMatch(Piece::isBlank);
     }
 
+//    public final
+
     public final Map<Position, PieceType> collectBoard() {
         return board.entrySet().stream()
                 .collect(Collectors.toMap(

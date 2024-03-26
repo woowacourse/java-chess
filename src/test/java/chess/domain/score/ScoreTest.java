@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.score;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.score.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

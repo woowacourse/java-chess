@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.score;
 
 import java.util.Objects;
 
