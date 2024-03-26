@@ -32,7 +32,7 @@ class ChessBoardTest {
 
         chessBoard.move(b2(), b3());
 
-        Piece findPiece = chessBoard.findPieceBySquare(b3());
+        Piece findPiece = chessBoard.findPieceByPosition(b3());
         Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
@@ -83,7 +83,7 @@ class ChessBoardTest {
         chessBoard.move(c7(), c5());
         chessBoard.move(b4(), c5());
 
-        Piece findPiece = chessBoard.findPieceBySquare(c5());
+        Piece findPiece = chessBoard.findPieceByPosition(c5());
         Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
@@ -105,6 +105,6 @@ class ChessBoardTest {
         chessBoard.move(b7(), b5());
         chessBoard.move(b1(), c3());
 
-        Assertions.assertThat(chessBoard.findPieceBySquare(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
+        Assertions.assertThat(chessBoard.findPieceByPosition(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
     }
 }

@@ -4,10 +4,7 @@ public enum Color {
     BLACK,
     WHITE;
 
-    public Color switchTurn() {
-        if (this == Color.BLACK) {
-            return Color.WHITE;
-        }
-        return Color.BLACK;
+    public boolean isBlack() {
+        return equals(BLACK);
     }
 }

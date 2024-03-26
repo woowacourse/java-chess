@@ -65,7 +65,7 @@ public class OutputView {
 
     public String generateSymbol(ChessBoard mover, Position position) {
         if (mover.hasPiece(position)) {
-            Piece piece = mover.findPieceBySquare(position);
+            Piece piece = mover.findPieceByPosition(position);
             return pieceSymbol.get(piece);
         }
         return ".";
