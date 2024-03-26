@@ -46,6 +46,12 @@ public class Position {
     public Position moveTowardDirection(final Direction direction) {
         char file = (char) direction.calculateNextFile(this.file);
         int rank = direction.calculateNextRank(this.rank);
+
+        if (file < START_VALUE_OF_FILE || file > END_VALUE_OF_FILE ||
+                rank < START_VALUE_OF_RANK || rank > END_VALUE_OF_RANK) {
+            throw new IllegalArgumentException("[ERROR] 체스판의 범위를 벗어난 위치로 이동할 수 없습니다");
+        }
+
         return Position.of(file, rank);
     }
 
