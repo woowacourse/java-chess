@@ -196,7 +196,7 @@ class BoardTest {
 
         Piece result = emptyBoard.findByCoordinate(new Coordinate(2, 'a'));
 
-        assertThat(result).isEqualTo(new Empty());
+        assertThat(result).isEqualTo(Empty.getInstance());
     }
 
     @DisplayName("해당 위치의 기물이 존재하는지 판단할 수 있다.")

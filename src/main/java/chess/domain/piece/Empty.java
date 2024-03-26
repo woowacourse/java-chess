@@ -5,8 +5,14 @@ import chess.domain.board.Coordinate;
 
 public class Empty extends AbstractPiece {
 
-    public Empty() {
+    private static final Piece INSTANCE = new Empty();
+
+    private Empty() {
         super(PieceType.EMPTY, Team.EMPTY);
+    }
+
+    public static Piece getInstance() {
+        return INSTANCE;
     }
 
     @Override

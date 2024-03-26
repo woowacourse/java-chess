@@ -9,8 +9,6 @@ import chess.domain.piece.Team;
 
 public class Board {
 
-    private static final Piece EMPTY_PIECE = new Empty();
-
     private final Map<Coordinate, Piece> pieces = new HashMap<>();
     private Team turn;
 
@@ -24,7 +22,7 @@ public class Board {
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {
-        return pieces.getOrDefault(coordinate, EMPTY_PIECE);
+        return pieces.getOrDefault(coordinate, Empty.getInstance());
     }
 
     public boolean isPiecePresent(Coordinate coordinate) {
