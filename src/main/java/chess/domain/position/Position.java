@@ -49,9 +49,7 @@ public class Position {
     private List<Position> findStraightRoute(List<File> files, List<Rank> ranks) {
         List<Position> positions = new ArrayList<>();
         for (File routeFile : files) {
-            for (Rank routeRank : ranks) {
-                positions.add(new Position(routeFile, routeRank));
-            }
+            ranks.forEach((routeRank) -> positions.add(new Position(routeFile, routeRank)));
         }
         return positions;
     }
