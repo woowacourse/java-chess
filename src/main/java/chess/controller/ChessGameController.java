@@ -1,13 +1,20 @@
 package chess.controller;
 
+import chess.db.DBConnector;
+import chess.db.DBService;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
+import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.dto.PieceDto;
 import chess.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.dto.Status;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +25,7 @@ public class ChessGameController {
     private static final String END_COMMAND = "end";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
 
+    private final DBService dbService = new DBService(() -> new DBConnector().getConnection());
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -40,7 +48,7 @@ public class ChessGameController {
     }
 
     private void startChessGame() {
-        ChessGame chessGame = new ChessGame(new BoardFactory().getInitialBoard());
+        ChessGame chessGame = registerChessGame();
         outputView.printBoard(chessGame.collectBoard());
 
         boolean canContinue = true;
@@ -50,6 +58,16 @@ public class ChessGameController {
             showStatus(chessGame, command);
             canContinue = canContinue(chessGame, command);
         }
+    }
+
+    private ChessGame registerChessGame() {
+        if (dbService.hasPreviousData()) {
+            List<PieceDto> previousPieces = dbService.findPreviousPieces();
+            Map<Position, Piece> board = new BoardFactory().getPreviousBoard(previousPieces);
+            Color currentTurn = dbService.findCurrentTurn().getColor();
+            return new ChessGame(board, currentTurn);
+        }
+        return new ChessGame(new BoardFactory().getInitialBoard());
     }
 
     private String readGameCommand() {

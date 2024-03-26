@@ -1,6 +1,9 @@
 package chess.db;
 
+import chess.dto.PieceDto;
+import chess.dto.TurnDto;
 import java.sql.Connection;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class DBService {
@@ -14,5 +17,13 @@ public class DBService {
 
     public boolean hasPreviousData() {
         return piecesDao.count() != 0;
+    }
+
+    public List<PieceDto> findPreviousPieces() {
+        return piecesDao.findAll();
+    }
+
+    public TurnDto findCurrentTurn() {
+        return turnsDao.find();
     }
 }

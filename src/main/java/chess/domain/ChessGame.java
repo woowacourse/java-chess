@@ -15,9 +15,13 @@ public class ChessGame {
     private ChessState chessState;
     private Color turnColor;
 
-    public ChessGame(Map<Position, Piece> board) {
+    public ChessGame(Map<Position, Piece> board, Color turnColor) {
         this.chessState = new BlankChessState(board);
-        this.turnColor = Color.WHITE;
+        this.turnColor = turnColor;
+    }
+
+    public ChessGame(Map<Position, Piece> board) {
+        this(board, Color.WHITE);
     }
 
     public void move(Positions positions) {
