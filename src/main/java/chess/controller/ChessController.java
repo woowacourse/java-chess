@@ -12,8 +12,8 @@ import chess.view.OutputView;
 public class ChessController {
 
     private static final String COMMAND_END = "end";
-    public static final int DEPARTURE_INDEX = 1;
-    public static final int DESTINATION_INDEX = 2;
+    private static final int DEPARTURE_INDEX = 1;
+    private static final int DESTINATION_INDEX = 2;
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
 
