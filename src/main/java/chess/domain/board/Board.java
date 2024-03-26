@@ -30,8 +30,7 @@ public class Board {
         validateIsNotTurn(sourcePiece, turn);
         validateCannotMove(source, target, sourcePiece);
         validateNotExistObstacleOnPath(source, target);
-        pieces.remove(source);
-        pieces.put(target, sourcePiece);
+        replacePieceSquare(source, target, sourcePiece);
     }
 
     private void validateIsSameSquare(final Square source, final Square target) {
@@ -73,6 +72,11 @@ public class Board {
         if (pieces.containsKey(square)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
+    }
+
+    private void replacePieceSquare(final Square source, final Square target, final Piece sourcePiece) {
+        pieces.remove(source);
+        pieces.put(target, sourcePiece);
     }
 
     public Map<Square, Piece> getPieces() {
