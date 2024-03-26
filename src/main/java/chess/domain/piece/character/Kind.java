@@ -1,7 +1,5 @@
 package chess.domain.piece.character;
 
-import java.util.stream.Stream;
-
 public enum Kind {
     PAWN(1),
     KNIGHT(2.5),
@@ -17,8 +15,7 @@ public enum Kind {
         this.point = point;
     }
 
-    public static double sumPoint(Stream<Kind> kinds) {
-        return kinds.mapToDouble(kind -> kind.point)
-                .sum();
+    public double point() {
+        return point;
     }
 }

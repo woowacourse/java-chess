@@ -1,13 +1,12 @@
 package chess.view;
 
-import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
 public class CharacterViewer {
-    public static String convertToString(Character character) {
-        String kindValue = convertKindToString(character.kind());
-        if (Team.WHITE == character.team()) {
+    public static String convertToString(Team team, Kind kind) {
+        String kindValue = convertKindToString(kind);
+        if (Team.WHITE == team) {
             return kindValue;
         }
         return kindValue.toUpperCase();

@@ -12,8 +12,6 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
-import chess.domain.piece.character.Character;
-import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 import java.util.Map;
@@ -21,18 +19,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
-    @DisplayName("보드에 있는 piece의 위치를 움직일 수 있다.")
-    @Test
-    void movePiece() {
-        Board board = new Board(BoardFactory.generateStartBoard());
-        board.move(new Movement(
-                Position.of(2, 1),
-                Position.of(3, 1)));
-
-        assertThat(board.getPieces().get(Position.of(3, 1)).character())
-                .isEqualTo(new Character(Team.WHITE, Kind.PAWN));
-    }
-
     @DisplayName("위치에 있는 기물이 입력된 팀과 같은 팀인지 검증한다.")
     @Test
     void validateOppositeTeamByPosition() {
@@ -95,6 +81,20 @@ public class BoardTest {
         ));
 
         assertThat(board.calculatePoint(Team.WHITE)).isEqualTo(5.5);
+    }
+
+    @DisplayName("폰이 두개 이상 세로로 겹쳐져 있는 경우, 폰 개수당 0.5점을 감점한다.")
+    @Test
+    void calculatePointWithDoubledPawn() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(2, 6), new WhitePawn(),
+                Position.of(3, 6), new WhitePawn(),
+                Position.of(4, 6), new WhitePawn(),
+                Position.of(2, 5), new WhitePawn()
+        ));
+
+        assertThat(board.calculatePoint(Team.WHITE)).isEqualTo(2.5);
     }
 
     @DisplayName("왕이 공격받고 있으면, 체크이다.")

@@ -4,6 +4,7 @@ import chess.domain.piece.abstractPiece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Position {
@@ -83,6 +84,19 @@ public class Position {
 
     public int calculateColumnDifference(Position targetPosition) {
         return targetPosition.column - column;
+    }
+
+    public static int sameColumnPositionCount(Stream<Position> positions) {
+        Map<Integer, Integer> map = positions.collect(Collectors.toMap(
+                position -> position.column,
+                position -> 1,
+                Integer::sum
+        ));
+        return map.values()
+                .stream()
+                .filter(value -> value > 1)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     @Override

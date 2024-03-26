@@ -1,7 +1,10 @@
 package chess.view;
 
+import chess.domain.Position;
 import chess.domain.Status;
+import chess.domain.piece.abstractPiece.Piece;
 import chess.dto.BoardStatusDto;
+import java.util.Map;
 
 public class OutputView {
     public static void printErrorMessage(String errorMessage) {
@@ -9,18 +12,27 @@ public class OutputView {
     }
 
     public static void printGameStatus(BoardStatusDto boardStatusDto) {
-        printChessBoard(boardStatusDto);
+        printChessBoard(boardStatusDto.board());
         printStatus(boardStatusDto.status());
     }
 
-    private static void printChessBoard(BoardStatusDto boardStatusDto) {
+    private static void printChessBoard(Map<Position, Piece> board) {
         for (int i = 8; i >= 1; i--) {
             for (int j = 1; j <= 8; j++) {
-                System.out.print(boardStatusDto.getPieceValue(i, j));
+                printPiece(board, i, j);
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    private static void printPiece(Map<Position, Piece> board, int i, int j) {
+        if (board.containsKey(Position.of(i, j))) {
+            Piece piece = board.get(Position.of(i, j));
+            System.out.print(CharacterViewer.convertToString(piece.team(), piece.kind()));
+            return;
+        }
+        System.out.print(".");
     }
 
     private static void printStatus(Status status) {

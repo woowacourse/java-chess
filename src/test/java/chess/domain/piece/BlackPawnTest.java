@@ -4,20 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
 import chess.domain.Position;
-import chess.domain.piece.character.Character;
-import chess.domain.piece.character.Kind;
-import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackPawnTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @Test
-    void findCharacter() {
-        assertThat(new BlackPawn().character())
-                .isEqualTo(new Character(Team.BLACK, Kind.PAWN));
-    }
-
     @DisplayName("검은색 폰은 1칸 움직일 수 있다.")
     @Test
     void blackPawnIsMovable() {

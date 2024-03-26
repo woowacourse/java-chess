@@ -4,24 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
 import chess.domain.Position;
-import chess.domain.piece.character.Character;
-import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class BishopTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @ParameterizedTest
-    @EnumSource
-    void findCharacter(Team team) {
-        assertThat(new Bishop(team).character())
-                .isEqualTo(new Character(team, Kind.BISHOP));
-    }
-
     @DisplayName("비숍은 대각선으로 이동할 수 있다.")
     @ParameterizedTest
     @CsvSource(value = {"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8", "1,7", "2,6", "3,5", "5,3", "6,2", "7,1"})

@@ -3,6 +3,7 @@ package chess.domain.piece.abstractPiece;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import java.util.List;
 
@@ -41,7 +42,15 @@ public abstract class Piece {
         return this.character.equals(character);
     }
 
-    public Character character() {
-        return character;
+    public Kind kind() {
+        return character.kind();
+    }
+
+    public Team team() {
+        return character.team();
+    }
+
+    public double point() {
+        return character.kind().point();
     }
 }

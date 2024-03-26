@@ -68,7 +68,18 @@ public class Board {
     }
 
     public double calculatePoint(Team team) {
-        return Character.sumPoint(findSameTeamPieces(team).map(entry -> entry.getValue().character()));
+        double pointSum = findSameTeamPieces(team).mapToDouble(entry -> entry.getValue().point()).sum();
+        if (sameColumnPawnCount(team) > 1) {
+            pointSum = pointSum - sameColumnPawnCount(team) * 0.5;
+        }
+        return pointSum;
+    }
+
+    private int sameColumnPawnCount(Team team) {
+        Stream<Position> pawnPositions = findSameTeamPieces(team)
+                .filter(entry -> entry.getValue().isSameCharacter(new Character(team, Kind.PAWN)))
+                .map(Entry::getKey);
+        return Position.sameColumnPositionCount(pawnPositions);
     }
 
     public boolean isChecked(Team attackedTeam) {
@@ -123,7 +134,7 @@ public class Board {
     private boolean isCheckedAfterMove(Piece piece, Movement movement) {
         Board copiedBoard = new Board(new HashMap<>(this.pieces));
         copiedBoard.move(movement);
-        return copiedBoard.isChecked(piece.character().team());
+        return copiedBoard.isChecked(piece.team());
     }
 
     private Position getKingPosition(Team team) {
