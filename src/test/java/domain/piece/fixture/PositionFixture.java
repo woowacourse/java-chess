@@ -2,6 +2,7 @@ package domain.piece.fixture;
 
 import domain.position.File;
 import domain.position.Position;
+import domain.position.PositionGenerator;
 import domain.position.Rank;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ public class PositionFixture { // TODO: PositionGenerator 와 일부 중복 & �
     private static Map<Rank, Position> rankPosition(File file) {
         Map<Rank, Position> rankPosition = new HashMap<>();
         for (Rank rank : Rank.values()) {
-            Position position = new Position(file, rank);
+            Position position = PositionGenerator.generate(file, rank);
             rankPosition.put(rank, position);
         }
         return rankPosition;

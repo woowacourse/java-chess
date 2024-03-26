@@ -13,7 +13,7 @@ public class Position { // TODO: refactoring (너무 무거움)
     private final File file;
     private final Rank rank;
 
-    public Position(File file, Rank rank) {
+    protected Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
