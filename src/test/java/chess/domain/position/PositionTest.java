@@ -174,4 +174,59 @@ class PositionTest {
         assertThat(back).isEqualTo(Position.of(File.E, Rank.FOUR));
         assertThat(front).isEqualTo(Position.of(File.C, Rank.TWO));
     }
+
+    @Test
+    @DisplayName("현재 파일보다 높은 위치의 파일인지 계산한다")
+    void hasLowerFileThan() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        boolean isLowerFile = source.hasLowerFileThan(Position.of(File.E, Rank.THREE));
+        // then
+        assertThat(isLowerFile).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 파일보다 낮은 위치의 파일인지 계산한다")
+    void hasHigherFileThan() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        boolean isHigherFile = source.hasHigherFileThan(Position.of(File.C, Rank.THREE));
+        // then
+        assertThat(isHigherFile).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 랭크보다 높은 위치의 랭크인지 계산한다")
+    void hasLowerRankThan() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        boolean isLowerRank = source.hasLowerRankThan(Position.of(File.D, Rank.FOUR));
+        // then
+        assertThat(isLowerRank).isTrue();
+    }
+
+    @Test
+    @DisplayName("현재 랭크보다 낮은 위치의 랭크인지 계산한다")
+    void hasHigherRankThan() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        boolean isHigherRank = source.hasHigherRankThan(Position.of(File.D, Rank.TWO));
+        // then
+        assertThat(isHigherRank).isTrue();
+    }
+
+    @Test
+    @DisplayName("같은 포지션이 아닌지 체크한다")
+    void isNotSamePosition() {
+        // given
+        Position source = Position.of(File.D, Rank.THREE);
+        // when
+        boolean isNotSamePosition = source.isNotEquals(Position.of(File.E, Rank.FOUR));
+        // then
+        assertThat(isNotSamePosition).isTrue();
+    }
 }

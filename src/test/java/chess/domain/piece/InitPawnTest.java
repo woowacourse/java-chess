@@ -6,6 +6,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -36,5 +37,18 @@ class InitPawnTest {
         // then
         assertThat(movable).isTrue();
     }
-    
+
+    @Test
+    @DisplayName("이동하지 않은 폰은 InitPawn 이다.")
+    void isInitPawnTest() {
+        // given
+        Pawn whitePawn = new InitPawn(Color.WHITE);
+        Pawn blackPawn = new InitPawn(Color.BLACK);
+        // when
+        boolean iswhiteInitPawn = whitePawn.isInitPawn();
+        boolean isblackInitPawn = blackPawn.isInitPawn();
+        // then
+        assertThat(iswhiteInitPawn).isTrue();
+        assertThat(isblackInitPawn).isTrue();
+    }
 }
