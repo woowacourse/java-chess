@@ -35,11 +35,11 @@ public class Position {
     }
 
     public boolean isSameRank(Position target) {
-        return this.rank == target.rank;
+        return rank == target.rank;
     }
 
     public boolean isSameFile(Position target) {
-        return this.file == target.file;
+        return file == target.file;
     }
 
     public int findFileDirection(Position target) {
