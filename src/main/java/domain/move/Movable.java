@@ -4,7 +4,7 @@ import domain.position.Position;
 import java.util.Objects;
 
 public class Movable {
-    private int maxMovement;
+    private final int maxMovement;
     private final Direction direction;
 
     public Movable(int maxMovement, Direction direction) {
@@ -22,16 +22,12 @@ public class Movable {
 
     private boolean doesStepExceedMaxMovement(Position sourcePosition, Position targetPosition) {
         int step = 0;
-        Position position = new Position(sourcePosition);
+        Position position = sourcePosition;
         while (!position.equals(targetPosition)) {
             position = position.move(direction);
             step++;
         }
         return step <= maxMovement;
-    }
-
-    public void decreaseMaxMovement() {
-        maxMovement--;
     }
 
     @Override

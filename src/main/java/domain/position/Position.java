@@ -13,10 +13,6 @@ public class Position {
         this.rank = rank;
     }
 
-    public Position(final Position other) {
-        this(other.file, other.rank);
-    }
-
     public Position(final String fileRank) {
         this(new File(fileRank.charAt(0)), new Rank(fileRank.charAt(1)));
     }
