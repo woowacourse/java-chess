@@ -21,9 +21,9 @@ public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Roo
 
     public abstract RoleStatus status();
 
-    public void moveTo(final WayPoints wayPoints, final Role target) {
-        validateNotExistWayPoints(wayPoints);
+    public void validateMoving(final WayPoints wayPoints, final Role target) {
         validateNotSameColor(target);
+        validateNotExistWayPoints(wayPoints);
     }
 
     private void validateNotSameColor(final Role target) {

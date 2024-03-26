@@ -18,11 +18,14 @@ public class Piece {
         return this.role.findRoute(source, target);
     }
 
-    public void moveTo(final WayPoints wayPoints, final Destination destination) {
+    public void moveTo(final Destination destination) {
         Piece target = destination.target();
-        role.moveTo(wayPoints, target.role());
         target.role = role;
         role = new Square();
+    }
+    public void validateMoving(final WayPoints wayPoints, final Destination destination){
+        Piece target = destination.target();
+        role.validateMoving(wayPoints, target.role());
     }
 
     public boolean isOccupied() {

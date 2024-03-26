@@ -35,7 +35,7 @@ class RoleTest {
     @EnumSource(Color.class)
     void validateMoveTo(Color color) {
         WayPoints wayPoints = new WayPoints(Direction.N, Map.of());
-        assertThatThrownBy(() -> new Pawn(color).moveTo(wayPoints, new Bishop(color)))
+        assertThatThrownBy(() -> new Pawn(color).validateMoving(wayPoints, new Bishop(color)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("같은 진영의 기물이 목적 지점에 위치합니다.");
 
@@ -45,7 +45,7 @@ class RoleTest {
     @Test
     void validateNotExistWayPoints() {
         WayPoints wayPoints = new WayPoints(Direction.N, Map.of(Position.of(File.E, Rank.FOUR), new Piece(new Bishop(Color.WHITE))));
-        assertThatThrownBy(() -> new Rook(Color.BLACK).moveTo(wayPoints, new Bishop(Color.WHITE)))
+        assertThatThrownBy(() -> new Rook(Color.BLACK).validateMoving(wayPoints, new Bishop(Color.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("목적 지점까지의 경로에 기물이 위치하여 이동할 수 없습니다.");
     }

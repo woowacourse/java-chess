@@ -56,8 +56,8 @@ public final class Pawn extends Role {
     }
 
     @Override
-    public void moveTo(final WayPoints wayPoints, final Role target) {
-        super.moveTo(wayPoints, target);
+    public void validateMoving(final WayPoints wayPoints, final Role target) {
+        super.validateMoving(wayPoints, target);
         Direction direction = wayPoints.direction();
         validateCanTakeOtherPiece(direction, target);
         validateCanMoveForward(direction, target);
