@@ -28,7 +28,7 @@ public class PieceGenerator {
         );
     }
 
-    public  List<Piece> makePawnPieces(Color color) {
+    public List<Piece> makePawnPieces(Color color) {
         List<Piece> pieces = new ArrayList<>();
         for (int i = 0; i < PAWN_COUNT_PER_PLAYER; i++) {
             pieces.add(new Pawn(color));

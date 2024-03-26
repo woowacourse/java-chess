@@ -1,7 +1,6 @@
 package chess.chessBoard;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
