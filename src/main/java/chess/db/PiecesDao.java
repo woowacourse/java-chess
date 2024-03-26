@@ -57,4 +57,17 @@ public class PiecesDao {
             throw new RuntimeException("Error deleting pieces", e);
         }
     }
+
+    public int count() {
+        try (final Connection connection = connector.get()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS count FROM " + TABLE);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("count");
+            }
+            return 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error counting piece", e);
+        }
+    }
 }

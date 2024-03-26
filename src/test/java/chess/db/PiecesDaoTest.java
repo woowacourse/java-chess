@@ -58,4 +58,17 @@ class PiecesDaoTest {
 
         assertThat(piecesDao.findAll()).isEmpty();
     }
+
+    @Test
+    @DisplayName("저장된 피스의 개수를 센다.")
+    void countPiecesSize() {
+        PieceDto pieceDto1 = new PieceDto(1, 1, "WHITE_ROOK");
+        PieceDto pieceDto2 = new PieceDto(2, 1, "WHITE_KNIGHT");
+        PieceDto pieceDto3 = new PieceDto(3, 1, "WHITE_BISHOP");
+        piecesDao.create(pieceDto1);
+        piecesDao.create(pieceDto2);
+        piecesDao.create(pieceDto3);
+
+        assertThat(piecesDao.count()).isSameAs(3);
+    }
 }
