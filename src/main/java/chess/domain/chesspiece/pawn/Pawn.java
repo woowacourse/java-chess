@@ -1,5 +1,8 @@
-package chess.domain.chesspiece;
+package chess.domain.chesspiece.pawn;
 
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.Role;
+import chess.domain.chesspiece.Team;
 import chess.domain.position.Rank;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -11,27 +14,33 @@ import java.util.List;
 import static chess.domain.chesspiece.Role.*;
 import static chess.domain.chesspiece.Team.WHITE;
 
-public class Pawn extends Piece {
-    private static Rank WHITE_PAWN_START_COLUMN = Rank.TWO;
-    private static Rank BLACK_PAWN_START_COLUMN = Rank.SEVEN;
+public abstract class Pawn extends Piece {
 
     public Pawn(Team team) {
         super(team);
     }
 
+    protected abstract int calculatePawnRankDistance(Position source, Position target);
+
+    protected abstract boolean isStartPosition(Position source);
+
     @Override
-    public List<Position> getRoute(Position source, Position target) {
+    public List<Position> getMovingRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
 
-        Direction direction = Direction.findDirection(source, target);
-        Position movingPosition = direction.move(source);
-
-        while (!movingPosition.equals(target)) {
-            route.add(movingPosition);
-            movingPosition = direction.move(movingPosition);
+        if(canMoveForwardTwice(source, target)) {
+            Direction direction = Direction.findDirection(source, target);
+            route.add(source.move(direction));
         }
+
         return Collections.unmodifiableList(route);
+    }
+
+    @Override
+    public List<Position> getAttackRoute(Position source, Position target) {
+        validateAttackRule(source, target);
+        return Collections.unmodifiableList(new ArrayList<>());
     }
 
     @Override
@@ -43,8 +52,7 @@ public class Pawn extends Piece {
 
     private boolean isMovable(Position source, Position target) {
         return canMoveForwardTwice(source, target)
-                || canMoveForwardOnce(source, target)
-                || canAttack(source, target);
+                || canMoveForwardOnce(source, target);
     }
 
     private boolean canMoveForwardTwice(Position source, Position target) {
@@ -52,38 +60,21 @@ public class Pawn extends Piece {
         return isStartPosition(source) && source.isSameFile(target) && columnDistance == 2;
     }
 
-    private int calculatePawnRankDistance(Position source, Position target) {
-        int columnDistance = source.subtractRanks(target);
-        if (getTeam() == WHITE) {
-            columnDistance *= -1;
-        }
-        return columnDistance;
-    }
-
-    private boolean isStartPosition(Position source) {
-        if (getTeam() == WHITE) {
-            return source.getRank() == WHITE_PAWN_START_COLUMN;
-        }
-        return source.getRank() == BLACK_PAWN_START_COLUMN;
-    }
-
     private boolean canMoveForwardOnce(Position source, Position target) {
         int columnDistance = calculatePawnRankDistance(source, target);
         return source.isSameFile(target) && columnDistance == 1;
+    }
+
+    private void validateAttackRule(Position source, Position target) {
+        if(!canAttack(source, target)) {
+            throw new IllegalArgumentException("공격할 수 없는 곳입니다.");
+        }
     }
 
     private boolean canAttack(Position source, Position target) {
         int fileDistance = source.calculateFileDistance(target);
         int colDistance = calculatePawnRankDistance(source, target);
         return fileDistance == 1 && colDistance == 1;
-    }
-
-    @Override
-    public Role getRole() {
-        if (getTeam().isWhite()) {
-            return WHITE_PAWN;
-        }
-        return BLACK_PAWN;
     }
 
     @Override

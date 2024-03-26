@@ -3,11 +3,13 @@ package chess.domain.chessboard;
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 
+import chess.domain.chesspiece.pawn.BlackPawn;
+import chess.domain.chesspiece.pawn.WhitePawn;
 import chess.domain.chesspiece.slidingPiece.Bishop;
 import chess.domain.chesspiece.Empty;
 import chess.domain.chesspiece.slidingPiece.King;
 import chess.domain.chesspiece.Knight;
-import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.pawn.Pawn;
 import chess.domain.chesspiece.Piece;
 import chess.domain.chesspiece.slidingPiece.Queen;
 import chess.domain.chesspiece.slidingPiece.Rook;
@@ -21,9 +23,9 @@ public class ChessBoardGenerator {
 
     public static Map<Position, Piece> initializeBoard() {
         initializeBackRank("8", BLACK);
-        initializePawnRank("7", BLACK);
+        initializeBlackPawnRank();
         initializeEmptyRanks();
-        initializePawnRank("2", WHITE);
+        initializeWhitePawnRank();
         initializeBackRank("1", WHITE);
         return board;
     }
@@ -39,8 +41,12 @@ public class ChessBoardGenerator {
         board.put(createPosition("h", column), new Rook(team));
     }
 
-    private static void initializePawnRank(String rank, Team team) {
-        initializeFiles(rank, new Pawn(team));
+    private static void initializeBlackPawnRank() {
+        initializeFiles("7", new BlackPawn());
+    }
+
+    private static void initializeWhitePawnRank() {
+        initializeFiles("2", new WhitePawn());
     }
 
     private static void initializeEmptyRanks() {
