@@ -13,7 +13,6 @@ public class GameStatus {
     private final Consumer<Board> onStart;
     private final BiConsumer<List<String>, Board> onMove;
 
-
     public GameStatus(Consumer<Board> onStart, BiConsumer<List<String>, Board> onMove) {
         this(Status.READY, onStart, onMove);
     }

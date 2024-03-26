@@ -1,5 +1,8 @@
 package chess.dto;
 
+import static chess.model.material.Color.BLACK;
+import static chess.model.material.Color.WHITE;
+
 import chess.model.material.Color;
 import chess.model.material.Type;
 import chess.model.piece.Bishop;
@@ -23,9 +26,6 @@ public enum PieceMapper {
     KING("k", "K", King::new),
     NONE(".", ".", color -> new None());
 
-    private static final String WHITE_REGEXP = "^[a-z]$";
-    private static final String BLACK_REGEXP = "^[A-Z]$";
-
     private final String whitePiece;
     private final String blackPiece;
     private final Function<Color, Piece> generate;
@@ -37,15 +37,15 @@ public enum PieceMapper {
     }
 
     public static String serialize(Piece piece) {
-        PieceMapper pieceType = findPieceType(piece);
+        PieceMapper mapper = findPieceMapper(piece);
         Color color = Color.findColor(piece);
         if (color.isWhite()) {
-            return pieceType.whitePiece;
+            return mapper.whitePiece;
         }
-        return pieceType.blackPiece;
+        return mapper.blackPiece;
     }
 
-    private static PieceMapper findPieceType(Piece piece) {
+    private static PieceMapper findPieceMapper(Piece piece) {
         Type type = Type.findType(piece);
         return Arrays.stream(values())
             .filter(pieceMapper -> pieceMapper.name().equals(type.name()))
@@ -54,29 +54,14 @@ public enum PieceMapper {
     }
 
     public static Piece deserialize(String pieceName) {
-        PieceMapper type = findType(pieceName);
-        Color color = findColor(pieceName);
-        return type.generate.apply(color);
-    }
-
-    private static PieceMapper findType(String pieceName) {
-        return Arrays.stream(values())
-            .filter(pieceMapper -> isSameType(pieceMapper, pieceName))
-            .findFirst()
-            .orElse(NONE);
-    }
-
-    private static boolean isSameType(PieceMapper mapper, String pieceName) {
-        return mapper.whitePiece.equals(pieceName) || mapper.blackPiece.equals(pieceName);
-    }
-
-    public static Color findColor(String pieceName) {
-        if (pieceName.matches(WHITE_REGEXP)) {
-            return Color.WHITE;
+        for (PieceMapper mapper : values()) {
+            if (mapper.whitePiece.equals(pieceName)) {
+                return mapper.generate.apply(WHITE);
+            }
+            if (mapper.blackPiece.equals(pieceName)) {
+                return mapper.generate.apply(BLACK);
+            }
         }
-        if (pieceName.matches(BLACK_REGEXP)) {
-            return Color.BLACK;
-        }
-        return Color.NONE;
+        return NONE.generate.apply(Color.NONE);
     }
 }
