@@ -17,32 +17,37 @@ public class ChessBoard {
 
     public void move(final Position current, final Position destination) {
         final Piece currentPiece = findPieceBy(current);
-        final Movement movement = new Movement(current, destination);
 
-        validateStrategy(currentPiece, movement);
-        validatePieceInRoute(getRoute(currentPiece, movement));
+        validateStrategy(currentPiece, current, destination);
+        validatePieceInRoute(getRoute(currentPiece, current, destination));
 
-        movePiece(currentPiece, movement);
+        movePiece(currentPiece, current, destination);
     }
 
     public Piece findPieceBy(final Position position) {
-        if (!isPieceExist(position)) {
-            throw new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다.");
+        if (isPieceExist(position)) {
+            return pieces.get(position);
         }
 
-        return pieces.get(position);
+        throw new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다.");
     }
 
-    public Set<Position> getRoute(final Piece currentPiece, final Movement movement) {
-        if (isPieceExist(movement.getDestination())) {
-            validateOpponent(currentPiece, movement);
+    public Set<Position> getRoute(final Piece currentPiece, final Position current, final Position destination) {
+        final Movement movement = new Movement(current, destination);
+
+        if (isPieceExist(destination)) {
+            final Piece targetPiece = findPieceBy(destination);
+
+            validateOpponent(currentPiece, targetPiece);
             return currentPiece.getCatchRoute(movement);
         }
 
         return currentPiece.getRoute(movement);
     }
 
-    private void validateStrategy(final Piece currentPiece, final Movement movement) {
+    private void validateStrategy(final Piece currentPiece, final Position current, final Position destination) {
+        final Movement movement = new Movement(current, destination);
+
         if (!currentPiece.canMove(movement)) {
             throw new IllegalArgumentException("[ERROR] 전략상 이동할 수 없는 위치입니다.");
         }
@@ -56,8 +61,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateOpponent(final Piece currentPiece, final Movement movement) {
-        final Piece targetPiece = findPieceBy(movement.getDestination());
+    private void validateOpponent(final Piece currentPiece, final Piece targetPiece) {
         if (currentPiece.isOpponent(targetPiece)) {
             return;
         }
@@ -69,9 +73,9 @@ public class ChessBoard {
         return pieces.containsKey(position);
     }
 
-    private void movePiece(final Piece currentPiece, final Movement movement) {
-        pieces.remove(movement.getCurrent());
-        pieces.put(movement.getDestination(), currentPiece);
+    private void movePiece(final Piece currentPiece, final Position current, final Position destination) {
+        pieces.remove(current);
+        pieces.put(destination, currentPiece);
     }
 
     public Map<Position, Piece> getPieces() {

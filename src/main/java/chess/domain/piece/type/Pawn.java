@@ -55,9 +55,9 @@ public class Pawn extends Piece {
 
     private boolean isInitPosition(final Movement movement) {
         if (this.isBlack()) {
-            return movement.getCurrent().isRank(INIT_BLACK_RANK);
+            return movement.isCurrentRank(INIT_BLACK_RANK);
         }
 
-        return movement.getCurrent().isRank(INIT_WHITE_RANK);
+        return movement.isCurrentRank(INIT_WHITE_RANK);
     }
 }

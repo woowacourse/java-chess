@@ -48,6 +48,10 @@ public class Movement {
         return current.getFileDistance(destination);
     }
 
+    public boolean isCurrentRank(final Rank rank) {
+        return current.isRank(rank);
+    }
+
     public Position getLowerPosition() {
         if (isUp()) {
             return current;
@@ -61,14 +65,6 @@ public class Movement {
             return current;
         }
 
-        return destination;
-    }
-
-    public Position getCurrent() {
-        return current;
-    }
-
-    public Position getDestination() {
         return destination;
     }
 }
