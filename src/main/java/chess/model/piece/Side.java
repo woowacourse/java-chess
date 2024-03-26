@@ -6,10 +6,10 @@ public enum Side {
     NONE;
 
     public boolean isWhite() {
-        return this.equals(WHITE);
+        return this == WHITE;
     }
 
     public boolean isBlack() {
-        return this.equals(BLACK);
+        return this == BLACK;
     }
 }
