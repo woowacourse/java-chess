@@ -23,11 +23,10 @@ public class King extends ChessPieceBase {
     }
 
     private Direction getKingDirection(int rowDifference, int columnDifference) {
-        try {
+        if (DiagonalDirection.isDiagonal(rowDifference, columnDifference)) {
             return DiagonalDirection.getDirection(rowDifference, columnDifference);
-        } catch (IllegalArgumentException e) {
-            return StraightDirection.getDirection(rowDifference, columnDifference);
         }
+        return StraightDirection.getDirection(rowDifference, columnDifference);
     }
 
     private void validateDistance(Coordinate start, Coordinate destination, Direction direction) {

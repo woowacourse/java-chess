@@ -17,10 +17,9 @@ public class Queen extends ChessPieceBase {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        try {
+        if (DiagonalDirection.isDiagonal(rowDifference, columnDifference)) {
             return DiagonalDirection.getDirection(rowDifference, columnDifference);
-        } catch (IllegalArgumentException e) {
-            return StraightDirection.getDirection(rowDifference, columnDifference);
         }
+        return StraightDirection.getDirection(rowDifference, columnDifference);
     }
 }
