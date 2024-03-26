@@ -39,7 +39,7 @@ public enum PieceMapper {
     public static String serialize(Piece piece) {
         PieceMapper mapper = findPieceMapper(piece);
         Color color = Color.findColor(piece);
-        if (color.isWhite()) {
+        if (color.isSame(WHITE)) {
             return mapper.whitePiece;
         }
         return mapper.blackPiece;

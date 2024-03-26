@@ -17,7 +17,7 @@ public enum Color {
         return NONE;
     }
 
-    public Color next() {
+    public Color rotate() {
         if (this == WHITE) {
             return BLACK;
         }
@@ -27,7 +27,7 @@ public enum Color {
         return NONE;
     }
 
-    public boolean isWhite() {
-        return this == WHITE;
+    public boolean isSame(Color color) {
+        return this == color;
     }
 }

@@ -26,7 +26,7 @@ public class Board {
     private void applyMove(Position source, Position target) {
         pieces.put(target, findPiece(source));
         pieces.put(source, new None());
-        turn = turn.next();
+        turn = turn.rotate();
     }
 
     private void validatePosition(Position source, Position target) {
