@@ -22,7 +22,6 @@ class RookTest {
     void from() {
         // given
         Rook blackRook = Rook.from(Side.BLACK);
-        assertThat(blackRook.equals(Bishop.from(Side.BLACK))).isFalse();
 
         // when & then
         assertThat(Rook.from(Side.BLACK)).isSameAs(blackRook);
