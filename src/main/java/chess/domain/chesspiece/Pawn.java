@@ -54,14 +54,14 @@ public class Pawn extends Piece {
 
     private int calculatePawnRankDistance(Position source, Position target) {
         int columnDistance = source.subtractRanks(target);
-        if (team == WHITE) {
+        if (getTeam() == WHITE) {
             columnDistance *= -1;
         }
         return columnDistance;
     }
 
     private boolean isStartPosition(Position source) {
-        if (team == WHITE) {
+        if (getTeam() == WHITE) {
             return source.getRank() == WHITE_PAWN_START_COLUMN;
         }
         return source.getRank() == BLACK_PAWN_START_COLUMN;
@@ -80,7 +80,7 @@ public class Pawn extends Piece {
 
     @Override
     public Role getRole() {
-        if (team.isWhite()) {
+        if (getTeam().isWhite()) {
             return WHITE_PAWN;
         }
         return BLACK_PAWN;

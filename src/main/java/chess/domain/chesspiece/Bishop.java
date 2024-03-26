@@ -42,7 +42,7 @@ public class Bishop extends Piece {
 
     @Override
     public Role getRole() {
-        if (team.isWhite()) {
+        if (getTeam().isWhite()) {
             return WHITE_BISHOP;
         }
         return BLACK_BISHOP;

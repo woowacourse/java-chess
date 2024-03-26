@@ -8,7 +8,7 @@ import static chess.domain.chesspiece.Role.BLACK_PAWN;
 import static chess.domain.chesspiece.Role.WHITE_PAWN;
 
 public abstract class Piece {
-    protected Team team;
+    private final Team team;
 
     public Piece(Team team) {
         this.team = team;
@@ -19,6 +19,10 @@ public abstract class Piece {
     protected abstract void validateMovingRule(Position source, Position target);
 
     public abstract Role getRole();
+
+    public Team getTeam() {
+        return team;
+    }
 
     public boolean isTeam(Piece piece) {
         return team == piece.team;

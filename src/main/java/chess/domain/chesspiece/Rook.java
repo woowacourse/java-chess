@@ -39,7 +39,7 @@ public class Rook extends Piece {
 
     @Override
     public Role getRole() {
-        if (team.isWhite()) {
+        if (getTeam().isWhite()) {
             return WHITE_ROOK;
         }
         return BLACK_ROOK;

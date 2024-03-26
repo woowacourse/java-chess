@@ -33,7 +33,7 @@ public class Knight extends Piece {
 
     @Override
     public Role getRole() {
-        if (team.isWhite()) {
+        if (getTeam().isWhite()) {
             return WHITE_KNIGHT;
         }
         return BLACK_KNIGHT;
