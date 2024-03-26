@@ -15,12 +15,8 @@ public abstract class Piece {
         return team == Team.BLACK;
     }
 
-    public boolean isSameTeam(Piece otherPiece) {
-        return this.team == otherPiece.team;
-    }
-
     public boolean isOtherTeam(Piece otherPiece) {
-        return !isSameTeam(otherPiece);
+        return this.team != otherPiece.team;
     }
 
     public boolean isOtherTeam(Team team) {

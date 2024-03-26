@@ -171,7 +171,7 @@ class PositionTest {
         List<Position> expectedPath = List.of(D4, E3, F2);
         List<Position> actualPath = start.findPath(destination);
 
-        assertThat(actualPath).containsAll(expectedPath);
+        assertThat(actualPath).containsExactlyElementsOf(expectedPath);
     }
 
     /*
@@ -193,6 +193,6 @@ class PositionTest {
         List<Position> expectedPath = List.of(D5, E5, F5, G5);
         List<Position> actualPath = start.findPath(destination);
 
-        assertThat(actualPath).containsAll(expectedPath);
+        assertThat(actualPath).containsExactlyElementsOf(expectedPath);
     }
 }
