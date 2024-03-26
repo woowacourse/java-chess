@@ -43,7 +43,7 @@ public class ChessBoardTest extends DaoTest {
 
     @DisplayName("source에 위치한 piece가 움직일 수 있는지 판단한다")
     @Test
-    public void move() throws NoSuchFieldException, IllegalAccessException {
+    public void move() {
         // given
         ChessBoard chessBoard = new ChessBoard();
 

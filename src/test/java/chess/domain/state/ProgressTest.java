@@ -3,6 +3,7 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.dao.DaoTest;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class ProgressTest {
+class ProgressTest extends DaoTest {
     @DisplayName("Progress는 command로 \"start\"를 받으면 예외가 발생한다.")
     @Test
     void playWithCommandStart() {

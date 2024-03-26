@@ -115,6 +115,9 @@ public class ChessBoard {
         chessBoard.put(target, sourcePiece);
         chessBoard.remove(source);
         currentTurnTeamColor = currentTurnTeamColor.convertTurn();
+
+        chessGameDao.remove(target);
+        chessGameDao.update(source, target);
     }
 
     private double getVerticalPawnCount(File file, Color color) {
