@@ -26,12 +26,12 @@ public class Space {
     }
 
     private boolean canCatch(Space targetSpace) {
-        return piece.isCatchable(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece)
+        return piece.canCatch(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece)
                 && !piece.isSameColor(targetSpace.piece);
     }
 
     private boolean canMove(Space targetSpace) {
-        return piece.isMovable(position, targetSpace.position) && !piece.isSameColor(targetSpace.piece);
+        return piece.canMove(position, targetSpace.position) && !piece.isSameColor(targetSpace.piece);
     }
 
     public List<Position> findRouteToTarget(Space targetSpace) {

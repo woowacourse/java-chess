@@ -11,12 +11,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isCatchable(Position from, Position to) {
-        return isMovable(from, to);
+    public boolean canCatch(Position from, Position to) {
+        return canMove(from, to);
     }
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         FileDifference fileDifference = from.calculateFileDifferenceTo(to);
         RankDifference rankDifference = from.calculateRankDifferenceTo(to);
         return isDiagonalMove(fileDifference, rankDifference);

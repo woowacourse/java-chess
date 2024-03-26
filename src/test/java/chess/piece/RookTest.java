@@ -20,6 +20,6 @@ class RookTest {
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.a, Rank.THREE);
 
-        assertThat(piece.isMovable(from, to)).isTrue();
+        assertThat(piece.canMove(from, to)).isTrue();
     }
 }

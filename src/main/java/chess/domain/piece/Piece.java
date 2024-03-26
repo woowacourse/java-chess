@@ -12,9 +12,9 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
 
-    public abstract boolean isMovable(Position from, Position to);
+    public abstract boolean canMove(Position from, Position to);
 
-    public abstract boolean isCatchable(Position from, Position to);
+    public abstract boolean canCatch(Position from, Position to);
 
     public boolean isSameColor(Piece piece) {
         return color == piece.color;

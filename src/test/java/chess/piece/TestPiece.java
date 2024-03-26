@@ -13,13 +13,13 @@ public class TestPiece extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         return false;
     }
 
 
     @Override
-    public boolean isCatchable(Position from, Position to) {
+    public boolean canCatch(Position from, Position to) {
         return false;
     }
 }

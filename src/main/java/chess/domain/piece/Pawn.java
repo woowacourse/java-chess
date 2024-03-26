@@ -32,7 +32,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position from, Position to) {
+    public boolean canMove(Position from, Position to) {
         if (!isMoved) {
             isMoved = true;
             return canFirstMove(from, to);
@@ -41,7 +41,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isCatchable(Position from, Position to) {
+    public boolean canCatch(Position from, Position to) {
         FileDifference fileDifference = from.calculateFileDifferenceTo(to);
         RankDifference rankDifference = from.calculateRankDifferenceTo(to);
         if (isSameColor(Color.WHITE)) {

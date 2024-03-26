@@ -20,7 +20,7 @@ public class PawnTest {
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.b, Rank.THREE);
 
-        assertThat(piece.isMovable(from, to)).isTrue();
+        assertThat(piece.canMove(from, to)).isTrue();
     }
 
     @Test
@@ -30,8 +30,8 @@ public class PawnTest {
         Position from = new Position(File.a, Rank.ONE);
         Position to1 = new Position(File.b, Rank.THREE);
         Position to2 = new Position(File.b, Rank.FIVE);
-        piece.isMovable(from, to1);
+        piece.canMove(from, to1);
 
-        assertThat(piece.isMovable(from, to2)).isFalse();
+        assertThat(piece.canMove(from, to2)).isFalse();
     }
 }

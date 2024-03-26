@@ -20,7 +20,7 @@ public class KnightTest {
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.b, Rank.THREE);
 
-        assertThat(piece.isMovable(from, to)).isTrue();
+        assertThat(piece.canMove(from, to)).isTrue();
     }
 
     @Test
@@ -30,6 +30,6 @@ public class KnightTest {
         Position from = new Position(File.a, Rank.ONE);
         Position to = new Position(File.b, Rank.TWO);
 
-        assertThat(piece.isMovable(from, to)).isFalse();
+        assertThat(piece.canMove(from, to)).isFalse();
     }
 }
