@@ -15,8 +15,10 @@ public class Position {
         return new Position(File.from(file), Rank.from(rank));
     }
 
-    public Position move(int fileDirection, int rankDirection) {
-        return new Position(file.update(fileDirection), rank.update(rankDirection));
+    public Position move(Direction direction) {
+        File fileUpdate = file.update(direction.getFileDirection());
+        Rank rankUpdate = rank.update(direction.getRankDirection());
+        return new Position(fileUpdate, rankUpdate);
     }
 
     public int calculateFileDistance(Position target) {

@@ -40,7 +40,11 @@ public enum Direction {
         return direction == UP || direction == DOWN;
     }
 
-    public Position move(Position source) {
-        return source.move(fileDirection, rankDirection);
+    public int getFileDirection() {
+        return fileDirection;
+    }
+
+    public int getRankDirection() {
+        return rankDirection;
     }
 }
