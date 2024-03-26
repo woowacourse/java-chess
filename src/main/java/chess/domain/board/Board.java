@@ -90,7 +90,7 @@ public class Board {
     }
 
     private Route createPath(MoveCommand moveCommand) {
-        List<Direction> directions = DirectionFinder.createDirections(moveCommand.getSource(), moveCommand.getTarget());
+        List<Direction> directions = DirectionFinder.find(moveCommand.getSource(), moveCommand.getTarget());
         List<SquareState> squareStates = createPathState(moveCommand.getSource(), directions);
         return new Route(directions, squareStates);
     }

@@ -10,14 +10,14 @@ public class DirectionFinder {
     private static final int NEUTRAL_DISTANCE = 0;
     private static final int NEGATIVE_DISTANCE = -1;
 
-    public static List<Direction> createDirections(Location source, Location target) {
+    public static List<Direction> find(Location source, Location target) {
         int verticalDistance = source.calculateVerticalDistance(target);
         int horizontalDistance = source.calculateHorizontalDistance(target);
         validateDistance(verticalDistance, horizontalDistance);
-        return createDirectionsByDistance(verticalDistance, horizontalDistance);
+        return findByDistance(verticalDistance, horizontalDistance);
     }
 
-    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
+    private static List<Direction> findByDistance(int verticalDistance, int horizontalDistance) {
         List<Direction> directions = new ArrayList<>();
         int verticalDistanceCheck = verticalDistance;
         int horizontalDistanceCheck = horizontalDistance;
