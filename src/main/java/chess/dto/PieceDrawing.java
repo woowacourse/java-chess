@@ -4,7 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 
 public record PieceDrawing(int fileOrdinal, int rankOrdinal, String colorName, String typeName) {
-    public static PieceDrawing of(Piece piece) {
+    public static PieceDrawing from(Piece piece) {
         Square square = piece.getSquare();
         int fileOrdinal = square.getFileOrdinal();
         int rankOrdinal = square.getRankOrdinal();

@@ -14,7 +14,7 @@ public class Board {
     public static final String ERROR_NOT_TURN = "선택한 기물의 팀의 차례가 아닙니다.";
     private static final String ERROR_CANNOT_STAY = "제자리로 이동할 수 없습니다.";
     private static final String ERROR_NOT_EXIST_PIECE = "해당 위치에 기물이 존재하지 않습니다.";
-    
+
     private final Set<Piece> pieces;
 
     public Board(Set<Piece> pieces) {
@@ -68,7 +68,7 @@ public class Board {
 
     public List<PieceDrawing> generatePieceDrawings() {
         return pieces.stream()
-                .map(PieceDrawing::of)
+                .map(PieceDrawing::from)
                 .toList();
     }
 }
