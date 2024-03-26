@@ -5,6 +5,7 @@ import chess.domain.Position;
 import chess.domain.piece.abstractPiece.AbstractPawn;
 import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ public class WhitePawn extends AbstractPawn {
 
     public WhitePawn() {
         super(Team.WHITE);
+    }
+
+
+    public WhitePawn(boolean isMoved) {
+        this(new Character(Team.WHITE, Kind.PAWN), isMoved);
     }
 
     private WhitePawn(Character character, boolean hasMoved) {

@@ -1,10 +1,12 @@
 package chess.controller;
 
+import chess.db.DbManager;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.Movement;
 import chess.domain.State;
+import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
 import chess.dto.BoardStatusDto;
 import chess.dto.CommandDto;
@@ -18,10 +20,12 @@ public class ChessController {
     public void run() {
         validateStartCommand();
         Board board = new Board(BoardFactory.generateStartBoard());
+        DbManager dbManager = new DbManager();
         ChessGame chessGame = new ChessGame(board);
+        dbManager.initialize(board, Team.WHITE);
         OutputView.printGameState(new BoardStatusDto(board.getPieces(), State.NORMAL));
 
-        play(chessGame, board);
+        play(chessGame, board, dbManager);
     }
 
     private void validateStartCommand() {
@@ -33,26 +37,30 @@ public class ChessController {
         }
     }
 
-    private void play(ChessGame chessGame, Board board) {
+    private void play(ChessGame chessGame, Board board, DbManager dbManager) {
         try {
-            playTurns(chessGame, board);
+            playTurns(chessGame, board, dbManager);
         } catch (InvalidCommandException | ImpossibleMoveException e) {
             OutputView.printErrorMessage(e.getMessage());
-            play(chessGame, board);
+            play(chessGame, board, dbManager);
         }
     }
 
-    private void playTurns(ChessGame chessGame, Board board) {
+    private void playTurns(ChessGame chessGame, Board board, DbManager dbManager) {
         CommandDto commandDto;
         State state = State.NORMAL;
         while ((commandDto = InputView.inputCommand()).gameCommand() == GameCommand.MOVE && state != State.CHECKMATE) {
-            Movement movement = commandDto.toDomain();
-            chessGame.movePiece(movement);
+            moveAndUpdate(chessGame, commandDto.toDomain(), dbManager);
             state = chessGame.checkStatus();
             OutputView.printGameState(new BoardStatusDto(board.getPieces(), state));
         }
         printWinnerByStatus(board, commandDto.gameCommand());
         printWinnerByCheckmate(chessGame, state);
+    }
+
+    private void moveAndUpdate(ChessGame chessGame, Movement movement, DbManager dbManager) {
+        Piece piece = chessGame.movePiece(movement);
+        dbManager.update(movement, piece, chessGame.getCurrentTeam());
     }
 
     private void printWinnerByStatus(Board board, GameCommand gameCommand) {

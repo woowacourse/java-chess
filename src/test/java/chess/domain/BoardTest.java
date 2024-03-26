@@ -1,11 +1,9 @@
+package chess.domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.Movement;
-import chess.domain.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

@@ -34,7 +34,7 @@ public class OutputView {
     private static void printPiece(Map<Position, Piece> board, int i, int j) {
         if (board.containsKey(Position.of(i, j))) {
             Piece piece = board.get(Position.of(i, j));
-            System.out.print(CharacterViewer.showKind(piece.team(), piece.kind()));
+            System.out.print(CharacterViewer.show(piece.team(), piece.kind()));
             return;
         }
         System.out.print(".");

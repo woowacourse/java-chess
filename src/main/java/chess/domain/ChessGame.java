@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
 
@@ -8,15 +9,20 @@ public class ChessGame {
     private Team currentTeam;
 
     public ChessGame(Board board) {
-        this.board = board;
-        this.currentTeam = Team.WHITE;
+        this(board, Team.WHITE);
     }
 
-    public void movePiece(Movement movement) {
+    public ChessGame(Board board, Team team) {
+        this.board = board;
+        this.currentTeam = team;
+    }
+
+    public Piece movePiece(Movement movement) {
         board.validateSameTeamByPosition(movement.source(), currentTeam);
-        board.move(movement);
+        Piece movedPiece = board.move(movement);
         validateCheck();
         currentTeam = currentTeam.opponent();
+        return movedPiece;
     }
 
     private void validateCheck() {

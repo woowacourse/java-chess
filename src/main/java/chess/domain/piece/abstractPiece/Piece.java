@@ -6,6 +6,7 @@ import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
@@ -52,5 +53,26 @@ public abstract class Piece {
 
     public double point() {
         return character.kind().point();
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return isMoved == piece.isMoved && Objects.equals(character, piece.character);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(character, isMoved);
     }
 }

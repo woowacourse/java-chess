@@ -26,7 +26,7 @@ public class Board {
         }
     }
 
-    public void move(Movement movement) {
+    public Piece move(Movement movement) {
         validatePieceExistsOnPosition(movement.source());
 
         Piece thisPiece = pieces.get(movement.source());
@@ -36,6 +36,7 @@ public class Board {
 
         pieces.put(movement.target(), thisPiece.move());
         pieces.remove(movement.source());
+        return thisPiece;
     }
 
     private void validatePieceExistsOnPosition(Position position) {

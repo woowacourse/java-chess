@@ -99,6 +99,14 @@ public class Position {
                 .sum();
     }
 
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

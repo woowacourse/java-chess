@@ -4,7 +4,7 @@ import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
 public class CharacterViewer {
-    public static String showKind(Team team, Kind kind) {
+    public static String show(Team team, Kind kind) {
         String kindView = showKind(kind);
         if (Team.WHITE == team) {
             return kindView;
