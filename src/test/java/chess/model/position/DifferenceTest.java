@@ -10,6 +10,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DifferenceTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Difference difference = Difference.from(2);
+
+        // when & then
+        assertThat(Difference.from(2)).isSameAs(difference);
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {8, -8})
     @DisplayName("좌표차의 절댓값이 7 초과이면 예외가 발생한다.")

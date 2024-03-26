@@ -17,6 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        King blackKing = King.from(Side.BLACK);
+
+        // when & then
+        assertThat(King.from(Side.BLACK)).isSameAs(blackKing);
+    }
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("King이 상하좌우, 대각선으로 한 칸씩 움직일 수 있다.")

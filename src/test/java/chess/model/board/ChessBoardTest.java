@@ -16,6 +16,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
 
@@ -35,8 +36,10 @@ class ChessBoardTest {
 
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
 
-        assertThat(board).containsEntry(source, Blank.INSTANCE);
-        assertThat(board).doesNotContainEntry(target, Blank.INSTANCE);
+        assertAll(
+                () -> assertThat(board).containsEntry(source, Blank.INSTANCE),
+                () -> assertThat(board).doesNotContainEntry(target, Blank.INSTANCE)
+        );
     }
 
     @Test

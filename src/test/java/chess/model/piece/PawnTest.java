@@ -18,6 +18,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Pawn blackPawn = Pawn.from(Side.BLACK);
+
+        // when & then
+        assertThat(Pawn.from(Side.BLACK)).isSameAs(blackPawn);
+    }
+
     @ParameterizedTest
     @MethodSource("providePositionsAndResultInInitialPosition")
     @DisplayName("초기 위치에 있는 Pawn은 한 칸 혹은 두 칸 전진할 수 있다.")

@@ -29,7 +29,8 @@ class MovementTest {
                 Arguments.of(Side.WHITE, new Movement(Difference.from(0), Difference.from(1)), true),
                 Arguments.of(Side.WHITE, new Movement(Difference.from(0), Difference.from(-1)), false),
                 Arguments.of(Side.BLACK, new Movement(Difference.from(0), Difference.from(1)), false),
-                Arguments.of(Side.BLACK, new Movement(Difference.from(0), Difference.from(-1)), true)
+                Arguments.of(Side.BLACK, new Movement(Difference.from(0), Difference.from(-1)), true),
+                Arguments.of(Side.BLACK, new Movement(Difference.from(1), Difference.from(0)), false)
         );
     }
 

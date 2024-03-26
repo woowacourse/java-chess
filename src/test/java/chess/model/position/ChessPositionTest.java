@@ -8,6 +8,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChessPositionTest {
 
     @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        ChessPosition chessPosition = ChessPosition.of(File.A, Rank.ONE);
+
+        // when & then
+        assertThat(ChessPosition.of(File.A, Rank.ONE)).isSameAs(chessPosition);
+    }
+
+    @Test
     @DisplayName("타겟 위치와 소스 위치 간의 이동량을 계산한다.")
     void calculateMovement() {
         // given
@@ -35,7 +45,7 @@ class ChessPositionTest {
         ChessPosition nextPosition = chessPosition.calculateNextPosition(fileOffset, rankOffset);
 
         // then
-        assertThat(nextPosition).isEqualTo(ChessPosition.of(File.C, Rank.THREE));
+        assertThat(nextPosition).isSameAs(ChessPosition.of(File.C, Rank.THREE));
     }
 
 }

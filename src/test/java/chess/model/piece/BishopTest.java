@@ -17,6 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BishopTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Bishop blackBishop = Bishop.from(Side.BLACK);
+
+        // when & then
+        assertThat(Bishop.from(Side.BLACK)).isSameAs(blackBishop);
+    }
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("Bishop은 대각선으로 원하는 만큼 움직일 수 있다.")
@@ -77,7 +87,7 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("Bishop 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
+    @DisplayName("Bishop은 직교로 움직일 수 없다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
         ChessPosition source = ChessPosition.of(File.C, Rank.TWO);

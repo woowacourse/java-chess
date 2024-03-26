@@ -17,6 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Rook blackRook = Rook.from(Side.BLACK);
+        assertThat(blackRook.equals(Bishop.from(Side.BLACK))).isFalse();
+
+        // when & then
+        assertThat(Rook.from(Side.BLACK)).isSameAs(blackRook);
+    }
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("Rook은 상하좌우로 원하는 만큼 움직일 수 있다.")

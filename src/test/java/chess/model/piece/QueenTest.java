@@ -17,6 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Queen blackQueen = Queen.from(Side.BLACK);
+
+        // when & then
+        assertThat(Queen.from(Side.BLACK)).isSameAs(blackQueen);
+    }
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("Queen은 상하좌우 대각선으로 원하는 만큼 움직일 수 있다.")

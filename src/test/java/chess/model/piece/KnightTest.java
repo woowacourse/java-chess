@@ -17,6 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
 
+    @Test
+    @DisplayName("캐싱되어 항상 동일한 객체를 반환한다.")
+    void from() {
+        // given
+        Knight blackKnight = Knight.from(Side.BLACK);
+
+        // when & then
+        assertThat(Knight.from(Side.BLACK)).isSameAs(blackKnight);
+    }
+
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("Knight는 L자로 움직인다.")
