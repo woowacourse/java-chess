@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Type;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -54,6 +55,28 @@ public class ChessGameDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Piece findPieceByPosition(Position position) {
+        try (final var connection = getConnection()) {
+            String tableName = getTableName();
+            final var statement = connection.prepareStatement(
+                    "SELECT * FROM " + tableName + " WHERE `file` = ? AND `rank` = ?");
+            statement.setString(1, position.getFileSymbol());
+            statement.setInt(2, position.getRankValue());
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Type type = Type.convertToType(resultSet.getString("type"));
+                Color color = Color.convertToColor(resultSet.getString("color"));
+
+                return type.generatePiece(color);
+            }
+        } catch (SQLException e) {
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void save(ChessGameComponentDto chessGameComponentDto) {

@@ -1,8 +1,10 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -63,6 +65,19 @@ class ChessGameDaoTest {
         chessGameDao.save(chessGameComponentDto);
 
         assertThat(chessGameDao.findAll().size()).isEqualTo(17);
+    }
+
+    @DisplayName("데이터베이스에서 position에 해당되는 piece를 찾아온다.")
+    @Test
+    void findPieceByPosition() {
+        Position position = Position.of(File.A, Rank.ONE);
+
+        Piece piece = chessGameDao.findPieceByPosition(position);
+
+        assertAll(
+                () -> assertThat(piece).isInstanceOf(Rook.class),
+                () -> assertThat(piece.getColor()).isEqualTo(Color.WHITE)
+        );
     }
 
     private void executeInitScript() throws IOException, SQLException {
