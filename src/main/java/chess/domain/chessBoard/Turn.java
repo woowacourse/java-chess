@@ -5,36 +5,53 @@ import chess.domain.piece.Piece;
 
 public class Turn {
 
-    private static final Turn whiteTurn = new Turn(Color.WHITE);
-    private static final Turn blackTurn = new Turn(Color.BLACK);
-    private static final Turn noneTurn = new Turn(Color.EMPTY);
+    private State state;
 
-    private final Color color;
-
-    private Turn(Color color) {
-        this.color = color;
+    private Turn(State state) {
+        this.state = state;
     }
 
-    public static Turn notPlayingGame() {
-        return noneTurn;
+    public static Turn create() {
+        return new Turn(State.WAIT);
     }
 
-    public static Turn firstTurn() {
-        return whiteTurn;
-    }
-
-    public Turn oppositeTurn() {
-        if (color == Color.BLACK) {
-            return whiteTurn;
+    public void startGame() {
+        if (state != State.WAIT) {
+            throw new IllegalStateException("게임을 시작할 수 없는 상태입니다");
         }
-        return blackTurn;
+        state = State.WHITE;
+    }
+
+    public void stopGame() {
+        state = State.END;
+    }
+
+    public void oppositeTurn() {
+        if (state == State.BLACK) {
+            state = State.WHITE;
+            return;
+        }
+        state = State.BLACK;
     }
 
     public boolean isActive() {
-        return color != Color.EMPTY;
+        return state == State.BLACK || state == State.WHITE;
     }
 
     public boolean isValidTurn(Piece piece) {
-        return piece.isSameColor(color);
+        return piece.isSameColor(state.color);
+    }
+
+    private enum State {
+        WAIT(Color.EMPTY),
+        WHITE(Color.WHITE),
+        BLACK(Color.BLACK),
+        END(Color.EMPTY);
+
+        private final Color color;
+
+        State(Color color) {
+            this.color = color;
+        }
     }
 }

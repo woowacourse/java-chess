@@ -10,11 +10,11 @@ import java.util.List;
 public class ChessBoard {
 
     private final List<Space> spaces;
-    private Turn turn;
+    private final Turn turn;
 
     public ChessBoard(SpaceGenerator spaceGenerator) {
         this.spaces = spaceGenerator.generateSpaces();
-        this.turn = Turn.notPlayingGame();
+        this.turn = Turn.create();
     }
 
     public void move(Position from, Position to) {
@@ -25,12 +25,7 @@ public class ChessBoard {
 
         validateTurn(fromSpace);
         fromSpace.movePiece(toSpace, spaces);
-
-        if (wasKing) {
-            turn = Turn.notPlayingGame();
-            return;
-        }
-        turn = turn.oppositeTurn();
+        changeTurnBy(wasKing);
     }
 
     private void validateActiveGame() {
@@ -54,12 +49,27 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Space가 없습니다"));
     }
 
+    private void validateTurn(Space fromSpace) {
+        if (fromSpace.isValidTurn(turn)) {
+            return;
+        }
+        throw new IllegalStateException("상대 플레이어의 차례입니다");
+    }
+
+    private void changeTurnBy(boolean wasKing) {
+        if (wasKing) {
+            endGame();
+            return;
+        }
+        turn.oppositeTurn();
+    }
+
     public void startGame() {
-        turn = Turn.firstTurn();
+        turn.startGame();
     }
 
     public void endGame() {
-        turn = Turn.notPlayingGame();
+        turn.stopGame();
     }
 
     public boolean isActive() {

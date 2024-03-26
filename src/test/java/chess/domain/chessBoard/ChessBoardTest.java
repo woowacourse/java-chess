@@ -55,7 +55,7 @@ class ChessBoardTest {
     }
 
     @Test
-    @DisplayName("게임을 끝내면 더이상 피스를 움직일 수 있다")
+    @DisplayName("게임을 끝내면 더이상 피스를 움직일 수 없다")
     void should_not_move_when_end() {
         chessBoard.startGame();
         chessBoard.endGame();
@@ -63,6 +63,17 @@ class ChessBoardTest {
         assertThatThrownBy(() -> chessBoard.move(from, to))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("게임이 활성화되지 않았습니다");
+    }
+
+    @Test
+    @DisplayName("게임을 끝내면 다시 시작할 수 없다")
+    void should_not_restart_when_end() {
+        chessBoard.startGame();
+        chessBoard.endGame();
+
+        assertThatThrownBy(() -> chessBoard.startGame())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("게임을 시작할 수 없는 상태입니다");
     }
 
     @Test
