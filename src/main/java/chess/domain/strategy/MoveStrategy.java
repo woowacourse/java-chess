@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public abstract class MoveStrategy {
     protected final Map<Position, Piece> board;
 
-    public MoveStrategy(Map<Position, Piece> board) {
+    protected MoveStrategy(Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
