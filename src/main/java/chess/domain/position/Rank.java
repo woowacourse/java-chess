@@ -25,9 +25,6 @@ public enum Rank {
     }
 
     public List<Rank> findRankRouteToTargetRank(Rank to) {
-        if (value == to.value) {
-            return List.of(this);
-        }
         if (to.value > value) {
             return inclineDirectionRoute(to);
         }

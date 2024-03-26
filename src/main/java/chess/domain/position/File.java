@@ -24,9 +24,6 @@ public enum File {
     }
 
     public List<File> findFileRouteToTargetFile(File to) {
-        if (value == to.value) {
-            return List.of(this);
-        }
         if (to.value > value) {
             return inclineDirectionRoute(to);
         }
