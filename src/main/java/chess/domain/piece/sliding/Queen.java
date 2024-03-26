@@ -1,5 +1,6 @@
 package chess.domain.piece.sliding;
 
+import chess.domain.piece.nonsliding.King;
 import chess.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
@@ -11,6 +12,14 @@ public final class Queen extends SlidingPiece {
 
     public Queen(Color color) {
         super(color, directions);
+    }
+
+    public static Queen createWhiteQueen() {
+        return new Queen(Color.WHITE);
+    }
+
+    public static Queen createBlackQueen() {
+        return new Queen(Color.BLACK);
     }
 
     @Override

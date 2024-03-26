@@ -1,5 +1,6 @@
 package chess.domain.piece.sliding;
 
+import chess.domain.piece.nonsliding.King;
 import chess.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
@@ -11,6 +12,14 @@ public final class Bishop extends SlidingPiece {
 
     public Bishop(Color color) {
         super(color, DIRECTIONS);
+    }
+
+    public static Bishop createWhiteBishop() {
+        return new Bishop(Color.WHITE);
+    }
+
+    public static Bishop createBlackBishop() {
+        return new Bishop(Color.BLACK);
     }
 
     @Override

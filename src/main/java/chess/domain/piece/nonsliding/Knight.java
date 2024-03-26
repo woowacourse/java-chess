@@ -13,6 +13,14 @@ public final class Knight extends NonSlidingPiece {
         super(color, DIRECTIONS);
     }
 
+    public static Knight createWhiteKnight() {
+        return new Knight(Color.WHITE);
+    }
+
+    public static Knight createBlackKnight() {
+        return new Knight(Color.BLACK);
+    }
+
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {

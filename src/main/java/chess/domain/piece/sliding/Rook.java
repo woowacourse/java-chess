@@ -13,6 +13,13 @@ public final class Rook extends SlidingPiece {
         super(color, directions);
     }
 
+    public static Rook createWhiteRook() {
+        return new Rook(Color.WHITE);
+    }
+
+    public static Rook createBlackRook() {
+        return new Rook(Color.BLACK);
+    }
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {
