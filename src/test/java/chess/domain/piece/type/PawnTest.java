@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.board.Movement;
-import chess.domain.board.SquareStatus;
+import chess.domain.board.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -20,7 +20,7 @@ class PawnTest {
         Position source = Position.of("a6");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -37,7 +37,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("a3");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -54,7 +54,7 @@ class PawnTest {
         Position source = Position.of("a6");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.ENEMY;
+        PieceRelation targetStatus = PieceRelation.ENEMY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -71,7 +71,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("a3");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.ENEMY;
+        PieceRelation targetStatus = PieceRelation.ENEMY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -88,7 +88,7 @@ class PawnTest {
         Position source = Position.of("a7");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -105,7 +105,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("a4");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -122,7 +122,7 @@ class PawnTest {
         Position source = Position.of("a6");
         Position target = Position.of("a4");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -139,7 +139,7 @@ class PawnTest {
         Position source = Position.of("a3");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -156,7 +156,7 @@ class PawnTest {
         Position source = Position.of("a3");
         Position target = Position.of("b4");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.ENEMY;
+        PieceRelation targetStatus = PieceRelation.ENEMY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -173,7 +173,7 @@ class PawnTest {
         Position source = Position.of("b7");
         Position target = Position.of("a6");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.ENEMY;
+        PieceRelation targetStatus = PieceRelation.ENEMY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -190,7 +190,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("b3");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);
@@ -207,7 +207,7 @@ class PawnTest {
         Position source = Position.of("a7");
         Position target = Position.of("b6");
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = pawn.isMovable(movement, targetStatus);

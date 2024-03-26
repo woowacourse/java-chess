@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.board.Movement;
-import chess.domain.board.SquareStatus;
+import chess.domain.board.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
@@ -12,7 +12,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Movement movement, final SquareStatus targetStatus) {
+    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation) {
         return isLShapeMovement(movement);
     }
 

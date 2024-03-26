@@ -1,7 +1,7 @@
 package chess.domain.piece.type;
 
 import chess.domain.board.Movement;
-import chess.domain.board.SquareStatus;
+import chess.domain.board.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -36,7 +36,7 @@ class QueenTest {
         // given
         Piece queen = new Queen(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
-        SquareStatus targetStatus = SquareStatus.EMPTY;
+        PieceRelation targetStatus = PieceRelation.EMPTY;
 
         // when
         boolean result = queen.isMovable(movement, targetStatus);

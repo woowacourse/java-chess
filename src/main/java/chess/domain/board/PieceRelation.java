@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-public enum SquareStatus {
+public enum PieceRelation {
     EMPTY,
     ENEMY,
     PEER;
