@@ -10,7 +10,7 @@ import chess.domain.strategy.MoveStrategy;
 import java.util.Map;
 import java.util.Set;
 
-public class Blank extends Piece {
+public final class Blank extends Piece {
     public Blank() {
         super(Color.NONE);
     }
