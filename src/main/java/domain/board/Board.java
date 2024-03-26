@@ -7,7 +7,6 @@ import domain.position.File;
 import domain.position.Position;
 import domain.position.PositionGenerator;
 import domain.position.Rank;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,15 +39,7 @@ public class Board {
     }
 
     public boolean isBlocked(Position source, Position target) {
-        List<Position> betweenPositions = new ArrayList<>();
-        if (source.isStraight(target)) {
-            List<Position> betweenStraightPositions = source.findBetweenStraightPositions(target);
-            betweenPositions.addAll(betweenStraightPositions);
-        }
-        if (source.isDiagonal(target)) {
-            List<Position> betweenDiagonalPositions = source.findBetweenDiagonalPositions(target);
-            betweenPositions.addAll(betweenDiagonalPositions);
-        }
+        List<Position> betweenPositions = source.betweenPositions(target);
         return betweenPositions.stream()
                 .map(this::findPieceByPosition)
                 .anyMatch(Piece::isNotBlank);

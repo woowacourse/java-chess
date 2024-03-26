@@ -24,6 +24,13 @@ public enum Direction {
         this.condition = condition;
     }
 
+    public static Direction asDirection(Position source, Position target) {
+        return Arrays.stream(values())
+                .filter(direction -> direction.meetCondition(source, target))
+                .findFirst()
+                .orElse(NONE);
+    }
+
     public static Set<Direction> allDirections() {
         Set<Direction> values = Set.of(values());
         return values.stream()
@@ -31,11 +38,12 @@ public enum Direction {
                 .collect(Collectors.toSet());
     }
 
-    public static Direction asDirection(Position source, Position target) {
-        return Arrays.stream(values())
-                .filter(direction -> direction.meetCondition(source, target))
-                .findFirst()
-                .orElse(NONE);
+    public static Set<Direction> straightDirections() {
+        return Set.of(UP, DOWN, RIGHT, LEFT);
+    }
+
+    public static Set<Direction> diagonalDirections() {
+        return Set.of(RIGHT_UP, RIGHT_DOWN, LEFT_UP, LEFT_DOWN);
     }
 
     private boolean meetCondition(Position source, Position target) {

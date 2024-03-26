@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class Position { // TODO: refactoring (너무 무거움)
 
@@ -15,36 +16,12 @@ public class Position { // TODO: refactoring (너무 무거움)
         this.rank = rank;
     }
 
-    public boolean isSameRank(Position target) {
-        return this.rank == target.rank;
-    }
-
     public boolean hasRank(Rank rank) {
         return this.rank == rank;
     }
 
     public boolean hasRank(List<Rank> ranks) {
         return ranks.contains(rank);
-    }
-
-    private boolean hasFile(File file) {
-        return this.file == file;
-    }
-
-    public boolean isStraight(Position target) {
-        return isVertical(target) || isHorizontal(target);
-    }
-
-    private boolean isVertical(Position target) {
-        return file == target.file;
-    }
-
-    private boolean isHorizontal(Position target) {
-        return rank == target.rank;
-    }
-
-    public boolean isSameFile(Position target) {
-        return this.file == target.file;
     }
 
     public boolean isUp(Position target) {
@@ -61,12 +38,6 @@ public class Position { // TODO: refactoring (너무 무거움)
 
     public boolean isLeft(Position target) {
         return rank == target.rank && file.isLeft(target.file);
-    }
-
-    public boolean isDiagonal(Position target) {
-        int fileDistance = file.distance(target.file);
-        int rankDistance = rank.distance(target.rank);
-        return fileDistance == rankDistance;
     }
 
     public boolean isRightUp(Position target) {
@@ -105,26 +76,39 @@ public class Position { // TODO: refactoring (너무 무거움)
         return steps.contains(distance);
     }
 
-    public List<Position> findBetweenStraightPositions(Position target) {
-        if (hasFile(target.file)) {
-            return findBetweenVerticalPositions(target.rank);
+    public List<Position> betweenPositions(Position target) {
+        Direction direction = Direction.asDirection(this, target);
+        Set<Direction> straightDirections = Direction.straightDirections();
+        Set<Direction> diagonalDirections = Direction.diagonalDirections();
+        if (straightDirections.contains(direction)) {
+            return betweenStraightPositions(target);
         }
-        return findBetweenHorizontalPositions(target.file);
+        if (diagonalDirections.contains(direction)) {
+            return betweenDiagonalPositions(target);
+        }
+        return List.of();
     }
 
-    private List<Position> findBetweenVerticalPositions(Rank targetRank) {
+    private List<Position> betweenStraightPositions(Position target) {
+        if (file == target.file) {
+            return betweenVerticalPositions(target.rank);
+        }
+        return betweenHorizontalPositions(target.file);
+    }
+
+    private List<Position> betweenVerticalPositions(Rank targetRank) {
         return rank.betweenRanks(targetRank).stream()
                 .map(rank -> PositionGenerator.generate(file, rank))
                 .toList();
     }
 
-    private List<Position> findBetweenHorizontalPositions(File targetFile) {
+    private List<Position> betweenHorizontalPositions(File targetFile) {
         return file.betweenFiles(targetFile).stream()
                 .map(file -> PositionGenerator.generate(file, rank))
                 .toList();
     }
 
-    public List<Position> findBetweenDiagonalPositions(Position target) {
+    private List<Position> betweenDiagonalPositions(Position target) {
         List<File> files = file.betweenFiles(target.file);
         List<Rank> ranks = rank.betweenRanks(target.rank);
 
