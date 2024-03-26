@@ -29,4 +29,45 @@ class FileTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("범위 밖의 파일 입니다.");
     }
+
+    @Test
+    @DisplayName("정수를 더할 수 있다.")
+    void addTest() {
+        // given
+        File file = File.from('c');
+
+        // when
+        File added = file.add(2);
+
+        // then
+        assertThat(added).isEqualTo(File.E);
+    }
+
+    @Test
+    @DisplayName("다른 파일까지의 벡터 값을 계산한다.")
+    void getVectorToTest() {
+        // given
+        File sourceFile = File.from('c');
+        File targetFile = File.from('f');
+
+        // when
+        int vectorTo = sourceFile.getVectorTo(targetFile);
+
+        // when & then
+        assertThat(vectorTo).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("목적지 파일부터의 거리를 계산한다.")
+    void distanceFromTest() {
+        // given
+        File sourceFile = File.from('c');
+        File targetFile = File.from('a');
+
+        // when
+        int vectorTo = sourceFile.distanceFrom(targetFile);
+
+        // when & then
+        assertThat(vectorTo).isEqualTo(2);
+    }
 }
