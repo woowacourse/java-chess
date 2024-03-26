@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS pieces;
+
 CREATE TABLE pieces
 (
     board_file INT         NOT NULL,
