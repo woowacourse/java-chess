@@ -1,17 +1,21 @@
 package domain.piece;
 
-import static domain.position.File.C;
+import static domain.piece.PositionFixture.C3;
+import static domain.piece.PositionFixture.C4;
+import static domain.piece.PositionFixture.C5;
+import static domain.piece.PositionFixture.D3;
+import static domain.piece.PositionFixture.D5;
+import static domain.piece.PositionFixture.E3;
+import static domain.piece.PositionFixture.E4;
+import static domain.piece.PositionFixture.E5;
+import static domain.piece.PositionFixture.otherPositions;
 import static domain.position.File.D;
-import static domain.position.File.E;
-import static domain.position.Rank.FIVE;
 import static domain.position.Rank.FOUR;
-import static domain.position.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.piece.fixture.PositionFixture;
 import domain.position.Position;
 import domain.position.PositionGenerator;
-import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,22 +32,12 @@ public class KingTest {
         ........
         ........
      */
-    private static List<Position> validPositions() {
-        return List.of(
-                PositionFixture.get(C, THREE),
-                PositionFixture.get(C, FOUR),
-                PositionFixture.get(C, FIVE),
-                PositionFixture.get(D, THREE),
-                PositionFixture.get(D, FIVE),
-                PositionFixture.get(E, THREE),
-                PositionFixture.get(E, FOUR),
-                PositionFixture.get(E, FIVE)
-        );
+    private static Set<Position> validPositions() {
+        return Set.of(C3, C4, C5, D3, D5, E3, E4, E5);
     }
 
-    private static List<Position> invalidPositions() {
-        List<Position> validPositions = validPositions();
-        return PositionFixture.otherPositions(validPositions);
+    private static Set<Position> invalidPositions() {
+        return otherPositions(validPositions());
     }
 
     @ParameterizedTest

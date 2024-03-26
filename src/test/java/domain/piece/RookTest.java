@@ -1,27 +1,27 @@
 package domain.piece;
 
-import static domain.position.File.A;
-import static domain.position.File.B;
-import static domain.position.File.C;
+import static domain.piece.PositionFixture.A4;
+import static domain.piece.PositionFixture.B4;
+import static domain.piece.PositionFixture.C4;
+import static domain.piece.PositionFixture.D1;
+import static domain.piece.PositionFixture.D2;
+import static domain.piece.PositionFixture.D3;
+import static domain.piece.PositionFixture.D5;
+import static domain.piece.PositionFixture.D6;
+import static domain.piece.PositionFixture.D7;
+import static domain.piece.PositionFixture.D8;
+import static domain.piece.PositionFixture.E4;
+import static domain.piece.PositionFixture.F4;
+import static domain.piece.PositionFixture.G4;
+import static domain.piece.PositionFixture.H4;
+import static domain.piece.PositionFixture.otherPositions;
 import static domain.position.File.D;
-import static domain.position.File.E;
-import static domain.position.File.F;
-import static domain.position.File.G;
-import static domain.position.File.H;
-import static domain.position.Rank.EIGHT;
-import static domain.position.Rank.FIVE;
 import static domain.position.Rank.FOUR;
-import static domain.position.Rank.ONE;
-import static domain.position.Rank.SEVEN;
-import static domain.position.Rank.SIX;
-import static domain.position.Rank.THREE;
-import static domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.piece.fixture.PositionFixture;
 import domain.position.Position;
 import domain.position.PositionGenerator;
-import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,28 +39,12 @@ public class RookTest {
         ...*....
      */
 
-    private static List<Position> validPositions() {
-        return List.of(
-                PositionFixture.get(A, FOUR),
-                PositionFixture.get(B, FOUR),
-                PositionFixture.get(C, FOUR),
-                PositionFixture.get(D, ONE),
-                PositionFixture.get(D, TWO),
-                PositionFixture.get(D, THREE),
-                PositionFixture.get(D, FIVE),
-                PositionFixture.get(D, SIX),
-                PositionFixture.get(D, SEVEN),
-                PositionFixture.get(D, EIGHT),
-                PositionFixture.get(E, FOUR),
-                PositionFixture.get(F, FOUR),
-                PositionFixture.get(G, FOUR),
-                PositionFixture.get(H, FOUR)
-        );
+    private static Set<Position> validPositions() {
+        return Set.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4);
     }
 
-    private static List<Position> invalidPositions() {
-        List<Position> validPositions = validPositions();
-        return PositionFixture.otherPositions(validPositions);
+    private static Set<Position> invalidPositions() {
+        return otherPositions(validPositions());
     }
 
     @ParameterizedTest

@@ -1,21 +1,20 @@
 package domain.piece;
 
-import static domain.position.File.B;
-import static domain.position.File.C;
+import static domain.piece.PositionFixture.B3;
+import static domain.piece.PositionFixture.B5;
+import static domain.piece.PositionFixture.C2;
+import static domain.piece.PositionFixture.C6;
+import static domain.piece.PositionFixture.E2;
+import static domain.piece.PositionFixture.E6;
+import static domain.piece.PositionFixture.F3;
+import static domain.piece.PositionFixture.F5;
 import static domain.position.File.D;
-import static domain.position.File.E;
-import static domain.position.File.F;
-import static domain.position.Rank.FIVE;
 import static domain.position.Rank.FOUR;
-import static domain.position.Rank.SIX;
-import static domain.position.Rank.THREE;
-import static domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.piece.fixture.PositionFixture;
 import domain.position.Position;
 import domain.position.PositionGenerator;
-import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,22 +32,12 @@ class KnightTest {
         ........
      */
 
-    private static List<Position> validPositions() {
-        return List.of(
-                PositionFixture.get(B, THREE),
-                PositionFixture.get(B, FIVE),
-                PositionFixture.get(C, TWO),
-                PositionFixture.get(C, SIX),
-                PositionFixture.get(E, TWO),
-                PositionFixture.get(E, SIX),
-                PositionFixture.get(F, THREE),
-                PositionFixture.get(F, FIVE)
-        );
+    private static Set<Position> validPositions() {
+        return Set.of(B3, B5, C2, C6, E2, E6, F3, F5);
     }
 
-    private static List<Position> invalidPositions() {
-        List<Position> validPositions = validPositions();
-        return PositionFixture.otherPositions(validPositions);
+    private static Set<Position> invalidPositions() {
+        return PositionFixture.otherPositions(validPositions());
     }
 
     @ParameterizedTest
