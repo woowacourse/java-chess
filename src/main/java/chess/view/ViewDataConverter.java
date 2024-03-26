@@ -30,7 +30,7 @@ class ViewDataConverter {
 
     private String convertToViewData(Piece piece) {
         String shape = PieceShapeSelector.selectShape(piece.getType());
-        if (piece.getTeam() == Team.BLACK) {
+        if (piece.isSameTeam(Team.BLACK)) {
             return shape.toUpperCase();
         }
 
