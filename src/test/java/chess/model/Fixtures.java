@@ -2,7 +2,6 @@ package chess.model;
 
 import static java.util.stream.Collectors.toMap;
 
-import chess.model.material.Color;
 import chess.model.piece.None;
 import chess.model.piece.Piece;
 import chess.model.position.Position;

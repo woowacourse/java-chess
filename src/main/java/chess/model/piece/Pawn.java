@@ -2,17 +2,17 @@ package chess.model.piece;
 
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
-import static chess.model.position.Direction.DOWN;
-import static chess.model.position.Direction.DOWN_DOWN;
-import static chess.model.position.Direction.DOWN_LEFT;
-import static chess.model.position.Direction.DOWN_RIGHT;
-import static chess.model.position.Direction.UP;
-import static chess.model.position.Direction.UP_LEFT;
-import static chess.model.position.Direction.UP_RIGHT;
-import static chess.model.position.Direction.UP_UP;
+import static chess.model.position.Movement.DOWN;
+import static chess.model.position.Movement.DOWN_DOWN;
+import static chess.model.position.Movement.DOWN_LEFT;
+import static chess.model.position.Movement.DOWN_RIGHT;
+import static chess.model.position.Movement.UP;
+import static chess.model.position.Movement.UP_LEFT;
+import static chess.model.position.Movement.UP_RIGHT;
+import static chess.model.position.Movement.UP_UP;
 
 import chess.model.material.Color;
-import chess.model.position.Direction;
+import chess.model.position.Movement;
 import chess.model.position.Position;
 import chess.model.position.Route;
 import chess.model.position.Row;
@@ -20,8 +20,8 @@ import java.util.List;
 
 public class Pawn extends Piece {
 
-    private static final List<Direction> WHITE_ATTACK_DIRECTIONS = List.of(UP_LEFT, UP_RIGHT);
-    private static final List<Direction> BLACK_ATTACK_DIRECTIONS = List.of(DOWN_LEFT, DOWN_RIGHT);
+    private static final List<Movement> WHITE_ATTACK_MOVEMENTS = List.of(UP_LEFT, UP_RIGHT);
+    private static final List<Movement> BLACK_ATTACK_MOVEMENTS = List.of(DOWN_LEFT, DOWN_RIGHT);
     private static final Row WHITE_INITIAL_ROW = Row.TWO;
     private static final Row BLACK_INITIAL_ROW = Row.SEVEN;
 
@@ -31,42 +31,42 @@ public class Pawn extends Piece {
 
     @Override
     public Route findRoute(Position source, Position target) {
-        validateDirection(source, target);
+        validateMovement(source, target);
         return Route.of(source, target);
     }
 
-    public void validateDirection(Position source, Position target) {
-        Direction direction = Direction.findDirectionByDelta(source, target);
-        if (isSameColor(WHITE) && whiteCanMove(direction, source)) {
+    public void validateMovement(Position source, Position target) {
+        Movement movement = Movement.findMovement(source, target);
+        if (isSameColor(WHITE) && whiteCanMove(movement, source)) {
             return;
         }
-        if (isSameColor(BLACK) && blackCanMove(direction, source)) {
+        if (isSameColor(BLACK) && blackCanMove(movement, source)) {
             return;
         }
         throw new IllegalArgumentException("Pawn은 1칸 전진 이동 혹은 최초 2칸 전진 이동만 가능합니다.");
     }
 
-    private boolean whiteCanMove(Direction direction, Position source) {
-        if (direction == UP_UP && source.isSameRow(WHITE_INITIAL_ROW)) {
+    private boolean whiteCanMove(Movement movement, Position source) {
+        if (movement == UP_UP && source.isSameRow(WHITE_INITIAL_ROW)) {
             return true;
         }
-        return direction == UP;
+        return movement == UP;
     }
 
-    private boolean blackCanMove(Direction direction, Position source) {
-        if (direction == DOWN_DOWN && source.isSameRow(BLACK_INITIAL_ROW)) {
+    private boolean blackCanMove(Movement movement, Position source) {
+        if (movement == DOWN_DOWN && source.isSameRow(BLACK_INITIAL_ROW)) {
             return true;
         }
-        return direction == DOWN;
+        return movement == DOWN;
     }
 
     @Override
     public boolean canAttack(Position source, Position target) {
-        Direction direction = Direction.findDirectionByDelta(source, target);
-        if (isSameColor(WHITE) && WHITE_ATTACK_DIRECTIONS.contains(direction)) {
+        Movement movement = Movement.findMovement(source, target);
+        if (isSameColor(WHITE) && WHITE_ATTACK_MOVEMENTS.contains(movement)) {
             return true;
         }
-        if (isSameColor(BLACK) && BLACK_ATTACK_DIRECTIONS.contains(direction)) {
+        if (isSameColor(BLACK) && BLACK_ATTACK_MOVEMENTS.contains(movement)) {
             return true;
         }
         throw new IllegalArgumentException("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");

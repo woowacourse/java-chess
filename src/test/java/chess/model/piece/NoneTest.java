@@ -4,7 +4,6 @@ import static chess.model.Fixtures.A3;
 import static chess.model.Fixtures.A4;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.material.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

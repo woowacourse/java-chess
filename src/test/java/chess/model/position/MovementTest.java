@@ -9,12 +9,12 @@ import static chess.model.Fixtures.C4;
 import static chess.model.Fixtures.C5;
 import static chess.model.Fixtures.E3;
 import static chess.model.Fixtures.H1;
-import static chess.model.position.Direction.DOWN_DOWN_LEFT;
-import static chess.model.position.Direction.DOWN_RIGHT;
-import static chess.model.position.Direction.NONE;
-import static chess.model.position.Direction.RIGHT;
-import static chess.model.position.Direction.UP;
-import static chess.model.position.Direction.UP_UP;
+import static chess.model.position.Movement.DOWN_DOWN_LEFT;
+import static chess.model.position.Movement.DOWN_RIGHT;
+import static chess.model.position.Movement.NONE;
+import static chess.model.position.Movement.RIGHT;
+import static chess.model.position.Movement.UP;
+import static chess.model.position.Movement.UP_UP;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.Stream;
@@ -23,17 +23,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DirectionTest {
+class MovementTest {
 
-    @DisplayName("출발 위치와 도착 위치의 델타 값으로 방향을 찾는다")
+    @DisplayName("출발 위치와 도착 위치의 움직임을 찾는다")
     @ParameterizedTest
-    @MethodSource("provideCoordinateAndDeltaDirection")
-    void findDirectionByDelta(Position source, Position target, Direction expected) {
-        Direction direction = Direction.findDirectionByDelta(source, target);
-        assertThat(direction).isEqualTo(expected);
+    @MethodSource("provideCoordinateAndMovement")
+    void findMovement(Position source, Position target, Movement expected) {
+        Movement movement = Movement.findMovement(source, target);
+        assertThat(movement).isEqualTo(expected);
     }
 
-    public static Stream<Arguments> provideCoordinateAndDeltaDirection() {
+    public static Stream<Arguments> provideCoordinateAndMovement() {
         return Stream.of(
             Arguments.of(B2, B4, UP_UP),
             Arguments.of(C5, B3, DOWN_DOWN_LEFT),
@@ -45,9 +45,9 @@ class DirectionTest {
     @DisplayName("출발 위치와 도착 위치의 방향을 찾는다")
     @ParameterizedTest
     @MethodSource("provideCoordinateAndDirection")
-    void findDirection(Position source, Position target, Direction expected) {
-        Direction direction = Direction.findDirection(source, target);
-        assertThat(direction).isEqualTo(expected);
+    void findDirection(Position source, Position target, Movement expected) {
+        Movement movement = Movement.findDirection(source, target);
+        assertThat(movement).isEqualTo(expected);
     }
 
     public static Stream<Arguments> provideCoordinateAndDirection() {
