@@ -3,7 +3,7 @@ package domain.piece;
 import domain.board.Position;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 import java.util.function.BiPredicate;
 
 public enum CommonMovementDirection implements MovementDirection {
@@ -46,16 +46,20 @@ public enum CommonMovementDirection implements MovementDirection {
         }
     }
 
-    public static Set<CommonMovementDirection> orthogonalVectors() {
-        return Set.of(UP, RIGHT, DOWN, LEFT);
+    public void checkBishopMovableMovement() {
+        List<CommonMovementDirection> bishopMovableMovement = List.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
+
+        if (!bishopMovableMovement.contains(this)) {
+            throw new IllegalArgumentException("비숍이 이동할 수 있는 방향이 아닙니다.");
+        }
     }
 
-    public static Set<CommonMovementDirection> diagonalVectors() {
-        return Set.of(UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
-    }
+    public void checkRookMovableMovement() {
+        List<CommonMovementDirection> rookMovableMovement = List.of(UP, DOWN, RIGHT, LEFT);
 
-    public static Set<CommonMovementDirection> omnidirectionalVectors() {
-        return Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
+        if (!rookMovableMovement.contains(this)) {
+            throw new IllegalArgumentException("룩이 이동할 수 있는 방향이 아닙니다.");
+        }
     }
 
     @Override

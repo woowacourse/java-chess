@@ -54,7 +54,7 @@ class RookTest {
         // When & Then
         assertThatThrownBy(() ->rook.move(source, destination, board))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("방향이 유효하지 않아 이동할 수 없는 칸입니다.");
+                .hasMessage("룩이 이동할 수 있는 방향이 아닙니다.");
     }
 
     private static Stream<Arguments> throwExceptionWhenInvalidDirectionTestCase() {
