@@ -23,6 +23,7 @@ public class Pawn extends Piece {
                 || isKillPassing(start, destination, board);
     }
 
+    // TODO typo 신경쓰기
     private boolean isFowardPassing(Position start, Position destination, ChessBoard board) {
         return isForward(start, destination)
                 && start.squaredDistanceWith(destination) == FORWARDING_SQUARED_DISTANCE

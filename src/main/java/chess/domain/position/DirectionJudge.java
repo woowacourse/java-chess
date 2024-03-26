@@ -32,6 +32,7 @@ public enum DirectionJudge {
         this.directionCondition = directionCondition;
     }
 
+    // TODO 예외에 메시지 담아 던지기
     public static Direction judge(Position start, Position destination) {
         return Stream.of(values())
                 .filter(condition -> condition.directionCondition.test(start, destination))

@@ -4,12 +4,14 @@ import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 
 public abstract class Piece {
+    // TODO : NullPiece만들기
     private final Team team;
 
     public Piece(Team team) {
         this.team = team;
     }
 
+    // TODO : 보드가 아닌 도착지의 piece를 넘기는 방안
     public abstract boolean canMove(Position start, Position destination, ChessBoard chessBoard);
 
     public boolean isBlackTeam() {

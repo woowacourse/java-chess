@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 public enum Direction {
+    // TODO NSWE가 아니라 DOWN, LEFT 등의 표현으로 바꾸기
     N(-1, 0),
     S(1, 0),
     W(0, -1),

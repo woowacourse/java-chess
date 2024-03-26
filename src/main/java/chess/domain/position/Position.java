@@ -11,6 +11,7 @@ import static chess.domain.position.ColumnPosition.MIN_NUMBER;
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
+    // TODO static import를 사용한 이유?
     private static final Map<String, Position> POOL = IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
             .mapToObj(RowPosition::new)
             .flatMap(rowPosition -> IntStream.rangeClosed(MIN_NUMBER, MAX_NUMBER)
@@ -86,6 +87,7 @@ public class Position {
         return columnPosition.isRight(target.columnPosition);
     }
 
+    // TODO 움직이는 행위가 구현되어 있음
     private Position findPositionDirectionTo(Direction direction) {
         int nextRowStep = direction.getRowWeight();
         int nextColumnStep = direction.getColumnWeight();

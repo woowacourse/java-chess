@@ -51,6 +51,7 @@ public class ChessBoard {
                 && isMovablePosition(start, destination);
     }
 
+    // TODO canMove 내부에서 처리하기
     private boolean isMovablePosition(Position start, Position destination) {
         return positionIsEmpty(destination) || piecesIsOtherTeam(start, destination);
     }

@@ -17,6 +17,7 @@ public class ChessBoardCreator {
         this.blackPiecesSetting = new HashMap<>(blackPiecesSetting);
     }
 
+    // TODO 개행 / 오타(Ment 등 신경쓰기)
     public static ChessBoardCreator normalGameCreator() {
         return new ChessBoardCreator(NormalPieceSetting.whitePiecesArrangeMent()
                 , NormalPieceSetting.blackPiecesArrangeMent());
