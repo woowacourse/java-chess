@@ -52,12 +52,16 @@ public class ChessController {
             playRound(requestDto, chessGame);
         }
 
-        // TODO: "status" 명령을 받을 때 출력하도록 변경
-        printGameResult(chessGame);
-    }
+        outputView.printGameEndMessage();
+        if (requestDto.command().isEnd()) {
+            return;
+        }
 
-    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
-        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
+        outputView.printStatusInputMessage();
+        requestDto = readUserInput(inputView::inputGameCommand);
+        if (requestDto.command().isStatus()) {
+            printGameResult(chessGame);
+        }
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
@@ -65,11 +69,16 @@ public class ChessController {
         outputView.printBoard(boardDto);
     }
 
+    private boolean shouldProceedGame(RequestDto requestDto, ChessGame chessGame) {
+        return requestDto.command().isContinuable() && !chessGame.isGameEnd();
+    }
+
     private void playRound(RequestDto requestDto, ChessGame chessGame) {
+        if (!requestDto.command().isContinuable()) {
+            return;
+        }
         try {
-            Position source = requestDto.source();
-            Position destination = requestDto.destination();
-            chessGame.move(source, destination);
+            chessGame.move(requestDto.source(), requestDto.destination());
             printBoardStatus(chessGame.getPositionsOfPieces());
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.printErrorMessage(e.getMessage());

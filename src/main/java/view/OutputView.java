@@ -98,10 +98,18 @@ public class OutputView {
     }
 
     public void printRestartMessage() {
-        System.out.println("게임이 종료되었습니다. 다시 시작하려면 start 를 입력하세요.");
+        System.out.println("다시 시작하려면 start 를 입력하세요.");
     }
 
     public void printErrorMessage(String message) {
         System.out.println("[오류] " + message);
+    }
+
+    public void printStatusInputMessage() {
+        System.out.println("결과를 확인하려면 status 를 입력하세요.");
+    }
+
+    public void printGameEndMessage() {
+        System.out.println("게임이 종료되었습니다.");
     }
 }

@@ -12,10 +12,12 @@ import java.util.Scanner;
 public class InputView {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final String END_COMMAND = "end";
     private static final Map<String, GameCommand> gameCommands = Map.of(
             START_COMMAND, GameCommand.START,
             MOVE_COMMAND, GameCommand.MOVE,
+            STATUS_COMMAND, GameCommand.STATUS,
             END_COMMAND, GameCommand.END
     );
 
