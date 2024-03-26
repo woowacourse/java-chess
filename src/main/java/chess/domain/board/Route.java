@@ -11,12 +11,6 @@ public class Route {
         this.steps = createSteps(directions, squareStates);
     }
 
-    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
-        if (directions.size() != squareStates.size()) {
-            throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
-        }
-    }
-
     private List<Step> createSteps(List<Direction> directions, List<SquareState> squareStates) {
         List<Step> steps = new ArrayList<>();
         for (int i = 0; i < directions.size(); i++) {
@@ -24,15 +18,6 @@ public class Route {
         }
         validatePathDistance(steps);
         return steps;
-    }
-
-    private void validatePathDistance(List<Step> steps) {
-        if (steps.size() > 7) {
-            throw new IllegalArgumentException("경로의 길이는 7칸을 넘을 수 없습니다.");
-        }
-        if (steps.isEmpty()) {
-            throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
-        }
     }
 
     public boolean isSizeOf(int size) {
@@ -97,5 +82,20 @@ public class Route {
 
     private int findTargetIndex() {
         return steps.size() - 1;
+    }
+
+    private static void validateStepSize(List<Direction> directions, List<SquareState> squareStates) {
+        if (directions.size() != squareStates.size()) {
+            throw new IllegalArgumentException("방향의 개수와 상태의 개수가 다릅니다.");
+        }
+    }
+
+    private void validatePathDistance(List<Step> steps) {
+        if (steps.size() > 7) {
+            throw new IllegalArgumentException("경로의 길이는 7칸을 넘을 수 없습니다.");
+        }
+        if (steps.isEmpty()) {
+            throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
+        }
     }
 }

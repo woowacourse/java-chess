@@ -13,45 +13,50 @@ public class GameController {
 
     public void run() {
         outputView.printGameStart();
-        play();
+        proceed();
+    }
+
+    private void proceed() {
+        try {
+            play();
+        } catch (RuntimeException exception) {
+            outputView.printException(exception);
+            proceed();
+        }
     }
 
     private void play() {
-        try {
-            playTurn();
-        } catch (RuntimeException exception) {
-            outputView.printException(exception);
-            play();
+        String command = inputView.readCommand();
+        while (!"end".equalsIgnoreCase(command)) {
+            playTurn(command);
+            command = inputView.readCommand();
         }
     }
 
-    //TODO 뎁스 줄이기
-    private void playTurn() {
-        while (true) {
-            String command = inputView.readCommand();
-            if ("end".equalsIgnoreCase(command)) {
-                return;
-            }
-            if ("start".equalsIgnoreCase(command)) {
-                createBoard();
-                continue;
-            }
-            move(command);
+    private void playTurn(String command) {
+        if ("start".equalsIgnoreCase(command)) {
+            createBoard();
+            return;
         }
+        move(command);
+    }
+
+    private void createBoard() {
+        board = new Board();
+        outputView.printBoard(board.getBoard());
     }
 
     private void move(String command) {
-        if (board == null) {
-            throw new IllegalStateException("아직 게임이 시작되지 않았습니다.");
-        }
+        checkBoard();
         String[] commands = command.split(" ");
         MoveCommand moveCommand = new MoveCommand(commands[1], commands[2]);
         board.tryMove(moveCommand);
         outputView.printBoard(board.getBoard());
     }
 
-    private void createBoard() {
-        board = new Board();
-        outputView.printBoard(board.getBoard());
+    private void checkBoard() {
+        if (board == null) {
+            throw new IllegalStateException("아직 게임이 시작되지 않았습니다.");
+        }
     }
 }

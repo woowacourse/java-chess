@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.view.MoveCommand;
 import chess.domain.location.Column;
 import chess.domain.location.Location;
 import chess.domain.location.Row;
@@ -13,6 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
+import chess.view.MoveCommand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,35 +38,31 @@ public class Board {
         return initialBoard;
     }
 
+    private static void validatePiece(Piece piece) {
+        if (piece == null) {
+            throw new IllegalArgumentException("말이 존재하지 않습니다.");
+        }
+    }
+
     private void initialPawnSetting(Map<Location, Piece> board) {
         for (Column value : Column.values()) {
             board.put(new Location(value, Row.TWO), new WhitePawn());
-        }
-
-        for (Column value : Column.values()) {
             board.put(new Location(value, Row.SEVEN), new BlackPawn());
         }
     }
 
     private void initialRookSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.A, Row.ONE), new Rook(Color.WHITE));
-        board.put(new Location(Column.A, Row.EIGHT), new Rook(Color.BLACK));
         board.put(new Location(Column.H, Row.ONE), new Rook(Color.WHITE));
+        board.put(new Location(Column.A, Row.EIGHT), new Rook(Color.BLACK));
         board.put(new Location(Column.H, Row.EIGHT), new Rook(Color.BLACK));
     }
 
     private void initialKnightSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.B, Row.ONE), new Knight(Color.WHITE));
-        board.put(new Location(Column.B, Row.EIGHT), new Knight(Color.BLACK));
         board.put(new Location(Column.G, Row.ONE), new Knight(Color.WHITE));
+        board.put(new Location(Column.B, Row.EIGHT), new Knight(Color.BLACK));
         board.put(new Location(Column.G, Row.EIGHT), new Knight(Color.BLACK));
-    }
-
-    private void initialBishopSetting(Map<Location, Piece> board) {
-        board.put(new Location(Column.C, Row.ONE), new Bishop(Color.WHITE));
-        board.put(new Location(Column.C, Row.EIGHT), new Bishop(Color.BLACK));
-        board.put(new Location(Column.F, Row.ONE), new Bishop(Color.WHITE));
-        board.put(new Location(Column.F, Row.EIGHT), new Bishop(Color.BLACK));
     }
 
     private void initialQueenSetting(Map<Location, Piece> board) {
@@ -77,10 +73,6 @@ public class Board {
     private void initialKingSetting(Map<Location, Piece> board) {
         board.put(new Location(Column.E, Row.ONE), new King(Color.WHITE));
         board.put(new Location(Column.E, Row.EIGHT), new King(Color.BLACK));
-    }
-
-    public Map<Location, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
     }
 
     public void tryMove(MoveCommand moveCommand) {
@@ -126,11 +118,20 @@ public class Board {
         return SquareState.ENEMY;
     }
 
+    private void initialBishopSetting(Map<Location, Piece> board) {
+        board.put(new Location(Column.C, Row.ONE), new Bishop(Color.WHITE));
+        board.put(new Location(Column.F, Row.ONE), new Bishop(Color.WHITE));
+        board.put(new Location(Column.C, Row.EIGHT), new Bishop(Color.BLACK));
+        board.put(new Location(Column.F, Row.EIGHT), new Bishop(Color.BLACK));
+    }
+
     private Piece findPieceAt(Location source) {
         Piece piece = board.get(source);
-        if (piece == null) {
-            throw new IllegalArgumentException("말이 존재하지 않습니다.");
-        }
+        validatePiece(piece);
         return piece;
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
     }
 }

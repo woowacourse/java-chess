@@ -13,13 +13,19 @@ public class DirectionFinder {
     public static List<Direction> createDirections(Location source, Location target) {
         int verticalDistance = source.calculateVerticalDistance(target);
         int horizontalDistance = source.calculateHorizontalDistance(target);
-        List<Direction> directions = new ArrayList<>();
         validateDistance(verticalDistance, horizontalDistance);
-        while (verticalDistance != 0 || horizontalDistance != 0) {
-            Direction direction = Direction.of(verticalDistance, horizontalDistance);
+        return createDirectionsByDistance(verticalDistance, horizontalDistance);
+    }
+
+    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
+        List<Direction> directions = new ArrayList<>();
+        int verticalDistanceCheck = verticalDistance;
+        int horizontalDistanceCheck = horizontalDistance;
+        while (verticalDistanceCheck != NEUTRAL_DISTANCE || horizontalDistanceCheck != NEUTRAL_DISTANCE) {
+            Direction direction = Direction.of(verticalDistanceCheck, horizontalDistanceCheck);
             directions.add(direction);
-            verticalDistance -= calculateVerticalDistance(direction);
-            horizontalDistance -= calculateHorizontalDistance(direction);
+            verticalDistanceCheck -= calculateVerticalDistance(direction);
+            horizontalDistanceCheck -= calculateHorizontalDistance(direction);
         }
         return directions;
     }
@@ -45,7 +51,7 @@ public class DirectionFinder {
     }
 
     private static void validateDistance(int verticalDistance, int horizontalDistance) {
-        if (verticalDistance == 0 && horizontalDistance == 0) {
+        if (verticalDistance == NEUTRAL_DISTANCE && horizontalDistance == NEUTRAL_DISTANCE) {
             throw new IllegalArgumentException("제자리 경로를 생성할 수 없습니다.");
         }
     }

@@ -44,17 +44,17 @@ public enum Row {
 
     private Row previous() {
         int ordinalIndex = this.rank - 1;
-        try {
-            return ROWS.get(ordinalIndex - 1);
-        } catch (IndexOutOfBoundsException exception) {
-            throw new IllegalArgumentException("잘못된 방향 입력입니다.");
-        }
+        return moveByIndex(ordinalIndex - 1);
     }
 
     private Row next() {
         int ordinalIndex = this.rank - 1;
+        return moveByIndex(ordinalIndex + 1);
+    }
+
+    private Row moveByIndex(int ordinalIndex) {
         try {
-            return ROWS.get(ordinalIndex + 1);
+            return ROWS.get(ordinalIndex);
         } catch (IndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("잘못된 방향 입력입니다.");
         }
