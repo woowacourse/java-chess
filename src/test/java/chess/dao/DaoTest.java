@@ -9,10 +9,8 @@ import java.sql.Statement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-public class DaoTest {
-    private static final String fileName = "docker/db/mysql/init/init_for_test.sql";
-
-    private ChessGameDao chessGameDao;
+public interface DaoTest {
+    String fileName = "docker/db/mysql/init/init_for_test.sql";
 
     /*
      * 초기 체스판 상태
@@ -26,23 +24,25 @@ public class DaoTest {
      * rnbqkbnr
      */
     @BeforeEach
-    void setUp() {
-        chessGameDao = new ChessGameDao();
+    default void setUp() {
+        ChessGameDao chessGameDao = new ChessGameDao();
         try {
             executeInitScript();
         } catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
         System.setProperty("TEST_ENV", "true");
     }
 
     @AfterEach
-    void tearDown() {
+    default void tearDown() {
         System.setProperty("TEST_ENV", "false");
     }
 
 
     private void executeInitScript() throws IOException, SQLException {
+        ChessGameDao chessGameDao = new ChessGameDao();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName));
              Connection connection = chessGameDao.getConnection();
              Statement statement = connection.createStatement()) {

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class ProgressTest extends DaoTest {
+class ProgressTest implements DaoTest {
     @DisplayName("Progress는 command로 \"start\"를 받으면 예외가 발생한다.")
     @Test
     void playWithCommandStart() {

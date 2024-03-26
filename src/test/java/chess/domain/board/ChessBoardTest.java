@@ -17,7 +17,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ChessBoardTest extends DaoTest {
+class ChessBoardTest implements DaoTest {
     @DisplayName("체스보드가 생성되면 저장된 데이터를 가져온다.")
     @Test
     void initialBoard() {
