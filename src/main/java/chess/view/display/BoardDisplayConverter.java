@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BoardDisplayConverter {
 
@@ -20,12 +21,14 @@ public class BoardDisplayConverter {
     }
 
     private RankDisplay convertNotationRankOf(Rank rank, Map<Position, Piece> pieces) {
-        List<PieceDisplay> pieceDisplays = new ArrayList<>();
-        Arrays.stream(File.values())
+        List<PieceDisplay> pieceDisplays = Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
-                .map(position -> pieces.getOrDefault(position, null))
+                .filter(pieces::containsKey)
+                .map(pieces::get)
                 .map(PieceDisplay::getNotationByPiece)
-                .forEach(pieceDisplays::add);
+                .collect(Collectors.toList());
+
         return new RankDisplay(pieceDisplays);
+
     }
 }
