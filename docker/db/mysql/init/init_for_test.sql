@@ -1,5 +1,16 @@
 USE chess;
 
+DROP TABLE IF EXISTS game_information_for_test;
+
+CREATE TABLE IF NOT EXISTS game_information_for_test
+(
+    info_id            int        NOT NULL AUTO_INCREMENT,
+    current_turn_color VARCHAR(5) NOT NULL,
+    PRIMARY KEY (info_Id)
+);
+
+INSERT INTO game_information_for_test (current_turn_color) VALUE ('WHITE');
+
 DROP TABLE IF EXISTS chessboard_for_test;
 
 CREATE TABLE IF NOT EXISTS chessboard_for_test

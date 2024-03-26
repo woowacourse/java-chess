@@ -1,5 +1,12 @@
 USE chess;
 
+CREATE TABLE IF NOT EXISTS game_information
+(
+    info_id            int        NOT NULL AUTO_INCREMENT,
+    current_turn_color VARCHAR(5) NOT NULL,
+    PRIMARY KEY (info_Id)
+);
+
 CREATE TABLE IF NOT EXISTS chessboard
 (
     id     int         NOT NULL AUTO_INCREMENT,
