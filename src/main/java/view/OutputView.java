@@ -37,7 +37,7 @@ public class OutputView {
         List<String> boardStatus = convertBoardStatus(boardDto.piecePositions());
         StringBuilder sb = new StringBuilder();
 
-        sb.append(pad(FILE_DESCRIPTION, FILE_DESCRIPTION_PAD_SIZE)).append(NEW_LINE);
+        sb.append(NEW_LINE).append(pad(FILE_DESCRIPTION, FILE_DESCRIPTION_PAD_SIZE)).append(NEW_LINE);
         sb.append(pad(FILE_DESCRIPTION_SEPARATOR, FILE_DESCRIPTION_PAD_SIZE)).append(NEW_LINE);
         for (int rank = boardStatus.size(); rank > 0; rank--) {
             sb.append(rank).append(PAD_CHAR).append(RANK_DESCRIPTION_SEPARATOR)
@@ -78,6 +78,10 @@ public class OutputView {
         return PAD_CHAR.repeat(padSize) + origin + PAD_CHAR.repeat(padSize);
     }
 
+    public void printCurrentTurn(TeamColor teamColor) {
+        System.out.printf("(%s) 차례 >> ", getTeamName(teamColor));
+    }
+
     public void printWinner(TeamColor winner) {
         System.out.printf("우승자는 %s 입니다.%n", getTeamName(winner));
     }
@@ -91,5 +95,13 @@ public class OutputView {
             throw new IllegalArgumentException("팀 정보가 존재하지 않습니다.");
         }
         return TEAM_NAME.get(teamColor);
+    }
+
+    public void printRestartMessage() {
+        System.out.println("게임이 종료되었습니다. 다시 시작하려면 start 를 입력하세요.");
+    }
+
+    public void printErrorMessage(String message) {
+        System.out.println("[오류] " + message);
     }
 }

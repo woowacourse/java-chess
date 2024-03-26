@@ -24,8 +24,10 @@ public class ChessController {
     public void run() {
         outputView.printWelcomeMessage();
         GameCommand command = readUserInput(inputView::inputGameStart);
-        if (command.isStart()) {
+        while (command.isStart()) {
             startGame(command);
+            outputView.printRestartMessage();
+            command = readUserInput(inputView::inputGameStart);
         }
     }
 
@@ -34,7 +36,7 @@ public class ChessController {
             try {
                 return inputSupplier.get();
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                outputView.printErrorMessage(e.getMessage());
             }
         }
     }
@@ -45,7 +47,7 @@ public class ChessController {
 
         RequestDto requestDto = RequestDto.of(command);  // TODO: 모두 호환되도록 GameRequest 같은 것으로 변경
         while (requestDto.command().isContinuable() && !chessGame.isGameEnd()) {
-            System.out.print(chessGame.currentPlayingTeam() + " >> ");
+            outputView.printCurrentTurn(chessGame.currentPlayingTeam());
             requestDto = readUserInput(inputView::inputGameCommand);
             playRound(requestDto, chessGame);
         }
@@ -66,7 +68,7 @@ public class ChessController {
             chessGame.move(source, destination);
             printBoardStatus(chessGame.getPositionsOfPieces());
         } catch (IllegalArgumentException | IllegalStateException e) {
-            System.out.println("[오류] " + e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
     }
 
@@ -75,9 +77,8 @@ public class ChessController {
         double whiteScore = chessGame.currentScoreOf(TeamColor.WHITE);
         double blackScore = chessGame.currentScoreOf(TeamColor.BLACK);
 
-        // TODO: View 에게 출력 맡기기
-        System.out.println(winner);
-        System.out.println(whiteScore);
-        System.out.println(blackScore);
+        outputView.printWinner(winner);
+        outputView.printScore(TeamColor.WHITE, whiteScore);
+        outputView.printScore(TeamColor.BLACK, blackScore);
     }
 }
