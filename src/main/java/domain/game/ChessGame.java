@@ -8,7 +8,7 @@ public class ChessGame {
     private GameState gameState;
 
     public ChessGame() {
-        chessBoard = new ChessBoard();
+        chessBoard = ChessBoardGenerator.generate();
         gameState = GameState.NOT_STARTED;
     }
 

@@ -2,19 +2,16 @@ package domain.game;
 
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.PieceGenerator;
 import domain.position.Position;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
     private Color turn;
     private final Map<Position, Piece> piecePosition;
 
-    public ChessBoard() {
+    public ChessBoard(final Map<Position, Piece> piecePosition) {
         this.turn = Color.WHITE;
-        this.piecePosition = new HashMap<>();
-        PieceGenerator.generate(piecePosition);
+        this.piecePosition = piecePosition;
     }
 
     public void add(Position position, Piece piece) {

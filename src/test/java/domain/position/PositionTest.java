@@ -20,7 +20,7 @@ class PositionTest {
         Position source = new Position(new File('b'), new Rank(1));
         Position target = new Position(new File('c'), new Rank(2));
 
-        Assertions.assertThat(source.generateVector(target)).isEqualTo(new Vector(-1, -1));
+        Assertions.assertThat(source.generateVectorToTargetPosition(target)).isEqualTo(new Vector(-1, -1));
     }
 
 }

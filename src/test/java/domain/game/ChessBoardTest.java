@@ -21,7 +21,7 @@ class ChessBoardTest {
         Position sourcePosition = PositionFixture.generateB2Position();
         Position targetPosition = PositionFixture.generateB3Position();
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         chessBoard.move(sourcePosition, targetPosition);
 
@@ -35,7 +35,7 @@ class ChessBoardTest {
         Position sourcePosition = PositionFixture.generateB1Position();
         Position targetPosition = PositionFixture.generateC2Position();
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
 
         Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -50,7 +50,7 @@ class ChessBoardTest {
         Piece sourcePiece = new Piece(King.from(), Color.BLACK);
         Piece targetPiece = new Piece(Queen.from(), Color.BLACK);
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
 
@@ -65,7 +65,7 @@ class ChessBoardTest {
         Position targetPosition = PositionFixture.generateB1Position();
 
         Piece sourcePiece = new Piece(King.from(), Color.BLACK);
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
 
         Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
@@ -81,7 +81,7 @@ class ChessBoardTest {
         Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
 
@@ -98,7 +98,7 @@ class ChessBoardTest {
         Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
         Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
 
@@ -120,7 +120,7 @@ class ChessBoardTest {
         Piece targetPiece = new Piece(Rook.from(), Color.WHITE);
         Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
         chessBoard.add(blockPosition, blockPiece);
@@ -140,7 +140,7 @@ class ChessBoardTest {
         Piece targetPiece = new Piece(Knight.from(), Color.WHITE);
         Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
 
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.add(sourcePosition, sourcePiece);
         chessBoard.add(targetPosition, targetPiece);
         chessBoard.add(blockPosition, blockPiece);
