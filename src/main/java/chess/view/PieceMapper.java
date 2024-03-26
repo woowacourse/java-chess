@@ -11,6 +11,7 @@ public enum PieceMapper {
     BISHOP('b'),
     KNIGHT('n'),
     PAWN('p'),
+    EMPTY('.'),
     ;
 
     private final char name;

@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.square.Square;
 
 import java.util.Collections;
@@ -25,12 +26,11 @@ public class Board {
     public void move(final Square source, final Square target, final PieceColor turn) {
         validateIsSameSquare(source, target);
         validateIsNonExistentPiece(source);
-
-        final Piece sourcePiece = findPieceBySquare(source);
-        validateIsNotTurn(sourcePiece, turn);
-        validateCannotMove(source, target, sourcePiece);
+        validateIsNotTurn(source, turn);
+        validateCannotMove(source, target);
         validateNotExistObstacleOnPath(source, target);
-        replacePieceSquare(source, target, sourcePiece);
+
+        replacePieceSquare(source, target);
     }
 
     private void validateIsSameSquare(final Square source, final Square target) {
@@ -49,16 +49,31 @@ public class Board {
         return pieces.get(square);
     }
 
-    private void validateIsNotTurn(final Piece source, final PieceColor turn) {
-        if (!source.isSameColor(turn)) {
+    private void validateIsNotTurn(final Square source, final PieceColor turn) {
+        final Piece sourcePiece = findPieceBySquare(source);
+        if (!sourcePiece.isSameColor(turn)) {
             throw new IllegalArgumentException(ERROR_IS_NOT_TURN);
         }
     }
 
-    private void validateCannotMove(final Square source, final Square target, final Piece sourcePiece) {
+    private void validateCannotMove(final Square source, final Square target) {
+        final Piece sourcePiece = findPieceBySquare(source);
+        if (findPieceBySquare(source).isPawn()) {
+            if (!canPawnAttack(source, target)) {
+                throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
+            }
+        }
+
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
+    }
+
+    private boolean canPawnAttack(final Square source, final Square target) {
+        if (source.isDiagonal(target) && findPieceBySquare(target).isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     private void validateNotExistObstacleOnPath(final Square source, final Square target) {
@@ -69,14 +84,15 @@ public class Board {
     }
 
     private void checkIsNotEmpty(final Square square) {
-        if (pieces.containsKey(square)) {
+        if (!findPieceBySquare(square).isEmpty()) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
     }
 
-    private void replacePieceSquare(final Square source, final Square target, final Piece sourcePiece) {
-        pieces.remove(source);
-        pieces.put(target, sourcePiece);
+    private void replacePieceSquare(final Square source, final Square target) {
+        final Piece sourcePiece = findPieceBySquare(source);
+        pieces.replace(source, new Piece(PieceType.EMPTY, PieceColor.NONE));
+        pieces.replace(target, sourcePiece);
     }
 
     public Map<Square, Piece> getPieces() {

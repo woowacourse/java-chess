@@ -12,15 +12,23 @@ public class Piece {
         this.color = color;
     }
 
-    public boolean isSameColor(final PieceColor other) {
-        return color == other;
-    }
-
     public boolean canMove(final Square source, final Square target) {
         if (type == PieceType.PAWN) {
             return type.canMove(source, target) && source.isNotBackward(target, color);
         }
         return type.canMove(source, target);
+    }
+
+    public boolean isSameColor(final PieceColor other) {
+        return color == other;
+    }
+
+    public boolean isEmpty() {
+        return type == PieceType.EMPTY;
+    }
+
+    public boolean isPawn() {
+        return type == PieceType.PAWN;
     }
 
     public PieceType getType() {

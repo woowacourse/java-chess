@@ -251,10 +251,11 @@ class SquareTest {
         }
 
         @DisplayName("공격할 수 없는 경우 False를 리턴한다.")
-        @Test
-        void returnFalseWhenCannotAttack() {
+        @ParameterizedTest
+        @CsvSource({"e, FIVE", "d, SIX"})
+        void returnFalseWhenCannotAttack(final File file, final Rank rank) {
             final Square source = new Square(File.e, Rank.THREE);
-            final Square target = null; // TODO: null x
+            final Square target = new Square(file, rank);
 
             final boolean actual = source.isAttack(target);
 

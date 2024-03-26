@@ -4,6 +4,7 @@ public enum PieceColor {
 
     BLACK,
     WHITE,
+    NONE,
     ;
 
     public PieceColor next() {

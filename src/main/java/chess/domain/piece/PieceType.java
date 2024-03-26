@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.DiagonalStrategy;
+import chess.domain.piece.strategy.EmptyStrategy;
 import chess.domain.piece.strategy.IntersectionStrategy;
 import chess.domain.piece.strategy.KnightStrategy;
 import chess.domain.piece.strategy.MoveStrategy;
@@ -23,6 +24,7 @@ public enum PieceType {
     BISHOP(new DiagonalStrategy()),
     KNIGHT(new KnightStrategy()),
     PAWN(new UnionStrategy(List.of(new OnlyForwardStrategy(), new PawnAttackStrategy()))),
+    EMPTY(new EmptyStrategy()),
     ;
 
     private final MoveStrategy moveStrategy;
