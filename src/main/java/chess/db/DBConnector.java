@@ -12,7 +12,7 @@ public class DBConnector {
 
     private final String database;
 
-    public DBConnector(String database) {
+    DBConnector(String database) {
         this.database = database;
     }
 
