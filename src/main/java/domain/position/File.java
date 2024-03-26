@@ -28,15 +28,11 @@ public enum File {
     }
 
     public boolean isRight(File target) {
-        return forwardDistance(target) < 0;
+        return order - target.order < 0;
     }
 
     public boolean isLeft(File target) {
-        return forwardDistance(target) > 0;
-    }
-
-    private int forwardDistance(File target) {
-        return order - target.order;
+        return order - target.order > 0;
     }
 
     public List<File> betweenFiles(File target) {

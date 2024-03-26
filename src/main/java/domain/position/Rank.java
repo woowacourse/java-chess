@@ -34,15 +34,11 @@ public enum Rank {
     }
 
     public boolean isUp(Rank target) {
-        return forwardDistance(target) < 0;
+        return order - target.order < 0;
     }
 
     public boolean isDown(Rank target) {
-        return forwardDistance(target) > 0;
-    }
-
-    private int forwardDistance(Rank target) {
-        return order - target.order;
+        return order - target.order > 0;
     }
 
     public List<Rank> betweenRanks(Rank target) {
