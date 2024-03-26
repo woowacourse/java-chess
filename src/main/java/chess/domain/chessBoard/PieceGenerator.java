@@ -13,6 +13,8 @@ import java.util.List;
 
 public class PieceGenerator {
 
+    public static final int PAWN_COUNT_PER_PLAYER = 8;
+
     public List<Piece> makeSpecialPieces(Color color) {
         return List.of(
                 new Rook(color),
@@ -28,7 +30,7 @@ public class PieceGenerator {
 
     public  List<Piece> makePawnPieces(Color color) {
         List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < PAWN_COUNT_PER_PLAYER; i++) {
             pieces.add(new Pawn(color));
         }
         return pieces;
