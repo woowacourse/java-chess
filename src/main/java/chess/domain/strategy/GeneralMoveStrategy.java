@@ -8,7 +8,7 @@ import chess.domain.position.Positions;
 import java.util.Map;
 import java.util.Set;
 
-public class GeneralMoveStrategy extends MoveStrategy {
+public final class GeneralMoveStrategy extends MoveStrategy {
 
     public GeneralMoveStrategy(Map<Position, Piece> board) {
         super(board);
@@ -33,7 +33,7 @@ public class GeneralMoveStrategy extends MoveStrategy {
         }
     }
 
-    public void updateBoard(Positions positions, Piece currentPiece) {
+    private void updateBoard(Positions positions, Piece currentPiece) {
         board.replace(positions.to(), currentPiece);
         board.replace(positions.from(), new Blank());
     }

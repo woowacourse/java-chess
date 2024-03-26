@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import java.util.Map;
 
-public class BlankMoveStrategy extends MoveStrategy {
+public final class BlankMoveStrategy extends MoveStrategy {
 
     public BlankMoveStrategy(Map<Position, Piece> board) {
         super(board);

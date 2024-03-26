@@ -19,24 +19,24 @@ public abstract class MoveStrategy {
 
     public abstract void move(Color turnColor, Positions positions);
 
-    public MoveStrategy changeStrategy(Position from) {
+    public final MoveStrategy changeStrategy(Position from) {
         Piece selectedPiece = board.get(from);
         return selectedPiece.strategy(board);
     }
 
-    public void checkTurnOf(Piece currentPiece, Color turnColor) {
+    protected final void checkTurnOf(Piece currentPiece, Color turnColor) {
         if (!currentPiece.isSameColor(turnColor)) {
             throw new IllegalArgumentException("상대 말은 이동할 수 없습니다.");
         }
     }
 
-    protected boolean isNotAllBlankPath(Set<Position> path) {
+    protected final boolean isNotAllBlankPath(Set<Position> path) {
         return !path.stream()
                 .map(board::get)
                 .allMatch(Piece::isBlank);
     }
 
-    public Map<Position, PieceType> collectBoard() {
+    public final Map<Position, PieceType> collectBoard() {
         return board.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,

@@ -9,7 +9,7 @@ import chess.domain.position.Positions;
 import java.util.Map;
 import java.util.Set;
 
-public class PawnMoveStrategy extends MoveStrategy {
+public final class PawnMoveStrategy extends MoveStrategy {
 
     public PawnMoveStrategy(Map<Position, Piece> board) {
         super(board);
@@ -41,7 +41,7 @@ public class PawnMoveStrategy extends MoveStrategy {
         }
     }
 
-    public void updateBoard(Positions positions, Pawn currentPiece) {
+    private void updateBoard(Positions positions, Pawn currentPiece) {
         board.replace(positions.to(), currentPiece.update());
         board.replace(positions.from(), new Blank());
     }
