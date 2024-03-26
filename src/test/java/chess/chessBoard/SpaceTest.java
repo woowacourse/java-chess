@@ -3,9 +3,6 @@ package chess.chessBoard;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.OriginalChessSpaceGenerator;
-import chess.domain.chessBoard.PieceGenerator;
 import chess.domain.chessBoard.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;

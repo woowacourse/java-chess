@@ -34,4 +34,14 @@ public class PawnTest {
 
         assertThat(piece.canMove(from, to2)).isFalse();
     }
+
+    @Test
+    @DisplayName("대각선 한칸 위치를 잡을 수 있다.")
+    void should_move_two_space_when_second_move() {
+        Piece piece = new Pawn(Color.WHITE);
+        Position from = new Position(File.a, Rank.ONE);
+        Position to = new Position(File.b, Rank.TWO);
+
+        assertThat(piece.canCatch(from, to)).isTrue();
+    }
 }
