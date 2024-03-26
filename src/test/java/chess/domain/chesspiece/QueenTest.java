@@ -16,8 +16,8 @@ class QueenTest {
     @DisplayName("여왕은 앞뒤로 움직일 수 있다.")
     void Queen_Move_forward_and_backward() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a1"), Position.from("a4"));
-        List<Position> positions = List.of(Position.from("a2"), Position.from("a3"));
+        List<Position> route = piece.getRoute(Position.from("a", "1"), Position.from("a", "4"));
+        List<Position> positions = List.of(Position.from("a", "2"), Position.from("a", "3"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -25,8 +25,8 @@ class QueenTest {
     @DisplayName("여왕은 좌우로 움직일 수 있다.")
     void Queen_Move_side() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getRoute(Position.from("b4"), Position.from("e4"));
-        List<Position> positions = List.of(Position.from("c4"), Position.from("d4"));
+        List<Position> route = piece.getRoute(Position.from("b", "4"), Position.from("e", "4"));
+        List<Position> positions = List.of(Position.from("c", "4"), Position.from("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -34,8 +34,8 @@ class QueenTest {
     @DisplayName("여왕은 대각선으로 움직일 수 있다.")
     void Queen_Move_diagonal() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getRoute(Position.from("b2"), Position.from("e5"));
-        List<Position> positions = List.of(Position.from("c3"), Position.from("d4"));
+        List<Position> route = piece.getRoute(Position.from("b", "2"), Position.from("e", "5"));
+        List<Position> positions = List.of(Position.from("c", "3"), Position.from("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -44,7 +44,7 @@ class QueenTest {
     void Bishop_Validate_route() {
         Piece piece = new Queen(WHITE);
         assertThatThrownBy(() -> {
-            piece.getRoute(Position.from("a1"), Position.from("b4"));
+            piece.getRoute(Position.from("a", "1"), Position.from("b", "4'"));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

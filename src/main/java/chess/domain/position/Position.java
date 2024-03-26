@@ -11,11 +11,8 @@ public class Position {
         this.rank = rank;
     }
 
-    public static Position from(String position) {
-        File file = File.from(position.substring(0, 1));
-        Rank rank = Rank.from(position.substring(1));
-
-        return new Position(file, rank);
+    public static Position from(String file, String rank) {
+        return new Position(File.from(file), Rank.from(rank));
     }
 
     public Position move(int fileDirection, int rankDirection) {

@@ -12,8 +12,8 @@ import static chess.domain.chesspiece.Role.*;
 import static chess.domain.chesspiece.Team.WHITE;
 
 public class Pawn extends Piece {
-    private static Rank WHITE_PAWN_START_COLUMN = Rank.from("2");
-    private static Rank BLACK_PAWN_START_COLUMN = Rank.from("7");
+    private static Rank WHITE_PAWN_START_COLUMN = Rank.TWO;
+    private static Rank BLACK_PAWN_START_COLUMN = Rank.SEVEN;
 
     public Pawn(Team team) {
         super(team);

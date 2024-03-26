@@ -18,16 +18,21 @@ class BishopTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들을 반환한다.")
     void Bishop_Check_route() {
         Piece piece = new Bishop(WHITE);
-        List<Position> route = piece.getRoute(Position.from("a1"), Position.from("e5"));
-        List<Position> positions = List.of(Position.from("b2"), Position.from("c3"),
-                Position.from("d4"));
+        List<Position> route = piece.getRoute(Position.from("a", "1"), Position.from("e", "5"));
+        List<Position> positions = List.of(Position.from("b", "2"), Position.from("c", "3"),
+                Position.from("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"a1, a3", "b1, a1", "b2, h7"})
+    @CsvSource(value = {"a, 1, a, 3", "b, 1, a, 1", "b, 2, h, 7"})
     @DisplayName("목적지 제외 갈 수 있는 위치들이 아니면 예외를 발생한다.")
-    void Bishop_Validate_route(Position source, Position target) {
+    void Bishop_Validate_route(String file1,
+                               String rank1,
+                               String file2,
+                               String rank2) {
+        Position source = Position.from(file1, rank1);
+        Position target = Position.from(file2, rank2);
         Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> {
             piece.getRoute(source, target);

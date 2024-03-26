@@ -11,10 +11,16 @@ public class InputView {
         return scanner.next();
     }
 
-    public static List<String> readPositions() {
-        return Arrays.stream(scanner.nextLine()
+    public static List<String> readPosition() {
+        List<String> position = Arrays.stream(scanner.next()
                         .trim()
-                        .split(" "))
+                        .split(""))
                 .toList();
+
+        if(position.size() != 2) {
+            throw new IllegalArgumentException("좌표는 2글자여야 합니다.");
+        }
+
+        return position;
     }
 }
