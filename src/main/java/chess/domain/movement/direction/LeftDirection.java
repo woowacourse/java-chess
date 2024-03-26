@@ -1,6 +1,6 @@
 package chess.domain.movement.direction;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 
 public class LeftDirection extends StraightDirection {
 

@@ -1,11 +1,10 @@
-package chess.domain;
+package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.awt.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -83,22 +82,22 @@ class PositionTest {
 
     @Test
     @DisplayName("현재 위치에서 더할 값이 위치 범위 내에 있으면 참을 반환한다.")
-    void Given_Position_When_IsNextPositionInRangeWithAddedPoint_Then_True() {
+    void Given_Position_When_IsNextPositionInRangeWithAddedVector_Then_True() {
         //given
         Position position = new Position(3, 3);
         //when, then
-        assertThat(position.isNextPositionInRange(new Point(1, 1))).isTrue();
+        assertThat(position.isNextPositionInRange(Vector.DOWN_DOWN_LEFT)).isTrue();
     }
 
     @Test
     @DisplayName("현재 위치에서 더할 값이 위치 범위 밖에 있으면 거짓을 반환한다.")
-    void Given_Position_When_IsNextPositionInRangeWithAddedPoint_Then_False() {
+    void Given_Position_When_IsNextPositionInRangeWithAddedVector_Then_False() {
         //given
-        Position position = new Position(3, 3);
+        Position position = new Position(8, 2);
         //when, then
         assertAll(
-                () -> assertThat(position.isNextPositionInRange(new Point(8, 8))).isFalse(),
-                () -> assertThat(position.isNextPositionInRange(new Point(-8, -8))).isFalse()
+                () -> assertThat(position.isNextPositionInRange(Vector.RIGHT_RIGHT_UP)).isFalse(),
+                () -> assertThat(position.isNextPositionInRange(Vector.DOWN_DOWN_RIGHT)).isFalse()
         );
     }
 }

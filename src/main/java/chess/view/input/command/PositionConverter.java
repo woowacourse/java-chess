@@ -1,6 +1,6 @@
 package chess.view.input.command;
 
-import chess.domain.Position;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class PositionConverter {

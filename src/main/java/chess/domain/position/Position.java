@@ -1,6 +1,4 @@
-package chess.domain;
-
-import java.awt.Point;
+package chess.domain.position;
 
 public record Position(int file, int rank) {
 
@@ -34,9 +32,9 @@ public record Position(int file, int rank) {
         return rank == MAX_POSITION_RANGE;
     }
 
-    public boolean isNextPositionInRange(final Point point) {
-        int nextFile = point.x + file;
-        int nextRank = point.y + rank;
+    public boolean isNextPositionInRange(final Vector vector) {
+        int nextFile = vector.getFileVector() + file;
+        int nextRank = vector.getRankVector() + rank;
         return isNextMoveInRange(nextFile) && isNextMoveInRange(nextRank);
     }
 

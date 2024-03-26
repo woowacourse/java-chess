@@ -1,19 +1,11 @@
 package chess.domain.movement.direction;
 
-import chess.domain.Position;
-import java.awt.Point;
+import chess.domain.position.Position;
+import chess.domain.position.Vector;
+import java.util.Arrays;
 import java.util.List;
 
 public class KnightDirection implements Direction {
-
-    private final List<Point> points = List.of(new Point(1, 2),
-            new Point(1, -2),
-            new Point(-1, 2),
-            new Point(-1, -2),
-            new Point(2, 1),
-            new Point(2, -1),
-            new Point(-2, 1),
-            new Point(-2, -1));
 
     @Override
     public boolean canReach(final Position source, final Position target, final List<Position> pieces) {
@@ -24,9 +16,10 @@ public class KnightDirection implements Direction {
     }
 
     private List<Position> getPossiblePosition(final Position position) {
-        return points.stream()
+        return Arrays.stream(Vector.values())
                 .filter(position::isNextPositionInRange)
-                .map(point -> new Position(point.x + position.file(), point.y + position.rank()))
+                .map(vector -> new Position(vector.getFileVector() + position.file(),
+                        vector.getRankVector() + position.rank()))
                 .toList();
     }
 }
