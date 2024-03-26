@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 

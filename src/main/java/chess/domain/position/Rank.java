@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,7 @@ public class Rank {
         CACHE.put(value, new Rank(value));
         return CACHE.get(value);
     }
+
     public int subtract(Rank otherRank) {
         return this.value - otherRank.value;
     }

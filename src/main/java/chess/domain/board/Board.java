@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.NoPiece;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {

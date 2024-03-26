@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.slidingpiece.Rook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ class PieceTest {
         Rook rook = new Rook(WHITE);
         assertThat(rook.isWhite()).isTrue();
     }
+
     @Test
     @DisplayName("반대 색을 불러올 수 있다.")
     void hasOppositeColorFrom() {

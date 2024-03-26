@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import java.util.Map;
 import java.util.Objects;
 

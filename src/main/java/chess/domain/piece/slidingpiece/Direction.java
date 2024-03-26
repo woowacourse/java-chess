@@ -1,5 +1,6 @@
-package chess.domain.board;
+package chess.domain.piece.slidingpiece;
 
+import chess.domain.position.Position;
 import java.util.Arrays;
 
 public enum Direction {

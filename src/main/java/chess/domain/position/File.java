@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Position;
+import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

@@ -2,8 +2,8 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.controller.MovePositionDto;
-import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;

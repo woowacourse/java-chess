@@ -1,6 +1,7 @@
-package chess.domain.board;
+package chess.domain.position;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.slidingpiece.Direction;
 import java.util.Objects;
 
 public class Position {
