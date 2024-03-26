@@ -50,13 +50,15 @@ public class Board {
 
     private static void settingExceptPawn(final Map<Position, Piece> board, final Camp camp, final Rank rank) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), startingPosition.get(file).apply(camp));
+            final Piece piece = startingPosition.get(file).apply(camp);
+            board.put(new Position(file, rank), piece);
         }
     }
 
     private static void settingPawn(final Map<Position, Piece> board, final Camp camp, final Rank rank) {
         for (File file : File.values()) {
-            board.put(new Position(file, rank), Pawn.create(camp));
+            final Piece piece = Pawn.create(camp);
+            board.put(new Position(file, rank), piece);
         }
     }
 

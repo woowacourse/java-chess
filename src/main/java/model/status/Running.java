@@ -24,8 +24,10 @@ public class Running implements GameStatus {
     }
 
     private Moving convert(final List<String> command) {
-        return new Moving(Position.from(command.get(CommandLine.CURRENT_POSITION_INDEX)),
-                Position.from(command.get(CommandLine.NEXT_POSITION_INDEX)));
+        final String currentPosition = command.get(CommandLine.CURRENT_POSITION_INDEX);
+        final String nextPosition = command.get(CommandLine.NEXT_POSITION_INDEX);
+
+        return new Moving(Position.from(currentPosition), Position.from(nextPosition));
     }
 
     @Override
