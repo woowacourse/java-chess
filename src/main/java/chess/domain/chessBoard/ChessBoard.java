@@ -23,25 +23,21 @@ public class ChessBoard {
 
     private void validateClearRoute(List<Position> routes) {
         for (Position route : routes) {
-            for (Space space : spaces) {
-                validateRouteHasPiece(route, space);
-            }
+            validateRouteHasPiece(route);
         }
     }
 
-    private void validateRouteHasPiece(Position route, Space space) {
-        if (space.isSamePosition(route) && space.hasPiece()) {
+    private void validateRouteHasPiece(Position route) {
+        if (findSpace(route).hasPiece()) {
             throw new IllegalArgumentException("루트에 피스가 있습니다.");
         }
     }
 
     private Space findSpace(Position position) {
-        for (Space space : spaces) {
-            if (space.isSamePosition(position)) {
-                return space;
-            }
-        }
-        throw new IllegalArgumentException("해당하는 Space가 없습니다");
+        return spaces.stream()
+                .filter(space -> space.isSamePosition(position))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 Space가 없습니다"));
     }
 
     public List<Space> getSpaces() {
