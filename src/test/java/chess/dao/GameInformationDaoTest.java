@@ -45,11 +45,11 @@ class GameInformationDaoTest implements DaoTest {
     void updateTurn() {
         // given
         int gameId = 1;
-        Color convertedColor = Color.BLACK;
+        GameInformation gameInformation = new GameInformation(gameId, Color.BLACK);
 
         // when
-        gameInformationDao.updateTurn(gameId, convertedColor);
-        GameInformation gameInformation = gameInformationDao.findByGameId(gameId);
+        gameInformationDao.updateTurn(gameInformation);
+        GameInformation updatedInformation = gameInformationDao.findByGameId(gameId);
 
         // then
         assertThat(gameInformation.getCurentTurnColor()).isEqualTo(Color.BLACK);

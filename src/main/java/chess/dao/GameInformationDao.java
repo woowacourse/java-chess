@@ -68,12 +68,12 @@ public class GameInformationDao {
         return null;
     }
 
-    public void updateTurn(int gameId, Color color) {
+    public void updateTurn(GameInformation gameInformation) {
         try (final Connection connection = getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
                     "UPDATE " + getTableName() + " SET current_turn_color = ? WHERE game_id = ?");
-            statement.setString(1, color.name());
-            statement.setInt(2, gameId);
+            statement.setString(1, gameInformation.getCurentTurnColor().name());
+            statement.setInt(2, gameInformation.getGameId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
