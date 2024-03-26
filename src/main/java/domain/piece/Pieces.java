@@ -16,22 +16,24 @@ public class Pieces {
         this.value = new HashSet<>(pieces);
     }
 
-    public Optional<Piece> findPieceWithPoint(final Point point) {
-        return value.stream()
-                    .filter(piece -> piece.isEqualPoint(point))
-                    .findAny();
-    }
 
     public boolean canMove(final Piece piece, final Point endPoint) {
         return piece.findLegalMovePoints(this).contains(endPoint);
     }
 
-    public void move(final Piece piece, final Point point) {
-        final var optionalPiece = findPieceWithPoint(point);
-        optionalPiece.ifPresent(value::remove);
-        piece.move(point);
+    public void replace(final Piece piece, final Point endPoint) {
+        Optional<Piece> pieceWithPoint = findPieceWithPoint(endPoint);
+        pieceWithPoint.ifPresent(value::remove);
+        value.remove(piece);
+        Piece moved = piece.move(endPoint, this);
+        value.add(moved);
     }
 
+    public Optional<Piece> findPieceWithPoint(final Point point) {
+        return value.stream()
+                .filter(piece -> piece.isEqualPoint(point))
+                .findAny();
+    }
 
     public boolean isFriend(Piece piece, Point point) {
         final var optionalPiece = findPieceWithPoint(point);
@@ -46,9 +48,6 @@ public class Pieces {
     public boolean hasNothing(Point endPoint) {
         return this.findPieceWithPoint(endPoint)
                 .isEmpty();
-    }
-    public int size() {
-        return value.size();
     }
 
     public Map<Point, Piece> toMap() {

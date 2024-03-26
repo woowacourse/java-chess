@@ -26,7 +26,7 @@ public class Queen extends SlidingPiece {
 
     @Override
     protected Piece update(Point point) {
-        return null;
+        return new Queen(point, color);
     }
 
     public boolean canMove(final Point point) {

@@ -26,7 +26,7 @@ public class Bishop extends SlidingPiece {
 
     @Override
     protected Piece update(Point point) {
-        return null;
+        return new Bishop(point, color);
     }
 
     @Override

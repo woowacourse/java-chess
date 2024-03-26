@@ -26,7 +26,7 @@ public class ChessBoard {
         final var piece = findPieceByPoint(startPoint);
 
         if (pieces.canMove(piece, endPoint)) {
-            pieces.move(piece, endPoint);
+            pieces.replace(piece, endPoint);
             return;
         }
         throw new IllegalArgumentException(

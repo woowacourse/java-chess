@@ -19,24 +19,27 @@ public abstract class Piece implements Movable {
 
     public abstract PieceStatus getStatus();
 
-    public Piece move(final Point destination, final Set<Piece> pieces) {
-        if (point.equals(destination)) {
-            throw new IllegalArgumentException("동일한 위치로 이동할 수 없습니다.");
-        }
-        final var movablePoints = findLegalMovePoints(new Pieces(pieces));
-        if (!movablePoints.contains(destination)) {
-            throw new IllegalArgumentException("말을 움직일 수 없습니다.");
-        }
+    public Piece move(final Point destination, final Pieces pieces) {
+        validateDifferentPoint(destination);
+        final var movablePoints = findLegalMovePoints(pieces);
+        validateMovablePoint(!movablePoints.contains(destination), "말을 움직일 수 없습니다.");
         return update(destination);
+    }
+
+    private void validateMovablePoint(boolean movablePoints, String s) {
+        if (movablePoints) {
+            throw new IllegalArgumentException(s);
+        }
+    }
+
+    private void validateDifferentPoint(Point destination) {
+        validateMovablePoint(point.equals(destination), "동일한 위치로 이동할 수 없습니다.");
     }
 
     protected abstract Set<Point> findLegalMovePoints(Pieces pieces);
 
     protected abstract Piece update(Point point);
 
-    public void move(final Point point) {
-        this.point = point;
-    }
 
     public boolean isEqualPoint(final Point point) {
         return this.point.equals(point);
@@ -50,23 +53,10 @@ public abstract class Piece implements Movable {
         return this.color != piece.color;
     }
 
-    public boolean isBlack() {
-        return this.color == Color.BLACK;
-    }
-
     public boolean isWhite() {
         return this.color == Color.WHITE;
     }
 
-    public boolean isDirectionStraight(final Point point) {
-        return this.point.calculate(point)
-                         .isVerticalStraight();
-    }
-
-    public boolean isDirectionDiagonal(final Point point) {
-        return this.point.calculate(point)
-                         .isDiagonal();
-    }
 
     public Point getPoint() {
         return this.point;

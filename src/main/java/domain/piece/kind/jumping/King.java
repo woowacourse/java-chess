@@ -33,7 +33,7 @@ public class King extends JumpingPiece{
 
     @Override
     protected Piece update(Point point) {
-        return null;
+        return new King(point, color);
     }
 
     public boolean canMove(final Point point) {

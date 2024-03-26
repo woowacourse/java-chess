@@ -31,7 +31,7 @@ public class Rook extends SlidingPiece {
 
     @Override
     protected Piece update(Point point) {
-        return null;
+        return new Rook(point, color);
     }
 
     public boolean canMove(final Point point) {

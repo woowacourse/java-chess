@@ -131,7 +131,7 @@ class PiecesTest {
                 new Queen(new Point(File.B, Rank.TWO), Color.WHITE)));
 
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
+                             .orElseThrow();
 
         final var result = sut.canMove(piece, new Point(File.B, Rank.TWO));
         assertThat(result).isTrue();
@@ -145,28 +145,13 @@ class PiecesTest {
                 new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
                 new Queen(new Point(File.C, Rank.TWO), Color.BLACK)));
 
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
+        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE)).orElseThrow();
 
-        sut.move(piece, new Point(File.B, Rank.THREE));
+        sut.replace(piece, new Point(File.B, Rank.THREE));
 
         final var findPiece = sut.findPieceWithPoint(new Point(File.B, Rank.THREE))
-                                 .get();
-        assertThat(piece).isEqualTo(findPiece);
+                                 .orElseThrow();
+        assertThat(findPiece).isEqualTo(new Knight(new Point(File.B, Rank.THREE), Color.BLACK));
     }
 
-    @Test
-    @DisplayName("기물이 이동할 때 해당 좌표에 적 기물이 있으면 제거한다.")
-    void move_piece_with_remove_if_exist_enemy_piece() {
-        final var sut = new Pieces(List.of(
-                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Queen(new Point(File.C, Rank.TWO), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
-
-        sut.move(piece, new Point(File.C, Rank.TWO));
-
-        assertThat(sut.size()).isEqualTo(1);
-    }
 }

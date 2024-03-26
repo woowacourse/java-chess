@@ -32,6 +32,6 @@ public class Knight extends JumpingPiece {
 
     @Override
     protected Piece update(Point point) {
-        return null;
+        return new Knight(point, color);
     }
 }
