@@ -31,10 +31,7 @@ public abstract class AbstractPawn extends UnslidingPiece {
         super(color, position);
     }
 
-    protected Set<Position> movablePositions(
-            final Chessboard chessboard,
-            final Set<Movement> movements
-    ) {
+    protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Movement> movements) {
         return Stream.concat(
                 possiblePositions(movements, chessboard::isEmpty).stream(),
                 attackablePositions(chessboard).stream()
