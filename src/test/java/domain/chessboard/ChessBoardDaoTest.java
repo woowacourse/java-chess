@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChessBoardDaoTest {
     final Connection connection = ChessConnectionGenerator.getTestConnection();
     final ChessBoardDao chessBoardDao = new ChessBoardDao(connection);
+    final int gameId = 41;
 
     @BeforeEach
     void before() {
@@ -51,14 +52,15 @@ class ChessBoardDaoTest {
     @Test
     void find() {
         // given
+
         final Square square = new Square(File.A, Rank.TWO);
         final Piece piece = new Pawn(Team.BLACK);
 
         // when
-        chessBoardDao.addSquarePiece(square, piece);
+        chessBoardDao.addSquarePiece(square, piece, gameId);
 
         // then
-        final Piece findPiece = chessBoardDao.findBySquare(square).get();
+        final Piece findPiece = chessBoardDao.findBySquare(square, gameId).get();
         assertThat(findPiece).isEqualTo(piece);
     }
 
@@ -66,17 +68,18 @@ class ChessBoardDaoTest {
     @Test
     void update() {
         // given
+
         final Square square = new Square(File.A, Rank.TWO);
         final Piece piece = new Pawn(Team.BLACK);
-        chessBoardDao.addSquarePiece(square, piece);
+        chessBoardDao.addSquarePiece(square, piece, gameId);
 
         final Piece newPiece = new Queen(Team.WHITE);
 
         // when
-        chessBoardDao.update(square, piece);
+        chessBoardDao.update(square, piece, gameId);
 
         // then
-        final Piece findPiece = chessBoardDao.findBySquare(square).get();
+        final Piece findPiece = chessBoardDao.findBySquare(square, gameId).get();
         assertThat(findPiece).isEqualTo(piece);
     }
 
@@ -84,15 +87,16 @@ class ChessBoardDaoTest {
     @Test
     void delete() {
         // given
+
         final Square square = new Square(File.A, Rank.TWO);
         final Piece piece = new Pawn(Team.BLACK);
-        chessBoardDao.addSquarePiece(square, piece);
+        chessBoardDao.addSquarePiece(square, piece, gameId);
 
         // when
-        chessBoardDao.deleteBySquare(square);
+        chessBoardDao.deleteBySquare(square, gameId);
 
         // then
-        final Optional<Piece> findPiece = chessBoardDao.findBySquare(square);
+        final Optional<Piece> findPiece = chessBoardDao.findBySquare(square, gameId);
         assertThat(findPiece).isEmpty();
     }
 
@@ -100,12 +104,13 @@ class ChessBoardDaoTest {
     @Test
     void findAll() {
         // given
+
         final ChessBoard chessBoard = ChessBoard.create();
         final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
-        chessBoardDao.addAll(pieceSquares);
+        chessBoardDao.addAll(pieceSquares, gameId);
 
         // when
-        final Map<Square, Piece> results = chessBoardDao.findAll();
+        final Map<Square, Piece> results = chessBoardDao.findAll(gameId);
 
         // then
         Assertions.assertThat(results.entrySet()).isEqualTo(pieceSquares.entrySet());

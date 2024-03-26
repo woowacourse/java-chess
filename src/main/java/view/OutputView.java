@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printStartHeader() {
+    public void printGameOption(final int gameId) {
         System.out.printf("""
-                > 체스 게임을 시작합니다.
-                > 게임 시작 : start
-                > 게임 종료 : end
-                > 게임 이동 : move source위치 target위치 - 예. move b2 b3%n""");
+                > %d번 게임을 시작합니다.
+                > 게임 점수 보기 : status
+                > 게임 이동 : move source위치 target위치 - 예. move b2 b3
+                > 프로그램 종료 : quit%n""", gameId);
     }
 
     public void printChessBoard(final Map<Square, Piece> squarePieces) {
@@ -50,12 +50,8 @@ public class OutputView {
     }
 
     public void printStatus(final ChessGameResult chessGameResult) {
-        System.out.printf("블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
+        System.out.printf("%n블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
                 chessGameResult.getBlackScore(), chessGameResult.getWhiteScore(),
                 WinStatusFormat.formatOf(chessGameResult.getWinStatus()));
-    }
-
-    public void printContinue() {
-        System.out.println("게임을 이어서 하겠습니다.");
     }
 }

@@ -131,13 +131,11 @@ public class ChessBoard {
                 .anyMatch(pieceSquares::containsKey);
     }
 
-    public boolean isAnyKingDead() {
-        return pieceSquares.values().stream()
-                .filter(piece -> piece.pieceType() == PieceType.KING)
-                .count() != TOTAL_KING_COUNT;
-    }
-
     public Map<Square, Piece> getPieceSquares() {
         return Collections.unmodifiableMap(pieceSquares);
+    }
+
+    public Team currentTeam() {
+        return currentTeam;
     }
 }

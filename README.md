@@ -6,6 +6,8 @@
 
 - [x] Square, Piece 저장
 - [x] Square, Piece 로딩
+- [ ] 현재 Team 저장
+- [ ] 현재 Team 로딩
 - 선택 요구 사항
 - [ ] 체스 게임방 생성
 - [ ] 게임방 입장

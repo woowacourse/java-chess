@@ -18,28 +18,32 @@ public class ChessBoardDao {
         this.connection = connection;
     }
 
-    public void addSquarePiece(final Square square, final Piece piece) {
-        final var query = "INSERT INTO board VALUES(null, ?, ?, ?, ?)";
+    public void addSquarePiece(final Square square, final Piece piece, final int gameId) {
+        final var query = "INSERT INTO board (file, `rank`, piece_type, team, game_id) VALUES (?, ?, ?, ?, ?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
+
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
             preparedStatement.setString(3, piece.pieceType().name());
             preparedStatement.setString(4, piece.team().name());
+            preparedStatement.setInt(5, gameId);
+
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void addAll(final Map<Square, Piece> pieceSquares) {
-        pieceSquares.forEach((this::addSquarePiece));
+    public void addAll(final Map<Square, Piece> pieceSquares, final int gameId) {
+        pieceSquares.forEach((square, piece) -> addSquarePiece(square, piece, gameId));
     }
 
-    public Optional<Piece> findBySquare(final Square square) {
-        final var query = "SELECT * FROM board WHERE file = (?) AND `rank` = (?)";
+    public Optional<Piece> findBySquare(final Square square, final int gameId) {
+        final var query = "SELECT * FROM board WHERE file = (?) AND `rank` = (?) AND game_id = (?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
+            preparedStatement.setInt(3, gameId);
 
             final var resultSet = preparedStatement.executeQuery();
 
@@ -56,15 +60,16 @@ public class ChessBoardDao {
         return Optional.empty();
     }
 
-    public void update(final Square square, final Piece piece) {
+    public void update(final Square square, final Piece piece, final int gameId) {
         final var query = "UPDATE board SET piece_type = (?), team = (?) " +
-                "where file = (?) AND `rank` = (?)";
+                "where file = (?) AND `rank` = (?) AND game_id = (?)";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, piece.pieceType().name());
             preparedStatement.setString(2, piece.team().name());
             preparedStatement.setString(3, square.file().name());
             preparedStatement.setString(4, square.rank().name());
+            preparedStatement.setInt(5, gameId);
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
@@ -72,11 +77,12 @@ public class ChessBoardDao {
         }
     }
 
-    public void deleteBySquare(final Square square) {
-        final var query = "DELETE FROM board where file = (?) AND `rank` = (?)";
+    public void deleteBySquare(final Square square, final int gameId) {
+        final var query = "DELETE FROM board where file = (?) AND `rank` = (?) AND game_id = (?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, square.file().name());
             preparedStatement.setString(2, square.rank().name());
+            preparedStatement.setInt(3, gameId);
 
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
@@ -84,9 +90,11 @@ public class ChessBoardDao {
         }
     }
 
-    public Map<Square, Piece> findAll() {
-        final var query = "SELECT * FROM board";
+    public Map<Square, Piece> findAll(final int gameId) {
+        final var query = "SELECT * FROM board WHERE game_id = (?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+
             final var resultSet = preparedStatement.executeQuery();
 
             final Map<Square, Piece> squarePieces = new HashMap<>();
@@ -108,12 +116,28 @@ public class ChessBoardDao {
         }
     }
 
-    public boolean isEmpty() {
-        final var query = "SELECT * FROM board";
+    public boolean isEmpty(final int gameId) {
+        final var query = "SELECT * FROM board WHERE game_id = (?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+
             final var resultSet = preparedStatement.executeQuery();
 
             return !resultSet.next();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int countKing(final int gameId) {
+        final var query = "SELECT count(id) AS 'king_count' FROM board WHERE game_id = (?) AND piece_type = 'KING'";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+
+            final var resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            return resultSet.getInt("king_count");
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
