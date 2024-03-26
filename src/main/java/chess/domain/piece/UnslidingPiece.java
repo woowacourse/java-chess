@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -17,7 +16,7 @@ public abstract class UnslidingPiece extends Piece {
         super(color, position);
     }
 
-    protected Set<Position> movablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+    protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Movement> movements) {
         Set<Position> positions = new HashSet<>();
         for (final Movement movement : movements) {
             movablePosition(chessboard, movement).ifPresent(positions::add);

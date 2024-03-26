@@ -47,7 +47,7 @@ public abstract class AbstractPawn extends UnslidingPiece {
     }
 
     @Override
-    protected Set<Position> movablePositions(final Chessboard chessboard, final Collection<Movement> movements) {
+    protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Movement> movements) {
         return possiblePositions(movements, chessboard::isEmpty);
     }
 
