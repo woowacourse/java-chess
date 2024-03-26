@@ -101,7 +101,6 @@ class ChessBoardTest {
     void isOverlappedPath() {
         Position sourcePosition = createA1();
         Position targetPosition = createA3();
-        Position blockPosition = createA2();
 
         ChessBoard chessBoard = new ChessBoard();
 
@@ -114,7 +113,6 @@ class ChessBoardTest {
     void knightCanJump() {
         Position sourcePosition = createB1();
         Position targetPosition = createC3();
-        Position blockPosition = createB2();
 
         ChessBoard chessBoard = new ChessBoard();
         assertThatCode(() -> chessBoard.checkRoute(sourcePosition, targetPosition, Color.WHITE))
