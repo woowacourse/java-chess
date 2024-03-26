@@ -85,9 +85,32 @@ public class BoardTest {
                 .hasMessage("해당 위치에 아군 기물이 존재합니다.");
     }
 
+    @DisplayName("팀의 포인트를 계산하여 반환한다.")
+    @Test
+    void calculatePoint() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 6), new Bishop(Team.WHITE),
+                Position.of(1, 4), new Knight(Team.WHITE)
+        ));
+
+        assertThat(board.calculatePoint(Team.WHITE)).isEqualTo(5.5);
+    }
+
+    @DisplayName("왕이 공격받고 있으면, 체크이다.")
+    @Test
+    void isChecked() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(1, 6), new Queen(Team.BLACK)
+        ));
+
+        assertThat(board.isChecked(Team.WHITE)).isTrue();
+    }
+
     @DisplayName("왕이 체크된 상태에서 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
     @Test
-    void checkmate() {
+    void isCheckmate() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
                 Position.of(2, 8), new WhitePawn(),
@@ -99,7 +122,7 @@ public class BoardTest {
 
     @DisplayName("더블 체크인 경우, 왕이 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
     @Test
-    void checkmateWhenDoubleCheck() {
+    void isCheckmateWhenDoubleCheck() {
         Board board = new Board(Map.of(
                 Position.of(1, 8), new King(Team.WHITE),
                 Position.of(1, 7), new WhitePawn(),

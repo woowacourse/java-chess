@@ -67,6 +67,10 @@ public class Board {
                 .anyMatch(pieces::containsKey);
     }
 
+    public double calculatePoint(Team team) {
+        return Character.sumPoint(findSameTeamPieces(team).map(entry -> entry.getValue().character()));
+    }
+
     public boolean isChecked(Team attackedTeam) {
         Position kingPosition = getKingPosition(attackedTeam);
         return isBeingAttacked(attackedTeam, kingPosition);
