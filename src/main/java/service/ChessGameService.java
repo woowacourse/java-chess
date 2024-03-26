@@ -42,6 +42,10 @@ public class ChessGameService {
         updateChessBoardDao(gameId, source, target);
 
         chessGameDao.updateCurrentTeam(gameId, chessBoard.currentTeam());
+
+        if (isKingDead(gameId)) {
+            endGame(gameId);
+        }
     }
 
     private ChessBoard createChessBoard(final int gameId) {

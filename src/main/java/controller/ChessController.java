@@ -87,7 +87,7 @@ public class ChessController {
                     continue;
                 }
                 if ("end".equals(command)) {
-                    runEnd(gameId);
+                    chessGameService.endGame(gameId);
                     continue;
                 }
                 if (MOVE_FORMAT.matcher(command).matches()) {
@@ -98,18 +98,13 @@ public class ChessController {
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
-
         }
+        runStatus(gameId);
     }
 
     private void runStatus(final int gameId) {
         final ChessGameResult chessGameResult = chessGameService.calculateResult(gameId);
         outputView.printStatus(chessGameResult);
-    }
-
-    private void runEnd(final int gameId) {
-        chessGameService.endGame(gameId);
-        runStatus(gameId);
     }
 
     private void runMove(final String command, final int gameId) {
@@ -120,10 +115,6 @@ public class ChessController {
 
         chessGameService.move(gameId, source, target);
         printBoard(gameId);
-
-        if (chessGameService.isKingDead(gameId)) {
-            runEnd(gameId);
-        }
     }
 
     private void printBoard(final int gameId) {
