@@ -18,7 +18,7 @@ public class King extends Piece {
     );
 
     public King(Color color) {
-        super(PieceType.KING, color, KING_DIRECTION);
+        super(color, KING_DIRECTION);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class Queen extends Piece {
     );
 
     public Queen(Color color) {
-        super(PieceType.QUEEN, color, QUEEN_DIRECTION);
+        super(color, QUEEN_DIRECTION);
     }
 
     @Override

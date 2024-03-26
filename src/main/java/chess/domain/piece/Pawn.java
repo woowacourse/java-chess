@@ -22,7 +22,7 @@ public abstract class Pawn extends Piece {
     );
 
     public Pawn(Color color) {
-        super(PieceType.PAWN, color, getPawnDirectionByColor(color));
+        super(color, getPawnDirectionByColor(color));
     }
 
     private static List<Direction> getPawnDirectionByColor(Color color) {

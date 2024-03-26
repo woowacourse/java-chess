@@ -1,32 +1,38 @@
 package chess.view.display;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceAttributes;
-import chess.domain.piece.PieceType;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import java.util.Arrays;
 
 public enum PieceDisplay {
 
-    BLACK_KING(PieceType.KING, Color.BLACK, "K"),
-    BLACK_QUEEN(PieceType.QUEEN, Color.BLACK, "Q"),
-    BLACK_ROOK(PieceType.ROOK, Color.BLACK, "R"),
-    BLACK_KNIGHT(PieceType.KNIGHT, Color.BLACK, "N"),
-    BLACK_BISHOP(PieceType.BISHOP, Color.BLACK, "B"),
-    BLACK_PAWN(PieceType.PAWN, Color.BLACK, "P"),
-    WHITE_KING(PieceType.KING, Color.WHITE, "k"),
-    WHITE_QUEEN(PieceType.QUEEN, Color.WHITE, "q"),
-    WHITE_ROOK(PieceType.ROOK, Color.WHITE, "r"),
-    WHITE_KNIGHT(PieceType.KNIGHT, Color.WHITE, "n"),
-    WHITE_BISHOP(PieceType.BISHOP, Color.WHITE, "b"),
-    WHITE_PAWN(PieceType.PAWN, Color.WHITE, "p"),
+    BLACK_KING(King.class, Color.BLACK, "K"),
+    BLACK_QUEEN(Queen.class, Color.BLACK, "Q"),
+    BLACK_ROOK(Rook.class, Color.BLACK, "R"),
+    BLACK_BISHOP(Bishop.class, Color.BLACK, "B"),
+    BLACK_KNIGHT(Knight.class, Color.BLACK, "N"),
+    BLACK_PAWN(Pawn.class, Color.BLACK, "P"),
+    WHITE_KING(King.class, Color.WHITE, "k"),
+    WHITE_QUEEN(Queen.class, Color.WHITE, "q"),
+    WHITE_ROOK(Rook.class, Color.WHITE, "r"),
+    WHITE_BISHOP(Bishop.class, Color.WHITE, "b"),
+    WHITE_KNIGHT(Knight.class, Color.WHITE, "n"),
+    WHITE_PAWN(Pawn.class, Color.WHITE, "p"),
     EMPTY(null, null, ".");
 
-    private final PieceAttributes pieceAttributes;
+    private final Class<? extends Piece> pieceType;
+    private final Color color;
     private final String notation;
 
-    PieceDisplay(PieceType pieceType, Color color, String notation) {
-        this.pieceAttributes = new PieceAttributes(pieceType, color);
+    PieceDisplay(Class<? extends Piece> pieceType, Color color, String notation) {
+        this.pieceType = pieceType;
+        this.color = color;
         this.notation = notation;
     }
 
@@ -45,6 +51,10 @@ public enum PieceDisplay {
         if (piece == null) {
             return false;
         }
-        return piece.hasAttributesOf(notation.pieceAttributes);
+        return piece.hasColorOf(notation.color) && isSamePieceType(notation.pieceType, piece);
+    }
+
+    private static boolean isSamePieceType(Class<? extends Piece> pieceType, Piece piece) {
+        return pieceType.isInstance(piece);
     }
 }
