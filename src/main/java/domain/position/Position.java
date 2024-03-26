@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class Position { // TODO: refactoring (너무 무거움)
+public class Position {
 
     private final File file;
     private final Rank rank;
@@ -41,23 +41,19 @@ public class Position { // TODO: refactoring (너무 무거움)
     }
 
     public boolean isRightUp(Position target) {
-        return rank.isUp(target.rank) && file.isRight(target.file)
-                && isSameDistance(target);
+        return rank.isUp(target.rank) && file.isRight(target.file) && isSameDistance(target);
     }
 
     public boolean isLeftUp(Position target) {
-        return rank.isUp(target.rank) && file.isLeft(target.file)
-                && isSameDistance(target);
+        return rank.isUp(target.rank) && file.isLeft(target.file) && isSameDistance(target);
     }
 
     public boolean isRightDown(Position target) {
-        return rank.isDown(target.rank) && file.isRight(target.file)
-                && isSameDistance(target);
+        return rank.isDown(target.rank) && file.isRight(target.file) && isSameDistance(target);
     }
 
     public boolean isLeftDown(Position target) {
-        return rank.isDown(target.rank) && file.isLeft(target.file)
-                && isSameDistance(target);
+        return rank.isDown(target.rank) && file.isLeft(target.file) && isSameDistance(target);
     }
 
     private boolean isSameDistance(Position target) {
