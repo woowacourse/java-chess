@@ -83,12 +83,9 @@ public class ChessBoard {
     }
 
     private void validatePawnCanMoveForward(Position sourcePosition, Position targetPosition, Direction direction) {
-        Position nextPosition = sourcePosition.moveTowardDirection(direction);
-        boolean canReachTarget = nextPosition.equals(targetPosition);
-        boolean canReachTargetFromInitialPosition
-                = pawnMovementRule.canReachTargetFromInitialPosition(sourcePosition, targetPosition, direction);
+        boolean canReachTargetWhenMoveForward = pawnMovementRule.canReachTargetWhenMoveForward(sourcePosition, targetPosition, direction);
 
-        if (!(canReachTarget || canReachTargetFromInitialPosition)) {
+        if (!(canReachTargetWhenMoveForward)) {
             throw new IllegalArgumentException("폰은 해당 위치에 도달할 수 없습니다.");
         }
     }

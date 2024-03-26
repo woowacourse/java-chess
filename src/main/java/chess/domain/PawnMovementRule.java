@@ -17,12 +17,17 @@ public class PawnMovementRule {
             Direction.LEFT_UP, Direction.LEFT_DOWN, Direction.RIGHT_UP, Direction.RIGHT_DOWN
     );
 
-    public boolean canReachTargetFromInitialPosition(Position sourcePosition, Position targetPosition, Direction direction) {
+    public boolean canReachTargetWhenMoveForward(Position sourcePosition, Position targetPosition, Direction direction) {
         Position nextPosition = sourcePosition.moveTowardDirection(direction);
         Position nextNextPosition = nextPosition.moveTowardDirection(direction);
+        boolean canReachTargetWhenMoveOnce = nextPosition.equals(targetPosition);
+        boolean isInitialPositionAndCanReachTargetWhenMoveTwice = isInitialPosition(sourcePosition) && nextNextPosition.equals(targetPosition);
 
-        return PAWN_INITIAL_POSITIONS.contains(sourcePosition) &&
-                (nextPosition.equals(targetPosition) || nextNextPosition.equals(targetPosition));
+        return (canReachTargetWhenMoveOnce || isInitialPositionAndCanReachTargetWhenMoveTwice);
+    }
+
+    private boolean isInitialPosition(Position position) {
+        return PAWN_INITIAL_POSITIONS.contains(position);
     }
 
     public boolean canMoveTowardDiagonal(Piece sourcePiece, Piece targetPiece, Direction direction) {

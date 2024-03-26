@@ -9,11 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnMovementRuleTest {
 
-    @DisplayName("폰이 시작 위치에서 출발해 목표 위치까지 도달할 수 있는지 반환한다.")
+    @DisplayName("폰이 직선으로 움직여서 목표 위치까지 도달할 수 있는지 반환한다.")
     @Nested
     class canReachTargetFromInitialPosition {
 
-        @DisplayName("폰의 시작 위치가 아니면 false를 반환한다.")
+        @DisplayName("시작 위치가 아니면서 한번 움직여서 도달할 수 있으면 true를 반환한다..")
         @Test
         void isNotPawnStartPosition() {
             PawnMovementRule pawnMovementRule = new PawnMovementRule();
@@ -21,9 +21,9 @@ class PawnMovementRuleTest {
             Position target = Position.of(File.A, Rank.FOUR);
             Direction direction = source.calculateDirection(target);
 
-            boolean result = pawnMovementRule.canReachTargetFromInitialPosition(source, target, direction);
+            boolean result = pawnMovementRule.canReachTargetWhenMoveForward(source, target, direction);
 
-            assertThat(result).isFalse();
+            assertThat(result).isTrue();
         }
 
         @DisplayName("시작 위치에서 한 번 이동해서 목표 위치에 도달하면 true를 반환한다.")
@@ -34,7 +34,7 @@ class PawnMovementRuleTest {
             Position target = Position.of(File.A, Rank.THREE);
             Direction direction = source.calculateDirection(target);
 
-            boolean result = pawnMovementRule.canReachTargetFromInitialPosition(source, target, direction);
+            boolean result = pawnMovementRule.canReachTargetWhenMoveForward(source, target, direction);
 
             assertThat(result).isTrue();
         }
@@ -47,7 +47,7 @@ class PawnMovementRuleTest {
             Position target = Position.of(File.A, Rank.FOUR);
             Direction direction = source.calculateDirection(target);
 
-            boolean result = pawnMovementRule.canReachTargetFromInitialPosition(source, target, direction);
+            boolean result = pawnMovementRule.canReachTargetWhenMoveForward(source, target, direction);
 
             assertThat(result).isTrue();
         }
@@ -60,7 +60,7 @@ class PawnMovementRuleTest {
             Position target = Position.of(File.A, Rank.FIVE);
             Direction direction = source.calculateDirection(target);
 
-            boolean result = pawnMovementRule.canReachTargetFromInitialPosition(source, target, direction);
+            boolean result = pawnMovementRule.canReachTargetWhenMoveForward(source, target, direction);
 
             assertThat(result).isFalse();
         }
