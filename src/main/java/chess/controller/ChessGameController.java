@@ -19,17 +19,21 @@ public class ChessGameController {
 
     public void start() {
         outputView.printInitialMessage();
-
         GameCommand gameCommand = inputView.getGameCommand();
+        checkStart(gameCommand);
+
+        play();
+    }
+
+    private void checkStart(final GameCommand gameCommand) {
         if (gameCommand != GameCommand.START) {
             throw new IllegalArgumentException("시작 명령어를 입력해주세요.");
         }
+    }
 
+    private void play() {
         Board board = initializeBoard();
-        while (gameCommand != GameCommand.END) {
-            gameCommand = inputView.getGameCommand();
-            board = run(board, gameCommand);
-        }
+        playRound(board, inputView.getGameCommand());
     }
 
     private Board initializeBoard() {
@@ -38,19 +42,19 @@ public class ChessGameController {
         return board;
     }
 
-    private Board run(Board board, GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            board = initializeBoard();
-        }
-
+    private void playRound(Board board, GameCommand gameCommand) {
         if (gameCommand == GameCommand.MOVE) {
             Position source = Position.of(inputView.getPosition());
             Position target = Position.of(inputView.getPosition());
 
             board.tryMove(source, target);
             outputView.printBoard(board);
+            gameCommand = inputView.getGameCommand();
+            playRound(board, gameCommand);
         }
 
-        return board;
+        if (gameCommand == GameCommand.START) {
+            play();
+        }
     }
 }
