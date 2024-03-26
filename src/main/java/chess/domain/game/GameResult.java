@@ -23,6 +23,22 @@ public class GameResult {
         this.pieces = pieces;
     }
 
+    private static double findDefaultPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() == 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
+                .sum();
+    }
+
+    private static double findHalfPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() > 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.HALF).getValue())
+                .sum();
+    }
+
     public Score calculateScore(final Color color) {
         double pieceScore = calculatePieceScore(color);
         double pawnScore = calculatePawnScore(color);
@@ -44,22 +60,6 @@ public class GameResult {
                         mapping(Entry::getValue, Collectors.toList())));
 
         return findDefaultPawnScore(fileToPawn) + findHalfPawnScore(fileToPawn);
-    }
-
-    private static double findDefaultPawnScore(Map<Integer, List<Piece>> fileToPawn) {
-        return fileToPawn.values().stream()
-                .filter(list -> list.size() == 1)
-                .flatMap(List::stream)
-                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
-                .sum();
-    }
-
-    private static double findHalfPawnScore(Map<Integer, List<Piece>> fileToPawn) {
-        return fileToPawn.values().stream()
-                .filter(list -> list.size() > 1)
-                .flatMap(List::stream)
-                .mapToDouble(piece -> piece.getScore(ScoreStatus.HALF).getValue())
-                .sum();
     }
 
     public boolean isGameOver() {

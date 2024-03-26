@@ -5,7 +5,6 @@ import chess.domain.pieces.King;
 import chess.domain.pieces.Queen;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
-import chess.domain.square.File;
 import chess.domain.square.Square;
 
 import java.util.Map;
