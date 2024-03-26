@@ -28,12 +28,12 @@ public class Chess {
 
     private void validateMovement(Position sourcePosition, Position targetPosition) {
         validate(sourcePosition.equals(targetPosition), "[ERROR] 제자리에 있을 수 없습니다.");
-        validate(board.isBlocked(sourcePosition, targetPosition), "[ERROR] 다른 기물에 막혀 이동하지 못했습니다.");
 
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
         validate(sourcePiece.isBlank(), "[ERROR] 출발지에 기물이 없어 이동하지 못했습니다.");
         validate(sourcePiece.isNotTurn(turn), "[ERROR] 차례가 아니므로 이동하지 못했습니다.");
+        validate(board.isBlocked(sourcePosition, targetPosition), "[ERROR] 다른 기물에 막혀 이동하지 못했습니다.");
         validate(targetPiece.isSameColor(sourcePiece), "[ERROR] 도착지에 같은 편 기물이 있어 이동하지 못했습니다.");
     }
 
