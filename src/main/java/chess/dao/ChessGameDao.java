@@ -108,6 +108,18 @@ public class ChessGameDao {
         }
     }
 
+    public void remove(Position target) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM " + getTableName() + " WHERE file = ? AND `rank` = ?");
+            statement.setString(1, target.getFileSymbol());
+            statement.setInt(2, target.getRankValue());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getTableName() {
         if (isTestEnvironment()) {
             return TEST_TABLE_NAME;

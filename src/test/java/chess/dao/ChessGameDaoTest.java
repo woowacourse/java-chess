@@ -97,6 +97,18 @@ class ChessGameDaoTest {
         );
     }
 
+    @DisplayName("piece가 제거되면 데이터베이스에서 해당 정보를 삭제한다.")
+    @Test
+    void remove() {
+        Position target = Position.of(File.A, Rank.ONE);
+
+        chessGameDao.remove(target);
+
+        Piece sourcePiece = chessGameDao.findPieceByPosition(target);
+
+        assertThat(sourcePiece).isNull();
+    }
+
     private void executeInitScript() throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader("docker/db/mysql/init/initfortest.sql"));
              Connection connection = chessGameDao.getConnection();
