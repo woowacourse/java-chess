@@ -102,3 +102,27 @@
 
 - 테스트 커버리지 확대
 - 클린코드화
+
+
+
+### 2차 리뷰 개선사안
+
+#### domain
+- 8방향 도메인 enum 변수명 변경 ex) N > UP
+- 널 오브젝트 패턴을 통한 양방향 의존관계 제거
+  - NullPiece : 빈 Piece를 나타내는 싱글톤 클래스 
+- 폰 추상클래스화
+  - Pawn : 폰의 행마 가능 공통 로직 구현
+  - BlackPawn / WhitePawn : 팀별 전진 정보 및 첫 스타트 라인 판단 로직 오버라이딩
+- chessBoard-canMove 메서드 시그니처 변경
+  - 기존 : canMove(Position start, Position destination ChessBoard board)
+  - 수정 : canMove(Position start, Position destination Piece destinationPiece)
+- 행마 판단 로직 책임의 명확한 분리
+  - Chessboard : 경로가 모두 비어있는지 / 경로를 특정하지 못하면 빈 리스트 반환
+  - Piece : 본인의 행마법에 맞는지
+  
+#### controller
+- 커맨드 인터페이스 구현
+  - 각 커맨드의 실행 로직을 다형성을 통해 실행로직 단순화
+  - 커맨드 확장성 강화
+
