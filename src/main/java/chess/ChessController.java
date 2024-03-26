@@ -9,12 +9,12 @@ import chess.view.OutputView;
 import chess.view.command.MoveCommand;
 import chess.view.command.StartCommand;
 
-class Controller {
+class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
 
-    public Controller(InputView inputView, OutputView outputView) {
+    public ChessController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }

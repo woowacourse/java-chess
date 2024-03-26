@@ -8,7 +8,7 @@ class Main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        Controller controller = new Controller(inputView, outputView);
+        ChessController controller = new ChessController(inputView, outputView);
 
         controller.run();
     }
