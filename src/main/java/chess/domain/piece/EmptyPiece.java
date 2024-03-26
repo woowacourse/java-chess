@@ -3,11 +3,11 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 
-public class Empty extends AbstractPiece {
+public class EmptyPiece extends AbstractPiece {
 
-    private static final Piece INSTANCE = new Empty();
+    private static final Piece INSTANCE = new EmptyPiece();
 
-    private Empty() {
+    private EmptyPiece() {
         super(PieceType.EMPTY, Team.EMPTY);
     }
 

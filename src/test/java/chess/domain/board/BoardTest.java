@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import chess.domain.piece.Bishop;
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -196,7 +196,7 @@ class BoardTest {
 
         Piece result = emptyBoard.findByCoordinate(new Coordinate(2, 'a'));
 
-        assertThat(result).isEqualTo(Empty.getInstance());
+        assertThat(result).isEqualTo(EmptyPiece.getInstance());
     }
 
     @DisplayName("해당 위치의 기물이 존재하는지 판단할 수 있다.")

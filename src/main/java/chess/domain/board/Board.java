@@ -3,7 +3,7 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import chess.domain.piece.Empty;
+import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
@@ -22,7 +22,7 @@ public class Board {
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {
-        return pieces.getOrDefault(coordinate, Empty.getInstance());
+        return pieces.getOrDefault(coordinate, EmptyPiece.getInstance());
     }
 
     public boolean isPiecePresent(Coordinate coordinate) {
