@@ -77,7 +77,11 @@ public class ChessGameService {
     }
 
     public List<Integer> findRunningGame() {
-        return chessGameDao.findRunningGames();
+        final List<Integer> games = chessGameDao.findRunningGames();
+        if (games.isEmpty()) {
+            throw new IllegalArgumentException("진행중인 게임이 없습니다.");
+        }
+        return games;
     }
 
     public boolean containRunningGame(final int gameId) {

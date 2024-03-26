@@ -21,20 +21,25 @@ public class InputView {
     }
 
     public String readGameCommand(final Team team) {
-        System.out.printf("%s팀 차례입니다.%n", team.name());
+        System.out.printf("%n%s팀 차례입니다.%n", team.name());
 
         return SCANNER.nextLine();
     }
 
     public int readContinueGame(final List<Integer> runningGame) {
-        System.out.printf("진행 중인 게임 목록 : %s%n", runningGame.stream()
+        System.out.printf("진행 중인 게임 목록 : %s%n게임 ID를 입력하세요.", runningGame.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(", ")));
 
+        return readGameId();
+    }
+
+    private static int readGameId() {
         try {
             return Integer.parseInt(SCANNER.nextLine());
         } catch (final NumberFormatException e) {
-            throw new IllegalArgumentException("잘못된 게임 ID 입니다");
+            System.out.println("숫자로 입력 바랍니다.");
+            return readGameId();
         }
     }
 }
