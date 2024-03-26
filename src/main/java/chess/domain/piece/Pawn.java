@@ -13,8 +13,8 @@ import chess.domain.piece.attribute.Position;
 
 public class Pawn extends AbstractPawn {
 
-    private static final Set<Movement> POSSIBLE_MOVEMENTS_WHITE = Set.of(Movement.of(UP));
-    private static final Set<Movement> POSSIBLE_MOVEMENTS_BLACK = Set.of(Movement.of(DOWN));
+    private static final Set<Movement> WHITE_POSSIBLE_MOVEMENTS = Set.of(Movement.of(UP));
+    private static final Set<Movement> BLACK_POSSIBLE_MOVEMENTS = Set.of(Movement.of(DOWN));
 
     public Pawn(final Color color, final Position position) {
         super(color, position);
@@ -25,7 +25,7 @@ public class Pawn extends AbstractPawn {
         Set<Position> positions = new HashSet<>();
         positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
         positions.addAll(movablePositions(chessboard,
-                possibleMovementsBy(color(), POSSIBLE_MOVEMENTS_WHITE, POSSIBLE_MOVEMENTS_BLACK)));
+                possibleMovementsBy(color(), WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS)));
         validateTarget(positions, target);
         return new Pawn(color(), target);
     }
