@@ -21,5 +21,6 @@ public abstract class JumpingPiece extends Piece {
                 .collect(Collectors.toSet());
     }
 
+
     protected abstract Set<Movement> getMovableDirection();
 }

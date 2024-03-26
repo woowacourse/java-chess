@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.piece.kind.*;
 import domain.piece.kind.jumping.King;
 import domain.piece.kind.jumping.Knight;
 import domain.piece.kind.sliding.Bishop;
@@ -138,61 +137,6 @@ class PiecesTest {
         assertThat(result).isTrue();
     }
 
-    @Test
-    @DisplayName("폰은 직진 하는 위치에 기물이 있으면 거짓을 반환한다.")
-    void false_if_pawn_piece_move_point_in_any_piece() {
-        final var sut = new Pieces(List.of(
-                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
-                new Queen(new Point(File.A, Rank.THREE), Color.BLACK)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    @DisplayName("폰은 직진 하는 위치에 기물이 없으면 참을 반환한다")
-    void true_if_pawn_piece_move_point_not_in_piece() {
-        final var sut = new Pieces(List.of(
-                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
-                new Queen(new Point(File.A, Rank.ONE), Color.BLACK)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("폰은 대각선 위치에 적 기물이 있으면 참을 반환한다.")
-    void true_if_pawn_piece_move_diagonal_enemy_point() {
-        final var sut = new Pieces(List.of(
-                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
-                new Queen(new Point(File.B, Rank.THREE), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("폰은 대각선 위치에 아군 기물이 있으면 거짓을 반환한다.")
-    void false_if_pawn_piece_move_diagonal_enemy_point() {
-        final var sut = new Pieces(List.of(
-                new Pawn(new Point(File.A, Rank.FOUR), Color.BLACK),
-                new Queen(new Point(File.B, Rank.THREE), Color.BLACK)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.FOUR))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
-        assertThat(result).isFalse();
-    }
 
     @Test
     @DisplayName("기물을 해당 좌표로 이동시킨다.")

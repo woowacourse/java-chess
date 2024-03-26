@@ -2,5 +2,13 @@ package domain.piece.attribute;
 
 public enum Color {
     BLACK,
-    WHITE
+    WHITE;
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
 }

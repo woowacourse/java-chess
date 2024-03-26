@@ -7,10 +7,10 @@ import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
-import domain.piece.kind.*;
 
 import domain.piece.kind.jumping.King;
 import domain.piece.kind.jumping.Knight;
+import domain.piece.kind.pawn.Pawn;
 import domain.piece.kind.sliding.Bishop;
 import domain.piece.kind.sliding.Queen;
 import domain.piece.kind.sliding.Rook;
@@ -35,7 +35,7 @@ public class ChessBoardGenerator {
 
     private static List<Piece> selectPawn(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
-                     .map(file -> new Pawn(new Point(file, rank), color))
+                     .map(file -> Pawn.from(new Point(file, rank), color))
                      .map(Piece.class::cast)
                      .toList();
     }
