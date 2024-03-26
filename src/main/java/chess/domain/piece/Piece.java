@@ -5,6 +5,7 @@ import chess.domain.movement.Movement;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Piece {
@@ -68,5 +69,10 @@ public abstract class Piece {
         }
         Piece piece = (Piece) o;
         return pieceType == piece.pieceType && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }
