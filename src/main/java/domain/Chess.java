@@ -1,12 +1,17 @@
 package domain;
 
 import domain.board.Board;
+import domain.board.BoardCreator;
 import domain.piece.Piece;
 import domain.position.Position;
 
 public class Chess {
 
-    private final Board board = new Board();
+    private final Board board;
+
+    public Chess() {
+        board = new BoardCreator().create();
+    }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);

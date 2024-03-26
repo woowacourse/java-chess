@@ -11,11 +11,10 @@ import java.util.Map;
 
 public class Board {
 
-    private final SquaresGenerator squaresGenerator = new SquaresGenerator();
     private final Map<Position, Piece> squares;
 
-    public Board() {
-        this.squares = squaresGenerator.generate();
+    public Board(Map<Position, Piece> squares) {
+        this.squares = squares;
     }
 
     public List<Piece> extractPieces() {
