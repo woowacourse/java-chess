@@ -80,6 +80,23 @@ class ChessGameDaoTest {
         );
     }
 
+    @DisplayName("piece가 이동하면 데이터베이스에서 해당 정보를 수정한다.")
+    @Test
+    void update() {
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.B, Rank.FIVE);
+
+        chessGameDao.update(source, target);
+
+        Piece targetPiece = chessGameDao.findPieceByPosition(target);
+        Piece sourcePiece = chessGameDao.findPieceByPosition(source);
+
+        assertAll(
+                () -> assertThat(targetPiece).isInstanceOf(Rook.class),
+                () -> assertThat(sourcePiece).isNull()
+        );
+    }
+
     private void executeInitScript() throws IOException, SQLException {
         try (BufferedReader reader = new BufferedReader(new FileReader("docker/db/mysql/init/initfortest.sql"));
              Connection connection = chessGameDao.getConnection();

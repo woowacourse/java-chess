@@ -94,6 +94,20 @@ public class ChessGameDao {
         }
     }
 
+    public void update(Position source, Position target) {
+        try (final var connection = getConnection()) {
+            final var statement = connection.prepareStatement(
+                    "UPDATE " + getTableName() + " SET file = ?, `rank` = ? WHERE file = ? AND `rank` = ?");
+            statement.setString(1, target.getFileSymbol());
+            statement.setInt(2, target.getRankValue());
+            statement.setString(3, source.getFileSymbol());
+            statement.setInt(4, source.getRankValue());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getTableName() {
         if (isTestEnvironment()) {
             return TEST_TABLE_NAME;
