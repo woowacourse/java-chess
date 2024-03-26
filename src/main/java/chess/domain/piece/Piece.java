@@ -23,6 +23,8 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public abstract boolean isKing();
+
     public abstract PieceType pieceType();
 
     public abstract Score score();

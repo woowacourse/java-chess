@@ -46,6 +46,11 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public final ChessState state(Map<Position, Piece> board) {
         return new PawnChessState(board);
     }

@@ -32,6 +32,11 @@ public final class Blank extends Piece {
     }
 
     @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
     public PieceType pieceType() {
         return PieceType.BLANK;
     }
