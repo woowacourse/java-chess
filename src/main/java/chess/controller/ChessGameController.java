@@ -42,15 +42,14 @@ public class ChessGameController {
         return board;
     }
 
-    private void playRound(Board board, GameCommand gameCommand) {
+    private void playRound(final Board board, final GameCommand gameCommand) {
         if (gameCommand == GameCommand.MOVE) {
             Position source = Position.of(inputView.getPosition());
             Position target = Position.of(inputView.getPosition());
 
             board.tryMove(source, target);
             outputView.printBoard(board);
-            gameCommand = inputView.getGameCommand();
-            playRound(board, gameCommand);
+            playRound(board, inputView.getGameCommand());
         }
 
         if (gameCommand == GameCommand.START) {
