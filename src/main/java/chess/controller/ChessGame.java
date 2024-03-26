@@ -4,11 +4,7 @@ import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
 import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
-<<<<<<< Updated upstream
-import chess.model.rule.Turn;
-=======
 import chess.model.game.Turn;
->>>>>>> Stashed changes
 import chess.view.input.GameArguments;
 import chess.view.input.GameCommand;
 import chess.view.input.InputView;

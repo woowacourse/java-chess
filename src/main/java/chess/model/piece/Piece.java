@@ -2,7 +2,6 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
-import chess.model.rule.Turn;
 
 import java.util.Objects;
 

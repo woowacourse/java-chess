@@ -4,11 +4,7 @@ import chess.model.piece.*;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
-<<<<<<< Updated upstream
-import chess.model.rule.Turn;
-=======
 import chess.model.game.Turn;
->>>>>>> Stashed changes
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

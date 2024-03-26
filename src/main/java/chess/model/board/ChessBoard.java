@@ -4,11 +4,7 @@ import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
-<<<<<<< Updated upstream
-import chess.model.rule.Turn;
-=======
 import chess.model.game.Turn;
->>>>>>> Stashed changes
 
 import java.util.HashMap;
 import java.util.Map;
