@@ -1,7 +1,7 @@
 package domain.piece.piecerole;
 
-import domain.move.Direction;
-import domain.move.Movable;
+import domain.movement.Direction;
+import domain.movement.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

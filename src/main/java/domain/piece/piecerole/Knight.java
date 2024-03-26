@@ -1,15 +1,15 @@
 package domain.piece.piecerole;
 
-import static domain.move.Direction.SSW;
-import static domain.move.Direction.SSE;
-import static domain.move.Direction.WSW;
-import static domain.move.Direction.WNW;
-import static domain.move.Direction.ESE;
-import static domain.move.Direction.ENE;
-import static domain.move.Direction.NNW;
-import static domain.move.Direction.NNE;
+import static domain.movement.Direction.SSW;
+import static domain.movement.Direction.SSE;
+import static domain.movement.Direction.WSW;
+import static domain.movement.Direction.WNW;
+import static domain.movement.Direction.ESE;
+import static domain.movement.Direction.ENE;
+import static domain.movement.Direction.NNW;
+import static domain.movement.Direction.NNE;
 
-import domain.move.Movable;
+import domain.movement.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;

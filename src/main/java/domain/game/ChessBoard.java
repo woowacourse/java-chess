@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.move.Direction;
+import domain.movement.Direction;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceGenerator;

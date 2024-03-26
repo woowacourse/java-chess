@@ -1,4 +1,4 @@
-package domain.move;
+package domain.movement;
 
 import domain.position.Position;
 

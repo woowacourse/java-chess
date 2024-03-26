@@ -1,7 +1,7 @@
 package domain.position;
 
-import domain.move.ChessVector;
-import domain.move.Direction;
+import domain.movement.ChessVector;
+import domain.movement.Direction;
 import java.util.Objects;
 
 public class Position {

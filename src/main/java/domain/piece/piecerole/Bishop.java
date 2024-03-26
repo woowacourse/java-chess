@@ -1,11 +1,11 @@
 package domain.piece.piecerole;
 
-import static domain.move.Direction.NE;
-import static domain.move.Direction.NW;
-import static domain.move.Direction.SE;
-import static domain.move.Direction.SW;
+import static domain.movement.Direction.NE;
+import static domain.movement.Direction.NW;
+import static domain.movement.Direction.SE;
+import static domain.movement.Direction.SW;
 
-import domain.move.Movable;
+import domain.movement.Movable;
 import domain.position.Position;
 import java.util.List;
 import java.util.Objects;
