@@ -55,7 +55,7 @@ class QueenTest {
         Route expectedRouteS = new Route(S, List.of(
                 Position.of(4, 3),
                 Position.of(4, 2),
-                destS = Position.of(4, 1)
+                Position.of(4, 1)
         ));
         Route expectedRouteE = new Route(E, List.of(
                 Position.of(5, 4),
