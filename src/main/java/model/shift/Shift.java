@@ -5,6 +5,6 @@ import model.position.Position;
 
 import java.util.Set;
 
-public interface Shift {
+public sealed interface Shift permits MultiShift, NoneShift, SingleShift {
     Set<Route> routes(final Position position);
 }

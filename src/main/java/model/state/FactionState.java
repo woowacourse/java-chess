@@ -2,7 +2,7 @@ package model.state;
 
 import model.piece.Piece;
 
-public interface FactionState {
+public sealed interface FactionState permits BlackFaction, WhiteFaction {
 
     void checkSameFaction(final Piece piece);
 

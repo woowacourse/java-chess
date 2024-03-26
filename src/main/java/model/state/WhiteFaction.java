@@ -3,7 +3,7 @@ package model.state;
 import model.piece.Color;
 import model.piece.Piece;
 
-public class WhiteFaction implements FactionState {
+public final class WhiteFaction implements FactionState {
     public static final Color COLOR = Color.WHITE;
 
     @Override

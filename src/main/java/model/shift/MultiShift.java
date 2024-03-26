@@ -7,7 +7,7 @@ import model.direction.Route;
 
 import java.util.*;
 
-public class MultiShift implements Shift {
+public final class MultiShift implements Shift {
 
     private final ShiftPattern shiftPattern;
 

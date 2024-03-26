@@ -8,7 +8,7 @@ import model.shift.Shift;
 
 import java.util.Set;
 
-public abstract class Role {
+public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Rook, Square {
 
     private final Color color;
     private final Shift shift;

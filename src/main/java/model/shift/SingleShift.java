@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SingleShift implements Shift {
+public final class SingleShift implements Shift {
     private final ShiftPattern shiftPattern;
 
     public SingleShift(final ShiftPattern shiftPattern) {
