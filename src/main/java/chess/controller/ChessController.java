@@ -72,6 +72,7 @@ public class ChessController {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
         }
         game.currentTurnPlayerMove(departure, destination);
+        game.turnOver();
     }
 
     private Point parsePoint(String splitedCommand) {

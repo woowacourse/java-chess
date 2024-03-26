@@ -20,7 +20,9 @@ public class ChessGame {
     public void currentTurnPlayerMove(Point departure, Point destination) {
         Player player = this.players.get(turn);
         player.move(departure, destination);
+    }
 
+    public void turnOver() {
         this.turn = turn.opponent();
     }
 }
