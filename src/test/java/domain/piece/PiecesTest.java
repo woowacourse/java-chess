@@ -45,7 +45,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
+        final var result = sut.canMove(piece, new Point(File.E, Rank.FIVE));
         assertThat(result).isFalse();
     }
 
@@ -60,7 +60,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.E, Rank.ONE));
+        final var result = sut.canMove(piece, new Point(File.E, Rank.ONE));
         assertThat(result).isFalse();
     }
 
@@ -75,7 +75,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
+        final var result = sut.canMove(piece, new Point(File.E, Rank.FIVE));
         assertThat(result).isFalse();
     }
 
@@ -91,7 +91,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.A, Rank.THREE));
+        final var result = sut.canMove(piece, new Point(File.A, Rank.THREE));
         assertThat(result).isTrue();
     }
 
@@ -105,7 +105,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.C, Rank.TWO));
+        final var result = sut.canMove(piece, new Point(File.C, Rank.TWO));
         assertThat(result).isFalse();
     }
 
@@ -119,7 +119,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.B, Rank.TWO));
+        final var result = sut.canMove(piece, new Point(File.B, Rank.TWO));
         assertThat(result).isFalse();
     }
 
@@ -133,7 +133,7 @@ class PiecesTest {
         final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
                              .get();
 
-        final var result = sut.check(piece, new Point(File.B, Rank.TWO));
+        final var result = sut.canMove(piece, new Point(File.B, Rank.TWO));
         assertThat(result).isTrue();
     }
 

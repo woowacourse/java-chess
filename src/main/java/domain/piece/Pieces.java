@@ -22,16 +22,8 @@ public class Pieces {
                     .findAny();
     }
 
-    public boolean check(final Piece piece, final Point endPoint) {
-        if (!piece.canMove(endPoint)) {
-            return false;
-        }
-        return switch (piece.getStatus()) {
-            case BISHOP, ROOK, QUEEN -> !(hasAnyPiece(piece.getPoint(), endPoint) && !isFriend(piece, endPoint));
-            case KING, KNIGHT -> !isFriend(piece, endPoint);
-            case PAWN ->
-                    (piece.isDirectionStraight(endPoint) && !hasPiece(endPoint)) || (piece.isDirectionDiagonal(endPoint) && !isFriend(piece, endPoint));
-        };
+    public boolean canMove(final Piece piece, final Point endPoint) {
+        return piece.findLegalMovePoints(this).contains(endPoint);
     }
 
     public void move(final Piece piece, final Point point) {
@@ -41,36 +33,9 @@ public class Pieces {
     }
 
 
-    public int size() {
-        return value.size();
-    }
-
-    public Map<Point, Piece> toMap() {
-        final var map = new HashMap<Point, Piece>();
-
-        for (final Piece piece : value) {
-            map.put(piece.getPoint(), piece);
-        }
-        return map;
-    }
-
     public boolean isFriend(Piece piece, Point point) {
         final var optionalPiece = findPieceWithPoint(point);
         return optionalPiece.filter(piece::isSameColor).isPresent();
-    }
-
-    public boolean isOpposite(Piece piece, Point point) {
-        final var optionalPiece = findPieceWithPoint(point);
-        return optionalPiece.filter(piece::isOpposite).isPresent();
-    }
-
-    private boolean hasAnyPiece(Point startPoint, Point endPoint) {
-        final var list = startPoint.toIndex()
-                                   .findMovePath(startPoint.calculate(endPoint), endPoint.toIndex());
-
-        return list.stream()
-                   .map(index -> findPieceWithPoint(Point.fromIndex(index)))
-                   .anyMatch(Optional::isPresent);
     }
 
     public boolean hasPiece(Point endPoint) {
@@ -81,5 +46,18 @@ public class Pieces {
     public boolean hasNothing(Point endPoint) {
         return this.findPieceWithPoint(endPoint)
                 .isEmpty();
+    }
+    public int size() {
+        return value.size();
+    }
+
+    public Map<Point, Piece> toMap() {
+        final var map = new HashMap<Point, Piece>();
+
+        for (final Piece piece : value) {
+
+            map.put(piece.getPoint(), piece);
+        }
+        return map;
     }
 }

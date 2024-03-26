@@ -25,7 +25,7 @@ public class ChessBoard {
         final var endPoint = dto.getEndPoint();
         final var piece = findPieceByPoint(startPoint);
 
-        if (pieces.check(piece, endPoint)) {
+        if (pieces.canMove(piece, endPoint)) {
             pieces.move(piece, endPoint);
             return;
         }
