@@ -19,8 +19,8 @@ public class ChessBoard {
 
     private final Map<Position, Piece> board;
 
-    public ChessBoard(final BoardGenerator chessBoardGenerator) {
-        this.board = new HashMap<>(chessBoardGenerator.generate());
+    public ChessBoard(final Map<Position,Piece> board) {
+        this.board = new HashMap<>(board);
     }
 
     public BoardStatus status() {

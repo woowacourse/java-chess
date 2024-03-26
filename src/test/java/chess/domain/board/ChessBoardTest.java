@@ -23,7 +23,7 @@ public class ChessBoardTest {
     @DisplayName("보드 정보를 통해 체스보드를 생성한다")
     @Test
     void createChessBoard() {
-        assertThatCode(() -> new ChessBoard(ChessBoardGenerator.getInstance()))
+        assertThatCode(() -> new ChessBoard(ChessBoardGenerator.getInstance().generate()))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +31,7 @@ public class ChessBoardTest {
     @Test
     void move() {
         // given
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance().generate());
 
         // when
         chessBoard.move("b2", "b3", Turn.first());
@@ -50,12 +50,7 @@ public class ChessBoardTest {
     @Test
     void notExistSource() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
-        HashMap<Position, Piece> board = new HashMap<>();
-        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
-
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance().generate());
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b3", "b2", Turn.first()))
@@ -67,12 +62,11 @@ public class ChessBoardTest {
     @Test
     void isNotTurn() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
         board.put(Position.of("a1"), new Rook(PieceColor.WHITE));
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+
+        ChessBoard chessBoard = new ChessBoard(board);
         Turn turn = Turn.first();
 
         // when
@@ -89,12 +83,10 @@ public class ChessBoardTest {
     @Test
     void isSamePosition() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
 
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(board);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b2", Turn.first()))
@@ -106,13 +98,11 @@ public class ChessBoardTest {
     @Test
     void isTargetSameColor() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
         board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
 
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(board);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b3", Turn.first()))
@@ -124,12 +114,10 @@ public class ChessBoardTest {
     @Test
     void validatePieceMovement() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
 
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(board);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b7", Turn.first()))
@@ -141,13 +129,11 @@ public class ChessBoardTest {
     @Test
     void validateBetweenSourceAndTarget() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Rook(PieceColor.WHITE));
         board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
 
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(board);
 
         // when & then
         assertThatThrownBy(() -> chessBoard.move("b2", "b7", Turn.first()))
@@ -159,13 +145,11 @@ public class ChessBoardTest {
     @Test
     void canKnightMove() {
         // given
-        BoardStubGenerator stubGenerator = new BoardStubGenerator();
         HashMap<Position, Piece> board = new HashMap<>();
         board.put(Position.of("b2"), new Knight(PieceColor.WHITE));
         board.put(Position.of("b3"), new Pawn(PieceColor.WHITE));
 
-        stubGenerator.setBoard(board);
-        ChessBoard chessBoard = new ChessBoard(stubGenerator);
+        ChessBoard chessBoard = new ChessBoard(board);
 
         // when & then
         assertThatCode(() -> chessBoard.move("b2", "c4", Turn.first())).doesNotThrowAnyException();

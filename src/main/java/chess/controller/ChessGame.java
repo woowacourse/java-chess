@@ -29,7 +29,7 @@ public class ChessGame {
         outputView.printGameStartMessage();
         start();
         Turn turn = Turn.first();
-        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.getInstance().generate());
         showBoard(chessBoard);
         play(turn, chessBoard);
     }
