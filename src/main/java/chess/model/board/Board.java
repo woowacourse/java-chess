@@ -36,7 +36,7 @@ public class Board {
     private void validateTurn(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
         if (sourcePiece.isNotSameColor(currnetColor)) {
-            throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
+            throw new IllegalArgumentException("현재 턴에 맞는 기물이 아니라서 움직일 수 없습니다.");
         }
     }
 
@@ -50,14 +50,14 @@ public class Board {
         Piece sourcePiece = getSourcePiece(movement);
         Piece destinationPiece = getDestinationPiece(movement);
         if (sourcePiece.isSameColorWith(destinationPiece)) {
-            throw new IllegalArgumentException("같은 색깔인 기물은 먹을 수 없습니다.");
+            throw new IllegalArgumentException("같은 색깔의 기물은 먹을 수 없어 움직일 수 없습니다.");
         }
     }
 
     private void validateMovementByPiece(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
         if (!sourcePiece.isValid(movement)) {
-            throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
+            throw new IllegalArgumentException("해당 기물에게 허용되지 않는 움직임이라 움직일 수 없습니다.");
         }
         if (sourcePiece.isType(Type.PAWN)) {
             validatePawn(movement);
@@ -70,7 +70,7 @@ public class Board {
                 || !destinationPiece.isEmpty() && movement.isDiagonal()) {
             return;
         }
-        throw new IllegalArgumentException("올바르지 않은 움직임입니다.");
+        throw new IllegalArgumentException("해당 기물에게 허용되지 않는 움직임이라 움직일 수 없습니다.");
     }
 
     private void validateIntermediatePositions(Movement movement) {
@@ -79,7 +79,7 @@ public class Board {
         }
         List<Position> intermediatePositions = movement.getIntermediatePositions();
         if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 있습니다.");
+            throw new IllegalArgumentException("이동 경로에 다른 기물이 있어 움직일 수 없습니다.");
         }
     }
 
