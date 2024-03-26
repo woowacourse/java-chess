@@ -1,7 +1,8 @@
 package model.piece;
 
-import model.direction.Direction;
+import model.direction.Destination;
 import model.direction.Route;
+import model.direction.WayPoints;
 import model.piece.role.Role;
 import model.piece.role.Square;
 import model.position.Position;
@@ -17,8 +18,9 @@ public class Piece {
         return this.role.findRoute(source, target);
     }
 
-    public void moveTo(final Direction direction, final Piece target) {
-        role.validateMoveTo(direction, target.role);
+    public void moveTo(final WayPoints wayPoints, final Destination destination) {
+        Piece target = destination.target();
+        role.moveTo(wayPoints, target.role());
         target.role = role;
         role = new Square();
     }

@@ -1,8 +1,9 @@
 package model.piece.role;
 
-import model.direction.Direction;
 import model.direction.Route;
+import model.direction.WayPoints;
 import model.piece.Color;
+import model.piece.Piece;
 import model.position.Position;
 import model.shift.Shift;
 
@@ -20,14 +21,30 @@ public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Roo
 
     public abstract RoleStatus status();
 
-    public boolean isOccupied() {
-        return true;
+    public void moveTo(final WayPoints wayPoints, final Role target) {
+        validateNotExistWayPoints(wayPoints);
+        validateNotSameColor(target);
     }
 
-    public void validateMoveTo(final Direction direction, final Role target) {
-        if (this.color == target.color) {
+    private void validateNotSameColor(final Role target) {
+        if (color == target.color()) {
             throw new IllegalArgumentException("같은 진영의 기물이 목적 지점에 위치합니다.");
         }
+    }
+
+    private void validateNotExistWayPoints(final WayPoints wayPoints) {
+        wayPoints.points()
+                 .values()
+                 .stream()
+                 .filter(Piece::isOccupied)
+                 .findAny()
+                 .ifPresent(position -> {
+                     throw new IllegalArgumentException("목적 지점까지의 경로에 기물이 위치하여 이동할 수 없습니다.");
+                 });
+    }
+
+    public boolean isOccupied() {
+        return true;
     }
 
     public Route findRoute(final Position source, final Position destination) {

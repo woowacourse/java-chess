@@ -3,6 +3,7 @@ package model.piece.role;
 import model.direction.Direction;
 import model.direction.Route;
 import model.direction.ShiftPattern;
+import model.direction.WayPoints;
 import model.piece.Color;
 import model.position.Position;
 import model.position.Rank;
@@ -55,8 +56,9 @@ public final class Pawn extends Role {
     }
 
     @Override
-    public void validateMoveTo(final Direction direction, final Role target) {
-        super.validateMoveTo(direction, target);
+    public void moveTo(final WayPoints wayPoints, final Role target) {
+        super.moveTo(wayPoints, target);
+        Direction direction = wayPoints.direction();
         validateCanTakeOtherPiece(direction, target);
         validateCanMoveForward(direction, target);
     }

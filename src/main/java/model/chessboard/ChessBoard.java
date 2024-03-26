@@ -1,11 +1,13 @@
 package model.chessboard;
 
+import model.direction.Destination;
 import model.direction.Route;
+import model.direction.WayPoints;
 import model.piece.Piece;
 import model.position.Position;
 import model.state.ChessState;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -19,25 +21,24 @@ public class ChessBoard {
 
     public void move(final Position source, final Position target) {
         Piece sourcePiece = chessBoard.get(source);
-        chessState.checkTheTurn(sourcePiece);
         Piece targetPiece = chessBoard.get(target);
+        chessState.checkTheTurn(sourcePiece);
+
         Route route = sourcePiece.findRoute(source, target);
-        validateNotExistWayPoints(route, target);
-        sourcePiece.moveTo(route.getDirection(), targetPiece);
+        WayPoints wayPoints = wayPoints(route, target);
+        Destination destination = new Destination(target, targetPiece);
+        sourcePiece.moveTo(wayPoints, destination);
+//        chessState.isCheck(chessBoard);
         chessState.passTheTurn();
     }
 
-
-    private void validateNotExistWayPoints(final Route route, final Position target) {
-        route.exclude(target);
-        List<Position> positions = route.positions();
-        positions.stream()
-                 .map(chessBoard::get)
-                 .filter(Piece::isOccupied)
-                 .findAny()
-                 .ifPresent(position -> {
-                     throw new IllegalArgumentException("목적 지점까지의 경로에 기물이 위치하여 이동할 수 없습니다.");
-                 });
+    private WayPoints wayPoints(final Route route, final Position target) {
+        Map<Position, Piece> wayPoints = new LinkedHashMap<>();
+        for (Position position : route.positions()) {
+            wayPoints.put(position, chessBoard.get(position));
+        }
+        wayPoints.remove(target);
+        return new WayPoints(route.direction(), wayPoints);
     }
 
     public Map<Position, Piece> getChessBoard() {
