@@ -34,14 +34,20 @@ public class Controller {
     }
 
     private void controlChessBoard(ChessBoard chessBoard, List<String> inputCommand) {
-        Position source = generatePosition(inputCommand);
-        Position destination = generatePosition(inputCommand);
+        Position source = generateSourcePosition(inputCommand);
+        Position destination = generateDestinationPosition(inputCommand);
         chessBoard.move(source, destination);
     }
 
-    private Position generatePosition(List<String> inputCommand) {
+    private Position generateSourcePosition(List<String> inputCommand) {
         int file = GameCommand.toSourceFileValue(inputCommand);
         int rank = GameCommand.toSourceRankValue(inputCommand);
+        return Position.of(file, rank);
+    }
+
+    private Position generateDestinationPosition(List<String> inputCommand) {
+        int file = GameCommand.toDestinationFileValue(inputCommand);
+        int rank = GameCommand.toDestinationRankValue(inputCommand);
         return Position.of(file, rank);
     }
 
