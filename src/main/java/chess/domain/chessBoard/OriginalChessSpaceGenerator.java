@@ -46,9 +46,9 @@ public class OriginalChessSpaceGenerator implements SpaceGenerator {
     private List<Space> makeEmptySpaces() {
         List<Space> spaces = new ArrayList<>();
         for (int i = HIGH_EMPTY_RANK; i >= LOW_EMPTY_RANK; i--) {
-            for (File file : File.values()) {
-                spaces.add(new Space(new EmptyPiece(), new Position(file, Rank.of(i))));
-            }
+            List<File> files = List.of(File.values());
+            Rank rank = Rank.of(i);
+            files.forEach((file) -> spaces.add(new Space(new EmptyPiece(), new Position(file, rank))));
         }
         return spaces;
     }
