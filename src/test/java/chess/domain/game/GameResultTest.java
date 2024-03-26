@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("게임 결과")
 class GameResultTest {
 
-    @DisplayName("기본 점수의 합을 반환한다.")
+    @DisplayName("기본 점수의 합을 반환한다")
     @Test
     void gameResultScore() {
         //given
@@ -36,10 +36,10 @@ class GameResultTest {
         GameResult gameResult = new GameResult(pieces);
 
         //then
-        assertThat(gameResult.getScore(black)).isEqualTo(Score.of(20));
+        assertThat(gameResult.calculateScore(black)).isEqualTo(Score.of(20));
     }
 
-    @DisplayName("세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점으로 계산한다.")
+    @DisplayName("세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점으로 계산한다")
     @Test
     void gameResultScoreWithVertical() {
         //given
@@ -60,6 +60,30 @@ class GameResultTest {
         GameResult gameResult = new GameResult(pieces);
 
         //then
-        assertThat(gameResult.getScore(white)).isEqualTo(Score.of(19.5));
+        assertThat(gameResult.calculateScore(white)).isEqualTo(Score.of(19.5));
+    }
+
+    @DisplayName("게임이 끝났는지 검증한다")
+    @Test
+    void finishGame() {
+        //given
+        Color white = Color.WHITE;
+
+        Map<Square, Piece> pieces = Map.of(
+                Square.from("e1"), new Rook(white),
+                Square.from("f4"), new Knight(white),
+                Square.from("g4"), new Queen(white),
+                Square.from("f2"), Pawn.of(white),
+                Square.from("f3"), Pawn.of(white),
+                Square.from("g2"), Pawn.of(white),
+                Square.from("h3"), Pawn.of(white),
+                Square.from("f1"), new King(white)
+        );
+
+        //when
+        GameResult gameResult = new GameResult(pieces);
+
+        //then
+        assertThat(gameResult.isGameOver()).isTrue();
     }
 }

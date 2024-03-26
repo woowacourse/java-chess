@@ -15,6 +15,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 
 public class GameResult {
+    private static final int KING_COUNT = 2;
 
     private final Map<Square, Piece> pieces;
 
@@ -22,23 +23,7 @@ public class GameResult {
         this.pieces = pieces;
     }
 
-    private static double findDefaultPawnScore(Map<Integer, List<Piece>> fileToPawn) {
-        return fileToPawn.values().stream()
-                .filter(list -> list.size() == 1)
-                .flatMap(List::stream)
-                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
-                .sum();
-    }
-
-    private static double findHalfPawnScore(Map<Integer, List<Piece>> fileToPawn) {
-        return fileToPawn.values().stream()
-                .filter(list -> list.size() > 1)
-                .flatMap(List::stream)
-                .mapToDouble(piece -> piece.getScore(ScoreStatus.HALF).getValue())
-                .sum();
-    }
-
-    public Score getScore(final Color color) {
+    public Score calculateScore(final Color color) {
         double pieceScore = calculatePieceScore(color);
         double pawnScore = calculatePawnScore(color);
         return Score.of(pieceScore + pawnScore);
@@ -59,5 +44,28 @@ public class GameResult {
                         mapping(Entry::getValue, Collectors.toList())));
 
         return findDefaultPawnScore(fileToPawn) + findHalfPawnScore(fileToPawn);
+    }
+
+    private static double findDefaultPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() == 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
+                .sum();
+    }
+
+    private static double findHalfPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() > 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.HALF).getValue())
+                .sum();
+    }
+
+    public boolean isGameOver() {
+        long kingCount = pieces.values().stream()
+                .filter(Piece::isKing)
+                .count();
+        return kingCount != KING_COUNT;
     }
 }

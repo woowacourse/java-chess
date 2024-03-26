@@ -1,17 +1,32 @@
 package chess.view;
 
+import chess.domain.game.GameResult;
+import chess.domain.pieces.piece.Color;
 import chess.dto.PieceResponse;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.IntStream;
 
 public class OutputView {
+    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
+    private static final String START_INFO_MESSAGE = "> 게임 시작 : start";
+    private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
+    private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
+    private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final char EMPTY_SQUARE = '.';
+    private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
 
     public void printGameStartMessage() {
-        System.out.println("체스 게임을 시작합니다.");
+        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(GAME_START_MESSAGE);
+        stringJoiner.add(START_INFO_MESSAGE);
+        stringJoiner.add(END_INFO_MESSAGE);
+        stringJoiner.add(STATUS_INFO_MESSAGE);
+        stringJoiner.add(MOVE_INFO_MESSAGE);
+        System.out.println(stringJoiner);
     }
 
     public void printBoard(final List<PieceResponse> pieces) {
@@ -46,5 +61,15 @@ public class OutputView {
                 .mapToObj(lineCount -> board[board.length - 1 - lineCount])
                 .map(String::new)
                 .forEach(System.out::println);
+    }
+
+    public void printStatus(final GameResult gameResult) {
+        printScoreStatus(gameResult, Color.WHITE);
+        printScoreStatus(gameResult, Color.BLACK);
+    }
+
+    private void printScoreStatus(final GameResult gameResult, final Color color) {
+        System.out.printf(SCORE_STATUS_FORMAT + System.lineSeparator(),
+                color.name(), gameResult.calculateScore(color).getValue());
     }
 }

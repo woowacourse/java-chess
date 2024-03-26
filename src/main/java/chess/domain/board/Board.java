@@ -77,8 +77,8 @@ public class Board {
 
     public List<PieceResponse> createBoardStatus() {
         List<PieceResponse> responses = new ArrayList<>();
-        for (Entry<Square, Piece> positionToPiece : pieces.entrySet()) {
-            responses.add(PieceResponse.of(positionToPiece.getKey(), positionToPiece.getValue()));
+        for (Entry<Square, Piece> squareToPiece : pieces.entrySet()) {
+            responses.add(PieceResponse.of(squareToPiece.getKey(), squareToPiece.getValue()));
         }
         return responses;
     }

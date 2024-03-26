@@ -28,6 +28,10 @@ public abstract class Piece {
         return this.type.equals(Type.PAWN);
     }
 
+    public boolean isKing() {
+        return this.type.equals(Type.KING);
+    }
+
     public Color color() {
         return color;
     }

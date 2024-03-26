@@ -13,9 +13,9 @@ public class Game {
     private final Board board;
     private final Turn turn;
 
-    public Game() {
+    public Game(final BoardFactory boardFactory) {
         this.turn = Turn.first();
-        this.board = BoardFactory.createBoard();
+        this.board = boardFactory.createBoard();
     }
 
     public void movePiece(final String source, final String target) {

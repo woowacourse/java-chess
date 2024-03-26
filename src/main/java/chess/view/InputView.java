@@ -1,19 +1,18 @@
 package chess.view;
 
-import chess.dto.MoveRequest;
+import chess.dto.GameCommand;
+import chess.dto.GameRequest;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
-    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
-    private static final String START_INFO_MESSAGE = "> 게임 시작 : start";
-    private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
-    private static final Set<String> GAME_COMMAND = Set.of("start", "end");
-    private static final String MOVE_COMMAND = "move";
-    private static final String INVALID_GAME_COMMAND = "start 또는 end만 입력가능합니다.";
-    private static final String INVALID_MOVE_COMMAND = "부적절한 명령어입니다. move b2 b3와 같이 입력해주세요.";
-    private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
-    private static final String MOVE_COMMAND_DELIMITER = " ";
+
+    public static final String INVALID_INPUT_MESSAGE = "적절하지 않은 명령어입니다. 명령어를 확인해 주세요.";
+    private static final Pattern PATTERN = Pattern.compile("[A-Z]\\d");
+    private static final String COMMAND_DELIMITER = " ";
 
     private final Scanner scanner;
 
@@ -21,37 +20,49 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public String readStartCommand() {
-        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
-        stringJoiner.add(GAME_START_MESSAGE);
-        stringJoiner.add(START_INFO_MESSAGE);
-        stringJoiner.add(END_INFO_MESSAGE);
-        stringJoiner.add(MOVE_INFO_MESSAGE);
-        System.out.println(stringJoiner);
+    public GameRequest readStartCommand() {
+        List<String> inputs = inputGameCommand();
+        validateInputLength(inputs);
 
-        String input = scanner.nextLine();
-        validateGameCommand(input);
-        return input;
+        GameCommand command = GameCommand.from(inputs.get(0));
+        if (command.isSingleCommand()) {
+            validateSingleCommand(inputs);
+            return GameRequest.createCommand(command);
+        }
+        validateGameParameters(inputs);
+        return GameRequest.createCommand(inputs.get(1), inputs.get(2));
     }
 
-    private void validateGameCommand(final String command) {
-        if (!GAME_COMMAND.contains(command)) {
-            throw new IllegalArgumentException(INVALID_GAME_COMMAND);
+    private List<String> inputGameCommand() {
+        return Arrays.stream(scanner.nextLine().split(COMMAND_DELIMITER))
+                .map(String::trim)
+                .map(String::toUpperCase)
+                .toList();
+    }
+
+    private void validateInputLength(final List<String> inputs) {
+        if (inputs.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
     }
 
-    public MoveRequest readMovement() {
-        String input = scanner.nextLine();
-        List<String> splitInput = Arrays.stream(input.split(MOVE_COMMAND_DELIMITER))
-                .map(String::trim)
-                .toList();
-        validateMoveCommand(splitInput.get(0));
-        return new MoveRequest(splitInput.get(1), splitInput.get(2));
+    private void validateSingleCommand(final List<String> inputs) {
+        if (inputs.size() > 1) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        }
     }
 
-    private void validateMoveCommand(final String command) {
-        if (!command.equals(MOVE_COMMAND)) {
-            throw new IllegalArgumentException(INVALID_MOVE_COMMAND);
+    private void validateGameParameters(final List<String> inputs) {
+        if (inputs.size() != 3) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        }
+        validateGameParameter(inputs.get(1));
+        validateGameParameter(inputs.get(2));
+    }
+
+    private void validateGameParameter(final String parameter) {
+        if (!PATTERN.matcher(parameter).matches()) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
     }
 }

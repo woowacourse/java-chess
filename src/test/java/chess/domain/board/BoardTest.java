@@ -16,7 +16,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        board = new ChessBoardFactory().createBoard();
     }
 
     @DisplayName("초기화에 성공한다.")
