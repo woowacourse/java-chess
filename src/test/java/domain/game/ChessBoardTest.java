@@ -14,12 +14,13 @@ import static fixture.PositionFixture.d1;
 import static fixture.PositionFixture.d2;
 import static fixture.PositionFixture.d3;
 import static fixture.PositionFixture.d5;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.WhitePawn;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,7 @@ class ChessBoardTest {
         chessBoard.move(b2(), b3());
 
         Piece piece = chessBoard.findPieceByPosition(b3());
-        Assertions.assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
@@ -41,7 +42,7 @@ class ChessBoardTest {
     void movePieceIfSourceHasNotPiece() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(c3(), c4()))
+        assertThatThrownBy(() -> chessBoard.move(c3(), c4()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -51,7 +52,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.move(d2(), d3());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(d1(), d3()))
+        assertThatThrownBy(() -> chessBoard.move(d1(), d3()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -60,7 +61,7 @@ class ChessBoardTest {
     void moveToSameSquare() {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(b1(), b1()))
+        assertThatThrownBy(() -> chessBoard.move(b1(), b1()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -71,7 +72,7 @@ class ChessBoardTest {
         chessBoard.move(b2(), b4());
         chessBoard.move(b7(), b5());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(b4(), b5()))
+        assertThatThrownBy(() -> chessBoard.move(b4(), b5()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -84,7 +85,7 @@ class ChessBoardTest {
         chessBoard.move(b4(), c5());
 
         Piece piece = chessBoard.findPieceByPosition(c5());
-        Assertions.assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
@@ -93,7 +94,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = ChessBoardGenerator.generate();
         chessBoard.move(d2(), d3());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(d1(), d5()))
+        assertThatThrownBy(() -> chessBoard.move(d1(), d5()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -105,6 +106,6 @@ class ChessBoardTest {
         chessBoard.move(b7(), b5());
         chessBoard.move(b1(), c3());
 
-        Assertions.assertThat(chessBoard.findPieceByPosition(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
+        assertThat(chessBoard.findPieceByPosition(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
     }
 }
