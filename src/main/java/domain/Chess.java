@@ -27,14 +27,14 @@ public class Chess {
     }
 
     private void validateMovement(Position sourcePosition, Position targetPosition) {
-        validate(sourcePosition.equals(targetPosition), "[ERROR] 움직여야 합니다.");
-        validate(board.isBlocked(sourcePosition, targetPosition), "[ERROR] 다른 기물이 길을 막습니다.");
+        validate(sourcePosition.equals(targetPosition), "[ERROR] 제자리에 있을 수 없습니다.");
+        validate(board.isBlocked(sourcePosition, targetPosition), "[ERROR] 다른 기물에 막혀 이동하지 못했습니다.");
 
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
-        validate(sourcePiece.isBlank(), "[ERROR] 선택된 위치에 기물이 없습니다.");
-        validate(sourcePiece.isNotTurn(turn), "[ERROR] 차례가 아닙니다.");
-        validate(targetPiece.isSameColor(sourcePiece), "[ERROR] 가려는 곳에 같은 편 기물이 있습니다.");
+        validate(sourcePiece.isBlank(), "[ERROR] 출발지에 기물이 없어 이동하지 못했습니다.");
+        validate(sourcePiece.isNotTurn(turn), "[ERROR] 차례가 아니므로 이동하지 못했습니다.");
+        validate(targetPiece.isSameColor(sourcePiece), "[ERROR] 도착지에 같은 편 기물이 있어 이동하지 못했습니다.");
     }
 
     private boolean canAttack(Position sourcePosition, Position targetPosition) {
@@ -51,8 +51,8 @@ public class Chess {
     private void validateCanMove(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = board.findPieceByPosition(sourcePosition);
         Piece targetPiece = board.findPieceByPosition(targetPosition);
-        validate(!sourcePiece.canMove(sourcePosition, targetPosition), "[ERROR] 움직일 수 없는 방식입니다.");
-        validate(targetPiece.isNotBlank(), "[ERROR] 가려는 곳에 기물이 있습니다.");
+        validate(!sourcePiece.canMove(sourcePosition, targetPosition), "[ERROR] 해당 기물이 움직일 수 없는 방식입니다.");
+        validate(targetPiece.isNotBlank(), "[ERROR] 도착지에 기물이 있어 움직일 수 없습니다.");
     }
 
     private void move(Position sourcePosition, Position targetPosition) {
