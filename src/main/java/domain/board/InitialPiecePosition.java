@@ -30,7 +30,7 @@ public enum InitialPiecePosition {
 
     public static PieceType find(Rank rank, File file) {
         return Arrays.stream(values())
-                .filter((initialPiecePosition -> initialPiecePosition.ranks.contains(rank) && initialPiecePosition.files.contains(file)))
+                .filter(initialPiecePosition -> initialPiecePosition.ranks.contains(rank) && initialPiecePosition.files.contains(file))
                 .findFirst()
                 .orElse(InitialPiecePosition.NONE)
                 .pieceType;
