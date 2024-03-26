@@ -1,6 +1,5 @@
 package chess.view;
 
-import java.util.List;
 import chess.domain.board.Board;
 
 public class OutputView {
@@ -15,15 +14,8 @@ public class OutputView {
     }
 
     public void printBoard(Board board) {
-        converter.convertToViewData(board)
-                .forEach(this::printRow);
-        System.out.println();
-    }
-
-    private void printRow(List<String> rowData) {
-        StringBuilder stringBuilder = new StringBuilder();
-        rowData.forEach(stringBuilder::append);
-        System.out.println(stringBuilder);
+        CharSequence viewData = converter.convertToViewData(board);
+        System.out.println(viewData);
     }
 
     public void printExceptionMessage(Exception exception) {

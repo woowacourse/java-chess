@@ -1,7 +1,6 @@
 package chess.view;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
@@ -10,22 +9,23 @@ import chess.domain.piece.Team;
 
 class ViewDataConverter {
 
-    List<List<String>> convertToViewData(Board board) {
-        List<List<String>> viewData = new ArrayList<>();
+    public CharSequence convertToViewData(Board board) {
+        StringBuilder viewData = new StringBuilder();
 
         for (int rankValue = 8; rankValue >= 1; rankValue--) {
-            viewData.add(createRowData(board, rankValue));
+            viewData.append(createRowViewData(board, rankValue));
+            viewData.append(System.lineSeparator());
         }
 
         return viewData;
     }
 
-    private List<String> createRowData(Board board, int rankValue) {
+    private String createRowViewData(Board board, int rankValue) {
         return IntStream.rangeClosed('a', 'h')
                 .mapToObj(operand -> new Coordinate(rankValue, (char) operand))
                 .map(board::findByCoordinate)
                 .map(this::convertToViewData)
-                .toList();
+                .collect(Collectors.joining());
     }
 
     private String convertToViewData(Piece piece) {
