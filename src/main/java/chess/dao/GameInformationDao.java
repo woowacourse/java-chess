@@ -102,4 +102,15 @@ public class GameInformationDao {
             throw new RuntimeException(e);
         }
     }
+
+    public void create() {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO " + getTableName() + " (`current_turn_color`)VALUES (?)");
+            statement.setString(1, Color.WHITE.name());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

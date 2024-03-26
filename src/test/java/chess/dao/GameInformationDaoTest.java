@@ -68,4 +68,15 @@ class GameInformationDaoTest implements DaoTest {
         // then
         assertThat(gameInfos).isEmpty();
     }
+
+    @DisplayName("데이터베이스에 새로운 게임 데이터를 저장한다.")
+    @Test
+    void save() {
+        // when
+        gameInformationDao.create();
+        List<GameInformation> gameInfos = gameInformationDao.findAll();
+
+        // then
+        assertThat(gameInfos.size()).isEqualTo(2);
+    }
 }
