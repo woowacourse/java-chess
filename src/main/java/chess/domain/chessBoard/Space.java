@@ -26,8 +26,7 @@ public class Space {
     }
 
     private boolean canCatch(Space targetSpace) {
-        return piece.canCatch(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece)
-                && !piece.isSameColor(targetSpace.piece);
+        return piece.canCatch(position, targetSpace.position) && piece.isOppositeColor(targetSpace.piece);
     }
 
     private boolean canMove(Space targetSpace) {
