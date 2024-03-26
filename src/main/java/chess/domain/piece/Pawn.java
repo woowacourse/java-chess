@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Route;
 
 public abstract class Pawn extends Piece {
-    private static final String PAWN_NAME = "P";
     private static final int INIT_MOVE_DISTANCE = 2;
     private static final int NORMAL_MOVE_DISTANCE = 1;
     private static final int ONE_DIRECTION = 1;
@@ -11,7 +10,7 @@ public abstract class Pawn extends Piece {
     private boolean moved = false;
 
     protected Pawn(Color color) {
-        super(color, PAWN_NAME);
+        super(color, PieceType.PAWN);
     }
 
     abstract boolean isBackward(Route route);

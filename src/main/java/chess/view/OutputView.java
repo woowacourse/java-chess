@@ -4,6 +4,7 @@ import chess.domain.location.Column;
 import chess.domain.location.Location;
 import chess.domain.location.Row;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
@@ -38,11 +39,35 @@ public class OutputView {
         if (piece == null) {
             return ONE_SQUARE;
         }
-        String pieceName = piece.getName();
+        String pieceName = checkPieceName(piece);
         if (piece.isBlack()) {
             return pieceName.toUpperCase();
         }
         return pieceName.toLowerCase();
+    }
+
+    private String checkPieceName(Piece piece) {
+        PieceType pieceType = piece.getPieceType();
+        if (pieceType == PieceType.KING) {
+            return "K";
+        }
+        if (pieceType == PieceType.QUEEN) {
+            return "Q";
+        }
+        return checkMinionPieceName(pieceType);
+    }
+
+    private static String checkMinionPieceName(PieceType pieceType) {
+        if (pieceType == PieceType.ROOK) {
+            return "R";
+        }
+        if (pieceType == PieceType.BISHOP) {
+            return "B";
+        }
+        if (pieceType == PieceType.KNIGHT) {
+            return "N";
+        }
+        return "P";
     }
 
     public void printException(RuntimeException exception) {

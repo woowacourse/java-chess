@@ -4,11 +4,11 @@ import chess.domain.board.Route;
 
 public abstract class Piece {
     private final Color color;
-    private final String name;
+    private final PieceType pieceType;
 
-    protected Piece(Color color, String name) {
+    protected Piece(Color color, PieceType pieceType) {
         this.color = color;
-        this.name = name;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean canMove(Route route);
@@ -21,7 +21,7 @@ public abstract class Piece {
         return this.color == other.color;
     }
 
-    public String getName() {
-        return name;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

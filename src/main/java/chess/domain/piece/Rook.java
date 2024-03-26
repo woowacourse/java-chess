@@ -3,11 +3,10 @@ package chess.domain.piece;
 import chess.domain.board.Route;
 
 public class Rook extends Piece {
-    private static final String ROOK_NAME = "R";
     private static final int ONE_DIRECTION = 1;
 
     public Rook(Color color) {
-        super(color, ROOK_NAME);
+        super(color, PieceType.ROOK);
     }
 
     @Override
