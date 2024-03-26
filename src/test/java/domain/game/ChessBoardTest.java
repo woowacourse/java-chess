@@ -32,8 +32,8 @@ class ChessBoardTest {
 
         chessBoard.move(b2(), b3());
 
-        Piece findPiece = chessBoard.findPieceByPosition(b3());
-        Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        Piece piece = chessBoard.findPieceByPosition(b3());
+        Assertions.assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
@@ -83,8 +83,8 @@ class ChessBoardTest {
         chessBoard.move(c7(), c5());
         chessBoard.move(b4(), c5());
 
-        Piece findPiece = chessBoard.findPieceByPosition(c5());
-        Assertions.assertThat(findPiece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        Piece piece = chessBoard.findPieceByPosition(c5());
+        Assertions.assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
     }
 
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
