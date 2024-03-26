@@ -1,5 +1,7 @@
 package model.direction;
 
+import java.util.Arrays;
+
 public enum Direction {
     N(0, 1),
     S(0, -1),
@@ -24,6 +26,14 @@ public enum Direction {
     Direction(int fileDifferential, int rankDifferential) {
         this.fileDifferential = fileDifferential;
         this.rankDifferential = rankDifferential;
+    }
+
+    public Direction toOppositeDirection() {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.rankDifferential * -1 == rankDifferential
+                        && direction.fileDifferential * -1 == fileDifferential)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("짝이 존재하지 않는 Direction입니다."));
     }
 
     public int fileDifferential() {
