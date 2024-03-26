@@ -191,12 +191,48 @@ public class PositionTest {
         }
 
         @Test
-        @DisplayName("방향이 아래를 가리지 않으면 거짓을 반환한다.")
+        @DisplayName("방향이 아래를 가리키지 않으면 거짓을 반환한다.")
         void isDown_False() {
             Position source = PositionGenerator.generate(File.A, Rank.TWO);
             Position target = PositionGenerator.generate(File.A, Rank.THREE);
 
             assertThat(source.isDown(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("방향이 오른쪽을 가리키면 참을 반환한다.")
+        void isRight_True() {
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.C, Rank.TWO);
+
+            assertThat(source.isRight(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("방향이 오른쪽을 가리키지 않으면 거짓을 반환한다.")
+        void isRight_False() {
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.TWO);
+
+            assertThat(source.isRight(target)).isFalse();
+        }
+
+        @Test
+        @DisplayName("방향이 왼쪽을 가리키면 참을 반환한다.")
+        void isLeft_True() {
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.A, Rank.TWO);
+
+            assertThat(source.isLeft(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("방향이 왼쪽을 가리키지 않으면 거짓을 반환한다.")
+        void isLeft_False() {
+            Position source = PositionGenerator.generate(File.B, Rank.TWO);
+            Position target = PositionGenerator.generate(File.C, Rank.TWO);
+
+            assertThat(source.isLeft(target)).isFalse();
         }
     }
 
@@ -237,6 +273,24 @@ public class PositionTest {
             Position target = PositionGenerator.generate(File.E, Rank.SEVEN);
 
             assertThat(source.isLegalFileStep(target, 5)).isFalse();
+        }
+
+        @Test
+        @DisplayName("파일의 거리와 랭크의 거리가 같으면 참을 반환한다.")
+        void isSameDistance_True() {
+            Position source = PositionGenerator.generate(File.A, Rank.EIGHT);
+            Position target = PositionGenerator.generate(File.H, Rank.ONE);
+
+            assertThat(source.isSameDistance(target)).isTrue();
+        }
+
+        @Test
+        @DisplayName("파일의 거리와 랭크의 거리가 같지 않으면 거짓을 반환한다.")
+        void isSameDistance_False() {
+            Position source = PositionGenerator.generate(File.A, Rank.EIGHT);
+            Position target = PositionGenerator.generate(File.H, Rank.TWO);
+
+            assertThat(source.isSameDistance(target)).isFalse();
         }
     }
 

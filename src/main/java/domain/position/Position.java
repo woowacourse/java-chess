@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 public class Position { // TODO: refactoring (너무 무거움)
 
@@ -16,6 +13,14 @@ public class Position { // TODO: refactoring (너무 무거움)
     protected Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
+    }
+
+    public boolean isSameFile(Position target) {
+        return this.file == target.file;
+    }
+
+    public boolean isSameRank(Position target) {
+        return this.rank == target.rank;
     }
 
     public boolean hasRank(Rank rank) {
@@ -28,10 +33,6 @@ public class Position { // TODO: refactoring (너무 무거움)
 
     private boolean hasFile(File file) {
         return this.file == file;
-    }
-
-    public Direction direction(Position target) {
-        return Direction.asDirection(this, target);
     }
 
     public boolean isStraight(Position target) {
@@ -52,6 +53,14 @@ public class Position { // TODO: refactoring (너무 무거움)
 
     public boolean isDown(Position target) {
         return file == target.file && rank.isDown(target.rank);
+    }
+
+    public boolean isRight(Position target) {
+        return rank == target.rank && file.isRight(target.file);
+    }
+
+    public boolean isLeft(Position target) {
+        return rank == target.rank && file.isLeft(target.file);
     }
 
     public boolean isDiagonal(Position target) {
@@ -138,47 +147,5 @@ public class Position { // TODO: refactoring (너무 무거움)
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public enum Direction { // TODO: 한 칸 검증을 여기서 하는 게 맞을까? -> Movement or Vector?
-
-        UP((source, target) -> source.file.equals(target.file) && source.rank.isUp(target.rank)),
-        DOWN((source, target) -> source.file.equals(target.file) && source.rank.isDown(target.rank)),
-        RIGHT((source, target) -> source.file.isRight(target.file) && source.rank.equals(target.rank)),
-        LEFT((source, target) -> source.file.isLeft(target.file) && source.rank.equals(target.rank)),
-        RIGHT_UP((source, target) -> source.file.isRight(target.file) && source.rank.isUp(target.rank)
-                && source.isSameDistance(target)),
-        RIGHT_DOWN((source, target) -> source.file.isRight(target.file) && source.rank.isDown(target.rank)
-                && source.isSameDistance(target)),
-        LEFT_UP((source, target) -> source.file.isLeft(target.file) && source.rank.isUp(target.rank)
-                && source.isSameDistance(target)),
-        LEFT_DOWN((source, target) -> source.file.isLeft(target.file) && source.rank.isDown(target.rank)
-                && source.isSameDistance(target)),
-        NONE((source, target) -> false),
-        ;
-
-        private final BiPredicate<Position, Position> condition;
-
-        Direction(BiPredicate<Position, Position> condition) {
-            this.condition = condition;
-        }
-
-        private static Direction asDirection(Position source, Position target) {
-            return Arrays.stream(values())
-                    .filter(direction -> direction.meetCondition(source, target))
-                    .findFirst()
-                    .orElse(NONE);
-        }
-
-        public static Set<Direction> allDirections() {
-            Set<Direction> values = Set.of(values());
-            return values.stream()
-                    .filter(direction -> direction != NONE)
-                    .collect(Collectors.toSet());
-        }
-
-        private boolean meetCondition(Position source, Position target) {
-            return condition.test(source, target);
-        }
     }
 }

@@ -1,17 +1,17 @@
 package domain.piece;
 
-import static domain.position.Position.Direction.DOWN;
-import static domain.position.Position.Direction.LEFT;
-import static domain.position.Position.Direction.RIGHT;
-import static domain.position.Position.Direction.UP;
+import static domain.position.Movement.DOWN;
+import static domain.position.Movement.LEFT;
+import static domain.position.Movement.RIGHT;
+import static domain.position.Movement.UP;
 
+import domain.position.Movement;
 import domain.position.Position;
-import domain.position.Position.Direction;
 import java.util.Set;
 
 public class Rook extends Piece {
 
-    private static final Set<Direction> VALID_DIRECTIONS = Set.of(UP, DOWN, RIGHT, LEFT);
+    private static final Set<Movement> VALID_MOVEMENTS = Set.of(UP, DOWN, RIGHT, LEFT);
 
     public Rook(Color color) {
         super(color);
@@ -19,7 +19,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        Direction direction = source.direction(target);
-        return VALID_DIRECTIONS.contains(direction);
+        Movement movement = Movement.asMovement(source, target);
+        return VALID_MOVEMENTS.contains(movement);
     }
 }

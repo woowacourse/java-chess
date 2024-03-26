@@ -1,12 +1,12 @@
 package domain.piece;
 
+import domain.position.Movement;
 import domain.position.Position;
-import domain.position.Position.Direction;
 import java.util.Set;
 
 public class Queen extends Piece {
 
-    private static final Set<Direction> VALID_DIRECTIONS = Direction.allDirections();
+    private static final Set<Movement> VALID_MOVEMENTS = Movement.allMovements();
 
     public Queen(Color color) {
         super(color);
@@ -14,7 +14,7 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position source, Position target) {
-        Direction direction = source.direction(target);
-        return VALID_DIRECTIONS.contains(direction);
+        Movement movement = Movement.asMovement(source, target);
+        return VALID_MOVEMENTS.contains(movement);
     }
 }
