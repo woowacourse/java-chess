@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BoardTest {
+
     private Board board;
 
     @BeforeEach
@@ -34,7 +35,7 @@ public class BoardTest {
 
     @Test
     @DisplayName("해당 위치로 기물을 옮긴다.")
-    void placePiece() {
+    void movePiece() {
         Position source = PositionGenerator.generate(File.A, Rank.TWO);
         Position target = PositionGenerator.generate(File.A, Rank.THREE);
         Piece expected = new Pawn(Color.WHITE);

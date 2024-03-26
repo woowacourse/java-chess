@@ -37,7 +37,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 폰은 A2 B2 C2 D2 E2 F2 G2 H2에 위치한다.")
     void generate_Pawn() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.A, Rank.TWO));
@@ -65,7 +64,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 룩은 A1 A8 H1 H8에 위치한다.")
     void generate_Rook() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.A, Rank.ONE));
@@ -85,7 +83,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 나이트는 B1 B8 G1 G8에 위치한다.")
     void generate_Knight() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.B, Rank.ONE));
@@ -105,7 +102,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 비숍은 C1 C8 F1 F8에 위치한다.")
     void generate_Bishop() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.C, Rank.ONE));
@@ -125,7 +121,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 퀸은 D1 D8에 위치한다.")
     void generate_Queen() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.D, Rank.ONE));
@@ -141,7 +136,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 킹은 E1 E8에 위치한다.")
     void generate_King() {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(File.E, Rank.ONE));
@@ -158,7 +152,6 @@ class SquaresGeneratorTest {
     @DisplayName("게임 시작 시 랭크 3, 4, 5, 6은 비어있다.")
     void generate_None(File file) {
         SquaresGenerator squaresGenerator = new SquaresGenerator();
-
         Map<Position, Piece> squares = squaresGenerator.generate();
 
         Piece actual1 = squares.get(PositionGenerator.generate(file, Rank.THREE));
