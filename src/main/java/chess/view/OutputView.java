@@ -9,11 +9,13 @@ import java.util.Comparator;
 import java.util.Map;
 
 public class OutputView {
+    public static final String ONE_SQUARE = ".";
+
     public void printGameStart() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
-        System.out.println("> 게임 종료 : end");
-        System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 게임 시작 : " + InputView.START);
+        System.out.println("> 게임 종료 : " + InputView.END);
+        System.out.println("> 게임 이동 : " + InputView.MOVE + " source위치 target위치 - 예. " + InputView.MOVE + " b2 b3");
     }
 
     public void printBoard(Map<Location, Piece> board) {
@@ -27,14 +29,14 @@ public class OutputView {
     private void printBoardRow(Row row, Map<Location, Piece> board) {
         Arrays.stream(Column.values())
                 .map(column -> new Location(column, row))
-                .map(location -> board.get(location))
+                .map(board::get)
                 .map(this::convertPieceToString)
                 .forEach(System.out::print);
     }
 
     private String convertPieceToString(Piece piece) {
         if (piece == null) {
-            return ".";
+            return ONE_SQUARE;
         }
         String pieceName = piece.getName();
         if (piece.isBlack()) {

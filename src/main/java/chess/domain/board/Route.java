@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Route {
+    private static final int MAX_MOVE_SIZE = 7;
+
     private final List<Step> steps;
 
     public Route(List<Direction> directions, List<SquareState> squareStates) {
@@ -91,7 +93,7 @@ public class Route {
     }
 
     private void validatePathDistance(List<Step> steps) {
-        if (steps.size() > 7) {
+        if (steps.size() > MAX_MOVE_SIZE) {
             throw new IllegalArgumentException("경로의 길이는 7칸을 넘을 수 없습니다.");
         }
         if (steps.isEmpty()) {

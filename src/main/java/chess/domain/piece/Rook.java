@@ -4,6 +4,7 @@ import chess.domain.board.Route;
 
 public class Rook extends Piece {
     private static final String ROOK_NAME = "R";
+    private static final int ONE_DIRECTION = 1;
 
     public Rook(Color color) {
         super(color, ROOK_NAME);
@@ -17,6 +18,6 @@ public class Rook extends Piece {
         if (route.containsDiagonal()) {
             return false;
         }
-        return route.hasNoAllyAtTarget() && route.isDirectionsCount(1);
+        return route.hasNoAllyAtTarget() && route.isDirectionsCount(ONE_DIRECTION);
     }
 }

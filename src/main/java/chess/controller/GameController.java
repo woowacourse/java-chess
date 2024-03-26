@@ -27,14 +27,14 @@ public class GameController {
 
     private void play() {
         String command = inputView.readCommand();
-        while (!"end".equalsIgnoreCase(command)) {
+        while (!InputView.END.equalsIgnoreCase(command)) {
             playTurn(command);
             command = inputView.readCommand();
         }
     }
 
     private void playTurn(String command) {
-        if ("start".equalsIgnoreCase(command)) {
+        if (InputView.START.equalsIgnoreCase(command)) {
             createBoard();
             return;
         }
@@ -48,7 +48,7 @@ public class GameController {
 
     private void move(String command) {
         checkBoard();
-        String[] commands = command.split(" ");
+        String[] commands = command.split(InputView.DELIMITER);
         MoveCommand moveCommand = new MoveCommand(commands[1], commands[2]);
         board.tryMove(moveCommand);
         outputView.printBoard(board.getBoard());
