@@ -23,6 +23,10 @@ public abstract class Piece {
         return directions.contains(targetDirection);
     }
 
+    final public boolean isPawn() {
+        return getOwnPieceType().name().equals(PieceType.PAWN.name());
+    }
+
     final public boolean isAlly(final Piece piece) {
         if (piece.isEmpty()) {
             return false;
