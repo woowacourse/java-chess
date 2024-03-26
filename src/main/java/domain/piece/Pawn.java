@@ -10,7 +10,6 @@ import domain.PiecesOnChessBoard;
 import domain.Position;
 import domain.Team;
 import java.util.List;
-import java.util.Optional;
 
 public final class Pawn extends Piece {
 
@@ -51,7 +50,7 @@ public final class Pawn extends Piece {
     }
 
     private boolean isEmpty(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
-        Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
+        Team targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
         return targetTeam.isEmpty();
     }
 
@@ -68,7 +67,7 @@ public final class Pawn extends Piece {
     private boolean isAllPieceOnRouteIsEmpty(PiecesOnChessBoard piecesOnChessBoard, List<Position> route) {
         return route.stream()
                 .map(piecesOnChessBoard::whichTeam)
-                .allMatch(Optional::isEmpty);
+                .allMatch(Team::isEmpty);
     }
 
     private boolean isMoveDiagonal(Position targetPosition) {
@@ -79,8 +78,8 @@ public final class Pawn extends Piece {
     }
 
     private boolean isOtherTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
-        Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
-        return targetTeam.isPresent() && !targetTeam.get().equals(getTeam());
+        Team targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
+        return targetTeam.equals(getTeam().otherTeam());
     }
 
     @Override

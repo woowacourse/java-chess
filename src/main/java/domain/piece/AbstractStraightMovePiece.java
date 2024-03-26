@@ -35,6 +35,6 @@ abstract class AbstractStraightMovePiece extends AbstractCatchOnMovePiece {
     private boolean isAnyPieceOnRouteIsPresent(PiecesOnChessBoard piecesOnChessBoard, List<Position> route) {
         return route.stream()
                 .map(piecesOnChessBoard::whichTeam)
-                .anyMatch(Optional::isPresent);
+                .anyMatch(Team::isPresent);
     }
 }

@@ -2,12 +2,12 @@ package domain;
 
 import static domain.Position.D2;
 import static domain.Team.BLACK;
+import static domain.Team.NONE;
 import static domain.Team.WHITE;
 
 import domain.piece.Pawn;
 import domain.piece.Piece;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -31,17 +31,17 @@ class PiecesOnChessBoardTest {
     void whichTeam(Team team) {
         List<Piece> pieces = List.of(new Pawn(D2, team));
         PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(pieces);
-        Team actual = piecesOnChessBoard.whichTeam(D2).orElseThrow();
+        Team actual = piecesOnChessBoard.whichTeam(D2);
         Assertions.assertThat(actual)
                 .isEqualTo(team);
     }
 
     @Test
-    @DisplayName("해당 위치에 말이 없는 경우 팀을 판단할 수 없는지 검증")
+    @DisplayName("해당 위치에 말이 없는 경우 NONE을 반환하는지 검증")
     void whichTeamWhenEmpty() {
         PiecesOnChessBoard piecesOnChessBoard = new PiecesOnChessBoard(List.of());
-        Optional<Team> actual = piecesOnChessBoard.whichTeam(D2);
+        Team actual = piecesOnChessBoard.whichTeam(D2);
         Assertions.assertThat(actual)
-                .isEmpty();
+                .isEqualTo(NONE);
     }
 }
