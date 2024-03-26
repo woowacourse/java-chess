@@ -37,7 +37,7 @@ public class ChessBoard {
                 .toList();
     }
 
-    private void changeTurn(){
+    private void changeTurn() {
         currentTurnColor = currentTurnColor.next();
     }
 
