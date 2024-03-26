@@ -4,7 +4,7 @@ import chess.domain.location.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path {
+public class DirectionFinder {
 
     private static final int POSITIVE_DISTANCE = 1;
     private static final int NEUTRAL_DISTANCE = 0;
@@ -13,12 +13,8 @@ public class Path {
     public static List<Direction> createDirections(Location source, Location target) {
         int verticalDistance = source.calculateVerticalDistance(target);
         int horizontalDistance = source.calculateHorizontalDistance(target);
-        return Path.createDirectionsByDistance(verticalDistance, horizontalDistance);
-    }
-
-    private static List<Direction> createDirectionsByDistance(int verticalDistance, int horizontalDistance) {
-        validateDistance(verticalDistance, horizontalDistance);
         List<Direction> directions = new ArrayList<>();
+        validateDistance(verticalDistance, horizontalDistance);
         while (verticalDistance != 0 || horizontalDistance != 0) {
             Direction direction = Direction.of(verticalDistance, horizontalDistance);
             directions.add(direction);

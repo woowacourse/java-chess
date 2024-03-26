@@ -11,7 +11,7 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Route route) {
-        if (route.hasPiecePathExcludedTarget()) {
+        if (route.hasPiecePathExclusive()) {
             return false;
         }
         return route.hasNoAllyAtTarget() && route.categoryNumOf(1);

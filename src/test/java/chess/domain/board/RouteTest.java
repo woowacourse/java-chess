@@ -120,7 +120,7 @@ class RouteTest {
 
     @DisplayName("도착 지점을 제외한 경로에 기물이 있는지 확인한다.")
     @Nested
-    class HasPiecePathExcludedTargetTest {
+    class HasPieceDirectionFinderExcludedTargetTest {
         @DisplayName("도착 지점을 제외한 경로에 기물이 있으면 참을 반환한다.")
         @Test
         void trueTest() {
@@ -128,7 +128,7 @@ class RouteTest {
                     List.of(Direction.DOWN_LEFT, Direction.DOWN_LEFT),
                     List.of(SquareState.ALLY, SquareState.EMPTY)
             );
-            assertThat(route.hasPiecePathExcludedTarget()).isTrue();
+            assertThat(route.hasPiecePathExclusive()).isTrue();
         }
 
         @DisplayName("도착 지점을 제외한 경로에 기물이 없으면 거짓을 반환한다.")
@@ -139,7 +139,7 @@ class RouteTest {
                     List.of(SquareState.EMPTY, SquareState.EMPTY)
             );
 
-            assertThat(route.hasPiecePathExcludedTarget()).isFalse();
+            assertThat(route.hasPiecePathExclusive()).isFalse();
         }
     }
 

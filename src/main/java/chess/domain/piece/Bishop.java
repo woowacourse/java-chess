@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Route route) {
-        if (route.hasPiecePathExcludedTarget()) {
+        if (route.hasPiecePathExclusive()) {
             return false;
         }
         if (route.containsOrthogonal()) {

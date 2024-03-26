@@ -11,14 +11,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-class PathTest {
+class DirectionFinderTest {
     @DisplayName("경로를 생성한다.")
     @Nested
     class DirectionsTest {
         @DisplayName("제자리 경로는 생성할 수 없다.")
         @Test
         void notMoveCreateExceptionTest() {
-            assertThatCode(() -> Path.createDirections(
+            assertThatCode(() -> DirectionFinder.createDirections(
                     new Location(Column.C, Row.TWO), new Location(Column.C, Row.TWO))
             )
                     .isInstanceOf(IllegalArgumentException.class)
@@ -39,7 +39,7 @@ class PathTest {
         @DisplayName("오른쪽위, 오른쪽, 오른쪽 경로를 생성할 수 있다.")
         @Test
         void create_UR_R_R_Test() {
-            List<Direction> directions = Path.createDirections(
+            List<Direction> directions = DirectionFinder.createDirections(
                     new Location(Column.A, Row.ONE),
                     new Location(Column.D, Row.TWO)
             );
@@ -62,7 +62,7 @@ class PathTest {
         @DisplayName("아래, 아래, 아래 경로를 생성할 수 있다.")
         @Test
         void create_D_D_D_Test() {
-            List<Direction> directions = Path.createDirections(
+            List<Direction> directions = DirectionFinder.createDirections(
                     new Location(Column.A, Row.EIGHT),
                     new Location(Column.A, Row.FIVE)
             );
