@@ -86,7 +86,8 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('c', 3)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("해당 기물이 이동할 수 있는 위치가 아닙니다.");
     }
 
     @DisplayName("룩이 이동할 경로에 기물이 있으면 예외가 발생한다.")
@@ -99,7 +100,8 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('a', 8)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("해당 기물이 이동할 수 있는 위치가 아닙니다.");
     }
 
     @DisplayName("폰은 수직으로 이동할 때 적이 경로에 있어도 전진할 수 없다.")
@@ -112,7 +114,8 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('a', 2)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("해당 기물이 이동할 수 있는 위치가 아닙니다.");
     }
 
     @DisplayName("폰은 대각선에 적이 없으면 대각선으로 이동할 수 없다.")
@@ -124,6 +127,7 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(Team.WHITE,
                 new Point('a', 1),
                 new Point('b', 2)))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("해당 기물이 이동할 수 있는 위치가 아닙니다.");
     }
 }
