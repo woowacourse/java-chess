@@ -65,8 +65,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.PAWN;
+    public String getOwnPieceTypeName() {
+        return PieceType.PAWN.name();
     }
 
     @Override

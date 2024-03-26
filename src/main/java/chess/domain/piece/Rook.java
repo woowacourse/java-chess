@@ -35,8 +35,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.ROOK;
+    public String getOwnPieceTypeName() {
+        return PieceType.ROOK.name();
     }
 
     @Override

@@ -21,8 +21,8 @@ public class Empty extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.EMPTY;
+    public String getOwnPieceTypeName() {
+        return PieceType.EMPTY.name();
     }
 
     @Override

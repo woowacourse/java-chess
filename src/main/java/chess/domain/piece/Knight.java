@@ -39,8 +39,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.KNIGHT;
+    public String getOwnPieceTypeName() {
+        return PieceType.KNIGHT.name();
     }
 
     @Override

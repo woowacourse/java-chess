@@ -33,7 +33,7 @@ public enum PieceExpression {
     private static String findMatchedExpression(final Piece piece) {
         return Arrays.stream(values())
                 .filter(expression -> expression.name()
-                        .equals(piece.getOwnPieceType().name()))
+                        .equals(piece.getOwnPieceTypeName()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 유형의 기물입니다."))
                 .expression;

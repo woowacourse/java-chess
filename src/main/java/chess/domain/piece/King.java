@@ -40,8 +40,8 @@ public class King extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.KING;
+    public String getOwnPieceTypeName() {
+        return PieceType.KING.name();
     }
 
     @Override

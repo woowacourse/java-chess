@@ -39,8 +39,8 @@ public class Queen extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.QUEEN;
+    public String getOwnPieceTypeName() {
+        return PieceType.QUEEN.name();
     }
 
     @Override

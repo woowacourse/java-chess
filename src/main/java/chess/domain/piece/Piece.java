@@ -18,6 +18,12 @@ public abstract class Piece {
 
     abstract public List<Position> findPath(final Position source, final Position target);
 
+    abstract public String getOwnPieceTypeName();
+
+    abstract public boolean canMoveMoreThenOnce();
+
+    abstract public boolean isEmpty();
+
     final protected List<Position> findPathOfSingleMovePiece(final Position source, final Position target) {
         List<Position> positions = new ArrayList<>();
 
@@ -50,18 +56,18 @@ public abstract class Piece {
         return positions;
     }
 
-    abstract public PieceType getOwnPieceType();
-
-    abstract public boolean canMoveMoreThenOnce();
-
-    abstract public boolean isEmpty();
+    final protected void validateDirection(final Direction direction) {
+        if (!directions.contains(direction)) {
+            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
+        }
+    }
 
     final public boolean canMoveInTargetDirection(final Direction targetDirection) {
         return directions.contains(targetDirection);
     }
 
     final public boolean isPawn() {
-        return getOwnPieceType().name().equals(PieceType.PAWN.name());
+        return getOwnPieceTypeName().equals(PieceType.PAWN.name());
     }
 
     final public boolean isAlly(final Piece piece) {
@@ -74,11 +80,5 @@ public abstract class Piece {
 
     final public boolean isBlack() {
         return this.color == Color.BLACK;
-    }
-
-    final protected void validateDirection(final Direction direction) {
-        if (!directions.contains(direction)) {
-            throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
-        }
     }
 }

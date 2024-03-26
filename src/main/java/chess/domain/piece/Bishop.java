@@ -35,8 +35,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public PieceType getOwnPieceType() {
-        return PieceType.BISHOP;
+    public String getOwnPieceTypeName() {
+        return PieceType.BISHOP.name();
     }
 
     @Override
