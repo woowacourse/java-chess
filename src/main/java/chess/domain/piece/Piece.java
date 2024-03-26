@@ -46,6 +46,10 @@ public abstract class Piece {
         return pieceType != PieceType.EMPTY;
     }
 
+    public boolean isEmpty() {
+        return pieceType == PieceType.EMPTY;
+    }
+
     public PieceType getPieceType() {
         return pieceType;
     }

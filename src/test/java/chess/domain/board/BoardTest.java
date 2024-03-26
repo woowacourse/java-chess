@@ -55,6 +55,17 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("보드에서 말울 이동할 때 출발 위치에 말 존재하지 않을 경우 예외가 발생한다.")
+    void Given_Board_When_MoveEmptyPieceAndColorValidPosition_Then_Exception() {
+        //given
+        Board board = BoardCreator.create();
+        //when, then
+        assertThatThrownBy(() -> board.move(new Position(3, 6), new Position(4, 6)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("기물이 존재하지 않아 이동시킬 수 없습니다.");
+    }
+
+    @Test
     @DisplayName("흑색 차례에 흑색의 킹이 존재하지 않으면 게임이 끝난다.")
     void Given_Board_When_IsGameOverBlackTurnDoesNotHaveKing_Then_True() {
         //given, when

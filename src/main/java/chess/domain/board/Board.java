@@ -21,6 +21,7 @@ public class Board {
 
     public Board move(final Position source, final Position target) {
         Piece piece = board.get(source);
+        validateEmpty(source);
         validateColorTurn(piece);
         validateMovement(source, target, piece);
 
@@ -28,6 +29,12 @@ public class Board {
         board.put(source, EMPTY);
 
         return new Board(board, color.opposite());
+    }
+
+    private void validateEmpty(Position source) {
+        if (board.get(source).isEmpty()) {
+            throw new IllegalArgumentException("기물이 존재하지 않아 이동시킬 수 없습니다.");
+        }
     }
 
     private void validateColorTurn(Piece piece) {
