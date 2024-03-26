@@ -17,6 +17,10 @@ public class Score {
         return new Score(this.score - subtrahend);
     }
 
+    public double getScore() {
+        return score;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
