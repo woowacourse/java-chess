@@ -18,11 +18,11 @@ public class PositionConverter {
         return new Position(FileSymbol.convertFile(file), Integer.parseInt(rank));
     }
 
-    private static void validateNumeric(String file) {
+    private static void validateNumeric(String rank) {
         try {
-            Integer.parseInt(file);
+            Integer.parseInt(rank);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("Rank는 숫자 1 부터 8까지 입력할 수 있습니다.");
+            throw new IllegalArgumentException("Rank에 문자를 입력할 수 없습니다.");
         }
     }
 }
