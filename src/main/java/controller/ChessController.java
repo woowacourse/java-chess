@@ -1,10 +1,10 @@
 package controller;
 
+import connection.ChessConnectionGenerator;
 import domain.ChessGameResult;
 import domain.Team;
 import domain.piece.Piece;
 import domain.square.Square;
-import repository.ChessConnectionGenerator;
 import service.ChessGameService;
 import view.InputView;
 import view.OutputView;

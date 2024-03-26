@@ -3,9 +3,10 @@ package service;
 import domain.ChessGameResult;
 import domain.Team;
 import domain.chessboard.ChessBoard;
-import domain.chessboard.ChessBoardDao;
 import domain.piece.Piece;
 import domain.square.Square;
+import repository.ChessBoardDao;
+import repository.ChessGameDao;
 
 import java.sql.Connection;
 import java.util.List;

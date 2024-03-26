@@ -1,4 +1,4 @@
-package domain.chessboard;
+package repository;
 
 import domain.piece.Piece;
 import domain.piece.PieceMaker;

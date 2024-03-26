@@ -1,5 +1,6 @@
 package domain.chessboard;
 
+import connection.ChessConnectionGenerator;
 import domain.Team;
 import domain.piece.Pawn;
 import domain.piece.Piece;
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import repository.ChessConnectionGenerator;
+import repository.ChessBoardDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

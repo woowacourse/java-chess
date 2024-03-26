@@ -1,4 +1,4 @@
-package repository;
+package connection;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
