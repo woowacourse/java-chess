@@ -11,11 +11,6 @@ public class InputView {
     private static final int FILE_START_ASCII = 'a' - 1;
     private static final int RANK_START_ASCII = '1' - 1;
 
-    public Command askCommand() {
-        String input = SCANNER.next();
-        return Command.findBy(input);
-    }
-
     public Command askStartCommand() {
         String input = SCANNER.next();
         Command command = Command.findBy(input);
