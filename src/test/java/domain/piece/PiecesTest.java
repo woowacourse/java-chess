@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.piece.kind.*;
 import domain.piece.kind.sliding.Bishop;
+import domain.piece.kind.sliding.Queen;
 import domain.piece.kind.sliding.Rook;
 import fixture.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
