@@ -23,6 +23,10 @@ public enum DiagonalDirection implements Direction {
                 .orElseThrow(() -> new IllegalArgumentException("이동할 수 없는 위치입니다."));
     }
 
+    public static boolean isDiagonal(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
+    }
+
     @Override
     public boolean isSameDirection(int rowDifference, int columnDifference) {
         if (Math.abs(rowDifference) != Math.abs(columnDifference)) {
