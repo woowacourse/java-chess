@@ -1,18 +1,18 @@
-package chess.view;
+package chess.view.viewer;
 
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 
 public class CharacterViewer {
-    public static String convertToString(Team team, Kind kind) {
-        String kindValue = convertKindToString(kind);
+    public static String showKind(Team team, Kind kind) {
+        String kindView = showKind(kind);
         if (Team.WHITE == team) {
-            return kindValue;
+            return kindView;
         }
-        return kindValue.toUpperCase();
+        return kindView.toUpperCase();
     }
 
-    private static String convertKindToString(Kind kind) {
+    private static String showKind(Kind kind) {
         return switch (kind) {
             case PAWN -> "p";
             case KNIGHT -> "n";

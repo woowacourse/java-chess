@@ -25,13 +25,17 @@ public class ChessGame {
         }
     }
 
-    public Status checkStatus() {
+    public State checkStatus() {
         if (board.isChecked(currentTeam)) {
             if (board.isCheckmate(currentTeam)) {
-                return Status.CHECKMATE;
+                return State.CHECKMATE;
             }
-            return Status.CHECK;
+            return State.CHECK;
         }
-        return Status.NORMAL;
+        return State.NORMAL;
+    }
+
+    public Team getCurrentTeam() {
+        return currentTeam;
     }
 }

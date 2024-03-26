@@ -35,7 +35,7 @@ public class BoardTest {
         assertThatThrownBy(() ->
                 board.validateSameTeamByPosition(Position.of(2, 2), Team.BLACK))
                 .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("%s 팀이 움직일 차례입니다".formatted(Team.BLACK.name()));
+                .hasMessage("흑팀이 움직일 차례입니다");
     }
 
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")
@@ -80,7 +80,7 @@ public class BoardTest {
                 Position.of(1, 4), new Knight(Team.WHITE)
         ));
 
-        assertThat(board.calculatePoint(Team.WHITE)).isEqualTo(5.5);
+        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(5.5);
     }
 
     @DisplayName("폰이 두개 이상 세로로 겹쳐져 있는 경우, 폰 개수당 0.5점을 감점한다.")
@@ -94,7 +94,7 @@ public class BoardTest {
                 Position.of(2, 5), new WhitePawn()
         ));
 
-        assertThat(board.calculatePoint(Team.WHITE)).isEqualTo(2.5);
+        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(2.5);
     }
 
     @DisplayName("왕이 공격받고 있으면, 체크이다.")

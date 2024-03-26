@@ -1,6 +1,6 @@
 package chess.domain;
 
-public enum Status {
+public enum State {
     CHECK,
     CHECKMATE,
     NORMAL,

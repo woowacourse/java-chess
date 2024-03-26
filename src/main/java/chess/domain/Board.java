@@ -5,6 +5,7 @@ import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.ImpossibleMoveException;
+import chess.view.viewer.TeamViewer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class Board {
     public void validateSameTeamByPosition(Position position, Team team) {
         validatePieceExistsOnPosition(position);
         if (!pieces.get(position).isSameTeamWith(team)) {
-            throw new ImpossibleMoveException("%s 팀이 움직일 차례입니다".formatted(team.name()));
+            throw new ImpossibleMoveException("%s이 움직일 차례입니다".formatted(TeamViewer.show(team)));
         }
     }
 
@@ -67,12 +68,16 @@ public class Board {
                 .anyMatch(pieces::containsKey);
     }
 
-    public double calculatePoint(Team team) {
-        double pointSum = findSameTeamPieces(team).mapToDouble(entry -> entry.getValue().point()).sum();
+    public GameResult findResultByScore() {
+        return GameResult.findGameResult(calculateScore(Team.WHITE), calculateScore(Team.BLACK));
+    }
+
+    public double calculateScore(Team team) {
+        double totalScore = findSameTeamPieces(team).mapToDouble(entry -> entry.getValue().point()).sum();
         if (sameColumnPawnCount(team) > 1) {
-            pointSum = pointSum - sameColumnPawnCount(team) * 0.5;
+            totalScore = totalScore - sameColumnPawnCount(team) * 0.5;
         }
-        return pointSum;
+        return totalScore;
     }
 
     private int sameColumnPawnCount(Team team) {
@@ -144,7 +149,7 @@ public class Board {
                 .filter(entry -> entry.getValue().isSameCharacter(myKingCharacter))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException(
-                        "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(team.name())))
+                        "%s 왕이 체스판 위에 존재하기 않습니다.".formatted(TeamViewer.show(team))))
                 .getKey();
     }
 
