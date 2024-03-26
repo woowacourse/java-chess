@@ -1,10 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -18,17 +16,10 @@ public enum Rank {
     ONE(1),
     ;
 
-    private final int value;
+    private final int order;
 
-    Rank(int value) {
-        this.value = value;
-    }
-
-    public static int max() {
-        return Arrays.stream(values())
-                .mapToInt(it -> it.value)
-                .max()
-                .orElseThrow();
+    Rank(int order) {
+        this.order = order;
     }
 
     public int gap(Rank other) {
@@ -36,29 +27,26 @@ public enum Rank {
     }
 
     public int difference(Rank other) {
-        return value - other.value;
+        return order - other.order;
     }
 
-    public List<Rank> findBetween(Rank target) {
-        if (this.value > target.value) {
-            return makeBetween(targetToSource(target));
+    public List<Rank> findBetween(Rank other) {
+        if (this.order < other.order) {
+            return betweenDesc(other);
         }
-        List<Rank> files = makeBetween(sourceToTarget(target));
-        Collections.reverse(files);
-        return files;
+        return betweenAsc(other);
     }
 
-    private List<Rank> makeBetween(Predicate<Rank> predicate) {
+    private List<Rank> betweenAsc(Rank other) {
         return Arrays.stream(values())
-                .filter(predicate)
-                .collect(Collectors.toList());
+                .filter(file -> file.order > other.order && file.order < this.order)
+                .toList();
     }
 
-    private Predicate<Rank> targetToSource(Rank other) {
-        return rank -> rank.value < this.value && rank.value > other.value;
-    }
-
-    private Predicate<Rank> sourceToTarget(Rank other) {
-        return rank -> rank.value > this.value && rank.value < other.value;
+    private List<Rank> betweenDesc(Rank other) {
+        return Arrays.stream(values())
+                .filter(file -> file.order > this.order && file.order < other.order)
+                .sorted(Comparator.comparingInt(Rank::ordinal).reversed())
+                .toList();
     }
 }

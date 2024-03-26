@@ -1,10 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public enum File {
 
@@ -24,13 +22,6 @@ public enum File {
         this.order = order;
     }
 
-    public static int max() {
-        return Arrays.stream(values())
-                .mapToInt(it -> it.order)
-                .max()
-                .orElseThrow();
-    }
-
     public static int length() {
         return values().length;
     }
@@ -39,26 +30,23 @@ public enum File {
         return Math.abs(order - other.order);
     }
 
-    public List<File> findBetween(File target) {
-        if (this.order > target.order) {
-            List<File> files = makeBetween(targetToSource(target));
-            Collections.reverse(files);
-            return files;
+    public List<File> findBetween(File other) {
+        if (this.order < other.order) {
+            return betweenAcs(other);
         }
-        return makeBetween(sourceToTarget(target));
+        return betweenDesc(other);
     }
 
-    private List<File> makeBetween(Predicate<File> predicate) {
+    private List<File> betweenAcs(File other) {
         return Arrays.stream(values())
-                .filter(predicate)
-                .collect(Collectors.toList());
+                .filter(file -> file.order > this.order && file.order < other.order)
+                .toList();
     }
 
-    private Predicate<File> targetToSource(File other) {
-        return file -> file.order < this.order && file.order > other.order;
-    }
-
-    private Predicate<File> sourceToTarget(File other) {
-        return file -> file.order > this.order && file.order < other.order;
+    private List<File> betweenDesc(File other) {
+        return Arrays.stream(values())
+                .filter(file -> file.order > other.order && file.order < this.order)
+                .sorted(Comparator.comparingInt(File::ordinal).reversed())
+                .toList();
     }
 }
