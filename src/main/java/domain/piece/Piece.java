@@ -8,45 +8,46 @@ import domain.Position;
 import domain.Team;
 
 public abstract class Piece {
-	private final Team team;
-	private Position position;
+    private final Team team;
+    private Position position;
 
-	public Piece(Position position, Team team) {
-		this.position = position;
-		this.team = team;
-	}
+    public Piece(Position position, Team team) {
+        this.position = position;
+        this.team = team;
+    }
 
-	public final PieceMoveResult move(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
-		if (targetPosition == position) {
-			return FAILURE;
-		}
-		PieceMoveResult pieceMoveResult = tryMove(targetPosition, piecesOnChessBoard);
-		if (!pieceMoveResult.equals(FAILURE)) {
-			position = targetPosition;
-		}
-		return pieceMoveResult;
-	}
+    protected abstract PieceMoveResult tryMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard);
 
-	abstract PieceMoveResult tryMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard);
+    public abstract PieceType getPieceType();
 
-	public boolean isOn(Position position) {
-		return this.position.equals(position);
-	}
+    public final PieceMoveResult move(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
+        if (targetPosition == position) {
+            return FAILURE;
+        }
+        PieceMoveResult pieceMoveResult = tryMove(targetPosition, piecesOnChessBoard);
+        if (!pieceMoveResult.equals(FAILURE)) {
+            position = targetPosition;
+        }
+        return pieceMoveResult;
+    }
 
-	public Team getTeam() {
-		return team;
-	}
-	public abstract PieceType getPieceType();
+    public boolean isOn(Position position) {
+        return this.position.equals(position);
+    }
 
-	public int getColumn() {
-		return position.getColumn();
-	}
+    public Team getTeam() {
+        return team;
+    }
 
-	public int getRow() {
-		return position.getRow();
-	}
+    public int getColumn() {
+        return position.getColumn();
+    }
 
-	protected Position getPosition() {
-		return position;
-	}
+    public int getRow() {
+        return position.getRow();
+    }
+
+    protected Position getPosition() {
+        return position;
+    }
 }

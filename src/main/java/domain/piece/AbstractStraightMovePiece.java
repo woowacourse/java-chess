@@ -14,6 +14,9 @@ abstract class AbstractStraightMovePiece extends AbstractCatchOnMovePiece {
         super(position, team);
     }
 
+    protected abstract Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition,
+                                                                    PiecesOnChessBoard piecesOnChessBoard);
+
     @Override
     protected Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
                                                                         PiecesOnChessBoard piecesOnChessBoard) {
@@ -34,7 +37,4 @@ abstract class AbstractStraightMovePiece extends AbstractCatchOnMovePiece {
                 .map(piecesOnChessBoard::whichTeam)
                 .anyMatch(Optional::isPresent);
     }
-
-    protected abstract Optional<PieceMoveResult> tryMoveAssumeAlone(Position targetPosition,
-                                                                    PiecesOnChessBoard piecesOnChessBoard);
 }

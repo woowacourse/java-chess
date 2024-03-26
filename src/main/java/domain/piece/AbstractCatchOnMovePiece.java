@@ -15,6 +15,9 @@ abstract class AbstractCatchOnMovePiece extends Piece {
         super(position, team);
     }
 
+    protected abstract Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
+                                                                                 PiecesOnChessBoard piecesOnChessBoard);
+
     @Override
     public final PieceMoveResult tryMove(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
         Optional<PieceMoveResult> pieceMoveResult = tryMoveAssumeAloneAndCheckRoute(targetPosition, piecesOnChessBoard);
@@ -29,9 +32,6 @@ abstract class AbstractCatchOnMovePiece extends Piece {
         }
         return SUCCESS;
     }
-
-    protected abstract Optional<PieceMoveResult> tryMoveAssumeAloneAndCheckRoute(Position targetPosition,
-                                                                                 PiecesOnChessBoard piecesOnChessBoard);
 
     private boolean isMyTeam(Position targetPosition, PiecesOnChessBoard piecesOnChessBoard) {
         Optional<Team> targetTeam = piecesOnChessBoard.whichTeam(targetPosition);
