@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Piece {
 
-    protected final List<Direction> directions = new ArrayList<>();
+    protected final Set<Direction> directions = new HashSet<>();
     protected final Color color;
 
     protected Piece(final Color color) {
