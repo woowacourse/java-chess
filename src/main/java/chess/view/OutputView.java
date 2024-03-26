@@ -5,7 +5,7 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.view.display.ColorDisplay;
 import chess.view.display.PieceDisplay;
-import dto.Status;
+import chess.dto.Status;
 import java.util.List;
 import java.util.Map;
 

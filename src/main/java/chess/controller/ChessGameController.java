@@ -6,7 +6,7 @@ import chess.domain.position.Positions;
 import chess.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
-import dto.Status;
+import chess.dto.Status;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
