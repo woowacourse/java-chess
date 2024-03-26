@@ -1,4 +1,4 @@
-package domain.piece.kind;
+package domain.piece.kind.sliding;
 
 import domain.piece.Piece;
 import domain.piece.Pieces;

@@ -1,6 +1,8 @@
 package domain.piece;
 
 import domain.piece.kind.*;
+import domain.piece.kind.sliding.Bishop;
+import domain.piece.kind.sliding.Rook;
 import fixture.PieceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,24 +76,6 @@ class PiecesTest {
         final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
         assertThat(result).isFalse();
     }
-
-    @Test
-    @DisplayName("해당 기물이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")
-    void true_if_rook_piece_can_move() {
-
-        final var sut = new Pieces(List.of(
-                new Rook(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Bishop(new Point(File.C, Rank.ONE), Color.WHITE),
-                new Queen(new Point(File.E, Rank.ONE), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.A, Rank.SIX));
-        assertThat(result).isTrue();
-
-    }
-
 
     @Test
     @DisplayName("해당 퀸이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")

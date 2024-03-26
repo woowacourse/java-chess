@@ -1,35 +1,27 @@
-package domain.piece.kind;
+package domain.piece.kind.sliding;
 
 import domain.piece.Piece;
 import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
-
 import domain.piece.attribute.point.TempDirection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static domain.piece.attribute.point.TempDirection.LEFT_DOWN;
-import static domain.piece.attribute.point.TempDirection.LEFT_UP;
-import static domain.piece.attribute.point.TempDirection.RIGHT_DOWN;
-import static domain.piece.attribute.point.TempDirection.RIGHT_UP;
-
-
-public class Bishop extends Piece {
-    private static final Set<TempDirection> directionList = Set.of(LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN);
-
-    public Bishop(final Point point, final Color color) {
+public abstract class SlidingPiece extends Piece {
+    protected SlidingPiece(Point point, Color color) {
         super(point, color);
     }
 
-    @Override
-    protected Set<Point> findLegalMovePoints(Pieces pieces) {
-        return directionList.stream()
+    protected final Set<Point> findLegalMovePoints(Pieces pieces) {
+        return getMovableDirection().stream()
                 .flatMap(direction -> findLegalMovePointByDirection(pieces, direction).stream())
                 .collect(Collectors.toSet());
     }
+
+    protected abstract Set<TempDirection> getMovableDirection();
 
     private Set<Point> findLegalMovePointByDirection(Pieces pieces, TempDirection direction) {
         final var legalMovePoints = new HashSet<>(findEmptyPoints(pieces, direction));
@@ -66,19 +58,5 @@ public class Bishop extends Piece {
         return legalMovePoints.stream()
                 .filter(point -> !pieces.isFriend(this, point))
                 .collect(Collectors.toSet());
-    }
-
-    @Override
-    protected Piece update(Point point) {
-        return null;
-    }
-
-    @Override
-    public PieceStatus getStatus() {
-        return PieceStatus.BISHOP;
-    }
-
-    public boolean canMove(final Point point) {
-        return false;
     }
 }
