@@ -23,15 +23,16 @@ public class OutputView {
     }
 
     public void printChessBoard(List<Space> spaces) {
-        for (int j = 0; j < CHESS_BOARD_WIDTH; j++) {
-            printOneRankBoard(spaces, j);
+        for (int rankOrder = 0; rankOrder < CHESS_BOARD_WIDTH; rankOrder++) {
+            printOneRankBoard(spaces, rankOrder);
         }
         System.out.println();
     }
 
-    private void printOneRankBoard(List<Space> spaces, int j) {
-        for (int i = CHESS_BOARD_WIDTH * j; i < CHESS_BOARD_WIDTH * j + CHESS_BOARD_WIDTH; i++) {
-            Space space = spaces.get(i);
+    private void printOneRankBoard(List<Space> spaces, int rankOrder) {
+        for (int spaceNumber = CHESS_BOARD_WIDTH * rankOrder;
+             spaceNumber < CHESS_BOARD_WIDTH * rankOrder + CHESS_BOARD_WIDTH; spaceNumber++) {
+            Space space = spaces.get(spaceNumber);
             Piece piece = space.getPiece();
             System.out.print(findSign(piece));
         }

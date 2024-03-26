@@ -12,25 +12,6 @@ public class Pawn extends Piece {
         super(color, PieceType.PAWN);
     }
 
-    private boolean canFirstMove(Position from, Position to) {
-        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
-        if (isSameColor(Color.BLACK)) {
-            return rankDifference.hasSameDifference(-2) || canNormalMove(from, to);
-        }
-        return rankDifference.hasSameDifference(2) || canNormalMove(from, to);
-    }
-
-    private boolean canNormalMove(Position from, Position to) {
-        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
-        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
-        if (isSameColor(Color.WHITE)) {
-            return rankDifference.hasSameDifference(1)
-                    && fileDifference.hasDistance(0);
-        }
-        return rankDifference.hasSameDifference(-1)
-                && fileDifference.hasDistance(0);
-    }
-
     @Override
     public boolean canMove(Position from, Position to) {
         if (!isMoved) {
@@ -50,5 +31,24 @@ public class Pawn extends Piece {
         }
         return rankDifference.hasSameDifference(-1) &&
                 fileDifference.hasDistance(1);
+    }
+
+    private boolean canFirstMove(Position from, Position to) {
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
+        if (isSameColor(Color.BLACK)) {
+            return rankDifference.hasSameDifference(-2) || canNormalMove(from, to);
+        }
+        return rankDifference.hasSameDifference(2) || canNormalMove(from, to);
+    }
+
+    private boolean canNormalMove(Position from, Position to) {
+        FileDifference fileDifference = from.calculateFileDifferenceTo(to);
+        RankDifference rankDifference = from.calculateRankDifferenceTo(to);
+        if (isSameColor(Color.WHITE)) {
+            return rankDifference.hasSameDifference(1)
+                    && fileDifference.hasDistance(0);
+        }
+        return rankDifference.hasSameDifference(-1)
+                && fileDifference.hasDistance(0);
     }
 }
