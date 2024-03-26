@@ -25,13 +25,17 @@ public final class Pawn extends MultiMovePiece {
         List<Point> points = new ArrayList<>();
         int forwardDirection = team.forwardDirection();
 
-        if (currentPoint.isInitialPointOfPawn()) {
+        if (isInitialPointOfPawn(currentPoint)) {
             findMovablePoint(points, currentPoint, 0, TWO_RANK * forwardDirection);
         }
         for (Direction direction : Direction.findPawnDirections()) {
             findMovablePoint(points, currentPoint, direction.file(), direction.rank() * forwardDirection);
         }
         return points;
+    }
+
+    private boolean isInitialPointOfPawn(final Point currentPoint) {
+        return currentPoint.isSecondRank() || currentPoint.isSeventhRank();
     }
 
     private void findMovablePoint(List<Point> points, Point currentPoint, int addFile, int addRank) {

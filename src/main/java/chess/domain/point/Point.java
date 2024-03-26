@@ -83,10 +83,6 @@ public class Point {
         return rank.calculateDistanceFrom(destination.rank);
     }
 
-    public boolean isInitialPointOfPawn() {
-        return rank.isFirstPositionOfPawn();
-    }
-
     public Point add(int directionOfFile, int distanceToMove) {
         File addedFile = file.move(directionOfFile);
         Rank addedRank = rank.move(distanceToMove);
@@ -96,6 +92,14 @@ public class Point {
 
     public boolean addable(int addFile, int distanceToMove) {
         return file.canMove(addFile) && rank.canMove(distanceToMove);
+    }
+
+    public boolean isSecondRank() {
+        return this.rank == Rank.TWO;
+    }
+
+    public boolean isSeventhRank() {
+        return this.rank == Rank.SEVEN;
     }
 
     @Override
