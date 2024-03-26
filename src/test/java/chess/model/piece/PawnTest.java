@@ -23,9 +23,13 @@ class PawnTest {
     void from() {
         // given
         Pawn blackPawn = Pawn.from(Side.BLACK);
+        Pawn otherBlackPawn = Pawn.from(Side.BLACK);
 
-        // when & then
-        assertThat(Pawn.from(Side.BLACK)).isSameAs(blackPawn);
+        // when
+        boolean result = blackPawn.equals(otherBlackPawn);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

@@ -22,9 +22,13 @@ class KnightTest {
     void from() {
         // given
         Knight blackKnight = Knight.from(Side.BLACK);
+        Knight otherBlackKnight = Knight.from(Side.BLACK);
 
-        // when & then
-        assertThat(Knight.from(Side.BLACK)).isSameAs(blackKnight);
+        // when
+        boolean result = blackKnight.equals(otherBlackKnight);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

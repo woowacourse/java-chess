@@ -26,7 +26,10 @@ class PieceTest {
             }
         };
 
-        // when & then
-        assertThat(piece.isSameSide(other)).isTrue();
+        // when
+        boolean result = piece.isSameSide(other);
+
+        // then
+        assertThat(result).isTrue();
     }
 }

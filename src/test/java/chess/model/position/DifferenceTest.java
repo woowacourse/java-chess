@@ -15,9 +15,13 @@ class DifferenceTest {
     void from() {
         // given
         Difference difference = Difference.from(2);
+        Difference otherDifference = Difference.from(2);
 
-        // when & then
-        assertThat(Difference.from(2)).isSameAs(difference);
+        // when
+        boolean result = difference.equals(otherDifference);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

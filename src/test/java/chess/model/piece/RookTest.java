@@ -22,9 +22,13 @@ class RookTest {
     void from() {
         // given
         Rook blackRook = Rook.from(Side.BLACK);
+        Rook otherBlackRook = Rook.from(Side.BLACK);
 
-        // when & then
-        assertThat(Rook.from(Side.BLACK)).isSameAs(blackRook);
+        // when
+        boolean result = blackRook.equals(otherBlackRook);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

@@ -12,9 +12,13 @@ class ChessPositionTest {
     void from() {
         // given
         ChessPosition chessPosition = ChessPosition.of(File.A, Rank.ONE);
+        ChessPosition otherChessPosition = ChessPosition.of(File.A, Rank.ONE);
 
-        // when & then
-        assertThat(ChessPosition.of(File.A, Rank.ONE)).isSameAs(chessPosition);
+        // when
+        boolean result = chessPosition.equals(otherChessPosition);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @Test

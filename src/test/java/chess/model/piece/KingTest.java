@@ -22,9 +22,14 @@ class KingTest {
     void from() {
         // given
         King blackKing = King.from(Side.BLACK);
+        King otherBlackKing = King.from(Side.BLACK);
 
-        // when & then
-        assertThat(King.from(Side.BLACK)).isSameAs(blackKing);
+        // when
+        boolean result = blackKing.equals(otherBlackKing);
+
+        // then
+        assertThat(result).isTrue();
+
     }
 
     @ParameterizedTest

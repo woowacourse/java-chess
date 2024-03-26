@@ -22,9 +22,13 @@ class BishopTest {
     void from() {
         // given
         Bishop blackBishop = Bishop.from(Side.BLACK);
+        Bishop otherBlackBishop = Bishop.from(Side.BLACK);
 
-        // when & then
-        assertThat(Bishop.from(Side.BLACK)).isSameAs(blackBishop);
+        // when
+        boolean result = blackBishop.equals(otherBlackBishop);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest

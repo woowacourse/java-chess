@@ -22,9 +22,13 @@ class QueenTest {
     void from() {
         // given
         Queen blackQueen = Queen.from(Side.BLACK);
+        Queen otherBlackQueen = Queen.from(Side.BLACK);
 
-        // when & then
-        assertThat(Queen.from(Side.BLACK)).isSameAs(blackQueen);
+        // when
+        boolean result = blackQueen.equals(otherBlackQueen);
+
+        // then
+        assertThat(result).isTrue();
     }
 
     @ParameterizedTest
