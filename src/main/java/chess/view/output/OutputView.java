@@ -1,7 +1,6 @@
 package chess.view.output;
 
 import chess.domain.board.TurnTrackerBoard;
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.input.command.GameCommand;
@@ -41,20 +40,6 @@ public class OutputView {
                 .map(PieceSymbol::getDisplay)
                 .collect(Collectors.joining(""));
         System.out.println(rankLine);
-    }
-
-    public static void printWinner(Color winnerColor) {
-        System.out.printf("%s 이 승리하였습니다.%n", buildColor(winnerColor));
-    }
-
-    private static String buildColor(Color color) {
-        if (color == Color.BLACK) {
-            return "흑색";
-        }
-        if (color == Color.WHITE) {
-            return "백색";
-        }
-        throw new IllegalArgumentException("승부를 판단할 수 없습니다.");
     }
 
     public static void printErrorMessage(String message) {
