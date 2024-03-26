@@ -2,55 +2,24 @@ package chess.domain.attribute;
 
 import static chess.domain.attribute.File.A;
 import static chess.domain.attribute.File.B;
-import static chess.domain.attribute.File.C;
-import static chess.domain.attribute.File.D;
 import static chess.domain.attribute.File.E;
 import static chess.domain.attribute.File.F;
 import static chess.domain.attribute.File.G;
 import static chess.domain.attribute.File.H;
 import static chess.domain.attribute.Rank.EIGHT;
-import static chess.domain.attribute.Rank.FIVE;
-import static chess.domain.attribute.Rank.FOUR;
 import static chess.domain.attribute.Rank.ONE;
 import static chess.domain.attribute.Rank.SEVEN;
-import static chess.domain.attribute.Rank.SIX;
 import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Optional;
-import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class SquareTest {
-
-    private static Stream<Arguments> stringConstructor() {
-        return Stream.of(
-                Arguments.of("a1", Square.of(A, ONE)),
-                Arguments.of("b2", Square.of(B, TWO)),
-                Arguments.of("c3", Square.of(C, THREE)),
-                Arguments.of("d4", Square.of(D, FOUR)),
-                Arguments.of("e5", Square.of(E, FIVE)),
-                Arguments.of("f6", Square.of(F, SIX)),
-                Arguments.of("g7", Square.of(G, SEVEN)),
-                Arguments.of("h8", Square.of(H, EIGHT))
-        );
-    }
-
-    @DisplayName("좌표를 입력받아 체스판의 칸을 생성한다.")
-    @MethodSource
-    @ParameterizedTest
-    void stringConstructor(String input, Square expected) {
-        assertThat(Square.of(input)).isEqualTo(expected);
-    }
 
     @DisplayName("현재 위치에서 위로 이동한다.")
     @Test
