@@ -30,7 +30,7 @@ public class Pieces {
             case BISHOP, ROOK, QUEEN -> !(hasAnyPiece(piece.getPoint(), endPoint) && !isFriend(piece, endPoint));
             case KING, KNIGHT -> !isFriend(piece, endPoint);
             case PAWN ->
-                    (piece.isDirectionStraight(endPoint) && !isInPiece(endPoint)) || (piece.isDirectionDiagonal(endPoint) && !isFriend(piece, endPoint));
+                    (piece.isDirectionStraight(endPoint) && !hasPiece(endPoint)) || (piece.isDirectionDiagonal(endPoint) && !isFriend(piece, endPoint));
         };
     }
 
@@ -54,7 +54,7 @@ public class Pieces {
         return map;
     }
 
-    private boolean isFriend(Piece piece, Point point) {
+    public boolean isFriend(Piece piece, Point point) {
         final var optionalPiece = findPieceWithPoint(point);
         return optionalPiece.filter(piece::sameColor).isPresent();
     }
@@ -68,9 +68,13 @@ public class Pieces {
                    .anyMatch(Optional::isPresent);
     }
 
-
-    private boolean isInPiece(Point endPoint) {
+    public boolean hasPiece(Point endPoint) {
         return this.findPieceWithPoint(endPoint)
                    .isPresent();
+    }
+
+    public boolean hasNothing(Point endPoint) {
+        return this.findPieceWithPoint(endPoint)
+                .isEmpty();
     }
 }

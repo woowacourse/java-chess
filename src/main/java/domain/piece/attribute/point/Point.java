@@ -8,52 +8,86 @@ public record Point(File file, Rank rank) {
 
     private static final Pattern pattern = Pattern.compile("[a-h][1-8]");
 
-    public boolean canMoveUp() {
-        return rank.canMoveUp(1);
+    public Point move(TempDirection direction) {
+        return moveVertical(direction.y()).moveHorizontal(direction.x());
     }
 
-    public boolean canMoveDown() {
-        return rank.canMoveDown(1);
+    private Point moveVertical(final int step) {
+        if (step > 0) {
+            return moveUp(step);
+        }
+        if (step < 0) {
+            return moveDown(-step);
+        }
+        return this;
     }
 
-    public boolean canMoveLeft() {
-        return file.canMoveLeft(1);
+    private Point moveHorizontal(final int step) {
+        if (step > 0) {
+            return moveRight(step);
+        }
+        if (step < 0) {
+            return moveLeft(-step);
+        }
+        return this;
     }
 
-    public boolean canMoveRight() {
-        return file.canMoveRight(1);
+    public boolean canMove(final TempDirection direction) {
+        return canVerticalMove(direction.y()) && canHorizontalMove(direction.x());
     }
 
-    public Point moveUp() {
-        return new Point(file, rank.moveUp(1));
+    private boolean canVerticalMove(final int step) {
+        if (step > 0) {
+            return canMoveUp(step);
+        }
+        if (step < 0) {
+            return canMoveDown(-step);
+        }
+        return true;
     }
 
-    public Point moveDown() {
-        return new Point(file, rank.moveDown(1));
+    private boolean canHorizontalMove(final int step) {
+        if (step > 0) {
+            return canMoveRight(step);
+        }
+        if (step < 0) {
+            return canMoveLeft(-step);
+        }
+        return true;
     }
 
-    public Point moveLeft() {
-        return new Point(file.moveLeft(), rank);
+
+    public boolean canMoveUp(final int step) {
+        return rank.canMoveUp(step);
     }
 
-    public Point moveRight() {
-        return new Point(file.moveRight(), rank);
+    public boolean canMoveDown(final int  step) {
+        return rank.canMoveDown(step);
     }
 
-    public Point moveLeftUp() {
-        return new Point(file.moveLeft(), rank.moveUp());
+    public boolean canMoveLeft(final int step) {
+        return file.canMoveLeft(step);
     }
 
-    public Point moveRightUp() {
-        return new Point(file.moveRight(), rank.moveUp());
+
+    public boolean canMoveRight(final int step) {
+        return file.canMoveRight(step);
     }
 
-    public Point moveLeftDown() {
-        return new Point(file.moveLeft(), rank.moveDown());
+    public Point moveUp(final int step) {
+        return new Point(file, rank.moveUp(step));
     }
 
-    public Point moveRightDown() {
-        return new Point(file.moveRight(), rank().moveDown());
+    public Point moveDown(final int step) {
+        return new Point(file, rank.moveDown(step));
+    }
+
+    public Point moveLeft(final int step) {
+        return new Point(file.moveLeft(step), rank);
+    }
+
+    public Point moveRight(final int step) {
+        return new Point(file.moveRight(step), rank);
     }
 
     public int getFileIndex() {

@@ -58,6 +58,15 @@ class RankTest {
                 .isTrue();
     }
 
+
+    @ParameterizedTest
+    @EnumSource(value = Rank.class, mode = Mode.INCLUDE, names = {"ONE", "TWO"})
+    @DisplayName("랭크는 아래로 이동할 거리만큼 이동이 가능하다면 참을 반환한다.")
+    void return_false_when_rank_can_not_move_to_down_by_insert_value(Rank rank) {
+        assertThat(rank.canMoveDown(2))
+                .isFalse();
+    }
+
     @Test
     @DisplayName("랭크는 위로 이동하고 싶은 거리만큼 이동이 가능하다면 다음 이동한 랭크를 반환한다.")
     void return_new_rank_that_moved_up_position_by_insert_value() {

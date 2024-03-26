@@ -1,12 +1,14 @@
 package domain.piece.kind;
 
 import domain.piece.Piece;
+import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Direction;
 import domain.piece.attribute.point.Index;
 import domain.piece.attribute.point.Point;
 
 import java.util.List;
+import java.util.Set;
 
 import static domain.piece.attribute.point.Direction.*;
 
@@ -46,5 +48,15 @@ public class Knight extends Piece {
     @Override
     public PieceStatus getStatus() {
         return PieceStatus.KNIGHT;
+    }
+
+    @Override
+    protected Set<Point> findLegalMovePoints(Pieces pieces) {
+        return null;
+    }
+
+    @Override
+    protected Piece update(Point point) {
+        return null;
     }
 }

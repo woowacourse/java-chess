@@ -68,7 +68,7 @@ class PointTest {
     void point_can_move_to_down() {
         Point sut = new Point(File.A, Rank.TWO);
 
-        assertThat(sut.moveDown())
+        assertThat(sut.moveDown(1))
                 .isEqualTo(new Point(File.A, Rank.ONE));
     }
 
@@ -77,7 +77,7 @@ class PointTest {
     void point_can_move_to_up() {
         Point sut = new Point(File.A, Rank.ONE);
 
-        assertThat(sut.moveUp())
+        assertThat(sut.moveUp(1))
                 .isEqualTo(new Point(File.A, Rank.TWO));
     }
 
@@ -86,7 +86,7 @@ class PointTest {
     void point_can_move_to_left() {
         Point sut = new Point(File.B, Rank.ONE);
 
-        assertThat(sut.moveLeft())
+        assertThat(sut.moveLeft(1))
                 .isEqualTo(new Point(File.A, Rank.ONE));
     }
 
@@ -95,44 +95,9 @@ class PointTest {
     void point_can_move_to_right() {
         Point sut = new Point(File.A, Rank.ONE);
 
-        assertThat(sut.moveRight())
+        assertThat(sut.moveRight(1))
                 .isEqualTo(new Point(File.B, Rank.ONE));
     }
 
-    @Test
-    @DisplayName("포인트는 왼&위 대각으로 이동할 수 있다.")
-    void point_can_move_to_left_up() {
-        Point sut = new Point(File.B, Rank.ONE);
-
-        assertThat(sut.moveLeftUp())
-                .isEqualTo(new Point(File.A, Rank.TWO));
-    }
-
-    @Test
-    @DisplayName("포인트는 오른&위 대각으로 이동할 수 있다.")
-    void point_can_move_to_right_up() {
-        Point sut = new Point(File.A, Rank.ONE);
-
-        assertThat(sut.moveRightUp())
-                .isEqualTo(new Point(File.B, Rank.TWO));
-    }
-
-    @Test
-    @DisplayName("포인트는 왼&아래 대각으로 이동할 수 있다.")
-    void point_can_move_to_left_down() {
-        Point sut = new Point(File.B, Rank.TWO);
-
-        assertThat(sut.moveLeftDown())
-                .isEqualTo(new Point(File.A, Rank.ONE));
-    }
-
-    @Test
-    @DisplayName("포인트는 오른&아래 대각으로 이동할 수 있다")
-    void point_can_move_to_right_down() {
-        Point sut = new Point(File.A, Rank.TWO);
-
-        assertThat(sut.moveRightDown())
-                .isEqualTo(new Point(File.B, Rank.ONE));
-    }
 
 }

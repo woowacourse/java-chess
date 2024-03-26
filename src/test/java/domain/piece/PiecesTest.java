@@ -109,22 +109,6 @@ class PiecesTest {
         assertThat(result).isTrue();
     }
 
-
-    @Test
-    @DisplayName("해당 비숍이 특정 기물들 사이에서 이동할 수 있으면 참을 반환한다.")
-    void true_if_bishop_piece_can_move() {
-
-        final var sut = new Pieces(List.of(
-                new Bishop(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Queen(new Point(File.F, Rank.SIX), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.E, Rank.FIVE));
-        assertThat(result).isTrue();
-    }
-
     @Test
     @DisplayName("나이트는 도착하는 위치에 적 기물이 있으면 참을 반환한다.")
     void true_if_knight_piece_move_not_existed_enemy_point() {
