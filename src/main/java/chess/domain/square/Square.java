@@ -12,7 +12,15 @@ public record Square(File file, Rank rank) {
     private static final int TWO_STEP = 2;
 
     public boolean isStraight(final Square target) {
-        return file.isSameFile(target.file) || rank.isSameRank(target.rank());
+        return isVertical(target) || isHorizontal(target);
+    }
+
+    private boolean isVertical(final Square target) {
+        return file.isSameFile(target.file);
+    }
+
+    private boolean isHorizontal(final Square target) {
+        return rank.isSameRank(target.rank);
     }
 
     public boolean isDiagonal(final Square target) {
@@ -20,17 +28,38 @@ public record Square(File file, Rank rank) {
     }
 
     public boolean isWithinOneStep(final Square target) {
-        return file.calculateDistance(target.file) <= ONE_STEP &&
-                rank.calculateDistance(target.rank) <= ONE_STEP;
+        return isFileWithinOneStep(target) && isRankWithinOneStep(target);
+    }
+
+    private boolean isFileWithinOneStep(final Square target) {
+        return file.calculateDistance(target.file) <= ONE_STEP;
+    }
+
+    private boolean isRankWithinOneStep(final Square target) {
+        return rank.calculateDistance(target.rank) <= ONE_STEP;
     }
 
     public boolean isStraightAndDiagonal(final Square target) {
-        if (file.calculateDistance(target.file) == ONE_STEP
-                && rank.calculateDistance(target.rank) == TWO_STEP) {
+        if (isFileOneStep(target) && isRankTwoStep(target)) {
             return true;
         }
-        return file.calculateDistance(target.file) == TWO_STEP
-                && rank.calculateDistance(target.rank) == ONE_STEP;
+        return isFileTwoStep(target) && isRankOneStep(target);
+    }
+
+    private boolean isFileOneStep(final Square target) {
+        return file.calculateDistance(target.file) == ONE_STEP;
+    }
+
+    private boolean isFileTwoStep(final Square target) {
+        return file.calculateDistance(target.file) == TWO_STEP;
+    }
+
+    private boolean isRankOneStep(final Square target) {
+        return rank.calculateDistance(target.rank) == ONE_STEP;
+    }
+
+    private boolean isRankTwoStep(final Square target) {
+        return rank.calculateDistance(target.rank) == TWO_STEP;
     }
 
     public boolean isNotBackward(final Square target, final PieceColor color) {
@@ -42,27 +71,33 @@ public record Square(File file, Rank rank) {
 
     public boolean isOnlyForward(final Square target) {
         if (isFirstMove()) {
-            return rank.calculateDistance(target.rank) <= TWO_STEP
-                    && file.isSameFile(target.file);
+            return isForwardWithinTwoStep(target) && isVertical(target);
         }
-        return rank.calculateDistance(target.rank) == ONE_STEP
-                && file.isSameFile(target.file);
+        return isForwardOnlyOneStep(target) && isVertical(target);
+    }
+
+    private boolean isForwardWithinTwoStep(final Square target) {
+        return rank.calculateDistance(target.rank) <= TWO_STEP;
+    }
+
+    private boolean isForwardOnlyOneStep(final Square target) {
+        return rank.calculateDistance(target.rank) == ONE_STEP;
     }
 
     private boolean isFirstMove() {
-        return rank.isSameRank(Rank.TWO) || rank.isSameRank(Rank.SEVEN);
+        return isWhiteFirstRank() || isBlackFirstRank();
+    }
+
+    private boolean isWhiteFirstRank() {
+        return rank.isSameRank(Rank.TWO);
+    }
+
+    private boolean isBlackFirstRank() {
+        return rank.isSameRank(Rank.SEVEN);
     }
 
     public boolean isAttack(final Square target) {
-        if (canAttack(target)) {
-            return isDiagonal(target)
-                    && file.calculateDistance(target.file) == 1;
-        }
-        return false;
-    }
-
-    private boolean canAttack(final Square target) {
-        return target != null;
+        return isDiagonal(target) && isFileOneStep(target);
     }
 
     public List<Square> findPath(final Square target) {
