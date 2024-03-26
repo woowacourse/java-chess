@@ -15,12 +15,13 @@ class OnlyForwardStrategyTest {
     @DisplayName("첫 번째 이동 시, 수직으로 최대 두 칸까지 이동할 수 있으면 True를 리턴한다.")
     @ParameterizedTest
     @CsvSource({"TWO, e, THREE", "TWO, e, FOUR", "SEVEN, e, SIX", "SEVEN, e, FIVE"})
-    void returnTrueIfCanMoveVerticalUpToTwoStepWhenFirstMove(final Rank sourceRank, final File file, final Rank targetRank) {
+    void returnTrueIfPawnMoveVerticalUpToTwoStepWhenFirstMove(
+            final Rank sourceRank, final File file, final Rank targetRank) {
         final MoveStrategy moveStrategy = new OnlyForwardStrategy();
         final Square source = new Square(File.e, sourceRank);
         final Square target = new Square(file, targetRank);
 
-        boolean actual = moveStrategy.canMove(source, target);
+        final boolean actual = moveStrategy.canMove(source, target);
 
         assertThat(actual).isTrue();
     }
@@ -28,12 +29,13 @@ class OnlyForwardStrategyTest {
     @DisplayName("두 번째 이동부터는 수직으로 한 칸씩 이동할 수 있으면 True를 리턴한다.")
     @ParameterizedTest
     @CsvSource({"THREE, e, FOUR", "SIX, e, FIVE"})
-    void returnTrueIfCanMoveVerticalOneStepAfterFirstMove(final Rank sourceRank, final File file, final Rank targetRank) {
+    void returnTrueIfCanMoveVerticalOnlyOneStepAfterFirstMove(
+            final Rank sourceRank, final File file, final Rank targetRank) {
         final MoveStrategy moveStrategy = new OnlyForwardStrategy();
         final Square source = new Square(File.e, sourceRank);
         final Square target = new Square(file, targetRank);
 
-        boolean actual = moveStrategy.canMove(source, target);
+        final boolean actual = moveStrategy.canMove(source, target);
 
         assertThat(actual).isTrue();
     }
@@ -45,7 +47,7 @@ class OnlyForwardStrategyTest {
         final Square source = new Square(File.e, Rank.FOUR);
         final Square target = new Square(File.e, Rank.SIX);
 
-        boolean actual = moveStrategy.canMove(source, target);
+        final boolean actual = moveStrategy.canMove(source, target);
 
         assertThat(actual).isFalse();
     }
@@ -57,7 +59,7 @@ class OnlyForwardStrategyTest {
         final Square source = new Square(File.e, Rank.FOUR);
         final Square target = new Square(File.f, Rank.FOUR);
 
-        boolean actual = moveStrategy.canMove(source, target);
+        final boolean actual = moveStrategy.canMove(source, target);
 
         assertThat(actual).isFalse();
     }

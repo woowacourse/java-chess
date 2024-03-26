@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,19 +14,23 @@ import java.util.List;
 
 class RankTest {
 
-    @DisplayName("좌표가 숫자가 아닐 경우 예외가 발생한다.")
-    @Test
-    void occurExceptionIfRankNotNumeric() {
-        assertThatCode(() -> Rank.findByValue("삼"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+    @Nested
+    class findByValueExceptionTest {
 
-    @DisplayName("좌표가 범위를 벗어날 경우 예외가 발생한다.")
-    @ParameterizedTest
-    @ValueSource(strings = {"0", "9"})
-    void occurExceptionIfRankIsOutOfRange(final String rank) {
-        assertThatCode(() -> Rank.findByValue(rank))
-                .isInstanceOf(IllegalArgumentException.class);
+        @DisplayName("좌표가 숫자가 아닐 경우 예외가 발생한다.")
+        @Test
+        void occurExceptionIfRankNotNumeric() {
+            assertThatCode(() -> Rank.findByValue("삼"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @DisplayName("좌표가 범위를 벗어날 경우 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(strings = {"0", "9"})
+        void occurExceptionIfRankIsOutOfRange(final String rank) {
+            assertThatCode(() -> Rank.findByValue(rank))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
     }
 
     @DisplayName("같은 랭크인지 확인한다.")
