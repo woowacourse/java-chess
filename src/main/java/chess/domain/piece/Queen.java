@@ -9,7 +9,7 @@ import java.util.List;
 import static chess.domain.position.Direction.*;
 
 public class Queen extends Piece {
-    private static final List<Direction> PASSING = List.of(N, S, E, W, NE, NW, SE, SW);
+    private static final List<Direction> PASSING = List.of(UP, DOWN, RIGHT, LEFT, UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
 
     public Queen(Team team) {
         super(team);

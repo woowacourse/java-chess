@@ -9,7 +9,7 @@ import java.util.List;
 import static chess.domain.position.Direction.*;
 
 public class Bishop extends Piece {
-    private static final List<Direction> PASSING = List.of(NW, NE, SW, SE);
+    private static final List<Direction> PASSING = List.of(UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT);
 
     public Bishop(Team team) {
         super(team);

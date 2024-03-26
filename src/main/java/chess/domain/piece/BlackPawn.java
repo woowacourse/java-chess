@@ -11,7 +11,7 @@ import static chess.domain.position.Direction.*;
 
 public final class BlackPawn extends Pawn {
 
-    private static final List<Direction> FORWARD_DIRECTIONS = List.of(S, SW, SE);
+    private static final List<Direction> FORWARD_DIRECTIONS = List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
     private static final RowPosition INITIAL_ROW = new RowPosition(1);
 
     public BlackPawn() {

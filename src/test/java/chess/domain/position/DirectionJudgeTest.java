@@ -13,7 +13,7 @@ class DirectionJudgeTest {
         Position start = Position.of(4, 1);
         Position destination = Position.of(1, 1);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.N);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.UP);
     }
 
     @DisplayName("목적지가 수직 아래에 있다면 방향은 S이다")
@@ -22,7 +22,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(4, 1);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.S);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.DOWN);
     }
 
     @DisplayName("목적지가 수평 오른쪽에 있다면 방향은 E이다")
@@ -31,7 +31,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(1, 4);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.E);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.RIGHT);
     }
 
     @DisplayName("목적지가 수평 왼쪽에 있다면 방향은 W이다")
@@ -40,7 +40,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 4);
         Position destination = Position.of(1, 1);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.W);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.LEFT);
     }
 
     @DisplayName("목적지가 대각선 오른쪽 위에 있다면 방향은 NE이다")
@@ -49,7 +49,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(0, 2);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.NE);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.UP_RIGHT);
     }
 
     @DisplayName("목적지가 대각선 왼쪽 위에 있다면 방향은 NW이다")
@@ -58,7 +58,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(0, 0);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.NW);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.UP_LEFT);
     }
 
     @DisplayName("목적지가 대각선 오른쪽 아래에 있다면 방향은 SE이다")
@@ -67,7 +67,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(2, 2);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.SE);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.DOWN_RIGHT);
     }
 
     @DisplayName("목적지가 대각선 왼쪽 위에 있다면 방향은 SW이다")
@@ -76,7 +76,7 @@ class DirectionJudgeTest {
         Position start = Position.of(1, 1);
         Position destination = Position.of(2, 0);
 
-        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.SW);
+        assertThat(DirectionJudge.judge(start, destination)).isEqualTo(Direction.DOWN_LEFT);
     }
 
     @DisplayName("목적지가 8방향 중 아무 곳에도 속하지 않으면 오류를 발생시킨다")

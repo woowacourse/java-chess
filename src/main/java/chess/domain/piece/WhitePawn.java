@@ -10,7 +10,7 @@ import java.util.List;
 import static chess.domain.position.Direction.*;
 
 public final class WhitePawn extends Pawn {
-    private static final List<Direction> FORWARD_DIRECTIONS = List.of(N, NW, NE);
+    private static final List<Direction> FORWARD_DIRECTIONS = List.of(UP, UP_LEFT, UP_RIGHT);
     private static final RowPosition INITIAL_ROW = new RowPosition(6);
 
     public WhitePawn() {
