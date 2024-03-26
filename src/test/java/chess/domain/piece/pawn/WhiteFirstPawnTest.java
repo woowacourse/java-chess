@@ -97,6 +97,6 @@ class WhiteFirstPawnTest {
     void getPieceType() {
         WhiteFirstPawn whiteFirstPawn = new WhiteFirstPawn();
 
-        assertThat(whiteFirstPawn.pieceType()).isEqualTo(PieceType.WHITE_PAWN);
+        assertThat(whiteFirstPawn.pieceType()).isEqualTo(PieceType.WHITE_FIRST_PAWN);
     }
 }

@@ -30,6 +30,6 @@ public final class WhiteFirstPawn extends Pawn {
 
     @Override
     public PieceType pieceType() {
-        return PieceType.WHITE_PAWN;
+        return PieceType.WHITE_FIRST_PAWN;
     }
 }
