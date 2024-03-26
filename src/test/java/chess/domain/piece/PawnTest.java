@@ -14,11 +14,15 @@ import java.util.stream.Stream;
 
 import static chess.fixture.PieceFixture.BLACK_PAWN;
 import static chess.fixture.PieceFixture.WHITE_PAWN;
+import static chess.fixture.PositionFixture.C3;
 import static chess.fixture.PositionFixture.C5;
 import static chess.fixture.PositionFixture.D2;
 import static chess.fixture.PositionFixture.D3;
 import static chess.fixture.PositionFixture.D4;
 import static chess.fixture.PositionFixture.D5;
+import static chess.fixture.PositionFixture.D6;
+import static chess.fixture.PositionFixture.D7;
+import static chess.fixture.PositionFixture.E3;
 import static chess.fixture.PositionFixture.E5;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,31 +44,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D3);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(D3));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(D3), D4);
         }
     }
 
@@ -84,31 +85,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = PositionFixture.D7;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.D6, D5);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(D7, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(D6, D5));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = BLACK_PAWN.hasFollowedRule(D7, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(D6, D5), D7);
         }
     }
 
@@ -128,31 +126,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(PositionFixture.C3, PositionFixture.E3);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
+            boolean actual = BLACK_PAWN.hasFollowedRule(D4, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(C3, E3));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = BLACK_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
+            boolean actual = BLACK_PAWN.hasFollowedRule(D4, target, MovePathFixture.hasTargetPiece(WHITE_PAWN));
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(C3, E3), D4);
         }
     }
 
@@ -172,31 +167,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D5);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(D5));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(D5), D4);
         }
     }
 
@@ -216,31 +208,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D2;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(D3, D4);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(D2, target, MovePathFixture.noPieces());
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(D3, D4));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+            boolean actual = WHITE_PAWN.hasFollowedRule(D2, target, MovePathFixture.noPieces());
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(D3, D4), D2);
         }
     }
 
@@ -260,31 +249,28 @@ public class PawnTest {
 
         abcdefgh
          */
-        private static final Position SOURCE = D4;
-        private static final List<Position> MOVABLE_POSITIONS = List.of(C5, E5);
-
-        private static Stream<Arguments> movableTargets() {
-            return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-        }
-
-        private static Stream<Arguments> immovableTargets() {
-            return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-        }
-
         @ParameterizedTest
         @MethodSource("movableTargets")
         void hasFollowedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
+            boolean actual = WHITE_PAWN.hasFollowedRule(D4, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
 
             assertThat(actual).isTrue();
+        }
+
+        private static Stream<Arguments> movableTargets() {
+            return PositionFixture.movablePositions(List.of(C5, E5));
         }
 
         @ParameterizedTest
         @MethodSource("immovableTargets")
         void hasViolatedRule(Position target) {
-            boolean actual = WHITE_PAWN.hasFollowedRule(SOURCE, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
+            boolean actual = WHITE_PAWN.hasFollowedRule(D4, target, MovePathFixture.hasTargetPiece(BLACK_PAWN));
 
             assertThat(actual).isFalse();
+        }
+
+        private static Stream<Arguments> immovableTargets() {
+            return PositionFixture.immovablePositions(List.of(C5, E5), D4);
         }
     }
 }

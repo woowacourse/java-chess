@@ -43,32 +43,29 @@ class RookTest {
 
     abcdefgh
      */
-    private static final Position SOURCE = D4;
-    private static final List<Position> MOVABLE_POSITIONS = List.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4);
-
-    private static Stream<Arguments> movableTargets() {
-        return PositionFixture.movablePositions(MOVABLE_POSITIONS);
-    }
-
-    private static Stream<Arguments> immovableTargets() {
-        return PositionFixture.immovablePositions(MOVABLE_POSITIONS, SOURCE);
-    }
-
     @DisplayName("룩은 수직 또는 수평 방향으로 한 칸 이상 움직인다.")
     @ParameterizedTest
     @MethodSource("movableTargets")
     void hasFollowedRule(Position target) {
-        boolean actual = BLACK_ROOK.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_ROOK.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
         assertThat(actual).isTrue();
+    }
+
+    private static Stream<Arguments> movableTargets() {
+        return PositionFixture.movablePositions(List.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4));
     }
 
     @DisplayName("룩은 수직 또는 수평 방향을 제외하고 움직일 수 없다.")
     @ParameterizedTest
     @MethodSource("immovableTargets")
     void hasViolatedRule(Position target) {
-        boolean actual = BLACK_ROOK.hasFollowedRule(SOURCE, target, MovePathFixture.noPieces());
+        boolean actual = BLACK_ROOK.hasFollowedRule(D4, target, MovePathFixture.noPieces());
 
         assertThat(actual).isFalse();
+    }
+
+    private static Stream<Arguments> immovableTargets() {
+        return PositionFixture.immovablePositions(List.of(A4, B4, C4, D1, D2, D3, D5, D6, D7, D8, E4, F4, G4, H4), D4);
     }
 }
