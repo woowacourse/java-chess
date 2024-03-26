@@ -23,7 +23,6 @@ import static model.Fixtures.D7;
 import static model.Fixtures.D8;
 import static model.Fixtures.E1;
 import static model.Fixtures.E2;
-import static model.Fixtures.E4;
 import static model.Fixtures.E5;
 import static model.Fixtures.E7;
 import static model.Fixtures.E8;
@@ -59,6 +58,8 @@ import model.position.Moving;
 import model.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class ChessGameTest {
 
@@ -124,12 +125,15 @@ class ChessGameTest {
     }
 
     @DisplayName("해당 위치에 기물이 없는 경우 예외가 발생한다.")
-    @Test
-    void failToMoveIfNoPiece() {
+    @ParameterizedTest
+    @ValueSource(strings = {"a3", "b3", "c3", "d4", "e4", "f5", "g6", "h6"})
+    void failToMoveIfNoPiece(final String currentPosition) {
         //given
         final ChessGame chessGame = ChessGame.setupStartingPosition();
 
-        final Moving moving = new Moving(E4, E5);
+        final Position position = Position.from(currentPosition);
+
+        final Moving moving = new Moving(position, E5);
 
         //when & then
         assertThatThrownBy(() -> chessGame.move(moving))
