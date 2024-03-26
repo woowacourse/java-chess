@@ -97,7 +97,7 @@ public class Chessboard {
     }
 
     private void validateSourceSquareOccupied(final Square square) {
-        if (!isOccupied(square)) {
+        if (isBlank(square)) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다.");
         }
     }
@@ -107,8 +107,8 @@ public class Chessboard {
         chessboard.remove(source);
     }
 
-    private boolean isOccupied(final Square square) {
-        return chessboard.containsKey(square);
+    private boolean isBlank(final Square square) {
+        return !chessboard.containsKey(square);
     }
 
     public Map<Square, Piece> getChessboard() {
