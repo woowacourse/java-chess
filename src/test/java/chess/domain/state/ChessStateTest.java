@@ -8,12 +8,10 @@ import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.pawn.WhiteFirstPawn;
-import chess.domain.piece.sliding.Queen;
 import chess.domain.position.Position;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -57,5 +55,16 @@ public class ChessStateTest {
         GeneralChessState chessState = new GeneralChessState(board);
 
         assertThat(chessState.isKingCaptured()).isTrue();
+    }
+
+    @Test
+    @DisplayName("이미 잡혀서 존재하지 않는 말의 색을 반환한다.")
+    void announceCapturedKingColor() {
+        Map<Position, Piece> board = new BlankBoard().fillWith(Map.of(
+                new Position(1, 5), new King(Color.WHITE)
+        ));
+        GeneralChessState chessState = new GeneralChessState(board);
+
+        assertThat(chessState.announceCapturedKingColor()).isEqualTo(Color.BLACK);
     }
 }

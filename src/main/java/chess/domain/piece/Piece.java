@@ -42,4 +42,8 @@ public abstract class Piece {
         }
         return false;
     }
+
+    public final Color color() {
+        return color;
+    }
 }

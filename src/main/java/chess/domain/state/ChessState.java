@@ -46,6 +46,15 @@ public abstract class ChessState {
                 .count() != KING_TOTAL;
     }
 
+    public final Color announceCapturedKingColor() {
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("왕이 모두 잡혔습니다."))
+                .color()
+                .findOppositeColor();
+    }
+
     public final Score calculateScore(Color color) {
         ScoreManager scoreManager = new ScoreManager();
         return scoreManager.calculateScore(board, color);
