@@ -23,12 +23,6 @@ public class ChessGame {
         this.outputView = outputView;
     }
 
-    private static void validateStartCommand(final CommandInfo commandInfo) {
-        if (!commandInfo.command().isStart()) {
-            throw new IllegalArgumentException(GAME_NOT_STARTED);
-        }
-    }
-
     public void start() {
         outputView.printGameStartMessage();
         CommandInfo commandInfo = readStartCommand(INITIAL_TRY_COUNT);
@@ -49,26 +43,31 @@ public class ChessGame {
         }
     }
 
+    private static void validateStartCommand(final CommandInfo commandInfo) {
+        if (!commandInfo.command().isStart()) {
+            throw new IllegalArgumentException(GAME_NOT_STARTED);
+        }
+    }
+
     private void play(CommandInfo commandInfo, final Turn turn, final ChessBoard chessBoard) {
         while (!commandInfo.command().isEnd()) {
             BoardStatus boardStatus = chessBoard.status();
             outputView.printChessBoard(boardStatus);
-            commandInfo = playTurn(turn, chessBoard, INITIAL_TRY_COUNT);
+            commandInfo = readCommand(INITIAL_TRY_COUNT);
+            if (commandInfo.command().isMove()) {
+                playTurn(turn, chessBoard, commandInfo, INITIAL_TRY_COUNT);
+                turn.next();
+            }
         }
     }
 
-    private CommandInfo playTurn(final Turn turn, final ChessBoard chessBoard, final int tryCount) {
+    private void playTurn(final Turn turn, final ChessBoard chessBoard, final CommandInfo commandInfo, final int tryCount) {
         try {
-            CommandInfo commandInfo = readCommand(INITIAL_TRY_COUNT);
-            if (commandInfo.command().isMove()) {
-                chessBoard.move(commandInfo.source().get(), commandInfo.target().get(), turn);
-                turn.next();
-            }
-            return commandInfo;
+            chessBoard.move(commandInfo.source().get(), commandInfo.target().get(), turn);
         } catch (IllegalArgumentException e) {
             outputView.printGameErrorMessage(e.getMessage());
             validateTryCount(tryCount);
-            return playTurn(turn, chessBoard, tryCount + 1);
+            playTurn(turn, chessBoard, commandInfo, tryCount + 1);
         }
     }
 
