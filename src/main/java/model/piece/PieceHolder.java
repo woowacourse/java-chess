@@ -23,7 +23,7 @@ public class PieceHolder {
     public void progressMoveToDestination(List<PieceHolder> pieceHoldersInRoute) {
         Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
         PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
-        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHoldersInRoute);
+        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHolders);
         this.role.traversalRoles(rolesInRoute, destination.role);
         destination.changeRoleTo(role);
         leave();
@@ -32,7 +32,7 @@ public class PieceHolder {
     public boolean isCheck(List<PieceHolder> pieceHoldersInRoute) {
         Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
         PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
-        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHoldersInRoute);
+        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHolders);
         try {
             this.role.traversalRoles(rolesInRoute, destination.role);
             return true;
@@ -41,7 +41,7 @@ public class PieceHolder {
         }
     }
 
-    private List<Role> extractRolesFromPieceHolders(List<PieceHolder> pieceHoldersInRoute) {
+    private List<Role> extractRolesFromPieceHolders(Deque<PieceHolder> pieceHoldersInRoute) {
         return pieceHoldersInRoute.stream()
                 .map(pieceHolder -> pieceHolder.role)
                 .toList();
@@ -59,7 +59,7 @@ public class PieceHolder {
         this.role = new Square();
     }
 
-    public boolean isSameColor(Color color) {
+    public boolean hasSameColor(Color color) {
         return this.role.isSameColor(color);
     }
 
