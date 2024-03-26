@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Side;
-import chess.domain.route.Pieces;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

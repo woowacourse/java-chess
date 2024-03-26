@@ -23,12 +23,12 @@ public class Route {
         return new Route(pathPieces, targetPiece);
     }
 
-    public Piece targetPiece() {
-        return targetPiece;
-    }
-
     public boolean notAllPathPiecesEmpty() {
         return pathPieces.notAllEmpty();
+    }
+
+    public boolean isTargetPieceEmpty() {
+        return targetPiece.isEmpty();
     }
 
     public boolean isOpponentTargetPiece(Side side) {
@@ -51,9 +51,5 @@ public class Route {
     @Override
     public int hashCode() {
         return Objects.hash(pathPieces, targetPiece);
-    }
-
-    public boolean isTargetPieceEmpty() {
-        return targetPiece.isEmpty();
     }
 }
