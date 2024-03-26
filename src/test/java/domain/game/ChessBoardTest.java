@@ -1,150 +1,109 @@
 package domain.game;
 
+import static fixture.PositionFixture.b1;
+import static fixture.PositionFixture.b2;
+import static fixture.PositionFixture.b3;
+import static fixture.PositionFixture.b4;
+import static fixture.PositionFixture.b5;
+import static fixture.PositionFixture.b7;
+import static fixture.PositionFixture.c3;
+import static fixture.PositionFixture.c4;
+import static fixture.PositionFixture.c5;
+import static fixture.PositionFixture.c7;
+import static fixture.PositionFixture.d1;
+import static fixture.PositionFixture.d2;
+import static fixture.PositionFixture.d3;
+import static fixture.PositionFixture.d5;
+
 import domain.piece.Color;
 import domain.piece.Piece;
-import domain.piece.piecerole.King;
 import domain.piece.piecerole.Knight;
 import domain.piece.piecerole.Pawn;
-import domain.piece.piecerole.Queen;
-import domain.piece.piecerole.Rook;
-import domain.position.Position;
-import fixture.PositionFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
 
-    @DisplayName("source에 위치한 piece를 target으로 이동한다.")
+    @DisplayName("(b,2)에 위치한 piece를 (b,3)로 이동한다.")
     @Test
     void movePieceToTarget() {
-        Position sourcePosition = PositionFixture.generateB2Position();
-        Position targetPosition = PositionFixture.generateB3Position();
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
 
-        chessBoard.move(sourcePosition, targetPosition);
+        chessBoard.move(b2(), b3());
 
-        Piece findPiece = chessBoard.findPieceBySquare(targetPosition);
+        Piece findPiece = chessBoard.findPieceBySquare(b3());
         Assertions.assertThat(findPiece).isEqualTo(new Piece(Pawn.from(Color.WHITE), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
     @Test
     void movePieceIfSourceHasNotPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(c3(), c4()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("옮기고자 하는 위치에 같은 진영의 Piece가 있다면 에러를 반환한다.")
     @Test
     void hasSameColorPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
-
-        Piece sourcePiece = new Piece(King.from(), Color.BLACK);
-        Piece targetPiece = new Piece(Queen.from(), Color.BLACK);
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
-        chessBoard.add(targetPosition, targetPiece);
+        chessBoard.move(d2(), d3());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(d1(), d3()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("같은 위치로의 이동이라면 에러를 반환한다.")
     @Test
     void moveToSameSquare() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB1Position();
-
-        Piece sourcePiece = new Piece(King.from(), Color.BLACK);
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(b1(), b1()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("앞에 다른 진영의 기물이 있는 경우 폰이 이동하지 못한다.")
     @Test
     void movePawnWhenFrontSquareHasOtherPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB2Position();
-
-        Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
-        chessBoard.add(targetPosition, targetPiece);
+        chessBoard.move(b2(), b4());
+        chessBoard.move(b7(), b5());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(b4(), b5()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("대각선에 다른 진영의 기물이 있는 경우 폰이 이동할 수 있다.")
     @Test
     void movePawnWhenDiagonalSquareHasOtherPiece() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC2Position();
-
-        Piece sourcePiece = new Piece(Pawn.from(Color.WHITE), Color.WHITE);
-        Piece targetPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
-        chessBoard.add(targetPosition, targetPiece);
+        chessBoard.move(b2(), b4());
+        chessBoard.move(c7(), c5());
+        chessBoard.move(b4(), c5());
 
-        chessBoard.move(sourcePosition, targetPosition);
-
-        Piece findPiece = chessBoard.findPieceBySquare(targetPosition);
-
-        Assertions.assertThat(findPiece).isEqualTo(sourcePiece);
+        Piece findPiece = chessBoard.findPieceBySquare(c5());
+        Assertions.assertThat(findPiece).isEqualTo(new Piece(Pawn.from(Color.WHITE), Color.WHITE));
     }
 
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
     @Test
     void isOverlappedPath() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateB7Position();
-        Position blockPosition = PositionFixture.generateB2Position();
-
-        Piece sourcePiece = new Piece(Rook.from(), Color.WHITE);
-        Piece targetPiece = new Piece(Rook.from(), Color.WHITE);
-        Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
-        chessBoard.add(targetPosition, targetPiece);
-        chessBoard.add(blockPosition, blockPiece);
+        chessBoard.move(d2(), d3());
 
-        Assertions.assertThatThrownBy(() -> chessBoard.move(sourcePosition, targetPosition))
+        Assertions.assertThatThrownBy(() -> chessBoard.move(d1(), d5()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("나이트는 이동하는 경로에 기물이 있어도 이동할 수 있다.")
     @Test
     void knightCanJump() {
-        Position sourcePosition = PositionFixture.generateB1Position();
-        Position targetPosition = PositionFixture.generateC3Position();
-        Position blockPosition = PositionFixture.generateB2Position();
-
-        Piece sourcePiece = new Piece(Knight.from(), Color.WHITE);
-        Piece targetPiece = new Piece(Knight.from(), Color.WHITE);
-        Piece blockPiece = new Piece(Pawn.from(Color.BLACK), Color.BLACK);
-
         ChessBoard chessBoard = ChessBoardGenerator.generate();
-        chessBoard.add(sourcePosition, sourcePiece);
-        chessBoard.add(targetPosition, targetPiece);
-        chessBoard.add(blockPosition, blockPiece);
+        chessBoard.move(b2(), b3());
+        chessBoard.move(b1(), c3());
 
-        Assertions.assertThat(chessBoard.findPieceBySquare(targetPosition)).isEqualTo(sourcePiece);
+        Assertions.assertThat(chessBoard.findPieceBySquare(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
     }
 }
