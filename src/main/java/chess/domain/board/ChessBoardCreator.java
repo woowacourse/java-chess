@@ -17,10 +17,8 @@ public class ChessBoardCreator {
         this.blackPiecesSetting = new HashMap<>(blackPiecesSetting);
     }
 
-    // TODO 개행 / 오타(Ment 등 신경쓰기)
     public static ChessBoardCreator normalGameCreator() {
-        return new ChessBoardCreator(NormalPieceSetting.whitePiecesArrangeMent()
-                , NormalPieceSetting.blackPiecesArrangeMent());
+        return new ChessBoardCreator(NormalPieceSetting.whitePiecesSetting(), NormalPieceSetting.blackPiecesSetting());
     }
 
     public ChessBoard create() {
@@ -30,7 +28,7 @@ public class ChessBoardCreator {
         return new ChessBoard(positionPiece);
     }
 
-    Map<Position, Piece> initializePiecesArrangeMent(Map<Piece, List<Position>> arrangeMent) {
+    private Map<Position, Piece> initializePiecesArrangeMent(Map<Piece, List<Position>> arrangeMent) {
         Map<Position, Piece> positionPiece = new HashMap<>();
         arrangeMent.entrySet().stream()
                 .map(piecePositions -> mapPositionToPiece(piecePositions.getKey(), piecePositions.getValue()))

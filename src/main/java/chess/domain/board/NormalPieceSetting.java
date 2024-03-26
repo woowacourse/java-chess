@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class NormalPieceSetting {
-    private static final Map<Piece, List<Position>> INITIAL_BLACK_PIECES_ARRANGEMENT = new HashMap<>() {
+    private static final Map<Piece, List<Position>> INITIAL_BLACK_PIECES_SETTING = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(0, 0), Position.of(0, 7));
             put(new Rook(Team.BLACK), rookPositions);
@@ -34,7 +34,7 @@ public class NormalPieceSetting {
         }
     };
 
-    private static final Map<Piece, List<Position>> INITIAL_WHITE_PIECES_ARRANGEMENT = new HashMap<>() {
+    private static final Map<Piece, List<Position>> INITIAL_WHITE_PIECES_SETTING = new HashMap<>() {
         {
             List<Position> rookPositions = List.of(Position.of(7, 0), Position.of(7, 7));
             put(new Rook(Team.WHITE), rookPositions);
@@ -61,11 +61,11 @@ public class NormalPieceSetting {
     private NormalPieceSetting() {
     }
 
-    public static Map<Piece, List<Position>> blackPiecesArrangeMent() {
-        return Map.copyOf(INITIAL_BLACK_PIECES_ARRANGEMENT);
+    public static Map<Piece, List<Position>> blackPiecesSetting() {
+        return Map.copyOf(INITIAL_BLACK_PIECES_SETTING);
     }
 
-    public static Map<Piece, List<Position>> whitePiecesArrangeMent() {
-        return Map.copyOf(INITIAL_WHITE_PIECES_ARRANGEMENT);
+    public static Map<Piece, List<Position>> whitePiecesSetting() {
+        return Map.copyOf(INITIAL_WHITE_PIECES_SETTING);
     }
 }
