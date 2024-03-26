@@ -20,11 +20,14 @@ public enum FileSymbol {
         this.file = file;
     }
 
-    public static int convertFile(final String symbol) {
+    public static FileSymbol getFileSymbol(final String symbol) {
         return Arrays.stream(FileSymbol.values()).filter(fileSymbol -> fileSymbol.symbol.equals(symbol))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("파일은 알파벳 소문자 a ~ h 까지 변환 가능합니다."))
-                .file;
+                .orElseThrow(() -> new IllegalArgumentException("파일은 알파벳 소문자 a ~ h 까지 변환 가능합니다."));
+    }
+
+    public int getFile() {
+        return file;
     }
 }
 

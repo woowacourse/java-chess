@@ -15,7 +15,8 @@ public class PositionConverter {
         String file = position.substring(0, 1);
         String rank = position.substring(1, 2);
         validateNumeric(rank);
-        return new Position(FileSymbol.convertFile(file), Integer.parseInt(rank));
+        FileSymbol fileSymbol = FileSymbol.getFileSymbol(file);
+        return new Position(fileSymbol.getFile(), Integer.parseInt(rank));
     }
 
     private static void validateNumeric(String rank) {
