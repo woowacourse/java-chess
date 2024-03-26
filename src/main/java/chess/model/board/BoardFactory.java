@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface BoardFactory {
+public abstract class BoardFactory {
 
-    Board generate();
+    public abstract Board generate();
 
-    default Map<Position, Piece> generatePieces(List<String> snapShot) {
+    protected final Map<Position, Piece> generatePieces(List<String> snapShot) {
         Map<Position, Piece> pieces = new HashMap<>();
         for (int i = 0; i < snapShot.size(); i++) {
             String rank = snapShot.get(i);

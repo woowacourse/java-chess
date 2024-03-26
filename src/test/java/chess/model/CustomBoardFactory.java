@@ -5,7 +5,7 @@ import chess.model.board.BoardFactory;
 import chess.model.material.Color;
 import java.util.List;
 
-public class CustomBoardFactory implements BoardFactory {
+public final class CustomBoardFactory extends BoardFactory {
 
     private final List<String> pieces;
     private final Color turn;
