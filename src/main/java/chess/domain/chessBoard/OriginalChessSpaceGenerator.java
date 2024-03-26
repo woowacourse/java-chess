@@ -11,6 +11,8 @@ import java.util.List;
 
 public class OriginalChessSpaceGenerator implements SpaceGenerator {
 
+    public static final int LOW_EMPTY_RANK = 3;
+    public static final int HIGH_EMPTY_RANK = 6;
     private final PieceGenerator pieceGenerator;
 
     public OriginalChessSpaceGenerator(PieceGenerator pieceGenerator) {
@@ -43,7 +45,7 @@ public class OriginalChessSpaceGenerator implements SpaceGenerator {
 
     private List<Space> makeEmptySpaces() {
         List<Space> spaces = new ArrayList<>();
-        for (int i = 6; i >= 3; i--) {
+        for (int i = HIGH_EMPTY_RANK; i >= LOW_EMPTY_RANK; i--) {
             for (File file : File.values()) {
                 spaces.add(new Space(new EmptyPiece(), new Position(file, Rank.of(i))));
             }
