@@ -16,18 +16,23 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public List<Position> getRoute(Position source, Position target) {
+    public List<Position> getMovingRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
 
         Direction direction = Direction.findDirection(source, target);
-        Position movingPosition = direction.move(source);
+        Position movingPosition = source.move(direction);
 
         while (!movingPosition.equals(target)) {
             route.add(movingPosition);
-            movingPosition = direction.move(movingPosition);
+            movingPosition = movingPosition.move(direction);
         }
         return Collections.unmodifiableList(route);
+    }
+
+    @Override
+    public List<Position> getAttackRoute(Position source, Position target) {
+        return getMovingRoute(source, target);
     }
 
     @Override

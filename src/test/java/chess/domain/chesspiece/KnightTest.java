@@ -17,7 +17,7 @@ class KnightTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들을 반환한다.")
     void Knight_Check_route() {
         Piece piece = new Knight(WHITE);
-        List<Position> route = piece.getRoute(Position.of("a", "1"), Position.of("b", "3"));
+        List<Position> route = piece.getMovingRoute(Position.of("a", "1"), Position.of("b", "3"));
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -27,7 +27,7 @@ class KnightTest {
     void Knight_Validate_route() {
         Piece piece = new Knight(WHITE);
         assertThatThrownBy(() -> {
-            piece.getRoute(Position.of("a", "1"), Position.of("b", "4"));
+            piece.getMovingRoute(Position.of("a", "1"), Position.of("b", "4"));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

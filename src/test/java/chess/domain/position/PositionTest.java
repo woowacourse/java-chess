@@ -25,24 +25,23 @@ public class PositionTest {
 
     @ParameterizedTest
     @CsvSource(value = {
-            "a, 1, 0, 1, a, 2",
-            "a, 2, 0, -1, a, 1",
-            "a, 1, 1, 0, b, 1",
-            "b, 1, -1, 0, a, 1",
-            "b, 1, -1, 1, a, 2",
-            "a, 1, 1, 1, b, 2",
-            "b, 2, -1, -1, a, 1",
-            "a, 2, 1, -1, b, 1"})
+            "a, 1, UP, a, 2",
+            "a, 2, DOWN, a, 1",
+            "a, 1, RIGHT, b, 1",
+            "b, 1, LEFT, a, 1",
+            "b, 1, UP_LEFT, a, 2",
+            "a, 1, UP_RIGHT, b, 2",
+            "b, 2, DOWN_LEFT, a, 1",
+            "a, 2, DOWN_RIGHT, b, 1"})
     @DisplayName("전달한 방향으로 이동한 새로운 Position을 반환한다.")
     void Position_Move_with_direction(String file1,
                                       String rank1,
-                                      int fileDirection,
-                                      int rankDirection,
+                                      Direction direction,
                                       String file2,
                                       String rank2) {
         Position source = Position.of(file1, rank1);
         Position target = Position.of(file2, rank2);
-        var result = source.move(fileDirection, rankDirection);
+        var result = source.move(direction);
         assertThat(result).isEqualTo(target);
     }
 

@@ -1,8 +1,6 @@
 package chess.domain.chesspiece.slidingPiece;
 
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.slidingPiece.Bishop;
-import chess.domain.chesspiece.slidingPiece.King;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,7 @@ class BishopTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들을 반환한다.")
     void Bishop_Check_route() {
         Piece piece = new Bishop(WHITE);
-        List<Position> route = piece.getRoute(Position.of("a", "1"), Position.of("e", "5"));
+        List<Position> route = piece.getMovingRoute(Position.of("a", "1"), Position.of("e", "5"));
         List<Position> positions = List.of(Position.of("b", "2"), Position.of("c", "3"),
                 Position.of("d", "4"));
         assertThat(route).isEqualTo(positions);
@@ -38,7 +36,7 @@ class BishopTest {
         Position target = Position.of(file2, rank2);
         Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> {
-            piece.getRoute(source, target);
+            piece.getMovingRoute(source, target);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

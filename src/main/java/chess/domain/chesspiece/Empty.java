@@ -14,8 +14,13 @@ public class Empty extends Piece {
     }
 
     @Override
-    public List<Position> getRoute(Position source, Position target) {
+    public List<Position> getMovingRoute(Position source, Position target) {
         throw new IllegalArgumentException("해당 공간은 기물이 존재하지 않습니다.");
+    }
+
+    @Override
+    public List<Position> getAttackRoute(Position source, Position target) {
+        return getMovingRoute(source, target);
     }
 
     @Override
