@@ -46,7 +46,7 @@ public class Pawn extends Piece {
         return Route.of(source, target);
     }
 
-    public void validateMovement(Position source, Position target) {
+    private void validateMovement(Position source, Position target) {
         Movement movement = Movement.findMovement(source, target);
         if (isSameColor(WHITE) && whiteCanMove(movement, source)) {
             return;

@@ -42,7 +42,7 @@ public class Knight extends Piece {
         return Route.empty();
     }
 
-    public void validateMovement(Position source, Position target) {
+    private void validateMovement(Position source, Position target) {
         Movement movement = Movement.findMovement(source, target);
         if (MOVEMENTS.contains(movement)) {
             return;

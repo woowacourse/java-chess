@@ -35,7 +35,7 @@ public class Rook extends Piece {
         return Route.of(source, target);
     }
 
-    public void validateMovement(Position source, Position target) {
+    private void validateMovement(Position source, Position target) {
         Movement movement = Movement.findDirection(source, target);
         if (MOVEMENTS.contains(movement)) {
             return;
