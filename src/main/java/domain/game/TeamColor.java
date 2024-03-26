@@ -17,11 +17,4 @@ public enum TeamColor {
     public boolean contains(PieceType pieceType) {
         return includedPieces.contains(pieceType);
     }
-
-    public TeamColor toggle() {
-        if (this == BLACK) {
-            return WHITE;
-        }
-        return BLACK;
-    }
 }
