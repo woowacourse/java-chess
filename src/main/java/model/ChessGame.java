@@ -149,11 +149,21 @@ public class ChessGame {
         }
     }
 
-    public Result status() {
+    public boolean isKingDie() {
+        return 2 > board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
+    public ScoreCalculator status() {
         if (chessStatus == ChessStatus.RUNNING) {
             return calculateResult();
         }
         throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
+    }
+
+    public ScoreCalculator calculateResult() {
+        return new ScoreCalculator(Collections.unmodifiableMap(board));
     }
 
     public void end() {
@@ -170,15 +180,5 @@ public class ChessGame {
 
     public Camp getCamp() {
         return camp;
-    }
-
-    public boolean isKingDie() {
-        return 2 > board.values().stream()
-                .filter(Piece::isKing)
-                .count();
-    }
-
-    public Result calculateResult() {
-        return new Result(Collections.unmodifiableMap(board));
     }
 }
