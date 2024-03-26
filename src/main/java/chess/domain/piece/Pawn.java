@@ -23,14 +23,12 @@ public class Pawn extends Piece {
         if (color == Color.BLACK) {
             this.directions.addAll(List.of(
                     Direction.DOWN,
-                    Direction.PAWN_INITIAL_DOWN,
                     Direction.LEFT_DOWN,
                     Direction.RIGHT_DOWN));
         }
         if (color == Color.WHITE) {
             this.directions.addAll(List.of(
                     Direction.UP,
-                    Direction.PAWN_INITIAL_UP,
                     Direction.LEFT_UP,
                     Direction.RIGHT_UP));
         }

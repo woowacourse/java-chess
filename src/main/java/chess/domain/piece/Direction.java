@@ -21,8 +21,6 @@ public enum Direction {
     KNIGHT_UP_RIGHT(1, 2),
     KNIGHT_DOWN_LEFT(-1, -2),
     KNIGHT_DOWN_RIGHT(1, -2),
-    PAWN_INITIAL_UP(0, 2),
-    PAWN_INITIAL_DOWN(0, -2),
     ;
 
     private final int file;
