@@ -14,12 +14,14 @@ public class InputView {
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
     private static final String SAVE_COMMAND = "save";
+    private static final String LOAD_COMMAND = "load";
     private static final String END_COMMAND = "end";
     private static final Map<String, GameCommand> gameCommands = Map.of(
             START_COMMAND, GameCommand.START,
             MOVE_COMMAND, GameCommand.MOVE,
             STATUS_COMMAND, GameCommand.STATUS,
             SAVE_COMMAND, GameCommand.SAVE,
+            LOAD_COMMAND, GameCommand.LOAD,
             END_COMMAND, GameCommand.END
     );
     private static final String COMMAND_DELIMITER = " ";

@@ -1,7 +1,11 @@
 package dto;
 
 import domain.game.Piece;
+import domain.game.PieceType;
+import domain.game.TeamColor;
+import domain.position.File;
 import domain.position.Position;
+import domain.position.Rank;
 
 public record PieceDto(
         int fileIndex, int rankIndex,
@@ -14,5 +18,14 @@ public record PieceDto(
                 piece.color().name(),
                 piece.getPieceType().name()
         );
+    }
+
+    public Position getPosition() {
+        return new Position(File.of(fileIndex), Rank.of(rankIndex));
+    }
+
+    public PieceType getPieceType() {
+        TeamColor teamColor = TeamColor.valueOf(color);
+        return PieceType.fromColorAndType(teamColor, type);
     }
 }

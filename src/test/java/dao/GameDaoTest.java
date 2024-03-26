@@ -46,4 +46,12 @@ class GameDaoTest {
 
         assertThat(turn).isEqualTo(TeamColor.WHITE);
     }
+
+    @Test
+    @DisplayName("가장 최근에 저장된 게임의 차례를 조회한다.")
+    void latestGameTurnTest() {
+        TeamColor turn = gameDao.findLatestGameTurn();
+
+        assertThat(turn).isEqualTo(TeamColor.WHITE);
+    }
 }

@@ -1,12 +1,18 @@
 package domain.game;
 
+import dao.DBConnector;
+import dao.GameDao;
+import dao.PieceDao;
 import domain.game.state.BlackTurn;
 import domain.game.state.GameEnd;
 import domain.game.state.GameState;
 import domain.game.state.WhiteTurn;
 import domain.position.Position;
+import dto.PieceDto;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChessGame {
     private static final Set<PieceType> GAME_END_WHEN_CAUGHT = Set.of(PieceType.WHITE_KING, PieceType.BLACK_KING);
@@ -21,6 +27,21 @@ public class ChessGame {
 
     public ChessGame() {
         this(WhiteTurn.getInstance(), BoardInitializer.init());
+    }
+
+    public static ChessGame load() {
+        GameDao gameDao = new GameDao(new DBConnector());
+        TeamColor savedTurn = gameDao.findLatestGameTurn();
+        PieceDao pieceDao = new PieceDao(new DBConnector());
+        List<PieceDto> allPieces = pieceDao.findAllPieces();
+        Map<Position, Piece> piecePositions = allPieces.stream()
+                .collect(Collectors.toMap(
+                        PieceDto::getPosition,
+                        dto -> PieceFactory.create(dto.getPieceType())
+                ));
+
+        GameState state = savedTurn == TeamColor.WHITE ? WhiteTurn.getInstance() : BlackTurn.getInstance();
+        return new ChessGame(state, new Board(piecePositions));
     }
 
     public void move(Position source, Position destination) {

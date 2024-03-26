@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
@@ -53,6 +54,25 @@ public class PieceDao {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public List<PieceDto> findAllPieces() {
+        final List<PieceDto> pieces = new ArrayList<>();
+        final String query = "SELECT * FROM " + TABLE_NAME;
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int fileIndex = resultSet.getInt("file");
+                int rankIndex = resultSet.getInt("rank");
+                String color = resultSet.getString("pieceColor");
+                String type = resultSet.getString("pieceType");
+                pieces.add(new PieceDto(fileIndex, rankIndex, color, type));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pieces;
     }
 
     public void removeAllPieces() {

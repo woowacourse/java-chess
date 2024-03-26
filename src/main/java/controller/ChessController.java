@@ -23,7 +23,7 @@ public class ChessController {
     public void run() {
         outputView.printWelcomeMessage();
         GameRequest gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
-        while (gameRequest.isStart()) {
+        while (gameRequest.isStart() || gameRequest.isLoad()) {
             startGame(gameRequest);
             outputView.printRestartMessage();
             gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
@@ -41,7 +41,7 @@ public class ChessController {
     }
 
     private void startGame(GameRequest gameRequest) {
-        ChessGame chessGame = new ChessGame();
+        ChessGame chessGame = createGame(gameRequest);
         printBoardStatus(chessGame.getPositionsOfPieces());
 
         while (shouldProceedGame(gameRequest, chessGame)) {
@@ -50,6 +50,13 @@ public class ChessController {
             processRequest(gameRequest, chessGame);
         }
         finishGame(gameRequest, chessGame);
+    }
+
+    private ChessGame createGame(GameRequest gameRequest) {
+        if (gameRequest.isStart()) {
+            return new ChessGame();
+        }
+        return ChessGame.load();
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {

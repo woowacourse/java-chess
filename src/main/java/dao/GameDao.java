@@ -52,6 +52,21 @@ public class GameDao {
         return null;
     }
 
+    public TeamColor findLatestGameTurn() {
+        final String query = String.format("SELECT turn FROM %s ORDER BY `gameId` DESC LIMIT 1", TABLE_NAME);
+        try (final Connection connection = getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String turn = resultSet.getString("turn");
+                return TeamColor.valueOf(turn);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public void updateTurn(int gameId, TeamColor teamColor) {
         final var query = String.format("UPDATE %s SET turn = ? WHERE gameId = ?", TABLE_NAME);
         try (final Connection connection = getConnection();

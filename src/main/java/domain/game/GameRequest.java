@@ -56,4 +56,8 @@ public class GameRequest {
     public boolean isEnd() {
         return commandType.isEnd();
     }
+
+    public boolean isLoad() {
+        return commandType.isLoad();
+    }
 }
