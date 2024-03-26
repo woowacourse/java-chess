@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class InputView {
     private static final Pattern COMMAND_PATTERN = Pattern.compile("^(\\w+)( [a-h][1-8] [a-h][1-8])?$");
+
     private final Scanner scanner;
 
     public InputView(Scanner scanner) {
