@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public enum PieceMessage {
-    BLACK_PAWN(Pawn.class, true, "P"),
+    BLACK_PAWN(BlackPawn.class, true, "P"),
     BLACK_KNIGHT(Knight.class, true, "N"),
     BLACK_BISHOP(Bishop.class, true, "B"),
     BLACK_ROOK(Rook.class, true, "R"),
     BLACK_QUEEN(Queen.class, true, "Q"),
     BLACK_KING(King.class, true, "K"),
 
-    WHITE_PAWN(Pawn.class, false, "p"),
+    WHITE_PAWN(WhitePawn.class, false, "p"),
     WHITE_KNIGHT(Knight.class, false, "n"),
     WHITE_BISHOP(Bishop.class, false, "b"),
     WHITE_ROOK(Rook.class, false, "r"),
