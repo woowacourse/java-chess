@@ -13,6 +13,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -140,8 +141,10 @@ class BoardTest {
         board.move(source, destination);
         // then
         Piece actual = board.pieces().get(destination);
-        assertThat(board.pieces().containsKey(source)).isFalse();
-        assertThat(actual).isInstanceOf(Rook.class);
-        assertThat(actual.hasColorOf(Color.WHITE)).isTrue();
+        Assertions.assertAll(
+                () -> assertThat(board.pieces().containsKey(source)).isFalse(),
+                () -> assertThat(actual).isInstanceOf(Rook.class),
+                () -> assertThat(actual.hasColorOf(Color.WHITE)).isTrue()
+        );
     }
 }

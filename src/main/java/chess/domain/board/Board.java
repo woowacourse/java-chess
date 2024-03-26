@@ -15,7 +15,8 @@ public class Board {
     }
 
     public void move(Position source, Position destination) {
-        validatePosition(source, destination);
+        validatePieceExistsAt(source);
+        validateAllyPieceNotOnDestination(source, destination);
         validateNoPiecesBetween(source, destination);
 
         Piece piece = pieces.get(source);
@@ -28,21 +29,19 @@ public class Board {
         replacePiece(source, destination, piece);
     }
 
-    private void validatePosition(Position source, Position destination) {
-        validatePieceExistsAt(source);
-        validateAllyPieceNotOnDestination(source, destination);
-    }
-
     private void validatePieceExistsAt(Position source) {
-        if (pieces.get(source) == null) {
+        if (!pieces.containsKey(source)) {
             throw new IllegalArgumentException("출발 칸에 기물이 없습니다.");
         }
     }
 
     private void validateAllyPieceNotOnDestination(Position source, Position destination) {
         Piece sourcePiece = pieces.get(source);
-        Piece destinationPiece = pieces.getOrDefault(destination, null);
-        if (destinationPiece != null && destinationPiece.hasSameColorWith(sourcePiece)) {
+        if (!pieces.containsKey(destination)) {
+            return;
+        }
+        Piece destinationPiece = pieces.get(destination);
+        if (destinationPiece.hasSameColorWith(sourcePiece)) {
             throw new IllegalArgumentException("도착 칸에 자신의 기물이 있습니다.");
         }
     }
@@ -74,7 +73,7 @@ public class Board {
         }
     }
 
-    public void replacePiece(Position source, Position destination, Piece piece) {
+    private void replacePiece(Position source, Position destination, Piece piece) {
         pieces.remove(source);
         if (piece.isInitPawn()) {
             pieces.put(destination, new MovedPawn(piece.getColor()));
