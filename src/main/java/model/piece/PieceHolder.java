@@ -23,12 +23,28 @@ public class PieceHolder {
     public void progressMoveToDestination(List<PieceHolder> pieceHoldersInRoute) {
         Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
         PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
-        List<Role> rolesInRoute = pieceHoldersInRoute.stream()
-                .map(pieceHolder -> pieceHolder.role)
-                .toList();
+        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHoldersInRoute);
         this.role.traversalRoles(rolesInRoute, destination.role);
         destination.changeRoleTo(role);
         leave();
+    }
+
+    public boolean isCheck(List<PieceHolder> pieceHoldersInRoute) {
+        Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
+        PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
+        List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHoldersInRoute);
+        try {
+            this.role.traversalRoles(rolesInRoute, destination.role);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    private List<Role> extractRolesFromPieceHolders(List<PieceHolder> pieceHoldersInRoute) {
+        return pieceHoldersInRoute.stream()
+                .map(pieceHolder -> pieceHolder.role)
+                .toList();
     }
 
     public boolean isKing() {

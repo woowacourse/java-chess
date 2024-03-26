@@ -43,7 +43,7 @@ class ChessBoardTest {
         assertAll(() -> {
             Throwable exception = assertThrows(IllegalArgumentException.class,
                     () -> chessBoard.move(blackPawnPosition, destination));
-            assertEquals("상대 턴입니다.", exception.getMessage());
+            assertEquals("WHITE 진영의 기물을 움직여야 합니다.", exception.getMessage());
         });
     }
 }
