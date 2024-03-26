@@ -7,7 +7,7 @@ public interface Piece {
 
     void validateMovable(Coordinate source, Coordinate target, Board board);
 
-    boolean isSameTeam(Piece other);
+    boolean isSameTeam(Team team);
 
     boolean isEnemy(Piece other);
 

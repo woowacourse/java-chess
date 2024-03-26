@@ -29,7 +29,7 @@ abstract class AbstractPiece implements Piece {
 
     private void validateSameTeam(Coordinate target, Board board) {
         Piece targetPiece = board.findByCoordinate(target);
-        if (isSameTeam(targetPiece)) {
+        if (targetPiece.isSameTeam(team)) {
             throw new IllegalStateException("아군 기물은 공격할 수 없습니다.");
         }
     }
@@ -37,8 +37,8 @@ abstract class AbstractPiece implements Piece {
     abstract void validatePieceMoveRule(Coordinate source, Coordinate target, Board board);
 
     @Override
-    public boolean isSameTeam(Piece other) {
-        return this.team == other.getTeam();
+    public boolean isSameTeam(Team team) {
+        return this.team == team;
     }
 
     @Override

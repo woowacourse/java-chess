@@ -240,4 +240,21 @@ class BoardTest {
         Piece result = board.findByCoordinate(target);
         assertThat(result).isEqualTo(sourcePiece);
     }
+
+    @DisplayName("현재 턴에 해당하는 진영에 소속된 기물만 움직일 수 있다.")
+    @Test
+    void validateInvalidTurn() {
+        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        Piece sourcePiece = new Pawn(Team.WHITE);
+        Coordinate source = new Coordinate(4, 'a');
+        Coordinate middle = new Coordinate(5, 'a');
+        Coordinate target = new Coordinate(6, 'a');
+        pieces.put(source, sourcePiece);
+        Board board = new Board(pieces);
+        board.move(source, middle);
+
+        assertThatThrownBy(() -> board.move(middle, target))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("상대방이 기물을 둘 차례입니다.");
+    }
 }
