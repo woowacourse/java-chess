@@ -1,10 +1,8 @@
 package chess.domain.attribute;
 
-import chess.domain.chessboard.attribute.Direction;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Square {
 
@@ -43,10 +41,6 @@ public class Square {
 
     private static String keyOf(final File file, final Rank rank) {
         return file.name() + rank.name();
-    }
-
-    public static boolean isInRange(final int column, final int row) {
-        return File.isInRange(column) && Rank.isInRange(row);
     }
 
     public Square moveUp() {
@@ -113,14 +107,6 @@ public class Square {
         return file.canMoveRight() && rank.canMoveDown();
     }
 
-    public Optional<Square> move(final Direction direction) {
-        int row = rank.getValue() + direction.getRow();
-        int column = file.getColumn() + direction.getColumn();
-        if (isInRange(column, row)) {
-            return Optional.of(Square.of(File.of(column), Rank.of(row)));
-        }
-        return Optional.empty();
-    }
 
     public boolean isStartRankOfBlackPawn() {
         return rank.isRankSeven();

@@ -20,22 +20,22 @@ public enum File {
     private static final int FILE_MIN = 1;
     private static final int FILE_MAX = 8;
 
-    private final int column;
+    private final int value;
 
-    File(final int column) {
-        this.column = column;
+    File(final int value) {
+        this.value = value;
     }
 
-    public static File of(final char column) {
-        return of(String.valueOf(column));
+    public static File of(final char value) {
+        return of(String.valueOf(value));
     }
 
-    public static File of(final int column) {
-        return findByColumn(column, file -> file.column == column);
+    public static File of(final int value) {
+        return findByColumn(value, file -> file.value == value);
     }
 
-    public static File of(final String column) {
-        return findByColumn(column, file -> column.equalsIgnoreCase(file.name()));
+    public static File of(final String value) {
+        return findByColumn(value, file -> value.equalsIgnoreCase(file.name()));
     }
 
     private static <T> File findByColumn(final T column, final Predicate<File> predicate) {
@@ -82,13 +82,5 @@ public enum File {
             return false;
         }
         return true;
-    }
-
-    public static boolean isInRange(final int column) {
-        return FILE_MIN <= column && column <= FILE_MAX;
-    }
-
-    public int getColumn() {
-        return column;
     }
 }

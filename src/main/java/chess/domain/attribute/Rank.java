@@ -16,48 +16,26 @@ public enum Rank {
     private static final int RANK_MAX = 8;
     private static final int RANK_MIN = 1;
 
-    private final int row;
+    private final int value;
 
-    Rank(final int row) {
-        this.row = row;
+    Rank(final int value) {
+        this.value = value;
     }
 
-    public static Rank of(final char row) {
-        return of(String.valueOf(row));
+    public static Rank of(final char value) {
+        return of(String.valueOf(value));
     }
 
-    public static Rank of(final String row) {
-        return of(Integer.parseInt(row));
+    public static Rank of(final String value) {
+        return of(Integer.parseInt(value));
     }
 
-    public static Rank of(final int row) {
+    public static Rank of(final int value) {
         return Arrays.stream(values())
-                .filter(rank -> rank.row == row)
+                .filter(rank -> rank.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "랭크는 %d~%d 사이로 입력해주세요: %d".formatted(RANK_MIN, RANK_MAX, row)));
-    }
-
-    public static Rank startRankOf(final Color color) {
-        if (color == Color.WHITE) {
-            return ONE;
-        }
-        return EIGHT;
-    }
-
-    public static Rank startPawnRankOf(final Color color) {
-        if (color == Color.WHITE) {
-            return TWO;
-        }
-        return SEVEN;
-    }
-
-    public static boolean isInRange(final int row) {
-        return RANK_MIN <= row && row <= RANK_MAX;
-    }
-
-    public int getValue() {
-        return row;
+                        "랭크는 %d~%d 사이로 입력해주세요: %d".formatted(RANK_MIN, RANK_MAX, value)));
     }
 
     public Rank up() {
