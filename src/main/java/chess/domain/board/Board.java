@@ -27,9 +27,9 @@ public class Board {
         validateIsNonExistentPiece(source);
 
         final Piece sourcePiece = findPieceBySquare(source);
-        validateIsTurn(sourcePiece, turn);
-        validateCanMove(source, target, sourcePiece);
-        validateExistObstacleOnPath(source, target);
+        validateIsNotTurn(sourcePiece, turn);
+        validateCannotMove(source, target, sourcePiece);
+        validateNotExistObstacleOnPath(source, target);
         pieces.remove(source);
         pieces.put(target, sourcePiece);
     }
@@ -50,19 +50,19 @@ public class Board {
         return pieces.get(square);
     }
 
-    private void validateIsTurn(final Piece source, final PieceColor turn) {
+    private void validateIsNotTurn(final Piece source, final PieceColor turn) {
         if (!source.isSameColor(turn)) {
             throw new IllegalArgumentException(ERROR_IS_NOT_TURN);
         }
     }
 
-    private void validateCanMove(final Square source, final Square target, final Piece sourcePiece) {
+    private void validateCannotMove(final Square source, final Square target, final Piece sourcePiece) {
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException(ERROR_MOVE_NOT_AVAILABLE);
         }
     }
 
-    private void validateExistObstacleOnPath(final Square source, final Square target) {
+    private void validateNotExistObstacleOnPath(final Square source, final Square target) {
         final List<Square> path = source.findPath(target);
         for (Square square : path) {
             checkIsNotEmpty(square);
