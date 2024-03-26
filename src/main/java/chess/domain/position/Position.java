@@ -58,17 +58,19 @@ public class Position {
     }
 
     public List<Position> findPath(Position target) {
-        Direction direction = DirectionJudge.judge(this, target);
-        List<Position> path = new ArrayList<>();
+        try {
+            Direction direction = DirectionJudge.judge(this, target);
+            List<Position> path = new ArrayList<>();
+            Position nextPosition = movePositionDirectionTo(direction);
 
-        Position nextPosition = findPositionDirectionTo(direction);
-
-        while (!target.equals(nextPosition)) {
-            path.add(nextPosition);
-            nextPosition = nextPosition.findPositionDirectionTo(direction);
+            while (!target.equals(nextPosition)) {
+                path.add(nextPosition);
+                nextPosition = nextPosition.movePositionDirectionTo(direction);
+            }
+            return path;
+        } catch (IllegalArgumentException e) {
+            return List.of();
         }
-
-        return path;
     }
 
     public boolean isUpPosition(Position target) {
@@ -88,7 +90,7 @@ public class Position {
     }
 
     // TODO 움직이는 행위가 구현되어 있음
-    private Position findPositionDirectionTo(Direction direction) {
+    private Position movePositionDirectionTo(Direction direction) {
         int nextRowStep = direction.getRowWeight();
         int nextColumnStep = direction.getColumnWeight();
         return movePosition(nextRowStep, nextColumnStep);

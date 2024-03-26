@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 
 public final class NullPiece extends Piece {
@@ -10,17 +9,17 @@ public final class NullPiece extends Piece {
         super(team);
     }
 
-    public static NullPiece getInstance(){
+    public static NullPiece getInstance() {
         return instance;
     }
 
     @Override
-    public boolean canMove(Position start, Position destination, ChessBoard chessBoard) {
+    public boolean canMove(Position start, Position destination, Piece destinationPiece) {
         throw new UnsupportedOperationException("NullPiece 객체입니다");
     }
 
     @Override
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return true;
     }
 }

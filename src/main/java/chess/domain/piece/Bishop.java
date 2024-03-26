@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.position.Direction;
 import chess.domain.position.DirectionJudge;
 import chess.domain.position.Position;
@@ -17,12 +16,16 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean canMove(Position start, Position destination, ChessBoard board) {
+    public boolean canMove(Position start, Position destination, Piece pieceAtDestination) {
         try {
             return PASSING.contains(DirectionJudge.judge(start, destination))
-                    && board.pathIsAllEmpty(start.findPath(destination));
+                    && checkDestinationPiece(pieceAtDestination);
         } catch (IllegalArgumentException e) {
             return false;
         }
+    }
+
+    private boolean checkDestinationPiece(Piece pieceAtDestination) {
+        return pieceAtDestination.isEmpty() || isOtherTeam(pieceAtDestination);
     }
 }

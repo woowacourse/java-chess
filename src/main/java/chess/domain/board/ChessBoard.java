@@ -1,11 +1,10 @@
 package chess.domain.board;
 
+import chess.domain.piece.NullPiece;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
@@ -20,14 +19,9 @@ public class ChessBoard {
 
     public Piece findPieceByPosition(Position targetPosition) {
         if (positionIsEmpty(targetPosition)) {
-            throw new NoSuchElementException("해당 위치에 기물이 존재하지 않습니다.");
+            return NullPiece.getInstance();
         }
         return board.get(targetPosition);
-    }
-
-    public boolean pathIsAllEmpty(List<Position> path) {
-        return path.stream()
-                .allMatch(this::positionIsEmpty);
     }
 
     public void move(Position start, Position destination) {
@@ -45,20 +39,14 @@ public class ChessBoard {
     }
 
     private boolean canMove(Position start, Position destination) {
-        Piece piece = findPieceByPosition(start);
-
-        return piece.canMove(start, destination, this)
-                && isMovablePosition(start, destination);
+        Piece pieceAtStart = findPieceByPosition(start);
+        return pieceAtStart.canMove(start, destination, findPieceByPosition(destination))
+                && pathIsAllEmpty(start, destination);
     }
 
-    // TODO canMove 내부에서 처리하기
-    private boolean isMovablePosition(Position start, Position destination) {
-        return positionIsEmpty(destination) || piecesIsOtherTeam(start, destination);
-    }
-
-    private boolean piecesIsOtherTeam(Position start, Position destination) {
-        Piece startPiece = findPieceByPosition(start);
-        Piece desinationPiece = findPieceByPosition(destination);
-        return startPiece.isOtherTeam(desinationPiece);
+    private boolean pathIsAllEmpty(Position start, Position destination) {
+        return start.findPath(destination)
+                .stream()
+                .allMatch(this::positionIsEmpty);
     }
 }

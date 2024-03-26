@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 
 public abstract class Piece {
@@ -12,7 +11,7 @@ public abstract class Piece {
     }
 
     // TODO : 보드가 아닌 도착지의 piece를 넘기는 방안
-    public abstract boolean canMove(Position start, Position destination, ChessBoard chessBoard);
+    public abstract boolean canMove(Position start, Position destination, Piece pieceAtDestination);
 
     public boolean isBlackTeam() {
         return team == Team.BLACK;
@@ -30,7 +29,7 @@ public abstract class Piece {
         return this.team != team;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return false;
     }
 }
