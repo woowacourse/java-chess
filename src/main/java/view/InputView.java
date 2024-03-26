@@ -17,7 +17,7 @@ public class InputView {
 
     public Command readStartCommand() {
         String[] tokens = readUserInput();
-        if (tokens.length == 1 && CommandType.START.message().equals(tokens[0])) {
+        if (tokens.length == 1 && CommandType.START.name().equals(tokens[0])) {
             return new StartOnCommand();
         }
         throw new IllegalArgumentException(GAME_NOT_STARTED_ERROR_MESSAGE);
