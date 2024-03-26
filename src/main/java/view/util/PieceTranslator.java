@@ -2,7 +2,7 @@ package view.util;
 
 import domain.piece.Bishop;
 import domain.piece.BlackPawn;
-import domain.piece.Color;
+import domain.piece.Blank;
 import domain.piece.King;
 import domain.piece.Knight;
 import domain.piece.Queen;
@@ -20,7 +20,7 @@ public enum PieceTranslator {
     KNIGHT(Knight.class, "n"),
     WHITE_PAWN(WhitePawn.class, "p"),
     BLACK_PAWN(BlackPawn.class, "P"),
-    NONE(null, ".");
+    NONE(Blank.class, ".");
 
     private final Class<? extends ChessPiece> classType;
     private final String name;
@@ -30,22 +30,18 @@ public enum PieceTranslator {
         this.name = name;
     }
 
-    public static String getName(ChessPiece piece) {
-        if (piece == null) {
-            return NONE.name;
-        }
-
-        PieceTranslator pieceTranslator = from(piece);
-        if (piece.hasSameColor(Color.BLACK)) {
-            return pieceTranslator.name.toUpperCase();
-        }
-        return pieceTranslator.name;
-    }
-
-    private static PieceTranslator from(ChessPiece piece) {
+    public static PieceTranslator from(ChessPiece chessPiece) {
         return Arrays.stream(values())
-                .filter(piece1 -> piece1.classType == piece.getClass())
+                .filter(type -> type.isSameType(chessPiece))
                 .findAny()
                 .orElseThrow();
+    }
+
+    private boolean isSameType(ChessPiece chessPiece) {
+        return this.classType.isInstance(chessPiece);
+    }
+
+    public String getName() {
+        return name;
     }
 }
