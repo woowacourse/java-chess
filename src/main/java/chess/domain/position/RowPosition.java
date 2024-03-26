@@ -55,4 +55,9 @@ public class RowPosition {
     public int hashCode() {
         return Objects.hash(rowNumber);
     }
+
+    @Override
+    public String toString(){
+        return "ROW : " + rowNumber;
+    }
 }

@@ -112,4 +112,12 @@ public class Position {
     public int hashCode() {
         return Objects.hash(rowPosition, columnPosition);
     }
+
+    @Override
+    public String toString(){
+        return "[Position : "
+                + rowPosition.toString()
+                + columnPosition.toString()
+                +"]";
+    }
 }

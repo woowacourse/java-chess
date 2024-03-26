@@ -51,4 +51,9 @@ public class ColumnPosition {
     public int hashCode() {
         return Objects.hash(columnNumber);
     }
+
+    @Override
+    public String toString(){
+        return "COLUMN : " + columnNumber;
+    }
 }

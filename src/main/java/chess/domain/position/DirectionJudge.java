@@ -32,12 +32,11 @@ public enum DirectionJudge {
         this.directionCondition = directionCondition;
     }
 
-    // TODO 예외에 메시지 담아 던지기
     public static Direction judge(Position start, Position destination) {
         return Stream.of(values())
                 .filter(condition -> condition.directionCondition.test(start, destination))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("두 위치의 방향을 특정할 수 없습니다."))
+                .orElseThrow(() -> new IllegalArgumentException(start + "과 " + destination + "의 방향을 특정할 수 없습니다."))
                 .direction;
     }
 }
