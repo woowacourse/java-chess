@@ -10,7 +10,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class DaoTest {
-    ChessGameDao chessGameDao;
+    private static final String fileName = "docker/db/mysql/init/init_for_test.sql";
+
+    private ChessGameDao chessGameDao;
 
     /*
      * 초기 체스판 상태
@@ -41,7 +43,7 @@ public class DaoTest {
 
 
     private void executeInitScript() throws IOException, SQLException {
-        try (BufferedReader reader = new BufferedReader(new FileReader("docker/db/mysql/init/initfortest.sql"));
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName));
              Connection connection = chessGameDao.getConnection();
              Statement statement = connection.createStatement()) {
             String line;
