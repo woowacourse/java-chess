@@ -13,11 +13,11 @@ public class Movement {
         this.rankDifference = rankDifference;
     }
 
-    public boolean isForward(Side side) {
+    public boolean isForward(boolean isUpperSide) {
         if (!fileDifference.isZero()) {
             return false;
         }
-        if (side.isBlack()) {
+        if (isUpperSide) {
             return rankDifference.isNegative();
         }
         return rankDifference.isPositive();

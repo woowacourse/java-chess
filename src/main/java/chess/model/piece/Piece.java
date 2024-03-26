@@ -6,7 +6,7 @@ import chess.model.position.Path;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final Side side;
+    private final Side side;
 
     protected Piece(Side side) {
         this.side = side;
