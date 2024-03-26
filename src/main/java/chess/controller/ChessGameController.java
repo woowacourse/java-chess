@@ -6,9 +6,11 @@ import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.dto.PieceDto;
+import chess.dto.TurnDto;
 import chess.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -129,6 +131,23 @@ public class ChessGameController {
             outputView.printResult(chessGame.findLoser(), chessGame.findWinner());
             return false;
         }
-        return !command.equals(END_COMMAND);
+        return isNotEnd(chessGame, command);
+    }
+
+    private boolean isNotEnd(ChessGame chessGame, String command) {
+        if (command.equals(END_COMMAND)) {
+            saveCurrentStatusToDB(chessGame);
+            return false;
+        }
+        return true;
+    }
+
+    private void saveCurrentStatusToDB(ChessGame chessGame) {
+        Map<Position, PieceType> board = chessGame.collectBoard();
+        List<PieceDto> pieces = board.entrySet().stream()
+                .map(entry -> PieceDto.from(entry.getKey(), entry.getValue()))
+                .toList();
+        TurnDto turn = TurnDto.of(chessGame.turn());
+        dbService.saveGame(pieces, turn);
     }
 }

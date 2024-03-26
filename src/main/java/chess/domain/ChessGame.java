@@ -58,6 +58,10 @@ public class ChessGame {
         return new Scores(whiteScore, blackScore);
     }
 
+    public Color turn() {
+        return turnColor;
+    }
+
     public Map<Position, PieceType> collectBoard() {
         return chessState.collectBoard();
     }
