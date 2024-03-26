@@ -18,6 +18,6 @@ public class Bishop extends Piece {
         if (route.containsOrthogonal()) {
             return false;
         }
-        return route.hasNoAllyAtTarget() && route.categoryNumOf(1);
+        return route.hasNoAllyAtTarget() && route.isDirectionsCount(1);
     }
 }

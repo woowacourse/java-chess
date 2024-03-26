@@ -39,7 +39,7 @@ public abstract class Pawn extends Piece {
     }
 
     private boolean isNotGeneralMove(Route route) {
-        if (!route.categoryNumOf(1)) {
+        if (!route.isDirectionsCount(1)) {
             return true;
         }
         return isBackward(route);

@@ -17,6 +17,6 @@ public class Rook extends Piece {
         if (route.containsDiagonal()) {
             return false;
         }
-        return route.hasNoAllyAtTarget() && route.categoryNumOf(1);
+        return route.hasNoAllyAtTarget() && route.isDirectionsCount(1);
     }
 }

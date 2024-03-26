@@ -14,7 +14,7 @@ public class Queen extends Piece {
         if (route.hasPiecePathExclusive()) {
             return false;
         }
-        return route.hasNoAllyAtTarget() && route.categoryNumOf(1);
+        return route.hasNoAllyAtTarget() && route.isDirectionsCount(1);
     }
 }
 

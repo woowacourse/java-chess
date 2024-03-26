@@ -64,7 +64,7 @@ class RouteTest {
                 List.of(SquareState.EMPTY, SquareState.EMPTY, SquareState.EMPTY)
         );
 
-        assertThat(route.categoryNumOf(2)).isTrue();
+        assertThat(route.isDirectionsCount(2)).isTrue();
     }
 
     @DisplayName("대각선을 포함하고 있는지 확인할 수 있다.")

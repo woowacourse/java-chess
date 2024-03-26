@@ -39,11 +39,11 @@ public class Route {
         return steps.size() == size;
     }
 
-    public boolean categoryNumOf(int categorySize) {
+    public boolean isDirectionsCount(int count) {
         return steps.stream()
                 .map(Step::getDirection)
                 .distinct()
-                .count() == categorySize;
+                .count() == count;
     }
 
     public boolean containsDiagonal() {
