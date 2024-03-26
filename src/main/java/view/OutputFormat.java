@@ -18,6 +18,7 @@ import java.util.Map;
 public class OutputFormat {
 
     private static final Map<Piece, String> pieceSymbol = new HashMap<>();
+    public static final int CHESSBOARD_SIZE = 8;
 
     static {
         pieceSymbol.put(new Piece(new Rook(), Color.BLACK), "R");
@@ -37,7 +38,7 @@ public class OutputFormat {
 
     public String parseChessBoard(final Map<Position, Piece> chessBoard) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int rank = 8; rank >= 1; rank--) {
+        for (int rank = CHESSBOARD_SIZE; rank >= 1; rank--) {
             parsePositionByFile(chessBoard, rank);
             stringBuilder.append(parsePositionByFile(chessBoard, rank)).append("\n");
         }
@@ -47,7 +48,7 @@ public class OutputFormat {
 
     private String parsePositionByFile(Map<Position, Piece> chessBoard, int rank) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int file = 0; file < 8; file++) {
+        for (int file = 0; file < CHESSBOARD_SIZE; file++) {
             Position position = new Position(new Position(new File((char) ('a' + file)), new Rank(rank)));
             stringBuilder.append(parseSymbol(chessBoard, position));
         }

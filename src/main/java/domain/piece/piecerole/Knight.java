@@ -33,6 +33,16 @@ public class Knight implements PieceRole {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isSlidingPiece() {
+        return false;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

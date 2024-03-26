@@ -37,8 +37,7 @@ public class ChessGame implements Executable {
         if (gameState.isNotRunning()) {
             throw new IllegalStateException("게임 진행중이 아닙니다.");
         }
-        chessBoard.checkColor(source, color);
-        chessBoard.checkRoute(source, target);
+        chessBoard.checkRoute(source, target, color);
         chessBoard.move(source, target);
 
         color = Color.reverseColor(color);

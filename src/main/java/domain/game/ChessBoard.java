@@ -4,14 +4,6 @@ import domain.move.Direction;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.PieceGenerator;
-import domain.piece.piecerole.Bishop;
-import domain.piece.piecerole.BlackPawn;
-import domain.piece.piecerole.King;
-import domain.piece.piecerole.Knight;
-import domain.piece.piecerole.PieceRole;
-import domain.piece.piecerole.Queen;
-import domain.piece.piecerole.Rook;
-import domain.piece.piecerole.WhitePawn;
 import domain.position.Position;
 import java.util.Collections;
 import java.util.Map;
@@ -19,38 +11,27 @@ import java.util.Map;
 public class ChessBoard {
 
     private final Map<Position, Piece> pieceByPosition;
-    private final Map<PieceRole, RouteValidator> routeValidator;
 
     public ChessBoard() {
         this.pieceByPosition = PieceGenerator.generate();
-        this.routeValidator = Map.of(
-                new WhitePawn(), this::validatePawnMove,
-                new BlackPawn(), this::validatePawnMove,
-                new Knight(), this::validatePieceMove,
-                new Bishop(), this::validateMultipleMoveRoute,
-                new Rook(), this::validateMultipleMoveRoute,
-                new Queen(), this::validateMultipleMoveRoute,
-                new King(), this::validatePieceMove
-        );
     }
 
-    public void add(Position position, Piece piece) {
-        pieceByPosition.put(position, piece);
+    public void checkRoute(Position source, Position target, Color color) {
+        checkSourcePosition(source);
+        checkTargetPosition(source, target);
+        checkColor(source, color);
+
+        Piece piece = pieceByPosition.get(source);
+
+        validatePieceMove(source, target);
+        validateSlidingMove(source, target, piece);
+        validatePawnMove(source, target, piece);
     }
 
     public void checkColor(Position source, Color color) {
-        checkSourcePosition(source);
         if (pieceByPosition.get(source).isNotSameColor(color)) {
             throw new IllegalArgumentException("자신의 기물만 움직일 수 있습니다.");
         }
-    }
-
-    public void checkRoute(Position source, Position target) {
-        checkSourcePosition(source);
-        checkTargetPosition(source, target);
-
-        Piece piece = pieceByPosition.get(source);
-        routeValidator.get(piece.getPieceRole()).validate(source, target);
     }
 
     private void checkSourcePosition(Position source) {
@@ -82,23 +63,16 @@ public class ChessBoard {
         return sourcePosition.equals(targetPosition);
     }
 
-    public void move(Position source, Position target) {
-        Piece findPiece = pieceByPosition.get(source);
-
-        pieceByPosition.remove(target);
-        pieceByPosition.put(target, findPiece);
-        pieceByPosition.remove(source);
-    }
-
-    private void validateMultipleMoveRoute(Position source, Position target) {
-        validatePieceMove(source, target);
-        validateOtherPieceOnRoute(source, target);
-    }
-
     private void validatePieceMove(Position source, Position target) {
         Piece sourcePiece = pieceByPosition.get(source);
         if (!sourcePiece.canMove(source, target)) {
             throw new IllegalArgumentException("해당 피스가 움직일 수 있는 지점이 아닙니다.");
+        }
+    }
+
+    private void validateSlidingMove(Position source, Position target, Piece piece) {
+        if (piece.isSlidingPiece()) {
+            validateOtherPieceOnRoute(source, target);
         }
     }
 
@@ -118,10 +92,14 @@ public class ChessBoard {
         }
     }
 
+    private void validatePawnMove(Position source, Position target, Piece piece) {
+        if (piece.isPawn()) {
+            validatePawnMove(source, target);
+        }
+    }
+
     private void validatePawnMove(Position source, Position target) {
         Direction direction = Direction.findDirection(source, target);
-        validatePieceMove(source, target);
-
         if (direction.isNorthOrSouth()) {
             checkOtherPieceAt(target);
         }
@@ -134,6 +112,14 @@ public class ChessBoard {
         if (isEmptyAt(target)) {
             throw new IllegalArgumentException("이동하려는 곳에 기물이 없어 이동할 수 없습니다.");
         }
+    }
+
+    public void move(Position source, Position target) {
+        Piece findPiece = pieceByPosition.get(source);
+
+        pieceByPosition.remove(target);
+        pieceByPosition.put(target, findPiece);
+        pieceByPosition.remove(source);
     }
 
     public boolean isNotEmptyAt(Position position) {

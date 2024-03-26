@@ -26,6 +26,16 @@ public class Bishop implements PieceRole {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isSlidingPiece() {
+        return true;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

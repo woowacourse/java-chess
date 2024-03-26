@@ -25,10 +25,13 @@ public class Piece {
         return pieceRole.canMove(source, target);
     }
 
-    public PieceRole getPieceRole() {
-        return pieceRole;
+    public boolean isPawn() {
+        return pieceRole.isPawn();
     }
 
+    public boolean isSlidingPiece() {
+        return pieceRole.isSlidingPiece();
+    }
 
     @Override
     public boolean equals(Object o) {
