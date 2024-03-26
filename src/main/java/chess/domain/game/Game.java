@@ -31,6 +31,10 @@ public class Game {
         }
     }
 
+    public GameResult getResult() {
+        return new GameResult(board.getPieces());
+    }
+
     public Map<Square, Piece> getBoardStatus() {
         return board.getPieces();
     }

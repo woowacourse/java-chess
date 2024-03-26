@@ -47,8 +47,8 @@
 # 기능 요구사항(step 3&4)
 
 ## Piece
-- [ ] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
-- [ ] pawn의 기본 점수는 1점이다.
+- [x] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+- [x] pawn의 기본 점수는 1점이다.
 - [ ] 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
 - [ ] king은 0점이다.
 

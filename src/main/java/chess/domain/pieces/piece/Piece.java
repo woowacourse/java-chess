@@ -21,12 +21,20 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
+    public boolean isPawn() {
+        return this.type.equals(Type.PAWN);
+    }
+
     public Color color() {
         return color;
     }
 
     public Type type() {
         return type;
+    }
+
+    public Score getScore() {
+        return type.getScore();
     }
 
     @Override
