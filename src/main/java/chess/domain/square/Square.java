@@ -16,11 +16,11 @@ public record Square(File file, Rank rank) {
     }
 
     private boolean isVertical(final Square target) {
-        return file.isSameFile(target.file);
+        return file == target.file;
     }
 
     private boolean isHorizontal(final Square target) {
-        return rank.isSameRank(target.rank);
+        return rank == target.rank;
     }
 
     public boolean isDiagonal(final Square target) {
@@ -89,11 +89,11 @@ public record Square(File file, Rank rank) {
     }
 
     private boolean isWhiteFirstRank() {
-        return rank.isSameRank(Rank.TWO);
+        return rank == Rank.TWO;
     }
 
     private boolean isBlackFirstRank() {
-        return rank.isSameRank(Rank.SEVEN);
+        return rank == Rank.SEVEN;
     }
 
     public boolean isAttack(final Square target) {

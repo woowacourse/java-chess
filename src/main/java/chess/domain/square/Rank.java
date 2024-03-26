@@ -42,10 +42,6 @@ public enum Rank {
         }
     }
 
-    public boolean isSameRank(final Rank other) {
-        return index == other.index;
-    }
-
     public int calculateDistance(final Rank other) {
         return Math.abs(index - other.index);
     }

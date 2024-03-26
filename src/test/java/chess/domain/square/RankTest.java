@@ -33,17 +33,6 @@ class RankTest {
         }
     }
 
-    @DisplayName("같은 랭크인지 확인한다.")
-    @ParameterizedTest
-    @CsvSource({"ONE, true", "TWO, false"})
-    void checkIsSameFile(final Rank other, final boolean expected) {
-        final Rank rank = Rank.ONE;
-
-        final boolean actual = rank.isSameRank(other);
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("두 랭크 간 거리를 구한다.")
     @Test
     void calculateDistanceBetweenTwoRanks() {

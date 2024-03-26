@@ -32,10 +32,6 @@ public enum File {
                 .orElseThrow(() -> new IllegalArgumentException(value + ERROR_NOT_EXIST_FILE));
     }
 
-    public boolean isSameFile(final File other) {
-        return index == other.index;
-    }
-
     public int calculateDistance(final File other) {
         return Math.abs(index - other.index);
     }

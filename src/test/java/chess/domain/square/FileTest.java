@@ -19,17 +19,6 @@ class FileTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("같은 파일인지 확인한다.")
-    @ParameterizedTest
-    @CsvSource({"a, true", "b, false"})
-    void checkIsSameFile(final String other, final boolean expected) {
-        final File file = File.a;
-
-        final boolean actual = file.isSameFile(File.findByValue(other));
-
-        assertThat(actual).isEqualTo(expected);
-    }
-
     @DisplayName("두 파일 간 거리를 구한다.")
     @Test
     void calculateDistanceBetweenTwoFiles() {
