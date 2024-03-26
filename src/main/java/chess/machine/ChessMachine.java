@@ -1,6 +1,6 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessGame;
 import chess.domain.chessBoard.generator.ChessSpaceGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -21,10 +21,11 @@ public class ChessMachine {
 
         Command command = inputView.readCommand();
         validateFirstCommand(command);
-        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
-        command.conductCommand(chessBoard, outputView);
+        ChessGame chessGame = new ChessGame(new ChessSpaceGenerator());
+        command.conductCommand(chessGame, outputView);
 
-        playChess(chessBoard);
+        playChess(chessGame);
+        printStatus(chessGame);
     }
 
     private void validateFirstCommand(Command command) {
@@ -33,10 +34,15 @@ public class ChessMachine {
         }
     }
 
-    private void playChess(ChessBoard chessBoard) {
-        while (chessBoard.isActive()) {
+    private void playChess(ChessGame chessGame) {
+        while (chessGame.isActive()) {
             Command command = inputView.readCommand();
-            command.conductCommand(chessBoard, outputView);
+            command.conductCommand(chessGame, outputView);
         }
+    }
+
+    private void printStatus(ChessGame chessGame) {
+        Command command = Status.of("status");
+        command.conductCommand(chessGame, outputView);
     }
 }

@@ -1,6 +1,6 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessGame;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
 import chess.view.OutputView;
@@ -42,10 +42,10 @@ public class Move implements Command {
     }
 
     @Override
-    public void conductCommand(ChessBoard chessBoard, OutputView outputView) {
-        chessBoard.move(
+    public void conductCommand(ChessGame chessGame, OutputView outputView) {
+        chessGame.move(
                 Position.fromCoordinate(Coordinate.of(from)),
                 Position.fromCoordinate(Coordinate.of(to)));
-        outputView.printChessBoard(chessBoard);
+        outputView.printChessBoard(chessGame);
     }
 }

@@ -1,7 +1,7 @@
 package chess.machine;
 
 import chess.domain.chessBoard.BoardScore;
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessGame;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
 
@@ -20,25 +20,36 @@ public class Status implements Command {
     }
 
     @Override
-    public void conductCommand(ChessBoard chessBoard, OutputView outputView) {
-        Result result = new Result(chessBoard);
+    public void conductCommand(ChessGame chessGame, OutputView outputView) {
+        Result result = new Result(chessGame);
 
-        outputView.printScore(result.blackScore, Color.BLACK);
-        outputView.printScore(result.whiteScore, Color.WHITE);
+        outputView.printScore(chessGame.calculateScore(Color.BLACK), Color.BLACK);
+        outputView.printScore(chessGame.calculateScore(Color.BLACK), Color.WHITE);
         outputView.printWinner(result.winner());
     }
 
     private static class Result {
 
-        final BoardScore blackScore;
-        final BoardScore whiteScore;
+        private final ChessGame chessGame;
 
-        Result(ChessBoard chessBoard) {
-            blackScore = chessBoard.calculateScore(Color.BLACK);
-            whiteScore = chessBoard.calculateScore(Color.WHITE);
+        Result(ChessGame chessGame) {
+            this.chessGame = chessGame;
         }
 
         Color winner() {
+            if (chessGame.hasSameDeadKingColor(Color.EMPTY)) {
+                return winnerByScore();
+            }
+            if (chessGame.hasSameDeadKingColor(Color.WHITE)) {
+                return Color.BLACK;
+            }
+            return Color.WHITE;
+        }
+
+        Color winnerByScore() {
+            BoardScore blackScore = chessGame.calculateScore(Color.BLACK);
+            BoardScore whiteScore = chessGame.calculateScore(Color.WHITE);
+
             if (blackScore.asDouble() > whiteScore.asDouble()) {
                 return Color.BLACK;
             }

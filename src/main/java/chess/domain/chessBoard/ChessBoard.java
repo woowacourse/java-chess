@@ -35,13 +35,6 @@ public class ChessBoard {
         throw new IllegalStateException("게임이 활성화되지 않았습니다");
     }
 
-    private void validateTurn(Space fromSpace) {
-        if (fromSpace.isValidTurn(turn)) {
-            return;
-        }
-        throw new IllegalStateException("상대 플레이어의 차례입니다");
-    }
-
     private Space findSpace(Position position) {
         return spaces.stream()
                 .filter(space -> space.isSamePosition(position))
@@ -74,6 +67,16 @@ public class ChessBoard {
 
     public boolean isActive() {
         return turn.isActive();
+    }
+
+    public boolean isBlackKingOn(Position position) {
+        Space space = findSpace(position);
+        return space.hasKing() && space.hasColor(Color.BLACK);
+    }
+
+    public boolean isWhiteKingOn(Position position) {
+        Space space = findSpace(position);
+        return space.hasKing() && space.hasColor(Color.WHITE);
     }
 
     public BoardScore calculateScore(Color color) {

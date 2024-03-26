@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.chessBoard.BoardScore;
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessBoard.ChessGame;
 import chess.domain.piece.Color;
 import java.util.List;
 
@@ -21,8 +21,8 @@ public class OutputView {
                         > 게임 이동 : move source위치 target위치 - 예. move b2 b3""");
     }
 
-    public void printChessBoard(ChessBoard chessBoard) {
-        List<String> board = chessBoard.showBoard();
+    public void printChessBoard(ChessGame chessGame) {
+        List<String> board = chessGame.showBoard();
 
         for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
             String boardLine = String.join("", board.subList(i * CHESS_BOARD_LENGTH, (i + 1) * CHESS_BOARD_LENGTH));
