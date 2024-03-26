@@ -18,7 +18,7 @@ class CoordinateTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("가중치를 받아서 새로운 좌표를 생성할 수 있는지 검사한다.")
+    @DisplayName("가중치가 더해진 새로운 좌표를 생성할 수 있는지 검사한다.")
     @Test
     void applicable() {
         Coordinate coordinate = new Coordinate(1, 'a');
@@ -31,7 +31,7 @@ class CoordinateTest {
         );
     }
 
-    @DisplayName("가중치를 받아서 새로운 좌표를 생성할 수 있다.")
+    @DisplayName("가중치가 더해진 새로운 좌표를 생성할 수 있다.")
     @Test
     void apply() {
         Coordinate coordinate = new Coordinate(1, 'a');
@@ -43,7 +43,7 @@ class CoordinateTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    @DisplayName("적용할 수 없는 가중치로는 새로운 좌표를 생성할 수 없다.")
+    @DisplayName("가중치를 더했을때, 좌표의 범위가 초과된 새로운 좌표를 생성할 수 없다.")
     @Test
     void cantApply() {
         Coordinate coordinate = new Coordinate(1, 'a');
