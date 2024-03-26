@@ -85,4 +85,9 @@ public class Pawn extends Piece {
         }
         return BLACK_PAWN;
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

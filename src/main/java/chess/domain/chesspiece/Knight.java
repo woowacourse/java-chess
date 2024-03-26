@@ -38,4 +38,9 @@ public class Knight extends Piece {
         }
         return BLACK_KNIGHT;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

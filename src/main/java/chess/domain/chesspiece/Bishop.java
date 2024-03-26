@@ -47,4 +47,9 @@ public class Bishop extends Piece {
         }
         return BLACK_BISHOP;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

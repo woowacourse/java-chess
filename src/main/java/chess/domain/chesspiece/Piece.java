@@ -20,15 +20,13 @@ public abstract class Piece {
 
     public abstract Role getRole();
 
-    public Team getTeam() {
+    public final Team getTeam() {
         return team;
     }
 
-    public boolean isTeam(Piece piece) {
+    public final boolean isTeam(Piece piece) {
         return team == piece.team;
     }
 
-    public boolean isPawn() {
-        return getRole() == BLACK_PAWN || getRole() == WHITE_PAWN;
-    }
+    public abstract boolean isPawn();
 }

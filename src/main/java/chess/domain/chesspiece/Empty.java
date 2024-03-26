@@ -15,7 +15,7 @@ public class Empty extends Piece {
 
     @Override
     public List<Position> getRoute(Position source, Position target) {
-        return null;
+        throw new IllegalArgumentException("해당 공간은 기물이 존재하지 않습니다.");
     }
 
     @Override
@@ -25,5 +25,10 @@ public class Empty extends Piece {
     @Override
     public Role getRole() {
         return EMPTY;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

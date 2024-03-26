@@ -46,4 +46,9 @@ public class Queen extends Piece {
         }
         return BLACK_QUEEN;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

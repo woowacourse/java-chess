@@ -44,4 +44,9 @@ public class Rook extends Piece {
         }
         return BLACK_ROOK;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

@@ -46,4 +46,9 @@ public class King extends Piece {
         }
         return BLACK_KING;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
