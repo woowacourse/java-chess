@@ -13,7 +13,7 @@ public class ChessGame {
     private final Board board;
     private State state;
 
-    public ChessGame(Map<Point, Piece> board) {
+    public ChessGame(final Map<Point, Piece> board) {
         this.board = new Board(board);
         this.state = new Ready(Team.WHITE);
     }
@@ -30,7 +30,7 @@ public class ChessGame {
         state = state.start();
     }
 
-    public void move(Point departure, Point destination) {
+    public void move(final Point departure, final Point destination) {
         state = state.move(board, departure, destination);
     }
 

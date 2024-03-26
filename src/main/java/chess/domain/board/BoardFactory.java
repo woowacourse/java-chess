@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class BoardFactory {
 
     public static Map<Point, Piece> createEmptyBoard() {
-        Map<Point, Piece> board = new HashMap<>();
+        final Map<Point, Piece> board = new HashMap<>();
 
         IntStream.rangeClosed(1, 8)
                 .boxed()
@@ -21,7 +21,7 @@ public class BoardFactory {
     }
 
     public static Map<Point, Piece> createInitialChessBoard() {
-        Map<Point, Piece> board = new HashMap<>();
+        final Map<Point, Piece> board = new HashMap<>();
 
         board.putAll(createEighthLine());
         board.putAll(createSeventhLine());
@@ -50,8 +50,8 @@ public class BoardFactory {
         return lineOfKing(1, Team.WHITE);
     }
 
-    private static Map<Point, Piece> lineOfPawn(int rank, Team team) {
-        Map<Point, Piece> line = new HashMap<>();
+    private static Map<Point, Piece> lineOfPawn(final int rank, final Team team) {
+        final Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
             line.put(new Point(c, rank), new Pawn(team));
@@ -59,7 +59,7 @@ public class BoardFactory {
         return line;
     }
 
-    private static Map<Point, Piece> lineOfKing(int rank, Team team) {
+    private static Map<Point, Piece> lineOfKing(final int rank, final Team team) {
         return Map.of(
                 new Point('a', rank), new Rook(team),
                 new Point('b', rank), new Knight(team),
@@ -72,8 +72,8 @@ public class BoardFactory {
         );
     }
 
-    private static Map<Point, Piece> lineOfEmpty(int rank) {
-        Map<Point, Piece> line = new HashMap<>();
+    private static Map<Point, Piece> lineOfEmpty(final int rank) {
+        final Map<Point, Piece> line = new HashMap<>();
 
         for (char c = 'a'; c <= 'h'; c++) {
             line.put(new Point(c, rank), Empty.INSTANCE);

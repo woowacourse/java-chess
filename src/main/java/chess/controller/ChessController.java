@@ -13,7 +13,7 @@ public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessController(InputView inputView, OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -21,7 +21,7 @@ public class ChessController {
     public void run() {
         outputView.printGameStart();
 
-        ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
+        final ChessGame game = new ChessGame(BoardFactory.createInitialChessBoard());
 
         while (game.isPlayable()) {
             play(game);
@@ -30,8 +30,8 @@ public class ChessController {
 
     private void play(final ChessGame game) {
         try {
-            List<String> readCommand = inputView.readCommand();
-            Command command = Command.from(readCommand.get(0));
+            final List<String> readCommand = inputView.readCommand();
+            final Command command = Command.from(readCommand.get(0));
 
             executeCommand(game, command, readCommand);
         } catch (RuntimeException e) {
@@ -39,7 +39,7 @@ public class ChessController {
         }
     }
 
-    private void executeCommand(ChessGame game, Command command, List<String> readCommand) {
+    private void executeCommand(final ChessGame game, final Command command, final List<String> readCommand) {
         if (command.isEnd()) {
             game.finish();
             return;
@@ -48,17 +48,17 @@ public class ChessController {
             game.start();
         }
         if (command.isMove()) {
-            Point departure = generatePoint(readCommand, 1);
-            Point destination = generatePoint(readCommand, 2);
+            final Point departure = generatePoint(readCommand, 1);
+            final Point destination = generatePoint(readCommand, 2);
             game.move(departure, destination);
         }
         outputView.printBoard(game.getBoard());
     }
 
-    private Point generatePoint(List<String> readCommand, int index) {
-        String pointInfo = readCommand.get(index);
-        char file = pointInfo.charAt(0);
-        int rank = Character.getNumericValue(pointInfo.charAt(1));
+    private Point generatePoint(final List<String> readCommand, final int index) {
+        final String pointInfo = readCommand.get(index);
+        final char file = pointInfo.charAt(0);
+        final int rank = Character.getNumericValue(pointInfo.charAt(1));
 
         return new Point(file, rank);
     }

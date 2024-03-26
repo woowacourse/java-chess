@@ -4,7 +4,7 @@ import chess.domain.point.Point;
 
 public final class Knight extends SingleMovePiece {
 
-    public Knight(Team team) {
+    public Knight(final Team team) {
         super(Type.KNIGHT, team);
     }
 

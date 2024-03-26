@@ -15,11 +15,11 @@ public class Point {
         this(File.from(file), Rank.from(rank));
     }
 
-    public Direction findRoute(Point destination) {
-        int fileDistance = calculateFileDistance(destination);
-        int rankDistance = calculateRankDistance(destination);
-        int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
-        int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
+    public Direction findRoute(final Point destination) {
+        final int fileDistance = calculateFileDistance(destination);
+        final int rankDistance = calculateRankDistance(destination);
+        final int unitFile = fileDistance == 0 ? 0 : fileDistance / Math.abs(fileDistance);
+        final int unitRank = rankDistance == 0 ? 0 : rankDistance / Math.abs(rankDistance);
 
         if (fileDistance == 0 || rankDistance == 0) {
             return Direction.of(unitFile, unitRank);
@@ -30,7 +30,7 @@ public class Point {
         return Direction.of(fileDistance, rankDistance);
     }
 
-    public boolean isDiagonalWithSlopeOfOne(Point destination) {
+    public boolean isDiagonalWithSlopeOfOne(final Point destination) {
         if (this.equals(destination)) {
             return false;
         }
@@ -38,8 +38,8 @@ public class Point {
     }
 
     private double calculateSlope(final Point destination) {
-        int fileDistance = calculateFileDistance(destination);
-        int rankDistance = calculateRankDistance(destination);
+        final int fileDistance = calculateFileDistance(destination);
+        final int rankDistance = calculateRankDistance(destination);
 
         if (rankDistance == 0) {
             return Double.MAX_VALUE;
@@ -47,29 +47,29 @@ public class Point {
         return (double) fileDistance / rankDistance;
     }
 
-    public boolean isStraight(Point destination) {
+    public boolean isStraight(final Point destination) {
         if (this.equals(destination)) {
             return false;
         }
         return this.file == destination.file || this.rank == destination.rank;
     }
 
-    public boolean isAround(Point destination) {
+    public boolean isAround(final Point destination) {
         if (this.equals(destination)) {
             return false;
         }
-        int fileDistance = calculateFileDistance(destination);
-        int rankDistance = calculateRankDistance(destination);
-        int totalDistance = Math.abs(fileDistance) + Math.abs(rankDistance);
+        final int fileDistance = calculateFileDistance(destination);
+        final int rankDistance = calculateRankDistance(destination);
+        final int totalDistance = Math.abs(fileDistance) + Math.abs(rankDistance);
         if (fileDistance != 0 && rankDistance != 0) {
             return totalDistance == 2;
         }
         return totalDistance == 1;
     }
 
-    public int multiplyAxis(Point destination) {
-        int fileDistance = calculateFileDistance(destination);
-        int rankDistance = calculateRankDistance(destination);
+    public int multiplyAxis(final Point destination) {
+        final int fileDistance = calculateFileDistance(destination);
+        final int rankDistance = calculateRankDistance(destination);
         return fileDistance * rankDistance;
     }
 
@@ -81,14 +81,14 @@ public class Point {
         return rank.calculateDistanceFrom(destination.rank);
     }
 
-    public Point add(int directionOfFile, int distanceToMove) {
-        File addedFile = file.move(directionOfFile);
-        Rank addedRank = rank.move(distanceToMove);
+    public Point add(final int directionOfFile, final int distanceToMove) {
+        final File addedFile = file.move(directionOfFile);
+        final Rank addedRank = rank.move(distanceToMove);
 
         return new Point(addedFile, addedRank);
     }
 
-    public boolean addable(int addFile, int distanceToMove) {
+    public boolean addable(final int addFile, final int distanceToMove) {
         return file.canMove(addFile) && rank.canMove(distanceToMove);
     }
 

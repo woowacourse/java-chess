@@ -4,7 +4,7 @@ import chess.domain.point.Point;
 
 public final class Queen extends MultiMovePiece {
 
-    public Queen(Team team) {
+    public Queen(final Team team) {
         super(Type.QUEEN, team);
     }
 

@@ -52,8 +52,4 @@ public enum Rank {
     private int subtractPosition(final int position) {
         return this.position - position;
     }
-
-    public boolean isFirstPositionOfPawn() {
-        return this == TWO || this == SEVEN;
-    }
 }

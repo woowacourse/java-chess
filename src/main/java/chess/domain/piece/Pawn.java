@@ -10,21 +10,21 @@ import java.util.Map;
 public final class Pawn extends MultiMovePiece {
     private static final int TWO_RANK = 2;
 
-    public Pawn(Team team) {
+    public Pawn(final Team team) {
         super(Type.PAWN, team);
     }
 
     @Override
     public boolean isMovableDirection(final Point departure, final Point destination) {
-        Team team = getTeam();
-        List<Point> movablePoints = findMovablePoints(departure, team);
+        final Team team = getTeam();
+        final List<Point> movablePoints = findMovablePoints(departure, team);
 
         return movablePoints.contains(destination);
     }
 
-    private List<Point> findMovablePoints(Point currentPoint, final Team team) {
-        List<Point> points = new ArrayList<>();
-        int forwardDirection = team.forwardDirection();
+    private List<Point> findMovablePoints(final Point currentPoint, final Team team) {
+        final List<Point> points = new ArrayList<>();
+        final int forwardDirection = team.forwardDirection();
 
         if (isInitialPointOfPawn(currentPoint)) {
             findMovablePoint(points, currentPoint, 0, TWO_RANK * forwardDirection);
@@ -39,9 +39,9 @@ public final class Pawn extends MultiMovePiece {
         return currentPoint.isSecondRank() || currentPoint.isSeventhRank();
     }
 
-    private void findMovablePoint(List<Point> points, Point currentPoint, int addFile, int addRank) {
+    private void findMovablePoint(final List<Point> points, final Point currentPoint, final int addFile, final int addRank) {
         if (currentPoint.addable(addFile, addRank)) {
-            Point point = currentPoint.add(addFile, addRank);
+            final Point point = currentPoint.add(addFile, addRank);
             points.add(point);
         }
     }

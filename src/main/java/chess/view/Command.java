@@ -15,11 +15,11 @@ public enum Command {
 
     private final String expression;
 
-    Command(String expression) {
+    Command(final String expression) {
         this.expression = expression;
     }
 
-    public static Command from(String expression) {
+    public static Command from(final String expression) {
         if (CACHED_COMMAND.containsKey(expression)) {
             return CACHED_COMMAND.get(expression);
         }

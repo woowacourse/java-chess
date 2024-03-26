@@ -4,7 +4,7 @@ import chess.domain.point.Point;
 
 public final class Rook extends MultiMovePiece {
 
-    public Rook(Team team) {
+    public Rook(final Team team) {
         super(Type.ROOK, team);
     }
 

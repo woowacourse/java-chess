@@ -25,7 +25,7 @@ public abstract class MultiMovePiece extends Piece {
     }
 
     private boolean hasPieceOnTheRoute(final Point departure, final Point destination, final Map<Point, Piece> board) {
-        Direction route = departure.findRoute(destination);
+        final Direction route = departure.findRoute(destination);
 
         Point nextPoint = departure.add(route.file(), route.rank());
         while (!nextPoint.equals(destination)) {

@@ -21,11 +21,11 @@ public class OutputView {
 
     // TODO
     public void printBoard(Map<Point, Piece> board) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
         for (int rank = 8; rank > 0; rank--) {
             for (char file = 'a'; file <= 'h'; file++) {
-                Piece piece = board.get(new Point(file, rank));
+                final Piece piece = board.get(new Point(file, rank));
                 builder.append(findNameOf(piece));
             }
             builder.append(System.lineSeparator());
@@ -35,10 +35,10 @@ public class OutputView {
     }
 
     private String findNameOf(Piece piece) {
-        Type pieceType = piece.getType();
-        String name = NAME_CLASSIFIER.get(pieceType);
+        final Type pieceType = piece.getType();
+        final String name = NAME_CLASSIFIER.get(pieceType);
 
-        Team team = piece.getTeam();
+        final Team team = piece.getTeam();
         if (team.isWhite()) {
             return name.toLowerCase();
         }

@@ -9,18 +9,18 @@ public abstract class Piece {
     private final Type type;
     private final Team team;
 
-    public Piece(Type type, Team team) {
+    public Piece(final Type type, final Team team) {
         this.type = type;
         this.team = team;
     }
 
-    public abstract boolean isMovable(Point departure, Point destination, final Map<Point, Piece> board);
+    public abstract boolean isMovable(final Point departure, final Point destination, final Map<Point, Piece> board);
 
     public boolean hasSameTeamPieceAtDestination(final Piece pieceAtDeparture, final Piece pieceAtDestination) {
         return pieceAtDeparture.team == pieceAtDestination.team;
     }
 
-    public boolean isSameTeam(Team team) {
+    public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
 

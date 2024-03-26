@@ -4,7 +4,7 @@ import chess.domain.point.Point;
 
 public final class Bishop extends MultiMovePiece {
 
-    public Bishop(Team team) {
+    public Bishop(final Team team) {
         super(Type.BISHOP, team);
     }
 
