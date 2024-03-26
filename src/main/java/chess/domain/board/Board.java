@@ -110,17 +110,17 @@ public class Board {
         Location moved = current;
         for (Direction direction : directions) {
             moved = moved.move(direction);
-            squareStates.add(findSquareStates(movingPiece, moved));
+            Piece movedPiece = board.get(moved);
+            squareStates.add(checkSquareStates(movingPiece, movedPiece));
         }
         return squareStates;
     }
 
-    private SquareState findSquareStates(Piece movingPiece, Location current) {
-        Piece locatedPiece = board.get(current);
-        if (locatedPiece == null) {
+    private SquareState checkSquareStates(Piece movingPiece, Piece movedPiece) {
+        if (movedPiece == null) {
             return SquareState.EMPTY;
         }
-        if (movingPiece.isAllyPiece(locatedPiece)) {
+        if (movingPiece.isAllyPiece(movedPiece)) {
             return SquareState.ALLY;
         }
         return SquareState.ENEMY;
