@@ -3,9 +3,6 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class RowPosition {
-    // TODO : startline 상수 초기화 / 정팩메?
-    public static final RowPosition ONE = new RowPosition(1);
-    public static final RowPosition SIX = new RowPosition(6);
     public static final int MIN_NUMBER = 0;
     public static final int MAX_NUMBER = 7;
 

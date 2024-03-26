@@ -11,7 +11,7 @@ import static chess.domain.position.Direction.*;
 
 public final class WhitePawn extends Pawn {
     private static final List<Direction> FORWARD_DIRECTIONS = List.of(N, NW, NE);
-    private static final RowPosition INITIAL_ROW = RowPosition.SIX;
+    private static final RowPosition INITIAL_ROW = new RowPosition(6);
 
     public WhitePawn() {
         super(Team.WHITE);
