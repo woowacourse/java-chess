@@ -19,7 +19,7 @@ public class OutputView {
         System.out.printf(TITLE_START);
     }
 
-    public void printBoard(List<PieceDrawing> pieceDrawings) {
+    public void printBoard(final List<PieceDrawing> pieceDrawings) {
         char[][] board = generateEmptyBoard();
         setPiecesOnBoard(board, pieceDrawings);
         for (char[] line : board) {
@@ -36,7 +36,7 @@ public class OutputView {
         return emptyBoard;
     }
 
-    private void setPiecesOnBoard(char[][] board, List<PieceDrawing> pieceDrawings) {
+    private void setPiecesOnBoard(final char[][] board, final List<PieceDrawing> pieceDrawings) {
         for (PieceDrawing pieceDrawing : pieceDrawings) {
             char pieceSymbol = PieceMapper.map(pieceDrawing.typeName(), pieceDrawing.colorName());
             board[pieceDrawing.rankOrdinal()][pieceDrawing.fileOrdinal()] = pieceSymbol;

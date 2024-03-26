@@ -12,12 +12,12 @@ public enum CommandType {
     private final String value;
     private final int argumentCount;
 
-    CommandType(String value, int argumentCount) {
+    CommandType(final String value, final int argumentCount) {
         this.value = value;
         this.argumentCount = argumentCount;
     }
 
-    public static CommandType from(String input) {
+    public static CommandType from(final String input) {
         return Arrays.stream(values())
                 .filter(commandType -> commandType.value.equals(input))
                 .findAny()

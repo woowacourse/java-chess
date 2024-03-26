@@ -10,11 +10,11 @@ public record Command(CommandType type, List<String> arguments) {
         validateArgumentCount(type, arguments);
     }
 
-    public static Command from(List<String> command) {
+    public static Command from(final List<String> command) {
         return new Command(CommandType.from(command.get(0)), command);
     }
 
-    private void validateArgumentCount(CommandType type, List<String> arguments) {
+    private void validateArgumentCount(final CommandType type, final List<String> arguments) {
         int argumentCount = type.getArgumentCount();
         if (arguments.size() - 1 != argumentCount) {
             String commandName = arguments.get(0);
@@ -22,11 +22,11 @@ public record Command(CommandType type, List<String> arguments) {
         }
     }
 
-    public boolean isType(CommandType type) {
+    public boolean isType(final CommandType type) {
         return this.type == type;
     }
 
-    public String getArgument(int index) {
+    public String getArgument(final int index) {
         return arguments.get(index);
     }
 }

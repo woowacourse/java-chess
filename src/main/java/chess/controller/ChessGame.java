@@ -21,7 +21,7 @@ public class ChessGame {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public ChessGame(InputView inputView, OutputView outputView) {
+    public ChessGame(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -42,7 +42,7 @@ public class ChessGame {
         return command;
     }
 
-    private void processMove(Command command, Board board) {
+    private void processMove(Command command, final Board board) {
         PieceColor turn = START_TURN;
         while (!command.isType(CommandType.END)) {
             command = requestUntilValid(this::requestMove);
@@ -70,7 +70,7 @@ public class ChessGame {
         return command;
     }
 
-    private PieceColor processMoveAndGetNextTurn(Command command, Board board, PieceColor turn) {
+    private PieceColor processMoveAndGetNextTurn(final Command command, final Board board, final PieceColor turn) {
         try {
             Square source = Square.from(command.getArgument(1));
             Square target = Square.from(command.getArgument(2));
@@ -83,7 +83,7 @@ public class ChessGame {
         return turn.opposite();
     }
 
-    private <T> T requestUntilValid(Supplier<T> supplier) {
+    private <T> T requestUntilValid(final Supplier<T> supplier) {
         Optional<T> result = Optional.empty();
         while (result.isEmpty()) {
             result = tryGet(supplier);
@@ -91,7 +91,7 @@ public class ChessGame {
         return result.get();
     }
 
-    private <T> Optional<T> tryGet(Supplier<T> supplier) {
+    private <T> Optional<T> tryGet(final Supplier<T> supplier) {
         try {
             return Optional.of(supplier.get());
         } catch (IllegalArgumentException e) {

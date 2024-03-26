@@ -16,12 +16,12 @@ public class Pawn extends Piece {
     private static final String ERROR_CANNOT_REACH = "폰의 이동 방법으로 갈 수 없는 곳입니다.";
     private static final String ERROR_OBSTACLE_ON_PATH = "폰의 이동 경로 중 장애물이 존재합니다.";
 
-    public Pawn(PieceColor color, Square square) {
+    public Pawn(final PieceColor color, final Square square) {
         super(color, square);
     }
 
     @Override
-    public void move(Board board, Square target) {
+    public void move(final Board board, final Square target) {
         if (isForwardDiagonal(target) && existEnemyOnTarget(board, target)) {
             validateAttackStepLimit(target);
             square = target;
@@ -31,32 +31,32 @@ public class Pawn extends Piece {
         square = target;
     }
 
-    private void validateAttackStepLimit(Square target) {
+    private void validateAttackStepLimit(final Square target) {
         if (square.distanceRankFrom(target) > STEP_LIMIT) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
         }
     }
 
-    private void validateMove(Board board, Square target) {
+    private void validateMove(final Board board, final Square target) {
         validateMoveDirection(target);
         validateMoveStepLimit(target);
         validateMoveObstacle(board, target);
     }
 
-    private void validateMoveDirection(Square target) {
+    private void validateMoveDirection(final Square target) {
         if (!isForward(target) || !square.isSameFile(target)) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
         }
     }
 
-    private void validateMoveStepLimit(Square target) {
+    private void validateMoveStepLimit(final Square target) {
         if ((!isFirstStep() && square.distanceRankFrom(target) > STEP_LIMIT) ||
                 square.distanceRankFrom(target) > FIRST_STEP_LIMIT) {
             throw new IllegalArgumentException(ERROR_CANNOT_REACH);
         }
     }
 
-    private void validateMoveObstacle(Board board, Square target) {
+    private void validateMoveObstacle(final Board board, final Square target) {
         List<Square> path = new ArrayList<>(square.generatePath(target));
         path.add(target);
         if (path.stream().anyMatch(board::existOnSquare)) {
@@ -64,7 +64,7 @@ public class Pawn extends Piece {
         }
     }
 
-    private boolean isForward(Square target) {
+    private boolean isForward(final Square target) {
         if (getColor() == PieceColor.BLACK) {
             return square.isUpperThan(target);
         }

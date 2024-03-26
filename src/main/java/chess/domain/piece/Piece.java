@@ -8,16 +8,16 @@ public abstract class Piece {
     private final PieceColor color;
     protected Square square;
 
-    public Piece(PieceColor color, Square square) {
+    public Piece(final PieceColor color, final Square square) {
         this.color = color;
         this.square = square;
     }
 
-    public abstract void move(Board board, Square target);
+    public abstract void move(final Board board, final Square target);
 
     public abstract PieceType getType();
 
-    public boolean isLocated(Square other) {
+    public boolean isLocated(final Square other) {
         return square.equals(other);
     }
 
@@ -30,7 +30,7 @@ public abstract class Piece {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;

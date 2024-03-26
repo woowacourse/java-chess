@@ -12,11 +12,11 @@ public enum PieceMapper {
 
     private final char symbol;
 
-    PieceMapper(char symbol) {
+    PieceMapper(final char symbol) {
         this.symbol = symbol;
     }
 
-    public static char map(String typeName, String colorName) {
+    public static char map(final String typeName, final String colorName) {
         if (PieceColor.BLACK.isSame(colorName)) {
             return Character.toUpperCase(valueOf(typeName).symbol);
         }

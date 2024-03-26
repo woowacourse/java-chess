@@ -13,12 +13,12 @@ public class Square {
     private final File file;
     private final Rank rank;
 
-    private Square(File file, Rank rank) {
+    private Square(final File file, final Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static Square from(String square) {
+    public static Square from(final String square) {
         validatePattern(square);
         return cache.computeIfAbsent(square, s -> {
             File file = File.from(s.charAt(0));
@@ -27,22 +27,22 @@ public class Square {
         });
     }
 
-    public static Square of(File file, Rank rank) {
+    public static Square of(final File file, final Rank rank) {
         String squareKey = generateSquareKey(file, rank);
         return cache.computeIfAbsent(squareKey, k -> new Square(file, rank));
     }
 
-    private static void validatePattern(String square) {
+    private static void validatePattern(final String square) {
         if (!square.matches(PATTERN)) {
             throw new IllegalArgumentException(ERROR_INVALID_PATTERN);
         }
     }
 
-    private static String generateSquareKey(File file, Rank rank) {
+    private static String generateSquareKey(final File file, final Rank rank) {
         return file.name().toLowerCase() + rank.toInput();
     }
 
-    public List<Square> generatePath(Square target) {
+    public List<Square> generatePath(final Square target) {
         List<Square> path = new ArrayList<>();
         int vectorFile = file.getVectorTo(target.file);
         int vectorRank = rank.getVectorTo(target.rank);
@@ -55,43 +55,43 @@ public class Square {
         return path;
     }
 
-    private Square add(int vectorFile, int vectorRank) {
+    private Square add(final int vectorFile, final int vectorRank) {
         return new Square(file.add(vectorFile), rank.add(vectorRank));
     }
 
-    public boolean isSameFile(Square other) {
+    public boolean isSameFile(final Square other) {
         return file == other.file;
     }
 
-    public boolean isSameFile(File otherFile) {
+    public boolean isSameFile(final File otherFile) {
         return file == otherFile;
     }
 
-    public boolean isSameRank(Square other) {
+    public boolean isSameRank(final Square other) {
         return rank == other.rank;
     }
 
-    public boolean isSameRank(Rank otherRank) {
+    public boolean isSameRank(final Rank otherRank) {
         return rank == otherRank;
     }
 
-    public boolean isSameDiagonal(Square other) {
+    public boolean isSameDiagonal(final Square other) {
         return distanceRankFrom(other) == distanceFileFrom(other);
     }
 
-    public int distanceFileFrom(Square other) {
+    public int distanceFileFrom(final Square other) {
         return file.distanceFrom(other.file);
     }
 
-    public int distanceRankFrom(Square other) {
+    public int distanceRankFrom(final Square other) {
         return rank.distanceFrom(other.rank);
     }
 
-    public boolean isUpperThan(Square other) {
+    public boolean isUpperThan(final Square other) {
         return rank.compareTo(other.rank) < 0;
     }
 
-    public boolean isLowerThan(Square other) {
+    public boolean isLowerThan(final Square other) {
         return rank.compareTo(other.rank) > 0;
     }
 
@@ -104,7 +104,7 @@ public class Square {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Square square = (Square) o;

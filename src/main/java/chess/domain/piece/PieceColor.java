@@ -12,7 +12,7 @@ public enum PieceColor {
         return BLACK;
     }
 
-    public boolean isSame(String color) {
+    public boolean isSame(final String color) {
         return name().equals(color);
     }
 }

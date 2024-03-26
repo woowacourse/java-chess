@@ -1,6 +1,13 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
@@ -32,7 +39,7 @@ public class BoardFactory {
         return new Board(board);
     }
 
-    private static Set<Piece> createPiecesWithoutPawn(Rank rank, PieceColor pieceColor) {
+    private static Set<Piece> createPiecesWithoutPawn(final Rank rank, final PieceColor pieceColor) {
         return Arrays.stream(File.values())
                 .map(file -> PIECES_ARRANGEMENT.get(file.ordinal()).apply(
                         pieceColor,
@@ -40,7 +47,7 @@ public class BoardFactory {
                 .collect(Collectors.toSet());
     }
 
-    private static Set<Piece> createPawns(Rank rank, PieceColor pieceColor) {
+    private static Set<Piece> createPawns(final Rank rank, final PieceColor pieceColor) {
         return Arrays.stream(File.values())
                 .map(file -> new Pawn(pieceColor, Square.of(file, rank)))
                 .collect(Collectors.toSet());

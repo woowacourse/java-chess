@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @DisplayName("흰색 폰")
 class WhitePawnTest {
 
-    public static final PieceColor PIECE_COLOR = PieceColor.WHITE;
+    private static final PieceColor PIECE_COLOR = PieceColor.WHITE;
 
     @ParameterizedTest
     @ValueSource(strings = {"c3", "c4"})
