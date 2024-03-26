@@ -28,13 +28,22 @@ public class ChessGame {
 
     public void run() {
         outputView.printStartMessage();
-        PieceColor turn = START_TURN;
-        Command command = requestUntilValid(this::requestStart);
-        while (!command.isType(CommandType.START)) {
-            command = requestUntilValid(this::requestStart);
-        }
+        Command command = processStartAndGetCommand();
         Board board = BoardFactory.createBoard();
         outputView.printBoard(board.generatePieceDrawings());
+        processMove(command, board);
+    }
+
+    private Command processStartAndGetCommand() {
+        Command command;
+        do {
+            command = requestUntilValid(this::requestStart);
+        } while (!command.isType(CommandType.START));
+        return command;
+    }
+
+    private void processMove(Command command, Board board) {
+        PieceColor turn = START_TURN;
         while (!command.isType(CommandType.END)) {
             command = requestUntilValid(this::requestMove);
             turn = processMoveAndGetNextTurn(command, board, turn);
