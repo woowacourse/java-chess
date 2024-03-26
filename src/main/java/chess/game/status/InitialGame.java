@@ -1,7 +1,7 @@
 package chess.game.status;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardCreator;
+import chess.domain.board.BoardFactory;
 import chess.view.input.InputView;
 import chess.view.input.command.ClientCommand;
 import chess.view.input.command.GameCommand;
@@ -28,7 +28,7 @@ public class InitialGame implements GameStatus {
     private GameStatus applyCommand(ClientCommand clientCommand) {
         GameCommand gameCommand = clientCommand.getCommand();
         if (gameCommand == GameCommand.START) {
-            Board board = BoardCreator.create();
+            Board board = BoardFactory.create();
             OutputView.printBoard(board);
             return new PlayingGame(inputView, board);
         }

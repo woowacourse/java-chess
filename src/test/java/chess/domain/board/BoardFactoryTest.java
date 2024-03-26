@@ -18,13 +18,13 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardCreatorTest {
+class BoardFactoryTest {
 
     @Test
     @DisplayName("기본 체스 보드를 반환한다.")
     void Given_BoardCreator_When_Create_Then_BasicBoardCreated() {
         //given, when
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         Map<Position, Piece> initialPiecePositions = board.getBoard();
         //then
         assertAll(
@@ -79,7 +79,7 @@ class BoardCreatorTest {
     @DisplayName("말의 위치가 비어있는 경우 비어있는 말의 타입을 반환한다.")
     void Given_BoardCreator_When_GetPieceFromEmptyPosition_Then_ReturnEmptyPiece() {
         //given
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         // when, then
         Map<Position, Piece> initialPiecePositions = board.getBoard();
         IntStream.rangeClosed(3, 6).boxed()

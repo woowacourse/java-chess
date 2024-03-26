@@ -20,7 +20,7 @@ class BoardTest {
     @DisplayName("보드에 있는 체스말이 존재하고 이동이 가능하면 지정한 위치로 이동할 수 있다.")
     void Given_Board_When_MoveValidColorAndPieceValidPosition_Then_MoveSelectedPiece() {
         //given
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         //when
         board.move(new Position(1, 2), new Position(1, 4));
         Map<Position, Piece> boardPieces = board.getBoard();
@@ -36,7 +36,7 @@ class BoardTest {
     @DisplayName("보드에서 체스 말을 이동할 수 없는 경우 예외가 발생한다.")
     void Given_Board_When_MoveValidPieceAndColorInvalidPosition_Then_Exception() {
         //given
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         //when, then
         assertThatThrownBy(() -> board.move(new Position(1, 1), new Position(1, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -47,7 +47,7 @@ class BoardTest {
     @DisplayName("보드에서 상대 팀 체스 말을 이동할 경우 예외가 발생한다.")
     void Given_Board_When_MoveInvalidPieceAndColorValidPosition_Then_Exception() {
         //given
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         //when, then
         assertThatThrownBy(() -> board.move(new Position(1, 7), new Position(1, 5)))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -58,7 +58,7 @@ class BoardTest {
     @DisplayName("보드에서 말울 이동할 때 출발 위치에 말 존재하지 않을 경우 예외가 발생한다.")
     void Given_Board_When_MoveEmptyPieceAndColorValidPosition_Then_Exception() {
         //given
-        Board board = BoardCreator.create();
+        Board board = BoardFactory.create();
         //when, then
         assertThatThrownBy(() -> board.move(new Position(3, 6), new Position(4, 6)))
                 .isInstanceOf(IllegalArgumentException.class)
