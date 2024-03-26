@@ -5,14 +5,15 @@ import java.util.List;
 import chess.domain.chessboard.attribute.File;
 import chess.domain.chessboard.attribute.Rank;
 import chess.domain.chessboard.attribute.Square;
+import chess.domain.chessboard.attribute.Squares;
 import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Position;
 
 public class Chessboard {
 
-    private final List<List<Square>> chessboard;
+    private final List<Squares> chessboard;
 
-    protected Chessboard(final List<List<Square>> chessboard) {
+    protected Chessboard(final List<Squares> chessboard) {
         this.chessboard = chessboard;
     }
 
@@ -24,18 +25,8 @@ public class Chessboard {
         validateSource(source);
         Piece sourcePiece = squareIn(source).piece();
         Piece targetPiece = sourcePiece.move(this, target);
-        removePieceIn(source);
+        remove(source);
         put(target, targetPiece);
-    }
-
-    public Square squareIn(final Position position) {
-        List<Square> squares = rowIn(position);
-        File file = position.file();
-        return squares.get(file.toColumn());
-    }
-
-    public boolean isEmpty(final Position position) {
-        return squareIn(position).isEmpty();
     }
 
     private void validateSource(final Position position) {
@@ -44,27 +35,34 @@ public class Chessboard {
         }
     }
 
-    private void removePieceIn(final Position position) {
+    public boolean isEmpty(final Position position) {
+        return squareIn(position).isEmpty();
+    }
+
+    private void remove(final Position position) {
         Rank rank = position.rank();
-        File file = position.file();
-        List<Square> squares = chessboard.get(rank.toRow());
-        squares.set(file.toColumn(), Square.empty());
+        Squares squares = chessboard.get(rank.toRow());
+        squares.remove(position);
     }
 
     private void put(final Position position, final Piece piece) {
-        List<Square> row = rowIn(piece.position());
-        File file = position.file();
-        row.set(file.toColumn(), Square.from(piece));
+        Squares squares = squaresIn(piece.position());
+        squares.put(position, piece);
     }
 
-    private List<Square> rowIn(final Position position) {
+    public Square squareIn(final Position position) {
+        Squares squares = squaresIn(position);
+        return squares.squareIn(position);
+    }
+
+    private Squares squaresIn(final Position position) {
         Rank rank = position.rank();
         return chessboard.get(rank.toRow());
     }
 
     public List<List<Square>> getSquares() {
         return List.copyOf(chessboard.stream()
-                .map(List::copyOf)
+                .map(Squares::getSquares)
                 .toList());
     }
 }
