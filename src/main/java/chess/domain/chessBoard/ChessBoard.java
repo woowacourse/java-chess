@@ -1,5 +1,6 @@
 package chess.domain.chessBoard;
 
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -38,6 +39,11 @@ public class ChessBoard {
                 .filter(space -> space.isSamePosition(position))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Space가 없습니다"));
+    }
+
+    public boolean isSameColor(Position position, Color color) {
+        Space space = findSpace(position);
+        return space.isSameColor(color);
     }
 
     public List<Space> getSpaces() {

@@ -48,4 +48,8 @@ public class Space {
     public Piece getPiece() {
         return piece;
     }
+
+    public boolean isSameColor(Color color) {
+        return piece.isSameColor(color);
+    }
 }

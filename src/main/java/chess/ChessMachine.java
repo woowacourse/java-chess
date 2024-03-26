@@ -3,6 +3,7 @@ package chess;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.OriginalChessSpaceGenerator;
 import chess.domain.chessBoard.PieceGenerator;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -26,7 +27,8 @@ public class ChessMachine {
         ChessBoard chessBoard = new ChessBoard(new OriginalChessSpaceGenerator(new PieceGenerator()));
         outputView.printChessBoard(chessBoard.getSpaces());
 
-        playChess(chessBoard);
+        Color initialTurnColor = Color.WHITE;
+        playChess(chessBoard, initialTurnColor);
     }
 
     private void validateFirstCommand() {
@@ -35,11 +37,11 @@ public class ChessMachine {
         }
     }
 
-    private void playChess(ChessBoard chessBoard) {
+    private void playChess(ChessBoard chessBoard, Color turnColor) {
         Command command = inputView.getCommand();
         while (command != Command.END) {
             validateCommandIsMove(command);
-            movePiece(chessBoard);
+            turnColor = consumeTurn(chessBoard, turnColor);
 
             outputView.printChessBoard(chessBoard.getSpaces());
 
@@ -47,10 +49,30 @@ public class ChessMachine {
         }
     }
 
-    private void movePiece(ChessBoard chessBoard) {
+    private Color consumeTurn(ChessBoard chessBoard, Color turnColor) {
         Position from = inputView.getMovePosition();
         Position to = inputView.getMovePosition();
-        chessBoard.move(from, to);
+
+        if(isRightTurn(chessBoard, turnColor, from)){
+            chessBoard.move(from, to);
+            return nextTurnColor(turnColor);
+        }
+        return turnColor;
+    }
+
+    private boolean isRightTurn(ChessBoard chessBoard, Color turnColor, Position from) {
+        if(chessBoard.isSameColor(from, turnColor)){
+            return true;
+        }
+        outputView.printWrongTurn();
+        return false;
+    }
+
+    private Color nextTurnColor(Color turnColor) {
+        if(turnColor==Color.WHITE){
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 
     private void validateCommandIsMove(Command command) {

@@ -48,10 +48,10 @@ public class Position {
 
     private List<Position> findStraightRoute(List<File> files, List<Rank> ranks) {
         List<Position> positions = new ArrayList<>();
-        if(files.isEmpty()){
+        if (files.isEmpty()) {
             ranks.forEach((routeRank) -> positions.add(new Position(file, routeRank)));
         }
-        if(ranks.isEmpty()){
+        if (ranks.isEmpty()) {
             files.forEach((routeFile) -> positions.add(new Position(routeFile, rank)));
         }
         return positions;

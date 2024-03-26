@@ -8,7 +8,7 @@ import java.util.List;
 
 public class OutputView {
 
-    private static final int CHESS_BOARD_WIDTH = 8;
+    private final int CHESS_BOARD_WIDTH = 8;
     public static final String EMPTY_PIECE_SIGN = ".";
 
     public void printStartGameMessage() {
@@ -64,5 +64,9 @@ public class OutputView {
             sign = sign.toUpperCase();
         }
         return sign;
+    }
+
+    public void printWrongTurn() {
+        System.out.println("상대방의 말은 움직일 수 없습니다.");
     }
 }
