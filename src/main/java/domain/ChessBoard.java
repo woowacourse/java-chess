@@ -16,11 +16,11 @@ class ChessBoard {
     private Team currentTeam = WHITE;
 
     ChessBoard() {
-        this(INITIAL_PIECES.toArray(new Piece[]{}));
+        this(INITIAL_PIECES);
     }
 
-    ChessBoard(Piece... pieces) {
-        piecesOnBoard = new ArrayList<>(List.of(pieces));
+    ChessBoard(List<Piece> pieces) {
+        piecesOnBoard = new ArrayList<>(pieces);
     }
 
     boolean move(Position from, Position to) {
