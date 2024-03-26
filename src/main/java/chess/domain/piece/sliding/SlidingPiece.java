@@ -13,13 +13,13 @@ import java.util.Set;
 public abstract class SlidingPiece extends Piece {
     private final Set<Direction> directions;
 
-    public SlidingPiece(Color color, Set<Direction> directions) {
+    protected SlidingPiece(Color color, Set<Direction> directions) {
         super(color);
         this.directions = directions;
     }
 
     @Override
-    public Set<Position> findPath(Positions positions) {
+    public final Set<Position> findPath(Positions positions) {
         Position from = positions.from();
         Position to = positions.to();
         Direction direction = from.findDirectionTo(to);
@@ -29,12 +29,12 @@ public abstract class SlidingPiece extends Piece {
         return from.findCourses(direction, to);
     }
     @Override
-    public boolean isBlank() {
+    public final boolean isBlank() {
         return false;
     }
 
     @Override
-    public MoveStrategy strategy(Map<Position, Piece> board) {
+    public final MoveStrategy strategy(Map<Position, Piece> board) {
         return new GeneralMoveStrategy(board);
     }
 }

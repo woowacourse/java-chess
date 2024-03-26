@@ -5,7 +5,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 import java.util.Set;
 
-public class Queen extends SlidingPiece {
+public final class Queen extends SlidingPiece {
     private static final Set<Direction> directions = Direction.getEightDirection();
 
     public Queen(Color color) {

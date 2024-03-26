@@ -23,7 +23,7 @@ public abstract class Pawn extends Piece {
     public abstract Piece update();
 
     @Override
-    public Set<Position> findPath(Positions positions) {
+    public final Set<Position> findPath(Positions positions) {
         Position from = positions.from();
         Position to = positions.to();
         Set<Position> movable = from.findMovablePositions(directions);
@@ -35,12 +35,12 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
+    public final boolean isBlank() {
         return false;
     }
 
     @Override
-    public MoveStrategy strategy(Map<Position, Piece> board) {
+    public final MoveStrategy strategy(Map<Position, Piece> board) {
         return new PawnMoveStrategy(board);
     }
 }

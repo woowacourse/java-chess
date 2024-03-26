@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import java.util.Set;
 
-public class BlackPawn extends Pawn {
+public final class BlackPawn extends Pawn {
     private static final Set<Direction> DIRECTIONS = Set.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN);
 
     public BlackPawn() {

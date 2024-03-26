@@ -22,11 +22,11 @@ public abstract class Piece {
 
     public abstract PieceType pieceType();
 
-    public boolean isSameColor(Color otherColor) {
+    public final boolean isSameColor(Color otherColor) {
         return color == otherColor;
     }
 
-    public boolean isOppositeColor(Piece other) {
+    public final boolean isOppositeColor(Piece other) {
         if (color == Color.WHITE) {
             return other.color == Color.BLACK;
         }

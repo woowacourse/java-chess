@@ -5,7 +5,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 import java.util.Set;
 
-public class Rook extends SlidingPiece {
+public final class Rook extends SlidingPiece {
     private static final Set<Direction> directions = Direction.getFourDirection();
 
     public Rook(Color color) {
