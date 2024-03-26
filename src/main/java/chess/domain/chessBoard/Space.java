@@ -78,6 +78,10 @@ public class Space {
         return !piece.isSameColor(new EmptyPiece());
     }
 
+    public boolean hasKing() {
+        return piece.isKing();
+    }
+
     public boolean doesNotHavePiece() {
         return piece.isSameColor(new EmptyPiece());
     }

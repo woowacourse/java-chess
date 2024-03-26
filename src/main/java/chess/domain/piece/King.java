@@ -13,4 +13,9 @@ public class King extends Piece {
     public boolean isCatchable(Position from, Position to) {
         return isMovable(from, to);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

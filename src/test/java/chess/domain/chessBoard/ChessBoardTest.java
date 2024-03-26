@@ -99,4 +99,28 @@ class ChessBoardTest {
         assertThat(pawnChessBoard.calculateScore(Color.WHITE).asDouble())
                 .isEqualTo(1.5);
     }
+
+    /*
+    RNBQKBNR
+    rnbqkbnr
+    ........
+    ........
+    ........
+    ........
+    ........
+    ........
+     */
+    @Test
+    @DisplayName("왕이 죽으면 보드가 비활성화 된다(움직일 수 없다)")
+    void should_inactive_when_king_die() {
+        ChessBoard stickChessBoard = new ChessBoard(new StickSpaceGenerator());
+        stickChessBoard.startGame();
+
+        stickChessBoard.move(
+                Position.fromCoordinate(Coordinate.of("e7")),
+                Position.fromCoordinate(Coordinate.of("e8"))
+        );
+
+        assertThat(stickChessBoard.isActive()).isFalse();
+    }
 }

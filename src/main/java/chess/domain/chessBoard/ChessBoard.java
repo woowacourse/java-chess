@@ -21,8 +21,15 @@ public class ChessBoard {
         validateActiveGame();
         Space fromSpace = findSpace(from);
         Space toSpace = findSpace(to);
+        boolean wasKing = toSpace.hasKing();
+
         validateTurn(fromSpace);
         fromSpace.movePiece(toSpace, spaces);
+
+        if (wasKing) {
+            turn = Turn.notPlayingGame();
+            return;
+        }
         turn = turn.oppositeTurn();
     }
 
