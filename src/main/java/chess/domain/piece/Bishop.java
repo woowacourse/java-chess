@@ -31,7 +31,12 @@ public class Bishop extends SlidingPiece {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(movablePositions(chessboard, POSSIBLE_DIRECTIONS), target);
+        validateTarget(movablePositions(chessboard), target);
         return new Bishop(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, POSSIBLE_DIRECTIONS);
     }
 }

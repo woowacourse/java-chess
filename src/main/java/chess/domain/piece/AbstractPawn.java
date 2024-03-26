@@ -5,6 +5,7 @@ import static chess.domain.chessboard.attribute.Direction.DOWN_RIGHT;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -45,9 +46,17 @@ public abstract class AbstractPawn extends UnslidingPiece {
         super(color, position);
     }
 
-    @Override
-    protected Set<Position> movablePositions(final Chessboard chessboard, final Set<Movement> movements) {
-        return possiblePositions(movements, chessboard::isEmpty);
+    protected Set<Position> movablePositions(
+            final Chessboard chessboard,
+            final Set<Movement> whiteMovements,
+            final Set<Movement> blackMovements
+    ) {
+        Set<Position> positions = new HashSet<>(possiblePositions(
+                possibleMovementsBy(color(), whiteMovements, blackMovements),
+                chessboard::isEmpty
+        ));
+        positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
+        return positions;
     }
 
     protected Set<Position> attackablePositions(final Chessboard chessboard, final Set<Movement> movements) {

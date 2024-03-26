@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static chess.domain.chessboard.attribute.Direction.DOWN;
 import static chess.domain.chessboard.attribute.Direction.UP;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import chess.domain.chessboard.Chessboard;
@@ -22,11 +21,12 @@ public class Pawn extends AbstractPawn {
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        Set<Position> positions = new HashSet<>();
-        positions.addAll(attackablePositions(chessboard, possibleAttacksBy(color())));
-        positions.addAll(movablePositions(chessboard,
-                possibleMovementsBy(color(), WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS)));
-        validateTarget(positions, target);
+        validateTarget(movablePositions(chessboard), target);
         return new Pawn(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, WHITE_POSSIBLE_MOVEMENTS, BLACK_POSSIBLE_MOVEMENTS);
     }
 }

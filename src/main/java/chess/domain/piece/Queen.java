@@ -18,16 +18,18 @@ public class Queen extends SlidingPiece {
         super(color, position);
     }
 
-    public static Piece ofInitialPosition(final Color color) {
-        if (color.isBlack()) {
-            return new Queen(color, BLACK_INITIAL_POSITION);
-        }
-        return new Queen(color, WHITE_INITIAL_POSITION);
+    public static Queen ofInitialPosition(final Color color) {
+        return new Queen(color, initialPositionBy(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
     }
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(movablePositions(chessboard, POSSIBLE_DIRECTIONS), target);
+        validateTarget(movablePositions(chessboard), target);
         return new Queen(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, POSSIBLE_DIRECTIONS);
     }
 }

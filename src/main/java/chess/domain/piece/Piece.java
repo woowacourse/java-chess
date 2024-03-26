@@ -28,6 +28,22 @@ public abstract class Piece {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
+    protected static Set<Position> initialPositionsBy(
+            final Color color,
+            final Set<Position> whitePositions,
+            final Set<Position> blackPositions
+    ) {
+        return (color.isBlack()) ? blackPositions : whitePositions;
+    }
+
+    protected static Position initialPositionBy(
+            final Color color,
+            final Position whitePosition,
+            final Position blackPosition
+    ) {
+        return (color.isBlack()) ? blackPosition : whitePosition;
+    }
+
     protected void validateTarget(final Set<Position> possiblePositions, final Position target) {
         if (!possiblePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다: %s".formatted(target));
@@ -51,4 +67,6 @@ public abstract class Piece {
     }
 
     public abstract Piece move(final Chessboard chessboard, final Position target);
+
+    public abstract Set<Position> movablePositions(final Chessboard chessboard);
 }

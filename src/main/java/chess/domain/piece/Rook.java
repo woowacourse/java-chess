@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.piece.attribute.Color.BLACK;
-import static chess.domain.piece.attribute.Color.WHITE;
-
 import java.util.Set;
 
 import chess.domain.chessboard.Chessboard;
@@ -23,15 +20,21 @@ public class Rook extends SlidingPiece {
     }
 
     public static Set<Rook> ofInitialPositions(final Color color) {
-        if (color.isBlack()) {
-            return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Rook::new);
-        }
-        return initialPiecesOf(WHITE_INITIAL_POSITIONS, WHITE, Rook::new);
+        return initialPiecesOf(
+                initialPositionsBy(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
+                color,
+                Rook::new
+        );
     }
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(movablePositions(chessboard, POSSIBLE_DIRECTIONS), target);
+        validateTarget(movablePositions(chessboard), target);
         return new Rook(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, POSSIBLE_DIRECTIONS);
     }
 }

@@ -23,16 +23,18 @@ public class King extends UnslidingPiece {
         super(color, position);
     }
 
-    public static Piece ofInitialPosition(final Color color) {
-        if (color.isBlack()) {
-            return new King(color, BLACK_INITIAL_POSITION);
-        }
-        return new King(color, WHITE_INITIAL_POSITION);
+    public static King ofInitialPosition(final Color color) {
+        return new King(color, initialPositionBy(color, WHITE_INITIAL_POSITION, BLACK_INITIAL_POSITION));
     }
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(movablePositions(chessboard, POSSIBLE_MOVEMENTS), target);
+        validateTarget(movablePositions(chessboard), target);
         return new King(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, POSSIBLE_MOVEMENTS);
     }
 }

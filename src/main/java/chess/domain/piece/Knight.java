@@ -8,8 +8,6 @@ import static chess.domain.chessboard.attribute.Direction.RIGHT;
 import static chess.domain.chessboard.attribute.Direction.UP;
 import static chess.domain.chessboard.attribute.Direction.UP_LEFT;
 import static chess.domain.chessboard.attribute.Direction.UP_RIGHT;
-import static chess.domain.piece.attribute.Color.BLACK;
-import static chess.domain.piece.attribute.Color.WHITE;
 
 import java.util.Set;
 
@@ -36,15 +34,21 @@ public class Knight extends UnslidingPiece {
     }
 
     public static Set<Knight> ofInitialPositions(final Color color) {
-        if (color.isBlack()) {
-            return initialPiecesOf(BLACK_INITIAL_POSITIONS, BLACK, Knight::new);
-        }
-        return initialPiecesOf(WHITE_INITIAL_POSITIONS, WHITE, Knight::new);
+        return initialPiecesOf(
+                initialPositionsBy(color, WHITE_INITIAL_POSITIONS, BLACK_INITIAL_POSITIONS),
+                color,
+                Knight::new
+        );
     }
 
     @Override
     public Piece move(final Chessboard chessboard, final Position target) {
-        validateTarget(movablePositions(chessboard, POSSIBLE_MOVEMENTS), target);
+        validateTarget(movablePositions(chessboard), target);
         return new Knight(color(), target);
+    }
+
+    @Override
+    public Set<Position> movablePositions(final Chessboard chessboard) {
+        return movablePositions(chessboard, POSSIBLE_MOVEMENTS);
     }
 }
