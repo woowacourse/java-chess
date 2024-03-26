@@ -26,7 +26,7 @@ public class PositionGenerator {
     }
 
     public static Position generate(File file, Rank rank) {
-        return CACHE.get(file).getOrDefault(rank, new Position(file, rank));
+        return CACHE.getOrDefault(file, new HashMap<>()).getOrDefault(rank, new Position(file, rank));
     }
 
     public static Position generate(String rawFile, String rawRank) {
