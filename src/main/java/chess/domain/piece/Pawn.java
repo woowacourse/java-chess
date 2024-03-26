@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.point.Direction;
 import chess.domain.point.Point;
 
 import java.util.ArrayList;
