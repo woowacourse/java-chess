@@ -16,6 +16,10 @@ public class Position {
         return new Position(Column.from(command.charAt(0)), Row.from(command.charAt(1)));
     }
 
+    public boolean isSameColumn(Position position) {
+        return column == position.getColumn();
+    }
+
     public int getRowIndex() {
         return row.getIndex();
     }

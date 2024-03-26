@@ -10,10 +10,12 @@ public abstract class Piece {
 
     private final Camp camp;
     private final String pieceName;
+    private final double score;
 
-    protected Piece(final Camp camp, final String pieceName) {
+    public Piece(Camp camp, String pieceName, double score) {
         this.camp = camp;
         this.pieceName = pieceName;
+        this.score = score;
     }
 
     public abstract Set<Position> getMoveRoute(final Moving moving);
@@ -28,8 +30,20 @@ public abstract class Piece {
         return camp == target;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     public Camp getCamp() {
         return camp;
+    }
+
+    public double getScore() {
+        return score;
     }
 
     public String getName() {

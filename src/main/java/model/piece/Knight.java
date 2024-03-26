@@ -11,7 +11,7 @@ public final class Knight extends Piece {
     private static final int KNIGHT_DELTA_DISTANCE = 3;
 
     public Knight(final Camp camp) {
-        super(camp, KNIGHT_NAME);
+        super(camp, KNIGHT_NAME, 2.5);
     }
 
     @Override

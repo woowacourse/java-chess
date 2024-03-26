@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,12 +83,9 @@ public class ChessGame {
             validate(moving);
 
             Piece source = board.get(moving.getCurrentPosition());
-            Piece target = board.get(moving.getNextPosition());
             board.put(moving.getNextPosition(), source);
             board.remove(moving.getCurrentPosition());
-            if (target != null) {
-                checkKing(target);
-            }
+            checkKing();
             camp = camp.toggle();
             return;
         }
@@ -145,10 +143,17 @@ public class ChessGame {
         }
     }
 
-    private void checkKing(Piece target) {
-        if (!target.isSameCamp(camp) && target instanceof King) {
+    private void checkKing() {
+        if (isKingDie()) {
             end();
         }
+    }
+
+    public Result status() {
+        if (chessStatus == ChessStatus.RUNNING) {
+            return calculateResult();
+        }
+        throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
     }
 
     public void end() {
@@ -165,5 +170,15 @@ public class ChessGame {
 
     public Camp getCamp() {
         return camp;
+    }
+
+    public boolean isKingDie() {
+        return 2 > board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
+    public Result calculateResult() {
+        return new Result(Collections.unmodifiableMap(board));
     }
 }

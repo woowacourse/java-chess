@@ -11,7 +11,7 @@ public final class King extends Piece {
     private static final int KING_DELTA_DISTANCE = 1;
 
     public King(final Camp camp) {
-        super(camp, KING_NAME);
+        super(camp, KING_NAME, 0);
     }
 
     @Override
@@ -38,5 +38,10 @@ public final class King extends Piece {
 
         return Math.abs(nextRow - currentRow) <= KING_DELTA_DISTANCE
                 && Math.abs(nextColumn - currentColumn) <= KING_DELTA_DISTANCE;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

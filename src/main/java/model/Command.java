@@ -1,18 +1,20 @@
 package model;
 
+import controller.menu.End;
+import controller.menu.Menu;
+import controller.menu.Move;
+import controller.menu.Start;
+import controller.menu.Status;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import model.menu.End;
-import model.menu.Menu;
-import model.menu.Move;
-import model.menu.Start;
 import model.position.Position;
 
 public enum Command {
 
     START("start", input -> new Start()),
     MOVE("move", Command::toMove),
+    STATUS("status", input -> new Status()),
     END("end", input -> new End());
 
     private final String value;

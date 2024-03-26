@@ -10,7 +10,7 @@ public final class Bishop extends Piece {
     private static final String BISHOP_NAME = "b";
 
     public Bishop(final Camp camp) {
-        super(camp, BISHOP_NAME);
+        super(camp, BISHOP_NAME, 3);
     }
 
     @Override

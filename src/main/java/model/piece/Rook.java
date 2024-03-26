@@ -10,7 +10,7 @@ public final class Rook extends Piece {
     private static final String ROOK_NAME = "r";
 
     public Rook(final Camp camp) {
-        super(camp, ROOK_NAME);
+        super(camp, ROOK_NAME, 5);
     }
 
     @Override

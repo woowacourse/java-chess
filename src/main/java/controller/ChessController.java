@@ -1,10 +1,9 @@
 package controller;
 
-import dto.GameBoardDto;
+import controller.menu.Menu;
 import java.util.function.Consumer;
 import model.ChessGame;
 import model.Command;
-import model.menu.Menu;
 import view.InputView;
 import view.OutputView;
 
@@ -25,18 +24,12 @@ public class ChessController {
     }
 
     private void play(final ChessGame chessGame) {
-        Menu status = Command.of(inputView.readCommandList());
-        status.play(chessGame);
+        Menu menu;
         while (chessGame.isNotEnd()) {
-            printCurrentStatus(chessGame);
-            status = Command.of(inputView.readCommandList());
-            status.play(chessGame);
+            menu = Command.of(inputView.readCommandList());
+            menu.play(chessGame, outputView);
         }
-    }
-
-    private void printCurrentStatus(final ChessGame chessGame) {
-        outputView.printGameBoard(GameBoardDto.from(chessGame));
-        outputView.printCurrentCame(chessGame.getCamp());
+        outputView.printWinner(chessGame.calculateResult().getWinner());
     }
 
     private <T> T readWithRetry(final Consumer<ChessGame> consumer, final ChessGame chessGame) {
