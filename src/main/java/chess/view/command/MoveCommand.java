@@ -14,6 +14,8 @@ public class MoveCommand {
     private static final int RANK_INDEX = 1;
     private static final int SOURCE_DATA_INDEX = 0;
     private static final int TARGET_DATA_INDEX = 1;
+    private static final String MOVE_COMMAND = "move";
+    private static final String END_COMMAND = "end";
 
     private final boolean isEnd;
     private final List<Coordinate> data;
@@ -24,7 +26,7 @@ public class MoveCommand {
     }
 
     public static MoveCommand from(String input) {
-        if ("end".equals(input)) {
+        if (END_COMMAND.equals(input)) {
             return new MoveCommand(true, Collections.emptyList());
         }
 
@@ -43,13 +45,20 @@ public class MoveCommand {
 
     private static void validateCommandSegmentSize(List<String> commandSegments) {
         if (commandSegments.size() != 3) {
-            throw new IllegalArgumentException("잘못된 입력입니다. move source target 형식으로 입력해주세요. ex) move a2 a4");
+
+            String message = String.format(
+                    "잘못된 입력입니다. %s source target 형식으로 입력해주세요. ex) %s a2 a4",
+                    MOVE_COMMAND,
+                    MOVE_COMMAND
+            );
+            throw new IllegalArgumentException(message);
         }
     }
 
     private static void validateCommand(String command) {
-        if (!"move".equals(command)) {
-            throw new IllegalArgumentException("존재하지 않는 명령어입니다. move 또는 end를 입력해주세요.");
+        if (!MOVE_COMMAND.equals(command)) {
+            String message = String.format("존재하지 않는 명령어입니다. %s 또는 %s를 입력해주세요.", MOVE_COMMAND, END_COMMAND);
+            throw new IllegalArgumentException(message);
         }
     }
 
@@ -57,7 +66,7 @@ public class MoveCommand {
         List<String> coordinateSegments = Arrays.asList(input.split(""));
         validateCoordinateSegmentSize(coordinateSegments);
         int rankValue = Integer.parseInt(coordinateSegments.get(RANK_INDEX));
-        char fileValue = coordinateSegments.get(FILE_INDEX).charAt(SOURCE_DATA_INDEX);
+        char fileValue = coordinateSegments.get(FILE_INDEX).charAt(0);
 
         return new Coordinate(rankValue, fileValue);
     }
