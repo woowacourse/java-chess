@@ -89,7 +89,6 @@ public class Position {
         return columnPosition.isRight(target.columnPosition);
     }
 
-    // TODO 움직이는 행위가 구현되어 있음
     private Position movePositionDirectionTo(Direction direction) {
         int nextRowStep = direction.getRowWeight();
         int nextColumnStep = direction.getColumnWeight();
