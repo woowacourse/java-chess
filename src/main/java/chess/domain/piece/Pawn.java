@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Pawn extends Piece {
-    private static final int MAX_NOT_MOVED_PASS_MOVE_COUNT = 2;
-    private static final int MAX_MOVED_PASS_MOVE_COUNT = 1;
+    private static final int MAX_NOT_MOVED_PASS_COUNT = 2;
+    private static final int MAX_MOVED_PASS_COUNT = 1;
     private static final int MAX_ATTACK_MOVE_COUNT = 1;
     private static final Movements BLACK_MOVEMENTS = new Movements(
             Set.of(UnitMovement.DOWN),
@@ -34,10 +34,10 @@ public class Pawn extends Piece {
     @Override
     protected int maxPassMoveCount() {
         if (isMoved) {
-            return MAX_MOVED_PASS_MOVE_COUNT;
+            return MAX_MOVED_PASS_COUNT;
         }
 
-        return MAX_NOT_MOVED_PASS_MOVE_COUNT;
+        return MAX_NOT_MOVED_PASS_COUNT;
     }
 
     @Override

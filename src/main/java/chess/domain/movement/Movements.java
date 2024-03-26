@@ -37,13 +37,16 @@ public class Movements {
     }
 
     private boolean canArrive(TerminalPosition terminalPosition, UnitMovement unitMovement, int maxMoveCount) {
-        return Stream.iterate(terminalPosition.getStart(), position -> position.move(unitMovement))
+        Position startPosition = terminalPosition.getStart();
+        Position endPosition = terminalPosition.getEnd();
+
+        return Stream.iterate(startPosition, position -> position.move(unitMovement))
                 .limit(maxMoveCount)
-                .takeWhile(current -> current.canMove(unitMovement))
-                .anyMatch(current -> next(current, unitMovement).equals(terminalPosition.getEnd()));
+                .takeWhile(currentPosition -> currentPosition.canMove(unitMovement))
+                .anyMatch(currentPosition -> endPosition.equals(nextPosition(currentPosition, unitMovement)));
     }
 
-    private Position next(Position position, UnitMovement unitMovement) {
+    private Position nextPosition(Position position, UnitMovement unitMovement) {
         return position.move(unitMovement);
     }
 
