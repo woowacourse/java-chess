@@ -54,4 +54,18 @@ class GameInformationDaoTest implements DaoTest {
         // then
         assertThat(gameInformation.getCurentTurnColor()).isEqualTo(Color.BLACK);
     }
+
+    @DisplayName("gameId에 해당되는 게임을 삭제한다.")
+    @Test
+    void remove() {
+        // given
+        int gameId = 1;
+
+        // when
+        gameInformationDao.remove(1);
+        List<GameInformation> gameInfos = gameInformationDao.findAll();
+
+        // then
+        assertThat(gameInfos).isEmpty();
+    }
 }

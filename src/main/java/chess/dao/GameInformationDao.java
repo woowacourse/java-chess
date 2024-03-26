@@ -91,4 +91,15 @@ public class GameInformationDao {
         String testStatus = System.getProperty("TEST_ENV");
         return testStatus != null && testStatus.equalsIgnoreCase("true");
     }
+
+    public void remove(int gameId) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM " + getTableName() + " WHERE game_id = ?");
+            statement.setInt(1, gameId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
