@@ -16,4 +16,8 @@ public class DBFixtures {
     public static PiecesDao createPiecesDao() {
         return new PiecesDao(createConnector());
     }
+
+    public static TurnsDao createTurnsDao() {
+        return new TurnsDao(createConnector());
+    }
 }
