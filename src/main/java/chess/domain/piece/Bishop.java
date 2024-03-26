@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Bishop extends Piece {
 
@@ -21,10 +22,11 @@ public class Bishop extends Piece {
     }
 
     private void initDirections() {
-        this.directions.add(Direction.LEFT_UP);
-        this.directions.add(Direction.LEFT_DOWN);
-        this.directions.add(Direction.RIGHT_UP);
-        this.directions.add(Direction.RIGHT_DOWN);
+        this.directions.addAll(Set.of(
+                Direction.LEFT_UP,
+                Direction.LEFT_DOWN,
+                Direction.RIGHT_UP,
+                Direction.RIGHT_DOWN));
     }
 
     @Override

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Rook extends Piece {
 
@@ -20,12 +21,12 @@ public class Rook extends Piece {
         return CACHE.get(color);
     }
 
-
     private void initDirections() {
-        this.directions.add(Direction.LEFT);
-        this.directions.add(Direction.RIGHT);
-        this.directions.add(Direction.UP);
-        this.directions.add(Direction.DOWN);
+        this.directions.addAll(Set.of(
+                Direction.LEFT,
+                Direction.RIGHT,
+                Direction.UP,
+                Direction.DOWN));
     }
 
     @Override

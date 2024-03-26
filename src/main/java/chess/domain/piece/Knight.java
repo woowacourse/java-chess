@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Knight extends Piece {
 
@@ -21,14 +22,15 @@ public class Knight extends Piece {
     }
 
     private void initDirections() {
-        this.directions.add(Direction.KNIGHT_LEFT_UP);
-        this.directions.add(Direction.KNIGHT_LEFT_DOWN);
-        this.directions.add(Direction.KNIGHT_RIGHT_UP);
-        this.directions.add(Direction.KNIGHT_RIGHT_DOWN);
-        this.directions.add(Direction.KNIGHT_UP_LEFT);
-        this.directions.add(Direction.KNIGHT_UP_RIGHT);
-        this.directions.add(Direction.KNIGHT_DOWN_LEFT);
-        this.directions.add(Direction.KNIGHT_DOWN_RIGHT);
+        this.directions.addAll(Set.of(
+                Direction.KNIGHT_LEFT_UP,
+                Direction.KNIGHT_LEFT_DOWN,
+                Direction.KNIGHT_RIGHT_UP,
+                Direction.KNIGHT_RIGHT_DOWN,
+                Direction.KNIGHT_UP_LEFT,
+                Direction.KNIGHT_UP_RIGHT,
+                Direction.KNIGHT_DOWN_LEFT,
+                Direction.KNIGHT_DOWN_RIGHT));
     }
 
     @Override

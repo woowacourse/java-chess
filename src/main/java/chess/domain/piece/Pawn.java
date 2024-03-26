@@ -4,6 +4,7 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Pawn extends Piece {
 
@@ -26,10 +27,10 @@ public class Pawn extends Piece {
 
     private void initDirections() {
         if (color == Color.BLACK) {
-            this.directions.addAll(List.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN));
+            this.directions.addAll(Set.of(Direction.DOWN, Direction.LEFT_DOWN, Direction.RIGHT_DOWN));
         }
         if (color == Color.WHITE) {
-            this.directions.addAll(List.of(Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP));
+            this.directions.addAll(Set.of(Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP));
         }
     }
 
