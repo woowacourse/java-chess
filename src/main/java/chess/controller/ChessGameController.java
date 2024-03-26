@@ -48,7 +48,7 @@ public class ChessGameController {
             String command = readGameCommand();
             tryOneRound(chessGame, command);
             showStatus(chessGame, command);
-            canContinue = canContinue(command);
+            canContinue = canContinue(chessGame, command);
         }
     }
 
@@ -106,7 +106,11 @@ public class ChessGameController {
         throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
     }
 
-    private boolean canContinue(String command) {
+    private boolean canContinue(ChessGame chessGame, String command) {
+        if (chessGame.isKingCaptured()) {
+            outputView.printResult(chessGame.findLoser(), chessGame.findWinner());
+            return false;
+        }
         return !command.equals(END_COMMAND);
     }
 }

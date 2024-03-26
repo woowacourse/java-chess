@@ -30,6 +30,24 @@ public class ChessGame {
         turnColor = turnColor.findOppositeColor();
     }
 
+    public boolean isKingCaptured() {
+        return chessState.isKingCaptured();
+    }
+
+    public Color findWinner() {
+        if (!isKingCaptured()) {
+            throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");
+        }
+        return chessState.announceCapturedKingColor().findOppositeColor();
+    }
+
+    public Color findLoser() {
+        if (!isKingCaptured()) {
+            throw new IllegalStateException("아직 게임이 끝나지 않았습니다.");
+        }
+        return chessState.announceCapturedKingColor();
+    }
+
     public Scores calculateScores() {
         Score whiteScore = chessState.calculateScore(Color.WHITE);
         Score blackScore = chessState.calculateScore(Color.BLACK);

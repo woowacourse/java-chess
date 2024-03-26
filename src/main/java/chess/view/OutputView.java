@@ -1,7 +1,9 @@
 package chess.view;
 
+import chess.domain.color.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
+import chess.view.display.ColorDisplay;
 import chess.view.display.PieceDisplay;
 import dto.Status;
 import java.util.List;
@@ -30,6 +32,11 @@ public class OutputView {
         System.out.println("현재 점수입니다.");
         System.out.println("흰색: " + status.whiteScore());
         System.out.println("검은색: " + status.blackScore());
+    }
+
+    public void printResult(Color loser, Color winner) {
+        System.out.println(ColorDisplay.findPieceDisplay(loser) + " 킹이 잡혔습니다.");
+        System.out.println(ColorDisplay.findPieceDisplay(winner) + "이 승리했습니다.");
     }
 
     public void printErrorMessage(String message) {
