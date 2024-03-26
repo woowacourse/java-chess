@@ -1,5 +1,7 @@
-package chess.model.board;
+package chess.model;
 
+import chess.model.board.Board;
+import chess.model.board.BoardFactory;
 import chess.model.material.Color;
 import java.util.List;
 

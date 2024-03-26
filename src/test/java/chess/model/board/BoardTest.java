@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dto.BoardDto;
+import chess.model.CustomBoardFactory;
 import chess.model.piece.Piece;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
