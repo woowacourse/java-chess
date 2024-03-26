@@ -12,9 +12,13 @@ public class ChessBoard {
     private final List<Space> spaces;
     private final Turn turn;
 
-    public ChessBoard(SpaceGenerator spaceGenerator) {
+    public ChessBoard(SpaceGenerator spaceGenerator, Turn turn) {
         this.spaces = spaceGenerator.generateSpaces();
-        this.turn = Turn.create();
+        this.turn = turn;
+    }
+
+    public static ChessBoard of(SpaceGenerator spaceGenerator) {
+        return new ChessBoard(spaceGenerator, Turn.create());
     }
 
     public void move(Position from, Position to) {

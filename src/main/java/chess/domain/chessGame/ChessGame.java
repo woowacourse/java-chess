@@ -11,7 +11,7 @@ public class ChessGame {
     private Color deadKingColor = Color.EMPTY;
 
     public ChessGame(SpaceGenerator spaceGenerator) {
-        this.chessBoard = new ChessBoard(spaceGenerator);
+        this.chessBoard = ChessBoard.of(spaceGenerator);
     }
 
     public ChessGame of(SpaceGenerator spaceGenerator) {
