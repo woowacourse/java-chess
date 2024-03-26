@@ -2,6 +2,7 @@ package domain.board;
 
 import domain.piece.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,43 +22,63 @@ import static domain.piece.PieceColor.BLACK;
 import static domain.piece.PieceColor.WHITE;
 
 public class BoardInitializer {
-    private static final Map<Position, Piece> initialPiecePositions = Map.ofEntries(
-            Map.entry(position(E, ONE), new King(WHITE)),
-            Map.entry(position(D, ONE), new Queen(WHITE)),
-            Map.entry(position(C, ONE), new Bishop(WHITE)),
-            Map.entry(position(F, ONE), new Bishop(WHITE)),
-            Map.entry(position(B, ONE), new Knight(WHITE)),
-            Map.entry(position(G, ONE), new Knight(WHITE)),
-            Map.entry(position(A, ONE), new Rook(WHITE)),
-            Map.entry(position(H, ONE), new Rook(WHITE)),
-            Map.entry(position(A, TWO), new Pawn(WHITE)),
-            Map.entry(position(B, TWO), new Pawn(WHITE)),
-            Map.entry(position(C, TWO), new Pawn(WHITE)),
-            Map.entry(position(D, TWO), new Pawn(WHITE)),
-            Map.entry(position(E, TWO), new Pawn(WHITE)),
-            Map.entry(position(F, TWO), new Pawn(WHITE)),
-            Map.entry(position(G, TWO), new Pawn(WHITE)),
-            Map.entry(position(H, TWO), new Pawn(WHITE)),
-            Map.entry(position(E, EIGHT), new King(BLACK)),
-            Map.entry(position(D, EIGHT), new Queen(BLACK)),
-            Map.entry(position(C, EIGHT), new Bishop(BLACK)),
-            Map.entry(position(F, EIGHT), new Bishop(BLACK)),
-            Map.entry(position(B, EIGHT), new Knight(BLACK)),
-            Map.entry(position(G, EIGHT), new Knight(BLACK)),
-            Map.entry(position(A, EIGHT), new Rook(BLACK)),
-            Map.entry(position(H, EIGHT), new Rook(BLACK)),
-            Map.entry(position(A, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(B, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(C, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(D, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(E, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(F, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(G, SEVEN), new Pawn(BLACK)),
-            Map.entry(position(H, SEVEN), new Pawn(BLACK))
-    );
-
     public static Board initBoard() {
-        return new Board(new HashMap<>(initialPiecePositions));
+        return new Board(new HashMap<>(initPieces()));
+    }
+
+    private static Map<Position, Piece> initPieces() {
+        final Map<Position, Piece> piecePositions = new HashMap<>();
+        initKing(piecePositions);
+        initQueen(piecePositions);
+        initBishop(piecePositions);
+        initKnight(piecePositions);
+        initRook(piecePositions);
+        initBlackPawns(piecePositions);
+        initWhitePawns(piecePositions);
+
+        return piecePositions;
+    }
+
+    private static void initKing(final Map<Position, Piece> piecePositions) {
+        piecePositions.put(position(E, ONE), new King(WHITE));
+        piecePositions.put(position(E, EIGHT), new King(BLACK));
+    }
+
+    private static void initQueen(final Map<Position, Piece> piecePositions) {
+        piecePositions.put(position(D, ONE), new Queen(WHITE));
+        piecePositions.put(position(D, EIGHT), new Queen(BLACK));
+    }
+
+    private static void initBishop(final Map<Position, Piece> piecePositions) {
+        piecePositions.put(position(C, ONE), new Bishop(WHITE));
+        piecePositions.put(position(F, ONE), new Bishop(WHITE));
+        piecePositions.put(position(C, EIGHT), new Bishop(BLACK));
+        piecePositions.put(position(F, EIGHT), new Bishop(BLACK));
+    }
+
+    private static void initKnight(final Map<Position, Piece> piecePositions) {
+        piecePositions.put(position(B, ONE), new Knight(WHITE));
+        piecePositions.put(position(G, ONE), new Knight(WHITE));
+        piecePositions.put(position(B, EIGHT), new Knight(BLACK));
+        piecePositions.put(position(G, EIGHT), new Knight(BLACK));
+    }
+
+    private static void initRook(final Map<Position, Piece> piecePositions) {
+        piecePositions.put(position(A, ONE), new Rook(WHITE));
+        piecePositions.put(position(H, ONE), new Rook(WHITE));
+        piecePositions.put(position(A, EIGHT), new Rook(BLACK));
+        piecePositions.put(position(H, EIGHT), new Rook(BLACK));
+
+    }
+
+    private static void initWhitePawns(final Map<Position, Piece> piecePositions) {
+        Arrays.stream(File.values())
+                .forEach(file -> piecePositions.put(position(file, TWO), new Pawn(WHITE)));
+    }
+
+    private static void initBlackPawns(final Map<Position, Piece> piecePositions) {
+        Arrays.stream(File.values())
+                .forEach(file -> piecePositions.put(position(file, SEVEN), new Pawn(BLACK)));
     }
 
     private static Position position(final File file, final Rank rank) {
