@@ -32,15 +32,7 @@ public final class BoardDao {
 
             final Map<Position, Piece> loadedBoard = new HashMap<>();
             while (resultSet.next()) {
-                int positionRow = resultSet.getInt("position_row");
-                int positionColumn = resultSet.getInt("position_column");
-                Team team = Team.valueOf(resultSet.getString("team"));
-                Kind kind = Kind.valueOf(resultSet.getString("kind"));
-                boolean isMoved = resultSet.getBoolean("is_moved");
-                Position position = Position.of(positionRow, positionColumn);
-                Piece piece = kind.createPiece(team, isMoved);
-
-                loadedBoard.put(position, piece);
+                addPiece(resultSet, loadedBoard);
             }
 
             return new Board(loadedBoard);
@@ -49,37 +41,48 @@ public final class BoardDao {
         }
     }
 
+    private void addPiece(ResultSet resultSet, Map<Position, Piece> loadedBoard) throws SQLException {
+        int positionRow = resultSet.getInt("position_row");
+        int positionColumn = resultSet.getInt("position_column");
+        Team team = Team.valueOf(resultSet.getString("team"));
+        Kind kind = Kind.valueOf(resultSet.getString("kind"));
+        boolean isMoved = resultSet.getBoolean("is_moved");
+        Position position = Position.of(positionRow, positionColumn);
+        Piece piece = kind.createPiece(team, isMoved);
+
+        loadedBoard.put(position, piece);
+    }
+
     public void save(Movement movement, Piece piece) {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE board SET position_row = ?, position_column = ?, is_moved = ? WHERE id = ?");
-
-            statement.setInt(1, movement.target().row());
-            statement.setInt(2, movement.target().column());
-            statement.setBoolean(3, piece.isMoved());
-            statement.setInt(4, findIdByPosition(movement.source()));
-
-            statement.executeUpdate();
+            deleteAttackedPiece(movement, connection);
+            movePiece(movement, piece, connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private int findIdByPosition(Position position) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM board WHERE position_row = ? AND position_column = ?");
-            statement.setInt(1, position.row());
-            statement.setInt(2, position.column());
-            final var resultSet = statement.executeQuery();
+    private void deleteAttackedPiece(Movement movement, Connection connection) throws SQLException {
+        final PreparedStatement deleteStatement = connection.prepareStatement(
+                "DELETE FROM board WHERE position_row = ? AND position_column = ?");
+        deleteStatement.setInt(1, movement.target().row());
+        deleteStatement.setInt(2, movement.target().column());
 
-            if (resultSet.next()) {
-                return resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
+        deleteStatement.executeUpdate();
+    }
+
+    private void movePiece(Movement movement, Piece piece, Connection connection) throws SQLException {
+        final PreparedStatement moveStatement = connection.prepareStatement(
+                "UPDATE board SET position_row = ?, position_column = ?, is_moved = ?"
+                        + " WHERE position_row = ? AND position_column = ?");
+
+        moveStatement.setInt(1, movement.target().row());
+        moveStatement.setInt(2, movement.target().column());
+        moveStatement.setBoolean(3, piece.isMoved());
+        moveStatement.setInt(4, movement.source().row());
+        moveStatement.setInt(5, movement.source().column());
+
+        moveStatement.executeUpdate();
     }
 
     public void addAll(Board board) {
