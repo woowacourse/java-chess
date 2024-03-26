@@ -11,7 +11,8 @@ import static chess.domain.position.Direction.*;
 public enum Team {
     // TODO 폰의 정보가 흘러 나온 것은 아닌지 고민해보기
     WHITE(List.of(N, NW, NE), RowPosition.SIX),
-    BLACK(List.of(S, SW, SE), RowPosition.ONE);
+    BLACK(List.of(S, SW, SE), RowPosition.ONE),
+    EMPTY(null, null);
 
     private final List<Direction> forwardDirections;
     private final RowPosition initialPawnRow;

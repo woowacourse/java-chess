@@ -29,4 +29,8 @@ public abstract class Piece {
     public boolean isOtherTeam(Team team) {
         return this.team != team;
     }
+
+    public boolean isEmpty(){
+        return false;
+    }
 }
