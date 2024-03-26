@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import static chess.domain.fixture.CoordinateFixture.B6;
-import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.C6;
@@ -53,6 +52,8 @@ class InitialBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B6, EMPTY_PIECE);
+        boardInformation.put(D6, EMPTY_PIECE);
         boardInformation.put(C6, EMPTY_PIECE);
         boardInformation.put(C5, EMPTY_PIECE);
 
@@ -63,7 +64,10 @@ class InitialBlackPawnTest {
     @Test
     void canMoveCaseTakeDown() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B6, EMPTY_PIECE);
         boardInformation.put(D6, WHITE_BISHOP);
+        boardInformation.put(C6, EMPTY_PIECE);
+        boardInformation.put(C5, EMPTY_PIECE);
 
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, D6, boardInformation)).isTrue();
     }
@@ -72,7 +76,9 @@ class InitialBlackPawnTest {
     @Test
     void canMoveCaseCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C3, EMPTY_PIECE);
+        boardInformation.put(B6, EMPTY_PIECE);
+        boardInformation.put(D6, EMPTY_PIECE);
+        boardInformation.put(C6, EMPTY_PIECE);
         boardInformation.put(C5, BLACK_KNIGHT);
 
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isFalse();
@@ -82,8 +88,10 @@ class InitialBlackPawnTest {
     @Test
     void canMoveCaseStuck() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C6, WHITE_QUEEN);
+        boardInformation.put(B6, EMPTY_PIECE);
+        boardInformation.put(D6, EMPTY_PIECE);
         boardInformation.put(C5, EMPTY_PIECE);
+        boardInformation.put(C6, WHITE_QUEEN);
 
         assertThat(INITIAL_BLACK_PAWN.canMove(C7, C5, boardInformation)).isFalse();
     }

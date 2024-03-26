@@ -5,6 +5,7 @@ import static chess.domain.fixture.CoordinateFixture.B5;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.C6;
+import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D5;
 import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
 import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
@@ -50,6 +51,8 @@ class NormalBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B4, EMPTY_PIECE);
+        boardInformation.put(D4, EMPTY_PIECE);
         boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isTrue();
@@ -60,6 +63,8 @@ class NormalBlackPawnTest {
     void canMoveCaseTakeDown() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
         boardInformation.put(B4, WHITE_BISHOP);
+        boardInformation.put(D4, EMPTY_PIECE);
+        boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, B4, boardInformation)).isTrue();
     }
@@ -68,6 +73,8 @@ class NormalBlackPawnTest {
     @Test
     void canMoveCaseStuckCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B4, EMPTY_PIECE);
+        boardInformation.put(D4, EMPTY_PIECE);
         boardInformation.put(C4, BLACK_KNIGHT);
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isFalse();

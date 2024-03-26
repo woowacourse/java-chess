@@ -52,6 +52,8 @@ class InitialWhitePawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B3, EMPTY_PIECE);
+        boardInformation.put(D3, EMPTY_PIECE);
         boardInformation.put(C3, EMPTY_PIECE);
         boardInformation.put(C4, EMPTY_PIECE);
 
@@ -63,6 +65,9 @@ class InitialWhitePawnTest {
     void canMoveCaseTakeDown() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
         boardInformation.put(B3, BLACK_BISHOP);
+        boardInformation.put(D3, EMPTY_PIECE);
+        boardInformation.put(C3, EMPTY_PIECE);
+        boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(INITIAL_WHITE_PAWN.canMove(C2, B3, boardInformation)).isTrue();
     }
@@ -71,6 +76,8 @@ class InitialWhitePawnTest {
     @Test
     void canMoveCaseStuckCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B3, EMPTY_PIECE);
+        boardInformation.put(D3, EMPTY_PIECE);
         boardInformation.put(C3, EMPTY_PIECE);
         boardInformation.put(C4, WHITE_KNIGHT);
 
@@ -81,6 +88,8 @@ class InitialWhitePawnTest {
     @Test
     void canMoveCaseStuck() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B3, EMPTY_PIECE);
+        boardInformation.put(D3, EMPTY_PIECE);
         boardInformation.put(C3, BLACK_KNIGHT);
         boardInformation.put(C4, EMPTY_PIECE);
 

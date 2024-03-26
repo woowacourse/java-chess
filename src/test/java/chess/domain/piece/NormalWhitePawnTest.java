@@ -3,10 +3,12 @@ package chess.domain.piece;
 import static chess.domain.fixture.CoordinateFixture.A3;
 import static chess.domain.fixture.CoordinateFixture.A5;
 import static chess.domain.fixture.CoordinateFixture.B3;
+import static chess.domain.fixture.CoordinateFixture.B4;
 import static chess.domain.fixture.CoordinateFixture.C2;
 import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.C4;
 import static chess.domain.fixture.CoordinateFixture.D3;
+import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.PieceFixture.BLACK_BISHOP;
 import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
 import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
@@ -51,6 +53,8 @@ class NormalWhitePawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(B4, EMPTY_PIECE);
+        boardInformation.put(D4, EMPTY_PIECE);
         boardInformation.put(C4, EMPTY_PIECE);
 
         assertThat(NORMAL_WHITE_PAWN.canMove(C3, C4, boardInformation)).isTrue();
@@ -60,7 +64,9 @@ class NormalWhitePawnTest {
     @Test
     void canMoveCaseTakeDown() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
+        boardInformation.put(D3, EMPTY_PIECE);
         boardInformation.put(B3, BLACK_BISHOP);
+        boardInformation.put(C3, EMPTY_PIECE);
 
         assertThat(NORMAL_WHITE_PAWN.canMove(C2, B3, boardInformation)).isTrue();
     }
@@ -69,8 +75,10 @@ class NormalWhitePawnTest {
     @Test
     void canMoveCaseStuckCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C4, WHITE_KNIGHT);
+        boardInformation.put(D3, EMPTY_PIECE);
+        boardInformation.put(B3, EMPTY_PIECE);
+        boardInformation.put(C3, WHITE_KNIGHT);
 
-        assertThat(NORMAL_WHITE_PAWN.canMove(C2, C4, boardInformation)).isFalse();
+        assertThat(NORMAL_WHITE_PAWN.canMove(C2, C3, boardInformation)).isFalse();
     }
 }

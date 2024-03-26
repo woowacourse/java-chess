@@ -6,6 +6,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,10 +34,13 @@ public abstract class Pawn extends AbstractPiece {
     }
 
     private Set<Coordinate> straightLegalNextCoordinates(final Coordinate now) {
-        return straightWeights().stream()
-                .filter(entry -> now.canMove(entry.getKey(), entry.getValue()))
-                .map(entry -> now.move(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toSet());
+        LinkedHashSet<Coordinate> legalCoordinates = new LinkedHashSet<>();
+        straightWeights().forEach(entry -> {
+            if (now.canMove(entry.getKey(), entry.getValue())) {
+                legalCoordinates.add(now.move(entry.getKey(), entry.getValue()));
+            }
+        });
+        return legalCoordinates;
     }
 
     private Set<Coordinate> diagonalLegalNextCoordinates(final Coordinate now) {
@@ -50,25 +54,21 @@ public abstract class Pawn extends AbstractPiece {
     public boolean canMove(final Coordinate now, final Coordinate destination,
                            final Map<Coordinate, Piece> boardInformation) {
 
-        Set<Coordinate> movableCoordinates = movableStraight(now, destination, boardInformation);
-        if (movableCoordinates.stream().anyMatch(coordinate -> boardInformation.get(coordinate).isNotEmpty())) {
-            return false;
-        }
-        movableCoordinates.addAll(movableDiagonal(now, destination, boardInformation));
+        Set<Coordinate> movableCoordinates = movableStraight(now, boardInformation);
+        movableCoordinates.addAll(movableDiagonal(now, boardInformation));
         return movableCoordinates.contains(destination);
     }
 
-    private Set<Coordinate> movableStraight(final Coordinate now, final Coordinate destination,
-                                            final Map<Coordinate, Piece> boardInformation) {
+    private Set<Coordinate> movableStraight(final Coordinate now, final Map<Coordinate, Piece> boardInformation) {
         return straightLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination).isEmpty())
+                .takeWhile(coordinate -> boardInformation.get(coordinate).isEmpty())
                 .collect(Collectors.toSet());
     }
 
-    private Set<Coordinate> movableDiagonal(final Coordinate now, final Coordinate destination,
-                                            final Map<Coordinate, Piece> boardInformation) {
+    private Set<Coordinate> movableDiagonal(final Coordinate now, final Map<Coordinate, Piece> boardInformation) {
         return diagonalLegalNextCoordinates(now).stream()
-                .filter(coordinate -> boardInformation.get(destination).isNotSameTeam(this))
+                .filter(coordinate -> boardInformation.get(coordinate).isNotEmpty() && boardInformation.get(coordinate)
+                        .isNotSameTeam(this))
                 .collect(Collectors.toSet());
     }
 }
