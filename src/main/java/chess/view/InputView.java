@@ -10,7 +10,7 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public Command readGameCommand() {
+    public Command readCommand() {
         return Command.from(scanner.nextLine());
     }
 

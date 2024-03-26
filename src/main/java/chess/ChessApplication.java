@@ -16,7 +16,7 @@ public class ChessApplication {
 
     public static void main(String[] args) {
         outputView.printStartMessage();
-        Command command = inputView.readGameCommand();
+        Command command = inputView.readCommand();
         if (command.isStart()) {
             outputView.printBoard(controller.getBoard());
             retryWhenError(() -> startTurn(Color.WHITE));
@@ -24,7 +24,7 @@ public class ChessApplication {
     }
 
     private static void startTurn(Color color) {
-        Command command = inputView.readGameCommand();
+        Command command = inputView.readCommand();
         if (command.isEnd()) {
             return;
         }
