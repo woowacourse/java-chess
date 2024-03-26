@@ -3,7 +3,6 @@ package controller.command;
 import domain.game.ChessGame;
 import java.util.Arrays;
 import java.util.function.Function;
-import view.OutputView;
 import view.command.CommandType;
 
 public enum Command {
@@ -25,10 +24,6 @@ public enum Command {
     }
 
     public void execute(final CommandType commandType, final ChessGame chessGame) {
-        try {
-            executorFunction.apply(commandType).execute(chessGame);
-        } catch (Exception exception) {
-            OutputView.printErrorMessage(exception.getMessage());
-        }
+        executorFunction.apply(commandType).execute(chessGame);
     }
 }

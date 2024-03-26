@@ -12,13 +12,12 @@ import view.command.CommandType;
 
 public class MoveCommandExecutor implements CommandExecutor {
     private static final Pattern pattern = Pattern.compile(MOVE_POSITION_REGEX_FORMAT);
-    public static final String INVALID_COMMAND_ERROR = "[ERROR] 잘못된 명령어 입력입니다.";
     private final Position source;
     private final Position target;
 
     public MoveCommandExecutor(final CommandType commandType) {
         if (commandType.notEqualsSupplementSize(2)) {
-            throw new IllegalArgumentException(INVALID_COMMAND_ERROR);
+            throw new IllegalArgumentException("[ERROR] 게임 이동 명령어를 올바르게 입력해주세요.");
         }
         List<String> supplements = commandType.getSupplements();
         this.source = convertToPosition(supplements.get(0));
@@ -34,7 +33,7 @@ public class MoveCommandExecutor implements CommandExecutor {
 
     private void validateIllegalCoordinate(String coordinate) {
         if (isInvalidCoordinate(coordinate)) {
-            throw new IllegalArgumentException(INVALID_COMMAND_ERROR);
+            throw new IllegalArgumentException("[ERROR] 게임 이동 명령어를 올바르게 입력해주세요.");
         }
     }
 

@@ -21,8 +21,4 @@ public class SeparatedInput {
     public List<String> getSupplements() {
         return separated.subList(1, separated.size());
     }
-
-    public List<String> getSeparated() {
-        return separated;
-    }
 }

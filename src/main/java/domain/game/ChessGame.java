@@ -9,7 +9,7 @@ public class ChessGame {
 
     public ChessGame() {
         chessBoard = new ChessBoard();
-        gameState = GameState.RUNNING;
+        gameState = GameState.NOT_STARTED;
     }
 
     public void start() {
@@ -21,6 +21,9 @@ public class ChessGame {
     }
 
     public void move(final Position source, final Position target) {
+        if (gameState.isNotStarted()) {
+            throw new IllegalStateException("[ERROR] 게임이 시작되지 않았으므로 이동할 수 없습니다.");
+        }
         if (gameState.isStopped()) {
             throw new IllegalStateException("[ERROR] 게임이 종료된 상태이므로 이동할 수 없습니다.");
         }
@@ -28,7 +31,7 @@ public class ChessGame {
     }
 
     public boolean isRunning() {
-        return gameState.isRunning();
+        return gameState.isNotStarted() || gameState.isRunning();
     }
 
     public ChessBoard getChessBoard() {
