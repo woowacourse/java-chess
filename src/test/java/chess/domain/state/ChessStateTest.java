@@ -2,12 +2,12 @@ package chess.domain.state;
 
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-import chess.domain.color.Color;
-import chess.domain.piece.nonsliding.King;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import chess.domain.BlankBoard;
+import chess.domain.color.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.pawn.WhiteFirstPawn;
+import chess.domain.position.Position;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
