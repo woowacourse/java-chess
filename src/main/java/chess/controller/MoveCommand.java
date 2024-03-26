@@ -3,8 +3,8 @@ package chess.controller;
 import chess.domain.location.Location;
 
 public class MoveCommand {
-    Location source;
-    Location target;
+    private final Location source;
+    private final Location target;
 
     public MoveCommand(String source, String target) {
         this.source = Location.of(source);
