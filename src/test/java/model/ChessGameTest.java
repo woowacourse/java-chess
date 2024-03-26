@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Map;
+import model.piece.King;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.position.Moving;
@@ -120,5 +121,20 @@ class ChessGameTest {
         chessGame.start();
 
         assertThat(chessGame.isNotEnd()).isTrue();
+    }
+
+    @DisplayName("King이 잡히면 게임을 종료한다.")
+    @Test
+    void name() {
+        final ChessGame chessGame = new ChessGame();
+        chessGame.start();
+
+        Map<Position, Piece> board = chessGame.getBoard();
+        board.put(Position.from("b3"), new King(Camp.BLACK));
+
+        Moving moving = new Moving(Position.from("a2"), Position.from("b3"));
+        chessGame.move(moving);
+
+        assertThat(chessGame.isNotEnd()).isFalse();
     }
 }

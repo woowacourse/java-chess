@@ -81,9 +81,13 @@ public class ChessGame {
         if (chessStatus == ChessStatus.RUNNING) {
             validate(moving);
 
-            Piece piece = board.get(moving.getCurrentPosition());
-            board.put(moving.getNextPosition(), piece);
+            Piece source = board.get(moving.getCurrentPosition());
+            Piece target = board.get(moving.getNextPosition());
+            board.put(moving.getNextPosition(), source);
             board.remove(moving.getCurrentPosition());
+            if (target != null) {
+                checkKing(target);
+            }
             camp = camp.toggle();
             return;
         }
@@ -138,6 +142,12 @@ public class ChessGame {
     private void validateTargetIsSameCamp(Piece target, Piece piece) {
         if (target != null && target.isSameCamp(piece.getCamp())) {
             throw new IllegalArgumentException("도착 지점에 같은 진영의 기물이 있습니다.");
+        }
+    }
+
+    private void checkKing(Piece target) {
+        if (!target.isSameCamp(camp) && target instanceof King) {
+            end();
         }
     }
 
