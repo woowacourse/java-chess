@@ -1,36 +1,36 @@
 package chess.domain.movement;
 
 public enum UnitMovement {
-    UP(1, 0),
-    DOWN(-1, 0),
-    RIGHT(0, 1),
-    LEFT(0, -1),
-    RIGHT_UP(1, 1),
-    RIGHT_DOWN(-1, 1),
-    LEFT_UP(1, -1),
-    LEFT_DOWN(-1, -1),
-    UP_UP_RIGHT(2, 1),
-    UP_UP_LEFT(2, -1),
-    DOWN_DOWN_RIGHT(-2, 1),
-    DOWN_DOWN_LEFT(-2, -1),
-    RIGHT_RIGHT_UP(1, 2),
-    RIGHT_RIGHT_DOWN(-1, 2),
-    LEFT_LEFT_UP(1, -2),
-    LEFT_LEFT_DOWN(-1, -2);
+    UP(0, 1),
+    DOWN(0, -1),
+    RIGHT(1, 0),
+    LEFT(-1, 0),
+    RIGHT_UP(RIGHT.fileDiff, UP.rankDiff),
+    RIGHT_DOWN(RIGHT.fileDiff, DOWN.rankDiff),
+    LEFT_UP(LEFT.fileDiff, UP.rankDiff),
+    LEFT_DOWN(LEFT.fileDiff, DOWN.rankDiff),
+    UP_UP_RIGHT(RIGHT.fileDiff, UP.rankDiff * 2),
+    UP_UP_LEFT(LEFT.fileDiff, UP.rankDiff * 2),
+    DOWN_DOWN_RIGHT(RIGHT.fileDiff, DOWN.rankDiff * 2),
+    DOWN_DOWN_LEFT(LEFT.fileDiff, DOWN.rankDiff * 2),
+    RIGHT_RIGHT_UP(RIGHT.fileDiff * 2, UP.rankDiff),
+    RIGHT_RIGHT_DOWN(RIGHT.fileDiff * 2, DOWN.rankDiff),
+    LEFT_LEFT_UP(LEFT.fileDiff * 2, UP.rankDiff),
+    LEFT_LEFT_DOWN(LEFT.fileDiff * 2, DOWN.rankDiff);
 
-    private final int rankDiff;
     private final int fileDiff;
+    private final int rankDiff;
 
-    UnitMovement(int rankDiff, int fileDiff) {
-        this.rankDiff = rankDiff;
+    UnitMovement(int fileDiff, int rankDiff) {
         this.fileDiff = fileDiff;
-    }
-
-    public int getRankDiff() {
-        return rankDiff;
+        this.rankDiff = rankDiff;
     }
 
     public int getFileDiff() {
         return fileDiff;
+    }
+
+    public int getRankDiff() {
+        return rankDiff;
     }
 }
