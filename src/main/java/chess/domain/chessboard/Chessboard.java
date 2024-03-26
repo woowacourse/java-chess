@@ -24,14 +24,14 @@ public class Chessboard {
         validateSource(source);
         Piece sourcePiece = squareIn(source).piece();
         Piece targetPiece = sourcePiece.move(this, target);
-        removePieceIn(source);
+        remove(source);
         put(target, targetPiece);
     }
 
     public Square squareIn(final Position position) {
-        List<Square> squares = rowIn(position);
+        List<Square> row = rowIn(position);
         File file = position.file();
-        return squares.get(file.toColumn());
+        return row.get(file.toColumn());
     }
 
     public boolean isEmpty(final Position position) {
@@ -44,11 +44,10 @@ public class Chessboard {
         }
     }
 
-    private void removePieceIn(final Position position) {
-        Rank rank = position.rank();
+    private void remove(final Position position) {
+        List<Square> row = rowIn(position);
         File file = position.file();
-        List<Square> squares = chessboard.get(rank.toRow());
-        squares.set(file.toColumn(), Square.empty());
+        row.set(file.toColumn(), Square.empty());
     }
 
     private void put(final Position position, final Piece piece) {
