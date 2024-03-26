@@ -21,6 +21,6 @@ public class RestartGame implements GameStatus {
     public GameStatus play() {
         Board board = BoardCreator.create();
         OutputView.printBoard(board);
-        return new MainGame(inputView, board);
+        return new PlayingGame(inputView, board);
     }
 }

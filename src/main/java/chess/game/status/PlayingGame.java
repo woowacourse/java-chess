@@ -8,12 +8,12 @@ import chess.view.input.command.GameCommand;
 import chess.view.output.OutputView;
 import java.util.List;
 
-public class MainGame implements GameStatus {
+public class PlayingGame implements GameStatus {
 
     private final InputView inputView;
     private final Board board;
 
-    public MainGame(InputView inputView, Board board) {
+    public PlayingGame(InputView inputView, Board board) {
         this.inputView = inputView;
         this.board = board;
     }
@@ -48,6 +48,6 @@ public class MainGame implements GameStatus {
         if (board.isGameOver()) {
             return new EndGame(board);
         }
-        return new MainGame(inputView, board);
+        return new PlayingGame(inputView, board);
     }
 }

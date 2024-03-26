@@ -30,7 +30,7 @@ public class InitialGame implements GameStatus {
         if (gameCommand == GameCommand.START) {
             Board board = BoardCreator.create();
             OutputView.printBoard(board);
-            return new MainGame(inputView, board);
+            return new PlayingGame(inputView, board);
         }
         if (gameCommand == GameCommand.END) {
             return new TerminateGame();
