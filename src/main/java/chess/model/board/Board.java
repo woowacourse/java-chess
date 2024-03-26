@@ -13,26 +13,29 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class Board {
+    private static final Color START_COLOR = Color.WHITE;
     public static final int MAX_LENGTH = 8;
     public static final int MIN_LENGTH = 1;
     private static final List<Position> ALL_POSITIONS = Position.values();
 
     private final Map<Position, Piece> squares;
+    private Color currnetColor = START_COLOR;
 
     public Board(Map<Position, Piece> squares) {
         this.squares = new HashMap<>(squares);
         ALL_POSITIONS.forEach(position -> this.squares.putIfAbsent(position, Empty.getInstance()));
     }
 
-    public void move(Movement movement, Color color) {
-        validateTurn(movement, color);
+    public void move(Movement movement) {
+        validateTurn(movement);
         validateMove(movement);
         updateSquare(movement);
+        updateTurn();
     }
 
-    private void validateTurn(Movement movement, Color color) {
+    private void validateTurn(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (sourcePiece.isNotSameColor(color)) {
+        if (sourcePiece.isNotSameColor(currnetColor)) {
             throw new IllegalArgumentException("현재 턴에 맞는 기물을 선택해주세요.");
         }
     }
@@ -85,6 +88,10 @@ public class Board {
         Position source = movement.getSource();
         squares.put(destination, getSourcePiece(movement));
         squares.put(source, Empty.getInstance());
+    }
+
+    private void updateTurn() {
+        currnetColor = currnetColor.getOpposite();
     }
 
     public List<List<Piece>> getLines() {

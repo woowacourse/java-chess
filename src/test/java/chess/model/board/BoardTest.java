@@ -3,7 +3,6 @@ package chess.model.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.model.piece.Color;
 import chess.model.piece.PieceFixture;
 import chess.model.position.Movement;
 import chess.model.position.Position;
@@ -30,7 +29,7 @@ class BoardTest {
         Movement movement = new Movement(Position.of(1, 1), Position.of(1, 3));
 
         // when, then
-        assertThatThrownBy(() -> board.move(movement, Color.WHITE))
+        assertThatThrownBy(() -> board.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +40,7 @@ class BoardTest {
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
 
         // when, then
-        board.move(movement, Color.WHITE);
+        board.move(movement);
         List<String> boardLines = PieceFixture.mappingBoard(board);
         assertThat(boardLines).containsExactly(
                 "RNBQKBNR",
