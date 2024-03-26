@@ -19,19 +19,22 @@ public class OutputView {
             Type.EMPTY, "."
     );
 
-    // TODO
     public void printBoard(Map<Point, Piece> board) {
         final StringBuilder boardMessageBuilder = new StringBuilder();
 
         for (int rank = 8; rank > 0; rank--) {
-            for (char file = 'a'; file <= 'h'; file++) {
-                final Piece piece = board.get(Point.of(file, rank));
-                boardMessageBuilder.append(findNameOf(piece));
-            }
+            appendPieceName(boardMessageBuilder, board, rank);
             boardMessageBuilder.append(System.lineSeparator());
         }
 
         System.out.println(boardMessageBuilder);
+    }
+
+    private void appendPieceName(final StringBuilder boardMessageBuilder, final Map<Point, Piece> board, final int rank) {
+        for (char file = 'a'; file <= 'h'; file++) {
+            final Piece piece = board.get(Point.of(file, rank));
+            boardMessageBuilder.append(findNameOf(piece));
+        }
     }
 
     private String findNameOf(Piece piece) {
