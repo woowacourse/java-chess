@@ -2,14 +2,10 @@ package controller;
 
 import domain.Chess;
 import domain.command.Command;
-import domain.position.Position;
-import domain.position.PositionGenerator;
+import domain.command.PlayCommand;
 import view.InputView;
 import view.OutputView;
 import view.mapper.CommandInput;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GameMachine {
 
@@ -18,51 +14,40 @@ public class GameMachine {
 
     public void start() {
         outputView.printStartNotice();
-        String rawCommand = requestCommand();
-        Command command = CommandInput.asCommand(rawCommand);
-        if (command.isNotStart()) {
-            return;
+        Command command = requestStartCommand();
+        if (command.isStart()) {
+            Chess chess = new Chess();
+            outputView.printBoard(chess.getBoard());
+            play(chess);
         }
-        Chess chess = new Chess();
-        outputView.printBoard(chess.getBoard());
-        play(chess);
     }
 
     private void play(Chess chess) {
-        String rawCommand = requestCommand();
-        Command command = CommandInput.asCommand(rawCommand);
-        if (isNotMove(command)) {
-            return;
+        PlayCommand playCommand = requestPlayCommand();
+        if (playCommand.isMove()) {
+            chess.movePiece(playCommand.sourcePosition(), playCommand.targetPosition());
+            outputView.printBoard(chess.getBoard());
+            play(chess);
         }
-        List<String> moveCommands = Arrays.stream(rawCommand.split(" ")).toList();
-        move(chess, moveCommands);
-        outputView.printBoard(chess.getBoard());
-        play(chess);
     }
 
-    private boolean isNotMove(Command command) {
-        if (command.isMove()) {
-            return false;
-        }
-        if (command.isStart()) {
-            start();
-        }
-        return true;
-    }
-
-    private void move(Chess chess, List<String> moveTokens) {
-        PositionGenerator positionGenerator = new PositionGenerator();
-        Position sourcePosition = positionGenerator.generate(moveTokens.get(1));
-        Position targetPosition = positionGenerator.generate(moveTokens.get(2));
-        chess.movePiece(sourcePosition, targetPosition);
-    }
-
-    private String requestCommand() {
+    private Command requestStartCommand() {
         try {
-            return inputView.readCommand();
+            String command = inputView.readCommand();
+            return CommandInput.asStartCommand(command);
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
-            return requestCommand();
+            return requestStartCommand();
+        }
+    }
+
+    private PlayCommand requestPlayCommand() {
+        try {
+            String rawCommand = inputView.readCommand();
+            return CommandInput.asPlayCommand(rawCommand);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return requestPlayCommand();
         }
     }
 }

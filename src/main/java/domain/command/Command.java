@@ -7,15 +7,15 @@ public enum Command {
     END,
     ;
 
-    public boolean isNotStart() {
-        return this != START;
-    }
-
     public boolean isStart() {
         return this == START;
     }
 
     public boolean isMove() {
         return this == MOVE;
+    }
+
+    public boolean isEnd() {
+        return this == END;
     }
 }
