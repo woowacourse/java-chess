@@ -13,10 +13,14 @@ import org.junit.jupiter.api.Test;
 class BishopTest {
     Bishop bishop;
     Position source;
+    Piece whitePiece;
+    Piece empty;
 
     @BeforeEach
     void setUp() {
         bishop = new Bishop(Color.WHITE);
+        whitePiece = new Bishop(Color.WHITE);
+        empty = new Empty();
         source = Position.of(File.C, Rank.ONE);
     }
 
@@ -25,10 +29,9 @@ class BishopTest {
     void canMove() {
         // given
         Position target = Position.of(File.E, Rank.THREE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = bishop.canMove(source, target, color);
+        boolean canMove = bishop.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,10 +42,9 @@ class BishopTest {
     void canNotMoveInvalidPath() {
         // given
         Position target = Position.of(File.C, Rank.THREE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = bishop.canMove(source, target, color);
+        boolean canMove = bishop.canMove(source, target, empty);
 
         // then
         assertThat(canMove).isFalse();
@@ -53,10 +55,9 @@ class BishopTest {
     void canNotMoveWithSameColor() {
         // given
         Position target = Position.of(File.E, Rank.THREE);
-        Color color = Color.WHITE;
 
         // when
-        boolean canMove = bishop.canMove(source, target, color);
+        boolean canMove = bishop.canMove(source, target, whitePiece);
 
         //then
         assertThat(canMove).isFalse();

@@ -13,10 +13,14 @@ import org.junit.jupiter.api.Test;
 class KingTest {
     King king;
     Position source;
+    Piece whitePiece;
+    Piece empty;
 
     @BeforeEach
     void setUp() {
         king = new King(Color.WHITE);
+        whitePiece = new King(Color.WHITE);
+        empty = new Empty();
         source = Position.of(File.E, Rank.ONE);
     }
 
@@ -25,10 +29,9 @@ class KingTest {
     void canMove() {
         // given
         Position target = Position.of(File.D, Rank.ONE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = king.canMove(source, target, color);
+        boolean canMove = king.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,10 +42,9 @@ class KingTest {
     void canMoveDiagonal() {
         // given
         Position target = Position.of(File.D, Rank.TWO);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = king.canMove(source, target, color);
+        boolean canMove = king.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -53,10 +55,9 @@ class KingTest {
     void canNotMoveWithSameColor() {
         // given
         Position target = Position.of(File.D, Rank.TWO);
-        Color color = Color.WHITE;
 
         // when
-        boolean canMove = king.canMove(source, target, color);
+        boolean canMove = king.canMove(source, target, whitePiece);
 
         //then
         assertThat(canMove).isFalse();
@@ -67,10 +68,9 @@ class KingTest {
     void canNotMoveInvalidPath() {
         // given
         Position target = Position.of(File.B, Rank.THREE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = king.canMove(source, target, color);
+        boolean canMove = king.canMove(source, target, whitePiece);
 
         // then
         assertThat(canMove).isFalse();

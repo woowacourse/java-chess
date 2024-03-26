@@ -26,8 +26,13 @@ public class Knight implements Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Color color) {
-        if (this.color == color) {
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target, Piece piece) {
+        if (piece.isSameColor(color)) {
             return false;
         }
         int rankDiff = source.calculateRankDifference(target);
@@ -39,10 +44,5 @@ public class Knight implements Piece {
     @Override
     public List<Position> searchPath(Position source, Position target) {
         return new ArrayList<>();
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }

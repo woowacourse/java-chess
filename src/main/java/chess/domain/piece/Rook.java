@@ -27,8 +27,13 @@ public class Rook implements Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Color color) {
-        if (this.color == color) {
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target, Piece piece) {
+        if (piece.isSameColor(color)) {
             return false;
         }
         int rankDiff = source.calculateRankDifference(target);
@@ -60,10 +65,5 @@ public class Rook implements Piece {
             path.add(source);
         }
         return path;
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
     }
 }

@@ -8,9 +8,9 @@ public interface Piece {
 
     boolean isBlack();
 
-    boolean canMove(Position source, Position target, Color color);
+    boolean isSameColor(Color color);
+
+    boolean canMove(Position source, Position target, Piece piece);
 
     List<Position> searchPath(Position source, Position target);
-
-    Color getColor();
 }

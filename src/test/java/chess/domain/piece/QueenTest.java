@@ -13,10 +13,14 @@ import org.junit.jupiter.api.Test;
 class QueenTest {
     Queen queen;
     Position source;
+    Piece whitePiece;
+    Piece empty;
 
     @BeforeEach
     void setUp() {
         queen = new Queen(Color.WHITE);
+        whitePiece = new Bishop(Color.WHITE);
+        empty = new Empty();
         source = Position.of(File.D, Rank.ONE);
     }
 
@@ -25,10 +29,9 @@ class QueenTest {
     void canMove() {
         // given
         Position target = Position.of(File.E, Rank.ONE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = queen.canMove(source, target, color);
+        boolean canMove = queen.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,10 +42,9 @@ class QueenTest {
     void canMoveDiagonal() {
         // given
         Position target = Position.of(File.E, Rank.TWO);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = queen.canMove(source, target, color);
+        boolean canMove = queen.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -53,10 +55,9 @@ class QueenTest {
     void canNotMoveWithSameColor() {
         // given
         Position target = Position.of(File.E, Rank.TWO);
-        Color color = Color.WHITE;
 
         // when
-        boolean canMove = queen.canMove(source, target, color);
+        boolean canMove = queen.canMove(source, target, whitePiece);
 
         //then
         assertThat(canMove).isFalse();
@@ -67,10 +68,9 @@ class QueenTest {
     void canNotMoveInvalidPath() {
         // given
         Position target = Position.of(File.E, Rank.THREE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = queen.canMove(source, target, color);
+        boolean canMove = queen.canMove(source, target, empty);
 
         // then
         assertThat(canMove).isFalse();

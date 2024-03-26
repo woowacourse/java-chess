@@ -32,14 +32,19 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Color targetPieceColor) {
-        if (this.color == targetPieceColor) {
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    @Override
+    public boolean canMove(Position source, Position target, Piece piece) {
+        if (piece.isSameColor(color)) {
             return false;
         }
         if (this.color == Color.BLACK) {
-            return checkBlack(source, target, targetPieceColor);
+            return checkBlack(source, target, piece);
         }
-        return checkWhite(source, target, targetPieceColor);
+        return checkWhite(source, target, piece);
     }
 
     @Override
@@ -54,19 +59,14 @@ public class Pawn implements Piece {
         return path;
     }
 
-    @Override
-    public Color getColor() {
-        return color;
-    }
-
-    private boolean checkBlack(Position source, Position target, Color color) {
+    private boolean checkBlack(Position source, Position target, Piece piece) {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
         if (rankDiff == -ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
-            return color == Color.WHITE;
+            return piece.isSameColor(Color.WHITE);
         }
-        if (color == Color.WHITE) {
+        if (piece.isSameColor(Color.WHITE)) {
             return false;
         }
         if (source.isRank(BLACK_INITIAL_POSITION)) {
@@ -75,14 +75,14 @@ public class Pawn implements Piece {
         return rankDiff == -ONE_SQUARE && fileDiff == STAY;
     }
 
-    private boolean checkWhite(Position source, Position target, Color color) {
+    private boolean checkWhite(Position source, Position target, Piece piece) {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
         if (rankDiff == ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
-            return color == Color.BLACK;
+            return piece.isSameColor(Color.BLACK);
         }
-        if (color == Color.BLACK) {
+        if (piece.isSameColor(Color.BLACK)) {
             return false;
         }
         if (source.isRank(WHITE_INITIAL_POSITION)) {

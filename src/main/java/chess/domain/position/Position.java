@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.piece.Color;
-
 import java.util.*;
 
 public class Position {

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -8,9 +9,6 @@ import chess.domain.position.Rank;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.EnumSource.Mode;
 
 class PawnTest {
 
@@ -22,10 +20,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SEVEN);
         Position target = Position.of(File.C, Rank.SIX);
-        Color color = Color.NONE;
+        Piece empty = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,10 +37,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SEVEN);
         Position target = Position.of(File.C, Rank.FIVE);
-        Color color = Color.NONE;
+        Piece empty = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -56,30 +54,35 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.C, Rank.FOUR);
-        Color color = Color.NONE;
+        Piece empty = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isFalse();
     }
 
     @DisplayName("target 위치가 대각선이 아니고 말이 있다면 색깔에 관계 없이 움직일 수 없다.")
-    @ParameterizedTest
-    @EnumSource(value = Color.class, mode = Mode.EXCLUDE, names = {"NONE"})
-    void canNotMoveBlack(Color targetColor) {
+    @Test
+    void canNotMoveBlack() {
         // given
         Pawn pawn = new Pawn(Color.BLACK);
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.C, Rank.FIVE);
+        Piece white = new Pawn(Color.WHITE);
+        Piece black = new Pawn(Color.BLACK);
 
         // when
-        boolean canMove = pawn.canMove(source, target, targetColor);
+        boolean canMove = pawn.canMove(source, target, white);
+        boolean canMove2 = pawn.canMove(source, target, black);
 
         //then
-        assertThat(canMove).isFalse();
+        assertAll(
+                () -> assertThat(canMove).isFalse(),
+                () -> assertThat(canMove2).isFalse()
+        );
     }
 
     @DisplayName("target 위치가 대각선이고 다른 색의 말이 있다면 움직일 수 있다.")
@@ -90,10 +93,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.B, Rank.FIVE);
-        Color color = Color.WHITE;
+        Piece piece = new Pawn(Color.WHITE);
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isTrue();
@@ -107,10 +110,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.B, Rank.FIVE);
-        Color color = Color.NONE;
+        Piece piece = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isFalse();
@@ -156,10 +159,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.TWO);
         Position target = Position.of(File.C, Rank.THREE);
-        Color color = Color.NONE;
+        Piece piece = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isTrue();
@@ -173,10 +176,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.TWO);
         Position target = Position.of(File.C, Rank.FOUR);
-        Color color = Color.NONE;
+        Piece piece = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isTrue();
@@ -190,10 +193,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.THREE);
         Position target = Position.of(File.C, Rank.FIVE);
-        Color color = Color.NONE;
+        Piece piece = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isFalse();
@@ -207,10 +210,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.C, Rank.SEVEN);
-        Color color = Color.BLACK;
+        Piece piece = new Pawn(Color.BLACK);
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isFalse();
@@ -224,10 +227,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.B, Rank.SEVEN);
-        Color color = Color.BLACK;
+        Piece piece = new Pawn(Color.BLACK);
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isTrue();
@@ -241,10 +244,10 @@ class PawnTest {
 
         Position source = Position.of(File.C, Rank.SIX);
         Position target = Position.of(File.B, Rank.SEVEN);
-        Color color = Color.NONE;
+        Piece piece = new Empty();
 
         // when
-        boolean canMove = pawn.canMove(source, target, color);
+        boolean canMove = pawn.canMove(source, target, piece);
 
         //then
         assertThat(canMove).isFalse();

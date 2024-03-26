@@ -13,10 +13,14 @@ import org.junit.jupiter.api.Test;
 class RookTest {
     Rook rook;
     Position source;
+    Piece whitePiece;
+    Piece empty;
 
     @BeforeEach
     void setUp() {
         rook = new Rook(Color.WHITE);
+        whitePiece = new Bishop(Color.WHITE);
+        empty = new Empty();
         source = Position.of(File.A, Rank.ONE);
     }
 
@@ -25,10 +29,9 @@ class RookTest {
     void canMove() {
         // given
         Position target = Position.of(File.E, Rank.ONE);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = rook.canMove(source, target, color);
+        boolean canMove = rook.canMove(source, target, empty);
 
         //then
         assertThat(canMove).isTrue();
@@ -39,10 +42,9 @@ class RookTest {
     void canNotMoveWithSameColor() {
         // given
         Position target = Position.of(File.E, Rank.ONE);
-        Color color = Color.WHITE;
 
         // when
-        boolean canMove = rook.canMove(source, target, color);
+        boolean canMove = rook.canMove(source, target, whitePiece);
 
         //then
         assertThat(canMove).isFalse();
@@ -53,10 +55,9 @@ class RookTest {
     void canNotMoveInvalidPath() {
         // given
         Position target = Position.of(File.B, Rank.TWO);
-        Color color = Color.NONE;
 
         // when
-        boolean canMove = rook.canMove(source, target, color);
+        boolean canMove = rook.canMove(source, target, empty);
 
         // then
         assertThat(canMove).isFalse();
