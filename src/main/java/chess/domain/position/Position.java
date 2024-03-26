@@ -82,6 +82,14 @@ public class Position {
     }
 
     @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
@@ -92,13 +100,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "file=" + file +
-                ", rank=" + rank +
-                '}';
     }
 }
