@@ -5,10 +5,10 @@ import java.util.List;
 
 public class PositionConverter {
 
-    public static List<Position> convert(final List<String> positions) {
+    public static MovePath convert(final List<String> positions) {
         String from = positions.get(0);
         String to = positions.get(1);
-        return List.of(convertPosition(from), convertPosition(to));
+        return new MovePath(convertPosition(from), convertPosition(to));
     }
 
     private static Position convertPosition(String position) {

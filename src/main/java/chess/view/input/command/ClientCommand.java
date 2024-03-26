@@ -1,6 +1,5 @@
 package chess.view.input.command;
 
-import chess.domain.Position;
 import java.util.List;
 
 public class ClientCommand {
@@ -16,10 +15,10 @@ public class ClientCommand {
         return command;
     }
 
-    public List<Position> getFromToPositions() {
+    public MovePath getMovePath() {
         if (command == GameCommand.MOVE) {
             return PositionConverter.convert(arguments);
         }
-        return List.of();
+        throw new IllegalArgumentException("해당 명령어는 이동 경로를 받을 수 없습니다.");
     }
 }
