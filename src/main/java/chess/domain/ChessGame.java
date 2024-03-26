@@ -53,7 +53,7 @@ public class ChessGame {
 
     private void validateMove(Position source, Position target) {
         if (notStarted()) {
-            throw new IllegalArgumentException("start가 입력되지 전에 move를 수행할 수 없습니다.");
+            throw new IllegalArgumentException("start가 입력되기 전에 move를 수행할 수 없습니다.");
         }
         if (source.equals(target)) {
             throw new IllegalArgumentException("source좌표와 target좌표가 같을 수 없습니다.");
@@ -80,7 +80,7 @@ public class ChessGame {
 
     private void validateStatus() {
         if (notStarted()) {
-            throw new IllegalArgumentException("start가 입력되지 전에 status를 수행할 수 없습니다.");
+            throw new IllegalArgumentException("start가 입력되기 전에 status를 수행할 수 없습니다.");
         }
     }
 

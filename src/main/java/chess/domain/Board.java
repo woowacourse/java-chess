@@ -27,10 +27,9 @@ public class Board {
     public boolean movePieceAndRenewBoard(Position source, Position target) {
         Piece piece = board.get(source);
         Piece movedPiece = movePiece(source, target, piece);
-        PieceInfo pieceInfo = movedPiece.getPieceInfo();
-        Position newPosition = pieceInfo.getPosition();
+        Position newPosition = movedPiece.getPosition();
 
-        if (source != newPosition) {
+        if (target == newPosition) {
             removedPiece.addPiece(board.get(newPosition));
         }
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));

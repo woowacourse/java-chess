@@ -31,9 +31,11 @@ public class ScoreCalculator {
 
     private static double scorePiece(Board board, Piece piece) {
         double basicScore = Score.getScoreByPieceType(piece.getType());
+
         if (piece.getType() == PieceType.PAWN) {
             basicScore = scorePawn(basicScore, board, piece);
         }
+
         return basicScore;
     }
 
@@ -41,6 +43,7 @@ public class ScoreCalculator {
         Position position = piece.getPosition();
         List<Position> otherPositions = position.getVerticalInternalPositions();
         List<Piece> otherPieces = board.getPiecesInVertical(otherPositions);
+
         if (piece.isSamePieceWithSameTeam(otherPieces)) {
             return basicScore / 2;
         }

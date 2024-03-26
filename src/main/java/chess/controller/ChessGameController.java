@@ -31,19 +31,24 @@ public class ChessGameController {
 
     private void playChess(ChessGame chessGame) {
         Command command = Command.of(InputView.inputCommand());
-        while(!command.isCommand(END)) {
-            boolean isEnd = playOneTurn(chessGame, command);
-            if (isEnd) {
-                break;
-            }
+        boolean isEnd = playOneTurn(chessGame, command);
+        while (!isEnd) {
             command = Command.of(InputView.inputCommand());
+            isEnd = playOneTurn(chessGame, command);
         }
     }
 
     private boolean playOneTurn(ChessGame chessGame, Command command) {
+        if (command.isCommand(END)) {
+            return true;
+        }
         if (command.isCommand(MOVE)) {
             return move(chessGame, command);
         }
+        return continueCommand(chessGame, command);
+    }
+
+    private boolean continueCommand(ChessGame chessGame, Command command) {
         if (command.isCommand(START)) {
             start(chessGame);
         }
@@ -61,11 +66,11 @@ public class ChessGameController {
     private boolean move(ChessGame chessGame, Command command) {
         Position source = Position.of(command.getSource());
         Position target = Position.of(command.getTarget());
-        Team turn = chessGame.getTurn();
         chessGame.move(source, target);
+
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (chessGame.isWin()) {
-            OutputView.printWinner(turn);
+            OutputView.printWinner(chessGame.getTurn());
             return true;
         }
         return false;
@@ -75,7 +80,11 @@ public class ChessGameController {
         List<Double> score = chessGame.status();
         double whiteScore = score.get(0);
         double blackScore = score.get(1);
-        Team winner = chessGame.findWinner(score.get(0), score.get(1));
+        Team winner = chessGame.findWinner(whiteScore, blackScore);
+        result(chessGame, winner, whiteScore, blackScore);
+    }
+
+    private void result(ChessGame chessGame, Team winner, double whiteScore, double blackScore) {
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (winner.equals(Team.NONE)) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);
