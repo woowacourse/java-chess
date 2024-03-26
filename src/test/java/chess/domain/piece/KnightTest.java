@@ -20,6 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class KnightTest {
+
     /*
      * * * * * * * * 8    * * * * * * * * 8
      * * * * * * * * 7    * * * * * * * * 7

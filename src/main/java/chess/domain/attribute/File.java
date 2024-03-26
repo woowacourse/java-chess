@@ -1,11 +1,7 @@
 package chess.domain.attribute;
 
-import static chess.domain.piece.PieceType.PAWN;
-
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 public enum File {
     A(1),
