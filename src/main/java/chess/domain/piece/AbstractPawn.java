@@ -51,7 +51,7 @@ public abstract class AbstractPawn extends UnslidingPiece {
     }
 
     protected Set<Position> attackablePositions(final Chessboard chessboard, final Set<Movement> movements) {
-        return possiblePositions(movements, (position) -> isAttackable(chessboard.squareIn(position)));
+        return possiblePositions(movements, position -> isAttackable(chessboard.squareIn(position)));
     }
 
     private Set<Position> possiblePositions(final Set<Movement> movements, final Predicate<Position> predicate) {
