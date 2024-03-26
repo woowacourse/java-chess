@@ -105,8 +105,9 @@ public class ChessBoard {
     }
 
     private void saveData() {
+        int gameId = gameInformation.getGameId();
         List<ChessGameComponentDto> dtos = chessBoard.entrySet().stream()
-                .map(entry -> new ChessGameComponentDto(entry.getKey(), entry.getValue())).toList();
+                .map(entry -> new ChessGameComponentDto(entry.getKey(), entry.getValue(), gameId)).toList();
         dtos.forEach(chessGameDao::save);
     }
 

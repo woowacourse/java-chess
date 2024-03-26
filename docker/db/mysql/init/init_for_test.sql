@@ -1,5 +1,6 @@
 USE chess;
 
+DROP TABLE IF EXISTS chessboard_for_test;
 DROP TABLE IF EXISTS game_information_for_test;
 
 CREATE TABLE IF NOT EXISTS game_information_for_test
@@ -9,50 +10,50 @@ CREATE TABLE IF NOT EXISTS game_information_for_test
     PRIMARY KEY (game_id)
 );
 
-INSERT INTO game_information_for_test (current_turn_color) VALUE ('WHITE');
-
-DROP TABLE IF EXISTS chessboard_for_test;
-
 CREATE TABLE IF NOT EXISTS chessboard_for_test
 (
-    id     int         NOT NULL AUTO_INCREMENT,
-    file   VARCHAR(64) NOT NULL,
-    `rank` int         NOT NULL,
-    type   VARCHAR(10) NOT NULL,
-    color  VARCHAR(5)  NOT NULL,
-    PRIMARY KEY (id)
+    id      int         NOT NULL AUTO_INCREMENT,
+    file    VARCHAR(64) NOT NULL,
+    `rank`  int         NOT NULL,
+    type    VARCHAR(10) NOT NULL,
+    color   VARCHAR(5)  NOT NULL,
+    game_id int         NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (game_id) REFERENCES game_information_for_test (game_id) ON DELETE CASCADE
 );
 
-INSERT INTO chessboard_for_test (file, `rank`, type, color)
-VALUES ('a', 1, 'ROOK', 'WHITE'),
-       ('b', 1, 'KNIGHT', 'WHITE'),
-       ('c', 1, 'BISHOP', 'WHITE'),
-       ('d', 1, 'QUEEN', 'WHITE'),
-       ('e', 1, 'KING', 'WHITE'),
-       ('f', 1, 'BISHOP', 'WHITE'),
-       ('g', 1, 'KNIGHT', 'WHITE'),
-       ('h', 1, 'ROOK', 'WHITE'),
-       ('a', 2, 'PAWN', 'WHITE'),
-       ('b', 2, 'PAWN', 'WHITE'),
-       ('c', 2, 'PAWN', 'WHITE'),
-       ('d', 2, 'PAWN', 'WHITE'),
-       ('e', 2, 'PAWN', 'WHITE'),
-       ('f', 2, 'PAWN', 'WHITE'),
-       ('g', 2, 'PAWN', 'WHITE'),
-       ('h', 2, 'PAWN', 'WHITE'),
-       ('a', 8, 'ROOK', 'BLACK'),
-       ('b', 8, 'KNIGHT', 'BLACK'),
-       ('c', 8, 'BISHOP', 'BLACK'),
-       ('d', 8, 'QUEEN', 'BLACK'),
-       ('e', 8, 'KING', 'BLACK'),
-       ('f', 8, 'BISHOP', 'BLACK'),
-       ('g', 8, 'KNIGHT', 'BLACK'),
-       ('h', 8, 'ROOK', 'BLACK'),
-       ('a', 7, 'PAWN', 'BLACK'),
-       ('b', 7, 'PAWN', 'BLACK'),
-       ('c', 7, 'PAWN', 'BLACK'),
-       ('d', 7, 'PAWN', 'BLACK'),
-       ('e', 7, 'PAWN', 'BLACK'),
-       ('f', 7, 'PAWN', 'BLACK'),
-       ('g', 7, 'PAWN', 'BLACK'),
-       ('h', 7, 'PAWN', 'BLACK');
+INSERT INTO game_information_for_test (current_turn_color) VALUE ('WHITE');
+
+INSERT INTO chessboard_for_test (file, `rank`, type, color, game_id)
+VALUES ('a', 1, 'ROOK', 'WHITE', 1),
+       ('b', 1, 'KNIGHT', 'WHITE', 1),
+       ('c', 1, 'BISHOP', 'WHITE', 1),
+       ('d', 1, 'QUEEN', 'WHITE', 1),
+       ('e', 1, 'KING', 'WHITE', 1),
+       ('g', 1, 'KNIGHT', 'WHITE', 1),
+       ('f', 1, 'BISHOP', 'WHITE', 1),
+       ('h', 1, 'ROOK', 'WHITE', 1),
+       ('a', 2, 'PAWN', 'WHITE', 1),
+       ('b', 2, 'PAWN', 'WHITE', 1),
+       ('c', 2, 'PAWN', 'WHITE', 1),
+       ('d', 2, 'PAWN', 'WHITE', 1),
+       ('e', 2, 'PAWN', 'WHITE', 1),
+       ('f', 2, 'PAWN', 'WHITE', 1),
+       ('g', 2, 'PAWN', 'WHITE', 1),
+       ('h', 2, 'PAWN', 'WHITE', 1),
+       ('a', 8, 'ROOK', 'BLACK', 1),
+       ('b', 8, 'KNIGHT', 'BLACK', 1),
+       ('c', 8, 'BISHOP', 'BLACK', 1),
+       ('d', 8, 'QUEEN', 'BLACK', 1),
+       ('e', 8, 'KING', 'BLACK', 1),
+       ('f', 8, 'BISHOP', 'BLACK', 1),
+       ('g', 8, 'KNIGHT', 'BLACK', 1),
+       ('h', 8, 'ROOK', 'BLACK', 1),
+       ('a', 7, 'PAWN', 'BLACK', 1),
+       ('b', 7, 'PAWN', 'BLACK', 1),
+       ('c', 7, 'PAWN', 'BLACK', 1),
+       ('d', 7, 'PAWN', 'BLACK', 1),
+       ('e', 7, 'PAWN', 'BLACK', 1),
+       ('f', 7, 'PAWN', 'BLACK', 1),
+       ('g', 7, 'PAWN', 'BLACK', 1),
+       ('h', 7, 'PAWN', 'BLACK', 1);

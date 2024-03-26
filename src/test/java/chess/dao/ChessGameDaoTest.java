@@ -49,7 +49,7 @@ class ChessGameDaoTest implements DaoTest {
     void save() {
         // given
         ChessGameComponentDto chessGameComponentDto = new ChessGameComponentDto(
-                Position.of(File.A, Rank.ONE), new Rook(Color.WHITE));
+                Position.of(File.A, Rank.ONE), new Rook(Color.WHITE), 1);
 
         // when
         chessGameDao.save(chessGameComponentDto);

@@ -46,8 +46,9 @@ public class ChessGameDao {
                 Rank rank = Rank.convertToRank(resultSet.getInt("rank"));
                 Type type = Type.convertToType(resultSet.getString("type"));
                 Color color = Color.convertToColor(resultSet.getString("color"));
+                int gameId = resultSet.getInt("game_id");
                 ChessGameComponentDto chessGameComponentDto
-                        = new ChessGameComponentDto(Position.of(file, rank), type.generatePiece(color));
+                        = new ChessGameComponentDto(Position.of(file, rank), type.generatePiece(color), gameId);
 
                 chessBoardComponents.add(chessGameComponentDto);
             }
@@ -83,11 +84,12 @@ public class ChessGameDao {
         String tableName = getTableName();
         try (final var connection = getConnection()) {
             final var statement = connection.prepareStatement(
-                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`)VALUES (?,?,?, ?)");
+                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`,`game_id`)VALUES (?,?,?,?,?)");
             statement.setString(1, chessGameComponentDto.position().getFileSymbol());
             statement.setInt(2, chessGameComponentDto.position().getRankValue());
             statement.setString(3, chessGameComponentDto.piece().identifyType());
             statement.setString(4, chessGameComponentDto.piece().getColor().name());
+            statement.setInt(5, chessGameComponentDto.gameId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
