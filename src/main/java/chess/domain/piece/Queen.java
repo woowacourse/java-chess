@@ -3,12 +3,11 @@ package chess.domain.piece;
 import chess.domain.attribute.Color;
 import chess.domain.attribute.Square;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Queen extends SlidingPiece {
+public class Queen extends MultiShift {
     public Queen(final Color color, final Square square) {
         super(color, PieceType.QUEEN, square);
     }

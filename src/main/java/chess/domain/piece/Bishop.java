@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Bishop extends SlidingPiece {
+public class Bishop extends MultiShift {
 
     public Bishop(final Color color, final Square square) {
         super(color, PieceType.BISHOP, square);

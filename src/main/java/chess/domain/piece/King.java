@@ -21,10 +21,8 @@ public class King extends Piece {
     }
 
     public void removeIfAllyExist(Piece other, Set<Square> candidateSquares) {
-        if (candidateSquares.contains(other.currentSquare())) {
-            if (isAllyOf(other)) {
-                candidateSquares.remove(other.currentSquare());
-            }
+        if (candidateSquares.contains(other.currentSquare()) && isAllyOf(other)) {
+            candidateSquares.remove(other.currentSquare());
         }
     }
 

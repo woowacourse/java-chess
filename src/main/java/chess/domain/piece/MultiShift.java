@@ -5,8 +5,8 @@ import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class SlidingPiece extends Piece {
-    protected SlidingPiece(Color color, PieceType pieceType, Square square) {
+public abstract class MultiShift extends Piece {
+    protected MultiShift(Color color, PieceType pieceType, Square square) {
         super(color, pieceType, square);
     }
 
