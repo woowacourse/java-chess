@@ -26,4 +26,21 @@ public class DBService {
     public TurnDto findCurrentTurn() {
         return turnsDao.find();
     }
+
+    public void saveGame(List<PieceDto> pieces, TurnDto turn) {
+        updatePieces(pieces);
+        updateTurns(turn);
+    }
+
+    private void updatePieces(List<PieceDto> pieces) {
+        piecesDao.deleteAll();
+        for (PieceDto piece : pieces) {
+            piecesDao.create(piece);
+        }
+    }
+
+    private void updateTurns(TurnDto turn) {
+        turnsDao.deleteAll();
+        turnsDao.create(turn);
+    }
 }
