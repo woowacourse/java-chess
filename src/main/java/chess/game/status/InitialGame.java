@@ -3,7 +3,7 @@ package chess.game.status;
 import chess.domain.board.Board;
 import chess.domain.board.BoardCreator;
 import chess.view.input.InputView;
-import chess.view.input.command.CommandObject;
+import chess.view.input.command.ClientCommand;
 import chess.view.input.command.GameCommand;
 import chess.view.output.OutputView;
 
@@ -22,11 +22,11 @@ public class InitialGame implements GameStatus {
 
     @Override
     public GameStatus play() {
-        return applyCommand(inputView.getCommandObject());
+        return applyCommand(inputView.getClientCommand());
     }
 
-    private GameStatus applyCommand(CommandObject commandObject) {
-        GameCommand gameCommand = commandObject.getCommand();
+    private GameStatus applyCommand(ClientCommand clientCommand) {
+        GameCommand gameCommand = clientCommand.getCommand();
         if (gameCommand == GameCommand.START) {
             Board board = BoardCreator.create();
             OutputView.printBoard(board);

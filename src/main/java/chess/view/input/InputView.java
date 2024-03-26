@@ -1,6 +1,6 @@
 package chess.view.input;
 
-import chess.view.input.command.CommandObject;
+import chess.view.input.command.ClientCommand;
 import chess.view.input.command.GameCommand;
 import java.util.List;
 import java.util.Scanner;
@@ -16,14 +16,14 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public CommandObject getCommandObject() {
+    public ClientCommand getClientCommand() {
         return parse(scanner.nextLine());
     }
 
-    private CommandObject parse(String input) {
+    private ClientCommand parse(String input) {
         validateCommand(input);
         List<String> parts = List.of(input.trim().split(" "));
-        return new CommandObject(GameCommand.getGameCommand(parts.get(0)), parseArguments(parts));
+        return new ClientCommand(GameCommand.getGameCommand(parts.get(0)), parseArguments(parts));
     }
 
     private void validateCommand(String input) {

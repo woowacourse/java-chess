@@ -3,7 +3,7 @@ package chess.game.status;
 import chess.domain.Position;
 import chess.domain.board.Board;
 import chess.view.input.InputView;
-import chess.view.input.command.CommandObject;
+import chess.view.input.command.ClientCommand;
 import chess.view.input.command.GameCommand;
 import chess.view.output.OutputView;
 import java.util.List;
@@ -25,16 +25,16 @@ public class MainGame implements GameStatus {
 
     @Override
     public GameStatus play() {
-        return applyCommand(inputView.getCommandObject());
+        return applyCommand(inputView.getClientCommand());
     }
 
-    private GameStatus applyCommand(CommandObject commandObject) {
-        GameCommand gameCommand = commandObject.getCommand();
+    private GameStatus applyCommand(ClientCommand clientCommand) {
+        GameCommand gameCommand = clientCommand.getCommand();
         if (gameCommand == GameCommand.START) {
             return new RestartGame(inputView);
         }
         if (gameCommand == GameCommand.MOVE) {
-            return movePiece(commandObject.getFromToPositions());
+            return movePiece(clientCommand.getFromToPositions());
         }
         if (gameCommand == GameCommand.END) {
             return new TerminateGame();
