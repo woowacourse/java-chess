@@ -1,6 +1,7 @@
 package view;
 
 import domain.game.PieceType;
+import domain.game.TeamColor;
 import domain.position.Position;
 import dto.BoardDto;
 
@@ -16,7 +17,11 @@ public class OutputView {
     private static final String RANK_DESCRIPTION_SEPARATOR = "|";
     private static final String PAD_CHAR = " ";
     private static final int PIECE_CHAR_PAD_SIZE = 1;
-    public static final String EMPTY_PIECE = ".";
+    private static final String EMPTY_PIECE = ".";
+    private static final Map<TeamColor, String> TEAM_NAME= Map.of(
+            TeamColor.WHITE, "흰색 팀",
+            TeamColor.BLACK, "검은색 팀"
+    );
     private static final String NEW_LINE = System.lineSeparator();
 
     public void printWelcomeMessage() {
@@ -71,5 +76,16 @@ public class OutputView {
 
     private String pad(String origin, int padSize) {
         return PAD_CHAR.repeat(padSize) + origin + PAD_CHAR.repeat(padSize);
+    }
+
+    public void printWinner(TeamColor winner) {
+        System.out.printf("우승자는 %s 입니다.%n", getTeamName(winner));
+    }
+
+    private String getTeamName(TeamColor teamColor) {
+        if (!TEAM_NAME.containsKey(teamColor)) {
+            throw new IllegalArgumentException("팀 정보가 존재하지 않습니다.");
+        }
+        return TEAM_NAME.get(teamColor);
     }
 }
