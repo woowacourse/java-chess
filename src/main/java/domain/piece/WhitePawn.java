@@ -5,46 +5,26 @@ import domain.coordinate.Position;
 import domain.direction.DiagonalDirection;
 import domain.direction.Direction;
 import domain.direction.StraightDirection;
-import domain.piece.base.ChessPieceBase;
+import domain.piece.base.PawnBase;
 
-public class WhitePawn extends ChessPieceBase {
+public class WhitePawn extends PawnBase {
 
-    private static final int INITIAL_ROW = 6;
+    private static final int WHITE_PAWN_INITIAL_ROW = 6;
 
     public WhitePawn() {
         super(Color.WHITE);
     }
 
     @Override
-    public Direction getDirection(Coordinate start, Coordinate destination) {
-        int rowDifference = start.calculateRowDifference(destination);
-        int columnDifference = start.calculateColumnDifference(destination);
-        boolean isInitialPawn = isInitialPawn(start);
-
-        return getWhitePawnDirection(rowDifference, columnDifference, isInitialPawn);
+    public boolean isInitialPawn(Coordinate start) {
+        return start.hasSameRowPosition(Position.of(WHITE_PAWN_INITIAL_ROW));
     }
 
-    private Direction getWhitePawnDirection(int rowDifference, int columnDifference, boolean isInitialPawn) {
-        if (rowDifference == -1 && Math.abs(columnDifference) == 1) {
-            return DiagonalDirection.getDirection(rowDifference, columnDifference);
+    @Override
+    public boolean canMove(Direction direction, int distance, boolean isInitialPawn) {
+        if (direction == StraightDirection.UP) {
+            return isMovableDistance(distance, isInitialPawn);
         }
-        if (canMoveUp(rowDifference, columnDifference, isInitialPawn)) {
-            return StraightDirection.UP;
-        }
-        throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-    }
-
-    private boolean canMoveUp(int rowDifference, int columnDifference, boolean isInitialPawn) {
-        if (columnDifference != 0) {
-            return false;
-        }
-        if (rowDifference == -2) {
-            return isInitialPawn;
-        }
-        return rowDifference == -1;
-    }
-
-    private boolean isInitialPawn(Coordinate start) {
-        return start.hasSameRowPosition(Position.of(INITIAL_ROW));
+        return direction == DiagonalDirection.UP_RIGHT || direction == DiagonalDirection.UP_LEFT;
     }
 }
