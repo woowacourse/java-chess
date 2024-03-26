@@ -9,6 +9,6 @@ public class InputView {
     private static final String COMMAND_DELIMITER = " ";
 
     public List<String> readCommand() {
-        return List.of(scanner.nextLine().split(COMMAND_DELIMITER));
+        return List.of(scanner.nextLine().trim().split(COMMAND_DELIMITER));
     }
 }

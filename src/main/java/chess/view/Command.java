@@ -4,21 +4,21 @@ import java.util.List;
 
 public record Command(CommandType type, List<String> arguments) {
 
-    private static final int REQUIRE_MOVE_ARGUMENTS_COUNT = 2;
-    private static final String ERROR_MOVE_ARGUMENTS_COUNT =
-            String.format("move 명령어는 인자가 %d개 필요합니다.", REQUIRE_MOVE_ARGUMENTS_COUNT);
+    private static final String ERROR_ARGUMENTS_COUNT_FORMAT = "%s 명령어는 인자가 %d개 필요합니다.";
 
     public Command {
-        validateMoveArgumentCount(type, arguments);
+        validateArgumentCount(type, arguments);
     }
 
     public static Command from(List<String> command) {
         return new Command(CommandType.from(command.get(0)), command);
     }
 
-    private void validateMoveArgumentCount(CommandType type, List<String> arguments) {
-        if (type == CommandType.MOVE && arguments.size() <= REQUIRE_MOVE_ARGUMENTS_COUNT) {
-            throw new IllegalArgumentException(ERROR_MOVE_ARGUMENTS_COUNT);
+    private void validateArgumentCount(CommandType type, List<String> arguments) {
+        int argumentCount = type.getArgumentCount();
+        if (arguments.size() - 1 != argumentCount) {
+            String commandName = arguments.get(0);
+            throw new IllegalArgumentException(ERROR_ARGUMENTS_COUNT_FORMAT.formatted(commandName, argumentCount));
         }
     }
 
