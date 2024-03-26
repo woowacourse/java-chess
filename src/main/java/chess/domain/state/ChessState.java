@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ChessState {
+    private static final int KING_TOTAL = 2;
+
     protected final Map<Position, Piece> board;
 
     protected ChessState(Map<Position, Piece> board) {
@@ -36,6 +38,12 @@ public abstract class ChessState {
         return !path.stream()
                 .map(board::get)
                 .allMatch(Piece::isBlank);
+    }
+
+    public final boolean isKingCaptured() {
+        return board.values().stream()
+                .filter(Piece::isKing)
+                .count() != KING_TOTAL;
     }
 
     public final Score calculateScore(Color color) {
