@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.dao.DaoTest;
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -16,8 +17,8 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ChessBoardTest {
-    @DisplayName("체스보드가 생성되면 32개의 말이 셋팅된다")
+public class ChessBoardTest extends DaoTest {
+    @DisplayName("체스보드가 생성되면 저장된 데이터를 가져온다.")
     @Test
     void initialBoard() {
         // when

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.dao.ChessGameDao;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -12,8 +13,10 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.vo.Score;
+import chess.dto.ChessGameComponentDto;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,12 +25,18 @@ public class ChessBoard {
     private static final int DOUBLE_PAWN = 2;
     private static final Score HALF_PAWN_SCORE = new Score(0.5);
 
+    private final ChessGameDao chessGameDao = new ChessGameDao();
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
     private Color currentTurnTeamColor;
 
     public ChessBoard() {
-        initializeBlackPieces();
-        initializeWhitePieces();
+        List<ChessGameComponentDto> searchedData = chessGameDao.findAll();
+        if (searchedData.isEmpty()) {
+            initializeBlackPieces();
+            initializeWhitePieces();
+            saveData();
+        }
+        bringChessBoard(searchedData);
         currentTurnTeamColor = Color.WHITE;
     }
 
@@ -71,6 +80,18 @@ public class ChessBoard {
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
+    }
+
+    private void bringChessBoard(List<ChessGameComponentDto> dtos) {
+        for (ChessGameComponentDto dto : dtos) {
+            chessBoard.put(dto.position(), dto.piece());
+        }
+    }
+
+    private void saveData() {
+        List<ChessGameComponentDto> dtos = chessBoard.entrySet().stream()
+                .map(entry -> new ChessGameComponentDto(entry.getKey(), entry.getValue())).toList();
+        dtos.forEach(chessGameDao::save);
     }
 
     private void validateTurn(Piece sourcePiece) {
