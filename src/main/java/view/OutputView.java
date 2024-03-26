@@ -1,13 +1,8 @@
 package view;
 
-import domain.coordinate.Coordinate;
-import domain.piece.base.ChessPiece;
-import java.util.Map;
-import view.util.PieceTranslator;
+import java.util.List;
 
 public class OutputView {
-
-    private static final int CHESS_BOARD_SIZE = 8;
 
     public void printGameGuide() {
         System.out.print("""
@@ -18,18 +13,12 @@ public class OutputView {
                 """);
     }
 
-    public void printBoard(Map<Coordinate, ChessPiece> board) {
-        for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
-            printRow(board, row);
-            System.out.println();
-        }
+    public void printBoard(List<List<String>> board) {
+        board.forEach(this::printRow);
     }
 
-    private void printRow(Map<Coordinate, ChessPiece> board, int row) {
-        for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
-            Coordinate coordinate = new Coordinate(row, column);
-            ChessPiece piece = board.get(coordinate);
-            System.out.print(PieceTranslator.getName(piece));
-        }
+    private void printRow(List<String> row) {
+        row.forEach(System.out::print);
+        System.out.println();
     }
 }
