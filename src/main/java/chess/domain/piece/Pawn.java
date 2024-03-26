@@ -3,6 +3,8 @@ package chess.domain.piece;
 import static chess.domain.piece.Type.PAWN;
 
 import chess.domain.position.Position;
+import chess.domain.position.Rank;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class Pawn implements Piece {
     private static final int STAY = 0;
     private static final int ONE_SQUARE = 1;
     private static final int TWO_SQUARES = 2;
+    public static final Rank WHITE_INITIAL_POSITION = Rank.TWO;
+    public static final Rank BLACK_INITIAL_POSITION = Rank.SEVEN;
 
     private final Color color;
 
@@ -65,7 +69,7 @@ public class Pawn implements Piece {
         if (color == Color.WHITE) {
             return false;
         }
-        if (source.isPawnFirstTry(this.color)) {
+        if (source.isRank(BLACK_INITIAL_POSITION)) {
             return (rankDiff == -ONE_SQUARE || rankDiff == -TWO_SQUARES) && (fileDiff == STAY);
         }
         return rankDiff == -ONE_SQUARE && fileDiff == STAY;
@@ -81,7 +85,7 @@ public class Pawn implements Piece {
         if (color == Color.BLACK) {
             return false;
         }
-        if (source.isPawnFirstTry(this.color)) {
+        if (source.isRank(WHITE_INITIAL_POSITION)) {
             return (rankDiff == ONE_SQUARE || rankDiff == TWO_SQUARES) && (fileDiff == STAY);
         }
         return rankDiff == ONE_SQUARE && fileDiff == STAY;

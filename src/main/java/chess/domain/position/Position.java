@@ -55,11 +55,8 @@ public class Position {
         return Position.of(movedFile, movedRank);
     }
 
-    public boolean isPawnFirstTry(Color color) {
-        if (color == Color.BLACK && rank == Rank.SEVEN) {
-            return true;
-        }
-        return color == Color.WHITE && rank == Rank.TWO;
+    public boolean isRank(Rank rank) {
+        return this.rank.equals(rank);
     }
 
     @Override
