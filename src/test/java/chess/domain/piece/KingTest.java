@@ -7,30 +7,19 @@ import static chess.domain.fixture.CoordinateFixture.E1;
 import static chess.domain.fixture.CoordinateFixture.E2;
 import static chess.domain.fixture.CoordinateFixture.E4;
 import static chess.domain.fixture.CoordinateFixture.E5;
-import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.WHITE_KING;
-import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
+import static chess.domain.piece.directionmove.Queen.WHITE_QUEEN;
+import static chess.domain.piece.directionmove.Rook.BLACK_ROOK;
+import static chess.domain.piece.fixedmove.King.WHITE_KING;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.fixedmove.King;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class KingTest {
-
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new King(Team.WHITE))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("킹은 가로, 세로 및 대각선으로도 1칸씩 움직일 수 있다.")
     @Test
     void findMovablePath() {
@@ -52,7 +41,7 @@ class KingTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(E2, EMPTY_PIECE);
+        boardInformation.put(E2, DummyPiece.getInstance());
 
         assertThat(WHITE_KING.canMove(E1, E2, boardInformation)).isTrue();
     }

@@ -9,17 +9,14 @@ import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.E6;
 import static chess.domain.fixture.CoordinateFixture.H8;
-import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
-import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
+import static chess.domain.piece.directionmove.Queen.WHITE_QUEEN;
+import static chess.domain.piece.directionmove.Rook.BLACK_ROOK;
+import static chess.domain.piece.fixedmove.Knight.BLACK_KNIGHT;
+import static chess.domain.piece.pawn.NormalWhitePawn.NORMAL_WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.directionmove.Queen;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,13 +24,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class QueenTest {
-
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Queen(Team.WHITE))
-                .doesNotThrowAnyException();
-    }
 
     @DisplayName("퀸은 대각과 가로, 세로로 제한없이 움직일 수 있다.")
     @Test
@@ -55,7 +45,7 @@ class QueenTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(H8, EMPTY_PIECE);
+        boardInformation.put(H8, DummyPiece.getInstance());
 
         assertThat(WHITE_QUEEN.canMove(A1, H8, boardInformation)).isTrue();
     }
@@ -82,9 +72,9 @@ class QueenTest {
     @Test
     void canMoveCaseStuck() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(B2, EMPTY_PIECE);
+        boardInformation.put(B2, DummyPiece.getInstance());
         boardInformation.put(C3, BLACK_KNIGHT);
-        boardInformation.put(D4, EMPTY_PIECE);
+        boardInformation.put(D4, DummyPiece.getInstance());
 
         assertThat(WHITE_QUEEN.canMove(A1, D4, boardInformation)).isFalse();
     }

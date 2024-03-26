@@ -1,5 +1,7 @@
 package chess.domain.piece.pawn;
 
+import static chess.domain.piece.pawn.NormalWhitePawn.NORMAL_WHITE_PAWN;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import java.util.Arrays;
@@ -9,7 +11,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class InitialWhitePawn extends Pawn {
-    public InitialWhitePawn() {
+    public static final Piece INITIAL_WHITE_PAWN = new InitialWhitePawn();
+
+    private InitialWhitePawn() {
         super(Team.WHITE);
     }
 
@@ -33,6 +37,6 @@ public class InitialWhitePawn extends Pawn {
 
     @Override
     public Piece updateAfterMove() {
-        return new NormalWhitePawn();
+        return NORMAL_WHITE_PAWN;
     }
 }

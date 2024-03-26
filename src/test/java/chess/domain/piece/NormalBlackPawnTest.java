@@ -7,30 +7,19 @@ import static chess.domain.fixture.CoordinateFixture.C5;
 import static chess.domain.fixture.CoordinateFixture.C6;
 import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.D5;
-import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.NORMAL_BLACK_PAWN;
-import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
+import static chess.domain.piece.directionmove.Bishop.WHITE_BISHOP;
+import static chess.domain.piece.fixedmove.Knight.BLACK_KNIGHT;
+import static chess.domain.piece.pawn.NormalBlackPawn.NORMAL_BLACK_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.pawn.NormalBlackPawn;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class NormalBlackPawnTest {
-
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(NormalBlackPawn::new)
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("일반 검은색 폰의 이동 가능한 모든 좌표를 계산한다.")
     @Test
     void legalNextCoordinatesBlackPawn() {
@@ -51,9 +40,9 @@ class NormalBlackPawnTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(B4, EMPTY_PIECE);
-        boardInformation.put(D4, EMPTY_PIECE);
-        boardInformation.put(C4, EMPTY_PIECE);
+        boardInformation.put(B4, DummyPiece.getInstance());
+        boardInformation.put(D4, DummyPiece.getInstance());
+        boardInformation.put(C4, DummyPiece.getInstance());
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isTrue();
     }
@@ -63,8 +52,8 @@ class NormalBlackPawnTest {
     void canMoveCaseTakeDown() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
         boardInformation.put(B4, WHITE_BISHOP);
-        boardInformation.put(D4, EMPTY_PIECE);
-        boardInformation.put(C4, EMPTY_PIECE);
+        boardInformation.put(D4, DummyPiece.getInstance());
+        boardInformation.put(C4, DummyPiece.getInstance());
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, B4, boardInformation)).isTrue();
     }
@@ -73,8 +62,8 @@ class NormalBlackPawnTest {
     @Test
     void canMoveCaseStuckCuzSameTeamPiece() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(B4, EMPTY_PIECE);
-        boardInformation.put(D4, EMPTY_PIECE);
+        boardInformation.put(B4, DummyPiece.getInstance());
+        boardInformation.put(D4, DummyPiece.getInstance());
         boardInformation.put(C4, BLACK_KNIGHT);
 
         assertThat(NORMAL_BLACK_PAWN.canMove(C5, C4, boardInformation)).isFalse();

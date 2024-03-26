@@ -12,16 +12,13 @@ import static chess.domain.fixture.CoordinateFixture.G4;
 import static chess.domain.fixture.CoordinateFixture.H1;
 import static chess.domain.fixture.CoordinateFixture.H4;
 import static chess.domain.fixture.CoordinateFixture.H8;
-import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.BLACK_ROOK;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.WHITE_ROOK;
+import static chess.domain.piece.directionmove.Rook.BLACK_ROOK;
+import static chess.domain.piece.directionmove.Rook.WHITE_ROOK;
+import static chess.domain.piece.fixedmove.Knight.BLACK_KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.directionmove.Rook;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,14 +26,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RookTest {
-
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Rook(Team.WHITE))
-                .doesNotThrowAnyException();
-    }
-
     @DisplayName("룩은 가로, 세로로 제한없이 움직일 수 있다.")
     @Test
     void findMovablePath() {
@@ -57,7 +46,7 @@ class RookTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(H1, EMPTY_PIECE);
+        boardInformation.put(H1, DummyPiece.getInstance());
 
         assertThat(WHITE_ROOK.canMove(A1, H1, boardInformation)).isTrue();
     }
@@ -84,9 +73,9 @@ class RookTest {
     @Test
     void canMoveCaseStuck() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(A2, EMPTY_PIECE);
+        boardInformation.put(A2, DummyPiece.getInstance());
         boardInformation.put(A3, BLACK_KNIGHT);
-        boardInformation.put(A4, EMPTY_PIECE);
+        boardInformation.put(A4, DummyPiece.getInstance());
 
         assertThat(WHITE_ROOK.canMove(A1, A4, boardInformation)).isFalse();
     }

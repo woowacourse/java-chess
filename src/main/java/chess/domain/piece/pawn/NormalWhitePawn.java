@@ -7,7 +7,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class NormalWhitePawn extends Pawn {
-    public NormalWhitePawn() {
+    public static final Piece NORMAL_WHITE_PAWN = new NormalWhitePawn();
+
+    private NormalWhitePawn() {
         super(Team.WHITE);
     }
 

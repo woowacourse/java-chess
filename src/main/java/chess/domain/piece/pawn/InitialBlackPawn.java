@@ -1,5 +1,7 @@
 package chess.domain.piece.pawn;
 
+import static chess.domain.piece.pawn.NormalBlackPawn.NORMAL_BLACK_PAWN;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import java.util.Arrays;
@@ -9,7 +11,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class InitialBlackPawn extends Pawn {
-    public InitialBlackPawn() {
+
+    public static final Piece INITIAL_BLACK_PAWN = new InitialBlackPawn();
+
+    private InitialBlackPawn() {
         super(Team.BLACK);
     }
 
@@ -33,6 +38,6 @@ public class InitialBlackPawn extends Pawn {
 
     @Override
     public Piece updateAfterMove() {
-        return new NormalBlackPawn();
+        return NORMAL_BLACK_PAWN;
     }
 }

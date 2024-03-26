@@ -9,17 +9,14 @@ import static chess.domain.fixture.CoordinateFixture.E5;
 import static chess.domain.fixture.CoordinateFixture.F6;
 import static chess.domain.fixture.CoordinateFixture.G7;
 import static chess.domain.fixture.CoordinateFixture.H8;
-import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.INITIAL_BLACK_PAWN;
-import static chess.domain.fixture.PieceFixture.NORMAL_WHITE_PAWN;
-import static chess.domain.fixture.PieceFixture.WHITE_BISHOP;
+import static chess.domain.piece.directionmove.Bishop.WHITE_BISHOP;
+import static chess.domain.piece.fixedmove.Knight.BLACK_KNIGHT;
+import static chess.domain.piece.pawn.InitialBlackPawn.INITIAL_BLACK_PAWN;
+import static chess.domain.piece.pawn.NormalWhitePawn.NORMAL_WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.directionmove.Bishop;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,12 +25,6 @@ import org.junit.jupiter.api.Test;
 
 class BishopTest {
 
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Bishop(Team.WHITE))
-                .doesNotThrowAnyException();
-    }
 
     @DisplayName("비숍은 대각으로 제한없이 움직일 수 있다.")
     @Test
@@ -56,7 +47,7 @@ class BishopTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(G7, EMPTY_PIECE);
+        boardInformation.put(G7, DummyPiece.getInstance());
 
         assertThat(WHITE_BISHOP.canMove(A1, G7, boardInformation)).isTrue();
     }
@@ -83,9 +74,9 @@ class BishopTest {
     @Test
     void canMoveCaseStuck() {
         HashMap<Coordinate, Piece> boardInformation = new LinkedHashMap<>();
-        boardInformation.put(B2, EMPTY_PIECE);
+        boardInformation.put(B2, DummyPiece.getInstance());
         boardInformation.put(C3, BLACK_KNIGHT);
-        boardInformation.put(D4, EMPTY_PIECE);
+        boardInformation.put(D4, DummyPiece.getInstance());
 
         assertThat(WHITE_BISHOP.canMove(A1, D4, boardInformation)).isFalse();
     }

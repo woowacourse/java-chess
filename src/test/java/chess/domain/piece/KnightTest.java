@@ -6,16 +6,13 @@ import static chess.domain.fixture.CoordinateFixture.C3;
 import static chess.domain.fixture.CoordinateFixture.D4;
 import static chess.domain.fixture.CoordinateFixture.F2;
 import static chess.domain.fixture.CoordinateFixture.F3;
-import static chess.domain.fixture.PieceFixture.BLACK_KNIGHT;
-import static chess.domain.fixture.PieceFixture.EMPTY_PIECE;
-import static chess.domain.fixture.PieceFixture.WHITE_KNIGHT;
-import static chess.domain.fixture.PieceFixture.WHITE_QUEEN;
+import static chess.domain.piece.directionmove.Queen.WHITE_QUEEN;
+import static chess.domain.piece.fixedmove.Knight.BLACK_KNIGHT;
+import static chess.domain.piece.fixedmove.Knight.WHITE_KNIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Coordinate;
-import chess.domain.piece.fixedmove.Knight;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +20,6 @@ import org.junit.jupiter.api.Test;
 
 class KnightTest {
 
-    @DisplayName("생성 테스트")
-    @Test
-    void create() {
-        assertThatCode(() -> new Knight(Team.WHITE))
-                .doesNotThrowAnyException();
-
-    }
 
     @DisplayName("나이트는 사방중 한 방향으로 한 칸, 그리고 그 방향의 양 대각선 방향 중 한 방향으로 움직이는 이동 패턴을 가지고 있다.")
     @Test
@@ -51,7 +41,7 @@ class KnightTest {
     @Test
     void canMove() {
         HashMap<Coordinate, Piece> boardInformation = new HashMap<>();
-        boardInformation.put(C3, EMPTY_PIECE);
+        boardInformation.put(C3, DummyPiece.getInstance());
 
         assertThat(WHITE_KNIGHT.canMove(B1, C3, boardInformation)).isTrue();
     }
