@@ -47,6 +47,7 @@ public class Pawn implements Piece {
         return checkWhite(source, target, piece);
     }
 
+
     @Override
     public List<Position> searchPath(Position source, Position target) {
         int rankDiff = source.calculateRankDifference(target);
@@ -63,10 +64,12 @@ public class Pawn implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
+        Color toggleColor = Color.toggleColor(color);
+
         if (rankDiff == -ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
-            return piece.isSameColor(Color.WHITE);
+            return piece.isSameColor(toggleColor);
         }
-        if (piece.isSameColor(Color.WHITE)) {
+        if (piece.isSameColor(toggleColor)) {
             return false;
         }
         if (source.isRank(BLACK_INITIAL_POSITION)) {
@@ -79,10 +82,12 @@ public class Pawn implements Piece {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
 
+        Color toggleColor = Color.toggleColor(color);
+
         if (rankDiff == ONE_SQUARE && Math.abs(fileDiff) == ONE_SQUARE) {
-            return piece.isSameColor(Color.BLACK);
+            return piece.isSameColor(toggleColor);
         }
-        if (piece.isSameColor(Color.BLACK)) {
+        if (piece.isSameColor(toggleColor)) {
             return false;
         }
         if (source.isRank(WHITE_INITIAL_POSITION)) {

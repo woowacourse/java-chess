@@ -45,11 +45,11 @@ public class Rook implements Piece {
     public List<Position> searchPath(Position source, Position target) {
         int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        List<Position> path = new ArrayList<>();
 
         if (Math.abs(rankDiff) > STAY) {
             int rankUnit = rankDiff / Math.abs(rankDiff);
 
-            List<Position> path = new ArrayList<>();
             for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
                 source = source.move(STAY, rankUnit);
                 path.add(source);
@@ -59,7 +59,6 @@ public class Rook implements Piece {
 
         int fileUnit = fileDiff / Math.abs(fileDiff);
 
-        List<Position> path = new ArrayList<>();
         for (int i = Math.abs(fileDiff); i != ONE_SQUARE; i--) {
             source = source.move(fileUnit, STAY);
             path.add(source);
