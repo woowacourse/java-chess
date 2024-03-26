@@ -6,6 +6,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class DummyPiece implements Piece {
+
+    private static final Piece INSTANCE = new DummyPiece();
+
+    private DummyPiece() {
+    }
+
+    public static Piece getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public List<Coordinate> legalNextCoordinates(final Coordinate now, final Coordinate destination) {
         throw new NoSuchElementException("보드에 움직일 대상 기물이 없습니다.");

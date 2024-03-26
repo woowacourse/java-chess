@@ -32,5 +32,5 @@ public class PieceFixture {
     public static final Piece NORMAL_BLACK_PAWN = new NormalBlackPawn();
     public static final Piece INITIAL_BLACK_PAWN = new InitialBlackPawn();
 
-    public static final Piece EMPTY_PIECE = new DummyPiece();
+    public static final Piece EMPTY_PIECE = DummyPiece.getInstance();
 }

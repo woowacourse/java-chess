@@ -39,7 +39,7 @@ public class Board {
     private void swap(final Coordinate source, final Coordinate target) {
         Piece sourcePiece = pieces.get(source);
         pieces.put(target, sourcePiece.updateAfterMove());
-        pieces.put(source, new DummyPiece());
+        pieces.put(source, DummyPiece.getInstance());
     }
 
     private Map<Coordinate, Piece> makeBoardInformation(final List<Coordinate> coordinates) {

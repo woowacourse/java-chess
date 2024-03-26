@@ -37,7 +37,7 @@ public class BoardFactory {
 
     static Map<Coordinate, Piece> initialEmpty() {
         Map<Coordinate, Piece> emptyBoard = new HashMap<>();
-        COORDINATE_POOL.values().forEach(coordinate -> emptyBoard.put(coordinate, new DummyPiece()));
+        COORDINATE_POOL.values().forEach(coordinate -> emptyBoard.put(coordinate, DummyPiece.getInstance()));
         return emptyBoard;
     }
 
