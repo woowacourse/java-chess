@@ -28,10 +28,6 @@ public class Route {
         return new Route(positions);
     }
 
-    public static Route empty() {
-        return new Route(Set.of());
-    }
-
     private static boolean isRemain(int offset) {
         return Math.abs(offset) > REMAIN_THRESHOLD;
     }
@@ -50,6 +46,10 @@ public class Route {
         Column sourceColumn = source.getColumn();
         Row sourceRow = source.getRow();
         return new Position(sourceColumn.add(columnOffset), sourceRow.add(rowOffset));
+    }
+
+    public static Route empty() {
+        return new Route(Set.of());
     }
 
     public boolean isBlocked(Map<Position, Piece> pieces) {
