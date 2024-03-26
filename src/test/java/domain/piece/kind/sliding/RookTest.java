@@ -16,11 +16,9 @@ import static domain.piece.attribute.point.Rank.ONE;
 import static domain.piece.attribute.point.Rank.SEVEN;
 import static domain.piece.attribute.point.Rank.SIX;
 import static domain.piece.attribute.point.Rank.THREE;
-import static domain.piece.attribute.point.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.Pieces;
-import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;

@@ -1,11 +1,11 @@
 package domain.piece.kind.sliding;
 
-import static domain.piece.attribute.point.TempDirection.*;
+import static domain.piece.attribute.point.Movement.*;
 
 import domain.piece.Piece;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.TempDirection;
+import domain.piece.attribute.point.Movement;
 import domain.piece.kind.PieceStatus;
 import java.util.Set;
 
@@ -20,7 +20,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    protected Set<TempDirection> getMovableDirection() {
+    protected Set<Movement> getMovableDirection() {
         return Set.of(UP, DOWN, RIGHT, LEFT, LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN);
     }
 

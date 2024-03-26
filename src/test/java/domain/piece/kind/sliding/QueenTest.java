@@ -5,7 +5,6 @@ import domain.piece.attribute.Color;
 import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
-import domain.piece.kind.sliding.Queen;
 import fixture.PieceImpl;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

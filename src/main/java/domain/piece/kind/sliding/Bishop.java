@@ -4,14 +4,14 @@ import domain.piece.Piece;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
 
-import domain.piece.attribute.point.TempDirection;
+import domain.piece.attribute.point.Movement;
 import domain.piece.kind.PieceStatus;
 import java.util.Set;
 
-import static domain.piece.attribute.point.TempDirection.LEFT_DOWN;
-import static domain.piece.attribute.point.TempDirection.LEFT_UP;
-import static domain.piece.attribute.point.TempDirection.RIGHT_DOWN;
-import static domain.piece.attribute.point.TempDirection.RIGHT_UP;
+import static domain.piece.attribute.point.Movement.LEFT_DOWN;
+import static domain.piece.attribute.point.Movement.LEFT_UP;
+import static domain.piece.attribute.point.Movement.RIGHT_DOWN;
+import static domain.piece.attribute.point.Movement.RIGHT_UP;
 
 
 public class Bishop extends SlidingPiece {
@@ -20,7 +20,7 @@ public class Bishop extends SlidingPiece {
     }
 
     @Override
-    protected Set<TempDirection> getMovableDirection() {
+    protected Set<Movement> getMovableDirection() {
         return Set.of(LEFT_UP, RIGHT_UP, LEFT_DOWN, RIGHT_DOWN);
     }
 

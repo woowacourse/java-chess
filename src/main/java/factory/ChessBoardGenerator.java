@@ -9,6 +9,8 @@ import domain.piece.attribute.point.Point;
 import domain.piece.attribute.point.Rank;
 import domain.piece.kind.*;
 
+import domain.piece.kind.jumping.King;
+import domain.piece.kind.jumping.Knight;
 import domain.piece.kind.sliding.Bishop;
 import domain.piece.kind.sliding.Queen;
 import domain.piece.kind.sliding.Rook;

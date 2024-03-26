@@ -56,7 +56,12 @@ public class Pieces {
 
     public boolean isFriend(Piece piece, Point point) {
         final var optionalPiece = findPieceWithPoint(point);
-        return optionalPiece.filter(piece::sameColor).isPresent();
+        return optionalPiece.filter(piece::isSameColor).isPresent();
+    }
+
+    public boolean isOpposite(Piece piece, Point point) {
+        final var optionalPiece = findPieceWithPoint(point);
+        return optionalPiece.filter(piece::isOpposite).isPresent();
     }
 
     private boolean hasAnyPiece(Point startPoint, Point endPoint) {

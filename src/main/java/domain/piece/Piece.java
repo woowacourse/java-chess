@@ -42,8 +42,12 @@ public abstract class Piece implements Movable {
         return this.point.equals(point);
     }
 
-    public boolean sameColor(final Piece piece) {
+    public boolean isSameColor(final Piece piece) {
         return this.color == piece.color;
+    }
+
+    public boolean isOpposite(final Piece piece) {
+        return this.color != piece.color;
     }
 
     public boolean isBlack() {
@@ -63,7 +67,6 @@ public abstract class Piece implements Movable {
         return this.point.calculate(point)
                          .isDiagonal();
     }
-
 
     public Point getPoint() {
         return this.point;

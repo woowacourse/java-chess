@@ -1,6 +1,8 @@
 package domain.piece;
 
 import domain.piece.kind.*;
+import domain.piece.kind.jumping.King;
+import domain.piece.kind.jumping.Knight;
 import domain.piece.kind.sliding.Bishop;
 import domain.piece.kind.sliding.Queen;
 import domain.piece.kind.sliding.Rook;
@@ -91,34 +93,6 @@ class PiecesTest {
                              .get();
 
         final var result = sut.check(piece, new Point(File.A, Rank.THREE));
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("나이트는 도착하는 위치에 적 기물이 있으면 참을 반환한다.")
-    void true_if_knight_piece_move_not_existed_enemy_point() {
-        final var sut = new Pieces(List.of(
-                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Queen(new Point(File.C, Rank.TWO), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.C, Rank.TWO));
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("나이트는 도착하는 위치에 기물이 없으면 참을 반환한다.")
-    void true_if_knight_piece_move_not_existed_empty_point() {
-        final var sut = new Pieces(List.of(
-                new Knight(new Point(File.A, Rank.ONE), Color.BLACK),
-                new Queen(new Point(File.C, Rank.TWO), Color.WHITE)));
-
-        final var piece = sut.findPieceWithPoint(new Point(File.A, Rank.ONE))
-                             .get();
-
-        final var result = sut.check(piece, new Point(File.B, Rank.THREE));
         assertThat(result).isTrue();
     }
 

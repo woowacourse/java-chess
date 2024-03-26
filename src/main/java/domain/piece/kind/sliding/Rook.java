@@ -4,14 +4,14 @@ import domain.piece.Piece;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
 
-import domain.piece.attribute.point.TempDirection;
+import domain.piece.attribute.point.Movement;
 import domain.piece.kind.PieceStatus;
 import java.util.Set;
 
-import static domain.piece.attribute.point.TempDirection.DOWN;
-import static domain.piece.attribute.point.TempDirection.LEFT;
-import static domain.piece.attribute.point.TempDirection.RIGHT;
-import static domain.piece.attribute.point.TempDirection.UP;
+import static domain.piece.attribute.point.Movement.DOWN;
+import static domain.piece.attribute.point.Movement.LEFT;
+import static domain.piece.attribute.point.Movement.RIGHT;
+import static domain.piece.attribute.point.Movement.UP;
 
 public class Rook extends SlidingPiece {
 
@@ -25,7 +25,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    protected Set<TempDirection> getMovableDirection() {
+    protected Set<Movement> getMovableDirection() {
         return Set.of(UP, DOWN, RIGHT, LEFT);
     }
 

@@ -4,7 +4,7 @@ import domain.piece.Piece;
 import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.TempDirection;
+import domain.piece.attribute.point.Movement;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,16 +21,16 @@ public abstract class SlidingPiece extends Piece {
                 .collect(Collectors.toSet());
     }
 
-    protected abstract Set<TempDirection> getMovableDirection();
+    protected abstract Set<Movement> getMovableDirection();
 
-    private Set<Point> findLegalMovePointByDirection(Pieces pieces, TempDirection direction) {
+    private Set<Point> findLegalMovePointByDirection(Pieces pieces, Movement direction) {
         final var legalMovePoints = new HashSet<>(findEmptyPoints(pieces, direction));
         legalMovePoints.add(findExistPoint(pieces, direction));
 
         return removeSameTeam(pieces, legalMovePoints);
     }
 
-    private Set<Point> findEmptyPoints(Pieces pieces, TempDirection direction) {
+    private Set<Point> findEmptyPoints(Pieces pieces, Movement direction) {
         return Stream.iterate(point, point -> point.canMove(direction), point -> point.move(direction))
                 .filter(point -> point.canMove(direction))
                 .map(point -> point.move(direction))
@@ -38,7 +38,7 @@ public abstract class SlidingPiece extends Piece {
                 .collect(Collectors.toSet());
     }
 
-    private Point findExistPoint(Pieces pieces, TempDirection direction) {
+    private Point findExistPoint(Pieces pieces, Movement direction) {
         return Stream.iterate(point, point -> point.canMove(direction), point -> point.move(direction))
                 .filter(point -> !point.equals(this.point))
                 .filter(pieces::hasPiece)
@@ -46,7 +46,7 @@ public abstract class SlidingPiece extends Piece {
                 .orElse(findEndPoint(direction));
     }
 
-    private Point findEndPoint(TempDirection direction) {
+    private Point findEndPoint(Movement direction) {
         var currentPosition = point;
         while (currentPosition.canMove(direction)) {
             currentPosition = currentPosition.move(direction);
