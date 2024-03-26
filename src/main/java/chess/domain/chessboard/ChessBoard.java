@@ -26,7 +26,7 @@ public class ChessBoard {
             piece.getMovingRoute(source, target)
                     .forEach(this::checkObstacle);
         }
-        if(piece.isTeam(targetPiece)) {
+        if(!piece.isTeam(targetPiece)) {
             piece.getAttackRoute(source, target)
                     .forEach(this::checkObstacle);
         }
