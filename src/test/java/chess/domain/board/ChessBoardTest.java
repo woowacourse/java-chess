@@ -14,25 +14,39 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.vo.Score;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest implements DaoTest {
+    ChessBoard chessBoard;
+
+    @BeforeEach
+    void setUpChessBoard() {
+        chessBoard = new ChessBoard(1);
+    }
+
     @DisplayName("체스보드가 생성되면 저장된 데이터를 가져온다.")
     @Test
     void initialBoard() {
-        // when
-        ChessBoard chessBoard = new ChessBoard();
-
         // then
         assertThat(chessBoard.getChessBoard()).hasSize(32);
+    }
+
+    @DisplayName("체스보드가 새롭게 생성되면 게임번호가 증가한다.")
+    @Test
+    void createNewGame() {
+        // when
+        ChessBoard createdChessBoard = new ChessBoard(0);
+
+        // then
+        assertThat(createdChessBoard.getGameInformation().getGameId()).isEqualTo(2);
     }
 
     @DisplayName("게임이 시작되면 White팀부터 게임을 시작한다")
     @Test
     void validateTurn() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         Position blackSource = Position.of(File.B, Rank.SEVEN);
         Position blackTarget = Position.of(File.B, Rank.SIX);
 
@@ -45,8 +59,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     public void move() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
-
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.THREE);
 
@@ -67,8 +79,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     void moveInvalidTarget() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
-
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.EIGHT);
 
@@ -81,8 +91,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     void moveInvalidSource() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
-
         Position source = Position.of(File.B, Rank.THREE);
         Position target = Position.of(File.B, Rank.FOUR);
 
@@ -95,7 +103,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     void isKingCaptured() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         Position blackKingPosition = Position.of(File.E, Rank.EIGHT);
         chessBoard.getChessBoard().remove(blackKingPosition);
 
@@ -110,7 +117,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     void findWinnerByKing() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         Position blackKingPosition = Position.of(File.E, Rank.EIGHT);
         chessBoard.getChessBoard().remove(blackKingPosition);
 
@@ -124,9 +130,6 @@ class ChessBoardTest implements DaoTest {
     @DisplayName("점수를 계산한다")
     @Test
     void calculateScore() {
-        // given
-        ChessBoard chessBoard = new ChessBoard();
-
         // when
         Score score = chessBoard.calculateScore(Color.BLACK);
 
@@ -146,7 +149,6 @@ class ChessBoardTest implements DaoTest {
     @Test
     void calculatePawnScore() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.getChessBoard().remove(Position.of(File.B, Rank.SEVEN));
         chessBoard.getChessBoard().remove(Position.of(File.C, Rank.SEVEN));
         chessBoard.getChessBoard().put(Position.of(File.A, Rank.SIX), new Pawn(Color.BLACK));

@@ -11,7 +11,15 @@ public class GameInformation {
         this.curentTurnColor = curentTurnColor;
     }
 
+    public int getGameId() {
+        return gameId;
+    }
+
     public Color getCurentTurnColor() {
         return curentTurnColor;
+    }
+
+    public void convertTurn() {
+        curentTurnColor.convertTurn();
     }
 }

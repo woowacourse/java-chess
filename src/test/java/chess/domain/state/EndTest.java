@@ -3,18 +3,27 @@ package chess.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.dao.DaoTest;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EndTest {
+class EndTest implements DaoTest {
+    private ChessBoard chessBoard;
+
+    @BeforeEach
+    void setUpChessBoard() {
+        chessBoard = new ChessBoard(1);
+    }
+
     @DisplayName("End는 command로 \"start\"를 받으면 예외가 발생한다.")
     @Test
     void playWithCommandStart() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("start")))
@@ -25,7 +34,7 @@ class EndTest {
     @Test
     void playWithCommandMove() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("move", "b1", "b2")))
@@ -36,7 +45,7 @@ class EndTest {
     @Test
     void playWithCommandEnd() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("end")))
@@ -47,7 +56,7 @@ class EndTest {
     @Test
     void playWithCommandInvalidValue() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> end.play(List.of("ash", "ella")))
@@ -58,7 +67,7 @@ class EndTest {
     @Test
     void isEnd() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when
         boolean result = end.isEnd();
@@ -71,7 +80,7 @@ class EndTest {
     @Test
     void calculateScore() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> end.calculateScore(Color.BLACK)).isInstanceOf(UnsupportedOperationException.class);
@@ -81,7 +90,7 @@ class EndTest {
     @Test
     void getWinnerColor() {
         // given
-        End end = new End(new ChessBoard());
+        End end = new End(chessBoard);
 
         // when, then
         assertThatThrownBy(end::getWinnerColor).isInstanceOf(UnsupportedOperationException.class);

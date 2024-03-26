@@ -11,17 +11,25 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class ProgressTest implements DaoTest {
+    ChessBoard chessBoard;
+
+    @BeforeEach
+    void setUpChessBoard() {
+        chessBoard = new ChessBoard(1);
+    }
+
     @DisplayName("Progress는 command로 \"start\"를 받으면 예외가 발생한다.")
     @Test
     void playWithCommandStart() {
         // given
-        Progress progress = new Progress(new ChessBoard());
+        Progress progress = new Progress(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> progress.play(List.of("start")))
@@ -32,7 +40,6 @@ class ProgressTest implements DaoTest {
     @Test
     void playWithCommandMove() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         Progress progress = new Progress(chessBoard);
 
         // when
@@ -46,7 +53,7 @@ class ProgressTest implements DaoTest {
     @Test
     void playWithCommandEnd() {
         // given
-        Progress progress = new Progress(new ChessBoard());
+        Progress progress = new Progress(chessBoard);
 
         // when
         GameState result = progress.play(List.of("end"));
@@ -66,7 +73,6 @@ class ProgressTest implements DaoTest {
     @Test
     void playWithKingCaptured() {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.getChessBoard().put(Position.of(File.D, Rank.SIX), new Knight(Color.WHITE));
         Progress progress = new Progress(chessBoard);
 
@@ -82,7 +88,6 @@ class ProgressTest implements DaoTest {
     @CsvSource(value = {"ONE,BLACK", "EIGHT,WHITE", "FIVE,NONE"})
     void getWinnerColor(Rank removeRank, Color expectedWinnerColor) {
         // given
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.getChessBoard().remove(Position.of(File.B, removeRank));
         Progress progress = new Progress(chessBoard);
 
@@ -97,7 +102,7 @@ class ProgressTest implements DaoTest {
     @Test
     void playWithCommandInvalidValue() {
         // given
-        Progress progress = new Progress(new ChessBoard());
+        Progress progress = new Progress(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> progress.play(List.of("ash", "ella")))
@@ -108,7 +113,7 @@ class ProgressTest implements DaoTest {
     @Test
     void isEnd() {
         // given
-        Progress progress = new Progress(new ChessBoard());
+        Progress progress = new Progress(chessBoard);
 
         // when
         boolean result = progress.isEnd();

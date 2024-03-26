@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.dao.ChessGameDao;
+import chess.dao.GameInformationDao;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
@@ -26,10 +27,11 @@ public class ChessBoard {
     private static final Score HALF_PAWN_SCORE = new Score(0.5);
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
+    private final GameInformationDao gameInformationDao = new GameInformationDao();
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-    private Color currentTurnTeamColor;
+    private GameInformation gameInformation;
 
-    public ChessBoard() {
+    public ChessBoard(int gameId) {
         List<ChessGameComponentDto> searchedData = chessGameDao.findAll();
         if (searchedData.isEmpty()) {
             initializeBlackPieces();
@@ -37,7 +39,7 @@ public class ChessBoard {
             saveData();
         }
         bringChessBoard(searchedData);
-        currentTurnTeamColor = Color.WHITE;
+        this.gameInformation = bringGameInformation(gameId);
     }
 
     public void move(Position source, Position target) {
@@ -82,10 +84,24 @@ public class ChessBoard {
         return chessBoard;
     }
 
+    public GameInformation getGameInformation() {
+        return gameInformation;
+    }
+
     private void bringChessBoard(List<ChessGameComponentDto> dtos) {
         for (ChessGameComponentDto dto : dtos) {
             chessBoard.put(dto.position(), dto.piece());
         }
+    }
+
+    private GameInformation bringGameInformation(int gameId) {
+        GameInformation searchedGameInformation = gameInformationDao.findByGameId(gameId);
+        if (gameId == 0) {
+            gameInformationDao.create();
+            int generatedGameId = gameInformationDao.findAll().size();
+            return new GameInformation(generatedGameId, Color.WHITE);
+        }
+        return searchedGameInformation;
     }
 
     private void saveData() {
@@ -95,7 +111,7 @@ public class ChessBoard {
     }
 
     private void validateTurn(Piece sourcePiece) {
-        if (!sourcePiece.isSameColor(currentTurnTeamColor)) {
+        if (!sourcePiece.isSameColor(gameInformation.getCurentTurnColor())) {
             throw new IllegalArgumentException("해당 팀의 턴이 아닙니다.");
         }
     }
@@ -114,10 +130,11 @@ public class ChessBoard {
     private void updateChessBoard(Position source, Position target, Piece sourcePiece) {
         chessBoard.put(target, sourcePiece);
         chessBoard.remove(source);
-        currentTurnTeamColor = currentTurnTeamColor.convertTurn();
+        gameInformation.convertTurn();
 
         chessGameDao.remove(target);
         chessGameDao.update(source, target);
+        gameInformationDao.updateTurn(gameInformation);
     }
 
     private double getVerticalPawnCount(File file, Color color) {
