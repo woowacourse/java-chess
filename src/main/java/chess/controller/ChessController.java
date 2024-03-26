@@ -1,6 +1,9 @@
 package chess.controller;
 
+import static chess.domain.piece.Color.WHITE;
+
 import chess.domain.ChessBoard;
+import chess.domain.Turn;
 import chess.util.ChessBoardInitializer;
 import chess.domain.Command;
 import chess.domain.position.Position;
@@ -19,33 +22,35 @@ public class ChessController {
     }
 
     public void runChess() {
-        final Command command = Command.from(inputView.readInitCommand());
+        final Turn turn = new Turn(WHITE);
+        final Command initCommand = Command.from(inputView.readInitCommand());
 
-        if (!command.isStartCommand()) {
+        if (!initCommand.isStart()) {
             return;
         }
 
         final ChessBoard chessBoard = ChessBoardInitializer.init();
         outputView.printChessBoard(chessBoard.getPieces());
 
-        List<String> positions = inputView.readMoveCommand();
+        List<String> command = inputView.readMoveCommand();
 
-        while (isNotEndCommand(positions)) {
-            playTurn(chessBoard, positions);
+        while (isNotEndCommand(command)) {
+            playTurn(command, turn, chessBoard);
 
-            positions = inputView.readMoveCommand();
+            command = inputView.readMoveCommand();
         }
     }
 
-    private boolean isNotEndCommand(final List<String> validInputPositions) {
-        return !validInputPositions.isEmpty();
+    private boolean isNotEndCommand(final List<String> command) {
+        return !command.isEmpty();
     }
 
-    private void playTurn(final ChessBoard chessBoard, final List<String> positions) {
-        final Position current = new Position(positions.get(0));
-        final Position destination = new Position(positions.get(1));
+    private void playTurn(final List<String> command, final Turn turn, final ChessBoard chessBoard) {
+        final Position current = new Position(command.get(0));
+        final Position destination = new Position(command.get(1));
 
-        chessBoard.move(current, destination);
+        chessBoard.move(turn, current, destination);
+        turn.change();
         outputView.printChessBoard(chessBoard.getPieces());
     }
 }

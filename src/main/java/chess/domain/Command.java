@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum Command {
 
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String message;
 
@@ -21,7 +22,7 @@ public enum Command {
                         String.format("[ERROR] 입력은 %s, %s로 해야 합니다.", START.message, END.message)));
     }
 
-    public boolean isStartCommand() {
+    public boolean isStart() {
         return this.equals(Command.START);
     }
 

@@ -64,4 +64,8 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color);
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -15,13 +15,20 @@ public class ChessBoard {
         this.pieces = pieces;
     }
 
-    public void move(final Position current, final Position destination) {
+    public void move(final Turn turn, final Position current, final Position destination) {
         final Piece currentPiece = findPieceBy(current);
 
+        validateTurn(turn, currentPiece);
         validateStrategy(currentPiece, current, destination);
         validatePieceInRoute(getRoute(currentPiece, current, destination));
 
         movePiece(currentPiece, current, destination);
+    }
+
+    private void validateTurn(final Turn turn, final Piece currentPiece) {
+        if (!turn.myTurn(currentPiece)) {
+            throw new IllegalArgumentException(String.format("[ERROR] 현재는 %s 의 차례입니다.", turn.getTurn()));
+        }
     }
 
     public Piece findPieceBy(final Position position) {
@@ -32,7 +39,7 @@ public class ChessBoard {
         throw new IllegalArgumentException("[ERROR] 해당 위치에 기물이 존재하지 않습니다.");
     }
 
-    public Set<Position> getRoute(final Piece currentPiece, final Position current, final Position destination) {
+    private Set<Position> getRoute(final Piece currentPiece, final Position current, final Position destination) {
         final Movement movement = new Movement(current, destination);
 
         if (isPieceExist(destination)) {
