@@ -68,6 +68,18 @@ public class GameInformationDao {
         return null;
     }
 
+    public void updateTurn(int gameId, Color color) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE " + getTableName() + " SET current_turn_color = ? WHERE game_id = ?");
+            statement.setString(1, color.name());
+            statement.setInt(2, gameId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String getTableName() {
         if (isTestEnvironment()) {
             return TEST_TABLE_NAME;

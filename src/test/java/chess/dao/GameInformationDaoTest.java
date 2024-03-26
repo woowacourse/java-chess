@@ -39,4 +39,19 @@ class GameInformationDaoTest implements DaoTest {
         // then
         assertThat(gameInformation.getCurentTurnColor()).isEqualTo(Color.WHITE);
     }
+
+    @DisplayName("현재 진행중인 팀의 색상을 전환한다.")
+    @Test
+    void updateTurn() {
+        // given
+        int gameId = 1;
+        Color convertedColor = Color.BLACK;
+
+        // when
+        gameInformationDao.updateTurn(gameId, convertedColor);
+        GameInformation gameInformation = gameInformationDao.findByGameId(gameId);
+
+        // then
+        assertThat(gameInformation.getCurentTurnColor()).isEqualTo(Color.BLACK);
+    }
 }
