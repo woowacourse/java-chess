@@ -21,7 +21,7 @@ public class ChessGame implements Executable {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard.getPieceByPosition();
+        return chessBoard.getPiecesPosition();
     }
 
     @Override
