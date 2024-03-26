@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class Square {
     private static final String ERROR_INVALID_PATTERN = "문자 1개 숫자 1개를 붙인 위치형식으로 입력해 주세요.";
-    private static final String PATTERN = "^[a-z][0-9]$";
-    private static final Map<String, Square> cache = new HashMap<>();
+    private static final String FILE_AND_RANK_PATTERN = "^[a-z][0-9]$";
+    private static final Map<String, Square> CACHE = new HashMap<>();
 
     private final File file;
     private final Rank rank;
@@ -20,7 +20,7 @@ public class Square {
 
     public static Square from(final String square) {
         validatePattern(square);
-        return cache.computeIfAbsent(square, s -> {
+        return CACHE.computeIfAbsent(square, s -> {
             File file = File.from(s.charAt(0));
             Rank rank = Rank.from(s.charAt(1));
             return new Square(file, rank);
@@ -29,11 +29,11 @@ public class Square {
 
     public static Square of(final File file, final Rank rank) {
         String squareKey = generateSquareKey(file, rank);
-        return cache.computeIfAbsent(squareKey, k -> new Square(file, rank));
+        return CACHE.computeIfAbsent(squareKey, k -> new Square(file, rank));
     }
 
     private static void validatePattern(final String square) {
-        if (!square.matches(PATTERN)) {
+        if (!square.matches(FILE_AND_RANK_PATTERN)) {
             throw new IllegalArgumentException(ERROR_INVALID_PATTERN);
         }
     }
@@ -113,6 +113,9 @@ public class Square {
 
     @Override
     public String toString() {
-        return generateSquareKey(file, rank);
+        return "Square{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }

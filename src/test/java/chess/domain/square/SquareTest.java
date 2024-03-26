@@ -201,17 +201,4 @@ class SquareTest {
         // when & then
         assertThat(square.getRankOrdinal()).isEqualTo(expectedRankOrdinal);
     }
-
-    @Test
-    @DisplayName("읽기 좋은 문자열로 변환한다.")
-    void toStringTest() {
-        // given
-        Square source = Square.of(File.B, Rank.FIVE);
-
-        // when
-        String readableSource = source.toString();
-
-        // then
-        assertThat(readableSource).isEqualTo("b5");
-    }
 }
