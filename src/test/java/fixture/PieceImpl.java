@@ -13,7 +13,7 @@ public class PieceImpl extends Piece {
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         throw new UnsupportedOperationException("사용할 수 없습니다.");
     }
 

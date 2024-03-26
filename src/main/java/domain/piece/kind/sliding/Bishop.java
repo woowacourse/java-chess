@@ -30,7 +30,7 @@ public class Bishop extends SlidingPiece {
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         return PieceStatus.BISHOP;
     }
 

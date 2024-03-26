@@ -1,5 +1,5 @@
 package dto;
 
-public record PointDto(int verticalPoint, int horizontalPoint) {
+public record PointDto(int horizontalPoint, int verticalPoint) {
 
 }

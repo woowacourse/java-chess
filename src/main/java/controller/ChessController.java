@@ -3,7 +3,6 @@ package controller;
 import domain.ChessBoard;
 import dto.RouteDto;
 import java.util.Objects;
-import util.BoardMapper;
 import view.ChessCommand;
 import view.InputView;
 import view.OutputView;
@@ -23,7 +22,7 @@ public class ChessController {
             if (chessCommand == ChessCommand.MOVE) {
                 pieceMove(Objects.requireNonNull(chessBoard));
             }
-            OutputView.printBoard(BoardMapper.toDto(chessBoard));
+            OutputView.printChessBoard(chessBoard.toDto());
         }
     }
 

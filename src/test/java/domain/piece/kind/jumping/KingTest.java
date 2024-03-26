@@ -3,7 +3,6 @@ package domain.piece.kind.jumping;
 import domain.piece.Pieces;
 import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.Rank;
 import fixture.PieceImpl;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;

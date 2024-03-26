@@ -22,7 +22,7 @@ public class King extends JumpingPiece{
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         return PieceStatus.KING;
     }
 

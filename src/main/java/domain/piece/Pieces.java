@@ -2,12 +2,13 @@ package domain.piece;
 
 import domain.piece.attribute.point.Point;
 
+import dto.PiecesDto;
 import java.util.*;
 
 public class Pieces {
-    private final Set<Piece> value;
+    private final Set<Piece> values;
     public Pieces(final Set<Piece> pieces) {
-        this.value = new HashSet<>(pieces);
+        this.values = new HashSet<>(pieces);
     }
 
     public boolean canReplace(final Piece piece, final Point endPoint) {
@@ -16,14 +17,14 @@ public class Pieces {
 
     public void replace(final Piece piece, final Point endPoint) {
         Optional<Piece> pieceWithPoint = findPieceWithPoint(endPoint);
-        pieceWithPoint.ifPresent(value::remove);
-        value.remove(piece);
+        pieceWithPoint.ifPresent(values::remove);
+        values.remove(piece);
         Piece moved = piece.move(endPoint, this);
-        value.add(moved);
+        values.add(moved);
     }
 
     public Optional<Piece> findPieceWithPoint(final Point point) {
-        return value.stream()
+        return values.stream()
                 .filter(piece -> piece.isEqualPoint(point))
                 .findAny();
     }
@@ -43,13 +44,9 @@ public class Pieces {
                 .isEmpty();
     }
 
-    public Map<Point, Piece> toMap() {
-        final var map = new HashMap<Point, Piece>();
-
-        for (final Piece piece : value) {
-
-            map.put(piece.getPoint(), piece);
-        }
-        return map;
+    public PiecesDto toDto() {
+        return new PiecesDto(values.stream()
+                .map(Piece::toDto)
+                .toList());
     }
 }

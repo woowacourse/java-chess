@@ -20,7 +20,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         return PieceStatus.ROOK;
     }
 

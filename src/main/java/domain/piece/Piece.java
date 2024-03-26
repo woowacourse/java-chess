@@ -4,6 +4,7 @@ import domain.piece.attribute.Color;
 import domain.piece.attribute.point.Point;
 import domain.piece.kind.PieceStatus;
 
+import dto.PieceDto;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public abstract class Piece {
         this.color = color;
     }
 
-    public abstract PieceStatus getStatus();
+    public abstract PieceStatus status();
 
     public Piece move(final Point destination, final Pieces pieces) {
         validateDifferentPoint(destination);
@@ -57,6 +58,9 @@ public abstract class Piece {
         return this.color == Color.WHITE;
     }
 
+    public PieceDto toDto() {
+        return new PieceDto(point.toDto(), this.status().value(), color);
+    }
 
     public Point getPoint() {
         return this.point;

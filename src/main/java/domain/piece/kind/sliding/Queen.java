@@ -15,7 +15,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         return PieceStatus.QUEEN;
     }
 

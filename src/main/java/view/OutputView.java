@@ -1,23 +1,24 @@
 package view;
 
-import dto.BoardDto;
+import dto.ChessBoardDto;
 
 public class OutputView {
     private OutputView() {
         throw new UnsupportedOperationException("생성할 수 없습니다.");
     }
 
-    public static void printBoard(final BoardDto boardDto) {
-        for (var vertical = BoardDto.VERTICAL_START_INDEX; vertical >= 0; vertical--) {
-            printHorizontalLine(boardDto, vertical);
+    public static void printChessBoard(final ChessBoardDto chessBoardDto) {
+        for (var vertical = ChessBoardDto.VERTICAL_START_INDEX; vertical >= 0; vertical--) {
+            printHorizontalLine(chessBoardDto, vertical);
         }
     }
 
-    private static void printHorizontalLine(final BoardDto boardDto, int vertical) {
+    private static void printHorizontalLine(final ChessBoardDto dto, int vertical) {
         final var sb = new StringBuilder();
-        for (var horizontal = 0; horizontal < BoardDto.HORIZONTAL_END_INDEX; horizontal++) {
-            sb.append(boardDto.getWithVerticalAndHorizontal(vertical, horizontal));
+        for (var horizontal = 0; horizontal < ChessBoardDto.HORIZONTAL_END_INDEX; horizontal++) {
+            sb.append(dto.findByPointIndex(horizontal, vertical));
         }
         System.out.println(sb);
     }
+
 }

@@ -85,7 +85,7 @@ class ChessBoardTest {
         return Arrays.stream(File.values())
                      .map(file -> new Point(file, rank))
                      .map(chessBoard::findPieceByPoint)
-                     .map(Piece::getStatus)
+                     .map(Piece::status)
                      .toList();
     }
 }

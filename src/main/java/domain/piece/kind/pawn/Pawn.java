@@ -42,7 +42,7 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public PieceStatus getStatus() {
+    public PieceStatus status() {
         return PieceStatus.PAWN;
     }
 

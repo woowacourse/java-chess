@@ -1,5 +1,6 @@
 package domain.piece.attribute.point;
 
+import dto.PointDto;
 import java.util.regex.Pattern;
 
 public record Point(File file, Rank rank) {
@@ -96,8 +97,6 @@ public record Point(File file, Rank rank) {
         return this.rank.ordinal();
     }
 
-
-
     public static Point from(final String value) {
         validate(value);
         final var file = File.from(value.charAt(0));
@@ -112,4 +111,7 @@ public record Point(File file, Rank rank) {
         }
     }
 
+    public PointDto toDto() {
+        return new PointDto(this.file.ordinal(), this.rank.ordinal());
+    }
 }
