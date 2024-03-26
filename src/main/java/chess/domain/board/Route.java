@@ -56,17 +56,17 @@ public class Route {
                 .anyMatch(Step::isOrthogonal);
     }
 
-    public boolean hasPiecePathExcludedTarget() {
-        return !isEmptyPathExcludedTarget();
+    public boolean hasPiecePathExclusive() {
+        return !isEmptyPathExclusive();
     }
 
-    private boolean isEmptyPathExcludedTarget() {
-        return createPathExcludedTarget()
+    private boolean isEmptyPathExclusive() {
+        return createPathExclusive()
                 .stream()
                 .allMatch(Step::isEmpty);
     }
 
-    private List<Step> createPathExcludedTarget() {
+    private List<Step> createPathExclusive() {
         return steps.subList(0, findTargetIndex());
     }
 
