@@ -1,9 +1,9 @@
 package chess.domain.movement.policy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -15,10 +15,8 @@ class EnemyExistPolicyTest {
     @DisplayName("해당 위치의 적 유무 정책과 일치 할 경우 해당 정책을 만족한다.")
     void isSatisfied(Color color) {
         EnemyExistPolicy policy = new EnemyExistPolicy();
-        assertAll(
-                () -> assertThat(policy.isSatisfied(color, true, true)).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, false, true)).isTrue()
-        );
+
+        assertThat(policy.isSatisfied(color, Position.of(1, 1), true)).isTrue();
     }
 
     @ParameterizedTest
@@ -27,9 +25,6 @@ class EnemyExistPolicyTest {
     void isNotSatisfied(Color color) {
         EnemyExistPolicy policy = new EnemyExistPolicy();
 
-        assertAll(
-                () -> assertThat(policy.isSatisfied(color, true, false)).isFalse(),
-                () -> assertThat(policy.isSatisfied(color, false, false)).isFalse()
-        );
+        assertThat(policy.isSatisfied(color, Position.of(1, 1), false)).isFalse();
     }
 }

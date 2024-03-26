@@ -1,6 +1,7 @@
 package chess.domain.movement.policy;
 
 import chess.domain.piece.Color;
+import chess.domain.position.Position;
 import java.util.List;
 
 public class CombinationPolicy implements Policy {
@@ -12,8 +13,8 @@ public class CombinationPolicy implements Policy {
     }
 
     @Override
-    public boolean isSatisfied(final Color color, final boolean firstMove, final boolean existEnemy) {
+    public boolean isSatisfied(final Color color, final Position currentPosition, final boolean existEnemy) {
         return policies.stream()
-                .allMatch(policy -> policy.isSatisfied(color, firstMove, existEnemy));
+                .allMatch(policy -> policy.isSatisfied(color, currentPosition, existEnemy));
     }
 }

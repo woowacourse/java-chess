@@ -80,4 +80,9 @@ public enum InitialPiecePosition {
     public Piece getPiece() {
         return piece;
     }
+
+    public boolean isPawnFirstMove(final Position position) {
+        return piece.pieceType() == PieceType.PAWN &&
+                initialPositions.contains(position);
+    }
 }

@@ -13,8 +13,8 @@ import chess.domain.movement.direction.UpRightDirection;
 import chess.domain.movement.policy.ColorPolicy;
 import chess.domain.movement.policy.CombinationPolicy;
 import chess.domain.movement.policy.EnemyExistPolicy;
-import chess.domain.movement.policy.FirstMovePolicy;
 import chess.domain.movement.policy.NoRestrictionPolicy;
+import chess.domain.movement.policy.PawnFirstMovePolicy;
 import java.util.List;
 
 public enum PieceType {
@@ -55,7 +55,7 @@ public enum PieceType {
     ),
 
     PAWN(
-            new Movement(new CombinationPolicy(new ColorPolicy(Color.WHITE), new FirstMovePolicy()),
+            new Movement(new CombinationPolicy(new ColorPolicy(Color.WHITE), new PawnFirstMovePolicy()),
                     new UpDirection(2)),
             new Movement(new CombinationPolicy(new ColorPolicy(Color.WHITE), new EnemyExistPolicy()),
                     new UpLeftDirection(1)),
@@ -63,7 +63,7 @@ public enum PieceType {
                     new UpRightDirection(1)),
             new Movement(new ColorPolicy(Color.WHITE), new UpDirection(1)),
 
-            new Movement(new CombinationPolicy(new ColorPolicy(Color.BLACK), new FirstMovePolicy()),
+            new Movement(new CombinationPolicy(new ColorPolicy(Color.BLACK), new PawnFirstMovePolicy()),
                     new DownDirection(2)),
             new Movement(new CombinationPolicy(new ColorPolicy(Color.BLACK), new EnemyExistPolicy()),
                     new DownLeftDirection(1)),

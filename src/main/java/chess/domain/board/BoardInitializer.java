@@ -58,9 +58,4 @@ public class BoardInitializer {
                         .collect(generateEntry(initialPiecePosition.getPiece())).entrySet().stream())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (existing, replacement) -> existing));
     }
-
-    public boolean isFirstMove(final Position position, final Piece piece) {
-        Piece initialPiece = initialPiecePositions.getOrDefault(position, Piece.getEmptyPiece());
-        return initialPiece.equals(piece);
-    }
 }

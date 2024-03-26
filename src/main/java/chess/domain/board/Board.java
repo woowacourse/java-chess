@@ -17,7 +17,7 @@ public class Board {
 
     public void tryMove(final Position source, final Position target) {
         Piece piece = board.get(source);
-        if (piece.canMove(source, target, isFirstMove(source, piece), getBoard())) {
+        if (piece.canMove(source, target, getBoard())) {
             move(source, target, piece);
             return;
         }
@@ -28,10 +28,6 @@ public class Board {
     private void move(final Position source, final Position target, final Piece piece) {
         board.put(target, piece);
         board.put(source, Piece.getEmptyPiece());
-    }
-
-    private boolean isFirstMove(final Position source, final Piece piece) {
-        return boardInitializer.isFirstMove(source, piece);
     }
 
     public Map<Position, Piece> getBoard() {

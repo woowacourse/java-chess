@@ -14,11 +14,10 @@ public record Piece(PieceType pieceType, Color color) {
         return EMPTY_PIECE;
     }
 
-    public boolean canMove(final Position source, final Position target,
-                           final boolean firstMove, final Map<Position, Piece> pieces) {
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces) {
         return pieceType.getMovements()
                 .stream()
-                .filter(movement -> movement.isSatisfied(color, firstMove, existEnemyAtTarget(target, pieces)))
+                .filter(movement -> movement.isSatisfied(color, source, existEnemyAtTarget(target, pieces)))
                 .map(Movement::getDirection)
                 .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
     }
