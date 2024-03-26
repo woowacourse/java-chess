@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.view.display.PieceDisplay;
+import dto.Status;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,12 @@ public class OutputView {
         List<String> lines = PieceDisplay.makeBoardDisplay(board);
         lines.forEach(System.out::println);
         System.out.println();
+    }
+
+    public void printStatus(Status status) {
+        System.out.println("현재 점수입니다.");
+        System.out.println("흰색: " + status.whiteScore());
+        System.out.println("검은색: " + status.blackScore());
     }
 
     public void printErrorMessage(String message) {

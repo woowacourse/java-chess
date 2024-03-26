@@ -3,8 +3,10 @@ package chess.controller;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.position.Positions;
+import chess.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
+import dto.Status;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +14,7 @@ import java.util.regex.Pattern;
 public class ChessGameController {
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
     private static final String END_COMMAND = "end";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
 
@@ -44,6 +47,7 @@ public class ChessGameController {
         while (canContinue) {
             String command = readGameCommand();
             tryOneRound(chessGame, command);
+            showStatus(chessGame, command);
             canContinue = canContinue(command);
         }
     }
@@ -59,7 +63,7 @@ public class ChessGameController {
     }
 
     private void validateIllegalGameCommand(String command) {
-        if (!command.startsWith(MOVE_COMMAND) && !command.equals(END_COMMAND)) {
+        if (!command.startsWith(MOVE_COMMAND) && !command.equals(END_COMMAND) && !command.equals(STATUS_COMMAND)) {
             throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
     }
@@ -67,6 +71,14 @@ public class ChessGameController {
     private void tryOneRound(ChessGame chessGame, String command) {
         if (command.startsWith(MOVE_COMMAND)) {
             movePiece(chessGame, command);
+        }
+    }
+
+    private void showStatus(ChessGame chessGame, String command) {
+        if (command.equals(STATUS_COMMAND)) {
+            Scores scores = chessGame.calculateScores();
+            Status status = Status.of(scores);
+            outputView.printStatus(status);
         }
     }
 
