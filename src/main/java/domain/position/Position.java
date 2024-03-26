@@ -15,6 +15,10 @@ public class Position {
         this(File.fromName(file), Rank.fromNumber(rank));
     }
 
+    public Position(final String fileAndRank) {
+        this(fileAndRank.substring(0, 1), Integer.parseInt(fileAndRank.substring(1)));
+    }
+
     public boolean isStraightAt(final Position target) {
         validateSamePosition(target);
         return calculateFileGap(target) == 0 || calculateRankGap(target) == 0;
