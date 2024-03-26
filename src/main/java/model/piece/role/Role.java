@@ -57,6 +57,10 @@ public abstract class Role {
         return true;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public Color getColor() {
         return color;
     }

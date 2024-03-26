@@ -31,6 +31,10 @@ public class PieceHolder {
         leave();
     }
 
+    public boolean isKing() {
+        return role.isKing();
+    }
+
     private void changeRoleTo(Role sourceRole) {
         this.role = sourceRole;
     }

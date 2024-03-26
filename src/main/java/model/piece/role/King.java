@@ -12,4 +12,9 @@ public final class King extends SingleShiftRole {
     public static King from(Color color) {
         return new King(color);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
