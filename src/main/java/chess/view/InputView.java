@@ -11,6 +11,11 @@ public class InputView {
 
     public Command readCommand() {
         String input = scanner.nextLine();
-        return commandMapper.inputToCommand(input);
+        try {
+            return commandMapper.inputToCommand(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readCommand();
+        }
     }
 }
