@@ -1,6 +1,6 @@
 package view.mapper;
 
-import domain.command.Command;
+import controller.Command;
 import java.util.Arrays;
 
 public enum CommandInput {
@@ -19,7 +19,7 @@ public enum CommandInput {
 
     public static Command asCommand(String input) {
         return Arrays.stream(values())
-                .filter(commandInput -> input.matches(commandInput.input))
+                .filter(commandInput -> input.equals(commandInput.input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 명령어를 입력해주세요."))
                 .command;

@@ -1,4 +1,4 @@
-package domain.command;
+package controller;
 
 public enum Command {
 

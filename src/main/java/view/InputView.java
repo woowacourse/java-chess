@@ -1,6 +1,6 @@
 package view;
 
-import domain.command.Command;
+import controller.Command;
 import domain.position.Position;
 import domain.position.PositionGenerator;
 import java.util.Scanner;

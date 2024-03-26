@@ -2,7 +2,6 @@ package controller;
 
 import domain.Chess;
 import domain.board.Turn;
-import domain.command.Command;
 import domain.position.Position;
 import view.InputView;
 import view.OutputView;
