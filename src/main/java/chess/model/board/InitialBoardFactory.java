@@ -1,5 +1,7 @@
 package chess.model.board;
 
+import static chess.model.material.Color.WHITE;
+
 import java.util.List;
 
 public class InitialBoardFactory implements BoardFactory {
@@ -17,6 +19,6 @@ public class InitialBoardFactory implements BoardFactory {
 
     @Override
     public Board generate() {
-        return new Board(generatePieces(INITIAL_PIECES), 0);
+        return new Board(generatePieces(INITIAL_PIECES), WHITE);
     }
 }

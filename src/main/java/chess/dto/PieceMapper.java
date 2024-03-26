@@ -21,7 +21,7 @@ public enum PieceMapper {
     BISHOP("b", "B", Bishop::new),
     QUEEN("q", "Q", Queen::new),
     KING("k", "K", King::new),
-    NONE(".", ".", None::new);
+    NONE(".", ".", color -> new None());
 
     private static final String WHITE_REGEXP = "^[a-z]$";
     private static final String BLACK_REGEXP = "^[A-Z]$";

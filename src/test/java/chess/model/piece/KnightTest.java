@@ -10,7 +10,6 @@ import static chess.model.Fixtures.D4;
 import static chess.model.Fixtures.D6;
 import static chess.model.Fixtures.E2;
 import static chess.model.Fixtures.E6;
-import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F2;
 import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.F5;
@@ -44,7 +43,7 @@ class KnightTest {
     @MethodSource("provideValidSourceAndTarget")
     void knightCanMove(Position source, Position target) {
         Piece piece = new Knight(BLACK);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -76,7 +75,7 @@ class KnightTest {
     @MethodSource("provideInvalidSourceAndTarget")
     void knightCanNotMove(Position source, Position target) {
         Piece piece = new Knight(BLACK);
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Knight는 L자 이동만 가능합니다.");
     }

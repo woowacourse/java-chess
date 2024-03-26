@@ -6,7 +6,6 @@ import static chess.model.Fixtures.C5;
 import static chess.model.Fixtures.D1;
 import static chess.model.Fixtures.D4;
 import static chess.model.Fixtures.E6;
-import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F6;
 import static chess.model.Fixtures.G1;
 import static chess.model.Fixtures.G3;
@@ -38,7 +37,7 @@ class BishopTest {
     @MethodSource("provideValidSourceAndTarget")
     void bishopCanMove(Position source, Position target) {
         Piece piece = new Bishop(WHITE);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -66,7 +65,7 @@ class BishopTest {
     @MethodSource("provideInvalidSourceAndTarget")
     void bishopCanNotMove(Position source, Position target) {
         Piece piece = new Bishop(WHITE);
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Bishop은 대각선 이동만 가능합니다.");
     }

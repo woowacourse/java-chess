@@ -5,9 +5,8 @@ import static chess.model.material.Color.NONE;
 import chess.model.material.Color;
 import chess.model.position.Position;
 import chess.model.position.Route;
-import java.util.Map;
 
-public abstract class Piece implements MoveStrategy {
+public abstract class Piece {
 
     protected final Color color;
 
@@ -15,26 +14,21 @@ public abstract class Piece implements MoveStrategy {
         this.color = color;
     }
 
-    protected void validateRoute(Position source, Position target, Map<Position, Piece> pieces) {
-        Route route = Route.of(source, target);
-        if (route.isBlocked(pieces)) {
-            throw new IllegalArgumentException("경로 상에 다른 기물이 존재합니다.");
-        }
+    public abstract Route findRoute(Position source, Position target);
+
+    public boolean canAttack(Position source, Position target) {
+        return false;
     }
 
-    public boolean isEnemyTurn(int turnCount) {
-        return color.isDifferentColor(turnCount);
-    }
-
-    public boolean isEnemy(Piece piece) {
+    public boolean isEnemyWith(Piece piece) {
         return piece.isDifferentColor(color) && piece.isDifferentColor(NONE);
     }
 
-    public boolean isAlly(Piece piece) {
+    public boolean isAllyWith(Piece piece) {
         return piece.isSameColor(color);
     }
 
-    private boolean isDifferentColor(Color color) {
+    public boolean isDifferentColor(Color color) {
         return this.color != color;
     }
 

@@ -25,19 +25,4 @@ public enum Type {
             .findFirst()
             .orElse(NONE);
     }
-
-    public static Type findType(String pieceName) {
-        return Arrays.stream(values())
-            .filter(type -> type.name().equals(pieceName))
-            .findFirst()
-            .orElse(NONE);
-    }
-
-    public boolean isNotNone() {
-        return !isNone();
-    }
-
-    public boolean isNone() {
-        return this == NONE;
-    }
 }

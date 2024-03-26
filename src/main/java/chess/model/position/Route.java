@@ -28,6 +28,10 @@ public class Route {
         return new Route(positions);
     }
 
+    public static Route empty() {
+        return new Route(Set.of());
+    }
+
     private static boolean isRemain(int offset) {
         return Math.abs(offset) > REMAIN_THRESHOLD;
     }

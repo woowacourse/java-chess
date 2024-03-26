@@ -8,8 +8,8 @@ import static chess.model.position.Direction.UP;
 import chess.model.material.Color;
 import chess.model.position.Direction;
 import chess.model.position.Position;
+import chess.model.position.Route;
 import java.util.List;
-import java.util.Map;
 
 public class Rook extends Piece {
 
@@ -20,9 +20,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position source, Position target, Map<Position, Piece> pieces) {
+    public Route findRoute(Position source, Position target) {
         validateDirection(source, target);
-        validateRoute(source, target, pieces);
+        return Route.of(source, target);
     }
 
     public void validateDirection(Position source, Position target) {

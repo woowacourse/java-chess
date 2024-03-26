@@ -1,7 +1,18 @@
 package chess.model.board;
 
 import static chess.model.Fixtures.B1;
+import static chess.model.Fixtures.B2;
+import static chess.model.Fixtures.B4;
+import static chess.model.Fixtures.B5;
+import static chess.model.Fixtures.B6;
+import static chess.model.Fixtures.B7;
+import static chess.model.Fixtures.C1;
+import static chess.model.Fixtures.C2;
 import static chess.model.Fixtures.C3;
+import static chess.model.Fixtures.C4;
+import static chess.model.Fixtures.C5;
+import static chess.model.Fixtures.E3;
+import static chess.model.material.Color.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -57,7 +68,7 @@ class BoardTest {
             ".p.q....",
             "....k..."
         );
-        BoardFactory boardFactory = new CustomBoardFactory(snapShot, 16);
+        BoardFactory boardFactory = new CustomBoardFactory(snapShot, BLACK);
         Board board = boardFactory.generate();
         BoardDto boardDto = BoardDto.from(board);
         List<String> actual = combineRanks(boardDto);
@@ -69,44 +80,44 @@ class BoardTest {
     @Test
     void notBlackTurn() {
         Board board = boardFactory.generate();
-        assertThatThrownBy(() -> board.move("b7", "b6"))
+        assertThatThrownBy(() -> board.move(B7, B6))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("지금은 White 차례입니다.");
+            .hasMessage("지금은 WHITE 차례입니다.");
     }
 
     @DisplayName("Black 차례에 White 기물 이동 시 예외가 발생한다.")
     @Test
     void notWhiteTurn() {
         Board board = boardFactory.generate();
-        board.move("b2", "b4");
-        assertThatThrownBy(() -> board.move("b4", "b5"))
+        board.move(B2, B4);
+        assertThatThrownBy(() -> board.move(B4, B5))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("지금은 Black 차례입니다.");
+            .hasMessage("지금은 BLACK 차례입니다.");
     }
 
     @DisplayName("이동 시 source 위치에 기물이 없으면 예외가 발생한다")
     @Test
     void pieceNotExistsOnSourceCoordinate() {
         Board board = boardFactory.generate();
-        assertThatThrownBy(() -> board.move("c4", "c5"))
+        assertThatThrownBy(() -> board.move(C4, C5))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("source위치에 기물이 존재하지 않습니다.");
+            .hasMessage("source 위치에 기물이 존재하지 않습니다.");
     }
 
     @DisplayName("이동 시 target 위치에 내 기물이 있으면 예외가 발생한다")
     @Test
     void pieceExistsOnTargetCoordinate() {
         Board board = boardFactory.generate();
-        assertThatThrownBy(() -> board.move("c2", "b2"))
+        assertThatThrownBy(() -> board.move(C2, B2))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("target위치에 내 기물이 존재합니다.");
+            .hasMessage("target 위치에 내 기물이 존재합니다.");
     }
 
     @DisplayName("이동 경로 상에 기물이 존재하면 예외가 발생한다.")
     @Test
     void obstacleOnRoute() {
         Board board = boardFactory.generate();
-        assertThatThrownBy(() -> board.move("c1", "e3"))
+        assertThatThrownBy(() -> board.move(C1, E3))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("경로 상에 다른 기물이 존재합니다.");
     }
@@ -115,7 +126,7 @@ class BoardTest {
     @Test
     void obstacleOnRouteButKnight() {
         Board board = boardFactory.generate();
-        assertThatCode(() -> board.move("b1", "c3"))
+        assertThatCode(() -> board.move(B1, C3))
             .doesNotThrowAnyException();
     }
 
@@ -125,7 +136,7 @@ class BoardTest {
         Board board = boardFactory.generate();
         Piece sourcePiece = board.findPiece(B1);
 
-        board.move("b1", "c3");
+        board.move(B1, C3);
 
         Piece targetPiece = board.findPiece(C3);
         Piece emptyPiece = board.findPiece(B1);

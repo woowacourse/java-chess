@@ -10,7 +10,6 @@ import static chess.model.Fixtures.D4;
 import static chess.model.Fixtures.D8;
 import static chess.model.Fixtures.E5;
 import static chess.model.Fixtures.E6;
-import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F2;
 import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.G4;
@@ -43,7 +42,7 @@ class QueenTest {
     @MethodSource("provideValidSourceAndTarget")
     void queenCanMove(Position source, Position target) {
         Piece piece = new Queen(WHITE);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -75,7 +74,7 @@ class QueenTest {
     @MethodSource("provideInvalidSourceAndTarget")
     void queenCanNotMove(Position source, Position target) {
         Piece piece = new Queen(WHITE);
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Queen은 상하좌우 대각선 이동만 가능합니다.");
     }

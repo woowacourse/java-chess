@@ -2,16 +2,16 @@ package chess.model.piece;
 
 import chess.model.material.Color;
 import chess.model.position.Position;
-import java.util.Map;
+import chess.model.position.Route;
 
 public class None extends Piece {
 
-    public None(Color color) {
-        super(color);
+    public None() {
+        super(Color.NONE);
     }
 
     @Override
-    public void move(Position source, Position target, Map<Position, Piece> pieces) {
+    public Route findRoute(Position source, Position target) {
         throw new IllegalArgumentException("이동할 기물이 존재하지 않습니다.");
     }
 

@@ -9,7 +9,6 @@ import static chess.model.Fixtures.E1;
 import static chess.model.Fixtures.E2;
 import static chess.model.Fixtures.E3;
 import static chess.model.Fixtures.E4;
-import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F2;
 import static chess.model.Fixtures.F3;
 import static chess.model.Fixtures.F4;
@@ -42,7 +41,7 @@ class KingTest {
     @MethodSource("provideValidSourceAndTarget")
     void kingCanMove(Position source, Position target) {
         Piece piece = new King(WHITE);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -74,7 +73,7 @@ class KingTest {
     @MethodSource("provideInvalidSourceAndTarget")
     void kingCanNotMove(Position source, Position target) {
         Piece piece = new King(WHITE);
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("King은 상하좌우 대각선 1칸 이동만 가능합니다.");
     }

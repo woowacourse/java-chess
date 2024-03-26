@@ -8,7 +8,6 @@ import static chess.model.Fixtures.C5;
 import static chess.model.Fixtures.D2;
 import static chess.model.Fixtures.D3;
 import static chess.model.Fixtures.D4;
-import static chess.model.Fixtures.EMPTY_PIECES;
 import static chess.model.Fixtures.F6;
 import static chess.model.Fixtures.F7;
 import static chess.model.Fixtures.G4;
@@ -17,7 +16,6 @@ import static chess.model.Fixtures.G6;
 import static chess.model.Fixtures.G7;
 import static chess.model.Fixtures.G8;
 import static chess.model.Fixtures.H6;
-import static chess.model.Fixtures.initiation;
 import static chess.model.material.Color.BLACK;
 import static chess.model.material.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -26,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.model.material.Color;
 import chess.model.position.Position;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -49,8 +46,7 @@ class PawnTest {
     @MethodSource("provideSingleMoveWithColor")
     void pawnCanSingleMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
-        EMPTY_PIECES.put(source, piece);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -76,8 +72,7 @@ class PawnTest {
     @MethodSource("provideDoubleMoveWithColor")
     void pawnCanDoubleMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
-        EMPTY_PIECES.put(source, piece);
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.findRoute(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -103,8 +98,7 @@ class PawnTest {
     @MethodSource("provideInvalidMoveWithColor")
     void kingCanNotMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
-        EMPTY_PIECES.put(source, piece);
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.findRoute(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Pawn은 1칸 전진 이동 혹은 최초 2칸 전진 이동만 가능합니다.");
     }
@@ -137,13 +131,7 @@ class PawnTest {
     @MethodSource("provideAttackMoveWithColor")
     void pawnCanAttackMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
-        EMPTY_PIECES.put(source, piece);
-        EMPTY_PIECES.put(B4, new Knight(BLACK));
-        EMPTY_PIECES.put(D4, new Knight(BLACK));
-        EMPTY_PIECES.put(F6, new Knight(WHITE));
-        EMPTY_PIECES.put(H6, new Knight(WHITE));
-
-        assertThatCode(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatCode(() -> piece.canAttack(source, target))
             .doesNotThrowAnyException();
     }
 
@@ -171,11 +159,7 @@ class PawnTest {
     @MethodSource("provideInvalidAttackMoveWithColor")
     void pawnCanNotAttackMove(Position source, Position target, Color color) {
         Piece piece = new Pawn(color);
-        EMPTY_PIECES.put(source, piece);
-        EMPTY_PIECES.put(D2, new Knight(BLACK));
-        EMPTY_PIECES.put(G6, new Knight(WHITE));
-
-        assertThatThrownBy(() -> piece.move(source, target, EMPTY_PIECES))
+        assertThatThrownBy(() -> piece.canAttack(source, target))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");
     }
@@ -185,10 +169,5 @@ class PawnTest {
             Arguments.of(C3, D2, WHITE),
             Arguments.of(G7, G6, BLACK)
         );
-    }
-
-    @AfterEach
-    void afterEach() {
-        EMPTY_PIECES = initiation();
     }
 }

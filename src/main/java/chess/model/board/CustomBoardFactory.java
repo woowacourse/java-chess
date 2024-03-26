@@ -1,19 +1,20 @@
 package chess.model.board;
 
+import chess.model.material.Color;
 import java.util.List;
 
 public class CustomBoardFactory implements BoardFactory {
 
     private final List<String> pieces;
-    private final int turnCount;
+    private final Color turn;
 
-    public CustomBoardFactory(List<String> pieces, int turnCount) {
+    public CustomBoardFactory(List<String> pieces, Color turn) {
         this.pieces = pieces;
-        this.turnCount = turnCount;
+        this.turn = turn;
     }
 
     @Override
     public Board generate() {
-        return new Board(generatePieces(pieces), turnCount);
+        return new Board(generatePieces(pieces), turn);
     }
 }

@@ -14,9 +14,9 @@ import static chess.model.position.Direction.UP_UP;
 import chess.model.material.Color;
 import chess.model.position.Direction;
 import chess.model.position.Position;
+import chess.model.position.Route;
 import chess.model.position.Row;
 import java.util.List;
-import java.util.Map;
 
 public class Pawn extends Piece {
 
@@ -30,34 +30,17 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(Position source, Position target, Map<Position, Piece> pieces) {
-        Piece sourcePiece = pieces.get(source);
-        Piece targetPiece = pieces.get(target);
-        if (sourcePiece.isEnemy(targetPiece)) {
-            validateAttack(source, target, sourcePiece);
-            return;
-        }
-        validateDirection(source, target, sourcePiece);
-        validateRoute(source, target, pieces);
+    public Route findRoute(Position source, Position target) {
+        validateDirection(source, target);
+        return Route.of(source, target);
     }
 
-    public void validateAttack(Position source, Position target, Piece sourcePiece) {
+    public void validateDirection(Position source, Position target) {
         Direction direction = Direction.findDirectionByDelta(source, target);
-        if (sourcePiece.isSameColor(WHITE) && WHITE_ATTACK_DIRECTIONS.contains(direction)) {
+        if (isSameColor(WHITE) && whiteCanMove(direction, source)) {
             return;
         }
-        if (sourcePiece.isSameColor(BLACK) && BLACK_ATTACK_DIRECTIONS.contains(direction)) {
-            return;
-        }
-        throw new IllegalArgumentException("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");
-    }
-
-    public void validateDirection(Position source, Position target, Piece sourcePiece) {
-        Direction direction = Direction.findDirectionByDelta(source, target);
-        if (sourcePiece.isSameColor(WHITE) && whiteCanMove(direction, source)) {
-            return;
-        }
-        if (sourcePiece.isSameColor(BLACK) && blackCanMove(direction, source)) {
+        if (isSameColor(BLACK) && blackCanMove(direction, source)) {
             return;
         }
         throw new IllegalArgumentException("Pawn은 1칸 전진 이동 혹은 최초 2칸 전진 이동만 가능합니다.");
@@ -75,6 +58,18 @@ public class Pawn extends Piece {
             return true;
         }
         return direction == DOWN;
+    }
+
+    @Override
+    public boolean canAttack(Position source, Position target) {
+        Direction direction = Direction.findDirectionByDelta(source, target);
+        if (isSameColor(WHITE) && WHITE_ATTACK_DIRECTIONS.contains(direction)) {
+            return true;
+        }
+        if (isSameColor(BLACK) && BLACK_ATTACK_DIRECTIONS.contains(direction)) {
+            return true;
+        }
+        throw new IllegalArgumentException("Pawn은 공격 시 전방 대각선 1칸 이동만 가능합니다.");
     }
 
     @Override

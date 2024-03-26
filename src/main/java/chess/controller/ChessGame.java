@@ -5,6 +5,7 @@ import chess.model.board.Board;
 import chess.model.board.BoardFactory;
 import chess.model.board.InitialBoardFactory;
 import chess.model.game.GameStatus;
+import chess.model.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -48,8 +49,8 @@ public final class ChessGame {
     }
 
     private void executeMove(List<String> commands, Board board) {
-        String source = commands.get(SOURCE_INDEX);
-        String target = commands.get(TARGET_INDEX);
+        Position source = Position.from(commands.get(SOURCE_INDEX));
+        Position target = Position.from(commands.get(TARGET_INDEX));
         board.move(source, target);
         BoardDto boardDto = BoardDto.from(board);
         outputView.printChessBoard(boardDto);
