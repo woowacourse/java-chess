@@ -42,6 +42,14 @@ public class Coordinate {
         );
     }
 
+    public Position getRow() {
+        return row;
+    }
+
+    public Position getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
