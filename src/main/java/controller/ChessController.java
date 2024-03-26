@@ -19,15 +19,16 @@ public class ChessController {
     }
 
     public void start() {
-        outputView.printGameGuideMessage();
-
         DBService dbService = new DBService();
         ChessBoard board = createChessBoard(dbService);
+
+        outputView.printGameGuideMessage();
         Command command = readStartCommandUntilValid();
         while (command.isNotEnded()) {
             command.execute(board, outputView);
-            command = readCommandIfGameNotEnded(board);
+            command = readNextCommand(board);
         }
+        command.execute(board, outputView);
         updateGameStatus(dbService, board);
     }
 
@@ -48,7 +49,7 @@ public class ChessController {
         }
     }
 
-    private Command readCommandIfGameNotEnded(final ChessBoard board) {
+    private Command readNextCommand(final ChessBoard board) {
         if (board.isKingNotExist()) {
             return new EndOnCommand();
         }
