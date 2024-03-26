@@ -30,9 +30,9 @@ public class ChessGame {
     }
 
     public static ChessGame load(int gameId) {
-        GameDao gameDao = new GameDao(new DBConnector());
+        GameDao gameDao = GameDao.getInstance();
         TeamColor savedTurn = gameDao.findTurn(gameId);
-        PieceDao pieceDao = new PieceDao(new DBConnector());
+        PieceDao pieceDao = PieceDao.getInstance();
         List<PieceDto> allPieces = pieceDao.findAllPieces(gameId);
         Map<Position, Piece> piecePositions = allPieces.stream()
                 .collect(Collectors.toMap(

@@ -124,11 +124,11 @@ public class Board {
     }
 
     public int save(TeamColor currentPlayingTeam) {
-        GameDao gameDao = new GameDao(new DBConnector());
+        GameDao gameDao = GameDao.getInstance();
         int gameId = gameDao.addGame();
         gameDao.updateTurn(gameId, currentPlayingTeam);
 
-        PieceDao pieceDao = new PieceDao(new DBConnector());
+        PieceDao pieceDao = PieceDao.getInstance();
         List<PieceDto> pieceDtos = chessBoard.entrySet().stream()
                 .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
                 .toList();

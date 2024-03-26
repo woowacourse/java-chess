@@ -9,14 +9,20 @@ import java.sql.Statement;
 
 public class GameDao {
     private static final String TABLE_NAME = "game";
-    private final DBConnector dbConnector;
+    private static GameDao instance = null;
 
-    public GameDao(DBConnector dbConnector) {
-        this.dbConnector = dbConnector;
+    private GameDao() {
+    }
+
+    public static GameDao getInstance() {
+        if (instance == null) {
+            instance = new GameDao();
+        }
+        return instance;
     }
 
     Connection getConnection() {
-        return dbConnector.getConnection();
+        return DBConnector.getInstance().getConnection();
     }
 
     public int addGame() {

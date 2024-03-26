@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameDaoTest {
-    private final GameDao gameDao = new GameDao(new DBConnector());
+    private final GameDao gameDao = GameDao.getInstance();
 
     @BeforeEach
     void setUp() {

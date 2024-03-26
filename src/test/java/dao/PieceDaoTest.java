@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoTest {
-    private final PieceDao pieceDao = new PieceDao(new DBConnector());
+    private final PieceDao pieceDao = PieceDao.getInstance();
 
     @BeforeEach
     void setUp() {
