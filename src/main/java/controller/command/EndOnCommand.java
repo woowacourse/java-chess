@@ -6,7 +6,7 @@ import view.OutputView;
 public class EndOnCommand implements Command {
     @Override
     public void execute(final ChessBoard board, final OutputView outputView) {
-
+        outputView.printScore(board.calculateScore());
     }
 
     @Override
