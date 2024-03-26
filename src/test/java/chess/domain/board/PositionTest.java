@@ -24,13 +24,6 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("Rank가 2인지 여부 반환")
-    void isPawnInitialPosition() {
-        Position position = Position.of(1, 2);
-        assertThat(position.isWhitePawnInitialPosition()).isTrue();
-    }
-
-    @Test
     @DisplayName("두 Position이 같은 대각선상에 있음")
     void isOnSameDiagonalAs_True() {
         Position position1 = Position.of(4, 4);

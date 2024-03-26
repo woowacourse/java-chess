@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.Map;
 
 public class King extends Piece {
 
@@ -9,15 +10,15 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        int fileDifference = sourcePosition.calculateFileDifference(targetPosition);
-        int rankDifference = sourcePosition.calculateRankDifference(targetPosition);
-        return Math.abs(fileDifference) == 1 && Math.abs(rankDifference) <= 1
-            || Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) == 1;
-    }
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
+        int fileDifference = source.calculateFileDifference(target);
+        int rankDifference = source.calculateRankDifference(target);
 
-    @Override
-    public boolean isPawn() {
+        if (Math.abs(fileDifference) == 1 && Math.abs(rankDifference) <= 1
+            || Math.abs(fileDifference) <= 1 && Math.abs(rankDifference) == 1) {
+            return board.get(target).doesNotExist() || board.get(target).hasOppositeColorFrom(this);
+        }
+
         return false;
     }
 

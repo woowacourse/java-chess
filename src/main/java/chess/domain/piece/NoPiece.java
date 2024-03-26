@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import java.util.Map;
 
 public class NoPiece extends Piece {
 
@@ -9,12 +10,7 @@ public class NoPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
+    public boolean canMove(Position source, Position target, Map<Position, Piece> board) {
         return false;
     }
 

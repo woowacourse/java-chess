@@ -20,17 +20,8 @@ public class Rank {
         CACHE.put(value, new Rank(value));
         return CACHE.get(value);
     }
-
     public int subtract(Rank otherRank) {
         return this.value - otherRank.value;
-    }
-
-    public boolean isRankTwo() {
-        return value == 2;
-    }
-
-    public boolean isRankSeven() {
-        return value == 7;
     }
 
     public int value() {

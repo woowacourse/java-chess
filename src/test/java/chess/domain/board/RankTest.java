@@ -15,11 +15,4 @@ class RankTest {
 
         assertThat(rank1.subtract(rank2)).isEqualTo(-1);
     }
-
-    @Test
-    @DisplayName("Rank가 2인지 여부 반환")
-    void isRankTwo() {
-        Rank rank = Rank.valueOf(2);
-        assertThat(rank.isRankTwo()).isTrue();
-    }
 }

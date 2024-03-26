@@ -1,25 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.board.Position;
+import static chess.domain.board.Direction.DOWN_LEFT;
+import static chess.domain.board.Direction.DOWN_RIGHT;
+import static chess.domain.board.Direction.UP_LEFT;
+import static chess.domain.board.Direction.UP_RIGHT;
 
-public class Bishop extends Piece {
+import chess.domain.board.Direction;
+import java.util.Set;
+
+public class Bishop extends SlidingPiece {
 
     public Bishop(Color color) {
         super(color);
     }
 
     @Override
-    public boolean canMove(Position sourcePosition, Position targetPosition) {
-        return sourcePosition.isOnSameDiagonalAs(targetPosition);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean exists() {
-        return true;
+    Set<Direction> directions() {
+        return Set.of(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
     }
 }

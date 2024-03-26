@@ -1,12 +1,12 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.controller.MovePositionDto;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.controller.MovePositionDto;
 
 public class ChessApplication {
 
@@ -33,7 +33,7 @@ public class ChessApplication {
             Position target = inputView.resolvePosition(command.targetPosition());
             outputView.printBoard(controller.move(new MovePositionDto(source, target, color)));
         }
-        startTurn(Color.nextColorOf(color));
+        startTurn(Color.oppose(color));
     }
 
     private static void retryWhenError(Runnable runnable) {

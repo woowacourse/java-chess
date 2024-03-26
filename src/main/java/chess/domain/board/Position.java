@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Color;
 import java.util.Objects;
 
 public class Position {
@@ -14,19 +15,6 @@ public class Position {
 
     public static Position of(int file, int rank) {
         return new Position(File.valueOf(file), Rank.valueOf(rank));
-    }
-
-    public Position nextPosition(Direction direction) {
-        return Position.of(file.value() + direction.getFileDirection(),
-            rank.value() + direction.getRankDirection());
-    }
-
-    public boolean isWhitePawnInitialPosition() {
-        return rank.isRankTwo();
-    }
-
-    public boolean isBlackPawnInitialPosition() {
-        return rank.isRankSeven();
     }
 
     public int calculateFileDifference(Position otherPosition) {
@@ -50,6 +38,29 @@ public class Position {
     public boolean isOnSameRankAs(Position targetPosition) {
         return rank.equals(targetPosition.rank)
             && !file.equals(targetPosition.file);
+    }
+
+    public Position nextPosition(Direction direction) {
+        return Position.of(file.value() + direction.fileDirection(),
+            rank.value() + direction.rankDirection());
+    }
+
+    public Position forward(Color color) {
+        if (color == Color.WHITE) {
+            return Position.of(file.value(), rank.value() + 1);
+        }
+        if (color == Color.BLACK) {
+            return Position.of(file.value(), rank.value() - 1);
+        }
+        throw new IllegalArgumentException("올바르지 않은 색상입니다.");
+    }
+
+    public Position left() {
+        return Position.of(file.value() - 1, rank.value());
+    }
+
+    public Position right() {
+        return Position.of(file.value() + 1, rank.value());
     }
 
     @Override

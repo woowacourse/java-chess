@@ -5,13 +5,14 @@ import java.util.Arrays;
 public enum Direction {
 
     UP(0, 1),
-    UPRIGHT(1, 1),
+    UP_RIGHT(1, 1),
     RIGHT(1, 0),
-    DOWNRIGHT(1, -1),
+    DOWN_RIGHT(1, -1),
     DOWN(0, -1),
-    DOWNLEFT(-1, -1),
+    DOWN_LEFT(-1, -1),
     LEFT(-1, 0),
-    UPLEFT(-1, 1);
+    UP_LEFT(-1, 1),
+    ;
 
     private final int fileDirection;
     private final int rankDirection;
@@ -26,37 +27,17 @@ public enum Direction {
         int rankDifference = targetPosition.calculateRankDifference(sourcePosition);
 
         return Arrays.stream(values())
-            .filter(direction -> direction.fileDirection == decideFileDirection(fileDifference)
-                && direction.rankDirection == decideRankDirection(rankDifference))
+            .filter(direction -> direction.fileDirection == Integer.compare(fileDifference, 0)
+                && direction.rankDirection == Integer.compare(rankDifference, 0))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
     }
 
-    public static int decideFileDirection(int fileDifference) {
-        if (fileDifference > 0) {
-            return 1;
-        }
-        if (fileDifference < 0) {
-            return -1;
-        }
-        return 0;
-    }
-
-    public static int decideRankDirection(int rankDifference) {
-        if (rankDifference > 0) {
-            return 1;
-        }
-        if (rankDifference < 0) {
-            return -1;
-        }
-        return 0;
-    }
-
-    public int getFileDirection() {
+    public int fileDirection() {
         return fileDirection;
     }
 
-    public int getRankDirection() {
+    public int rankDirection() {
         return rankDirection;
     }
 }
