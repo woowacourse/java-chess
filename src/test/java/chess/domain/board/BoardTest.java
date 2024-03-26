@@ -21,7 +21,7 @@ class BoardTest {
         //given
         Board board = BoardFactory.create();
         //when
-        board.move(new Position(1, 2), new Position(1, 4));
+        board.move(new Position(1, 2), new Position(1, 4), Color.WHITE);
         Map<Position, Piece> boardPieces = board.getBoard();
         //then
         assertAll(
@@ -37,7 +37,7 @@ class BoardTest {
         //given
         Board board = BoardFactory.create();
         //when, then
-        assertThatThrownBy(() -> board.move(new Position(1, 1), new Position(1, 2)))
+        assertThatThrownBy(() -> board.move(new Position(1, 1), new Position(1, 2), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
@@ -48,7 +48,7 @@ class BoardTest {
         //given
         Board board = BoardFactory.create();
         //when, then
-        assertThatThrownBy(() -> board.move(new Position(1, 7), new Position(1, 5)))
+        assertThatThrownBy(() -> board.move(new Position(1, 7), new Position(1, 5), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("상대 팀의 기물을 이동시킬 수 없습니다.");
     }
@@ -59,7 +59,7 @@ class BoardTest {
         //given
         Board board = BoardFactory.create();
         //when, then
-        assertThatThrownBy(() -> board.move(new Position(3, 6), new Position(4, 6)))
+        assertThatThrownBy(() -> board.move(new Position(3, 6), new Position(4, 6), Color.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("기물이 존재하지 않아 이동시킬 수 없습니다.");
     }

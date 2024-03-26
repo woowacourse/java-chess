@@ -11,23 +11,21 @@ public class Board {
     private static final Empty EMPTY = new Empty();
 
     private final Map<Position, Piece> board;
-    private final Color color;
 
-    public Board(final Map<Position, Piece> board, Color color) {
+    public Board(final Map<Position, Piece> board) {
         this.board = board;
-        this.color = color;
     }
 
-    public Board move(final Position source, final Position target) {
+    public Board move(final Position source, final Position target, Color color) {
         Piece piece = board.get(source);
         validateEmpty(source);
-        validateColorTurn(piece);
+        validateColorTurn(piece, color);
         validateMovement(source, target, piece);
 
         board.put(target, piece);
         board.put(source, EMPTY);
 
-        return new Board(board, color.opposite());
+        return new Board(board);
     }
 
     private void validateEmpty(Position source) {
@@ -36,7 +34,7 @@ public class Board {
         }
     }
 
-    private void validateColorTurn(Piece piece) {
+    private void validateColorTurn(Piece piece, Color color) {
         if (!piece.isSameColor(color)) {
             throw new IllegalArgumentException("상대 팀의 기물을 이동시킬 수 없습니다.");
         }

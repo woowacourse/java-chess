@@ -1,6 +1,6 @@
 package chess.view.output;
 
-import chess.domain.board.Board;
+import chess.domain.board.TurnTrackerBoard;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -26,7 +26,7 @@ public class OutputView {
         System.out.println(commandMessage);
     }
 
-    public static void printBoard(final Board board) {
+    public static void printBoard(final TurnTrackerBoard board) {
         Map<Position, Piece> positions = board.getBoard();
         for (int rank = MAXIMUM_RANK_RANGE; rank >= MINIMUM_RANK_RANGE; rank--) {
             printRankLine(positions, rank);

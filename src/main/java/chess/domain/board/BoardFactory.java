@@ -31,14 +31,13 @@ public class BoardFactory {
     private static final int BLACK_PIECE_START_RANK = 8;
     private static final int BLACK_PAWN_START_RANK = 7;
 
-    private static final Color START_COLOR = Color.WHITE;
     private static final Empty EMPTY = new Empty();
 
     public static Board create() {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
         initialPiecePositions.putAll(getWhitePieces());
         initialPiecePositions.putAll(getBlackPieces());
-        return new Board(initialPiecePositions, START_COLOR);
+        return new Board(initialPiecePositions);
     }
 
     private static Map<Position, Piece> generateEmptyBoard() {
