@@ -18,6 +18,10 @@ public class BlackPawn extends Piece {
         super(Color.BLACK, BlackPawnMoveRule.instance());
     }
 
+    public static BlackPawn of(Color color) {
+        return new BlackPawn();
+    }
+
     @Override
     public boolean isMovable(Position from, Position to) {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);

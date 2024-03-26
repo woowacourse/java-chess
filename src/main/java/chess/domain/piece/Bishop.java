@@ -9,6 +9,10 @@ public class Bishop extends Piece {
         super(color, BishopMoveRule.instance());
     }
 
+    public static Bishop of(Color color) {
+        return new Bishop(color);
+    }
+
     @Override
     public boolean isCatchable(Position from, Position to) {
         return isMovable(from, to);

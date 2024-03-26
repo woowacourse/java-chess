@@ -1,6 +1,5 @@
 package chess.domain.chessGame;
 
-import chess.domain.chessGame.generator.SpaceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import java.util.List;
@@ -10,12 +9,12 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private Color deadKingColor = Color.EMPTY;
 
-    public ChessGame(SpaceGenerator spaceGenerator) {
-        this.chessBoard = ChessBoard.of(spaceGenerator);
+    public ChessGame(ChessBoard chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
-    public ChessGame of(SpaceGenerator spaceGenerator) {
-        return new ChessGame(spaceGenerator);
+    public ChessGame of(ChessBoard chessBoard) {
+        return new ChessGame(chessBoard);
     }
 
     public void move(Position from, Position to) {

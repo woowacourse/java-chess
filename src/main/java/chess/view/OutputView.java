@@ -42,4 +42,8 @@ public class OutputView {
         }
         System.out.printf("%s 승리%n", winner);
     }
+
+    public void printMessage(String message) {
+        System.out.println(message);
+    }
 }

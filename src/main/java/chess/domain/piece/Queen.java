@@ -9,6 +9,10 @@ public class Queen extends Piece {
         super(color, QueenMoveRule.instance());
     }
 
+    public static Queen of(Color color) {
+        return new Queen(color);
+    }
+
     @Override
     public boolean isCatchable(Position from, Position to) {
         return isMovable(from, to);

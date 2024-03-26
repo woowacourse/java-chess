@@ -16,10 +16,12 @@ public class Turn {
     }
 
     public void startGame() {
-        if (state != State.WAIT) {
+        if (state == State.END) {
             throw new IllegalStateException("게임을 시작할 수 없는 상태입니다");
         }
-        state = State.WHITE;
+        if (state == State.WAIT) {
+            state = State.WHITE;
+        }
     }
 
     public void stopGame() {

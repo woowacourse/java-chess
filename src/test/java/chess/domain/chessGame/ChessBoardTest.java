@@ -20,7 +20,7 @@ class ChessBoardTest {
 
     @BeforeEach
     void beforeEach() {
-        chessBoard = ChessBoard.of(new ChessSpaceGenerator());
+        chessBoard = ChessBoard.create(new ChessSpaceGenerator());
     }
 
     @Test
@@ -96,7 +96,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("해당 색의 총 점수를 계산할 수 있다(2개 폰이 같은 file에 있을 때)")
     void should_sum_piece_scores_two_pawns_in_column() {
-        ChessBoard pawnChessBoard = ChessBoard.of(new TestSpaceGenerator());
+        ChessBoard pawnChessBoard = ChessBoard.create(new TestSpaceGenerator());
 
         assertThat(pawnChessBoard.calculateScore(Color.BLACK).asDouble())
                 .isEqualTo(1.0);
@@ -105,7 +105,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("해당 색의 총 점수를 계산할 수 있다(3개 폰이 같은 file에 있을 때)")
     void should_sum_piece_scores_three_pawns_in_column() {
-        ChessBoard pawnChessBoard = ChessBoard.of(new TestSpaceGenerator());
+        ChessBoard pawnChessBoard = ChessBoard.create(new TestSpaceGenerator());
 
         assertThat(pawnChessBoard.calculateScore(Color.WHITE).asDouble())
                 .isEqualTo(1.5);
@@ -124,7 +124,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("왕이 죽으면 보드가 비활성화 된다(움직일 수 없다)")
     void should_inactive_when_king_die() {
-        ChessBoard stickChessBoard = ChessBoard.of(new StickSpaceGenerator());
+        ChessBoard stickChessBoard = ChessBoard.create(new StickSpaceGenerator());
         stickChessBoard.startGame();
 
         stickChessBoard.move(
