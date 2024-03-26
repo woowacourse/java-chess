@@ -29,7 +29,7 @@ public class ChessBoard {
             throw new IllegalArgumentException("[ERROR] 선택한 기물이 이동할 수 없는 방향입니다.");
         }
 
-        if (findPieceByPosition(source).isAlly(findPieceByPosition(target))) {
+        if (piece.isAlly(findPieceByPosition(target))) {
             throw new IllegalArgumentException("[ERROR] 이동하려는 위치에 아군 기물이 존재합니다.");
         }
 
@@ -52,10 +52,10 @@ public class ChessBoard {
             }
 
             // Pawn한테 주는 한칸 뽀나스 ㅋ
-            if (isPawnOnInitialPosition(piece, source)
-                    && !direction.isDiagonal()
-                    && !nextPosition.equals(target)
-                    && findPieceByPosition(nextPosition).isEmpty()) {
+            if (isPawnOnInitialPosition(piece, source) &&
+                    !direction.isDiagonal() &&
+                    !nextPosition.equals(target) &&
+                    findPieceByPosition(nextPosition).isEmpty()) {
                 nextPosition = nextPosition.moveTowardDirection(direction);
             }
         }
