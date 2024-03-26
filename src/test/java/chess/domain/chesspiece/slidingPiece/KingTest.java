@@ -1,5 +1,7 @@
-package chess.domain.chesspiece;
+package chess.domain.chesspiece.slidingPiece;
 
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.slidingPiece.King;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

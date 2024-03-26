@@ -3,14 +3,14 @@ package chess.domain.chessboard;
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 
-import chess.domain.chesspiece.Bishop;
+import chess.domain.chesspiece.slidingPiece.Bishop;
 import chess.domain.chesspiece.Empty;
-import chess.domain.chesspiece.King;
+import chess.domain.chesspiece.slidingPiece.King;
 import chess.domain.chesspiece.Knight;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.Queen;
-import chess.domain.chesspiece.Rook;
+import chess.domain.chesspiece.slidingPiece.Queen;
+import chess.domain.chesspiece.slidingPiece.Rook;
 import chess.domain.chesspiece.Team;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;

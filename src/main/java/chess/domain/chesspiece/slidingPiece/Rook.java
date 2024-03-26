@@ -1,5 +1,8 @@
-package chess.domain.chesspiece;
+package chess.domain.chesspiece.slidingPiece;
 
+import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.Role;
+import chess.domain.chesspiece.Team;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -9,25 +12,10 @@ import java.util.List;
 
 import static chess.domain.chesspiece.Role.*;
 
-public class Rook extends Piece {
+public class Rook extends SlidingPiece {
 
     public Rook(Team team) {
         super(team);
-    }
-
-    @Override
-    public List<Position> getRoute(Position source, Position target) {
-        List<Position> route = new ArrayList<>();
-        validateMovingRule(source, target);
-
-        Direction direction = Direction.findDirection(source, target);
-        Position movingPosition = direction.move(source);
-
-        while (!movingPosition.equals(target)) {
-            route.add(movingPosition);
-            movingPosition = direction.move(movingPosition);
-        }
-        return Collections.unmodifiableList(route);
     }
 
     @Override
@@ -43,10 +31,5 @@ public class Rook extends Piece {
             return WHITE_ROOK;
         }
         return BLACK_ROOK;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
     }
 }

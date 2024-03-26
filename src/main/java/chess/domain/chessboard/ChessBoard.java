@@ -29,17 +29,9 @@ public class ChessBoard {
 
         checkTeam(piece, targetPiece);
 
-//        if (targetPiece.getRole() == EMPTY) {
-//            piece.move();
-//        }
-//
-//        if (!targetPiece.isTeam(piece)) {
-//            piece.attack();
-//        }
-
-//        if (piece.isPawn()) {
-//            checkPawnMoving(source, target);
-//        }
+        if (piece.isPawn()) {
+            checkPawnMoving(source, target);
+        }
 
         chessBoard.put(source, new Empty());
         chessBoard.put(target, piece);
