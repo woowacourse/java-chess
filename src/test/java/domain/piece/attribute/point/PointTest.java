@@ -44,26 +44,6 @@ class PointTest {
     }
 
     @Test
-    @DisplayName("포인트가 자신의 인덱스를 알려준다.")
-    void get_index_by_point() {
-        Point point = Point.from("e5");
-
-        final var sut = point.toIndex();
-
-        assertThat(sut).isEqualTo(new Index(4, 4));
-    }
-
-    @Test
-    @DisplayName("파일 과 랭크의 인덱스를 통해 포인트를 생성한다.")
-    void create_with_index() {
-        final var index = new Index(3, 5);
-
-        final var sut = Point.fromIndex(index);
-
-        assertThat(sut).isEqualTo(new Point(File.F, Rank.FOUR));
-    }
-
-    @Test
     @DisplayName("포인트는 아래로 이동할 수 있다.")
     void point_can_move_to_down() {
         Point sut = new Point(File.A, Rank.TWO);

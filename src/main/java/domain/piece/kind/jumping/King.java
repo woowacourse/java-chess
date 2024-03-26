@@ -36,11 +36,4 @@ public class King extends JumpingPiece{
         return new King(point, color);
     }
 
-    public boolean canMove(final Point point) {
-        final var direction = this.point.calculate(point);
-        final var index = this.point.toIndex();
-
-        return Point.fromIndex(index.move(direction))
-                    .equals(point);
-    }
 }

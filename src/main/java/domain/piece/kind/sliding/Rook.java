@@ -34,7 +34,4 @@ public class Rook extends SlidingPiece {
         return new Rook(point, color);
     }
 
-    public boolean canMove(final Point point) {
-        return false;
-    }
 }

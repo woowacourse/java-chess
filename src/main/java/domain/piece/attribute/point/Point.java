@@ -1,7 +1,5 @@
 package domain.piece.attribute.point;
 
-import util.DirectionUtil;
-
 import java.util.regex.Pattern;
 
 public record Point(File file, Rank rank) {
@@ -98,16 +96,6 @@ public record Point(File file, Rank rank) {
         return this.rank.ordinal();
     }
 
-    public static Point fromIndex(final Index index) {
-        if (!index.isInBoundary()) {
-            throw new IllegalArgumentException("파일과 랭크의 범위를 벗어났습니다.");
-        }
-        return new Point(File.findByIndex(index.horizontal()), Rank.findByIndex(index.vertical()));
-    }
-
-    public Direction calculate(final Point point) {
-        return DirectionUtil.determineDirection(this, point);
-    }
 
 
     public static Point from(final String value) {
@@ -124,7 +112,4 @@ public record Point(File file, Rank rank) {
         }
     }
 
-    public Index toIndex() {
-        return new Index(rank.ordinal(), file.ordinal());
-    }
 }

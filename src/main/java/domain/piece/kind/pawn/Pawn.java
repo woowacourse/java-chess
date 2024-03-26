@@ -41,10 +41,6 @@ public abstract class Pawn extends Piece {
                 .isPresent();
     }
 
-    public boolean canMove(final Point point) {
-        return false;
-    }
-
     @Override
     public PieceStatus getStatus() {
         return PieceStatus.PAWN;

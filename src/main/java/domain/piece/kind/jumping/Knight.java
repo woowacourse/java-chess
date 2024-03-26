@@ -21,10 +21,6 @@ public class Knight extends JumpingPiece {
                 RIGHT_RIGHT_DOWN, RIGHT_DOWN_DOWN);
     }
 
-    public boolean canMove(final Point point) {
-        return false;
-    }
-
     @Override
     public PieceStatus getStatus() {
         return PieceStatus.KNIGHT;

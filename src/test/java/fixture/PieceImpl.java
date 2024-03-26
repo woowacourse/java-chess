@@ -27,8 +27,4 @@ public class PieceImpl extends Piece {
         return null;
     }
 
-    @Override
-    public boolean canMove(final Point point) {
-        throw new UnsupportedOperationException("사용할 수 없습니다.");
-    }
 }

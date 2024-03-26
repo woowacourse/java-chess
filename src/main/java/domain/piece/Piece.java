@@ -7,7 +7,7 @@ import domain.piece.kind.PieceStatus;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Piece implements Movable {
+public abstract class Piece {
 
     protected Point point;
     protected final Color color;

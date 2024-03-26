@@ -6,9 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.piece.Pieces;
 import domain.piece.attribute.Color;
-import domain.piece.attribute.point.File;
 import domain.piece.attribute.point.Point;
-import domain.piece.attribute.point.Rank;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

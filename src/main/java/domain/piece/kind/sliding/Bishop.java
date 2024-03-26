@@ -34,7 +34,4 @@ public class Bishop extends SlidingPiece {
         return PieceStatus.BISHOP;
     }
 
-    public boolean canMove(final Point point) {
-        return false;
-    }
 }

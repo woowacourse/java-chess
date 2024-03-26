@@ -29,8 +29,4 @@ public class Queen extends SlidingPiece {
         return new Queen(point, color);
     }
 
-    public boolean canMove(final Point point) {
-        this.point.calculate(point);
-        return true;
-    }
 }
