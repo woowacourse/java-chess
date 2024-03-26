@@ -34,4 +34,12 @@ public class OutputView {
     public void printScore(BoardScore boardScore, Color color) {
         System.out.printf("%s 점수: %.1f%n", color, boardScore.asDouble());
     }
+
+    public void printWinner(Color winner) {
+        if (winner == Color.EMPTY) {
+            System.out.printf("무승부%n");
+            return;
+        }
+        System.out.printf("%s 승리%n", winner);
+    }
 }

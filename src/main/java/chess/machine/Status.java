@@ -1,5 +1,6 @@
 package chess.machine;
 
+import chess.domain.chessBoard.BoardScore;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.piece.Color;
 import chess.view.OutputView;
@@ -20,7 +21,31 @@ public class Status implements Command {
 
     @Override
     public void conductCommand(ChessBoard chessBoard, OutputView outputView) {
-        outputView.printScore(chessBoard.calculateScore(Color.BLACK), Color.BLACK);
-        outputView.printScore(chessBoard.calculateScore(Color.WHITE), Color.WHITE);
+        Result result = new Result(chessBoard);
+
+        outputView.printScore(result.blackScore, Color.BLACK);
+        outputView.printScore(result.whiteScore, Color.WHITE);
+        outputView.printWinner(result.winner());
+    }
+
+    private static class Result {
+
+        final BoardScore blackScore;
+        final BoardScore whiteScore;
+
+        Result(ChessBoard chessBoard) {
+            blackScore = chessBoard.calculateScore(Color.BLACK);
+            whiteScore = chessBoard.calculateScore(Color.WHITE);
+        }
+
+        Color winner() {
+            if (blackScore.asDouble() > whiteScore.asDouble()) {
+                return Color.BLACK;
+            }
+            if (blackScore.asDouble() < whiteScore.asDouble()) {
+                return Color.WHITE;
+            }
+            return Color.EMPTY;
+        }
     }
 }
