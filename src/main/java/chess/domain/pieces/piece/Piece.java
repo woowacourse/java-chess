@@ -1,6 +1,9 @@
 package chess.domain.pieces.piece;
 
+import chess.domain.score.Score;
+import chess.domain.score.ScoreStatus;
 import chess.domain.square.Movement;
+
 import java.util.Objects;
 
 public abstract class Piece {
@@ -33,8 +36,8 @@ public abstract class Piece {
         return type;
     }
 
-    public Score getScore() {
-        return type.getScore();
+    public Score getScore(ScoreStatus scoreStatus) {
+        return scoreStatus.calculate(type.getScore());
     }
 
     @Override

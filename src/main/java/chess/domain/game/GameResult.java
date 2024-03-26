@@ -2,28 +2,62 @@ package chess.domain.game;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
-import chess.domain.pieces.piece.Score;
+import chess.domain.score.Score;
+import chess.domain.score.ScoreStatus;
 import chess.domain.square.Square;
+
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 
 public class GameResult {
 
-    private final Map<Square, Piece> positionToPiece;
+    private final Map<Square, Piece> pieces;
 
-    public GameResult(final Map<Square, Piece> positionToPiece) {
-        this.positionToPiece = positionToPiece;
+    public GameResult(final Map<Square, Piece> pieces) {
+        this.pieces = pieces;
+    }
+
+    private static double findDefaultPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() == 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
+                .sum();
+    }
+
+    private static double findHalfPawnScore(Map<Integer, List<Piece>> fileToPawn) {
+        return fileToPawn.values().stream()
+                .filter(list -> list.size() > 1)
+                .flatMap(List::stream)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.HALF).getValue())
+                .sum();
     }
 
     public Score getScore(final Color color) {
-        double score = calculatePieceScore(color);
-        return Score.of(score);
+        double pieceScore = calculatePieceScore(color);
+        double pawnScore = calculatePawnScore(color);
+        return Score.of(pieceScore + pawnScore);
     }
 
     private double calculatePieceScore(final Color color) {
-        return positionToPiece.values().stream()
-                .filter(piece -> piece.color().equals(color))
-                .map(piece -> piece.getScore().getValue())
+        return pieces.values().stream()
+                .filter(piece -> piece.color().equals(color) && !piece.isPawn())
+                .map(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
                 .mapToDouble(i -> i)
                 .sum();
+    }
+
+    private double calculatePawnScore(final Color color) {
+        Map<Integer, List<Piece>> fileToPawn = pieces.entrySet().stream()
+                .filter(it -> it.getValue().color().equals(color) && it.getValue().isPawn())
+                .collect(groupingBy(it -> it.getKey().getFileIndex(),
+                        mapping(Entry::getValue, Collectors.toList())));
+
+        return findDefaultPawnScore(fileToPawn) + findHalfPawnScore(fileToPawn);
     }
 }

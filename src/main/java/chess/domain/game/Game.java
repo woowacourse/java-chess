@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Square;
+
 import java.util.Map;
 
 public class Game {

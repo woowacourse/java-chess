@@ -7,6 +7,7 @@ import chess.dto.MoveRequest;
 import chess.dto.PieceResponse;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

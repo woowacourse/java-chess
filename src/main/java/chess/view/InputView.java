@@ -1,11 +1,8 @@
 package chess.view;
 
 import chess.dto.MoveRequest;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.StringJoiner;
+
+import java.util.*;
 
 public class InputView {
     private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";

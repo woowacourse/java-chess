@@ -1,5 +1,7 @@
 package chess.domain.pieces.piece;
 
+import chess.domain.score.Score;
+
 public enum Type {
     KING(0),
     QUEEN(9),

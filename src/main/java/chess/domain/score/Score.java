@@ -1,4 +1,4 @@
-package chess.domain.pieces.piece;
+package chess.domain.score;
 
 import java.util.Objects;
 
@@ -20,6 +20,10 @@ public class Score {
         if (score < 0) {
             throw new IllegalStateException(INVALID_SCORE);
         }
+    }
+
+    public Score half() {
+        return new Score(value / 2);
     }
 
     public double getValue() {
