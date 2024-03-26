@@ -130,7 +130,7 @@ public abstract class MultiShift extends Piece {
         return squares;
     }
 
-    private Piece getPiece(Set<Piece> entirePieces, Square existPieces) { //todo 예외를 던지는 것이 아닌, Blank를 반환하기
+    private Piece getPiece(Set<Piece> entirePieces, Square existPieces) {
         return entirePieces.stream()
                 .filter(piece -> piece.currentSquare() == existPieces)
                 .findFirst()
@@ -142,7 +142,7 @@ public abstract class MultiShift extends Piece {
                 .anyMatch(piece -> piece.currentSquare() == currentSquare);
     }
 
-    private void addToMovableSquareIfEnemy(Set<Square> movableSquare, Piece piece) { //todo Set<Square> 일급 컬렉션
+    private void addToMovableSquareIfEnemy(Set<Square> movableSquare, Piece piece) {
         if (isEnemyOf(piece)) {
             movableSquare.add(piece.currentSquare());
         }

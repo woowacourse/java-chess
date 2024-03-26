@@ -111,7 +111,8 @@ public class Pawn extends Piece {
         return squares;
     }
 
-    private Set<Square> findStartWhitePawnLegalMoves(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
+    private Set<Square> findStartWhitePawnLegalMoves(Set<Piece> existPieces, Square currentSquare,
+                                                     Set<Square> squares) {
         for (int i = 0; i < 2 && currentSquare.canMoveUp(); i++) {
             currentSquare = currentSquare.moveUp();
             if (isOccupied(existPieces, currentSquare)) {
@@ -122,7 +123,7 @@ public class Pawn extends Piece {
         return squares;
     }
 
-    private Piece getPiece(Set<Piece> entirePieces, Square currentSquare) { //todo 예외를 던지는 것이 아닌, Blank를 반환하기
+    private Piece getPiece(Set<Piece> entirePieces, Square currentSquare) {
         return entirePieces.stream()
                 .filter(piece -> piece.currentSquare() == currentSquare)
                 .findFirst()
