@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
@@ -106,22 +107,51 @@ class MovementTest {
 
     @ParameterizedTest
     @MethodSource(value = "provideMovementAndLengthAndExpectedResult")
-    @DisplayName("같은 거리인지 판단한다.")
-    void hasSameLengthOf(Movement movement, int length, boolean expectedResult) {
+    @DisplayName("움직인 거리를 구한다.")
+    void hasSameLengthOf(Movement movement, int expectedLength) {
         // when
-        boolean result = movement.hasLengthOf(length);
+        int actualLength = movement.calculateLength();
 
         // then
-        assertThat(result).isEqualTo(expectedResult);
+        assertThat(actualLength).isEqualTo(expectedLength);
     }
 
     private static Stream<Arguments> provideMovementAndLengthAndExpectedResult() {
         return Stream.of(
-                Arguments.of(new Movement(Difference.from(3), Difference.from(0)), 3, true),
-                Arguments.of(new Movement(Difference.from(2), Difference.from(-2)), 2, true),
-                Arguments.of(new Movement(Difference.from(0), Difference.from(5)), 1, false),
-                Arguments.of(new Movement(Difference.from(1), Difference.from(-1)), 4, false),
-                Arguments.of(new Movement(Difference.from(3), Difference.from(5)), 3, false)
+                Arguments.of(new Movement(Difference.from(3), Difference.from(0)), 3),
+                Arguments.of(new Movement(Difference.from(2), Difference.from(-2)), 2),
+                Arguments.of(new Movement(Difference.from(0), Difference.from(5)), 5),
+                Arguments.of(new Movement(Difference.from(1), Difference.from(-1)), 1),
+                Arguments.of(new Movement(Difference.from(3), Difference.from(5)), 8),
+                Arguments.of(new Movement(Difference.from(0), Difference.from(0)), 0)
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"-5,-1", "4,1", "0,0"})
+    @DisplayName("File 움직임의 증가량을 구한다.")
+    void calculateFileIncrement(int fileDifference, int expectedIncrement) {
+        // given
+        Movement movement = new Movement(Difference.from(fileDifference), Difference.from(0));
+
+        // when
+        int actualIncrement = movement.calculateFileIncrement();
+
+        // then
+        assertThat(actualIncrement).isEqualTo(expectedIncrement);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"-5,-1", "4,1", "0,0"})
+    @DisplayName("Rank 움직임의 증가량을 구한다.")
+    void calculateRankIncrement(int rankDifference, int expectedIncrement) {
+        // given
+        Movement movement = new Movement(Difference.from(0), Difference.from(rankDifference));
+
+        // when
+        int actualIncrement = movement.calculateRankIncrement();
+
+        // then
+        assertThat(actualIncrement).isEqualTo(expectedIncrement);
     }
 }

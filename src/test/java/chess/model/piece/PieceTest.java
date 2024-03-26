@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceTest {
+
     @Test
     @DisplayName("같은 진영인지 확인한다.")
     void isSameSide() {
@@ -28,5 +29,4 @@ class PieceTest {
         // when & then
         assertThat(piece.isSameSide(other)).isTrue();
     }
-
 }
