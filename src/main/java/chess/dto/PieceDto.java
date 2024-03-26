@@ -6,6 +6,13 @@ import chess.domain.position.Position;
 
 public record PieceDto(int file, int rank, String type) {
 
+    public static PieceDto from(Position position, PieceType pieceType) {
+        int file = position.file();
+        int rank = position.rank();
+        String type = pieceType.name();
+        return new PieceDto(file, rank, type);
+    }
+
     public Position getPosition() {
         return new Position(file, rank);
     }
