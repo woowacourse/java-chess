@@ -274,24 +274,6 @@ public class PositionTest {
 
             assertThat(source.isLegalFileStep(target, 5)).isFalse();
         }
-
-        @Test
-        @DisplayName("파일의 거리와 랭크의 거리가 같으면 참을 반환한다.")
-        void isSameDistance_True() {
-            Position source = PositionGenerator.generate(File.A, Rank.EIGHT);
-            Position target = PositionGenerator.generate(File.H, Rank.ONE);
-
-            assertThat(source.isSameDistance(target)).isTrue();
-        }
-
-        @Test
-        @DisplayName("파일의 거리와 랭크의 거리가 같지 않으면 거짓을 반환한다.")
-        void isSameDistance_False() {
-            Position source = PositionGenerator.generate(File.A, Rank.EIGHT);
-            Position target = PositionGenerator.generate(File.H, Rank.TWO);
-
-            assertThat(source.isSameDistance(target)).isFalse();
-        }
     }
 
     @Nested

@@ -15,10 +15,6 @@ public class Position { // TODO: refactoring (너무 무거움)
         this.rank = rank;
     }
 
-    public boolean isSameFile(Position target) {
-        return this.file == target.file;
-    }
-
     public boolean isSameRank(Position target) {
         return this.rank == target.rank;
     }
@@ -47,6 +43,10 @@ public class Position { // TODO: refactoring (너무 무거움)
         return rank == target.rank;
     }
 
+    public boolean isSameFile(Position target) {
+        return this.file == target.file;
+    }
+
     public boolean isUp(Position target) {
         return file == target.file && rank.isUp(target.rank);
     }
@@ -70,22 +70,26 @@ public class Position { // TODO: refactoring (너무 무거움)
     }
 
     public boolean isRightUp(Position target) {
-        return rank.isUp(target.rank) && file.isRight(target.file);
+        return rank.isUp(target.rank) && file.isRight(target.file)
+                && isSameDistance(target);
     }
 
     public boolean isLeftUp(Position target) {
-        return rank.isUp(target.rank) && file.isLeft(target.file);
+        return rank.isUp(target.rank) && file.isLeft(target.file)
+                && isSameDistance(target);
     }
 
     public boolean isRightDown(Position target) {
-        return rank.isDown(target.rank) && file.isRight(target.file);
+        return rank.isDown(target.rank) && file.isRight(target.file)
+                && isSameDistance(target);
     }
 
     public boolean isLeftDown(Position target) {
-        return rank.isDown(target.rank) && file.isLeft(target.file);
+        return rank.isDown(target.rank) && file.isLeft(target.file)
+                && isSameDistance(target);
     }
 
-    public boolean isSameDistance(Position target) {
+    private boolean isSameDistance(Position target) {
         return file.distance(target.file) == rank.distance(target.rank);
     }
 
