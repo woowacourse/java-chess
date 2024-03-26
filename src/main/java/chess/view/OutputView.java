@@ -31,4 +31,8 @@ public class OutputView {
         System.out.println(" --- 현재 점수 --- ");
         System.out.println("백 : " + whiteScore + "  -  " + blackScore + " 흑");
     }
+
+    public void printEndMessage() {
+        System.out.println("게임이 종료되었습니다.");
+    }
 }

@@ -61,6 +61,7 @@ public class ChessGame {
         while (gameState.isPlaying()) {
             executeCommandFromInput();
         }
+        outputView.printEndMessage();
     }
 
     private void proceedTurn(Board board, BoardDisplayConverter converter) {
