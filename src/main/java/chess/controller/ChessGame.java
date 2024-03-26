@@ -2,7 +2,9 @@ package chess.controller;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
+import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
+import chess.model.rule.Turn;
 import chess.view.input.GameArguments;
 import chess.view.input.GameCommand;
 import chess.view.input.InputView;
@@ -28,15 +30,17 @@ public class ChessGame {
         }
         ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
         ChessBoard chessBoard = new ChessBoard(chessBoardInitializer.create());
+        Turn firstTurn = Turn.from(Side.WHITE);
         outputView.printChessBoard(chessBoard);
-        retryOnException(() -> play(chessBoard));
+        retryOnException(() -> play(chessBoard, firstTurn));
     }
 
     private GameCommand getFirstGameCommand() {
         return GameCommand.createInPreparation(inputView.readGameCommand());
     }
 
-    private void play(ChessBoard chessBoard) {
+    private void play(ChessBoard chessBoard, Turn firstTurn) {
+        Turn turn = firstTurn;
         while (true) {
             GameArguments gameArguments = inputView.readMoveArguments();
             GameCommand gameCommand = gameArguments.gameCommand();
@@ -44,14 +48,15 @@ public class ChessGame {
                 break;
             }
             MoveArguments moveArguments = gameArguments.moveArguments();
-            move(chessBoard, moveArguments);
+            move(chessBoard, moveArguments, turn);
+            turn = turn.getNextTurn();
         }
     }
 
-    private void move(ChessBoard chessBoard, MoveArguments moveArguments) {
+    private void move(ChessBoard chessBoard, MoveArguments moveArguments, Turn turn) {
         ChessPosition source = moveArguments.createSourcePosition();
         ChessPosition target = moveArguments.createTargetPosition();
-        chessBoard.move(source, target);
+        chessBoard.move(source, target, turn);
         outputView.printChessBoard(chessBoard);
     }
 

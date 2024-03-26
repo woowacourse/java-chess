@@ -1,5 +1,6 @@
 package chess.model.rule;
 
+import chess.model.piece.Piece;
 import chess.model.piece.Side;
 
 import java.util.Arrays;
@@ -24,5 +25,9 @@ public class Turn {
 
     public Turn getNextTurn() {
         return Turn.from(side.getOppositeSide());
+    }
+
+    public boolean isNotCorrect(Piece piece) {
+        return !piece.isSameSide(side);
     }
 }

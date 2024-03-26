@@ -4,6 +4,7 @@ import chess.model.piece.*;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
+import chess.model.rule.Turn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class ChessBoardTest {
     void move() {
         ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
         ChessPosition target = ChessPosition.of(File.B, Rank.FOUR);
-        chessBoard.move(source, target);
+        chessBoard.move(source, target, Turn.from(Side.WHITE));
 
         Map<ChessPosition, Piece> board = chessBoard.getBoard();
 
@@ -50,7 +51,20 @@ class ChessBoardTest {
         ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.BLACK)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게임 차례에 맞지 않는 Source 기물의 위치를 입력하면 예외가 발생한다.")
+    void moveWithInvalidTurn() {
+        // given
+        ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
+        ChessPosition target = ChessPosition.of(File.B, Rank.FOUR);
+        Turn turn = Turn.from(Side.BLACK);
+
+        // when & then
+        assertThatThrownBy(() -> chessBoard.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -63,7 +77,7 @@ class ChessBoardTest {
         ChessBoard chessBoard = new ChessBoard(Map.of(source, Pawn.from(Side.BLACK), target, Bishop.from(Side.BLACK)));
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -75,7 +89,7 @@ class ChessBoardTest {
         ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -87,7 +101,7 @@ class ChessBoardTest {
         ChessPosition target = ChessPosition.of(File.A, Rank.SIX);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -102,7 +116,7 @@ class ChessBoardTest {
         ChessPosition targetPosition = ChessPosition.of(File.B, Rank.THREE);
 
         // when
-        customChessBoard.move(knightPosition, targetPosition);
+        customChessBoard.move(knightPosition, targetPosition, Turn.from(Side.WHITE));
 
         // then
         Map<ChessPosition, Piece> actualBoard = customChessBoard.getBoard();

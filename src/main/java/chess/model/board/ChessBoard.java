@@ -4,6 +4,7 @@ import chess.model.piece.Blank;
 import chess.model.piece.Piece;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
+import chess.model.rule.Turn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +18,9 @@ public class ChessBoard {
         this.board = new HashMap<>(board);
     }
 
-    public void move(ChessPosition sourcePosition, ChessPosition targetPosition) {
+    public void move(ChessPosition sourcePosition, ChessPosition targetPosition, Turn turn) {
         Piece sourcePiece = board.get(sourcePosition);
-        validateSourceIsBlank(sourcePiece);
+        validateSource(sourcePiece, turn);
         Piece targetPiece = board.get(targetPosition);
         validateTargetPiece(sourcePiece, targetPiece);
         Path path = sourcePiece.findPath(sourcePosition, targetPosition, targetPiece);
@@ -28,9 +29,12 @@ public class ChessBoard {
         replacePiece(sourcePiece, sourcePosition, targetPosition);
     }
 
-    private void validateSourceIsBlank(Piece sourcePiece) {
+    private void validateSource(Piece sourcePiece, Turn turn) {
         if (sourcePiece.equals(Blank.INSTANCE)) {
             throw new IllegalArgumentException("소스 위치에 기물이 존재하지 않습니다.");
+        }
+        if (turn.isNotCorrect(sourcePiece)) {
+            throw new IllegalArgumentException("올바른 게임 차례가 아닙니다.");
         }
     }
 

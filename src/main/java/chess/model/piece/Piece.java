@@ -2,6 +2,7 @@ package chess.model.piece;
 
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
+import chess.model.rule.Turn;
 
 import java.util.Objects;
 
@@ -16,6 +17,10 @@ public abstract class Piece {
 
     public final boolean isSameSide(Piece other) {
         return this.side == other.side;
+    }
+
+    public final boolean isSameSide(Side side) {
+        return this.side == side;
     }
 
     @Override

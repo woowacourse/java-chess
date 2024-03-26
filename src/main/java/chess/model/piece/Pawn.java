@@ -51,14 +51,14 @@ public class Pawn extends Piece {
     }
 
     private boolean isPawnInitialPosition(ChessPosition source) {
-        if (isSameSide(from(Side.WHITE))) {
+        if (isSameSide(Side.WHITE)) {
             return source.hasRank(Rank.TWO);
         }
         return source.hasRank(Rank.SEVEN);
     }
 
     private boolean canMoveForwardWith(Movement movement, int displacement) {
-        boolean isUpperSide = isSameSide(from(Side.BLACK));
+        boolean isUpperSide = isSameSide(Side.BLACK);
         return movement.isForward(isUpperSide) && movement.hasLengthOf(displacement);
     }
 
