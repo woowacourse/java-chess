@@ -11,6 +11,7 @@ import static domain.position.Rank.THREE;
 import static domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.piece.fixture.PositionFixture;
 import domain.position.Position;
 import domain.position.PositionGenerator;
 import java.util.List;

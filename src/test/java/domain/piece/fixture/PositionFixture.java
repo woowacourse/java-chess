@@ -1,4 +1,4 @@
-package domain.piece;
+package domain.piece.fixture;
 
 import domain.position.File;
 import domain.position.Position;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PositionFixture { // TODO: PositionGenerator 와 일부 중복
+public class PositionFixture { // TODO: PositionGenerator 와 일부 중복 & 이 클래스에 대한 테스트 만들기
 
     private static final Map<File, Map<Rank, Position>> POSITIONS = new HashMap<>();
 
