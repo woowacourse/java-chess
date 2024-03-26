@@ -82,6 +82,10 @@ public class OutputView {
         System.out.printf("우승자는 %s 입니다.%n", getTeamName(winner));
     }
 
+    public void printScore(TeamColor teamColor, double score) {
+        System.out.printf("%s 의 점수: %f%n", getTeamName(teamColor), score);
+    }
+
     private String getTeamName(TeamColor teamColor) {
         if (!TEAM_NAME.containsKey(teamColor)) {
             throw new IllegalArgumentException("팀 정보가 존재하지 않습니다.");
