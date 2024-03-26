@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public class Piece {
 
-    private final PieceType pieceType;
-    private final Color color;
+    protected final PieceType pieceType;
+    protected final Color color;
 
     public Piece(PieceType pieceType, Color color) {
         this.pieceType = pieceType;
@@ -23,14 +23,19 @@ public class Piece {
     }
 
     public boolean canMove(Position source, Position target) {
-        if (isSameType(PieceType.PAWN)) {
-            return color.canMove(source, target) && pieceType.canMove(source, target);
-        }
         return pieceType.canMove(source, target);
     }
 
-    public boolean isDifferentColor(Piece targetPiece) {
-        return color != targetPiece.color;
+    public boolean canMove(Piece targetPiece) {
+        return this.color != targetPiece.color;
+    }
+
+    public boolean canAttack(Position source, Position target) {
+        return pieceType.canAttack(source, target);
+    }
+
+    public boolean isOpposite(Piece targetPiece) {
+        return color != Color.NONE && color != targetPiece.color;
     }
 
     @Override

@@ -21,6 +21,24 @@ public class Board {
         return squares.values().stream().toList();
     }
 
+    public boolean canMove(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = findPieceByPosition(sourcePosition);
+        Piece targetPiece = findPieceByPosition(targetPosition);
+        if (sourcePiece.canMove(targetPiece)) {
+            return sourcePiece.canMove(sourcePosition, targetPosition);
+        }
+        return false;
+    }
+
+    public boolean canAttack(Position sourcePosition, Position targetPosition) {
+        Piece sourcePiece = findPieceByPosition(sourcePosition);
+        Piece targetPiece = findPieceByPosition(targetPosition);
+        if (sourcePiece.isOpposite(targetPiece)) {
+            return sourcePiece.canAttack(sourcePosition, targetPosition);
+        }
+        return false;
+    }
+
     public Piece findPieceByPosition(Position position) {
         return squares.get(position);
     }

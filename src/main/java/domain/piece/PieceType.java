@@ -2,26 +2,34 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.function.BiPredicate;
-
 public enum PieceType {
 
-    BISHOP(Position::isDiagonal),
-    KING(Position::isNeighbor),
-    KNIGHT(Position::isStraightDiagonal),
-    PAWN((source, target) -> source.isForwardStraight(target) || source.canAttackDiagonal(target)),
-    QUEEN((source, target) -> source.isDiagonal(target) || source.isStraight(target)),
-    ROOK(Position::isStraight),
-    NONE((source, target) -> false),
+    BISHOP(MoveTactic.DIAGONAL, AttackTactic.ATTACK),
+    KING(MoveTactic.NEIGHBOR, AttackTactic.ATTACK),
+    KNIGHT(MoveTactic.ONE_STRAIGHT_ONE_DIAGONAL, AttackTactic.ATTACK),
+    PAWN(MoveTactic.FORWARD_STRAIGHT, AttackTactic.DIAGONAL),
+    QUEEN(MoveTactic.STRAIGHT_DIAGONAL, AttackTactic.ATTACK),
+    ROOK(MoveTactic.STRAIGHT, AttackTactic.ATTACK),
+    NONE(MoveTactic.STOP, AttackTactic.ATTACK),
     ;
 
-    private final BiPredicate<Position, Position> tactic;
+    private final MoveTactic moveTactic;
+    private final AttackTactic attackTactic;
 
-    PieceType(BiPredicate<Position, Position> tactic) {
-        this.tactic = tactic;
+    PieceType(MoveTactic moveTactic, AttackTactic attackTactic) {
+        this.moveTactic = moveTactic;
+        this.attackTactic = attackTactic;
     }
 
     public boolean canMove(Position source, Position target) {
-        return tactic.test(source, target);
+        return moveTactic.canMove(source, target);
+    }
+
+    public boolean canAttack(Position source, Position target) {
+        return attackTactic.canAttack(source, target);
+    }
+
+    public boolean isPawn() {
+        return this == PAWN;
     }
 }
