@@ -1,4 +1,4 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -7,9 +7,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-import static chess.domain.chessBoard.PieceFixture.blackBishop;
-import static chess.domain.chessBoard.PieceFixture.emptyPiece;
-import static chess.domain.chessBoard.PieceFixture.whiteBishop;
+import static chess.domain.chessGame.PieceFixture.blackBishop;
+import static chess.domain.chessGame.PieceFixture.emptyPiece;
+import static chess.domain.chessGame.PieceFixture.whiteBishop;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

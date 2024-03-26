@@ -1,6 +1,8 @@
-package chess.domain.chessBoard.generator;
+package chess.domain.chessGame;
 
-import chess.domain.chessBoard.Space;
+import chess.domain.chessGame.generator.ChessPieceGenerator;
+import chess.domain.chessGame.generator.PieceGenerator;
+import chess.domain.chessGame.generator.SpaceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -12,19 +14,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class ChessSpaceGenerator implements SpaceGenerator {
+class TestSpaceGenerator implements SpaceGenerator {
 
-    public static final int CHESS_BOARD_LENGTH = 8;
-
-    private final PieceGenerator pieceGenerator;
-
-    public ChessSpaceGenerator() {
-        this(new ChessPieceGenerator());
-    }
-
-    public ChessSpaceGenerator(PieceGenerator pieceGenerator) {
-        this.pieceGenerator = pieceGenerator;
-    }
+    private static final PieceGenerator pieceGenerator = new ChessPieceGenerator();
 
     @Override
     public List<Space> generateSpaces() {
@@ -38,14 +30,22 @@ public class ChessSpaceGenerator implements SpaceGenerator {
     }
 
     private List<Piece> makeAllPieces() {
-        List<Piece> pieces = new ArrayList<>(pieceGenerator.makeSpecialPieces(Color.BLACK));
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, CHESS_BOARD_LENGTH));
-        pieces.addAll(pieceGenerator.makeSpecialPieces(Color.WHITE));
+        List<Piece> pieces = new ArrayList<>();
+
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, 1));
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
+
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, 1));
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
+
+        pieces.addAll(pieceGenerator.makeEmptyPieces(1));
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
+
+        pieces.addAll(pieceGenerator.makeEmptyPieces(40));
+
         return pieces;
     }
 

@@ -1,6 +1,6 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
-import chess.domain.chessBoard.generator.ChessSpaceGenerator;
+import chess.domain.chessGame.generator.ChessSpaceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;

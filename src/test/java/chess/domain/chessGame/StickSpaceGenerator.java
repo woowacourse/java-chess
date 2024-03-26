@@ -1,8 +1,8 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
-import chess.domain.chessBoard.generator.ChessPieceGenerator;
-import chess.domain.chessBoard.generator.PieceGenerator;
-import chess.domain.chessBoard.generator.SpaceGenerator;
+import chess.domain.chessGame.generator.ChessPieceGenerator;
+import chess.domain.chessGame.generator.PieceGenerator;
+import chess.domain.chessGame.generator.SpaceGenerator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -14,8 +14,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-class TestSpaceGenerator implements SpaceGenerator {
-
+class StickSpaceGenerator implements SpaceGenerator {
     private static final PieceGenerator pieceGenerator = new ChessPieceGenerator();
 
     @Override
@@ -32,19 +31,11 @@ class TestSpaceGenerator implements SpaceGenerator {
     private List<Piece> makeAllPieces() {
         List<Piece> pieces = new ArrayList<>();
 
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, 1));
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
+        pieces.addAll(pieceGenerator.makeSpecialPieces(Color.BLACK));
 
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, 1));
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
+        pieces.addAll(pieceGenerator.makeSpecialPieces(Color.WHITE));
 
-        pieces.addAll(pieceGenerator.makeEmptyPieces(1));
-        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, 1));
-        pieces.addAll(pieceGenerator.makeEmptyPieces(6));
-
-        pieces.addAll(pieceGenerator.makeEmptyPieces(40));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(48));
 
         return pieces;
     }

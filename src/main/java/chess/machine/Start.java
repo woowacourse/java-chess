@@ -1,6 +1,6 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessGame;
+import chess.domain.chessGame.ChessGame;
 import chess.view.OutputView;
 
 public class Start implements Command {

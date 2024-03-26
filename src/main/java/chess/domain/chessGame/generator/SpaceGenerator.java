@@ -1,6 +1,6 @@
-package chess.domain.chessBoard.generator;
+package chess.domain.chessGame.generator;
 
-import chess.domain.chessBoard.Space;
+import chess.domain.chessGame.Space;
 import java.util.List;
 
 public interface SpaceGenerator {

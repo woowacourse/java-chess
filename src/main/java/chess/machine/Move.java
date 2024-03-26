@@ -1,6 +1,6 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessGame;
+import chess.domain.chessGame.ChessGame;
 import chess.domain.position.Coordinate;
 import chess.domain.position.Position;
 import chess.view.OutputView;

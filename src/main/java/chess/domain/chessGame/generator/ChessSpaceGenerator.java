@@ -1,8 +1,6 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame.generator;
 
-import chess.domain.chessBoard.generator.ChessPieceGenerator;
-import chess.domain.chessBoard.generator.PieceGenerator;
-import chess.domain.chessBoard.generator.SpaceGenerator;
+import chess.domain.chessGame.Space;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -14,8 +12,19 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-class StickSpaceGenerator implements SpaceGenerator {
-    private static final PieceGenerator pieceGenerator = new ChessPieceGenerator();
+public class ChessSpaceGenerator implements SpaceGenerator {
+
+    public static final int CHESS_BOARD_LENGTH = 8;
+
+    private final PieceGenerator pieceGenerator;
+
+    public ChessSpaceGenerator() {
+        this(new ChessPieceGenerator());
+    }
+
+    public ChessSpaceGenerator(PieceGenerator pieceGenerator) {
+        this.pieceGenerator = pieceGenerator;
+    }
 
     @Override
     public List<Space> generateSpaces() {
@@ -29,14 +38,14 @@ class StickSpaceGenerator implements SpaceGenerator {
     }
 
     private List<Piece> makeAllPieces() {
-        List<Piece> pieces = new ArrayList<>();
-
-        pieces.addAll(pieceGenerator.makeSpecialPieces(Color.BLACK));
-
+        List<Piece> pieces = new ArrayList<>(pieceGenerator.makeSpecialPieces(Color.BLACK));
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.BLACK, CHESS_BOARD_LENGTH));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
+        pieces.addAll(pieceGenerator.makeEmptyPieces(CHESS_BOARD_LENGTH));
+        pieces.addAll(pieceGenerator.makePawnPieces(Color.WHITE, CHESS_BOARD_LENGTH));
         pieces.addAll(pieceGenerator.makeSpecialPieces(Color.WHITE));
-
-        pieces.addAll(pieceGenerator.makeEmptyPieces(48));
-
         return pieces;
     }
 

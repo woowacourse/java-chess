@@ -1,4 +1,4 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -13,16 +13,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static chess.domain.chessBoard.PieceFixture.blackBishop;
-import static chess.domain.chessBoard.PieceFixture.blackKing;
-import static chess.domain.chessBoard.PieceFixture.blackKnight;
-import static chess.domain.chessBoard.PieceFixture.blackPawn;
-import static chess.domain.chessBoard.PieceFixture.blackQueen;
-import static chess.domain.chessBoard.PieceFixture.blackRook;
-import static chess.domain.chessBoard.PieceFixture.emptyPiece;
-import static chess.domain.chessBoard.PieceFixture.whiteKing;
-import static chess.domain.chessBoard.PieceFixture.whitePawn;
-import static chess.domain.chessBoard.PieceFixture.whiteRook;
+import static chess.domain.chessGame.PieceFixture.blackBishop;
+import static chess.domain.chessGame.PieceFixture.blackKing;
+import static chess.domain.chessGame.PieceFixture.blackKnight;
+import static chess.domain.chessGame.PieceFixture.blackPawn;
+import static chess.domain.chessGame.PieceFixture.blackQueen;
+import static chess.domain.chessGame.PieceFixture.blackRook;
+import static chess.domain.chessGame.PieceFixture.emptyPiece;
+import static chess.domain.chessGame.PieceFixture.whiteKing;
+import static chess.domain.chessGame.PieceFixture.whitePawn;
+import static chess.domain.chessGame.PieceFixture.whiteRook;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

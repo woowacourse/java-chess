@@ -1,4 +1,4 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
 import chess.domain.piece.Piece;
 

@@ -1,7 +1,7 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessGame;
-import chess.domain.chessBoard.generator.ChessSpaceGenerator;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.generator.ChessSpaceGenerator;
 import chess.view.InputView;
 import chess.view.OutputView;
 
