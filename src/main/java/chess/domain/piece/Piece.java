@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import chess.domain.color.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
@@ -23,6 +24,8 @@ public abstract class Piece {
     public abstract boolean isPawn();
 
     public abstract PieceType pieceType();
+
+    public abstract Score score();
 
     public final boolean isSameColor(Color otherColor) {
         return color == otherColor;

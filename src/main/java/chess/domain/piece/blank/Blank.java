@@ -1,5 +1,6 @@
 package chess.domain.piece.blank;
 
+import chess.domain.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
@@ -26,6 +27,11 @@ public final class Blank extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public PieceType pieceType() {
         return PieceType.BLANK;
     }
@@ -33,5 +39,10 @@ public final class Blank extends Piece {
     @Override
     public MoveStrategy strategy(Map<Position, Piece> board) {
         return new BlankMoveStrategy(board);
+    }
+
+    @Override
+    public Score score() {
+        return new Score(0);
     }
 }

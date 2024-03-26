@@ -1,5 +1,6 @@
 package chess.domain.piece.sliding;
 
+import chess.domain.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
@@ -18,5 +19,10 @@ public final class Rook extends SlidingPiece {
             return PieceType.WHITE_ROOK;
         }
         return PieceType.BLACK_ROOK;
+    }
+
+    @Override
+    public Score score() {
+        return new Score(5);
     }
 }

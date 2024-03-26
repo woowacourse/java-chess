@@ -1,5 +1,6 @@
 package chess.domain.piece.nonsliding;
 
+import chess.domain.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
@@ -18,5 +19,10 @@ public final class King extends NonSlidingPiece {
             return PieceType.WHITE_KING;
         }
         return PieceType.BLACK_KING;
+    }
+
+    @Override
+    public Score score() {
+        return new Score(0);
     }
 }
