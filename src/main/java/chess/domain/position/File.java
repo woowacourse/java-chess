@@ -20,7 +20,7 @@ public enum File {
     public static File from(String value) {
         try {
             return File.valueOf(value);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("a~h까지 입력가능합니다.");
         }
     }

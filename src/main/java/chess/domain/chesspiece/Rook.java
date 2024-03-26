@@ -9,7 +9,7 @@ import java.util.List;
 
 import static chess.domain.chesspiece.Role.*;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
 
     public Rook(Team team) {
         super(team);
@@ -32,14 +32,14 @@ public class Rook extends Piece{
 
     @Override
     protected void validateMovingRule(Position source, Position target) {
-        if(!source.isSameRank(target) && !source.isSameFile(target)) {
+        if (!source.isSameRank(target) && !source.isSameFile(target)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
     @Override
     public Role getRole() {
-        if(team.isWhite()) {
+        if (team.isWhite()) {
             return WHITE_ROOK;
         }
         return BLACK_ROOK;

@@ -13,8 +13,8 @@ public class InputView {
 
     public static List<String> readPositions() {
         return Arrays.stream(scanner.nextLine()
-                .trim()
-                .split(" "))
+                        .trim()
+                        .split(" "))
                 .toList();
     }
 }

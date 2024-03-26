@@ -21,7 +21,7 @@ public class ChessGame {
     }
 
     private void processGame(Command command, ChessBoard chessBoard) {
-        if(command.isMove()) {
+        if (command.isMove()) {
             List<String> positions = InputView.readPositions();
             chessBoard.move(Position.from(positions.get(0)), Position.from(positions.get(1)));
         }

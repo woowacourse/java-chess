@@ -10,7 +10,7 @@ import java.util.List;
 import static chess.domain.chesspiece.Role.BLACK_BISHOP;
 import static chess.domain.chesspiece.Role.WHITE_BISHOP;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece {
 
     public Bishop(Team team) {
         super(team);
@@ -35,14 +35,14 @@ public class Bishop extends Piece{
     protected void validateMovingRule(Position source, Position target) {
         int fileDistance = source.calculateFileDistance(target);
         int columnDistance = source.calculateRankDistance(target);
-        if(fileDistance!=columnDistance){
+        if (fileDistance != columnDistance) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
     @Override
     public Role getRole() {
-        if(team.isWhite()) {
+        if (team.isWhite()) {
             return WHITE_BISHOP;
         }
         return BLACK_BISHOP;

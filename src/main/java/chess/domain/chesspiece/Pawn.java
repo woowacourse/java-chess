@@ -42,37 +42,37 @@ public class Pawn extends Piece {
     }
 
     private boolean isMovable(Position source, Position target) {
-        return moveForwardTwice(source, target)
-                || moveForward(source, target)
-                || attack(source, target);
+        return canMoveForwardTwice(source, target)
+                || canMoveForwardOnce(source, target)
+                || canAttack(source, target);
     }
 
-    private boolean moveForwardTwice(Position source, Position target) {
+    private boolean canMoveForwardTwice(Position source, Position target) {
         int columnDistance = calculatePawnRankDistance(source, target);
         return isStartPosition(source) && source.isSameFile(target) && columnDistance == 2;
     }
 
     private int calculatePawnRankDistance(Position source, Position target) {
         int columnDistance = source.subtractRanks(target);
-        if(team == WHITE) {
+        if (team == WHITE) {
             columnDistance *= -1;
         }
         return columnDistance;
     }
 
     private boolean isStartPosition(Position source) {
-        if(team == WHITE) {
+        if (team == WHITE) {
             return source.getRank() == WHITE_PAWN_START_COLUMN;
         }
         return source.getRank() == BLACK_PAWN_START_COLUMN;
     }
 
-    private boolean moveForward(Position source, Position target) {
+    private boolean canMoveForwardOnce(Position source, Position target) {
         int columnDistance = calculatePawnRankDistance(source, target);
         return source.isSameFile(target) && columnDistance == 1;
     }
 
-    private boolean attack(Position source, Position target) {
+    private boolean canAttack(Position source, Position target) {
         int fileDistance = source.calculateFileDistance(target);
         int colDistance = calculatePawnRankDistance(source, target);
         return fileDistance == 1 && colDistance == 1;

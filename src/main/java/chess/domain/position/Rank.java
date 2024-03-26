@@ -28,7 +28,7 @@ public enum Rank {
     }
 
     private static void validateInRange(int index) {
-        if(index < 0 || index >= values().length) {
+        if (index < 0 || index >= values().length) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }

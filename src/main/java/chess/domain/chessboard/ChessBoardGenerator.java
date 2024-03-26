@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class ChessBoardGenerator {
     private static final Map<Position, Piece> board = new LinkedHashMap<>();
+
     public static Map<Position, Piece> initializeBoard() {
         initializeBackRank("8", BLACK);
         initializePawnRank("7", BLACK);
@@ -43,13 +44,13 @@ public class ChessBoardGenerator {
     }
 
     private static void initializeEmptyRanks() {
-        for(int rank = 6; rank >= 3; rank--) {
+        for (int rank = 6; rank >= 3; rank--) {
             initializeFiles(String.valueOf(rank), new Empty());
         }
     }
 
     private static void initializeFiles(String rank, Piece piece) {
-        for(char file = 'a'; file <= 'h'; file++) {
+        for (char file = 'a'; file <= 'h'; file++) {
             board.put(createPosition(String.valueOf(file), String.valueOf(rank)), piece);
         }
     }

@@ -9,12 +9,13 @@ public enum Command {
     END("end");
 
     private final String command;
+
     Command(String command) {
-        this.command=command;
+        this.command = command;
     }
 
     public static Command getStartCommand(String command) {
-        if(!START.command.equals(command)){
+        if (!START.command.equals(command)) {
             throw new IllegalArgumentException("첫 명령어는 start만 입력할 수 있습니다.");
         }
         return START;
@@ -26,16 +27,17 @@ public enum Command {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
 
-        if(inputCommand == START) {
+        if (inputCommand == START) {
             throw new IllegalArgumentException("게임 중에 start 명령어는 사용할 수 없습니다.");
         }
 
         return inputCommand;
     }
 
-    public boolean isMove(){
+    public boolean isMove() {
         return this == MOVE;
     }
+
     public boolean isEnd() {
         return this == END;
     }

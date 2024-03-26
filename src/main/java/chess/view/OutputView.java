@@ -12,9 +12,9 @@ public class OutputView {
 
     public static void printChessBoard(Map<Position, Piece> chessBoard) {
         int count = 1;
-        for(Piece piece : chessBoard.values()) {
+        for (Piece piece : chessBoard.values()) {
             printPiece(piece);
-            if(count % 8 == 0) {
+            if (count % 8 == 0) {
                 System.out.println();
             }
             count++;

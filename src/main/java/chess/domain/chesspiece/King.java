@@ -15,7 +15,6 @@ public class King extends Piece {
         super(team);
     }
 
-    //TODO : 리팩토링
     @Override
     public List<Position> getRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
