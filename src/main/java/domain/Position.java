@@ -29,7 +29,7 @@ public enum Position {
                 .filter(position -> position.row == row)
                 .filter(position -> position.column == column)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 좌표입니다."));
     }
 
     public List<Position> route(Position targetPosition) {
@@ -98,7 +98,7 @@ public enum Position {
 
     private void validateIsNotSelf(Position targetPosition) {
         if (this.equals(targetPosition)) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("출발지와 도착지가 같을 수 없습니다.");
         }
     }
 
