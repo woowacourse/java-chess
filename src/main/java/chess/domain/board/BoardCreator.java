@@ -32,7 +32,7 @@ public class BoardCreator {
         Map<Position, Piece> initialPiecePositions = generateEmptyBoard();
         initialPiecePositions.putAll(getWhitePieces());
         initialPiecePositions.putAll(getBlackPieces());
-        return new Board(new HashMap<>(initialPiecePositions), START_COLOR);
+        return new Board(initialPiecePositions, START_COLOR);
     }
 
     private static Map<Position, Piece> generateEmptyBoard() {
