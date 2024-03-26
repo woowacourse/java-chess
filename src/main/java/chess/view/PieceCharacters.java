@@ -7,29 +7,31 @@ import java.util.Map;
 
 class PieceCharacters {
 
-    private static final Map<Piece, Character> POOL = createPool();
+    private static final Map<Piece, Character> POOL;
 
     static char characterFrom(Piece piece) {
-        return POOL.get(piece);
+        Character c = POOL.get(piece);
+        if (c == null) {
+            throw new IllegalStateException("체스에 존재하지 않는 기물이 있습니다. 게임을 종료합니다.");
+        }
+        return c;
     }
 
-    private static Map<Piece, Character> createPool() {
-        final Map<Piece, Character> pieces = new HashMap<>();
+    static {
+        POOL = new HashMap<>();
 
-        pieces.put(Piece.kingFrom(Team.WHITE), 'k');
-        pieces.put(Piece.kingFrom(Team.BLACK), 'K');
-        pieces.put(Piece.queenFrom(Team.WHITE), 'q');
-        pieces.put(Piece.queenFrom(Team.BLACK), 'Q');
-        pieces.put(Piece.bishopFrom(Team.WHITE), 'b');
-        pieces.put(Piece.bishopFrom(Team.BLACK), 'B');
-        pieces.put(Piece.rookFrom(Team.WHITE), 'r');
-        pieces.put(Piece.rookFrom(Team.BLACK), 'R');
-        pieces.put(Piece.knightFrom(Team.WHITE), 'n');
-        pieces.put(Piece.knightFrom(Team.BLACK), 'N');
-        pieces.put(Piece.pawnFrom(Team.WHITE), 'p');
-        pieces.put(Piece.pawnFrom(Team.BLACK), 'P');
-        pieces.put(Piece.empty(), '.');
-
-        return pieces;
+        POOL.put(Piece.kingFrom(Team.WHITE), 'k');
+        POOL.put(Piece.kingFrom(Team.BLACK), 'K');
+        POOL.put(Piece.queenFrom(Team.WHITE), 'q');
+        POOL.put(Piece.queenFrom(Team.BLACK), 'Q');
+        POOL.put(Piece.bishopFrom(Team.WHITE), 'b');
+        POOL.put(Piece.bishopFrom(Team.BLACK), 'B');
+        POOL.put(Piece.rookFrom(Team.WHITE), 'r');
+        POOL.put(Piece.rookFrom(Team.BLACK), 'R');
+        POOL.put(Piece.knightFrom(Team.WHITE), 'n');
+        POOL.put(Piece.knightFrom(Team.BLACK), 'N');
+        POOL.put(Piece.pawnFrom(Team.WHITE), 'p');
+        POOL.put(Piece.pawnFrom(Team.BLACK), 'P');
+        POOL.put(Piece.empty(), '.');
     }
 }

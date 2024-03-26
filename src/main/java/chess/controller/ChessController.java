@@ -55,6 +55,9 @@ public class ChessController {
                     return;
                 }
                 pieceMove(readCommand, game);
+            } catch (IllegalStateException e) {
+                outputView.printErrorMessage(e.getMessage());
+                return;
             } catch (RuntimeException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
