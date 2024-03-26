@@ -114,7 +114,7 @@ class SpaceTest {
 
     @Test
     @DisplayName("폰은 반대색이 대각선한칸에 있다면, 대각선으로 움직일 수 있다")
-    void should_move_two_space_when_first_move2() {
+    void should_move_diagonal_when_diagonal_space_has_opposite_color() {
         Piece piece1 = new Pawn(Color.WHITE);
         Piece piece2 = new Pawn(Color.BLACK);
         Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
@@ -123,5 +123,18 @@ class SpaceTest {
         space1.movePiece(space2);
 
         assertThat(space2.getPiece()).isEqualTo(piece1);
+    }
+
+    @Test
+    @DisplayName("폰은 반대색이 대각선한칸에 없다면, 대각선으로 움직일 수 없다")
+    void should_not_move_diagonal_when_diagonal_space_has_not_opposite_color() {
+        Piece piece1 = new Pawn(Color.WHITE);
+        Piece piece2 = new EmptyPiece();
+        Space space1 = new Space(piece1, new Position(File.a, Rank.ONE));
+        Space space2 = new Space(piece2, new Position(File.b, Rank.TWO));
+
+        assertThatThrownBy(() -> space1.movePiece(space2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이동 규칙을 위반한 움직임입니다.");
     }
 }
