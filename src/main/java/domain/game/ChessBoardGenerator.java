@@ -35,13 +35,13 @@ public class ChessBoardGenerator {
             .mapToObj(number -> (PieceRole) WhitePawn.from())
             .toList();
     private static final List<Piece> NONE = new ArrayList<>();
-    private static final Map<Integer, List<Piece>> rankPieces = new HashMap<>();
+    private static final Map<Integer, List<Piece>> RANK_PIECES = new HashMap<>();
 
     static {
-        rankPieces.put(8, generateListPiece(ROYAL_PIECES, Color.BLACK));
-        rankPieces.put(7, generateListPiece(BLACK_PAWNS, Color.BLACK));
-        rankPieces.put(2, generateListPiece(WHITE_PAWNS, Color.WHITE));
-        rankPieces.put(1, generateListPiece(ROYAL_PIECES, Color.WHITE));
+        RANK_PIECES.put(8, generateListPiece(ROYAL_PIECES, Color.BLACK));
+        RANK_PIECES.put(7, generateListPiece(BLACK_PAWNS, Color.BLACK));
+        RANK_PIECES.put(2, generateListPiece(WHITE_PAWNS, Color.WHITE));
+        RANK_PIECES.put(1, generateListPiece(ROYAL_PIECES, Color.WHITE));
     }
 
     private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color) {
@@ -59,7 +59,7 @@ public class ChessBoardGenerator {
     }
 
     private static void initializeEachRank(final Map<Position, Piece> piecePosition, final int rank) {
-        List<Piece> pieces = rankPieces.getOrDefault(rank, NONE);
+        List<Piece> pieces = RANK_PIECES.getOrDefault(rank, NONE);
         for (int column = toColumnIndex(CHESS_FILE_START); column < pieces.size(); column++) {
             Position position = new Position(new File(toFileLetter(column)), new Rank(rank));
             Piece piece = pieces.get(column);

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import view.command.CommandType;
 
 public class MoveCommandExecutor implements CommandExecutor {
-    private static final Pattern pattern = Pattern.compile(MOVE_POSITION_REGEX_FORMAT);
+    private static final Pattern POSITION_INPUT_PATTERN = Pattern.compile(MOVE_POSITION_REGEX_FORMAT);
     private final Position source;
     private final Position target;
 
@@ -38,7 +38,7 @@ public class MoveCommandExecutor implements CommandExecutor {
     }
 
     private boolean isInvalidCoordinate(String coordinate) {
-        return !pattern.matcher(coordinate).matches();
+        return !POSITION_INPUT_PATTERN.matcher(coordinate).matches();
     }
 
     @Override
