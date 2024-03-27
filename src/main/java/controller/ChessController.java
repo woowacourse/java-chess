@@ -9,6 +9,7 @@ import service.ChessGameService;
 import view.InputView;
 import view.OutputView;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class ChessController {
         this.isRunning = true;
     }
 
-    public void run() {
+    public void run() throws SQLException {
         while (isRunning) {
             try {
                 final String command = inputView.readStartOption();
@@ -70,7 +71,7 @@ public class ChessController {
         }
     }
 
-    private void play(final int gameId) {
+    private void play(final int gameId) throws SQLException {
         outputView.printGameOption(gameId);
         printBoard(gameId);
 
@@ -107,7 +108,7 @@ public class ChessController {
         outputView.printStatus(chessGameResult);
     }
 
-    private void runMove(final String command, final int gameId) {
+    private void runMove(final String command, final int gameId) throws SQLException {
         final List<String> commands = Arrays.asList(command.split(COMMAND_DELIMITER));
 
         final Square source = Square.from(commands.get(MOVE_SOURCE_INDEX));

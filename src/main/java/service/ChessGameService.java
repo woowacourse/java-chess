@@ -9,42 +9,62 @@ import repository.ChessBoardDao;
 import repository.ChessGameDao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class ChessGameService {
 
+    private final Connection connection;
     private final ChessBoardDao chessBoardDao;
     private final ChessGameDao chessGameDao;
 
     public ChessGameService(final Connection connection) {
+        this.connection = connection;
         this.chessBoardDao = new ChessBoardDao(connection);
         this.chessGameDao = new ChessGameDao(connection);
     }
 
-    public int createNewGame() {
-        final int id = chessGameDao.addGame(Team.WHITE, ChessGameStatus.RUNNING);
+    public int createNewGame() throws SQLException {
+        try {
+            connection.setAutoCommit(false);
 
-        final ChessBoard chessBoard = ChessBoard.create();
+            final ChessBoard chessBoard = ChessBoard.create();
+            final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
 
-        final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
-        chessBoardDao.addAll(pieceSquares, id);
+            final int id = chessGameDao.addGame(Team.WHITE, ChessGameStatus.RUNNING);
+            chessBoardDao.addAll(pieceSquares, id);
 
-        return id;
+            connection.commit();
+            return id;
+        } catch (final Exception e) {
+            connection.rollback();
+            throw new IllegalArgumentException(e.getMessage());
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
-    public void move(final int gameId, final Square source, final Square target) {
-        final ChessBoard chessBoard = createChessBoard(gameId);
+    public void move(final int gameId, final Square source, final Square target) throws SQLException {
+        try {
+            connection.setAutoCommit(false);
 
-        chessBoard.move(source, target);
+            final ChessBoard chessBoard = createChessBoard(gameId);
+            chessBoard.move(source, target);
 
-        updateChessBoardDao(gameId, source, target);
+            updateChessBoardDao(gameId, source, target);
+            chessGameDao.updateCurrentTeam(gameId, chessBoard.currentTeam());
 
-        chessGameDao.updateCurrentTeam(gameId, chessBoard.currentTeam());
-
-        if (isKingDead(gameId)) {
-            endGame(gameId);
+            if (isKingDead(gameId)) {
+                endGame(gameId);
+            }
+            connection.commit();
+        } catch (final Exception e) {
+            connection.rollback();
+            throw new IllegalArgumentException(e.getMessage());
+        } finally {
+            connection.setAutoCommit(true);
         }
     }
 
