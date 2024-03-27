@@ -28,9 +28,9 @@ public class InputView {
         String input = scanner.nextLine();
         List<String> inputs = Arrays.stream(input.split(" ")).toList();
         GameCommand moveCommand = GameCommand.createInProgress(inputs.get(0));
-        if (moveCommand.isEnd()) {
-            return new GameArguments(moveCommand, null);
+        if (moveCommand.isMove()) {
+            return new GameArguments(moveCommand, MoveArguments.from(inputs));
         }
-        return new GameArguments(moveCommand, MoveArguments.from(inputs));
+        return new GameArguments(moveCommand, null);
     }
 }
