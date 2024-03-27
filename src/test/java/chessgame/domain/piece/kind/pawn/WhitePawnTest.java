@@ -1,5 +1,6 @@
 package chessgame.domain.piece.kind.pawn;
 
+import static chessgame.domain.piece.attribute.point.File.A;
 import static chessgame.domain.piece.attribute.point.File.B;
 import static chessgame.domain.piece.attribute.point.File.C;
 import static chessgame.domain.piece.attribute.point.File.D;
@@ -12,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chessgame.domain.piece.Pieces;
 import chessgame.domain.piece.attribute.Color;
 import chessgame.domain.piece.attribute.point.Point;
-import chessgame.domain.piece.kind.pawn.Pawn;
 import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -78,7 +78,7 @@ class WhitePawnTest {
     */
     @Test
     @DisplayName("대각 1칸 거리에 적이 있으면 해당 위치로 이동이 가능하다.")
-    void can_move_diagonal_step_when_exist_enemy() {
+    void can_move_right_diagonal_step_when_exist_enemy() {
         final var sut = Pawn.from(new Point(C, TWO), Color.WHITE);
         final var enemy = Pawn.from(new Point(D, THREE), Color.BLACK);
         final var enemy2 = Pawn.from(new Point(C, FIVE), Color.BLACK);
@@ -91,4 +91,32 @@ class WhitePawnTest {
         );
 
     }
+
+    /*
+    ........ 8
+    ........ 7
+    ........ 6
+    .E...... 5
+    .#...... 4
+    E#F..... 3
+    .P...... 2
+    ........ 1
+    abcdefgh
+    */
+    @Test
+    @DisplayName("대각 1칸 거리에 적이 있으면 해당 위치로 이동이 가능하다.")
+    void can_move_left_diagonal_step_when_exist_enemy() {
+        final var sut = Pawn.from(new Point(B, TWO), Color.WHITE);
+        final var friend = Pawn.from(new Point(C, THREE), Color.WHITE);
+        final var enemy = Pawn.from(new Point(A, THREE), Color.BLACK);
+        final var enemy2 = Pawn.from(new Point(B, FIVE), Color.BLACK);
+        Set<Point> legalMovePoints = sut.findLegalMovePoints(new Pieces(Set.of(sut, enemy, enemy2, friend)));
+        assertThat(legalMovePoints).containsExactlyInAnyOrder(
+                new Point(B, THREE),
+                new Point(B, FOUR),
+                new Point(A, THREE)
+        );
+
+    }
+
 }

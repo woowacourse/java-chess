@@ -19,7 +19,7 @@ public class Pieces {
         Optional<Piece> pieceWithPoint = findPieceWithPoint(endPoint);
         pieceWithPoint.ifPresent(values::remove);
         values.remove(piece);
-        Piece moved = piece.move(endPoint, this);
+        Piece moved = piece.move(endPoint);
         values.add(moved);
     }
 

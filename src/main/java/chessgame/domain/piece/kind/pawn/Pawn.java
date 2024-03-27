@@ -23,11 +23,13 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    protected Set<Point> findLegalMovePoints(Pieces pieces){
+    protected Set<Point> findLegalMovePoints(Pieces pieces) {
         return getMovableDirection(pieces).stream()
+                .filter(direction -> super.point.canMove(direction))
                 .map(direction -> super.point.move(direction))
                 .filter(point -> !pieces.isFriend(this, point))
                 .collect(Collectors.toSet());
+
     }
 
     protected abstract Set<Movement> getMovableDirection(Pieces pieces);

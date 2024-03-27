@@ -33,7 +33,7 @@ public class ChessBoard {
         final var startPoint = dto.getStartPoint();
         final var endPoint = dto.getEndPoint();
         final var piece = findPieceByPoint(startPoint);
-        validateCanMove(piece, endPoint, startPoint);
+        validateCanReplace(piece, endPoint, startPoint);
         pieces.replace(piece, endPoint);
     }
 
@@ -43,7 +43,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateCanMove(Piece piece, Point endPoint, Point startPoint) {
+    private void validateCanReplace(Piece piece, Point endPoint, Point startPoint) {
         if (!pieces.canReplace(piece, endPoint)) {
             throw new IllegalArgumentException(
                     String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.status(), startPoint, endPoint));

@@ -20,21 +20,16 @@ public abstract class Piece {
 
     public abstract PieceStatus status();
 
-    public Piece move(final Point destination, final Pieces pieces) {
-        validateDifferentPoint(destination);
-        final var movablePoints = findLegalMovePoints(pieces);
-        validateMovablePoint(!movablePoints.contains(destination), "말을 움직일 수 없습니다.");
+    public Piece move(final Point destination) {
+        validateSamePoint(destination);
         return update(destination);
     }
 
-    private void validateMovablePoint(boolean movablePoints, String s) {
-        if (movablePoints) {
-            throw new IllegalArgumentException(s);
-        }
-    }
 
-    private void validateDifferentPoint(Point destination) {
-        validateMovablePoint(point.equals(destination), "동일한 위치로 이동할 수 없습니다.");
+    private void validateSamePoint(Point destination) {
+        if (point.equals(destination)) {
+            throw new IllegalArgumentException("동일한 위치로 이동할 수 없습니다.");
+        }
     }
 
     protected abstract Set<Point> findLegalMovePoints(Pieces pieces);
