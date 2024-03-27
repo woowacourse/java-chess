@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 
-import java.util.List;
 import java.util.Map;
 
 public class ChessGame {
@@ -35,15 +34,14 @@ public class ChessGame {
         return board.isKingRemoved();
     }
 
-    public List<Double> status() {
+    public ScoreCalculator status() {
         validateStatus();
-        ScoreCalculator scoreCalculator = ScoreCalculator.of(board);
-        return List.of(scoreCalculator.getWhiteScore(), scoreCalculator.getBlackScore());
+        return ScoreCalculator.of(board);
     }
 
-    public Team findWinner(List<Double> score) {
-        double whiteScore = score.get(0);
-        double blackScore = score.get(1);
+    public Team findWinner(ScoreCalculator scoreCalculator) {
+        double whiteScore = scoreCalculator.getWhiteScore();
+        double blackScore = scoreCalculator.getBlackScore();
         if (whiteScore > blackScore) {
             return Team.WHITE;
         }

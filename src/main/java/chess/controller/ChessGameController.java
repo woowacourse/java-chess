@@ -5,8 +5,6 @@ import chess.domain.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
-
 import static chess.domain.CommandType.*;
 
 public class ChessGameController {
@@ -77,14 +75,14 @@ public class ChessGameController {
     }
 
     private void status(final ChessGame chessGame) {
-        List<Double> score = chessGame.status();
-        Team winner = chessGame.findWinner(score);
-        result(chessGame, winner, score);
+        ScoreCalculator scoreCalculator = chessGame.status();
+        Team winner = chessGame.findWinner(scoreCalculator);
+        result(chessGame, winner, scoreCalculator);
     }
 
-    private void result(final ChessGame chessGame, final Team winner, final List<Double> score) {
-        double whiteScore = score.get(0);
-        double blackScore = score.get(1);
+    private void result(final ChessGame chessGame, final Team winner, final ScoreCalculator scoreCalculator) {
+        double whiteScore = scoreCalculator.getWhiteScore();
+        double blackScore = scoreCalculator.getBlackScore();
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (winner.equals(Team.NONE)) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);
