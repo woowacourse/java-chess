@@ -21,6 +21,7 @@ import java.util.function.Supplier;
 
 public class GameController {
     private static final String GAME_ALREADY_START = "게임이 이미 진행중입니다.";
+    private static final String FIRST_START_EXCEPTION = "게임 시작을 위해 start를 입력해주세요.";
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -34,14 +35,23 @@ public class GameController {
 
     public void start(final long roomId) {
         outputView.printGameStartMessage();
+        GameCommand gameCommand = requestUntilValidated(this::readStartCommand);
+        if (gameCommand == GameCommand.START) {
+            play(loadGame(roomId));
+        }
+    }
+
+    private GameCommand readStartCommand() {
         GameRequest request = inputView.readStartCommand();
         GameCommand command = request.getCommand();
 
-        if (!command.equals(GameCommand.START)) {
-            throw new IllegalArgumentException();
+        if (command == GameCommand.START) {
+            return command;
         }
-
-        play(loadGame(roomId));
+        if (command == GameCommand.END) {
+            return command;
+        }
+        throw new IllegalArgumentException(FIRST_START_EXCEPTION);
     }
 
     private Game loadGame(final long roomId) {
