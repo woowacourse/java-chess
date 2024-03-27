@@ -41,6 +41,10 @@ public final class PositionFixture {
         return new Position(new File('b'), new Rank(5));
     }
 
+    public static Position b6() {
+        return new Position(new File('b'), new Rank(6));
+    }
+
     public static Position b7() {
         return new Position(new File('b'), new Rank(7));
     }
@@ -66,7 +70,7 @@ public final class PositionFixture {
     }
 
     public static Position d5() {
-        return new Position(new File('d'), new Rank(3));
+        return new Position(new File('d'), new Rank(5));
     }
 
     public static Position F1() {

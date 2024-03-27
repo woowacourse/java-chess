@@ -22,12 +22,12 @@ public class Piece {
         pieceRole.validateMovableRoute(source, target, chessBoard);
     }
 
-    public boolean isEqualColor(final Color target) {
-        return this.color == target;
-    }
-
     public boolean isWhite() {
         return isEqualColor(Color.WHITE);
+    }
+
+    public boolean isEqualColor(final Color target) {
+        return this.color == target;
     }
 
     public boolean equalPieceRole(final PieceRole pieceRole) {
