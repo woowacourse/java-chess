@@ -3,6 +3,8 @@ package chess;
 import chess.controller.GameController;
 import chess.controller.RoomController;
 import chess.controller.UserController;
+import chess.infra.ConnectionPool;
+import chess.infra.JdbcConnectionPool;
 import chess.repository.MovementDao;
 import chess.repository.MovementRepository;
 import chess.repository.RoomDao;
@@ -21,9 +23,11 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        MovementRepository movementRepository = new MovementDao();
-        RoomRepository roomRepository = new RoomDao();
-        UserRepository userRepository = new UserDao();
+        ConnectionPool connectionPool = JdbcConnectionPool.getInstance();
+
+        MovementRepository movementRepository = new MovementDao(connectionPool);
+        RoomRepository roomRepository = new RoomDao(connectionPool);
+        UserRepository userRepository = new UserDao(connectionPool);
 
         GameService gameService = new GameService(movementRepository);
         RoomService roomService = new RoomService(roomRepository);
@@ -34,5 +38,7 @@ public class Application {
         UserController userController = new UserController(inputView, outputView, userService, roomController);
 
         userController.start();
+
+        connectionPool.shutdown();
     }
 }
