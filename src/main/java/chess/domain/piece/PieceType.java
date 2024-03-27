@@ -18,13 +18,13 @@ import chess.domain.movement.policy.PawnFirstMovePolicy;
 import chess.domain.piece.obstaclerule.DiagonalCaptureObstacleRule;
 import chess.domain.piece.obstaclerule.NoObstacleRule;
 import chess.domain.piece.obstaclerule.ObstacleRule;
-import chess.domain.piece.obstaclerule.StraightKillObstacleRule;
+import chess.domain.piece.obstaclerule.StraightCaptureObstacleRule;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
 public enum PieceType {
-    KING(new StraightKillObstacleRule(),
+    KING(new StraightCaptureObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(1)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(1)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(1)),
@@ -35,7 +35,7 @@ public enum PieceType {
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(1))
     ),
 
-    QUEEN(new StraightKillObstacleRule(),
+    QUEEN(new StraightCaptureObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(8)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(8)),
@@ -46,21 +46,21 @@ public enum PieceType {
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(8))
     ),
 
-    BISHOP(new StraightKillObstacleRule(),
+    BISHOP(new StraightCaptureObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpLeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new UpRightDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownLeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(8))
     ),
 
-    ROOK(new StraightKillObstacleRule(),
+    ROOK(new StraightCaptureObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(8)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new RightDirection(8))
     ),
 
-    KNIGHT(new StraightKillObstacleRule(),
+    KNIGHT(new StraightCaptureObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new KnightDirection())
     ),
 

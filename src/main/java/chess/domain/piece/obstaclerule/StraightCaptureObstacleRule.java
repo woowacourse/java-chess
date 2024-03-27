@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-public class StraightKillObstacleRule extends ObstacleRule {
+public class StraightCaptureObstacleRule extends ObstacleRule {
 
     @Override
     public List<Position> findObstacle(final Position source, final Position target,
