@@ -8,37 +8,9 @@ import chess.dto.MoveArgumentDto;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class InputView {
-
-    private static final InputView INSTANCE = new InputView(new Scanner(System.in));
-    private static final Map<String, CommandType> COMMANDS = Map.of(
-            "start", CommandType.START,
-            "end", CommandType.END,
-            "move", CommandType.MOVE
-    );
-    private static final Map<String, File> FILE_TEXTS = Map.of(
-            "a", File.A,
-            "b", File.B,
-            "c", File.C,
-            "d", File.D,
-            "e", File.E,
-            "f", File.F,
-            "g", File.G,
-            "h", File.H
-    );
-    private static final Map<String, Rank> RANK_TEXTS = Map.of(
-            "1", Rank.FIRST,
-            "2", Rank.SECOND,
-            "3", Rank.THIRD,
-            "4", Rank.FOURTH,
-            "5", Rank.FIFTH,
-            "6", Rank.SIXTH,
-            "7", Rank.SEVENTH,
-            "8", Rank.EIGHTH
-    );
     private static final String COMMAND_DELIMITER = " ";
     private static final int MOVE_ARGS_COUNT = 2;
     private static final int FILE_BEGIN_INDEX = 0;
@@ -47,7 +19,7 @@ public class InputView {
     private static final int RANK_END_INDEX = 1;
     private static final int FILE_RANK_TEXT_LENGTH =
             (FILE_END_INDEX - FILE_BEGIN_INDEX + 1) + (RANK_END_INDEX - RANK_BEGIN_INDEX + 1);
-
+    private static final InputView INSTANCE = new InputView(new Scanner(System.in));
 
     private final Scanner scanner;
 
@@ -62,23 +34,16 @@ public class InputView {
     public Command readStartCommand() {
         String input = scanner.nextLine();
         validateStartCommand(input);
-        return Command.createNoArgCommand(COMMANDS.get(input));
+        return Command.createNoArgCommand(CommandTypeView.find(input));
     }
 
     private void validateStartCommand(String input) {
         List<String> commandTypeAndArgs = Arrays.asList(input.split(COMMAND_DELIMITER));
         String commandText = commandTypeAndArgs.get(0);
 
-        validateExistCommand(commandText);
-        CommandType commandType = COMMANDS.get(commandText);
+        CommandType commandType = CommandTypeView.find(commandText);
         if (commandType != CommandType.START && commandType != CommandType.END) {
             throw new IllegalArgumentException("시작 커맨드는 start 또는 end만 가능합니다.");
-        }
-    }
-
-    private void validateExistCommand(String commandText) {
-        if (!COMMANDS.containsKey(commandText)) {
-            throw new IllegalArgumentException("존재하지 않는 커맨드입니다.");
         }
     }
 
@@ -98,8 +63,7 @@ public class InputView {
 
     private CommandType makeCommandType(List<String> splittedCommand) {
         String commandTypeText = splittedCommand.get(0);
-        validateExistCommand(commandTypeText);
-        CommandType commandType = COMMANDS.get(commandTypeText);
+        CommandType commandType = CommandTypeView.find(commandTypeText);
         validateNotStart(commandType);
         return commandType;
     }
@@ -133,26 +97,12 @@ public class InputView {
 
     private File getFile(String fileRankText) {
         String fileText = fileRankText.substring(FILE_BEGIN_INDEX, FILE_END_INDEX + 1);
-        validateFileExist(fileText);
-        return FILE_TEXTS.get(fileText);
-    }
-
-    private void validateFileExist(String fileText) {
-        if (!FILE_TEXTS.containsKey(fileText)) {
-            throw new IllegalArgumentException("존재하지 않는 파일입니다.");
-        }
+        return FileView.find(fileText);
     }
 
     private Rank getRank(String fileRankText) {
         String rankText = fileRankText.substring(RANK_BEGIN_INDEX, RANK_END_INDEX + 1);
-        validateRankExist(rankText);
-        return RANK_TEXTS.get(rankText);
-    }
-
-    private void validateRankExist(String rankText) {
-        if (!RANK_TEXTS.containsKey(rankText)) {
-            throw new IllegalArgumentException("존재하지 않는 랭크입니다.");
-        }
+        return RankView.find(rankText);
     }
 
     private void validateNotStart(CommandType commandType) {
