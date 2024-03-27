@@ -44,6 +44,10 @@ public abstract class Piece {
         return this.color == piece.color;
     }
 
+    public boolean isSameColor(final Color color) {
+        return this.color == color;
+    }
+
     public boolean isOpposite(final Piece piece) {
         return this.color != piece.color;
     }

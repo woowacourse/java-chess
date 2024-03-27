@@ -2,6 +2,7 @@ package chessgame.domain;
 
 import chessgame.domain.piece.Piece;
 import chessgame.domain.piece.Pieces;
+import chessgame.domain.piece.attribute.Color;
 import chessgame.domain.piece.attribute.point.Point;
 import chessgame.dto.ChessBoardDto;
 import chessgame.dto.RouteDto;
@@ -10,8 +11,10 @@ import java.util.Set;
 
 public class ChessBoard {
     private Pieces pieces;
+    private Color color;
 
     public ChessBoard() {
+        color = Color.WHITE;
         this.pieces = new Pieces(Set.of());
     }
 
@@ -33,8 +36,16 @@ public class ChessBoard {
         final var startPoint = dto.getStartPoint();
         final var endPoint = dto.getEndPoint();
         final var piece = findPieceByPoint(startPoint);
+        validateCorrectTurn(piece);
         validateCanReplace(piece, endPoint, startPoint);
         pieces.replace(piece, endPoint);
+        color = color.getOpposite();
+    }
+
+    private void validateCorrectTurn(Piece piece) {
+        if (!piece.isSameColor(color)) {
+            throw new IllegalStateException("현재는 %s의 턴입니다.".formatted(color.name()));
+        }
     }
 
     private void validateGameProceed() {
