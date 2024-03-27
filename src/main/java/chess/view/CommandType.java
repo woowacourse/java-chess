@@ -33,6 +33,7 @@ public enum CommandType {
 
     public static boolean isValidArguments(List<String> input) {
         return Arrays.stream(values())
+                .filter(commandType -> commandType.type.equals(input.get(0)))
                 .anyMatch(commandType -> commandType.argumentCount == input.size() - 1);
     }
 
