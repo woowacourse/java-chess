@@ -67,9 +67,6 @@ public class ChessBoard {
 
     private void update(Position sourcePosition, Position targetPosition) {
         Piece sourcePiece = piecePosition.get(sourcePosition);
-        if (piecePosition.containsKey(targetPosition)) {
-            piecePosition.remove(targetPosition);
-        }
         piecePosition.put(targetPosition, sourcePiece);
         piecePosition.remove(sourcePosition);
     }
