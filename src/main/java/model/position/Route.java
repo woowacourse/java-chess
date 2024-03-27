@@ -1,6 +1,7 @@
 package model.position;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import model.direction.Direction;
@@ -14,21 +15,33 @@ public class Route {
         this.positions = new ArrayList<>(positions);
     }
 
-    public List<Position> getPositions() {
-        return List.copyOf(positions);
-    }
-
     public boolean contains(Position position) {
         return positions.contains(position);
     }
 
     public Route directRouteTo(Position destination) {
-        List<Position> subList = positions.subList(0, positions.indexOf(destination) + 1);
+        List<Position> subList = new ArrayList<>(positions.subList(0, positions.indexOf(destination) + 1));
         return new Route(direction, subList);
     }
 
-    public Direction getDirection(){
+    public Route reverseRouteTowardSource() {
+        List<Position> reversedPositions = new ArrayList<>(positions);
+        Direction oppositeDirection = direction.toOppositeDirection();
+        Collections.reverse(reversedPositions);
+        reversedPositions.remove(0);
+        Position beforeLastPosition = positions.get(0);
+        if (beforeLastPosition.hasAvailableNextPostitionToDirection(oppositeDirection)) {
+            reversedPositions.add(beforeLastPosition.getNextPosition(oppositeDirection));
+        }
+        return new Route(oppositeDirection, reversedPositions);
+    }
+
+    public Direction getDirection() {
         return direction;
+    }
+
+    public List<Position> getPositions() {
+        return List.copyOf(positions);
     }
 
     @Override
