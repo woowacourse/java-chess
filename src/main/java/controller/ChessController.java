@@ -5,7 +5,6 @@ import domain.game.GameRequest;
 import domain.game.Piece;
 import domain.game.PieceFactory;
 import domain.game.TeamColor;
-import domain.game.state.GameState;
 import domain.position.Position;
 import domain.service.DBService;
 import dto.BoardDto;
@@ -108,7 +107,14 @@ public class ChessController {
     }
 
     private void saveCurrentStatus(ChessGame chessGame) {
-        int gameId = chessGame.save();
+        int gameId = dbService.addGame();
+        dbService.saveTurn(gameId, chessGame.currentPlayingTeam());
+
+        List<PieceDto> pieces = chessGame.getPositionsOfPieces().entrySet().stream()
+                .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
+                .toList();
+        dbService.saveAllPieces(gameId, pieces);
+
         outputView.printSaveResult(gameId);
     }
 
