@@ -1,8 +1,11 @@
 package chess.domain.piece.pawn;
 
+import static chess.domain.board.Weight.ONE_DOWN;
+import static chess.domain.board.Weight.ONE_LEFT_ONE_DOWN;
+import static chess.domain.board.Weight.ONE_RIGHT_ONE_DOWN;
+
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -15,14 +18,13 @@ public class NormalBlackPawn extends Pawn {
 
     @Override
     Set<Entry<Integer, Integer>> straightWeights() {
-        return Set.of(Map.entry(0, -1));
+        return Set.of(ONE_DOWN.value());
     }
 
-    @Override
     Set<Entry<Integer, Integer>> diagonalWeights() {
         return Set.of(
-                Map.entry(1, -1),
-                Map.entry(-1, -1)
+                ONE_RIGHT_ONE_DOWN.value(),
+                ONE_LEFT_ONE_DOWN.value()
         );
     }
 
