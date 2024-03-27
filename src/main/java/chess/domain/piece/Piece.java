@@ -23,11 +23,11 @@ public abstract class Piece {
                 isReachable(source, destination, direction);
     }
 
-    private final boolean matchesDirection(Direction direction) {
+    private boolean matchesDirection(Direction direction) {
         return directions.contains(direction);
     }
 
-    private final boolean isReachable(Position source, Position destination, Direction direction) {
+    private boolean isReachable(Position source, Position destination, Direction direction) {
         int distance = (int) Stream.iterate(source,
                         position -> position.isNotEquals(destination),
                         direction::nextPosition)
@@ -44,7 +44,7 @@ public abstract class Piece {
     }
 
     public final boolean hasSameColorWith(Piece piece) {
-        return this.color.equals(piece.getColor());
+        return this.color == piece.getColor();
     }
 
     public final boolean hasDifferentColorWith(Piece piece) {
@@ -52,7 +52,7 @@ public abstract class Piece {
     }
 
     public final boolean hasColorOf(Color color) {
-        return this.color.equals(color);
+        return this.color == color;
     }
 
     public final Color getColor() {
