@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.dto.GameCommand;
 import chess.dto.GameRequest;
-
+import chess.dto.UserRequest;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -62,6 +62,18 @@ public class InputView {
 
     private void validateGameParameter(final String parameter) {
         if (!PATTERN.matcher(parameter).matches()) {
+            throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
+        }
+    }
+
+    public UserRequest readUserRequest() {
+        List<String> inputs = inputGameCommand();
+        validateUserCommand(inputs);
+        return UserRequest.from(inputs);
+    }
+
+    private void validateUserCommand(List<String> inputs) {
+        if (inputs.size() != 2) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
     }

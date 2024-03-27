@@ -3,7 +3,6 @@ package chess.view;
 import chess.domain.game.GameResult;
 import chess.domain.pieces.piece.Color;
 import chess.dto.PieceResponse;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
@@ -71,5 +70,9 @@ public class OutputView {
     private void printScoreStatus(final GameResult gameResult, final Color color) {
         System.out.printf(SCORE_STATUS_FORMAT + System.lineSeparator(),
                 color.name(), gameResult.calculateScore(color).getValue());
+    }
+
+    public void printSignupMessage() {
+        System.out.println("> 회원 가입: signup 이름 - 예. signup 초코칩");
     }
 }
