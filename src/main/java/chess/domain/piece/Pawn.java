@@ -24,11 +24,16 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Point currentPoint, Point nextPoint, Piece target) {
-        Team team = getTeam();
-        List<Point> movablePoints = findMovablePoints(currentPoint, team);
-        return movablePoints.contains(nextPoint) &&
-                (movableDiagonal(currentPoint, nextPoint, target) || movableStraight(currentPoint, nextPoint, target));
+        if (invalidForwardDirection(currentPoint, nextPoint)) {
+            return false;
+        }
+        return canAttack(currentPoint, nextPoint, target) || canForward(currentPoint, nextPoint, target);
+    }
 
+    private boolean invalidForwardDirection(Point currentPoint, Point nextPoint) {
+        List<Point> movablePoints = findMovablePoints(currentPoint, getTeam());
+
+        return !movablePoints.contains(nextPoint);
     }
 
     private List<Point> findMovablePoints(Point currentPoint, Team team) {
@@ -57,11 +62,13 @@ public final class Pawn extends Piece {
         }
     }
 
-    private boolean movableDiagonal(Point currentPoint, Point nextPoint, Piece target) {
-        return currentPoint.isSlopeOneDiagonal(nextPoint) && target != Piece.empty();
+    private boolean canAttack(Point currentPoint, Point nextPoint, Piece target) {
+        return currentPoint.isSlopeOneDiagonal(nextPoint)
+                && target != Piece.empty() && !target.isSameTeam(getTeam());
     }
 
-    private boolean movableStraight(Point currentPoint, Point nextPoint, Piece target) {
-        return currentPoint.isStraight(nextPoint) && target == Piece.empty();
+    private boolean canForward(Point currentPoint, Point nextPoint, Piece target) {
+        return currentPoint.isStraight(nextPoint)
+                && target == Piece.empty();
     }
 }

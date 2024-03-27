@@ -58,15 +58,7 @@ public class Point {
         }
         int fileDistance = this.file.distance(point.file);
         int rankDistance = this.rank.distance(point.rank);
-        int distance = getDistance(fileDistance, rankDistance);
-        if (fileDistance != 0 && rankDistance != 0) {
-            return distance == 2;
-        }
-        return distance == 1;
-    }
-
-    private int getDistance(int fileDistance, int rankDistance) {
-        return Math.abs(fileDistance) + Math.abs(rankDistance);
+        return Math.abs(fileDistance) < 2 && Math.abs(rankDistance) < 2;
     }
 
     public int multiplyAxis(Point point) {
