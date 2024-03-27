@@ -48,11 +48,10 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
         StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
         TurnConverter turnConverter = new TurnConverter();
 
-        String boardState = stringSpaceGeneratorConverter.convertToData(spaceGenerator);
-        String currentTurn = turnConverter.convertToData(turn);
-
-        saveInBoard("board_state", boardState);
-        saveInBoard("turn", currentTurn);
+        saveInBoard("board_state",
+                stringSpaceGeneratorConverter.convertToData(spaceGenerator));
+        saveInBoard("turn",
+                turnConverter.convertToData(turn));
         return chessBoard;
     }
 
