@@ -12,6 +12,7 @@ public class ConnectionTest {
     @Test
     void testConnection() {
         connectionGenerator = new TestConnectionGenerator();
+
         assertThat(connectionGenerator.getConnection()).isNotNull();
     }
 
@@ -19,6 +20,7 @@ public class ConnectionTest {
     @Test
     void productionConnection() {
         connectionGenerator = new ProductionConnectionGenerator();
+
         assertThat(connectionGenerator.getConnection()).isNotNull();
     }
 }

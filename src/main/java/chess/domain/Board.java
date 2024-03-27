@@ -22,7 +22,7 @@ public class Board {
     public void validateSameTeamByPosition(Position position, Team team) {
         validatePieceExistsOnPosition(position);
         if (!pieces.get(position).isSameTeamWith(team)) {
-            throw new ImpossibleMoveException("%s이 움직일 차례입니다".formatted(TeamViewer.show(team)));
+            throw new ImpossibleMoveException("%s이 움직일 차례입니다.".formatted(TeamViewer.show(team)));
         }
     }
 
@@ -97,7 +97,22 @@ public class Board {
         return Position.sameColumnPositionCount(pawnPositions);
     }
 
-    public boolean isChecked(Team attackedTeam) {
+    public State checkState(Team currentTeam) {
+        boolean isCheck = isChecked(currentTeam);
+        boolean isMate = isMate(currentTeam);
+        if (isCheck && isMate) {
+            return State.CHECKMATE;
+        }
+        if (isCheck) {
+            return State.CHECKED;
+        }
+        if (isMate) {
+            return State.STALEMATE;
+        }
+        return State.NORMAL;
+    }
+
+    private boolean isChecked(Team attackedTeam) {
         Position kingPosition = getKingPosition(attackedTeam);
         return isBeingAttacked(attackedTeam, kingPosition);
     }
@@ -120,7 +135,7 @@ public class Board {
         return false;
     }
 
-    public boolean isMate(Team attackedTeam) {
+    private boolean isMate(Team attackedTeam) {
         return findSameTeamPieces(attackedTeam)
                 .allMatch(entry -> isCheckedAfterAllMoves(entry.getKey(), entry.getValue()));
     }

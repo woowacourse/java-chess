@@ -21,8 +21,8 @@ public class BoardTest {
     @Test
     void validateOppositeTeamByPosition() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatCode(() ->
-                board.validateSameTeamByPosition(Position.of(2, 2), Team.WHITE))
+
+        assertThatCode(() -> board.validateSameTeamByPosition(Position.of(2, 2), Team.WHITE))
                 .doesNotThrowAnyException();
     }
 
@@ -30,16 +30,17 @@ public class BoardTest {
     @Test
     void validateSameTeamByPositionThrowsException() {
         Board board = new Board(BoardFactory.generateStartBoard());
-        assertThatThrownBy(() ->
-                board.validateSameTeamByPosition(Position.of(2, 2), Team.BLACK))
+
+        assertThatThrownBy(() -> board.validateSameTeamByPosition(Position.of(2, 2), Team.BLACK))
                 .isInstanceOf(ImpossibleMoveException.class)
-                .hasMessage("흑팀이 움직일 차례입니다");
+                .hasMessage("흑팀이 움직일 차례입니다.");
     }
 
     @DisplayName("시작 위치에 piece가 없으면 예외가 발생한다.")
     @Test
     void invalidSourcePositionMovePiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
+
         assertThatThrownBy(() -> board.move(new Movement(
                 Position.of(3, 1),
                 Position.of(2, 2))))
@@ -51,6 +52,7 @@ public class BoardTest {
     @Test
     void betweenPositionHasPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
+
         assertThatThrownBy(() -> board.move(new Movement(
                 Position.of(1, 3),
                 Position.of(3, 5))))
@@ -62,6 +64,7 @@ public class BoardTest {
     @Test
     void targetPositionHasTeamPiece() {
         Board board = new Board(BoardFactory.generateStartBoard());
+
         assertThatThrownBy(() -> board.move(new Movement(
                 Position.of(1, 1),
                 Position.of(1, 2))))
@@ -78,7 +81,9 @@ public class BoardTest {
                 Position.of(1, 4), new Knight(Team.WHITE)
         ));
 
-        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(5.5);
+        double actualScore = board.calculateScore(Team.WHITE);
+
+        assertThat(actualScore).isEqualTo(5.5);
     }
 
     @DisplayName("폰이 두개 이상 세로로 겹쳐져 있는 경우, 폰 개수당 0.5점을 감점한다.")
@@ -92,7 +97,9 @@ public class BoardTest {
                 Position.of(2, 5), new WhitePawn()
         ));
 
-        assertThat(board.calculateScore(Team.WHITE)).isEqualTo(2.5);
+        double actualScore = board.calculateScore(Team.WHITE);
+
+        assertThat(actualScore).isEqualTo(2.5);
     }
 
     @DisplayName("왕이 공격받고 있으면, 체크이다.")
@@ -103,10 +110,12 @@ public class BoardTest {
                 Position.of(1, 6), new Queen(Team.BLACK)
         ));
 
-        assertThat(board.isChecked(Team.WHITE)).isTrue();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKED);
     }
 
-    @DisplayName("왕이 체크된 상태에서 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
+    @DisplayName("어떻게 움직여도 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
     @Test
     void isCheckmate() {
         Board board = new Board(Map.of(
@@ -115,7 +124,9 @@ public class BoardTest {
                 Position.of(1, 6), new Queen(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isTrue();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKMATE);
     }
 
     @DisplayName("더블 체크인 경우, 왕이 공격받지 않는 곳으로 움직일 수 없을 때, 체크메이트이다.")
@@ -128,7 +139,9 @@ public class BoardTest {
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isTrue();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKMATE);
     }
 
     @DisplayName("체크된 상태에서 왕이 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
@@ -141,7 +154,9 @@ public class BoardTest {
                 Position.of(2, 7), new Bishop(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isFalse();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKED);
     }
 
     @DisplayName("체크된 상태에서 체크하는 경로를 막을 수 있으면, 체크메이트가 아니다.")
@@ -154,7 +169,9 @@ public class BoardTest {
                 Position.of(3, 6), new Bishop(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isFalse();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKED);
     }
 
     @DisplayName("체크된 상태에서 체크하는 기물을 제거할 수 있으면, 체크메이트가 아니다.")
@@ -167,7 +184,9 @@ public class BoardTest {
                 Position.of(4, 8), new Rook(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isFalse();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKED);
     }
 
     @DisplayName("체크된 상태에서 왕만 공격 기물을 공격할 수 있으며, 공격 기물이 보호되고 있을 때 체크메이트이다.")
@@ -179,6 +198,21 @@ public class BoardTest {
                 Position.of(2, 5), new Knight(Team.BLACK)
         ));
 
-        assertThat(board.isMate(Team.WHITE)).isTrue();
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.CHECKMATE);
+    }
+
+    @DisplayName("체크당하지 않은 상태에서 이동할 기물이 없으면, 스테일메이트이다.")
+    @Test
+    void isStaleMate() {
+        Board board = new Board(Map.of(
+                Position.of(1, 8), new King(Team.WHITE),
+                Position.of(2, 6), new Queen(Team.BLACK)
+        ));
+
+        State actualState = board.checkState(Team.WHITE);
+
+        assertThat(actualState).isEqualTo(State.STALEMATE);
     }
 }

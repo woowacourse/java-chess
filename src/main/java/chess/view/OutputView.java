@@ -43,7 +43,7 @@ public class OutputView {
     private static void printState(State state) {
         switch (state) {
             case CHECKMATE -> System.out.println("체크메이트!");
-            case CHECK -> System.out.println("체크!");
+            case CHECKED -> System.out.println("체크!");
         }
     }
 

@@ -1,7 +1,7 @@
 package chess.domain;
 
 public enum State {
-    CHECK,
+    CHECKED,
     CHECKMATE,
     STALEMATE,
     NORMAL,

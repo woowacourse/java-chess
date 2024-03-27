@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
-    public void add(String roomName, Team currentTeam, Connection connection) {
+    public void add(Team currentTeam, String roomName, Connection connection) {
         try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO chess_game(room_name, current_team) VALUES (?, ?)");

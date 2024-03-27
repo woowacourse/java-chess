@@ -24,12 +24,12 @@ public class ChessDaoManager {
         this.chessGameDao = chessGameDao;
     }
 
-    public void initialize(String roomName, Board board, Team team) {
+    public void initialize(Board board, Team team, String roomName) {
         Connection connection = null;
         try {
             connection = connectionGenerator.getConnection();
             connection.setAutoCommit(false);
-            chessGameDao.add(roomName, team, connection);
+            chessGameDao.add(team, roomName, connection);
             boardDao.addAll(board, roomName, connection);
             connection.commit();
         } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class ChessDaoManager {
         return null;
     }
 
-    public void update(String roomName, Movement movement, Piece piece, Team currentTeam) {
+    public void update(Movement movement, Piece piece, Team currentTeam, String roomName) {
         Connection connection = null;
         try {
             connection = connectionGenerator.getConnection();

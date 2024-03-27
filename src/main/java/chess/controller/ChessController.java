@@ -45,7 +45,7 @@ public class ChessController {
         ChessDaoManager chessDaoManager = new ChessDaoManager();
         Board board = new Board(BoardFactory.generateStartBoard());
         ChessGame chessGame = new ChessGame(board);
-        chessDaoManager.initialize(roomName, board, chessGame.getCurrentTeam());
+        chessDaoManager.initialize(board, chessGame.getCurrentTeam(), roomName);
         OutputView.printGameState(new BoardStatusDto(board.getPieces(), State.NORMAL));
 
         play(chessGame, chessDaoManager, roomName);
@@ -74,7 +74,7 @@ public class ChessController {
         State state = chessGame.checkState();
         Board board = chessGame.getBoard();
         while (state != State.CHECKMATE && (commandDto = InputView.inputCommand()).gameCommand() == GameCommand.MOVE) {
-            playTurn(chessGame, chessDaoManager, roomName, commandDto.toMovementDomain());
+            playTurn(chessGame, chessDaoManager, commandDto.toMovementDomain(), roomName);
             state = chessGame.checkState();
         }
         printWinnerByStatus(board, commandDto.gameCommand());
@@ -82,10 +82,10 @@ public class ChessController {
         chessDaoManager.deleteChessGame(roomName);
     }
 
-    private void playTurn(ChessGame chessGame, ChessDaoManager chessDaoManager, String roomName, Movement movement) {
+    private void playTurn(ChessGame chessGame, ChessDaoManager chessDaoManager, Movement movement, String roomName) {
         Board board = chessGame.getBoard();
         Piece piece = chessGame.movePiece(movement);
-        chessDaoManager.update(roomName, movement, piece, chessGame.getCurrentTeam());
+        chessDaoManager.update(movement, piece, chessGame.getCurrentTeam(), roomName);
         OutputView.printGameState(new BoardStatusDto(board.getPieces(), chessGame.checkState()));
     }
 

@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
 import chess.domain.Position;
+import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,27 +17,33 @@ class KnightTest {
     @ParameterizedTest
     @CsvSource(value = {"1,2", "2,1", "2,5", "1,4", "5,2", "4,1", "4,5", "5,4"})
     void knightIsMovable(int row, int column) {
-        assertThat(new Knight(Team.WHITE).isMovable(new Movement(
-                Position.of(3, 3),
-                Position.of(row, column))))
-                .isTrue();
+        Piece knight = new Knight(Team.WHITE);
+
+        boolean movable = knight.isMovable(new Movement(
+                Position.of(3, 3), Position.of(row, column)));
+
+        assertThat(movable).isTrue();
     }
 
     @DisplayName("나이트는 날 일 자가 아닌 경우, 이동할 수 없다.")
     @Test
     void knightMoveOverDayHieroglyph() {
-        assertThat(new Knight(Team.WHITE).isMovable(new Movement(
-                Position.of(1, 1), Position.of(3, 3))))
-                .isFalse();
+        Piece knight = new Knight(Team.WHITE);
+
+        boolean movable = knight.isMovable(new Movement(
+                Position.of(3, 3), Position.of(1, 1)));
+
+        assertThat(movable).isFalse();
     }
 
     @DisplayName("두 위치 사이의 나이트가 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPosition() {
-        assertThat(new Knight(Team.WHITE)
-                .findBetweenPositions(new Movement(
-                        Position.of(3, 3),
-                        Position.of(2, 1))))
-                .isEmpty();
+        Piece knight = new Knight(Team.WHITE);
+
+        Set<Position> betweenPositions = knight.findBetweenPositions(new Movement(
+                Position.of(3, 3), Position.of(2, 1)));
+
+        assertThat(betweenPositions).isEmpty();
     }
 }

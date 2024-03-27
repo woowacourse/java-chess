@@ -26,24 +26,13 @@ public class ChessGame {
     }
 
     private void validateCheck() {
-        if (board.isChecked(currentTeam)) {
+        if (board.checkState(currentTeam) == State.CHECKED) {
             throw new ImpossibleMoveException("체크 상태를 벗어나지 않았습니다.");
         }
     }
 
     public State checkState() {
-        boolean isCheck = board.isChecked(currentTeam);
-        boolean isMate = board.isMate(currentTeam);
-        if (isCheck && isMate) {
-            return State.CHECKMATE;
-        }
-        if (isCheck) {
-            return State.CHECK;
-        }
-        if (isMate) {
-            return State.STALEMATE;
-        }
-        return State.NORMAL;
+        return board.checkState(currentTeam);
     }
 
     public Team getCurrentTeam() {

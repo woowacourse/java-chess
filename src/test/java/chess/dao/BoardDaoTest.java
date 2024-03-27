@@ -60,14 +60,17 @@ class BoardDaoTest {
         Board board = new Board(Map.of(Position.of(1, 1), new WhitePawn()));
 
         boardDao.addAll(board, ROOM_NAME, connection);
+        Board dbBoard = boardDao.loadAll(ROOM_NAME, connection);
 
-        assertThat(boardDao.loadAll(ROOM_NAME, connection).getPieces()).isEqualTo(board.getPieces());
+        assertThat(dbBoard.getPieces()).isEqualTo(board.getPieces());
     }
 
     @DisplayName("존재하는 게임의 기물들을 반환한다.")
     @Test
     void loadAll() {
-        assertThat(boardDao.loadAll(ROOM_NAME, connection).getPieces()).isEmpty();
+        Board dbBoard = boardDao.loadAll(ROOM_NAME, connection);
+
+        assertThat(dbBoard.getPieces()).isEmpty();
     }
 
     @DisplayName("보드 기물의 변화를 저장한다.")
@@ -79,8 +82,9 @@ class BoardDaoTest {
         boardDao.addAll(board, ROOM_NAME, connection);
         boardDao.update(new Movement(Position.of(1, 1), Position.of(3, 1)),
                 piece, ROOM_NAME, connection);
+        Board dbBoard = boardDao.loadAll(ROOM_NAME, connection);
 
-        assertThat(boardDao.loadAll(ROOM_NAME, connection).getPieces())
+        assertThat(dbBoard.getPieces())
                 .containsExactly(Map.entry(Position.of(3, 1), piece));
     }
 
@@ -88,8 +92,11 @@ class BoardDaoTest {
     @Test
     void delete() {
         Board board = new Board(Map.of(Position.of(1, 1), new WhitePawn()));
+
         boardDao.addAll(board, ROOM_NAME, connection);
         boardDao.delete(ROOM_NAME, connection);
-        assertThat(boardDao.loadAll(ROOM_NAME, connection).getPieces()).isEmpty();
+        Board dbBoard = boardDao.loadAll(ROOM_NAME, connection);
+
+        assertThat(dbBoard.getPieces()).isEmpty();
     }
 }

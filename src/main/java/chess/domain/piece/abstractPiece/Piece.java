@@ -5,8 +5,8 @@ import chess.domain.Position;
 import chess.domain.piece.character.Character;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
@@ -25,7 +25,7 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Movement movement, boolean isAttack);
 
-    public abstract List<Position> findBetweenPositions(Movement movement);
+    public abstract Set<Position> findBetweenPositions(Movement movement);
 
     public boolean isMovable(Movement movement) {
         return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
@@ -68,11 +68,11 @@ public abstract class Piece {
             return false;
         }
         Piece piece = (Piece) o;
-        return isMoved == piece.isMoved && Objects.equals(character, piece.character);
+        return Objects.equals(character, piece.character);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(character, isMoved);
+        return Objects.hash(character);
     }
 }
