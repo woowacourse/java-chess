@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.game.CommonValue;
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
@@ -33,5 +35,10 @@ public class Queen extends Piece {
 
     private boolean canMove(Movement movement) {
         return movement.isOrthogonal() || movement.isDiagonal();
+    }
+
+    @Override
+    public PieceValue value() {
+        return new CommonValue(9);
     }
 }

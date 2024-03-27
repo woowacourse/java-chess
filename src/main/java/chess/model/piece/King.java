@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.game.CommonValue;
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
@@ -32,5 +34,10 @@ public class King extends Piece {
             return new Path(List.of(target));
         }
         return Path.empty();
+    }
+
+    @Override
+    public PieceValue value() {
+        return new CommonValue(0);
     }
 }

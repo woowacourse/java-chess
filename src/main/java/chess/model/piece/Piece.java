@@ -1,5 +1,6 @@
 package chess.model.piece;
 
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
 
@@ -13,6 +14,8 @@ public abstract class Piece {
     }
 
     public abstract Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
+
+    public abstract PieceValue value();
 
     public final boolean isSameSide(Piece other) {
         return this.side == other.side;

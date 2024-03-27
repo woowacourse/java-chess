@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.game.CommonValue;
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
@@ -29,5 +31,10 @@ public class Rook extends Piece {
             return Path.makeStraightPath(source, movement);
         }
         return Path.empty();
+    }
+
+    @Override
+    public PieceValue value() {
+        return new CommonValue(5);
     }
 }

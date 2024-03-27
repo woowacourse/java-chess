@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.game.PawnValue;
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
@@ -74,5 +76,10 @@ public class Pawn extends Piece {
 
     private boolean isPossibleDiagonal(Movement movement) {
         return movement.isDiagonal() && movement.hasLengthOf(DISPLACEMENT);
+    }
+
+    @Override
+    public PieceValue value() {
+        return new PawnValue(1, 0.5);
     }
 }

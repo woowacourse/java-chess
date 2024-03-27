@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import chess.model.game.CommonValue;
+import chess.model.game.PieceValue;
 import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
@@ -39,5 +41,10 @@ public class Knight extends Piece {
             return false;
         }
         return movement.hasLengthOf(DISPLACEMENT);
+    }
+
+    @Override
+    public PieceValue value() {
+        return new CommonValue(2.5);
     }
 }
