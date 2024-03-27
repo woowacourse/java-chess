@@ -3,6 +3,7 @@ package chess.domain.chessgame;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.chesspiece.ChessPieceType;
 import java.util.List;
 
 public class ChessGame {
@@ -34,7 +35,7 @@ public class ChessGame {
     }
 
     private void validateEmptyChessPiece(ChessPiece chessPieceOnSquare) {
-        if (chessPieceOnSquare == null) {
+        if (chessPieceOnSquare.getChessPieceType() == ChessPieceType.NONE) {
             throw new IllegalArgumentException("[ERROR] 이동할 체스말이 없습니다.");
         }
     }
