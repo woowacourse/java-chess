@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class PathFinderTest {
 
-    @Test
     @DisplayName("랭크 방향으로 직선 경로를 찾는다.")
+    @Test
     void findRankStraightPath() {
         final Position start = new Position(Rank.FIRST, File.A);
         final Position target = new Position(Rank.FOURTH, File.A);
@@ -23,8 +23,8 @@ class PathFinderTest {
         assertThat(foundPath).isEqualTo(expected);
     }
 
-    @Test
     @DisplayName("파일 방향으로 직선 경로를 찾는다.")
+    @Test
     void findFileStraightPath() {
         final Position start = new Position(Rank.FIRST, File.A);
         final Position target = new Position(Rank.FIRST, File.D);
@@ -36,8 +36,8 @@ class PathFinderTest {
         assertThat(foundPath).isEqualTo(expected);
     }
 
-    @Test
     @DisplayName("Uphill 방향의 대각선 경로를 찾는다.")
+    @Test
     void findUphillDiagonalPath() {
         final Position start = new Position(Rank.FIRST, File.A);
         final Position target = new Position(Rank.FOURTH, File.D);
@@ -49,8 +49,8 @@ class PathFinderTest {
         assertThat(foundPath).isEqualTo(expected);
     }
 
-    @Test
     @DisplayName("Downhill 방향의 대각선 경로를 찾는다.")
+    @Test
     void findDownhillDiagonalPath() {
         final Position start = new Position(Rank.FOURTH, File.A);
         final Position target = new Position(Rank.FIRST, File.D);
@@ -62,8 +62,8 @@ class PathFinderTest {
         assertThat(foundPath).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 직선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "FIRST, A, FOURTH, A, true",
             "FIRST, A, FIRST, D, true",
@@ -79,8 +79,8 @@ class PathFinderTest {
         assertThat(isStraight).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 최대 거리보다 짧거나 같은 직선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "FIRST, A, FOURTH, A, 3, true",
             "FIRST, A, FOURTH, A, 2, false",
@@ -99,8 +99,8 @@ class PathFinderTest {
         assertThat(isStraight).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 대각선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "FIRST, A, FOURTH, D, true",
             "FOURTH, A, FIRST, D, true",
@@ -116,8 +116,8 @@ class PathFinderTest {
         assertThat(isDiagonal).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 최대 거리보다 짧거나 같은 대각선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "FIRST, A, FOURTH, D, 3, true",
             "FIRST, A, FOURTH, D, 2, false",
@@ -136,8 +136,8 @@ class PathFinderTest {
         assertThat(isDiagonal).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 최대 거리보다 짧거나 같은 아래 방향 직선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "THIRD, A, FIRST, A, 2, true",
             "FIRST, A, THIRD, A, 2, false",
@@ -154,8 +154,8 @@ class PathFinderTest {
         assertThat(isDiagonal).isEqualTo(expected);
     }
 
-    @ParameterizedTest
     @DisplayName("주어진 경로가 최대 거리보다 짧거나 같은 위 방향 직선 경로인지 확인한다.")
+    @ParameterizedTest
     @CsvSource({
             "FIRST, A, THIRD, A, 2, true",
             "THIRD, A, FIRST, A, 2, false",

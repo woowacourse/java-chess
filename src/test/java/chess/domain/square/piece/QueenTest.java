@@ -14,88 +14,79 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class QueenTest {
+
     @DisplayName("퀸은 직선 경로이고, 경로에 장애물이 없는 경우 이동할 수 있다.")
     @Test
-    void canStraightMoveTest() {
-        // given
+    void canMoveStraight() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Queen.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
-        // when & then
-        assertThat(piece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isTrue();
     }
 
     @DisplayName("퀸은 대각선 경로이고, 경로에 장애물이 없는 경우 이동할 수 있다.")
     @Test
-    void canDiagonalMoveTest() {
-        // given
+    void canMoveDiagonal() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Queen.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
-        // when
-        assertThat(piece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isTrue();
     }
 
     @DisplayName("퀸은 대각선 또는 직선 경로가 아니면 움직일 수 없다.")
     @Test
-    void canNotMoveInvalidPathTest() {
-        // given
+    void canNotMoveUnlessStraightOrDiagonal() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Queen.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
-        // when
-        assertThat(piece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isFalse();
     }
 
     @DisplayName("직선 경로에 장애물이 있으면 움직일 수 없다.")
     @Test
-    void canNotMoveStraightWithObstacleTest() {
-        // given
+    void canNotMoveStraightWithObstacle() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Queen.from(Color.WHITE);
         Piece obstacle = Queen.from(Color.BLACK);
-
         board.put(new Position(Rank.FIRST, File.A), piece);
         board.put(new Position(Rank.FIRST, File.B), obstacle);
-
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
-        // when
-        assertThat(piece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isFalse();
     }
 
     @DisplayName("대각선 경로에 장애물이 있으면 움직일 수 없다.")
     @Test
-    void canNotMoveDiagonalWithObstacleTest() {
-        // given
+    void canNotMoveDiagonalWithObstacle() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Queen.from(Color.WHITE);
         Piece obstacle = Queen.from(Color.BLACK);
-
         board.put(new Position(Rank.FIRST, File.A), piece);
         board.put(new Position(Rank.SECOND, File.B), obstacle);
-
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
-        // when
-        assertThat(piece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isFalse();
     }
 
     @DisplayName("퀸은 직선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
     @Test
-    void canStraightAttackTest() {
-        // given
+    void canAttackStraight() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Queen.from(Color.WHITE);
         Piece attackedPiece = Queen.from(Color.BLACK);
@@ -103,15 +94,14 @@ public class QueenTest {
         board.put(new Position(Rank.EIGHTH, File.A), attackedPiece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.EIGHTH, File.A));
 
-        // when & then
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canAttack = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isTrue();
     }
 
     @DisplayName("퀸은 대각선 경로이고, 경로에 장애물이 없는 경우 공격할 수 있다.")
     @Test
-    void canDiagonalAttackTest() {
-        // given
+    void canAttackDiagonal() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Queen.from(Color.WHITE);
         Piece attackedPiece = Queen.from(Color.BLACK);
@@ -119,15 +109,14 @@ public class QueenTest {
         board.put(new Position(Rank.THIRD, File.C), attackedPiece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
-        // when
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canAttack = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isTrue();
     }
 
-    @DisplayName("퀸은 대각선 또는 직선 경로가 아니면 공격할 수 없다.")
+    @DisplayName("퀸은 직선 또는 대각선 경로가 아니면 공격할 수 없다.")
     @Test
-    void canNotAttackInvalidPathTest() {
-        // given
+    void canNotAttackUnlessStraightOrDiagonal() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Queen.from(Color.WHITE);
         Piece attackedPiece = Queen.from(Color.BLACK);
@@ -135,48 +124,42 @@ public class QueenTest {
         board.put(new Position(Rank.SECOND, File.C), attackedPiece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
 
-        // when
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canAttack = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isFalse();
     }
 
     @DisplayName("직선 경로에 장애물이 있으면 공격할 수 없다.")
     @Test
-    void canNotAttackStraightWithObstacleTest() {
-        // given
+    void canNotAttackStraightWithObstacle() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Queen.from(Color.WHITE);
         Piece attackedPiece = Queen.from(Color.BLACK);
         Piece obstacle = Queen.from(Color.BLACK);
-
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.FIRST, File.C), attackedPiece);
         board.put(new Position(Rank.FIRST, File.B), obstacle);
-
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.FIRST, File.C));
 
-        // when
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canAttack = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isFalse();
     }
 
     @DisplayName("대각선 경로에 장애물이 있으면 공격할 수 없다.")
     @Test
-    void canNotAttackDiagonalWithObstacleTest() {
-        // given
+    void canNotAttackDiagonalWithObstacle() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attackerPiece = Queen.from(Color.WHITE);
         Piece attackedPiece = Queen.from(Color.BLACK);
         Piece obstacle = Queen.from(Color.BLACK);
-
         board.put(new Position(Rank.FIRST, File.A), attackerPiece);
         board.put(new Position(Rank.THIRD, File.C), attackedPiece);
         board.put(new Position(Rank.SECOND, File.B), obstacle);
-
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.C));
 
-        // when
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canAttack = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isFalse();
     }
 }

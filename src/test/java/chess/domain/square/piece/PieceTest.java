@@ -14,10 +14,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PieceTest {
+
     @DisplayName("아군은 공격할 수 없다.")
     @Test
-    void canNotAttack() {
-        // given
+    void canNotAttackFriendly() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece attacker = Rook.from(Color.BLACK);
         Piece attackedPiece = Rook.from(Color.BLACK);
@@ -25,8 +25,8 @@ class PieceTest {
         board.put(new Position(Rank.SECOND, File.A), attackedPiece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
-        // when & then
-        assertThat(attacker.canArrive(pathFinder, board))
-                .isFalse();
+        final boolean canAttack = attacker.canArrive(pathFinder, board);
+
+        assertThat(canAttack).isFalse();
     }
 }

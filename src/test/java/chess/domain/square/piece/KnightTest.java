@@ -12,98 +12,71 @@ import chess.domain.square.piece.unified.Knight;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class KnightTest {
-    @DisplayName("나이트는 파일 두칸, 랭크 한칸만큼 떨어진 칸으로 갈 수 있다.")
-    @Test
-    void canTwoFileOneRankMoveTest() {
-        // given
+
+    @DisplayName("나이트는 파일 두 칸, 랭크 한 칸 또는 파일 한 칸, 랭크 두 칸만큼 떨어진 칸으로 이동할 수 있다.")
+    @ParameterizedTest
+    @CsvSource({
+            "THIRD, C, FIFTH, D",
+            "THIRD, C, FIFTH, B",
+            "THIRD, C, FIRST, D",
+            "THIRD, C, FIRST, B",
+            "THIRD, C, SECOND, A",
+            "THIRD, C, FOURTH, A",
+            "THIRD, C, FOURTH, E",
+            "THIRD, C, SECOND, E",
+    })
+    void canMoveTwoStepAndOneStep(Rank startRank, File startFile, Rank targetRank, File targetFile) {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
-        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
+        board.put(new Position(startRank, startFile), piece);
+        PathFinder pathFinder = new PathFinder(
+                new Position(startRank, startFile), new Position(targetRank, targetFile));
 
-        // when & then
-        assertThat(piece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canMove = piece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isTrue();
     }
 
-    @DisplayName("나이트는 파일 한칸, 랭크 두칸만큼 떨어진 칸으로 갈 수 있다.")
-    @Test
-    void canOneFileTwoRankMoveTest() {
-        // given
+    @DisplayName("나이트는 파일 두 칸, 랭크 한 칸 또는 파일 한 칸, 랭크 두 칸만큼 떨어진 칸을 공격할 수 있다.")
+    @ParameterizedTest
+    @CsvSource({
+            "THIRD, C, FIFTH, D",
+            "THIRD, C, FIFTH, B",
+            "THIRD, C, FIRST, D",
+            "THIRD, C, FIRST, B",
+            "THIRD, C, SECOND, A",
+            "THIRD, C, FOURTH, A",
+            "THIRD, C, FOURTH, E",
+            "THIRD, C, SECOND, E",
+    })
+    void canAttackTwoStepAndOneStep(Rank startRank, File startFile, Rank targetRank, File targetFile) {
         final Map<Position, Square> board = EmptySquaresMaker.make();
-        Piece piece = Knight.from(Color.WHITE);
-        board.put(new Position(Rank.FIRST, File.A), piece);
-        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
+        Piece attackerPiece = Knight.from(Color.WHITE);
+        Piece attackedPiece = Knight.from(Color.BLACK);
+        board.put(new Position(startRank, startFile), attackerPiece);
+        board.put(new Position(targetRank, targetFile), attackedPiece);
+        PathFinder pathFinder = new PathFinder(
+                new Position(startRank, startFile), new Position(targetRank, targetFile));
 
-        // when & then
-        assertThat(piece.canArrive(pathFinder, board))
-                .isTrue();
+        final boolean canMove = attackerPiece.canArrive(pathFinder, board);
+
+        assertThat(canMove).isTrue();
     }
 
-    @DisplayName("나이트는 정해진 규칙이 아닌 칸으로 움직일 수 없다.")
+    @DisplayName("나이트는 파일 두 칸, 랭크 한 칸 또는 파일 한 칸, 랭크 두 칸만큼 떨어진 칸이 아니면 움직일 수 없다.")
     @Test
-    void canNotMoveTest() {
-        // given
+    void canNotUnlessTwoStepAndOneStep() {
         final Map<Position, Square> board = EmptySquaresMaker.make();
         Piece piece = Knight.from(Color.WHITE);
         board.put(new Position(Rank.FIRST, File.A), piece);
         PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
 
-        // when & then
-        assertThat(piece.canArrive(pathFinder, board))
-                .isFalse();
-    }
+        final boolean canMove = piece.canArrive(pathFinder, board);
 
-    @DisplayName("나이트는 파일 두칸, 랭크 한칸만큼 떨어진 칸을 공격할 수 있다.")
-    @Test
-    void canTwoFileOneRankAttackTest() {
-        // given
-        final Map<Position, Square> board = EmptySquaresMaker.make();
-        Piece attackerPiece = Knight.from(Color.WHITE);
-        Piece attackedPiece = Knight.from(Color.BLACK);
-        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
-        board.put(new Position(Rank.SECOND, File.C), attackedPiece);
-
-        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.C));
-
-        // when & then
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isTrue();
-    }
-
-    @DisplayName("나이트는 파일 한칸, 랭크 두칸만큼 떨어진 칸을 공격할 수 있다.")
-    @Test
-    void canOneFileTwoRankAttackTest() {
-        // given
-        final Map<Position, Square> board = EmptySquaresMaker.make();
-        Piece attackerPiece = Knight.from(Color.WHITE);
-        Piece attackedPiece = Knight.from(Color.BLACK);
-        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
-        board.put(new Position(Rank.THIRD, File.B), attackedPiece);
-
-        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.THIRD, File.B));
-
-        // when & then
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isTrue();
-    }
-
-    @DisplayName("나이트는 정해진 규칙이 아닌 칸으로 공격할 수 없다.")
-    @Test
-    void canNotAttackTest() {
-        // given
-        final Map<Position, Square> board = EmptySquaresMaker.make();
-        Piece attackerPiece = Knight.from(Color.WHITE);
-        Piece attackedPiece = Knight.from(Color.BLACK);
-        board.put(new Position(Rank.FIRST, File.A), attackerPiece);
-        board.put(new Position(Rank.SECOND, File.A), attackedPiece);
-
-        PathFinder pathFinder = new PathFinder(new Position(Rank.FIRST, File.A), new Position(Rank.SECOND, File.A));
-
-        // when & then
-        assertThat(attackerPiece.canArrive(pathFinder, board))
-                .isFalse();
+        assertThat(canMove).isFalse();
     }
 }
