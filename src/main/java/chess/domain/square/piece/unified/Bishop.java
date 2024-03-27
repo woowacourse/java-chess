@@ -4,7 +4,7 @@ import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class Bishop extends UnifiedArriveWay {
+public class Bishop extends MoveAttackUnified {
     private static final Map<Color, Bishop> BISHOP_POOL = Map.of(
             Color.WHITE, new Bishop(Color.WHITE),
             Color.BLACK, new Bishop(Color.BLACK));

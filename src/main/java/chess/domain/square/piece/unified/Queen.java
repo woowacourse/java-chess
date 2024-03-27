@@ -4,7 +4,7 @@ import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class Queen extends UnifiedArriveWay {
+public class Queen extends MoveAttackUnified {
     private static final Map<Color, Queen> QUEEN_POOL = Map.of(
             Color.WHITE, new Queen(Color.WHITE),
             Color.BLACK, new Queen(Color.BLACK));

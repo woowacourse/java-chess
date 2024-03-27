@@ -4,7 +4,7 @@ import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
 import java.util.Map;
 
-public class King extends UnifiedArriveWay {
+public class King extends MoveAttackUnified {
     private static final int MOVABLE_DISTANCE = 1;
     private static final Map<Color, King> KING_POOL = Map.of(
             Color.WHITE, new King(Color.WHITE),

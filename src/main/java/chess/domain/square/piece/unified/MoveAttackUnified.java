@@ -7,9 +7,9 @@ import chess.domain.square.piece.Color;
 import chess.domain.square.piece.Piece;
 import java.util.Map;
 
-public abstract class UnifiedArriveWay extends Piece {
+public abstract class MoveAttackUnified extends Piece {
 
-    public UnifiedArriveWay(final Color color) {
+    public MoveAttackUnified(final Color color) {
         super(color);
     }
 
