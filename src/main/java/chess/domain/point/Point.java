@@ -1,26 +1,25 @@
 package chess.domain.point;
 
 import chess.domain.piece.Direction;
-import java.util.EnumMap;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Point {
 
     private static final int SlOPE_TWO = 2;
-    private static final EnumMap<File, EnumMap<Rank, Point>> POOL;
-
-    static {
-        POOL = new EnumMap<>(File.class);
-        for (File file : File.values()) {
-            EnumMap<Rank, Point> rankPoints = new EnumMap<>(Rank.class);
-            for (Rank rank : Rank.values()) {
-                rankPoints.put(rank, new Point(file, rank));
-            }
-            POOL.put(file, rankPoints);
-        }
-    }
+    private static final Map<String, Point> POOL;
 
     private final File file;
     private final Rank rank;
+
+    static {
+        POOL = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values())
+                        .map(rank -> new Point(file, rank)))
+                .collect(Collectors.toMap(it -> toKey(it.file, it.rank), Function.identity()));
+    }
 
     private Point(File file, Rank rank) {
         this.file = file;
@@ -28,7 +27,7 @@ public class Point {
     }
 
     public static Point of(File file, Rank rank) {
-        return POOL.get(file).get(rank);
+        return POOL.get(toKey(file, rank));
     }
 
     public boolean isSlopeOneDiagonal(Point point) {
@@ -96,5 +95,9 @@ public class Point {
             return 0;
         }
         return distance < 0 ? -1 : 1;
+    }
+
+    private static String toKey(File file, Rank rank) {
+        return file.name() + rank.name();
     }
 }
