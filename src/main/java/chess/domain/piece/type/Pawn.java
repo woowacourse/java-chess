@@ -1,8 +1,8 @@
 package chess.domain.piece.type;
 
+import chess.domain.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.PieceRelation;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Direction;
@@ -30,17 +30,17 @@ public final class Pawn extends Piece {
     private boolean canMove(final Movement movement) {
         Direction direction = movement.findDirection();
         if (color.isWhite()) {
-            return movement.isCross() && type.contains(direction) && direction.isUpSide();
+            return direction.isVertical() && direction.isUpSide();
         }
-        return movement.isCross() && type.contains(direction) && direction.isDownSide();
+        return direction.isVertical() && direction.isDownSide();
     }
 
     private boolean canAttack(final Movement movement) {
         Direction direction = movement.findDirection();
         if (color.isWhite()) {
-            return movement.isDiagonal() && type.contains(direction) && direction.isUpSide();
+            return direction.isDiagonal() && direction.isUpSide();
         }
-        return movement.isDiagonal() && type.contains(direction) && direction.isDownSide();
+        return direction.isDiagonal() && direction.isDownSide();
     }
 
     private boolean isMovableDistance(final Movement movement) {

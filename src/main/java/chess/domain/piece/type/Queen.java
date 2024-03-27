@@ -20,7 +20,7 @@ public final class Queen extends Piece {
     }
 
     private boolean isMovableDirection(final Direction direction) {
-        return type.contains(direction);
+        return direction.isDiagonal() || direction.isCross();
     }
 
     private boolean isNotBlocked(final PathStatus pathStatus) {

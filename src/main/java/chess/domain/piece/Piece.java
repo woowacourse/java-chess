@@ -19,15 +19,9 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public boolean isType(final PieceType pieceType) {
-        return this.type == pieceType;
-    }
-
-    public PieceType type() {
-        return type;
-    }
-
     public PieceColor color() {
         return color;
     }
+
+    public PieceType type() {return type;}
 }
