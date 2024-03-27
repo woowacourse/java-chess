@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
+import chess.model.game.PositionEvaluation;
 import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
 import chess.model.game.Turn;
@@ -47,9 +48,14 @@ public class ChessGame {
             if (gameCommand.isEnd()) {
                 break;
             }
-            MoveArguments moveArguments = gameArguments.moveArguments();
-            move(chessBoard, moveArguments, turn);
-            turn = turn.getNextTurn();
+            if (gameCommand.isMove()) {
+                MoveArguments moveArguments = gameArguments.moveArguments();
+                move(chessBoard, moveArguments, turn);
+                turn = turn.getNextTurn();
+                continue;
+            }
+            PositionEvaluation positionEvaluation = new PositionEvaluation(chessBoard.getBoard());
+            outputView.printPositionEvaluation(positionEvaluation);
         }
     }
 

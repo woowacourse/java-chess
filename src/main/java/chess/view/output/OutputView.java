@@ -1,7 +1,9 @@
 package chess.view.output;
 
 import chess.model.board.ChessBoard;
+import chess.model.game.PositionEvaluation;
 import chess.model.piece.Piece;
+import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
 import chess.model.position.File;
 import chess.model.position.Rank;
@@ -60,6 +62,14 @@ public class OutputView {
         return result.stream()
                 .map(strings -> String.join("", strings))
                 .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public void printPositionEvaluation(PositionEvaluation positionEvaluation) {
+        Side.colors().forEach(side -> printScoreBySide(side, positionEvaluation));
+    }
+
+    private void printScoreBySide(Side side, PositionEvaluation positionEvaluation) {
+        System.out.println(side.name() + ": " + positionEvaluation.getEvaluationBySide(side) + "점");
     }
 
     public void printException(String message) {
