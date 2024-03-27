@@ -8,7 +8,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessGameComponentDto;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,28 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessGameDao {
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USERNAME = "user";
-    private static final String PASSWORD = "password";
-    private static final String APP_TABLE_NAME = "chessboard";
-    private static final String TEST_TABLE_NAME = "chessboard_for_test";
+    private static final String TABLE_NAME = "chessboard";
+    private final ConnectionGenerator connectionGenerator;
 
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+    public ChessGameDao(ConnectionGenerator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
     public List<ChessGameComponentDto> findAll() {
-        String tableName = getTableName();
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + tableName);
+        try (final Connection connection = connectionGenerator.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME);
             final ResultSet resultSet = statement.executeQuery();
 
             final List<ChessGameComponentDto> chessBoardComponents = new ArrayList<>();
@@ -54,15 +41,16 @@ public class ChessGameDao {
             }
             return chessBoardComponents;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
+        return null;
     }
 
     public Piece findPieceByPosition(Position position) {
-        try (final Connection connection = getConnection()) {
-            String tableName = getTableName();
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + tableName + " WHERE `file` = ? AND `rank` = ?");
+                    "SELECT * FROM " + TABLE_NAME + " WHERE `file` = ? AND `rank` = ?");
             statement.setString(1, position.getFileSymbol());
             statement.setInt(2, position.getRankValue());
             ResultSet resultSet = statement.executeQuery();
@@ -81,9 +69,9 @@ public class ChessGameDao {
     }
 
     public List<ChessGameComponentDto> findById(int gameId) {
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + getTableName() + " WHERE game_id = ?");
+                    "SELECT * FROM " + TABLE_NAME + " WHERE game_id = ?");
             statement.setInt(1, gameId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -100,15 +88,16 @@ public class ChessGameDao {
             }
             return chessBoardComponents;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
+        return null;
     }
 
     public void save(ChessGameComponentDto chessGameComponentDto) {
-        String tableName = getTableName();
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`,`game_id`)VALUES (?,?,?,?,?)");
+                    "INSERT INTO " + TABLE_NAME + " (`file`,`rank`,`type`,`color`,`game_id`)VALUES (?,?,?,?,?)");
             statement.setString(1, chessGameComponentDto.position().getFileSymbol());
             statement.setInt(2, chessGameComponentDto.position().getRankValue());
             statement.setString(3, chessGameComponentDto.piece().identifyType());
@@ -116,45 +105,36 @@ public class ChessGameDao {
             statement.setInt(5, chessGameComponentDto.gameId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public void update(Position source, Position target) {
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE " + getTableName() + " SET file = ?, `rank` = ? WHERE file = ? AND `rank` = ?");
+                    "UPDATE " + TABLE_NAME + " SET file = ?, `rank` = ? WHERE file = ? AND `rank` = ?");
             statement.setString(1, target.getFileSymbol());
             statement.setInt(2, target.getRankValue());
             statement.setString(3, source.getFileSymbol());
             statement.setInt(4, source.getRankValue());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public void remove(Position target) {
-        try (final Connection connection = getConnection()) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM " + getTableName() + " WHERE file = ? AND `rank` = ?");
+                    "DELETE FROM " + TABLE_NAME + " WHERE file = ? AND `rank` = ?");
             statement.setString(1, target.getFileSymbol());
             statement.setInt(2, target.getRankValue());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    private String getTableName() {
-        if (isTestEnvironment()) {
-            return TEST_TABLE_NAME;
-        }
-        return APP_TABLE_NAME;
-    }
-
-    private boolean isTestEnvironment() {
-        String testStatus = System.getProperty("TEST_ENV");
-        return testStatus != null && testStatus.equalsIgnoreCase("true");
     }
 }

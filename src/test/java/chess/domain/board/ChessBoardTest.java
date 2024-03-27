@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.dao.DaoTest;
+import chess.dao.TestConnectionGenerator;
 import chess.domain.piece.Color;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -19,11 +20,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest implements DaoTest {
-    ChessBoard chessBoard;
+    private ChessBoard chessBoard;
 
     @BeforeEach
     void setUpChessBoard() {
-        chessBoard = new ChessBoard(1);
+        chessBoard = new ChessBoard(1, new TestConnectionGenerator());
     }
 
     @DisplayName("체스보드가 생성되면 저장된 데이터를 가져온다.")
@@ -37,7 +38,7 @@ class ChessBoardTest implements DaoTest {
     @Test
     void createNewGame() {
         // when
-        ChessBoard createdChessBoard = new ChessBoard();
+        ChessBoard createdChessBoard = new ChessBoard(new TestConnectionGenerator());
 
         // then
         assertThat(createdChessBoard.getGameInformation().getGameId()).isEqualTo(2);
@@ -57,7 +58,7 @@ class ChessBoardTest implements DaoTest {
 
     @DisplayName("source에 위치한 piece가 움직일 수 있는지 판단한다")
     @Test
-    public void move() {
+    void move() {
         // given
         Position source = Position.of(File.B, Rank.ONE);
         Position target = Position.of(File.C, Rank.THREE);

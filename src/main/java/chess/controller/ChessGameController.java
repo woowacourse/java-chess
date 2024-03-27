@@ -2,7 +2,9 @@ package chess.controller;
 
 import static chess.utils.Constant.STATUS_COMMAND;
 
+import chess.dao.ConnectionGenerator;
 import chess.dao.GameInformationDao;
+import chess.dao.ProductConnectionGenerator;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.GameInformation;
 import chess.domain.piece.Color;
@@ -20,10 +22,10 @@ import java.util.function.Supplier;
 public class ChessGameController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
-    private final GameInformationDao gameInformationDao = new GameInformationDao();
+    private final GameInformationDao gameInformationDao = new GameInformationDao(new ProductConnectionGenerator());
 
     public void run() {
-        ChessBoard chessBoard = prepareChessBoard();
+        ChessBoard chessBoard = prepareChessBoard(new ProductConnectionGenerator());
         outputView.printStartMessage(chessBoard.getGameId());
 
         playGame(chessBoard);
@@ -41,12 +43,12 @@ public class ChessGameController {
         handleKingCapture((End) gameState, chessBoard);
     }
 
-    private ChessBoard prepareChessBoard() {
+    private ChessBoard prepareChessBoard(ConnectionGenerator connectionGenerator) {
         List<GameInformation> gameInfos = gameInformationDao.findAll();
         outputView.printGameInformation(gameInfos);
 
         int gameId = repeatUntilSuccess(() -> inputView.readGameId(gameInfos));
-        return ChessBoard.from(gameId);
+        return ChessBoard.from(gameId, connectionGenerator);
     }
 
     private void handleKingCapture(End gameState, ChessBoard chessBoard) {

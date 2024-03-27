@@ -14,7 +14,7 @@ class GameInformationDaoTest implements DaoTest {
 
     @BeforeEach
     void initializeChessGameDao() {
-        gameInformationDao = new GameInformationDao();
+        gameInformationDao = new GameInformationDao(new TestConnectionGenerator());
     }
 
     @DisplayName("데이터베이스에서 전체 데이터를 조회한다.")

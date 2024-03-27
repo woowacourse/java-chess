@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.dao.ChessGameDao;
+import chess.dao.ConnectionGenerator;
 import chess.dao.GameInformationDao;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
@@ -27,28 +28,32 @@ public class ChessBoard {
     private static final Score HALF_PAWN_SCORE = new Score(0.5);
     private static final int NEW_GAME_COMMAND = 0;
 
-    private final ChessGameDao chessGameDao = new ChessGameDao();
-    private final GameInformationDao gameInformationDao = new GameInformationDao();
+    private final GameInformationDao gameInformationDao;
+    private final ChessGameDao chessGameDao;
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
     private final GameInformation gameInformation;
 
-    public ChessBoard() {
+    public ChessBoard(ConnectionGenerator connectionGenerator) {
+        this.gameInformationDao = new GameInformationDao(connectionGenerator);
+        this.chessGameDao = new ChessGameDao(connectionGenerator);
         initializeBlackPieces();
         initializeWhitePieces();
         saveData();
         this.gameInformation = bringNewGameInformation();
     }
 
-    public ChessBoard(int gameId) {
+    public ChessBoard(int gameId, ConnectionGenerator connectionGenerator) {
+        this.gameInformationDao = new GameInformationDao(connectionGenerator);
+        this.chessGameDao = new ChessGameDao(connectionGenerator);
         bringChessBoard(chessGameDao.findById(gameId));
         this.gameInformation = bringGameInformation(gameId);
     }
 
-    public static ChessBoard from(int gameId) {
+    public static ChessBoard from(int gameId, ConnectionGenerator connectionGenerator) {
         if (gameId == NEW_GAME_COMMAND) {
-            return new ChessBoard();
+            return new ChessBoard(connectionGenerator);
         }
-        return new ChessBoard(gameId);
+        return new ChessBoard(gameId, connectionGenerator);
     }
 
     public void move(Position source, Position target) {

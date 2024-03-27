@@ -10,7 +10,6 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessGameComponentDto;
-import java.sql.Connection;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,17 +20,7 @@ class ChessGameDaoTest implements DaoTest {
 
     @BeforeEach
     void initializeChessGameDao() {
-        chessGameDao = new ChessGameDao();
-    }
-
-    @DisplayName("데이터베이스 연결이 되었는지 확인한다.")
-    @Test
-    void getConnection() {
-        // when
-        Connection connection = chessGameDao.getConnection();
-
-        // then
-        assertThat(connection).isNotNull();
+        chessGameDao = new ChessGameDao(new TestConnectionGenerator());
     }
 
     @DisplayName("데이터베이스에서 전체 데이터를 조회한다.")

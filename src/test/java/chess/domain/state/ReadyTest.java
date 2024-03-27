@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.dao.DaoTest;
+import chess.dao.TestConnectionGenerator;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Color;
 import java.util.List;
@@ -16,7 +17,7 @@ class ReadyTest implements DaoTest {
 
     @BeforeEach
     void setUpChessBoard() {
-        chessBoard = new ChessBoard(1);
+        chessBoard = new ChessBoard(1, new TestConnectionGenerator());
     }
 
     @BeforeEach
@@ -37,7 +38,7 @@ class ReadyTest implements DaoTest {
     @Test
     void playWithCommandMove() {
         // given
-        Ready ready = new Ready(new ChessBoard(1));
+        Ready ready = new Ready(chessBoard);
 
         // when, then
         assertThatThrownBy(() -> ready.play(List.of("move", "b1", "b2")))
