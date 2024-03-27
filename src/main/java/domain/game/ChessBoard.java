@@ -13,48 +13,48 @@ public class ChessBoard {
         this.piecePosition = piecePosition;
     }
 
-    public void move(final Position sourcePosition, final Position targetPosition) {
-        validateMovement(sourcePosition, targetPosition);
-        update(sourcePosition, targetPosition);
+    public void move(final Position source, final Position target) {
+        validateMovement(source, target);
+        update(source, target);
         turn.change();
     }
 
-    private void validateMovement(final Position sourcePosition, final Position targetPosition) {
-        validateSourceExists(sourcePosition);
+    private void validateMovement(final Position source, final Position target) {
+        validateSourceExists(source);
 
-        Piece sourcePiece = piecePosition.get(sourcePosition);
+        Piece sourcePiece = piecePosition.get(source);
         validateCorrectTurn(sourcePiece);
 
-        validateDifferentSourceTarget(sourcePosition, targetPosition);
-        validateOpponentTarget(sourcePosition, targetPosition);
+        validateDifferentSourceTarget(source, target);
+        validateOpponentTarget(source, target);
 
-        sourcePiece.validateMovableRoute(sourcePosition, targetPosition, piecePosition);
+        sourcePiece.validateMovableRoute(source, target, piecePosition);
     }
 
-    private void validateOpponentTarget(final Position sourcePosition, final Position targetPosition) {
-        if (hasSameColorPiece(sourcePosition, targetPosition)) {
+    private void validateOpponentTarget(final Position source, final Position target) {
+        if (hasSameColorPiece(source, target)) {
             throw new IllegalArgumentException("[ERROR]같은 진영의 기물이 있는 곳으로 옮길 수 없습니다.");
         }
     }
 
-    private boolean hasSameColorPiece(final Position sourcePosition, final Position targetPosition) {
-        Piece sourcePiece = piecePosition.get(sourcePosition);
+    private boolean hasSameColorPiece(final Position source, final Position target) {
+        Piece sourcePiece = piecePosition.get(source);
 
-        if (piecePosition.containsKey(targetPosition)) {
-            Piece targetPiece = piecePosition.get(targetPosition);
+        if (piecePosition.containsKey(target)) {
+            Piece targetPiece = piecePosition.get(target);
             return sourcePiece.isEqualColor(targetPiece.getColor());
         }
         return false;
     }
 
-    private void validateSourceExists(final Position sourcePosition) {
-        if (!piecePosition.containsKey(sourcePosition)) {
+    private void validateSourceExists(final Position source) {
+        if (!piecePosition.containsKey(source)) {
             throw new IllegalArgumentException("[ERROR]해당 위치에 Piece가 존재하지 않습니다.");
         }
     }
 
-    private void validateDifferentSourceTarget(final Position sourcePosition, final Position targetPosition) {
-        if (sourcePosition.equals(targetPosition)) {
+    private void validateDifferentSourceTarget(final Position source, final Position target) {
+        if (source.equals(target)) {
             throw new IllegalArgumentException("[ERROR]같은 위치로의 이동입니다. 다시 입력해주세요.");
         }
     }
@@ -65,17 +65,17 @@ public class ChessBoard {
         }
     }
 
-    private void update(final Position sourcePosition, final Position targetPosition) {
-        Piece sourcePiece = piecePosition.get(sourcePosition);
-        piecePosition.put(targetPosition, sourcePiece);
-        piecePosition.remove(sourcePosition);
+    private void update(final Position source, final Position target) {
+        Piece sourcePiece = piecePosition.get(source);
+        piecePosition.put(target, sourcePiece);
+        piecePosition.remove(source);
     }
 
     public boolean hasPiece(final Position position) {
         return piecePosition.containsKey(position);
     }
 
-    public Piece findPieceByPosition(final Position targetPosition) {
-        return piecePosition.get(targetPosition);
+    public Piece findPieceByPosition(final Position position) {
+        return piecePosition.get(position);
     }
 }

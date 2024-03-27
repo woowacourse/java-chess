@@ -12,18 +12,18 @@ public class Movable {
         this.direction = direction;
     }
 
-    public boolean canMove(final Position sourcePosition, final Position targetPosition) {
-        Direction findDirection = Direction.findDirection(sourcePosition, targetPosition);
+    public boolean canMove(final Position source, final Position target) {
+        Direction findDirection = Direction.findDirection(source, target);
         if (this.direction == findDirection) {
-            return doesStepExceedMaxMovement(sourcePosition, targetPosition);
+            return doesStepExceedMaxMovement(source, target);
         }
         return false;
     }
 
-    private boolean doesStepExceedMaxMovement(final Position sourcePosition, final Position targetPosition) {
+    private boolean doesStepExceedMaxMovement(final Position source, final Position target) {
         int step = 0;
-        Position here = new Position(sourcePosition);
-        while (!here.equals(targetPosition)) {
+        Position here = new Position(source);
+        while (!here.equals(target)) {
             here = here.move(direction);
             step++;
         }
