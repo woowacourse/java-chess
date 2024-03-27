@@ -28,7 +28,7 @@ public class Room {
         }
     }
 
-    public long getRoomId() {
+    public Long getRoomId() {
         return id;
     }
 

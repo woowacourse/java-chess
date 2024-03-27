@@ -20,7 +20,6 @@ public class RoomService {
                 .toList();
     }
 
-
     public long create(final long userId, final String name) {
         roomRepository.findByUserIdAndName(userId, name)
                 .ifPresent(room -> {
