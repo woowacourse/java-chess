@@ -1,10 +1,12 @@
 package chess.controller;
 
 import chess.dto.BoardDTO;
+import chess.dto.ScoreDTO;
 import chess.model.board.Board;
 import chess.model.board.InitialBoardGenerator;
 import chess.model.position.Movement;
 import chess.model.position.Position;
+import chess.model.score.ScoreGenerator;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -44,11 +46,23 @@ public class ChessGameController {
 
     private void playTurn(GameStatus gameStatus, Board board) {
         Command command = inputView.askCommand();
+        validateCommandNotStart(command);
+        if (command != Command.END) {
+            moveOrShowResult(command, board);
+            return;
+        }
+        gameStatus.stop();
+    }
+
+    private void validateCommandNotStart(Command command) {
         if (command == Command.START) {
             throw new IllegalArgumentException("게임이 이미 시작되었습니다.");
         }
-        if (command == Command.END) {
-            gameStatus.stop();
+    }
+
+    private void moveOrShowResult(Command command, Board board) {
+        if (command == Command.STATUS) {
+            showResult(board);
             return;
         }
         move(board);
@@ -60,6 +74,12 @@ public class ChessGameController {
         Position destination = inputView.askPosition();
         Movement movement = new Movement(source, destination);
         board.move(movement);
+    }
+
+    private void showResult(Board board) {
+        ScoreGenerator scoreGenerator = new ScoreGenerator(board);
+        ScoreDTO scoreDTO = scoreGenerator.calculateScore();
+        outputView.printScore(scoreDTO);
     }
 
     private Command getValidCommand() {
