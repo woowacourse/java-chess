@@ -10,15 +10,26 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardTest {
-    private ChessBoard chessBoard = new ChessBoard();
+    private final ChessBoard chessBoard = new ChessBoard();
 
     @Test
-    @DisplayName("특정 위치에 존재하는 이동 가능한 기물을 이동할 때에는 예외를 던지지 않는다.")
-    void move_ShouldMovePieceHolder_WhenLegalSourceDestination() {
+    @DisplayName("특정 위치에 존재하는 이동 가능한 Pawn을 이동할 때에는 예외를 던지지 않는다.")
+    void move_ShouldMovePawnPieceHolder_WhenLegalSourceDestination() {
         Position whitePawnPosition = Position.of(1, 2);
         Position destination = Position.of(1, 3);
 
         assertDoesNotThrow(() -> chessBoard.move(whitePawnPosition, destination));
+    }
+
+    @Test
+    @DisplayName("특정 위치에 존재하는 기물들을 가능한 이동 실행할 때에는 예외를 던지지 않는다.")
+    void move_ShouldMoveRookPieceHolder_WhenLegalSourceDestination() {
+        assertAll(() -> {
+            chessBoard.move(Position.of(6, 2), Position.of(6, 3));
+            chessBoard.move(Position.of(5, 7), Position.of(5, 5)); // e7 e5
+            chessBoard.move(Position.of(7, 2), Position.of(7, 4)); // g2 g4
+            chessBoard.move(Position.of(4, 8), Position.of(8, 4)); // d8 h4 -> CheckMate Black Wins
+        });
     }
 
     @Test

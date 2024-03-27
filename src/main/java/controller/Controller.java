@@ -17,7 +17,7 @@ public class Controller {
     public void execute() {
         GameCommand gameCommand = executeInitial();
         ChessBoard chessBoard = new ChessBoard();
-        while (gameCommand != GameCommand.END) {
+        while (gameCommand != GameCommand.END && !chessBoard.isFinish()) {
             List<PieceInfo> pieceInfos = InfoMapper.toPieceInfoMapper(chessBoard);
             printChessBoard(pieceInfos);
             gameCommand = inputRetryHelper(() -> runGame(chessBoard));
