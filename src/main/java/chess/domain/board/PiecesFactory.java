@@ -52,15 +52,6 @@ public class PiecesFactory {
         initializePawn(INITIAL_BLACK_PAWN_RANK, Team.BLACK, pieces);
     }
 
-    private static void initializePawn(
-            int rankValue,
-            Team team,
-            HashMap<Coordinate, Piece> pieces) {
-        for (char fileValue = 'a'; fileValue <= 'h'; fileValue++) {
-            pieces.put(new Coordinate(rankValue, fileValue), new Pawn(team));
-        }
-    }
-
     private static void initializeSpecialPiece(int rankValue, Team team, HashMap<Coordinate, Piece> pieces) {
         pieces.put(new Coordinate(rankValue, 'e'), new King(team));
         pieces.put(new Coordinate(rankValue, 'd'), new Queen(team));
@@ -70,5 +61,14 @@ public class PiecesFactory {
         pieces.put(new Coordinate(rankValue, 'g'), new Knight(team));
         pieces.put(new Coordinate(rankValue, 'a'), new Rook(team));
         pieces.put(new Coordinate(rankValue, 'h'), new Rook(team));
+    }
+
+    private static void initializePawn(
+            int rankValue,
+            Team team,
+            HashMap<Coordinate, Piece> pieces) {
+        for (char fileValue = 'a'; fileValue <= 'h'; fileValue++) {
+            pieces.put(new Coordinate(rankValue, fileValue), new Pawn(team));
+        }
     }
 }
