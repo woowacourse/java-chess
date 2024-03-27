@@ -4,8 +4,8 @@ import domain.coordinate.Coordinate;
 import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Color;
-import domain.piece.Pawn;
 import domain.piece.base.ChessPiece;
+import domain.piece.pawn.Pawn;
 import java.util.Collections;
 import java.util.Map;
 
@@ -69,13 +69,14 @@ public class ChessBoard {
         validateNoPieceOnPath(start, destination, direction);
 
         if (!isAttack && piece instanceof Pawn) {
-            validateCanMoveTwoDistance(start, (Pawn) piece);
+            int rowDifference = start.calculateRowDifference(destination);
+            validateCanMoveTwoDistance(start, rowDifference, (Pawn) piece);
         }
     }
 
-    private void validateCanMoveTwoDistance(Coordinate coordinate, Pawn pawn) {
-        if (!pawn.isFirstPosition(coordinate)) {
-            throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
+    private void validateCanMoveTwoDistance(Coordinate coordinate, int rowDifference, Pawn pawn) {
+        if (!pawn.isFirstPosition(coordinate) && Math.abs(rowDifference) == 2) {
+            throw new IllegalArgumentException("2칸을 이동할 수 있는 상태가 아닙니다.");
         }
     }
 

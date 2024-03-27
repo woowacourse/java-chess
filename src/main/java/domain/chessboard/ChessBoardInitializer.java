@@ -6,10 +6,11 @@ import domain.piece.Blank;
 import domain.piece.Color;
 import domain.piece.King;
 import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import domain.piece.base.ChessPiece;
+import domain.piece.pawn.BlackPawn;
+import domain.piece.pawn.WhitePawn;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,13 +56,13 @@ public class ChessBoardInitializer {
 
     private static void settingSecondBlackRow(Map<Coordinate, ChessPiece> board) {
         for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
-            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_SECOND_RANK), new Pawn(Color.BLACK));
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + BLACK_SECOND_RANK), new BlackPawn());
         }
     }
 
     private static void settingSecondWhiteRow(Map<Coordinate, ChessPiece> board) {
         for (int i = 1; i <= CHESS_BOARD_COLUMNS.length(); i++) {
-            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_SECOND_RANK), new Pawn(Color.WHITE));
+            board.put(Coordinate.from(CHESS_BOARD_COLUMNS.charAt(i - 1) + WHITE_SECOND_RANK), new WhitePawn());
         }
     }
 

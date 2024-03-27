@@ -3,12 +3,15 @@ package domain.piece;
 import domain.coordinate.Coordinate;
 import domain.direction.Direction;
 import domain.piece.base.ChessPieceBase;
-import domain.piece.strategy.RookStrategy;
+import domain.piece.strategy.PieceStrategy;
 
 public class Rook extends ChessPieceBase {
 
+    private final PieceStrategy pieceStrategy;
+
     public Rook(Color color) {
         super(color);
+        this.pieceStrategy = new PieceStrategy(Direction.STRAIGHT_DIRECTION);
     }
 
     @Override
@@ -16,7 +19,13 @@ public class Rook extends ChessPieceBase {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        RookStrategy rookStrategy = RookStrategy.getMoveStrategy(rowDifference, columnDifference);
-        return rookStrategy.getDirection();
+        return pieceStrategy.findDirection(divideValueByAbs(rowDifference), divideValueByAbs(columnDifference));
+    }
+
+    private int divideValueByAbs(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 }

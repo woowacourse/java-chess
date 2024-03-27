@@ -3,12 +3,15 @@ package domain.piece;
 import domain.coordinate.Coordinate;
 import domain.direction.Direction;
 import domain.piece.base.ChessPieceBase;
-import domain.piece.strategy.KingStrategy;
+import domain.piece.strategy.PieceStrategy;
 
 public class King extends ChessPieceBase {
 
+    private final PieceStrategy pieceStrategy;
+
     public King(Color color) {
         super(color);
+        this.pieceStrategy = new PieceStrategy(Direction.ALL_DIRECTION);
     }
 
     @Override
@@ -16,7 +19,13 @@ public class King extends ChessPieceBase {
         int rowDifference = start.calculateRowDifference(destination);
         int columnDifference = start.calculateColumnDifference(destination);
 
-        KingStrategy kingStrategy = KingStrategy.getMoveStrategy(rowDifference, columnDifference);
-        return kingStrategy.getDirection();
+        return pieceStrategy.findDirection(divideValueByAbs(rowDifference), divideValueByAbs(columnDifference));
+    }
+
+    private int divideValueByAbs(int value) {
+        if (value == 0) {
+            return 0;
+        }
+        return value / Math.abs(value);
     }
 }
