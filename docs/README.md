@@ -29,7 +29,7 @@
 
 ### 기물들
 
-- [ ] 기물들의 위치를 관리한다.
+- [x] 기물들의 위치를 관리한다.
     - [x] White King = E 1
     - [x] White Queen = D 1
     - [x] White Bishop = C 1, F 1
@@ -39,13 +39,13 @@
     - [x] Black King = E 8
     - [x] Black Queen = D 8
     - [x] Black Bishop = C 8, F 8
-    - [X] Black Knight = B 8, G 8
+    - [x] Black Knight = B 8, G 8
     - [x] Black Rook = A 8, H 8
-    - [X] Black Pawn = (A - H)7
-- [ ] 기들들은 주어진 좌표에 해당하는 기물을 반환할 수 있다.
-    - [ ] 존재하지 않는 경우 Empty 피스를 반환한다.
-- [ ] 기물들은 주어진 좌표에 기물이 존재하는지 확인할 수 있다.
-- [ ] 두 좌표에 해당하는 값들을 서로 바꾼다.
+    - [x] Black Pawn = (A - H)7
+- [x] 기들들은 주어진 좌표에 해당하는 기물을 반환할 수 있다.
+    - [x] 존재하지 않는 경우 Empty 피스를 반환한다.
+- [x] 기물들은 주어진 좌표에 기물이 존재하는지 확인할 수 있다.
+- [x] 두 좌표에 해당하는 값들을 서로 바꾼다.
 
 ### 진영
 
