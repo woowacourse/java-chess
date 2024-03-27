@@ -33,7 +33,16 @@ public class ChessGameController {
 
     private void play() {
         Board board = initializeBoard();
-        playRound(board, inputView.getGameCommand());
+        GameCommand gameCommand = inputView.getGameCommand();
+
+        while (gameCommand == GameCommand.MOVE) {
+            playTurn(board);
+            gameCommand = inputView.getGameCommand();
+        }
+
+        if (gameCommand == GameCommand.START) {
+            play();
+        }
     }
 
     private Board initializeBoard() {
@@ -42,18 +51,11 @@ public class ChessGameController {
         return board;
     }
 
-    private void playRound(final Board board, final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.MOVE) {
-            Position source = Position.of(inputView.getPosition());
-            Position target = Position.of(inputView.getPosition());
+    private void playTurn(final Board board) {
+        Position source = Position.of(inputView.getPosition());
+        Position target = Position.of(inputView.getPosition());
 
-            board.tryMove(source, target);
-            outputView.printBoard(board);
-            playRound(board, inputView.getGameCommand());
-        }
-
-        if (gameCommand == GameCommand.START) {
-            play();
-        }
+        board.tryMove(source, target);
+        outputView.printBoard(board);
     }
 }
