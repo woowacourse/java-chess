@@ -7,8 +7,8 @@ import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.state.BlankChessState;
 import chess.domain.state.ChessState;
-import chess.score.Score;
-import chess.score.Scores;
+import chess.domain.score.Score;
+import chess.domain.score.Scores;
 import java.util.Map;
 
 public class ChessGame {

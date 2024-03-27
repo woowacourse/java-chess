@@ -12,7 +12,7 @@ import chess.domain.position.Positions;
 import chess.dto.PieceDto;
 import chess.dto.Status;
 import chess.dto.TurnDto;
-import chess.score.Scores;
+import chess.domain.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;

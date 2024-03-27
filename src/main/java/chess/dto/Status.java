@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.score.Scores;
+import chess.domain.score.Scores;
 
 public record Status(double whiteScore, double blackScore) {
 

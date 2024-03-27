@@ -16,7 +16,7 @@ import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.score.Score;
+import chess.domain.score.Score;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

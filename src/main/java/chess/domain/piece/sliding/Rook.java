@@ -1,6 +1,6 @@
 package chess.domain.piece.sliding;
 
-import chess.score.Score;
+import chess.domain.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;

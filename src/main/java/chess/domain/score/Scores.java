@@ -1,4 +1,4 @@
-package chess.score;
+package chess.domain.score;
 
 public class Scores {
     private final Score whiteScore;

@@ -15,8 +15,6 @@ import chess.domain.piece.sliding.Bishop;
 import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
 import chess.domain.position.Position;
-import chess.score.Score;
-import chess.score.ScoreManager;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
