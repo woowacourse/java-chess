@@ -21,30 +21,30 @@ public class Pawn extends ChessPieceBase {
         int columnDifference = start.calculateColumnDifference(destination);
 
         if (canAttack) {
-            return getAttackDirection(start, rowDifference, columnDifference);
+            return getAttackDirection(rowDifference, columnDifference);
         }
-        return getMoveDirection(start, rowDifference, columnDifference);
+        return getMoveDirection(rowDifference, columnDifference);
     }
 
-    private Direction getAttackDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
+    private Direction getAttackDirection(int rowDifference, int columnDifference) {
         PawnAttackStrategy pawnPath = PawnAttackStrategy.getMoveStrategy(rowDifference, columnDifference);
-        validateAttack(pawnPath, coordinate, rowDifference);
+        validateAttack(pawnPath);
 
         return pawnPath.getDirection();
     }
 
-    private Direction getMoveDirection(Coordinate coordinate, int rowDifference, int columnDifference) {
+    private Direction getMoveDirection(int rowDifference, int columnDifference) {
         PawnStrategy pawnPath = PawnStrategy.getMoveStrategy(rowDifference, columnDifference);
-        validate(pawnPath, coordinate, rowDifference);
+        validate(pawnPath);
 
         return pawnPath.getDirection();
     }
 
-    private void validate(PawnStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
+    private void validate(PawnStrategy pawnStrategy) {
         pawnStrategy.validateMoveBackward(color);
     }
 
-    private void validateAttack(PawnAttackStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
+    private void validateAttack(PawnAttackStrategy pawnStrategy) {
         pawnStrategy.validateMoveBackward(color);
     }
 
