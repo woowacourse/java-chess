@@ -1,6 +1,7 @@
 package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
@@ -73,13 +74,12 @@ class ChessGameDaoTest implements DaoTest {
         // when
         chessGameDao.update(source, target);
         Piece targetPiece = chessGameDao.findPieceByPosition(target);
-        Piece sourcePiece = chessGameDao.findPieceByPosition(source);
 
         // then
         assertAll(
                 () -> assertThat(targetPiece).isInstanceOf(Rook.class),
-                () -> assertThat(sourcePiece).isNull()
-        );
+                () -> assertThatThrownBy(() -> chessGameDao.findPieceByPosition(source))
+                        .isInstanceOf(IllegalArgumentException.class));
     }
 
     @DisplayName("piece가 제거되면 데이터베이스에서 해당 정보를 삭제한다.")
@@ -90,9 +90,9 @@ class ChessGameDaoTest implements DaoTest {
 
         // when
         chessGameDao.remove(target);
-        Piece sourcePiece = chessGameDao.findPieceByPosition(target);
 
         // then
-        assertThat(sourcePiece).isNull();
+        assertThatThrownBy(() -> chessGameDao.findPieceByPosition(target))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

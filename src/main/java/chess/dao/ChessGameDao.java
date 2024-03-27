@@ -42,7 +42,21 @@ public class ChessGameDao {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
+    }
+
+    public List<ChessGameComponentDto> findById(int gameId) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
+            statement.setInt(1, gameId);
+            ResultSet resultSet = statement.executeQuery();
+
+            return getChessGameComponentDtos(resultSet);
+        } catch (SQLException e) {
+            System.err.println("DB 연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     public Piece findPieceByPosition(Position position) {
@@ -61,21 +75,7 @@ public class ChessGameDao {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-        return null;
-    }
-
-    public List<ChessGameComponentDto> findById(int gameId) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
-            statement.setInt(1, gameId);
-            ResultSet resultSet = statement.executeQuery();
-
-            return getChessGameComponentDtos(resultSet);
-        } catch (SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
+        throw new IllegalArgumentException("해당 위치에 존재하는 말이 없습니다.");
     }
 
     public void save(ChessGameComponentDto chessGameComponentDto) {

@@ -108,6 +108,9 @@ public class ChessBoard {
     }
 
     private void bringChessBoard(List<ChessGameComponentDto> dtos) {
+        if (dtos.isEmpty()) {
+            throw new IllegalArgumentException("종료됐거나 존재하지 않는 게임입니다.");
+        }
         for (ChessGameComponentDto dto : dtos) {
             chessBoard.put(dto.position(), dto.piece());
         }

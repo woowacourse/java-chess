@@ -24,23 +24,28 @@ public class GameInformationDao {
         this.connectionGenerator = connectionGenerator;
     }
 
+    private static List<GameInformation> convertToGameInformation(ResultSet resultSet) throws SQLException {
+        final List<GameInformation> gameInfos = new ArrayList<>();
+        while (resultSet.next()) {
+            int gameId = resultSet.getInt("game_id");
+            Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
+            GameInformation gameInformation = new GameInformation(gameId, color);
+
+            gameInfos.add(gameInformation);
+        }
+        return gameInfos;
+    }
+
     public List<GameInformation> findAll() {
         try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUERY);
             final ResultSet resultSet = statement.executeQuery();
 
-            final List<GameInformation> gameInfos = new ArrayList<>();
-            while (resultSet.next()) {
-                int gameId = resultSet.getInt("game_id");
-                Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
-                GameInformation gameInformation = new GameInformation(gameId, color);
-
-                gameInfos.add(gameInformation);
-            }
-            return gameInfos;
+            return convertToGameInformation(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            handleSQLException(e);
         }
+        throw new IllegalArgumentException("진행중인 게임이 존재하지 않습니다.");
     }
 
     public GameInformation findByGameId(int gameId) {
@@ -51,14 +56,12 @@ public class GameInformationDao {
 
             if (resultSet.next()) {
                 Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
-
                 return new GameInformation(gameId, color);
             }
         } catch (SQLException e) {
-            System.err.println("DB 연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            handleSQLException(e);
         }
-        return null;
+        throw new IllegalArgumentException("존재하지 않는 게임 번호입니다.");
     }
 
     public GameInformation findLatestGame() {
@@ -74,7 +77,7 @@ public class GameInformationDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        throw new IllegalArgumentException("진행중인 게임이 존재하지 않습니다.");
     }
 
     public void remove(int gameId) {
@@ -106,5 +109,10 @@ public class GameInformationDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void handleSQLException(SQLException e) {
+        System.err.println("DB 연결 오류:" + e.getMessage());
+        e.printStackTrace();
     }
 }
