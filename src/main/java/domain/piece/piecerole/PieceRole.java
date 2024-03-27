@@ -15,8 +15,8 @@ public abstract class PieceRole {
         this.routes = routes;
     }
 
-    public abstract void validateMovableRoute(Position source, Position target,
-                                              Map<Position, Piece> chessBoard);
+    public abstract void validateMovableRoute(final Position source, final Position target,
+                                              final Map<Position, Piece> chessBoard);
 
     protected void validateBlockedRoute(final Position source, final Position target,
                                         final Map<Position, Piece> chessBoard) {

@@ -10,7 +10,7 @@ public class SeparatedInput {
         this.separated = separated;
     }
 
-    public static SeparatedInput from(String command) {
+    public static SeparatedInput from(final String command) {
         return new SeparatedInput(List.of(command.split(COMMAND_SEPARATOR)));
     }
 

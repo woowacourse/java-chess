@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Queen extends PieceRole {
     public static final int MAX_MOVEMENT = 7;
 
-    private Queen(List<Movable> routes) {
+    private Queen(final List<Movable> routes) {
         super(routes);
     }
 

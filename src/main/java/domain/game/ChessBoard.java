@@ -13,13 +13,13 @@ public class ChessBoard {
         this.piecePosition = piecePosition;
     }
 
-    public void move(Position sourcePosition, Position targetPosition) {
+    public void move(final Position sourcePosition, final Position targetPosition) {
         validateMovement(sourcePosition, targetPosition);
         update(sourcePosition, targetPosition);
         turn.change();
     }
 
-    private void validateMovement(Position sourcePosition, Position targetPosition) {
+    private void validateMovement(final Position sourcePosition, final Position targetPosition) {
         validateSourceExists(sourcePosition);
 
         Piece sourcePiece = piecePosition.get(sourcePosition);
@@ -37,7 +37,7 @@ public class ChessBoard {
         }
     }
 
-    private boolean hasSameColorPiece(Position sourcePosition, Position targetPosition) {
+    private boolean hasSameColorPiece(final Position sourcePosition, final Position targetPosition) {
         Piece sourcePiece = piecePosition.get(sourcePosition);
 
         if (piecePosition.containsKey(targetPosition)) {
@@ -65,7 +65,7 @@ public class ChessBoard {
         }
     }
 
-    private void update(Position sourcePosition, Position targetPosition) {
+    private void update(final Position sourcePosition, final Position targetPosition) {
         Piece sourcePiece = piecePosition.get(sourcePosition);
         piecePosition.put(targetPosition, sourcePiece);
         piecePosition.remove(sourcePosition);
@@ -75,7 +75,7 @@ public class ChessBoard {
         return piecePosition.containsKey(position);
     }
 
-    public Piece findPieceByPosition(Position targetPosition) {
+    public Piece findPieceByPosition(final Position targetPosition) {
         return piecePosition.get(targetPosition);
     }
 }

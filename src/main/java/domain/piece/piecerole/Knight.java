@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Knight extends PieceRole {
     public static final int MAX_MOVEMENT = 1;
 
-    private Knight(List<Movable> routes) {
+    private Knight(final List<Movable> routes) {
         super(routes);
     }
 

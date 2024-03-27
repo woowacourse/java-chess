@@ -31,7 +31,7 @@ public enum Direction {
         this.rankVector = rankVector;
     }
 
-    public static Direction findDirection(Position source, Position target) {
+    public static Direction findDirection(final Position source, final Position target) {
         Vector vector = target.generateVectorToTargetPosition(source);
         Vector unitVector = vector.toUnitVector();
 

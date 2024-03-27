@@ -6,7 +6,7 @@ public class File {
 
     private final char letter;
 
-    public File(char letter) {
+    public File(final char letter) {
         this.letter = letter;
     }
 
@@ -14,12 +14,8 @@ public class File {
         return new File((char) (letter + movement));
     }
 
-    public int subtract(File target) {
+    public int subtract(final File target) {
         return letter - target.letter;
-    }
-
-    public char getLetter() {
-        return letter;
     }
 
     @Override

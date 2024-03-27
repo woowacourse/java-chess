@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Rook extends PieceRole {
     public static final int MAX_MOVEMENT = 7;
 
-    private Rook(List<Movable> routes) {
+    private Rook(final List<Movable> routes) {
         super(routes);
     }
 

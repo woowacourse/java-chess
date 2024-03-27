@@ -28,7 +28,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printSquareByFile(ChessBoard mover, int row) {
+    private void printSquareByFile(final ChessBoard mover, final int row) {
         for (int file = 0; file < 8; file++) {
             Position position = new Position(
                     new Position(new File((char) ('a' + file)), new Rank(row)));
@@ -36,7 +36,7 @@ public class OutputView {
         }
     }
 
-    public String generateSymbol(ChessBoard mover, Position position) {
+    public String generateSymbol(final ChessBoard mover, final Position position) {
         if (mover.hasPiece(position)) {
             Piece piece = mover.findPieceByPosition(position);
             return PieceMapper.symbol(piece);

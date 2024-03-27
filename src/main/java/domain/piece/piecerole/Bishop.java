@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Bishop extends PieceRole {
     public static final int MAX_MOVEMENT = 7;
 
-    private Bishop(List<Movable> routes) {
+    private Bishop(final List<Movable> routes) {
         super(routes);
     }
 
