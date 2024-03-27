@@ -30,14 +30,30 @@ public class Knight extends Piece {
     public Set<Square> candidateSquares() {
         Set<Square> squares = new HashSet<>();
         Square currentSquare = currentSquare();
-        squares.add(currentSquare.moveUp().moveLeftUp());
-        squares.add(currentSquare.moveUp().moveRightUp());
-        squares.add(currentSquare.moveDown().moveLeftDown());
-        squares.add(currentSquare.moveDown().moveRightDown());
-        squares.add(currentSquare.moveRight().moveRightUp());
-        squares.add(currentSquare.moveRight().moveRightDown());
-        squares.add(currentSquare.moveLeft().moveLeftUp());
-        squares.add(currentSquare.moveLeft().moveLeftDown());
+        if (currentSquare.canMoveUp() && currentSquare.moveUp().canMoveLeftUp()) {
+            squares.add(currentSquare.moveUp().moveLeftUp());
+        }
+        if (currentSquare.canMoveUp() && currentSquare.moveUp().canMoveRightUp()) {
+            squares.add(currentSquare.moveUp().moveRightUp());
+        }
+        if (currentSquare.canMoveDown() && currentSquare.moveDown().canMoveLeftDown()) {
+            squares.add(currentSquare.moveDown().moveLeftDown());
+        }
+        if (currentSquare.canMoveDown() && currentSquare.moveDown().canMoveRightDown()) {
+            squares.add(currentSquare.moveDown().moveRightDown());
+        }
+        if (currentSquare.canMoveRight() && currentSquare.moveRight().canMoveRightUp()) {
+            squares.add(currentSquare.moveRight().moveRightUp());
+        }
+        if (currentSquare.canMoveRight() && currentSquare.moveRight().canMoveRightDown()) {
+            squares.add(currentSquare.moveRight().moveRightDown());
+        }
+        if (currentSquare.canMoveLeft() && currentSquare.moveLeft().canMoveLeftUp()) {
+            squares.add(currentSquare.moveLeft().moveLeftUp());
+        }
+        if (currentSquare.canMoveLeft() && currentSquare.moveLeft().canMoveLeftDown()) {
+            squares.add(currentSquare.moveLeft().moveLeftDown());
+        }
         return squares;
     }
 }

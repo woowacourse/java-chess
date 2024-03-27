@@ -7,8 +7,11 @@ import static chess.domain.attribute.File.D;
 import static chess.domain.attribute.File.E;
 import static chess.domain.attribute.File.F;
 import static chess.domain.attribute.File.G;
+import static chess.domain.attribute.File.H;
+import static chess.domain.attribute.Rank.EIGHT;
 import static chess.domain.attribute.Rank.FIVE;
 import static chess.domain.attribute.Rank.FOUR;
+import static chess.domain.attribute.Rank.SEVEN;
 import static chess.domain.attribute.Rank.SIX;
 import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
@@ -150,5 +153,29 @@ class KnightTest {
                         Square.of(G, THREE),
                         Square.of(D, TWO),
                         Square.of(F, TWO));
+    }
+
+    /*
+     * * * * * * * * 8    * * * * * * N * 8
+     * * * * * * * * 7    * * * * o * * * 7
+     * * * * * * * * 6    * * * * * o * o 6
+     * * * * * * * * 5    * * * * * * * * 5
+     * * * * * * * * 4 -> * * * * * * * * 4
+     * * * * * * * * 3    * * * * * * * * 3
+     * * * * * * * * 2    * * * * * * * * 2
+     * * * * * * * * 1    * * * * * * * * 1
+     a b c d e f g h      a b c d e f g h
+     */
+    @DisplayName("이동하는 경로가 칸에 없다면 저장하지 않는다.")
+    @Test
+    void movableSquareExceptNotSquare() {
+        Knight knight = new Knight(BLACK, Square.of(G, EIGHT));
+        Set<Piece> existPieces = Set.of(knight);
+        Set<Square> squares = knight.findLegalMoves(existPieces);
+        assertThat(squares)
+                .containsExactlyInAnyOrder(
+                        Square.of(H, SIX),
+                        Square.of(F, SIX),
+                        Square.of(E, SEVEN));
     }
 }
