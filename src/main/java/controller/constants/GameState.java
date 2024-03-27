@@ -3,7 +3,8 @@ package controller.constants;
 public enum GameState {
     NOT_STARTED,
     RUNNING,
-    STOPPED;
+    STOPPED,
+    ;
 
     public boolean isNotStarted() {
         return equals(NOT_STARTED);

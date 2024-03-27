@@ -7,7 +7,8 @@ import java.util.List;
 public enum CommandType {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    ;
 
     private final String command;
     private final List<String> supplements;

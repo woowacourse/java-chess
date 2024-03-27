@@ -8,7 +8,8 @@ import view.command.CommandType;
 public enum Command {
     START(StartCommandExecutor::new),
     END(EndCommandExecutor::new),
-    MOVE(MoveCommandExecutor::new);
+    MOVE(MoveCommandExecutor::new),
+    ;
 
     private final Function<CommandType, CommandExecutor> executorFunction;
 

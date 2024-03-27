@@ -22,7 +22,6 @@ public enum Direction {
     LEFT_UP(-2, 1),
     DOWN_RIGHT(1, -2),
     DOWN_LEFT(-1, -2),
-
     ;
 
     private final int fileVector;

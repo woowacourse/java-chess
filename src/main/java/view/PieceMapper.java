@@ -19,7 +19,8 @@ public enum PieceMapper {
     KNIGHT(Knight.create(), "N"),
     BISHOP(Bishop.create(), "B"),
     QUEEN(Queen.create(), "Q"),
-    KING(King.create(), "K");
+    KING(King.create(), "K"),
+    ;
 
     private final PieceRole pieceRole;
     private final String symbol;
