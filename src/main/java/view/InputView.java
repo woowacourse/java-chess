@@ -1,6 +1,7 @@
 package view;
 
 import domain.Team;
+import domain.player.PlayerName;
 
 import java.util.List;
 import java.util.Scanner;
@@ -20,8 +21,8 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public String readGameCommand(final Team team) {
-        System.out.printf("%n%s팀 차례입니다.%n", team.name());
+    public String readGameCommand(final Team team, final PlayerName playerName) {
+        System.out.printf("%n%s팀 %s의 차례입니다.%n", team.name(), playerName.getName());
 
         return SCANNER.nextLine();
     }
@@ -41,5 +42,11 @@ public class InputView {
             System.out.println("숫자로 입력 바랍니다.");
             return readGameId();
         }
+    }
+
+    public String readPlayerName(final Team team) {
+        System.out.print(team.name() + "팀의 플레이어 이름 : ");
+
+        return SCANNER.nextLine();
     }
 }

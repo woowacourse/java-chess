@@ -2,6 +2,7 @@ package view;
 
 import domain.ChessGameResult;
 import domain.piece.Piece;
+import domain.player.PlayerName;
 import domain.square.File;
 import domain.square.Rank;
 import domain.square.Square;
@@ -12,13 +13,14 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printGameOption(final int gameId) {
+    public void printGameOption(final int gameId, final PlayerName blackPlayerName, final PlayerName whitePlayerName) {
         System.out.printf("""
                 > %d번 게임을 시작합니다.
                 > 게임 점수 보기 : status
                 > 게임 끝내기 : end
                 > 게임 이동 : move source위치 target위치 - 예. move b2 b3
-                > 프로그램 종료 : quit%n""", gameId);
+                > 프로그램 종료 : quit
+                흑 : %s VS 백 : %s%n""", gameId, blackPlayerName.getName(), whitePlayerName.getName());
     }
 
     public void printChessBoard(final Map<Square, Piece> squarePieces) {

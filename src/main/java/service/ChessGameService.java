@@ -4,6 +4,8 @@ import domain.ChessGameResult;
 import domain.Team;
 import domain.chessboard.ChessBoard;
 import domain.piece.Piece;
+import domain.player.Player;
+import domain.player.PlayerName;
 import domain.square.Square;
 import repository.ChessBoardDao;
 import repository.ChessGameDao;
@@ -26,14 +28,15 @@ public class ChessGameService {
         this.chessGameDao = new ChessGameDao(connection);
     }
 
-    public int createNewGame() throws SQLException {
+    public int createNewGame(final Player blackPlayer, final Player whitePlayer) throws SQLException {
         try {
             connection.setAutoCommit(false);
 
+            final int id = chessGameDao.addGame(blackPlayer, whitePlayer, Team.WHITE, ChessGameStatus.RUNNING);
+
+            // TODO : ChessBoard Service로 분리
             final ChessBoard chessBoard = ChessBoard.create();
             final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
-
-            final int id = chessGameDao.addGame(Team.WHITE, ChessGameStatus.RUNNING);
             chessBoardDao.addAll(pieceSquares, id);
 
             connection.commit();
@@ -117,8 +120,13 @@ public class ChessGameService {
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
     }
 
+    public PlayerName findPlayerName(final int gameId, final Team team) {
+        return chessGameDao.findPlayerName(gameId, team)
+                .orElseThrow(() -> new IllegalStateException("플레이어가 없습니다."));
+    }
+
     public boolean isNotEnd(final int gameId) {
-        final ChessGameStatus chessGameStatus = chessGameDao.findStatus(gameId)
+        final ChessGameStatus chessGameStatus = chessGameDao.findStatusById(gameId)
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
 
         return chessGameStatus == ChessGameStatus.RUNNING;

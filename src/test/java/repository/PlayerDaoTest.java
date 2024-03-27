@@ -1,7 +1,8 @@
 package repository;
 
 import connection.ChessConnectionGenerator;
-import domain.Player;
+import domain.player.Player;
+import domain.player.PlayerName;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,17 +40,17 @@ class PlayerDaoTest {
         }
     }
 
-    @DisplayName("사용자의 이름을 저장한다.")
+    @DisplayName("사용자의 이름을 사용자를 생성한다.")
     @Test
     void create() {
         // given
         final String name = "pobi";
-        final Player player = new Player(name);
+        final PlayerName playerName = new PlayerName(name);
 
         // when
-        final int playerId = playerDao.add(player);
+        final Player player = playerDao.add(playerName);
 
         // then
-        assertThat(playerDao.findNameById(playerId).get()).isEqualTo(name);
+        assertThat(player.getName()).isEqualTo(name);
     }
 }

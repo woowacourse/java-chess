@@ -1,0 +1,28 @@
+package service;
+
+import domain.player.Player;
+import domain.player.PlayerName;
+import repository.PlayerDao;
+
+import java.sql.Connection;
+
+public class PlayerService {
+
+    private final Connection connection;
+    private final PlayerDao playerDao;
+
+    public PlayerService(final Connection connection) {
+        this.connection = connection;
+        this.playerDao = new PlayerDao(connection);
+    }
+
+    public Player roadPlayer(final String name) {
+        final PlayerName playerName = new PlayerName(name);
+
+        if (playerDao.exist(playerName)) {
+            return new Player(playerName);
+        }
+
+        return playerDao.add(playerName);
+    }
+}

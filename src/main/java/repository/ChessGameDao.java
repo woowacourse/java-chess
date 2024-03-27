@@ -1,6 +1,8 @@
 package repository;
 
 import domain.Team;
+import domain.player.Player;
+import domain.player.PlayerName;
 import service.ChessGameStatus;
 
 import java.sql.Connection;
@@ -19,11 +21,15 @@ public class ChessGameDao {
         this.connection = connection;
     }
 
-    public int addGame(final Team currentTeam, final ChessGameStatus chessGameStatus) {
-        final var query = "INSERT INTO game VALUES(null, ?, ?)";
+    public int addGame(final Player blackPlayer, final Player whitePlayer, final Team currentTeam, final ChessGameStatus chessGameStatus) {
+        final var query = "INSERT INTO game (current_team, status, black_player_id, white_player_id) VALUES(?, ?, " +
+                "(SELECT id FROM player WHERE name = ?), " +
+                "(SELECT id FROM player WHERE name = ?))";
         try (final var preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, currentTeam.name());
             preparedStatement.setString(2, chessGameStatus.name());
+            preparedStatement.setString(3, blackPlayer.getName());
+            preparedStatement.setString(4, whitePlayer.getName());
 
             preparedStatement.executeUpdate();
 
@@ -57,7 +63,7 @@ public class ChessGameDao {
         return Optional.empty();
     }
 
-    public Optional<ChessGameStatus> findStatus(final int gameId) {
+    public Optional<ChessGameStatus> findStatusById(final int gameId) {
         final var query = "SELECT status FROM game WHERE id = (?)";
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameId);
@@ -129,6 +135,37 @@ public class ChessGameDao {
             final var resultSet = preparedStatement.executeQuery();
 
             return resultSet.next();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<PlayerName> findPlayerName(final int gameId, final Team team) {
+        final var query = "SELECT name FROM game WHERE id = (?) AND current_team = (?)";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+            preparedStatement.setString(2, team.name());
+
+            final var resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(
+                        new PlayerName(resultSet.getString("name"))
+                );
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Optional.empty();
+    }
+
+    public void delete(final int id) {
+        final var query = "DELETE FROM game where id = ?";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
