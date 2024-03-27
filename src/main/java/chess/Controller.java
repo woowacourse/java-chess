@@ -2,9 +2,9 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.view.Command;
+import chess.view.InputTokens;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 class Controller {
 
@@ -22,8 +22,8 @@ class Controller {
     }
 
     private void start(Board board) {
-        List<String> commandInput = inputView.readCommand();
-        Command command = Command.from(commandInput.get(0));
+        InputTokens inputTokens = inputView.readCommand();
+        Command command = Command.from(inputTokens);
         if (command.isStart()) {
             repeatUntilLegalInput(() -> proceed(board));
             return;
@@ -38,10 +38,10 @@ class Controller {
 
     private void proceed(Board board) {
         outputView.printBoard(board);
-        List<String> commandInput = inputView.readCommand();
-        Command command = Command.from(commandInput.get(0));
+        InputTokens inputTokens = inputView.readCommand();
+        Command command = Command.from(inputTokens);
         if (command.isMove()) {
-            board.move(command.sourceCoordinate(commandInput.get(1)), command.targetCoordinate(commandInput.get(2)));
+            board.move(command.sourceCoordinate(inputTokens), command.targetCoordinate(inputTokens));
             proceed(board);
             return;
         }

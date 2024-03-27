@@ -9,32 +9,32 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move");
-    private final String format;
+    private final String displayFormat;
 
-    Command(final String format) {
-        this.format = format;
+    Command(final String displayFormat) {
+        this.displayFormat = displayFormat;
     }
 
-    public static Command from(final String input) {
+    public static Command from(final InputTokens tokens) {
         return Arrays.stream(values())
-                .filter(command -> command.format.equals(input))
+                .filter(command -> command.displayFormat.equals(tokens.getCommandToken()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
     }
 
-    public Coordinate sourceCoordinate(final String sourceInput) {
-        if (!isMove()) {
+    public Coordinate sourceCoordinate(final InputTokens tokens) {
+        if (isNotMove()) {
             throw new UnsupportedOperationException("지원하지 않는 Command 기능입니다.");
         }
-        Coordinate source = mapToCoordinate(sourceInput);
+        Coordinate source = mapToCoordinate(tokens.getSourceCoordinateToken());
         return source;
     }
 
-    public Coordinate targetCoordinate(final String targetInput) {
-        if (!isMove()) {
+    public Coordinate targetCoordinate(final InputTokens tokens) {
+        if (isNotMove()) {
             throw new UnsupportedOperationException("지원하지 않는 Command 기능입니다.");
         }
-        Coordinate target = mapToCoordinate(targetInput);
+        Coordinate target = mapToCoordinate(tokens.getTargetCoordinateToken());
         return target;
     }
 
@@ -52,5 +52,9 @@ public enum Command {
 
     public boolean isMove() {
         return this == MOVE;
+    }
+
+    private boolean isNotMove() {
+        return !isMove();
     }
 }
