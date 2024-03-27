@@ -69,3 +69,22 @@ abcdefgh
 - [x] 저장이 필요한 데이터
   - [x] 말의 위치, 말의 타입
   - [x] 현재 턴 컬러
+
+---
+
+## 리팩터링
+- [ ] Controller 커멘드 분기 처리 모으기
+- [ ] 구현체에 대한 정보가 인터페이스에 많이 드러난다
+  ```java
+  public abstract boolean isPawn();
+  
+  public abstract boolean isKing();
+  ```
+- [ ] README.md 어플리케이션 실행 방법 정리
+- [ ] ScoreManager ↔️ ChessState 객체끼리 서로 물어보며 점수 계산
+- [ ] ScoreManager 상수 사용 or 각 객체에서 자신의 점수 계산
+- [ ] DBService 네이밍
+  - [ ] 무엇을 위한 서비스인지 고민
+  - [ ] 도메인을 서비스에서 만들어서 반환
+- [ ] DBConnector 네이밍 & 역할
+- [ ] PieceType : 생성자 사용으로 통일
