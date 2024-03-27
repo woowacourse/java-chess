@@ -82,8 +82,4 @@ public class UserDao implements UserRepository {
     private User createUser(final ResultSet resultSet) throws SQLException {
         return new User((long) resultSet.getInt("user_id"), resultSet.getString("name"));
     }
-
-    @Override
-    public void deleteAll() {
-    }
 }

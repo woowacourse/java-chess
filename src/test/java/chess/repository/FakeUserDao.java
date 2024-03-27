@@ -40,7 +40,6 @@ public class FakeUserDao implements UserRepository {
                 .toList();
     }
 
-    @Override
     public void deleteAll() {
         users.clear();
         initialize();

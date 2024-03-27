@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.repository.FakeUserDao;
-import chess.repository.UserRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test;
 @DisplayName("사용자 로직")
 class UserServiceTest {
 
-    UserRepository userRepository;
+    FakeUserDao userRepository;
 
     UserService userService;
 
