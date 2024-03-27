@@ -1,11 +1,11 @@
 package chess.view;
 
+import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.BoardDto;
 import chess.dto.PieceDto;
-import chess.dto.PieceType;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
