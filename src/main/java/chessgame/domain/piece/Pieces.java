@@ -7,6 +7,7 @@ import java.util.*;
 
 public class Pieces {
     private final Set<Piece> values;
+
     public Pieces(final Set<Piece> pieces) {
         this.values = new HashSet<>(pieces);
     }
@@ -16,7 +17,7 @@ public class Pieces {
     }
 
     public void replace(final Piece piece, final Point endPoint) {
-        Optional<Piece> pieceWithPoint = findPieceWithPoint(endPoint);
+        final var pieceWithPoint = findPieceWithPoint(endPoint);
         pieceWithPoint.ifPresent(values::remove);
         values.remove(piece);
         Piece moved = piece.move(endPoint);
@@ -29,17 +30,17 @@ public class Pieces {
                 .findAny();
     }
 
-    public boolean isFriend(Piece piece, Point point) {
+    public boolean isFriend(final Piece piece, final Point point) {
         final var optionalPiece = findPieceWithPoint(point);
         return optionalPiece.filter(piece::isSameColor).isPresent();
     }
 
-    public boolean hasPiece(Point endPoint) {
+    public boolean hasPiece(final Point endPoint) {
         return this.findPieceWithPoint(endPoint)
-                   .isPresent();
+                .isPresent();
     }
 
-    public boolean hasNothing(Point endPoint) {
+    public boolean hasNothing(final Point endPoint) {
         return this.findPieceWithPoint(endPoint)
                 .isEmpty();
     }

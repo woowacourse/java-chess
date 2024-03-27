@@ -25,16 +25,15 @@ public abstract class Piece {
         return update(destination);
     }
 
-
-    private void validateSamePoint(Point destination) {
+    private void validateSamePoint(final Point destination) {
         if (point.equals(destination)) {
             throw new IllegalArgumentException("동일한 위치로 이동할 수 없습니다.");
         }
     }
 
-    protected abstract Set<Point> findLegalMovePoints(Pieces pieces);
+    protected abstract Set<Point> findLegalMovePoints(final Pieces pieces);
 
-    protected abstract Piece update(Point point);
+    protected abstract Piece update(final Point point);
 
     public boolean isEqualPoint(final Point point) {
         return this.point.equals(point);
@@ -62,8 +61,12 @@ public abstract class Piece {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof final Piece piece)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Piece piece)) {
+            return false;
+        }
         return Objects.equals(point, piece.point) && color == piece.color;
     }
 

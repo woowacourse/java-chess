@@ -25,7 +25,7 @@ public class Rook extends SlidingPiece {
     }
 
     @Override
-    protected Piece update(Point point) {
+    protected Piece update(final Point point) {
         return new Rook(point, color);
     }
 

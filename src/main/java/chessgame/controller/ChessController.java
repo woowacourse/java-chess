@@ -24,9 +24,8 @@ public class ChessController {
         }
     }
 
-    private ChessCommand proceed(ChessBoard chessBoard) {
-        ChessCommand chessCommand;
-        chessCommand = InputView.inputChessCommand();
+    private ChessCommand proceed(final ChessBoard chessBoard) {
+        final var chessCommand = InputView.inputChessCommand();
         if (chessCommand == END) {
             return END;
         }

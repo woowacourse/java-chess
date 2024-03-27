@@ -25,7 +25,7 @@ public enum Rank {
     }
 
     public boolean isTop() {
-        return ordinal() == values().length-1;
+        return ordinal() == values().length - 1;
     }
 
     public boolean isBottom() {

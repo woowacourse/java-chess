@@ -21,7 +21,7 @@ public enum File {
         return Arrays.stream(values())
                 .filter(file -> file.value == value)
                 .findFirst()
-                .orElseThrow(() ->new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value)));
     }
 
     public boolean isFarLeft() {

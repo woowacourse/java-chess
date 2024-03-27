@@ -15,7 +15,8 @@ public class Knight extends JumpingPiece {
 
     @Override
     protected Set<Movement> getMovableDirection() {
-        return Set.of(Movement.LEFT_LEFT_UP, Movement.LEFT_UP_UP, Movement.LEFT_LEFT_DOWN, Movement.LEFT_DOWN_DOWN, Movement.RIGHT_RIGHT_UP, Movement.RIGHT_UP_UP,
+        return Set.of(Movement.LEFT_LEFT_UP, Movement.LEFT_UP_UP, Movement.LEFT_LEFT_DOWN, Movement.LEFT_DOWN_DOWN,
+                Movement.RIGHT_RIGHT_UP, Movement.RIGHT_UP_UP,
                 Movement.RIGHT_RIGHT_DOWN, Movement.RIGHT_DOWN_DOWN);
     }
 
@@ -25,7 +26,7 @@ public class Knight extends JumpingPiece {
     }
 
     @Override
-    protected Piece update(Point point) {
+    protected Piece update(final Point point) {
         return new Knight(point, color);
     }
 }

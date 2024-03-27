@@ -7,7 +7,7 @@ import chessgame.domain.piece.attribute.Color;
 import chessgame.domain.piece.kind.PieceStatus;
 import java.util.Set;
 
-public class King extends JumpingPiece{
+public class King extends JumpingPiece {
     public King(final Point point, final Color color) {
         super(point, color);
     }
@@ -19,11 +19,12 @@ public class King extends JumpingPiece{
 
     @Override
     protected Set<Movement> getMovableDirection() {
-        return Set.of(Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT, Movement.RIGHT_UP, Movement.RIGHT_DOWN, Movement.LEFT_UP, Movement.LEFT_DOWN);
+        return Set.of(Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT, Movement.RIGHT_UP, Movement.RIGHT_DOWN,
+                Movement.LEFT_UP, Movement.LEFT_DOWN);
     }
 
     @Override
-    protected Piece update(Point point) {
+    protected Piece update(final Point point) {
         return new King(point, color);
     }
 

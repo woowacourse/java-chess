@@ -23,7 +23,7 @@ public class Queen extends SlidingPiece {
     }
 
     @Override
-    protected Piece update(Point point) {
+    protected Piece update(final Point point) {
         return new Queen(point, color);
     }
 

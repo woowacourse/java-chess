@@ -42,7 +42,7 @@ public class ChessBoard {
         color = color.getOpposite();
     }
 
-    private void validateCorrectTurn(Piece piece) {
+    private void validateCorrectTurn(final Piece piece) {
         if (!piece.isSameColor(color)) {
             throw new IllegalStateException("현재는 %s의 턴입니다.".formatted(color.name()));
         }
@@ -54,7 +54,7 @@ public class ChessBoard {
         }
     }
 
-    private void validateCanReplace(Piece piece, Point endPoint, Point startPoint) {
+    private void validateCanReplace(final Piece piece, final Point endPoint, final Point startPoint) {
         if (!pieces.canReplace(piece, endPoint)) {
             throw new IllegalArgumentException(
                     String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.status(), startPoint, endPoint));

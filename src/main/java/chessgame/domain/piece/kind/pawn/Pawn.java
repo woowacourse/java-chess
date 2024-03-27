@@ -15,7 +15,7 @@ public abstract class Pawn extends Piece {
         super(point, color);
     }
 
-    public static Pawn from(Point point, Color color) {
+    public static Pawn from(final Point point, final Color color) {
         if (color.isBlack()) {
             return new BlackPawn(point, color);
         }
@@ -23,7 +23,7 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    protected Set<Point> findLegalMovePoints(Pieces pieces) {
+    protected Set<Point> findLegalMovePoints(final Pieces pieces) {
         return getMovableDirection(pieces).stream()
                 .filter(direction -> super.point.canMove(direction))
                 .map(direction -> super.point.move(direction))
@@ -32,9 +32,9 @@ public abstract class Pawn extends Piece {
 
     }
 
-    protected abstract Set<Movement> getMovableDirection(Pieces pieces);
+    protected abstract Set<Movement> getMovableDirection(final Pieces pieces);
 
-    protected final boolean hasEnemy(Pieces pieces, Movement movement) {
+    protected final boolean hasEnemy(final Pieces pieces, final Movement movement) {
         if (!point.canMove(movement)) {
             return false;
         }

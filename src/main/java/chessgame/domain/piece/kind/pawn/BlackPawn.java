@@ -44,14 +44,14 @@ public class BlackPawn extends Pawn {
         return new BlackPawn(point, color);
     }
 
-    private void insertAbleToAttack(Pieces pieces, HashSet<Movement> availableMovement) {
+    private void insertAbleToAttack(final Pieces pieces, final HashSet<Movement> availableMovement) {
         attackMovements.stream()
-                .filter(movement ->  point.canMove(movement))
+                .filter(movement -> point.canMove(movement))
                 .filter(movement -> hasEnemy(pieces, movement))
                 .forEach(availableMovement::add);
     }
 
-    private void insertSpecialCase(Pieces pieces, HashSet<Movement> availableMovement) {
+    private void insertSpecialCase(final Pieces pieces, final HashSet<Movement> availableMovement) {
         if (point.rank() == NEVER_MOVE_RANK && pieces.findPieceWithPoint(point.move(DOUBLE_STEP)).isEmpty()) {
             availableMovement.add(DOUBLE_STEP);
         }

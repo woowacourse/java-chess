@@ -10,7 +10,7 @@ public enum PieceStatus {
 
     private final String value;
 
-    PieceStatus(String value) {
+    PieceStatus(final String value) {
         this.value = value;
     }
 

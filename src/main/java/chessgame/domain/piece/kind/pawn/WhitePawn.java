@@ -20,12 +20,12 @@ public class WhitePawn extends Pawn {
     private static final Movement NORMAL_STEP = UP;
     private static final Rank NEVER_MOVE_RANK = Rank.TWO;
 
-    protected WhitePawn(Point point, Color color) {
+    protected WhitePawn(final Point point, final Color color) {
         super(point, color);
     }
 
     @Override
-    protected Set<Movement> getMovableDirection(Pieces pieces) {
+    protected Set<Movement> getMovableDirection(final Pieces pieces) {
         final var availableMovement = new HashSet<Movement>();
         insertAbleToAttack(pieces, availableMovement);
         if (pieces.findPieceWithPoint(point.move(NORMAL_STEP)).isPresent()) {
@@ -37,17 +37,17 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
-    protected Piece update(Point point) {
+    protected Piece update(final Point point) {
         return new WhitePawn(point, color);
     }
 
-    private void insertAbleToAttack(Pieces pieces, HashSet<Movement> availableMovement) {
+    private void insertAbleToAttack(final Pieces pieces, final HashSet<Movement> availableMovement) {
         attackMovements.stream()
                 .filter(movement -> hasEnemy(pieces, movement))
                 .forEach(availableMovement::add);
     }
 
-    private void insertSpecialCase(Pieces pieces, HashSet<Movement> availableMovement) {
+    private void insertSpecialCase(final Pieces pieces, final HashSet<Movement> availableMovement) {
         if (point.rank() == NEVER_MOVE_RANK && pieces.findPieceWithPoint(point.move(DOUBLE_STEP)).isEmpty()) {
             availableMovement.add(DOUBLE_STEP);
         }

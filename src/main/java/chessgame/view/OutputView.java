@@ -29,7 +29,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void printExceptionMessage(String message) {
+    public static void printExceptionMessage(final String message) {
         System.out.println("[ERROR] " + message);
     }
 }

@@ -13,10 +13,11 @@ public abstract class JumpingPiece extends Piece {
     protected JumpingPiece(Point point, Color color) {
         super(point, color);
     }
+
     @Override
-    protected final Set<Point> findLegalMovePoints(Pieces pieces) {
+    protected final Set<Point> findLegalMovePoints(final Pieces pieces) {
         return getMovableDirection().stream()
-                .filter(direction -> super.point.canMove(direction ))
+                .filter(direction -> super.point.canMove(direction))
                 .map(direction -> super.point.move(direction))
                 .filter(point -> !pieces.isFriend(this, point))
                 .collect(Collectors.toSet());
