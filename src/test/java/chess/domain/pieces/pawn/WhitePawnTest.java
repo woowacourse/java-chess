@@ -123,10 +123,12 @@ class WhitePawnTest {
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
-            boolean whiteCanMove = whitePawn.canMove(whiteMovement, Pawn.of(Color.BLACK));
+            boolean whiteCanMoveToBlack = whitePawn.canMove(whiteMovement, Pawn.of(Color.BLACK));
+            boolean whiteCanMoveToWhite = whitePawn.canMove(whiteMovement, Pawn.of(Color.WHITE));
 
             //then
-            assertThat(whiteCanMove).isFalse();
+            assertThat(whiteCanMoveToBlack).isFalse();
+            assertThat(whiteCanMoveToWhite).isFalse();
         }
     }
 }
