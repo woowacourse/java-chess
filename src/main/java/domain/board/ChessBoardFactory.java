@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.dto.PieceDto;
 import domain.piece.Color;
 import domain.piece.Piece;
 import domain.piece.nonpawn.Bishop;
@@ -16,6 +17,7 @@ import domain.position.Rank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoardFactory {
     private static final int SPECIAL_PIECE_SIZE = 8;
@@ -40,5 +42,13 @@ public class ChessBoardFactory {
             pieceMap.put(new Position(File.fromOrder(order), Rank.ONE), whiteSpecialPieces.get(order));
         }
         return new ChessBoard(pieceMap);
+    }
+
+    public static ChessBoard loadPreviousChessBoard(List<PieceDto> pieceDtos, final Color color) {
+        return pieceDtos.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toMap(
+                        PieceDto::getPosition,
+                        PieceDto::getPiece
+                ), board -> new ChessBoard(board, color)));
     }
 }

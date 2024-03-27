@@ -1,6 +1,7 @@
 package view;
 
 import domain.board.ChessBoard;
+import domain.board.Score;
 import domain.piece.Piece;
 import domain.piece.Type;
 import domain.position.File;
@@ -13,9 +14,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static view.Command.END;
-import static view.Command.MOVE;
-import static view.Command.START;
+import static view.CommandType.END;
+import static view.CommandType.MOVE;
+import static view.CommandType.START;
 
 public class MessageResolver {
     public static final int BOARD_LENGTH = 8;
@@ -55,18 +56,18 @@ public class MessageResolver {
         return rankMessage.toString();
     }
 
-    private void updateRankMessage(final StringBuilder rankMessage, final Map.Entry<Position, Piece> positionPieceEntry) {
+    private void updateRankMessage(StringBuilder rankMessage, Map.Entry<Position, Piece> positionPieceEntry) {
         Position position = resolvePosition(positionPieceEntry);
         Piece piece = resolvePiece(positionPieceEntry);
         File file = position.file();
         rankMessage.setCharAt(file.order(), pieceDisplay(piece).charAt(0));
     }
 
-    private Piece resolvePiece(final Map.Entry<Position, Piece> positionAndPiece) {
+    private Piece resolvePiece(Map.Entry<Position, Piece> positionAndPiece) {
         return positionAndPiece.getValue();
     }
 
-    private Position resolvePosition(final Map.Entry<Position, Piece> positionAndPiece) {
+    private Position resolvePosition(Map.Entry<Position, Piece> positionAndPiece) {
         return positionAndPiece.getKey();
     }
 
@@ -76,5 +77,11 @@ public class MessageResolver {
             return pieceName.toUpperCase();
         }
         return pieceName;
+    }
+
+    public String resolveScore(Score score) {
+        String whiteScoreMessage = String.format("WHITE 점수: %.1f", score.getWhiteScore());
+        String blackScoreMessage = String.format("BLACK 점수: %.1f", score.getBlackScore());
+        return String.join(LINE_SEPARATOR, whiteScoreMessage, blackScoreMessage);
     }
 }

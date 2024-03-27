@@ -55,4 +55,8 @@ public enum Rank {
     int subtract(final Rank rank) {
         return this.number - rank.number;
     }
+
+    public String number() {
+        return String.valueOf(number);
+    }
 }

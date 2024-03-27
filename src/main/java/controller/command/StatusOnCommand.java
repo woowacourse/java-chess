@@ -1,16 +1,18 @@
 package controller.command;
 
 import domain.board.ChessBoard;
+import domain.board.Score;
 import view.OutputView;
 
-public class EndOnCommand implements Command {
+public class StatusOnCommand implements Command{
     @Override
     public void execute(final ChessBoard board, final OutputView outputView) {
-        outputView.printScore(board.calculateScore());
+        Score score = board.calculateScore();
+        outputView.printScore(score);
     }
 
     @Override
     public boolean isNotEnded() {
-        return false;
+        return true;
     }
 }

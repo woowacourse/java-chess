@@ -1,14 +1,14 @@
 package view;
 
 import controller.command.Command;
-import controller.command.EndOnCommand;
-import controller.command.MoveOnCommand;
 import controller.command.StartOnCommand;
-import domain.position.Position;
 
 import java.util.Scanner;
 
 public class InputView {
+    public static final String WRONG_COMMAND_ERROR_MESSAGE = "잘못된 형식의 명령어입니다.";
+    public static final String GAME_NOT_STARTED_ERROR_MESSAGE = "먼저, 게임을 시작해 주세요.";
+
     private final Scanner scanner;
 
     public InputView() {
@@ -16,38 +16,41 @@ public class InputView {
     }
 
     public Command readStartCommand() {
-        String[] rawInput = scanner.nextLine().trim().split(" ");
-        if (hasSize(rawInput, 1) && "start".equals(rawInput[0])) {
+        String[] tokens = readUserInput();
+        if (tokens.length == 1 && CommandType.START.name().equals(tokens[0])) {
             return new StartOnCommand();
         }
-        throw new IllegalArgumentException("먼저, 게임을 시작해 주세요.");
+        throw new IllegalArgumentException(GAME_NOT_STARTED_ERROR_MESSAGE);
     }
 
     public Command readCommand() {
-        String[] rawInput = scanner.nextLine().trim().split(" ");
-        if (hasSize(rawInput, 1) && "start".equals(rawInput[0])) {
-            return new StartOnCommand();
-        }
-        if (hasSize(rawInput, 3) && "move".equals(rawInput[0])) {
-            return new MoveOnCommand(resolvePosition(rawInput[1]), resolvePosition(rawInput[2]));
-        }
-        if (hasSize(rawInput, 1) && "end".equals(rawInput[0])) {
-            return new EndOnCommand();
-        }
-        throw new IllegalArgumentException("잘못된 형식의 명령어입니다.");
-    }
-
-    private Position resolvePosition(String position) {
-        String file = position.substring(0, 1);
-        String rank = position.substring(1);
+        String[] tokens = readUserInput();
         try {
-            return new Position(file, Integer.parseInt(rank));
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("잘못된 형식의 명령어입니다.");
+            validateCommand(tokens);
+            return CommandType.getCommand(tokens);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(WRONG_COMMAND_ERROR_MESSAGE);
         }
     }
 
-    private boolean hasSize(final String[] rawInput, int size) {
-        return rawInput.length == size;
+    private void validateCommand(String[] tokens) {
+        for (int i = 1; i < tokens.length; i++) {
+            validatePositionFormat(tokens[i]);
+        }
+    }
+
+    private void validatePositionFormat(String token) {
+        if (token.length() != 2) {
+            throw new IllegalArgumentException();
+        }
+        try {
+            Integer.parseInt(token.substring(1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private String[] readUserInput() {
+        return scanner.nextLine().trim().toUpperCase().split(" ");
     }
 }

@@ -10,28 +10,27 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public enum File {
-    A("a", 0),
-    B("b", 1),
-    C("c", 2),
-    D("d", 3),
-    E("e", 4),
-    F("f", 5),
-    G("g", 6),
-    H("h", 7);
+    A(0),
+    B(1),
+    C(2),
+    D(3),
+    E(4),
+    F(5),
+    G(6),
+    H(7);
 
-    private final String name;
     private final int order;
 
-    File(String name, int order) {
-        this.name = name;
+    File(int order) {
         this.order = order;
     }
 
     public static File fromName(final String name) {
-        return Arrays.stream(values())
-                .filter(file -> file.name.equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 file입니다."));
+        try {
+            return File.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("존재하지 않은 file입니다.");
+        }
     }
 
     public static File fromOrder(final int order) {

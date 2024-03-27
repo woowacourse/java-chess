@@ -1,20 +1,24 @@
 package domain.board;
 
+import domain.dto.PieceDto;
+import domain.dto.TurnDto;
 import domain.piece.Color;
 import domain.piece.Empty;
 import domain.piece.Piece;
+import domain.piece.Type;
 import domain.position.Position;
 import domain.position.Route;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
     private Color turn;
 
-    private ChessBoard(Map<Position, Piece> board, Color color) {
+    public ChessBoard(Map<Position, Piece> board, Color color) {
         this.board = board;
         this.turn = color;
     }
@@ -76,7 +80,27 @@ public class ChessBoard {
         return board.getOrDefault(position, Empty.getInstance());
     }
 
+    public boolean isKingNotExist() {
+        return board.values().stream()
+                .filter(piece -> piece.type() == Type.KING)
+                .count() != 2;
+    }
+
+    public Score calculateScore() {
+        return Score.calculate(board);
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public List<PieceDto> getPieces() {
+        return board.entrySet().stream()
+                .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
+                .toList();
+    }
+
+    public TurnDto getTurn() {
+        return new TurnDto(this.turn.name());
     }
 }
