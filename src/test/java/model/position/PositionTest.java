@@ -23,14 +23,14 @@ class PositionTest {
         Position position = Position.of(1, 1);
 
         assertAll( () -> {
-            assertTrue(position.isAvailablePosition(Direction.N));
-            assertTrue(position.isAvailablePosition(Direction.NE));
-            assertTrue(position.isAvailablePosition(Direction.E));
-            assertFalse(position.isAvailablePosition(Direction.NW));
-            assertFalse(position.isAvailablePosition(Direction.W));
-            assertFalse(position.isAvailablePosition(Direction.SW));
-            assertFalse(position.isAvailablePosition(Direction.S));
-            assertFalse(position.isAvailablePosition(Direction.SE));
+            assertTrue(position.hasAvailableNextPostitionToDirection(Direction.N));
+            assertTrue(position.hasAvailableNextPostitionToDirection(Direction.NE));
+            assertTrue(position.hasAvailableNextPostitionToDirection(Direction.E));
+            assertFalse(position.hasAvailableNextPostitionToDirection(Direction.NW));
+            assertFalse(position.hasAvailableNextPostitionToDirection(Direction.W));
+            assertFalse(position.hasAvailableNextPostitionToDirection(Direction.SW));
+            assertFalse(position.hasAvailableNextPostitionToDirection(Direction.S));
+            assertFalse(position.hasAvailableNextPostitionToDirection(Direction.SE));
         });
     }
 }

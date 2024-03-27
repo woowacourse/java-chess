@@ -16,7 +16,7 @@ public abstract class SingleShiftRole extends Role {
     @Override
     protected Route findRouteByDirection(Direction direction, Position source) {
         List<Position> sequentialPositions = new ArrayList<>();
-        if (source.isAvailablePosition(direction)) {
+        if (source.hasAvailableNextPostitionToDirection(direction)) {
             source = source.getNextPosition(direction);
             sequentialPositions.add(source);
         }

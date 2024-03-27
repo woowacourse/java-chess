@@ -42,7 +42,7 @@ public class Position {
         }
     }
 
-    public boolean isAvailablePosition(Direction direction) {
+    public boolean hasAvailableNextPostitionToDirection(Direction direction) {
         int movedFile = file + direction.fileDifferential();
         int movedRank = rank + direction.rankDifferential();
         return A.getValue() <= movedFile && movedFile <= H.getValue() && ONE.getValue() <= movedRank

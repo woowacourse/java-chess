@@ -16,7 +16,7 @@ public abstract class MultiShiftRole extends Role {
     @Override
     protected Route findRouteByDirection(Direction direction, Position source) {
         List<Position> sequentialPositions = new ArrayList<>();
-        while (source.isAvailablePosition(direction)) {
+        while (source.hasAvailableNextPostitionToDirection(direction)) {
             source = source.getNextPosition(direction);
             sequentialPositions.add(source);
         }
