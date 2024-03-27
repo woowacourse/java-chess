@@ -69,11 +69,11 @@ public class ChessBoard {
         validateNoPieceOnPath(start, destination, direction);
 
         if (!isAttack && piece instanceof Pawn) {
-            validateCanMoveTwo(start, (Pawn) piece);
+            validateCanMoveTwoDistance(start, (Pawn) piece);
         }
     }
 
-    private void validateCanMoveTwo(Coordinate coordinate, Pawn pawn) {
+    private void validateCanMoveTwoDistance(Coordinate coordinate, Pawn pawn) {
         if (!pawn.isFirstPosition(coordinate)) {
             throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
         }
