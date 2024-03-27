@@ -21,7 +21,7 @@ public class Board {
 
     private void initialize(final Map<Position, Piece> board) {
         List<Piece> pieces = BoardInitializer.initialize();
-        pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
+        pieces.forEach(piece -> board.put(piece.getPosition(), piece));
     }
 
     public boolean movePieceAndRenewBoard(final Position source, final Position target) {
