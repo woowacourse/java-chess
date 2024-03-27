@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -10,29 +10,34 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    public static Map<Point, Piece> createInitialChessBoard() {
+    public static Board createInitialChessBoard() {
         Map<Point, Piece> board = new HashMap<>();
 
         board.putAll(WhiteFirstLine());
         board.putAll(WhiteSecondLine());
-        putEmptyLines(3, 4, board);
+        board.putAll(putEmptyLines(3, 4));
         board.putAll(BlackSecondLine());
         board.putAll(BlackFirstLine());
-        return board;
+        return new Board(board);
     }
 
-    public static Map<Point, Piece> createEmptyBoard() {
+    public static Board createCustumBoard(Map<Point, Piece> pieces) {
         Map<Point, Piece> board = new HashMap<>();
 
-        putEmptyLines(1, 8, board);
+        board.putAll(putEmptyLines(1, 8));
+        board.putAll(pieces);
 
-        return board;
+        return new Board(board);
     }
 
-    private static void putEmptyLines(int beginRank, int size, Map<Point, Piece> board) {
+    private static Map<Point, Piece> putEmptyLines(int beginRank, int size) {
+        Map<Point, Piece> emptyLines = new HashMap<>();
+
         for (int rank = beginRank; rank < beginRank + size; rank++) {
-            board.putAll(EmptyLine(rank));
+            emptyLines.putAll(EmptyLine(rank));
         }
+
+        return emptyLines;
     }
 
     private static Map<Point, Piece> BlackFirstLine() {

@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.point.File;
 import chess.domain.point.Point;
 import chess.domain.point.Rank;
@@ -43,7 +43,7 @@ public class ChessController {
     }
 
     private void runGame() {
-        Board board = new Board(BoardFactory.createInitialChessBoard());
+        Board board = BoardFactory.createInitialChessBoard();
         ChessGame game = new ChessGame(board);
         while (true) {
             try {

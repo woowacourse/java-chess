@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.point.Point;
@@ -9,7 +9,7 @@ public class Board {
 
     private final Map<Point, Piece> board;
 
-    public Board(Map<Point, Piece> board) {
+    Board(Map<Point, Piece> board) {
         this.board = board;
     }
 

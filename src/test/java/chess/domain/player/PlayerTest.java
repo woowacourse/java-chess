@@ -3,32 +3,24 @@ package chess.domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.point.File;
 import chess.domain.point.Point;
 import chess.domain.point.Rank;
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    private Map<Point, Piece> tempBoard;
-
-    @BeforeEach
-    void setUp() {
-        tempBoard = BoardFactory.createEmptyBoard();
-    }
-
     @DisplayName("비숍을 a1을 a3으로 이동시킬 수 있다.")
     @Test
     void move1() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.bishopFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.bishopFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         player.move(
@@ -42,11 +34,12 @@ class PlayerTest {
     @DisplayName("나이트를 a1에서 b1, b2, c1의 기물 뛰어넘고 c2로 이동시킬 수 있다.")
     @Test
     void move2() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.knightFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.B, Rank.FIRST), Piece.knightFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.B, Rank.SECOND), Piece.knightFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.C, Rank.FIRST), Piece.knightFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.knightFrom(Team.WHITE),
+                Point.of(File.B, Rank.FIRST), Piece.knightFrom(Team.WHITE),
+                Point.of(File.B, Rank.SECOND), Piece.knightFrom(Team.WHITE),
+                Point.of(File.C, Rank.FIRST), Piece.knightFrom(Team.WHITE)
+        ));
         Player player = new Player(Team.WHITE, board);
 
         player.move(
@@ -60,8 +53,8 @@ class PlayerTest {
     @DisplayName("룩을 a1을 a8으로 이동시킬 수 있다.")
     @Test
     void move3() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.rookFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.rookFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         player.move(
@@ -75,8 +68,8 @@ class PlayerTest {
     @DisplayName("폰을 a2에서 a3으로 이동시킬 수 있다.")
     @Test
     void move4() {
-        tempBoard.put(Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         player.move(
@@ -90,9 +83,9 @@ class PlayerTest {
     @DisplayName("비숍이 이동할 경로에 기물이 있으면 예외가 발생한다.")
     @Test
     void invalidMove() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.bishopFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.B, Rank.SECOND), Piece.bishopFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.bishopFrom(Team.WHITE),
+                Point.of(File.B, Rank.SECOND), Piece.bishopFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         assertThatThrownBy(() ->
@@ -105,9 +98,9 @@ class PlayerTest {
     @DisplayName("룩이 이동할 경로에 기물이 있으면 예외가 발생한다.")
     @Test
     void invalidMove2() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.rookFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.A, Rank.FIFTH), Piece.rookFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.rookFrom(Team.WHITE),
+                Point.of(File.A, Rank.FIFTH), Piece.rookFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         assertThatThrownBy(() ->
@@ -120,23 +113,23 @@ class PlayerTest {
     @DisplayName("폰은 수직으로 이동할 때 적이 경로에 있어도 전진할 수 없다.")
     @Test
     void invalidMove3() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.pawnFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.BLACK));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.pawnFrom(Team.WHITE),
+                Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.BLACK)));
         Player player = new Player(Team.WHITE, board);
 
         assertThatThrownBy(() ->
                 player.move(
-                Point.of(File.A, Rank.FIRST),
-                Point.of(File.A, Rank.SECOND)))
+                        Point.of(File.A, Rank.FIRST),
+                        Point.of(File.A, Rank.SECOND)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰은 대각선에 적이 없으면 대각선으로 이동할 수 없다.")
     @Test
     void invalidMove4() {
-        tempBoard.put(Point.of(File.A, Rank.FIRST), Piece.pawnFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.FIRST), Piece.pawnFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         assertThatThrownBy(() -> player.move(
@@ -148,9 +141,9 @@ class PlayerTest {
     @DisplayName("폰은 기물을 뛰어넘을 수 없다.")
     @Test
     void invalidMove5() {
-        tempBoard.put(Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.WHITE));
-        tempBoard.put(Point.of(File.A, Rank.THIRD), Piece.pawnFrom(Team.WHITE));
-        Board board = new Board(tempBoard);
+        Board board = BoardFactory.createCustumBoard(Map.of(
+                Point.of(File.A, Rank.SECOND), Piece.pawnFrom(Team.WHITE),
+                Point.of(File.A, Rank.THIRD), Piece.pawnFrom(Team.WHITE)));
         Player player = new Player(Team.WHITE, board);
 
         assertThatThrownBy(() -> player.move(

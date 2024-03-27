@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,8 @@ class BoardFactoryTest {
     @Test
     @DisplayName("체스 초기 상태의 기물들을 생성할 수 있다.")
     void create() {
-        Map<Point, Piece> pieces = BoardFactory.createInitialChessBoard();
+        Board board = BoardFactory.createInitialChessBoard();
+        Map<Point, Piece> pieces = board.getBoard();
 
         long emptyCount = piecesCount(pieces, Piece.empty());
         long WhiteKingCount = piecesCount(pieces, Piece.kingFrom(Team.WHITE));
