@@ -2,12 +2,12 @@ package controller;
 
 import connection.ChessConnectionGenerator;
 import domain.ChessGameResult;
-import domain.PlayerGameRecord;
 import domain.Team;
 import domain.piece.Piece;
 import domain.player.Player;
 import domain.player.PlayerName;
 import domain.square.Square;
+import dto.PlayerGameRecordDto;
 import service.ChessService;
 import service.PlayerService;
 import view.InputView;
@@ -66,7 +66,7 @@ public class ChessController {
                 }
                 if ("record".equals(command)) {
                     final PlayerName name = readPlayerName();
-                    final PlayerGameRecord gameRecord = chessService.findGameRecord(name);
+                    final PlayerGameRecordDto gameRecord = chessService.findGameRecord(name);
                     outputView.printGameRecord(gameRecord);
                     continue;
                 }

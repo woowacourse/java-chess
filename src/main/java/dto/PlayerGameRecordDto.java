@@ -1,6 +1,6 @@
-package domain;
+package dto;
 
-public record PlayerGameRecord(
+public record PlayerGameRecordDto(
         int winCount,
         int loseCount,
         int drawCount

@@ -2,13 +2,13 @@ package service;
 
 import domain.ChessGameResult;
 import domain.ChessGameStatus;
-import domain.PlayerGameRecord;
 import domain.Team;
 import domain.chessboard.ChessBoard;
 import domain.piece.Piece;
 import domain.player.Player;
 import domain.player.PlayerName;
 import domain.square.Square;
+import dto.PlayerGameRecordDto;
 import repository.ChessBoardDao;
 import repository.ChessGameDao;
 import repository.ChessResultDao;
@@ -160,11 +160,11 @@ public class ChessService {
         chessResultDao.create(chessGameResult, gameId);
     }
 
-    public PlayerGameRecord findGameRecord(final PlayerName name) {
+    public PlayerGameRecordDto findGameRecord(final PlayerName name) {
         final int countWin = chessResultDao.countWin(name);
         final int countLose = chessResultDao.countLose(name);
         final int countDraw = chessResultDao.countDraw(name);
 
-        return new PlayerGameRecord(countWin, countLose, countDraw);
+        return new PlayerGameRecordDto(countWin, countLose, countDraw);
     }
 }
