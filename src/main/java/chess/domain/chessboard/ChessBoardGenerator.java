@@ -18,18 +18,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoardGenerator {
-    private static final Map<Position, Piece> board = new LinkedHashMap<>();
 
     public static Map<Position, Piece> initializeBoard() {
-        initializeBackRank("8", BLACK);
-        initializeBlackPawnRank();
-        initializeEmptyRanks();
-        initializeWhitePawnRank();
-        initializeBackRank("1", WHITE);
+        Map<Position, Piece> board = new LinkedHashMap<>();
+        initializeBackRank(board, "8", BLACK);
+        initializeBlackPawnRank(board);
+        initializeEmptyRanks(board);
+        initializeWhitePawnRank(board);
+        initializeBackRank(board, "1", WHITE);
         return board;
     }
 
-    private static void initializeBackRank(String column, Team team) {
+    private static void initializeBackRank(Map<Position, Piece> board, String column, Team team) {
         board.put(createPosition("a", column), new Rook(team));
         board.put(createPosition("b", column), new Knight(team));
         board.put(createPosition("c", column), new Bishop(team));
@@ -40,21 +40,21 @@ public class ChessBoardGenerator {
         board.put(createPosition("h", column), new Rook(team));
     }
 
-    private static void initializeBlackPawnRank() {
-        initializeFiles("7", new BlackPawn());
+    private static void initializeBlackPawnRank(Map<Position, Piece> board) {
+        initializeFiles(board, "7", new BlackPawn());
     }
 
-    private static void initializeWhitePawnRank() {
-        initializeFiles("2", new WhitePawn());
+    private static void initializeWhitePawnRank(Map<Position, Piece> board) {
+        initializeFiles(board, "2", new WhitePawn());
     }
 
-    private static void initializeEmptyRanks() {
+    private static void initializeEmptyRanks(Map<Position, Piece> board) {
         for (int rank = 6; rank >= 3; rank--) {
-            initializeFiles(String.valueOf(rank), new Empty());
+            initializeFiles(board, String.valueOf(rank), new Empty());
         }
     }
 
-    private static void initializeFiles(String rank, Piece piece) {
+    private static void initializeFiles(Map<Position, Piece> board, String rank, Piece piece) {
         for (char file = 'a'; file <= 'h'; file++) {
             board.put(createPosition(String.valueOf(file), String.valueOf(rank)), piece);
         }
