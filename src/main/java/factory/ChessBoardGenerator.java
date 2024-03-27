@@ -36,20 +36,15 @@ public class ChessBoardGenerator {
 
     private static Set<Piece> selectPawn(final Rank rank, final Color color) {
         return Arrays.stream(File.values())
-                     .map(file -> Pawn.from(new Point(file, rank), color))
-                     .map(Piece.class::cast)
-                     .collect(Collectors.toSet());
+                .map(file -> Pawn.from(new Point(file, rank), color))
+                .map(Piece.class::cast)
+                .collect(Collectors.toSet());
     }
 
     private static Set<Piece> selectPiece(final Rank rank, final Color color) {
-        return Arrays.stream(File.values())
-                     .map(file -> switch (file) {
-                         case A, H -> new Rook(new Point(file, rank), color);
-                         case B, G -> new Knight(new Point(file, rank), color);
-                         case C, F -> new Bishop(new Point(file, rank), color);
-                         case D -> new Queen(new Point(file, rank), color);
-                         case E -> new King(new Point(file, rank), color);
-                     })
-                     .collect(Collectors.toSet());
+        return Set.of(new Rook(new Point(File.A, rank), color), new Knight(new Point(File.B, rank), color),
+                new Bishop(new Point(File.C, rank), color), new Queen(new Point(File.D, rank), color),
+                new King(new Point(File.E, rank), color), new Bishop(new Point(File.F, rank), color),
+                new Knight(new Point(File.G, rank), color), new Rook(new Point(File.H, rank), color));
     }
 }
