@@ -22,6 +22,13 @@ public class Controller {
             printChessBoard(pieceInfos);
             gameCommand = inputRetryHelper(() -> runGame(chessBoard));
         }
+        List<PieceInfo> pieceInfos = InfoMapper.toPieceInfoMapper(chessBoard);
+        printChessBoard(pieceInfos);
+    }
+
+    private GameCommand executeInitial() {
+        printInitialGamePrompt();
+        return inputRetryHelper(InputView::inputInitialGameCommand);
     }
 
     private GameCommand runGame(ChessBoard chessBoard) {
@@ -49,10 +56,5 @@ public class Controller {
         int file = GameCommand.toDestinationFileValue(inputCommand);
         int rank = GameCommand.toDestinationRankValue(inputCommand);
         return Position.of(file, rank);
-    }
-
-    private GameCommand executeInitial() {
-        printInitialGamePrompt();
-        return inputRetryHelper(InputView::inputInitialGameCommand);
     }
 }
