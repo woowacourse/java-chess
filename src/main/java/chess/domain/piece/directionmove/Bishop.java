@@ -19,6 +19,11 @@ public class Bishop extends DirectionMovePiece {
 
     @Override
     Set<Direction> legalDirections() {
-        return Set.of(Direction.LEFT_UP, Direction.LEFT_DOWN, Direction.RIGHT_DOWN, Direction.RIGHT_UP);
+        return Set.of(
+                Direction.LEFT_UP,
+                Direction.LEFT_DOWN,
+                Direction.RIGHT_DOWN,
+                Direction.RIGHT_UP
+        );
     }
 }
