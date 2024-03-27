@@ -21,7 +21,7 @@ public class PiecesDao {
     public void create(PieceDto pieceDto) {
         try (final Connection connection = connector.get()) {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + TABLE + " VALUES (?, ?, ?)");
+                    "INSERT INTO " + TABLE + " (board_file, board_rank, type) VALUES (?, ?, ?)");
             statement.setInt(1, pieceDto.file());
             statement.setInt(2, pieceDto.rank());
             statement.setString(3, pieceDto.type());

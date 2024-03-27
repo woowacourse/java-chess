@@ -19,7 +19,7 @@ public class TurnsDao {
     public void create(TurnDto turnDto) {
         try (final Connection connection = connector.get()) {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + TABLE + " VALUES (?)");
+                    "INSERT INTO " + TABLE + " (color) VALUES (?)");
             statement.setString(1, turnDto.color());
             statement.executeUpdate();
         } catch (SQLException e) {

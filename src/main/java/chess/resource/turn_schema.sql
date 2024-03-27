@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS turns;
 
 CREATE TABLE turns
 (
-    color varchar(10) NOT NULL,
-    PRIMARY KEY (color)
+    id    INT AUTO_INCREMENT PRIMARY KEY,
+    color varchar(10) NOT NULL
 );
 
