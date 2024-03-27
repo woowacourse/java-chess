@@ -7,15 +7,9 @@ import java.util.List;
 
 import static chess.domain.piece.Type.EMPTY;
 
-public class Empty implements Piece{
-    @Override
-    public boolean isBlack() {
-        return false;
-    }
-
-    @Override
-    public boolean isSameColor(Color color) {
-        return false;
+public class Empty extends Piece {
+    public Empty() {
+        super(Color.NONE);
     }
 
     @Override
@@ -29,7 +23,7 @@ public class Empty implements Piece{
     }
 
     @Override
-    public String identifyType() {
-        return EMPTY.name();
+    public Type identifyType() {
+        return EMPTY;
     }
 }

@@ -3,32 +3,22 @@ package chess.domain.piece;
 import static chess.domain.piece.Type.KNIGHT;
 
 import chess.domain.position.Position;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight implements Piece {
+public class Knight extends Piece {
     private static final int TWO_SQUARES = 2;
 
-    private final Color color;
-
     public Knight(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
-    public String identifyType() {
-        return KNIGHT.name();
+    public Type identifyType() {
+        return KNIGHT;
     }
 
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
-    @Override
-    public boolean isSameColor(Color color) {
-        return this.color == color;
-    }
 
     @Override
     public boolean canMove(Position source, Position target, Piece piece) {

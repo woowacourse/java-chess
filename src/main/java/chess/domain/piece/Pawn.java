@@ -8,32 +8,20 @@ import chess.domain.position.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn implements Piece {
+public class Pawn extends Piece {
     private static final int STAY = 0;
     private static final int ONE_SQUARE = 1;
     private static final int TWO_SQUARES = 2;
     public static final Rank WHITE_INITIAL_POSITION = Rank.TWO;
     public static final Rank BLACK_INITIAL_POSITION = Rank.SEVEN;
 
-    private final Color color;
-
     public Pawn(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
-    public String identifyType() {
-        return PAWN.name();
-    }
-
-    @Override
-    public boolean isBlack() {
-        return color == Color.BLACK;
-    }
-
-    @Override
-    public boolean isSameColor(Color color) {
-        return this.color == color;
+    public Type identifyType() {
+        return PAWN;
     }
 
     @Override
