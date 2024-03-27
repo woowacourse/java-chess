@@ -10,7 +10,7 @@ public class BlackPawn extends Pawn {
         super(movables);
     }
 
-    public static BlackPawn from() {
+    public static BlackPawn create() {
         List<Movable> routes = List.of(
                 new Movable(ORIGINAL_MAX_MOVEMENT, Direction.SOUTH),
                 new Movable(ORIGINAL_MAX_MOVEMENT, Direction.SOUTH_EAST),

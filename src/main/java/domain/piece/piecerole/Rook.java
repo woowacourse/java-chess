@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Rook extends PieceRole {
-    public static final int MAX_MOVEMENT = 7;
+    private static final int MAX_MOVEMENT = 7;
 
     private Rook(final List<Movable> routes) {
         super(routes);
     }
 
-    public static Rook from() {
+    public static Rook create() {
         List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),

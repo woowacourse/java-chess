@@ -25,14 +25,14 @@ public class ChessBoardGenerator {
     private static final char CHESS_FILE_START = 'a';
     private static final char CHESS_FILE_END = 'h';
     private static final List<PieceRole> ROYAL_PIECES = List.of(
-            Rook.from(), Knight.from(), Bishop.from(), Queen.from(),
-            King.from(), Bishop.from(), Knight.from(), Rook.from()
+            Rook.create(), Knight.create(), Bishop.create(), Queen.create(),
+            King.create(), Bishop.create(), Knight.create(), Rook.create()
     );
     private static final List<PieceRole> BLACK_PAWNS = IntStream.range(0, toColumnIndex(CHESS_FILE_END) + 1)
-            .mapToObj(number -> (PieceRole) BlackPawn.from())
+            .mapToObj(number -> (PieceRole) BlackPawn.create())
             .toList();
     private static final List<PieceRole> WHITE_PAWNS = IntStream.range(0, toColumnIndex(CHESS_FILE_END) + 1)
-            .mapToObj(number -> (PieceRole) WhitePawn.from())
+            .mapToObj(number -> (PieceRole) WhitePawn.create())
             .toList();
     private static final List<Piece> NONE = new ArrayList<>();
     private static final Map<Integer, List<Piece>> RANK_PIECES = new HashMap<>();

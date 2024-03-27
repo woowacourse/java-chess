@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Queen extends PieceRole {
-    public static final int MAX_MOVEMENT = 7;
+    private static final int MAX_MOVEMENT = 7;
 
     private Queen(final List<Movable> routes) {
         super(routes);
     }
 
-    public static Queen from() {
+    public static Queen create() {
         List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),

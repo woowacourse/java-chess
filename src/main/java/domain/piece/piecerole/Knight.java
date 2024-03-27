@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Knight extends PieceRole {
-    public static final int MAX_MOVEMENT = 1;
+    private static final int MAX_MOVEMENT = 1;
 
     private Knight(final List<Movable> routes) {
         super(routes);
     }
 
-    public static Knight from() {
+    public static Knight create() {
         List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, DOWN_LEFT),
                 new Movable(MAX_MOVEMENT, DOWN_RIGHT),

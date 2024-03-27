@@ -13,13 +13,13 @@ import java.util.Arrays;
 import java.util.Locale;
 
 public enum PieceMapper {
-    BLACK_PAWN(BlackPawn.from(), "P"),
-    WHITE_PAWN(WhitePawn.from(), "p"),
-    ROOK(Rook.from(), "R"),
-    KNIGHT(Knight.from(), "N"),
-    BISHOP(Bishop.from(), "B"),
-    QUEEN(Queen.from(), "Q"),
-    KING(King.from(), "K");
+    BLACK_PAWN(BlackPawn.create(), "P"),
+    WHITE_PAWN(WhitePawn.create(), "p"),
+    ROOK(Rook.create(), "R"),
+    KNIGHT(Knight.create(), "N"),
+    BISHOP(Bishop.create(), "B"),
+    QUEEN(Queen.create(), "Q"),
+    KING(King.create(), "K");
 
     private final PieceRole pieceRole;
     private final String symbol;

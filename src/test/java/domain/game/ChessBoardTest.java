@@ -34,7 +34,7 @@ class ChessBoardTest {
         chessBoard.move(b2(), b3());
 
         Piece piece = chessBoard.findPieceByPosition(b3());
-        assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        assertThat(piece).isEqualTo(new Piece(WhitePawn.create(), Color.WHITE));
     }
 
     @DisplayName("source에 piece가 없다면 에러를 반환한다.")
@@ -85,7 +85,7 @@ class ChessBoardTest {
         chessBoard.move(b4(), c5());
 
         Piece piece = chessBoard.findPieceByPosition(c5());
-        assertThat(piece).isEqualTo(new Piece(WhitePawn.from(), Color.WHITE));
+        assertThat(piece).isEqualTo(new Piece(WhitePawn.create(), Color.WHITE));
     }
 
     @DisplayName("나이트를 제외한 기물은 이동하는 경로에 기물이 있으면 이동하지 못한다.")
@@ -106,6 +106,6 @@ class ChessBoardTest {
         chessBoard.move(b7(), b5());
         chessBoard.move(b1(), c3());
 
-        assertThat(chessBoard.findPieceByPosition(c3())).isEqualTo(new Piece(Knight.from(), Color.WHITE));
+        assertThat(chessBoard.findPieceByPosition(c3())).isEqualTo(new Piece(Knight.create(), Color.WHITE));
     }
 }

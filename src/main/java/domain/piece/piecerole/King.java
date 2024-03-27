@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class King extends PieceRole {
-    public static final int MAX_MOVEMENT = 1;
+    private static final int MAX_MOVEMENT = 1;
 
     private King(final List<Movable> routes) {
         super(routes);
     }
 
-    public static King from() {
+    public static King create() {
         List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH),
                 new Movable(MAX_MOVEMENT, EAST),

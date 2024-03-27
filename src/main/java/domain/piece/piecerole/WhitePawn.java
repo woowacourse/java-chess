@@ -10,7 +10,7 @@ public class WhitePawn extends Pawn {
         super(movables);
     }
 
-    public static WhitePawn from() {
+    public static WhitePawn create() {
         List<Movable> routes = List.of(
                 new Movable(ORIGINAL_MAX_MOVEMENT, Direction.NORTH),
                 new Movable(ORIGINAL_MAX_MOVEMENT, Direction.NORTH_EAST),

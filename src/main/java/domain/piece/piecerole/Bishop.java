@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Bishop extends PieceRole {
-    public static final int MAX_MOVEMENT = 7;
+    private static final int MAX_MOVEMENT = 7;
 
     private Bishop(final List<Movable> routes) {
         super(routes);
     }
 
-    public static Bishop from() {
+    public static Bishop create() {
         List<Movable> routes = List.of(
                 new Movable(MAX_MOVEMENT, NORTH_WEST),
                 new Movable(MAX_MOVEMENT, NORTH_EAST),
