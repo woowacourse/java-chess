@@ -22,10 +22,6 @@ public enum Direction {
         this.y = y;
     }
 
-    public static List<Direction> all() {
-        return List.of(values());
-    }
-
     public static List<Direction> diagonal() {
         return List.of(Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
     }
@@ -39,8 +35,7 @@ public enum Direction {
             throw new IllegalArgumentException("올바르지 않은 방향입니다.");
         }
         return Arrays.stream(values())
-                .filter(direction -> direction.x == Math.signum(fileDiff))
-                .filter(direction -> direction.y == Math.signum(rankDiff))
+                .filter(direction -> direction.x == Math.signum(fileDiff) && direction.y == Math.signum(rankDiff))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 방향입니다."));
     }
