@@ -20,20 +20,7 @@ class PawnTest {
         Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false))
                 .isEqualTo(Direction.from(List.of(-1, 0)));
     }
-
-    @DisplayName("폰이 첫 움직임이 아닐경우 2칸을 이동할 수 없다.")
-    @Test
-    void cantMoveTwoWhenNotInitial() {
-        Coordinate coordinate = Coordinate.from("A2");
-        Coordinate nextCoordinate = Coordinate.from("A4");
-
-        Pawn pawn = new Pawn(Color.BLACK);
-
-        Assertions.assertThatThrownBy(() -> pawn.getDirection(coordinate, nextCoordinate, false))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰은 처음에만 2칸을 이동할 수 있습니다.");
-    }
-
+    
     @DisplayName("폰이 공격이 가능한 상태라면 대각선으로도 갈 수 있다.")
     @Test
     void canMoveDiagonalWhenCanAttack() {

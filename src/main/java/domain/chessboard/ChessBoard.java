@@ -4,6 +4,7 @@ import domain.coordinate.Coordinate;
 import domain.direction.Direction;
 import domain.piece.Blank;
 import domain.piece.Color;
+import domain.piece.Pawn;
 import domain.piece.base.ChessPiece;
 import java.util.Collections;
 import java.util.Map;
@@ -63,8 +64,19 @@ public class ChessBoard {
     }
 
     private void checkPath(Coordinate start, Coordinate destination, ChessPiece piece) {
-        Direction direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
+        boolean isAttack = isAttack(currentTurn, destination);
+        Direction direction = piece.getDirection(start, destination, isAttack);
         validateNoPieceOnPath(start, destination, direction);
+
+        if (!isAttack && piece instanceof Pawn) {
+            validateCanMoveTwo(start, (Pawn) piece);
+        }
+    }
+
+    private void validateCanMoveTwo(Coordinate coordinate, Pawn pawn) {
+        if (!pawn.isFirstPosition(coordinate)) {
+            throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
+        }
     }
 
     private void validateNoPieceOnPath(Coordinate coordinate, Coordinate destination, Direction direction) {

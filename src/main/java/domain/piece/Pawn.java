@@ -10,7 +10,6 @@ public class Pawn extends ChessPieceBase {
 
     private static final int BLACK_PAWN_FIRST_POSITION = 7;
     private static final int WHITE_PAWN_FIRST_POSITION = 2;
-    private static final int MAX_PAWN_DISTANCE_DIFFERENCE = 2;
 
     public Pawn(Color color) {
         super(color);
@@ -42,22 +41,14 @@ public class Pawn extends ChessPieceBase {
     }
 
     private void validate(PawnStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
-        validateCanMovePawn(coordinate, rowDifference);
         pawnStrategy.validateMoveBackward(color);
     }
 
     private void validateAttack(PawnAttackStrategy pawnStrategy, Coordinate coordinate, int rowDifference) {
-        validateCanMovePawn(coordinate, rowDifference);
         pawnStrategy.validateMoveBackward(color);
     }
 
-    private void validateCanMovePawn(Coordinate coordinate, int rowDifference) {
-        if (!isFirstPosition(coordinate) && Math.abs(rowDifference) == MAX_PAWN_DISTANCE_DIFFERENCE) {
-            throw new IllegalArgumentException("폰은 처음에만 2칸을 이동할 수 있습니다.");
-        }
-    }
-
-    private boolean isFirstPosition(Coordinate coordinate) {
+    public boolean isFirstPosition(Coordinate coordinate) {
         if (isBlack()) {
             return coordinate.isSameRowPosition(BLACK_PAWN_FIRST_POSITION);
         }
