@@ -9,7 +9,7 @@ import java.sql.Statement;
 import org.junit.jupiter.api.BeforeEach;
 
 public interface DaoTest {
-    String fileName = "docker/docker-test/db/mysql/init/init_for_test.sql";
+    String fileName = "docker/db/mysql/init/init_for_test.sql";
 
     /*
      * 초기 체스판 상태

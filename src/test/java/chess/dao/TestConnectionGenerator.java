@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class TestConnectionGenerator implements ConnectionGenerator {
-    private static final String SERVER = "localhost:13307";
     private static final String DATABASE = "chess-test";
 
     public Connection getConnection() {
