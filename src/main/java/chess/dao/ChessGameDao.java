@@ -9,18 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessGameDao {
-    private final ConnectionGenerator connectionGenerator;
-
-    public ChessGameDao() {
-        this(new ProductionConnectionGenerator());
-    }
-
-    public ChessGameDao(ConnectionGenerator connectionGenerator) {
-        this.connectionGenerator = connectionGenerator;
-    }
-
-    public void add(String roomName, Team currentTeam) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public void add(String roomName, Team currentTeam, Connection connection) {
+        try {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO chess_game(room_name, current_team) VALUES (?, ?)");
 
@@ -32,8 +22,8 @@ public class ChessGameDao {
         }
     }
 
-    public Team findCurrentTeamByRoomName(String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public Team findCurrentTeamByRoomName(String roomName, Connection connection) {
+        try {
             final PreparedStatement statement = connection.prepareStatement(
                     "SELECT current_team FROM chess_game WHERE room_name = ?");
 
@@ -47,8 +37,8 @@ public class ChessGameDao {
         }
     }
 
-    public void update(Team currentTeam, String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public void update(Team currentTeam, String roomName, Connection connection) {
+        try {
             final PreparedStatement statement = connection.prepareStatement(
                     "UPDATE chess_game SET current_team = ? WHERE room_name = ?");
 
@@ -61,8 +51,8 @@ public class ChessGameDao {
         }
     }
 
-    public void delete(String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public void delete(String roomName, Connection connection) {
+        try {
             final PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM chess_game WHERE room_name = ?");
             statement.setString(1, roomName);

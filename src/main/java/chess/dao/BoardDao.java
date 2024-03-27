@@ -18,18 +18,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public final class BoardDao {
-    private final ConnectionGenerator connectionGenerator;
-
-    public BoardDao() {
-        this(new ProductionConnectionGenerator());
-    }
-
-    public BoardDao(ConnectionGenerator connectionGenerator) {
-        this.connectionGenerator = connectionGenerator;
-    }
-
-    public void addAll(Board board, String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public void addAll(Board board, String roomName, Connection connection) {
+        try {
             for (Entry<Position, Piece> piece : board.getPieces().entrySet()) {
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO board(room_name, position, team, kind, is_moved)"
@@ -48,8 +38,8 @@ public final class BoardDao {
         }
     }
 
-    public Board loadAll(String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public Board loadAll(String roomName, Connection connection) {
+        try {
             final PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM board WHERE room_name = ?");
 
@@ -81,8 +71,7 @@ public final class BoardDao {
         }
     }
 
-    public void update(Movement movement, Piece piece, String roomName) {
-        final Connection connection = connectionGenerator.getConnection();
+    public void update(Movement movement, Piece piece, String roomName, Connection connection) {
         deleteAttackedPiece(movement, roomName, connection);
         movePiece(movement, piece, roomName, connection);
     }
@@ -116,8 +105,8 @@ public final class BoardDao {
         }
     }
 
-    public void delete(String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection()) {
+    public void delete(String roomName, Connection connection) {
+        try {
             final PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM board WHERE room_name = ?");
             statement.setString(1, roomName);
