@@ -41,7 +41,6 @@ public abstract class Piece {
 
     protected abstract Piece update(Point point);
 
-
     public boolean isEqualPoint(final Point point) {
         return this.point.equals(point);
     }
