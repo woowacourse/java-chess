@@ -88,9 +88,12 @@ public class GameDao {
 
     public void removeAllGames() {
         final String query = "DELETE FROM " + TABLE_NAME;
+        final String resetAutoIncrementId = "ALTER TABLE " + TABLE_NAME + " auto_increment = 1";
         try (final Connection connection = getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query);
+             final PreparedStatement preparedStatementToResetId = connection.prepareStatement(resetAutoIncrementId)) {
             preparedStatement.executeUpdate();
+            preparedStatementToResetId.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
