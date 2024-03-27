@@ -23,7 +23,7 @@ public class ScoreCalculatorTest {
         );
 
         Board board = new Board();
-        pieces.forEach(piece -> board.placePiece(piece.getPieceInfo().getPosition(), piece));
+        pieces.forEach(piece -> board.placePiece(piece.getPosition(), piece));
         ScoreCalculator scoreCalculator = ScoreCalculator.of(board);
 
         double expectedWhiteScore = 52.5;
