@@ -12,28 +12,22 @@ public class InitialGame implements GameStatus {
 
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
 
-    private final InputView inputView;
-
-    public InitialGame(InputView inputView) {
-        this.inputView = inputView;
-    }
-
     @Override
     public boolean isPlayable() {
         return true;
     }
 
     @Override
-    public GameStatus play() {
-        return applyCommand(inputView.getClientCommand());
+    public GameStatus play(final InputView inputView, final OutputView outputView) {
+        return applyCommand(inputView.getClientCommand(), outputView);
     }
 
-    private GameStatus applyCommand(ClientCommand clientCommand) {
+    private GameStatus applyCommand(final ClientCommand clientCommand, final OutputView outputView) {
         GameCommand gameCommand = clientCommand.getCommand();
         if (gameCommand == GameCommand.START) {
             TurnTrackerBoard turnTrackerBoard = new TurnTrackerBoard(BoardFactory.create(), FIRST_TURN_COLOR);
-            OutputView.printBoard(turnTrackerBoard);
-            return new PlayingGame(inputView, turnTrackerBoard);
+            outputView.printBoard(turnTrackerBoard);
+            return new PlayingGame(turnTrackerBoard);
         }
         if (gameCommand == GameCommand.END) {
             return new TerminateGame();

@@ -7,14 +7,16 @@ import chess.view.output.OutputView;
 
 public class ChessGame {
     private final InputView inputView;
+    private final OutputView outputView;
 
-    public ChessGame(final InputView inputView) {
+    public ChessGame(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void start() {
-        OutputView.printInitialMessage();
-        GameStatus gameStatus = new InitialGame(inputView);
+        outputView.printInitialMessage();
+        GameStatus gameStatus = new InitialGame();
         while (gameStatus.isPlayable()) {
             gameStatus = getGameStatus(gameStatus);
         }
@@ -22,9 +24,9 @@ public class ChessGame {
 
     private GameStatus getGameStatus(GameStatus gameStatus) {
         try {
-            gameStatus = gameStatus.play();
+            gameStatus = gameStatus.play(inputView, outputView);
         } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
         }
         return gameStatus;
     }

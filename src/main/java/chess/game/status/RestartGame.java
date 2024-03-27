@@ -7,13 +7,7 @@ import chess.view.input.InputView;
 import chess.view.output.OutputView;
 
 public class RestartGame implements GameStatus {
-
     private static final Color FIRST_TURN_COLOR = Color.WHITE;
-    private final InputView inputView;
-
-    public RestartGame(InputView inputView) {
-        this.inputView = inputView;
-    }
 
     @Override
     public boolean isPlayable() {
@@ -21,9 +15,9 @@ public class RestartGame implements GameStatus {
     }
 
     @Override
-    public GameStatus play() {
+    public GameStatus play(final InputView inputView, final OutputView outputView) {
         TurnTrackerBoard turnTrackerBoard = new TurnTrackerBoard(BoardFactory.create(), FIRST_TURN_COLOR);
-        OutputView.printBoard(turnTrackerBoard);
-        return new PlayingGame(inputView, turnTrackerBoard);
+        outputView.printBoard(turnTrackerBoard);
+        return new PlayingGame(turnTrackerBoard);
     }
 }
