@@ -4,6 +4,7 @@ import static chess.utils.Constant.END_COMMAND;
 import static chess.utils.Constant.MOVE_COMMAND;
 import static chess.utils.Constant.START_COMMAND;
 
+import chess.domain.board.GameInformation;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
@@ -11,19 +12,36 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessBoardDto;
 import chess.dto.CurrentResultDto;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String ERROR_HEADER = "[ERROR] ";
     private static final String NEW_LINE = System.lineSeparator();
 
-    public void printStartMessage() {
-        System.out.println(
+    public void printGameInformation(List<GameInformation> gameInfos) {
+        System.out.printf(
                 "> 체스 게임을 시작합니다." + NEW_LINE
+                        + "> 진행중인 게임을 시작하려면 해당 게임 번호를, 새 게임을 시작하려면 0을 입력하세요 - 예. 0 " + NEW_LINE
+                        + "> 진행중인 게임 목록 : %s" + NEW_LINE
+                , convertToGameList(gameInfos));
+    }
+
+    public void printStartMessage(int gameId) {
+        System.out.println(
+                "> " + gameId + "번 게임을 시작합니다." + NEW_LINE
                         + "> 게임 시작 : " + START_COMMAND + NEW_LINE
                         + "> 게임 종료 : " + END_COMMAND + NEW_LINE
                         + "> 게임 이동 : " + MOVE_COMMAND + " source위치 target위치 - 예. " + MOVE_COMMAND + " b2 b3"
         );
+    }
+
+    private String convertToGameList(List<GameInformation> gameInfos) {
+        return gameInfos.stream()
+                .map(GameInformation::getGameId)
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
     }
 
     public void printChessBoard(ChessBoardDto chessBoardDto) {

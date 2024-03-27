@@ -32,13 +32,14 @@ public class ChessBoard {
     private GameInformation gameInformation;
 
     public ChessBoard(int gameId) {
-        List<ChessGameComponentDto> searchedData = chessGameDao.findAll();
-        if (searchedData.isEmpty()) {
+        if (gameId == 0) {
             initializeBlackPieces();
             initializeWhitePieces();
             saveData();
         }
-        bringChessBoard(searchedData);
+        if (gameId > 0) {
+            bringChessBoard(chessGameDao.findById(gameId));
+        }
         this.gameInformation = bringGameInformation(gameId);
     }
 
@@ -88,6 +89,10 @@ public class ChessBoard {
         return gameInformation;
     }
 
+    public int getGameId() {
+        return gameInformation.getGameId();
+    }
+
     private void bringChessBoard(List<ChessGameComponentDto> dtos) {
         for (ChessGameComponentDto dto : dtos) {
             chessBoard.put(dto.position(), dto.piece());
@@ -95,17 +100,15 @@ public class ChessBoard {
     }
 
     private GameInformation bringGameInformation(int gameId) {
-        GameInformation searchedGameInformation = gameInformationDao.findByGameId(gameId);
         if (gameId == 0) {
-            gameInformationDao.create();
-            int generatedGameId = gameInformationDao.findAll().size();
-            return new GameInformation(generatedGameId, Color.WHITE);
+            return gameInformationDao.findLatestGame();
         }
-        return searchedGameInformation;
+        return gameInformationDao.findByGameId(gameId);
     }
 
     private void saveData() {
-        int gameId = gameInformation.getGameId();
+        gameInformationDao.create();
+        int gameId = gameInformationDao.findLatestGame().getGameId();
         List<ChessGameComponentDto> dtos = chessBoard.entrySet().stream()
                 .map(entry -> new ChessGameComponentDto(entry.getKey(), entry.getValue(), gameId)).toList();
         dtos.forEach(chessGameDao::save);

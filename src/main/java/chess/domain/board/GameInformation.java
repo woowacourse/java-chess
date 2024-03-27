@@ -4,7 +4,7 @@ import chess.domain.piece.Color;
 
 public class GameInformation {
     private final int gameId;
-    private final Color curentTurnColor;
+    private Color curentTurnColor;
 
     public GameInformation(int gameId, Color curentTurnColor) {
         this.gameId = gameId;
@@ -20,6 +20,6 @@ public class GameInformation {
     }
 
     public void convertTurn() {
-        curentTurnColor.convertTurn();
+        curentTurnColor = curentTurnColor.convertTurn();
     }
 }

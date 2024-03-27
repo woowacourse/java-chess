@@ -68,30 +68,6 @@ public class GameInformationDao {
         return null;
     }
 
-    public void updateTurn(GameInformation gameInformation) {
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE " + getTableName() + " SET current_turn_color = ? WHERE game_id = ?");
-            statement.setString(1, gameInformation.getCurentTurnColor().name());
-            statement.setInt(2, gameInformation.getGameId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String getTableName() {
-        if (isTestEnvironment()) {
-            return TEST_TABLE_NAME;
-        }
-        return APP_TABLE_NAME;
-    }
-
-    private boolean isTestEnvironment() {
-        String testStatus = System.getProperty("TEST_ENV");
-        return testStatus != null && testStatus.equalsIgnoreCase("true");
-    }
-
     public void remove(int gameId) {
         try (final Connection connection = getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
@@ -112,5 +88,46 @@ public class GameInformationDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateTurn(GameInformation gameInformation) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE " + getTableName() + " SET current_turn_color = ? WHERE game_id = ?");
+            statement.setString(1, gameInformation.getCurentTurnColor().name());
+            statement.setInt(2, gameInformation.getGameId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GameInformation findLatestGame() {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM " + getTableName() + " ORDER BY game_id DESC LIMIT 1");
+            final ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int gameId = resultSet.getInt("game_id");
+                Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
+                return new GameInformation(gameId, color);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private String getTableName() {
+        if (isTestEnvironment()) {
+            return TEST_TABLE_NAME;
+        }
+        return APP_TABLE_NAME;
+    }
+
+    private boolean isTestEnvironment() {
+        String testStatus = System.getProperty("TEST_ENV");
+        return testStatus != null && testStatus.equalsIgnoreCase("true");
     }
 }

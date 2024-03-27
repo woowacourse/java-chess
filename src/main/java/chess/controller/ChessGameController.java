@@ -2,7 +2,9 @@ package chess.controller;
 
 import static chess.utils.Constant.STATUS_COMMAND;
 
+import chess.dao.GameInformationDao;
 import chess.domain.board.ChessBoard;
+import chess.domain.board.GameInformation;
 import chess.domain.piece.Color;
 import chess.domain.state.End;
 import chess.domain.state.GameState;
@@ -20,12 +22,13 @@ public class ChessGameController {
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        outputView.printStartMessage();
-        playGame();
+        ChessBoard chessBoard = prepareChessBoard();
+        outputView.printStartMessage(chessBoard.getGameId());
+
+        playGame(chessBoard);
     }
 
-    private void playGame() {
-        ChessBoard chessBoard = new ChessBoard();
+    private void playGame(ChessBoard chessBoard) {
         GameState gameState = new Ready(chessBoard);
 
         while (!gameState.isEnd()) {
@@ -35,6 +38,15 @@ public class ChessGameController {
             printChessBoardInProgress(gameState, chessBoard);
         }
         printResulByKingCaptured((End) gameState, chessBoard);
+    }
+
+    private ChessBoard prepareChessBoard() {
+        GameInformationDao gameInformationDao = new GameInformationDao();
+        List<GameInformation> gameInfos = gameInformationDao.findAll();
+        outputView.printGameInformation(gameInfos);
+
+        int gameId = repeatUntilSuccess(() -> inputView.readGameId(gameInfos));
+        return new ChessBoard(gameId);
     }
 
     private void printResulByKingCaptured(End gameState, ChessBoard chessBoard) {

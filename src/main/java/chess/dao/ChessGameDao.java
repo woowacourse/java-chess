@@ -110,6 +110,30 @@ public class ChessGameDao {
         }
     }
 
+    public List<ChessGameComponentDto> findById(int gameId) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM " + getTableName() + " WHERE game_id = ?");
+            statement.setInt(1, gameId);
+            ResultSet resultSet = statement.executeQuery();
+
+            final List<ChessGameComponentDto> chessBoardComponents = new ArrayList<>();
+            while (resultSet.next()) {
+                File file = File.convertToFile(resultSet.getString("file"));
+                Rank rank = Rank.convertToRank(resultSet.getInt("rank"));
+                Type type = Type.convertToType(resultSet.getString("type"));
+                Color color = Color.convertToColor(resultSet.getString("color"));
+                ChessGameComponentDto chessGameComponentDto
+                        = new ChessGameComponentDto(Position.of(file, rank), type.generatePiece(color), gameId);
+
+                chessBoardComponents.add(chessGameComponentDto);
+            }
+            return chessBoardComponents;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void remove(Position target) {
         try (final Connection connection = getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
