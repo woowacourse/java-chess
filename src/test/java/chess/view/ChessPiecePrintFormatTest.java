@@ -1,7 +1,6 @@
 package chess.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.chesspiece.Camp;
 import chess.domain.chesspiece.ChessPiece;

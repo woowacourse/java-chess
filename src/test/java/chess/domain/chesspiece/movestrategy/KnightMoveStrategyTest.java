@@ -1,7 +1,6 @@
 package chess.domain.chesspiece.movestrategy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Lettering;
