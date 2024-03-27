@@ -6,7 +6,6 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Direction;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 
 public final class Rook extends Piece {
 
@@ -15,15 +14,11 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final PathStatus pathStatus) {
-        return isMovableDirection(movement.findDirection()) && isNotBlocked(pathStatus);
+    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final boolean isOpened) {
+        return isMovableDirection(movement.findDirection()) && isOpened;
     }
 
     private boolean isMovableDirection(final Direction direction) {
         return direction.isCross();
-    }
-
-    private boolean isNotBlocked(final PathStatus pathStatus) {
-        return pathStatus.isOpen();
     }
 }

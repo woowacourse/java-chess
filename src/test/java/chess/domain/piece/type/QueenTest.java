@@ -4,7 +4,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,10 +38,10 @@ class QueenTest {
         Piece queen = new Queen(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.OPEN;
+        boolean isOpened = true;
 
         // when
-        boolean result = queen.isMovable(movement, targetStatus, pathStatus);
+        boolean result = queen.isMovable(movement, targetStatus, isOpened);
 
         // then
         assertThat(result).isTrue();
@@ -55,9 +54,9 @@ class QueenTest {
         Piece pawn = new Pawn(PieceColor.BLACK);
         Movement movement = new Movement(Position.of("d4"), Position.of("c4"));
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.BLOCKED;
+        boolean isOpened = false;
 
         // when & then
-        assertThat(pawn.isMovable(movement, targetStatus, pathStatus)).isFalse();
+        assertThat(pawn.isMovable(movement, targetStatus, isOpened)).isFalse();
     }
 }

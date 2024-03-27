@@ -5,7 +5,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 
 public final class Knight extends Piece {
     public Knight(final PieceColor color) {
@@ -13,7 +12,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final PathStatus pathStatus) {
+    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final boolean isOpened) {
         return isLShapeMovement(movement);
     }
 

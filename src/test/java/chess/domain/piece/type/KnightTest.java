@@ -4,7 +4,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,10 +52,10 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.OPEN;
+        boolean isOpened = true;
 
         // when
-        boolean result = knight.isMovable(movement, targetStatus, pathStatus);
+        boolean result = knight.isMovable(movement, targetStatus, isOpened);
 
         // then
         assertThat(result).isTrue();
@@ -70,10 +69,10 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.OPEN;
+        boolean isOpened = true;
 
         // when
-        boolean result = knight.isMovable(movement, targetStatus, pathStatus);
+        boolean result = knight.isMovable(movement, targetStatus, isOpened);
 
         // then
         assertThat(result).isFalse();
@@ -86,9 +85,9 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
         Movement movement = new Movement(Position.of("d4"), Position.of("c2"));
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.BLOCKED;
+        boolean isOpened = false;
 
         // when & then
-        assertThatCode(() -> knight.isMovable(movement, targetStatus, pathStatus)).doesNotThrowAnyException();
+        assertThatCode(() -> knight.isMovable(movement, targetStatus, isOpened)).doesNotThrowAnyException();
     }
 }

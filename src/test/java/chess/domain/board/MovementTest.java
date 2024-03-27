@@ -52,7 +52,7 @@ class MovementTest {
         Movement movement = new Movement(source, target);
 
         //when
-        Set<Position> result = movement.findRoute();
+        Set<Position> result = movement.findRouteBetween();
 
         //then
         assertThat(result).hasSize(expected.size()).containsAll(expected);

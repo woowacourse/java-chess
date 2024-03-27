@@ -4,7 +4,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,10 +43,10 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.OPEN;
+        boolean isOpened = true;
 
         // when
-        boolean result = bishop.isMovable(movement, targetStatus, pathStatus);
+        boolean result = bishop.isMovable(movement, targetStatus, isOpened);
 
         // then
         assertThat(result).isFalse();
@@ -61,10 +60,10 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.OPEN;
+        boolean isOpened = true;
 
         // when
-        boolean result = bishop.isMovable(movement, targetStatus, pathStatus);
+        boolean result = bishop.isMovable(movement, targetStatus, isOpened);
 
         // then
         assertThat(result).isTrue();
@@ -77,9 +76,9 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
         Movement movement = new Movement(Position.of("d4"), Position.of("d3"));
         PieceRelation targetStatus = PieceRelation.NONE;
-        PathStatus pathStatus = PathStatus.BLOCKED;
+        boolean isOpened = false;
 
         // when & then
-        assertThat(bishop.isMovable(movement, targetStatus, pathStatus)).isFalse();
+        assertThat(bishop.isMovable(movement, targetStatus, isOpened)).isFalse();
     }
 }

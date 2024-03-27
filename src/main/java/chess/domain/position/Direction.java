@@ -31,10 +31,6 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 방향입니다."));
     }
 
-    private static int calculateUnit(final int distance, final int gcd) {
-        return distance / gcd;
-    }
-
     private static int calculateGCD(final int fileDiff, final int rankDiff) {
         int a = Math.max(fileDiff, rankDiff);
         int b = Math.min(fileDiff,rankDiff);
@@ -44,6 +40,10 @@ public enum Direction {
             a = temp;
         }
         return Math.abs(a);
+    }
+
+    private static int calculateUnit(final int distance, final int gcd) {
+        return distance / gcd;
     }
 
     public boolean isDiagonal() {

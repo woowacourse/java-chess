@@ -1,16 +1,15 @@
 package chess.domain.board;
 
+import chess.domain.PieceRelation;
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
-import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import chess.dto.BoardStatus;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ChessBoard {
     private static final String INVALID_SOURCE = "source에 이동할 수 있는 기물이 존재하지 않습니다.";
@@ -81,10 +80,14 @@ public class ChessBoard {
         Movement movement = new Movement(source, target);
         Piece sourcePiece = board.get(source);
         PieceRelation relation = PieceRelation.determine(sourcePiece, board.get(target));
-        PathStatus pathStatus = PathStatus.determine(movement.findRoute(), Collections.unmodifiableMap(board));
-        if (!sourcePiece.isMovable(movement, relation, pathStatus)) {
+        Set<Position> route = movement.findRouteBetween();
+        if (!sourcePiece.isMovable(movement, relation, isOpened(route))) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
+    }
+
+    private boolean isOpened(final Set<Position> route) {
+        return route.stream().noneMatch(board::containsKey);
     }
 
     private void updateBoard(final Position source, final Position target) {

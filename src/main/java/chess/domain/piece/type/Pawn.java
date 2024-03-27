@@ -7,7 +7,6 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
 import chess.domain.position.Direction;
 import chess.domain.position.Movement;
-import chess.domain.position.PathStatus;
 
 public final class Pawn extends Piece {
 
@@ -16,8 +15,8 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final PathStatus pathStatus) {
-        return isMovableDirection(movement, pieceRelation) && isMovableDistance(movement) && isNotBlocked(pathStatus);
+    public boolean isMovable(final Movement movement, final PieceRelation pieceRelation, final boolean isOpened) {
+        return isMovableDirection(movement, pieceRelation) && isMovableDistance(movement) && isOpened;
     }
 
     private boolean isMovableDirection(final Movement movement, final PieceRelation targetStatus) {
@@ -53,9 +52,5 @@ public final class Pawn extends Piece {
             return (distance == 1 || distance == 2);
         }
         return distance == 1;
-    }
-
-    private boolean isNotBlocked(final PathStatus pathStatus) {
-        return pathStatus.isOpen();
     }
 }
