@@ -2,6 +2,7 @@ package chess.domain.square;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -74,6 +75,24 @@ public class Movement {
 
     public Square getTarget() {
         return target;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Movement movement = (Movement) o;
+        return Objects.equals(getSource(), movement.getSource()) && Objects.equals(getTarget(),
+                movement.getTarget());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSource(), getTarget());
     }
 
     @Override
