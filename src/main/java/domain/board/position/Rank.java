@@ -30,6 +30,13 @@ public enum Rank {
         return of(Integer.parseInt(command) - 1);
     }
 
+    public static Rank fromDB(final String s2) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.name().equals(s2))
+                .findAny()
+                .orElseThrow();
+    }
+
     public int toIndex() {
         return index;
     }

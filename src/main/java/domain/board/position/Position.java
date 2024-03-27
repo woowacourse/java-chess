@@ -11,6 +11,10 @@ public class Position {
         this.rank = rank;
     }
 
+    public static Position of(final String s1, final String s2) {
+        return new Position(File.FromDB(s1), Rank.fromDB(s2));
+    }
+
     public static Position from(final String command) {
         if (command.length() != 2) {
             throw new IllegalArgumentException(String.format("입력된 명령어: %s, 명령어는 파일, 랭크로 구성되어 있어야 합니다", command));

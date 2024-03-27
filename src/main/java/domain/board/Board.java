@@ -1,7 +1,5 @@
 package domain.board;
 
-import db.Movement;
-import db.MovementDao;
 import domain.board.position.Position;
 import domain.board.position.Vector;
 import domain.piece.Color;
@@ -104,11 +102,6 @@ public class Board {
     }
 
     private void updateBoard(final Position source, final Position target) {
-        final MovementDao movementDao = new MovementDao();
-        movementDao.createMovement(
-                new Movement(source.getFile().name(), source.getRank().name(),
-                        target.getFile().name(), target.getRank().name(),
-                        squares.get(source).getName(), squares.get(source).getColor().name()));
         squares.put(target, squares.get(source).move());
         squares.put(source, Empty.INSTANCE);
     }
@@ -127,5 +120,13 @@ public class Board {
 
     public Map<Position, Piece> getSquares() {
         return Collections.unmodifiableMap(squares);
+    }
+
+    public void move(final String s1, final String s2, final String t1, final String t2) {
+        move(Position.of(s1, s2), Position.of(t1, t2));
+    }
+
+    public Piece getPiece(final String source) {
+        return squares.get(Position.from(source));
     }
 }

@@ -43,7 +43,7 @@ public final class MovementDao {
     }
 
     public Movement findByMovementId(final String id) {
-        final var query = "SELECT * FROM movement WHERE movement_id = ?";
+        final var query = "SELECT * FROM movement WHERE movement_id = ? ORDER BY movement_id";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, id);

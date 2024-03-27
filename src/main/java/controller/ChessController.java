@@ -10,6 +10,7 @@ import view.OutputView;
 public class ChessController {
     public void start() {
         final ChessGame chessGame = new ChessGame();
+        chessGame.recover();
         OutputView.printGameStartMessage();
         retryUntilNoException(this::play, chessGame);
     }

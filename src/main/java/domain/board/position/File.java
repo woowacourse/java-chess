@@ -30,6 +30,13 @@ public enum File {
         return of(substring.charAt(0) - 'a');
     }
 
+    public static File FromDB(final String s1) {
+        return Arrays.stream(values())
+                .filter(file -> file.name().equals(s1))
+                .findAny()
+                .orElseThrow();
+    }
+
     public int toIndex() {
         return index;
     }
