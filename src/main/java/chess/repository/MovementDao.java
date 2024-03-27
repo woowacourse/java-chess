@@ -1,7 +1,7 @@
 package chess.repository;
 
 import chess.domain.square.Movement;
-import chess.infra.ConnectionPool;
+import chess.infra.JdbcConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovementDao implements MovementRepository {
-    private final ConnectionPool connectionPool;
+    private final JdbcConnectionPool connectionPool;
 
-    public MovementDao(final ConnectionPool connectionPool) {
+    public MovementDao(final JdbcConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
