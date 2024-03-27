@@ -26,8 +26,7 @@ public class ChessBoard {
         piece.findRoute(source, target, targetPiece)
                 .forEach(this::checkObstacle);
 
-        chessBoard.put(source, new Empty());
-        chessBoard.put(target, piece);
+        replacePieceToTarget(source, target, piece);
     }
 
     private void checkObstacle(Position position) {
@@ -41,6 +40,11 @@ public class ChessBoard {
         if(source.isTeam(target)) {
             throw new IllegalStateException("같은 팀이 있는 곳으로는 이동할 수 없습니다.");
         }
+    }
+
+    private void replacePieceToTarget(Position source, Position target, Piece piece) {
+        chessBoard.put(source, new Empty());
+        chessBoard.put(target, piece);
     }
 
     public Map<Position, Piece> getChessBoard() {
