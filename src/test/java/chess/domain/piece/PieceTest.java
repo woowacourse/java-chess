@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import static chess.PositionFixture.WHITE_PAWN_FIRST_MOVE_POSITION;
+import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
+import static chess.domain.pixture.PositionFixture.WHITE_PAWN_FIRST_MOVE_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -20,68 +21,79 @@ class PieceTest {
         @Test
         @DisplayName("폰이 직선으로 이동할 경우 경로에 어떠한 말도 없다면 이동 가능하다.")
         void canMoveStraight() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
-                    () -> assertThat(whitePawn.canMove(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(), Position.of(1, 3),
-                            Map.of())).isTrue(),
-                    () -> assertThat(whitePawn.canMove(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(), Position.of(1, 4),
-                            Map.of())).isTrue());
+                    () -> assertThat(WHITE_PAWN.getPiece()
+                            .canMove(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(), Position.of(1, 3),
+                                    Map.of(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
+                                            WHITE_PAWN.getPiece()))).isTrue(),
+
+                    () -> assertThat(WHITE_PAWN.getPiece()
+                            .canMove(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(), Position.of(1, 4),
+                                    Map.of(WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
+                                            WHITE_PAWN.getPiece()))).isTrue());
         }
 
         @Test
         @DisplayName("폰이 대각선 이동할 경우 도착 위치에 상대방의 말이 있다면 이동 가능하다.")
         void canMoveDiagonal() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
-                    () -> assertThat(whitePawn.canMove(Position.of(3, 1), Position.of(2, 2),
-                            Map.of(Position.of(2, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue(),
-                    () -> assertThat(whitePawn.canMove(Position.of(3, 1), Position.of(4, 2),
-                            Map.of(Position.of(4, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue());
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(2, 2),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(2, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue(),
+
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(4, 2),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(4, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isTrue());
         }
 
         @Test
         @DisplayName("폰이 직선으로 이동할 경우 도착 위치에 말이 있다면 이동이 불가능하다.")
         void canNotMoveStraightWhenPieceExistInTarget() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
-                    () -> assertThat(whitePawn.canMove(Position.of(1, 1), Position.of(1, 2),
-                            Map.of(Position.of(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
-                    () -> assertThat(whitePawn.canMove(Position.of(1, 1), Position.of(1, 2),
-                            Map.of(Position.of(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse());
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(1, 1), Position.of(1, 2),
+                            Map.of(Position.of(1, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(1, 1), Position.of(1, 2),
+                            Map.of(Position.of(1, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse());
         }
 
 
         @Test
         @DisplayName("폰이 직선으로 이동할 경우 도착 위치 전의 경로에 말이 있다면 이동이 불가능하다.")
         void canNotMoveStraightWhenPieceExistInPath() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
-                    () -> assertThat(whitePawn.canMove(Position.of(1, 1), Position.of(1, 3),
-                            Map.of(Position.of(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse(),
-                    () -> assertThat(whitePawn.canMove(Position.of(1, 1), Position.of(1, 3),
-                            Map.of(Position.of(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(1, 1), Position.of(1, 3),
+                            Map.of(Position.of(1, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(1, 2), new Piece(PieceType.QUEEN, Color.BLACK)))).isFalse(),
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(1, 1), Position.of(1, 3),
+                            Map.of(Position.of(1, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(1, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
         }
 
         @Test
         @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 같은 색의 말인 경우 이동이 불가능하다.")
         void canNotMoveDiagonalWhenTargetIsSameColor() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
-                    () -> assertThat(whitePawn.canMove(Position.of(3, 1), Position.of(2, 2),
-                            Map.of(Position.of(2, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
-                    () -> assertThat(whitePawn.canMove(Position.of(3, 1), Position.of(4, 2),
-                            Map.of(Position.of(4, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(2, 2),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(2, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse(),
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(4, 2),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(4, 2), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse());
         }
 
         @Test
         @DisplayName("폰이 대각선으로 이동할 경우 도착 위치가 비어있을 경우 이동이 불가능하다.")
         void canNotMoveDiagonalWhenTargetIsEmpty() {
-            Piece whitePawn = new Piece(PieceType.PAWN, Color.WHITE);
             assertAll(
+                    () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(2, 2),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece()))).isFalse(),
+
                     () -> assertThat(
-                            whitePawn.canMove(Position.of(3, 1), Position.of(2, 2), Map.of())).isFalse(),
-                    () -> assertThat(
-                            whitePawn.canMove(Position.of(3, 1), Position.of(4, 2), Map.of())).isFalse());
+                            WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(4, 2),
+                                    Map.of(Position.of(3, 1), WHITE_PAWN.getPiece()))).isFalse());
         }
     }
 
@@ -111,7 +123,8 @@ class PieceTest {
         void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.KNIGHT, Color.WHITE);
             assertThat(piece.canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+                    Map.of(Position.of(4, 4), piece,
+                            Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
 
@@ -144,7 +157,8 @@ class PieceTest {
         void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.BISHOP, Color.WHITE);
             assertThat(piece.canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+                    Map.of(Position.of(4, 4), piece,
+                            Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -185,7 +199,8 @@ class PieceTest {
         void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.ROOK, Color.WHITE);
             assertThat(piece.canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+                    Map.of(Position.of(4, 4), piece,
+                            Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -232,7 +247,8 @@ class PieceTest {
         void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             Piece piece = new Piece(PieceType.QUEEN, Color.WHITE);
             assertThat(piece.canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+                    Map.of(Position.of(4, 4), piece,
+                            Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
 
         @Test
@@ -279,7 +295,8 @@ class PieceTest {
         void canNotMoveWhenTargetIsSameColor(int rank, int file) {
             Piece piece = new Piece(PieceType.KING, Color.WHITE);
             assertThat(piece.canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
+                    Map.of(Position.of(4, 4), piece,
+                            Position.of(file, rank), new Piece(PieceType.QUEEN, Color.WHITE)))).isFalse();
         }
     }
 }

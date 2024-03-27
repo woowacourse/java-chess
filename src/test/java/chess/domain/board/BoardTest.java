@@ -1,12 +1,11 @@
 package chess.domain.board;
 
+import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -22,9 +21,9 @@ class BoardTest {
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
                 () -> assertThat(boardPieces.get(Position.of(1, 2)))
-                        .isEqualTo(new Piece(PieceType.EMPTY, Color.NONE)),
+                        .isEqualTo(Piece.getEmptyPiece()),
                 () -> assertThat(boardPieces.get(Position.of(1, 4)))
-                        .isEqualTo(new Piece(PieceType.PAWN, Color.WHITE)));
+                        .isEqualTo(WHITE_PAWN.getPiece()));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package chess.domain.movement.policy;
 
-import static chess.PositionFixture.BLACK_PAWN_FIRST_MOVE_POSITION;
-import static chess.PositionFixture.WHITE_PAWN_FIRST_MOVE_POSITION;
+import static chess.domain.pixture.PositionFixture.BLACK_PAWN_FIRST_MOVE_POSITION;
+import static chess.domain.pixture.PositionFixture.WHITE_PAWN_FIRST_MOVE_POSITION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
