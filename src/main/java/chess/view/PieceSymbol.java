@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.piece.Piece;
+
 import java.util.Arrays;
 
 public enum PieceSymbol {
@@ -20,7 +21,7 @@ public enum PieceSymbol {
 
     public static String convertToSymbol(Piece piece) {
         String name = Arrays.stream(values())
-                .filter(pieceSymbol -> piece.identifyType().equals(pieceSymbol.name()))
+                .filter(pieceSymbol -> piece.identifyType().name().equals(pieceSymbol.name()))
                 .findFirst()
                 .orElseThrow()
                 .symbol;
