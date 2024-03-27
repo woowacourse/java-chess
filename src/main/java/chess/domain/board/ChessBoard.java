@@ -25,6 +25,7 @@ public class ChessBoard {
     private static final int SINGLE_KING = 1;
     private static final int DOUBLE_PAWN = 2;
     private static final Score HALF_PAWN_SCORE = new Score(0.5);
+    private static final int NEW_GAME_COMMAND = 0;
 
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final GameInformationDao gameInformationDao = new GameInformationDao();
@@ -32,7 +33,7 @@ public class ChessBoard {
     private GameInformation gameInformation;
 
     public ChessBoard(int gameId) {
-        if (gameId == 0) {
+        if (gameId == NEW_GAME_COMMAND) {
             initializeBlackPieces();
             initializeWhitePieces();
             saveData();
@@ -60,6 +61,8 @@ public class ChessBoard {
         int kingCount = Math.toIntExact(chessBoard.values().stream()
                 .filter(Piece::isKing)
                 .count());
+        removeFinishedData(gameInformation.getGameId());
+
         return kingCount == SINGLE_KING;
     }
 
@@ -118,6 +121,10 @@ public class ChessBoard {
         if (!sourcePiece.isSameColor(gameInformation.getCurentTurnColor())) {
             throw new IllegalArgumentException("해당 팀의 턴이 아닙니다.");
         }
+    }
+
+    private void removeFinishedData(int gameId) {
+        gameInformationDao.remove(gameId);
     }
 
     private boolean canMove(Piece sourcePiece, Position source, Position target) {
