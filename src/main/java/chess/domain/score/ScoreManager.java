@@ -4,12 +4,13 @@ import chess.domain.piece.Piece;
 import java.util.List;
 
 public class ScoreManager {
+    private static final double OPTIONAL_PAWN_SCORE = 0.5;
 
     public Score calculateFileScore(List<Piece> pieces) {
         Score baseScore = calculateBaseScore(pieces);
         int pawnCount = calculatePawnCount(pieces);
         if (pawnCount >= 2) {
-            return baseScore.subtract(pawnCount * 0.5);
+            return baseScore.subtract(pawnCount * OPTIONAL_PAWN_SCORE);
         }
         return baseScore;
     }
