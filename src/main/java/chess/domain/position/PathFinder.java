@@ -1,11 +1,9 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-// TODO: 단위테스트 작성
-// TODO: 첵임을 줄이는 방안 고려하기
 public class PathFinder {
     private final Position start;
     private final Position target;
@@ -15,14 +13,14 @@ public class PathFinder {
         this.target = target;
     }
 
-    public List<Position> find() {
+    public Set<Position> find() {
         if (isStraight()) {
             return findStraight();
         }
         if (isDiagonal()) {
             return findDiagonal();
         }
-        return Collections.emptyList();
+        return Collections.emptySet();
     }
 
     public boolean isStraight() {
@@ -49,18 +47,18 @@ public class PathFinder {
         return rankDistance() == 0 && fileDistance() > 0;
     }
 
-    private List<Position> findStraight() {
+    private Set<Position> findStraight() {
         if (isStraightRank()) {
             return findStraightRank();
         }
         return findStraightFile();
     }
 
-    private List<Position> findStraightRank() {
+    private Set<Position> findStraightRank() {
         int maxRankValue = Math.max(start.rankValue(), target.rankValue()) - 1;
         int minRankValue = Math.min(start.rankValue(), target.rankValue()) + 1;
 
-        List<Position> path = new ArrayList<>();
+        Set<Position> path = new HashSet<>();
         for (int rankValue = minRankValue; rankValue <= maxRankValue; rankValue++) {
             path.add(new Position(Rank.from(rankValue), start.file()));
         }
@@ -68,11 +66,11 @@ public class PathFinder {
         return path;
     }
 
-    private List<Position> findStraightFile() {
+    private Set<Position> findStraightFile() {
         int maxFileValue = Math.max(start.fileValue(), target.fileValue()) - 1;
         int minFileValue = Math.min(start.fileValue(), target.fileValue()) + 1;
 
-        List<Position> path = new ArrayList<>();
+        Set<Position> path = new HashSet<>();
         for (int fileValue = minFileValue; fileValue <= maxFileValue; fileValue++) {
             path.add(new Position(start.rank(), File.from(fileValue)));
         }
@@ -88,7 +86,7 @@ public class PathFinder {
         return isDiagonal() && rankDistance() <= maxDistance;
     }
 
-    private List<Position> findDiagonal() {
+    private Set<Position> findDiagonal() {
         if (isUphill()) {
             return findUphill();
         }
@@ -99,24 +97,24 @@ public class PathFinder {
         return (target.subtractFile(start)) * (target.subtractRank(start)) > 0;
     }
 
-    private List<Position> findUphill() {
+    private Set<Position> findUphill() {
         int minRankValue = Math.min(start.rankValue(), target.rankValue()) + 1;
         int minFileValue = Math.min(start.fileValue(), target.fileValue()) + 1;
         int pathLength = fileDistance() - 1;
 
-        List<Position> uphill = new ArrayList<>();
+        Set<Position> uphill = new HashSet<>();
         for (int addend = 0; addend < pathLength; addend++) {
             uphill.add(new Position(Rank.from(minRankValue + addend), File.from(minFileValue + addend)));
         }
         return uphill;
     }
 
-    private List<Position> findDownhill() {
+    private Set<Position> findDownhill() {
         int maxRankValue = Math.max(start.rankValue(), target.rankValue()) - 1;
         int minFileValue = Math.min(start.fileValue(), target.fileValue()) + 1;
         int pathLength = fileDistance() - 1;
 
-        List<Position> downhill = new ArrayList<>();
+        Set<Position> downhill = new HashSet<>();
         for (int addend = 0; addend < pathLength; addend++) {
             downhill.add(new Position(Rank.from(maxRankValue - addend), File.from(minFileValue + addend)));
         }
