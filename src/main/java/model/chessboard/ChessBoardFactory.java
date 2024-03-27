@@ -20,8 +20,8 @@ public class ChessBoardFactory {
 
     public static Map<Position, Piece> create() {
         initRook();
-        initBishop();
         initKnight();
+        initBishop();
         initQueen();
         initKing();
         initPawn();
@@ -36,18 +36,18 @@ public class ChessBoardFactory {
         chessBoard.put(Position.of(File.H, Rank.EIGHT), new Piece(new Rook(BLACK)));
     }
 
-    private static void initBishop() {
-        chessBoard.put(Position.of(File.B, Rank.ONE), new Piece(new Bishop(WHITE)));
-        chessBoard.put(Position.of(File.G, Rank.ONE), new Piece(new Bishop(WHITE)));
-        chessBoard.put(Position.of(File.B, Rank.EIGHT), new Piece(new Bishop(BLACK)));
-        chessBoard.put(Position.of(File.G, Rank.EIGHT), new Piece(new Bishop(BLACK)));
+    private static void initKnight() {
+        chessBoard.put(Position.of(File.B, Rank.ONE), new Piece(new Knight(WHITE)));
+        chessBoard.put(Position.of(File.G, Rank.ONE), new Piece(new Knight(WHITE)));
+        chessBoard.put(Position.of(File.B, Rank.EIGHT), new Piece(new Knight(BLACK)));
+        chessBoard.put(Position.of(File.G, Rank.EIGHT), new Piece(new Knight(BLACK)));
     }
 
-    private static void initKnight() {
-        chessBoard.put(Position.of(File.C, Rank.ONE), new Piece(new Knight(WHITE)));
-        chessBoard.put(Position.of(File.F, Rank.ONE), new Piece(new Knight(WHITE)));
-        chessBoard.put(Position.of(File.C, Rank.EIGHT), new Piece(new Knight(BLACK)));
-        chessBoard.put(Position.of(File.F, Rank.EIGHT), new Piece(new Knight(BLACK)));
+    private static void initBishop() {
+        chessBoard.put(Position.of(File.C, Rank.ONE), new Piece(new Bishop(WHITE)));
+        chessBoard.put(Position.of(File.F, Rank.ONE), new Piece(new Bishop(WHITE)));
+        chessBoard.put(Position.of(File.C, Rank.EIGHT), new Piece(new Bishop(BLACK)));
+        chessBoard.put(Position.of(File.F, Rank.EIGHT), new Piece(new Bishop(BLACK)));
     }
 
     private static void initQueen() {
