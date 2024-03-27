@@ -24,13 +24,13 @@ public class RoomController {
     }
 
     public void enterRoom(final long userId) {
-        long roomId = selectRoom(userId);
+        printRoomNames(userId);
+        long roomId = requestUntilValidated(() -> selectRoom(userId));
         gameController.start(roomId);
     }
 
     private long selectRoom(final long userId) {
-        printRoomNames(userId);
-        RoomRequest request = requestUntilValidated(inputView::readRoomRequest);
+        RoomRequest request = inputView.readRoomRequest();
         if (request.getCommand() == RoomCommand.ENTER) {
             return roomService.selectRoom(userId, request.getName());
         }
