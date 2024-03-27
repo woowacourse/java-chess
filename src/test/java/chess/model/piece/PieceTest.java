@@ -1,6 +1,7 @@
 package chess.model.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,6 +29,30 @@ class PieceTest {
                 Arguments.of(Knight.from(Color.WHITE), "WHITE_KNIGHT"),
                 Arguments.of(Pawn.from(Color.WHITE), "WHITE_PAWN"),
                 Arguments.of(King.from(Color.WHITE), "WHITE_KING")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("providePieceDestination")
+    void 도착지에_같은_색깔의_기물이_있으면_예외가_발생한다(Piece piece, Piece destination) {
+        assertThatThrownBy(() -> piece.validateDestinationColor(destination))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private static Stream<Arguments> providePieceDestination() {
+        return Stream.of(
+                Arguments.of(Bishop.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(Rook.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(Queen.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(Knight.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(Pawn.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(King.from(Color.BLACK), Bishop.from(Color.BLACK)),
+                Arguments.of(Bishop.from(Color.WHITE), Bishop.from(Color.WHITE)),
+                Arguments.of(Rook.from(Color.WHITE), Bishop.from(Color.WHITE)),
+                Arguments.of(Queen.from(Color.WHITE), Bishop.from(Color.WHITE)),
+                Arguments.of(Knight.from(Color.WHITE), Bishop.from(Color.WHITE)),
+                Arguments.of(Pawn.from(Color.WHITE), Bishop.from(Color.WHITE)),
+                Arguments.of(King.from(Color.WHITE), Bishop.from(Color.WHITE))
         );
     }
 }

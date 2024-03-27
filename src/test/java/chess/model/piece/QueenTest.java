@@ -14,6 +14,6 @@ class QueenTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Queen.from(Color.BLACK).isValid(movement)).isTrue();
+        assertThat(Queen.from(Color.BLACK).isValid(movement, Empty.getInstance())).isTrue();
     }
 }

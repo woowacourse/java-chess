@@ -20,7 +20,8 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isValid(Movement movement) {
+    public boolean isValid(Movement movement, Piece destination) {
+        validateDestinationColor(destination);
         int fileDistance = movement.getFileDistance();
         int rankDistance = movement.getRankDistance();
         return (fileDistance == LONG_MOVE_DISTANCE && rankDistance == SHORT_MOVE_DISTANCE)

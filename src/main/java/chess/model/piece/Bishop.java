@@ -18,7 +18,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isValid(Movement movement) {
+    public boolean isValid(Movement movement, Piece destination) {
+        validateDestinationColor(destination);
         return movement.isDiagonal();
     }
 }

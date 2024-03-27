@@ -14,7 +14,7 @@ class RookTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Rook.from(Color.BLACK).isValid(movement)).isTrue();
+        assertThat(Rook.from(Color.BLACK).isValid(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
@@ -23,6 +23,6 @@ class RookTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Rook.from(Color.BLACK).isValid(movement)).isFalse();
+        assertThat(Rook.from(Color.BLACK).isValid(movement, Empty.getInstance())).isFalse();
     }
 }

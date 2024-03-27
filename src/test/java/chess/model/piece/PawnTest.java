@@ -14,16 +14,17 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.WHITE).isValid(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
     @CsvSource({"2,7,1,8", "2,2,3,3", "4,7,5,8", "3,4,4,5"})
-    void 화이트_폰은_대각선으로_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
+    void 화이트_폰은_상대편이_존재한다면_대각선으로_한_칸_앞으로_움직일_수_있다(
+            int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.WHITE).isValid(movement, Pawn.from(Color.BLACK))).isTrue();
     }
 
     @ParameterizedTest
@@ -32,7 +33,7 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isFalse();
+        assertThat(Pawn.from(Color.WHITE).isValid(movement, Empty.getInstance())).isFalse();
     }
 
     @ParameterizedTest
@@ -41,7 +42,7 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.WHITE).isValid(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
@@ -50,7 +51,7 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.WHITE).isValid(movement)).isFalse();
+        assertThat(Pawn.from(Color.WHITE).isValid(movement, Empty.getInstance())).isFalse();
     }
 
     @ParameterizedTest
@@ -59,16 +60,17 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.BLACK).isValid(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
     @CsvSource({"1,8,2,7", "3,3,2,2", "5,8,4,7", "4,5,3,4"})
-    void 블랙_폰은_대각선으로_한_칸_앞으로_움직일_수_있다(int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
+    void 블랙_폰은_상대편이_존재한다면_대각선으로_한_칸_앞으로_움직일_수_있다(
+            int sourceFile, int sourceRank, int destinationFile, int destinationRank) {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.BLACK).isValid(movement, Pawn.from(Color.WHITE))).isTrue();
     }
 
     @ParameterizedTest
@@ -77,7 +79,7 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isFalse();
+        assertThat(Pawn.from(Color.BLACK).isValid(movement, Empty.getInstance())).isFalse();
     }
 
     @ParameterizedTest
@@ -86,7 +88,7 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isTrue();
+        assertThat(Pawn.from(Color.BLACK).isValid(movement, Empty.getInstance())).isTrue();
     }
 
     @ParameterizedTest
@@ -95,6 +97,6 @@ class PawnTest {
         Position source = Position.of(sourceFile, sourceRank);
         Position destination = Position.of(destinationFile, destinationRank);
         Movement movement = new Movement(source, destination);
-        assertThat(Pawn.from(Color.BLACK).isValid(movement)).isFalse();
+        assertThat(Pawn.from(Color.BLACK).isValid(movement, Empty.getInstance())).isFalse();
     }
 }

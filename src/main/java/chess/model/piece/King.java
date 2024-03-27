@@ -19,7 +19,8 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isValid(Movement movement) {
+    public boolean isValid(Movement movement, Piece destination) {
+        validateDestinationColor(destination);
         int fileDistance = movement.getFileDistance();
         int rankDistance = movement.getRankDistance();
         return fileDistance <= MAX_MOVE_DISTANCE && rankDistance <= MAX_MOVE_DISTANCE;

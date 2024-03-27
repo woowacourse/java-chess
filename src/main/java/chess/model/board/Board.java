@@ -35,45 +35,26 @@ public class Board {
 
     private void validateTurn(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (sourcePiece.isNotSameColor(currnetColor)) {
+        if (sourcePiece.hasOppositeColorTo(currnetColor)) {
             throw new IllegalArgumentException("현재 턴에 맞는 기물이 아니라서 움직일 수 없습니다.");
         }
     }
 
     private void validateMove(Movement movement) {
-        validateOppositeColor(movement);
         validateMovementByPiece(movement);
         validateIntermediatePositions(movement);
     }
 
-    private void validateOppositeColor(Movement movement) {
-        Piece sourcePiece = getSourcePiece(movement);
-        Piece destinationPiece = getDestinationPiece(movement);
-        if (sourcePiece.isSameColorWith(destinationPiece)) {
-            throw new IllegalArgumentException("같은 색깔의 기물은 먹을 수 없어 움직일 수 없습니다.");
-        }
-    }
-
     private void validateMovementByPiece(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (!sourcePiece.isValid(movement)) {
+        Piece destinationPiece = getDestinationPiece(movement);
+        if (!sourcePiece.isValid(movement, destinationPiece)) {
             throw new IllegalArgumentException("해당 기물에게 허용되지 않는 움직임이라 움직일 수 없습니다.");
         }
-        if (sourcePiece.isType(Type.PAWN)) {
-            validatePawn(movement);
-        }
-    }
-
-    private void validatePawn(Movement movement) {
-        Piece destinationPiece = getDestinationPiece(movement);
-        if (destinationPiece.isEmpty() && movement.isSameFile()
-                || !destinationPiece.isEmpty() && movement.isDiagonal()) {
-            return;
-        }
-        throw new IllegalArgumentException("해당 기물에게 허용되지 않는 움직임이라 움직일 수 없습니다.");
     }
 
     private void validateIntermediatePositions(Movement movement) {
+        Piece sourcePiece = getSourcePiece(movement);
         if (getSourcePiece(movement).isType(Type.KNIGHT)) {
             return;
         }
