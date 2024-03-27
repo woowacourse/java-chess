@@ -1,6 +1,7 @@
 package domain.board;
 
 import domain.piece.Color;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +14,9 @@ class TurnTest {
     void swap_WhiteTurn_BlackTurn() {
         Turn turn = new Turn(Color.WHITE);
 
-        Turn next = turn.swap();
+        turn.swap();
 
-        assertThat(next).isEqualTo(new Turn(Color.BLACK));
+        assertThat(turn).isEqualTo(new Turn(Color.BLACK));
     }
 
     @Test
@@ -23,8 +24,16 @@ class TurnTest {
     void swap_BlackTurn_WhiteTurn() {
         Turn turn = new Turn(Color.BLACK);
 
-        Turn next = turn.swap();
+        turn.swap();
 
-        assertThat(next).isEqualTo(new Turn(Color.WHITE));
+        assertThat(turn).isEqualTo(new Turn(Color.WHITE));
+    }
+
+    @Test
+    void validateTurn() {
+        Turn whiteTurn = new Turn(Color.WHITE);
+
+        Assertions.assertThatThrownBy(() -> whiteTurn.validate(Color.BLACK))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

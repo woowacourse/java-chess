@@ -38,6 +38,10 @@ public class Piece {
         return color != Color.NONE && color != targetPiece.color;
     }
 
+    public Color color() {
+        return color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

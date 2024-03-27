@@ -6,14 +6,20 @@ import java.util.Objects;
 
 public class Turn {
 
-    private final Color color;
+    private Color color;
 
     public Turn(Color color) {
         this.color = color;
     }
 
-    public Turn swap() {
-        return new Turn(color.opposite());
+    public void swap() {
+        this.color = color.opposite();
+    }
+
+    public void validate(Color color) {
+        if (this.color != color) {
+            throw new IllegalArgumentException("올바른 차례가 아닙니다.");
+        }
     }
 
     @Override
