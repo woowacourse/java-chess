@@ -30,6 +30,10 @@ public class ChessPiece {
         return ChessPieceType.isChessPieceTypeNone(getChessPieceType());
     }
 
+    public boolean isChessPiecePawn() {
+        return chessPieceProperty.getChessPieceType() == ChessPieceType.PAWN;
+    }
+
     public Camp getCamp() {
         return camp;
     }

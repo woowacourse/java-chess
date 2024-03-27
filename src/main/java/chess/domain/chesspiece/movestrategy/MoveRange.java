@@ -3,7 +3,6 @@ package chess.domain.chesspiece.movestrategy;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
 import chess.domain.chesspiece.ChessPiece;
-import chess.domain.chesspiece.ChessPieceType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +112,7 @@ public class MoveRange {
         }
         Square leftForwardDiagonalSquare = chessBoard.findLeftForwardDiagonalSquare(startSquare);
         ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftForwardDiagonalSquare);
-        if (isChessPiecePawn(chessBoard, startSquare) && !chessPiece.isEmptyChessPiece()) {
+        if (chessPiece.isChessPiecePawn() && !chessPiece.isEmptyChessPiece()) {
             moveRange.add(leftForwardDiagonalSquare);
         }
         if (chessPiece.isEmptyChessPiece()) {
@@ -139,17 +138,12 @@ public class MoveRange {
         }
         Square rightForwardDiagonalSquare = chessBoard.findRightForwardDiagonalSquare(startSquare);
         ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightForwardDiagonalSquare);
-        if (isChessPiecePawn(chessBoard, startSquare) && !chessPiece.isEmptyChessPiece()) {
+        if (chessPiece.isChessPiecePawn() && !chessPiece.isEmptyChessPiece()) {
             moveRange.add(rightForwardDiagonalSquare);
         }
         if (chessPiece.isEmptyChessPiece()) {
             moveRange.add(rightForwardDiagonalSquare);
         }
-    }
-
-    private boolean isChessPiecePawn(ChessBoard chessBoard, Square startSquare) {
-        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(startSquare);
-        return chessPiece.getChessPieceType() == ChessPieceType.PAWN;
     }
 
     public void addContinuousRightForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
