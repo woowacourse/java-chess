@@ -25,13 +25,17 @@ public class ChessBoardGenerator {
     }
 
     public static ChessBoard createDefaultBoard() {
+        return new ChessBoard(createDefaultPieces());
+    }
+
+    public static Pieces createDefaultPieces() {
         final var defaultPieces = new HashSet<Piece>();
         defaultPieces.addAll(selectPiece(Rank.EIGHT, Color.BLACK));
         defaultPieces.addAll(selectPawn(Rank.SEVEN, Color.BLACK));
 
         defaultPieces.addAll(selectPawn(Rank.TWO, Color.WHITE));
         defaultPieces.addAll(selectPiece(Rank.ONE, Color.WHITE));
-        return new ChessBoard(new Pieces(defaultPieces));
+        return new Pieces(defaultPieces);
     }
 
     private static Set<Piece> selectPawn(final Rank rank, final Color color) {

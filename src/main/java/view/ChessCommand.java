@@ -3,7 +3,7 @@ package view;
 import java.util.Arrays;
 
 public enum ChessCommand {
-
+    PENDING(""),
     START("start"),
     END("end"),
     MOVE("move");
