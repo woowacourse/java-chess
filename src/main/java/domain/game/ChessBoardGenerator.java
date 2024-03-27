@@ -29,12 +29,14 @@ public class ChessBoardGenerator {
             Rook.create(), Knight.create(), Bishop.create(), Queen.create(),
             King.create(), Bishop.create(), Knight.create(), Rook.create()
     );
-    private static final List<PieceRole> BLACK_PAWNS = IntStream.range(0, toColumnIndex(START_LETTER) + 1)
-            .mapToObj(number -> (PieceRole) BlackPawn.create())
-            .toList();
-    private static final List<PieceRole> WHITE_PAWNS = IntStream.range(0, toColumnIndex(END_LETTER) + 1)
-            .mapToObj(number -> (PieceRole) WhitePawn.create())
-            .toList();
+    private static final List<PieceRole> BLACK_PAWNS =
+            IntStream.range(0, toColumnIndex(START_LETTER) + 1)
+                    .mapToObj(number -> (PieceRole) BlackPawn.create())
+                    .toList();
+    private static final List<PieceRole> WHITE_PAWNS =
+            IntStream.range(0, toColumnIndex(END_LETTER) + 1)
+                    .mapToObj(number -> (PieceRole) WhitePawn.create())
+                    .toList();
     private static final List<Piece> NONE = new ArrayList<>();
     private static final Map<Integer, List<Piece>> RANK_PIECES = new HashMap<>();
 
@@ -45,7 +47,10 @@ public class ChessBoardGenerator {
         RANK_PIECES.put(START_NUMBER, generateListPiece(ROYAL_PIECES, Color.WHITE));
     }
 
-    private static List<Piece> generateListPiece(final List<PieceRole> pieceRoles, final Color color) {
+    private static List<Piece> generateListPiece(
+            final List<PieceRole> pieceRoles,
+            final Color color
+    ) {
         return pieceRoles.stream()
                 .map(pieceRole -> new Piece(pieceRole, color))
                 .toList();
@@ -59,7 +64,10 @@ public class ChessBoardGenerator {
         return new ChessBoard(piecePosition);
     }
 
-    private static void initializeEachRank(final Map<Position, Piece> piecePosition, final int rank) {
+    private static void initializeEachRank(
+            final Map<Position, Piece> piecePosition,
+            final int rank
+    ) {
         List<Piece> pieces = RANK_PIECES.getOrDefault(rank, NONE);
         for (int column = toColumnIndex(START_LETTER); column < pieces.size(); column++) {
             Position position = new Position(new File(toFileLetter(column)), new Rank(rank));

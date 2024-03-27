@@ -38,8 +38,11 @@ public class Queen extends PieceRole {
     }
 
     @Override
-    public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Position, Piece> chessBoard) {
+    public void validateMovableRoute(
+            final Position source,
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         validateCorrectRouteForPiece(source, target);
         validateBlockedRoute(source, target, chessBoard);
     }

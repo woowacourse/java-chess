@@ -14,8 +14,11 @@ public class Piece {
         this.color = color;
     }
 
-    public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Position, Piece> chessBoard) {
+    public void validateMovableRoute(
+            final Position source,
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         pieceRole.validateMovableRoute(source, target, chessBoard);
     }
 

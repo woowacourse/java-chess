@@ -17,16 +17,18 @@ public abstract class Pawn extends PieceRole {
     }
 
     @Override
-    public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Position, Piece> chessBoard) {
+    public void validateMovableRoute(
+            final Position source,
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         validateCorrectRouteForPiece(source, target);
         validateHasAnotherPieceOnTarget(source, target, chessBoard);
         validateBlockedRoute(source, target, chessBoard);
     }
 
     @Override
-    protected void validateCorrectRouteForPiece(final Position source,
-                                                final Position target) {
+    protected void validateCorrectRouteForPiece(final Position source, final Position target) {
         List<Movable> movables = generateCurrentMovable(source);
         boolean cannotMove = movables.stream()
                 .noneMatch(movable -> movable.canMove(source, target));
@@ -50,13 +52,19 @@ public abstract class Pawn extends PieceRole {
         }
     }
 
-    private void validateForwardPiece(final Position target, final Map<Position, Piece> chessBoard) {
+    private void validateForwardPiece(
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         if (chessBoard.containsKey(new Position(target))) {
             throw new IllegalArgumentException("[ERROR]전진하려는 곳에 다른 기물이 있어서 이동할 수 없습니다.");
         }
     }
 
-    private void validateDiagonalPiece(final Position target, final Map<Position, Piece> chessBoard) {
+    private void validateDiagonalPiece(
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         if (!chessBoard.containsKey(new Position(target))) {
             throw new IllegalArgumentException("[ERROR]다른 진영의 기물이 있을 때만 대각선으로 이동할 수 있습니다.");
         }

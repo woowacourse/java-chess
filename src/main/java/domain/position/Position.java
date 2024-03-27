@@ -23,9 +23,9 @@ public class Position {
     }
 
     public Position move(final Direction direction) {
-        int dFile = direction.getFileVector();
-        int dRank = direction.getRankVector();
-        return new Position(file.add(dFile), rank.add(dRank));
+        int fileVector = direction.getFileVector();
+        int rankVector = direction.getRankVector();
+        return new Position(file.add(fileVector), rank.add(rankVector));
     }
 
     public boolean isRank2() {

@@ -15,11 +15,17 @@ public abstract class PieceRole {
         this.routes = routes;
     }
 
-    public abstract void validateMovableRoute(final Position source, final Position target,
-                                              final Map<Position, Piece> chessBoard);
+    public abstract void validateMovableRoute(
+            final Position source,
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    );
 
-    protected void validateBlockedRoute(final Position source, final Position target,
-                                        final Map<Position, Piece> chessBoard) {
+    protected void validateBlockedRoute(
+            final Position source,
+            final Position target,
+            final Map<Position, Piece> chessBoard
+    ) {
         Direction direction = Direction.findDirection(source, target);
         Position here = source.move(direction);
         while (!here.equals(target)) {
@@ -34,8 +40,7 @@ public abstract class PieceRole {
         }
     }
 
-    protected void validateCorrectRouteForPiece(final Position source,
-                                                final Position target) {
+    protected void validateCorrectRouteForPiece(final Position source, final Position target) {
         boolean cannotMove = routes.stream()
                 .noneMatch(movable -> movable.canMove(source, target));
         if (cannotMove) {
