@@ -21,7 +21,7 @@ public class Application {
         GameController gameController = new GameController(inputView, outputView);
         UserController userController = new UserController(userService, inputView, outputView);
 
-        userController.signup();
+        userController.start();
         gameController.start();
     }
 }

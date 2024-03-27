@@ -32,6 +32,11 @@ public class TestUserDao implements UserRepository {
     }
 
     @Override
+    public List<User> findAll() {
+        return users;
+    }
+
+    @Override
     public void deleteAll() {
         users.clear();
         initialize();

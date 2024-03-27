@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDao implements UserRepository {
@@ -45,6 +47,22 @@ public class UserDao implements UserRepository {
                 return Optional.of(createUser(resultSet));
             }
             return Optional.empty();
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @Override
+    public List<User> findAll() {
+        final String query = "SELECT user_id, name FROM User";
+        try (final Connection connection = JdbcConnection.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                users.add(createUser(resultSet));
+            }
+            return users;
         } catch (SQLException exception) {
             throw new RuntimeException(exception);
         }

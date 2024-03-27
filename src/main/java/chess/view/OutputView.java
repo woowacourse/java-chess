@@ -14,9 +14,13 @@ public class OutputView {
     private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
     private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
     private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String SIGNUP_MESSAGE = "> 회원 가입: signup 이름 - 예. signup 초코칩";
+    private static final String LOGIN_MESSAGE = "> 로그인: login 이름 - 예. login 초코칩";
+    private static final String USER_STATUS = "> 로그인 가능한 사용: %s";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
+    private static final String NAME_DELIMITER = ", ";
 
     public void printGameStartMessage() {
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
@@ -72,7 +76,20 @@ public class OutputView {
                 color.name(), gameResult.calculateScore(color).getValue());
     }
 
-    public void printSignupMessage() {
-        System.out.println("> 회원 가입: signup 이름 - 예. signup 초코칩");
+    public void printUserEntranceMessage() {
+        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(SIGNUP_MESSAGE);
+        stringJoiner.add(LOGIN_MESSAGE);
+        System.out.println(stringJoiner);
+    }
+
+    public void printUserStatus(final List<String> names) {
+        StringJoiner stringJoiner = new StringJoiner(NAME_DELIMITER);
+        names.forEach(stringJoiner::add);
+        if(stringJoiner.length() == 0){
+            System.out.printf(USER_STATUS + System.lineSeparator(), "없음");
+            return;
+        }
+        System.out.printf(USER_STATUS + System.lineSeparator(), stringJoiner);
     }
 }
