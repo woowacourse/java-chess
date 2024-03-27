@@ -58,8 +58,7 @@ public class Player {
         Direction unitDirection = currentPoint.findUnitDirection(destination);
         Point nextPoint = currentPoint.move(unitDirection);
         while (nextPoint != destination) {
-            Piece nextPiece = board.get(nextPoint);
-            if (Piece.empty() != nextPiece) {
+            if (!board.isEmpty(nextPoint)) {
                 throw new IllegalArgumentException("이동 경로에 기물이 존재하여 이동할 수 없습니다.");
             }
             nextPoint = nextPoint.move(unitDirection);

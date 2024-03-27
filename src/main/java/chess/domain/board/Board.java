@@ -24,6 +24,10 @@ public class Board {
         board.put(destination, currentPiece);
     }
 
+    public boolean isEmpty(Point nextPoint) {
+        return board.get(nextPoint) == Piece.empty();
+    }
+
     public Map<Point, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
