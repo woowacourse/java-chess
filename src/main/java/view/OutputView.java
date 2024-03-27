@@ -46,4 +46,8 @@ public class OutputView {
               .forEach(System.out::println);
         System.out.println();
     }
+
+    public void printExceptionMessage(final String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

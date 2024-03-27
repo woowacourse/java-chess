@@ -4,16 +4,14 @@ import model.chessboard.ChessBoard;
 import model.position.File;
 import model.position.Position;
 import model.position.Rank;
+import util.PieceInfoMapper;
 import view.GameCommand;
 import view.InputView;
 import view.OutputView;
 import view.dto.GameProceedRequest;
-import util.PieceInfoMapper;
 import view.dto.PieceInfo;
 
 import java.util.List;
-
-import static util.InputRetryHelper.inputRetryHelper;
 
 public class Controller {
     private static final int FILE_INDEX = 0;
@@ -25,29 +23,39 @@ public class Controller {
     }
 
     public void execute() {
-        GameCommand gameCommand = executeInitial();
+        outputView.printInitialGamePrompt();
+        GameCommand gameCommand = initGameCommand();
         ChessBoard chessBoard = new ChessBoard();
         while (gameCommand != GameCommand.END) {
             List<PieceInfo> pieceInfos = PieceInfoMapper.toPieceInfo(chessBoard);
             outputView.printChessBoard(pieceInfos);
-            gameCommand = inputRetryHelper(() -> runGame(chessBoard));
+            gameCommand = play(chessBoard);
         }
     }
 
-    private GameCommand executeInitial() {
-        outputView.printInitialGamePrompt();
-        return inputRetryHelper(InputView::inputInitialGameCommand);
+    private GameCommand initGameCommand() {
+        try {
+            return InputView.inputInitialGameCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return initGameCommand();
+        }
     }
 
-    private GameCommand runGame(final ChessBoard chessBoard) {
-        GameProceedRequest gameProceedRequest = InputView.inputGameProceedCommand();
-        if (gameProceedRequest.gameCommand() == GameCommand.START) {
-            throw new IllegalArgumentException("이미 진행중인 게임이 존재합니다.");
+    private GameCommand play(final ChessBoard chessBoard) {
+        try {
+            GameProceedRequest gameProceedRequest = InputView.inputGameProceedCommand();
+            if (gameProceedRequest.gameCommand() == GameCommand.START) {
+                throw new IllegalArgumentException("이미 진행중인 게임이 존재합니다.");
+            }
+            if (gameProceedRequest.gameCommand() == GameCommand.MOVE) {
+                controlChessBoard(chessBoard, gameProceedRequest);
+            }
+            return gameProceedRequest.gameCommand();
+        } catch (IllegalArgumentException e) {
+            outputView.printExceptionMessage(e.getMessage());
+            return play(chessBoard);
         }
-        if (gameProceedRequest.gameCommand() == GameCommand.MOVE) {
-            controlChessBoard(chessBoard, gameProceedRequest);
-        }
-        return gameProceedRequest.gameCommand();
     }
 
     private void controlChessBoard(final ChessBoard chessBoard, final GameProceedRequest gameProceedRequest) {
