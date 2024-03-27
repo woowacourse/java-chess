@@ -23,7 +23,8 @@ public class UserDao implements UserRepository {
     public long save(final User user) {
         final String query = "INSERT INTO user (name) VALUES (?)";
         final Connection connection = connectionPool.getConnection();
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query,
+                Statement.RETURN_GENERATED_KEYS)
         ) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.executeUpdate();

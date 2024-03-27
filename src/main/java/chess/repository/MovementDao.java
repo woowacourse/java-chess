@@ -21,7 +21,8 @@ public class MovementDao implements MovementRepository {
     public void save(final long roomId, final Movement movement) {
         final String query = "INSERT INTO Movement (room_id, source, target) VALUES (?, ?, ?)";
         final Connection connection = connectionPool.getConnection();
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(query,
+                Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, roomId);
             preparedStatement.setString(2, movement.getSource().getName());
             preparedStatement.setString(3, movement.getTarget().getName());

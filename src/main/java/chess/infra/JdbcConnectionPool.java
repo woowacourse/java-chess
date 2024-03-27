@@ -18,10 +18,8 @@ public class JdbcConnectionPool implements ConnectionPool {
     private static final String FAILED_TO_GET_CONNECTION = "커넥션 획득에 실패했습니다.";
     private static final String FAILED_TO_TERMINATE = "종료에 실패했습니다.";
     private static final String FAILED_RELEASE = "커넥션 해제에 실패했습니다.";
-
-    private BlockingQueue<Connection> pool;
-
     private static final ConnectionPool INSTANCE = new JdbcConnectionPool();
+    private BlockingQueue<Connection> pool;
 
     private JdbcConnectionPool() {
         initializeConnectionPool();
