@@ -141,10 +141,13 @@ public class ChessGameDao {
     }
 
     public Optional<PlayerName> findPlayerName(final int gameId, final Team team) {
-        final var query = "SELECT name FROM game WHERE id = (?) AND current_team = (?)";
+        final var query = "SELECT P.name FROM game as G LEFT JOIN player as P ON " +
+                (team == Team.WHITE ? "G.white_player_id" : "G.black_player_id") +
+                "= P.id " +
+                "WHERE G.id = (?)";
+
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, gameId);
-            preparedStatement.setString(2, team.name());
 
             final var resultSet = preparedStatement.executeQuery();
 

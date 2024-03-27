@@ -128,7 +128,7 @@ public class ChessController {
 
     private String readCommand(final int gameId) {
         final Team currentTeam = chessGameService.currentTeam(gameId);
-        final PlayerName currentPlayerName = chessGameService.findPlayerName(gameId, Team.BLACK);
+        final PlayerName currentPlayerName = chessGameService.findPlayerName(gameId, currentTeam);
         return inputView.readGameCommand(currentTeam, currentPlayerName);
     }
 

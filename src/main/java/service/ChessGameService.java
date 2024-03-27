@@ -120,10 +120,6 @@ public class ChessGameService {
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
     }
 
-    public PlayerName findPlayerName(final int gameId, final Team team) {
-        return chessGameDao.findPlayerName(gameId, team)
-                .orElseThrow(() -> new IllegalStateException("플레이어가 없습니다."));
-    }
 
     public boolean isNotEnd(final int gameId) {
         final ChessGameStatus chessGameStatus = chessGameDao.findStatusById(gameId)
@@ -138,5 +134,10 @@ public class ChessGameService {
 
     public Map<Square, Piece> getPieceSquares(final int gameId) {
         return chessBoardDao.findAll(gameId);
+    }
+
+    public PlayerName findPlayerName(final int gameId, final Team team) {
+        return chessGameDao.findPlayerName(gameId, team)
+                .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
 }
