@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 
 public class DBFixtures {
 
-    public static DBConnector createDBConnector() {
-        return new DBConnector("chess_test");
+    public static ChessGameDBConnector createChessGameDBConnector() {
+        return new ChessGameDBConnector("chess_test");
     }
 
     public static Supplier<Connection> createConnectorSupplier() {
-        return () -> createDBConnector().getConnection();
+        return () -> createChessGameDBConnector().getConnection();
     }
 
     public static PiecesDao createPiecesDao() {

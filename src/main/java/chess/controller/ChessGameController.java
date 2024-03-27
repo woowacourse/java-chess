@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.db.DBConnector;
+import chess.db.ChessGameDBConnector;
 import chess.db.ChessGameDBService;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
@@ -20,7 +20,7 @@ public class ChessGameController {
     private static final String END_COMMAND = "end";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
 
-    private final ChessGameDBService chessGameDbService = new ChessGameDBService(() -> new DBConnector().getConnection());
+    private final ChessGameDBService chessGameDbService = new ChessGameDBService(() -> new ChessGameDBConnector().getConnection());
     private final InputView inputView;
     private final OutputView outputView;
 

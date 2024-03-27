@@ -4,12 +4,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DBConnectorTest {
+class ChessGameDBConnectorTest {
 
     @Test
     @DisplayName("데이터 베이스 연결 테스트")
     void connectDB() {
-        DBConnector connector = new DBConnector("chess_test");
+        ChessGameDBConnector connector = new ChessGameDBConnector("chess_test");
 
         Assertions.assertThat(connector.getConnection()).isNotNull();
     }
