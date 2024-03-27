@@ -5,11 +5,10 @@ import domain.piece.base.ChessPiece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import view.translator.ColumnSymbol;
 import view.translator.PieceTranslator;
 
 public class OutputView {
-
-    private static final int ROW_SIZE = 8;
 
     public void printGameGuide() {
         System.out.print("""
@@ -22,9 +21,10 @@ public class OutputView {
 
     public void printBoard(Map<Coordinate, ChessPiece> board) {
         List<ChessPiece> boardValues = new ArrayList<>(board.values());
+        int rowSize = ColumnSymbol.size();
 
-        for (int row = 0; row < board.size(); row += ROW_SIZE) {
-            List<ChessPiece> oneRowPieces = getOneRowPieces(boardValues, row);
+        for (int row = 0; row < board.size(); row += rowSize) {
+            List<ChessPiece> oneRowPieces = getOneRowPieces(boardValues, row, rowSize);
 
             for (ChessPiece piece : oneRowPieces) {
                 System.out.print(PieceTranslator.getName(piece));
@@ -33,7 +33,7 @@ public class OutputView {
         }
     }
 
-    private List<ChessPiece> getOneRowPieces(List<ChessPiece> boardValues, int row) {
-        return boardValues.subList(row, Math.min(row + ROW_SIZE, boardValues.size()));
+    private List<ChessPiece> getOneRowPieces(List<ChessPiece> boardValues, int row, int rowSize) {
+        return boardValues.subList(row, Math.min(row + rowSize, boardValues.size()));
     }
 }

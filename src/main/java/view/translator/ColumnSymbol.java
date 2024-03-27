@@ -30,4 +30,8 @@ public enum ColumnSymbol {
     public int getPosition() {
         return this.position;
     }
+
+    public static int size() {
+        return values().length;
+    }
 }
