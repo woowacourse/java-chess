@@ -81,7 +81,7 @@ public class ChessBoard {
         Movement movement = new Movement(source, target);
         Piece sourcePiece = board.get(source);
         PieceRelation relation = PieceRelation.determine(sourcePiece, board.get(target));
-        PathStatus pathStatus = PathStatus.determine(movement, Collections.unmodifiableMap(board));
+        PathStatus pathStatus = PathStatus.determine(movement.findRoute(), Collections.unmodifiableMap(board));
         if (!sourcePiece.isMovable(movement, relation, pathStatus)) {
             throw new IllegalArgumentException(INVALID_MOVEMENT);
         }
