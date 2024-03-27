@@ -14,14 +14,6 @@ public final class Queen extends SlidingPiece {
         super(color, directions);
     }
 
-    public static Queen createWhiteQueen() {
-        return new Queen(Color.WHITE);
-    }
-
-    public static Queen createBlackQueen() {
-        return new Queen(Color.BLACK);
-    }
-
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {

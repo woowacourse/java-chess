@@ -14,14 +14,6 @@ public final class Bishop extends SlidingPiece {
         super(color, DIRECTIONS);
     }
 
-    public static Bishop createWhiteBishop() {
-        return new Bishop(Color.WHITE);
-    }
-
-    public static Bishop createBlackBishop() {
-        return new Bishop(Color.BLACK);
-    }
-
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {

@@ -13,14 +13,6 @@ public final class King extends NonSlidingPiece {
         super(color, DIRECTIONS);
     }
 
-    public static King createWhiteKing() {
-        return new King(Color.WHITE);
-    }
-
-    public static King createBlackKing() {
-        return new King(Color.BLACK);
-    }
-
     @Override
     public PieceType pieceType() {
         if (color == Color.WHITE) {

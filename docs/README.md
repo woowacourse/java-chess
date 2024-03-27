@@ -87,4 +87,4 @@ abcdefgh
   - [ ] 무엇을 위한 서비스인지 고민
   - [ ] 도메인을 서비스에서 만들어서 반환
 - [ ] DBConnector 네이밍 & 역할
-- [ ] PieceType : 생성자 사용으로 통일
+- [x] PieceType : 생성자 사용으로 통일

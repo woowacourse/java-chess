@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.color.Color;
 import chess.domain.piece.blank.Blank;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.nonsliding.Knight;
@@ -15,18 +16,18 @@ import java.util.function.Supplier;
 public enum PieceType {
     WHITE_FIRST_PAWN(WhiteFirstPawn::new),
     WHITE_PAWN(WhitePawn::new),
-    WHITE_KNIGHT(Knight::createWhiteKnight),
-    WHITE_BISHOP(Bishop::createWhiteBishop),
-    WHITE_ROOK(Rook::createWhiteRook),
-    WHITE_QUEEN(Queen::createWhiteQueen),
-    WHITE_KING(King::createWhiteKing),
+    WHITE_KNIGHT(() -> new Knight(Color.WHITE)),
+    WHITE_BISHOP(() -> new Bishop(Color.WHITE)),
+    WHITE_ROOK(() -> new Rook(Color.WHITE)),
+    WHITE_QUEEN(() -> new Queen(Color.WHITE)),
+    WHITE_KING(() -> new King(Color.WHITE)),
     BLACK_FIRST_PAWN(BlackFirstPawn::new),
     BLACK_PAWN(BlackPawn::new),
-    BLACK_KNIGHT(Knight::createBlackKnight),
-    BLACK_BISHOP(Bishop::createBlackBishop),
-    BLACK_ROOK(Rook::createBlackRook),
-    BLACK_QUEEN(Queen::createBlackQueen),
-    BLACK_KING(King::createBlackKing),
+    BLACK_KNIGHT(() -> new Knight(Color.BLACK)),
+    BLACK_BISHOP(() -> new Bishop(Color.BLACK)),
+    BLACK_ROOK(() -> new Rook(Color.BLACK)),
+    BLACK_QUEEN(() -> new Queen(Color.BLACK)),
+    BLACK_KING(() -> new King(Color.BLACK)),
     BLANK(Blank::new);
 
     private final Supplier<Piece> pieceMaker;
