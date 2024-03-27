@@ -4,7 +4,9 @@ import java.util.regex.Pattern;
 
 public class Room {
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z가-힣]+(?:\\s+[a-zA-Z가-힣]+)*$");
-    private static final String INVALID_NAME_FORMAT = "체스방 이름은 5자 이하여야합니다.";
+    private static final String INVALID_NAME_FORMAT = "체스방 이름은 10자 이하여야합니다.";
+    private static final int MAX_ROOM_NAME_LENGTH = 10;
+
     private final Long id;
     private final long userId;
     private final String name;
@@ -21,7 +23,7 @@ public class Room {
     }
 
     private void validate(final String name) {
-        if (name.isEmpty() || name.length() > 5 || !PATTERN.matcher(name).matches()) {
+        if (name.isEmpty() || name.length() > MAX_ROOM_NAME_LENGTH || !PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(INVALID_NAME_FORMAT);
         }
     }

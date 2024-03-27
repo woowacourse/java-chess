@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class GameController {
+    private static final String GAME_ALREADY_START = "게임이 진행중입니다.";
+
     private final InputView inputView;
     private final OutputView outputView;
     private final GameService gameService;
@@ -57,7 +59,7 @@ public class GameController {
         GameRequest request = inputView.readStartCommand();
         GameCommand commandType = request.getCommand();
         if (commandType == GameCommand.START) {
-            throw new IllegalArgumentException("게임이 진행중입니다.");
+            throw new IllegalArgumentException(GAME_ALREADY_START);
         }
         if (commandType == GameCommand.STATUS) {
             outputView.printStatus(game.getResult());

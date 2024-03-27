@@ -20,6 +20,7 @@ public class OutputView {
     private static final String ROOM_CREATE_MESSAGE = "> 방 만들기: create 이름 - 예. create chess";
     private static final String ROOM_ENTER_MESSAGE = "> 방 만들기: enter 이름 - 예. enter chess";
     private static final String ROOM_STATUS = "> 입장 가능한 방 : %s";
+    private static final String NO_NAME = "없음";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
@@ -90,7 +91,7 @@ public class OutputView {
         StringJoiner stringJoiner = new StringJoiner(NAME_DELIMITER);
         names.forEach(stringJoiner::add);
         if (stringJoiner.length() == 0) {
-            System.out.printf(USER_STATUS + System.lineSeparator(), "없음");
+            System.out.printf(USER_STATUS + System.lineSeparator(), NO_NAME);
             return;
         }
         System.out.printf(USER_STATUS + System.lineSeparator(), stringJoiner);
@@ -107,7 +108,7 @@ public class OutputView {
         StringJoiner stringJoiner = new StringJoiner(NAME_DELIMITER);
         names.forEach(stringJoiner::add);
         if (stringJoiner.length() == 0) {
-            System.out.printf(ROOM_STATUS + System.lineSeparator(), "없음");
+            System.out.printf(ROOM_STATUS + System.lineSeparator(), NO_NAME);
             return;
         }
         System.out.printf(ROOM_STATUS + System.lineSeparator(), stringJoiner);

@@ -14,8 +14,7 @@ public class JdbcConnection {
 
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME,
-                    PASSWORD);
+            return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
         } catch (final SQLException exception) {
             System.out.println(exception.getMessage());
             throw new RuntimeException("DB 연결 오류: " + exception.getMessage());

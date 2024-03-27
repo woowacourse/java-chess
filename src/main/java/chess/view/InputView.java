@@ -73,7 +73,7 @@ public class InputView {
         return UserRequest.from(inputs);
     }
 
-    private void validateUserCommand(List<String> inputs) {
+    private void validateUserCommand(final List<String> inputs) {
         if (inputs.size() != 2) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }

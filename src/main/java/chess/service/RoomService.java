@@ -6,6 +6,8 @@ import java.util.List;
 
 public class RoomService {
 
+    private static final String ROOM_NOT_FOUND = "존재하지 않는 게임방입니다.";
+    private static final String DUPLICATED_ROOM_NAME = "이미 사용중인 이름입니다.";
     private final RoomRepository roomRepository;
 
     public RoomService(final RoomRepository roomRepository) {
@@ -19,18 +21,18 @@ public class RoomService {
     }
 
 
-    public long create(long userId, String name) {
+    public long create(final long userId, final String name) {
         roomRepository.findByUserIdAndName(userId, name)
                 .ifPresent(room -> {
-                    throw new IllegalArgumentException("이미 사용중인 이름입니다.");
+                    throw new IllegalArgumentException(DUPLICATED_ROOM_NAME);
                 });
         Room room = new Room(userId, name);
         return roomRepository.save(room);
     }
 
-    public long selectRoom(long userId, String name) {
+    public long selectRoom(final long userId, final String name) {
         Room room = roomRepository.findByUserIdAndName(userId, name)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게임방입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(ROOM_NOT_FOUND));
         return room.getRoomId();
     }
 }
