@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -12,14 +11,14 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 
-public class BoardFactory {
+public class PiecesFactory {
 
     private static final int INITIAL_WHITE_PAWN_RANK = 2;
     private static final int INITIAL_BLACK_PAWN_RANK = 7;
     private static final int INITIAL_WHITE_SPECIAL_RANK = 1;
     private static final int INITIAL_BLACK_SPECIAL_RANK = 8;
 
-    private BoardFactory() {
+    private PiecesFactory() {
     }
 
     public static boolean isInitialRank(Coordinate coordinate) {
@@ -35,12 +34,12 @@ public class BoardFactory {
                 .anyMatch(initialRank -> targetRank == initialRank);
     }
 
-    public static Map<Coordinate, Piece> createInitialPieces() {
+    public static Pieces createInitialPieces() {
         HashMap<Coordinate, Piece> pieces = new HashMap<>();
         initializeWhitePiece(pieces);
         initializeBlackPiece(pieces);
 
-        return pieces;
+        return new Pieces(pieces);
     }
 
     private static void initializeWhitePiece(HashMap<Coordinate, Piece> pieces) {

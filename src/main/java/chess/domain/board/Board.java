@@ -11,12 +11,16 @@ public class Board {
     private Team turn;
 
     public Board(Map<Coordinate, Piece> pieces) {
-        this.pieces = new Pieces(pieces);
-        this.turn = Team.WHITE;
+        this(new Pieces(pieces));
     }
 
     public Board() {
-        this(BoardFactory.createInitialPieces());
+        this(PiecesFactory.createInitialPieces());
+    }
+
+    public Board(Pieces pieces) {
+        this.pieces = pieces;
+        this.turn = Team.WHITE;
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {

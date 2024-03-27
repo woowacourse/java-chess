@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import java.util.List;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.PiecesFactory;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Pieces;
 import chess.domain.piece.exception.InvalidMoveException;
@@ -65,7 +65,7 @@ public class Pawn extends AbstractPiece {
     }
 
     private void validateInitialCoordinate(Coordinate source) {
-        if (!BoardFactory.isInitialRank(source)) {
+        if (!PiecesFactory.isInitialRank(source)) {
             throw new IllegalStateException("초기 상태의 폰이 아닌 경우, 2칸 이동할 수 없습니다.");
         }
     }
