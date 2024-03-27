@@ -82,11 +82,11 @@ public class ChessGameController {
             movePiece(chessGame, command);
         }
         if (command.equals(STATUS_COMMAND)) {
-            showStatus(chessGame, command);
+            showStatus(chessGame);
         }
     }
 
-    private void showStatus(ChessGame chessGame, String command) {
+    private void showStatus(ChessGame chessGame) {
             Scores scores = chessGame.calculateScores();
             Status status = Status.of(scores);
             outputView.printStatus(status);
