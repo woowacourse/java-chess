@@ -25,6 +25,7 @@ public class OutputView {
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
     private static final String NAME_DELIMITER = ", ";
+    private static final String ERROR_PREFIX = "[ERROR] ";
 
     public void printGameStartMessage() {
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
@@ -113,4 +114,9 @@ public class OutputView {
         }
         System.out.printf(ROOM_STATUS + System.lineSeparator(), stringJoiner);
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println(ERROR_PREFIX + message);
+    }
+
 }

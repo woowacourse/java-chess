@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 public class GameController {
     private static final String GAME_ALREADY_START = "게임이 진행중입니다.";
@@ -50,7 +51,7 @@ public class GameController {
 
     private void play(final Game game) {
         outputView.printBoard(createBoardResponse(game.getBoardStatus()));
-        while (playOneRound(game) != GameCommand.END) {
+        while (requestUntilValidated(() -> playOneRound(game)) != GameCommand.END) {
             outputView.printBoard(createBoardResponse(game.getBoardStatus()));
         }
     }
@@ -86,5 +87,14 @@ public class GameController {
             responses.add(PieceResponse.of(squareToPiece.getKey(), squareToPiece.getValue()));
         }
         return responses;
+    }
+
+    private <T> T requestUntilValidated(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return requestUntilValidated(supplier);
+        }
     }
 }

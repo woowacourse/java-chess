@@ -6,6 +6,7 @@ import chess.service.RoomService;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class RoomController {
 
@@ -29,7 +30,7 @@ public class RoomController {
 
     private long selectRoom(final long userId) {
         printRoomNames(userId);
-        RoomRequest request = inputView.readRoomRequest();
+        RoomRequest request = requestUntilValidated(inputView::readRoomRequest);
         if (request.getCommand() == RoomCommand.ENTER) {
             return roomService.selectRoom(userId, request.getName());
         }
@@ -41,5 +42,14 @@ public class RoomController {
         List<String> roomNames = roomService.getRoomNames(userId);
         outputView.printRoomEntranceMessage();
         outputView.printRoomNames(roomNames);
+    }
+
+    private <T> T requestUntilValidated(Supplier<T> supplier) {
+        try {
+            return supplier.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return requestUntilValidated(supplier);
+        }
     }
 }
