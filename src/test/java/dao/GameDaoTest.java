@@ -3,40 +3,43 @@ package dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.game.TeamColor;
-import java.sql.SQLException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameDaoTest {
-    private final GameDao gameDao = GameDao.getInstance();
+    final GameDao gameDao = GameDao.getInstance();
+    final PieceDao pieceDao = PieceDao.getInstance();
 
     @BeforeEach
     void setUp() {
-        final var query = "TRUNCATE TABLE game";
-        try (final var connection = gameDao.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
+        pieceDao.removeAllPieces();
+        gameDao.removeAllGames();
         gameDao.addGame();
+        gameDao.addGame();
+    }
+
+    @AfterEach
+    void tearDown() {
+        pieceDao.removeAllPieces();
+        gameDao.removeAllGames();
     }
 
     @Test
     @DisplayName("현재 생성된 게임의 총 개수를 조회한다.")
     void tupleCountTest() {
         int count = gameDao.tupleCount();
-        assertThat(count).isNotNegative();
+        assertThat(count).isEqualTo(2);
     }
 
     @Test
     @DisplayName("게임 정보를 추가하면 자동 생성된 게임 ID를 반환한다.")
     void addGameTest() {
-        int totalGameCount = gameDao.tupleCount();
-
         int gameId = gameDao.addGame();
-        assertThat(gameId).isEqualTo(totalGameCount + 1);
+
+        assertThat(gameDao.findTurn(gameId)).isEqualTo(TeamColor.WHITE);
+        assertThat(gameId).isEqualTo(3);
     }
 
     @Test
