@@ -11,6 +11,13 @@ import java.util.List;
 
 public class GameInformationDao {
     private static final String TABLE_NAME = "game_information";
+    private static final String UPDATE_QUERY = "UPDATE " + TABLE_NAME + " SET current_turn_color = ? WHERE game_id = ?";
+    private static final String CREATE_QUERY = "INSERT INTO " + TABLE_NAME + " (`current_turn_color`)VALUES (?)";
+    private static final String REMOVE_QUERY = "DELETE FROM " + TABLE_NAME + " WHERE game_id = ?";
+    private static final String FIND_LATEST_QUERY = "SELECT * FROM " + TABLE_NAME + " ORDER BY game_id DESC LIMIT 1";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM " + TABLE_NAME + " WHERE `game_id` = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM " + TABLE_NAME;
+
     private final ConnectionGenerator connectionGenerator;
 
     public GameInformationDao(ConnectionGenerator connectionGenerator) {
@@ -19,7 +26,7 @@ public class GameInformationDao {
 
     public List<GameInformation> findAll() {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + TABLE_NAME);
+            final PreparedStatement statement = connection.prepareStatement(FIND_ALL_QUERY);
             final ResultSet resultSet = statement.executeQuery();
 
             final List<GameInformation> gameInfos = new ArrayList<>();
@@ -38,9 +45,7 @@ public class GameInformationDao {
 
     public GameInformation findByGameId(int gameId) {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            String tableName = TABLE_NAME;
-            final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + tableName + " WHERE `game_id` = ?");
+            final PreparedStatement statement = connection.prepareStatement(FIND_BY_ID_QUERY);
             statement.setInt(1, gameId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -58,8 +63,7 @@ public class GameInformationDao {
 
     public GameInformation findLatestGame() {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + TABLE_NAME + " ORDER BY game_id DESC LIMIT 1");
+            final PreparedStatement statement = connection.prepareStatement(FIND_LATEST_QUERY);
             final ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
@@ -75,8 +79,7 @@ public class GameInformationDao {
 
     public void remove(int gameId) {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM " + TABLE_NAME + " WHERE game_id = ?");
+            final PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY);
             statement.setInt(1, gameId);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -86,8 +89,7 @@ public class GameInformationDao {
 
     public void create() {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO " + TABLE_NAME + " (`current_turn_color`)VALUES (?)");
+            final PreparedStatement statement = connection.prepareStatement(CREATE_QUERY);
             statement.setString(1, Color.WHITE.name());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -97,8 +99,7 @@ public class GameInformationDao {
 
     public void updateTurn(GameInformation gameInformation) {
         try (final Connection connection = connectionGenerator.getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE " + TABLE_NAME + " SET current_turn_color = ? WHERE game_id = ?");
+            final PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY);
             statement.setString(1, gameInformation.getCurentTurnColor().name());
             statement.setInt(2, gameInformation.getGameId());
             statement.executeUpdate();
