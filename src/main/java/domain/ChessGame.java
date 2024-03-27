@@ -5,7 +5,9 @@ import domain.board.BoardInitiator;
 import domain.board.position.Position;
 import domain.command.Command;
 import domain.command.Commands;
+import domain.command.End;
 import domain.command.Ready;
+import domain.piece.Color;
 import domain.piece.Piece;
 import java.util.Collections;
 import java.util.Map;
@@ -26,10 +28,11 @@ public class ChessGame {
         if (this.command.isMove()) {
             final StringTokenizer tokens = skipFirstToken(value);
             board.move(tokens.nextToken(), tokens.nextToken());
+
         }
-//        if(board.isKingDead()){
-//            this.command =
-//        }
+        if (board.isKingDead()) {
+            this.command = command.next(End.getInstance());
+        }
     }
 
     private StringTokenizer skipFirstToken(final String command) {
@@ -44,5 +47,24 @@ public class ChessGame {
 
     public Map<Position, Piece> getSquares() {
         return Collections.unmodifiableMap(board.getSquares());
+    }
+
+    public Color getColor() {
+        return board.getColor();
+    }
+
+    public Double calculateWhiteScore() {
+        return board.calculateScore(Color.WHITE);
+    }
+
+    public Double calculateBlackScore() {
+        return board.calculateScore(Color.BLACK);
+    }
+
+    public Color winnerColor() {
+        if (board.isKingDead()) {
+            return board.getColor();
+        }
+        throw new IllegalCallerException();
     }
 }

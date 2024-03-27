@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 public enum Commands {
     START(Pattern.compile("start"), Start.getInstance()),
     MOVE(Pattern.compile("move ([a-h][1-8]) ([a-h][1-8])"), Move.getInstance()),
-    END(Pattern.compile("end"), End.getInstance());
+    END(Pattern.compile("end"), End.getInstance()),
+
+    ;
 
     private final Pattern pattern;
     private final Command command;

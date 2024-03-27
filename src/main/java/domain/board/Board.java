@@ -1,5 +1,7 @@
 package domain.board;
 
+import db.Movement;
+import db.MovementDao;
 import domain.board.position.Position;
 import domain.board.position.Vector;
 import domain.piece.Color;
@@ -26,9 +28,9 @@ public class Board {
     public void move(final Position source, final Position target) {
         validateMovement(source, target);
         updateBoard(source, target);
-//        if (squares.get(source).isKing()) {
-//
-//        }
+        if (isKingDead()) {
+            return;
+        }
         switchTurn();
     }
 
@@ -48,6 +50,7 @@ public class Board {
                 .filter(r -> r.getValue().isPawn())
                 .map(r -> r.getKey().toFileIndex())
                 .toList();
+
         return Set.copyOf(pawnsFile).size() != pawnsFile.size();
     }
 
@@ -101,12 +104,25 @@ public class Board {
     }
 
     private void updateBoard(final Position source, final Position target) {
+        final MovementDao movementDao = new MovementDao();
+        movementDao.createMovement(
+                new Movement(source.getFile().name(), source.getRank().name(),
+                        target.getFile().name(), target.getRank().name(),
+                        squares.get(source).getName(), squares.get(source).getColor().name()));
         squares.put(target, squares.get(source).move());
         squares.put(source, Empty.INSTANCE);
     }
 
+    public boolean isKingDead() {
+        return squares.values().stream().filter(Piece::isKing).count() != 2;
+    }
+
     private void switchTurn() {
         currentTurnColor = currentTurnColor.reverse();
+    }
+
+    public Color getColor() {
+        return this.currentTurnColor;
     }
 
     public Map<Position, Piece> getSquares() {

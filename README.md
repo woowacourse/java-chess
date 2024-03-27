@@ -103,3 +103,15 @@ pawn의 기본 점수는 1점이다. 하지만 같은 세로줄에 같은 색의
 king은 잡히는 경우 경기가 끝나기 때문에 점수가 없다.
 한 번에 한 쪽의 점수만을 계산해야 한다.
 
+
+
+    move b1 c3
+    move h7 h6
+    move c3 d5
+    move h6 h5
+    move d5 f6
+    move h5 h4
+    move f6 e8
+
+
+피스 모양 색깔 위치

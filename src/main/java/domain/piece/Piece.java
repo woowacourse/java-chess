@@ -46,10 +46,10 @@ public abstract class Piece {
     public boolean isPawn() {
         return false;
     }
+
     public boolean isKing() {
         return false;
     }
-
 
     public boolean hasColor(final Color color) {
         return this.color == color;
@@ -61,5 +61,8 @@ public abstract class Piece {
 
     public double getScore() {
         return score;
+    }
+    public String getName(){
+        return getClass().getSimpleName();
     }
 }

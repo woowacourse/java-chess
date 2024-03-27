@@ -16,12 +16,23 @@ public class ChessController {
 
     private void play(final ChessGame chessGame) {
         while (chessGame.isRunning()) {
-            chessGame.execute(InputView.inputCommand());
-            printChessBoard(chessGame);
+            final String command = InputView.inputCommand();
+            if (isCommandStatus(command)) {
+                OutputView.printChessResult(DtoMapper.generateGameResultResponse(
+                        chessGame.calculateWhiteScore(),
+                        chessGame.calculateBlackScore()));
+                continue;
+            }
+            chessGame.execute(command);
+            printChessBoardIfRunning(chessGame);
         }
     }
 
-    private void printChessBoard(final ChessGame chessGame) {
+    private boolean isCommandStatus(final String command) {
+        return command.equals("status");
+    }
+
+    private void printChessBoardIfRunning(final ChessGame chessGame) {
         if (chessGame.isRunning()) {
             OutputView.printChessBoard(DtoMapper.generateBoardResponse(chessGame.getSquares()));
         }

@@ -4,7 +4,6 @@ import domain.board.position.Vector;
 import java.util.List;
 
 public abstract class AbstractPawn extends Piece {
-    public static final double SCORE_LOW = 0.5;
     private static final double SCORE_HIGH = 1;
 
     protected AbstractPawn(final Color color) {
