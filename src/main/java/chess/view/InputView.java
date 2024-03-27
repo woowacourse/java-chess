@@ -11,7 +11,7 @@ public class InputView {
 
     public void readStart() {
         if (!COMMAND_START.equals(SCANNER.nextLine())) {
-            throw new IllegalArgumentException(String.format("게임 시작 시 %s 만 입력할 수 있습니다.", COMMAND_START));
+            throw new IllegalArgumentException(String.format("게임 시작 시 %s 만 입력할 수 있습니다.",COMMAND_START ));
         }
     }
 

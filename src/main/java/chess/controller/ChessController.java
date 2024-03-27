@@ -58,7 +58,7 @@ public class ChessController {
             } catch (IllegalStateException e) {
                 outputView.printErrorMessage(e.getMessage());
                 return;
-            } catch (RuntimeException e) {
+            } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
@@ -71,8 +71,8 @@ public class ChessController {
             String[] splitCommand = readCommand.split(" ");
             departure = parsePoint(splitCommand[DEPARTURE_INDEX]);
             destination = parsePoint(splitCommand[DESTINATION_INDEX]);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("잘못된 위치를 입력하였습니다.");
+        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("잘못된 위치를 입력하였습니다. 입력값 : " + readCommand);
         }
         game.currentTurnPlayerMove(departure, destination);
         game.turnOver();
