@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.coordinate.Coordinate;
 import domain.direction.Direction;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ class QueenTest {
 
         Queen queen = new Queen(Color.BLACK);
 
-        Assertions.assertThat(queen.getDirection(coordinate, nextCoordinate, false)).isEqualTo(new Direction(0, -1));
+        Assertions.assertThat(queen.getDirection(coordinate, nextCoordinate, false))
+                .isEqualTo(Direction.from(List.of(0, -1)));
     }
 }

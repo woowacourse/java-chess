@@ -2,6 +2,7 @@ package domain.piece;
 
 import domain.coordinate.Coordinate;
 import domain.direction.Direction;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,8 @@ class PawnTest {
 
         Pawn pawn = new Pawn(Color.BLACK);
 
-        Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false)).isEqualTo(new Direction(-1, 0));
+        Assertions.assertThat(pawn.getDirection(coordinate, nextCoordinate, false))
+                .isEqualTo(Direction.from(List.of(-1, 0)));
     }
 
     @DisplayName("폰이 첫 움직임이 아닐경우 2칸을 이동할 수 없다.")

@@ -20,20 +20,15 @@ public class ChessBoard {
 
     public void playTurn(Coordinate start, Coordinate destination) {
         ChessPiece piece = findPiece(start);
-        Coordinate startPosition = start.copied();
-
-        validateBeforePlay(destination, currentTurn, piece);
-
-        Direction direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
-
-        validateNoPieceOnPath(start, destination, direction);
-        movePiece(destination, startPosition, piece);
+        movePiece(start, destination, piece);
 
         currentTurn = changeTurn();
     }
 
-    private void movePiece(Coordinate destination, Coordinate startPosition, ChessPiece piece) {
-        board.replace(startPosition, new Blank());
+    private void movePiece(Coordinate start, Coordinate destination, ChessPiece piece) {
+        validateBeforePlay(start, destination, piece);
+
+        board.replace(start, new Blank());
         board.replace(destination, piece);
     }
 
@@ -44,10 +39,10 @@ public class ChessBoard {
         return Color.BLACK;
     }
 
-
-    private void validateBeforePlay(Coordinate destination, Color currentTurn, ChessPiece piece) {
+    private void validateBeforePlay(Coordinate start, Coordinate destination, ChessPiece piece) {
         validateDestination(destination, currentTurn);
         validateTurn(piece, currentTurn);
+        checkPath(start, destination, piece);
     }
 
     private void validateDestination(Coordinate destination, Color currentTurn) {
@@ -67,9 +62,14 @@ public class ChessBoard {
         }
     }
 
+    private void checkPath(Coordinate start, Coordinate destination, ChessPiece piece) {
+        Direction direction = piece.getDirection(start, destination, isAttack(currentTurn, destination));
+        validateNoPieceOnPath(start, destination, direction);
+    }
+
     private void validateNoPieceOnPath(Coordinate coordinate, Coordinate destination, Direction direction) {
         while (!coordinate.equals(destination)) {
-            coordinate.moveByDistances(direction);
+            coordinate = coordinate.next(direction);
             hasPieceOnPath(coordinate, destination);
         }
     }

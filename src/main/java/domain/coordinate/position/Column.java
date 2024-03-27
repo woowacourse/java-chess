@@ -10,16 +10,12 @@ public class Column {
         this.position = position;
     }
 
-    public void moveBy(int distance) {
-        position.moveBy(distance);
+    public Column next(int direction) {
+        return new Column(position.next(direction));
     }
 
     public int getColumnDifference(Column column) {
         return position.getMinusPosition(column.position);
-    }
-
-    public Column copied() {
-        return new Column(position.copied());
     }
 
     @Override

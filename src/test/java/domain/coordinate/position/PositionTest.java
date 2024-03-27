@@ -15,7 +15,7 @@ class PositionTest {
     void overRangePosition(int distance) {
         Position position = new Position(distance);
 
-        assertThatThrownBy(() -> position.moveBy(distance))
+        assertThatThrownBy(() -> position.next(distance))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 있는 위치가 아닙니다.");
     }
@@ -26,9 +26,9 @@ class PositionTest {
     void moveBy(int distance) {
         Position position = new Position(2);
 
-        position.moveBy(distance);
+        Position nextPosition = position.next(distance);
         Position expectedPosition = new Position(2 + distance);
 
-        assertThat(position).isEqualTo(expectedPosition);
+        assertThat(nextPosition).isEqualTo(expectedPosition);
     }
 }

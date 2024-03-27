@@ -40,7 +40,7 @@ class ChessBoardTest {
 
         Coordinate knightStart = Coordinate.from("b1");
         Coordinate knightDestination = Coordinate.from("a3");
-        chessBoard.playTurn(knightStart.copied(), knightDestination);
+        chessBoard.playTurn(knightStart, knightDestination);
 
         assertThat(chessBoard.getBoard().get(knightStart)).isInstanceOf(Blank.class);
         assertThat(chessBoard.getBoard().get(knightDestination)).isInstanceOf(Knight.class);

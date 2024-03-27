@@ -37,13 +37,8 @@ public class Coordinate {
         return row.isSamePosition(otherPosition);
     }
 
-    public void moveByDistances(Direction direction) {
-        row.moveBy(direction.rowDirection());
-        column.moveBy(direction.columnDirection());
-    }
-
-    public Coordinate copied() {
-        return new Coordinate(row.copied(), column.copied());
+    public Coordinate next(Direction direction) {
+        return new Coordinate(row.next(direction.getRowDirection()), column.next(direction.getColumnDirection()));
     }
 
     @Override

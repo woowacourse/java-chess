@@ -10,16 +10,12 @@ public class Row {
         this.position = position;
     }
 
-    public void moveBy(int distance) {
-        position.moveBy(distance);
+    public Row next(int direction) {
+        return new Row(position.next(direction));
     }
 
     public int getRowDifference(Row row) {
         return position.getMinusPosition(row.position);
-    }
-
-    public Row copied() {
-        return new Row(position.copied());
     }
 
     public boolean isSamePosition(int otherPosition) {
