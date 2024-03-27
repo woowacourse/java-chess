@@ -42,7 +42,7 @@ public class ScoreCalculator {
     private static double scorePawn(final double basicScore, final Board board, final Piece piece) {
         Position position = piece.getPosition();
         List<Position> otherPositions = position.getVerticalInternalPositions();
-        List<Piece> otherPieces = board.getPiecesInVertical(otherPositions);
+        List<Piece> otherPieces = board.getPiecesInPositions(otherPositions);
 
         if (piece.isSamePieceWithSameTeam(otherPieces)) {
             return basicScore / 2;

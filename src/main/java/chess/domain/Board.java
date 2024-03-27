@@ -55,7 +55,7 @@ public class Board {
         return removedPieces.isRecentlyRemovedPieceType(PieceType.KING);
     }
 
-    public List<Piece> getPiecesInVertical(final List<Position> positions) {
+    public List<Piece> getPiecesInPositions(final List<Position> positions) {
         return positions.stream()
                 .map(board::get)
                 .toList();
