@@ -4,12 +4,34 @@ import java.util.Objects;
 
 public class Square {
 
+    private static final Integer FORMATTING_TO_UPPERCASE_LETTER_ASCII_NUMBER = 64;
+    private static final Integer FORMATTING_TO_LOWERCASE_LETTER_ASCII_NUMBER = 96;
+    private static final Integer FORMATTING_TO_NUMBER_ASCII_NUMBER = 48;
+
     private final Lettering lettering;
     private final Numbering numbering;
 
     public Square(Lettering lettering, Numbering numbering) {
         this.lettering = lettering;
         this.numbering = numbering;
+    }
+
+    public Square(String inputSquare) {
+        this.lettering = createSquareLettering(inputSquare);
+        this.numbering = createSquareNumbering(inputSquare);
+    }
+
+    private Numbering createSquareNumbering(String inputSquare) {
+        char number = inputSquare.charAt(1);
+        return Numbering.findNumbering(number - FORMATTING_TO_NUMBER_ASCII_NUMBER);
+    }
+
+    private Lettering createSquareLettering(String inputSquare) {
+        char letter = inputSquare.charAt(0);
+        if (Character.isUpperCase(letter)) {
+            return Lettering.findLettering(letter - FORMATTING_TO_UPPERCASE_LETTER_ASCII_NUMBER);
+        }
+        return Lettering.findLettering(letter - FORMATTING_TO_LOWERCASE_LETTER_ASCII_NUMBER);
     }
 
     public boolean isForwardMost() {
