@@ -16,10 +16,9 @@ import chess.exception.InvalidGameRoomException;
 import chess.util.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.sql.SQLException;
 
 public class ChessController {
-    public void run() throws SQLException {
+    public void run() {
         try {
             switch (validateStartCommand()) {
                 case START -> startNewGame();
@@ -31,7 +30,7 @@ public class ChessController {
         }
     }
 
-    private void loadGame() throws SQLException {
+    private void loadGame() {
         final String roomName = InputView.inputLoadRoomName();
         DbManager dbManager = new DbManager();
         ChessGame chessGame = dbManager.loadChessGame(roomName);
@@ -41,7 +40,7 @@ public class ChessController {
         play(chessGame, dbManager, roomName);
     }
 
-    private void startNewGame() throws SQLException {
+    private void startNewGame() {
         final String roomName = InputView.inputNewRoomName();
         DbManager dbManager = new DbManager();
         Board board = new Board(BoardFactory.generateStartBoard());
@@ -61,7 +60,7 @@ public class ChessController {
         }
     }
 
-    private void play(ChessGame chessGame, DbManager dbManager, String roomName) throws SQLException {
+    private void play(ChessGame chessGame, DbManager dbManager, String roomName) {
         try {
             playTurns(chessGame, dbManager, roomName);
         } catch (InvalidCommandException | ImpossibleMoveException e) {
@@ -70,7 +69,7 @@ public class ChessController {
         }
     }
 
-    private void playTurns(ChessGame chessGame, DbManager dbManager, String roomName) throws SQLException {
+    private void playTurns(ChessGame chessGame, DbManager dbManager, String roomName) {
         CommandDto commandDto = new CommandDto();
         State state = chessGame.checkState();
         Board board = chessGame.getBoard();
@@ -83,8 +82,7 @@ public class ChessController {
         dbManager.deleteChessGame(roomName);
     }
 
-    private void playTurn(ChessGame chessGame, DbManager dbManager, String roomName, Movement movement)
-            throws SQLException {
+    private void playTurn(ChessGame chessGame, DbManager dbManager, String roomName, Movement movement) {
         Board board = chessGame.getBoard();
         Piece piece = chessGame.movePiece(movement);
         dbManager.update(roomName, movement, piece, chessGame.getCurrentTeam());

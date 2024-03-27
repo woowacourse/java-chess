@@ -1,6 +1,7 @@
 package chess.db;
 
 import chess.domain.piece.character.Team;
+import chess.exception.DbException;
 import chess.exception.InvalidGameRoomException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +11,11 @@ import java.sql.SQLException;
 public class ChessGameDao {
     private final ConnectionGenerator connectionGenerator;
 
-    ChessGameDao() {
+    public ChessGameDao() {
         this(new ProductionConnectionGenerator());
     }
 
-    ChessGameDao(ConnectionGenerator connectionGenerator) {
+    public ChessGameDao(ConnectionGenerator connectionGenerator) {
         this.connectionGenerator = connectionGenerator;
     }
 
@@ -46,23 +47,29 @@ public class ChessGameDao {
         }
     }
 
-    public void update(Team currentTeam, String roomName) throws SQLException {
-        final Connection connection = connectionGenerator.getConnection();
-        final PreparedStatement statement = connection.prepareStatement(
-                "UPDATE chess_game SET current_team = ? WHERE room_name = ?");
+    public void update(Team currentTeam, String roomName) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE chess_game SET current_team = ? WHERE room_name = ?");
 
-        statement.setString(1, currentTeam.name());
-        statement.setString(2, roomName);
+            statement.setString(1, currentTeam.name());
+            statement.setString(2, roomName);
 
-        statement.execute();
+            statement.execute();
+        } catch (SQLException e) {
+            throw new DbException();
+        }
     }
 
-    public void delete(String roomName) throws SQLException {
-        final Connection connection = connectionGenerator.getConnection();
-        final PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM chess_game WHERE room_name = ?");
-        statement.setString(1, roomName);
+    public void delete(String roomName) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM chess_game WHERE room_name = ?");
+            statement.setString(1, roomName);
 
-        statement.execute();
+            statement.execute();
+        } catch (SQLException e) {
+            throw new DbException();
+        }
     }
 }

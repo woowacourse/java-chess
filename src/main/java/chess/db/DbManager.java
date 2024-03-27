@@ -5,7 +5,6 @@ import chess.domain.ChessGame;
 import chess.domain.Movement;
 import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
-import java.sql.SQLException;
 
 public class DbManager {
     private final BoardDao boardDao;
@@ -16,7 +15,7 @@ public class DbManager {
         this.chessGameDao = new ChessGameDao();
     }
 
-    public void initialize(String roomName, Board board, Team team) throws SQLException {
+    public void initialize(String roomName, Board board, Team team) {
         chessGameDao.add(roomName, team);
         boardDao.addAll(board, roomName);
     }
@@ -28,12 +27,12 @@ public class DbManager {
         return new ChessGame(board, currentTeam);
     }
 
-    public void update(String roomName, Movement movement, Piece piece, Team currentTeam) throws SQLException {
+    public void update(String roomName, Movement movement, Piece piece, Team currentTeam) {
         chessGameDao.update(currentTeam, roomName);
         boardDao.update(movement, piece, roomName);
     }
 
-    public void deleteChessGame(String roomName) throws SQLException {
+    public void deleteChessGame(String roomName) {
         chessGameDao.delete(roomName);
         boardDao.delete(roomName);
     }
