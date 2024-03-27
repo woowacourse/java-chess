@@ -29,7 +29,7 @@ public class PieceHolder {
         leave();
     }
 
-    public boolean isCheck(List<PieceHolder> pieceHoldersInRoute) {
+    public boolean checkPieceHoldersOnMovingRoute(List<PieceHolder> pieceHoldersInRoute) {
         Deque<PieceHolder> pieceHolders = new ArrayDeque<>(pieceHoldersInRoute);
         PieceHolder destination = Objects.requireNonNull(pieceHolders.pollLast());
         List<Role> rolesInRoute = extractRolesFromPieceHolders(pieceHolders);
