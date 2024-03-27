@@ -8,9 +8,11 @@ import chess.domain.position.Positions;
 import chess.domain.score.Score;
 import chess.domain.score.ScoreManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public abstract class ChessState {
     private static final int KING_TOTAL = 2;
@@ -57,7 +59,17 @@ public abstract class ChessState {
 
     public final Score calculateScore(Color color) {
         ScoreManager scoreManager = new ScoreManager();
-        return scoreManager.calculateScore(board, color);
+        return IntStream.rangeClosed(1, 8)
+                .mapToObj(i -> findFilePieces(color, i))
+                .map(scoreManager::calculateFileScore)
+                .reduce(new Score(0), Score::add);
+    }
+
+    private List<Piece> findFilePieces(Color color, int file) {
+        return IntStream.rangeClosed(1, 8)
+                .mapToObj(i -> board.get(new Position(file, i)))
+                .filter(piece -> piece.isSameColor(color))
+                .toList();
     }
 
     public final Map<Position, PieceType> collectBoard() {

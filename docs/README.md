@@ -81,7 +81,7 @@ abcdefgh
   public abstract boolean isKing();
   ```
 - [ ] README.md 어플리케이션 실행 방법 정리
-- [ ] ScoreManager ↔️ ChessState 객체끼리 서로 물어보며 점수 계산
+- [x] ScoreManager ↔️ ChessState 객체끼리 서로 물어보며 점수 계산
 - [ ] ScoreManager 상수 사용 or 각 객체에서 자신의 점수 계산
 - [ ] DBService 네이밍
   - [ ] 무엇을 위한 서비스인지 고민
