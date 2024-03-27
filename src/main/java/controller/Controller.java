@@ -8,7 +8,7 @@ import view.GameCommand;
 import view.InputView;
 import view.OutputView;
 import view.dto.GameProceedRequest;
-import view.dto.InfoMapper;
+import util.PieceInfoMapper;
 import view.dto.PieceInfo;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class Controller {
         GameCommand gameCommand = executeInitial();
         ChessBoard chessBoard = new ChessBoard();
         while (gameCommand != GameCommand.END) {
-            List<PieceInfo> pieceInfos = InfoMapper.toPieceInfo(chessBoard);
+            List<PieceInfo> pieceInfos = PieceInfoMapper.toPieceInfo(chessBoard);
             outputView.printChessBoard(pieceInfos);
             gameCommand = inputRetryHelper(() -> runGame(chessBoard));
         }
@@ -51,10 +51,8 @@ public class Controller {
     }
 
     private void controlChessBoard(final ChessBoard chessBoard, final GameProceedRequest gameProceedRequest) {
-        Position source = matchPosition(gameProceedRequest.sourcePosition()
-                                                          .get());
-        Position destination = matchPosition(gameProceedRequest.targetPosition()
-                                                               .get());
+        Position source = matchPosition(gameProceedRequest.sourcePosition().get());
+        Position destination = matchPosition(gameProceedRequest.targetPosition().get());
         chessBoard.move(source, destination);
     }
 

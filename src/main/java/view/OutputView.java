@@ -8,6 +8,7 @@ import java.util.List;
 public class OutputView {
 
     private static final int BOARD_SIZE = 8;
+    private static final char EMPTY_SPACE = '.';
 
     private final char[][] chessBoard = new char[BOARD_SIZE][BOARD_SIZE];
 
@@ -15,13 +16,13 @@ public class OutputView {
         initializeChessBoard(chessBoard);
     }
 
-    private void initializeChessBoard(char[][] chessBoard) {
+    private void initializeChessBoard(final char[][] chessBoard) {
         for (char[] row : chessBoard) {
-            Arrays.fill(row, ChessSymbol.squareAbbreviation());
+            Arrays.fill(row, EMPTY_SPACE);
         }
     }
 
-    public void printChessBoard(List<PieceInfo> pieceInfos) {
+    public void printChessBoard(final List<PieceInfo> pieceInfos) {
         pieceInfos.forEach(this::placePieceOnBoard);
         printBoard();
     }
@@ -33,10 +34,10 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    private void placePieceOnBoard(PieceInfo pieceInfo) {
-        int rowIndex = BOARD_SIZE - pieceInfo.rank().index();
-        int columnIndex = pieceInfo.file().index() - 1;
-        chessBoard[rowIndex][columnIndex] = ChessSymbol.from(pieceInfo.roleStatus(), pieceInfo.color());
+    private void placePieceOnBoard(final PieceInfo pieceInfo) {
+        int rowIndex = BOARD_SIZE - pieceInfo.rank();
+        int columnIndex = pieceInfo.file() - 1;
+        chessBoard[rowIndex][columnIndex] = pieceInfo.role();
     }
 
     private void printBoard() {
