@@ -1,7 +1,7 @@
 package chess.repository;
 
 import chess.domain.room.Room;
-import chess.infra.JdbcConnection;
+import chess.infra.JdbcConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class RoomDao implements RoomRepository {
     @Override
     public long save(final Room room) {
         final String query = "INSERT INTO Room (user_id, name) VALUES (?, ?)";
-        try (final Connection connection = JdbcConnection.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
+        try (final Connection connection = JdbcConnectionPool.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
                 query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, room.getUserId());
             preparedStatement.setString(2, room.getName());
@@ -35,7 +35,7 @@ public class RoomDao implements RoomRepository {
     @Override
     public List<Room> findAllByUserId(final long userId) {
         final String query = "SELECT room_id, user_id, name FROM Room WHERE user_id = ?";
-        try (final Connection connection = JdbcConnection.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
+        try (final Connection connection = JdbcConnectionPool.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
                 query)) {
             preparedStatement.setLong(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,7 +56,7 @@ public class RoomDao implements RoomRepository {
     @Override
     public Optional<Room> findByUserIdAndName(long userId, String name) {
         final String query = "SELECT room_id, user_id, name FROM Room WHERE user_id = ? AND name = ?";
-        try (final Connection connection = JdbcConnection.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
+        try (final Connection connection = JdbcConnectionPool.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
                 query)) {
             preparedStatement.setLong(1, userId);
             preparedStatement.setString(2, name);

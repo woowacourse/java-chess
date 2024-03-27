@@ -1,7 +1,7 @@
 package chess.repository;
 
 import chess.domain.square.Movement;
-import chess.infra.JdbcConnection;
+import chess.infra.JdbcConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +15,7 @@ public class MovementDao implements MovementRepository {
     @Override
     public void save(final long roomId, final Movement movement) {
         final String query = "INSERT INTO Movement (room_id, source, target) VALUES (?, ?, ?)";
-        try (final Connection connection = JdbcConnection.getConnection();
+        try (final Connection connection = JdbcConnectionPool.getConnection();
              final PreparedStatement preparedStatement =
                      connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, roomId);
@@ -30,7 +30,7 @@ public class MovementDao implements MovementRepository {
     @Override
     public List<Movement> findAllByRoomId(final long roomId) {
         final String query = "SELECT source, target FROM Movement WHERE room_id = ? ORDER BY created_at";
-        try (final Connection connection = JdbcConnection.getConnection();
+        try (final Connection connection = JdbcConnectionPool.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, roomId);
             ResultSet resultSet = preparedStatement.executeQuery();

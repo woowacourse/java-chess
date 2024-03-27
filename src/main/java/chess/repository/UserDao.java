@@ -1,7 +1,7 @@
 package chess.repository;
 
 import chess.domain.user.User;
-import chess.infra.JdbcConnection;
+import chess.infra.JdbcConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ public class UserDao implements UserRepository {
     @Override
     public long save(final User user) {
         final String query = "INSERT INTO user (name) VALUES (?)";
-        try (final Connection connection = JdbcConnection.getConnection();
+        try (final Connection connection = JdbcConnectionPool.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(
                      query, Statement.RETURN_GENERATED_KEYS
              )
@@ -38,7 +38,7 @@ public class UserDao implements UserRepository {
     @Override
     public Optional<User> findByName(final String name) {
         final String query = "SELECT user_id, name FROM user WHERE name = ?";
-        try (final Connection connection = JdbcConnection.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
+        try (final Connection connection = JdbcConnectionPool.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(
                 query)) {
             preparedStatement.setString(1, name);
 
@@ -55,7 +55,7 @@ public class UserDao implements UserRepository {
     @Override
     public List<User> findAll() {
         final String query = "SELECT user_id, name FROM User";
-        try (final Connection connection = JdbcConnection.getConnection();
+        try (final Connection connection = JdbcConnectionPool.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
