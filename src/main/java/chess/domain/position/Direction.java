@@ -2,7 +2,6 @@ package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public enum Direction {
     UP(0, 1),
@@ -22,57 +21,56 @@ public enum Direction {
         this.y = y;
     }
 
-    public static List<Direction> diagonal() {
-        return List.of(Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT);
-    }
-
-    public static List<Direction> cross() {
-        return List.of(Direction.UP, Direction.DOWN, Direction.RIGHT, Direction.LEFT);
-    }
-
     public static Direction findDirection(int fileDiff, int rankDiff) {
-        if (fileDiff != 0 && rankDiff != 0 && Math.abs(fileDiff) != Math.abs(rankDiff)) {
-            throw new IllegalArgumentException("올바르지 않은 방향입니다.");
-        }
+        int gcd = calculateGCD(fileDiff,rankDiff);
+        int fileUnit = calculateUnit(fileDiff,gcd);
+        int rankUnit = calculateUnit(rankDiff,gcd);
         return Arrays.stream(values())
-                .filter(direction -> direction.x == Math.signum(fileDiff) && direction.y == Math.signum(rankDiff))
+                .filter(direction -> direction.x == fileUnit && direction.y == rankUnit)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 방향입니다."));
     }
 
-    public static List<Direction> upSide() {
-        return List.of(UP, UP_LEFT, UP_RIGHT);
+    private static int calculateUnit(final int distance, final int gcd) {
+        return distance / gcd;
     }
 
-    public static List<Direction> downSide() {
-        return List.of(DOWN, DOWN_LEFT, DOWN_RIGHT);
+    private static int calculateGCD(final int fileDiff, final int rankDiff) {
+        int a = Math.max(fileDiff, rankDiff);
+        int b = Math.min(fileDiff,rankDiff);
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return Math.abs(a);
     }
 
     public boolean isDiagonal() {
-        return diagonal().contains(this);
+        return List.of(Direction.UP_LEFT, Direction.UP_RIGHT, Direction.DOWN_LEFT, Direction.DOWN_RIGHT).contains(this);
     }
 
     public boolean isCross() {
-        return cross().contains(this);
+        return List.of(Direction.UP, Direction.DOWN, Direction.RIGHT, Direction.LEFT).contains(this);
     }
 
     public boolean isVertical() {
-        return Set.of(UP, DOWN).contains(this);
+        return List.of(UP, DOWN).contains(this);
     }
 
     public boolean isHorizontal() {
-        return Set.of(LEFT, RIGHT).contains(this);
+        return List.of(LEFT, RIGHT).contains(this);
     }
 
     public boolean isUpSide() {
-        return upSide().contains(this);
+        return List.of(UP, UP_LEFT, UP_RIGHT).contains(this);
     }
 
     public boolean isDownSide() {
-        return downSide().contains(this);
+        return List.of(DOWN, DOWN_LEFT, DOWN_RIGHT).contains(this);
     }
 
     public boolean isLeftSide() {
-        return Set.of(LEFT, UP_LEFT, DOWN_LEFT).contains(this);
+        return List.of(LEFT, UP_LEFT, DOWN_LEFT).contains(this);
     }
 }
