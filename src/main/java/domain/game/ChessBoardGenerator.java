@@ -30,7 +30,7 @@ public class ChessBoardGenerator {
             King.create(), Bishop.create(), Knight.create(), Rook.create()
     );
     private static final List<PieceRole> BLACK_PAWNS =
-            IntStream.range(0, toColumnIndex(START_LETTER) + 1)
+            IntStream.range(0, toColumnIndex(END_LETTER) + 1)
                     .mapToObj(number -> (PieceRole) BlackPawn.create())
                     .toList();
     private static final List<PieceRole> WHITE_PAWNS =

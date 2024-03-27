@@ -36,14 +36,6 @@ public class Position {
         return rank.equals(new Rank(7));
     }
 
-    public boolean isRank2() {
-        return rank.equals(new Rank(2));
-    }
-
-    public boolean isRank7() {
-        return rank.equals(new Rank(7));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
