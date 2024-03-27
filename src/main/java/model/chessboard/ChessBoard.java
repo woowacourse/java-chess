@@ -27,9 +27,9 @@ public class ChessBoard {
         Destination destination = new Destination(target, targetPiece);
         sourcePiece.validateMoving(wayPoints, destination);
         sourcePiece.moveTo(destination);
-        chessState.validateCheck(chessBoard);   // 내 차례에 나의 기물의 이동으로 인해 내가 체크인 경우를 위해
+        chessState.validateCheck(chessBoard);
         chessState.passTheTurn();
-        chessState.validateCheck(chessBoard);   // 내 기물의 이동으로 인해 체크가 됐다면 상대방이 다음 턴에 바로 체크인 상태를 가지게 하기 위해
+        chessState.validateCheck(chessBoard);
     }
 
     public Map<Position, Piece> getChessBoard() {
