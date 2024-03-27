@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public class WhitePawn extends Pawn {
-    private static Rank WHITE_PAWN_START_COLUMN = Rank.TWO;
+    private static final Rank WHITE_PAWN_START_COLUMN = Rank.TWO;
 
     public WhitePawn() {
         super(WHITE);

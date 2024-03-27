@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public class BlackPawn extends Pawn {
-    private static Rank BLACK_PAWN_START_COLUMN = Rank.SEVEN;
+    private static final Rank BLACK_PAWN_START_COLUMN = Rank.SEVEN;
 
     public BlackPawn() {
         super(BLACK);
