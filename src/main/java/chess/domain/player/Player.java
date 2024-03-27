@@ -33,6 +33,9 @@ public class Player {
     }
 
     private void validateMyPiece(Piece currentPiece) {
+        if (currentPiece == Piece.empty()) {
+            throw new IllegalArgumentException("source 위치에 기물이 없습니다.");
+        }
         if (!currentPiece.isSameTeam(team)) {
             throw new IllegalArgumentException("상대방의 기물을 움직일 수 없습니다.");
         }
@@ -40,14 +43,14 @@ public class Player {
 
     private void validateMovablePoint(Point currentPoint, Point destination, Piece currentPiece, Piece targetPiece) {
         if (!currentPiece.isMovable(currentPoint, destination, targetPiece)) {
-            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 위치가 아닙니다.");
+            throw new IllegalArgumentException("해당 기물이 이동할 수 있는 target 위치가 아닙니다.");
         }
     }
 
     private void validateDestination(Point destination) {
         Piece nextPiece = board.get(destination);
         if (Piece.empty() != nextPiece && nextPiece.isSameTeam(team)) {
-            throw new IllegalArgumentException("이동하려는 위치에 이미 자신의 기물이 있을 수 없습니다.");
+            throw new IllegalArgumentException("target 위치에 이미 자신의 기물이 있을 수 없습니다.");
         }
     }
 
