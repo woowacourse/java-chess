@@ -1,6 +1,5 @@
 package chess.domain.position;
 
-import chess.domain.MoveDistance;
 import java.awt.Point;
 
 public record Position(File file, Rank rank) {

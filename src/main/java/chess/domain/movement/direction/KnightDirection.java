@@ -1,6 +1,6 @@
 package chess.domain.movement.direction;
 
-import chess.domain.MoveDistance;
+import chess.domain.position.MoveDistance;
 import chess.domain.position.Position;
 import java.util.List;
 
