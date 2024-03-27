@@ -6,9 +6,7 @@ import chess.domain.CurrentTurn;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
 import chess.domain.position.PathFinder;
-import chess.domain.position.Position;
 import chess.domain.square.piece.Color;
-import chess.dto.MoveArgumentDto;
 import chess.util.ExceptionRetryHandler;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -24,18 +22,20 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        Command command = receiveStartCommand();
+        Command command = ExceptionRetryHandler.handle(this::readCommand);
         if (command.type() == CommandType.START) {
             startGame();
         }
     }
 
-    private Command receiveStartCommand() {
-        return ExceptionRetryHandler.handle(inputView::readStartCommand);
+    private Command readCommand() {
+        Command command = inputView.readCommand();
+        if (command.type() != CommandType.START && command.type() != CommandType.END) {
+            throw new IllegalArgumentException("첫 커맨드는 start 또는 end만 가능합니다.");
+        }
+        return command;
     }
 
-    // TODO: 하위 타입 캐스팅 로직 개선
-    // TODO: 게임을 진행하는 로직(ex: turn 관리)을 ChessGame으로 분리
     private void startGame() {
         ChessBoard chessBoard = makeChessBoard();
 
@@ -60,22 +60,18 @@ public class ChessController {
     }
 
     private void executeCommand(Command command, ChessBoard chessBoard) {
+        if (command.type() == CommandType.START) {
+            throw new IllegalArgumentException("이미 게임이 진행중인 경우 start를 입력할 수 없습니다");
+        }
         if (command.type() == CommandType.MOVE) {
             movePlayerPiece(command, chessBoard);
         }
     }
 
     private void movePlayerPiece(Command command, ChessBoard chessBoard) {
-        MoveArgumentDto moveArgumentDto = (MoveArgumentDto) command.arguments().get(0);
-        PathFinder pathFinder = makePathFinder(moveArgumentDto);
+        PathFinder pathFinder = new PathFinder(command.getStartPosition(), command.getTargetPosition());
         chessBoard.move(pathFinder);
 
         outputView.printChessBoard(chessBoard.getSquares());
-    }
-
-    private PathFinder makePathFinder(MoveArgumentDto moveArgumentDto) {
-        return new PathFinder(
-                new Position(moveArgumentDto.startRank(), moveArgumentDto.startFile()),
-                new Position(moveArgumentDto.endRank(), moveArgumentDto.endFile()));
     }
 }
