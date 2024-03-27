@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.room.Room;
 import chess.repository.RoomRepository;
+
 import java.util.List;
 
 public class RoomService {

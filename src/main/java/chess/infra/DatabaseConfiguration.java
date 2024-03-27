@@ -2,9 +2,8 @@ package chess.infra;
 
 public class DatabaseConfiguration {
 
-    private final String MYSQL_CONNECT_URL_FORMAT = "jdbc:mysql://%s:%s/%s";
-
     private static final DatabaseConfiguration INSTANCE = new DatabaseConfiguration();
+    private final String MYSQL_CONNECT_URL_FORMAT = "jdbc:mysql://%s:%s/%s";
     private final String host = "localhost";
     private final String post = "13306";
     private final String database = "chess";

@@ -1,6 +1,7 @@
 package chess.repository;
 
 import chess.domain.user.User;
+
 import java.util.List;
 import java.util.Optional;
 

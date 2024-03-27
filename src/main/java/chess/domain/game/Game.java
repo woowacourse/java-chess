@@ -5,6 +5,7 @@ import chess.domain.board.BoardFactory;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
+
 import java.util.List;
 import java.util.Map;
 
@@ -31,11 +32,9 @@ public class Game {
         return game;
     }
 
-    public void movePiece(final String source, final String target) {
-        Square from = Square.from(source);
-        Square to = Square.from(target);
-        validateTurn(from);
-        board.move(from, to);
+    public void movePiece(final Square source, final Square target) {
+        validateTurn(source);
+        board.move(source, target);
         turn.next();
     }
 

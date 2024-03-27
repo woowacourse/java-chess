@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +31,8 @@ class BishopTest {
         @Test
         void canMoveDiagonallyUpRight() {
             //given
-            Square source = Square.from("c3");
-            Square target = Square.from("e5");
+            Square source = Square.of(File.C, Rank.THREE);
+            Square target = Square.of(File.E, Rank.FIVE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -43,8 +45,8 @@ class BishopTest {
         @Test
         void canMoveDiagonallyUpLeft() {
             //given
-            Square source = Square.from("e3");
-            Square target = Square.from("c5");
+            Square source = Square.of(File.E, Rank.THREE);
+            Square target = Square.of(File.C, Rank.FIVE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -57,8 +59,8 @@ class BishopTest {
         @Test
         void canMoveDiagonallyDownRight() {
             //given
-            Square source = Square.from("c5");
-            Square target = Square.from("e3");
+            Square source = Square.of(File.C, Rank.FIVE);
+            Square target = Square.of(File.E, Rank.THREE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -71,8 +73,8 @@ class BishopTest {
         @Test
         void canMoveDiagonallyDownLeft() {
             //given
-            Square source = Square.from("e5");
-            Square target = Square.from("c3");
+            Square source = Square.of(File.E, Rank.FIVE);
+            Square target = Square.of(File.C, Rank.THREE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -97,8 +99,8 @@ class BishopTest {
         @Test
         void canNotMoveVertically() {
             //given
-            Square source = Square.from("c1");
-            Square target = Square.from("c2");
+            Square source = Square.of(File.C, Rank.ONE);
+            Square target = Square.of(File.C, Rank.TWO);
 
             //when
             Movement movement = new Movement(source, target);
@@ -111,8 +113,8 @@ class BishopTest {
         @Test
         void canNotMoveHorizontally() {
             //given
-            Square source = Square.from("c1");
-            Square target = Square.from("d1");
+            Square source = Square.of(File.C, Rank.ONE);
+            Square target = Square.of(File.D, Rank.ONE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -125,8 +127,8 @@ class BishopTest {
         @Test
         void canNotMoveInNonDiagonalDirection() {
             //given
-            Square source = Square.from("c1");
-            Square target = Square.from("d3");
+            Square source = Square.of(File.C, Rank.ONE);
+            Square target = Square.of(File.D, Rank.THREE);
 
             //when
             Movement movement = new Movement(source, target);

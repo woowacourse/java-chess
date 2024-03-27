@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.domain.user.User;
 import chess.repository.UserRepository;
+
 import java.util.List;
 
 public class UserService {
