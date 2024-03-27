@@ -1,11 +1,13 @@
 package chess.domain.piece.type;
 
-import chess.domain.position.Movement;
-import chess.domain.piece.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceRelation;
+import chess.domain.position.Movement;
+import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,6 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class KnightTest {
 
@@ -50,9 +53,10 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = knight.isMovable(movement, targetStatus);
+        boolean result = knight.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isTrue();
@@ -66,11 +70,25 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = knight.isMovable(movement, targetStatus);
+        boolean result = knight.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @DisplayName("나이트는 Source와 Target 사이에 다른 기물이 존재해도 이동할 수 있다.")
+    @Test
+    void canKnightMove() {
+        // given
+        Piece knight = new Knight(PieceColor.BLACK);
+        Movement movement = new Movement(Position.of("d4"), Position.of("c2"));
+        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.BLOCKED;
+
+        // when & then
+        assertThatCode(() -> knight.isMovable(movement, targetStatus, pathStatus)).doesNotThrowAnyException();
     }
 }

@@ -1,7 +1,7 @@
 package chess.domain.board;
 
-import chess.domain.position.Direction;
 import chess.domain.position.ChessRank;
+import chess.domain.position.Direction;
 import chess.domain.position.Movement;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;

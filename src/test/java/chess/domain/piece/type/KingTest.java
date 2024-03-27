@@ -1,11 +1,13 @@
 package chess.domain.piece.type;
 
-import chess.domain.position.Movement;
-import chess.domain.piece.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceRelation;
+import chess.domain.position.Movement;
+import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -32,9 +34,10 @@ class KingTest {
         Piece king = new King(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = king.isMovable(movement, targetStatus);
+        boolean result = king.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isTrue();
@@ -48,11 +51,25 @@ class KingTest {
         Piece king = new King(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = king.isMovable(movement, targetStatus);
+        boolean result = king.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isFalse();
+    }
+
+    @DisplayName("킹은 Source와 Target 사이에 다른 기물이 존재하면 이동할 수 없다.")
+    @Test
+    void cannotKingMove() {
+        // given
+        Piece king = new King(PieceColor.BLACK);
+        Movement movement = new Movement(Position.of("d4"), Position.of("d3"));
+        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.BLOCKED;
+
+        // when & then
+        assertThat(king.isMovable(movement, targetStatus, pathStatus)).isFalse();
     }
 }

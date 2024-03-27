@@ -1,11 +1,13 @@
 package chess.domain.piece.type;
 
-import chess.domain.position.Movement;
-import chess.domain.piece.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceRelation;
+import chess.domain.position.Movement;
+import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -42,9 +44,10 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = bishop.isMovable(movement, targetStatus);
+        boolean result = bishop.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isFalse();
@@ -58,11 +61,25 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
         PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.OPEN;
 
         // when
-        boolean result = bishop.isMovable(movement, targetStatus);
+        boolean result = bishop.isMovable(movement, targetStatus, pathStatus);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("비숍은 Source와 Target 사이에 다른 기물이 존재하면 이동할 수 없다.")
+    @Test
+    void cannotBishopMove() {
+        // given
+        Piece bishop = new Bishop(PieceColor.BLACK);
+        Movement movement = new Movement(Position.of("d4"), Position.of("d3"));
+        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PathStatus pathStatus = PathStatus.BLOCKED;
+
+        // when & then
+        assertThat(bishop.isMovable(movement, targetStatus, pathStatus)).isFalse();
     }
 }
