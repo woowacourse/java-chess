@@ -22,13 +22,13 @@ public class ChessController {
 
     public void run() {
         outputView.printStartMessage();
-        Command command = ExceptionRetryHandler.handle(this::readCommand);
-        if (command.type() == CommandType.START) {
+        Command firstCommand = ExceptionRetryHandler.handle(this::readFirstCommand);
+        if (firstCommand.type() == CommandType.START) {
             startGame();
         }
     }
 
-    private Command readCommand() {
+    private Command readFirstCommand() {
         Command command = inputView.readCommand();
         if (command.type() != CommandType.START && command.type() != CommandType.END) {
             throw new IllegalArgumentException("첫 커맨드는 start 또는 end만 가능합니다.");
@@ -61,7 +61,7 @@ public class ChessController {
 
     private void executeCommand(Command command, ChessBoard chessBoard) {
         if (command.type() == CommandType.START) {
-            throw new IllegalArgumentException("이미 게임이 진행중인 경우 start를 입력할 수 없습니다");
+            throw new IllegalArgumentException("이미 게임이 진행중이므로 start 외의 커맨드를 입력해 주세요.");
         }
         if (command.type() == CommandType.MOVE) {
             movePlayerPiece(command, chessBoard);
