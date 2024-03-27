@@ -6,6 +6,7 @@ import model.position.Position;
 import model.position.Rank;
 import view.GameCommand;
 import view.InputView;
+import view.OutputView;
 import view.dto.GameProceedRequest;
 import view.dto.InfoMapper;
 import view.dto.PieceInfo;
@@ -13,25 +14,28 @@ import view.dto.PieceInfo;
 import java.util.List;
 
 import static util.InputRetryHelper.inputRetryHelper;
-import static view.OutputView.printChessBoard;
-import static view.OutputView.printInitialGamePrompt;
 
 public class Controller {
     private static final int FILE_INDEX = 0;
     private static final int RANK_INDEX = 1;
+    private final OutputView outputView;
+
+    public Controller() {
+        outputView = new OutputView();
+    }
 
     public void execute() {
         GameCommand gameCommand = executeInitial();
         ChessBoard chessBoard = new ChessBoard();
         while (gameCommand != GameCommand.END) {
             List<PieceInfo> pieceInfos = InfoMapper.toPieceInfo(chessBoard);
-            printChessBoard(pieceInfos);
+            outputView.printChessBoard(pieceInfos);
             gameCommand = inputRetryHelper(() -> runGame(chessBoard));
         }
     }
 
     private GameCommand executeInitial() {
-        printInitialGamePrompt();
+        outputView.printInitialGamePrompt();
         return inputRetryHelper(InputView::inputInitialGameCommand);
     }
 
@@ -47,8 +51,10 @@ public class Controller {
     }
 
     private void controlChessBoard(final ChessBoard chessBoard, final GameProceedRequest gameProceedRequest) {
-        Position source = matchPosition(gameProceedRequest.sourcePosition().get());
-        Position destination = matchPosition(gameProceedRequest.targetPosition().get());
+        Position source = matchPosition(gameProceedRequest.sourcePosition()
+                                                          .get());
+        Position destination = matchPosition(gameProceedRequest.targetPosition()
+                                                               .get());
         chessBoard.move(source, destination);
     }
 
