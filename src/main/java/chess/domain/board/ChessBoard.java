@@ -30,7 +30,7 @@ public class ChessBoard {
     private final ChessGameDao chessGameDao = new ChessGameDao();
     private final GameInformationDao gameInformationDao = new GameInformationDao();
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
-    private GameInformation gameInformation;
+    private final GameInformation gameInformation;
 
     public ChessBoard() {
         initializeBlackPieces();
@@ -128,10 +128,6 @@ public class ChessBoard {
         if (!sourcePiece.isSameColor(gameInformation.getCurentTurnColor())) {
             throw new IllegalArgumentException("해당 팀의 턴이 아닙니다.");
         }
-    }
-
-    private void removeFinishedData(int gameId) {
-        gameInformationDao.remove(gameId);
     }
 
     private boolean canMove(Piece sourcePiece, Position source, Position target) {

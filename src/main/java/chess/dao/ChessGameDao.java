@@ -59,9 +59,9 @@ public class ChessGameDao {
     }
 
     public Piece findPieceByPosition(Position position) {
-        try (final var connection = getConnection()) {
+        try (final Connection connection = getConnection()) {
             String tableName = getTableName();
-            final var statement = connection.prepareStatement(
+            final PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM " + tableName + " WHERE `file` = ? AND `rank` = ?");
             statement.setString(1, position.getFileSymbol());
             statement.setInt(2, position.getRankValue());
@@ -78,36 +78,6 @@ public class ChessGameDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void save(ChessGameComponentDto chessGameComponentDto) {
-        String tableName = getTableName();
-        try (final var connection = getConnection()) {
-            final var statement = connection.prepareStatement(
-                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`,`game_id`)VALUES (?,?,?,?,?)");
-            statement.setString(1, chessGameComponentDto.position().getFileSymbol());
-            statement.setInt(2, chessGameComponentDto.position().getRankValue());
-            statement.setString(3, chessGameComponentDto.piece().identifyType());
-            statement.setString(4, chessGameComponentDto.piece().getColor().name());
-            statement.setInt(5, chessGameComponentDto.gameId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void update(Position source, Position target) {
-        try (final var connection = getConnection()) {
-            final var statement = connection.prepareStatement(
-                    "UPDATE " + getTableName() + " SET file = ?, `rank` = ? WHERE file = ? AND `rank` = ?");
-            statement.setString(1, target.getFileSymbol());
-            statement.setInt(2, target.getRankValue());
-            statement.setString(3, source.getFileSymbol());
-            statement.setInt(4, source.getRankValue());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public List<ChessGameComponentDto> findById(int gameId) {
@@ -129,6 +99,36 @@ public class ChessGameDao {
                 chessBoardComponents.add(chessGameComponentDto);
             }
             return chessBoardComponents;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void save(ChessGameComponentDto chessGameComponentDto) {
+        String tableName = getTableName();
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO " + tableName + " (`file`,`rank`,`type`,`color`,`game_id`)VALUES (?,?,?,?,?)");
+            statement.setString(1, chessGameComponentDto.position().getFileSymbol());
+            statement.setInt(2, chessGameComponentDto.position().getRankValue());
+            statement.setString(3, chessGameComponentDto.piece().identifyType());
+            statement.setString(4, chessGameComponentDto.piece().getColor().name());
+            statement.setInt(5, chessGameComponentDto.gameId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(Position source, Position target) {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE " + getTableName() + " SET file = ?, `rank` = ? WHERE file = ? AND `rank` = ?");
+            statement.setString(1, target.getFileSymbol());
+            statement.setInt(2, target.getRankValue());
+            statement.setString(3, source.getFileSymbol());
+            statement.setInt(4, source.getRankValue());
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

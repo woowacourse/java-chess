@@ -49,9 +49,9 @@ public class GameInformationDao {
     }
 
     public GameInformation findByGameId(int gameId) {
-        try (final var connection = getConnection()) {
+        try (final Connection connection = getConnection()) {
             String tableName = getTableName();
-            final var statement = connection.prepareStatement(
+            final PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM " + tableName + " WHERE `game_id` = ?");
             statement.setInt(1, gameId);
             ResultSet resultSet = statement.executeQuery();
@@ -64,6 +64,23 @@ public class GameInformationDao {
         } catch (SQLException e) {
             System.err.println("DB 연결 오류:" + e.getMessage());
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    public GameInformation findLatestGame() {
+        try (final Connection connection = getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM " + getTableName() + " ORDER BY game_id DESC LIMIT 1");
+            final ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int gameId = resultSet.getInt("game_id");
+                Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
+                return new GameInformation(gameId, color);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
@@ -100,23 +117,6 @@ public class GameInformationDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public GameInformation findLatestGame() {
-        try (final Connection connection = getConnection()) {
-            final PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM " + getTableName() + " ORDER BY game_id DESC LIMIT 1");
-            final ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                int gameId = resultSet.getInt("game_id");
-                Color color = Color.convertToColor(resultSet.getString("current_turn_color"));
-                return new GameInformation(gameId, color);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
     }
 
     private String getTableName() {
