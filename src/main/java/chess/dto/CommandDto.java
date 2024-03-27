@@ -9,6 +9,10 @@ public class CommandDto {
     private final String source;
     private final String target;
 
+    public CommandDto() {
+        this(GameCommand.END, "", "");
+    }
+
     public CommandDto(GameCommand gameCommand, String source, String target) {
         this.gameCommand = gameCommand;
         this.source = source;
@@ -19,7 +23,7 @@ public class CommandDto {
         return gameCommand;
     }
 
-    public Movement toDomain() {
+    public Movement toMovementDomain() {
         return new Movement(PositionCommand.generate(source), PositionCommand.generate(target));
     }
 }

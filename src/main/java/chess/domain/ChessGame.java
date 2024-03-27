@@ -31,7 +31,7 @@ public class ChessGame {
         }
     }
 
-    public State checkStatus() {
+    public State checkState() {
         if (board.isChecked(currentTeam)) {
             if (board.isCheckmate(currentTeam)) {
                 return State.CHECKMATE;
@@ -43,5 +43,9 @@ public class ChessGame {
 
     public Team getCurrentTeam() {
         return currentTeam;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
