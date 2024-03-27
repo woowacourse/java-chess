@@ -21,6 +21,9 @@ public class Position {
     }
 
     public static Position of(File file, Rank rank) {
+        if (CACHE.get(toKey(file, rank)) == null) {
+            throw new IllegalArgumentException("체스보드를 벗어난 입력입니다.");
+        }
         return CACHE.get(toKey(file, rank));
     }
 
