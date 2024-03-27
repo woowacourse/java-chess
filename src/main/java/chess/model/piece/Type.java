@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Type {
     WHITE_PAWN(Pawn.from(Color.WHITE)),
-    WHITE_KNIGHT(Pawn.from(Color.WHITE)),
+    WHITE_KNIGHT(Knight.from(Color.WHITE)),
     WHITE_BISHOP(Bishop.from(Color.WHITE)),
     WHITE_ROOK(Rook.from(Color.WHITE)),
     WHITE_QUEEN(Queen.from(Color.WHITE)),
