@@ -22,9 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-// TODO: 단위 테스트 작성
 public class ChessBoardMaker {
-
     private static final int EMPTY_START = 3;
     private static final int EMPTY_END = 6;
     private static final int FILE_SIZE = 8;
@@ -58,7 +56,6 @@ public class ChessBoardMaker {
         for (int file = 0; file < FILE_SIZE; file++) {
             squares.add(Pawn.from(color));
         }
-
         return squares;
     }
 
