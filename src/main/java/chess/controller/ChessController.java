@@ -68,9 +68,9 @@ public class ChessController {
         Point departure;
         Point destination;
         try {
-            String[] splitCommand = readCommand.split(" ");
-            departure = parsePoint(splitCommand[DEPARTURE_INDEX]);
-            destination = parsePoint(splitCommand[DESTINATION_INDEX]);
+            String[] splitCommands = readCommand.split(" ");
+            departure = parsePoint(splitCommands[DEPARTURE_INDEX]);
+            destination = parsePoint(splitCommands[DESTINATION_INDEX]);
         } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
             throw new IllegalArgumentException("잘못된 위치를 입력하였습니다. 입력값 : " + readCommand);
         }
@@ -78,9 +78,9 @@ public class ChessController {
         game.turnOver();
     }
 
-    private Point parsePoint(String splitedCommand) {
-        File file = File.of(splitedCommand.charAt(FILE_INDEX));
-        Rank rank = Rank.of(Integer.parseInt(String.valueOf(splitedCommand.charAt(RANK_INDEX))));
+    private Point parsePoint(String splitCommand) {
+        File file = File.of(splitCommand.charAt(FILE_INDEX));
+        Rank rank = Rank.of(Integer.parseInt(String.valueOf(splitCommand.charAt(RANK_INDEX))));
         return Point.of(file, rank);
     }
 }
