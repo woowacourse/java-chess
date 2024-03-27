@@ -10,11 +10,11 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.dto.PieceDto;
+import chess.dto.Status;
 import chess.dto.TurnDto;
 import chess.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
-import chess.dto.Status;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -56,8 +56,7 @@ public class ChessGameController {
         boolean canContinue = true;
         while (canContinue) {
             String command = readGameCommand();
-            tryOneRound(chessGame, command);
-            showStatus(chessGame, command);
+            play(chessGame, command);
             canContinue = canContinue(chessGame, command);
         }
     }
@@ -88,18 +87,19 @@ public class ChessGameController {
         }
     }
 
-    private void tryOneRound(ChessGame chessGame, String command) {
+    private void play(ChessGame chessGame, String command) {
         if (command.startsWith(MOVE_COMMAND)) {
             movePiece(chessGame, command);
+        }
+        if (command.equals(STATUS_COMMAND)) {
+            showStatus(chessGame, command);
         }
     }
 
     private void showStatus(ChessGame chessGame, String command) {
-        if (command.equals(STATUS_COMMAND)) {
             Scores scores = chessGame.calculateScores();
             Status status = Status.of(scores);
             outputView.printStatus(status);
-        }
     }
 
     private void movePiece(ChessGame chessGame, String command) {
