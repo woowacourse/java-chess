@@ -8,8 +8,15 @@ public class Movable {
     private final Direction direction;
 
     public Movable(final int maxMovement, final Direction direction) {
+        validateMaxMovement(maxMovement);
         this.maxMovement = maxMovement;
         this.direction = direction;
+    }
+
+    private void validateMaxMovement(final int maxMovement) {
+        if (maxMovement <= 0) {
+            throw new IllegalArgumentException("[ERROR] 최대 이동 횟수는 1 이상이어야 합니다.");
+        }
     }
 
     public boolean canMove(final Position source, final Position target) {

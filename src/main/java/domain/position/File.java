@@ -3,11 +3,23 @@ package domain.position;
 import java.util.Objects;
 
 public class File {
-
+    private static final char START_LETTER = 'a';
+    private static final char END_LETTER = 'h';
     private final char letter;
 
     public File(final char letter) {
+        validate(letter);
         this.letter = letter;
+    }
+
+    private void validate(final char letter) {
+        if (isInvalidLetter(letter)) {
+            throw new IllegalArgumentException("[ERROR] 올바르지 않은 File 문자 입력입니다.");
+        }
+    }
+
+    private boolean isInvalidLetter(final char letter) {
+        return letter < START_LETTER || letter > END_LETTER;
     }
 
     public File add(final int movement) {
