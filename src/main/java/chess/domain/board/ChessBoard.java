@@ -5,6 +5,7 @@ import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.dto.ChessBoardDto;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 

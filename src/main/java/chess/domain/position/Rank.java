@@ -13,9 +13,9 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
-    private static final Map<Integer,Rank> CACHE;
+    private static final Map<Integer, Rank> CACHE;
 
-    static{
+    static {
         CACHE = new HashMap<>();
         for (Rank rank : Rank.values()) {
             CACHE.put(rank.rankRow, rank);

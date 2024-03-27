@@ -15,7 +15,7 @@ public enum File {
 
     private static final Map<Integer, File> CACHE;
 
-    static{
+    static {
         CACHE = new HashMap<>();
         for (File file : File.values()) {
             CACHE.put(file.fileColumn, file);

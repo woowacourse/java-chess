@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.board.ChessBoard;
+
 import java.util.List;
 
 public class Ready implements GameState {

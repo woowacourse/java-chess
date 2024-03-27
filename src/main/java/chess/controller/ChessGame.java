@@ -6,6 +6,7 @@ import chess.domain.state.Ready;
 import chess.dto.ChessBoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 import java.util.function.Supplier;
 

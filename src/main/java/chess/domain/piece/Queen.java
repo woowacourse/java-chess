@@ -22,7 +22,6 @@ public class Queen extends Piece {
         if (piece.isSameColor(color)) {
             return false;
         }
-
         return isDiagonalMove(source, target) || isHorizontalMove(source, target) || isVerticalMove(source, target);
     }
 
