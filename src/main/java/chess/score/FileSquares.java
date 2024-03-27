@@ -22,17 +22,16 @@ public class FileSquares {
 
     private Score calculateScoreWithoutPawn(Color color) {
         return pieces.stream()
-                .filter(Square::hasPiece)
-                .filter(Square::hasNoPawn)
                 .filter(square -> square.hasPieceColored(color))
+                .filter(Square::hasNoPawn)
                 .map(Square::getScore)
                 .reduce(Score.ZERO, Score::add);
     }
 
     private Score calculatePawnScore(Color color) {
         int pawnCount = (int) pieces.stream()
-                .filter(Square::hasPawn)
                 .filter(square -> square.hasPieceColored(color))
+                .filter(Square::hasPawn)
                 .count();
         return manipulateScoreByPawnCount(pawnCount);
     }
