@@ -62,10 +62,6 @@ public abstract class Piece {
         return new PieceDto(point.toDto(), this.status().value(), color);
     }
 
-    public Point getPoint() {
-        return this.point;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
