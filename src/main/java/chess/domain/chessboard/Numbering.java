@@ -23,12 +23,12 @@ public enum Numbering {
         return Arrays.stream(Numbering.values())
                 .filter(numbering -> numbering.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 넘버링 값이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 넘버링 값을 찾을 수 없습니다."));
     }
 
     public static Numbering findNextNumbering(Numbering numbering) {
         if (numbering == Numbering.EIGHT) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 현재 맨 위쪽입니다. 위쪽 레터링이 존재하지 않습니다.");
         }
         int findNumberingValue = numbering.value + 1;
         return findNumbering(findNumberingValue);
@@ -36,7 +36,7 @@ public enum Numbering {
 
     public static Numbering findPreviousNumbering(Numbering numbering) {
         if (numbering == Numbering.ONE) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 현재 맨 아래쪽입니다. 아래쪽 레터링이 존재하지 않습니다.");
         }
         int findNumberingValue = numbering.value - 1;
         return findNumbering(findNumberingValue);

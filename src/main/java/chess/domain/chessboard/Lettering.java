@@ -23,12 +23,12 @@ public enum Lettering {
         return Arrays.stream(Lettering.values())
                 .filter(lettering -> lettering.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 유효한 레터링 값이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 일치하는 레터링 값을 찾을 수 없습니다."));
     }
 
     public static Lettering findNextLettering(Lettering lettering) {
         if (lettering == Lettering.H) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 현재 맨 오른쪽입니다. 오른쪽 레터링이 존재하지 않습니다.");
         }
         int findLetteringValue = lettering.value + 1;
         return findLettering(findLetteringValue);
@@ -36,7 +36,7 @@ public enum Lettering {
 
     public static Lettering findPreviousLettering(Lettering lettering) {
         if (lettering == Lettering.A) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("[ERROR] 현재 맨 왼쪽입니다. 왼쪽 레터링이 존재하지 않습니다.");
         }
         int findLetteringValue = lettering.value - 1;
         return findLettering(findLetteringValue);
