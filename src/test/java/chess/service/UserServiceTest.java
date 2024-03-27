@@ -3,7 +3,7 @@ package chess.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.repository.TestUserDao;
+import chess.repository.FakeUserDao;
 import chess.repository.UserRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ class UserServiceTest {
 
     @BeforeEach
     void setup() {
-        userRepository = new TestUserDao();
+        userRepository = new FakeUserDao();
         userRepository.deleteAll();
 
         userService = new UserService(userRepository);

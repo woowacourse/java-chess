@@ -4,36 +4,40 @@ import static chess.fixture.UserFixture.createUserChoco;
 import static chess.fixture.UserFixture.createUserKhaki;
 
 import chess.domain.user.User;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-public class TestUserDao implements UserRepository {
+public class FakeUserDao implements UserRepository {
 
-    private final List<User> users = new ArrayList<>();
+    private final Map<Integer, User> users = new HashMap<>();
 
-    public TestUserDao() {
+    public FakeUserDao() {
         initialize();
     }
 
     @Override
     public long save(final User user) {
         if (user.getId() == null) {
-            users.add(new User((long) users.size() + 1, user.getName()));
+            users.put(users.size() + 1, new User((long) users.size() + 1, user.getName()));
             return users.size();
         }
-        users.add(new User(user.getName()));
+        users.put(users.size() + 1, user);
         return users.size();
     }
 
     @Override
     public Optional<User> findByName(final String name) {
-        return users.stream().filter(user -> user.getName().equals(name)).findAny();
+        return users.values().stream()
+                .filter(user -> user.getName().equals(name))
+                .findAny();
     }
 
     @Override
     public List<User> findAll() {
-        return users;
+        return users.values().stream()
+                .toList();
     }
 
     @Override
@@ -43,7 +47,7 @@ public class TestUserDao implements UserRepository {
     }
 
     private void initialize() {
-        users.add(createUserChoco());
-        users.add(createUserKhaki());
+        users.put(1, createUserChoco());
+        users.put(2, createUserKhaki());
     }
 }
