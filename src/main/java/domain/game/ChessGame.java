@@ -28,17 +28,7 @@ public class ChessGame {
         this(WhiteTurn.getInstance(), BoardInitializer.init());
     }
 
-    public static ChessGame load(int gameId) {
-        GameDao gameDao = GameDao.getInstance();
-        TeamColor savedTurn = gameDao.findTurn(gameId);
-        PieceDao pieceDao = PieceDao.getInstance();
-        List<PieceDto> allPieces = pieceDao.findAllPieces(gameId);
-        Map<Position, Piece> piecePositions = allPieces.stream()
-                .collect(Collectors.toMap(
-                        PieceDto::getPosition,
-                        dto -> PieceFactory.create(dto.getPieceType())
-                ));
-
+    public static ChessGame of(TeamColor savedTurn, Map<Position, Piece> piecePositions) {
         GameState state = savedTurn == TeamColor.WHITE ? WhiteTurn.getInstance() : BlackTurn.getInstance();
         return new ChessGame(state, new Board(piecePositions));
     }

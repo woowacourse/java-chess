@@ -3,21 +3,29 @@ package controller;
 import domain.game.ChessGame;
 import domain.game.GameRequest;
 import domain.game.Piece;
+import domain.game.PieceFactory;
 import domain.game.TeamColor;
+import domain.game.state.GameState;
 import domain.position.Position;
+import domain.service.DBService;
 import dto.BoardDto;
+import dto.PieceDto;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.OutputView;
 
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final DBService dbService;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView, final DBService dbService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.dbService = dbService;
     }
 
     public void run() {
@@ -57,7 +65,18 @@ public class ChessController {
             return new ChessGame();
         }
         int gameId = readUserInput(inputView::inputGameId);
-        return ChessGame.load(gameId);
+        return loadGame(gameId);
+    }
+
+    private ChessGame loadGame(int gameId) {
+        TeamColor savedTurn = dbService.findSavedTurn(gameId);
+        List<PieceDto> savedPieces = dbService.findSavedPieces(gameId);
+        Map<Position, Piece> piecePositions = savedPieces.stream()
+                .collect(Collectors.toMap(
+                        PieceDto::getPosition,
+                        dto -> PieceFactory.create(dto.getPieceType())
+                ));
+        return ChessGame.of(savedTurn, piecePositions);
     }
 
     private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
