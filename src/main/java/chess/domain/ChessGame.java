@@ -32,11 +32,16 @@ public class ChessGame {
     }
 
     public State checkState() {
-        if (board.isChecked(currentTeam)) {
-            if (board.isCheckmate(currentTeam)) {
-                return State.CHECKMATE;
-            }
+        boolean isCheck = board.isChecked(currentTeam);
+        boolean isMate = board.isMate(currentTeam);
+        if (isCheck && isMate) {
+            return State.CHECKMATE;
+        }
+        if (isCheck) {
             return State.CHECK;
+        }
+        if (isMate) {
+            return State.STALEMATE;
         }
         return State.NORMAL;
     }

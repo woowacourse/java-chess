@@ -71,7 +71,15 @@ public class Board {
     }
 
     public GameResult findResultByScore() {
-        return GameResult.findGameResult(calculateScore(Team.WHITE), calculateScore(Team.BLACK));
+        double whiteScore = calculateScore(Team.WHITE);
+        double blackScore = calculateScore(Team.BLACK);
+        if (whiteScore > blackScore) {
+            return GameResult.WHITE_WIN;
+        }
+        if (whiteScore < blackScore) {
+            return GameResult.BLACK_WIN;
+        }
+        return GameResult.DRAW;
     }
 
     public double calculateScore(Team team) {
@@ -112,7 +120,7 @@ public class Board {
         return false;
     }
 
-    public boolean isCheckmate(Team attackedTeam) {
+    public boolean isMate(Team attackedTeam) {
         return findSameTeamPieces(attackedTeam)
                 .allMatch(entry -> isCheckedAfterAllMoves(entry.getKey(), entry.getValue()));
     }
