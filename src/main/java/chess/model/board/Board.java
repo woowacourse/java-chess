@@ -29,7 +29,7 @@ public class Board {
         validateTurn(movement);
         validateMove(movement);
         updateSquare(movement);
-        updateTurn();
+        currnetColor = currnetColor.getOpposite();
     }
 
     private void validateTurn(Movement movement) {
@@ -65,10 +65,6 @@ public class Board {
         Position source = movement.getSource();
         squares.put(destination, getSourcePiece(movement));
         squares.put(source, Empty.getInstance());
-    }
-
-    private void updateTurn() {
-        currnetColor = currnetColor.getOpposite();
     }
 
     public List<List<Piece>> getLines() {
