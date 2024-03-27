@@ -292,11 +292,11 @@ public class MoveRange {
 
     public void addLeftForwardLShape(ChessBoard chessBoard, Square startSquare) {
         Square square = startSquare;
-        if (startSquare.isLeftMost()) {
+        if (square.isLeftMost()) {
             return;
         }
         square = chessBoard.findLeftSquare(square);
-        if (startSquare.isLeftMost()) {
+        if (square.isLeftMost()) {
             return;
         }
         square = chessBoard.findLeftSquare(square);
@@ -312,11 +312,11 @@ public class MoveRange {
 
     public void addLeftBackwardLShape(ChessBoard chessBoard, Square startSquare) {
         Square square = startSquare;
-        if (startSquare.isLeftMost()) {
+        if (square.isLeftMost()) {
             return;
         }
         square = chessBoard.findLeftSquare(square);
-        if (startSquare.isLeftMost()) {
+        if (square.isLeftMost()) {
             return;
         }
         square = chessBoard.findLeftSquare(square);
