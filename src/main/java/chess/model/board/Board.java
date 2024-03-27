@@ -7,7 +7,9 @@ import chess.model.position.Movement;
 import chess.model.position.Position;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Board {
     public static final int MIN_LENGTH = 1;
@@ -25,6 +27,13 @@ public class Board {
     public Piece getPiece(int file, int rank) {
         Position position = Position.of(file, rank);
         return getByPosition(position);
+    }
+
+    public List<Piece> getRank(int rank) {
+        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
+                .mapToObj(file -> Position.of(file, rank))
+                .map(this::getByPosition)
+                .toList();
     }
 
     public void move(Movement movement) {
