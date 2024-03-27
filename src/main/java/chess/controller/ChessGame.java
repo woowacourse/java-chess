@@ -1,15 +1,6 @@
 package chess.controller;
 
-import chess.model.board.ChessBoard;
-import chess.model.board.ChessBoardInitializer;
-import chess.model.game.PositionEvaluation;
-import chess.model.piece.Side;
-import chess.model.position.ChessPosition;
-import chess.model.game.Turn;
-import chess.view.input.GameArguments;
-import chess.view.input.GameCommand;
 import chess.view.input.InputView;
-import chess.view.input.MoveArguments;
 import chess.view.output.OutputView;
 
 import java.util.Objects;
@@ -24,46 +15,21 @@ public class ChessGame {
         this.outputView = outputView;
     }
 
-    public void run() {
-        GameCommand gameCommand = retryOnException(this::getFirstGameCommand);
-        if (gameCommand.isEnd()) {
-            return;
+    public void start() {
+        GameState gameState = retryOnException(this::prepare);
+        retryOnException(() -> play(gameState));
+    }
+
+    private GameState prepare() {
+        GameState prepare = new Prepare();
+        return prepare.run(inputView, outputView);
+    }
+
+    private void play(GameState prepare) {
+        GameState gameState = prepare;
+        while (gameState.canContinue()) {
+            gameState = gameState.run(inputView, outputView);
         }
-        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
-        ChessBoard chessBoard = new ChessBoard(chessBoardInitializer.create());
-        Turn firstTurn = Turn.from(Side.WHITE);
-        outputView.printChessBoard(chessBoard);
-        retryOnException(() -> play(chessBoard, firstTurn));
-    }
-
-    private GameCommand getFirstGameCommand() {
-        return GameCommand.createInPreparation(inputView.readGameCommand());
-    }
-
-    private void play(ChessBoard chessBoard, Turn firstTurn) {
-        Turn turn = firstTurn;
-        while (true) {
-            GameArguments gameArguments = inputView.readMoveArguments();
-            GameCommand gameCommand = gameArguments.gameCommand();
-            if (gameCommand.isEnd()) {
-                break;
-            }
-            if (gameCommand.isMove()) {
-                MoveArguments moveArguments = gameArguments.moveArguments();
-                move(chessBoard, moveArguments, turn);
-                turn = turn.getNextTurn();
-                continue;
-            }
-            PositionEvaluation positionEvaluation = new PositionEvaluation(chessBoard.getBoard());
-            outputView.printPositionEvaluation(positionEvaluation);
-        }
-    }
-
-    private void move(ChessBoard chessBoard, MoveArguments moveArguments, Turn turn) {
-        ChessPosition source = moveArguments.createSourcePosition();
-        ChessPosition target = moveArguments.createTargetPosition();
-        chessBoard.move(source, target, turn);
-        outputView.printChessBoard(chessBoard);
     }
 
     private <T> T retryOnException(Supplier<T> retryOperation) {
