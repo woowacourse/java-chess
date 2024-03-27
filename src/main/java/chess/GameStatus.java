@@ -3,6 +3,7 @@ package chess;
 import chess.domain.piece.Team;
 
 public enum GameStatus {
+
     PLAY,
     END,
     BLACK_WIN,
