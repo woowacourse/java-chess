@@ -18,7 +18,7 @@ public abstract class DefaultState {
 
     protected abstract boolean isCheckedBy(Color targetColor);
 
-    protected abstract DefaultState nextState();
+    public abstract DefaultState nextState();
 
     public abstract boolean isFinish();
 

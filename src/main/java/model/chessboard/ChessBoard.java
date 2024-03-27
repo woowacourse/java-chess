@@ -16,6 +16,11 @@ public class ChessBoard {
 
     public void move(Position source, Position destination) {
         this.currentState = currentState.move(source, destination);
+        this.update();
+    }
+
+    private void update() {
+        this.currentState = currentState.nextState();
     }
 
     public boolean isFinish() {
