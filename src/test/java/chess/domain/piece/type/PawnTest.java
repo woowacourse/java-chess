@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceRelation;
+import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
 import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
@@ -21,7 +21,7 @@ class PawnTest {
         Position source = Position.of("a6");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -39,7 +39,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("a3");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -93,7 +93,7 @@ class PawnTest {
         Position source = Position.of("a7");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -111,7 +111,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("a4");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -129,7 +129,7 @@ class PawnTest {
         Position source = Position.of("a6");
         Position target = Position.of("a4");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -147,7 +147,7 @@ class PawnTest {
         Position source = Position.of("a3");
         Position target = Position.of("a5");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -201,7 +201,7 @@ class PawnTest {
         Position source = Position.of("a2");
         Position target = Position.of("b3");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -219,7 +219,7 @@ class PawnTest {
         Position source = Position.of("a7");
         Position target = Position.of("b6");
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -235,7 +235,7 @@ class PawnTest {
         // given
         Piece pawn = new Pawn(PieceColor.BLACK);
         Movement movement = new Movement(Position.of("d4"), Position.of("c4"));
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.BLOCKED;
 
         // when & then

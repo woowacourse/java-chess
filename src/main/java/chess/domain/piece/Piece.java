@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
 import chess.domain.position.PathStatus;
 

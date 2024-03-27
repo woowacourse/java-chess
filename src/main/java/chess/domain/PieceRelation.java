@@ -1,13 +1,15 @@
-package chess.domain.piece;
+package chess.domain;
+
+import chess.domain.piece.Piece;
 
 public enum PieceRelation {
-    EMPTY,
+    NONE,
     ENEMY,
     PEER;
 
     public static PieceRelation determine(final Piece sourcePiece, final Piece targetPiece) {
         if (targetPiece == null) {
-            return PieceRelation.EMPTY;
+            return PieceRelation.NONE;
         }
         if (isSameColor(sourcePiece, targetPiece)) {
             return PieceRelation.PEER;

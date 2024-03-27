@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Turn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceRelation;
+import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
 import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
@@ -34,8 +34,8 @@ public class ChessBoard {
         Position target = Position.of(to);
 
         validatePosition(source, target);
-        validateTurn(source, turn);
         validateTarget(source, target);
+        validateTurn(source, turn);
         validateMovement(source, target);
 
         updateBoard(source, target);

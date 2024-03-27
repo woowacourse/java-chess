@@ -2,7 +2,7 @@ package chess.domain.piece.type;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceRelation;
+import chess.domain.PieceRelation;
 import chess.domain.position.Movement;
 import chess.domain.position.PathStatus;
 import chess.domain.position.Position;
@@ -43,7 +43,7 @@ class RookTest {
         // given
         Piece rook = new Rook(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -59,7 +59,7 @@ class RookTest {
         // given
         Piece rook = new Rook(PieceColor.BLACK);
         Movement movement = new Movement(source, target);
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.OPEN;
 
         // when
@@ -75,7 +75,7 @@ class RookTest {
         // given
         Piece rook = new Rook(PieceColor.BLACK);
         Movement movement = new Movement(Position.of("d4"), Position.of("c4"));
-        PieceRelation targetStatus = PieceRelation.EMPTY;
+        PieceRelation targetStatus = PieceRelation.NONE;
         PathStatus pathStatus = PathStatus.BLOCKED;
 
         // when & then
