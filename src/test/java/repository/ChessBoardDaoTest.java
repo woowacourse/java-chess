@@ -89,11 +89,11 @@ class ChessBoardDaoTest {
         final Piece newPiece = new Queen(Team.WHITE);
 
         // when
-        chessBoardDao.update(square, piece, gameId);
+        chessBoardDao.update(square, newPiece, gameId);
 
         // then
         final Piece findPiece = chessBoardDao.findBySquare(square, gameId).get();
-        assertThat(findPiece).isEqualTo(piece);
+        assertThat(findPiece).isEqualTo(newPiece);
     }
 
     @DisplayName("해당 위치의 기물을 삭제한다.")
