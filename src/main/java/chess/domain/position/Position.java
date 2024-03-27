@@ -34,6 +34,10 @@ public class Position {
         return this.rank == rank;
     }
 
+    public Position move(final Direction direction) {
+        return Position.of(this.file.move(direction), this.rank.move(direction));
+    }
+
     public int calculateDistanceTo(final Position target) {
         int fileDistance = Math.abs(calculateFileDifferenceTo(target));
         int rankDistance = Math.abs(calculateRankDifferenceTo(target));
@@ -45,11 +49,11 @@ public class Position {
     }
 
     public int calculateFileDifferenceTo(final Position target) {
-        return target.file.index() - file.index();
+        return target.file.differenceTo(this.file);
     }
 
     public int calculateRankDifferenceTo(final Position target) {
-        return target.rank.index() - rank.index();
+        return target.rank.differenceTo(this.rank);
     }
 
     public int indexOfFile() {
@@ -58,10 +62,6 @@ public class Position {
 
     public int indexOfRank() {
         return rank.index();
-    }
-
-    public Position move(final Direction direction) {
-        return Position.of(this.file.move(direction), this.rank.move(direction));
     }
 
     @Override

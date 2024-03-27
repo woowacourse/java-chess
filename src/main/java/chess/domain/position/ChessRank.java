@@ -62,4 +62,8 @@ public enum ChessRank {
     public int index() {
         return index;
     }
+
+    public int differenceTo(final ChessRank rank) {
+        return this.index - rank.index;
+    }
 }

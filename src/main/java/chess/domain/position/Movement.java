@@ -63,14 +63,6 @@ public class Movement {
         return directions;
     }
 
-    public boolean isDiagonal() {
-        return findDirection().isDiagonal();
-    }
-
-    public boolean isCross() {
-        return findDirection().isCross();
-    }
-
     public Direction findDirection() {
         int fileDiff = source.calculateFileDifferenceTo(target);
         int rankDiff = source.calculateRankDifferenceTo(target);

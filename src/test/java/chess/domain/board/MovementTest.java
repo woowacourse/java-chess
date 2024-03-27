@@ -58,30 +58,6 @@ class MovementTest {
         assertThat(result).hasSize(expected.size()).containsAll(expected);
     }
 
-    @DisplayName("대각선으로 움직인다.")
-    @Test
-    void isDiagonal() {
-        //given
-        Position source = Position.of("b3");
-        Position target = Position.of("c4");
-        Movement movement = new Movement(source, target);
-
-        //when & then
-        assertThat(movement.isDiagonal()).isTrue();
-    }
-
-    @DisplayName("상하좌우로 움직인다.")
-    @Test
-    void isCross() {
-        //given
-        Position source = Position.of("b3");
-        Position target = Position.of("c3");
-        Movement movement = new Movement(source, target);
-
-        //when & then
-        assertThat(movement.isCross()).isTrue();
-    }
-
     @DisplayName("source에서 target으로의 방향을 찾는다.")
     @ParameterizedTest
     @MethodSource("findDirectionArguments")

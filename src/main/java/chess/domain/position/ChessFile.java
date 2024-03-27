@@ -58,4 +58,8 @@ public enum ChessFile {
     public String value() {
         return value;
     }
+
+    public int differenceTo(final ChessFile file) {
+        return this.index - file.index;
+    }
 }
