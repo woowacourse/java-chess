@@ -20,17 +20,7 @@ public class BlackPawn extends Pawn {
     }
 
     @Override
-    protected void validateCorrectRouteForPiece(final Position source,
-                                                final Position target) {
-        List<Movable> movables = generateCurrentMovable(source);
-        boolean cannotMove = movables.stream()
-                .noneMatch(movable -> movable.canMove(source, target));
-        if (cannotMove) {
-            throw new IllegalArgumentException("[ERROR]이동할 수 없는 경로입니다. 다시 입력해주세요.");
-        }
-    }
-
-    private List<Movable> generateCurrentMovable(final Position source) {
+    protected List<Movable> generateCurrentMovable(final Position source) {
         if (isStartPosition(source)) {
             return List.of(
                     new Movable(INITIAL_MAX_MOVEMENT, Direction.SOUTH),
