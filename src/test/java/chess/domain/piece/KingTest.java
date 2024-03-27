@@ -3,7 +3,10 @@ package chess.domain.piece;
 import static chess.domain.attribute.File.D;
 import static chess.domain.attribute.File.E;
 import static chess.domain.attribute.File.F;
+import static chess.domain.attribute.File.G;
+import static chess.domain.attribute.Rank.EIGHT;
 import static chess.domain.attribute.Rank.ONE;
+import static chess.domain.attribute.Rank.SEVEN;
 import static chess.domain.attribute.Rank.THREE;
 import static chess.domain.attribute.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -107,5 +110,31 @@ class KingTest {
                         Square.of(D, ONE),
                         Square.of(E, ONE),
                         Square.of(F, ONE));
+    }
+
+    /*
+     * * * * * K * * 8    * * * * o K o * 8
+     * * * * * * * * 7    * * * * o o o * 7
+     * * * * * * * * 6    * * * * * * * * 6
+     * * * * * * * * 5    * * * * * * * * 5
+     * * * * * * * * 4 -> * * * * * * * * 4
+     * * * * * * * * 3    * * * * * * * * 3
+     * * * * * * * * 2    * * * * * * * * 2
+     * * * * * * * * 1    * * * * * * * * 1
+     a b c d e f g h      a b c d e f g h
+     */
+    @DisplayName("이동하는 경로가 칸에 없다면 저장하지 않는다.")
+    @Test
+    void movableSquareExceptNotSquare() {
+        King king = new King(Color.BLACK, Square.of(F, EIGHT));
+        Set<Piece> existPieces = Set.of(king);
+        Set<Square> squares = king.findLegalMoves(existPieces);
+        assertThat(squares)
+                .containsExactlyInAnyOrder(
+                        Square.of(E, EIGHT),
+                        Square.of(E, SEVEN),
+                        Square.of(F, SEVEN),
+                        Square.of(G, EIGHT),
+                        Square.of(G, SEVEN));
     }
 }

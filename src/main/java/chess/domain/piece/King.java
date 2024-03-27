@@ -29,14 +29,30 @@ public class King extends Piece {
     public Set<Square> candidateSquares() {
         Set<Square> squares = new HashSet<>();
         Square currentSquare = currentSquare();
-        squares.add(currentSquare.moveUp());
-        squares.add(currentSquare.moveDown());
-        squares.add(currentSquare.moveLeft());
-        squares.add(currentSquare.moveRight());
-        squares.add(currentSquare.moveLeftUp());
-        squares.add(currentSquare.moveLeftDown());
-        squares.add(currentSquare.moveRightUp());
-        squares.add(currentSquare.moveRightDown());
+        if (currentSquare.canMoveUp()) {
+            squares.add(currentSquare.moveUp());
+        }
+        if (currentSquare.canMoveDown()) {
+            squares.add(currentSquare.moveDown());
+        }
+        if (currentSquare.canMoveLeft()) {
+            squares.add(currentSquare.moveLeft());
+        }
+        if (currentSquare.canMoveRight()) {
+            squares.add(currentSquare.moveRight());
+        }
+        if (currentSquare.canMoveLeftUp()) {
+            squares.add(currentSquare.moveLeftUp());
+        }
+        if (currentSquare.canMoveLeftDown()) {
+            squares.add(currentSquare.moveLeftDown());
+        }
+        if (currentSquare.canMoveRightUp()) {
+            squares.add(currentSquare.moveRightUp());
+        }
+        if (currentSquare.canMoveRightDown()) {
+            squares.add(currentSquare.moveRightDown());
+        }
         return squares;
     }
 }
