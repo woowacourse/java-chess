@@ -27,6 +27,10 @@ public class OutputView {
                 scoreDTO.blackScore(), scoreDTO.whiteScore());
     }
 
+    public void printWinner(String winnerColor) {
+        System.out.println(winnerColor + "가 승리해서 게임이 종료되었습니다.");
+    }
+
     public void printException(String message) {
         System.out.println("[ERROR] " + message);
     }
