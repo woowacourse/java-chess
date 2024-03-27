@@ -28,14 +28,14 @@ public class PlayerDao {
         }
     }
 
-    public Optional<String> findNameById(final int id) {
-        final var query = "SELECT name FROM player WHERE id = ?";
+    public Optional<PlayerName> findName(final String name) {
+        final var query = "SELECT name FROM player WHERE name = ?";
         try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, name);
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return Optional.of(resultSet.getString("name"));
+                return Optional.of(new PlayerName(resultSet.getString("name")));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -64,21 +64,5 @@ public class PlayerDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Optional<PlayerName> findName(final String name) {
-        final var query = "SELECT name FROM player WHERE name = ?";
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, name);
-            final var resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return Optional.of(new PlayerName(resultSet.getString("name")));
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return Optional.empty();
     }
 }

@@ -1,6 +1,7 @@
 package service;
 
 import domain.ChessGameResult;
+import domain.ChessGameStatus;
 import domain.PlayerGameRecord;
 import domain.Team;
 import domain.chessboard.ChessBoard;
@@ -82,18 +83,28 @@ public class ChessService {
         return new ChessBoard(pieceSquares, currentTeam);
     }
 
-    private void updateChessBoardDao(final int gameId, final Square source, final Square target) {
-        final Piece piece = chessBoardDao.findBySquare(source, gameId)
-                .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
+    private void updateChessBoardDao(final int gameId, final Square source, final Square target) throws SQLException {
+        try {
+            connection.setAutoCommit(false);
 
-        final Optional<Piece> targetPiece = chessBoardDao.findBySquare(target, gameId);
-        if (targetPiece.isEmpty()) {
-            chessBoardDao.addSquarePiece(target, piece, gameId);
-        } else {
-            chessBoardDao.update(target, piece, gameId);
+            final Piece piece = chessBoardDao.findBySquare(source, gameId)
+                    .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
+
+            final Optional<Piece> targetPiece = chessBoardDao.findBySquare(target, gameId);
+            if (targetPiece.isEmpty()) {
+                chessBoardDao.addSquarePiece(target, piece, gameId);
+            } else {
+                chessBoardDao.update(target, piece, gameId);
+            }
+
+            chessBoardDao.deleteBySquare(source, gameId);
+            connection.commit();
+        } catch (final Exception e) {
+            connection.rollback();
+            throw new IllegalArgumentException(e.getMessage());
+        } finally {
+            connection.setAutoCommit(true);
         }
-
-        chessBoardDao.deleteBySquare(source, gameId);
     }
 
     public void endGame(final int gameId) {

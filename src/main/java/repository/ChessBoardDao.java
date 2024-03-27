@@ -60,6 +60,32 @@ public class ChessBoardDao {
         return Optional.empty();
     }
 
+    public Map<Square, Piece> findAll(final int gameId) {
+        final var query = "SELECT * FROM board WHERE game_id = (?)";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+
+            final var resultSet = preparedStatement.executeQuery();
+
+            final Map<Square, Piece> squarePieces = new HashMap<>();
+
+            while (resultSet.next()) {
+                squarePieces.put(Square.of(
+                                resultSet.getString("file"),
+                                resultSet.getString("rank")
+                        ),
+                        PieceMaker.of(
+                                resultSet.getString("piece_type"),
+                                resultSet.getString("team")
+                        ));
+            }
+
+            return squarePieces;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void update(final Square square, final Piece piece, final int gameId) {
         final var query = "UPDATE board SET piece_type = (?), team = (?) " +
                 "where file = (?) AND `rank` = (?) AND game_id = (?)";
@@ -85,32 +111,6 @@ public class ChessBoardDao {
             preparedStatement.setInt(3, gameId);
 
             preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Map<Square, Piece> findAll(final int gameId) {
-        final var query = "SELECT * FROM board WHERE game_id = (?)";
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gameId);
-
-            final var resultSet = preparedStatement.executeQuery();
-
-            final Map<Square, Piece> squarePieces = new HashMap<>();
-
-            while (resultSet.next()) {
-                squarePieces.put(Square.of(
-                                resultSet.getString("file"),
-                                resultSet.getString("rank")
-                        ),
-                        PieceMaker.of(
-                                resultSet.getString("piece_type"),
-                                resultSet.getString("team")
-                        ));
-            }
-
-            return squarePieces;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }

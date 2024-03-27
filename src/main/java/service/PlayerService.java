@@ -8,11 +8,9 @@ import java.sql.Connection;
 
 public class PlayerService {
 
-    private final Connection connection;
     private final PlayerDao playerDao;
 
     public PlayerService(final Connection connection) {
-        this.connection = connection;
         this.playerDao = new PlayerDao(connection);
     }
 

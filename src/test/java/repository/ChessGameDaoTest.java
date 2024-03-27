@@ -1,6 +1,7 @@
 package repository;
 
 import connection.ChessConnectionGenerator;
+import domain.ChessGameStatus;
 import domain.Team;
 import domain.player.Player;
 import domain.player.PlayerName;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.ChessGameStatus;
 
 import java.sql.Connection;
 import java.sql.SQLException;

@@ -1,9 +1,9 @@
 package repository;
 
+import domain.ChessGameStatus;
 import domain.Team;
 import domain.player.Player;
 import domain.player.PlayerName;
-import service.ChessGameStatus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

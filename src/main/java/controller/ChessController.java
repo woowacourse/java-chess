@@ -47,7 +47,6 @@ public class ChessController {
         while (isRunning) {
             try {
                 final String command = inputView.readStartOption();
-                final int gameId;
                 if ("quit".equals(command)) {
                     isRunning = false;
                     continue;
@@ -55,13 +54,13 @@ public class ChessController {
                 if ("start".equals(command)) {
                     final Player blackPlayer = roadPlayer(Team.BLACK);
                     final Player whitePlayer = roadPlayer(Team.WHITE);
-                    gameId = chessService.createNewGame(blackPlayer, whitePlayer);
+                    final int gameId = chessService.createNewGame(blackPlayer, whitePlayer);
                     play(gameId);
                     continue;
                 }
                 if ("continue".equals(command)) {
                     final List<Integer> runningGame = chessService.findRunningGame();
-                    gameId = readGameId(runningGame);
+                    final int gameId = readGameId(runningGame);
                     play(gameId);
                     continue;
                 }
@@ -98,7 +97,6 @@ public class ChessController {
                 outputView.printError(e.getMessage());
             }
         }
-
     }
 
     private void play(final int gameId) throws SQLException {
