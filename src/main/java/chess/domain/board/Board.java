@@ -23,10 +23,6 @@ public class Board {
         return pieces.findByCoordinate(coordinate);
     }
 
-    public boolean isPiecePresent(Coordinate coordinate) {
-        return pieces.isPiecePresent(coordinate);
-    }
-
     public void move(Coordinate source, Coordinate target) {
         validateSourceExist(source);
         validateTurn(source);

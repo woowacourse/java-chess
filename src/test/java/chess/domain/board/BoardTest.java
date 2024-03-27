@@ -18,7 +18,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -197,21 +196,6 @@ class BoardTest {
         Piece result = emptyBoard.findByCoordinate(new Coordinate(2, 'a'));
 
         assertThat(result).isEqualTo(EmptyPiece.getInstance());
-    }
-
-    @DisplayName("해당 위치의 기물이 존재하는지 판단할 수 있다.")
-    @Test
-    void isPiecePresent() {
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
-        Piece sourcePiece = new Pawn(Team.WHITE);
-        Coordinate source = new Coordinate(2, 'a');
-        pieces.put(source, sourcePiece);
-        Board board = new Board(pieces);
-
-        Assertions.assertAll(
-                () -> Assertions.assertTrue(board.isPiecePresent(source)),
-                () -> Assertions.assertFalse(board.isPiecePresent(new Coordinate(3, 'a')))
-        );
     }
 
     @DisplayName("source 좌표에 기물이 없으면 기물을 움직일 수 없다.")
