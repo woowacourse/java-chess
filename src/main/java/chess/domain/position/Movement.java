@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class Movement {
         if (isOnlyOneDirection(fileDiff, rankDiff)) {
             return findOnlyOneDirections(fileDiff, rankDiff);
         }
-        return findMultipleDirections(fileDiff, rankDiff);
+        return findLDirections(fileDiff, rankDiff);
     }
 
     private boolean isOnlyOneDirection(final int fileDiff, final int rankDiff) {
@@ -44,13 +45,22 @@ public class Movement {
                 .toList();
     }
 
-    private List<Direction> findMultipleDirections(final int fileDiff, final int rankDiff) {
-        Stream<Direction> horizontalDirections = Stream.generate(() -> Direction.findDirection(fileDiff, 0)).limit(fileDiff);
-        Stream<Direction> verticalDirections = Stream.generate(() -> Direction.findDirection(0, rankDiff)).limit(rankDiff);
-        if (Math.abs(fileDiff) > Math.abs(rankDiff)) {
-            return Stream.concat(horizontalDirections, verticalDirections).toList();
+    private List<Direction> findLDirections(final int fileDiff, final int rankDiff) {
+        List<Direction> horizontalDirections = Stream.generate(() -> Direction.findDirection(fileDiff, 0)).limit(fileDiff).toList();
+        List<Direction> verticalDirections = Stream.generate(() -> Direction.findDirection(0, rankDiff)).limit(rankDiff).toList();
+        return union(horizontalDirections, verticalDirections);
+    }
+
+    private static List<Direction> union(final List<Direction> horizontalDirections, final List<Direction> verticalDirections) {
+        List<Direction> directions = new ArrayList<>();
+        if (horizontalDirections.size() > verticalDirections.size()) {
+            directions.addAll(horizontalDirections);
+            directions.addAll(verticalDirections);
+            return directions;
         }
-        return Stream.concat(verticalDirections, horizontalDirections).toList();
+        directions.addAll(verticalDirections);
+        directions.addAll(horizontalDirections);
+        return directions;
     }
 
     public boolean isDiagonal() {
