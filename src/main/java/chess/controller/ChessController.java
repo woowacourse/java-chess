@@ -13,7 +13,7 @@ import chess.dto.CommandDto;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.InvalidCommandException;
 import chess.exception.InvalidGameRoomException;
-import chess.view.GameCommand;
+import chess.util.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.sql.SQLException;
@@ -75,15 +75,20 @@ public class ChessController {
         State state = chessGame.checkState();
         Board board = chessGame.getBoard();
         while (state != State.CHECKMATE && (commandDto = InputView.inputCommand()).gameCommand() == GameCommand.MOVE) {
-            Movement movement = commandDto.toMovementDomain();
-            Piece piece = chessGame.movePiece(movement);
-            dbManager.update(roomName, movement, piece, chessGame.getCurrentTeam());
+            playTurn(chessGame, dbManager, roomName, commandDto.toMovementDomain());
             state = chessGame.checkState();
-            OutputView.printGameState(new BoardStatusDto(board.getPieces(), state));
         }
         printWinnerByStatus(board, commandDto.gameCommand());
         printWinnerByCheckmate(chessGame, state);
         dbManager.deleteChessGame(roomName);
+    }
+
+    private void playTurn(ChessGame chessGame, DbManager dbManager, String roomName, Movement movement)
+            throws SQLException {
+        Board board = chessGame.getBoard();
+        Piece piece = chessGame.movePiece(movement);
+        dbManager.update(roomName, movement, piece, chessGame.getCurrentTeam());
+        OutputView.printGameState(new BoardStatusDto(board.getPieces(), chessGame.checkState()));
     }
 
     private void printWinnerByStatus(Board board, GameCommand gameCommand) {

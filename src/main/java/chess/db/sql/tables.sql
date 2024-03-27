@@ -1,14 +1,15 @@
 USE chess;
 
+DROP TABLE board;
+
 CREATE TABLE board
 (
-    id              INT         NOT NULL AUTO_INCREMENT,
-    room_name       VARCHAR(16) NOT NULL,
-    position_row    TINYINT     NOT NULL,
-    position_column TINYINT     NOT NULL,
-    team            CHAR(5)     NOT NULL,
-    kind            VARCHAR(6)  NOT NULL,
-    is_moved        BOOLEAN     NOT NULL,
+    id        INT         NOT NULL AUTO_INCREMENT,
+    room_name VARCHAR(16) NOT NULL,
+    position  CHAR(2)     NOT NULL,
+    team      CHAR(5)     NOT NULL,
+    kind      VARCHAR(6)  NOT NULL,
+    is_moved  BOOLEAN     NOT NULL,
     PRIMARY KEY (id)
 );
 

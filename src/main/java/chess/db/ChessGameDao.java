@@ -32,7 +32,7 @@ public class ChessGameDao {
     }
 
     public Team findCurrentTeamByRoomName(String roomName) {
-        try (final Connection connection = connectionGenerator.getConnection();) {
+        try (final Connection connection = connectionGenerator.getConnection()) {
             final PreparedStatement statement = connection.prepareStatement(
                     "SELECT current_team FROM chess_game WHERE room_name = ?");
 

@@ -52,10 +52,10 @@ public class OutputView {
     }
 
     public static void printWinner(Team team) {
-        System.out.println(TeamViewer.show(team) + "팀 승리!");
+        System.out.println(TeamViewer.show(team) + " 승리!");
     }
 
     public static void printPoint(Team team, double point) {
-        System.out.println(TeamViewer.show(team) + "팀" + point + "점");
+        System.out.println(TeamViewer.show(team) + point + "점");
     }
 }

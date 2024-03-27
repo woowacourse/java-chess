@@ -1,8 +1,8 @@
 package chess.dto;
 
 import chess.domain.Movement;
-import chess.view.GameCommand;
-import chess.view.PositionCommand;
+import chess.util.GameCommand;
+import chess.util.PositionConverter;
 
 public class CommandDto {
     private final GameCommand gameCommand;
@@ -24,6 +24,6 @@ public class CommandDto {
     }
 
     public Movement toMovementDomain() {
-        return new Movement(PositionCommand.generate(source), PositionCommand.generate(target));
+        return new Movement(PositionConverter.toPosition(source), PositionConverter.toPosition(target));
     }
 }

@@ -1,13 +1,14 @@
 package chess.view;
 
-import static chess.view.GameCommand.END;
-import static chess.view.GameCommand.LOAD;
-import static chess.view.GameCommand.MOVE;
-import static chess.view.GameCommand.START;
-import static chess.view.GameCommand.STATUS;
+import static chess.util.GameCommand.END;
+import static chess.util.GameCommand.LOAD;
+import static chess.util.GameCommand.MOVE;
+import static chess.util.GameCommand.START;
+import static chess.util.GameCommand.STATUS;
 
 import chess.dto.CommandDto;
 import chess.exception.InvalidCommandException;
+import chess.util.GameCommand;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 

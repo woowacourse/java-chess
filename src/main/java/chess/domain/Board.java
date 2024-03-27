@@ -34,7 +34,8 @@ public class Board {
         validateSameTeamPieceExistsOnTargetPosition(movement.target(), thisPiece);
         validateBlockingPieceExists(thisPiece, movement);
 
-        pieces.put(movement.target(), thisPiece.move());
+        thisPiece = thisPiece.move();
+        pieces.put(movement.target(), thisPiece);
         pieces.remove(movement.source());
         return thisPiece;
     }

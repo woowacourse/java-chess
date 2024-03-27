@@ -7,6 +7,7 @@ import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
 import chess.exception.InvalidGameRoomException;
+import chess.util.PositionConverter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,15 +31,14 @@ public final class BoardDao {
         final Connection connection = connectionGenerator.getConnection();
         for (Entry<Position, Piece> piece : board.getPieces().entrySet()) {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO board(room_name, position_row, position_column, team, kind, is_moved)"
-                            + " VALUES (?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO board(room_name, position, team, kind, is_moved)"
+                            + " VALUES (?, ?, ?, ?, ?)");
 
             statement.setString(1, roomName);
-            statement.setInt(2, piece.getKey().row());
-            statement.setInt(3, piece.getKey().column());
-            statement.setString(4, piece.getValue().team().name());
-            statement.setString(5, piece.getValue().kind().name());
-            statement.setBoolean(6, piece.getValue().isMoved());
+            statement.setString(2, PositionConverter.toNotation(piece.getKey()));
+            statement.setString(3, piece.getValue().team().name());
+            statement.setString(4, piece.getValue().kind().name());
+            statement.setBoolean(5, piece.getValue().isMoved());
 
             statement.execute();
         }
@@ -64,12 +64,10 @@ public final class BoardDao {
     }
 
     private void getPiece(ResultSet resultSet, Map<Position, Piece> loadedBoard) throws SQLException {
-        int positionRow = resultSet.getInt("position_row");
-        int positionColumn = resultSet.getInt("position_column");
+        Position position = PositionConverter.toPosition(resultSet.getString("position"));
         Team team = Team.valueOf(resultSet.getString("team"));
         Kind kind = Kind.valueOf(resultSet.getString("kind"));
         boolean isMoved = resultSet.getBoolean("is_moved");
-        Position position = Position.of(positionRow, positionColumn);
         Piece piece = kind.createPiece(team, isMoved);
 
         loadedBoard.put(position, piece);
@@ -83,25 +81,21 @@ public final class BoardDao {
 
     private void deleteAttackedPiece(Movement movement, String roomName, Connection connection) throws SQLException {
         final PreparedStatement statement = connection.prepareStatement(
-                "DELETE FROM board WHERE position_row = ? AND position_column = ? AND room_name = ?");
-        statement.setInt(1, movement.target().row());
-        statement.setInt(2, movement.target().column());
-        statement.setString(3, roomName);
+                "DELETE FROM board WHERE position = ? AND room_name = ?");
+        statement.setString(1, PositionConverter.toNotation(movement.target()));
+        statement.setString(2, roomName);
 
         statement.executeUpdate();
     }
 
     private void movePiece(Movement movement, Piece piece, String roomName, Connection connection) throws SQLException {
         final PreparedStatement statement = connection.prepareStatement(
-                "UPDATE board SET position_row = ?, position_column = ?, is_moved = ?"
-                        + " WHERE position_row = ? AND position_column = ? AND room_name = ?");
+                "UPDATE board SET position = ?, is_moved = ? WHERE position = ? AND room_name = ?");
 
-        statement.setInt(1, movement.target().row());
-        statement.setInt(2, movement.target().column());
-        statement.setBoolean(3, piece.isMoved());
-        statement.setInt(4, movement.source().row());
-        statement.setInt(5, movement.source().column());
-        statement.setString(6, roomName);
+        statement.setString(1, PositionConverter.toNotation(movement.target()));
+        statement.setBoolean(2, piece.isMoved());
+        statement.setString(3, PositionConverter.toNotation(movement.source()));
+        statement.setString(4, roomName);
 
         statement.executeUpdate();
     }
