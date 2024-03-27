@@ -6,7 +6,7 @@ import model.position.Position;
 
 import java.util.Map;
 
-public final class BlackFaction implements FactionState {
+public sealed class BlackFaction implements FactionState permits BlackFactionCheck {
     @Override
     public void checkSameFaction(final Piece piece) {
         if (piece.color() != Color.BLACK) {

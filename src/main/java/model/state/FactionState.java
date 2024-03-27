@@ -11,7 +11,7 @@ import model.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public sealed interface FactionState permits BlackFaction, BlackFactionCheck, WhiteFaction, WhiteFactionCheck {
+public sealed interface FactionState permits BlackFaction, WhiteFaction {
 
     void checkSameFaction(final Piece piece);
 
@@ -33,12 +33,12 @@ public sealed interface FactionState permits BlackFaction, BlackFactionCheck, Wh
     default Position positionOfKing(final Map<Position, Piece> chessBoard, final Color color) {
         return chessBoard.entrySet()
                          .stream()
-                         .filter(entry -> entry.getValue().role().status() == RoleStatus.KING
+                         .filter(entry -> entry.getValue().roleStatus() == RoleStatus.KING
                                  && entry.getValue().color() == color)
                          .map(Map.Entry::getKey)
                          .findFirst()
                          .get();
-        // TODO 킹이 없는 경우는 게임이 종료된 경우 -> 3단계
+        // TODO -> 3단계
     }
 
     default boolean possibleAttacked(final Map<Position, Piece> chessBoard, final Position kingPosition, final Map.Entry<Position, Piece> entry) {
