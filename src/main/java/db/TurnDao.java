@@ -2,59 +2,42 @@ package db;
 
 import domain.dto.TurnDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 public class TurnDao {
-    private static final String tableName = "turns";
-    private final ConnectionManager connectionManager;
+    private static final String TABLE_NAME = "turns";
 
-    private TurnDao(final ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
-    }
+    private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<TurnDto> rowMapper = (resultSet) ->
+            new TurnDto(resultSet.getString("color"));
 
     TurnDao() {
-        this(new ConnectionManager());
+        this(new JdbcTemplate());
+    }
+
+    private TurnDao(final JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     TurnDto find() {
-        final var query = "SELECT * FROM " + tableName;
-        try (final var connection = connectionManager.getConnection();
-             final var prepareStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = prepareStatement.executeQuery();
-            if (resultSet.next()) {
-                return new TurnDto(resultSet.getString("color"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        final var query = "SELECT * FROM " + TABLE_NAME + " LIMIT 1";
+        final List<TurnDto> turns = jdbcTemplate.find(query, rowMapper);
+        if (turns.isEmpty()) {
+            throw new IllegalArgumentException("데이터가 없습니다.");
         }
-        return null;
+        return turns.get(0);
     }
 
-    void update(TurnDto turnDto) {
-        final String deleteQuery = "DELETE FROM " + tableName;
-        final String insertQuery = "INSERT INTO " + tableName + " (color) VALUES (?)";
-        try (final Connection connection = connectionManager.getConnection();
-             final PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery);
-             final PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-            deleteStatement.executeUpdate();
 
-            insertStatement.setString(1, turnDto.color());
-            insertStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    void update(final TurnDto turnDto) {
+        final String deleteQuery = "DELETE FROM " + TABLE_NAME;
+        final String insertQuery = "INSERT INTO " + TABLE_NAME + " (color) VALUES (?)";
+        jdbcTemplate.delete(deleteQuery);
+        jdbcTemplate.add(insertQuery, turnDto.color());
     }
 
     public void deleteAll() {
-        final String deleteQuery = "DELETE FROM " + tableName;
-        try (final Connection connection = connectionManager.getConnection();
-             final PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
-            deleteStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        final String query = "DELETE FROM " + TABLE_NAME;
+        jdbcTemplate.delete(query);
     }
 }

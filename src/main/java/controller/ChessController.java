@@ -33,7 +33,7 @@ public class ChessController {
     }
 
     private ChessBoard createChessBoard(DBService dbService) {
-        if (dbService.doesPreviousDataExist()) {
+        if (dbService.isPreviousDataExist()) {
             TurnDto turnDto = dbService.loadPreviousTurn();
             return ChessBoardFactory.loadPreviousChessBoard(dbService.loadPreviousData(), turnDto.getTurn());
         }

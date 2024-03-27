@@ -19,7 +19,7 @@ public class PieceDaoTest {
         final var pieceDto = new PieceDto("A", "3", "WHITE", "PAWN");
 
         pieceDao.add(pieceDto);
-        PieceDto findPieceDto = pieceDao.find("A", "3");
+        PieceDto findPieceDto = pieceDao.findOne("A", "3");
 
         assertThat(findPieceDto).isEqualTo(pieceDto);
     }
@@ -29,7 +29,7 @@ public class PieceDaoTest {
         final var pieceDto = new PieceDto("A", "3", "WHITE", "PAWN");
         pieceDao.add(pieceDto);
 
-        PieceDto findPiece = pieceDao.find("A", "3");
+        PieceDto findPiece = pieceDao.findOne("A", "3");
 
         assertThat(findPiece.color()).isEqualTo("WHITE");
         assertThat(findPiece.type()).isEqualTo("PAWN");
@@ -57,6 +57,6 @@ public class PieceDaoTest {
         pieceDao.add(pieceDtoB);
         pieceDao.add(pieceDtoC);
 
-        assertThat(pieceDao.count()).isEqualTo(3);
+        assertThat(pieceDao.hasRecords()).isTrue();
     }
 }

@@ -2,99 +2,54 @@ package db;
 
 import domain.dto.PieceDto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
-    private static final String tableName = "pieces";
-    private final ConnectionManager connectionManager;
+    private static final String TABLE_NAME = "pieces";
 
-    private PieceDao(final ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
-    }
+    private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<PieceDto> rowMapper = (resultSet) -> new PieceDto(
+            resultSet.getString("board_file"),
+            resultSet.getString("board_rank"),
+            resultSet.getString("color"),
+            resultSet.getString("type")
+    );
 
     PieceDao() {
-        this(new ConnectionManager());
+        this(new JdbcTemplate());
+    }
+
+    private PieceDao(final JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     void add(final PieceDto piece) {
-        final var query = "INSERT INTO " + tableName + " VALUES(?, ?, ?, ?)";
-        try (final var connection = connectionManager.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, piece.boardFile());
-            preparedStatement.setString(2, piece.boardRank());
-            preparedStatement.setString(3, piece.color());
-            preparedStatement.setString(4, piece.type());
-            preparedStatement.executeUpdate();
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
+        final String query = "INSERT INTO " + TABLE_NAME + " VALUES(?, ?, ?, ?)";
+        jdbcTemplate.add(query, piece.boardFile(), piece.boardRank(), piece.color(), piece.type());
     }
 
-    PieceDto find(final String file, final String rank) {
-        final var query = "SELECT * FROM " + tableName + " WHERE board_file = ? and board_rank = ?";
-        try (final var connection = connectionManager.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, file);
-            preparedStatement.setString(2, rank);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new PieceDto(file,
-                        rank,
-                        resultSet.getString("color"),
-                        resultSet.getString("type")
-                );
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
+    PieceDto findOne(final String file, final String rank) {
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE board_file = ? and board_rank = ? limit 1";
+        final List<PieceDto> pieces = jdbcTemplate.find(query, rowMapper, file, rank);
+        if (pieces.size() == 0) {
+            throw new IllegalArgumentException("데이터가 없습니다.");
         }
-        return null;
+        return pieces.get(0);
     }
 
     List<PieceDto> findAll() {
-        final List<PieceDto> pieces = new ArrayList<>();
-        final String query = "SELECT * FROM " + tableName;
-        try (final Connection connection = connectionManager.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String file = resultSet.getString("board_file");
-                String rank = resultSet.getString("board_rank");
-                String color = resultSet.getString("color");
-                String type = resultSet.getString("type");
-                pieces.add(new PieceDto(file, rank, color, type));
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return pieces;
+        final String query = "SELECT * FROM " + TABLE_NAME;
+        return jdbcTemplate.find(query, rowMapper);
     }
 
     void deleteAll() {
-        final var query = "DELETE FROM " + tableName;
-        try (final var connection = connectionManager.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        final String query = "DELETE FROM " + TABLE_NAME;
+        jdbcTemplate.delete(query);
     }
 
-    int count() {
-        final var query = "SELECT COUNT(*) AS count FROM " + tableName;
-        try (final var connection = connectionManager.getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return Integer.parseInt(resultSet.getString("count"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
+    boolean hasRecords() {
+        final String query = "SELECT * FROM " + TABLE_NAME + " LIMIT 1";
+        final List<PieceDto> pieces = jdbcTemplate.find(query, rowMapper);
+        return pieces.size() != 0;
     }
 }

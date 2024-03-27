@@ -37,7 +37,7 @@ class DBServiceTest {
 
     @Test
     void 이전_게임_데이터가_존재한다() {
-        assertThat(dbService.doesPreviousDataExist()).isTrue();
+        assertThat(dbService.isPreviousDataExist()).isTrue();
     }
 
     @Test
@@ -79,6 +79,6 @@ class DBServiceTest {
     void 모든_데이터를_삭제한다() {
         dbService.deletePreviousData();
 
-        assertThat(dbService.doesPreviousDataExist()).isFalse();
+        assertThat(dbService.isPreviousDataExist()).isFalse();
     }
 }

@@ -9,8 +9,8 @@ public class DBService {
     private final PieceDao pieceDao = new PieceDao();
     private final TurnDao turnDao = new TurnDao();
 
-    public boolean doesPreviousDataExist() {
-        return pieceDao.count() != 0;
+    public boolean isPreviousDataExist() {
+        return pieceDao.hasRecords();
     }
 
     public List<PieceDto> loadPreviousData() {
