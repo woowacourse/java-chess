@@ -136,4 +136,14 @@ class ChessBoardTest {
         return Arrays.stream(Rank.values())
                 .map(rank -> ChessPosition.of(file, rank));
     }
+
+    @Test
+    @DisplayName("체스보드에 각 진영의 King이 모두 존재하면 게임을 이어갈 수 있다.")
+    void canContinue() {
+        // when
+        boolean result = chessBoard.canContinue();
+
+        // then
+        assertThat(result).isTrue();
+    }
 }

@@ -48,6 +48,6 @@ public class Run implements GameState {
 
     @Override
     public boolean canContinue() {
-        return true;
+        return chessBoard.canContinue();
     }
 }

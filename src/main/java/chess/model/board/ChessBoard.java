@@ -1,7 +1,9 @@
 package chess.model.board;
 
 import chess.model.piece.Blank;
+import chess.model.piece.King;
 import chess.model.piece.Piece;
+import chess.model.piece.Side;
 import chess.model.position.ChessPosition;
 import chess.model.position.Path;
 import chess.model.game.Turn;
@@ -59,6 +61,12 @@ public class ChessBoard {
     private void replacePiece(Piece sourcePiece, ChessPosition sourcePosition, ChessPosition targetPosition) {
         board.put(sourcePosition, Blank.INSTANCE);
         board.put(targetPosition, sourcePiece);
+    }
+
+    public boolean canContinue() {
+        return Side.colors()
+                .stream()
+                .allMatch(side -> board.containsValue(King.from(side)));
     }
 
     public Map<ChessPosition, Piece> getBoard() {
