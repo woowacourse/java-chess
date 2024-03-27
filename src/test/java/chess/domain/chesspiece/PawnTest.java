@@ -5,6 +5,7 @@ import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.chesspiece.pawn.BlackPawn;
 import chess.domain.chesspiece.pawn.WhitePawn;
 import chess.domain.chesspiece.slidingPiece.King;
 import chess.domain.position.Position;
@@ -19,7 +20,7 @@ class PawnTest {
     @DisplayName("폰은 시작 지점에 있을 때 앞으로 2칸 이동할 수 있다.")
     void Pawn_Move_forward_twice_on_start_position() {
         Piece piece = new WhitePawn();
-        List<Position> route = piece.getMovingRoute(new Position("a", "2"), new Position("a", "4"));
+        List<Position> route = piece.findRoute(new Position("a", "2"), new Position("a", "4"), new Empty());
         List<Position> positions = List.of(new Position("a", "3"));
         assertThat(route).isEqualTo(positions);
     }
@@ -28,7 +29,7 @@ class PawnTest {
     @DisplayName("폰은 앞으로 한 칸 이동할 수 있다.")
     void Pawn_Move_forward_once() {
         Piece piece = new WhitePawn();
-        List<Position> route = piece.getMovingRoute(new Position("a", "2"), new Position("a", "3"));
+        List<Position> route = piece.findRoute(new Position("a", "2"), new Position("a", "3"), new Empty());
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -38,7 +39,7 @@ class PawnTest {
     void Pawn_Can_not_move_diagonal() {
         assertThatThrownBy(() -> {
             Piece piece = new WhitePawn();
-            piece.getMovingRoute(new Position("a", "2"), new Position("b", "3"));
+            piece.findRoute(new Position("a", "2"), new Position("b", "3"), new Empty());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -46,7 +47,7 @@ class PawnTest {
     @DisplayName("폰은 공격할 때만 대각선으로 이동할 수 있다.")
     void Pawn_Attack_diagonal() {
         Piece piece = new WhitePawn();
-        List<Position> route = piece.getAttackRoute(new Position("a", "2"), new Position("b", "3"));
+        List<Position> route = piece.findRoute(new Position("a", "2"), new Position("b", "3"), new BlackPawn());
         List<Position> positions = List.of();
         assertThat(route).isEqualTo(positions);
     }
@@ -56,7 +57,7 @@ class PawnTest {
     void Pawn_Can_not_attack_forward() {
         assertThatThrownBy(() -> {
             Piece piece = new WhitePawn();
-            piece.getAttackRoute(new Position("a", "2"), new Position("a", "3"));
+            piece.findRoute(new Position("a", "2"), new Position("a", "3"), new BlackPawn());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -68,7 +69,7 @@ class PawnTest {
         Position source = new Position(file1, rank1);
         Position target = new Position(file2, rank2);
         assertThatThrownBy(() -> {
-            piece.getMovingRoute(source, target);
+            piece.findRoute(source, target, new Empty());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

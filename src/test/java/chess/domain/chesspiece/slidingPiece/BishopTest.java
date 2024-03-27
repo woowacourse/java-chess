@@ -5,6 +5,7 @@ import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.chesspiece.Empty;
 import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
@@ -18,7 +19,7 @@ class BishopTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들을 반환한다.")
     void Bishop_Check_route() {
         Piece piece = new Bishop(WHITE);
-        List<Position> route = piece.getMovingRoute(new Position("a", "1"), new Position("e", "5"));
+        List<Position> route = piece.findRoute(new Position("a", "1"), new Position("e", "5"), new Empty());
         List<Position> positions = List.of(new Position("b", "2"), new Position("c", "3"),
                 new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
@@ -35,7 +36,7 @@ class BishopTest {
         Position target = new Position(file2, rank2);
         Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> {
-            piece.getMovingRoute(source, target);
+            piece.findRoute(source, target, new Empty());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -23,14 +23,8 @@ public class ChessBoard {
         Piece targetPiece = chessBoard.get(target);
 
         checkTargetIsTeam(piece, targetPiece);
-        if (targetPiece.isEmpty()) {
-            piece.getMovingRoute(source, target)
-                    .forEach(this::checkObstacle);
-        }
-        if (!targetPiece.isEmpty() && !piece.isTeam(targetPiece)) {
-            piece.getAttackRoute(source, target)
-                    .forEach(this::checkObstacle);
-        }
+        piece.findRoute(source, target, targetPiece)
+                .forEach(this::checkObstacle);
 
         chessBoard.put(source, new Empty());
         chessBoard.put(target, piece);
@@ -44,8 +38,8 @@ public class ChessBoard {
     }
 
     private void checkTargetIsTeam(Piece source, Piece target) {
-        if (source.isTeam(target)) {
-            throw new IllegalArgumentException("같은 팀이 있는 곳으로는 이동할 수 없습니다.");
+        if(source.isTeam(target)) {
+            throw new IllegalStateException("같은 팀이 있는 곳으로는 이동할 수 없습니다.");
         }
     }
 

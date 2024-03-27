@@ -19,7 +19,15 @@ public abstract class Pawn extends Piece {
     protected abstract boolean isStartPosition(Position source);
 
     @Override
-    public List<Position> getMovingRoute(Position source, Position target) {
+    public List<Position> findRoute(Position source, Position target, Piece targetPiece) {
+        if(targetPiece.isEmpty()) {
+            return findMovingRoute(source, target);
+        }
+
+        return findAttackRoute(source, target);
+    }
+
+    private List<Position> findMovingRoute(Position source, Position target) {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
 
@@ -31,8 +39,7 @@ public abstract class Pawn extends Piece {
         return Collections.unmodifiableList(route);
     }
 
-    @Override
-    public List<Position> getAttackRoute(Position source, Position target) {
+    private List<Position> findAttackRoute(Position source, Position target) {
         validateAttackRule(source, target);
         return Collections.unmodifiableList(new ArrayList<>());
     }

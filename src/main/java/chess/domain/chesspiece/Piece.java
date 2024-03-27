@@ -10,9 +10,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract List<Position> getMovingRoute(Position source, Position target);
-
-    public abstract List<Position> getAttackRoute(Position source, Position target);
+    public abstract List<Position> findRoute(Position source, Position target, Piece targetPiece);
 
     protected abstract void validateMovingRule(Position source, Position target);
 

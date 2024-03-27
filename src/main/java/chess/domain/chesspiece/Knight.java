@@ -15,15 +15,10 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> getMovingRoute(Position source, Position target) {
+    public List<Position> findRoute(Position source, Position target, Piece targetPiece) {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
         return Collections.unmodifiableList(route);
-    }
-
-    @Override
-    public List<Position> getAttackRoute(Position source, Position target) {
-        return getMovingRoute(source, target);
     }
 
     @Override

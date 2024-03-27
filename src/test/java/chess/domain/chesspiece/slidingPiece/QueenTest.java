@@ -5,6 +5,7 @@ import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.chesspiece.Empty;
 import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import java.util.List;
@@ -16,7 +17,7 @@ class QueenTest {
     @DisplayName("여왕은 앞뒤로 움직일 수 있다.")
     void Queen_Move_forward_and_backward() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(new Position("a", "1"), new Position("a", "4"));
+        List<Position> route = piece.findRoute(new Position("a", "1"), new Position("a", "4"), new Empty());
         List<Position> positions = List.of(new Position("a", "2"), new Position("a", "3"));
         assertThat(route).isEqualTo(positions);
     }
@@ -25,7 +26,7 @@ class QueenTest {
     @DisplayName("여왕은 좌우로 움직일 수 있다.")
     void Queen_Move_side() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(new Position("b", "4"), new Position("e", "4"));
+        List<Position> route = piece.findRoute(new Position("b", "4"), new Position("e", "4"), new Empty());
         List<Position> positions = List.of(new Position("c", "4"), new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
@@ -34,7 +35,7 @@ class QueenTest {
     @DisplayName("여왕은 대각선으로 움직일 수 있다.")
     void Queen_Move_diagonal() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(new Position("b", "2"), new Position("e", "5"));
+        List<Position> route = piece.findRoute(new Position("b", "2"), new Position("e", "5"), new Empty());
         List<Position> positions = List.of(new Position("c", "3"), new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
@@ -44,7 +45,7 @@ class QueenTest {
     void Bishop_Validate_route() {
         Piece piece = new Queen(WHITE);
         assertThatThrownBy(() -> {
-            piece.getMovingRoute(new Position("a", "1"), new Position("b", "4'"));
+            piece.findRoute(new Position("a", "1"), new Position("b", "4'"), new Empty());
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
