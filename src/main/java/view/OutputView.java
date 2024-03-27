@@ -21,4 +21,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
+    public static void printExceptionMessage(String message) {
+        System.out.println("[ERROR] " + message);
+    }
 }

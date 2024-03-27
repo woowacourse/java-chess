@@ -19,15 +19,21 @@ public class ChessController {
         var chessBoard = new ChessBoard();
         var chessCommand = ChessCommand.PENDING;
         while (chessCommand != END) {
-            chessCommand = InputView.inputChessCommand();
-            commandPerformances.get(chessCommand).accept(chessBoard);
+            chessCommand = ExceptionHandler.handleInputWithRetry(() -> proceed(chessBoard));
             OutputView.printChessBoard(chessBoard.toDto());
         }
     }
 
+    private ChessCommand proceed(ChessBoard chessBoard) {
+        ChessCommand chessCommand;
+        chessCommand = InputView.inputChessCommand();
+        commandPerformances.get(chessCommand).accept(chessBoard);
+        return chessCommand;
+    }
+
     public static RouteDto askRoute() {
-        final var source = InputView.inputChessPoint();
-        final var destination = InputView.inputChessPoint();
+        final var source = ExceptionHandler.handleInputWithRetry(InputView::inputChessPoint);
+        final var destination = ExceptionHandler.handleInputWithRetry(InputView::inputChessPoint);
         return new RouteDto(source, destination);
     }
 

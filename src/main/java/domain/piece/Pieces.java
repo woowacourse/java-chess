@@ -49,4 +49,8 @@ public class Pieces {
                 .map(Piece::toDto)
                 .toList());
     }
+
+    public boolean isEmpty() {
+        return this.values.isEmpty();
+    }
 }

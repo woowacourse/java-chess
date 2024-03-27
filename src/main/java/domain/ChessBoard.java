@@ -29,17 +29,25 @@ public class ChessBoard {
     }
 
     public void move(final RouteDto dto) {
+        validateGameProceed();
         final var startPoint = dto.getStartPoint();
         final var endPoint = dto.getEndPoint();
         final var piece = findPieceByPoint(startPoint);
+        validateCanMove(piece, endPoint, startPoint);
+        pieces.replace(piece, endPoint);
+    }
 
-        if (pieces.canReplace(piece, endPoint)) {
-            pieces.replace(piece, endPoint);
-            return;
+    private void validateGameProceed() {
+        if (pieces.isEmpty()) {
+            throw new IllegalStateException("게임을 시작하고 기물 이동을 요청해주새요.");
         }
+    }
 
-        throw new IllegalArgumentException(
-                String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.status(), startPoint, endPoint));
+    private void validateCanMove(Piece piece, Point endPoint, Point startPoint) {
+        if (!pieces.canReplace(piece, endPoint)) {
+            throw new IllegalArgumentException(
+                    String.format("%s 는 %s 에서 %s로 이동할 수 없습니다.", piece.status(), startPoint, endPoint));
+        }
     }
 
     public static ChessBoard createDefaultBoard() {
