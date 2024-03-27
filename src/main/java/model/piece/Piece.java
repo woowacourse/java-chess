@@ -4,6 +4,7 @@ import model.direction.Destination;
 import model.direction.Route;
 import model.direction.WayPoints;
 import model.piece.role.Role;
+import model.piece.role.RoleStatus;
 import model.piece.role.Square;
 import model.position.Position;
 
@@ -23,17 +24,18 @@ public class Piece {
         target.role = role;
         role = new Square();
     }
-    public void validateMoving(final WayPoints wayPoints, final Destination destination){
+
+    public void validateMoving(final WayPoints wayPoints, final Destination destination) {
         Piece target = destination.target();
-        role.validateMoving(wayPoints, target.role());
+        role.validateMoving(wayPoints, target.role);
     }
 
     public boolean isOccupied() {
         return role.isOccupied();
     }
 
-    public Role role() {
-        return role;
+    public RoleStatus roleStatus() {
+        return role.status();
     }
 
     public Color color() {

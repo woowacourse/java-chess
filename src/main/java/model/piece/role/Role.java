@@ -27,7 +27,7 @@ public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Roo
     }
 
     private void validateNotSameColor(final Role target) {
-        if (color == target.color()) {
+        if (color == target.color) {
             throw new IllegalArgumentException("같은 진영의 기물이 목적 지점에 위치합니다.");
         }
     }
@@ -43,10 +43,6 @@ public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Roo
                  });
     }
 
-    public boolean isOccupied() {
-        return true;
-    }
-
     public Route findRoute(final Position source, final Position destination) {
         return findPossibleAllRoute(source).stream()
                                            .filter(route -> route.contains(destination))
@@ -56,6 +52,10 @@ public sealed abstract class Role permits Bishop, King, Knight, Pawn, Queen, Roo
 
     public Set<Route> findPossibleAllRoute(final Position position) {
         return shift.routes(position);
+    }
+
+    public boolean isOccupied() {
+        return true;
     }
 
     public Color color() {
