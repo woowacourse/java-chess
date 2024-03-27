@@ -1,4 +1,4 @@
-package chess.db;
+package chess.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.character.Team;
 import chess.exception.InvalidGameRoomException;
-import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ class ChessGameDaoTest {
     private ChessGameDao chessGameDao;
 
     @BeforeEach
-    void setUp() throws SQLException {
+    void setUp() {
         chessGameDao = new ChessGameDao(new TestConnectionGenerator());
         chessGameDao.delete(ROOM_NAME);
     }
@@ -63,7 +62,7 @@ class ChessGameDaoTest {
 
     @DisplayName("입력된 팀으로 입력된 방이름의 현재 팀을 바꾼다.")
     @Test
-    void update() throws SQLException {
+    void update() {
         chessGameDao.add(ROOM_NAME, Team.WHITE);
         chessGameDao.update(Team.BLACK, ROOM_NAME);
 

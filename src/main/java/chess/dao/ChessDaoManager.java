@@ -1,4 +1,4 @@
-package chess.db;
+package chess.dao;
 
 import chess.domain.Board;
 import chess.domain.ChessGame;
@@ -6,11 +6,11 @@ import chess.domain.Movement;
 import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
 
-public class DbManager {
+public class ChessDaoManager {
     private final BoardDao boardDao;
     private final ChessGameDao chessGameDao;
 
-    public DbManager() {
+    public ChessDaoManager() {
         this.boardDao = new BoardDao();
         this.chessGameDao = new ChessGameDao();
     }

@@ -1,4 +1,4 @@
-package chess.db;
+package chess.dao;
 
 import chess.domain.piece.character.Team;
 import chess.exception.DbException;
