@@ -1,6 +1,7 @@
-package chess.domain.chessGame.generator;
+package chess.repository.exchanger;
 
 import chess.domain.chessGame.Space;
+import chess.domain.chessGame.generator.SpaceGenerator;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
@@ -71,6 +72,10 @@ public class StringSpaceGenerator implements SpaceGenerator {
             rankSpaces.add(new Space(pieceIterator.next(), new Position(file, rank)));
         }
         return rankSpaces;
+    }
+
+    public String getChessBoardStates() {
+        return chessBoardStates;
     }
 
     private enum Mapper {

@@ -1,8 +1,11 @@
 package chess.repository;
 
+import chess.domain.chessGame.ChessBoard;
 import chess.domain.chessGame.Turn;
-import chess.domain.chessGame.generator.SpaceGenerator;
-import chess.domain.chessGame.generator.StringSpaceGenerator;
+import chess.repository.exchanger.ChessBoardSpliter;
+import chess.repository.exchanger.StringSpaceGenerator;
+import chess.repository.exchanger.StringSpaceGeneratorConverter;
+import chess.repository.exchanger.TurnConverter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +20,8 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
     private static final String USERNAME = "root"; //  MySQL 서버 아이디
     private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
 
+    private final ChessBoardSpliter chessBoardSpliter = new ChessBoardSpliter();
+
     public Connection getConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
@@ -27,13 +32,34 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
     }
 
     @Override
-    public SpaceGenerator findSpaceGenerator() {
-        return new StringSpaceGenerator(findInBoard("board_state"));
+    public ChessBoard findChessBoard() {
+        StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
+        StringSpaceGenerator spaceGenerator = stringSpaceGeneratorConverter.convertToObject(findInBoard("board_state"));
+        TurnConverter turnConverter = new TurnConverter();
+        Turn turn = turnConverter.convertToObject(findInBoard("turn"));
+
+        return chessBoardSpliter.combine(spaceGenerator, turn);
     }
 
     @Override
-    public Turn findTurn() {
-        return TurnConverter.convert(findInBoard("turn"));
+    public ChessBoard saveChessBoard(ChessBoard chessBoard) {
+        StringSpaceGenerator spaceGenerator = chessBoardSpliter.splitFirst(chessBoard);
+        Turn turn = chessBoardSpliter.splitSecond(chessBoard);
+        StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
+        TurnConverter turnConverter = new TurnConverter();
+
+        String boardState = stringSpaceGeneratorConverter.convertToData(spaceGenerator);
+        String currentTurn = turnConverter.convertToData(turn);
+
+        saveInBoard("board_state", boardState);
+        saveInBoard("turn", currentTurn);
+        return chessBoard;
+    }
+
+    @Override
+    public void deleteChessBoard() {
+        saveInBoard("board_state", "");
+        saveInBoard("turn", "");
     }
 
     public String findInBoard(String columnLabel) {
@@ -46,8 +72,20 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
                 result = resultSet.getString(columnLabel);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
         return result;
+    }
+
+    public void saveInBoard(String columnLabel, String data) {
+        final var query = "UPDATE board SET " + columnLabel + " = ? WHERE board_id = 1";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, data);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

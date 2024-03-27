@@ -2,9 +2,7 @@ package chess.machine;
 
 import chess.domain.chessGame.ChessBoard;
 import chess.domain.chessGame.ChessGame;
-import chess.domain.chessGame.Turn;
 import chess.domain.chessGame.generator.ChessSpaceGenerator;
-import chess.domain.chessGame.generator.SpaceGenerator;
 import chess.service.ChessBoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -31,21 +29,8 @@ public class ChessMachine {
         command.conductCommand(chessGame, outputView);
 
         playChess(chessGame);
+        saveGameIfKingIsNotDead(chessGame);
         printStatus(chessGame);
-    }
-
-    private ChessGame findOrCreateGame() {
-        try {
-            SpaceGenerator spaceGenerator = chessBoardService.findSpaceGenerator();
-            Turn turn = chessBoardService.findTurn();
-            ChessBoard chessBoard = ChessBoard.of(spaceGenerator, turn);
-            return new ChessGame(chessBoard);
-        } catch (IllegalArgumentException e) {
-            outputView.printMessage(e.getMessage());
-        }
-
-        ChessBoard chessBoard = ChessBoard.create(new ChessSpaceGenerator());
-        return new ChessGame(chessBoard);
     }
 
     private void validateFirstCommand(Command command) {
@@ -54,11 +39,32 @@ public class ChessMachine {
         }
     }
 
+    private ChessGame findOrCreateGame() {
+        try {
+            ChessBoard chessBoard = chessBoardService.findChessBoard();
+            outputView.printMessage("저장된 데이터로 게임을 시작합니다");
+            return new ChessGame(chessBoard);
+        } catch (IllegalArgumentException e) {
+            outputView.printMessage("데이터가 없어 새로 게임을 시작합니다");
+        }
+
+        ChessBoard chessBoard = ChessBoard.create(new ChessSpaceGenerator());
+        return new ChessGame(chessBoard);
+    }
+
     private void playChess(ChessGame chessGame) {
         while (chessGame.isActive()) {
             Command command = inputView.readCommand();
             command.conductCommand(chessGame, outputView);
         }
+    }
+
+    private void saveGameIfKingIsNotDead(ChessGame chessGame) {
+        if (chessGame.isEnd()) {
+            chessBoardService.deleteChessBoard();
+            return;
+        }
+        chessBoardService.saveChessBoard(chessGame.getChessBoard());
     }
 
     private void printStatus(ChessGame chessGame) {

@@ -34,7 +34,14 @@ public class ChessGame {
     }
 
     public void startGame() {
+        if (chessBoard.isActive()) {
+            return;
+        }
         chessBoard.startGame();
+    }
+
+    public void pauseGame() {
+        chessBoard.pauseGame();
     }
 
     public void endGame() {
@@ -49,11 +56,19 @@ public class ChessGame {
         return chessBoard.calculateScore(color);
     }
 
-    public List<String> showBoard() {
-        return chessBoard.showBoard();
-    }
-
     public boolean hasSameDeadKingColor(Color otherColor) {
         return deadKingColor == otherColor;
+    }
+
+    public boolean isEnd() {
+        return chessBoard.isEnd();
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
+    public List<String> showBoard() {
+        return chessBoard.showBoard();
     }
 }

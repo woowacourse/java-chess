@@ -1,11 +1,12 @@
 package chess.repository;
 
-import chess.domain.chessGame.Turn;
-import chess.domain.chessGame.generator.SpaceGenerator;
+import chess.domain.chessGame.ChessBoard;
 
 public interface ChessBoardRepository {
 
-    SpaceGenerator findSpaceGenerator();
+    ChessBoard findChessBoard();
 
-    Turn findTurn();
+    ChessBoard saveChessBoard(ChessBoard chessBoard);
+
+    void deleteChessBoard();
 }

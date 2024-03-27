@@ -2,6 +2,7 @@ package chess.domain.chessGame;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import java.util.Arrays;
 
 public class Turn {
 
@@ -24,6 +25,10 @@ public class Turn {
         }
     }
 
+    public void pauseGame() {
+        state = State.inactive(state.color);
+    }
+
     public void stopGame() {
         state = State.END;
     }
@@ -40,20 +45,38 @@ public class Turn {
         return state == State.BLACK || state == State.WHITE;
     }
 
+    public boolean isEnd() {
+        return state == State.END;
+    }
+
     public boolean isValidTurn(Piece piece) {
         return piece.isSameColor(state.color);
+    }
+
+    public String state() {
+        return this.state.name();
     }
 
     private enum State {
         WAIT(Color.EMPTY),
         WHITE(Color.WHITE),
+        WHITE_INACTIVE(Color.WHITE),
         BLACK(Color.BLACK),
+        BLACK_INACTIVE(Color.BLACK),
         END(Color.EMPTY);
 
         private final Color color;
 
         State(Color color) {
             this.color = color;
+        }
+
+        private static State inactive(Color color) {
+            return Arrays.stream(values())
+                    .filter(value -> value.name().contains("INACTIVE"))
+                    .filter(value -> value.color == color)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("잘못된 상태 설정입니다"));
         }
     }
 }

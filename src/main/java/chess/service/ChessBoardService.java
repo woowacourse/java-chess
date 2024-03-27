@@ -1,7 +1,6 @@
 package chess.service;
 
-import chess.domain.chessGame.Turn;
-import chess.domain.chessGame.generator.SpaceGenerator;
+import chess.domain.chessGame.ChessBoard;
 import chess.repository.ChessBoardRepository;
 
 public class ChessBoardService {
@@ -12,11 +11,15 @@ public class ChessBoardService {
         this.chessBoardRepository = chessBoardRepository;
     }
 
-    public SpaceGenerator findSpaceGenerator() {
-        return chessBoardRepository.findSpaceGenerator();
+    public ChessBoard findChessBoard() {
+        return chessBoardRepository.findChessBoard();
     }
 
-    public Turn findTurn() {
-        return chessBoardRepository.findTurn();
+    public ChessBoard saveChessBoard(ChessBoard chessBoard) {
+        return chessBoardRepository.saveChessBoard(chessBoard);
+    }
+
+    public void deleteChessBoard() {
+        chessBoardRepository.deleteChessBoard();
     }
 }

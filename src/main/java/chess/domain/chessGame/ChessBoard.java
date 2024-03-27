@@ -69,12 +69,20 @@ public class ChessBoard {
         turn.startGame();
     }
 
+    public void pauseGame() {
+        turn.pauseGame();
+    }
+
     public void endGame() {
         turn.stopGame();
     }
 
     public boolean isActive() {
         return turn.isActive();
+    }
+
+    public boolean isEnd() {
+        return turn.isEnd();
     }
 
     public boolean isBlackKingOn(Position position) {
@@ -108,5 +116,9 @@ public class ChessBoard {
         return spaces.stream()
                 .map(Space::pieceCharacter)
                 .toList();
+    }
+
+    public String showTurn() {
+        return turn.state();
     }
 }

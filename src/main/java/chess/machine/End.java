@@ -1,6 +1,7 @@
 package chess.machine;
 
 import chess.domain.chessGame.ChessGame;
+import chess.domain.piece.Color;
 import chess.view.OutputView;
 
 public class End implements Command {
@@ -19,6 +20,11 @@ public class End implements Command {
 
     @Override
     public void conductCommand(ChessGame chessGame, OutputView outputView) {
+        if (chessGame.hasSameDeadKingColor(Color.EMPTY)) {
+            chessGame.pauseGame();
+            outputView.printChessBoard(chessGame);
+            return;
+        }
         chessGame.endGame();
         outputView.printChessBoard(chessGame);
     }

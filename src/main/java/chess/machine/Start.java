@@ -19,7 +19,9 @@ public class Start implements Command {
 
     @Override
     public void conductCommand(ChessGame chessGame, OutputView outputView) {
-        chessGame.startGame();
+        if (!chessGame.isActive()) {
+            chessGame.startGame();
+        }
         outputView.printChessBoard(chessGame);
     }
 }
