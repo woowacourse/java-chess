@@ -14,10 +14,10 @@ import chess.domain.square.piece.Pawn;
 import chess.domain.square.piece.unified.Queen;
 import chess.domain.square.piece.unified.Rook;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -28,14 +28,14 @@ public class ChessBoardMaker {
     private static final int EMPTY_START = 3;
     private static final int EMPTY_END = 6;
     private static final int FILE_SIZE = 8;
-    private static final List<Square> EIGHTH_RANK = List.of(
-            Rook.from(Color.BLACK), Knight.from(Color.BLACK), Bishop.from(Color.BLACK), Queen.from(Color.BLACK),
-            King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
-    private static final List<Square> EMPTY_RANK = new ArrayList<>(
-            Collections.nCopies(FILE_SIZE, Empty.getInstance()));
     private static final List<Square> FIRST_RANK = List.of(
             Rook.from(Color.WHITE), Knight.from(Color.WHITE), Bishop.from(Color.WHITE), Queen.from(Color.WHITE),
             King.from(Color.WHITE), Bishop.from(Color.WHITE), Knight.from(Color.WHITE), Rook.from(Color.WHITE));
+    private static final List<Square> EMPTY_RANK = new ArrayList<>(
+            Collections.nCopies(FILE_SIZE, Empty.getInstance()));
+    private static final List<Square> EIGHTH_RANK = List.of(
+            Rook.from(Color.BLACK), Knight.from(Color.BLACK), Bishop.from(Color.BLACK), Queen.from(Color.BLACK),
+            King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
 
     public ChessBoard make(CurrentTurn initialCurrentTurn) {
         Queue<Square> orderedSquares = makeOrderedSquares();
@@ -43,18 +43,18 @@ public class ChessBoardMaker {
     }
 
     private Queue<Square> makeOrderedSquares() {
-        Queue<Square> orderedSquares = new ArrayDeque<>();
-        orderedSquares.addAll(EIGHTH_RANK);
-        orderedSquares.addAll(makePawns(Color.BLACK));
-        orderedSquares.addAll(makeEmptyRanks());
-        orderedSquares.addAll(makePawns(Color.WHITE));
+        Queue<Square> orderedSquares = new LinkedList<>();
         orderedSquares.addAll(FIRST_RANK);
+        orderedSquares.addAll(makePawns(Color.WHITE));
+        orderedSquares.addAll(makeEmptyRanks());
+        orderedSquares.addAll(makePawns(Color.BLACK));
+        orderedSquares.addAll(EIGHTH_RANK);
 
         return orderedSquares;
     }
 
-    private List<Square> makePawns(Color color) {
-        List<Square> squares = new ArrayList<>();
+    private Queue<Square> makePawns(Color color) {
+        Queue<Square> squares = new LinkedList<>();
         for (int file = 0; file < FILE_SIZE; file++) {
             squares.add(Pawn.from(color));
         }
@@ -62,12 +62,11 @@ public class ChessBoardMaker {
         return squares;
     }
 
-    private List<Square> makeEmptyRanks() {
-        List<Square> squares = new ArrayList<>();
+    private Queue<Square> makeEmptyRanks() {
+        Queue<Square> squares = new LinkedList<>();
         for (int rank = EMPTY_START; rank <= EMPTY_END; rank++) {
             squares.addAll(EMPTY_RANK);
         }
-
         return squares;
     }
 
@@ -84,7 +83,6 @@ public class ChessBoardMaker {
         for (File file : File.values()) {
             squares.put(new Position(rank, file), squareQueue.poll());
         }
-
         return squares;
     }
 }

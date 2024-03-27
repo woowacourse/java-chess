@@ -13,7 +13,10 @@ import chess.domain.square.piece.Pawn;
 import chess.domain.square.piece.unified.Queen;
 import chess.domain.square.piece.unified.Rook;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -58,7 +61,9 @@ public class OutputView {
     }
 
     public void printChessBoard(Map<Position, Square> squares) {
-        for (Rank rank : Rank.values()) {
+        final List<Rank> ranks = Arrays.asList(Rank.values());
+        Collections.reverse(ranks);
+        for (Rank rank : ranks) {
             printRank(squares, rank);
             System.out.println();
         }
