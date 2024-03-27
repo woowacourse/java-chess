@@ -1,6 +1,9 @@
 package chess.domain.point;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum File {
 
@@ -13,9 +16,12 @@ public enum File {
     G('g'),
     H('h');
 
-    private static final Map<Character, File> POOL = Map.of(
-            'a', A, 'b', B, 'c', C, 'd', D, 'e', E, 'f', F, 'g', G, 'h', H
-    );
+    private static final Map<Character, File> POOL;
+
+    static {
+        POOL = Arrays.stream(File.values())
+                .collect(Collectors.toMap(file -> file.file, Function.identity()));
+    }
 
     private final char file;
 
@@ -46,10 +52,10 @@ public enum File {
     }
 
     public static char maxValue() {
-        return 'h';
+        return H.file;
     }
 
     public static char minValue() {
-        return 'a';
+        return A.file;
     }
 }

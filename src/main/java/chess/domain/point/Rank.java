@@ -1,6 +1,9 @@
 package chess.domain.point;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public enum Rank {
 
@@ -13,10 +16,12 @@ public enum Rank {
     SEVENTH(7),
     EIGHTH(8);
 
-    private static final Map<Integer, Rank> POOL = Map.of(
-            1, FIRST, 2, SECOND, 3, THIRD, 4, FOURTH,
-            5, FIFTH, 6, SIXTH, 7, SEVENTH, 8, EIGHTH
-    );
+    private static final Map<Integer, Rank> POOL;
+
+    static {
+        POOL = Arrays.stream(Rank.values())
+                .collect(Collectors.toMap(rank -> rank.rank, Function.identity()));
+    }
 
     private final int rank;
 
@@ -46,10 +51,10 @@ public enum Rank {
     }
 
     public static int maxValue() {
-        return 8;
+        return EIGHTH.rank;
     }
 
     public static int minValue() {
-        return 1;
+        return FIRST.rank;
     }
 }
