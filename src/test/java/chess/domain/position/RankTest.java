@@ -28,15 +28,15 @@ public class RankTest {
     @Test
     @DisplayName("값을 넘겨주어 rank을 최신화한다.")
     void Rank_Update_with_value() {
-        Rank rank = Rank.from("2");
+        Rank rank = Rank.TWO;
 
-        assertThat(rank.update(1)).isEqualTo(Rank.from("3"));
+        assertThat(rank.update(1)).isEqualTo(Rank.THREE);
     }
 
     @Test
     @DisplayName("보드판 밖으로 나가게 되는 경우 예외처리한다.")
     void Rank_Throw_exception_when_move_out_of_board() {
-        Rank rank = Rank.from("2");
+        Rank rank = Rank.TWO;
 
         assertThatThrownBy(() -> {
             rank.update(7);
@@ -46,8 +46,8 @@ public class RankTest {
     @Test
     @DisplayName("rank과 rank의 차이를 구한다.")
     void Rank_Subtract_with_other_rank() {
-        Rank rank = Rank.from("2");
-        var sut = Rank.from("4");
+        Rank rank = Rank.TWO;
+        var sut = Rank.FOUR;
 
         var result = sut.subtractRank(rank);
 
@@ -55,13 +55,10 @@ public class RankTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"2, 4, 1", "2, 2, 0", "2, 1, -1"})
+    @CsvSource(value = {"TWO, FOUR, 1", "TWO, TWO, 0", "TWO, ONE, -1"})
     @DisplayName("rank과 rank의 크기를 비교하여 방향을 찾는다..")
-    void Rank_Find_direction_with_other_rank(String value1, String value2, int compareResult) {
-        var sut = Rank.from(value1);
-        Rank rank = Rank.from(value2);
-
-        var result = sut.findDirection(rank);
+    void Rank_Find_direction_with_other_rank(Rank rank1, Rank rank2, int compareResult) {
+        var result = rank1.findDirection(rank2);
 
         assertThat(result).isEqualTo(compareResult);
     }

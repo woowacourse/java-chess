@@ -26,15 +26,15 @@ public class FileTest {
     @Test
     @DisplayName("값을 넘겨주어 file을 최신화한다.")
     void File_Update_with_value() {
-        File file = File.from("a");
+        File file = File.a;
 
-        assertThat(file.update(1)).isEqualTo(File.from("b"));
+        assertThat(file.update(1)).isEqualTo(File.b);
     }
 
     @Test
     @DisplayName("보드판 밖으로 나가게 되는 경우 예외처리한다.")
     void File_Throw_exception_when_move_out_of_board() {
-        File file = File.from("b");
+        File file = File.b;
 
         assertThatThrownBy(() -> {
             file.update(7);
@@ -45,8 +45,8 @@ public class FileTest {
     @Test
     @DisplayName("file과 file의 차이를 구한다.")
     void file_Subtract_with_other_file() {
-        File file = File.from("a");
-        var sut = File.from("c");
+        File file = File.a;
+        var sut = File.c;
 
         var result = sut.subtractFile(file);
 
@@ -56,11 +56,8 @@ public class FileTest {
     @ParameterizedTest
     @CsvSource(value = {"a, b, 1", "a, a, 0", "b, a, -1"})
     @DisplayName("rank과 rank의 크기를 비교하여 방향을 찾는다..")
-    void Rank_Find_direction_with_other_rank(String value1, String value2, int compareResult) {
-        var sut = File.from(value1);
-        File file = File.from(value2);
-
-        var result = sut.findDirection(file);
+    void Rank_Find_direction_with_other_rank(File file1, File file2, int compareResult) {
+        var result = file1.findDirection(file2);
 
         assertThat(result).isEqualTo(compareResult);
     }
