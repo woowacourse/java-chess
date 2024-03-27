@@ -6,8 +6,8 @@ import java.util.List;
 
 public class UserService {
 
-    private static final String NAME_DUPLICATED = "이름이 중복되었습니다.";
-    private static final String INVALID_USER = "존재하지 않는 사용자입니다.";
+    private static final String NAME_DUPLICATED = "이름이 중복되었습니다. 다른 이름을 입력해주세요.";
+    private static final String INVALID_USER = "존재하지 않는 사용자입니다. 입력한 이름을 확인해주세요.";
 
     private final UserRepository userRepository;
 

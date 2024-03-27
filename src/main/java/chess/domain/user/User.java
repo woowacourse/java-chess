@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class User {
 
     private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z가-힣]+(?:\\s+[a-zA-Z가-힣]+)*$");
-    private static final String INVALID_NAME_FORMAT = "사용자 이름은 5자 이하여야합니다.";
+    private static final String INVALID_NAME_FORMAT = "사용자 이름은 5자 이하로 입력해주세요.";
     private static final int MAX_USER_NAME_LENGTH = 5;
 
     private final Long id;

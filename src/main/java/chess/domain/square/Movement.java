@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 public class Movement {
-    public static final String INVALID_PIECE_MOVEMENT = "해당 기물은 위치로 이동할 수 없습니다.";
+    public static final String INVALID_PIECE_MOVEMENT = "기물은 해당 위치로 이동할 수 없습니다. 다시 입력해주세요.";
 
     private final Square source;
     private final Square target;

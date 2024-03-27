@@ -20,7 +20,7 @@ import java.util.Map.Entry;
 import java.util.function.Supplier;
 
 public class GameController {
-    private static final String GAME_ALREADY_START = "게임이 진행중입니다.";
+    private static final String GAME_ALREADY_START = "게임이 이미 진행중입니다.";
 
     private final InputView inputView;
     private final OutputView outputView;

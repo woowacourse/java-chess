@@ -6,8 +6,8 @@ import java.util.List;
 
 public class RoomService {
 
-    private static final String ROOM_NOT_FOUND = "존재하지 않는 게임방입니다.";
-    private static final String DUPLICATED_ROOM_NAME = "이미 사용중인 이름입니다.";
+    private static final String ROOM_NOT_FOUND = "존재하지 않는 게임방입니다. 입력한 게임방명을 확인해주세요.";
+    private static final String DUPLICATED_ROOM_NAME = "이미 사용중인 이름입니다. 다른 이름을 입력해주세요.";
     private final RoomRepository roomRepository;
 
     public RoomService(final RoomRepository roomRepository) {

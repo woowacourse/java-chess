@@ -26,4 +26,8 @@ public class Turn {
         IntStream.range(0, size)
                 .forEach(i -> next());
     }
+
+    public String getColor() {
+        return turn.name();
+    }
 }

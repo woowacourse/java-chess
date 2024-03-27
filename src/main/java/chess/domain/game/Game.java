@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Game {
 
-    private static final String INVALID_TURN = "헤당 색의 턴이 아닙니다.";
+    private static final String INVALID_TURN = "현재 %s 색의 턴입니다.";
     private final long roomId;
     private final Board board;
     private final Turn turn;
@@ -41,7 +41,7 @@ public class Game {
 
     private void validateTurn(final Square square) {
         if (!board.checkTurn(square, turn)) {
-            throw new IllegalArgumentException(INVALID_TURN);
+            throw new IllegalArgumentException(String.format(INVALID_TURN, turn.getColor()));
         }
     }
 

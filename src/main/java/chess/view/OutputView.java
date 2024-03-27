@@ -9,11 +9,7 @@ import java.util.StringJoiner;
 import java.util.stream.IntStream;
 
 public class OutputView {
-    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
-    private static final String START_INFO_MESSAGE = "> 게임 시작 : start";
-    private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
-    private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
-    private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String WELCOME_MESSAGE = "> 우아한 체스 게임에 오신 것을 환영합니다.";
     private static final String SIGNUP_MESSAGE = "> 회원 가입: signup 이름 - 예. signup 초코칩";
     private static final String LOGIN_MESSAGE = "> 로그인: login 이름 - 예. login 초코칩";
     private static final String USER_STATUS = "> 로그인 가능한 사용자 : %s";
@@ -21,6 +17,11 @@ public class OutputView {
     private static final String ROOM_ENTER_MESSAGE = "> 방 만들기: enter 이름 - 예. enter chess";
     private static final String ROOM_STATUS = "> 입장 가능한 방 : %s";
     private static final String NO_NAME = "없음";
+    private static final String GAME_START_MESSAGE = "> 체스 게임을 시작합니다.";
+    private static final String START_INFO_MESSAGE = "> 게임 시작 : start";
+    private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
+    private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
+    private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
@@ -34,7 +35,7 @@ public class OutputView {
         stringJoiner.add(END_INFO_MESSAGE);
         stringJoiner.add(STATUS_INFO_MESSAGE);
         stringJoiner.add(MOVE_INFO_MESSAGE);
-        System.out.println(stringJoiner);
+        System.out.println(System.lineSeparator() + stringJoiner);
     }
 
     public void printBoard(final List<PieceResponse> pieces) {
@@ -65,9 +66,7 @@ public class OutputView {
     }
 
     private void printBoardStatus(final char[][] board) {
-        IntStream.range(0, board.length)
-                .mapToObj(lineCount -> board[board.length - 1 - lineCount])
-                .map(String::new)
+        IntStream.range(0, board.length).mapToObj(lineCount -> board[board.length - 1 - lineCount]).map(String::new)
                 .forEach(System.out::println);
     }
 
@@ -77,15 +76,16 @@ public class OutputView {
     }
 
     private void printScoreStatus(final GameResult gameResult, final Color color) {
-        System.out.printf(SCORE_STATUS_FORMAT + System.lineSeparator(),
-                color.name(), gameResult.calculateScore(color).getValue());
+        System.out.printf(SCORE_STATUS_FORMAT + System.lineSeparator(), color.name(),
+                gameResult.calculateScore(color).getValue());
     }
 
     public void printUserEntranceMessage() {
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(WELCOME_MESSAGE);
         stringJoiner.add(SIGNUP_MESSAGE);
         stringJoiner.add(LOGIN_MESSAGE);
-        System.out.println(stringJoiner);
+        System.out.println(System.lineSeparator() + stringJoiner);
     }
 
     public void printUserStatus(final List<String> names) {
@@ -102,7 +102,7 @@ public class OutputView {
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
         stringJoiner.add(ROOM_CREATE_MESSAGE);
         stringJoiner.add(ROOM_ENTER_MESSAGE);
-        System.out.println(stringJoiner);
+        System.out.println(System.lineSeparator() + stringJoiner);
     }
 
     public void printRoomNames(final List<String> names) {

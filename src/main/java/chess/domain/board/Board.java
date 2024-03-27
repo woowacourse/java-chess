@@ -14,8 +14,8 @@ import java.util.Set;
 
 public class Board {
 
-    private static final String INVALID_PIECE_MOVEMENT = "해당 기물은 위치로 이동할 수 없습니다.";
-    private static final String NO_PIECE_EXCEPTION = "해당 위치에 기물이 없습니다.";
+    private static final String INVALID_PIECE_MOVEMENT = "기물은 해당 위치로 이동할 수 없습니다. 다른 위치를 입력해주세요.";
+    private static final String NO_PIECE_EXCEPTION = "해당 위치에 기물이 없습니다. 출발지를 확인해주세요.";
 
     private final Map<Square, Piece> pieces;
 
