@@ -1,5 +1,10 @@
 package view;
 
+import static domain.position.File.END_LETTER;
+import static domain.position.File.START_LETTER;
+import static domain.position.Rank.END_NUMBER;
+import static domain.position.Rank.START_NUMBER;
+
 import domain.game.ChessBoard;
 import domain.piece.Piece;
 import domain.position.File;
@@ -21,17 +26,17 @@ public class OutputView {
     }
 
     public void printChessBoard(final ChessBoard mover) {
-        for (int rank = 8; rank >= 1; rank--) {
-            printSquareByFile(mover, rank);
+        for (int rank = END_NUMBER; rank >= START_NUMBER; rank--) {
+            printPieceSymbol(mover, rank);
             System.out.println();
         }
         System.out.println();
     }
 
-    private void printSquareByFile(final ChessBoard mover, final int row) {
-        for (int file = 0; file < 8; file++) {
+    private void printPieceSymbol(final ChessBoard mover, final int rank) {
+        for (char file = START_LETTER; file <= END_LETTER; file++) {
             Position position = new Position(
-                    new Position(new File((char) ('a' + file)), new Rank(row)));
+                    new Position(new File(file), new Rank(rank)));
             System.out.print(generateSymbol(mover, position));
         }
     }
@@ -41,6 +46,6 @@ public class OutputView {
             Piece piece = mover.findPieceByPosition(position);
             return PieceMapper.symbol(piece);
         }
-        return ".";
+        return PieceMapper.emptySymbol();
     }
 }

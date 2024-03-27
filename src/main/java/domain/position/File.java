@@ -3,8 +3,8 @@ package domain.position;
 import java.util.Objects;
 
 public class File {
-    private static final char START_LETTER = 'a';
-    private static final char END_LETTER = 'h';
+    public static final char START_LETTER = 'a';
+    public static final char END_LETTER = 'h';
     private final char letter;
 
     public File(final char letter) {
