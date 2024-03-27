@@ -25,8 +25,17 @@ public class GameMachine {
     private void play(Chess chess) {
         PlayCommand playCommand = requestPlayCommand();
         if (playCommand.isMove()) {
+            movePieceByCommand(chess, playCommand);
+        }
+    }
+
+    private void movePieceByCommand(Chess chess, PlayCommand playCommand) {
+        try {
             chess.movePiece(playCommand.sourcePosition(), playCommand.targetPosition());
             outputView.printBoard(chess.getBoard());
+            play(chess);
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
             play(chess);
         }
     }
