@@ -37,7 +37,7 @@ class ChessBoardTest implements DaoTest {
     @Test
     void createNewGame() {
         // when
-        ChessBoard createdChessBoard = new ChessBoard(0);
+        ChessBoard createdChessBoard = new ChessBoard();
 
         // then
         assertThat(createdChessBoard.getGameInformation().getGameId()).isEqualTo(2);

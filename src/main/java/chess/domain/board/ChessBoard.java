@@ -32,16 +32,23 @@ public class ChessBoard {
     private final Map<Position, Piece> chessBoard = new LinkedHashMap<>();
     private GameInformation gameInformation;
 
+    public ChessBoard() {
+        initializeBlackPieces();
+        initializeWhitePieces();
+        saveData();
+        this.gameInformation = bringNewGameInformation();
+    }
+
     public ChessBoard(int gameId) {
-        if (gameId == NEW_GAME_COMMAND) {
-            initializeBlackPieces();
-            initializeWhitePieces();
-            saveData();
-        }
-        if (gameId > 0) {
-            bringChessBoard(chessGameDao.findById(gameId));
-        }
+        bringChessBoard(chessGameDao.findById(gameId));
         this.gameInformation = bringGameInformation(gameId);
+    }
+
+    public static ChessBoard from(int gameId) {
+        if (gameId == NEW_GAME_COMMAND) {
+            return new ChessBoard();
+        }
+        return new ChessBoard(gameId);
     }
 
     public void move(Position source, Position target) {
@@ -49,6 +56,7 @@ public class ChessBoard {
             throw new IllegalArgumentException("이동할 수 있는 말이 없습니다.");
         }
         Piece sourcePiece = chessBoard.get(source);
+        validateTurn(sourcePiece);
         validateTurn(sourcePiece);
 
         if (!canMove(sourcePiece, source, target)) {
@@ -61,8 +69,6 @@ public class ChessBoard {
         int kingCount = Math.toIntExact(chessBoard.values().stream()
                 .filter(Piece::isKing)
                 .count());
-        removeFinishedData(gameInformation.getGameId());
-
         return kingCount == SINGLE_KING;
     }
 
@@ -102,10 +108,11 @@ public class ChessBoard {
         }
     }
 
+    private GameInformation bringNewGameInformation() {
+        return gameInformationDao.findLatestGame();
+    }
+
     private GameInformation bringGameInformation(int gameId) {
-        if (gameId == 0) {
-            return gameInformationDao.findLatestGame();
-        }
         return gameInformationDao.findByGameId(gameId);
     }
 

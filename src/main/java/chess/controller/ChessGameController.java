@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 public class ChessGameController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
+    private final GameInformationDao gameInformationDao = new GameInformationDao();
 
     public void run() {
         ChessBoard chessBoard = prepareChessBoard();
@@ -37,23 +38,27 @@ public class ChessGameController {
 
             printChessBoardInProgress(gameState, chessBoard);
         }
-        printResulByKingCaptured((End) gameState, chessBoard);
+        handleKingCapture((End) gameState, chessBoard);
     }
 
     private ChessBoard prepareChessBoard() {
-        GameInformationDao gameInformationDao = new GameInformationDao();
         List<GameInformation> gameInfos = gameInformationDao.findAll();
         outputView.printGameInformation(gameInfos);
 
         int gameId = repeatUntilSuccess(() -> inputView.readGameId(gameInfos));
-        return new ChessBoard(gameId);
+        return ChessBoard.from(gameId);
     }
 
-    private void printResulByKingCaptured(End gameState, ChessBoard chessBoard) {
+    private void handleKingCapture(End gameState, ChessBoard chessBoard) {
         if (gameState.isEndByKingCaptured()) {
-            outputView.printChessBoard(new ChessBoardDto(chessBoard));
-            outputView.printResultWithKingCaptured(chessBoard.findWinnerByKing());
+            printResultByKingCaptured(chessBoard);
+            gameInformationDao.remove(chessBoard.getGameId());
         }
+    }
+
+    private void printResultByKingCaptured(ChessBoard chessBoard) {
+        outputView.printChessBoard(new ChessBoardDto(chessBoard));
+        outputView.printResultWithKingCaptured(chessBoard.findWinnerByKing());
     }
 
     private GameState playEachTurn(GameState gameState) {
