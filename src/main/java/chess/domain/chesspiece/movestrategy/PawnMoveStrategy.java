@@ -22,7 +22,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         MoveRange moveRange = new MoveRange();
         moveRange.addForward(chessBoard, startSquare);
         if (isStartingPosition) {
-            moveRange.addForward(chessBoard, startSquare);
+            moveRange.addForward(chessBoard, moveRange.firstMoveRange());
         }
         moveRange.addLeftForwardDiagonal(chessBoard, startSquare);
         moveRange.addRightForwardDiagonal(chessBoard, startSquare);

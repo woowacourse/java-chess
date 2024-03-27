@@ -370,6 +370,10 @@ public class MoveRange {
         }
     }
 
+    public Square firstMoveRange() {
+        return moveRange.get(0);
+    }
+
     public List<Square> getMoveRange() {
         return moveRange;
     }
