@@ -1,33 +1,26 @@
 package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.position.UnitDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class KingTest {
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"1,1", "1,0", "1,-1", "0,1", "0,-1", "-1,-1", "-1,0", "-1,1"})
     @DisplayName("킹은 상하좌우 및 대각선 방향으로 한 칸 이동할 수 있다.")
-    void kingMoveTest() {
+    void kingMoveTest(int fileDifference, int rankDifference) {
         // given
         King king = new King(Color.WHITE);
-        Position source = Position.of(File.D, Rank.FOUR);
-        // when, then
-        assertAll(
-                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.FIVE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FIVE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.FOUR))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.E, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.D, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.THREE))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FOUR))).isTrue(),
-                () -> assertThat(king.isMovable(source, Position.of(File.C, Rank.FIVE))).isTrue()
-        );
+        UnitDirection direction = UnitDirection.differencesOf(fileDifference, rankDifference);
+        // when
+        boolean actual = king.isMovable(direction, 1);
+        // then
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -35,8 +28,10 @@ class KingTest {
     void kingMaxUnitTest() {
         // given
         King king = new King(Color.WHITE);
-        Position source = Position.of(File.D, Rank.FOUR);
-        // when, then
-        assertThat(king.isMovable(source, Position.of(File.D, Rank.SIX))).isFalse();
+        UnitDirection direction = UnitDirection.differencesOf(1, 1);
+        // when
+        boolean actual = king.isMovable(direction, 2);
+        // then
+        assertThat(actual).isFalse();
     }
 }

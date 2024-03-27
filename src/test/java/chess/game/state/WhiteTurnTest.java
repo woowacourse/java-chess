@@ -1,7 +1,6 @@
 package chess.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.predicate;
 
 import chess.board.Board;
 import chess.board.BoardInitializer;

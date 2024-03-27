@@ -1,11 +1,9 @@
 package chess.piece;
 
-import chess.position.Position;
 import chess.position.UnitDirection;
 import chess.score.PieceScore;
 import chess.score.Score;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public abstract class Piece {
 
@@ -19,32 +17,15 @@ public abstract class Piece {
         this.unitDirections = unitDirections;
     }
 
-    public boolean isMovable(Position source, Position destination) {
-        UnitDirection direction = source.unitDirectionToward(destination);
+    public boolean isMovable(UnitDirection direction, int step) {
         return unitDirections.contains(direction) &&
-                isReachable(source, destination, direction);
+                isReachable(step);
     }
 
-    private boolean isReachable(Position source, Position destination, UnitDirection unitDirection) {
-        int distance = (int) Stream.iterate(source,
-                        position -> position.isNotEquals(destination),
-                        unitDirection::nextPosition)
-                .count();
-        return isReachable(distance);
-    }
+    protected abstract boolean isReachable(int step);
 
-    protected abstract boolean isReachable(int distance);
-
-    public boolean canAttack(Position source, Position destination) {
-        return isMovable(source, destination);
-    }
-
-    public boolean canNotAttack(Position source, Position destination) {
-        return !canAttack(source, destination);
-    }
-
-    public boolean isNotMovable(Position source, Position destination) {
-        return !isMovable(source, destination);
+    public boolean canAttack(UnitDirection direction, int step) {
+        return isMovable(direction, step);
     }
 
     public boolean isInitPawn() {
@@ -63,8 +44,8 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public boolean hasOpponentColorOf(Color currentTurnColor) {
-        return color != currentTurnColor;
+    public boolean hasOpponentColorOf(Color color) {
+        return this.color != color;
     }
 
     public boolean isPawn() {
@@ -81,5 +62,9 @@ public abstract class Piece {
 
     public Score getScore() {
         return pieceScore.asScore();
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

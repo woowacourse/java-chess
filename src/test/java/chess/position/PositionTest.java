@@ -66,7 +66,7 @@ class PositionTest {
         // then
         assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 0));
     }
-    
+
     @ParameterizedTest
     @EnumSource(value = File.class, names = {"A", "C"})
     @DisplayName("다른 File에 위치하는 경우를 올바르게 확인한다.")
@@ -78,7 +78,7 @@ class PositionTest {
         // then
         assertThat(actual).isFalse();
     }
-    
+
     @Test
     @DisplayName("같은 File에 위치하는 경우를 올바르게 확인한다.")
     void sameFileTest() {

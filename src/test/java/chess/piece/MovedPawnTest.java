@@ -3,9 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.position.UnitDirection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,25 +15,33 @@ class MovedPawnTest {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        Position position = Position.of(File.B, Rank.THREE);
-        // when, then
+        UnitDirection whiteDirection = UnitDirection.differencesOf(0, 1);
+        UnitDirection blackDirection = UnitDirection.differencesOf(0, -1);
+        // when
+        boolean isWhiteMovable = whitePawn.isMovable(whiteDirection, 2);
+        boolean isBlackMovable = blackPawn.isMovable(blackDirection, 2);
+        // then
         assertAll(
-                () -> assertThat(whitePawn.isMovable(position, Position.of(File.B, Rank.FOUR))).isTrue(),
-                () -> assertThat(blackPawn.isMovable(position, Position.of(File.B, Rank.TWO))).isTrue()
+                () -> assertThat(isWhiteMovable).isFalse(),
+                () -> assertThat(isBlackMovable).isFalse()
         );
     }
 
     @Test
-    @DisplayName("폰은 두 칸 이상 전진할 수 없다.")
+    @DisplayName("움직인 폰은 두 칸 이상 전진할 수 없다.")
     void pawnMaxUnitTest() {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        Position position = Position.of(File.B, Rank.THREE);
-        // when, then
+        UnitDirection whiteDirection = UnitDirection.differencesOf(0, 1);
+        UnitDirection blackDirection = UnitDirection.differencesOf(0, -1);
+        // when
+        boolean isWhiteMovable = whitePawn.isMovable(whiteDirection, 2);
+        boolean isBlackMovable = blackPawn.isMovable(blackDirection, 2);
+        // then
         assertAll(
-                () -> assertThat(whitePawn.isMovable(position, Position.of(File.B, Rank.FIVE))).isFalse(),
-                () -> assertThat(blackPawn.isMovable(position, Position.of(File.B, Rank.ONE))).isFalse()
+                () -> assertThat(isWhiteMovable).isFalse(),
+                () -> assertThat(isBlackMovable).isFalse()
         );
     }
 }

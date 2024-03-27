@@ -1,6 +1,5 @@
 package chess.piece;
 
-import chess.position.Position;
 import chess.position.UnitDirection;
 import chess.score.PieceScore;
 import java.util.Set;
@@ -34,8 +33,7 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public final boolean canAttack(Position source, Position destination) {
-        UnitDirection direction = source.unitDirectionToward(destination);
+    public final boolean canAttack(UnitDirection direction, int step) {
         if (hasColorOf(Color.WHITE)) {
             return WHITE_PAWN_ATTACK_UNIT_DIRECTION.contains(direction);
         }

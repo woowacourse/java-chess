@@ -1,17 +1,17 @@
 package chess.score;
 
+import chess.board.Square;
 import chess.piece.Color;
-import chess.piece.Piece;
 import java.util.List;
 
-public class FilePieces {
+public class FileSquares {
 
     private static final int MIN_PAWN_COUNT_FOR_MANIPULATION = 2;
 
-    private final List<Piece> pieces;
+    private final List<Square> pieces;
 
-    public FilePieces(List<Piece> pieces) {
-        this.pieces = pieces;
+    public FileSquares(List<Square> squares) {
+        this.pieces = squares;
     }
 
     public Score calculateScore(Color color) {
@@ -22,16 +22,17 @@ public class FilePieces {
 
     private Score calculateScoreWithoutPawn(Color color) {
         return pieces.stream()
-                .filter(Piece::isNotPawn)
-                .filter(piece -> piece.hasColorOf(color))
-                .map(Piece::getScore)
+                .filter(Square::hasPiece)
+                .filter(Square::hasNoPawn)
+                .filter(square -> square.hasPieceColored(color))
+                .map(Square::getScore)
                 .reduce(Score.ZERO, Score::add);
     }
 
     private Score calculatePawnScore(Color color) {
         int pawnCount = (int) pieces.stream()
-                .filter(Piece::isPawn)
-                .filter(piece -> piece.hasColorOf(color))
+                .filter(Square::hasPawn)
+                .filter(square -> square.hasPieceColored(color))
                 .count();
         return manipulateScoreByPawnCount(pawnCount);
     }

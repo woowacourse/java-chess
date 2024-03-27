@@ -9,8 +9,8 @@ public class InitPawn extends Pawn {
     }
 
     @Override
-    protected boolean isReachable(int distance) {
-        return distance <= MAX_UNIT_MOVE;
+    protected boolean isReachable(int step) {
+        return step <= MAX_UNIT_MOVE;
     }
 
     @Override
