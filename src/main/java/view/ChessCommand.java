@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+
 public enum ChessCommand {
 
     START("start"),
@@ -13,11 +15,9 @@ public enum ChessCommand {
     }
 
     public static ChessCommand from(final String commandText){
-        for (final var value : values()) {
-            if (value.commandText.equals(commandText)) {
-                return value;
-            }
-        }
-        throw new IllegalArgumentException(String.format("%s는 없는 명령입니다.", commandText));
+        return Arrays.stream(values())
+                .filter(value -> value.commandText.equals(commandText))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%s는 없는 명령입니다.", commandText)));
     }
 }
