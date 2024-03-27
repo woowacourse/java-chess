@@ -24,6 +24,10 @@ public class Position {
         return row.getIndex();
     }
 
+    public Row getRow() {
+        return row;
+    }
+
     public int getColumnIndex() {
         return column.getIndex();
     }

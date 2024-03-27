@@ -9,13 +9,11 @@ import model.position.Position;
 public abstract class Piece {
 
     private final Camp camp;
-    private final String pieceName;
-    private final double score;
+    private final PieceType pieceType;
 
-    public Piece(Camp camp, String pieceName, double score) {
+    public Piece(Camp camp, PieceType pieceType) {
         this.camp = camp;
-        this.pieceName = pieceName;
-        this.score = score;
+        this.pieceType = pieceType;
     }
 
     public abstract Set<Position> getMoveRoute(final Moving moving);
@@ -42,15 +40,15 @@ public abstract class Piece {
         return camp;
     }
 
-    public double getScore() {
-        return score;
+    public PieceType getPieceType() {
+        return pieceType;
     }
 
     public String getName() {
         if (camp == Camp.BLACK) {
-            return pieceName.toUpperCase();
+            return pieceType.getName().toUpperCase();
         }
-        return pieceName;
+        return pieceType.getName();
     }
 
     @Override

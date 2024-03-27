@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Map;
-import model.piece.King;
+import model.piece.Knight;
 import model.piece.Piece;
 import model.piece.Queen;
 import model.position.Moving;
@@ -130,9 +130,9 @@ class ChessGameTest {
         chessGame.start();
 
         Map<Position, Piece> board = chessGame.getBoard();
-        board.put(Position.from("b3"), new King(Camp.BLACK));
+        board.put(Position.from("d6"), new Knight(Camp.WHITE));
 
-        Moving moving = new Moving(Position.from("a2"), Position.from("b3"));
+        Moving moving = new Moving(Position.from("d6"), Position.from("e8"));
         chessGame.move(moving);
 
         assertThat(chessGame.isNotEnd()).isFalse();

@@ -7,11 +7,10 @@ import model.position.Position;
 
 public final class King extends Piece {
 
-    private static final String KING_NAME = "k";
     private static final int KING_DELTA_DISTANCE = 1;
 
     public King(final Camp camp) {
-        super(camp, KING_NAME, 0);
+        super(camp, PieceType.KING);
     }
 
     @Override

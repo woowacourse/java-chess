@@ -29,7 +29,7 @@ public class ScoreCalculator {
             return 0;
         }
         double total = pieces.stream()
-                .map(Piece::getScore)
+                .map(piece -> piece.getPieceType().getScore())
                 .reduce(0D, Double::sum);
         return total - pawnsScore(board, camp);
     }

@@ -36,6 +36,10 @@ public enum Column {
                 .orElseThrow(() -> new IndexOutOfBoundsException("인덱스 범위 초과"));
     }
 
+    public String getValue() {
+        return value;
+    }
+
     public int getIndex() {
         return index;
     }
