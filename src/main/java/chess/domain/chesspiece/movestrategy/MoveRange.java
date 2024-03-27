@@ -15,7 +15,7 @@ public class MoveRange {
         this.moveRange = new ArrayList<>();
     }
 
-    void addForward(ChessBoard chessBoard, Square startSquare) {
+    public void addForward(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isForwardMost()) {
             return;
         }
@@ -26,7 +26,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousForward(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousForward(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isForwardMost()) {
             Square forwardSquare = chessBoard.findForwardSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(forwardSquare);
@@ -38,7 +38,7 @@ public class MoveRange {
         }
     }
 
-    void addBackward(ChessBoard chessBoard, Square startSquare) {
+    public void addBackward(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isBackwardMost()) {
             return;
         }
@@ -49,7 +49,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousBackward(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousBackward(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isBackwardMost()) {
             Square backwardSquare = chessBoard.findBackwardSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(backwardSquare);
@@ -61,7 +61,7 @@ public class MoveRange {
         }
     }
 
-    void addLeft(ChessBoard chessBoard, Square startSquare) {
+    public void addLeft(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isLeftMost()) {
             return;
         }
@@ -72,7 +72,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousLeft(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousLeft(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isLeftMost()) {
             Square leftSquare = chessBoard.findLeftSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftSquare);
@@ -84,7 +84,7 @@ public class MoveRange {
         }
     }
 
-    void addRight(ChessBoard chessBoard, Square startSquare) {
+    public void addRight(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isRightMost()) {
             return;
         }
@@ -95,7 +95,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousRight(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousRight(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isRightMost()) {
             Square rightSquare = chessBoard.findRightSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightSquare);
@@ -107,7 +107,7 @@ public class MoveRange {
         }
     }
 
-    void addLeftForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addLeftForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isLeftMost() || startSquare.isForwardMost()) {
             return;
         }
@@ -121,7 +121,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousLeftForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousLeftForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isLeftMost() || !startSquare.isForwardMost()) {
             Square leftForwadDiagonalSquare = chessBoard.findLeftForwardDiagonalSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftForwadDiagonalSquare);
@@ -133,7 +133,7 @@ public class MoveRange {
         }
     }
 
-    void addRightForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addRightForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isRightMost() || startSquare.isForwardMost()) {
             return;
         }
@@ -152,7 +152,7 @@ public class MoveRange {
         return chessPiece.getChessPieceType() == ChessPieceType.PAWN;
     }
 
-    void addContinuousRightForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousRightForwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isRightMost() || !startSquare.isForwardMost()) {
             Square rightforwadrdDiagonalSquare = chessBoard.findRightForwardDiagonalSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightforwadrdDiagonalSquare);
@@ -164,7 +164,7 @@ public class MoveRange {
         }
     }
 
-    void addLeftBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addLeftBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isLeftMost() || startSquare.isBackwardMost()) {
             return;
         }
@@ -175,7 +175,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousLeftBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousLeftBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isLeftMost() || !startSquare.isBackwardMost()) {
             Square leftBackwardDiagonalSquare = chessBoard.findLeftBackwardDiagonalSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftBackwardDiagonalSquare);
@@ -187,7 +187,7 @@ public class MoveRange {
         }
     }
 
-    void addRightBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addRightBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         if (startSquare.isRightMost() || startSquare.isBackwardMost()) {
             return;
         }
@@ -198,7 +198,7 @@ public class MoveRange {
         }
     }
 
-    void addContinuousRightBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
+    public void addContinuousRightBackwardDiagonal(ChessBoard chessBoard, Square startSquare) {
         while (!startSquare.isRightMost() || !startSquare.isBackwardMost()) {
             Square rightBackwardDiagonalSquare = chessBoard.findRightBackwardDiagonalSquare(startSquare);
             ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightBackwardDiagonalSquare);
@@ -210,52 +210,164 @@ public class MoveRange {
         }
     }
 
-    void addBackwardRightLShape(ChessBoard chessBoard, Square startSquare) {
-        addBackward(chessBoard, startSquare);
-        addBackward(chessBoard, startSquare);
-        addRight(chessBoard, startSquare);
+    public void addBackwardRightLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addBackwardLeftLShape(ChessBoard chessBoard, Square startSquare) {
-        addBackward(chessBoard, startSquare);
-        addBackward(chessBoard, startSquare);
-        addLeft(chessBoard, startSquare);
+    public void addBackwardLeftLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addForwardRightLShape(ChessBoard chessBoard, Square startSquare) {
-        addForward(chessBoard, startSquare);
-        addForward(chessBoard, startSquare);
-        addRight(chessBoard, startSquare);
+    public void addForwardRightLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addForwardLeftLShape(ChessBoard chessBoard, Square startSquare) {
-        addForward(chessBoard, startSquare);
-        addForward(chessBoard, startSquare);
-        addLeft(chessBoard, startSquare);
+    public void addForwardLeftLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addLeftForwardLShape(ChessBoard chessBoard, Square startSquare) {
-        addLeft(chessBoard, startSquare);
-        addLeft(chessBoard, startSquare);
-        addForward(chessBoard, startSquare);
+    public void addLeftForwardLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addLeftBackwardLShape(ChessBoard chessBoard, Square startSquare) {
-        addLeft(chessBoard, startSquare);
-        addLeft(chessBoard, startSquare);
-        addBackward(chessBoard, startSquare);
+    public void addLeftBackwardLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        if (startSquare.isLeftMost()) {
+            return;
+        }
+        square = chessBoard.findLeftSquare(square);
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addRightForwardLShape(ChessBoard chessBoard, Square startSquare) {
-        addRight(chessBoard, startSquare);
-        addRight(chessBoard, startSquare);
-        addForward(chessBoard, startSquare);
+    public void addRightForwardLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        if (square.isForwardMost()) {
+            return;
+        }
+        square = chessBoard.findForwardSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
-    void addRightBackwardLShape(ChessBoard chessBoard, Square startSquare) {
-        addRight(chessBoard, startSquare);
-        addRight(chessBoard, startSquare);
-        addBackward(chessBoard, startSquare);
+    public void addRightBackwardLShape(ChessBoard chessBoard, Square startSquare) {
+        Square square = startSquare;
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        if (startSquare.isRightMost()) {
+            return;
+        }
+        square = chessBoard.findRightSquare(square);
+        if (square.isBackwardMost()) {
+            return;
+        }
+        square = chessBoard.findBackwardSquare(square);
+        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(square);
+        if (chessPiece.isEmptyChessPiece()) {
+            moveRange.add(square);
+        }
     }
 
     public List<Square> getMoveRange() {
