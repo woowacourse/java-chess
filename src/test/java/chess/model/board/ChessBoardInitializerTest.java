@@ -7,9 +7,11 @@ import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -59,5 +61,16 @@ class ChessBoardInitializerTest {
                 .stream()
                 .filter(condition)
                 .count();
+    }
+
+    @Test
+    void calculateTotalScore() {
+        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
+        Map<ChessPosition, Piece> chessBoard = chessBoardInitializer.create();
+        Map<Piece, List<ChessPosition>> positionsByPiece = chessBoard.entrySet().stream()
+                .collect(
+                        groupingBy(Map.Entry::getValue, mapping(Map.Entry::getKey, toList()))
+                );
+        for(Piece piece: positionsByPiece.keySet()) System.out.println(piece.getClass());
     }
 }
