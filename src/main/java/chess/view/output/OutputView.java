@@ -1,6 +1,6 @@
 package chess.view.output;
 
-import chess.domain.board.TurnTrackerBoard;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.view.input.command.GameCommand;
@@ -16,7 +16,7 @@ public class OutputView {
     private static final int MINIMUM_RANK_RANGE = 1;
     private static final int MAXIMUM_RANK_RANGE = 8;
 
-    public void printBoard(final TurnTrackerBoard board) {
+    public void printBoard(final Board board) {
         Map<Position, Piece> positions = board.getBoard();
         for (int rank = MAXIMUM_RANK_RANGE; rank >= MINIMUM_RANK_RANGE; rank--) {
             printRankLine(positions, rank);
