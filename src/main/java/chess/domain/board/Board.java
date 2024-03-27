@@ -1,19 +1,17 @@
 package chess.domain.board;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class Board {
 
-    private final Map<Coordinate, Piece> pieces = new HashMap<>();
+    private final Pieces pieces;
     private Team turn;
 
     public Board(Map<Coordinate, Piece> pieces) {
-        this.pieces.putAll(pieces);
+        this.pieces = new Pieces(pieces);
         this.turn = Team.WHITE;
     }
 
@@ -22,11 +20,11 @@ public class Board {
     }
 
     public Piece findByCoordinate(Coordinate coordinate) {
-        return pieces.getOrDefault(coordinate, EmptyPiece.getInstance());
+        return pieces.findByCoordinate(coordinate);
     }
 
     public boolean isPiecePresent(Coordinate coordinate) {
-        return pieces.containsKey(coordinate);
+        return pieces.isPiecePresent(coordinate);
     }
 
     public void move(Coordinate source, Coordinate target) {
@@ -37,27 +35,25 @@ public class Board {
     }
 
     private void validateSourceExist(Coordinate source) {
-        if (!pieces.containsKey(source)) {
+        if (!pieces.isPiecePresent(source)) {
             throw new NoSuchElementException("보드에 움직일 대상이 없습니다.");
         }
     }
 
     private void validateTurn(Coordinate source) {
-        Piece sourcePiece = pieces.get(source);
+        Piece sourcePiece = pieces.findByCoordinate(source);
         if (!sourcePiece.isSameTeam(turn)) {
             throw new IllegalStateException("상대방이 기물을 둘 차례입니다.");
         }
     }
 
     private void validateMovable(Coordinate source, Coordinate target) {
-        Piece sourcePiece = pieces.get(source);
+        Piece sourcePiece = pieces.findByCoordinate(source);
         sourcePiece.validateMovable(source, target, this);
     }
 
     private void updateBoard(Coordinate source, Coordinate target) {
-        Piece sourcePiece = pieces.get(source);
-        pieces.remove(source);
-        pieces.put(target, sourcePiece);
+        pieces.swap(source, target);
         turn = turn.opposite();
     }
 }
