@@ -4,12 +4,15 @@ import static chess.domain.piece.Type.KNIGHT;
 import static chess.utils.Constant.TWO_SQUARE;
 
 import chess.domain.position.Position;
+import chess.domain.vo.Score;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
+    private static final Score KNIGHT_SCORE = new Score(2.5);
+
     public Knight(Color color) {
-        super(color);
+        super(color, KNIGHT_SCORE);
     }
 
     @Override
@@ -22,10 +25,10 @@ public class Knight extends Piece {
         if (this.color == color) {
             return false;
         }
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        return Math.abs(rankDiff) * Math.abs(fileDiff) == TWO_SQUARE;
+        return Math.abs(fileDiff) * Math.abs(rankDiff) == TWO_SQUARE;
     }
 
     @Override

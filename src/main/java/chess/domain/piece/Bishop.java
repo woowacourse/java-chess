@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Type.BISHOP;
-import static chess.utils.Constant.ONE_SQUARE;
 
 import chess.domain.position.Position;
-import java.util.ArrayList;
+import chess.domain.vo.Score;
+import chess.utils.UnitCalculator;
 import java.util.List;
 
 public class Bishop extends Piece {
+    private static final Score BISHOP_SCORE = new Score(3);
+
     public Bishop(Color color) {
-        super(color);
+        super(color, BISHOP_SCORE);
     }
 
     @Override
@@ -22,24 +24,20 @@ public class Bishop extends Piece {
         if (this.color == color) {
             return false;
         }
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
-        return Math.abs(rankDiff) == Math.abs(fileDiff);
+        int rankDiff = source.calculateRankDifference(target);
+        return Math.abs(fileDiff) == Math.abs(rankDiff);
     }
 
     @Override
     public List<Position> searchPath(Position source, Position target) {
-        int rankDiff = source.calculateRankDifference(target);
         int fileDiff = source.calculateFileDifference(target);
+        int rankDiff = source.calculateRankDifference(target);
 
-        int rankUnit = rankDiff / Math.abs(rankDiff);
-        int fileUnit = fileDiff / Math.abs(fileDiff);
+        int fileUnit = UnitCalculator.getUnit(fileDiff);
+        int rankUnit = UnitCalculator.getUnit(rankDiff);
+        int moveCount = Math.abs(rankDiff);
 
-        List<Position> path = new ArrayList<>();
-        for (int i = Math.abs(rankDiff); i != ONE_SQUARE; i--) {
-            source = source.move(fileUnit, rankUnit);
-            path.add(source);
-        }
-        return path;
+        return combinePath(source, moveCount, fileUnit, rankUnit);
     }
 }

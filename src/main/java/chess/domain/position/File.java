@@ -37,4 +37,8 @@ public enum File {
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("올바르지 않은 file 값입니다."));
     }
+
+    public String getSymbol() {
+        return fileSymbol;
+    }
 }

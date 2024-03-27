@@ -33,4 +33,8 @@ public enum Rank {
         int destination = rank + moveUnit;
         return convertToRank(destination);
     }
+
+    public int getSymbol() {
+        return rank;
+    }
 }
