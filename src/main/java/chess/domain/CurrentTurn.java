@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.square.piece.Color;
 
-// TODO: 불변객체로 만들어도 ChessBoard가 가진 필드는 턴마다 변해야 하는데 이점이 있는지 생각해보기.
 public class CurrentTurn {
     private Color currentTurn;
 
