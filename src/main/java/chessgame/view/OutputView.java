@@ -7,6 +7,14 @@ public class OutputView {
         throw new UnsupportedOperationException("생성할 수 없습니다.");
     }
 
+
+    public static void printCommandOptions() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작 : start");
+        System.out.println("> 게임 종료 : end");
+        System.out.print("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
     public static void printChessBoard(final ChessBoardDto chessBoardDto) {
         for (var vertical = ChessBoardDto.VERTICAL_START_INDEX; vertical >= 0; vertical--) {
             printHorizontalLine(chessBoardDto, vertical);

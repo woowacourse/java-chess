@@ -18,16 +18,20 @@ public class ChessController {
     public void start() {
         var chessBoard = new ChessBoard();
         var chessCommand = ChessCommand.PENDING;
+        OutputView.printCommandOptions();
         while (chessCommand != END) {
             chessCommand = ExceptionHandler.handleInputWithRetry(() -> proceed(chessBoard));
-            OutputView.printChessBoard(chessBoard.toDto());
         }
     }
 
     private ChessCommand proceed(ChessBoard chessBoard) {
         ChessCommand chessCommand;
         chessCommand = InputView.inputChessCommand();
+        if (chessCommand == END) {
+            return END;
+        }
         commandPerformances.get(chessCommand).accept(chessBoard);
+        OutputView.printChessBoard(chessBoard.toDto());
         return chessCommand;
     }
 
