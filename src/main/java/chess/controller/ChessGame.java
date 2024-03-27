@@ -50,14 +50,12 @@ public class ChessGame {
     }
 
     private void play(final Turn turn, final ChessBoard chessBoard) {
-        CommandInfo commandInfo;
-        do {
+        CommandInfo commandInfo = requestUntilValid(this::requestMove);
+        while (commandInfo.type().isMove()) {
+            playTurn(turn, chessBoard, commandInfo);
+            turn.next();
             commandInfo = requestUntilValid(this::requestMove);
-            if (commandInfo.type().isMove()) {
-                playTurn(turn, chessBoard, commandInfo);
-                turn.next();
-            }
-        } while (!commandInfo.type().isEnd());
+        }
     }
 
     private CommandInfo requestMove() {
