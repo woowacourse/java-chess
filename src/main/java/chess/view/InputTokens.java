@@ -8,8 +8,8 @@ public class InputTokens {
     private static final int START_AND_END_COMMAND_SIZE = 1;
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int COMMAND_TOKEN_POSITION = 0;
-    public static final int SOURCE_TOKEN_POSITION = 1;
-    public static final int TARGET_TOKEN_POSITION = 2;
+    private static final int SOURCE_TOKEN_POSITION = 1;
+    private static final int TARGET_TOKEN_POSITION = 2;
 
     private final List<String> tokens;
 
