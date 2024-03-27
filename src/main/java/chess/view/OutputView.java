@@ -9,7 +9,7 @@ import chess.domain.square.piece.unified.Bishop;
 import chess.domain.square.piece.Color;
 import chess.domain.square.piece.unified.King;
 import chess.domain.square.piece.unified.Knight;
-import chess.domain.square.piece.divided.Pawn;
+import chess.domain.square.piece.Pawn;
 import chess.domain.square.piece.unified.Queen;
 import chess.domain.square.piece.unified.Rook;
 

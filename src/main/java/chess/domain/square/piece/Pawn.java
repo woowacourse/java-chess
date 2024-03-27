@@ -1,10 +1,12 @@
-package chess.domain.square.piece.divided;
+package chess.domain.square.piece;
 
 import chess.domain.position.PathFinder;
-import chess.domain.square.piece.Color;
+import chess.domain.position.Position;
+import chess.domain.square.Empty;
+import chess.domain.square.Square;
 import java.util.Map;
 
-public class Pawn extends DividedArriveWay {
+public class Pawn extends Piece {
     private static final int ATTACKABLE_FILE_DISTANCE = 1;
     private static final int NORMAL_MOVABLE_DISTANCE = 1;
     private static final int FIRST_MOVABLE_MAX_DISTANCE = 2;
@@ -25,6 +27,18 @@ public class Pawn extends DividedArriveWay {
     }
 
     @Override
+    public boolean canArrive(PathFinder pathFinder, Map<Position, Square> board) {
+        final Square targetSquare = board.get(pathFinder.targetPosition());
+        if (targetSquare.isColor(getColor())) {
+            return false;
+        }
+        if (targetSquare == Empty.getInstance()) {
+            return canMove(pathFinder) && isNotObstructed(pathFinder, board);
+        }
+        return canAttack(pathFinder) && isNotObstructed(pathFinder, board);
+    }
+
+    @Override
     protected boolean canMove(PathFinder pathFinder) {
         if (isColor(Color.BLACK)) {
             return pathFinder.isDown(maxDistance(pathFinder, BLACK_START_RANK));
@@ -39,8 +53,7 @@ public class Pawn extends DividedArriveWay {
         return NORMAL_MOVABLE_DISTANCE;
     }
 
-    @Override
-    protected boolean canAttack(PathFinder pathFinder) {
+    private boolean canAttack(PathFinder pathFinder) {
         int attackableRankDiff = ATTACKABLE_RANK_DISTANCE;
         if (isColor(Color.BLACK)) {
             attackableRankDiff *= DOWN_DIRECTION;

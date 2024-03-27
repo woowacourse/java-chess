@@ -8,7 +8,6 @@ import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.square.Square;
-import chess.domain.square.piece.divided.Pawn;
 import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
