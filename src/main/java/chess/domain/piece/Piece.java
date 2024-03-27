@@ -29,4 +29,12 @@ public abstract class Piece {
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
+
+    public boolean isPawn() {
+        return PieceType.from(this) == PieceType.PAWN;
+    }
+
+    public boolean isKing() {
+        return PieceType.from(this) == PieceType.KING;
+    }
 }
