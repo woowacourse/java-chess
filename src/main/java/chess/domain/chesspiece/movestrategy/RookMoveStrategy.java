@@ -2,27 +2,25 @@ package chess.domain.chesspiece.movestrategy;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
-import java.util.ArrayList;
 import java.util.List;
 
-public class RookMoveStrategy extends MoveDirection implements MoveStrategy {
+public class RookMoveStrategy implements MoveStrategy {
 
     @Override
     public void move(ChessBoard chessBoard, Square startSquare, Square targetSquare) {
-        List<Square> moveRange = createMoveRange(chessBoard, startSquare);
+        List<Square> moveRange = createMoveRange(chessBoard, startSquare).getMoveRange();
 
         if (moveRange.contains(targetSquare)) {
             chessBoard.movePiece(startSquare, targetSquare);
         }
     }
 
-    private List<Square> createMoveRange(ChessBoard chessBoard, Square startSquare) {
-        List<Square> moveRange = new ArrayList<>();
-        addContinuousForward(moveRange, startSquare, chessBoard);
-        addContinuousBackward(moveRange, startSquare, chessBoard);
-        addContinuousLeft(moveRange, startSquare, chessBoard);
-        addContinuousRight(moveRange, startSquare, chessBoard);
-
+    private MoveRange createMoveRange(ChessBoard chessBoard, Square startSquare) {
+        MoveRange moveRange = new MoveRange();
+        moveRange.addContinuousForward(chessBoard, startSquare);
+        moveRange.addContinuousBackward(chessBoard, startSquare);
+        moveRange.addContinuousLeft(chessBoard, startSquare);
+        moveRange.addContinuousRight(chessBoard, startSquare);
         return moveRange;
     }
 }

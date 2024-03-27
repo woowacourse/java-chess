@@ -2,17 +2,15 @@ package chess.domain.chesspiece.movestrategy;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
-import chess.domain.chesspiece.ChessPiece;
-import java.util.ArrayList;
 import java.util.List;
 
-public class PawnMoveStrategy extends MoveDirection implements MoveStrategy {
+public class PawnMoveStrategy implements MoveStrategy {
 
     private boolean isStartingPosition = true;
 
     @Override
     public void move(ChessBoard chessBoard, Square startSquare, Square targetSquare) {
-        List<Square> moveRange = createMoveRange(chessBoard, startSquare);
+        List<Square> moveRange = createMoveRange(chessBoard, startSquare).getMoveRange();
 
         if (moveRange.contains(targetSquare)) {
             chessBoard.movePiece(startSquare, targetSquare);
@@ -20,39 +18,15 @@ public class PawnMoveStrategy extends MoveDirection implements MoveStrategy {
         }
     }
 
-    private List<Square> createMoveRange(ChessBoard chessBoard, Square startSquare) {
-        List<Square> moveRange = new ArrayList<>();
-        addForward(moveRange, startSquare, chessBoard);
+    private MoveRange createMoveRange(ChessBoard chessBoard, Square startSquare) {
+        MoveRange moveRange = new MoveRange();
+        moveRange.addForward(chessBoard, startSquare);
         if (isStartingPosition) {
-            addForward(moveRange, startSquare, chessBoard);
+            moveRange.addForward(chessBoard, startSquare);
         }
-        addLeftForwardDiagonal(moveRange, startSquare, chessBoard);
-        addRightForwardDiagonal(moveRange, startSquare, chessBoard);
+        moveRange.addLeftForwardDiagonal(chessBoard, startSquare);
+        moveRange.addRightForwardDiagonal(chessBoard, startSquare);
 
         return moveRange;
-    }
-
-    @Override
-    void addLeftForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
-        if (startSquare.isLeftMost() || startSquare.isForwardMost()) {
-            return;
-        }
-        Square leftDiagonalSquare = chessBoard.findLeftForwardDiagonalSquare(startSquare);
-        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(leftDiagonalSquare);
-        if (!chessPiece.isEmptyChessPiece()) {
-            moveRange.add(leftDiagonalSquare);
-        }
-    }
-
-    @Override
-    void addRightForwardDiagonal(List<Square> moveRange, Square startSquare, ChessBoard chessBoard) {
-        if (startSquare.isRightMost() || startSquare.isForwardMost()) {
-            return;
-        }
-        Square rightDiagonalSquare = chessBoard.findRightForwardDiagonalSquare(startSquare);
-        ChessPiece chessPiece = chessBoard.findChessPieceOnSquare(rightDiagonalSquare);
-        if (!chessPiece.isEmptyChessPiece()) {
-            moveRange.add(rightDiagonalSquare);
-        }
     }
 }

@@ -2,27 +2,25 @@ package chess.domain.chesspiece.movestrategy;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chessboard.Square;
-import java.util.ArrayList;
 import java.util.List;
 
-public class BishopMoveStrategy extends MoveDirection implements MoveStrategy {
+public class BishopMoveStrategy implements MoveStrategy {
 
     @Override
     public void move(ChessBoard chessBoard, Square startSquare, Square targetSquare) {
-        List<Square> moveRange = createMoveRange(chessBoard, startSquare);
+        List<Square> moveRange = createMoveRange(chessBoard, startSquare).getMoveRange();
 
         if (moveRange.contains(targetSquare)) {
             chessBoard.movePiece(startSquare, targetSquare);
         }
     }
 
-    private List<Square> createMoveRange(ChessBoard chessBoard, Square startSquare) {
-        List<Square> moveRange = new ArrayList<>();
-        addContinuousLeftForwardDiagonal(moveRange, startSquare, chessBoard);
-        addContinuousRightForwardDiagonal(moveRange, startSquare, chessBoard);
-        addContinuousLeftBackwardDiagonal(moveRange, startSquare, chessBoard);
-        addContinuousRightBackwardDiagonal(moveRange, startSquare, chessBoard);
-
+    private MoveRange createMoveRange(ChessBoard chessBoard, Square startSquare) {
+        MoveRange moveRange = new MoveRange();
+        moveRange.addContinuousLeftForwardDiagonal(chessBoard, startSquare);
+        moveRange.addContinuousRightForwardDiagonal(chessBoard, startSquare);
+        moveRange.addContinuousLeftBackwardDiagonal(chessBoard, startSquare);
+        moveRange.addContinuousRightBackwardDiagonal(chessBoard, startSquare);
         return moveRange;
     }
 }
