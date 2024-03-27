@@ -75,12 +75,20 @@ public class Board {
 
     private GameStatus move(Position start, Position end, Piece movingPiece) {
         board.remove(start);
-        if (find(end).map(piece -> !piece.isSameTeam(turn) && piece.isKing()).orElse(false)) {
+        if (isOtherTeamKing(end)) {
             return GameStatus.whenWin(turn);
         }
         board.put(end, movingPiece);
         turn = turn.next();
         return GameStatus.PLAY;
+    }
+
+    private boolean isOtherTeamKing(Position end) {
+        return find(end).map(this::isOtherTeamKing).orElse(false);
+    }
+
+    private boolean isOtherTeamKing(Piece piece) {
+        return !piece.isSameTeam(turn) && piece.isKing();
     }
 
     public double calculateScoreOf(Team team) {
