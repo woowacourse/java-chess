@@ -3,7 +3,6 @@ package chess.model.board;
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
 import chess.model.piece.Piece;
-import chess.model.piece.Type;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import java.util.ArrayList;
@@ -42,25 +41,22 @@ public class Board {
 
     private void validateMove(Movement movement) {
         validateMovementByPiece(movement);
-        validateIntermediatePositions(movement);
+        validateIntermediatePositionsByPiece(movement);
     }
 
     private void validateMovementByPiece(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
         Piece destinationPiece = getDestinationPiece(movement);
         if (!sourcePiece.isValid(movement, destinationPiece)) {
-            throw new IllegalArgumentException("해당 기물에게 허용되지 않는 움직임이라 움직일 수 없습니다.");
+            throw new IllegalArgumentException("해당 기물의 행마법에 맞지 않아 움직일 수 없습니다.");
         }
     }
 
-    private void validateIntermediatePositions(Movement movement) {
+    private void validateIntermediatePositionsByPiece(Movement movement) {
         Piece sourcePiece = getSourcePiece(movement);
-        if (getSourcePiece(movement).isType(Type.KNIGHT)) {
-            return;
-        }
-        List<Position> intermediatePositions = movement.getIntermediatePositions();
+        List<Position> intermediatePositions = sourcePiece.getIntermediatePositions(movement);
         if (intermediatePositions.stream().anyMatch(position -> !squares.get(position).isEmpty())) {
-            throw new IllegalArgumentException("이동 경로에 다른 기물이 있어 움직일 수 없습니다.");
+            throw new IllegalArgumentException("해당 기물은 이동 경로에 다른 기물이 있으면 움직일 수 없습니다.");
         }
     }
 

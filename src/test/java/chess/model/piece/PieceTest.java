@@ -28,14 +28,15 @@ class PieceTest {
                 Arguments.of(Queen.from(Color.WHITE), "WHITE_QUEEN"),
                 Arguments.of(Knight.from(Color.WHITE), "WHITE_KNIGHT"),
                 Arguments.of(Pawn.from(Color.WHITE), "WHITE_PAWN"),
-                Arguments.of(King.from(Color.WHITE), "WHITE_KING")
+                Arguments.of(King.from(Color.WHITE), "WHITE_KING"),
+                Arguments.of(Empty.getInstance(), "NONE_NONE")
         );
     }
 
     @ParameterizedTest
     @MethodSource("providePieceDestination")
-    void 도착지에_같은_색깔의_기물이_있으면_예외가_발생한다(Piece piece, Piece destination) {
-        assertThatThrownBy(() -> piece.validateDestinationColor(destination))
+    void 도착지에_같은_색깔의_기물이_있으면_예외가_발생한다(Piece source, Piece destination) {
+        assertThatThrownBy(() -> source.validateDestinationColor(destination))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

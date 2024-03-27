@@ -45,6 +45,8 @@
 - 행(Rank) -> 함수 그래프에서 y를 의미
     - 행은 체스보드에서 가로 줄을 의미합니다. 8개의 행은 백을 기준으로 아래쪽부터 숫자(1~8)를 부여받습니다. 아래 그림에서 색칠되어 있는 행은 4번째 행입니다.
     - <img src="./image/rank.png" height="300" width="300">
+- 슬라이딩 기물(Sliding Piece) -> 경로에 다른 기물이 있으면 움직이지 못하는 기물 [Sliding Piece](https://www.chessprogramming.org/Sliding_Pieces)
+- 점핑 기물(Jumping Piece) -> 경로에 다른 기물이 있어도 움직일 수 있는 기물
 
 # 구현 기능 목록
 

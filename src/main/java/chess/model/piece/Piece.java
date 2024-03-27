@@ -1,6 +1,8 @@
 package chess.model.piece;
 
 import chess.model.position.Movement;
+import chess.model.position.Position;
+import java.util.List;
 
 public abstract class Piece {
     private static final String PIECE_NAME_DELIMITER = "_";
@@ -14,6 +16,8 @@ public abstract class Piece {
     }
 
     public abstract boolean isValid(Movement movement, Piece destination);
+
+    public abstract List<Position> getIntermediatePositions(Movement movement);
 
     protected void validateDestinationColor(Piece destination) {
         if (destination.hasSameColorAs(this.color)) {

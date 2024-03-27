@@ -2,7 +2,7 @@ package chess.model.piece;
 
 import chess.model.position.Movement;
 
-public class Pawn extends Piece {
+public final class Pawn extends JumpingPiece {
     private static final Piece WHITE_PAWN = new Pawn(Color.WHITE, 1, 2);
     private static final Piece BLACK_PAWN = new Pawn(Color.BLACK, -1, 7);
     private static final int START_JUMP_DISTANCE = 2;
