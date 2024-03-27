@@ -3,14 +3,14 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Rank {
-    ONE(0),
-    TWO(1),
-    THREE(2),
-    FOUR(3),
-    FIVE(4),
-    SIX(5),
-    SEVEN(6),
-    EIGHT(7);
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8);
 
     private int index;
 
@@ -31,7 +31,7 @@ public enum Rank {
 
     private static int convertValueToIndex(String value) {
         try {
-            int index = Integer.parseInt(value) - 1;
+            int index = Integer.parseInt(value);
             validateInRange(index);
             return index;
         } catch (NumberFormatException e) {
@@ -40,13 +40,13 @@ public enum Rank {
     }
 
     private static void validateInRange(int index) {
-        if (index < 0 || index >= values().length) {
+        if (index < 1 || index > values().length) {
             throw new IllegalArgumentException("1~8까지 가능합니다.");
         }
     }
 
     public Rank update(int value) {
-        int index = ordinal() + value;
+        int index = this.index + value;
         if (index >= values().length) {
             throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
         }

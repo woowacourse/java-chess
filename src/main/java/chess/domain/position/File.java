@@ -3,14 +3,14 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum File {
-    a(0),
-    b(1),
-    c(2),
-    d(3),
-    e(4),
-    f(5),
-    g(6),
-    h(7);
+    a(1),
+    b(2),
+    c(3),
+    d(4),
+    e(5),
+    f(6),
+    g(7),
+    h(8);
 
     private int index;
 
@@ -27,7 +27,7 @@ public enum File {
     }
 
     public File update(int value) {
-        int index = ordinal() + value;
+        int index = this.index + value;
         if (index >= values().length) {
             throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
         }

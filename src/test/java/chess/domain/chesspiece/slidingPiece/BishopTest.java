@@ -18,9 +18,9 @@ class BishopTest {
     @DisplayName("목적지 제외 갈 수 있는 위치들을 반환한다.")
     void Bishop_Check_route() {
         Piece piece = new Bishop(WHITE);
-        List<Position> route = piece.getMovingRoute(Position.of("a", "1"), Position.of("e", "5"));
-        List<Position> positions = List.of(Position.of("b", "2"), Position.of("c", "3"),
-                Position.of("d", "4"));
+        List<Position> route = piece.getMovingRoute(new Position("a", "1"), new Position("e", "5"));
+        List<Position> positions = List.of(new Position("b", "2"), new Position("c", "3"),
+                new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -31,8 +31,8 @@ class BishopTest {
                                String rank1,
                                String file2,
                                String rank2) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         Piece piece = new Bishop(WHITE);
         assertThatThrownBy(() -> {
             piece.getMovingRoute(source, target);

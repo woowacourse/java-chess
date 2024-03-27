@@ -12,7 +12,7 @@ public class PositionTest {
     @Test
     @DisplayName("Position을 생성한다.")
     void makePosition() {
-        var result = Position.of("b", "2");
+        var result = new Position("b", "2");
         assertThat(result).isInstanceOf(Position.class);
     }
 
@@ -20,7 +20,7 @@ public class PositionTest {
     @DisplayName("잘못된 Position을 넘기면 에러가 발생한다.")
     void wrongValueTest() {
         assertThatThrownBy(() -> {
-            Position.of("x", "5");
+            new Position("x", "5");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -40,8 +40,8 @@ public class PositionTest {
                                       Direction direction,
                                       String file2,
                                       String rank2) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = source.move(direction);
         assertThat(result).isEqualTo(target);
     }
@@ -58,8 +58,8 @@ public class PositionTest {
                                                               String file2,
                                                               String rank2,
                                                               int distance) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = source.calculateRankDistance(target);
         assertThat(result).isEqualTo(distance);
     }
@@ -76,8 +76,8 @@ public class PositionTest {
                                                               String file2,
                                                               String rank2,
                                                               int distance) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = source.calculateFileDistance(target);
         assertThat(result).isEqualTo(distance);
     }
@@ -92,8 +92,8 @@ public class PositionTest {
                                      String file2,
                                      String rank2,
                                      boolean isSame) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = source.isSameRank(target);
         assertThat(result).isEqualTo(isSame);
     }
@@ -108,8 +108,8 @@ public class PositionTest {
                                      String file2,
                                      String rank2,
                                      boolean isSame) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = source.isSameFile(target);
         assertThat(result).isEqualTo(isSame);
     }

@@ -24,8 +24,8 @@ class DirectionTest {
                                                  String file2,
                                                  String rank2,
                                                  Direction inputDirection) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         Direction direction = Direction.findDirection(source, target);
 
         assertThat(direction).isEqualTo(inputDirection);
@@ -41,8 +41,8 @@ class DirectionTest {
                                                    String file2,
                                                    String rank2,
                                                    boolean isUpDown) {
-        Position source = Position.of(file1, rank1);
-        Position target = Position.of(file2, rank2);
+        Position source = new Position(file1, rank1);
+        Position target = new Position(file2, rank2);
         var result = Direction.isUpDown(source, target);
 
         assertThat(result).isEqualTo(isUpDown);

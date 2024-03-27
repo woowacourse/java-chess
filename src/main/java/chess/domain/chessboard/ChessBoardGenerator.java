@@ -61,6 +61,6 @@ public class ChessBoardGenerator {
     }
 
     private static Position createPosition(String file, String column) {
-        return Position.of(file, column);
+        return new Position(file, column);
     }
 }

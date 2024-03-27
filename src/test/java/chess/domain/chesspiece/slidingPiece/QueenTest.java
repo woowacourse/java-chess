@@ -16,8 +16,8 @@ class QueenTest {
     @DisplayName("여왕은 앞뒤로 움직일 수 있다.")
     void Queen_Move_forward_and_backward() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(Position.of("a", "1"), Position.of("a", "4"));
-        List<Position> positions = List.of(Position.of("a", "2"), Position.of("a", "3"));
+        List<Position> route = piece.getMovingRoute(new Position("a", "1"), new Position("a", "4"));
+        List<Position> positions = List.of(new Position("a", "2"), new Position("a", "3"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -25,8 +25,8 @@ class QueenTest {
     @DisplayName("여왕은 좌우로 움직일 수 있다.")
     void Queen_Move_side() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(Position.of("b", "4"), Position.of("e", "4"));
-        List<Position> positions = List.of(Position.of("c", "4"), Position.of("d", "4"));
+        List<Position> route = piece.getMovingRoute(new Position("b", "4"), new Position("e", "4"));
+        List<Position> positions = List.of(new Position("c", "4"), new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -34,8 +34,8 @@ class QueenTest {
     @DisplayName("여왕은 대각선으로 움직일 수 있다.")
     void Queen_Move_diagonal() {
         Piece piece = new Queen(WHITE);
-        List<Position> route = piece.getMovingRoute(Position.of("b", "2"), Position.of("e", "5"));
-        List<Position> positions = List.of(Position.of("c", "3"), Position.of("d", "4"));
+        List<Position> route = piece.getMovingRoute(new Position("b", "2"), new Position("e", "5"));
+        List<Position> positions = List.of(new Position("c", "3"), new Position("d", "4"));
         assertThat(route).isEqualTo(positions);
     }
 
@@ -44,7 +44,7 @@ class QueenTest {
     void Bishop_Validate_route() {
         Piece piece = new Queen(WHITE);
         assertThatThrownBy(() -> {
-            piece.getMovingRoute(Position.of("a", "1"), Position.of("b", "4'"));
+            piece.getMovingRoute(new Position("a", "1"), new Position("b", "4'"));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
