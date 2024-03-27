@@ -1,6 +1,6 @@
 package chess.domain.strategy;
 
-import chess.domain.Position;
+import chess.domain.pieceInfo.Position;
 
 public class EmptyMoveStrategy implements MoveStrategy {
 

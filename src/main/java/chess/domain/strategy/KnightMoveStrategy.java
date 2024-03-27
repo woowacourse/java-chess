@@ -1,7 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.Position;
-import chess.domain.PositionDifference;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.PositionDifference;
 import java.util.List;
 
 public class KnightMoveStrategy implements MoveStrategy {

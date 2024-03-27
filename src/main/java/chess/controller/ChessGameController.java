@@ -1,11 +1,15 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.Command;
+import chess.domain.chessGame.ScoreCalculator;
 import chess.domain.dto.BoardDto;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import static chess.domain.CommandType.*;
+import static chess.domain.chessGame.CommandType.*;
 
 public class ChessGameController {
 

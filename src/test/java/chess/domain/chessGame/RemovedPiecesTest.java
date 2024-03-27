@@ -1,8 +1,12 @@
-package chess.domain;
+package chess.domain.chessGame;
 
+import chess.domain.board.RemovedPieces;
 import chess.domain.piece.King;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

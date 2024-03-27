@@ -1,6 +1,9 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.*;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
 
 import java.util.ArrayList;
 import java.util.List;

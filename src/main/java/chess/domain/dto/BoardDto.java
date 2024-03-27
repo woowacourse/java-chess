@@ -1,7 +1,7 @@
 package chess.domain.dto;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 

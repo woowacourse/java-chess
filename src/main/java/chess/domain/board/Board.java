@@ -1,8 +1,12 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +85,7 @@ public class Board {
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    void placePiece(final Position currentPosition, final Piece piece) {
+    public void placePiece(final Position currentPosition, final Piece piece) {
         board.put(currentPosition, piece);
     }
 

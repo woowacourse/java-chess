@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
 import chess.domain.strategy.KingMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 

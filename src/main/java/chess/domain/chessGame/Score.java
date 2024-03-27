@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chessGame;
 
 import chess.domain.piece.PieceType;
 

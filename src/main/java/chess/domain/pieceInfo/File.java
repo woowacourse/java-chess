@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.pieceInfo;
 
 import java.util.Arrays;
 

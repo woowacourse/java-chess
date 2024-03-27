@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.pieceInfo;
 
 public record PositionDifference(int xDifference, int yDifference) {
     public boolean isMagnitudeEqual() {
