@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
-import chess.domain.position.Position;
 import chess.domain.piece.blank.Blank;
 import chess.domain.piece.nonsliding.King;
 import chess.domain.piece.nonsliding.Knight;
@@ -11,11 +10,9 @@ import chess.domain.piece.pawn.WhiteFirstPawn;
 import chess.domain.piece.sliding.Bishop;
 import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
-import chess.dto.PieceDto;
+import chess.domain.position.Position;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BoardFactory {
     private static final Map<Position, Piece> board = new HashMap<>();
@@ -73,13 +70,5 @@ public class BoardFactory {
 
     public Map<Position, Piece> getInitialBoard() {
         return new HashMap<>(board);
-    }
-
-    public Map<Position, Piece> getPreviousBoard(List<PieceDto> pieces) {
-        Map<Position, Piece> board = new HashMap<>(pieces.size());
-        for (PieceDto piece : pieces) {
-            board.put(piece.getPosition(), piece.getPiece());
-        }
-        return board;
     }
 }

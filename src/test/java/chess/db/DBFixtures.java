@@ -21,7 +21,7 @@ public class DBFixtures {
         return new TurnsDao(createConnectorSupplier());
     }
 
-    public static DBService createDBService() {
-        return new DBService(createConnectorSupplier());
+    public static ChessGameDBService createChessGameDBService() {
+        return new ChessGameDBService(createConnectorSupplier());
     }
 }

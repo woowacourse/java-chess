@@ -1,22 +1,15 @@
 package chess.controller;
 
 import chess.db.DBConnector;
-import chess.db.DBService;
+import chess.db.ChessGameDBService;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
-import chess.domain.color.Color;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.dto.PieceDto;
 import chess.dto.Status;
-import chess.dto.TurnDto;
 import chess.domain.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +20,7 @@ public class ChessGameController {
     private static final String END_COMMAND = "end";
     private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
 
-    private final DBService dbService = new DBService(() -> new DBConnector().getConnection());
+    private final ChessGameDBService chessGameDbService = new ChessGameDBService(() -> new DBConnector().getConnection());
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -62,11 +55,8 @@ public class ChessGameController {
     }
 
     private ChessGame registerChessGame() {
-        if (dbService.hasPreviousData()) {
-            List<PieceDto> previousPieces = dbService.findPreviousPieces();
-            Map<Position, Piece> board = new BoardFactory().getPreviousBoard(previousPieces);
-            Color currentTurn = dbService.findCurrentTurn().getColor();
-            return new ChessGame(board, currentTurn);
+        if (chessGameDbService.hasPreviousData()) {
+            return chessGameDbService.getCurrentChessGame();
         }
         return new ChessGame(new BoardFactory().getInitialBoard());
     }
@@ -136,18 +126,9 @@ public class ChessGameController {
 
     private boolean isNotEnd(ChessGame chessGame, String command) {
         if (command.equals(END_COMMAND)) {
-            saveCurrentStatusToDB(chessGame);
+            chessGameDbService.saveGame(chessGame);
             return false;
         }
         return true;
-    }
-
-    private void saveCurrentStatusToDB(ChessGame chessGame) {
-        Map<Position, PieceType> board = chessGame.collectBoard();
-        List<PieceDto> pieces = board.entrySet().stream()
-                .map(entry -> PieceDto.from(entry.getKey(), entry.getValue()))
-                .toList();
-        TurnDto turn = TurnDto.of(chessGame.turn());
-        dbService.saveGame(pieces, turn);
     }
 }
