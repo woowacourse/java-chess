@@ -4,13 +4,13 @@ import domain.position.Position;
 
 public enum PieceType {
 
-    BISHOP(MoveTactic.DIAGONAL, AttackTactic.ATTACK),
-    KING(MoveTactic.NEIGHBOR, AttackTactic.ATTACK),
-    KNIGHT(MoveTactic.ONE_STRAIGHT_ONE_DIAGONAL, AttackTactic.ATTACK),
+    BISHOP(MoveTactic.DIAGONAL, AttackTactic.NOT_ATTACK),
+    KING(MoveTactic.NEIGHBOR, AttackTactic.NOT_ATTACK),
+    KNIGHT(MoveTactic.ONE_STRAIGHT_ONE_DIAGONAL, AttackTactic.NOT_ATTACK),
     PAWN(MoveTactic.FORWARD_STRAIGHT, AttackTactic.DIAGONAL),
-    QUEEN(MoveTactic.STRAIGHT_DIAGONAL, AttackTactic.ATTACK),
-    ROOK(MoveTactic.STRAIGHT, AttackTactic.ATTACK),
-    NONE(MoveTactic.STOP, AttackTactic.ATTACK),
+    QUEEN(MoveTactic.STRAIGHT_DIAGONAL, AttackTactic.NOT_ATTACK),
+    ROOK(MoveTactic.STRAIGHT, AttackTactic.NOT_ATTACK),
+    NONE(MoveTactic.STOP, AttackTactic.NOT_ATTACK),
     ;
 
     private final MoveTactic moveTactic;
