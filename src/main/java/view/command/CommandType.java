@@ -17,12 +17,12 @@ public enum CommandType {
         this.supplements = new ArrayList<>();
     }
 
-    public static CommandType from(final SeparatedInput separatedInput) {
+    public static CommandType from(final SeparatedCommandInput separatedCommandInput) {
         CommandType commandType = Arrays.stream(CommandType.values())
-                .filter(type -> type.command.equals(separatedInput.prefix()))
+                .filter(type -> type.command.equals(separatedCommandInput.prefix()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR]잘못된 게임 명령어입니다."));
-        commandType.addSupplements(separatedInput.getSupplements());
+        commandType.addSupplements(separatedCommandInput.getSupplements());
         return commandType;
     }
 
