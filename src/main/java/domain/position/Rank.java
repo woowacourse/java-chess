@@ -3,8 +3,8 @@ package domain.position;
 import java.util.Objects;
 
 public class Rank {
-    private static final int START_NUMBER = 1;
-    private static final int END_NUMBER = 8;
+    public static final int START_NUMBER = 1;
+    public static final int END_NUMBER = 8;
     private final int number;
 
     public Rank(final int number) {

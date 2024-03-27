@@ -5,8 +5,8 @@ import domain.game.Vector;
 import java.util.Objects;
 
 public class Position {
-    private File file;
-    private Rank rank;
+    private final File file;
+    private final Rank rank;
 
     public Position(final File file, final Rank rank) {
         this.file = file;
@@ -28,6 +28,14 @@ public class Position {
         return new Position(file.add(dFile), rank.add(dRank));
     }
 
+    public boolean isRank2() {
+        return rank.equals(new Rank(2));
+    }
+
+    public boolean isRank7() {
+        return rank.equals(new Rank(7));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -43,13 +51,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-    public boolean isRank2() {
-        return rank.equals(new Rank(2));
-    }
-
-    public boolean isRank7() {
-        return rank.equals(new Rank(7));
     }
 }

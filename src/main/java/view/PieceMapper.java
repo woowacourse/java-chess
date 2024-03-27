@@ -44,4 +44,8 @@ public enum PieceMapper {
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
+
+    public static String emptySymbol() {
+        return ".";
+    }
 }
