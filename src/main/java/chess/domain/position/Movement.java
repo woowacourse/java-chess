@@ -38,8 +38,8 @@ public class Movement {
     }
 
     private List<ChessDirection> findLShapedDirections(final int fileDiff, final int rankDiff) {
-        List<ChessDirection> horizontalDirections = Stream.generate(() -> ChessDirection.findDirection(fileDiff, 0)).limit(fileDiff).toList();
-        List<ChessDirection> verticalDirections = Stream.generate(() -> ChessDirection.findDirection(0, rankDiff)).limit(rankDiff).toList();
+        List<ChessDirection> horizontalDirections = Stream.generate(() -> ChessDirection.findDirection(fileDiff, 0)).limit(Math.abs(fileDiff)).toList();
+        List<ChessDirection> verticalDirections = Stream.generate(() -> ChessDirection.findDirection(0, rankDiff)).limit(Math.abs(rankDiff)).toList();
         return union(horizontalDirections, verticalDirections);
     }
 

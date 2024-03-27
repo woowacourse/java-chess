@@ -110,6 +110,20 @@ public class ChessBoardTest {
                 .hasMessage("target으로 이동할 수 없습니다.");
     }
 
+    @DisplayName("Source와 Target이 다른 색이면 이동할 수 있다.")
+    @Test
+    void isTargetNotSameColor() {
+        // given
+        HashMap<Position, Piece> board = new HashMap<>();
+        board.put(Position.of("b2"), new Pawn(PieceColor.WHITE));
+        board.put(Position.of("c3"), new Pawn(PieceColor.BLACK));
+
+        ChessBoard chessBoard = new ChessBoard(board);
+
+        // when & then
+        assertThatCode(() -> chessBoard.move("b2", "c3", Turn.first())).doesNotThrowAnyException();
+    }
+
     @DisplayName("기물이 이동할 수 없는 방식으로 움직이면 예외를 발생한다.")
     @Test
     void validatePieceMovement() {

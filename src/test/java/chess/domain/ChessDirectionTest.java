@@ -23,7 +23,15 @@ class ChessDirectionTest {
                 Arguments.arguments(1, 1, ChessDirection.UP_RIGHT),
                 Arguments.arguments(-1, 1, ChessDirection.UP_LEFT),
                 Arguments.arguments(1, -1, ChessDirection.DOWN_RIGHT),
-                Arguments.arguments(-1, -1, ChessDirection.DOWN_LEFT)
+                Arguments.arguments(-1, -1, ChessDirection.DOWN_LEFT),
+                Arguments.arguments(-1, 2, ChessDirection.UP_UP_LEFT),
+                Arguments.arguments(1, 2, ChessDirection.UP_UP_RIGHT),
+                Arguments.arguments(1, -2, ChessDirection.DOWN_DOWN_RIGHT),
+                Arguments.arguments(-1, -2, ChessDirection.DOWN_DOWN_LEFT),
+                Arguments.arguments(2, 1, ChessDirection.RIGHT_RIGHT_UP),
+                Arguments.arguments(2, -1, ChessDirection.RIGHT_RIGHT_DOWN),
+                Arguments.arguments(-2, 1, ChessDirection.LEFT_LEFT_UP),
+                Arguments.arguments(-2, -1, ChessDirection.LEFT_LEFT_DOWN)
         );
     }
 

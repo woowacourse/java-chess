@@ -27,7 +27,15 @@ class MovementTest {
                 Arguments.arguments(Position.of("d4"), Position.of("a7"), Set.of(Position.of("c5"), Position.of("b6"))),
                 Arguments.arguments(Position.of("d4"), Position.of("g1"), Set.of(Position.of("e3"), Position.of("f2"))),
                 Arguments.arguments(Position.of("d4"), Position.of("a1"), Set.of(Position.of("c3"), Position.of("b2"))),
-                Arguments.arguments(Position.of("d4"), Position.of("e6"), Set.of(Position.of("d5"), Position.of("d6")))
+                Arguments.arguments(Position.of("d4"), Position.of("e6"), Set.of(Position.of("d5"), Position.of("d6"))),
+                Arguments.arguments(Position.of("d4"), Position.of("c6"), Set.of(Position.of("d5"), Position.of("d6"))),
+                Arguments.arguments(Position.of("d4"), Position.of("e2"), Set.of(Position.of("d3"), Position.of("d2"))),
+                Arguments.arguments(Position.of("d4"), Position.of("c2"), Set.of(Position.of("d3"), Position.of("d2"))),
+                Arguments.arguments(Position.of("d4"), Position.of("f5"), Set.of(Position.of("e4"), Position.of("f4"))),
+                Arguments.arguments(Position.of("d4"), Position.of("f3"), Set.of(Position.of("e4"), Position.of("f4"))),
+                Arguments.arguments(Position.of("d4"), Position.of("b5"), Set.of(Position.of("c4"), Position.of("b4"))),
+                Arguments.arguments(Position.of("d4"), Position.of("b3"), Set.of(Position.of("c4"), Position.of("b4")))
+
         );
     }
 
@@ -40,7 +48,15 @@ class MovementTest {
                 Arguments.arguments(Position.of("d4"), Position.of("g7"), ChessDirection.UP_RIGHT),
                 Arguments.arguments(Position.of("d4"), Position.of("a7"), ChessDirection.UP_LEFT),
                 Arguments.arguments(Position.of("d4"), Position.of("g1"), ChessDirection.DOWN_RIGHT),
-                Arguments.arguments(Position.of("d4"), Position.of("a1"), ChessDirection.DOWN_LEFT)
+                Arguments.arguments(Position.of("d4"), Position.of("a1"), ChessDirection.DOWN_LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("e6"), ChessDirection.UP_UP_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("c6"), ChessDirection.UP_UP_LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("e2"), ChessDirection.DOWN_DOWN_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("c2"), ChessDirection.DOWN_DOWN_LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("f5"), ChessDirection.RIGHT_RIGHT_UP),
+                Arguments.arguments(Position.of("d4"), Position.of("f3"), ChessDirection.RIGHT_RIGHT_DOWN),
+                Arguments.arguments(Position.of("d4"), Position.of("b5"), ChessDirection.LEFT_LEFT_UP),
+                Arguments.arguments(Position.of("d4"), Position.of("b3"), ChessDirection.LEFT_LEFT_DOWN)
         );
     }
 
