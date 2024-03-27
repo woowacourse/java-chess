@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-public class RemovedPieceTest {
+public class RemovedPiecesTest {
 
     private static Stream<Arguments> isRecentlyRemovedPieceTypeParameters() {
         return Stream.of(
@@ -24,14 +24,14 @@ public class RemovedPieceTest {
     @ParameterizedTest
     @MethodSource("isRecentlyRemovedPieceTypeParameters")
     void isRecentlyRemovedPieceTypeTest(PieceType pieceType, boolean expectedTypeCheck) {
-        RemovedPiece removedPiece = new RemovedPiece();
+        RemovedPieces removedPieces = new RemovedPieces();
         King king = new King(new PieceInfo(Position.of("a5"), Team.WHITE));
         Queen queen = new Queen(new PieceInfo(Position.of("a4"), Team.WHITE));
 
-        removedPiece.addPiece(queen);
-        removedPiece.addPiece(king);
+        removedPieces.addPiece(queen);
+        removedPieces.addPiece(king);
 
-        boolean actualTypeCheck = removedPiece.isRecentlyRemovedPieceType(pieceType);
+        boolean actualTypeCheck = removedPieces.isRecentlyRemovedPieceType(pieceType);
 
         Assertions.assertThat(actualTypeCheck).isEqualTo(expectedTypeCheck);
     }

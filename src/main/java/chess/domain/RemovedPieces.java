@@ -6,10 +6,10 @@ import chess.domain.piece.PieceType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemovedPiece {
+public class RemovedPieces {
     private final List<Piece> removedPiece;
 
-    public RemovedPiece() {
+    public RemovedPieces() {
         this.removedPiece = new ArrayList<>();
     }
 

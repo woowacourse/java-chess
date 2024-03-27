@@ -9,14 +9,14 @@ import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
-    private final RemovedPiece removedPiece;
+    private final RemovedPieces removedPieces;
 
     public Board() {
         Map<Position, Piece> board = new HashMap<>();
         initialize(board);
 
         this.board = board;
-        this.removedPiece = new RemovedPiece();
+        this.removedPieces = new RemovedPieces();
     }
 
     private void initialize(final Map<Position, Piece> board) {
@@ -30,7 +30,7 @@ public class Board {
         Position newPosition = movedPiece.getPosition();
 
         if (target == newPosition) {
-            removedPiece.addPiece(board.get(newPosition));
+            removedPieces.addPiece(board.get(newPosition));
         }
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
         board.put(newPosition, movedPiece);
@@ -52,7 +52,7 @@ public class Board {
     }
 
     public boolean isKingRemoved() {
-        return removedPiece.isRecentlyRemovedPieceType(PieceType.KING);
+        return removedPieces.isRecentlyRemovedPieceType(PieceType.KING);
     }
 
     public List<Piece> getPiecesInVertical(final List<Position> positions) {
