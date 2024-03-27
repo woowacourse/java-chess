@@ -82,6 +82,45 @@ public class ChessGameDao {
         return Optional.empty();
     }
 
+    public List<Integer> findRunningGames() {
+        final var query = "SELECT id FROM game WHERE status = 'RUNNING'";
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+
+            final List<Integer> ids = new ArrayList<>();
+
+            while (resultSet.next()) {
+                ids.add(resultSet.getInt("id"));
+            }
+            return ids;
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Optional<PlayerName> findPlayerName(final int gameId, final Team team) {
+        final var query = "SELECT P.name FROM game as G LEFT JOIN player as P ON " +
+                (team == Team.WHITE ? "G.white_player_id" : "G.black_player_id") +
+                "= P.id " +
+                "WHERE G.id = (?)";
+
+        try (final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, gameId);
+
+            final var resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(
+                        new PlayerName(resultSet.getString("name"))
+                );
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Optional.empty();
+    }
+
     public void updateStatusById(final int id, final ChessGameStatus chessGameStatus) {
         final var query = "UPDATE game SET status = (?)" +
                 "WHERE id = (?)";
@@ -110,22 +149,6 @@ public class ChessGameDao {
         }
     }
 
-    public List<Integer> findRunningGames() {
-        final var query = "SELECT id FROM game WHERE status = 'RUNNING'";
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            final var resultSet = preparedStatement.executeQuery();
-
-            final List<Integer> ids = new ArrayList<>();
-
-            while (resultSet.next()) {
-                ids.add(resultSet.getInt("id"));
-            }
-            return ids;
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public boolean existRunningById(final int gameId) {
         final var query = "SELECT id FROM game " +
                 "WHERE status = 'RUNNING' AND id = (?)";
@@ -138,29 +161,6 @@ public class ChessGameDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Optional<PlayerName> findPlayerName(final int gameId, final Team team) {
-        final var query = "SELECT P.name FROM game as G LEFT JOIN player as P ON " +
-                (team == Team.WHITE ? "G.white_player_id" : "G.black_player_id") +
-                "= P.id " +
-                "WHERE G.id = (?)";
-
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, gameId);
-
-            final var resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return Optional.of(
-                        new PlayerName(resultSet.getString("name"))
-                );
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return Optional.empty();
     }
 
     public void delete(final int id) {

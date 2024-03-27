@@ -1,6 +1,7 @@
 package view;
 
 import domain.ChessGameResult;
+import domain.PlayerGameRecord;
 import domain.piece.Piece;
 import domain.player.PlayerName;
 import domain.square.File;
@@ -56,5 +57,10 @@ public class OutputView {
         System.out.printf("%n블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
                 chessGameResult.getBlackScore(), chessGameResult.getWhiteScore(),
                 WinStatusFormat.formatOf(chessGameResult.getWinStatus()));
+    }
+
+    public void printGameRecord(final PlayerGameRecord gameRecord) {
+        System.out.printf("전체 전적 : %d승 %d패 %d무%n",
+                gameRecord.winCount(), gameRecord.loseCount(), gameRecord.drawCount());
     }
 }

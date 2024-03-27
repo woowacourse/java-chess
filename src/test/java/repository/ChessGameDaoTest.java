@@ -21,12 +21,16 @@ class ChessGameDaoTest {
     final Connection connection = ChessConnectionGenerator.getTestConnection();
     final ChessGameDao chessGameDao = new ChessGameDao(connection);
     final PlayerDao playerDao = new PlayerDao(connection);
+    final PlayerName pobi = new PlayerName("pobi");
+    final PlayerName json = new PlayerName("json");
 
     @BeforeEach
     void before() {
         try {
             if (connection != null) {
                 connection.setAutoCommit(false);
+                playerDao.add(pobi);
+                playerDao.add(json);
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -48,11 +52,6 @@ class ChessGameDaoTest {
     @Test
     void add() {
         // given
-        final PlayerName pobi = new PlayerName("pobi");
-        final PlayerName json = new PlayerName("json");
-        playerDao.add(pobi);
-        playerDao.add(json);
-
         final Player blackPlayer = new Player(pobi);
         final Player whitePlayer = new Player(json);
         final Team team = Team.WHITE;
@@ -75,11 +74,6 @@ class ChessGameDaoTest {
     @Test
     void updateCurrentTeam() {
         // given
-        final PlayerName pobi = new PlayerName("pobi");
-        final PlayerName json = new PlayerName("json");
-        playerDao.add(pobi);
-        playerDao.add(json);
-
         final Player blackPlayer = new Player(pobi);
         final Player whitePlayer = new Player(json);
         final int gameId = chessGameDao.addGame(blackPlayer, whitePlayer, Team.WHITE, ChessGameStatus.RUNNING);
@@ -98,11 +92,6 @@ class ChessGameDaoTest {
     @Test
     void updateStatus() {
         // given
-        final PlayerName pobi = new PlayerName("pobi");
-        final PlayerName json = new PlayerName("json");
-        playerDao.add(pobi);
-        playerDao.add(json);
-
         final Player blackPlayer = new Player(pobi);
         final Player whitePlayer = new Player(json);
         final int gameId = chessGameDao.addGame(blackPlayer, whitePlayer, Team.WHITE, ChessGameStatus.RUNNING);

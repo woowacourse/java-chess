@@ -1,6 +1,7 @@
 package service;
 
 import domain.ChessGameResult;
+import domain.PlayerGameRecord;
 import domain.Team;
 import domain.chessboard.ChessBoard;
 import domain.piece.Piece;
@@ -9,6 +10,7 @@ import domain.player.PlayerName;
 import domain.square.Square;
 import repository.ChessBoardDao;
 import repository.ChessGameDao;
+import repository.ChessResultDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,16 +18,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class ChessGameService {
+public class ChessService {
 
     private final Connection connection;
     private final ChessBoardDao chessBoardDao;
     private final ChessGameDao chessGameDao;
+    private final ChessResultDao chessResultDao;
 
-    public ChessGameService(final Connection connection) {
+    public ChessService(final Connection connection) {
         this.connection = connection;
         this.chessBoardDao = new ChessBoardDao(connection);
         this.chessGameDao = new ChessGameDao(connection);
+        this.chessResultDao = new ChessResultDao(connection);
     }
 
     public int createNewGame(final Player blackPlayer, final Player whitePlayer) throws SQLException {
@@ -34,7 +38,6 @@ public class ChessGameService {
 
             final int id = chessGameDao.addGame(blackPlayer, whitePlayer, Team.WHITE, ChessGameStatus.RUNNING);
 
-            // TODO : ChessBoard Service로 분리
             final ChessBoard chessBoard = ChessBoard.create();
             final Map<Square, Piece> pieceSquares = chessBoard.getPieceSquares();
             chessBoardDao.addAll(pieceSquares, id);
@@ -139,5 +142,18 @@ public class ChessGameService {
     public PlayerName findPlayerName(final int gameId, final Team team) {
         return chessGameDao.findPlayerName(gameId, team)
                 .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
+    }
+
+    public void saveResult(final int gameId) {
+        final ChessGameResult chessGameResult = calculateResult(gameId);
+        chessResultDao.create(chessGameResult, gameId);
+    }
+
+    public PlayerGameRecord findGameRecord(final PlayerName name) {
+        final int countWin = chessResultDao.countWin(name);
+        final int countLose = chessResultDao.countLose(name);
+        final int countDraw = chessResultDao.countDraw(name);
+
+        return new PlayerGameRecord(countWin, countLose, countDraw);
     }
 }

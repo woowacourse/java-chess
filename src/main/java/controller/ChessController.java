@@ -2,12 +2,13 @@ package controller;
 
 import connection.ChessConnectionGenerator;
 import domain.ChessGameResult;
+import domain.PlayerGameRecord;
 import domain.Team;
 import domain.piece.Piece;
 import domain.player.Player;
 import domain.player.PlayerName;
 import domain.square.Square;
-import service.ChessGameService;
+import service.ChessService;
 import service.PlayerService;
 import view.InputView;
 import view.OutputView;
@@ -27,7 +28,7 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessGameService chessGameService;
+    private final ChessService chessService;
     private final PlayerService playerService;
     private boolean isRunning;
 
@@ -36,7 +37,7 @@ public class ChessController {
         this.outputView = new OutputView();
 
         final Connection connection = ChessConnectionGenerator.getConnection();
-        this.chessGameService = new ChessGameService(connection);
+        this.chessService = new ChessService(connection);
         this.playerService = new PlayerService(connection);
 
         this.isRunning = true;
@@ -54,14 +55,20 @@ public class ChessController {
                 if ("start".equals(command)) {
                     final Player blackPlayer = roadPlayer(Team.BLACK);
                     final Player whitePlayer = roadPlayer(Team.WHITE);
-                    gameId = chessGameService.createNewGame(blackPlayer, whitePlayer);
+                    gameId = chessService.createNewGame(blackPlayer, whitePlayer);
                     play(gameId);
                     continue;
                 }
                 if ("continue".equals(command)) {
-                    final List<Integer> runningGame = chessGameService.findRunningGame();
+                    final List<Integer> runningGame = chessService.findRunningGame();
                     gameId = readGameId(runningGame);
                     play(gameId);
+                    continue;
+                }
+                if ("record".equals(command)) {
+                    final PlayerName name = readPlayerName();
+                    final PlayerGameRecord gameRecord = chessService.findGameRecord(name);
+                    outputView.printGameRecord(gameRecord);
                     continue;
                 }
                 throw new IllegalArgumentException("잘못된 커맨드입니다.");
@@ -74,7 +81,7 @@ public class ChessController {
     private Player roadPlayer(final Team team) {
         while (true) {
             try {
-                final String name = inputView.readPlayerName(team);
+                final String name = inputView.readTeamPlayerName(team);
                 return playerService.roadPlayer(name);
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
@@ -82,24 +89,25 @@ public class ChessController {
         }
     }
 
-    private int readGameId(final List<Integer> runningGame) {
+    private PlayerName readPlayerName() {
         while (true) {
-            final int input = inputView.readContinueGame(runningGame);
-            final boolean hasGame = chessGameService.containRunningGame(input);
-            if (hasGame) {
-                return input;
+            try {
+                final String name = inputView.readPlayerName();
+                return playerService.findPlayerName(name);
+            } catch (final IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
             }
-            outputView.printError("게임 ID가 존재하지 않습니다.");
         }
+
     }
 
     private void play(final int gameId) throws SQLException {
-        final PlayerName blackPlayerName = chessGameService.findPlayerName(gameId, Team.BLACK);
-        final PlayerName whitePlayerName = chessGameService.findPlayerName(gameId, Team.WHITE);
+        final PlayerName blackPlayerName = chessService.findPlayerName(gameId, Team.BLACK);
+        final PlayerName whitePlayerName = chessService.findPlayerName(gameId, Team.WHITE);
         outputView.printGameOption(gameId, blackPlayerName, whitePlayerName);
         printBoard(gameId);
 
-        while (chessGameService.isNotEnd(gameId)) {
+        while (chessService.isNotEnd(gameId)) {
             try {
                 final String command = readCommand(gameId);
                 if ("quit".equals(command)) {
@@ -111,7 +119,7 @@ public class ChessController {
                     continue;
                 }
                 if ("end".equals(command)) {
-                    chessGameService.endGame(gameId);
+                    chessService.endGame(gameId);
                     continue;
                 }
                 if (MOVE_FORMAT.matcher(command).matches()) {
@@ -123,17 +131,29 @@ public class ChessController {
                 outputView.printError(e.getMessage());
             }
         }
+        chessService.saveResult(gameId);
         runStatus(gameId);
     }
 
+    private int readGameId(final List<Integer> runningGame) {
+        while (true) {
+            final int input = inputView.readContinueGame(runningGame);
+            final boolean hasGame = chessService.containRunningGame(input);
+            if (hasGame) {
+                return input;
+            }
+            outputView.printError("게임 ID가 존재하지 않습니다.");
+        }
+    }
+
     private String readCommand(final int gameId) {
-        final Team currentTeam = chessGameService.currentTeam(gameId);
-        final PlayerName currentPlayerName = chessGameService.findPlayerName(gameId, currentTeam);
+        final Team currentTeam = chessService.currentTeam(gameId);
+        final PlayerName currentPlayerName = chessService.findPlayerName(gameId, currentTeam);
         return inputView.readGameCommand(currentTeam, currentPlayerName);
     }
 
     private void runStatus(final int gameId) {
-        final ChessGameResult chessGameResult = chessGameService.calculateResult(gameId);
+        final ChessGameResult chessGameResult = chessService.calculateResult(gameId);
         outputView.printStatus(chessGameResult);
     }
 
@@ -143,12 +163,12 @@ public class ChessController {
         final Square source = Square.from(commands.get(MOVE_SOURCE_INDEX));
         final Square target = Square.from(commands.get(TARGET_SOURCE_INDEX));
 
-        chessGameService.move(gameId, source, target);
+        chessService.move(gameId, source, target);
         printBoard(gameId);
     }
 
     private void printBoard(final int gameId) {
-        final Map<Square, Piece> pieceSquares = chessGameService.getPieceSquares(gameId);
+        final Map<Square, Piece> pieceSquares = chessService.getPieceSquares(gameId);
         outputView.printChessBoard(pieceSquares);
     }
 }

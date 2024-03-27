@@ -16,6 +16,7 @@ public class InputView {
                 > 체스 게임을 시작합니다.
                 > 게임 새로 시작 : start
                 > 게임 이어하기 : continue
+                > 게임 전적 검색 : record
                 > 프로그램 종료 : quit%n""");
 
         return SCANNER.nextLine();
@@ -44,8 +45,14 @@ public class InputView {
         }
     }
 
-    public String readPlayerName(final Team team) {
+    public String readTeamPlayerName(final Team team) {
         System.out.print(team.name() + "팀의 플레이어 이름 : ");
+
+        return SCANNER.nextLine();
+    }
+
+    public String readPlayerName() {
+        System.out.println("이름을 입력 하세요.");
 
         return SCANNER.nextLine();
     }
