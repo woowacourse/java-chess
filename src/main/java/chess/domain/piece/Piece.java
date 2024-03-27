@@ -44,7 +44,11 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public Team getTeam() {
-        return team;
+    public boolean isSameTeam(Piece piece) {
+        return this.team == piece.team;
+    }
+
+    public boolean isWhite() {
+        return team.isWhite();
     }
 }

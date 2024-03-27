@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Direction {
 
@@ -39,10 +38,6 @@ public enum Direction {
                 .filter(direction -> direction.isMatch(file, rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방향입니다."));
-    }
-
-    public static List<Direction> findPawnDirections() {
-        return List.of(UPPER_LEFT, UPPER, UPPER_RIGHT);
     }
 
     private boolean isMatch(int file, int rank) {
