@@ -3,7 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +15,8 @@ class MovedPawnTest {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        UnitDirection whiteDirection = UnitDirection.differencesOf(0, 1);
-        UnitDirection blackDirection = UnitDirection.differencesOf(0, -1);
+        UnitMovement whiteDirection = UnitMovement.differencesOf(0, 1);
+        UnitMovement blackDirection = UnitMovement.differencesOf(0, -1);
         // when
         boolean isWhiteMovable = whitePawn.isMovable(whiteDirection, 2);
         boolean isBlackMovable = blackPawn.isMovable(blackDirection, 2);
@@ -33,8 +33,8 @@ class MovedPawnTest {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        UnitDirection whiteDirection = UnitDirection.differencesOf(0, 1);
-        UnitDirection blackDirection = UnitDirection.differencesOf(0, -1);
+        UnitMovement whiteDirection = UnitMovement.differencesOf(0, 1);
+        UnitMovement blackDirection = UnitMovement.differencesOf(0, -1);
         // when
         boolean isWhiteMovable = whitePawn.isMovable(whiteDirection, 2);
         boolean isBlackMovable = blackPawn.isMovable(blackDirection, 2);

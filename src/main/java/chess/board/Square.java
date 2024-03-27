@@ -3,7 +3,7 @@ package chess.board;
 import chess.piece.Color;
 import chess.piece.MovedPawn;
 import chess.piece.Piece;
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import chess.score.Score;
 
 public class Square {
@@ -37,12 +37,12 @@ public class Square {
         return destination;
     }
 
-    public boolean canPieceMoveToward(UnitDirection direction, int step) {
-        return hasPiece() && piece.isMovable(direction, step);
+    public boolean canPieceMoveToward(UnitMovement movement, int step) {
+        return hasPiece() && piece.isMovable(movement, step);
     }
 
-    public boolean canPieceAttackToward(UnitDirection direction, int step) {
-        return hasPiece() && piece.canAttack(direction, step);
+    public boolean canPieceAttackToward(UnitMovement movement, int step) {
+        return hasPiece() && piece.canAttack(movement, step);
     }
 
     private void validateSource(Square destination) {

@@ -2,7 +2,7 @@ package chess.piece;
 
 public class InitPawn extends Pawn {
 
-    private static final int MAX_UNIT_MOVE = 2;
+    private static final int MAX_MOVE_STEP = 2;
 
     public InitPawn(Color color) {
         super(color);
@@ -10,7 +10,7 @@ public class InitPawn extends Pawn {
 
     @Override
     protected boolean isReachable(int step) {
-        return step <= MAX_UNIT_MOVE;
+        return step <= MAX_MOVE_STEP;
     }
 
     @Override

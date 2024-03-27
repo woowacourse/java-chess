@@ -2,7 +2,7 @@ package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,9 +16,9 @@ class QueenTest {
     void queenMoveTest(int fileDiffence, int rankDifference) {
         // given
         Queen queen = new Queen(Color.WHITE);
-        UnitDirection direction = UnitDirection.differencesOf(fileDiffence, rankDifference);
+        UnitMovement movement = UnitMovement.differencesOf(fileDiffence, rankDifference);
         // when
-        boolean actual = queen.isMovable(direction, 7);
+        boolean actual = queen.isMovable(movement, 7);
         // then
         assertThat(actual).isTrue();
     }
@@ -28,9 +28,9 @@ class QueenTest {
     void queenInvalidMoveTest() {
         // given
         Queen queen = new Queen(Color.WHITE);
-        UnitDirection direction = UnitDirection.differencesOf(1, 2);
+        UnitMovement movement = UnitMovement.differencesOf(1, 2);
         // when
-        boolean actual = queen.isMovable(direction, 1);
+        boolean actual = queen.isMovable(movement, 1);
         // then
         assertThat(actual).isFalse();
     }

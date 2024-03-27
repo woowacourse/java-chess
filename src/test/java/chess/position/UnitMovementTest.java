@@ -6,12 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UnitDirectionTest {
+class UnitMovementTest {
 
     @Test
     @DisplayName("File/Rank 차이가 0으로 생성하는 경우, 예외를 발생한다.")
     void invalidDifferencesTest() {
-        assertThatThrownBy(() -> UnitDirection.differencesOf(0, 0))
+        assertThatThrownBy(() -> UnitMovement.differencesOf(0, 0))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("단위 이동은 한 칸 이상 이동해야 합니다.");
     }
@@ -21,9 +21,9 @@ class UnitDirectionTest {
     void nextPositionTest() {
         // given
         Position source = Position.of(File.A, Rank.ONE);
-        UnitDirection unitDirection = UnitDirection.differencesOf(1, 1);
+        UnitMovement unitMovement = UnitMovement.differencesOf(1, 1);
         // when
-        Position nextPosition = unitDirection.nextPosition(source);
+        Position nextPosition = unitMovement.nextPosition(source);
         // then
         assertThat(nextPosition).isEqualTo(Position.of(File.B, Rank.TWO));
     }
@@ -32,8 +32,8 @@ class UnitDirectionTest {
     @DisplayName("동등성을 올바르게 비교한다.")
     void equalsTest() {
         // given
-        UnitDirection unitDirection = UnitDirection.differencesOf(1, 1);
+        UnitMovement unitMovement = UnitMovement.differencesOf(1, 1);
         // when, then
-        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 1));
+        assertThat(unitMovement).isEqualTo(UnitMovement.differencesOf(1, 1));
     }
 }

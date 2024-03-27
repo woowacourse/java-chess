@@ -4,7 +4,7 @@ import chess.piece.Color;
 import chess.piece.Piece;
 import chess.position.File;
 import chess.position.Position;
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import chess.score.FileSquares;
 import chess.score.Score;
 import java.util.Arrays;
@@ -34,14 +34,14 @@ public class Board {
     }
 
     private Path createPathBetween(Position source, Position destination) {
-        UnitDirection direction = source.unitDirectionToward(destination);
+        UnitMovement movement = source.unitMovementToward(destination);
         List<Square> routeSquares = Stream.iterate(source,
                         position -> position.isNotEquals(destination),
-                        direction::nextPosition)
+                        movement::nextPosition)
                 .map(this::getSquareByPosition)
                 .collect(Collectors.toList());
         routeSquares.add(getSquareByPosition(destination));
-        return new Path(routeSquares, direction);
+        return new Path(routeSquares, movement);
     }
 
     private Square getSquareByPosition(Position position) {

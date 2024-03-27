@@ -45,10 +45,10 @@ public class Position {
         );
     }
 
-    public UnitDirection unitDirectionToward(Position destination) {
+    public UnitMovement unitMovementToward(Position destination) {
         int fileDelta = destination.subtractFile(this);
         int rankDelta = destination.subtractRank(this);
-        return UnitDirection.differencesOf(fileDelta, rankDelta);
+        return UnitMovement.differencesOf(fileDelta, rankDelta);
     }
 
     private int subtractFile(Position other) {

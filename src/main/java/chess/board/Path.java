@@ -1,7 +1,7 @@
 package chess.board;
 
 import chess.piece.Color;
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import java.util.List;
 
 public class Path {
@@ -9,12 +9,12 @@ public class Path {
     private static final int MIN_PATH_LENGTH = 2;
 
     private final List<Square> squares;
-    private final UnitDirection unitDirection;
+    private final UnitMovement unitMovement;
 
-    public Path(List<Square> squares, UnitDirection unitDirection) {
+    public Path(List<Square> squares, UnitMovement unitMovement) {
         validatePathLength(squares);
         this.squares = squares;
-        this.unitDirection = unitDirection;
+        this.unitMovement = unitMovement;
     }
 
     private void validatePathLength(List<Square> squares) {
@@ -38,14 +38,14 @@ public class Path {
 
     private void validatePieceMove() {
         Square source = getSourceSquare();
-        if (!source.canPieceMoveToward(unitDirection, getPathLength())) {
+        if (!source.canPieceMoveToward(unitMovement, getPathLength())) {
             throw new IllegalStateException("움직일 수 없는 경로입니다.");
         }
     }
 
     private void validatePieceAttack() {
         Square source = getSourceSquare();
-        if (!source.canPieceAttackToward(unitDirection, getPathLength())) {
+        if (!source.canPieceAttackToward(unitMovement, getPathLength())) {
             throw new IllegalStateException("움직일 수 없는 경로입니다.");
         }
     }

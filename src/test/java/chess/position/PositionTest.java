@@ -25,9 +25,9 @@ class PositionTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.D, Rank.FOUR);
         // when
-        UnitDirection unitDirection = source.unitDirectionToward(destination);
+        UnitMovement unitMovement = source.unitMovementToward(destination);
         // then
-        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 1));
+        assertThat(unitMovement).isEqualTo(UnitMovement.differencesOf(1, 1));
     }
 
     @Test
@@ -37,9 +37,9 @@ class PositionTest {
         Position source = Position.of(File.D, Rank.FOUR);
         Position destination = Position.of(File.A, Rank.ONE);
         // when
-        UnitDirection unitDirection = source.unitDirectionToward(destination);
+        UnitMovement unitMovement = source.unitMovementToward(destination);
         // then
-        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(-1, -1));
+        assertThat(unitMovement).isEqualTo(UnitMovement.differencesOf(-1, -1));
     }
 
 
@@ -50,9 +50,9 @@ class PositionTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.A, Rank.FOUR);
         // when
-        UnitDirection unitDirection = source.unitDirectionToward(destination);
+        UnitMovement unitMovement = source.unitMovementToward(destination);
         // then
-        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(0, 1));
+        assertThat(unitMovement).isEqualTo(UnitMovement.differencesOf(0, 1));
     }
 
     @Test
@@ -62,9 +62,9 @@ class PositionTest {
         Position source = Position.of(File.A, Rank.ONE);
         Position destination = Position.of(File.D, Rank.ONE);
         // when
-        UnitDirection unitDirection = source.unitDirectionToward(destination);
+        UnitMovement unitMovement = source.unitMovementToward(destination);
         // then
-        assertThat(unitDirection).isEqualTo(UnitDirection.differencesOf(1, 0));
+        assertThat(unitMovement).isEqualTo(UnitMovement.differencesOf(1, 0));
     }
 
     @ParameterizedTest

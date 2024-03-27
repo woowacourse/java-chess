@@ -1,6 +1,6 @@
 package chess.piece;
 
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import chess.score.PieceScore;
 import chess.score.Score;
 import java.util.Set;
@@ -9,23 +9,23 @@ public abstract class Piece {
 
     private final Color color;
     private final PieceScore pieceScore;
-    private final Set<UnitDirection> unitDirections;
+    private final Set<UnitMovement> unitMovements;
 
-    protected Piece(Color color, PieceScore pieceScore, Set<UnitDirection> unitDirections) {
+    protected Piece(Color color, PieceScore pieceScore, Set<UnitMovement> unitMovements) {
         this.color = color;
         this.pieceScore = pieceScore;
-        this.unitDirections = unitDirections;
+        this.unitMovements = unitMovements;
     }
 
-    public boolean isMovable(UnitDirection direction, int step) {
-        return unitDirections.contains(direction) &&
+    public boolean isMovable(UnitMovement movement, int step) {
+        return unitMovements.contains(movement) &&
                 isReachable(step);
     }
 
     protected abstract boolean isReachable(int step);
 
-    public boolean canAttack(UnitDirection direction, int step) {
-        return isMovable(direction, step);
+    public boolean canAttack(UnitMovement movement, int step) {
+        return isMovable(movement, step);
     }
 
     public boolean isInitPawn() {

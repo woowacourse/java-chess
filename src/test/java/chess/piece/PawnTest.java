@@ -3,7 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,9 +17,9 @@ class PawnTest {
     void whitePawnAttackTest(int fileDifference, int rankDifference) {
         // given
         MovedPawn whitePawn = new MovedPawn(Color.WHITE);
-        UnitDirection direction = UnitDirection.differencesOf(fileDifference, rankDifference);
+        UnitMovement movement = UnitMovement.differencesOf(fileDifference, rankDifference);
         // when
-        boolean actual = whitePawn.canAttack(direction, 1);
+        boolean actual = whitePawn.canAttack(movement, 1);
         // then
         assertThat(actual).isTrue();
     }
@@ -30,9 +30,9 @@ class PawnTest {
     void blackPawnAttackTest(int fileDifference, int rankDifference) {
         // given
         MovedPawn blackPawn = new MovedPawn(Color.BLACK);
-        UnitDirection direction = UnitDirection.differencesOf(fileDifference, rankDifference);
+        UnitMovement movement = UnitMovement.differencesOf(fileDifference, rankDifference);
         // when
-        boolean actual = blackPawn.canAttack(direction, 1);
+        boolean actual = blackPawn.canAttack(movement, 1);
         // then
         assertThat(actual).isTrue();
     }

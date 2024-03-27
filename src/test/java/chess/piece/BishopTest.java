@@ -2,7 +2,7 @@ package chess.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,9 +15,9 @@ class BishopTest {
     void bishopMoveTest(int fileDifference, int rankDifference) {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
-        UnitDirection direction = UnitDirection.differencesOf(fileDifference, rankDifference);
+        UnitMovement movement = UnitMovement.differencesOf(fileDifference, rankDifference);
         // when
-        boolean actual = bishop.isMovable(direction, 7);
+        boolean actual = bishop.isMovable(movement, 7);
         // then
         assertThat(actual).isTrue();
     }
@@ -28,9 +28,9 @@ class BishopTest {
     void bishopInvalidMoveTest(int fileDifference, int rankDifference) {
         // given
         Bishop bishop = new Bishop(Color.WHITE);
-        UnitDirection unitDirection = UnitDirection.differencesOf(fileDifference, rankDifference);
+        UnitMovement unitMovement = UnitMovement.differencesOf(fileDifference, rankDifference);
         // when
-        boolean actual = bishop.isMovable(unitDirection, 1);
+        boolean actual = bishop.isMovable(unitMovement, 1);
         // then
         assertThat(actual).isFalse();
     }

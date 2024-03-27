@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.piece.Bishop;
 import chess.piece.Color;
 import chess.piece.MovedPawn;
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,9 @@ class PathTest {
     void shortPathTest() {
         // given
         List<Square> squares = List.of(Square.empty());
-        UnitDirection direction = UnitDirection.differencesOf(1, 1);
+        UnitMovement movement = UnitMovement.differencesOf(1, 1);
         // when, then
-        assertThatThrownBy(() -> new Path(squares, direction))
+        assertThatThrownBy(() -> new Path(squares, movement))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("경로의 길이는 2 이상이어야 합니다.");
     }
@@ -35,8 +35,8 @@ class PathTest {
                 new Square(new MovedPawn(Color.BLACK)),
                 new Square(new Bishop(Color.BLACK))
         );
-        UnitDirection direction = UnitDirection.differencesOf(1, 1);
-        Path path = new Path(squares, direction);
+        UnitMovement movement = UnitMovement.differencesOf(1, 1);
+        Path path = new Path(squares, movement);
         // when, then
         assertThatThrownBy(() -> path.traverse(Color.WHITE))
                 .isInstanceOf(IllegalStateException.class)
@@ -51,8 +51,8 @@ class PathTest {
                 new Square(new Bishop(Color.WHITE)),
                 Square.empty()
         );
-        UnitDirection direction = UnitDirection.differencesOf(1, 1);
-        Path path = new Path(squares, direction);
+        UnitMovement movement = UnitMovement.differencesOf(1, 1);
+        Path path = new Path(squares, movement);
         // when, then
         assertThatThrownBy(() -> path.traverse(Color.BLACK))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -69,8 +69,8 @@ class PathTest {
                 Square.empty(),
                 Square.empty()
         );
-        UnitDirection direction = UnitDirection.differencesOf(1, 1);
-        Path path = new Path(squares, direction);
+        UnitMovement movement = UnitMovement.differencesOf(1, 1);
+        Path path = new Path(squares, movement);
         // when
         Square destination = path.traverse(Color.WHITE);
         // then
@@ -89,8 +89,8 @@ class PathTest {
                 Square.empty(),
                 Square.empty()
         );
-        UnitDirection direction = UnitDirection.differencesOf(0, 1);
-        Path path = new Path(squares, direction);
+        UnitMovement movement = UnitMovement.differencesOf(0, 1);
+        Path path = new Path(squares, movement);
         // when, then
         assertThatThrownBy(() -> path.traverse(Color.WHITE))
                 .isInstanceOf(IllegalStateException.class)
@@ -105,8 +105,8 @@ class PathTest {
                 new Square(new MovedPawn(Color.WHITE)),
                 new Square(new MovedPawn(Color.BLACK))
         );
-        UnitDirection direction = UnitDirection.differencesOf(0, 1);
-        Path path = new Path(squares, direction);
+        UnitMovement movement = UnitMovement.differencesOf(0, 1);
+        Path path = new Path(squares, movement);
         // when, then
         assertThatThrownBy(() -> path.traverse(Color.WHITE))
                 .isInstanceOf(IllegalStateException.class)
