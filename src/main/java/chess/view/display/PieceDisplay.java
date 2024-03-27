@@ -2,6 +2,7 @@ package chess.view.display;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -24,7 +25,7 @@ public enum PieceDisplay {
     WHITE_BISHOP(Bishop.class, Color.WHITE, "b"),
     WHITE_KNIGHT(Knight.class, Color.WHITE, "n"),
     WHITE_PAWN(Pawn.class, Color.WHITE, "p"),
-    EMPTY(null, null, ".");
+    EMPTY(Empty.class, Color.EMPTY, ".");
 
     private final Class<? extends Piece> pieceType;
     private final Color color;

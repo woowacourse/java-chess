@@ -4,7 +4,6 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -13,22 +12,24 @@ import java.util.stream.Collectors;
 public class BoardDisplayConverter {
 
     public List<RankDisplay> convert(Map<Position, Piece> pieces) {
-        List<RankDisplay> rankDisplays = new ArrayList<>();
-        Arrays.stream(Rank.values())
-                .map(rank -> convertNotationRankOf(rank, pieces))
-                .forEach(rankDisplays::add);
-        return rankDisplays;
+        return Arrays.stream(Rank.values())
+                .map(rank -> createRankDisplay(pieces, rank))
+                .collect(Collectors.toList());
     }
 
-    private RankDisplay convertNotationRankOf(Rank rank, Map<Position, Piece> pieces) {
+    public RankDisplay createRankDisplay(Map<Position, Piece> pieces, Rank rank) {
         List<PieceDisplay> pieceDisplays = Arrays.stream(File.values())
-                .map(file -> Position.of(file, rank))
-                .filter(pieces::containsKey)
-                .map(pieces::get)
-                .map(PieceDisplay::getNotationByPiece)
+                .map(file -> createPieceDisplay(pieces, file, rank))
                 .collect(Collectors.toList());
 
         return new RankDisplay(pieceDisplays);
+    }
 
+    private PieceDisplay createPieceDisplay(Map<Position, Piece> pieces, File file, Rank rank) {
+        Position position = Position.of(file, rank);
+        if (pieces.containsKey(position)) {
+            return PieceDisplay.getNotationByPiece(pieces.get(position));
+        }
+        return PieceDisplay.EMPTY;
     }
 }
