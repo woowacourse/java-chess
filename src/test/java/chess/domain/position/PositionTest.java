@@ -33,4 +33,30 @@ class PositionTest {
                 () -> assertThat(position.moveToNorth()).isEqualTo(new Position(File.D, Rank.FIVE))
         );
     }
+
+    @Test
+    @DisplayName("서로 같은 랭크인지 판단한다.")
+    void isSameRankTest() {
+        Position sample = new Position(File.F, Rank.FOUR);
+        Rank sameRank = Rank.FOUR;
+        Rank differentRank = Rank.SIX;
+
+        assertAll(
+                () -> assertThat(sample.isSameRank(sameRank)).isTrue(),
+                () -> assertThat(sample.isSameRank(differentRank)).isFalse()
+        );
+    }
+
+    @Test
+    @DisplayName("서로 같은 파일인지 판단한다.")
+    void isSameFileTest() {
+        Position sample = new Position(File.F, Rank.FOUR);
+        Position sameFile = new Position(File.F, Rank.SIX);
+        Position differentFile = new Position(File.A, Rank.FOUR);
+
+        assertAll(
+                () -> assertThat(sample.isSameFile(sameFile)).isTrue(),
+                () -> assertThat(sample.isSameFile(differentFile)).isFalse()
+        );
+    }
 }

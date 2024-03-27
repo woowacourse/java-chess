@@ -23,6 +23,10 @@ public class Position {
         return this.rank == rank;
     }
 
+    public boolean isSameFile(Position other) {
+        return this.file == other.file;
+    }
+
     public int calculateFileDifference(Position other) {
         return this.file.calculateDifference(other.file);
     }
