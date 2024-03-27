@@ -14,13 +14,21 @@ public class Piece {
         this.color = color;
     }
 
+    public void validateMovableRoute(final Position source, final Position target,
+                                     final Map<Position, Piece> chessBoard) {
+        pieceRole.validateMovableRoute(source, target, chessBoard);
+    }
+
     public boolean isEqualColor(final Color target) {
         return this.color == target;
     }
 
-    public void validateMovableRoute(final Position source, final Position target,
-                                     final Map<Position, Piece> chessBoard) {
-        pieceRole.validateMovableRoute(source, target, chessBoard);
+    public boolean isWhite() {
+        return isEqualColor(Color.WHITE);
+    }
+
+    public boolean equalPieceRole(final PieceRole pieceRole) {
+        return this.pieceRole.equals(pieceRole);
     }
 
     public Color getColor() {
@@ -43,4 +51,5 @@ public class Piece {
     public int hashCode() {
         return Objects.hash(pieceRole, color);
     }
+
 }
