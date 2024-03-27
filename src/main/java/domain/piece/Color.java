@@ -18,5 +18,12 @@ public enum Color {
         int rankDirection = source.rankDirection(target);
         return direction.isForward(rankDirection);
     }
+
+    public Color opposite() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
 
