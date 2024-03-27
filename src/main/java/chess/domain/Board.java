@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.GameStatus;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
@@ -7,7 +8,9 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Board {
 
@@ -24,7 +27,7 @@ public class Board {
         return Optional.ofNullable(piece);
     }
 
-    public void tryMove(Position start, Position end) {
+    public GameStatus tryMove(Position start, Position end) {
         Piece movingPiece = findMovingPiece(start);
         validateTeamRule(movingPiece, end);
 
@@ -32,7 +35,7 @@ public class Board {
         List<Position> path = movingPiece.findPath(start, end, hasEnemy);
         validatePath(path);
 
-        move(start, end, movingPiece);
+        return move(start, end, movingPiece);
     }
 
     private Piece findMovingPiece(Position start) {
@@ -70,10 +73,14 @@ public class Board {
                 .anyMatch(board::containsKey);
     }
 
-    private void move(Position start, Position end, Piece movingPiece) {
+    private GameStatus move(Position start, Position end, Piece movingPiece) {
         board.remove(start);
+        if (find(end).map(piece -> !piece.isSameTeam(turn) && piece.isKing()).orElse(false)) {
+            return GameStatus.whenWin(turn);
+        }
         board.put(end, movingPiece);
         turn = turn.next();
+        return GameStatus.PLAY;
     }
 
     public double calculateScoreOf(Team team) {

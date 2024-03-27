@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.GameStatus;
 import chess.domain.piece.PieceType;
 import chess.domain.position.File;
 import chess.domain.position.Position;
@@ -67,7 +68,28 @@ public class OutputView {
         System.out.print(EMPTY_SPACE);
     }
 
+    public void printStatus(double blackScore, double whiteScore) {
+        System.out.print("검은색: " + blackScore + ", 흰색: " + whiteScore);
+        if (blackScore > whiteScore) {
+            System.out.println(", 검은색 승리");
+            return;
+        }
+        if (whiteScore > blackScore) {
+            System.out.println(", 흰색 승리");
+            return;
+        }
+        System.out.println(", 무승부");
+    }
+
     public void printExceptionMessage(Exception exception) {
         System.out.println(ERROR_PREFIX + exception.getMessage());
+    }
+
+    public void printWinner(GameStatus gameStatus) {
+        if (gameStatus == GameStatus.BLACK_WIN) {
+            System.out.println("검은색 승리");
+            return;
+        }
+        System.out.println("흰색 승리");
     }
 }
