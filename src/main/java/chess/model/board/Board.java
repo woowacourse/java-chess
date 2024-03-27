@@ -2,6 +2,7 @@ package chess.model.board;
 
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
+import chess.model.piece.King;
 import chess.model.piece.Piece;
 import chess.model.position.Movement;
 import chess.model.position.Position;
@@ -58,6 +59,23 @@ public class Board {
                 .mapToObj(rank -> Position.of(file, rank))
                 .map(this::getByPosition)
                 .toList();
+    }
+
+    public Color getWinnerColor() {
+        if (isKingCaptured(currentColor)) {
+            return currentColor.getOpposite();
+        }
+        if (isKingCaptured(currentColor.getOpposite())) {
+            return currentColor;
+        }
+        return Color.NONE;
+    }
+
+    private boolean isKingCaptured(Color color) {
+        Piece king = King.from(color);
+        return squares.values()
+                .stream()
+                .noneMatch(piece -> piece.equals(king));
     }
 
     public void move(Movement movement) {

@@ -1,14 +1,15 @@
 package chess.model.board;
 
-import chess.model.piece.Color;
-import chess.model.piece.Pawn;
-import chess.model.piece.Piece;
-import chess.model.piece.Queen;
+import chess.model.piece.*;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -56,5 +57,27 @@ class BoardTest {
         // then
         assertThat(board.getPiece(2, 3)).isEqualTo(pawn);
         assertThat(board.getPiece(2, 2).isEmpty()).isTrue();
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideBoardWithWinnerColor")
+    void 이긴_팀을_판별한다(Board board, Color color) {
+        assertThat(board.getWinnerColor()).isEqualTo(color);
+    }
+
+    private static Stream<Arguments> provideBoardWithWinnerColor() {
+        return Stream.of(
+                Arguments.of(
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE))),
+                        Color.WHITE),
+                Arguments.of(
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.BLACK))),
+                        Color.BLACK
+                ),
+                Arguments.of(
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE), Position.of(3, 7), King.from(Color.BLACK))),
+                        Color.NONE
+                )
+        );
     }
 }
