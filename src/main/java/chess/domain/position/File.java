@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -8,14 +9,20 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toMap;
 
 public enum File {
-    a,
-    b,
-    c,
-    d,
-    e,
-    f,
-    g,
-    h;
+    a(0),
+    b(1),
+    c(2),
+    d(3),
+    e(4),
+    f(5),
+    g(6),
+    h(7);
+
+    private int index;
+
+    File(int index) {
+        this.index = index;
+    }
 
     public static File from(String value) {
         try {
@@ -30,7 +37,14 @@ public enum File {
         if(index >= values().length) {
             throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
         }
-        return values()[index];
+        return findFile(index);
+    }
+
+    private static File findFile(int index) {
+        return Arrays.stream(values())
+                .filter(file -> file.index == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("a~h까지 가능합니다."));
     }
 
     public int subtractFile(File file) {

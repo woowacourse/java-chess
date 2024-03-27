@@ -2,22 +2,36 @@ package chess.domain.position;
 
 import static java.util.stream.Collectors.toMap;
 
-public enum Rank {
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT;
+import java.util.Arrays;
 
-    public static Rank from(String value) {
-        int index = getIndex(value);
-        return values()[index];
+public enum Rank {
+    ONE(0),
+    TWO(1),
+    THREE(2),
+    FOUR(3),
+    FIVE(4),
+    SIX(5),
+    SEVEN(6),
+    EIGHT(7);
+
+    private int index;
+
+    Rank(int index) {
+        this.index = index;
     }
 
-    private static int getIndex(String value) {
+    public static Rank from(String value) {
+        return findRank(convertValueToIndex(value));
+    }
+
+    private static Rank findRank(int index) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.index == index)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("1~8까지 가능합니다."));
+    }
+
+    private static int convertValueToIndex(String value) {
         try {
             int index = Integer.parseInt(value) - 1;
             validateInRange(index);
@@ -38,7 +52,7 @@ public enum Rank {
         if (index >= values().length) {
             throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
         }
-        return values()[index];
+        return findRank(index);
     }
 
     public int subtractRank(Rank rank) {
