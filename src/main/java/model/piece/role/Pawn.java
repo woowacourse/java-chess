@@ -64,13 +64,13 @@ public final class Pawn extends Role {
     }
 
     private void validateCanTakeOtherPiece(final Direction direction, final Role target) {
-        if ((direction != Direction.N && direction != Direction.S) && !target.isOccupied()) {
+        if (ShiftPattern.isNotForward(direction) && !target.isOccupied()) {
             throw new IllegalArgumentException("해당 방향으로 이동 시 도착지에 상대편의 기물이 존재해야 합니다.");
         }
     }
 
     private void validateCanMoveForward(final Direction direction, final Role target) {
-        if ((direction == Direction.N || direction == Direction.S) && target.isOccupied()) {
+        if (ShiftPattern.isForward(direction) && target.isOccupied()) {
             throw new IllegalArgumentException("해당 방향으로 이동 시 도착지에 상대편의 기물이 존재할 경우 이동이 불가 합니다.");
         }
     }

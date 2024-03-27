@@ -21,4 +21,11 @@ public enum ShiftPattern {
     public List<Direction> getDirections() {
         return directions;
     }
+
+    public static boolean isNotForward(Direction direction) {
+        return direction != Direction.N && direction != Direction.S;
+    }
+    public static boolean isForward(Direction direction) {
+        return direction == Direction.N || direction == Direction.S;
+    }
 }
