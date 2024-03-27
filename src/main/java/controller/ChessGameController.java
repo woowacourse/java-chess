@@ -1,11 +1,11 @@
 package controller;
 
+import command.Command;
 import domain.chessboard.ChessBoard;
 import domain.coordinate.Coordinate;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
-import view.command.Command;
 
 public class ChessGameController {
 
