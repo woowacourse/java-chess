@@ -55,6 +55,10 @@ public class Square {
         return rank.index();
     }
 
+    public String getName() {
+        return file.name() + (rank.index() + 1);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

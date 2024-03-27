@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.view.InputView;
-
 import java.util.Set;
 
 public enum GameCommand {
@@ -13,7 +12,7 @@ public enum GameCommand {
 
     private static final Set<GameCommand> SINGLE_COMMANDS = Set.of(START, END, STATUS);
 
-    public static GameCommand from(String input) {
+    public static GameCommand from(final String input) {
         try {
             return valueOf(input);
         } catch (IllegalArgumentException exception) {

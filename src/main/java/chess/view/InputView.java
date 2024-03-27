@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.dto.GameCommand;
 import chess.dto.GameRequest;
+import chess.dto.RoomRequest;
 import chess.dto.UserRequest;
 import java.util.Arrays;
 import java.util.List;
@@ -76,5 +77,11 @@ public class InputView {
         if (inputs.size() != 2) {
             throw new IllegalArgumentException(INVALID_INPUT_MESSAGE);
         }
+    }
+
+    public RoomRequest readRoomRequest() {
+        List<String> inputs = inputGameCommand();
+        validateUserCommand(inputs);
+        return RoomRequest.from(inputs);
     }
 }

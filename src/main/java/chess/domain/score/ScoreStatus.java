@@ -9,7 +9,7 @@ public enum ScoreStatus {
 
     private final Function<Score, Score> function;
 
-    ScoreStatus(Function<Score, Score> function) {
+    ScoreStatus(final Function<Score, Score> function) {
         this.function = function;
     }
 

@@ -1,10 +1,10 @@
 package chess.domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.pieces.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("턴")
 class TurnTest {

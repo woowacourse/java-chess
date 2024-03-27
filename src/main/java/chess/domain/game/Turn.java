@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.pieces.piece.Color;
+import java.util.stream.IntStream;
 
 public class Turn {
     private Color turn;
@@ -19,5 +20,10 @@ public class Turn {
 
     public boolean isTurn(final Color color) {
         return this.turn == color;
+    }
+
+    public void proceedTurn(final int size) {
+        IntStream.range(0, size)
+                .forEach(i -> next());
     }
 }

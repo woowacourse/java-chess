@@ -1,14 +1,13 @@
 package chess.domain.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.dto.PieceResponse;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("기물 생성")
 class ChessBoardFactoryTest {

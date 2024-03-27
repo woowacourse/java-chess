@@ -17,6 +17,10 @@ public class Movement {
         this.target = target;
     }
 
+    public static Movement from(final String source, final String target) {
+        return new Movement(Square.from(source), Square.from(target));
+    }
+
     private void validate(final Square source, final Square target) {
         if (source.equals(target)) {
             throw new IllegalArgumentException(INVALID_PIECE_MOVEMENT);
@@ -62,5 +66,21 @@ public class Movement {
 
     public int getSourceRankIndex() {
         return source.getRankIndex();
+    }
+
+    public Square getSource() {
+        return source;
+    }
+
+    public Square getTarget() {
+        return target;
+    }
+
+    @Override
+    public String toString() {
+        return "Movement{" +
+                "source=" + source +
+                ", target=" + target +
+                '}';
     }
 }

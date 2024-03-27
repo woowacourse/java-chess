@@ -7,16 +7,16 @@ public class Score {
     private static final String INVALID_SCORE = "점수는 음수일 수 없습니다.";
     private final double value;
 
-    private Score(double score) {
+    private Score(final double score) {
         validate(score);
         this.value = score;
     }
 
-    public static Score of(double score) {
+    public static Score of(final double score) {
         return new Score(score);
     }
 
-    private void validate(double score) {
+    private void validate(final double score) {
         if (score < 0) {
             throw new IllegalStateException(INVALID_SCORE);
         }

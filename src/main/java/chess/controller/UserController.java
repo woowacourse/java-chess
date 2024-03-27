@@ -9,23 +9,29 @@ import java.util.List;
 
 public class UserController {
 
-    private final UserService userService;
     private final InputView inputView;
     private final OutputView outputView;
+    private final UserService userService;
+    private final RoomController roomController;
 
-    public UserController(final UserService userService, final InputView inputView, final OutputView outputView) {
-        this.userService = userService;
+    public UserController(final InputView inputView, final OutputView outputView, final UserService userService,
+                          final RoomController roomController) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.userService = userService;
+        this.roomController = roomController;
     }
 
-    public long start() {
+    public void start() {
         printEntrance();
         UserRequest request = inputView.readUserRequest();
         if (request.getCommand() == UserCommand.LOGIN) {
-            return userService.login(request.getName());
+            long userId = userService.login(request.getName());
+            roomController.enterRoom(userId);
+            return;
         }
-        return userService.signup(request.getName());
+        long userId = userService.signup(request.getName());
+        roomController.enterRoom(userId);
     }
 
     private void printEntrance() {

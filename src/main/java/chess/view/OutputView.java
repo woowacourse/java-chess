@@ -16,7 +16,10 @@ public class OutputView {
     private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String SIGNUP_MESSAGE = "> 회원 가입: signup 이름 - 예. signup 초코칩";
     private static final String LOGIN_MESSAGE = "> 로그인: login 이름 - 예. login 초코칩";
-    private static final String USER_STATUS = "> 로그인 가능한 사용: %s";
+    private static final String USER_STATUS = "> 로그인 가능한 사용자 : %s";
+    private static final String ROOM_CREATE_MESSAGE = "> 방 만들기: create 이름 - 예. create chess";
+    private static final String ROOM_ENTER_MESSAGE = "> 방 만들기: enter 이름 - 예. enter chess";
+    private static final String ROOM_STATUS = "> 입장 가능한 방 : %s";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
@@ -86,10 +89,27 @@ public class OutputView {
     public void printUserStatus(final List<String> names) {
         StringJoiner stringJoiner = new StringJoiner(NAME_DELIMITER);
         names.forEach(stringJoiner::add);
-        if(stringJoiner.length() == 0){
+        if (stringJoiner.length() == 0) {
             System.out.printf(USER_STATUS + System.lineSeparator(), "없음");
             return;
         }
         System.out.printf(USER_STATUS + System.lineSeparator(), stringJoiner);
+    }
+
+    public void printRoomEntranceMessage() {
+        StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
+        stringJoiner.add(ROOM_CREATE_MESSAGE);
+        stringJoiner.add(ROOM_ENTER_MESSAGE);
+        System.out.println(stringJoiner);
+    }
+
+    public void printRoomNames(final List<String> names) {
+        StringJoiner stringJoiner = new StringJoiner(NAME_DELIMITER);
+        names.forEach(stringJoiner::add);
+        if (stringJoiner.length() == 0) {
+            System.out.printf(ROOM_STATUS + System.lineSeparator(), "없음");
+            return;
+        }
+        System.out.printf(ROOM_STATUS + System.lineSeparator(), stringJoiner);
     }
 }

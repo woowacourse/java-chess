@@ -1,5 +1,7 @@
 package chess.domain.pieces.pawn;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
@@ -8,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("흰 폰")
 class WhitePawnTest {
