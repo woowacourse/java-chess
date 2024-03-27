@@ -1,6 +1,5 @@
 package domain.game;
 
-import dao.DBConnector;
 import dao.GameDao;
 import dao.PieceDao;
 import domain.position.File;

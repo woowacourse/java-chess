@@ -1,12 +1,7 @@
 package dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static domain.Fixture.Positions.*;
 
-import domain.game.PieceFactory;
-import domain.game.PieceType;
-import domain.position.Position;
-import dto.PieceDto;
 import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
