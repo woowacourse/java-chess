@@ -8,20 +8,17 @@ import java.util.concurrent.BlockingQueue;
 
 public class JdbcConnectionPool {
 
-    private static final String SERVER = "localhost:13306";
-    private static final String DATABASE = "chess";
-    private static final String OPTION = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-    private static final int INITIAL_POOL_SIZE = 2;
     private static final String FAILED_INITIALIZE = "커넥션 풀 초기화에 실패했습니다.";
     private static final String FAILED_TO_GET_CONNECTION = "커넥션 획득에 실패했습니다.";
     private static final String FAILED_TO_TERMINATE = "종료에 실패했습니다.";
     private static final String FAILED_RELEASE = "커넥션 해제에 실패했습니다.";
+    private static final int INITIAL_POOL_SIZE = 2;
     private static final JdbcConnectionPool INSTANCE = new JdbcConnectionPool();
+    private final DatabaseConfiguration configuration;
     private BlockingQueue<Connection> pool;
 
     private JdbcConnectionPool() {
+        configuration = DatabaseConfiguration.getInstance();
         initializeConnectionPool();
     }
 
@@ -41,7 +38,11 @@ public class JdbcConnectionPool {
     }
 
     private Connection createNewConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
+        return DriverManager.getConnection(
+                configuration.getUrl(),
+                configuration.getUsername(),
+                configuration.getPassword()
+        );
     }
 
     public Connection getConnection() {
@@ -57,10 +58,9 @@ public class JdbcConnectionPool {
         }
     }
 
-    public void releaseConnection(Connection connection) {
+    public void releaseConnection(final Connection connection) {
         try {
             pool.put(connection);
-            System.out.println("Pool Size = " + pool.size());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException(FAILED_RELEASE);
