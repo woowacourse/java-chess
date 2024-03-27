@@ -32,14 +32,14 @@ public class ChessBoardGenerator {
     }
 
     private static void initializeBackRank(Map<Position, Piece> board, Rank rank, Team team) {
-        board.put(createPosition(File.a, rank), new Rook(team));
-        board.put(createPosition(File.b, rank), new Knight(team));
-        board.put(createPosition(File.c, rank), new Bishop(team));
-        board.put(createPosition(File.d, rank), new Queen(team));
-        board.put(createPosition(File.e, rank), new King(team));
-        board.put(createPosition(File.f, rank), new Bishop(team));
-        board.put(createPosition(File.g, rank), new Knight(team));
-        board.put(createPosition(File.h, rank), new Rook(team));
+        board.put(new Position(File.a, rank), new Rook(team));
+        board.put(new Position(File.b, rank), new Knight(team));
+        board.put(new Position(File.c, rank), new Bishop(team));
+        board.put(new Position(File.d, rank), new Queen(team));
+        board.put(new Position(File.e, rank), new King(team));
+        board.put(new Position(File.f, rank), new Bishop(team));
+        board.put(new Position(File.g, rank), new Knight(team));
+        board.put(new Position(File.h, rank), new Rook(team));
     }
 
     private static void initializeBlackPawnRank(Map<Position, Piece> board) {
@@ -59,11 +59,7 @@ public class ChessBoardGenerator {
 
     private static void initializeFiles(Map<Position, Piece> board, Rank rank, Piece piece) {
         for(File file : File.values()) {
-            board.put(createPosition(file, rank), piece);
+            board.put(new Position(file, rank), piece);
         }
-    }
-
-    private static Position createPosition(File file, Rank rank) {
-        return new Position(file, rank);
     }
 }
