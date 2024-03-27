@@ -2,12 +2,12 @@ package chess.domain.position;
 
 public class Coordinate {
 
-    private final char fileChar;
-    private final char rankChar;
+    private final File file;
+    private final Rank rank;
 
-    private Coordinate(char fileChar, char rankChar) {
-        this.fileChar = fileChar;
-        this.rankChar = rankChar;
+    private Coordinate(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
     }
 
     public static Coordinate of(String coordinate) {
@@ -15,7 +15,9 @@ public class Coordinate {
         validateFileChar(coordinate.charAt(0));
         validateRankChar(coordinate.charAt(1));
 
-        return new Coordinate(coordinate.charAt(0), coordinate.charAt(1));
+        return new Coordinate(
+                File.of(coordinate.charAt(0)),
+                Rank.of(coordinate.charAt(1)));
     }
 
     private static void validateLength(String coordinate) {
@@ -33,10 +35,10 @@ public class Coordinate {
     }
 
     public File file() {
-        return File.of(fileChar);
+        return file;
     }
 
     public Rank rank() {
-        return Rank.of(rankChar);
+        return rank;
     }
 }
