@@ -9,7 +9,10 @@ import chess.model.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.*;
 
 public class Board {
     public static final int MIN_LENGTH = 1;
@@ -32,6 +35,27 @@ public class Board {
     public List<Piece> getRank(int rank) {
         return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
                 .mapToObj(file -> Position.of(file, rank))
+                .map(this::getByPosition)
+                .toList();
+    }
+
+    public Map<Piece, Integer> getPieceCount(Color color) {
+        return squares.values()
+                .stream()
+                .filter(piece -> piece.hasColor(color))
+                .collect(groupingBy(Function.identity(),
+                        collectingAndThen(counting(), Long::intValue)));
+    }
+
+    public int countPieceOfFile(Piece piece, int file) {
+        return (int) getFile(file).stream()
+                .filter(filePiece -> filePiece.equals(piece))
+                .count();
+    }
+
+    private List<Piece> getFile(int file) {
+        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
+                .mapToObj(rank -> Position.of(file, rank))
                 .map(this::getByPosition)
                 .toList();
     }
