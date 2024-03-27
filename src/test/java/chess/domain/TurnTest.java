@@ -18,6 +18,6 @@ class TurnTest {
         turn.next();
 
         //then
-        assertThat(turn.hasTurn(PieceColor.BLACK)).isTrue();
+        assertThat(turn.isNotTurnOwner(PieceColor.WHITE)).isTrue();
     }
 }

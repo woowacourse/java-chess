@@ -41,16 +41,16 @@ public class CommandTypeTest {
     @Test
     public void isCommandExists() {
         assertAll(
-                () -> assertThat(CommandType.exists("start")).isTrue(),
-                () -> assertThat(CommandType.exists("move")).isTrue(),
-                () -> assertThat(CommandType.exists("end")).isTrue()
+                () -> assertThat(CommandType.doesNotExist("start")).isFalse(),
+                () -> assertThat(CommandType.doesNotExist("move")).isFalse(),
+                () -> assertThat(CommandType.doesNotExist("end")).isFalse()
         );
     }
 
     @DisplayName("존재하는 명령어가 아니다.")
     @Test
     public void isCommandNotExists() {
-        assertThat(CommandType.exists("invalid")).isFalse();
+        assertThat(CommandType.doesNotExist("invalid")).isTrue();
     }
 
     @DisplayName("입력받은 명령어의 인자 개수가 올바르다.")
@@ -70,7 +70,7 @@ public class CommandTypeTest {
         }
 
         //then
-        assertThat(CommandType.isValidArguments(command)).isTrue();
+        assertThat(CommandType.isInValidArgumentCount(command)).isFalse();
     }
 
     @DisplayName("입력받은 명령어의 인자 개수가 올바르지 않다.")
@@ -83,9 +83,9 @@ public class CommandTypeTest {
 
         //when & then
         assertAll(
-                () -> assertThat(CommandType.isValidArguments(invalidMoveArguments)).isFalse(),
-                () -> assertThat(CommandType.isValidArguments(invalidStartArguments)).isFalse(),
-                () -> assertThat(CommandType.isValidArguments(invalidEndArguments)).isFalse()
+                () -> assertThat(CommandType.isInValidArgumentCount(invalidMoveArguments)).isTrue(),
+                () -> assertThat(CommandType.isInValidArgumentCount(invalidStartArguments)).isTrue(),
+                () -> assertThat(CommandType.isInValidArgumentCount(invalidEndArguments)).isTrue()
         );
     }
 }

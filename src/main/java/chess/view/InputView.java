@@ -34,13 +34,13 @@ public class InputView {
     }
 
     private void validateCommand(final String command) {
-        if (!CommandType.exists(command)) {
+        if (CommandType.doesNotExist(command)) {
             throw new IllegalArgumentException(UNKNOWN_COMMAND);
         }
     }
 
     private void validateCommandArgument(final List<String> command) {
-        if (!CommandType.isValidArguments(command)) {
+        if (CommandType.isInValidArgumentCount(command)) {
             throw new IllegalArgumentException(INVALID_ARGUMENT);
         }
     }

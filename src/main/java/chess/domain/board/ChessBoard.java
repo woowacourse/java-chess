@@ -47,7 +47,7 @@ public class ChessBoard {
     }
 
     private void validateSource(final Position source) {
-        if (!isExist(source)) {
+        if (doesNotExist(source)) {
             throw new IllegalArgumentException(INVALID_SOURCE);
         }
     }
@@ -67,7 +67,7 @@ public class ChessBoard {
 
     private void validateTurn(final Position source, final Turn turn) {
         Piece sourcePiece = board.get(source);
-        if (!turn.hasTurn(sourcePiece.color())) {
+        if (turn.isNotTurnOwner(sourcePiece.color())) {
             throw new IllegalArgumentException(String.format(INVALID_TURN, sourcePiece.color()));
         }
     }
@@ -87,7 +87,7 @@ public class ChessBoard {
     }
 
     private PieceRelation determineStatus(final Position source, final Position position) {
-        if (!isExist(position)) {
+        if (doesNotExist(position)) {
             return PieceRelation.EMPTY;
         }
         if (isSameColor(board.get(position), board.get(source))) {
@@ -96,8 +96,8 @@ public class ChessBoard {
         return PieceRelation.ENEMY;
     }
 
-    private boolean isExist(final Position position) {
-        return board.containsKey(position);
+    private boolean doesNotExist(final Position position) {
+        return !board.containsKey(position);
     }
 
     private boolean isSameColor(final Piece sourcePiece, final Piece targetPiece) {
@@ -112,7 +112,7 @@ public class ChessBoard {
     }
 
     private boolean isBlocked(final Movement movement) {
-        return movement.findRoute().stream().anyMatch(this::isExist);
+        return movement.findRoute().stream().anyMatch(this::doesNotExist);
     }
 
     private void updateBoard(final Position source, final Position target) {

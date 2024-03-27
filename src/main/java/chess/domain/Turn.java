@@ -17,7 +17,7 @@ public class Turn {
         turn = turn.reverse();
     }
 
-    public boolean hasTurn(final PieceColor color) {
-        return this.turn == color;
+    public boolean isNotTurnOwner(final PieceColor color) {
+        return this.turn != color;
     }
 }

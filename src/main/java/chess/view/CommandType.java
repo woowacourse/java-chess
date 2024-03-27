@@ -26,15 +26,15 @@ public enum CommandType {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND));
     }
 
-    public static boolean exists(String type) {
+    public static boolean doesNotExist(String type) {
         return Arrays.stream(values())
-                .anyMatch(commandType -> commandType.type.equals(type));
+                .noneMatch(commandType -> commandType.type.equals(type));
     }
 
-    public static boolean isValidArguments(List<String> input) {
+    public static boolean isInValidArgumentCount(List<String> input) {
         return Arrays.stream(values())
                 .filter(commandType -> commandType.type.equals(input.get(0)))
-                .anyMatch(commandType -> commandType.argumentCount == input.size() - 1);
+                .noneMatch(commandType -> commandType.argumentCount == input.size() - 1);
     }
 
     public boolean isStart() {
