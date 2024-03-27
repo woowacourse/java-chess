@@ -92,6 +92,7 @@ class FileTest {
         assertThat(H.left(step)).isEqualTo(file);
     }
 
+
     @Test
     @DisplayName("현재 file에서 숫자만큼 왼쪽으로 이동하여, 1을 미만이 된 경우 예외가 발생한다.")
     void canNotLeftUnderOne() {
@@ -121,5 +122,20 @@ class FileTest {
                 () -> assertThat(H.canLeft(step)).isTrue(),
                 () -> assertThat(H.canLeft(8)).isFalse()
         );
+    }
+
+    // ---
+    @ParameterizedTest
+    @CsvSource({"A", "C"})
+    @DisplayName("두 file간의 거리가 한칸인 경우 참을 반환한다.")
+    void canMoveOneSpace(final File file) {
+        assertThat(B.canMoveOneSpace(file)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"D", "E", "F", "G", "H"})
+    @DisplayName("두 file간의 거리가 한칸이 아닌 경우 거짓을 반환한다.")
+    void canNotMoveOneSpace(final File file) {
+        assertThat(B.canMoveOneSpace(file)).isFalse();
     }
 }

@@ -109,4 +109,14 @@ public enum Rank {
         }
         return true;
     }
+
+    public boolean canMoveOneSpace(final Rank rank) {
+        boolean canMoveOne = canDown() && down() == rank;
+
+        if (canUp() && up() == rank) {
+            canMoveOne = true;
+        }
+
+        return canMoveOne;
+    }
 }

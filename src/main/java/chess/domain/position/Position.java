@@ -55,4 +55,9 @@ public record Position(File file, Rank rank) {
         return file.canMove(moveDistance.fileMoveAmount())
                 && rank.canMove(moveDistance.rankMoveAmount());
     }
+
+    public boolean isDiagonalBy(final Position target) {
+        return file.canMoveOneSpace(target.file)
+                && rank.canMoveOneSpace(target.rank);
+    }
 }

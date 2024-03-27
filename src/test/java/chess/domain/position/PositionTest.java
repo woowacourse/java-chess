@@ -106,4 +106,24 @@ class PositionTest {
                 () -> assertThat(position.isMaximumRank()).isFalse()
         );
     }
+
+    // *.*
+    // .*.
+    // *.*
+    @ParameterizedTest
+    @CsvSource({"1, 1", "1, 3", "3, 1", "3, 3"})
+    @DisplayName("두 position이 대각선인 경우 참을 반환한다.")
+    void canMoveOneSpace(final int file, final int rank) {
+        assertThat(Position.of(2, 2).isDiagonalBy(Position.of(file, rank))).isTrue();
+    }
+
+    // .*.
+    // ***
+    // .*.
+    @ParameterizedTest
+    @CsvSource({"1, 2", "2, 1", "2, 3", "3, 2"})
+    @DisplayName("두 position이 대각선이 아닌 경우 거짓을 반환한다.")
+    void canNotMoveOneSpace(final int file, final int rank) {
+        assertThat(Position.of(2, 2).isDiagonalBy(Position.of(file, rank))).isFalse();
+    }
 }

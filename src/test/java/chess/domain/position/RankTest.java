@@ -3,6 +3,7 @@ package chess.domain.position;
 import static chess.domain.position.Rank.EIGHT;
 import static chess.domain.position.Rank.FIVE;
 import static chess.domain.position.Rank.ONE;
+import static chess.domain.position.Rank.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -120,5 +121,20 @@ class RankTest {
                 () -> assertThat(EIGHT.canDown(step)).isTrue(),
                 () -> assertThat(EIGHT.canDown(8)).isFalse()
         );
+    }
+
+    // ---
+    @ParameterizedTest
+    @CsvSource({"ONE", "THREE"})
+    @DisplayName("두 rank간의 거리가 한칸인 경우 참을 반환한다.")
+    void canMoveOneSpace(final Rank rank) {
+        assertThat(TWO.canMoveOneSpace(rank)).isTrue();
+    }
+
+    @ParameterizedTest
+    @CsvSource({"FOUR", "FIVE", "SIX", "SEVEN", "EIGHT"})
+    @DisplayName("두 rank간의 거리가 한칸이 아닌 경우 거짓을 반환한다.")
+    void canNotMoveOneSpace(final Rank rank) {
+        assertThat(TWO.canMoveOneSpace(rank)).isFalse();
     }
 }

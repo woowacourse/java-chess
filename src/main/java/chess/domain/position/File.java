@@ -112,4 +112,13 @@ public enum File {
         return true;
     }
 
+    public boolean canMoveOneSpace(final File file) {
+        boolean canMoveOne = canLeft() && left() == file;
+
+        if (canRight() && right() == file) {
+            canMoveOne = true;
+        }
+
+        return canMoveOne;
+    }
 }
