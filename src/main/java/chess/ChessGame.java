@@ -1,11 +1,10 @@
 package chess;
 
-import chess.domain.chessboard.ChessBoard;
 import chess.domain.Command;
+import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.List;
 
 public class ChessGame {

@@ -1,18 +1,12 @@
 package chess.domain.chesspiece.pawn;
 
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.Role;
 import chess.domain.chesspiece.Team;
-import chess.domain.position.Rank;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static chess.domain.chesspiece.Role.*;
-import static chess.domain.chesspiece.Team.WHITE;
 
 public abstract class Pawn extends Piece {
 
@@ -29,7 +23,7 @@ public abstract class Pawn extends Piece {
         List<Position> route = new ArrayList<>();
         validateMovingRule(source, target);
 
-        if(canMoveForwardTwice(source, target)) {
+        if (canMoveForwardTwice(source, target)) {
             Direction direction = Direction.findDirection(source, target);
             route.add(source.move(direction));
         }
@@ -66,7 +60,7 @@ public abstract class Pawn extends Piece {
     }
 
     private void validateAttackRule(Position source, Position target) {
-        if(!canAttack(source, target)) {
+        if (!canAttack(source, target)) {
             throw new IllegalArgumentException("공격할 수 없는 곳입니다.");
         }
     }

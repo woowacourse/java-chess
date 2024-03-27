@@ -1,16 +1,15 @@
 package chess.domain.chesspiece.slidingPiece;
 
-import chess.domain.chesspiece.Piece;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.chesspiece.Piece;
+import chess.domain.position.Position;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class RookTest {
     @Test
@@ -22,6 +21,7 @@ class RookTest {
                 Position.of("d", "1"));
         assertThat(route).isEqualTo(positions);
     }
+
     @Test
     @DisplayName("목적지 제외 가로로 갈 수 있는 위치들을 반환한다.")
     void Rook_Check_horizontal_route() {
@@ -44,7 +44,7 @@ class RookTest {
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void Rook_Validate_team() {
-        Piece piece=new Rook(WHITE);
+        Piece piece = new Rook(WHITE);
         assertThat(piece.isTeam(new King(WHITE))).isTrue();
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }

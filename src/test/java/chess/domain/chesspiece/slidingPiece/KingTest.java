@@ -1,16 +1,15 @@
 package chess.domain.chesspiece.slidingPiece;
 
-import chess.domain.chesspiece.Piece;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.chesspiece.Piece;
+import chess.domain.position.Position;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class KingTest {
     @Test
@@ -52,7 +51,7 @@ class KingTest {
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void King_Validate_team() {
-        Piece piece=new King(WHITE);
+        Piece piece = new King(WHITE);
         assertThat(piece.isTeam(new King(WHITE))).isTrue();
         assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }

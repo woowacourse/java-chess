@@ -1,12 +1,12 @@
 package chess.domain.chesspiece;
 
-import chess.domain.position.Position;
+import static chess.domain.chesspiece.Role.BLACK_KNIGHT;
+import static chess.domain.chesspiece.Role.WHITE_KNIGHT;
 
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static chess.domain.chesspiece.Role.*;
 
 public class Knight extends Piece {
 

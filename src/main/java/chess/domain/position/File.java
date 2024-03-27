@@ -1,12 +1,6 @@
 package chess.domain.position;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toMap;
 
 public enum File {
     a(0),
@@ -34,7 +28,7 @@ public enum File {
 
     public File update(int value) {
         int index = ordinal() + value;
-        if(index >= values().length) {
+        if (index >= values().length) {
             throw new IllegalArgumentException("보드판 밖으로 이동할 수 없습니다.");
         }
         return findFile(index);

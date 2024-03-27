@@ -1,7 +1,6 @@
 package chess.domain.chesspiece.slidingPiece;
 
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.Role;
 import chess.domain.chesspiece.Team;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;

@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import static java.util.stream.Collectors.toMap;
-
 import java.util.Arrays;
 
 public enum Rank {

@@ -1,9 +1,10 @@
 package chess.domain.chessboard;
 
-import chess.domain.chesspiece.*;
+import chess.domain.chesspiece.Empty;
+import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
-
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
 
 public class ChessBoard {
 
@@ -22,11 +23,11 @@ public class ChessBoard {
         Piece targetPiece = chessBoard.get(target);
 
         checkTargetIsTeam(piece, targetPiece);
-        if(targetPiece.isEmpty()) {
+        if (targetPiece.isEmpty()) {
             piece.getMovingRoute(source, target)
                     .forEach(this::checkObstacle);
         }
-        if(!targetPiece.isEmpty() && !piece.isTeam(targetPiece)) {
+        if (!targetPiece.isEmpty() && !piece.isTeam(targetPiece)) {
             piece.getAttackRoute(source, target)
                     .forEach(this::checkObstacle);
         }
@@ -36,7 +37,8 @@ public class ChessBoard {
     }
 
     private void checkObstacle(Position position) {
-        if (!chessBoard.get(position).isEmpty()) {
+        if (!chessBoard.get(position)
+                .isEmpty()) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

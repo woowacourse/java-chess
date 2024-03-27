@@ -1,8 +1,7 @@
 package chess.view;
 
-import chess.domain.chesspiece.Role;
 import chess.domain.chesspiece.Piece;
-
+import chess.domain.chesspiece.Role;
 import chess.domain.position.Position;
 import java.util.EnumMap;
 import java.util.Map;

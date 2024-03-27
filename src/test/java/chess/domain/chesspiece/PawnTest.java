@@ -1,20 +1,18 @@
 package chess.domain.chesspiece;
 
-import chess.domain.chesspiece.pawn.Pawn;
-import chess.domain.chesspiece.pawn.WhitePawn;
-import chess.domain.chesspiece.slidingPiece.King;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
-
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.chesspiece.pawn.WhitePawn;
+import chess.domain.chesspiece.slidingPiece.King;
+import chess.domain.position.Position;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
     @Test

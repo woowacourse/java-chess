@@ -1,7 +1,6 @@
 package chess.domain.chesspiece;
 
 import chess.domain.position.Position;
-
 import java.util.List;
 
 public abstract class Piece {
@@ -12,6 +11,7 @@ public abstract class Piece {
     }
 
     public abstract List<Position> getMovingRoute(Position source, Position target);
+
     public abstract List<Position> getAttackRoute(Position source, Position target);
 
     protected abstract void validateMovingRule(Position source, Position target);

@@ -1,18 +1,17 @@
 package chess.domain.chesspiece.slidingPiece;
 
-import chess.domain.chesspiece.Piece;
-import chess.domain.position.Position;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import java.util.List;
-
 import static chess.domain.chesspiece.Team.BLACK;
 import static chess.domain.chesspiece.Team.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.chesspiece.Piece;
+import chess.domain.position.Position;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
     @Test
@@ -43,9 +42,9 @@ class BishopTest {
     @Test
     @DisplayName("같은 팀인지 확인한다.")
     void Bishop_Validate_team() {
-      Piece piece=new Bishop(WHITE);
-      assertThat(piece.isTeam(new King(WHITE))).isTrue();
-      assertThat(piece.isTeam(new King(BLACK))).isFalse();
+        Piece piece = new Bishop(WHITE);
+        assertThat(piece.isTeam(new King(WHITE))).isTrue();
+        assertThat(piece.isTeam(new King(BLACK))).isFalse();
     }
 
     @Test

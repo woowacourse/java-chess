@@ -1,16 +1,11 @@
 package chess.domain.chesspiece.slidingPiece;
 
-import chess.domain.chesspiece.Piece;
+import static chess.domain.chesspiece.Role.BLACK_KING;
+import static chess.domain.chesspiece.Role.WHITE_KING;
+
 import chess.domain.chesspiece.Role;
 import chess.domain.chesspiece.Team;
-import chess.domain.position.Direction;
 import chess.domain.position.Position;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static chess.domain.chesspiece.Role.*;
 
 public class King extends SlidingPiece {
 

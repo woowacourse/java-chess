@@ -17,7 +17,7 @@ public class InputView {
                         .split(""))
                 .toList();
 
-        if(position.size() != 2) {
+        if (position.size() != 2) {
             throw new IllegalArgumentException("좌표는 2글자여야 합니다.");
         }
 

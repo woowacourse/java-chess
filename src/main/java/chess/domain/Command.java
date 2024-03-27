@@ -1,7 +1,6 @@
 package chess.domain;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Command {
     START("start"),
