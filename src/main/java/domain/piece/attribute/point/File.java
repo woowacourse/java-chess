@@ -11,10 +11,6 @@ public enum File {
     H('h');
     private final char value;
 
-    public static boolean isInBoundary(final int index) {
-        return index >= 0 && index < values().length;
-    }
-
     File(final char value) {
         this.value = value;
     }
@@ -27,12 +23,6 @@ public enum File {
         }
         throw new IllegalArgumentException(String.format("%c는 파일에 존재하지 않습니다.", value));
     }
-
-    public static File findByIndex(final int ordinalIndex) {
-        return values()[ordinalIndex];
-    }
-
-
 
     public boolean isFarLeft() {
         return ordinal() == 0;
@@ -57,19 +47,11 @@ public enum File {
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
 
-    public File moveLeft() {
-        return moveLeft(1);
-    }
-
     public File moveRight(final int step) {
         if (canMoveRight(step)) {
             return values()[ordinal() + step];
         }
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
-    }
-
-    public File moveRight() {
-        return moveRight(1);
     }
 
 }

@@ -89,14 +89,6 @@ public record Point(File file, Rank rank) {
         return new Point(file.moveRight(step), rank);
     }
 
-    public int getFileIndex() {
-        return this.file.ordinal();
-    }
-
-    public int getRankIndex() {
-        return this.rank.ordinal();
-    }
-
     public static Point from(final String value) {
         validate(value);
         final var file = File.from(value.charAt(0));

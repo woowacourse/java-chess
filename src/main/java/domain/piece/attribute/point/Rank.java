@@ -24,14 +24,6 @@ public enum Rank {
         throw new IllegalArgumentException(String.format("%d는 랭크에 존재하지 않습니다.", value));
     }
 
-    public static boolean isInBoundary(final int index) {
-        return index >= 0 && index < values().length;
-    }
-
-    public static Rank findByIndex(final int ordinalIndex) {
-        return values()[ordinalIndex];
-    }
-
     public boolean isTop() {
         return ordinal() == values().length-1;
     }
@@ -55,25 +47,10 @@ public enum Rank {
         throw new IllegalStateException("이동할 수 없는 위치입니다.");
     }
 
-    public Rank moveUp() {
-        if (canMoveUp(1)) {
-            return values()[ordinal() + 1];
-        }
-        throw new IllegalStateException("이동할 수 없는 위치입니다.");
-    }
-
     public Rank moveDown(final int step) {
         if (canMoveDown(step)) {
             return values()[ordinal() - step];
         }
         throw new IllegalStateException("이동할 수 없는 위치입니다.");
     }
-
-    public Rank moveDown() {
-        if (canMoveDown(1)) {
-            return values()[ordinal() - 1];
-        }
-        throw  new IllegalStateException("이동할 수 없는 위치입니다.");
-    }
-
 }
