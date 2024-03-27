@@ -15,14 +15,14 @@ class ChessFileTest {
 
     static Stream<Arguments> moveArguments() {
         return java.util.stream.Stream.of(
-                Arguments.arguments(ChessFile.C, Direction.DOWN, ChessFile.C),
-                Arguments.arguments(ChessFile.C, Direction.UP, ChessFile.C),
-                Arguments.arguments(ChessFile.C, Direction.LEFT, ChessFile.B),
-                Arguments.arguments(ChessFile.C, Direction.RIGHT, ChessFile.D),
-                Arguments.arguments(ChessFile.C, Direction.DOWN_LEFT, ChessFile.B),
-                Arguments.arguments(ChessFile.C, Direction.DOWN_RIGHT, ChessFile.D),
-                Arguments.arguments(ChessFile.C, Direction.UP_LEFT, ChessFile.B),
-                Arguments.arguments(ChessFile.C, Direction.UP_RIGHT, ChessFile.D)
+                Arguments.arguments(ChessFile.C, ChessDirection.DOWN, ChessFile.C),
+                Arguments.arguments(ChessFile.C, ChessDirection.UP, ChessFile.C),
+                Arguments.arguments(ChessFile.C, ChessDirection.LEFT, ChessFile.B),
+                Arguments.arguments(ChessFile.C, ChessDirection.RIGHT, ChessFile.D),
+                Arguments.arguments(ChessFile.C, ChessDirection.DOWN_LEFT, ChessFile.B),
+                Arguments.arguments(ChessFile.C, ChessDirection.DOWN_RIGHT, ChessFile.D),
+                Arguments.arguments(ChessFile.C, ChessDirection.UP_LEFT, ChessFile.B),
+                Arguments.arguments(ChessFile.C, ChessDirection.UP_RIGHT, ChessFile.D)
         );
     }
 
@@ -54,8 +54,8 @@ class ChessFileTest {
     @DisplayName("체스 파일을 주어진 방향 정보에 따라 갱신한다.")
     @ParameterizedTest
     @MethodSource("moveArguments")
-    void move(ChessFile before, Direction direction, ChessFile after) {
+    void move(ChessFile before, ChessDirection chessDirection, ChessFile after) {
         //when & then
-        assertThat(before.move(direction)).isEqualTo(after);
+        assertThat(before.move(chessDirection)).isEqualTo(after);
     }
 }

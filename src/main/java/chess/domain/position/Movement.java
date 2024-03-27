@@ -18,41 +18,33 @@ public class Movement {
     public Set<Position> findRouteBetween() {
         Set<Position> route = new HashSet<>();
         Position nextPosition = source;
-        for (final Direction direction : findDirections()) {
-            nextPosition = nextPosition.move(direction);
+        for (final ChessDirection chessDirection : findDirections()) {
+            nextPosition = nextPosition.move(chessDirection);
             route.add(nextPosition);
         }
         route.remove(target);
         return route;
     }
 
-    private List<Direction> findDirections() {
+    private List<ChessDirection> findDirections() {
         int fileDiff = source.calculateFileDifferenceTo(target);
         int rankDiff = source.calculateRankDifferenceTo(target);
-        if (isOnlyOneDirection(fileDiff, rankDiff)) {
-            return findOnlyOneDirections(fileDiff, rankDiff);
+        if(findDirection().isLShaped()){
+            return findLShapedDirections(fileDiff, rankDiff);
         }
-        return findLDirections(fileDiff, rankDiff);
-    }
-
-    private boolean isOnlyOneDirection(final int fileDiff, final int rankDiff) {
-        return fileDiff == 0 || rankDiff == 0 || Math.abs(rankDiff) == Math.abs(fileDiff);
-    }
-
-    private List<Direction> findOnlyOneDirections(final int fileDiff, final int rankDiff) {
-        return Stream.generate(() -> Direction.findDirection(fileDiff, rankDiff))
+        return Stream.generate(() -> ChessDirection.findDirection(fileDiff, rankDiff))
                 .limit(Math.max(Math.abs(rankDiff), Math.abs(fileDiff)))
                 .toList();
     }
 
-    private List<Direction> findLDirections(final int fileDiff, final int rankDiff) {
-        List<Direction> horizontalDirections = Stream.generate(() -> Direction.findDirection(fileDiff, 0)).limit(fileDiff).toList();
-        List<Direction> verticalDirections = Stream.generate(() -> Direction.findDirection(0, rankDiff)).limit(rankDiff).toList();
+    private List<ChessDirection> findLShapedDirections(final int fileDiff, final int rankDiff) {
+        List<ChessDirection> horizontalDirections = Stream.generate(() -> ChessDirection.findDirection(fileDiff, 0)).limit(fileDiff).toList();
+        List<ChessDirection> verticalDirections = Stream.generate(() -> ChessDirection.findDirection(0, rankDiff)).limit(rankDiff).toList();
         return union(horizontalDirections, verticalDirections);
     }
 
-    private static List<Direction> union(final List<Direction> horizontalDirections, final List<Direction> verticalDirections) {
-        List<Direction> directions = new ArrayList<>();
+    private static List<ChessDirection> union(final List<ChessDirection> horizontalDirections, final List<ChessDirection> verticalDirections) {
+        List<ChessDirection> directions = new ArrayList<>();
         if (horizontalDirections.size() > verticalDirections.size()) {
             directions.addAll(horizontalDirections);
             directions.addAll(verticalDirections);
@@ -63,18 +55,10 @@ public class Movement {
         return directions;
     }
 
-    public Direction findDirection() {
+    public ChessDirection findDirection() {
         int fileDiff = source.calculateFileDifferenceTo(target);
         int rankDiff = source.calculateRankDifferenceTo(target);
-        return Direction.findDirection(fileDiff, rankDiff);
-    }
-
-    public int calculateFileDistance() {
-        return Math.abs(source.calculateFileDifferenceTo(target));
-    }
-
-    public int calculateRankDistance() {
-        return Math.abs(source.calculateRankDifferenceTo(target));
+        return ChessDirection.findDirection(fileDiff, rankDiff);
     }
 
     public int calculateDistance() {

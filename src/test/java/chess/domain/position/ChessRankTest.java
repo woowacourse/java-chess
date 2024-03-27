@@ -15,14 +15,14 @@ class ChessRankTest {
 
     static Stream<Arguments> moveArguments() {
         return java.util.stream.Stream.of(
-                Arguments.arguments(ChessRank.SIX, Direction.DOWN, ChessRank.FIVE),
-                Arguments.arguments(ChessRank.SIX, Direction.UP, ChessRank.SEVEN),
-                Arguments.arguments(ChessRank.SIX, Direction.LEFT, ChessRank.SIX),
-                Arguments.arguments(ChessRank.SIX, Direction.RIGHT, ChessRank.SIX),
-                Arguments.arguments(ChessRank.SIX, Direction.DOWN_LEFT, ChessRank.FIVE),
-                Arguments.arguments(ChessRank.SIX, Direction.DOWN_RIGHT, ChessRank.FIVE),
-                Arguments.arguments(ChessRank.SIX, Direction.UP_LEFT, ChessRank.SEVEN),
-                Arguments.arguments(ChessRank.SIX, Direction.UP_RIGHT, ChessRank.SEVEN)
+                Arguments.arguments(ChessRank.SIX, ChessDirection.DOWN, ChessRank.FIVE),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.UP, ChessRank.SEVEN),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.LEFT, ChessRank.SIX),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.RIGHT, ChessRank.SIX),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.DOWN_LEFT, ChessRank.FIVE),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.DOWN_RIGHT, ChessRank.FIVE),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.UP_LEFT, ChessRank.SEVEN),
+                Arguments.arguments(ChessRank.SIX, ChessDirection.UP_RIGHT, ChessRank.SEVEN)
         );
     }
 
@@ -54,8 +54,8 @@ class ChessRankTest {
     @DisplayName("체스 랭크를 주어진 방향 정보에 따라 갱신한다.")
     @ParameterizedTest
     @MethodSource("moveArguments")
-    void move(ChessRank before, Direction direction, ChessRank after) {
+    void move(ChessRank before, ChessDirection chessDirection, ChessRank after) {
         //when & then
-        assertThat(before.move(direction)).isEqualTo(after);
+        assertThat(before.move(chessDirection)).isEqualTo(after);
     }
 }

@@ -4,7 +4,7 @@ import chess.domain.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Direction;
+import chess.domain.position.ChessDirection;
 import chess.domain.position.Movement;
 
 public final class King extends Piece {
@@ -17,8 +17,8 @@ public final class King extends Piece {
         return isMovableDirection(movement.findDirection()) && isMovableDistance(movement.calculateDistance()) && isOpened;
     }
 
-    private boolean isMovableDirection(final Direction direction) {
-        return direction.isDiagonal() || direction.isCross();
+    private boolean isMovableDirection(final ChessDirection chessDirection) {
+        return chessDirection.isDiagonal() || chessDirection.isCross();
     }
 
     private boolean isMovableDistance(final int distance) {

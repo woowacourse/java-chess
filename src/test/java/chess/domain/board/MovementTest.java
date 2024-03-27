@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.position.ChessRank;
-import chess.domain.position.Direction;
+import chess.domain.position.ChessDirection;
 import chess.domain.position.Movement;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -33,14 +33,14 @@ class MovementTest {
 
     static Stream<Arguments> findDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("d1"), Direction.DOWN),
-                Arguments.arguments(Position.of("d4"), Position.of("g4"), Direction.RIGHT),
-                Arguments.arguments(Position.of("d4"), Position.of("d7"), Direction.UP),
-                Arguments.arguments(Position.of("d4"), Position.of("a4"), Direction.LEFT),
-                Arguments.arguments(Position.of("d4"), Position.of("g7"), Direction.UP_RIGHT),
-                Arguments.arguments(Position.of("d4"), Position.of("a7"), Direction.UP_LEFT),
-                Arguments.arguments(Position.of("d4"), Position.of("g1"), Direction.DOWN_RIGHT),
-                Arguments.arguments(Position.of("d4"), Position.of("a1"), Direction.DOWN_LEFT)
+                Arguments.arguments(Position.of("d4"), Position.of("d1"), ChessDirection.DOWN),
+                Arguments.arguments(Position.of("d4"), Position.of("g4"), ChessDirection.RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("d7"), ChessDirection.UP),
+                Arguments.arguments(Position.of("d4"), Position.of("a4"), ChessDirection.LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("g7"), ChessDirection.UP_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("a7"), ChessDirection.UP_LEFT),
+                Arguments.arguments(Position.of("d4"), Position.of("g1"), ChessDirection.DOWN_RIGHT),
+                Arguments.arguments(Position.of("d4"), Position.of("a1"), ChessDirection.DOWN_LEFT)
         );
     }
 
@@ -61,7 +61,7 @@ class MovementTest {
     @DisplayName("source에서 target으로의 방향을 찾는다.")
     @ParameterizedTest
     @MethodSource("findDirectionArguments")
-    void findDirection(Position source, Position target, Direction expected) {
+    void findDirection(Position source, Position target, ChessDirection expected) {
         //given
         Movement movement = new Movement(source, target);
 

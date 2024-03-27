@@ -34,8 +34,8 @@ public class Position {
         return this.rank == rank;
     }
 
-    public Position move(final Direction direction) {
-        return Position.of(this.file.move(direction), this.rank.move(direction));
+    public Position move(final ChessDirection chessDirection) {
+        return Position.of(this.file.move(chessDirection), this.rank.move(chessDirection));
     }
 
     public int calculateDistanceTo(final Position target) {

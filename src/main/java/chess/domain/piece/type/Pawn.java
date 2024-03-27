@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
 import chess.domain.position.ChessRank;
-import chess.domain.position.Direction;
+import chess.domain.position.ChessDirection;
 import chess.domain.position.Movement;
 
 public final class Pawn extends Piece {
@@ -27,28 +27,28 @@ public final class Pawn extends Piece {
     }
 
     private boolean canMove(final Movement movement) {
-        Direction direction = movement.findDirection();
+        ChessDirection chessDirection = movement.findDirection();
         if (color.isWhite()) {
-            return direction.isVertical() && direction.isUpSide();
+            return chessDirection.isVertical() && chessDirection.isUpSide();
         }
-        return direction.isVertical() && direction.isDownSide();
+        return chessDirection.isVertical() && chessDirection.isDownSide();
     }
 
     private boolean canAttack(final Movement movement) {
-        Direction direction = movement.findDirection();
+        ChessDirection chessDirection = movement.findDirection();
         if (color.isWhite()) {
-            return direction.isDiagonal() && direction.isUpSide();
+            return chessDirection.isDiagonal() && chessDirection.isUpSide();
         }
-        return direction.isDiagonal() && direction.isDownSide();
+        return chessDirection.isDiagonal() && chessDirection.isDownSide();
     }
 
     private boolean isMovableDistance(final Movement movement) {
         int distance = movement.calculateDistance();
-        Direction direction = movement.findDirection();
-        if (color.isWhite() && movement.isSourceRank(ChessRank.TWO) && direction == Direction.UP) {
+        ChessDirection chessDirection = movement.findDirection();
+        if (color.isWhite() && movement.isSourceRank(ChessRank.TWO) && chessDirection == ChessDirection.UP) {
             return (distance == 1 || distance == 2);
         }
-        if (color.isBlack() && movement.isSourceRank(ChessRank.SEVEN) && direction == Direction.DOWN) {
+        if (color.isBlack() && movement.isSourceRank(ChessRank.SEVEN) && chessDirection == ChessDirection.DOWN) {
             return (distance == 1 || distance == 2);
         }
         return distance == 1;

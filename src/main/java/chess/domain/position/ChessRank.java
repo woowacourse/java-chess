@@ -45,11 +45,11 @@ public enum ChessRank {
                 .orElseThrow(() -> new IllegalArgumentException(UNKNOWN_INDEX));
     }
 
-    public ChessRank move(final Direction direction) {
-        if (direction.isUpSide()) {
+    public ChessRank move(final ChessDirection chessDirection) {
+        if (chessDirection.isUpSide()) {
             return findByIndex(this.index + 1);
         }
-        if (direction.isHorizontal()) {
+        if (chessDirection.isHorizontal()) {
             return this;
         }
         return findByIndex(this.index - 1);

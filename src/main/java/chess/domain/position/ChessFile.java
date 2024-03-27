@@ -41,11 +41,11 @@ public enum ChessFile {
                 .orElseThrow(() -> new IllegalArgumentException(UNKNOWN_INDEX));
     }
 
-    public ChessFile move(final Direction direction) {
-        if (direction.isLeftSide()) {
+    public ChessFile move(final ChessDirection chessDirection) {
+        if (chessDirection.isLeftSide()) {
             return findByIndex(this.index - 1);
         }
-        if (direction.isVertical()) {
+        if (chessDirection.isVertical()) {
             return this;
         }
         return findByIndex(this.index + 1);

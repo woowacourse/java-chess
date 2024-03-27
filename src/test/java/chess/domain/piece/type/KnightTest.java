@@ -33,14 +33,14 @@ class KnightTest {
 
     static Stream<Arguments> cannotKnightMoveExceptL_ShapeDirectionArguments() {
         return Stream.of(
-                Arguments.arguments(Position.of("d4"), Position.of("g5")),
-                Arguments.arguments(Position.of("d4"), Position.of("g7")),
+                Arguments.arguments(Position.of("d4"), Position.of("d5")),
+                Arguments.arguments(Position.of("d4"), Position.of("d3")),
+                Arguments.arguments(Position.of("d4"), Position.of("c4")),
+                Arguments.arguments(Position.of("d4"), Position.of("e4")),
+                Arguments.arguments(Position.of("d4"), Position.of("c3")),
                 Arguments.arguments(Position.of("d4"), Position.of("c5")),
-                Arguments.arguments(Position.of("d4"), Position.of("c7")),
-                Arguments.arguments(Position.of("d4"), Position.of("a3")),
-                Arguments.arguments(Position.of("d4"), Position.of("a1")),
                 Arguments.arguments(Position.of("d4"), Position.of("e3")),
-                Arguments.arguments(Position.of("d4"), Position.of("e1"))
+                Arguments.arguments(Position.of("d4"), Position.of("e5"))
         );
     }
 

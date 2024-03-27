@@ -4,6 +4,7 @@ import chess.domain.PieceRelation;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceType;
+import chess.domain.position.ChessDirection;
 import chess.domain.position.Movement;
 
 public final class Knight extends Piece {
@@ -17,9 +18,7 @@ public final class Knight extends Piece {
     }
 
     public boolean isLShapeMovement(final Movement movement) {
-        int fileDistance = movement.calculateFileDistance();
-        int rankDistance = movement.calculateRankDistance();
-
-        return (fileDistance == 1 && rankDistance == 2) || (fileDistance == 2 && rankDistance == 1);
+        ChessDirection chessDirection = movement.findDirection();
+        return chessDirection.isLShaped();
     }
 }
