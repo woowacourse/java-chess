@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +31,8 @@ class KnightTest {
         @Test
         void canMoveUpRight() {
             //given
-            Square source = Square.from("e4");
-            Square target = Square.from("f6");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target = Square.of(File.F, Rank.SIX);
 
             //when
             Movement movement = new Movement(source, target);
@@ -43,8 +45,8 @@ class KnightTest {
         @Test
         void canMoveDownRight() {
             //given
-            Square source = Square.from("e4");
-            Square target = Square.from("f2");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target = Square.of(File.F, Rank.TWO);
 
             //when
             Movement movement = new Movement(source, target);
@@ -57,8 +59,8 @@ class KnightTest {
         @Test
         void canMoveUpLeft() {
             //given
-            Square source = Square.from("e4");
-            Square target = Square.from("d6");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target = Square.of(File.D, Rank.SIX);
 
             //when
             Movement movement = new Movement(source, target);
@@ -71,8 +73,8 @@ class KnightTest {
         @Test
         void canMoveDownLeft() {
             //given
-            Square source = Square.from("e4");
-            Square target = Square.from("d2");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target = Square.of(File.D, Rank.TWO);
 
             //when
             Movement movement = new Movement(source, target);
@@ -85,9 +87,9 @@ class KnightTest {
         @Test
         void canMoveRightUpAndDown() {
             //given
-            Square source = Square.from("e4");
-            Square target1 = Square.from("g5");
-            Square target2 = Square.from("g3");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target1 = Square.of(File.G, Rank.FIVE);
+            Square target2 = Square.of(File.G, Rank.THREE);
 
             //when
             Movement movement1 = new Movement(source, target1);
@@ -102,9 +104,9 @@ class KnightTest {
         @Test
         void canMoveLeftUpAndDown() {
             //given
-            Square source = Square.from("e4");
-            Square target1 = Square.from("c5");
-            Square target2 = Square.from("c3");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target1 = Square.of(File.C, Rank.FIVE);
+            Square target2 = Square.of(File.C, Rank.THREE);
 
             //when
             Movement movement1 = new Movement(source, target1);
@@ -131,8 +133,8 @@ class KnightTest {
         @Test
         void canNotMoveDiagonally() {
             //given
-            Square source = Square.from("e4");
-            Square target = Square.from("d5");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target = Square.of(File.D, Rank.FIVE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -145,9 +147,9 @@ class KnightTest {
         @Test
         void canNotMoveHorizontallyOrVertically() {
             //given
-            Square source = Square.from("e4");
-            Square target1 = Square.from("e6");
-            Square target2 = Square.from("g4");
+            Square source = Square.of(File.E, Rank.FOUR);
+            Square target1 = Square.of(File.E, Rank.SIX);
+            Square target2 = Square.of(File.G, Rank.FOUR);
 
             //when
             Movement movement1 = new Movement(source, target1);

@@ -4,7 +4,9 @@ import chess.domain.board.ChessBoardFactory;
 import chess.domain.game.Game;
 import chess.domain.game.GameResult;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import chess.dto.GameCommand;
 import chess.dto.GameRequest;
@@ -13,6 +15,7 @@ import chess.dto.PieceResponse;
 import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +80,15 @@ public class GameController {
 
     private void move(final Game game, final GameRequest request) {
         MoveRequest moveRequest = request.getMoveRequest();
-        game.movePiece(moveRequest.source(), moveRequest.target());
+        String[] source = moveRequest.source().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        File sourceFile = File.from(source[0]);
+        Rank sourceRank = Rank.from(source[1]);
+
+        String[] target = moveRequest.target().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        File targetFile = File.from(target[0]);
+        Rank targetRank = Rank.from(target[1]);
+
+        game.movePiece(Square.of(sourceFile, sourceRank), Square.of(targetFile, targetRank));
         gameService.createMove(game.getRoomId(), moveRequest.source(), moveRequest.target());
     }
 

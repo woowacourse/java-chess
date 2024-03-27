@@ -6,6 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.board.GameOverBoardFactory;
+import chess.domain.square.File;
+import chess.domain.square.Rank;
+import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +27,8 @@ class GameTest {
     @Test
     void invalidTurn() {
         //given
-        String source = "a7";
-        String target = "a6";
+        Square source = Square.of(File.A, Rank.SEVEN);
+        Square target = Square.of(File.A, Rank.SIX);
         Game game = new Game(1, boardFactory);
 
         //when & then
@@ -37,8 +40,8 @@ class GameTest {
     @Test
     void exchangeTurn() {
         //given
-        String source = "a2";
-        String target = "a3";
+        Square source = Square.of(File.A, Rank.TWO);
+        Square target = Square.of(File.A, Rank.THREE);
         Game game = new Game(1, boardFactory);
 
         //when

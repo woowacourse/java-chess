@@ -19,7 +19,14 @@ public class Movement {
     }
 
     public static Movement from(final String source, final String target) {
-        return new Movement(Square.from(source), Square.from(target));
+        String[] sourceSplit = source.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        File sourceFile = File.from(sourceSplit[0]);
+        Rank sourceRank = Rank.from(sourceSplit[1]);
+
+        String[] targetSplit = target.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        File targetFile = File.from(targetSplit[0]);
+        Rank targetRank = Rank.from(targetSplit[1]);
+        return new Movement(Square.of(sourceFile, sourceRank), Square.of(targetFile, targetRank));
     }
 
     private void validate(final Square source, final Square target) {

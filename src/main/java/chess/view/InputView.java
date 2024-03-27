@@ -4,6 +4,7 @@ import chess.dto.GameCommand;
 import chess.dto.GameRequest;
 import chess.dto.RoomRequest;
 import chess.dto.UserRequest;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

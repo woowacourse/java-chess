@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +31,8 @@ class WhitePawnTest {
         @Test
         void canMoveTwoStep() {
             //given
-            Square whiteSource = Square.from("a2");
-            Square whiteTarget = Square.from("a4");
+            Square whiteSource = Square.of(File.A, Rank.TWO);
+            Square whiteTarget = Square.of(File.A, Rank.FOUR);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
@@ -44,8 +46,8 @@ class WhitePawnTest {
         @Test
         void canMoveOneStep() {
             //given
-            Square whiteSource = Square.from("a3");
-            Square whiteTarget = Square.from("a4");
+            Square whiteSource = Square.of(File.A, Rank.THREE);
+            Square whiteTarget = Square.of(File.A, Rank.FOUR);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
@@ -59,8 +61,8 @@ class WhitePawnTest {
         @Test
         void canAttack() {
             //given
-            Square whiteSource = Square.from("a2");
-            Square whiteTarget = Square.from("b3");
+            Square whiteSource = Square.of(File.A, Rank.TWO);
+            Square whiteTarget = Square.of(File.B, Rank.THREE);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
@@ -86,8 +88,8 @@ class WhitePawnTest {
         @Test
         void canNotMoveTwoStep() {
             //given
-            Square whiteSource = Square.from("a3");
-            Square whiteTarget = Square.from("a5");
+            Square whiteSource = Square.of(File.A, Rank.THREE);
+            Square whiteTarget = Square.of(File.A, Rank.FIVE);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
@@ -101,8 +103,8 @@ class WhitePawnTest {
         @Test
         void canNotAttack() {
             //given
-            Square whiteSource = Square.from("a2");
-            Square whiteTarget = Square.from("b3");
+            Square whiteSource = Square.of(File.A, Rank.TWO);
+            Square whiteTarget = Square.of(File.B, Rank.THREE);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when
@@ -116,8 +118,8 @@ class WhitePawnTest {
         @Test
         void canNotAttackOneStep() {
             //given
-            Square whiteSource = Square.from("a2");
-            Square whiteTarget = Square.from("a3");
+            Square whiteSource = Square.of(File.A, Rank.TWO);
+            Square whiteTarget = Square.of(File.A, Rank.THREE);
             Movement whiteMovement = new Movement(whiteSource, whiteTarget);
 
             //when

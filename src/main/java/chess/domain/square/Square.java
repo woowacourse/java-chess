@@ -14,15 +14,6 @@ public class Square {
         this.file = file;
     }
 
-    public static Square from(final String square) {
-        return squareCache.computeIfAbsent(square, s -> {
-            String[] splitSquare = s.split("");
-            File file = File.from(splitSquare[0]);
-            Rank rank = Rank.from(splitSquare[1]);
-            return new Square(file, rank);
-        });
-    }
-
     public static Square of(final File file, final Rank rank) {
         String squareKey = generateSquareKey(file, rank);
         return squareCache.computeIfAbsent(squareKey, k -> new Square(file, rank));
