@@ -26,10 +26,6 @@ public enum Command {
         return true;
     }
 
-    private static boolean isMoveCommand(String identifier) {
-        return MOVE.identifier.equals(identifier);
-    }
-
     private static boolean isEndCommand(String identifier) {
         return END.identifier.equals(identifier);
     }
