@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -34,16 +35,6 @@ public class Board {
         move(start, end, movingPiece);
     }
 
-    private void validatePath(List<Position> path) {
-        if (isBlocked(path)) {
-            throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
-        }
-    }
-
-    private boolean hasEnemy(Position end) {
-        return find(end).isPresent();
-    }
-
     private Piece findMovingPiece(Position start) {
         return find(start)
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
@@ -63,6 +54,17 @@ public class Board {
                 .orElse(false);
     }
 
+    private boolean hasEnemy(Position end) {
+        return find(end).map(piece -> !piece.isSameTeam(turn))
+                .orElse(false);
+    }
+
+    private void validatePath(List<Position> path) {
+        if (isBlocked(path)) {
+            throw new IllegalArgumentException("다른 말이 있어 이동 불가능합니다.");
+        }
+    }
+
     private boolean isBlocked(List<Position> path) {
         return path.stream()
                 .anyMatch(board::containsKey);
@@ -72,5 +74,35 @@ public class Board {
         board.remove(start);
         board.put(end, movingPiece);
         turn = turn.next();
+    }
+
+    public double calculateScoreOf(Team team) {
+        double basicScore = calculateBasicScoreOf(team);
+        double minusScore = calculateMinusScoreOf(team);
+
+        return basicScore - minusScore;
+    }
+
+    private double calculateBasicScoreOf(Team team) {
+        return board.values().stream()
+                .filter(piece -> piece.isSameTeam(team))
+                .mapToDouble(PieceType::scoreOf)
+                .sum();
+    }
+
+    private double calculateMinusScoreOf(Team team) {
+        int count = (int) findPawnEntryOf(team)
+                .filter(entry -> findPawnEntryOf(team)
+                        .anyMatch(otherEntry -> !otherEntry.getKey().equals(entry.getKey())
+                                && otherEntry.getKey().isSameFile(entry.getKey())))
+                .count();
+
+        return count * 0.5;
+    }
+
+    private Stream<Entry<Position, Piece>> findPawnEntryOf(Team team) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .filter(entry -> entry.getValue().isPawn());
     }
 }
