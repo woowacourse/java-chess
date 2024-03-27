@@ -15,7 +15,7 @@ public class ChessApplication {
 
     public static void main(String[] args) {
         outputView.printStartMessage();
-        Command command = inputView.readCommand();
+        Command command = tryReadCommand();
         if (command.isStart()) {
             Board board = Board.generatedBy(new InitialBoardGenerator());
             Game game = Game.from(board);
@@ -25,7 +25,7 @@ public class ChessApplication {
     }
 
     private static void start(Game game) {
-        Command command = inputView.readCommand();
+        Command command = tryReadCommand();
         if (command.isEnd()) {
             return;
         }
@@ -33,10 +33,19 @@ public class ChessApplication {
         start(game);
     }
 
-    private static Game tryMove(Game game, Command command) {
-        Position source = inputView.resolvePosition(command.sourcePosition());
-        Position target = inputView.resolvePosition(command.targetPosition());
+    private static Command tryReadCommand() {
         try {
+            return inputView.readCommand();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+            return tryReadCommand();
+        }
+    }
+
+    private static Game tryMove(Game game, Command command) {
+        try {
+            Position source = inputView.resolvePosition(command.sourcePosition());
+            Position target = inputView.resolvePosition(command.targetPosition());
             game = game.move(source, target);
             outputView.printBoard(game.getBoard());
         } catch (IllegalArgumentException e) {
