@@ -1,4 +1,4 @@
-package chess.domain.chessGame;
+package chess.domain.chessgame;
 
 import chess.domain.board.RemovedPieces;
 import chess.domain.piece.King;

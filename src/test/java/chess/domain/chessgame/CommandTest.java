@@ -1,4 +1,4 @@
-package chess.domain.chessGame;
+package chess.domain.chessgame;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
