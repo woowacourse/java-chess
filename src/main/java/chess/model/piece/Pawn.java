@@ -7,14 +7,13 @@ import chess.model.position.Movement;
 import chess.model.position.Path;
 import chess.model.position.Rank;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Pawn extends Piece {
-    private static final Map<Side, Pawn> CACHE = Arrays.stream(Side.values())
+    private static final Map<Side, Pawn> CACHE = Side.colors().stream()
             .collect(toMap(identity(), Pawn::new));
 
     private static final int DISPLACEMENT = 1;

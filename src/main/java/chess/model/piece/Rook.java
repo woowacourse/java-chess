@@ -6,14 +6,13 @@ import chess.model.position.ChessPosition;
 import chess.model.position.Movement;
 import chess.model.position.Path;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
 
 public class Rook extends Piece {
-    private static final Map<Side, Rook> CACHE = Arrays.stream(Side.values())
+    private static final Map<Side, Rook> CACHE = Side.colors().stream()
             .collect(Collectors.toMap(identity(), Rook::new));
 
     private Rook(Side side) {
