@@ -24,7 +24,7 @@ class ChessController {
         StartCommand startCommand = handleException(inputView::readWannaStart);
         if (startCommand.isStart()) {
             Board board = new Board();
-            outputView.printBoard(board);
+            outputView.printPieces(board.getPieces());
             handleException(this::tryMove, board);
         }
     }
@@ -35,7 +35,7 @@ class ChessController {
             Coordinate source = moveCommand.source();
             Coordinate target = moveCommand.target();
             board.move(source, target);
-            outputView.printBoard(board);
+            outputView.printPieces(board.getPieces());
             moveCommand = inputView.readMoveCommand();
         }
     }

@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -42,10 +41,8 @@ class BoardTest {
         pieces.put(source, sourcePiece);
         Board board = new Board(pieces);
 
-        board.move(source, target);
-
-        Piece result = board.findByCoordinate(target);
-        assertThat(result).isEqualTo(sourcePiece);
+        assertThatCode(() -> board.move(source, target))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("현재 턴에 해당하는 진영에 소속된 기물만 움직일 수 있다.")

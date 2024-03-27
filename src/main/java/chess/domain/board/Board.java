@@ -23,10 +23,6 @@ public class Board {
         this.turn = Team.WHITE;
     }
 
-    public Piece findByCoordinate(Coordinate coordinate) {
-        return pieces.findByCoordinate(coordinate);
-    }
-
     public void move(Coordinate source, Coordinate target) {
         validateSourceExist(source);
         validateTurn(source);
@@ -55,5 +51,9 @@ public class Board {
     private void updateBoard(Coordinate source, Coordinate target) {
         pieces.swap(source, target);
         turn = turn.opposite();
+    }
+
+    public Pieces getPieces() {
+        return pieces;
     }
 }
