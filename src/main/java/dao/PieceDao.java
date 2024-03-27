@@ -45,12 +45,13 @@ public class PieceDao {
         pieceDtos.forEach(pieceDto -> addPiece(pieceDto, gameId));
     }
 
-    public PieceDto findPiece(int fileIndex, int rankIndex) {
-        final String query = String.format("SELECT * FROM %s WHERE `file` = ? and `rank` = ?", TABLE_NAME);
+    public PieceDto findPiece(int fileIndex, int rankIndex, int gameId) {
+        final String query = String.format("SELECT * FROM %s WHERE `file` = ? and `rank` = ? and `gameId` = ?", TABLE_NAME);
         try (final Connection connection = getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, fileIndex);
             preparedStatement.setInt(2, rankIndex);
+            preparedStatement.setInt(3, gameId);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String pieceColor = resultSet.getString("pieceColor");
