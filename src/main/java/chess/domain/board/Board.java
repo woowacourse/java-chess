@@ -49,7 +49,7 @@ public class Board {
 
     private void validateMovable(Coordinate source, Coordinate target) {
         Piece sourcePiece = pieces.findByCoordinate(source);
-        sourcePiece.validateMovable(source, target, this);
+        sourcePiece.validateMovable(source, target, pieces);
     }
 
     private void updateBoard(Coordinate source, Coordinate target) {

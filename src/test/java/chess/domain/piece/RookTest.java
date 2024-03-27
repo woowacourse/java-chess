@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,14 +25,14 @@ class RookTest {
     @Test
     void attackTeam() {
         Rook rook = new Rook(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(1, 'e');
         Coordinate target = new Coordinate(2, 'e');
-        pieces.put(source, rook);
-        pieces.put(target, new Pawn(Team.WHITE));
-        Board board = new Board(pieces);
+        piecesMap.put(source, rook);
+        piecesMap.put(target, new Pawn(Team.WHITE));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> rook.validateMovable(source, target, board))
+        assertThatThrownBy(() -> rook.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("아군 기물은 공격할 수 없습니다.");
     }
@@ -41,12 +41,12 @@ class RookTest {
     @Test
     void sameCoordinate() {
         Rook rook = new Rook(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, rook);
-        Board board = new Board(pieces);
+        piecesMap.put(source, rook);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> rook.validateMovable(source, source, board))
+        assertThatThrownBy(() -> rook.validateMovable(source, source, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("제자리 이동은 할 수 없습니다.");
     }
@@ -67,16 +67,16 @@ class RookTest {
     @Test
     void obstacle() {
         Rook rook = new Rook(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate obstacle = new Coordinate(6, 'e');
         Coordinate target = new Coordinate(8, 'e');
-        pieces.put(source, rook);
-        pieces.put(obstacle, new Pawn(Team.WHITE));
-        pieces.put(target, new Pawn(Team.BLACK));
-        Board board = new Board(pieces);
+        piecesMap.put(source, rook);
+        piecesMap.put(obstacle, new Pawn(Team.WHITE));
+        piecesMap.put(target, new Pawn(Team.BLACK));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> rook.validateMovable(source, target, board))
+        assertThatThrownBy(() -> rook.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
     }
@@ -86,12 +86,12 @@ class RookTest {
     @ParameterizedTest
     void canGo(Coordinate target) {
         Rook rook = new Rook(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, rook);
-        Board board = new Board(pieces);
+        piecesMap.put(source, rook);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatCode(() -> rook.validateMovable(source, target, board))
+        assertThatCode(() -> rook.validateMovable(source, target, pieces))
                 .doesNotThrowAnyException();
     }
 
@@ -100,12 +100,12 @@ class RookTest {
     @ParameterizedTest
     void cantGo(Coordinate target) {
         Rook rook = new Rook(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, rook);
-        Board board = new Board(pieces);
+        piecesMap.put(source, rook);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> rook.validateMovable(source, target, board))
+        assertThatThrownBy(() -> rook.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
     }
@@ -127,15 +127,15 @@ class RookTest {
     void attack() {
         Rook rook = new Rook(Team.WHITE);
         Queen enemy = new Queen(Team.BLACK);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate target = new Coordinate(8, 'e');
-        pieces.put(source, rook);
-        pieces.put(target, enemy);
+        piecesMap.put(source, rook);
+        piecesMap.put(target, enemy);
 
-        Board board = new Board(pieces);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatCode(() -> rook.validateMovable(source, target, board))
+        assertThatCode(() -> rook.validateMovable(source, target, pieces))
                 .doesNotThrowAnyException();
     }
 

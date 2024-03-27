@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import java.util.Objects;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 
 abstract class AbstractPiece implements Piece {
 
@@ -15,10 +15,10 @@ abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public void validateMovable(Coordinate source, Coordinate target, Board board) {
+    public void validateMovable(Coordinate source, Coordinate target, Pieces pieces) {
         validateSameCoordinate(source, target);
-        validateSameTeam(target, board);
-        validatePieceMoveRule(source, target, board);
+        validateSameTeam(target, pieces);
+        validatePieceMoveRule(source, target, pieces);
     }
 
     private void validateSameCoordinate(Coordinate source, Coordinate target) {
@@ -27,14 +27,14 @@ abstract class AbstractPiece implements Piece {
         }
     }
 
-    private void validateSameTeam(Coordinate target, Board board) {
-        Piece targetPiece = board.findByCoordinate(target);
+    private void validateSameTeam(Coordinate target, Pieces pieces) {
+        Piece targetPiece = pieces.findByCoordinate(target);
         if (targetPiece.isSameTeam(team)) {
             throw new IllegalStateException("아군 기물은 공격할 수 없습니다.");
         }
     }
 
-    abstract void validatePieceMoveRule(Coordinate source, Coordinate target, Board board);
+    abstract void validatePieceMoveRule(Coordinate source, Coordinate target, Pieces pieces);
 
     @Override
     public boolean isSameTeam(Team team) {

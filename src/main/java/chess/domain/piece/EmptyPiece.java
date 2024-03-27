@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 
 public class EmptyPiece extends AbstractPiece {
 
@@ -16,7 +16,7 @@ public class EmptyPiece extends AbstractPiece {
     }
 
     @Override
-    void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
+    void validatePieceMoveRule(Coordinate source, Coordinate target, Pieces pieces) {
         throw new UnsupportedOperationException();
     }
 }

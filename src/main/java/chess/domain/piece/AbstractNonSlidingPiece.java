@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import chess.domain.piece.exception.InvalidMoveException;
 
 abstract class AbstractNonSlidingPiece extends AbstractPiece {
@@ -16,7 +16,7 @@ abstract class AbstractNonSlidingPiece extends AbstractPiece {
     }
 
     @Override
-    void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
+    void validatePieceMoveRule(Coordinate source, Coordinate target, Pieces pieces) {
         List<Coordinate> path = createPath(source);
         if (!path.contains(target)) {
             throw new InvalidMoveException();

@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,14 +25,14 @@ class KingTest {
     @Test
     void attackTeam() {
         King king = new King(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(1, 'e');
         Coordinate target = new Coordinate(2, 'e');
-        pieces.put(source, king);
-        pieces.put(target, new Pawn(Team.WHITE));
-        Board board = new Board(pieces);
+        piecesMap.put(source, king);
+        piecesMap.put(target, new Pawn(Team.WHITE));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> king.validateMovable(source, target, board))
+        assertThatThrownBy(() -> king.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("아군 기물은 공격할 수 없습니다.");
     }
@@ -41,12 +41,12 @@ class KingTest {
     @Test
     void sameCoordinate() {
         King king = new King(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, king);
-        Board board = new Board(pieces);
+        piecesMap.put(source, king);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> king.validateMovable(source, source, board))
+        assertThatThrownBy(() -> king.validateMovable(source, source, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("제자리 이동은 할 수 없습니다.");
     }
@@ -56,12 +56,12 @@ class KingTest {
     @ParameterizedTest
     void canGo(Coordinate target) {
         King king = new King(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, king);
-        Board board = new Board(pieces);
+        piecesMap.put(source, king);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatCode(() -> king.validateMovable(source, target, board))
+        assertThatCode(() -> king.validateMovable(source, target, pieces))
                 .doesNotThrowAnyException();
     }
 
@@ -70,12 +70,12 @@ class KingTest {
     @ParameterizedTest
     void cantGo(Coordinate target) {
         King king = new King(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, king);
-        Board board = new Board(pieces);
+        piecesMap.put(source, king);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> king.validateMovable(source, target, board))
+        assertThatThrownBy(() -> king.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
     }

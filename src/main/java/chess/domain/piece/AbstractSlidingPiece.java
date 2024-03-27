@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import chess.domain.piece.exception.InvalidMoveException;
 import chess.domain.piece.exception.ObstacleException;
 
@@ -18,10 +18,10 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
     }
 
     @Override
-    void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
+    void validatePieceMoveRule(Coordinate source, Coordinate target, Pieces pieces) {
         List<Coordinate> path = createPath(source, target);
 
-        validateBlocked(target, path, board);
+        validateBlocked(target, path, pieces);
     }
 
     private List<Coordinate> createPath(Coordinate source, Coordinate target) {
@@ -45,9 +45,9 @@ abstract class AbstractSlidingPiece extends AbstractPiece {
         return slidingPath;
     }
 
-    private void validateBlocked(Coordinate target, List<Coordinate> path, Board board) {
+    private void validateBlocked(Coordinate target, List<Coordinate> path, Pieces pieces) {
         Coordinate blockedCoordinate = path.stream()
-                .filter(board::isPiecePresent)
+                .filter(pieces::isPiecePresent)
                 .findFirst()
                 .orElse(target);
 

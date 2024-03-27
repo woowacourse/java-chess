@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import chess.domain.piece.exception.InvalidMoveException;
 import chess.domain.piece.exception.ObstacleException;
 
@@ -24,17 +24,17 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    void validatePieceMoveRule(Coordinate source, Coordinate target, Board board) {
+    void validatePieceMoveRule(Coordinate source, Coordinate target, Pieces pieces) {
         List<Coordinate> forwardPath = createPath(source, forwardDirections);
         List<Coordinate> diagonalPath = createPath(source, diagonalDirections);
 
         validateReachable(target, diagonalPath, forwardPath);
-        validateForwardAttack(target, forwardPath, board);
+        validateForwardAttack(target, forwardPath, pieces);
         if (isTwoStep(source, target)) {
             validateInitialCoordinate(source);
-            validateBlocked(target, forwardPath, board);
+            validateBlocked(target, forwardPath, pieces);
         }
-        validateDiagonal(target, diagonalPath, board);
+        validateDiagonal(target, diagonalPath, pieces);
     }
 
     private List<Coordinate> createPath(Coordinate source, List<Direction> directions) {
@@ -54,8 +54,8 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateForwardAttack(Coordinate target, List<Coordinate> forwardPath, Board board) {
-        if (forwardPath.contains(target) && isEnemy(board.findByCoordinate(target))) {
+    private void validateForwardAttack(Coordinate target, List<Coordinate> forwardPath, Pieces pieces) {
+        if (forwardPath.contains(target) && isEnemy(pieces.findByCoordinate(target))) {
             throw new ObstacleException();
         }
     }
@@ -70,9 +70,9 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateBlocked(Coordinate target, List<Coordinate> path, Board board) {
+    private void validateBlocked(Coordinate target, List<Coordinate> path, Pieces pieces) {
         Coordinate blockedCoordinate = path.stream()
-                .filter(board::isPiecePresent)
+                .filter(pieces::isPiecePresent)
                 .findFirst()
                 .orElse(target);
 
@@ -81,18 +81,18 @@ public class Pawn extends AbstractPiece {
         }
     }
 
-    private void validateDiagonal(Coordinate target, List<Coordinate> diagonalPath, Board board) {
+    private void validateDiagonal(Coordinate target, List<Coordinate> diagonalPath, Pieces pieces) {
         if (diagonalPath.contains(target)) {
-            validateEnemyExist(target, board);
+            validateEnemyExist(target, pieces);
         }
     }
 
-    private void validateEnemyExist(Coordinate target, Board board) {
-        if (!board.isPiecePresent(target)) {
+    private void validateEnemyExist(Coordinate target, Pieces pieces) {
+        if (!pieces.isPiecePresent(target)) {
             throw new InvalidMoveException();
         }
 
-        if (!isEnemy(board.findByCoordinate(target))) {
+        if (!isEnemy(pieces.findByCoordinate(target))) {
             throw new InvalidMoveException();
         }
     }

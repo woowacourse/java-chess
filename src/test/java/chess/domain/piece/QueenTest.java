@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.List;
-import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
+import chess.domain.board.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,14 +25,14 @@ class QueenTest {
     @Test
     void attackTeam() {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate target = new Coordinate(4, 'd');
-        pieces.put(source, queen);
-        pieces.put(target, new Pawn(Team.WHITE));
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        piecesMap.put(target, new Pawn(Team.WHITE));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> queen.validateMovable(source, target, board))
+        assertThatThrownBy(() -> queen.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("아군 기물은 공격할 수 없습니다.");
     }
@@ -41,12 +41,12 @@ class QueenTest {
     @Test
     void sameCoordinate() {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, queen);
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> queen.validateMovable(source, source, board))
+        assertThatThrownBy(() -> queen.validateMovable(source, source, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("제자리 이동은 할 수 없습니다.");
     }
@@ -67,16 +67,16 @@ class QueenTest {
     @Test
     void obstacleDiagonal() {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate obstacle = new Coordinate(5, 'c');
         Coordinate target = new Coordinate(7, 'a');
-        pieces.put(source, queen);
-        pieces.put(obstacle, new Pawn(Team.WHITE));
-        pieces.put(target, new Pawn(Team.BLACK));
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        piecesMap.put(obstacle, new Pawn(Team.WHITE));
+        piecesMap.put(target, new Pawn(Team.BLACK));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> queen.validateMovable(source, target, board))
+        assertThatThrownBy(() -> queen.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
     }
@@ -97,16 +97,16 @@ class QueenTest {
     @Test
     void obstacleStraight() {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate obstacle = new Coordinate(6, 'e');
         Coordinate target = new Coordinate(8, 'e');
-        pieces.put(source, queen);
-        pieces.put(obstacle, new Pawn(Team.WHITE));
-        pieces.put(target, new Pawn(Team.BLACK));
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        piecesMap.put(obstacle, new Pawn(Team.WHITE));
+        piecesMap.put(target, new Pawn(Team.BLACK));
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> queen.validateMovable(source, target, board))
+        assertThatThrownBy(() -> queen.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("기물로 막혀있어 이동할 수 없습니다.");
     }
@@ -116,12 +116,12 @@ class QueenTest {
     @ParameterizedTest
     void canGo(Coordinate target) {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, queen);
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatCode(() -> queen.validateMovable(source, target, board))
+        assertThatCode(() -> queen.validateMovable(source, target, pieces))
                 .doesNotThrowAnyException();
     }
 
@@ -130,12 +130,12 @@ class QueenTest {
     @ParameterizedTest
     void cantGo(Coordinate target) {
         Queen queen = new Queen(Team.WHITE);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
-        pieces.put(source, queen);
-        Board board = new Board(pieces);
+        piecesMap.put(source, queen);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatThrownBy(() -> queen.validateMovable(source, target, board))
+        assertThatThrownBy(() -> queen.validateMovable(source, target, pieces))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("해당 기물은 주어진 좌표로 이동할 수 없습니다.");
     }
@@ -157,15 +157,15 @@ class QueenTest {
     void attack() {
         Queen queen = new Queen(Team.WHITE);
         Queen enemy = new Queen(Team.BLACK);
-        HashMap<Coordinate, Piece> pieces = new HashMap<>();
+        HashMap<Coordinate, Piece> piecesMap = new HashMap<>();
         Coordinate source = new Coordinate(3, 'e');
         Coordinate target = new Coordinate(8, 'e');
-        pieces.put(source, queen);
-        pieces.put(target, enemy);
+        piecesMap.put(source, queen);
+        piecesMap.put(target, enemy);
 
-        Board board = new Board(pieces);
+        Pieces pieces = new Pieces(piecesMap);
 
-        assertThatCode(() -> queen.validateMovable(source, target, board))
+        assertThatCode(() -> queen.validateMovable(source, target, pieces))
                 .doesNotThrowAnyException();
     }
 
