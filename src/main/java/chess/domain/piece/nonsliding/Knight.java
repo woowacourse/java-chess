@@ -25,9 +25,4 @@ public final class Knight extends NonSlidingPiece {
     public Score score() {
         return new Score(2.5);
     }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

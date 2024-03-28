@@ -21,11 +21,11 @@ public abstract class Piece {
 
     public abstract boolean isBlank();
 
-    public abstract boolean isPawn();
-
-    public abstract boolean isKing();
-
     public abstract PieceType pieceType();
+
+    public final boolean isTypeOf(Set<PieceType> type) {
+        return type.contains(pieceType());
+    }
 
     public abstract Score score();
 

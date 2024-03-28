@@ -44,13 +44,13 @@ public abstract class ChessState {
 
     public final boolean isKingCaptured() {
         return board.values().stream()
-                .filter(Piece::isKing)
+                .filter(piece -> piece.isTypeOf(PieceType.kings()))
                 .count() != KING_TOTAL;
     }
 
     public final Color announceCapturedKingColor() {
         return board.values().stream()
-                .filter(Piece::isKing)
+                .filter(piece -> piece.isTypeOf(PieceType.kings()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("왕이 모두 잡혔습니다."))
                 .color()

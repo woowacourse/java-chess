@@ -36,11 +36,6 @@ public abstract class NonSlidingPiece extends Piece {
     }
 
     @Override
-    public final boolean isPawn() {
-        return false;
-    }
-
-    @Override
     public final ChessState state(Map<Position, Piece> board) {
         return new GeneralChessState(board);
     }

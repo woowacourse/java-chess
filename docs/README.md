@@ -74,12 +74,12 @@ abcdefgh
 
 ## 리팩터링
 - [ ] Controller 커멘드 분기 처리 모으기
-- [ ] 구현체에 대한 정보가 인터페이스에 많이 드러난다
-  ```java
-  public abstract boolean isPawn();
-  
-  public abstract boolean isKing();
-  ```
+- [x] 구현체에 대한 정보가 인터페이스에 많이 드러난다
+```java
+public abstract boolean isPawn();
+
+public abstract boolean isKing();
+```
 - [ ] README.md 어플리케이션 실행 방법 정리
 - [x] ScoreManager ↔️ ChessState 객체끼리 서로 물어보며 점수 계산
 - [ ] ScoreManager 상수 사용 or 각 객체에서 자신의 점수 계산

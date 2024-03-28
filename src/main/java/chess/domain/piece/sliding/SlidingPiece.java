@@ -34,16 +34,6 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public final boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public final boolean isKing() {
-        return false;
-    }
-
-    @Override
     public final ChessState state(Map<Position, Piece> board) {
         return new GeneralChessState(board);
     }

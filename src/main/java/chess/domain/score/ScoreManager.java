@@ -1,6 +1,7 @@
 package chess.domain.score;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class ScoreManager {
@@ -23,7 +24,7 @@ public class ScoreManager {
 
     private int calculatePawnCount(List<Piece> pieces) {
         return (int) pieces.stream()
-                .filter(Piece::isPawn)
+                .filter(piece -> piece.isTypeOf(PieceType.pawns()))
                 .count();
     }
 }

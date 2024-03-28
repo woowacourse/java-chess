@@ -11,6 +11,7 @@ import chess.domain.piece.pawn.WhitePawn;
 import chess.domain.piece.sliding.Bishop;
 import chess.domain.piece.sliding.Queen;
 import chess.domain.piece.sliding.Rook;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public enum PieceType {
@@ -34,6 +35,14 @@ public enum PieceType {
 
     PieceType(Supplier<Piece> pieceMaker) {
         this.pieceMaker = pieceMaker;
+    }
+
+    public static Set<PieceType> kings() {
+        return Set.of(WHITE_KING, BLACK_KING);
+    }
+
+    public static Set<PieceType> pawns() {
+        return Set.of(WHITE_FIRST_PAWN, WHITE_PAWN, BLACK_FIRST_PAWN, BLACK_PAWN);
     }
 
     public Piece getPiece() {
