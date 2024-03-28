@@ -14,11 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChessGameController {
-    private static final String START_COMMAND = "start";
-    private static final String MOVE_COMMAND = "move";
-    private static final String STATUS_COMMAND = "status";
-    private static final String END_COMMAND = "end";
-    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + MOVE_COMMAND + "\\s+(\\w\\d\\s+\\w\\d)$");
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + Command.MOVE.command() + "\\s+(\\w\\d\\s+\\w\\d)$");
 
     private final ChessGameDBService chessGameDbService = new ChessGameDBService(() -> new ChessGameDBConnector().getConnection());
     private final InputView inputView;
@@ -39,7 +35,7 @@ public class ChessGameController {
 
     private boolean isNotStartCommand() {
         String command = inputView.readCommand().trim();
-        return !command.equals(START_COMMAND);
+        return !Command.START.sameWith(command);
     }
 
     private void startChessGame() {
@@ -72,16 +68,16 @@ public class ChessGameController {
     }
 
     private void validateIllegalGameCommand(String command) {
-        if (!command.startsWith(MOVE_COMMAND) && !command.equals(END_COMMAND) && !command.equals(STATUS_COMMAND)) {
+        if  (!Command.hasCommand(command) && !Command.MOVE.startsWith(command)) {
             throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
     }
 
     private void play(ChessGame chessGame, String command) {
-        if (command.startsWith(MOVE_COMMAND)) {
+        if (Command.MOVE.startsWith(command)) {
             movePiece(chessGame, command);
         }
-        if (command.equals(STATUS_COMMAND)) {
+        if (Command.STATUS.sameWith(command)) {
             showStatus(chessGame);
         }
     }
@@ -125,7 +121,7 @@ public class ChessGameController {
     }
 
     private boolean isNotEnd(ChessGame chessGame, String command) {
-        if (command.equals(END_COMMAND)) {
+        if (Command.END.sameWith(command)) {
             chessGameDbService.saveGame(chessGame);
             return false;
         }
