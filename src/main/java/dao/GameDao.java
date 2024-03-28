@@ -37,9 +37,9 @@ public class GameDao {
                 return resultSet.getInt(1);
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return -1;
+        throw new DBException("게임 생성 중 오류가 발생했습니다.");
     }
 
     public TeamColor findTurn(int gameId) {
@@ -53,9 +53,9 @@ public class GameDao {
                 return TeamColor.valueOf(turn);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return null;
+        throw new DBException(gameId + " 에 해당하는 차례를 찾을 수 없습니다.");
     }
 
     public TeamColor findLatestGameTurn() {
@@ -68,9 +68,9 @@ public class GameDao {
                 return TeamColor.valueOf(turn);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return null;
+        throw new DBException("최근 게임의 차례 정보를 찾을 수 없습니다.");
     }
 
     public void updateTurn(int gameId, TeamColor teamColor) {
@@ -82,7 +82,7 @@ public class GameDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 
@@ -95,7 +95,7 @@ public class GameDao {
             preparedStatement.executeUpdate();
             preparedStatementToResetId.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 
@@ -108,8 +108,8 @@ public class GameDao {
                 return Integer.parseInt(resultSet.getString("count"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return 0;
+        throw new DBException("전체 게임 수를 가져오는 중 오류가 발생했습니다.");
     }
 }

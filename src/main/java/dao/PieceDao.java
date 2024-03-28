@@ -37,7 +37,7 @@ public class PieceDao {
             preparedStatement.setInt(5, gameId);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 
@@ -59,9 +59,9 @@ public class PieceDao {
                 return new PieceDto(fileIndex, rankIndex, pieceColor, pieceType);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return null;
+        throw new DBException(gameId + " 에 해당하는 기물 정보를 가져오는 중 오류가 발생했습니다.");
     }
 
     public List<PieceDto> findAllPieces(int gameId) {
@@ -79,7 +79,7 @@ public class PieceDao {
                 pieces.add(new PieceDto(fileIndex, rankIndex, color, type));
             }
         } catch (final SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
         return pieces;
     }
@@ -90,7 +90,7 @@ public class PieceDao {
              final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
     }
 
@@ -103,8 +103,8 @@ public class PieceDao {
                 return Integer.parseInt(resultSet.getString("count"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DBException(e);
         }
-        return 0;
+        throw new DBException("전체 기물 개수를 가져오는 중 오류가 발생했습니다.");
     }
 }
