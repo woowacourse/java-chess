@@ -10,4 +10,8 @@ public class DBException extends RuntimeException {
     public DBException(Throwable cause) {
         super(DEFAULT_ERROR_MESSAGE, cause);
     }
+
+    public DBException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
