@@ -9,7 +9,6 @@ import chess.score.FileSquares;
 import chess.score.Score;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,10 +20,12 @@ public class Board {
     private final Map<Position, Square> squares;
 
     public Board(Map<Position, Piece> pieces) {
-        squares = new HashMap<>();
-        for (Entry<Position, Piece> entry : pieces.entrySet()) {
-            squares.put(entry.getKey(), new Square(entry.getValue()));
-        }
+        this.squares = pieces.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> new Square(entry.getValue()))
+                );
     }
 
     public void move(Position source, Position destination, Color currentTurnColor) {
