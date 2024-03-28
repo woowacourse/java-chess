@@ -1,82 +1,62 @@
 package chess.domain.chessGame;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import java.util.Arrays;
 
 public class Turn {
 
-    private State state;
+    private TurnState turnState;
 
-    private Turn(State state) {
-        this.state = state;
+    public Turn(TurnState turnState) {
+        this.turnState = turnState;
     }
 
     public static Turn create() {
-        return new Turn(State.WAIT);
+        return new Turn(TurnState.WAIT);
     }
 
     public void startGame() {
-        if (state == State.END) {
+        if (turnState == TurnState.END) {
             throw new IllegalStateException("게임을 시작할 수 없는 상태입니다");
         }
-        if (state == State.WAIT) {
-            state = State.WHITE;
+        if (turnState == TurnState.WAIT) {
+            turnState = TurnState.WHITE;
+            return;
         }
+        turnState = TurnState.activate(turnState);
     }
 
     public void pauseGame() {
-        state = State.inactive(state.color);
+        turnState = TurnState.inactivate(turnState);
     }
 
     public void stopGame() {
-        state = State.END;
+        turnState = TurnState.END;
     }
 
     public void oppositeTurn() {
-        if (state == State.BLACK) {
-            state = State.WHITE;
+        if (turnState == TurnState.BLACK) {
+            turnState = TurnState.WHITE;
             return;
         }
-        state = State.BLACK;
+        turnState = TurnState.BLACK;
     }
 
     public boolean isActive() {
-        return state == State.BLACK || state == State.WHITE;
+        return turnState.isActive();
     }
 
     public boolean isEnd() {
-        return state == State.END;
+        return turnState == TurnState.END;
     }
 
     public boolean isValidTurn(Piece piece) {
-        return piece.isSameColor(state.color);
+        return piece.isSameColor(turnState.color())
+                && turnState.isActive();
     }
 
     public String state() {
-        return this.state.name();
+        return this.turnState.name();
     }
 
-    private enum State {
-        WAIT(Color.EMPTY),
-        WHITE(Color.WHITE),
-        WHITE_INACTIVE(Color.WHITE),
-        BLACK(Color.BLACK),
-        BLACK_INACTIVE(Color.BLACK),
-        END(Color.EMPTY);
 
-        private final Color color;
-
-        State(Color color) {
-            this.color = color;
-        }
-
-        private static State inactive(Color color) {
-            return Arrays.stream(values())
-                    .filter(value -> value.name().contains("INACTIVE"))
-                    .filter(value -> value.color == color)
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("잘못된 상태 설정입니다"));
-        }
-    }
 }
