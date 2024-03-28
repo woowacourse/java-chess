@@ -56,7 +56,7 @@ public class ChessBoardService {
         return new ChessBoard(pieceSquares, currentTeam);
     }
 
-    private void updateChessBoardDao(final int gameId, final Square source, final Square target) throws SQLException {
+    private void updateChessBoardDao(final int gameId, final Square source, final Square target) {
         final Piece piece = chessBoardDao.findBySquare(source, gameId)
                 .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
 
