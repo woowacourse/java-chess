@@ -98,7 +98,7 @@ public class ChessGameDao {
         }
     }
 
-    public Optional<PlayerName> findPlayerName(final int gameId, final Team team) {
+    public Optional<Player> findPlayer(final int gameId, final Team team) {
         final var query = "SELECT P.name FROM game as G LEFT JOIN player as P ON " +
                 (team == Team.WHITE ? "G.white_player_id" : "G.black_player_id") +
                 "= P.id " +
@@ -111,7 +111,7 @@ public class ChessGameDao {
 
             if (resultSet.next()) {
                 return Optional.of(
-                        new PlayerName(resultSet.getString("name"))
+                        new Player(new PlayerName(resultSet.getString("name")))
                 );
             }
         } catch (final SQLException e) {

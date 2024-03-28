@@ -1,11 +1,11 @@
-import controller.ChessController;
+import controller.ChessFrontController;
 
 import java.sql.SQLException;
 
 public class Application {
 
     public static void main(final String[] args) throws SQLException {
-        final ChessController chessController = new ChessController();
-        chessController.run();
+        final ChessFrontController chessFrontController = new ChessFrontController();
+        chessFrontController.run();
     }
 }

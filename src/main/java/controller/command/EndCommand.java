@@ -1,23 +1,37 @@
 package controller.command;
 
-import controller.ChessController;
-import view.format.command.PlayCommandFormat;
+import controller.status.ChessProgramStatus;
+import controller.status.StartingStatus;
+import domain.ChessGameResult;
+import service.ChessGameService;
+import service.ChessResultService;
+import view.OutputView;
+
+import java.util.List;
 
 public class EndCommand implements Command {
 
-    private final ChessController controller;
+    private final ChessGameService chessGameService;
+    private final ChessResultService chessResultService;
 
-    public EndCommand(final ChessController controller) {
-        this.controller = controller;
+    public EndCommand(final ChessGameService chessGameService, final ChessResultService chessResultService) {
+        this.chessGameService = chessGameService;
+        this.chessResultService = chessResultService;
     }
 
     @Override
-    public void executeStart() {
+    public ChessProgramStatus executeStart() {
         throw new UnsupportedOperationException("사용할 수 없는 기능입니다.");
     }
 
     @Override
-    public void executePlay(final PlayCommandFormat playCommandFormat, final int gameId) {
-        controller.endGame(gameId);
+    public ChessProgramStatus executePlay(final List<String> playCommandFormat, final int gameId) {
+        chessGameService.endGame(gameId);
+        chessResultService.saveResult(gameId);
+
+        final ChessGameResult chessGameResult = chessResultService.calculateResult(gameId);
+        OutputView.printStatus(chessGameResult);
+
+        return new StartingStatus();
     }
 }

@@ -1,23 +1,19 @@
 package controller.command;
 
-import controller.ChessController;
-import view.format.command.PlayCommandFormat;
+import controller.status.ChessProgramStatus;
+import controller.status.EndStatus;
+
+import java.util.List;
 
 public class QuitCommand implements Command {
 
-    private final ChessController controller;
-
-    public QuitCommand(final ChessController controller) {
-        this.controller = controller;
+    @Override
+    public ChessProgramStatus executeStart() {
+        return new EndStatus();
     }
 
     @Override
-    public void executeStart() {
-        controller.quit();
-    }
-
-    @Override
-    public void executePlay(final PlayCommandFormat command, final int gameId) {
-        controller.quit();
+    public ChessProgramStatus executePlay(final List<String> command, final int gameId) {
+        return new EndStatus();
     }
 }

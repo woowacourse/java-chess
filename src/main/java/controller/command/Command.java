@@ -1,13 +1,14 @@
 package controller.command;
 
-import view.format.command.PlayCommandFormat;
+import controller.status.ChessProgramStatus;
 
 import java.sql.SQLException;
+import java.util.List;
 
 
 public interface Command {
 
-    void executeStart() throws SQLException;
+    ChessProgramStatus executeStart() throws SQLException;
 
-    void executePlay(PlayCommandFormat playCommandFormat, int gameId) throws SQLException;
+    ChessProgramStatus executePlay(List<String> inputs, int gameId) throws SQLException;
 }

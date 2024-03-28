@@ -5,7 +5,6 @@ import domain.Team;
 import domain.chessboard.ChessBoard;
 import domain.piece.Piece;
 import domain.player.Player;
-import domain.player.PlayerName;
 import domain.square.Square;
 import repository.ChessBoardDao;
 import repository.ChessGameDao;
@@ -55,8 +54,8 @@ public class ChessGameService {
         return games;
     }
 
-    public PlayerName findPlayerName(final int gameId, final Team team) {
-        return chessGameDao.findPlayerName(gameId, team)
+    public Player findPlayer(final int gameId, final Team team) {
+        return chessGameDao.findPlayer(gameId, team)
                 .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니다."));
     }
 
@@ -78,9 +77,5 @@ public class ChessGameService {
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
 
         return chessGameStatus == ChessGameStatus.END;
-    }
-
-    public boolean isNotEnd(final int gameId) {
-        return !isEnd(gameId);
     }
 }
