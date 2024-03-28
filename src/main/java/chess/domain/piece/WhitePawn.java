@@ -41,7 +41,6 @@ public class WhitePawn extends Pawn {
     }
 
 
-
     private Set<Square> findStartWhitePawnLegalMoves(Set<Piece> existPieces, Square currentSquare,
                                                      Set<Square> squares) {
         for (int i = 0; i < 2 && currentSquare.canMoveUp(); i++) {

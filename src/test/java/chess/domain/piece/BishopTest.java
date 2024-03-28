@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.attribute.Color.BLACK;
 import static chess.domain.attribute.Color.WHITE;
 import static chess.domain.attribute.File.A;
 import static chess.domain.attribute.File.B;
