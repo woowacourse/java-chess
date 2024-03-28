@@ -70,8 +70,8 @@ class KnightTest {
         Knight knight = new Knight(WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 knight,
-                new Pawn(WHITE, Square.of(F, SIX)),
-                new Pawn(WHITE, Square.of(G, THREE))
+                new WhitePawn(Square.of(F, SIX)),
+                new WhitePawn(Square.of(G, THREE))
         );
         Set<Square> squares = knight.findLegalMoves(existPieces);
         assertThat(squares)
@@ -101,9 +101,9 @@ class KnightTest {
         Knight knight = new Knight(WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 knight,
-                new Pawn(WHITE, Square.of(D, SIX)),
-                new Pawn(WHITE, Square.of(G, THREE)),
-                new Pawn(BLACK, Square.of(F, SIX))
+                new WhitePawn(Square.of(D, SIX)),
+                new WhitePawn(Square.of(G, THREE)),
+                new BlackPawn(Square.of(F, SIX))
         );
         Set<Square> squares = knight.findLegalMoves(existPieces);
         assertThat(squares)
@@ -133,14 +133,14 @@ class KnightTest {
         Knight knight = new Knight(WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 knight,
-                new Pawn(WHITE, Square.of(D, FIVE)),
-                new Pawn(WHITE, Square.of(E, FIVE)),
-                new Pawn(WHITE, Square.of(F, FIVE)),
-                new Pawn(WHITE, Square.of(D, FOUR)),
-                new Pawn(WHITE, Square.of(F, FOUR)),
-                new Pawn(WHITE, Square.of(D, THREE)),
-                new Pawn(WHITE, Square.of(E, THREE)),
-                new Pawn(WHITE, Square.of(F, THREE))
+                new WhitePawn(Square.of(D, FIVE)),
+                new WhitePawn(Square.of(E, FIVE)),
+                new WhitePawn(Square.of(F, FIVE)),
+                new WhitePawn(Square.of(D, FOUR)),
+                new WhitePawn(Square.of(F, FOUR)),
+                new WhitePawn(Square.of(D, THREE)),
+                new WhitePawn(Square.of(E, THREE)),
+                new WhitePawn(Square.of(F, THREE))
         );
         Set<Square> squares = knight.findLegalMoves(existPieces);
         assertThat(squares)

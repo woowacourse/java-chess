@@ -19,6 +19,11 @@ public class WhitePawn extends Pawn {
         return findWhitePawnLegalMoves(entirePieces);
     }
 
+    @Override
+    protected Set<Movement> movements() {
+        return Set.of(Movement.UP, Movement.UP_UP, Movement.RIGHT_UP, Movement.LEFT_UP);
+    }
+
     private Set<Square> findWhitePawnLegalMoves(Set<Piece> existPieces) {
         Set<Square> squares = new HashSet<>(findWhiteCapableOfAttack(existPieces));
         Square currentSquare = currentSquare();

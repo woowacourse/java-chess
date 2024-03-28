@@ -18,12 +18,14 @@ import static chess.domain.attribute.Rank.TWO;
 import chess.domain.attribute.File;
 import chess.domain.attribute.Square;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class Chessboard {
         pieces.add(new Rook(WHITE, Square.of(A, ONE)));
         pieces.add(new Rook(WHITE, Square.of(H, ONE)));
         for (File file : File.values()) {
-            pieces.add(new Pawn(WHITE, Square.of(file, TWO)));
+            pieces.add(new WhitePawn(Square.of(file, TWO)));
         }
         return pieces;
     }
@@ -76,7 +78,7 @@ public class Chessboard {
         pieces.add(new Rook(BLACK, Square.of(A, EIGHT)));
         pieces.add(new Rook(BLACK, Square.of(H, EIGHT)));
         for (File file : File.values()) {
-            pieces.add(new Pawn(BLACK, Square.of(file, SEVEN)));
+            pieces.add(new BlackPawn(Square.of(file, SEVEN)));
         }
         return pieces;
     }

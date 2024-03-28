@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.attribute.Color;
+import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,12 @@ public class Knight extends Piece {
             removeIfAllyExist(other, candidateSquares);
         }
         return candidateSquares;
+    }
+
+    @Override
+    protected Set<Movement> movements() {
+        return Set.of(Movement.UP_UP_LEFT, Movement.UP_UP_RIGHT, Movement.DOWN_DOWN_LEFT, Movement.DOWN_DOWN_RIGHT,
+                Movement.LEFT_LEFT_UP, Movement.LEFT_LEFT_DOWN, Movement.RIGHT_RIGHT_DOWN, Movement.RIGHT_RIGHT_UP);
     }
 
     public void removeIfAllyExist(Piece other, Set<Square> candidateSquares) {

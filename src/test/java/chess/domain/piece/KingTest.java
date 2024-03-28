@@ -65,9 +65,9 @@ class KingTest {
         King king = new King(Color.WHITE, Square.of(E, TWO));
         Set<Piece> existPieces = Set.of(
                 king,
-                new Pawn(Color.WHITE, Square.of(F, THREE)),
-                new Pawn(Color.WHITE, Square.of(F, TWO)),
-                new Pawn(Color.WHITE, Square.of(E, ONE))
+                new WhitePawn(Square.of(F, THREE)),
+                new WhitePawn(Square.of(F, TWO)),
+                new WhitePawn(Square.of(E, ONE))
         );
         Set<Square> squares = king.findLegalMoves(existPieces);
         assertThat(squares)
@@ -96,9 +96,9 @@ class KingTest {
         King king = new King(Color.WHITE, Square.of(E, TWO));
         Set<Piece> existPieces = Set.of(
                 king,
-                new Pawn(Color.BLACK, Square.of(D, THREE)),
-                new Pawn(Color.BLACK, Square.of(E, THREE)),
-                new Pawn(Color.WHITE, Square.of(F, TWO))
+                new BlackPawn(Square.of(D, THREE)),
+                new BlackPawn(Square.of(E, THREE)),
+                new WhitePawn(Square.of(F, TWO))
         );
         Set<Square> squares = king.findLegalMoves(existPieces);
         assertThat(squares)

@@ -79,11 +79,11 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 queen,
-                new Pawn(Color.WHITE, Square.of(E, SIX)),
-                new Pawn(Color.WHITE, Square.of(G, SIX)),
-                new Pawn(Color.WHITE, Square.of(A, FOUR)),
-                new Pawn(Color.WHITE, Square.of(D, THREE)),
-                new Pawn(Color.WHITE, Square.of(G, TWO))
+                new WhitePawn(Square.of(E, SIX)),
+                new WhitePawn(Square.of(G, SIX)),
+                new WhitePawn(Square.of(A, FOUR)),
+                new WhitePawn(Square.of(D, THREE)),
+                new WhitePawn(Square.of(G, TWO))
         );
         Set<Square> squares = queen.findLegalMoves(existPieces);
         assertThat(squares)
@@ -116,10 +116,10 @@ class QueenTest {
         Queen queen = new Queen(Color.WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 queen,
-                new Pawn(Color.BLACK, Square.of(E, SIX)),
-                new Pawn(Color.BLACK, Square.of(E, TWO)),
-                new Pawn(Color.BLACK, Square.of(A, FOUR)),
-                new Pawn(Color.WHITE, Square.of(F, FIVE))
+                new BlackPawn(Square.of(E, SIX)),
+                new BlackPawn(Square.of(E, TWO)),
+                new BlackPawn(Square.of(A, FOUR)),
+                new WhitePawn(Square.of(F, FIVE))
         );
         Set<Square> squares = queen.findLegalMoves(existPieces);
         assertThat(squares)

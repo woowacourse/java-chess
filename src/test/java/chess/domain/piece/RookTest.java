@@ -78,8 +78,8 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE, Square.of(C, FOUR));
         Set<Piece> existPieces = Set.of(
                 rook,
-                new Pawn(Color.WHITE, Square.of(C, FIVE)),
-                new Pawn(Color.WHITE, Square.of(G, FOUR))
+                new WhitePawn(Square.of(C, FIVE)),
+                new WhitePawn(Square.of(G, FOUR))
         );
         Set<Square> squares = rook.findLegalMoves(existPieces);
         assertThat(squares)
@@ -111,10 +111,10 @@ class RookTest {
         Rook rook = new Rook(Color.WHITE, Square.of(C, FOUR));
         Set<Piece> existPieces = Set.of(
                 rook,
-                new Pawn(Color.WHITE, Square.of(F, FOUR)),
-                new Pawn(Color.WHITE, Square.of(E, SIX)),
-                new Pawn(Color.BLACK, Square.of(C, FIVE)),
-                new Pawn(Color.BLACK, Square.of(C, ONE))
+                new WhitePawn(Square.of(F, FOUR)),
+                new WhitePawn(Square.of(E, SIX)),
+                new BlackPawn(Square.of(C, FIVE)),
+                new BlackPawn(Square.of(C, ONE))
         );
         Set<Square> squares = rook.findLegalMoves(existPieces);
         assertThat(squares)

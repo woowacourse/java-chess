@@ -78,7 +78,7 @@ class BishopTest {
         Bishop bishop = new Bishop(WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 bishop,
-                new Pawn(WHITE, Square.of(G, SIX))
+                new WhitePawn(Square.of(G, SIX))
         );
         Set<Square> squares = bishop.findLegalMoves(existPieces);
         assertThat(squares)
@@ -113,7 +113,7 @@ class BishopTest {
         Bishop bishop = new Bishop(WHITE, Square.of(E, FOUR));
         Set<Piece> existPieces = Set.of(
                 bishop,
-                new Pawn(BLACK, Square.of(G, SIX))
+                new BlackPawn(Square.of(G, SIX))
         );
         Set<Square> squares = bishop.findLegalMoves(existPieces);
         assertThat(squares)

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.attribute.Color;
+import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +19,8 @@ public abstract class Piece {
     }
 
     abstract public Set<Square> findLegalMoves(Set<Piece> entirePieces);
+
+    protected abstract Set<Movement> movements();
 
     public void moveTo(Square square) {
         this.square = square;

@@ -22,7 +22,7 @@ class PawnTest {
 
     @DisplayName("폰이 흑인 경우")
     @Nested
-    class BlackPawn {
+    class BlackPawnTest {
 
         /*
         * * * * * * * * 8    * * * * * * * * 8
@@ -38,7 +38,7 @@ class PawnTest {
         @DisplayName("rank7에 위치한 경우 아래로 2칸 또는 1칸 갈 수 있다.")
         @Test
         void moveIfPositionedRank7() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SEVEN));
+            Pawn blackPawn = new chess.domain.piece.BlackPawn(Square.of(E, SEVEN));
             Set<Piece> existPieces = Set.of(blackPawn);
             Set<Square> squares = blackPawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -61,7 +61,7 @@ class PawnTest {
         @DisplayName("rank7에 위치하지 않는다면 이동은 아래로 1칸만 이동할 수 있다.")
         @Test
         void cannotMoveIfNotPositionedRank7() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SIX));
+            Pawn blackPawn = new BlackPawn(Square.of(E, SIX));
             Set<Piece> existPieces = Set.of(blackPawn);
             Set<Square> squares = blackPawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -82,7 +82,7 @@ class PawnTest {
         @DisplayName("앞에 기물이 존재하면 이동할 수 없다.")
         @Test
         void cannotMoveIfExistFront() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SIX));
+            Pawn blackPawn = new BlackPawn(Square.of(E, SIX));
             Set<Piece> existPieces = Set.of(
                     blackPawn,
                     new Knight(Color.BLACK, Square.of(E, FIVE))
@@ -105,10 +105,10 @@ class PawnTest {
         @DisplayName("대각선에 백 기물이 존재하면 이동(공격)할 수 있다.")
         @Test
         void moveIfWhiteExistDiagonal() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SIX));
+            Pawn blackPawn = new BlackPawn(Square.of(E, SIX));
             Set<Piece> existPieces = Set.of(
                     blackPawn,
-                    new Pawn(Color.WHITE, Square.of(D, FIVE))
+                    new WhitePawn(Square.of(D, FIVE))
             );
             Set<Square> squares = blackPawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -131,10 +131,10 @@ class PawnTest {
         @DisplayName("대각선에 흑 기물이 있으면 공격할 수 없다.")
         @Test
         void cannotMoveIfBlackExistDiagonal() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SIX));
+            Pawn blackPawn = new BlackPawn(Square.of(E, SIX));
             Set<Piece> existPieces = Set.of(
                     blackPawn,
-                    new Pawn(Color.BLACK, Square.of(D, FIVE))
+                    new BlackPawn(Square.of(D, FIVE))
             );
             Set<Square> squares = blackPawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -156,10 +156,10 @@ class PawnTest {
         @DisplayName("대각선에 백 기물이 있으면 이동할 수 있다.")
         @Test
         void canMoveIfWhiteExistDiagonal() {
-            Pawn blackPawn = new Pawn(Color.BLACK, Square.of(E, SEVEN));
+            Pawn blackPawn = new BlackPawn(Square.of(E, SEVEN));
             Set<Piece> existPieces = Set.of(
                     blackPawn,
-                    new Pawn(Color.WHITE, Square.of(F, SIX))
+                    new WhitePawn(Square.of(F, SIX))
             );
             Set<Square> squares = blackPawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -172,7 +172,7 @@ class PawnTest {
 
     @DisplayName("폰이 백인 경우")
     @Nested
-    class WhitePawn {
+    class WhitePawnTest {
 
         /*
         * * * * * * * * 8    * * * * * * * * 8
@@ -188,7 +188,7 @@ class PawnTest {
         @DisplayName("rank2에 위치한 경우 아래로 2칸 또는 1칸 갈 수 있다.")
         @Test
         void moveIfPositionedRank2() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, TWO));
+            Pawn whitePawn = new WhitePawn(Square.of(E, TWO));
             Set<Piece> existPieces = Set.of(whitePawn);
             Set<Square> squares = whitePawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -211,7 +211,7 @@ class PawnTest {
         @DisplayName("rank2에 위치하지 않는다면 이동은 아래로 1칸만 이동할 수 있다.")
         @Test
         void cannotMoveIfNotPositionedRank2() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, THREE));
+            Pawn whitePawn = new WhitePawn(Square.of(E, THREE));
             Set<Piece> existPieces = Set.of(whitePawn);
             Set<Square> squares = whitePawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -232,7 +232,7 @@ class PawnTest {
         @DisplayName("앞에 백 기물이 존재하면 이동할 수 없다.")
         @Test
         void cannotMoveIfAllyExistFront() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, TWO));
+            Pawn whitePawn = new WhitePawn(Square.of(E, TWO));
             Set<Piece> existPieces = Set.of(
                     whitePawn,
                     new Knight(Color.WHITE, Square.of(E, THREE))
@@ -255,7 +255,7 @@ class PawnTest {
         @DisplayName("앞에 흑 기물이 존재하면 이동할 수 없다.")
         @Test
         void cannotMoveIfEnemyExistFront() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, TWO));
+            Pawn whitePawn = new WhitePawn(Square.of(E, TWO));
             Set<Piece> existPieces = Set.of(
                     whitePawn,
                     new Knight(Color.BLACK, Square.of(E, THREE))
@@ -278,10 +278,10 @@ class PawnTest {
         @DisplayName("대각선에 흑 기물이 존재하면 이동(공격)할 수 있다.")
         @Test
         void moveIfBlackExistDiagonal() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, TWO));
+            Pawn whitePawn = new WhitePawn(Square.of(E, TWO));
             Set<Piece> existPieces = Set.of(
                     whitePawn,
-                    new Pawn(Color.BLACK, Square.of(F, THREE))
+                    new BlackPawn(Square.of(F, THREE))
             );
             Set<Square> squares = whitePawn.findLegalMoves(existPieces);
             assertThat(squares)
@@ -306,10 +306,10 @@ class PawnTest {
         @DisplayName("대각선에 백 기물이 있으면 공격할 수 없다.")
         @Test
         void cannotMoveIfWhiteExistDiagonal() {
-            Pawn whitePawn = new Pawn(Color.WHITE, Square.of(E, TWO));
+            Pawn whitePawn = new WhitePawn(Square.of(E, TWO));
             Set<Piece> existPieces = Set.of(
                     whitePawn,
-                    new Pawn(Color.WHITE, Square.of(F, THREE))
+                    new WhitePawn(Square.of(F, THREE))
             );
             Set<Square> squares = whitePawn.findLegalMoves(existPieces);
             assertThat(squares)

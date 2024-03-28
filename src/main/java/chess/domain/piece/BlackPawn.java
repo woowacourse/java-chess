@@ -19,6 +19,11 @@ public class BlackPawn extends Pawn {
         return findBlackPawnLegalMoves(entirePieces);
     }
 
+    @Override
+    protected Set<Movement> movements() {
+        return Set.of(Movement.DOWN, Movement.DOWN_DOWN, Movement.LEFT_DOWN, Movement.RIGHT_DOWN);
+    }
+
     private Set<Square> findBlackPawnLegalMoves(Set<Piece> existPieces) {
         Set<Square> squares = new HashSet<>(findBlackCapableOfAttack(existPieces));
         Square currentSquare = currentSquare();
