@@ -34,13 +34,7 @@ public abstract class Piece {
     }
 
     public final boolean isOppositeColor(Piece other) {
-        if (color == Color.WHITE) {
-            return other.color == Color.BLACK;
-        }
-        if (color == Color.BLACK) {
-            return other.color == Color.WHITE;
-        }
-        return false;
+        return this.color.findOppositeColor() == other.color;
     }
 
     public final Color color() {
