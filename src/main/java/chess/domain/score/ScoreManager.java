@@ -5,12 +5,13 @@ import chess.domain.piece.PieceType;
 import java.util.List;
 
 public class ScoreManager {
+    private static final int PAWN_SCORE_CHANGE_THRESHOLD = 2;
     private static final double OPTIONAL_PAWN_SCORE = 0.5;
 
     public Score calculateFileScore(List<Piece> pieces) {
         Score baseScore = calculateBaseScore(pieces);
         int pawnCount = calculatePawnCount(pieces);
-        if (pawnCount >= 2) {
+        if (pawnCount >= PAWN_SCORE_CHANGE_THRESHOLD) {
             return baseScore.subtract(pawnCount * OPTIONAL_PAWN_SCORE);
         }
         return baseScore;
