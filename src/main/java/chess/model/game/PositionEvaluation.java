@@ -31,7 +31,7 @@ public class PositionEvaluation {
         return positionsByPiece.keySet()
                 .stream()
                 .filter(piece -> piece.isSameSide(side))
-                .mapToDouble(key -> calculateScoreByPiece(key, positionsByPiece.get(key)))
+                .mapToDouble(piece -> calculateScoreByPiece(piece, positionsByPiece.get(piece)))
                 .sum();
     }
 
