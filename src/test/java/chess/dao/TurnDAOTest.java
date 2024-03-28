@@ -14,7 +14,7 @@ import java.util.Objects;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TurnDAOTest {
-    private static final ConnectionManager CONNECTION_MANAGER = new ConnectionManager();
+    private static final ConnectionManager CONNECTION_MANAGER = ConnectionManager.getTest();
 
     private final TurnDAO turnDAO = new TurnDAO(CONNECTION_MANAGER);
 
