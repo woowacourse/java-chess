@@ -22,16 +22,21 @@ public abstract class Pawn extends Piece {
                 .collect(Collectors.toSet());
     }
 
-    protected void addStartPawnMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {//todo
+    protected void addStartPawnMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
         for (Movement movement : movements()) {
-            for (int i = 0; i < 2 && currentSquare.canMove(movement); i++) {
-                currentSquare = currentSquare.move(movement);
-                if (isOccupied(existPieces, currentSquare)) {
-                    break;
-                }
-                squares.add(currentSquare);
-            }
+            currentSquare = addToMovableSquares(existPieces, currentSquare, squares, movement);
         }
+    }
+
+    private Square addToMovableSquares(Set<Piece> existPieces, Square currentSquare, Set<Square> squares, Movement movement) {
+        for (int i = 0; i < 2 && currentSquare.canMove(movement); i++) {
+            currentSquare = currentSquare.move(movement);
+            if (isOccupied(existPieces, currentSquare)) {
+                break;
+            }
+            squares.add(currentSquare);
+        }
+        return currentSquare;
     }
 
     protected Set<Square> findPawnLegalMoves(Set<Piece> existPieces, Color color) {

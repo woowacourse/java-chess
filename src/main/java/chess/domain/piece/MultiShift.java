@@ -15,18 +15,22 @@ public abstract class MultiShift extends Piece {
     public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
         Set<Square> movableSquares = new HashSet<>();
         for (Movement movement : movements()) {
-            Square currentSquare = currentSquare();
-            while (currentSquare.canMove(movement)) {
-                currentSquare = currentSquare.move(movement);
-                if (isOccupied(entirePieces, currentSquare)) {
-                    Piece piece = getPiece(entirePieces, currentSquare);
-                    addToMovableSquareIfEnemy(movableSquares, piece);
-                    break;
-                }
-                movableSquares.add(currentSquare);
-            }
+            addToMovableSquares(entirePieces, movement, movableSquares);
         }
         return movableSquares;
+    }
+
+    private void addToMovableSquares(Set<Piece> entirePieces, Movement movement, Set<Square> movableSquares) {
+        Square currentSquare = currentSquare();
+        while (currentSquare.canMove(movement)) {
+            currentSquare = currentSquare.move(movement);
+            if (isOccupied(entirePieces, currentSquare)) {
+                Piece piece = getPiece(entirePieces, currentSquare);
+                addToMovableSquareIfEnemy(movableSquares, piece);
+                break;
+            }
+            movableSquares.add(currentSquare);
+        }
     }
 
     private Piece getPiece(Set<Piece> entirePieces, Square existPieces) {
