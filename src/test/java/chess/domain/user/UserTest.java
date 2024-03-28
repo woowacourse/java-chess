@@ -13,7 +13,7 @@ class UserTest {
     @ValueSource(strings = {"", "    ", "!@asdr32"})
     void invalidName(final String invalidName) {
         //given & when & then
-        assertThatThrownBy(() -> new User(invalidName))
+        assertThatThrownBy(() -> User.from(invalidName))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

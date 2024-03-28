@@ -25,7 +25,7 @@ public class RoomService {
                 .ifPresent(room -> {
                     throw new IllegalArgumentException(DUPLICATED_ROOM_NAME);
                 });
-        Room room = new Room(userId, name);
+        Room room = Room.of(userId, name);
         return roomRepository.save(room);
     }
 

@@ -19,7 +19,7 @@ public class UserService {
         userRepository.findByName(name).ifPresent(user -> {
             throw new IllegalArgumentException(NAME_DUPLICATED);
         });
-        User user = new User(name);
+        User user = User.from(name);
         return userRepository.save(user);
     }
 

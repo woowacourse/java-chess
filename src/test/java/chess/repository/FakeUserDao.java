@@ -20,7 +20,7 @@ public class FakeUserDao implements UserRepository {
     @Override
     public long save(final User user) {
         if (user.getId() == null) {
-            users.put(users.size() + 1, new User((long) users.size() + 1, user.getName()));
+            users.put(users.size() + 1, User.of((long) users.size() + 1, user.getName()));
             return users.size();
         }
         users.put(users.size() + 1, user);

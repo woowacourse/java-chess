@@ -7,10 +7,10 @@ public class UserFixture {
     }
 
     public static User createUserChoco() {
-        return new User(1L, "choco");
+        return User.of(1L, "choco");
     }
 
     public static User createUserKhaki() {
-        return new User(2L, "khaki");
+        return User.of(2L, "khaki");
     }
 }

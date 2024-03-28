@@ -20,7 +20,7 @@ public class FakeRoomDao implements RoomRepository {
     @Override
     public long save(final Room room) {
         if (room.getRoomId() == null) {
-            rooms.put(rooms.size() + 1, new Room((long) rooms.size() + 1, room.getUserId(), room.getName()));
+            rooms.put(rooms.size() + 1, Room.of((long) rooms.size() + 1, room.getUserId(), room.getName()));
             return rooms.size();
         }
         rooms.put(rooms.size() + 1, room);

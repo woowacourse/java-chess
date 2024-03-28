@@ -7,14 +7,18 @@ public class Room {
     private final long userId;
     private final Name name;
 
-    public Room(final long userId, final String name) {
-        this(null, userId, name);
-    }
-
-    public Room(final Long id, final long userId, final String name) {
+    public Room(final Long id, final long userId, final Name name) {
         this.id = id;
         this.userId = userId;
-        this.name = new Name(name);
+        this.name = name;
+    }
+
+    public static Room of(final long userId, final String name) {
+        return new Room(null, userId, new Name(name));
+    }
+
+    public static Room of(final Long id, final long userId, final String name) {
+        return new Room(id, userId, new Name(name));
     }
 
     public Long getRoomId() {

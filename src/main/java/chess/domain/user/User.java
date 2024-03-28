@@ -7,13 +7,17 @@ public class User {
     private final Long id;
     private final Name name;
 
-    public User(final String name) {
-        this(null, name);
+    private User(final Long id, final Name name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public User(final Long id, final String name) {
-        this.id = id;
-        this.name = new Name(name);
+    public static User from(final String name) {
+        return new User(null, new Name(name));
+    }
+
+    public static User of(final Long id, final String name) {
+        return new User(id, new Name(name));
     }
 
     public Long getId() {

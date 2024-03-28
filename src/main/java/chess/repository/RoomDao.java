@@ -84,7 +84,7 @@ public class RoomDao implements RoomRepository {
     }
 
     private Room createRoom(ResultSet resultSet) throws SQLException {
-        return new Room(
+        return Room.of(
                 resultSet.getLong("room_id"),
                 resultSet.getInt("user_id"),
                 resultSet.getString("name")
