@@ -19,22 +19,15 @@ public enum Rank {
         this.index = index;
     }
 
-    public static Rank of(final int rankNumber) {
+    public static Rank of(final int index) {
         return Arrays.stream(values())
-                .filter(rank -> rank.index == rankNumber)
+                .filter(rank -> rank.index == index)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("입력된 값: %d, 랭크가 잘못되었습니다.", rankNumber)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("입력된 값: %d, 랭크가 잘못되었습니다.", index)));
     }
 
     public static Rank from(final String command) {
         return of(Integer.parseInt(command) - 1);
-    }
-
-    public static Rank fromDB(final String s2) {
-        return Arrays.stream(values())
-                .filter(rank -> rank.name().equals(s2))
-                .findAny()
-                .orElseThrow();
     }
 
     public int toIndex() {

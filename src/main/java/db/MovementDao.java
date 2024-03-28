@@ -1,5 +1,6 @@
 package db;
 
+import domain.board.position.Position;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,15 +28,13 @@ public final class MovementDao {
     }
 
     public void createMovement(final Movement movement) {
-        final var query = "INSERT INTO movement (source_file, source_rank, target_file,target_rank, shape, color) values(?, ?, ?, ?,?,?)";
+        final var query = "INSERT INTO movement (source,  target, shape, color) values(?, ?, ?, ?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, movement.sourceFile());
-            preparedStatement.setString(2, movement.sourceRank());
-            preparedStatement.setString(3, movement.targetFile());
-            preparedStatement.setString(4, movement.targetRank());
-            preparedStatement.setString(5, movement.shape());
-            preparedStatement.setString(6, movement.color());
+            preparedStatement.setString(1, movement.source().toString());
+            preparedStatement.setString(2, movement.target().toString());
+            preparedStatement.setString(3, movement.shape());
+            preparedStatement.setString(4, movement.color());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
@@ -50,10 +49,8 @@ public final class MovementDao {
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new Movement(
-                        resultSet.getString("source_file"),
-                        resultSet.getString("source_rank"),
-                        resultSet.getString("target_file"),
-                        resultSet.getString("target_rank"),
+                        Position.from(resultSet.getString("source")),
+                        Position.from(resultSet.getString("target")),
                         resultSet.getString("shape"),
                         resultSet.getString("color")
                 );
@@ -72,10 +69,8 @@ public final class MovementDao {
             final List<Movement> movements = new ArrayList<>();
             while (resultSet.next()) {
                 movements.add(new Movement(
-                        resultSet.getString("source_file"),
-                        resultSet.getString("source_rank"),
-                        resultSet.getString("target_file"),
-                        resultSet.getString("target_rank"),
+                        Position.from(resultSet.getString("source")),
+                        Position.from(resultSet.getString("target")),
                         resultSet.getString("shape"),
                         resultSet.getString("color")
                 ));
@@ -86,29 +81,13 @@ public final class MovementDao {
         }
     }
 
-//
-//    public boolean deleteByUserId(final String userId) {
-//        final var query = "DELETE from user WHERE user_id = ?";
-//        try (final var connection = getConnection();
-//             final var preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, userId);
-//            final int i = preparedStatement.executeUpdate();
-//            return i == 1;
-//        } catch (final SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    public boolean updateByUserId(final String userId, final String name) {
-//        final var query = "UPDATE user SET name = ? WHERE user_id = ?";
-//        try (final var connection = getConnection();
-//             final var preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setString(1, name);
-//            preparedStatement.setString(2, userId);
-//            final int i = preparedStatement.executeUpdate();
-//            return i == 1;
-//        } catch (final SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void deleteAll() {
+        final var query = "DELETE from movement";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

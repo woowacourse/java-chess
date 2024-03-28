@@ -15,8 +15,10 @@ public class DtoMapper {
     }
 
 
-    public static GameResultResponse generateGameResultResponse(final Double whiteScore, final Double blackScore) {
-        return new GameResultResponse(whiteScore, blackScore);
+    public static GameResultResponse generateGameResultResponse(final Double whiteScore, final Double blackScore,
+                                                                final boolean isWhiteKingDead,
+                                                                final boolean isBlackKingDead) {
+        return new GameResultResponse(whiteScore, blackScore, isWhiteKingDead, isBlackKingDead);
     }
 
     public static BoardResponse generateBoardResponse(final Map<Position, Piece> squares) {

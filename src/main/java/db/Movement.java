@@ -1,6 +1,7 @@
 package db;
 
-public record Movement(String sourceFile, String sourceRank, String targetFile, String targetRank, String shape,
-                       String color) {
+import domain.board.position.Position;
+
+public record Movement(Position source, Position target, String shape, String color) {
 
 }

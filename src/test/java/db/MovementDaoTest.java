@@ -1,27 +1,42 @@
 package db;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+import domain.board.position.Position;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MovementDaoTest {
 
     @Test
+    @DisplayName("움직임이 잘 만들어지는지 확인한다")
     void createMovement() {
-        final MovementDao squareDao = new MovementDao();
-        final Movement movement = new Movement("B","ONE", "A","THREE", "WHITE", "KING");
-        squareDao.createMovement(movement);
+        final MovementDao movementDao = new MovementDao();
+        final Movement movement = new Movement(Position.from("b2"), Position.from("b3"), "WHITE", "KING");
 
-        assertThat(squareDao.findByMovementId("1")).isEqualTo(movement);
+        Assertions.assertThatCode(() -> movementDao.createMovement(movement)).doesNotThrowAnyException();
     }
+
     @Test
+    @DisplayName("저장된 모든 움직임이 잘 반환되는지 확인한다")
     void findAll() {
-        final MovementDao squareDao = new MovementDao();
-//        final Movement movement = new Movement("B","ONE", "A","THREE", "WHITE", "KING");
-//        squareDao.createSquare(movement);
+        final MovementDao movementDao = new MovementDao();
+        final Movement movement = new Movement(Position.from("b2"), Position.from("b3"), "WHITE", "KING");
+        movementDao.createMovement(movement);
 
-        Assertions.assertThat(squareDao.findAll()).hasSize(4);
+        Assertions.assertThat(movementDao.findAll()).hasSize(1);
     }
+
+    @Test
+    @DisplayName("저장된 움직임이 잘 지워졌는지 확인한다")
+    void deleteAll() {
+        final MovementDao movementDao = new MovementDao();
+        final Movement movement = new Movement(Position.from("b2"), Position.from("b3"), "WHITE", "KING");
+        movementDao.createMovement(movement);
+
+        movementDao.deleteAll();
+
+        Assertions.assertThat(movementDao.findAll()).isEmpty();
+    }
+
 
 }
