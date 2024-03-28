@@ -39,7 +39,11 @@ public enum Rank {
     }
 
     public Rank up() {
-        int upOrdinal = this.ordinal() - 1;
+        return up(1);
+    }
+
+    public Rank up(int step) {
+        int upOrdinal = this.ordinal() - step;
         Rank[] files = Rank.values();
         try {
             return files[upOrdinal];
@@ -49,7 +53,12 @@ public enum Rank {
     }
 
     public Rank down() {
-        int downOrdinal = this.ordinal() + 1;
+        return down(1);
+    }
+
+
+    public Rank down(int step) {
+        int downOrdinal = this.ordinal() + step;
         Rank[] files = Rank.values();
         try {
             return files[downOrdinal];
@@ -59,8 +68,12 @@ public enum Rank {
     }
 
     public boolean canMoveUp() {
+        return canMoveUp(1);
+    }
+
+    public boolean canMoveUp(int step) {
         try {
-            up();
+            up(Math.abs(step));
         } catch (IllegalStateException exception) {
             return false;
         }
@@ -68,8 +81,12 @@ public enum Rank {
     }
 
     public boolean canMoveDown() {
+        return canMoveDown(1);
+    }
+
+    public boolean canMoveDown(int step) {
         try {
-            down();
+            down(Math.abs(step));
         } catch (IllegalStateException exception) {
             return false;
         }

@@ -43,7 +43,11 @@ public enum File {
     }
 
     public File left() {
-        int leftOrdinal = this.ordinal() - 1;
+        return left(1);
+    }
+
+    public File left(int step) {
+        int leftOrdinal = this.ordinal() - step;
         File[] files = File.values();
         try {
             return files[leftOrdinal];
@@ -53,7 +57,11 @@ public enum File {
     }
 
     public File right() {
-        int rightOrdinal = this.ordinal() + 1;
+        return right(1);
+    }
+
+    public File right(int step) {
+        int rightOrdinal = this.ordinal() + step;
         File[] files = File.values();
         try {
             return files[rightOrdinal];
@@ -63,8 +71,12 @@ public enum File {
     }
 
     public boolean canMoveLeft() {
+        return canMoveLeft(1);
+    }
+
+    public boolean canMoveLeft(int step) {
         try {
-            left();
+            left(step);
         } catch (IllegalStateException exception) {
             return false;
         }
@@ -72,8 +84,12 @@ public enum File {
     }
 
     public boolean canMoveRight() {
+        return canMoveRight(1);
+    }
+
+    public boolean canMoveRight(int step) {
         try {
-            right();
+            right(step);
         } catch (IllegalStateException exception) {
             return false;
         }

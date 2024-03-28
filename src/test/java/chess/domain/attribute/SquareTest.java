@@ -156,4 +156,28 @@ class SquareTest {
                 () -> assertFalse(Square.of(H, EIGHT)::canMoveRightUp)
         );
     }
+
+    /*
+    * * * * * * * * 8    * * * * * * * * 8
+    * * * * * * * * 7    * * * * * * * * 7
+    * * * * * * * * 6    * * * * * * * * 6
+    * * * * * * * * 5    * * * * * * * * 5
+    * * * * * * * * 4 -> * * * * * * * * 4
+    * * * * * * * * 3    * * * * * * * * 3
+    * * * * * * * * 2    * * * * * * * * 2
+    o * * * * * * * 1    * * * * * * * * 1
+    a b c d e f g h      a b c d e f g h
+    */
+    @DisplayName("움직일 방법을 보내면 해당 칸으로 움직일 수 있는지 없는지를 반환한다.")
+    @Test
+    void canMove() {
+        assertAll(
+                () -> assertTrue(Square.of(A, ONE).canMove(Movement.UP)),
+                () -> assertFalse(Square.of(A, ONE).canMove(Movement.LEFT)),
+                () -> assertFalse(Square.of(A, ONE).canMove(Movement.LEFT_UP)),
+                () -> assertFalse(Square.of(A, ONE).canMove(Movement.DOWN)),
+                () -> assertFalse(Square.of(A, ONE).canMove(Movement.LEFT_DOWN)),
+                () -> assertFalse(Square.of(A, ONE).canMove(Movement.LEFT_LEFT_DOWN))
+        );
+    }
 }
