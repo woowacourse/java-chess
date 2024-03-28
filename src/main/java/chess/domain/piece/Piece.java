@@ -5,6 +5,7 @@ import chess.domain.color.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.state.ChessState;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,11 +24,11 @@ public abstract class Piece {
 
     public abstract PieceType pieceType();
 
+    public abstract Score score();
+
     public final boolean isTypeOf(Set<PieceType> type) {
         return type.contains(pieceType());
     }
-
-    public abstract Score score();
 
     public final boolean isSameColor(Color otherColor) {
         return color == otherColor;
