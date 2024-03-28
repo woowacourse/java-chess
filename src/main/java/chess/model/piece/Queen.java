@@ -2,7 +2,7 @@ package chess.model.piece;
 
 import chess.model.game.CommonValue;
 import chess.model.game.PieceValue;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.Movement;
 import chess.model.position.Path;
 
@@ -24,7 +24,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+    public Path findPath(Position source, Position target, Piece targetPiece) {
         Movement movement = target.calculateMovement(source);
         if (canMove(movement)) {
             return Path.makeStraightPath(source, movement);

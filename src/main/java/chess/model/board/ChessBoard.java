@@ -5,7 +5,7 @@ import chess.model.piece.Blank;
 import chess.model.piece.King;
 import chess.model.piece.Piece;
 import chess.model.piece.Side;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.Path;
 import chess.model.game.Turn;
 
@@ -15,13 +15,13 @@ import java.util.Map;
 import static java.util.Collections.unmodifiableMap;
 
 public class ChessBoard {
-    private final Map<ChessPosition, Piece> board;
+    private final Map<Position, Piece> board;
 
-    public ChessBoard(Map<ChessPosition, Piece> board) {
+    public ChessBoard(Map<Position, Piece> board) {
         this.board = new HashMap<>(board);
     }
 
-    public void move(ChessPosition sourcePosition, ChessPosition targetPosition, Turn turn) {
+    public void move(Position sourcePosition, Position targetPosition, Turn turn) {
         Piece sourcePiece = board.get(sourcePosition);
         validateSource(sourcePiece, turn);
         Piece targetPiece = board.get(targetPosition);
@@ -59,7 +59,7 @@ public class ChessBoard {
         }
     }
 
-    private void replacePiece(Piece sourcePiece, ChessPosition sourcePosition, ChessPosition targetPosition) {
+    private void replacePiece(Piece sourcePiece, Position sourcePosition, Position targetPosition) {
         board.put(sourcePosition, Blank.INSTANCE);
         board.put(targetPosition, sourcePiece);
     }
@@ -74,7 +74,7 @@ public class ChessBoard {
         return new PositionEvaluation(board);
     }
 
-    public Map<ChessPosition, Piece> getBoard() {
+    public Map<Position, Piece> getBoard() {
         return unmodifiableMap(board);
     }
 }

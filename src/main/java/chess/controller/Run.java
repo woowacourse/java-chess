@@ -3,7 +3,7 @@ package chess.controller;
 import chess.model.board.ChessBoard;
 import chess.model.game.PositionEvaluation;
 import chess.model.game.Turn;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.view.input.GameArguments;
 import chess.view.input.GameCommand;
 import chess.view.input.InputView;
@@ -35,8 +35,8 @@ public class Run implements GameState {
     }
 
     private void move(MoveArguments moveArguments, OutputView outputView) {
-        ChessPosition source = moveArguments.createSourcePosition();
-        ChessPosition target = moveArguments.createTargetPosition();
+        Position source = moveArguments.createSourcePosition();
+        Position target = moveArguments.createTargetPosition();
         chessBoard.move(source, target, turn);
         outputView.printChessBoard(chessBoard);
     }

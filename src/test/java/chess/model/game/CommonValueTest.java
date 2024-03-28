@@ -1,6 +1,6 @@
 package chess.model.game;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
@@ -17,14 +17,14 @@ class CommonValueTest {
     void calculateScore() {
         // given
         PieceValue pieceValue = new CommonValue(5);
-        List<ChessPosition> chessPositions = List.of(
-                ChessPosition.of(File.A, Rank.FOUR),
-                ChessPosition.of(File.A, Rank.TWO),
-                ChessPosition.of(File.C, Rank.FIVE)
+        List<Position> positions = List.of(
+                Position.of(File.A, Rank.FOUR),
+                Position.of(File.A, Rank.TWO),
+                Position.of(File.C, Rank.FIVE)
         );
 
         // when
-        double score = pieceValue.calculateScore(chessPositions);
+        double score = pieceValue.calculateScore(positions);
 
         // then
         assertThat(score).isEqualTo(15);

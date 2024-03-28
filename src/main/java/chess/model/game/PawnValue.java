@@ -1,6 +1,6 @@
 package chess.model.game;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 
 import java.util.List;
@@ -21,9 +21,9 @@ public class PawnValue implements PieceValue {
     }
 
     @Override
-    public double calculateScore(List<ChessPosition> positions) {
+    public double calculateScore(List<Position> positions) {
         Map<File, Long> countByFile = positions.stream()
-                .collect(groupingBy(ChessPosition::getFile, counting()));
+                .collect(groupingBy(Position::getFile, counting()));
 
         return countByFile.values()
                 .stream()

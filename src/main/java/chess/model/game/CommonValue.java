@@ -1,6 +1,6 @@
 package chess.model.game;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class CommonValue implements PieceValue{
     }
 
     @Override
-    public double calculateScore(List<ChessPosition> positions) {
+    public double calculateScore(List<Position> positions) {
         return positions.size() * point;
     }
 }

@@ -2,7 +2,7 @@ package chess.model.piece;
 
 import chess.model.game.PawnValue;
 import chess.model.game.PieceValue;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.Movement;
 import chess.model.position.Path;
 import chess.model.position.Rank;
@@ -28,7 +28,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Path findPath(ChessPosition sourcePosition, ChessPosition targetPosition, Piece targetPiece) {
+    public Path findPath(Position sourcePosition, Position targetPosition, Piece targetPiece) {
         Movement movement = targetPosition.calculateMovement(sourcePosition);
         validateForwardPath(sourcePosition, targetPiece, movement);
         if (canOrthogonalMove(sourcePosition, movement) || canDiagonalMove(targetPiece, movement)) {
@@ -37,13 +37,13 @@ public class Pawn extends Piece {
         return Path.empty();
     }
 
-    private void validateForwardPath(ChessPosition source, Piece targetPiece, Movement movement) {
+    private void validateForwardPath(Position source, Piece targetPiece, Movement movement) {
         if (!targetPiece.equals(Blank.INSTANCE) && canOrthogonalMove(source, movement)) {
             throw new IllegalArgumentException("타겟 위치에 기물이 존재하여 전진할 수 없습니다.");
         }
     }
 
-    private boolean canOrthogonalMove(ChessPosition source, Movement movement) {
+    private boolean canOrthogonalMove(Position source, Movement movement) {
         if (isPawnInitialPosition(source)) {
             return canMoveForwardWith(movement, DISPLACEMENT) ||
                     canMoveForwardWith(movement, INITIAL_SPECIAL_DISPLACEMENT);
@@ -51,7 +51,7 @@ public class Pawn extends Piece {
         return canMoveForwardWith(movement, DISPLACEMENT);
     }
 
-    private boolean isPawnInitialPosition(ChessPosition source) {
+    private boolean isPawnInitialPosition(Position source) {
         if (isSameSide(Side.WHITE)) {
             return source.hasRank(Rank.TWO);
         }

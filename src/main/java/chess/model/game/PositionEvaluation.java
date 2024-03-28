@@ -2,7 +2,7 @@ package chess.model.game;
 
 import chess.model.piece.Piece;
 import chess.model.piece.Side;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 
 import java.util.List;
 import java.util.Map;
@@ -14,12 +14,12 @@ import static java.util.stream.Collectors.groupingBy;
 public class PositionEvaluation {
     private final Map<Side, Double> evaluation;
 
-    public PositionEvaluation(Map<ChessPosition, Piece> board) {
+    public PositionEvaluation(Map<Position, Piece> board) {
         this.evaluation = evaluate(board);
     }
 
-    public Map<Side, Double> evaluate(Map<ChessPosition, Piece> board) {
-        Map<Piece, List<ChessPosition>> positionsByPiece = board.entrySet().stream()
+    public Map<Side, Double> evaluate(Map<Position, Piece> board) {
+        Map<Piece, List<Position>> positionsByPiece = board.entrySet().stream()
                 .collect(groupingBy(Map.Entry::getValue, mapping(Map.Entry::getKey, toList())));
 
         return Side.colors()
@@ -27,7 +27,7 @@ public class PositionEvaluation {
                 .collect(toMap(identity(), side -> sumScoresBySide(positionsByPiece, side)));
     }
 
-    private Double sumScoresBySide(Map<Piece, List<ChessPosition>> positionsByPiece, Side side) {
+    private Double sumScoresBySide(Map<Piece, List<Position>> positionsByPiece, Side side) {
         return positionsByPiece.keySet()
                 .stream()
                 .filter(piece -> piece.isSameSide(side))
@@ -35,9 +35,9 @@ public class PositionEvaluation {
                 .sum();
     }
 
-    private double calculateScoreByPiece(Piece piece, List<ChessPosition> chessPositions) {
+    private double calculateScoreByPiece(Piece piece, List<Position> positions) {
         PieceValue pieceValue = piece.value();
-        return pieceValue.calculateScore(chessPositions);
+        return pieceValue.calculateScore(positions);
     }
 
     public double getEvaluationBySide(Side side) {
