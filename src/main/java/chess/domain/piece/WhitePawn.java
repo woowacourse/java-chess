@@ -18,6 +18,10 @@ public class WhitePawn extends Piece {
         super(Color.WHITE, WhitePawnMoveRule.instance());
     }
 
+    public static WhitePawn of(Color color) {
+        return new WhitePawn();
+    }
+
     @Override
     public boolean isMovable(Position from, Position to) {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);
@@ -36,5 +40,10 @@ public class WhitePawn extends Piece {
     public boolean isCatchable(Position from, Position to) {
         PositionDifference positionDifference = from.calculateDifferenceTo(to);
         return positionDifference.isObeyRule(catchRule);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

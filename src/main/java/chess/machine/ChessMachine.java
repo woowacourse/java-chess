@@ -1,7 +1,9 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.generator.ChessSpaceGenerator;
+import chess.domain.chessGame.ChessBoard;
+import chess.domain.chessGame.ChessGame;
+import chess.domain.chessGame.generator.ChessSpaceGenerator;
+import chess.service.ChessBoardService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -9,37 +11,70 @@ public class ChessMachine {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessBoardService chessBoardService;
 
-    public ChessMachine(OutputView outputView, InputView inputView) {
+    public ChessMachine(OutputView outputView, InputView inputView, ChessBoardService chessBoardService) {
         this.outputView = outputView;
         this.inputView = inputView;
+        this.chessBoardService = chessBoardService;
     }
 
     public void run() {
         outputView.printStartGameMessage();
         outputView.printCommandGuideMessage();
 
+        ChessGame chessGame = initializeChessGame();
+        playChess(chessGame);
+        saveGameIfKingIsNotDead(chessGame);
+        printStatus(chessGame);
+    }
+
+    private ChessGame initializeChessGame() {
         Command command = inputView.readCommand();
         validateFirstCommand(command);
-
-        ChessBoard chessBoard = new ChessBoard(new ChessSpaceGenerator());
-        command.conductCommand(chessBoard);
-        outputView.printChessBoard(chessBoard);
-
-        playChess(chessBoard);
+        ChessGame chessGame = findOrCreateGame();
+        command.conductCommand(chessGame, outputView);
+        return chessGame;
     }
 
     private void validateFirstCommand(Command command) {
-        if (command.getClass() == Move.class) {
-            throw new IllegalArgumentException("잘못된 입력입니다.");
+        if (command.getClass() != Start.class) {
+            throw new IllegalArgumentException("잘못된 명령어 입력입니다.");
         }
     }
 
-    private void playChess(ChessBoard chessBoard) {
-        while (chessBoard.isActive()) {
-            Command command = inputView.readCommand();
-            command.conductCommand(chessBoard);
-            outputView.printChessBoard(chessBoard);
+    private ChessGame findOrCreateGame() {
+        try {
+            ChessBoard chessBoard = chessBoardService.findChessBoard();
+            outputView.printMessage("저장된 데이터로 게임을 시작합니다");
+            return new ChessGame(chessBoard);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            outputView.printMessage("오류: " + e.getMessage());
+            outputView.printMessage("데이터가 없어 새로 게임을 시작합니다");
         }
+
+        ChessBoard chessBoard = ChessBoard.create(new ChessSpaceGenerator());
+        return new ChessGame(chessBoard);
+    }
+
+    private void playChess(ChessGame chessGame) {
+        while (chessGame.isActive()) {
+            Command command = inputView.readCommand();
+            command.conductCommand(chessGame, outputView);
+        }
+    }
+
+    private void saveGameIfKingIsNotDead(ChessGame chessGame) {
+        if (chessGame.isEnd()) {
+            chessBoardService.deleteChessBoard();
+            return;
+        }
+        chessBoardService.saveChessBoard(chessGame.getChessBoard());
+        outputView.printMessage("게임이 저장되었습니다.");
+    }
+
+    private void printStatus(ChessGame chessGame) {
+        Command command = Status.instance();
+        command.conductCommand(chessGame, outputView);
     }
 }

@@ -1,8 +1,9 @@
 package chess.machine;
 
-import chess.domain.chessBoard.ChessBoard;
+import chess.domain.chessGame.ChessGame;
+import chess.view.OutputView;
 
 public interface Command {
 
-    void conductCommand(ChessBoard chessBoard);
+    void conductCommand(ChessGame chessGame, OutputView outputView);
 }

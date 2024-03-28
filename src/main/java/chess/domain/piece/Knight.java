@@ -9,6 +9,10 @@ public class Knight extends Piece {
         super(color, KnightMoveRule.instance());
     }
 
+    public static Knight of(Color color) {
+        return new Knight(color);
+    }
+
     @Override
     public boolean isCatchable(Position from, Position to) {
         return isMovable(from, to);

@@ -1,7 +1,9 @@
-package chess.domain.chessBoard;
+package chess.domain.chessGame;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.view.PieceSign;
 import java.util.List;
@@ -46,7 +48,7 @@ public class Space {
     }
 
     private void validateRouteHasPieceInSpace(Position route, Space space) {
-        if (space.position.equals(route) && space.hasPiece()) {
+        if (space.position.equals(route) && space.hasAnyPiece()) {
             throw new IllegalArgumentException("루트에 피스가 있습니다.");
         }
     }
@@ -68,15 +70,35 @@ public class Space {
         return position.equals(otherPosition);
     }
 
-    private boolean hasPiece() {
+    public boolean isSameFile(File file) {
+        return position.isSameFile(file);
+    }
+
+    private boolean hasAnyPiece() {
         return !piece.isSameColor(new EmptyPiece());
+    }
+
+    public boolean hasKing() {
+        return piece.isKing();
     }
 
     public boolean doesNotHavePiece() {
         return piece.isSameColor(new EmptyPiece());
     }
 
+    public boolean hasColor(Color color) {
+        return piece.isSameColor(color);
+    }
+
     public boolean isValidTurn(Turn turn) {
         return turn.isValidTurn(piece);
+    }
+
+    public double calculateScore() {
+        return PieceScore.findScore(piece);
+    }
+
+    public Score score() {
+        return new Score(piece);
     }
 }

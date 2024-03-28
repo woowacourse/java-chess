@@ -12,7 +12,8 @@ public class CommandMapper {
     private enum CommandMatcher {
         START(Start::of, "start"),
         MOVE(Move::of, "move"),
-        STOP(End::of, "end");
+        STOP(End::of, "end"),
+        STATUS(Status::of, "status");
 
         private final Function<String, ? extends Command> commandFunction;
         private final String inputCommand;

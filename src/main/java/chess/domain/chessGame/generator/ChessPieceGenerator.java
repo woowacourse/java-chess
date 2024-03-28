@@ -1,4 +1,4 @@
-package chess.domain.chessBoard.generator;
+package chess.domain.chessGame.generator;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.BlackPawn;
@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ChessPieceGenerator implements PieceGenerator {
 
-    public static final int CHESS_BOARD_LENGTH = 8;
-
     @Override
     public List<Piece> makeSpecialPieces(Color color) {
         return List.of(
@@ -32,36 +30,36 @@ public class ChessPieceGenerator implements PieceGenerator {
     }
 
     @Override
-    public List<Piece> makePawnPieces(Color color) {
+    public List<Piece> makePawnPieces(Color color, int amount) {
         if (color == Color.WHITE) {
-            return makeWhitePawnPieces();
+            return makeWhitePawnPieces(amount);
         }
         if (color == Color.BLACK) {
-            return makeBlackPawnPieces();
+            return makeBlackPawnPieces(amount);
         }
         throw new IllegalArgumentException(String.format("%s 색깔의 폰을 생성할 수 없습니다", color));
     }
 
     @Override
-    public List<Piece> makeEmptyPieces() {
+    public List<Piece> makeEmptyPieces(int amount) {
         List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
+        for (int i = 0; i < amount; i++) {
             pieces.add(new EmptyPiece());
         }
         return pieces;
     }
 
-    private List<Piece> makeWhitePawnPieces() {
+    private List<Piece> makeWhitePawnPieces(int amount) {
         List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
+        for (int i = 0; i < amount; i++) {
             pieces.add(new WhitePawn());
         }
         return pieces;
     }
 
-    private List<Piece> makeBlackPawnPieces() {
+    private List<Piece> makeBlackPawnPieces(int amount) {
         List<Piece> pieces = new ArrayList<>();
-        for (int i = 0; i < CHESS_BOARD_LENGTH; i++) {
+        for (int i = 0; i < amount; i++) {
             pieces.add(new BlackPawn());
         }
         return pieces;
