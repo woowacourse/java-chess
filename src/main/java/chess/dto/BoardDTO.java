@@ -14,7 +14,8 @@ public record BoardDTO(List<RankDTO> board) {
 
     public static BoardDTO from(Board board) {
         List<RankDTO> ranks = RANK_ORDERS.stream()
-                .map(rank -> RankDTO.of(rank, board))
+                .map(board::getRank)
+                .map(RankDTO::of)
                 .toList();
         return new BoardDTO(ranks);
     }

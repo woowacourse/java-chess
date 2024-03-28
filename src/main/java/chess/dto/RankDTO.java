@@ -1,20 +1,16 @@
 package chess.dto;
 
-import chess.model.board.Board;
-import chess.view.PieceSignature;
+import chess.model.piece.Piece;
+import chess.model.piece.Type;
+import chess.view.PieceTypeSignature;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 public record RankDTO(List<String> line) {
-    private static final List<Integer> FILE_ORDERS = IntStream.rangeClosed(Board.MIN_LENGTH, Board.MAX_LENGTH)
-            .boxed()
-            .toList();
-
-    public static RankDTO of(int rank, Board board) {
-        List<String> rankSignatures = FILE_ORDERS.stream()
-                .map(file -> board.getPiece(file, rank))
-                .map(PieceSignature::getSignature)
+    public static RankDTO of(List<Piece> rank) {
+        List<String> rankSignatures = rank.stream()
+                .map(Type::from)
+                .map(PieceTypeSignature::getSignature)
                 .toList();
         return new RankDTO(rankSignatures);
     }

@@ -2,29 +2,78 @@ package chess.model.board;
 
 import chess.model.piece.Color;
 import chess.model.piece.Empty;
+import chess.model.piece.King;
 import chess.model.piece.Piece;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.*;
 
 public class Board {
     public static final int MIN_LENGTH = 1;
     public static final int MAX_LENGTH = 8;
-    private static final Color START_COLOR = Color.WHITE;
     private static final Piece EMPTY = Empty.getInstance();
 
     private final Map<Position, Piece> squares;
-    private Color currentColor = START_COLOR;
+    private Color currentColor;
 
-    public Board(Map<Position, Piece> squares) {
+    public Board(Map<Position, Piece> squares, Color currentColor) {
         this.squares = new HashMap<>(squares);
+        this.currentColor = currentColor;
     }
 
     public Piece getPiece(int file, int rank) {
         Position position = Position.of(file, rank);
         return getByPosition(position);
+    }
+
+    public List<Piece> getRank(int rank) {
+        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
+                .mapToObj(file -> Position.of(file, rank))
+                .map(this::getByPosition)
+                .toList();
+    }
+
+    public Map<Piece, Integer> getPieceCount(Color color) {
+        return squares.values()
+                .stream()
+                .filter(piece -> piece.hasColor(color))
+                .collect(groupingBy(Function.identity(),
+                        collectingAndThen(counting(), Long::intValue)));
+    }
+
+    public int countPieceOfFile(Piece piece, int file) {
+        return (int) getFile(file).stream()
+                .filter(filePiece -> filePiece.equals(piece))
+                .count();
+    }
+
+    private List<Piece> getFile(int file) {
+        return IntStream.rangeClosed(MIN_LENGTH, MAX_LENGTH)
+                .mapToObj(rank -> Position.of(file, rank))
+                .map(this::getByPosition)
+                .toList();
+    }
+
+    public Color getWinnerColor() {
+        if (isKingCaptured(currentColor)) {
+            return currentColor.getOpposite();
+        }
+        return Color.NONE;
+    }
+
+    private boolean isKingCaptured(Color color) {
+        Piece king = King.from(color);
+        return squares.values()
+                .stream()
+                .noneMatch(piece -> piece.equals(king));
     }
 
     public void move(Movement movement) {
@@ -83,5 +132,13 @@ public class Board {
 
     private Piece getByPosition(Position position) {
         return squares.getOrDefault(position, EMPTY);
+    }
+
+    public Map<Position, Piece> getSquares() {
+        return Collections.unmodifiableMap(squares);
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
     }
 }
