@@ -18,14 +18,14 @@ import static java.util.stream.Collectors.*;
 public class Board {
     public static final int MIN_LENGTH = 1;
     public static final int MAX_LENGTH = 8;
-    private static final Color START_COLOR = Color.WHITE;
     private static final Piece EMPTY = Empty.getInstance();
 
     private final Map<Position, Piece> squares;
-    private Color currentColor = START_COLOR;
+    private Color currentColor;
 
-    public Board(Map<Position, Piece> squares) {
+    public Board(Map<Position, Piece> squares, Color currentColor) {
         this.squares = new HashMap<>(squares);
+        this.currentColor = currentColor;
     }
 
     public Piece getPiece(int file, int rank) {
@@ -64,9 +64,6 @@ public class Board {
     public Color getWinnerColor() {
         if (isKingCaptured(currentColor)) {
             return currentColor.getOpposite();
-        }
-        if (isKingCaptured(currentColor.getOpposite())) {
-            return currentColor;
         }
         return Color.NONE;
     }

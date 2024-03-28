@@ -18,7 +18,7 @@ class BoardTest {
     @Test
     void 보드는_기물이_없는_위치에_Empty를_둔다() {
         // given
-        Board board = new Board(Map.of());
+        Board board = new Board(Map.of(), Color.WHITE);
 
         // when, then
         for (int file = Board.MIN_LENGTH; file < Board.MAX_LENGTH; file++) {
@@ -35,7 +35,7 @@ class BoardTest {
                 Position.of(1, 1), Queen.from(Color.WHITE),
                 Position.of(1, 2), Pawn.from(Color.WHITE)
         );
-        Board board = new Board(piecePosition);
+        Board board = new Board(piecePosition, Color.WHITE);
         Movement movement = new Movement(Position.of(1, 1), Position.of(1, 3));
 
         // when, then
@@ -48,7 +48,7 @@ class BoardTest {
         // given
         Piece pawn = Pawn.from(Color.WHITE);
         Map<Position, Piece> piecePosition = Map.of(Position.of(2, 2), pawn);
-        Board board = new Board(piecePosition);
+        Board board = new Board(piecePosition, Color.WHITE);
         Movement movement = new Movement(Position.of(2, 2), Position.of(2, 3));
 
         // when
@@ -68,14 +68,14 @@ class BoardTest {
     private static Stream<Arguments> provideBoardWithWinnerColor() {
         return Stream.of(
                 Arguments.of(
-                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE))),
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE)), Color.BLACK),
                         Color.WHITE),
                 Arguments.of(
-                        new Board(Map.of(Position.of(1, 2), King.from(Color.BLACK))),
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.BLACK)), Color.WHITE),
                         Color.BLACK
                 ),
                 Arguments.of(
-                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE), Position.of(3, 7), King.from(Color.BLACK))),
+                        new Board(Map.of(Position.of(1, 2), King.from(Color.WHITE), Position.of(3, 7), King.from(Color.BLACK)), Color.WHITE),
                         Color.NONE
                 )
         );

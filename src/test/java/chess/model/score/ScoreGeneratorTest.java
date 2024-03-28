@@ -26,14 +26,16 @@ class ScoreGeneratorTest {
                 Arguments.of(
                         new Board(Map.of(
                                 Position.of(1, 2), Pawn.from(Color.BLACK),
-                                Position.of(1, 3), Pawn.from(Color.BLACK))),
+                                Position.of(1, 3), Pawn.from(Color.BLACK)),
+                                Color.WHITE),
                         new ScoreDTO(1.0, 0.0)
                 ),
                 Arguments.of(
                         new Board(Map.of(
                                 Position.of(1, 2), Pawn.from(Color.WHITE),
                                 Position.of(1, 3), Pawn.from(Color.WHITE),
-                                Position.of(1, 4), Pawn.from(Color.WHITE))),
+                                Position.of(1, 4), Pawn.from(Color.WHITE)),
+                                Color.WHITE),
                         new ScoreDTO(0.0, 1.5)
                 )
         );
@@ -51,7 +53,8 @@ class ScoreGeneratorTest {
                 Arguments.of(
                         new Board(Map.of(
                                 Position.of(1, 2), Knight.from(Color.BLACK),
-                                Position.of(1, 3), Queen.from(Color.WHITE))),
+                                Position.of(1, 3), Queen.from(Color.WHITE)),
+                                Color.WHITE),
                         new ScoreDTO(2.5, 9.0)
                 ),
                 Arguments.of(
@@ -59,7 +62,8 @@ class ScoreGeneratorTest {
                                 Position.of(1, 2), Pawn.from(Color.BLACK),
                                 Position.of(1, 3), King.from(Color.BLACK),
                                 Position.of(1, 4), Bishop.from(Color.WHITE),
-                                Position.of(3, 4), Rook.from(Color.WHITE))),
+                                Position.of(3, 4), Rook.from(Color.WHITE)),
+                                Color.WHITE),
                         new ScoreDTO(1.0, 8.0)
                 )
         );
