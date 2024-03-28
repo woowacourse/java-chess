@@ -42,7 +42,24 @@ public class PieceDao {
     }
 
     public void addAll(List<PieceDto> pieceDtos, int gameId) {
-        pieceDtos.forEach(pieceDto -> addPiece(pieceDto, gameId));
+        final String query = String.format("INSERT INTO %s VALUES(?, ?, ?, ?, ?)", TABLE_NAME);
+        try (Connection connection = getConnection();
+             PreparedStatement psmt = connection.prepareStatement(query)) {
+            connection.setAutoCommit(false);
+
+            for (PieceDto pieceDto : pieceDtos) {
+                psmt.setInt(1, pieceDto.fileIndex());
+                psmt.setInt(2, pieceDto.rankIndex());
+                psmt.setString(3, pieceDto.color());
+                psmt.setString(4, pieceDto.type());
+                psmt.setInt(5, gameId);
+                psmt.addBatch();
+            }
+            psmt.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
     }
 
     public PieceDto findPiece(int fileIndex, int rankIndex, int gameId) {
