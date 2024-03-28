@@ -10,14 +10,14 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class PawnValue implements PieceValue {
-    public static final int SPECIAL_POINT_THRESHOLD = 1;
+    public static final int UNFAVORABLE_POINT_THRESHOLD = 1;
 
     private final double point;
-    private final double specialPoint;
+    private final double unfavorablePoint;
 
-    public PawnValue(double point, double specialPoint) {
+    public PawnValue(double point, double unfavorablePoint) {
         this.point = point;
-        this.specialPoint = specialPoint;
+        this.unfavorablePoint = unfavorablePoint;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class PawnValue implements PieceValue {
     }
 
     private double scoreOfCount(long count) {
-        if (count > SPECIAL_POINT_THRESHOLD) {
-            return count * specialPoint;
+        if (count > UNFAVORABLE_POINT_THRESHOLD) {
+            return count * unfavorablePoint;
         }
         return count * point;
     }
