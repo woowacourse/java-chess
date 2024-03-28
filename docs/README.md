@@ -1,3 +1,38 @@
+# ♟️ 체스 게임 실행 방법
+
+1. `docekr-compose.yml`파일이 있는 `docker` 폴더에서 docker 실행
+```zsh
+docker-compose -p chess up -d
+```
+
+2. 데이터베이스 생성
+```mysql
+CREATE DATABASE chess DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+```
+
+3. 테이블 생성
+```mysql
+USE chess;
+
+CREATE TABLE pieces
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    board_file INT         NOT NULL,
+    board_rank INT         NOT NULL,
+    type       VARCHAR(64) NOT NULL
+);
+
+CREATE TABLE turns
+(
+    id    INT AUTO_INCREMENT PRIMARY KEY,
+    color varchar(10) NOT NULL
+);
+```
+
+4. `Application` 실행
+
+---
+
 ## 기능 요구 사항
 
 ### 각 팀 별 체스 말 개수
@@ -80,7 +115,7 @@ public abstract boolean isPawn();
 
 public abstract boolean isKing();
 ```
-- [ ] README.md 어플리케이션 실행 방법 정리
+- [x] README.md 어플리케이션 실행 방법 정리
 - [x] ScoreManager ↔️ ChessState 객체끼리 서로 물어보며 점수 계산
 - [ ] ScoreManager 상수 사용 or 각 객체에서 자신의 점수 계산
 - [x] DBService 네이밍
