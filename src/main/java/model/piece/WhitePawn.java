@@ -25,7 +25,7 @@ public final class WhitePawn extends Pawn {
         if (nextPosition.getRowIndex() - currentPosition.getRowIndex() == WHITE_PAWN_DELTA_ONE_ROW) {
             return Set.of();
         }
-        return Set.of(new Position(currentPosition.getColumn(), Row.THIRD));
+        return Set.of(new Position(currentPosition.getColumn(), Row.THREE));
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class WhitePawn extends Pawn {
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SECOND.getIndex() == currentPosition.getRowIndex() && dRow == WHITE_PAWN_DELTA_TWO_ROW) {
+        if (Row.TWO.getIndex() == currentPosition.getRowIndex() && dRow == WHITE_PAWN_DELTA_TWO_ROW) {
             return true;
         }
         return dRow == WHITE_PAWN_DELTA_ONE_ROW;
