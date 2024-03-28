@@ -1,5 +1,9 @@
 package model;
 
+import database.DBConnection;
+import database.DBService;
+import dto.ChessGameDto;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +25,7 @@ import model.position.Row;
 public class ChessGame {
 
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
+    private static final int ALL_KING_COUNT = 2;
 
     static {
         initPosition.put(Column.A, Rook::new);
@@ -33,30 +38,37 @@ public class ChessGame {
         initPosition.put(Column.H, Rook::new);
     }
 
-    private final Map<Position, Piece> board;
+    private Map<Position, Piece> board;
     private ChessStatus chessStatus;
     private Camp camp;
+    private DBService dbService;
 
     public ChessGame() {
         this.board = new HashMap<>();
         this.chessStatus = ChessStatus.INIT;
+        this.dbService = new DBService(DBConnection.getConnection());
     }
 
     public void start() {
         if (chessStatus == ChessStatus.INIT) {
             chessStatus = ChessStatus.RUNNING;
+            if (dbService.isContinue()) {
+                reload(dbService.reload());
+                return;
+            }
             this.camp = Camp.WHITE;
             setting();
+            dbService.saveAll(new ChessGameDto(board, camp));
             return;
         }
         throw new IllegalArgumentException("이미 게임이 진행중입니다.");
     }
 
     private void setting() {
-        settingExceptPawn(Camp.BLACK, Row.EIGHTH);
+        settingExceptPawn(Camp.BLACK, Row.EIGHT);
         settingBlackPawn();
         settingWhitePawn();
-        settingExceptPawn(Camp.WHITE, Row.FIRST);
+        settingExceptPawn(Camp.WHITE, Row.ONE);
     }
 
     private void settingExceptPawn(final Camp camp, Row row) {
@@ -67,13 +79,13 @@ public class ChessGame {
 
     private void settingBlackPawn() {
         for (Column column : Column.values()) {
-            board.put(new Position(column, Row.SEVENTH), new BlackPawn());
+            board.put(new Position(column, Row.SEVEN), new BlackPawn());
         }
     }
 
     private void settingWhitePawn() {
         for (Column column : Column.values()) {
-            board.put(new Position(column, Row.SECOND), new WhitePawn());
+            board.put(new Position(column, Row.TWO), new WhitePawn());
         }
     }
 
@@ -81,10 +93,18 @@ public class ChessGame {
         if (chessStatus == ChessStatus.RUNNING) {
             validate(moving);
 
-            Piece piece = board.get(moving.getCurrentPosition());
-            board.put(moving.getNextPosition(), piece);
+            Piece source = board.get(moving.getCurrentPosition());
+            if (board.containsKey(moving.getNextPosition())) {
+                dbService.updatePiece(moving.getNextPosition(), source);
+            } else {
+                dbService.savePiece(moving.getNextPosition(), source);
+            }
+            dbService.deletePiece(moving.getCurrentPosition());
+            board.put(moving.getNextPosition(), source);
             board.remove(moving.getCurrentPosition());
+            checkKing();
             camp = camp.toggle();
+            dbService.updateCamp(camp);
             return;
         }
         throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
@@ -141,12 +161,41 @@ public class ChessGame {
         }
     }
 
+    private void checkKing() {
+        if (isKingDie()) {
+            dbService.reset();
+            end();
+        }
+    }
+
+    public boolean isKingDie() {
+        return ALL_KING_COUNT > board.values().stream()
+                .filter(Piece::isKing)
+                .count();
+    }
+
+    public ScoreCalculator status() {
+        if (chessStatus == ChessStatus.RUNNING) {
+            return calculateResult();
+        }
+        throw new IllegalArgumentException("start를 입력해야 게임이 시작됩니다.");
+    }
+
+    public ScoreCalculator calculateResult() {
+        return new ScoreCalculator(Collections.unmodifiableMap(board));
+    }
+
     public void end() {
         chessStatus = ChessStatus.END;
     }
 
     public boolean isNotEnd() {
         return chessStatus.isNotEnd();
+    }
+
+    public void reload(ChessGameDto chessGameDto) {
+        board = chessGameDto.board();
+        camp = chessGameDto.camp();
     }
 
     public Map<Position, Piece> getBoard() {

@@ -25,7 +25,7 @@ public final class BlackPawn extends Pawn {
         if (nextPosition.getRowIndex() - currentPosition.getRowIndex() == BLACK_PAWN_DELTA_ONE_ROW) {
             return Set.of();
         }
-        return Set.of(new Position(currentPosition.getColumn(), Row.SIXTH));
+        return Set.of(new Position(currentPosition.getColumn(), Row.SIX));
     }
 
     @Override
@@ -44,7 +44,7 @@ public final class BlackPawn extends Pawn {
         if (dColumn != 0) {
             return false;
         }
-        if (Row.SEVENTH.getIndex() == currentPosition.getRowIndex() && dRow == BLACK_PAWN_DELTA_TWO_ROW) {
+        if (Row.SEVEN.getIndex() == currentPosition.getRowIndex() && dRow == BLACK_PAWN_DELTA_TWO_ROW) {
             return true;
         }
         return dRow == BLACK_PAWN_DELTA_ONE_ROW;

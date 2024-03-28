@@ -9,11 +9,11 @@ import model.position.Position;
 public abstract class Piece {
 
     private final Camp camp;
-    private final String pieceName;
+    private final PieceType pieceType;
 
-    protected Piece(final Camp camp, final String pieceName) {
+    public Piece(Camp camp, PieceType pieceType) {
         this.camp = camp;
-        this.pieceName = pieceName;
+        this.pieceType = pieceType;
     }
 
     public abstract Set<Position> getMoveRoute(final Moving moving);
@@ -28,15 +28,27 @@ public abstract class Piece {
         return camp == target;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
     public Camp getCamp() {
         return camp;
     }
 
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
     public String getName() {
         if (camp == Camp.BLACK) {
-            return pieceName.toUpperCase();
+            return pieceType.getName().toUpperCase();
         }
-        return pieceName;
+        return pieceType.getName();
     }
 
     @Override

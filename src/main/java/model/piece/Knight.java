@@ -7,11 +7,10 @@ import model.position.Position;
 
 public final class Knight extends Piece {
 
-    private static final String KNIGHT_NAME = "n";
     private static final int KNIGHT_DELTA_DISTANCE = 3;
 
     public Knight(final Camp camp) {
-        super(camp, KNIGHT_NAME);
+        super(camp, PieceType.KNIGHT);
     }
 
     @Override
