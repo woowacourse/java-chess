@@ -25,6 +25,27 @@ public abstract class Pawn extends Piece {
         return squares;
     }
 
+    protected void addStartPawnMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
+        for (Movement movement : movements()) {
+            for (int i = 0; i < 2 && currentSquare.canMove(movement); i++) {
+                currentSquare = currentSquare.move(movement);
+                if (isOccupied(existPieces, currentSquare)) {
+                    break;
+                }
+                squares.add(currentSquare);
+            }
+        }
+    }
+
+    protected void addMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
+        for (Movement movement : movements()) {
+            if (currentSquare.canMove(movement)) {
+                currentSquare = currentSquare.move(movement);
+                addToMovableSquareIfBlank(existPieces, currentSquare, squares);
+            }
+        }
+    }
+
     protected Piece getPiece(Set<Piece> entirePieces, Square currentSquare) {
         return entirePieces.stream()
                 .filter(piece -> piece.currentSquare() == currentSquare)
@@ -60,15 +81,4 @@ public abstract class Pawn extends Piece {
         return entirePieces.stream()
                 .noneMatch(piece -> piece.currentSquare() == currentSquare);
     }
-
-    protected void addToMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
-        for (int i = 0; i < 2 && currentSquare.canMoveDown(); i++) {
-            currentSquare = currentSquare.moveDown();
-            if (isOccupied(existPieces, currentSquare)) {
-                break;
-            }
-            squares.add(currentSquare);
-        }
-    }
-
 }

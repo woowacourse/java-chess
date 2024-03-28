@@ -19,7 +19,7 @@ public class WhitePawn extends Pawn {
 
     @Override
     protected Set<Movement> movements() {
-        return Set.of(Movement.UP, Movement.UP_UP);
+        return Set.of(Movement.UP);
     }
 
     @Override
@@ -31,26 +31,10 @@ public class WhitePawn extends Pawn {
         Set<Square> squares = new HashSet<>(capableOfAttack(existPieces));
         Square currentSquare = currentSquare();
         if (currentSquare.isStartRankOfWhitePawn()) {
-            return findStartWhitePawnLegalMoves(existPieces, currentSquare, squares);
+            addStartPawnMovableSquare(existPieces, currentSquare, squares);
+            return squares;
         }
-        if (currentSquare.canMoveUp()) {
-            currentSquare = currentSquare.moveUp();
-            addToMovableSquareIfBlank(existPieces, currentSquare, squares);
-        }
+        addMovableSquare(existPieces, currentSquare, squares);
         return squares;
     }
-
-
-    private Set<Square> findStartWhitePawnLegalMoves(Set<Piece> existPieces, Square currentSquare,
-                                                     Set<Square> squares) {
-        for (int i = 0; i < 2 && currentSquare.canMoveUp(); i++) {
-            currentSquare = currentSquare.moveUp();
-            if (isOccupied(existPieces, currentSquare)) {
-                break;
-            }
-            squares.add(currentSquare);
-        }
-        return squares;
-    }
-
 }

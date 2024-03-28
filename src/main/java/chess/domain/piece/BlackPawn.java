@@ -19,7 +19,7 @@ public class BlackPawn extends Pawn {
 
     @Override
     protected Set<Movement> movements() {
-        return Set.of(Movement.DOWN, Movement.DOWN_DOWN);
+        return Set.of(Movement.DOWN);
     }
 
     @Override
@@ -31,13 +31,10 @@ public class BlackPawn extends Pawn {
         Set<Square> squares = new HashSet<>(capableOfAttack(existPieces));
         Square currentSquare = currentSquare();
         if (currentSquare.isStartRankOfBlackPawn()) {
-            addToMovableSquare(existPieces, currentSquare, squares);
+            addStartPawnMovableSquare(existPieces, currentSquare, squares);
             return squares;
         }
-        if (currentSquare.canMoveDown()) {
-            currentSquare = currentSquare.moveDown();
-            addToMovableSquareIfBlank(existPieces, currentSquare, squares);
-        }
+        addMovableSquare(existPieces, currentSquare, squares);
         return squares;
     }
 }
