@@ -24,8 +24,6 @@ import java.util.Map;
 
 public class ChessController {
 
-    private final InputView inputView;
-    private final OutputView outputView;
     private final ChessBoardService chessBoardService;
     private final ChessGameService chessGameService;
     private final ChessResultService chessResultService;
@@ -34,9 +32,6 @@ public class ChessController {
     private boolean isRunning;
 
     public ChessController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
-
         final Connection connection = ChessConnectionGenerator.getConnection();
         this.chessBoardService = new ChessBoardService(connection);
         this.chessGameService = new ChessGameService(connection);
@@ -50,10 +45,10 @@ public class ChessController {
     public void run() throws SQLException {
         while (isRunning) {
             try {
-                final StartCommandsFormat command = inputView.readStartOption();
+                final StartCommandsFormat command = InputView.readStartOption();
                 commandRouter.execute(command);
             } catch (final IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                OutputView.printError(e.getMessage());
             }
         }
     }
@@ -68,10 +63,10 @@ public class ChessController {
     private Player roadPlayer(final Team team) {
         while (true) {
             try {
-                final String name = inputView.readTeamPlayerName(team);
+                final String name = InputView.readTeamPlayerName(team);
                 return playerService.roadPlayer(name);
             } catch (final IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                OutputView.printError(e.getMessage());
             }
         }
     }
@@ -84,7 +79,7 @@ public class ChessController {
                 final PlayCommandFormat command = readCommand(gameId);
                 commandRouter.execute(command, gameId);
             } catch (final IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                OutputView.printError(e.getMessage());
             }
         }
 
@@ -94,7 +89,7 @@ public class ChessController {
     private PlayCommandFormat readCommand(final int gameId) {
         final Team currentTeam = chessGameService.findCurrentTeam(gameId);
         final PlayerName currentPlayerName = chessGameService.findPlayerName(gameId, currentTeam);
-        return inputView.readGameCommand(currentTeam, currentPlayerName);
+        return InputView.readGameCommand(currentTeam, currentPlayerName);
     }
 
     public void continueGame() throws SQLException {
@@ -105,28 +100,28 @@ public class ChessController {
 
     private int readGameId(final List<Integer> runningGame) {
         while (true) {
-            final int input = inputView.readContinueGame(runningGame);
+            final int input = InputView.readContinueGame(runningGame);
             final boolean hasGame = chessGameService.containRunningGame(input);
             if (hasGame) {
                 return input;
             }
-            outputView.printError("게임 ID가 존재하지 않습니다.");
+            OutputView.printError("게임 ID가 존재하지 않습니다.");
         }
     }
 
     public void printPlayerRecord() {
         final Player player = readPlayer();
         final PlayerGameRecordDto gameRecord = chessResultService.findGameRecord(player);
-        outputView.printGameRecord(gameRecord);
+        OutputView.printGameRecord(gameRecord);
     }
 
     private Player readPlayer() {
         while (true) {
             try {
-                final String name = inputView.readPlayerName();
+                final String name = InputView.readPlayerName();
                 return playerService.findPlayer(name);
             } catch (final IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
+                OutputView.printError(e.getMessage());
             }
         }
     }
@@ -138,13 +133,13 @@ public class ChessController {
     private void printGameOptions(final int gameId) {
         final PlayerName blackPlayerName = chessGameService.findPlayerName(gameId, Team.BLACK);
         final PlayerName whitePlayerName = chessGameService.findPlayerName(gameId, Team.WHITE);
-        outputView.printGameOption(gameId, blackPlayerName, whitePlayerName);
+        OutputView.printGameOption(gameId, blackPlayerName, whitePlayerName);
         printBoard(gameId);
     }
 
     public void runStatus(final int gameId) {
         final ChessGameResult chessGameResult = chessResultService.calculateResult(gameId);
-        outputView.printStatus(chessGameResult);
+        OutputView.printStatus(chessGameResult);
     }
 
     public void runMove(final PlayCommandFormat command, final int gameId) throws SQLException {
@@ -161,7 +156,7 @@ public class ChessController {
 
     private void printBoard(final int gameId) {
         final Map<Square, Piece> pieceSquares = chessBoardService.getPieceSquares(gameId);
-        outputView.printChessBoard(pieceSquares);
+        OutputView.printChessBoard(pieceSquares);
     }
 
     private void finishGame(final int gameId) {

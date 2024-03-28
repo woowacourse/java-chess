@@ -16,7 +16,10 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printGameOption(final int gameId, final PlayerName blackPlayerName, final PlayerName whitePlayerName) {
+    private OutputView() {
+    }
+
+    public static void printGameOption(final int gameId, final PlayerName blackPlayerName, final PlayerName whitePlayerName) {
         System.out.printf("""
                 > %d번 게임을 시작합니다.
                 > 게임 점수 보기 : status
@@ -26,7 +29,7 @@ public class OutputView {
                 흑 : %s VS 백 : %s%n""", gameId, blackPlayerName.getName(), whitePlayerName.getName());
     }
 
-    public void printChessBoard(final Map<Square, Piece> squarePieces) {
+    public static void printChessBoard(final Map<Square, Piece> squarePieces) {
         final String board = Arrays.stream(Rank.values())
                 .map(rank -> createOneRank(squarePieces, rank))
                 .collect(Collectors.joining("\n"));
@@ -34,13 +37,13 @@ public class OutputView {
         System.out.println(board);
     }
 
-    private String createOneRank(final Map<Square, Piece> squarePieces, final Rank rank) {
+    private static String createOneRank(final Map<Square, Piece> squarePieces, final Rank rank) {
         return Arrays.stream(File.values())
                 .map(file -> createOnePiece(squarePieces, rank, file))
                 .collect(Collectors.joining());
     }
 
-    private String createOnePiece(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
+    private static String createOnePiece(final Map<Square, Piece> squarePieces, final Rank rank, final File file) {
         final Square square = new Square(file, rank);
 
         if (squarePieces.containsKey(square)) {
@@ -51,18 +54,18 @@ public class OutputView {
         return PieceFormat.EMPTY_PIECE;
     }
 
-    public void printError(final String message) {
-        System.out.println("[ERROR] " + message);
-    }
-
-    public void printStatus(final ChessGameResult chessGameResult) {
+    public static void printStatus(final ChessGameResult chessGameResult) {
         System.out.printf("%n블랙 : %.1f%n화이트 : %.1f%n승패 : %s%n",
                 chessGameResult.getBlackScore(), chessGameResult.getWhiteScore(),
                 WinStatusFormat.formatOf(chessGameResult.getWinStatus()));
     }
 
-    public void printGameRecord(final PlayerGameRecordDto gameRecord) {
+    public static void printGameRecord(final PlayerGameRecordDto gameRecord) {
         System.out.printf("전체 전적 : %d승 %d패 %d무%n",
                 gameRecord.winCount(), gameRecord.loseCount(), gameRecord.drawCount());
+    }
+
+    public static void printError(final String message) {
+        System.out.println("[ERROR] " + message);
     }
 }
