@@ -19,7 +19,14 @@ public abstract class Pawn extends Piece {
         this.directions = directions;
     }
 
-    public abstract boolean isCaptureMove(Positions positions);
+    public final boolean isCaptureMove(Positions positions) {
+        Position from = positions.from();
+        Position to = positions.to();
+        Direction direction = from.findDirectionTo(to);
+        return sameWithCaptureMove(direction);
+    }
+
+    protected abstract boolean sameWithCaptureMove(Direction direction);
 
     public abstract Piece update();
 
