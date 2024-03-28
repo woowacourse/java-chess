@@ -48,8 +48,7 @@ public class GameResult {
     private double calculatePieceScore(final Color color) {
         return pieces.values().stream()
                 .filter(piece -> piece.color().equals(color) && !piece.isPawn())
-                .map(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
-                .mapToDouble(i -> i)
+                .mapToDouble(piece -> piece.getScore(ScoreStatus.DEFAULT).getValue())
                 .sum();
     }
 
