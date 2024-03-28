@@ -34,12 +34,12 @@ public abstract class SlidingPiece extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
+    public final boolean isPawn() {
         return false;
     }
 
     @Override
-    public boolean isKing() {
+    public final boolean isKing() {
         return false;
     }
 

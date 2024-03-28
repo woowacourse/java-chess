@@ -48,12 +48,12 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
+    public final boolean isPawn() {
         return true;
     }
 
     @Override
-    public boolean isKing() {
+    public final boolean isKing() {
         return false;
     }
 
