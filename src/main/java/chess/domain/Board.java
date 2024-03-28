@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
@@ -31,8 +33,6 @@ public class Board {
 
         Piece thisPiece = pieces.get(movement.source());
         validateMovable(thisPiece, movement);
-        validateSameTeamPieceExistsOnTargetPosition(movement.target(), thisPiece);
-        validateBlockingPieceExists(thisPiece, movement);
 
         thisPiece = thisPiece.move();
         pieces.put(movement.target(), thisPiece);
@@ -46,19 +46,13 @@ public class Board {
         }
     }
 
-    public void validateMovable(Piece thisPiece, Movement movement) {
+    private void validateMovable(Piece thisPiece, Movement movement) {
         if (!thisPiece.isMovable(movement, pieces.containsKey(movement.target()))) {
             throw new ImpossibleMoveException("해당 위치로 움직일 수 없습니다.");
         }
-    }
-
-    private void validateSameTeamPieceExistsOnTargetPosition(Position targetPosition, Piece thisPiece) {
-        if (pieces.containsKey(targetPosition) && thisPiece.isSameTeamWith(pieces.get(targetPosition))) {
+        if (pieces.containsKey(movement.target()) && thisPiece.isSameTeamWith(pieces.get(movement.target()))) {
             throw new ImpossibleMoveException("해당 위치에 아군 기물이 존재합니다.");
         }
-    }
-
-    private void validateBlockingPieceExists(Piece thisPiece, Movement movement) {
         if (isBlocked(thisPiece, movement)) {
             throw new ImpossibleMoveException("이동을 가로막는 기물이 존재합니다.");
         }
@@ -83,7 +77,9 @@ public class Board {
     }
 
     public double calculateScore(Team team) {
-        double totalScore = findSameTeamPieces(team).mapToDouble(entry -> entry.getValue().point()).sum();
+        double totalScore = findSameTeamPieces(team).values()
+                .stream()
+                .mapToDouble(Piece::point).sum();
         if (sameColumnPawnCount(team) > 1) {
             totalScore = totalScore - sameColumnPawnCount(team) * 0.5;
         }
@@ -91,9 +87,11 @@ public class Board {
     }
 
     private int sameColumnPawnCount(Team team) {
-        Stream<Position> pawnPositions = findSameTeamPieces(team)
+        Set<Position> pawnPositions = findSameTeamPieces(team).entrySet()
+                .stream()
                 .filter(entry -> entry.getValue().isSameCharacter(new Character(team, Kind.PAWN)))
-                .map(Entry::getKey);
+                .map(Entry::getKey)
+                .collect(Collectors.toSet());
         return Position.sameColumnPositionCount(pawnPositions);
     }
 
@@ -118,14 +116,19 @@ public class Board {
     }
 
     private boolean isBeingAttacked(Team team, Position position) {
-        return findSameTeamPieces(team.opponent())
+        return findSameTeamPieces(team.opponent()).entrySet()
+                .stream()
                 .anyMatch(entry -> isAttacking(entry.getValue(), new Movement(entry.getKey(), position)));
     }
 
-    private Stream<Entry<Position, Piece>> findSameTeamPieces(Team team) {
+    private Map<Position, Piece> findSameTeamPieces(Team team) {
         return pieces.entrySet()
                 .stream()
-                .filter(entry -> entry.getValue().isSameTeamWith(team));
+                .filter(entry -> entry.getValue().isSameTeamWith(team))
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        Entry::getValue
+                ));
     }
 
     private boolean isAttacking(Piece thisPiece, Movement movement) {
@@ -136,35 +139,33 @@ public class Board {
     }
 
     private boolean isMate(Team attackedTeam) {
-        return findSameTeamPieces(attackedTeam)
-                .allMatch(entry -> isCheckedAfterAllMoves(entry.getKey(), entry.getValue()));
+        return findSameTeamPieces(attackedTeam).entrySet()
+                .stream()
+                .allMatch(entry -> isCheckedAfterAllMoves(entry.getKey(), entry.getValue(), attackedTeam));
     }
 
-    private boolean isCheckedAfterAllMoves(Position position, Piece piece) {
+    private boolean isCheckedAfterAllMoves(Position position, Piece piece, Team team) {
         return findAllMovablePositions(position, piece)
-                .allMatch(movablePosition -> isCheckedAfterMove(piece, new Movement(position, movablePosition)));
+                .stream()
+                .allMatch(movablePosition -> isCheckedAfterMove(new Movement(position, movablePosition), team));
     }
 
-    private Stream<Position> findAllMovablePositions(Position position, Piece piece) {
-        return Stream.concat(findMovablePositions(position, piece), findAttackablePositions(position, piece))
-                .filter(targetPosition -> !isBlocked(piece, new Movement(position, targetPosition)));
+    private Set<Position> findAllMovablePositions(Position position, Piece piece) {
+        return Stream.concat(position.findAllMovablePosition(piece, false)
+                                .stream()
+                                .filter(targetPosition -> !pieces.containsKey(targetPosition)),
+                        position.findAllMovablePosition(piece, true)
+                                .stream()
+                                .filter(targetPosition -> pieces.containsKey(targetPosition)
+                                        && !piece.isSameTeamWith(pieces.get(targetPosition))))
+                .filter(targetPosition -> !isBlocked(piece, new Movement(position, targetPosition)))
+                .collect(Collectors.toSet());
     }
 
-    private Stream<Position> findMovablePositions(Position position, Piece piece) {
-        return position.findAllMovablePosition(piece)
-                .filter(targetPosition -> !pieces.containsKey(targetPosition));
-    }
-
-    private Stream<Position> findAttackablePositions(Position position, Piece piece) {
-        return position.findAllMovablePosition(piece, true)
-                .filter(targetPosition -> pieces.containsKey(targetPosition)
-                        && !piece.isSameTeamWith(pieces.get(targetPosition)));
-    }
-
-    private boolean isCheckedAfterMove(Piece piece, Movement movement) {
+    private boolean isCheckedAfterMove(Movement movement, Team team) {
         Board copiedBoard = new Board(new HashMap<>(this.pieces));
         copiedBoard.move(movement);
-        return copiedBoard.isChecked(piece.team());
+        return copiedBoard.isChecked(team);
     }
 
     private Position getKingPosition(Team team) {
