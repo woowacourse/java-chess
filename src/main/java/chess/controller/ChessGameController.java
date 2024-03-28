@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Command;
-import chess.domain.chessgame.ScoreCalculator;
+import chess.domain.chessgame.ScoreBoard;
 import chess.domain.dto.BoardDto;
 import chess.domain.pieceInfo.Position;
 import chess.domain.pieceInfo.Team;
@@ -83,14 +83,14 @@ public class ChessGameController {
     }
 
     private void status(final ChessGame chessGame) {
-        ScoreCalculator scoreCalculator = chessGame.status();
-        Team winner = chessGame.findWinner(scoreCalculator);
-        result(chessGame, winner, scoreCalculator);
+        ScoreBoard scoreBoard = chessGame.status();
+        Team winner = chessGame.findWinner(scoreBoard);
+        result(chessGame, winner, scoreBoard);
     }
 
-    private void result(final ChessGame chessGame, final Team winner, final ScoreCalculator scoreCalculator) {
-        double whiteScore = scoreCalculator.getWhiteScore();
-        double blackScore = scoreCalculator.getBlackScore();
+    private void result(final ChessGame chessGame, final Team winner, final ScoreBoard scoreBoard) {
+        double whiteScore = scoreBoard.getWhiteScore();
+        double blackScore = scoreBoard.getBlackScore();
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
         if (winner.equals(Team.NONE)) {
             OutputView.printScoreWithDraw(whiteScore, blackScore);

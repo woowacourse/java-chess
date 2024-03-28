@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class ScoreCalculatorTest {
+public class ScoreBoardTest {
 
     @DisplayName("현재 살아있는 말에 따라 진영에 맞는 점수를 계산한다.")
     @Test
@@ -28,13 +28,13 @@ public class ScoreCalculatorTest {
 
         Board board = new Board();
         pieces.forEach(piece -> board.placePiece(piece.getPosition(), piece));
-        ScoreCalculator scoreCalculator = ScoreCalculator.of(board);
+        ScoreBoard scoreBoard = ScoreBoard.of(board);
 
         double expectedWhiteScore = 52.5;
         double expectedBlackScore = 43.5;
 
-        double actualWhiteScore = scoreCalculator.getWhiteScore();
-        double actualBlackScore = scoreCalculator.getBlackScore();
+        double actualWhiteScore = scoreBoard.getWhiteScore();
+        double actualBlackScore = scoreBoard.getBlackScore();
 
         Assertions.assertThat(actualWhiteScore).isEqualTo(expectedWhiteScore);
         Assertions.assertThat(actualBlackScore).isEqualTo(expectedBlackScore);

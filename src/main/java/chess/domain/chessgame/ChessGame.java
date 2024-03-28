@@ -37,14 +37,14 @@ public class ChessGame {
         return board.isKingRemoved();
     }
 
-    public ScoreCalculator status() {
+    public ScoreBoard status() {
         validateStatus();
-        return ScoreCalculator.of(board);
+        return ScoreBoard.of(board);
     }
 
-    public Team findWinner(ScoreCalculator scoreCalculator) {
-        double whiteScore = scoreCalculator.getWhiteScore();
-        double blackScore = scoreCalculator.getBlackScore();
+    public Team findWinner(ScoreBoard scoreBoard) {
+        double whiteScore = scoreBoard.getWhiteScore();
+        double blackScore = scoreBoard.getBlackScore();
         if (whiteScore > blackScore) {
             return Team.WHITE;
         }

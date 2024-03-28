@@ -9,19 +9,19 @@ import chess.domain.pieceInfo.Team;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreCalculator {
+public class ScoreBoard {
     private final double whiteScore;
     private final double blackScore;
 
-    private ScoreCalculator(final double whiteScore, final double blackScore) {
+    private ScoreBoard(final double whiteScore, final double blackScore) {
         this.whiteScore = whiteScore;
         this.blackScore = blackScore;
     }
 
-    public static ScoreCalculator of(final Board board) {
+    public static ScoreBoard of(final Board board) {
         double whiteScore = calculateScore(board, Team.WHITE);
         double blackScore = calculateScore(board, Team.BLACK);
-        return new ScoreCalculator(whiteScore, blackScore);
+        return new ScoreBoard(whiteScore, blackScore);
     }
 
     private static double calculateScore(final Board board, final Team team) {
