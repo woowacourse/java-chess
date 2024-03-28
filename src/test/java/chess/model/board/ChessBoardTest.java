@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
 
-    private ChessBoard chessBoard;
+    private ChessBoard defaltChessBoard;
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard(new ChessBoardInitializer().create());
+        defaltChessBoard = new ChessBoard(new ChessBoardInitializer().create());
     }
 
     @Test
@@ -30,9 +30,9 @@ class ChessBoardTest {
     void move() {
         Position source = Position.of(File.B, Rank.TWO);
         Position target = Position.of(File.B, Rank.FOUR);
-        chessBoard.move(source, target, Turn.from(Side.WHITE));
+        defaltChessBoard.move(source, target, Turn.from(Side.WHITE));
 
-        Map<Position, Piece> board = chessBoard.getBoard();
+        Map<Position, Piece> board = defaltChessBoard.getBoard();
 
         assertAll(
                 () -> assertThat(board).containsEntry(source, Blank.INSTANCE),
@@ -48,7 +48,7 @@ class ChessBoardTest {
         Position target = Position.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.BLACK)))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.BLACK)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -61,7 +61,7 @@ class ChessBoardTest {
         Turn turn = Turn.from(Side.BLACK);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target, turn))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -86,7 +86,7 @@ class ChessBoardTest {
         Position target = Position.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -98,7 +98,7 @@ class ChessBoardTest {
         Position target = Position.of(File.A, Rank.SIX);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -125,9 +125,23 @@ class ChessBoardTest {
     @DisplayName("체스보드에 각 진영의 King이 모두 존재하면 게임을 이어갈 수 있다.")
     void canContinue() {
         // when
-        boolean result = chessBoard.canContinue();
+        boolean result = defaltChessBoard.canContinue();
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("한 쪽이 이겨 한 King이 존재하지 않을 경우 게임이 종료된다.")
+    void canContinueNotExistingKing() {
+        // given
+        ChessBoardGenerator chessBoardGenerator = new TestChessBoardGenerator(ChessBoardFixture.WHITE_FOOLS_MATE_LOSE);
+        ChessBoard customChessBoard = new ChessBoard(chessBoardGenerator.create());
+
+        // when
+        boolean result = customChessBoard.canContinue();
+
+        // then
+        assertThat(result).isFalse();
     }
 }
