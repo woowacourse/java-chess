@@ -13,7 +13,7 @@ public enum File {
     H(7),
     ;
 
-    private static final String INVALID_FILE = "일치하지 않은 파일 입니다.";
+    private static final String INVALID_FILE = "유효하지 않은 파일입니다. 알파벳 A~F 사이로 입력해주세요. (대소문자 무관)";
 
     private final int index;
 

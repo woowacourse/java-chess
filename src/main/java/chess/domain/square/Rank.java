@@ -13,7 +13,7 @@ public enum Rank {
     EIGHT(7),
     ;
 
-    private static final String INVALID_RANK = "유효하지 않는 랭크입니다.";
+    private static final String INVALID_RANK = "유효하지 않은 랭크입니다. 숫자 1~8 사이로 입력해주세요.";
 
     private final int index;
 

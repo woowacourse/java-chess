@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,11 +26,11 @@ class QueenTest {
     @Test
     void canMove() {
         //given
-        Square crossSource = Square.from("d1");
-        Square crossTarget = Square.from("d3");
+        Square crossSource = Square.of(File.D, Rank.ONE);
+        Square crossTarget = Square.of(File.D, Rank.THREE);
 
-        Square diagonalSource = Square.from("d1");
-        Square diagonalTarget = Square.from("b3");
+        Square diagonalSource = Square.of(File.D, Rank.ONE);
+        Square diagonalTarget = Square.of(File.B, Rank.THREE);
 
         Movement crossMovement = new Movement(crossSource, crossTarget);
         Movement diagonalMovement = new Movement(diagonalSource, diagonalTarget);
@@ -46,8 +48,8 @@ class QueenTest {
     @Test
     void canNotMove() {
         //given
-        Square source = Square.from("d1");
-        Square target = Square.from("f4");
+        Square source = Square.of(File.D, Rank.ONE);
+        Square target = Square.of(File.F, Rank.FOUR);
         Movement movement = new Movement(source, target);
 
         //when

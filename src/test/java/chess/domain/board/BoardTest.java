@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.square.File;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import chess.dto.PieceResponse;
 import java.util.List;
@@ -17,7 +19,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        board = new ChessBoardFactory().createBoard();
     }
 
     @DisplayName("초기화에 성공한다.")
@@ -34,8 +36,8 @@ class BoardTest {
     @Test
     void noPiece() {
         //given
-        Square from = Square.from("c4");
-        Square to = Square.from("c5");
+        Square from = Square.of(File.C, Rank.FOUR);
+        Square to = Square.of(File.C, Rank.FIVE);
 
         //when & then
         assertThatThrownBy(() -> board.move(from, to))
@@ -46,8 +48,8 @@ class BoardTest {
     @Test
     void invalidMovable() {
         //given
-        Square from = Square.from("c2");
-        Square to = Square.from("c5");
+        Square from = Square.of(File.C, Rank.TWO);
+        Square to = Square.of(File.C, Rank.FIVE);
 
         //when & then
         assertThatThrownBy(() -> board.move(from, to))
@@ -58,8 +60,8 @@ class BoardTest {
     @Test
     void checkRoute() {
         //given
-        Square from = Square.from("c1");
-        Square to = Square.from("f4");
+        Square from = Square.of(File.C, Rank.ONE);
+        Square to = Square.of(File.F, Rank.FOUR);
 
         //when & then
         assertThatThrownBy(() -> board.move(from, to))
@@ -70,8 +72,8 @@ class BoardTest {
     @Test
     void checkKnightRoute() {
         //given
-        Square from = Square.from("b1");
-        Square to = Square.from("c3");
+        Square from = Square.of(File.B, Rank.ONE);
+        Square to = Square.of(File.C, Rank.THREE);
 
         //when & then
         assertThatCode(() -> board.move(from, to))
@@ -82,8 +84,8 @@ class BoardTest {
     @Test
     void invalidTarget() {
         //given
-        Square from = Square.from("a1");
-        Square to = Square.from("a2");
+        Square from = Square.of(File.A, Rank.ONE);
+        Square to = Square.of(File.A, Rank.TWO);
 
         //when & then
         assertThatThrownBy(() -> board.move(from, to))
@@ -94,8 +96,8 @@ class BoardTest {
     @Test
     void move() {
         //given
-        Square from = Square.from("a2");
-        Square to = Square.from("a3");
+        Square from = Square.of(File.A, Rank.TWO);
+        Square to = Square.of(File.A, Rank.THREE);
 
         //when
         board.move(from, to);

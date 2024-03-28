@@ -12,7 +12,7 @@ class TurnTest {
     @Test
     void nextTurn() {
         //given
-        Turn turn = new Turn();
+        Turn turn = Turn.first();
 
         //when
         turn.next();

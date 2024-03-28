@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("기물 생성")
-class BoardFactoryTest {
+class ChessBoardFactoryTest {
 
     List<PieceResponse> pieces;
 
     @BeforeEach
     void setUp() {
-        pieces = BoardFactory.createBoard().createBoardStatus();
+        pieces = new ChessBoardFactory().createBoard().createBoardStatus();
     }
 
     @DisplayName("검은 기물")

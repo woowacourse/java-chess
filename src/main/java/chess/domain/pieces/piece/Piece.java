@@ -1,5 +1,7 @@
 package chess.domain.pieces.piece;
 
+import chess.domain.score.Score;
+import chess.domain.score.ScoreStatus;
 import chess.domain.square.Movement;
 import java.util.Objects;
 
@@ -21,12 +23,24 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
+    public boolean isPawn() {
+        return this.type.equals(Type.PAWN);
+    }
+
+    public boolean isKing() {
+        return this.type.equals(Type.KING);
+    }
+
     public Color color() {
         return color;
     }
 
     public Type type() {
         return type;
+    }
+
+    public Score getScore(ScoreStatus scoreStatus) {
+        return scoreStatus.calculate(type.getScore());
     }
 
     @Override

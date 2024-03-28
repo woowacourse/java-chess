@@ -1,12 +1,14 @@
 package chess.domain.square;
 
+import chess.dto.SquareRequest;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 
 public class Movement {
-    public static final String INVALID_PIECE_MOVEMENT = "해당 기물은 위치로 이동할 수 없습니다.";
+    public static final String INVALID_PIECE_MOVEMENT = "기물은 해당 위치로 이동할 수 없습니다. 다시 입력해주세요.";
 
     private final Square source;
     private final Square target;
@@ -15,6 +17,15 @@ public class Movement {
         validate(source, target);
         this.source = source;
         this.target = target;
+    }
+
+    public static Movement of(final SquareRequest source, final SquareRequest target) {
+        File sourceFile = File.from(source.file());
+        Rank sourceRank = Rank.from(source.rank());
+
+        File targetFile = File.from(target.file());
+        Rank targetRank = Rank.from(target.rank());
+        return new Movement(Square.of(sourceFile, sourceRank), Square.of(targetFile, targetRank));
     }
 
     private void validate(final Square source, final Square target) {
@@ -62,5 +73,39 @@ public class Movement {
 
     public int getSourceRankIndex() {
         return source.getRankIndex();
+    }
+
+    public Square getSource() {
+        return source;
+    }
+
+    public Square getTarget() {
+        return target;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Movement movement = (Movement) o;
+        return Objects.equals(getSource(), movement.getSource()) && Objects.equals(getTarget(),
+                movement.getTarget());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSource(), getTarget());
+    }
+
+    @Override
+    public String toString() {
+        return "Movement{" +
+                "source=" + source +
+                ", target=" + target +
+                '}';
     }
 }

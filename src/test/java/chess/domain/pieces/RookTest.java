@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
+import chess.domain.square.File;
 import chess.domain.square.Movement;
+import chess.domain.square.Rank;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,8 +31,8 @@ class RookTest {
         @Test
         void canMoveHorizontally() {
             //given
-            Square source = Square.from("a1");
-            Square target = Square.from("c1");
+            Square source = Square.of(File.A, Rank.ONE);
+            Square target = Square.of(File.C, Rank.ONE);
 
             //when
             Movement movement = new Movement(source, target);
@@ -43,8 +45,8 @@ class RookTest {
         @Test
         void canMoveVertically() {
             //given
-            Square source = Square.from("a1");
-            Square target = Square.from("a4");
+            Square source = Square.of(File.A, Rank.ONE);
+            Square target = Square.of(File.A, Rank.FOUR);
 
             //when
             Movement movement = new Movement(source, target);
@@ -57,9 +59,9 @@ class RookTest {
         @Test
         void canMoveHorizontallyThenVertically() {
             //given
-            Square source = Square.from("a1");
-            Square intermediate = Square.from("b1");
-            Square target = Square.from("b5");
+            Square source = Square.of(File.A, Rank.ONE);
+            Square intermediate = Square.of(File.B, Rank.ONE);
+            Square target = Square.of(File.B, Rank.FIVE);
 
             //when
             Movement movement1 = new Movement(source, intermediate);
@@ -86,8 +88,8 @@ class RookTest {
         @Test
         void canNotMoveDiagonally() {
             //given
-            Square source = Square.from("a1");
-            Square target = Square.from("b2");
+            Square source = Square.of(File.A, Rank.ONE);
+            Square target = Square.of(File.B, Rank.TWO);
 
             //when
             Movement movement = new Movement(source, target);
@@ -100,8 +102,8 @@ class RookTest {
         @Test
         void canNotMoveLikeKnight() {
             //given
-            Square source = Square.from("a1");
-            Square target = Square.from("c2");
+            Square source = Square.of(File.A, Rank.ONE);
+            Square target = Square.of(File.C, Rank.TWO);
 
             //when
             Movement movement = new Movement(source, target);

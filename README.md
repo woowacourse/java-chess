@@ -8,9 +8,18 @@
 
 
 # 객체 협력 관계
-![object-relations](src/main/java/resources/static/chess-step-1.png)
+![object-relations](src/main/resources/static/chess-step-1.png)
 
-# 기능 요구사항
+# ERD
+![erd](src/main/resources/static/chess-erd.png)
+
+# MySQL Server 실행하기
+```bash
+docker-compose -p chess up -d
+```
+
+
+# 기능 요구사항(step 1&2)
 
 ## Board
 - [x] 초기의 체스판에 기물을 적절한 위치와 컬러에 맞게 세팅한다.
@@ -43,3 +52,30 @@
 - [x] Rank를 가지고 있다.
 - [x] File을 가지고 있다.
   - ⛔️️[x] 이동 위치가 유효하지 않으면 예외가 발생한다.
+
+# 기능 요구사항(step 3&4)
+
+## Piece
+- [x] queen은 9점, rook은 5점, bishop은 3점, knight는 2.5점이다.
+- [x] pawn의 기본 점수는 1점이다.
+- [x] 같은 세로줄에 같은 색의 폰이 있는 경우 1점이 아닌 0.5점을 준다.
+- [x] king은 0점이다.
+
+## Game
+- [x] King이 잡혔을 때 게임을 종료해야 한다.
+- [x] 남아 있는 말에 대한 점수를 구한다.
+- [x] 재입력을 구현한다.
+- [x] Pawn 전진 공격 시 수정한다.
+- [x] 이긴 진영을 출력한다.
+
+## Application
+- [x] 애플리케이션을 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+ - [x] 종료된 게임을 불러오면 종료되었다고 알린다.
+- [x] DB를 적용할 때 도메인 객체의 변경을 최소화해야한다.
+- [x] 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다.
+  - [x] 사용자를 생성할 수 있다.
+  - [x] 모든 사용자를 조회할 수 있다.
+- [x] 사용자별로 체스 게임 기록을 관리할 수 있다.
+ - [x] 게임을 기록한다.
+- [x] 게임 종료 시, 점수를 출력한다.
+- [x] 턴이 바뀔 때마다 출력한다.

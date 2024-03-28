@@ -9,10 +9,14 @@ repositories {
 }
 
 dependencies {
+    // Java
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation platform('org.assertj:assertj-bom:3.25.1')
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core')
+
+    // Database
+    runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
 }
 
 java {
