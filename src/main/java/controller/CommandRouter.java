@@ -22,7 +22,7 @@ public class CommandRouter {
 
         this.playRouter = Map.of(
                 PlayCommandFormatType.MOVE, new MoveCommand(controller),
-                PlayCommandFormatType.STATUS, new StartCommand(controller),
+                PlayCommandFormatType.STATUS, new StatusCommand(controller),
                 PlayCommandFormatType.END, new EndCommand(controller),
                 PlayCommandFormatType.QUIT, new QuitCommand(controller));
     }
