@@ -7,23 +7,23 @@ USE chess;
 
 CREATE TABLE IF NOT EXISTS user
 (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    name    VARCHAR(64) NOT NULL
+    user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name    CHAR(10) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS room
 (
-    room_id INT AUTO_INCREMENT PRIMARY KEY,
-    name    VARCHAR(64) NOT NULL,
-    user_id INT,
+    room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name    CHAR(10) NOT NULL,
+    user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES user (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS movement
 (
-    source     VARCHAR(64) NOT NULL,
-    target     VARCHAR(64) NOT NULL,
-    room_id    INT,
+    source     CHAR(2) NOT NULL,
+    target     CHAR(2) NOT NULL,
+    room_id    BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES room (room_id)
 );
