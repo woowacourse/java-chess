@@ -5,6 +5,7 @@ import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Knight extends Piece {
     public Knight(final Color color, final Square square) {
@@ -13,7 +14,7 @@ public class Knight extends Piece {
 
     @Override
     public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
-        Set<Square> candidateSquares = candidateSquares();
+        Set<Square> candidateSquares = findCandidateSquares();
         for (Piece other : entirePieces) {
             removeIfAllyExist(other, candidateSquares);
         }
@@ -34,33 +35,11 @@ public class Knight extends Piece {
         }
     }
 
-    public Set<Square> candidateSquares() {
-        Set<Square> squares = new HashSet<>();
+    public Set<Square> findCandidateSquares() {
         Square currentSquare = currentSquare();
-        if (currentSquare.canMoveUp() && currentSquare.moveUp().canMoveLeftUp()) {
-            squares.add(currentSquare.moveUp().moveLeftUp());
-        }
-        if (currentSquare.canMoveUp() && currentSquare.moveUp().canMoveRightUp()) {
-            squares.add(currentSquare.moveUp().moveRightUp());
-        }
-        if (currentSquare.canMoveDown() && currentSquare.moveDown().canMoveLeftDown()) {
-            squares.add(currentSquare.moveDown().moveLeftDown());
-        }
-        if (currentSquare.canMoveDown() && currentSquare.moveDown().canMoveRightDown()) {
-            squares.add(currentSquare.moveDown().moveRightDown());
-        }
-        if (currentSquare.canMoveRight() && currentSquare.moveRight().canMoveRightUp()) {
-            squares.add(currentSquare.moveRight().moveRightUp());
-        }
-        if (currentSquare.canMoveRight() && currentSquare.moveRight().canMoveRightDown()) {
-            squares.add(currentSquare.moveRight().moveRightDown());
-        }
-        if (currentSquare.canMoveLeft() && currentSquare.moveLeft().canMoveLeftUp()) {
-            squares.add(currentSquare.moveLeft().moveLeftUp());
-        }
-        if (currentSquare.canMoveLeft() && currentSquare.moveLeft().canMoveLeftDown()) {
-            squares.add(currentSquare.moveLeft().moveLeftDown());
-        }
-        return squares;
+        return movements().stream()
+                .filter(currentSquare::canMove)
+                .map(currentSquare::move)
+                .collect(Collectors.toSet());
     }
 }
