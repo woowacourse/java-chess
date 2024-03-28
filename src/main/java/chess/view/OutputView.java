@@ -3,7 +3,6 @@ package chess.view;
 import chess.domain.game.GameResult;
 import chess.domain.pieces.piece.Color;
 import chess.dto.PieceResponse;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
@@ -23,6 +22,7 @@ public class OutputView {
     private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
     private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
     private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String GAME_FINISH_MESSAGE = "> 게임이 종료되었습니다.";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
@@ -116,8 +116,11 @@ public class OutputView {
         System.out.printf(ROOM_STATUS + System.lineSeparator(), stringJoiner);
     }
 
+    public void printGameFinish() {
+        System.out.println(GAME_FINISH_MESSAGE);
+    }
+
     public void printErrorMessage(String message) {
         System.out.println(ERROR_PREFIX + message);
     }
-
 }

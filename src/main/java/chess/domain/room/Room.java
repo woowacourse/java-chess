@@ -3,7 +3,7 @@ package chess.domain.room;
 import java.util.regex.Pattern;
 
 public class Room {
-    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z가-힣]+(?:\\s+[a-zA-Z가-힣]+)*$");
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z가-힣0-9]+(?:\\s+[a-zA-Z가-힣0-9]+)*$");
     private static final String INVALID_NAME_FORMAT = "체스방 이름은 10자 이하로 입력해주세요.";
     private static final int MAX_ROOM_NAME_LENGTH = 10;
 

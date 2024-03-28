@@ -15,7 +15,6 @@ import chess.dto.PieceResponse;
 import chess.service.GameService;
 import chess.view.InputView;
 import chess.view.OutputView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +66,7 @@ public class GameController {
         while (requestUntilValidated(() -> playOneRound(game)) != GameCommand.END) {
             outputView.printBoard(createBoardResponse(game.getBoardStatus()));
         }
+        printEndStatus(game);
     }
 
     private GameCommand playOneRound(final Game game) {
@@ -86,6 +86,14 @@ public class GameController {
             }
         }
         return commandType;
+    }
+
+    private void printEndStatus(final Game game) {
+        GameResult gameResult = game.getResult();
+
+        outputView.printGameFinish();
+        outputView.printBoard(createBoardResponse(game.getBoardStatus()));
+        outputView.printStatus(gameResult);
     }
 
     private void move(final Game game, final GameRequest request) {
