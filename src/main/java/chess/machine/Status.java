@@ -19,6 +19,10 @@ public class Status implements Command {
         return new Status(input);
     }
 
+    public static Status instance() {
+        return new Status(INPUT_COMMAND);
+    }
+
     @Override
     public void conductCommand(ChessGame chessGame, OutputView outputView) {
         Result result = new Result(chessGame);

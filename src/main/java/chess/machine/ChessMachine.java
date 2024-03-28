@@ -70,7 +70,7 @@ public class ChessMachine {
     }
 
     private void printStatus(ChessGame chessGame) {
-        Command command = Status.of("status");
+        Command command = Status.instance();
         command.conductCommand(chessGame, outputView);
     }
 }
