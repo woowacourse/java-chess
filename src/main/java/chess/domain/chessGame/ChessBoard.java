@@ -105,8 +105,7 @@ public class ChessBoard {
 
     private FileScore calculateScoreInFile(Color color, File file) {
         return spaces.stream()
-                .filter(space -> space.isSameFile(file))
-                .filter(space -> space.hasColor(color))
+                .filter(space -> space.isSameFile(file) && space.hasColor(color))
                 .map(space -> FileScore.create(file, space))
                 .reduce(FileScore::concat)
                 .orElse(FileScore.zero(file));
