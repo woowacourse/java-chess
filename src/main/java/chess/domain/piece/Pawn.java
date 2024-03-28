@@ -5,6 +5,7 @@ import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class Pawn extends Piece {
     public Pawn(final Color color, final Square square) {
@@ -14,18 +15,14 @@ public abstract class Pawn extends Piece {
     public abstract Set<Movement> capableOfAttackMovements();
 
     protected Set<Square> capableOfAttack(Set<Piece> existPieces) {
-        Set<Square> squares = new HashSet<>();
-        for (Movement movement : capableOfAttackMovements()) {
-            Square currentSquare = currentSquare();
-            if (currentSquare.canMove(movement)) {
-                currentSquare = currentSquare.move(movement);
-                addMovableSquareIfOccupiedEnemy(existPieces, currentSquare, squares);
-            }
-        }
-        return squares;
+        return capableOfAttackMovements().stream()
+                .filter(movement -> currentSquare().canMove(movement))
+                .map(movement -> currentSquare().move(movement))
+                .filter(square -> isOccupied(existPieces, square) && isEnemyOf(getPiece(existPieces, square)))
+                .collect(Collectors.toSet());
     }
 
-    protected void addStartPawnMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
+    protected void addStartPawnMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {//todo
         for (Movement movement : movements()) {
             for (int i = 0; i < 2 && currentSquare.canMove(movement); i++) {
                 currentSquare = currentSquare.move(movement);
@@ -37,13 +34,23 @@ public abstract class Pawn extends Piece {
         }
     }
 
-    protected void addMovableSquare(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
-        for (Movement movement : movements()) {
-            if (currentSquare.canMove(movement)) {
-                currentSquare = currentSquare.move(movement);
-                addToMovableSquareIfBlank(existPieces, currentSquare, squares);
-            }
+    protected Set<Square> findPawnLegalMoves(Set<Piece> existPieces, Color color) {
+        Set<Square> squares = new HashSet<>(capableOfAttack(existPieces));
+        Square currentSquare = currentSquare();
+        if (currentSquare.isStartRankOf(color)) {
+            addStartPawnMovableSquare(existPieces, currentSquare, squares);
+            return squares;
         }
+        squares.addAll(addMovableSquare(existPieces, currentSquare));
+        return squares;
+    }
+
+    protected Set<Square> addMovableSquare(Set<Piece> existPieces, Square currentSquare) {
+        return movements().stream()
+                .filter(currentSquare::canMove)
+                .map(currentSquare::move)
+                .filter(square -> isBlank(existPieces, square))
+                .collect(Collectors.toSet());
     }
 
     protected Piece getPiece(Set<Piece> entirePieces, Square currentSquare) {
@@ -51,25 +58,6 @@ public abstract class Pawn extends Piece {
                 .filter(piece -> piece.currentSquare() == currentSquare)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 기물이 없습니다."));
-    }
-
-    protected void addMovableSquareIfOccupiedEnemy(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
-        if (isOccupied(existPieces, currentSquare)) {
-            Piece piece = getPiece(existPieces, currentSquare);
-            addToMovableSquareIfEnemy(piece, squares, currentSquare);
-        }
-    }
-
-    protected void addToMovableSquareIfEnemy(Piece piece, Set<Square> squares, Square currentSquare) {
-        if (isEnemyOf(piece)) {
-            squares.add(currentSquare);
-        }
-    }
-
-    protected void addToMovableSquareIfBlank(Set<Piece> existPieces, Square currentSquare, Set<Square> squares) {
-        if (isBlank(existPieces, currentSquare)) {
-            squares.add(currentSquare);
-        }
     }
 
     protected boolean isOccupied(Set<Piece> entirePieces, Square currentSquare) {

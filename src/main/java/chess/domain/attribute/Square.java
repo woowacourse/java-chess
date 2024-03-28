@@ -200,12 +200,11 @@ public class Square {
         return file.canMoveRight() && rank.canMoveDown();
     }
 
-    public boolean isStartRankOfBlackPawn() {
+    public boolean isStartRankOf(Color color) {
+        if (color.equals(Color.WHITE)) {
+            return rank.isRankTwo();
+        }
         return rank.isRankSeven();
-    }
-
-    public boolean isStartRankOfWhitePawn() {
-        return rank.isRankTwo();
     }
 
     @Override
