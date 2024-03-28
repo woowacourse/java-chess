@@ -3,7 +3,6 @@ package chess.model.position;
 import chess.model.board.Board;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -65,12 +64,16 @@ public class Position {
         return Position.of(file + fileStep, rank + rankStep);
     }
 
-    public static List<Position> values() {
-        return List.copyOf(POSITION_CACHE.values());
-    }
-
     public boolean isOnRank(int rank) {
         return this.rank == rank;
+    }
+
+    public int getFile() {
+        return file;
+    }
+
+    public int getRank() {
+        return rank;
     }
 
     @Override
