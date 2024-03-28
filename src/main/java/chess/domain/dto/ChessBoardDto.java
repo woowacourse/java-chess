@@ -13,12 +13,12 @@ public class ChessBoardDto {
         this.pieces = pieces;
     }
 
-    public ChessBoardDto of(List<Piece> pieces) {
+    public static ChessBoardDto of(List<Piece> pieces) {
         List<ChessBoard> piece = makeChessBoard(pieces);
         return new ChessBoardDto(piece);
     }
 
-    private List<ChessBoard> makeChessBoard(List<Piece> pieces) {
+    private static List<ChessBoard> makeChessBoard(List<Piece> pieces) {
         List<ChessBoard> pieceSet = new ArrayList<>();
         pieces.forEach(piece -> pieceSet.add(
                 new ChessBoard(piece.getPosition().getPosition(), piece.getTeam().name(), piece.getType().name())));

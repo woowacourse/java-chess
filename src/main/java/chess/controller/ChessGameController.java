@@ -3,7 +3,9 @@ package chess.controller;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Command;
 import chess.domain.chessgame.ScoreBoard;
+import chess.domain.db.ChessBoardDao;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.ChessBoardDto;
 import chess.domain.pieceInfo.Position;
 import chess.domain.pieceInfo.Team;
 import chess.view.InputView;
@@ -12,6 +14,7 @@ import chess.view.OutputView;
 import static chess.domain.chessgame.CommandType.*;
 
 public class ChessGameController {
+    private final ChessBoardDao chessBoardDao = new ChessBoardDao();
 
     public void run() {
         ChessGame chessGame = new ChessGame();
@@ -57,6 +60,9 @@ public class ChessGameController {
         if (command.isCommand(STATUS)) {
             status(chessGame);
         }
+        if (command.isCommand(SAVE)) {
+            save(chessGame);
+        }
         return false;
     }
 
@@ -97,5 +103,10 @@ public class ChessGameController {
             return;
         }
         OutputView.printScoreWithWinner(whiteScore, blackScore, winner);
+    }
+
+    private void save(final ChessGame chessGame) {
+        ChessBoardDto chessBoardDto = ChessBoardDto.of(chessGame.getBoard().values().stream().toList());
+        chessBoardDto.getPieces().forEach(chessBoardDao::addPiece);
     }
 }
