@@ -47,8 +47,8 @@ public class PiecePositionsTest {
         pieces.put(new Position(File.H, Rank.EIGHTH), Rook.from(Color.BLACK));
 
         for (File file : File.values()) {
-            pieces.put(new Position(file, Rank.SEVENTH), Pawn.createOnStart(Color.BLACK));
-            pieces.put(new Position(file, Rank.SECOND), Pawn.createOnStart(Color.WHITE));
+            pieces.put(new Position(file, Rank.SEVENTH), Pawn.from(Color.BLACK));
+            pieces.put(new Position(file, Rank.SECOND), Pawn.from(Color.WHITE));
         }
 
         pieces.put(new Position(File.A, Rank.FIRST), Rook.from(Color.WHITE));

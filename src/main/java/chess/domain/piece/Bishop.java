@@ -3,7 +3,10 @@ package chess.domain.piece;
 import chess.domain.movement.Movements;
 import chess.domain.movement.MovementsFactory;
 import chess.domain.movement.UnitMovement;
+import chess.domain.position.Position;
+import chess.domain.position.TerminalPosition;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,12 +27,12 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected int maxPassMoveCount() {
-        return MAX_MOVE_COUNT;
+    public List<Position> findPassPathTaken(TerminalPosition terminalPosition) {
+        return movements.findPassPathTaken(terminalPosition, MAX_MOVE_COUNT);
     }
 
     @Override
-    protected int maxAttackMoveCount() {
-        return MAX_MOVE_COUNT;
+    public List<Position> findAttackPathTaken(TerminalPosition terminalPosition) {
+        return movements.findAttackPathTaken(terminalPosition, MAX_MOVE_COUNT);
     }
 }

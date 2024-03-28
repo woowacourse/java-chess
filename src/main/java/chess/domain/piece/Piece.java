@@ -9,30 +9,16 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final Color color;
-    private final Movements movements;
+    protected final Movements movements;
 
     public Piece(Color color, Movements movements) {
         this.color = color;
         this.movements = movements;
     }
 
-    public final List<Position> findPassPathTaken(TerminalPosition terminalPosition) {
-        return movements.findPassPathTaken(terminalPosition, maxPassMoveCount());
-    }
+    public abstract List<Position> findPassPathTaken(TerminalPosition terminalPosition);
 
-    protected abstract int maxPassMoveCount();
-
-    public final List<Position> findAttackPathTaken(TerminalPosition terminalPosition) {
-        return movements.findAttackPathTaken(terminalPosition, maxAttackMoveCount());
-    }
-
-    protected abstract int maxAttackMoveCount();
-
-    /**
-     * @ImplSpec 각 Piece의 움직임을 추적해야 하는 경우, move 메소드를 적절히 오버라이딩하여 사용할 수 있다. 기본적인 동작은 아무것도 수행하지 않는 것이다.
-     */
-    public void move() {
-    }
+    public abstract List<Position> findAttackPathTaken(TerminalPosition terminalPosition);
 
     public boolean isColor(Color color) {
         return this.color == color;

@@ -19,7 +19,7 @@ import java.util.Map;
 public class OutputView {
     private static final OutputView INSTANCE = new OutputView();
     private static final Map<Piece, String> BLACK_PIECE_VIEWS = Map.of(
-            Pawn.createOnStart(Color.BLACK), "P",
+            Pawn.from(Color.BLACK), "P",
             Knight.from(Color.BLACK), "N",
             Bishop.from(Color.BLACK), "B",
             Rook.from(Color.BLACK), "R",
@@ -27,7 +27,7 @@ public class OutputView {
             King.from(Color.BLACK), "K"
     );
     private static final Map<Piece, String> WHITE_PIECE_VIEWS = Map.of(
-            Pawn.createOnStart(Color.WHITE), "p",
+            Pawn.from(Color.WHITE), "p",
             Knight.from(Color.WHITE), "n",
             Bishop.from(Color.WHITE), "b",
             Rook.from(Color.WHITE), "r",

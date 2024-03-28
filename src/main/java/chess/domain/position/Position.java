@@ -19,6 +19,10 @@ public class Position {
         return new Position(file.move(unitMovement.getFileDiff()), rank.move(unitMovement.getRankDiff()));
     }
 
+    public boolean isRank(Rank rank) {
+        return this.rank == rank;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

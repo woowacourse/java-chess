@@ -20,27 +20,26 @@ class PawnTest {
     @DisplayName("블랙 폰 이동 테스트")
     @Nested
     class BlackPawnPassTest {
-        @DisplayName("한 번도 이동하지 않은 블랙 폰은 밑으로 두 칸 움직일 수 있다.")
+        @DisplayName("초기 위치 Rank 7에 있는 블랙 폰은 밑으로 두 칸 움직일 수 있다.")
         @Test
         void blackCanMoveTwoStraightTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.BLACK);
+            Piece piece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SIXTH));
+                    new TerminalPosition(new Position(File.A, Rank.SEVENTH), new Position(File.A, Rank.FIFTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
-                    .isEqualTo(List.of(new Position(File.A, Rank.SEVENTH)));
+                    .isEqualTo(List.of(new Position(File.A, Rank.SIXTH)));
         }
 
-        @DisplayName("이동한적이 있는 블랙 폰은 밑으로 두 칸 움직일 수 없다.")
+        @DisplayName("초기 위치 Rank 7에 있지 않는 블랙 폰은 밑으로 두 칸 움직일 수 없다.")
         @Test
         void blackCanNotMoveTwoStraightTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.BLACK);
-            piece.move();
+            Piece piece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SIXTH));
+                    new TerminalPosition(new Position(File.A, Rank.SIXTH), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -52,9 +51,9 @@ class PawnTest {
         @Test
         void blackCanStraightMoveTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.BLACK);
+            Piece piece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(File.A, Rank.EIGHTH), new Position(File.A, Rank.SEVENTH));
+                    new TerminalPosition(new Position(File.A, Rank.SEVENTH), new Position(File.A, Rank.SIXTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -66,7 +65,7 @@ class PawnTest {
         @MethodSource("provideUnValidEndPositionForBlack")
         void blackCanNotStraightMoveTest(Position endPosition) {
             // given
-            Piece piece = Pawn.createOnStart(Color.BLACK);
+            Piece piece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition = new TerminalPosition(new Position(File.B, Rank.SEVENTH), endPosition);
 
             // when & then
@@ -88,11 +87,11 @@ class PawnTest {
     @DisplayName("화이트 폰 이동 테스트")
     @Nested
     class WhitePawnPassTest {
-        @DisplayName("한 번도 이동하지 않은 화이트 폰은 위로 두 칸 움직일 수 있다.")
+        @DisplayName("초기 위치 Rank 2에 있는 화이트 폰은 밑으로 두 칸 움직일 수 있다.")
         @Test
         void whiteCanMoveTwoStraightTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.WHITE);
+            Piece piece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.FOURTH));
 
@@ -101,14 +100,13 @@ class PawnTest {
                     .isEqualTo(List.of(new Position(File.A, Rank.THIRD)));
         }
 
-        @DisplayName("이동한적이 있는 화이트 폰은 밑으로 두 칸 움직일 수 없다.")
+        @DisplayName("초기 위치 Rank 2에 있지 않는 화이트 폰은 밑으로 두 칸 움직일 수 없다.")
         @Test
         void whiteCanNotMoveTwoStraightTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.WHITE);
-            piece.move();
+            Piece piece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(File.A, Rank.SECOND), new Position(File.A, Rank.FOURTH));
+                    new TerminalPosition(new Position(File.A, Rank.THIRD), new Position(File.A, Rank.FIFTH));
 
             // when & then
             assertThatThrownBy(() -> piece.findPassPathTaken(terminalPosition))
@@ -120,9 +118,9 @@ class PawnTest {
         @Test
         void whiteCanStraightMoveTest() {
             // given
-            Piece piece = Pawn.createOnStart(Color.WHITE);
+            Piece piece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
-                    new TerminalPosition(new Position(File.A, Rank.FIRST), new Position(File.A, Rank.SECOND));
+                    new TerminalPosition(new Position(File.A, Rank.THIRD), new Position(File.A, Rank.FOURTH));
 
             // when & then
             assertThat(piece.findPassPathTaken(terminalPosition))
@@ -134,7 +132,7 @@ class PawnTest {
         @MethodSource("provideUnValidEndPositionForWhite")
         void canStraightNotMoveTest(Position endPosition) {
             // given
-            Piece piece = Pawn.createOnStart(Color.WHITE);
+            Piece piece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition = new TerminalPosition(new Position(File.B, Rank.SECOND), endPosition);
 
             // when & then
@@ -160,7 +158,7 @@ class PawnTest {
         @Test
         void blackCanLeftDownAttackTest() {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
+            Piece attackerPiece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.A, Rank.SIXTH));
 
@@ -173,7 +171,7 @@ class PawnTest {
         @Test
         void blackCanRightDownAttackTest() {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
+            Piece attackerPiece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.C, Rank.SIXTH));
 
@@ -187,7 +185,7 @@ class PawnTest {
         @MethodSource("provideUnValidAttackedPositionForBlack")
         void blackCanNotAttackTest(Position attackedPosition) {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.BLACK);
+            Piece attackerPiece = Pawn.from(Color.BLACK);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), attackedPosition);
 
@@ -216,7 +214,7 @@ class PawnTest {
         @Test
         void whiteCanLeftDownAttackTest() {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
+            Piece attackerPiece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.A, Rank.EIGHTH));
 
@@ -229,7 +227,7 @@ class PawnTest {
         @Test
         void whiteCanRightDownAttackTest() {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
+            Piece attackerPiece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), new Position(File.C, Rank.EIGHTH));
 
@@ -243,7 +241,7 @@ class PawnTest {
         @MethodSource("provideUnValidAttackedPositionForWhite")
         void whiteCanNotAttackTest(Position attackedPosition) {
             // given
-            Piece attackerPiece = Pawn.createOnStart(Color.WHITE);
+            Piece attackerPiece = Pawn.from(Color.WHITE);
             TerminalPosition terminalPosition =
                     new TerminalPosition(new Position(File.B, Rank.SEVENTH), attackedPosition);
 

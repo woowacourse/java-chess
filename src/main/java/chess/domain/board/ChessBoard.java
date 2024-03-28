@@ -68,7 +68,6 @@ public class ChessBoard {
     private void passPiece(TerminalPosition terminalPosition) {
         Piece startPiece = getPiece(terminalPosition.getStart());
         validateObstacle(startPiece.findPassPathTaken(terminalPosition));
-        startPiece.move();
 
         exchange(terminalPosition, startPiece);
     }
@@ -82,7 +81,6 @@ public class ChessBoard {
     private void attackPiece(TerminalPosition terminalPosition) {
         Piece startPiece = getPiece(terminalPosition.getStart());
         validateObstacle(startPiece.findAttackPathTaken(terminalPosition));
-        startPiece.move();
 
         putPiece(terminalPosition.getEnd(), startPiece);
         putPiece(terminalPosition.getStart(), Empty.getInstance());
