@@ -27,7 +27,8 @@ public class OutputView {
     private static final String GAME_FINISH_MESSAGE = "> 게임이 종료되었습니다.";
     private static final String GAME_ALREADY_OVER = "> 이미 게임이 종료되었습니다.";
     private static final char EMPTY_SQUARE = '.';
-    private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
+    private static final String SCORE_STATUS_FORMAT = "> %s: %.1f";
+    private static final String WINNER_FORMAT = "> 승리 진영: %s";
     private static final int BOARD_SIZE = 8;
     private static final String NAME_DELIMITER = ", ";
     private static final String ERROR_PREFIX = "[ERROR] ";
@@ -76,11 +77,16 @@ public class OutputView {
     public void printStatus(final GameResult gameResult) {
         printScoreStatus(gameResult, Color.WHITE);
         printScoreStatus(gameResult, Color.BLACK);
+        printWinner(gameResult);
     }
 
     private void printScoreStatus(final GameResult gameResult, final Color color) {
         System.out.printf(SCORE_STATUS_FORMAT + System.lineSeparator(), color.name(),
                 gameResult.calculateScore(color).getValue());
+    }
+
+    private void printWinner(final GameResult gameResult) {
+        System.out.printf(WINNER_FORMAT + System.lineSeparator(), gameResult.getWinner());
     }
 
     public void printUserEntranceMessage() {

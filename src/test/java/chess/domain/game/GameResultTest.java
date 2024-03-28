@@ -91,4 +91,78 @@ class GameResultTest {
         //then
         assertThat(gameResult.isGameOver()).isTrue();
     }
+
+    @DisplayName("King이 죽은 경우, 살아있는 진영이 승리한다")
+    @Test
+    void getWinnerKingDead() {
+        //given
+        Color white = Color.WHITE;
+        Color black = Color.BLACK;
+
+        Map<Square, Piece> pieces = Map.of(
+                Square.of(File.E, Rank.ONE), new Rook(white),
+                Square.of(File.F, Rank.FOUR), new Knight(white),
+                Square.of(File.G, Rank.FOUR), new Queen(white),
+                Square.of(File.F, Rank.TWO), Pawn.of(white),
+                Square.of(File.F, Rank.THREE), Pawn.of(white),
+                Square.of(File.G, Rank.TWO), Pawn.of(white),
+                Square.of(File.H, Rank.THREE), Pawn.of(white),
+                Square.of(File.A, Rank.ONE), new King(black)
+        );
+
+        //when
+        GameResult gameResult = new GameResult(pieces);
+
+        //then
+        assertThat(gameResult.getWinner()).isEqualTo(WinnerResult.BLACK);
+    }
+
+    @DisplayName("King이 모두 살아있을 경우, 점수가 높은 진영이 승리한다")
+    @Test
+    void getWinnerBiggerScore() {
+        //given
+        Color white = Color.WHITE;
+        Color black = Color.BLACK;
+
+        Map<Square, Piece> pieces = Map.of(
+                Square.of(File.E, Rank.ONE), new Rook(white),
+                Square.of(File.F, Rank.FOUR), new Knight(white),
+                Square.of(File.G, Rank.FOUR), new Queen(white),
+                Square.of(File.F, Rank.TWO), Pawn.of(white),
+                Square.of(File.F, Rank.THREE), Pawn.of(white),
+                Square.of(File.G, Rank.TWO), Pawn.of(white),
+                Square.of(File.H, Rank.THREE), Pawn.of(white),
+                Square.of(File.A, Rank.ONE), new King(black),
+                Square.of(File.F, Rank.ONE), new King(white)
+        );
+
+        //when
+        GameResult gameResult = new GameResult(pieces);
+
+        //then
+        assertThat(gameResult.getWinner()).isEqualTo(WinnerResult.WHITE);
+    }
+
+    @DisplayName("King이 모두 살아있을 경우, 점수가 동률이면 TIE를 반환한다")
+    @Test
+    void getWinnerTie() {
+        //given
+        Color white = Color.WHITE;
+        Color black = Color.BLACK;
+
+        Map<Square, Piece> pieces = Map.of(
+                Square.of(File.F, Rank.TWO), Pawn.of(white),
+                Square.of(File.A, Rank.THREE), Pawn.of(white),
+                Square.of(File.G, Rank.TWO), Pawn.of(black),
+                Square.of(File.H, Rank.THREE), Pawn.of(black),
+                Square.of(File.A, Rank.ONE), new King(black),
+                Square.of(File.F, Rank.ONE), new King(white)
+        );
+
+        //when
+        GameResult gameResult = new GameResult(pieces);
+
+        //then
+        assertThat(gameResult.getWinner()).isEqualTo(WinnerResult.TIE);
+    }
 }

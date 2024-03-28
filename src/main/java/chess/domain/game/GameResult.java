@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class GameResult {
+    private static final String NO_KING_FOUND = "살아있는 왕이 없습니다.";
     private static final int KING_COUNT = 2;
 
     private final Map<Square, Piece> pieces;
@@ -62,9 +63,30 @@ public class GameResult {
     }
 
     public boolean isGameOver() {
-        long kingCount = pieces.values().stream()
-                .filter(Piece::isKing)
-                .count();
+        long kingCount = pieces.values().stream().filter(Piece::isKing).count();
         return kingCount != KING_COUNT;
+    }
+
+    public WinnerResult getWinner() {
+        if (isGameOver()) {
+            return getWinnerWhenOver();
+        }
+        return getCurrentWinner(calculateScore(Color.BLACK), calculateScore(Color.WHITE));
+    }
+
+    private WinnerResult getWinnerWhenOver() {
+        Piece king = pieces.values().stream().filter(Piece::isKing).findAny()
+                .orElseThrow(() -> new IllegalStateException(NO_KING_FOUND));
+        return WinnerResult.from(king.color());
+    }
+
+    private WinnerResult getCurrentWinner(final Score blackScore, final Score whiteScore) {
+        if (blackScore.isBiggerThan(whiteScore)) {
+            return WinnerResult.BLACK;
+        }
+        if (whiteScore.isBiggerThan(blackScore)) {
+            return WinnerResult.WHITE;
+        }
+        return WinnerResult.TIE;
     }
 }

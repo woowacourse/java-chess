@@ -30,6 +30,10 @@ public class Score {
         return value;
     }
 
+    public boolean isBiggerThan(final Score score) {
+        return this.value > score.getValue();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
