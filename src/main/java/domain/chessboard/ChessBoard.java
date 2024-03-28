@@ -28,7 +28,6 @@ public class ChessBoard {
     );
     private static final Piece BLACK_PAWN = new Pawn(Team.BLACK);
     private static final Piece WHITE_PAWN = new Pawn(Team.WHITE);
-    private static final int TOTAL_KING_COUNT = 2;
 
     private final Map<Square, Piece> pieceSquares;
     private Team currentTeam;
