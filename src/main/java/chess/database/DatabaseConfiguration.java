@@ -1,4 +1,4 @@
-package chess.infra;
+package chess.database;
 
 public class DatabaseConfiguration {
 
