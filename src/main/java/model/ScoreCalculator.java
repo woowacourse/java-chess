@@ -3,7 +3,9 @@ package model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import model.piece.Piece;
+import model.position.Column;
 import model.position.Position;
 
 public class ScoreCalculator {
@@ -41,34 +43,23 @@ public class ScoreCalculator {
     }
 
     private double pawnsScore(Map<Position, Piece> board, Camp camp) {
-        List<Position> pawnPositions = board.keySet().stream()
+        Map<Column, Long> pawnPositions = board.keySet().stream()
                 .filter(position -> board.get(position).isSameCamp(camp))
                 .filter(position -> board.get(position).isPawn())
-                .toList();
-        return sameColumnPawnsCount(pawnPositions) * EQUAL_COLUMN_PAWN_SCORE;
+                .collect(Collectors.groupingBy(Position::getColumn, Collectors.counting()));
+        return calculatePawnScore(pawnPositions);
     }
 
-    private int sameColumnPawnsCount(List<Position> pawnPositions) {
-        int count = 0;
-        for (Position pawnPosition : pawnPositions) {
-            count += sameColumnPawnCount(pawnPosition, pawnPositions);
+    private double calculatePawnScore(Map<Column, Long> pawnPositions) {
+        double pawnScore = 0D;
+        for (long sameColumnPawnCount : pawnPositions.values()) {
+            if (sameColumnPawnCount >= 2) {
+                pawnScore += sameColumnPawnCount * EQUAL_COLUMN_PAWN_SCORE;
+            } else {
+                pawnScore += sameColumnPawnCount;
+            }
         }
-        return count;
-    }
-
-    private int sameColumnPawnCount(Position pawnPosition, List<Position> pawnPositions) {
-        int count = 0;
-        for (Position position : pawnPositions) {
-            count += getCount(pawnPosition, position);
-        }
-        return count;
-    }
-
-    private int getCount(Position pawnPosition, Position position) {
-        if (!pawnPosition.equals(position) && pawnPosition.isSameColumn(position)) {
-            return 1;
-        }
-        return 0;
+        return pawnScore;
     }
 
     public Result getWinner() {
