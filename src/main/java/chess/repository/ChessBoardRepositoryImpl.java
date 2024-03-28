@@ -19,8 +19,12 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+    private static final String BOARD_COLUMN = "board_state";
+    private static final String TURN_COLUMN = "turn";
 
     private final ChessBoardSpliter chessBoardSpliter = new ChessBoardSpliter();
+    private final StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
+    private final TurnConverter turnConverter = new TurnConverter();
 
     public Connection getConnection() {
         try {
@@ -32,36 +36,56 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
 
     @Override
     public ChessBoard findChessBoard() {
-        StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
-        StringSpaceGenerator spaceGenerator = stringSpaceGeneratorConverter.convertToObject(findInBoard("board_state"));
-        TurnConverter turnConverter = new TurnConverter();
-        Turn turn = turnConverter.convertToObject(findInBoard("turn"));
+        StringSpaceGenerator stringSpaceGenerator = stringSpaceGeneratorConverter.convertToObject(findInBoard("board_state"));
+        Turn turn = turnConverter.convertToObject(findInBoard(TURN_COLUMN));
 
-        return chessBoardSpliter.combine(spaceGenerator, turn);
+        return chessBoardSpliter.combine(stringSpaceGenerator, turn);
     }
 
     @Override
     public ChessBoard saveChessBoard(ChessBoard chessBoard) {
         StringSpaceGenerator spaceGenerator = chessBoardSpliter.splitFirst(chessBoard);
         Turn turn = chessBoardSpliter.splitSecond(chessBoard);
-        StringSpaceGeneratorConverter stringSpaceGeneratorConverter = new StringSpaceGeneratorConverter();
-        TurnConverter turnConverter = new TurnConverter();
 
-        saveInBoard("board_state",
-                stringSpaceGeneratorConverter.convertToData(spaceGenerator));
-        saveInBoard("turn",
-                turnConverter.convertToData(turn));
+        boolean updated = updateIfExist(spaceGenerator, turn);
+        if (!updated) {
+            createInBoard(
+                    stringSpaceGeneratorConverter.convertToData(spaceGenerator),
+                    turnConverter.convertToData(turn));
+        }
+
         return chessBoard;
+    }
+
+    private boolean updateIfExist(StringSpaceGenerator stringSpaceGenerator, Turn turn) {
+        if (saveDateExist()) {
+            saveInBoard(BOARD_COLUMN,
+                    stringSpaceGeneratorConverter.convertToData(stringSpaceGenerator));
+            saveInBoard(TURN_COLUMN,
+                    turnConverter.convertToData(turn));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean saveDateExist() {
+        try {
+            findInBoard(BOARD_COLUMN);
+            findInBoard(TURN_COLUMN);
+            return true;
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            return false;
+        }
     }
 
     @Override
     public void deleteChessBoard() {
-        saveInBoard("board_state", "");
-        saveInBoard("turn", "");
+        saveInBoard(BOARD_COLUMN, "");
+        saveInBoard(TURN_COLUMN, "");
     }
 
     public String findInBoard(String columnLabel) {
-        final var query = "SELECT * FROM board";
+        final var query = "SELECT * FROM board WHERE board_id = 1";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -79,6 +103,18 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, data);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public void createInBoard(String boardData, String turnData) {
+        final var query = "INSERT INTO board (board_id, board_state, turn) values (1, ?, ?)";
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, boardData);
+            statement.setString(2, turnData);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
