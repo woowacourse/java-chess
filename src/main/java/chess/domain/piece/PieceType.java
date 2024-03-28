@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Team;
+import chess.domain.pieceInfo.Team;
 
 public enum PieceType {
     PAWN("p"),
@@ -13,11 +13,11 @@ public enum PieceType {
 
     private final String pieceLetter;
 
-    PieceType(String visualizedPiece) {
+    PieceType(final String visualizedPiece) {
         this.pieceLetter = visualizedPiece;
     }
 
-    public String getPieceLetter(Team team) {
+    public String getPieceLetter(final Team team) {
         if (team == Team.BLACK) {
             return pieceLetter.toUpperCase();
         }

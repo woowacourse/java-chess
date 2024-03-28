@@ -1,22 +1,23 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
 import chess.domain.strategy.BishopMoveStrategy;
 import chess.domain.strategy.MoveStrategy;
 
 public class Bishop extends ChessPiece {
 
-    private Bishop(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Bishop(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public Bishop(PieceInfo pieceInfo) {
+    public Bishop(final PieceInfo pieceInfo) {
         this(pieceInfo, new BishopMoveStrategy());
     }
 
     @Override
-    public Bishop move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public Bishop move(final Position newPosition, final boolean isDisturbed,
+                       final boolean isOtherPieceExist, final boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

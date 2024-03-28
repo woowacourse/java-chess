@@ -1,15 +1,16 @@
-package chess.domain;
+package chess.domain.chessgame;
 
 import java.util.Arrays;
 
 public enum CommandType {
     START("start"),
     MOVE("move"),
-    END("end");
+    END("end"),
+    STATUS("status");
 
     private final String commandType;
 
-    CommandType(String commandType) {
+    CommandType(final String commandType) {
         this.commandType = commandType;
     }
 
@@ -17,7 +18,7 @@ public enum CommandType {
         return commandType;
     }
 
-    public static CommandType valueByCommandType(String commandType) {
+    public static CommandType valueByCommandType(final String commandType) {
         return Arrays.stream(values())
                 .filter(value -> value.commandType.equals(commandType))
                 .findFirst()

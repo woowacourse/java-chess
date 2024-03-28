@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

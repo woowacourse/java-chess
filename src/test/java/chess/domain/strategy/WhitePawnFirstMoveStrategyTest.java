@@ -1,6 +1,6 @@
 package chess.domain.strategy;
 
-import chess.domain.Position;
+import chess.domain.pieceInfo.Position;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

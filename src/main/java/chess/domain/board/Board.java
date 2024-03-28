@@ -1,51 +1,71 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
+    private final RemovedPieces removedPieces;
 
     public Board() {
         Map<Position, Piece> board = new HashMap<>();
         initialize(board);
 
         this.board = board;
+        this.removedPieces = new RemovedPieces();
     }
 
-    private void initialize(Map<Position, Piece> board) {
+    private void initialize(final Map<Position, Piece> board) {
         List<Piece> pieces = BoardInitializer.initialize();
-        pieces.forEach(piece -> board.put(piece.getPieceInfo().getPosition(), piece));
+        pieces.forEach(piece -> board.put(piece.getPosition(), piece));
     }
 
-    public void movePieceAndRenewBoard(Position source, Position target) {
+    public boolean movePieceAndRenewBoard(final Position source, final Position target) {
         Piece piece = board.get(source);
-
         Piece movedPiece = movePiece(source, target, piece);
+        Position newPosition = movedPiece.getPosition();
 
-        PieceInfo pieceInfo = movedPiece.getPieceInfo();
+        if (target == newPosition) {
+            removedPieces.addPiece(board.get(newPosition));
+        }
         board.put(source, new EmptyPiece(new PieceInfo(source, Team.NONE)));
-        board.put(pieceInfo.getPosition(), movedPiece);
+        board.put(newPosition, movedPiece);
+
+        return target == newPosition;
     }
 
-    public boolean isSameTeamFromPosition(Position position, Team team) {
+    public boolean isSameTeamFromPosition(final Position position, final Team team) {
         Piece piece = board.get(position);
 
         return piece.isSameTeam(team);
     }
 
-    private Piece movePiece(Position source, Position target, Piece piece) {
+    private Piece movePiece(final Position source, final Position target, final Piece piece) {
         return piece.move(target,
                 checkObstacleInRange(source, target),
                 checkPieceExist(target),
                 checkSameTeamPieceExist(piece.getTeam(), target));
     }
 
-    boolean checkObstacleInRange(Position currentPosition, Position newPosition) {
+    public boolean isKingRemoved() {
+        return removedPieces.isRecentlyRemovedPieceType(PieceType.KING);
+    }
+
+    public List<Piece> getPiecesInPositions(final List<Position> positions) {
+        return positions.stream()
+                .map(board::get)
+                .toList();
+    }
+
+    boolean checkObstacleInRange(final Position currentPosition, final Position newPosition) {
         List<Position> internalPositions = currentPosition.getInternalPositions(newPosition);
 
         return internalPositions.stream()
@@ -53,19 +73,19 @@ public class Board {
                 .anyMatch(piece -> piece.getType() != PieceType.EMPTY);
     }
 
-    boolean checkPieceExist(Position position) {
+    boolean checkPieceExist(final Position position) {
         Piece piece = board.get(position);
 
         return piece.getType() != PieceType.EMPTY;
     }
 
-    boolean checkSameTeamPieceExist(Team currentTeam, Position otherPosition) {
+    boolean checkSameTeamPieceExist(final Team currentTeam, final Position otherPosition) {
         Piece otherPiece = board.get(otherPosition);
 
         return otherPiece.isSameTeam(currentTeam);
     }
 
-    void placePiece(Position currentPosition, Piece piece) {
+    public void placePiece(final Position currentPosition, final Piece piece) {
         board.put(currentPosition, piece);
     }
 

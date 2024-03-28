@@ -1,7 +1,7 @@
 package chess.domain.strategy;
 
-import chess.domain.Position;
+import chess.domain.pieceInfo.Position;
 
 public interface MoveStrategy {
-    boolean canMove(Position currentPosition, Position newPosition);
+    boolean canMove(final Position currentPosition, final Position newPosition);
 }

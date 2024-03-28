@@ -1,22 +1,23 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
 import chess.domain.strategy.MoveStrategy;
 import chess.domain.strategy.QueenMoveStrategy;
 
 public class Queen extends ChessPiece {
 
-    private Queen(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Queen(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public Queen(PieceInfo pieceInfo) {
+    public Queen(final PieceInfo pieceInfo) {
         this(pieceInfo, new QueenMoveStrategy());
     }
 
     @Override
-    public Queen move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist) {
+    public Queen move(final Position newPosition, final boolean isDisturbed,
+                      final boolean isOtherPieceExist, final boolean isSameTeamExist) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;

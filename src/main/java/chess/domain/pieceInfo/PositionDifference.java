@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.pieceInfo;
 
 public record PositionDifference(int xDifference, int yDifference) {
     public boolean isMagnitudeEqual() {
@@ -16,7 +16,7 @@ public record PositionDifference(int xDifference, int yDifference) {
         return Math.abs(xDifference) <= 1 && Math.abs(yDifference) <= 1;
     }
 
-    public boolean isWithinVerticalRange(int minimum, int maximum) {
+    public boolean isWithinVerticalRange(final int minimum, final int maximum) {
         return (minimum <= yDifference) && (yDifference <= maximum);
     }
 }

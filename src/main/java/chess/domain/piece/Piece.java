@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
+
+import java.util.List;
 
 public interface Piece {
-    Piece move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeamExist);
+    Piece move(final Position newPosition, final boolean isDisturbed,
+               final boolean isOtherPieceExist, final boolean isSameTeamExist);
 
     PieceType getType();
 
@@ -13,5 +16,9 @@ public interface Piece {
 
     Team getTeam();
 
+    Position getPosition();
+
     boolean isSameTeam(Team otherTeam);
+
+    boolean isSamePieceWithSameTeam(List<Piece> pieces);
 }

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.chessgame;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +28,7 @@ public class CommandTest {
     void commandTest(String invalidCommand) {
         Assertions.assertThatThrownBy(() -> Command.of(List.of(invalidCommand)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format("%s는 올바른 커맨드가 아닙니다. start, move, end 중 하나여야 합니다.", invalidCommand));
+                .hasMessageContaining(String.format("%s는 올바른 커맨드가 아닙니다.", invalidCommand));
     }
 
     @DisplayName("커맨드가 move 일 때에 적절하지 않은 인자 수이면 예외를 발생한다.")

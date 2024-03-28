@@ -1,33 +1,33 @@
-package chess.domain;
+package chess.domain.pieceInfo;
 
 import java.util.Arrays;
 
-public enum Rank {
-    ONE("1", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8);
+public enum File {
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
-    private final String rank;
+    private final String file;
     private final int index;
 
-    Rank(String rank, int index) {
-        this.rank = rank;
+    File(final String file, final int index) {
+        this.file = file;
         this.index = index;
     }
 
-    public static Rank valueByRank(String rank) {
+    public static File valueByFileIndex(final String fileIndex) {
         return Arrays.stream(values())
-                .filter(value -> value.rank.equals(rank))
+                .filter(value -> value.file.equals(fileIndex))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("보드의 범위를 벗어난 좌표입니다."));
     }
 
-    public static Rank valueByIndex(int index) {
+    public static File valueByIndex(final int index) {
         return Arrays.stream(values())
                 .filter(value -> value.index == index)
                 .findFirst()
@@ -37,5 +37,4 @@ public enum Rank {
     public int getIndex() {
         return index;
     }
-
 }

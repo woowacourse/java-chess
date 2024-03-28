@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.pieceInfo;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ public class PieceInfo {
     private final Position position;
     private final Team team;
 
-    public PieceInfo(Position position, Team team) {
+    public PieceInfo(final Position position, final Team team) {
         this.position = position;
         this.team = team;
     }
@@ -19,11 +19,11 @@ public class PieceInfo {
         return team;
     }
 
-    public boolean isSameTeam(Team otherTeam) {
+    public boolean isSameTeam(final Team otherTeam) {
         return team == otherTeam;
     }
 
-    public PieceInfo renewPosition(Position newPosition) {
+    public PieceInfo renewPosition(final Position newPosition) {
         return new PieceInfo(newPosition, team);
     }
 

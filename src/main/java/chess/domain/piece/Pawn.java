@@ -1,21 +1,21 @@
 package chess.domain.piece;
 
-import chess.domain.PieceInfo;
-import chess.domain.Position;
-import chess.domain.Team;
+import chess.domain.pieceInfo.PieceInfo;
+import chess.domain.pieceInfo.Position;
+import chess.domain.pieceInfo.Team;
 import chess.domain.strategy.*;
 
 public class Pawn extends ChessPiece {
 
-    private Pawn(PieceInfo pieceInfo, MoveStrategy moveStrategy) {
+    private Pawn(final PieceInfo pieceInfo, final MoveStrategy moveStrategy) {
         super(pieceInfo, moveStrategy);
     }
 
-    public Pawn(PieceInfo pieceInfo) {
+    public Pawn(final PieceInfo pieceInfo) {
         this(pieceInfo, decidePawnMoveStrategy(pieceInfo));
     }
 
-    private static MoveStrategy decidePawnMoveStrategy(PieceInfo pieceInfo) {
+    private static MoveStrategy decidePawnMoveStrategy(final PieceInfo pieceInfo) {
         if (pieceInfo.getTeam() == Team.WHITE) {
             return new WhitePawnFirstMoveStrategy();
         }
@@ -23,7 +23,8 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    public Pawn move(Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
+    public Pawn move(final Position newPosition, final boolean isDisturbed,
+                     final boolean isOtherPieceExist, final boolean isSameTeam) {
         Position currentPosition = pieceInfo.getPosition();
         if (!moveStrategy.canMove(currentPosition, newPosition)) {
             return this;
@@ -48,7 +49,8 @@ public class Pawn extends ChessPiece {
         return new BlackPawnNotFirstMoveStrategy();
     }
 
-    private boolean isUnableToMove(Position currentPosition, Position newPosition, boolean isDisturbed, boolean isOtherPieceExist, boolean isSameTeam) {
+    private boolean isUnableToMove(final Position currentPosition, final Position newPosition,
+                                   final boolean isDisturbed, final boolean isOtherPieceExist, final boolean isSameTeam) {
         int diffX = Math.abs(currentPosition.getXPosition() - newPosition.getXPosition());
         if (isDisturbed) {
             return true;
