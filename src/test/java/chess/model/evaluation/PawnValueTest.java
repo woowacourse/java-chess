@@ -1,4 +1,4 @@
-package chess.model.game;
+package chess.model.evaluation;
 
 import chess.model.position.Position;
 import chess.model.position.File;
@@ -10,13 +10,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CommonValueTest {
+class PawnValueTest {
 
     @Test
-    @DisplayName("기물 가치에 따라 점수를 계산한다.")
+    @DisplayName("Pawn의 기물 가치는 1점이다. 단, 같은 세로줄에 있으면 각 0.5점으로 계산한다.")
     void calculateScore() {
         // given
-        PieceValue pieceValue = new CommonValue(5);
+        PieceValue pawnValue = new PawnValue(1, 0.5);
         List<Position> positions = List.of(
                 Position.of(File.A, Rank.FOUR),
                 Position.of(File.A, Rank.TWO),
@@ -24,9 +24,9 @@ class CommonValueTest {
         );
 
         // when
-        double score = pieceValue.calculateScore(positions);
+        double score = pawnValue.calculateScore(positions);
 
         // then
-        assertThat(score).isEqualTo(15);
+        assertThat(score).isEqualTo(2);
     }
 }

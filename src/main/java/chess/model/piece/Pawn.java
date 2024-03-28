@@ -1,7 +1,7 @@
 package chess.model.piece;
 
-import chess.model.game.PawnValue;
-import chess.model.game.PieceValue;
+import chess.model.evaluation.PawnValue;
+import chess.model.evaluation.PieceValue;
 import chess.model.position.Position;
 import chess.model.position.Movement;
 import chess.model.position.Path;

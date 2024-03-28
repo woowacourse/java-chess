@@ -1,7 +1,7 @@
 package chess.view.output;
 
 import chess.model.board.ChessBoard;
-import chess.model.game.PositionEvaluation;
+import chess.model.evaluation.PositionEvaluation;
 import chess.model.piece.Piece;
 import chess.model.piece.Side;
 import chess.model.position.Position;

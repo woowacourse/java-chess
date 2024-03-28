@@ -4,7 +4,6 @@ import chess.model.piece.*;
 import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Rank;
-import chess.model.game.Turn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

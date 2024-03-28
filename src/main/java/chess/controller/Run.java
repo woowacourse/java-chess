@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.model.board.ChessBoard;
-import chess.model.game.PositionEvaluation;
-import chess.model.game.Turn;
+import chess.model.evaluation.PositionEvaluation;
+import chess.model.board.Turn;
 import chess.model.position.Position;
 import chess.view.input.GameArguments;
 import chess.view.input.GameCommand;

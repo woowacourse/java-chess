@@ -1,4 +1,4 @@
-package chess.model.game;
+package chess.model.evaluation;
 
 import chess.model.piece.Piece;
 import chess.model.piece.Side;

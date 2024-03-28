@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
-import chess.model.game.Turn;
+import chess.model.board.Turn;
 import chess.model.piece.Side;
 import chess.view.input.GameCommand;
 import chess.view.input.InputView;

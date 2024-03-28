@@ -1,13 +1,12 @@
 package chess.model.board;
 
-import chess.model.game.PositionEvaluation;
+import chess.model.evaluation.PositionEvaluation;
 import chess.model.piece.Blank;
 import chess.model.piece.King;
 import chess.model.piece.Piece;
 import chess.model.piece.Side;
 import chess.model.position.Position;
 import chess.model.position.Path;
-import chess.model.game.Turn;
 
 import java.util.HashMap;
 import java.util.Map;

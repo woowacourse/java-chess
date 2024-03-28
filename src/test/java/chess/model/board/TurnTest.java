@@ -1,5 +1,6 @@
-package chess.model.game;
+package chess.model.board;
 
+import chess.model.board.Turn;
 import chess.model.piece.Side;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package chess.model.game;
+package chess.model.evaluation;
 
 import chess.model.board.ChessBoard;
 import chess.model.board.ChessBoardInitializer;
