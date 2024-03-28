@@ -34,7 +34,7 @@ public class ChessGameController {
     }
 
     private boolean isNotStartCommand() {
-        String command = inputView.readCommand().trim();
+        String command = inputView.readCommand();
         return !Command.START.sameWith(command);
     }
 
@@ -58,7 +58,7 @@ public class ChessGameController {
     }
 
     private String readGameCommand() {
-        String command = inputView.readCommand().trim();
+        String command = inputView.readCommand();
         try {
             validateIllegalGameCommand(command);
         } catch (IllegalArgumentException e) {
