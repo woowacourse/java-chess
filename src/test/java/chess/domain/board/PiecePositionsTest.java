@@ -22,6 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PiecePositionsTest {
 
+    /*
+    RNBQKBNR
+    PPPPPPPP
+    ........
+    ........
+    ........
+    ........
+    pppppppp
+    rnbqkbnr
+     */
     @DisplayName("체스판을 만든다.")
     @Test
     void createChessBoard() {
