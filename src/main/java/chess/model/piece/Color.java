@@ -1,5 +1,7 @@
 package chess.model.piece;
 
+import java.util.Arrays;
+
 public enum Color {
     WHITE,
     NONE,
@@ -13,5 +15,12 @@ public enum Color {
             return WHITE;
         }
         return NONE;
+    }
+
+    public static Color from(String colorName) {
+        return Arrays.stream(values())
+                .filter(color -> color.name().equals(colorName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 색상입니다."));
     }
 }
