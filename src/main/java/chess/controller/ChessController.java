@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.command.Command;
-import chess.command.CommandType;
 import chess.domain.game.ChessGame;
 import chess.domain.position.TerminalPosition;
 import chess.util.ExceptionRetryHandler;
@@ -21,9 +20,9 @@ public class ChessController {
     public void run() {
         outputView.printStartMessage();
         Command command = receiveStartCommandUntilValid();
-        validateStartOrEnd(command.getType());
+        validateStartOrEnd(command);
 
-        if (command.getType() == CommandType.START) {
+        if (command.isStart()) {
             startGame();
         }
     }
@@ -32,8 +31,8 @@ public class ChessController {
         return ExceptionRetryHandler.handle(inputView::readCommand);
     }
 
-    private static void validateStartOrEnd(CommandType commandType) {
-        if (commandType != CommandType.START && commandType != CommandType.END) {
+    private static void validateStartOrEnd(Command command) {
+        if (command.isNotStartOrEnd()) {
             throw new IllegalArgumentException("게임을 시작하거나 끝내는 것만 가능합니다.");
         }
     }
@@ -52,7 +51,7 @@ public class ChessController {
     private void processGame(ChessGame chessGame) {
         Command command = receiveProcessCommand();
 
-        while (command.getType() != CommandType.END) {
+        while (command.isNotEnd()) {
             processTurn(command, chessGame);
             command = receiveProcessCommand();
         }
@@ -60,18 +59,18 @@ public class ChessController {
 
     private Command receiveProcessCommand() {
         Command command = inputView.readCommand();
-        validateNotStart(command.getType());
+        validateNotStart(command);
         return command;
     }
 
-    private void validateNotStart(CommandType commandType) {
-        if (commandType == CommandType.START) {
+    private void validateNotStart(Command command) {
+        if (command.isStart()) {
             throw new IllegalArgumentException("게임이 이미 진행중입니다.");
         }
     }
 
     private void processTurn(Command command, ChessGame chessGame) {
-        if (command.getType() == CommandType.MOVE) {
+        if (command.isMove()) {
             TerminalPosition terminalPosition = TerminalPositionView.of(command.getArguments());
             chessGame.movePiece(terminalPosition);
             outputView.printChessBoard(chessGame.getPieces());

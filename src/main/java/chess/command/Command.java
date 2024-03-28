@@ -17,8 +17,24 @@ public class Command {
         return new Command(commandType, Collections.emptyList());
     }
 
-    public CommandType getType() {
-        return type;
+    public boolean isStart() {
+        return type == CommandType.START;
+    }
+
+    public boolean isNotStart() {
+        return !isStart();
+    }
+
+    public boolean isNotStartOrEnd() {
+        return isNotStart() && isNotEnd();
+    }
+
+    public boolean isMove() {
+        return type == CommandType.MOVE;
+    }
+
+    public boolean isNotEnd() {
+        return type != CommandType.END;
     }
 
     public List<String> getArguments() {
