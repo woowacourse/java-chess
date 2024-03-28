@@ -70,7 +70,7 @@ public class ChessBoard {
                 .allMatch(side -> board.containsValue(King.from(side)));
     }
 
-    public PositionEvaluation evaluateNow() {
+    public PositionEvaluation evaluateCurrentBoard() {
         return new PositionEvaluation(board);
     }
 
