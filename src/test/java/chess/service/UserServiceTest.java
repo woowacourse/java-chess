@@ -19,8 +19,6 @@ class UserServiceTest {
     @BeforeEach
     void setup() {
         userRepository = new FakeUserDao();
-        userRepository.deleteAll();
-
         userService = new UserService(userRepository);
     }
 

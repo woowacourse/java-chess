@@ -41,11 +41,6 @@ public class FakeRoomDao implements RoomRepository {
                 .findAny();
     }
 
-    public void deleteAll() {
-        rooms.clear();
-        initialize();
-    }
-
     private void initialize() {
         rooms.put(1, createChessRoom());
         rooms.put(2, createBigChessRoom());

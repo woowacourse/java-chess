@@ -20,8 +20,6 @@ class RoomServiceTest {
     @BeforeEach
     void setup() {
         roomRepository = new FakeRoomDao();
-        roomRepository.deleteAll();
-
         roomService = new RoomService(roomRepository);
     }
 

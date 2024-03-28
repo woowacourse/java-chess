@@ -20,8 +20,6 @@ class GameServiceTest {
     @BeforeEach
     void setUp() {
         moveRepository = new FakeMovementDao();
-        moveRepository.deleteAll();
-
         gameService = new GameService(moveRepository);
     }
 

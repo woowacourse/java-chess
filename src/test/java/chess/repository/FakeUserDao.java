@@ -39,12 +39,7 @@ public class FakeUserDao implements UserRepository {
         return users.values().stream()
                 .toList();
     }
-
-    public void deleteAll() {
-        users.clear();
-        initialize();
-    }
-
+    
     private void initialize() {
         users.put(1, createUserChoco());
         users.put(2, createUserKhaki());

@@ -30,11 +30,6 @@ public class FakeMovementDao implements MovementRepository {
         return movements.get(roomId);
     }
 
-    public void deleteAll() {
-        movements.clear();
-        initialize();
-    }
-
     private void initialize() {
         movements.put(1L, createMovements());
     }
