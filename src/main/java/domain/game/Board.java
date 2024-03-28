@@ -28,7 +28,7 @@ public class Board {
 
         return caughtPiece
                 .map(Piece::getPieceType)
-                .map(pieceType -> (MoveResponse) new CaughtMoveResponse(pieceType))
+                .<MoveResponse>map(CaughtMoveResponse::new)
                 .orElseGet(NormalMoveResponse::new);
     }
 
