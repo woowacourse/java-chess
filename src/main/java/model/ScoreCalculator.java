@@ -35,31 +35,29 @@ public class ScoreCalculator {
         double total = pieces.stream()
                 .map(piece -> piece.getPieceType().getScore())
                 .reduce(0D, Double::sum);
-        return total - pawnsScore(board, camp);
+        return total - calculateMinusPawnScore(board, camp);
     }
 
     private boolean isKingDie(List<Piece> pieces) {
         return pieces.stream().noneMatch(Piece::isKing);
     }
 
-    private double pawnsScore(Map<Position, Piece> board, Camp camp) {
+    private double calculateMinusPawnScore(Map<Position, Piece> board, Camp camp) {
         Map<Column, Long> pawnPositions = board.keySet().stream()
                 .filter(position -> board.get(position).isSameCamp(camp))
                 .filter(position -> board.get(position).isPawn())
                 .collect(Collectors.groupingBy(Position::getColumn, Collectors.counting()));
-        return calculatePawnScore(pawnPositions);
+        return calculateSameColumnPawnCount(pawnPositions) * EQUAL_COLUMN_PAWN_SCORE;
     }
 
-    private double calculatePawnScore(Map<Column, Long> pawnPositions) {
-        double pawnScore = 0D;
+    private int calculateSameColumnPawnCount(Map<Column, Long> pawnPositions) {
+        int count = 0;
         for (long sameColumnPawnCount : pawnPositions.values()) {
             if (sameColumnPawnCount >= 2) {
-                pawnScore += sameColumnPawnCount * EQUAL_COLUMN_PAWN_SCORE;
-            } else {
-                pawnScore += sameColumnPawnCount;
+                count += (int) sameColumnPawnCount;
             }
         }
-        return pawnScore;
+        return count;
     }
 
     public Result getWinner() {
