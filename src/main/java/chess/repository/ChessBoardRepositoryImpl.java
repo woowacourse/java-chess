@@ -61,18 +61,17 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
     }
 
     public String findInBoard(String columnLabel) {
-        String result = "";
         final var query = "SELECT * FROM board";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                result = resultSet.getString(columnLabel);
+                return resultSet.getString(columnLabel);
             }
+            throw new IllegalStateException("해당하는 값이 존재하지 않습니다");
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
-        return result;
     }
 
     public void saveInBoard(String columnLabel, String data) {
@@ -81,7 +80,6 @@ public class ChessBoardRepositoryImpl implements ChessBoardRepository {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, data);
             statement.executeUpdate();
-
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
