@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.game.GameResult;
+import chess.domain.game.Turn;
 import chess.domain.pieces.piece.Color;
 import chess.dto.PieceResponse;
 import java.util.Arrays;
@@ -22,7 +23,9 @@ public class OutputView {
     private static final String END_INFO_MESSAGE = "> 게임 종료 : end";
     private static final String STATUS_INFO_MESSAGE = "> 점수 보기 : status";
     private static final String MOVE_INFO_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String TURN_INFO_MESSAGE = "> 현재 %s 턴입니다.";
     private static final String GAME_FINISH_MESSAGE = "> 게임이 종료되었습니다.";
+    private static final String GAME_ALREADY_OVER = "> 이미 게임이 종료되었습니다.";
     private static final char EMPTY_SQUARE = '.';
     private static final String SCORE_STATUS_FORMAT = "%s: %.1f";
     private static final int BOARD_SIZE = 8;
@@ -43,7 +46,6 @@ public class OutputView {
         char[][] board = setUpBoard();
         addPieceToBoard(pieces, board);
         printBoardStatus(board);
-        System.out.println();
     }
 
     private char[][] setUpBoard() {
@@ -118,6 +120,14 @@ public class OutputView {
 
     public void printGameFinish() {
         System.out.println(GAME_FINISH_MESSAGE);
+    }
+
+    public void printAlreadyOver(){
+        System.out.println(GAME_ALREADY_OVER);
+    }
+
+    public void printTurn(final Turn turn) {
+        System.out.printf(TURN_INFO_MESSAGE + System.lineSeparator(), turn.getColor());
     }
 
     public void printErrorMessage(String message) {

@@ -5,7 +5,6 @@ import chess.domain.board.BoardFactory;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.square.Movement;
 import chess.domain.square.Square;
-
 import java.util.List;
 import java.util.Map;
 
@@ -48,11 +47,15 @@ public class Game {
         return new GameResult(board.getPieces());
     }
 
+    public long getRoomId() {
+        return roomId;
+    }
+
     public Map<Square, Piece> getBoardStatus() {
         return board.getPieces();
     }
 
-    public long getRoomId() {
-        return roomId;
+    public Turn getTurn() {
+        return turn;
     }
 }

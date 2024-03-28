@@ -36,10 +36,20 @@ public class GameController {
     }
 
     public void start(final long roomId) {
+        Game game = loadGame(roomId);
+        GameResult gameResult = game.getResult();
+
+        if (gameResult.isGameOver()) {
+            outputView.printAlreadyOver();
+            outputView.printBoard(createBoardResponse(game.getBoardStatus()));
+            outputView.printStatus(gameResult);
+            return;
+        }
+
         outputView.printGameStartMessage();
         GameCommand gameCommand = requestUntilValidated(this::readStartCommand);
         if (gameCommand == GameCommand.START) {
-            play(loadGame(roomId));
+            play(game);
         }
     }
 
@@ -63,8 +73,11 @@ public class GameController {
 
     private void play(final Game game) {
         outputView.printBoard(createBoardResponse(game.getBoardStatus()));
+        outputView.printTurn(game.getTurn());
+
         while (requestUntilValidated(() -> playOneRound(game)) != GameCommand.END) {
             outputView.printBoard(createBoardResponse(game.getBoardStatus()));
+            outputView.printTurn(game.getTurn());
         }
         printEndStatus(game);
     }
