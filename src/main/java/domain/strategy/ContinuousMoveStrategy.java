@@ -33,7 +33,7 @@ public class ContinuousMoveStrategy implements MoveStrategy {
         return isReachable(destination, optimalVector, movePaths);
     }
 
-    private static boolean isContinuable(final Position current, final Position destination, final Set<Position> piecePositions) {
+    private boolean isContinuable(final Position current, final Position destination, final Set<Position> piecePositions) {
         boolean isReachedDestination = current.equals(destination);
         boolean isOtherPieceExist = piecePositions.contains(current);
         return !isReachedDestination && !isOtherPieceExist;

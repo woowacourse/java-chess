@@ -1,11 +1,13 @@
 package controller;
 
-import domain.GameCommand;
-import domain.game.Board;
-import domain.game.BoardInitializer;
-import domain.game.Turn;
+import domain.game.ChessGame;
+import domain.game.GameRequest;
+import domain.game.Piece;
+import domain.game.TeamColor;
+import domain.position.Position;
+import domain.service.DBService;
 import dto.BoardDto;
-import dto.RequestDto;
+import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -13,17 +15,21 @@ import view.OutputView;
 public class ChessController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final DBService dbService;
 
-    public ChessController(final InputView inputView, final OutputView outputView) {
+    public ChessController(final InputView inputView, final OutputView outputView, final DBService dbService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.dbService = dbService;
     }
 
     public void run() {
         outputView.printWelcomeMessage();
-        GameCommand command = readUserInput(inputView::inputGameStart);
-        if (command.isStart()) {
-            startGame();
+        GameRequest gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+        while (gameRequest.isStart() || gameRequest.isLoad()) {
+            startGame(gameRequest);
+            outputView.printRestartMessage();
+            gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
         }
     }
 
@@ -32,35 +38,84 @@ public class ChessController {
             try {
                 return inputSupplier.get();
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                outputView.printErrorMessage(e.getMessage());
             }
         }
     }
 
-    private void startGame() {
-        Board board = BoardInitializer.init();
-        printStatus(board);
+    private void startGame(GameRequest gameRequest) {
+        ChessGame chessGame = createGame(gameRequest);
+        printBoardStatus(chessGame.getPositionsOfPieces());
 
-        Turn turn = new Turn();
-        RequestDto requestDto = readUserInput(inputView::inputGameCommand);
-        while (requestDto.command().isContinuable()) {
-            doTurn(board, turn, requestDto);
-            printStatus(board);
-            requestDto = readUserInput(inputView::inputGameCommand);
+        while (shouldProceedGame(gameRequest, chessGame)) {
+            outputView.printCurrentTurn(chessGame.currentPlayingTeam());
+            gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+            processRequest(gameRequest, chessGame);
         }
+        finishGame(gameRequest, chessGame);
     }
 
-    private void doTurn(Board board, Turn turn, RequestDto requestDto) {
-        try {
-            board.movePiece(turn.current(), requestDto.source(), requestDto.destination());
-            turn.next();
-        } catch (IllegalArgumentException e) {
-            System.out.println("[오류] " + e.getMessage());
+    private ChessGame createGame(GameRequest gameRequest) {
+        if (gameRequest.isStart()) {
+            return new ChessGame();
         }
+        int gameId = readUserInput(inputView::inputGameId);
+        return dbService.loadGame(gameId);
     }
 
-    private void printStatus(Board board) {
-        BoardDto boardDto = BoardDto.from(board);
+    private void printBoardStatus(Map<Position, Piece> positionOfPieces) {
+        BoardDto boardDto = BoardDto.from(positionOfPieces);
         outputView.printBoard(boardDto);
+    }
+
+    private boolean shouldProceedGame(GameRequest gameRequest, ChessGame chessGame) {
+        return gameRequest.isContinuable() && !chessGame.isGameEnd();
+    }
+
+    private void processRequest(GameRequest gameRequest, ChessGame chessGame) {
+        if (gameRequest.isSave()) {
+            saveCurrentStatus(chessGame);
+            return;
+        }
+        if (gameRequest.isContinuable()) {
+            playRound(gameRequest, chessGame);
+        }
+    }
+
+    private void saveCurrentStatus(ChessGame chessGame) {
+        int gameId = dbService.saveGame(chessGame);
+        outputView.printSaveResult(gameId);
+    }
+
+    private void playRound(GameRequest gameRequest, ChessGame chessGame) {
+        try {
+            chessGame.move(gameRequest.source(), gameRequest.destination());
+            printBoardStatus(chessGame.getPositionsOfPieces());
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            outputView.printErrorMessage(e.getMessage());
+        }
+    }
+
+    private void finishGame(GameRequest gameRequest, ChessGame chessGame) {
+        outputView.printGameEndMessage();
+        if (gameRequest.isEnd()) {
+            return;
+        }
+
+        outputView.printStatusInputMessage();
+        gameRequest = readUserInput(inputView::inputGameCommand).asRequest();
+        if (gameRequest.isStatus()) {
+            printGameResult(chessGame);
+        }
+    }
+
+    private void printGameResult(ChessGame chessGame) {
+        TeamColor winner = chessGame.getWinner();
+        double whiteScore = chessGame.currentScoreOf(TeamColor.WHITE);
+        double blackScore = chessGame.currentScoreOf(TeamColor.BLACK);
+
+        outputView.printWinner(winner);
+        outputView.printScore(TeamColor.WHITE, whiteScore);
+        outputView.printScore(TeamColor.BLACK, blackScore);
     }
 }

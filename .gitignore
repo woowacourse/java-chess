@@ -32,4 +32,4 @@ out/
 .vscode/
 
 ### Docker ###
-/docker/
+/docker/db

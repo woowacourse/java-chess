@@ -14,15 +14,30 @@ public class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public PieceType getPieceType() {
-        return pieceType;
-    }
-
     public boolean hasColor(final TeamColor teamColor) {
         return teamColor.contains(pieceType);
     }
 
+    public TeamColor color() {
+        if (hasColor(TeamColor.WHITE)) {
+            return TeamColor.WHITE;
+        }
+        return TeamColor.BLACK;
+    }
+
     public boolean isMovable(final Position source, final Position destination, final Set<Position> piecePositions) {
         return moveStrategy.isMovable(source, destination, piecePositions);
+    }
+
+    public double value() {
+        return pieceType.value();
+    }
+
+    public boolean isPawn() {
+        return pieceType.isPawn();
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
     }
 }

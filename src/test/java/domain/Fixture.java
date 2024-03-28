@@ -1,14 +1,12 @@
 package domain;
 
-import static domain.position.UnitVector.DOWN;
-import static domain.position.UnitVector.DOWN_LEFT;
-import static domain.position.UnitVector.DOWN_RIGHT;
-import static domain.position.UnitVector.LEFT;
-import static domain.position.UnitVector.RIGHT;
-import static domain.position.UnitVector.UP;
-import static domain.position.UnitVector.UP_LEFT;
-import static domain.position.UnitVector.UP_RIGHT;
+import static domain.Fixture.Pieces.*;
+import static domain.Fixture.Positions.*;
+import static domain.position.UnitVector.*;
 
+import domain.game.Piece;
+import domain.game.PieceFactory;
+import domain.game.PieceType;
 import domain.game.TeamColor;
 import domain.position.File;
 import domain.position.Position;
@@ -20,6 +18,7 @@ import domain.strategy.KnightMoveStrategy;
 import domain.strategy.MoveStrategy;
 import domain.strategy.PawnMoveStrategy;
 import domain.strategy.WhitePawnMoveStrategy;
+import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings("unused")
@@ -108,6 +107,22 @@ public class Fixture {
         public static final Set<UnitVector> OMNIDIRECTIONAL_VECTORS = Set.of(UP, RIGHT, DOWN, LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT);
     }
 
+    public static class Pieces {
+        public static final Piece BLACK_PAWN_PIECE = PieceFactory.create(PieceType.BLACK_PAWN);
+        public static final Piece BLACK_KNIGHT_PIECE = PieceFactory.create(PieceType.BLACK_KNIGHT);
+        public static final Piece BLACK_BISHOP_PIECE = PieceFactory.create(PieceType.BLACK_BISHOP);
+        public static final Piece BLACK_ROOK_PIECE = PieceFactory.create(PieceType.BLACK_ROOK);
+        public static final Piece BLACK_QUEEN_PIECE = PieceFactory.create(PieceType.BLACK_QUEEN);
+        public static final Piece BLACK_KING_PIECE = PieceFactory.create(PieceType.BLACK_KING);
+        public static final Piece WHITE_PAWN_PIECE = PieceFactory.create(PieceType.WHITE_PAWN);
+        public static final Piece WHITE_KNIGHT_PIECE = PieceFactory.create(PieceType.WHITE_KNIGHT);
+        public static final Piece WHITE_BISHOP_PIECE = PieceFactory.create(PieceType.WHITE_BISHOP);
+        public static final Piece WHITE_ROOK_PIECE = PieceFactory.create(PieceType.WHITE_ROOK);
+        public static final Piece WHITE_QUEEN_PIECE = PieceFactory.create(PieceType.WHITE_QUEEN);
+        public static final Piece WHITE_KING_PIECE = PieceFactory.create(PieceType.WHITE_KING);
+
+    }
+
     public static class Strategies {
         public static final MoveStrategy KING_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.OMNIDIRECTIONAL_VECTORS, 1);
         public static final MoveStrategy QUEEN_MOVE_STRATEGY = new ContinuousMoveStrategy(Vectors.OMNIDIRECTIONAL_VECTORS, 8);
@@ -123,5 +138,64 @@ public class Fixture {
             return new WhitePawnMoveStrategy();
         }
         return new BlackPawnMoveStrategy();
+    }
+
+    public static class PredefinedBoardsOfEachScore {
+        public static final Map<Position, Piece> BOARD_WHITE_20_5_BLACK_20 = Map.ofEntries(
+                Map.entry(A7, BLACK_PAWN_PIECE),
+                Map.entry(B6, BLACK_PAWN_PIECE),
+                Map.entry(B8, BLACK_KING_PIECE),
+                Map.entry(C7, BLACK_PAWN_PIECE),
+                Map.entry(C8, BLACK_ROOK_PIECE),
+                Map.entry(D7, BLACK_BISHOP_PIECE),
+                Map.entry(E6, BLACK_QUEEN_PIECE),
+
+                Map.entry(E1, WHITE_ROOK_PIECE),
+                Map.entry(E3, WHITE_PAWN_PIECE),
+                Map.entry(F1, WHITE_KING_PIECE),
+                Map.entry(F2, WHITE_PAWN_PIECE),
+                Map.entry(F4, WHITE_KNIGHT_PIECE),
+                Map.entry(G2, WHITE_PAWN_PIECE),
+                Map.entry(G4, WHITE_QUEEN_PIECE),
+                Map.entry(H3, WHITE_PAWN_PIECE)
+        );
+
+        public static final Map<Position, Piece> BOARD_WHITE_19_5_BLACK_20 = Map.ofEntries(
+                Map.entry(E1, WHITE_ROOK_PIECE),
+                Map.entry(F1, WHITE_KING_PIECE),
+                Map.entry(F2, WHITE_PAWN_PIECE),  // 0.5
+                Map.entry(F3, WHITE_PAWN_PIECE),  // 0.5
+                Map.entry(F4, WHITE_KNIGHT_PIECE),
+                Map.entry(G2, WHITE_PAWN_PIECE),
+                Map.entry(G4, WHITE_QUEEN_PIECE),
+                Map.entry(H3, WHITE_PAWN_PIECE),
+                Map.entry(A7, BLACK_PAWN_PIECE),
+                Map.entry(B6, BLACK_PAWN_PIECE),
+                Map.entry(B8, BLACK_KING_PIECE),
+                Map.entry(C7, BLACK_PAWN_PIECE),
+                Map.entry(C8, BLACK_ROOK_PIECE),
+                Map.entry(D7, BLACK_BISHOP_PIECE),
+                Map.entry(E6, BLACK_QUEEN_PIECE)
+        );
+
+        public static final Map<Position, Piece> BOARD_WHITE_2_BLACK_2_5 = Map.ofEntries(
+                Map.entry(A2, WHITE_PAWN_PIECE),  // 0.5
+                Map.entry(A3, WHITE_PAWN_PIECE),  // 0.5
+                Map.entry(C2, WHITE_PAWN_PIECE),
+                Map.entry(D7, BLACK_PAWN_PIECE),  // 0.5
+                Map.entry(D6, BLACK_PAWN_PIECE),  // 0.5
+                Map.entry(D5, BLACK_PAWN_PIECE),  // 0.5
+                Map.entry(C7, BLACK_PAWN_PIECE)
+        );
+
+        public static final Map<Position, Piece> BOARD_WHITE_0_BLACK_3_5 = Map.ofEntries(
+                Map.entry(A2, BLACK_PAWN_PIECE),
+                Map.entry(A3, BLACK_PAWN_PIECE),
+                Map.entry(A4, BLACK_PAWN_PIECE),
+                Map.entry(A5, BLACK_PAWN_PIECE),
+                Map.entry(A6, BLACK_PAWN_PIECE),
+                Map.entry(A7, BLACK_PAWN_PIECE),
+                Map.entry(A8, BLACK_PAWN_PIECE)
+        );
     }
 }

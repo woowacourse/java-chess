@@ -1,30 +1,35 @@
 package domain.game;
 
+import domain.position.File;
 import domain.position.Position;
-
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final double DUPLICATED_PAWN_PENALTY_RATE = 0.5;
+
     private final Map<Position, Piece> chessBoard;
 
     public Board(final Map<Position, Piece> chessBoard) {
         this.chessBoard = chessBoard;
     }
 
-    public Map<Position, Piece> getChessBoard() {
-        return Collections.unmodifiableMap(chessBoard);
-    }
-
-    public void movePiece(final TeamColor teamColor, final Position source, final Position destination) {
+    public MoveResponse movePiece(final TeamColor teamColor, final Position source, final Position destination) {
         validateMoveRequest(teamColor, source, destination);
 
-        boolean caughtEnemy = isPieceExist(destination);
         Piece piece = chessBoard.get(source);
-        chessBoard.put(destination, piece);
         chessBoard.remove(source);
+        Optional<Piece> caughtPiece = getCaughtPiece(destination);
+        chessBoard.put(destination, piece);
+
+        return caughtPiece
+                .map(Piece::getPieceType)
+                .<MoveResponse>map(CaughtMoveResponse::new)
+                .orElseGet(NormalMoveResponse::new);
     }
 
     private void validateMoveRequest(TeamColor teamColor, Position source, Position destination) {
@@ -72,7 +77,43 @@ public class Board {
         return isPieceExist(destination) && (chessBoard.get(destination).hasColor(teamColor));
     }
 
+    private Optional<Piece> getCaughtPiece(Position destination) {
+        if (!chessBoard.containsKey(destination)) {
+            return Optional.empty();
+        }
+        return Optional.of(chessBoard.get(destination));
+    }
+
     private boolean isPieceExist(Position position) {
         return chessBoard.containsKey(position);
+    }
+
+    public double calculateScoreOf(TeamColor teamColor) {
+        Map<Position, Piece> teamPieces = chessBoard.entrySet().stream()
+                .filter(entry -> entry.getValue().hasColor(teamColor))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+
+        double totalPieceValue = teamPieces.values().stream()
+                .mapToDouble(Piece::value)
+                .sum();
+
+        return totalPieceValue - calcDuplicatedPawnPenalty(teamPieces);
+    }
+
+    private double calcDuplicatedPawnPenalty(Map<Position, Piece> teamPieces) {
+        Map<File, Long> pawnCounts = teamPieces.entrySet().stream()
+                .filter(entry -> entry.getValue().isPawn())
+                .collect(Collectors.groupingBy(entry -> entry.getKey().file(), Collectors.counting()));
+
+        int duplicatedPawnCount = pawnCounts.values().stream()
+                .filter(count -> count > 1)
+                .mapToInt(Long::intValue)
+                .sum();
+
+        return duplicatedPawnCount * DUPLICATED_PAWN_PENALTY_RATE;
+    }
+
+    public Map<Position, Piece> getPositionsOfPieces() {
+        return Collections.unmodifiableMap(chessBoard);
     }
 }
