@@ -2,14 +2,19 @@ package chess.piece;
 
 public class InitPawn extends Pawn {
 
-    private static final int MAX_UNIT_MOVE = 2;
+    private static final int MAX_MOVE_STEP = 2;
 
     public InitPawn(Color color) {
-        super(color, MAX_UNIT_MOVE);
+        super(color);
     }
 
     @Override
-    public boolean isInitPawn() {
-        return true;
+    protected boolean isReachable(int step) {
+        return step <= MAX_MOVE_STEP;
+    }
+
+    @Override
+    public Piece move() {
+        return new MovedPawn(getColor());
     }
 }

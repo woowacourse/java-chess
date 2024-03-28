@@ -1,5 +1,8 @@
 package chess.game.state;
 
+import chess.board.Board;
+import chess.position.Position;
+
 public class TerminatedState implements GameState {
 
     private static final String TERMINATED_ERROR_MESSAGE = "게임이 이미 종료되었습니다.";
@@ -10,7 +13,7 @@ public class TerminatedState implements GameState {
     }
 
     @Override
-    public GameState proceedTurn(TurnAction action) {
+    public GameState proceedTurn(Board board, Position source, Position destination) {
         throw new UnsupportedOperationException(TERMINATED_ERROR_MESSAGE);
     }
 

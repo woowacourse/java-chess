@@ -45,12 +45,22 @@ public class Position {
         );
     }
 
-    public int subtractFile(Position other) {
+    public UnitMovement unitMovementToward(Position destination) {
+        int fileDelta = destination.subtractFile(this);
+        int rankDelta = destination.subtractRank(this);
+        return UnitMovement.differencesOf(fileDelta, rankDelta);
+    }
+
+    private int subtractFile(Position other) {
         return file.subtract(other.file);
     }
 
-    public int subtractRank(Position other) {
+    private int subtractRank(Position other) {
         return rank.subtract(other.rank);
+    }
+
+    public boolean hasFileOf(File file) {
+        return this.file == file;
     }
 
     public boolean isNotEquals(Position other) {

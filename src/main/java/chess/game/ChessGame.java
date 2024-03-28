@@ -4,9 +4,11 @@ import chess.board.Board;
 import chess.board.BoardInitializer;
 import chess.game.state.GameState;
 import chess.game.state.InitState;
+import chess.piece.Color;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
+import chess.score.Score;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -43,6 +45,7 @@ public class ChessGame {
     private void prepareCommandExecutors(Board board, BoardDisplayConverter converter) {
         executors.put(Command.START, () -> startGame(board, converter));
         executors.put(Command.MOVE, () -> proceedTurn(board, converter));
+        executors.put(Command.STATUS, () -> showStatus(board));
         executors.put(Command.END, () -> gameState = gameState.terminate());
     }
 
@@ -58,14 +61,22 @@ public class ChessGame {
         while (gameState.isPlaying()) {
             executeCommandFromInput();
         }
+        outputView.printEndMessage();
     }
 
     private void proceedTurn(Board board, BoardDisplayConverter converter) {
         PathDto pathDto = inputView.readPosition();
         Position source = getSourceFrom(pathDto);
         Position destination = getDestinationFrom(pathDto);
-        gameState = gameState.proceedTurn(color -> board.move(source, destination, color));
+        gameState = gameState.proceedTurn(board, source, destination);
         printBoard(board, converter);
+    }
+
+    private void showStatus(Board board) {
+        gameState.validatePlaying();
+        Score whiteScore = board.calculateScore(Color.WHITE);
+        Score blackScore = board.calculateScore(Color.BLACK);
+        outputView.printScore(whiteScore.getScore(), blackScore.getScore());
     }
 
     private void printBoard(Board board, BoardDisplayConverter converter) {

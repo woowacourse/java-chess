@@ -1,50 +1,35 @@
 package chess.piece;
 
-import chess.position.Position;
-import chess.position.UnitDirection;
+import chess.position.UnitMovement;
+import chess.score.PieceScore;
+import chess.score.Score;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public abstract class Piece {
 
     private final Color color;
-    private final int maxUnitMove;
-    private final Set<UnitDirection> unitDirections;
+    private final PieceScore pieceScore;
+    private final Set<UnitMovement> unitMovements;
 
-    protected Piece(Color color, int maxUnitMove, Set<UnitDirection> unitDirections) {
+    protected Piece(Color color, PieceScore pieceScore, Set<UnitMovement> unitMovements) {
         this.color = color;
-        this.maxUnitMove = maxUnitMove;
-        this.unitDirections = unitDirections;
+        this.pieceScore = pieceScore;
+        this.unitMovements = unitMovements;
     }
 
-    public boolean isMovable(Position source, Position destination) {
-        UnitDirection direction = UnitDirection.differencesBetween(source, destination);
-        return unitDirections.contains(direction) &&
-                isReachable(source, destination, direction);
+    public boolean isMovable(UnitMovement movement, int step) {
+        return unitMovements.contains(movement) &&
+                isReachable(step);
     }
 
-    private boolean isReachable(Position source, Position destination, UnitDirection unitDirection) {
-        int distance = (int) Stream.iterate(source,
-                        position -> position.isNotEquals(destination),
-                        unitDirection::nextPosition)
-                .count();
-        return distance <= maxUnitMove;
+    public Piece move() {
+        return this;
     }
 
-    public boolean isAttackable(Position source, Position destination) {
-        return isMovable(source, destination);
-    }
+    protected abstract boolean isReachable(int step);
 
-    public boolean isNotMovable(Position source, Position destination) {
-        return !isMovable(source, destination);
-    }
-
-    public boolean isNotAttackable(Position source, Position destination) {
-        return !isAttackable(source, destination);
-    }
-
-    public boolean isInitPawn() {
-        return false;
+    public boolean canAttack(UnitMovement movement, int step) {
+        return isMovable(movement, step);
     }
 
     public boolean hasSameColorWith(Piece piece) {
@@ -59,7 +44,27 @@ public abstract class Piece {
         return this.color == color;
     }
 
-    public boolean hasOpponentColorOf(Color currentTurnColor) {
-        return color != currentTurnColor;
+    public boolean hasOpponentColorOf(Color color) {
+        return this.color != color;
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isNotPawn() {
+        return !isPawn();
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public Score getScore() {
+        return pieceScore.asScore();
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

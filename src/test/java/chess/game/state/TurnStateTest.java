@@ -2,7 +2,10 @@ package chess.game.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import chess.board.Board;
+import chess.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,7 @@ class TurnStateTest {
     TurnState createDummyTurnState() {
         return new TurnState() {
             @Override
-            public GameState proceedTurn(TurnAction action) {
+            public GameState proceedTurn(Board board, Position source, Position destination) {
                 return null;
             }
         };
@@ -53,6 +56,12 @@ class TurnStateTest {
             GameState actual = state.terminate();
             // then
             assertThat(actual).isInstanceOf(TerminatedState.class);
+        }
+
+        @Test
+        @DisplayName("플레이 여부를 검증한다.")
+        void validatePlaying() {
+            assertDoesNotThrow(() -> createDummyTurnState().validatePlaying());
         }
     }
 }

@@ -1,31 +1,28 @@
 package chess.view.display;
 
-import chess.piece.Piece;
+import chess.board.Square;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class BoardDisplayConverter {
 
-    public List<RankDisplay> convert(Map<Position, Piece> pieces) {
-        List<RankDisplay> rankDisplays = new ArrayList<>();
-        Arrays.stream(Rank.values())
+    public List<RankDisplay> convert(Map<Position, Square> pieces) {
+        return Arrays.stream(Rank.values())
                 .map(rank -> convertNotationRankOf(rank, pieces))
-                .forEach(rankDisplays::add);
-        return rankDisplays;
+                .toList();
     }
 
-    private RankDisplay convertNotationRankOf(Rank rank, Map<Position, Piece> pieces) {
-        List<PieceDisplay> pieceDisplays = new ArrayList<>();
-        Arrays.stream(File.values())
+    private RankDisplay convertNotationRankOf(Rank rank, Map<Position, Square> pieces) {
+        List<PieceDisplay> pieceDisplays = Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
-                .map(position -> pieces.getOrDefault(position, null))
+                .map(position -> pieces.getOrDefault(position, Square.empty()))
+                .map(Square::getPiece)
                 .map(PieceDisplay::getNotationByPiece)
-                .forEach(pieceDisplays::add);
+                .toList();
         return new RankDisplay(pieceDisplays);
     }
 }

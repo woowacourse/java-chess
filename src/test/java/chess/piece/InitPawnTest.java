@@ -3,9 +3,7 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.position.File;
-import chess.position.Position;
-import chess.position.Rank;
+import chess.position.UnitMovement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +15,27 @@ class InitPawnTest {
         // given
         InitPawn whitePawn = new InitPawn(Color.WHITE);
         InitPawn blackPawn = new InitPawn(Color.BLACK);
-        Position whitePosition = Position.of(File.B, Rank.TWO);
-        Position blackPosition = Position.of(File.B, Rank.SEVEN);
-        // when, then
+        UnitMovement whiteDirection = UnitMovement.differencesOf(0, 1);
+        UnitMovement blackDirection = UnitMovement.differencesOf(0, -1);
+        // when
+        boolean isWhiteMovable = whitePawn.isMovable(whiteDirection, 2);
+        boolean isBlackMovable = blackPawn.isMovable(blackDirection, 2);
+        // then
         assertAll(
-                () -> assertThat(whitePawn.isMovable(whitePosition, Position.of(File.B, Rank.THREE))).isTrue(),
-                () -> assertThat(whitePawn.isMovable(whitePosition, Position.of(File.B, Rank.FOUR))).isTrue(),
-                () -> assertThat(blackPawn.isMovable(blackPosition, Position.of(File.B, Rank.SIX))).isTrue(),
-                () -> assertThat(blackPawn.isMovable(blackPosition, Position.of(File.B, Rank.FIVE))).isTrue()
+                () -> assertThat(isWhiteMovable).isTrue(),
+                () -> assertThat(isBlackMovable).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("InitPawn이 이동하면 MovedPawn으로 교체한다.")
+    void replaceInitPawnTest() {
+        // given
+        InitPawn initPawn = new InitPawn(Color.WHITE);
+        // when
+        Piece movedPawn = initPawn.move();
+        // then
+        assertThat(movedPawn).isInstanceOf(MovedPawn.class);
+    }
+
 }
