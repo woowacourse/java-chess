@@ -1,0 +1,25 @@
+package controller.command;
+
+import controller.ChessController;
+import view.format.command.PlayCommandFormat;
+
+import java.sql.SQLException;
+
+public class StartCommand implements Command {
+
+    private final ChessController controller;
+
+    public StartCommand(final ChessController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void executeStart() throws SQLException {
+        controller.startNewGame();
+    }
+
+    @Override
+    public void executePlay(final PlayCommandFormat command, final int gameId) {
+        throw new UnsupportedOperationException("사용할 수 없는 기능입니다.");
+    }
+}

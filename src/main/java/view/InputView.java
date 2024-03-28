@@ -2,6 +2,9 @@ package view;
 
 import domain.Team;
 import domain.player.PlayerName;
+import view.format.command.PlayCommandFormat;
+import view.format.command.PlayCommandFormatType;
+import view.format.command.StartCommandsFormat;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +14,7 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public String readStartOption() {
+    public StartCommandsFormat readStartOption() {
         System.out.printf("""
                 > 체스 게임을 시작합니다.
                 > 게임 새로 시작 : start
@@ -19,13 +22,13 @@ public class InputView {
                 > 게임 전적 검색 : record
                 > 프로그램 종료 : quit%n""");
 
-        return SCANNER.nextLine();
+        return StartCommandsFormat.of(SCANNER.nextLine().toLowerCase());
     }
 
-    public String readGameCommand(final Team team, final PlayerName playerName) {
+    public PlayCommandFormat readGameCommand(final Team team, final PlayerName playerName) {
         System.out.printf("%n%s팀 %s의 차례입니다.%n", team.name(), playerName.getName());
 
-        return SCANNER.nextLine();
+        return PlayCommandFormatType.from(SCANNER.nextLine());
     }
 
     public int readContinueGame(final List<Integer> runningGame) {

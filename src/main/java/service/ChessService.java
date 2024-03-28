@@ -84,27 +84,18 @@ public class ChessService {
     }
 
     private void updateChessBoardDao(final int gameId, final Square source, final Square target) throws SQLException {
-        try {
-            connection.setAutoCommit(false);
+        final Piece piece = chessBoardDao.findBySquare(source, gameId)
+                .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
 
-            final Piece piece = chessBoardDao.findBySquare(source, gameId)
-                    .orElseThrow(() -> new IllegalArgumentException("Source에 기물이 없습니다."));
-
-            final Optional<Piece> targetPiece = chessBoardDao.findBySquare(target, gameId);
-            if (targetPiece.isEmpty()) {
-                chessBoardDao.addSquarePiece(target, piece, gameId);
-            } else {
-                chessBoardDao.update(target, piece, gameId);
-            }
-
-            chessBoardDao.deleteBySquare(source, gameId);
-            connection.commit();
-        } catch (final Exception e) {
-            connection.rollback();
-            throw new IllegalArgumentException(e.getMessage());
-        } finally {
-            connection.setAutoCommit(true);
+        final Optional<Piece> targetPiece = chessBoardDao.findBySquare(target, gameId);
+        if (targetPiece.isEmpty()) {
+            chessBoardDao.addSquarePiece(target, piece, gameId);
+        } else {
+            chessBoardDao.update(target, piece, gameId);
         }
+
+        chessBoardDao.deleteBySquare(source, gameId);
+        connection.commit();
     }
 
     public void endGame(final int gameId) {
@@ -135,11 +126,15 @@ public class ChessService {
     }
 
 
-    public boolean isNotEnd(final int gameId) {
+    public boolean isEnd(final int gameId) {
         final ChessGameStatus chessGameStatus = chessGameDao.findStatusById(gameId)
                 .orElseThrow(() -> new IllegalArgumentException("게임을 찾을 수 없습니다."));
 
-        return chessGameStatus == ChessGameStatus.RUNNING;
+        return chessGameStatus == ChessGameStatus.END;
+    }
+
+    public boolean isNotEnd(final int gameId) {
+        return !isEnd(gameId);
     }
 
     public boolean isKingDead(final int gameId) {

@@ -1,4 +1,4 @@
-package view;
+package view.format;
 
 import domain.WinStatus;
 

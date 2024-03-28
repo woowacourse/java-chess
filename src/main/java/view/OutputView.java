@@ -7,6 +7,8 @@ import domain.square.File;
 import domain.square.Rank;
 import domain.square.Square;
 import dto.PlayerGameRecordDto;
+import view.format.PieceFormat;
+import view.format.WinStatusFormat;
 
 import java.util.Arrays;
 import java.util.Map;
