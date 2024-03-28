@@ -28,14 +28,14 @@ public class PlayerDao {
         }
     }
 
-    public Optional<PlayerName> findName(final String name) {
+    public Optional<Player> findPlayerByName(final String name) {
         final var query = "SELECT name FROM player WHERE name = ?";
         try (final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, name);
             final var resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                return Optional.of(new PlayerName(resultSet.getString("name")));
+                return Optional.of(new Player(new PlayerName(resultSet.getString("name"))));
             }
         } catch (final SQLException e) {
             throw new RuntimeException(e);

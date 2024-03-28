@@ -24,8 +24,8 @@ public class PlayerService {
         return playerDao.add(playerName);
     }
 
-    public PlayerName findPlayerName(final String name) {
-        return playerDao.findName(name)
+    public Player findPlayer(final String name) {
+        return playerDao.findPlayerByName(name)
                 .orElseThrow(() -> new IllegalArgumentException("플레이어를 찾을 수 없습니댜."));
     }
 }
