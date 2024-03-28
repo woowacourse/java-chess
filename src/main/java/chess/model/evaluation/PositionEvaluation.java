@@ -25,20 +25,20 @@ public class PositionEvaluation {
 
         return Side.colors()
                 .stream()
-                .collect(toMap(identity(), side -> sumScoresBySide(positionsByPiece, side)));
+                .collect(toMap(identity(), side -> sumValuesBySide(positionsByPiece, side)));
     }
 
-    private Double sumScoresBySide(Map<Piece, List<Position>> positionsByPiece, Side side) {
+    private Double sumValuesBySide(Map<Piece, List<Position>> positionsByPiece, Side side) {
         return positionsByPiece.keySet()
                 .stream()
                 .filter(piece -> piece.isSameSide(side))
-                .mapToDouble(piece -> calculateScoreByPiece(piece, positionsByPiece.get(piece)))
+                .mapToDouble(piece -> calculateValueByPiece(piece, positionsByPiece.get(piece)))
                 .sum();
     }
 
-    private double calculateScoreByPiece(Piece piece, List<Position> positions) {
+    private double calculateValueByPiece(Piece piece, List<Position> positions) {
         PieceValue pieceValue = piece.value();
-        return pieceValue.calculateScore(positions);
+        return pieceValue.calculateValue(positions);
     }
 
     public double getEvaluationBySide(Side side) {

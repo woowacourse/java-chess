@@ -24,7 +24,7 @@ class PawnValueTest {
         );
 
         // when
-        double score = pawnValue.calculateScore(positions);
+        double score = pawnValue.calculateValue(positions);
 
         // then
         assertThat(score).isEqualTo(2);

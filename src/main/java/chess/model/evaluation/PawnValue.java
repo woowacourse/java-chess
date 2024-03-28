@@ -21,17 +21,17 @@ public class PawnValue implements PieceValue {
     }
 
     @Override
-    public double calculateScore(List<Position> positions) {
+    public double calculateValue(List<Position> positions) {
         Map<File, Long> countByFile = positions.stream()
                 .collect(groupingBy(Position::getFile, counting()));
 
         return countByFile.values()
                 .stream()
-                .mapToDouble(this::scoreOfCount)
+                .mapToDouble(this::pointOfCount)
                 .sum();
     }
 
-    private double scoreOfCount(long count) {
+    private double pointOfCount(long count) {
         if (count > UNFAVORABLE_POINT_THRESHOLD) {
             return count * unfavorablePoint;
         }

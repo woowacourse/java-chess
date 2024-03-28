@@ -24,7 +24,7 @@ class CommonValueTest {
         );
 
         // when
-        double score = pieceValue.calculateScore(positions);
+        double score = pieceValue.calculateValue(positions);
 
         // then
         assertThat(score).isEqualTo(15);
