@@ -10,6 +10,14 @@
 # 객체 협력 관계
 ![object-relations](src/main/resources/static/chess-step-1.png)
 
+
+
+# MySQL Server 실행하기
+```bash
+docker-compose -p chess up -d
+```
+
+
 # 기능 요구사항(step 1&2)
 
 ## Board
