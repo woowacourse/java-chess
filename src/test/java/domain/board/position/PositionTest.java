@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -23,13 +22,4 @@ class PositionTest {
     void commandException(final String command) {
         assertThatThrownBy(() -> Position.from(command)).isInstanceOf(IllegalArgumentException.class);
     }
-
-
-    @Test
-    @DisplayName("wqr")
-    void nameTest() {
-        final Position position = Position.from("c1");
-        System.out.println(position);
-    }
-
 }
