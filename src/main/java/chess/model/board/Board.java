@@ -7,6 +7,7 @@ import chess.model.piece.Piece;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,5 +132,13 @@ public class Board {
 
     private Piece getByPosition(Position position) {
         return squares.getOrDefault(position, EMPTY);
+    }
+
+    public Map<Position, Piece> getSquares() {
+        return Collections.unmodifiableMap(squares);
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
     }
 }

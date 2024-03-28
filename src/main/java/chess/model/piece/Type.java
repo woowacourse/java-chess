@@ -23,10 +23,22 @@ public enum Type {
         this.piece = piece;
     }
 
+    private Piece getPiece() {
+        return piece;
+    }
+
     public static Type from(Piece piece) {
         return Arrays.stream(values())
                 .filter(pieceSignature -> pieceSignature.piece.equals(piece))
                 .findFirst()
-                .orElse(EMPTY);
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 타입입니다."));
+    }
+
+    public static Piece getPiece(String typeName) {
+        return Arrays.stream(values())
+                .filter(type -> type.name().equals(typeName))
+                .findFirst()
+                .map(Type::getPiece)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 타입입니다."));
     }
 }
