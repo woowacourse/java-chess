@@ -14,16 +14,6 @@ public class Rook extends MultiShift {
     }
 
     @Override
-    public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
-        return Stream.of(candidateUpSquares(entirePieces),
-                        candidateDownSquares(entirePieces),
-                        candidateLeftSquares(entirePieces),
-                        candidateRightSquares(entirePieces))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
-    }
-
-    @Override
     protected Set<Movement> movements() {
         return Set.of(Movement.UP, Movement.DOWN, Movement.LEFT, Movement.RIGHT);
     }

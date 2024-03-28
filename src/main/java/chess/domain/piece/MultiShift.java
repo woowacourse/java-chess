@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.attribute.Color;
+import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,124 +11,22 @@ public abstract class MultiShift extends Piece {
         super(color, pieceType, square);
     }
 
-    protected Set<Square> candidateUpSquares(Set<Piece> entirePieces) {
+    @Override
+    public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
         Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveUp()) {
-            currentSquare = currentSquare.moveUp();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
+        for (Movement movement : movements()) {
+            Square currentSquare = currentSquare();
+            while (currentSquare.canMove(movement)) {
+                currentSquare = currentSquare.move(movement);
+                if (isOccupied(entirePieces, currentSquare)) {
+                    Piece piece = getPiece(entirePieces, currentSquare);
+                    addToMovableSquareIfEnemy(movableSquares, piece);
+                    break;
+                }
+                movableSquares.add(currentSquare);
             }
-            movableSquares.add(currentSquare);
         }
         return movableSquares;
-    }
-
-    protected Set<Square> candidateDownSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveDown()) {
-            currentSquare = currentSquare.moveDown();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateRightSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveRight()) {
-            currentSquare = currentSquare.moveRight();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateLeftSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveLeft()) {
-            currentSquare = currentSquare.moveLeft();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateLeftUpSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveLeftUp()) {
-            currentSquare = currentSquare.moveLeftUp();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateLeftDownSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveLeftDown()) {
-            currentSquare = currentSquare.moveLeftDown();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateRightUpSquares(Set<Piece> entirePieces) {
-        Set<Square> movableSquares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveRightUp()) {
-            currentSquare = currentSquare.moveRightUp();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(movableSquares, piece);
-                break;
-            }
-            movableSquares.add(currentSquare);
-        }
-        return movableSquares;
-    }
-
-    protected Set<Square> candidateRightDownSquares(Set<Piece> entirePieces) {
-        Set<Square> squares = new HashSet<>();
-        Square currentSquare = currentSquare();
-        while (currentSquare.canMoveRightDown()) {
-            currentSquare = currentSquare.moveRightDown();
-            if (isOccupied(entirePieces, currentSquare)) {
-                Piece piece = getPiece(entirePieces, currentSquare);
-                addToMovableSquareIfEnemy(squares, piece);
-                break;
-            }
-            squares.add(currentSquare);
-        }
-        return squares;
     }
 
     private Piece getPiece(Set<Piece> entirePieces, Square existPieces) {
