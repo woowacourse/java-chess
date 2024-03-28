@@ -8,6 +8,7 @@ import chess.model.piece.Color;
 import chess.model.position.Movement;
 import chess.model.position.Position;
 import chess.model.score.ScoreGenerator;
+import chess.service.BoardService;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,10 +18,12 @@ import java.util.function.Supplier;
 public class ChessGameController {
     private final OutputView outputView;
     private final InputView inputView;
+    private final BoardService boardService;
 
-    public ChessGameController(OutputView outputView, InputView inputView) {
+    public ChessGameController(OutputView outputView, InputView inputView, BoardService boardService) {
         this.outputView = outputView;
         this.inputView = inputView;
+        this.boardService = boardService;
     }
 
     public void run() {
@@ -32,12 +35,20 @@ public class ChessGameController {
     }
 
     private void start() {
-        Board board = new InitialBoardGenerator().create();
+        Board board = getOrCreateBoard();
         GameStatus gameStatus = new GameStatus();
         showBoard(board);
         while (gameStatus.isRunning()) {
             retryOnException(() -> playTurn(gameStatus, board));
         }
+        boardService.saveBoard(board);
+    }
+
+    private Board getOrCreateBoard() {
+        if (boardService.isBoardExist()) {
+            return boardService.getBoard();
+        }
+        return new InitialBoardGenerator().create();
     }
 
     private void showBoard(Board board) {
