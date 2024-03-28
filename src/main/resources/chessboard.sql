@@ -1,3 +1,5 @@
+USE chess;
+
 create table chessboard
 (
     board_column varchar(1) not null,
