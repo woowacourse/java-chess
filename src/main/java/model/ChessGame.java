@@ -46,8 +46,7 @@ public class ChessGame {
     public ChessGame() {
         this.board = new HashMap<>();
         this.chessStatus = ChessStatus.INIT;
-        DBConnection dbConnection = new DBConnection();
-        this.dbService = new DBService(dbConnection.getConnection());
+        this.dbService = new DBService(DBConnection.getConnection());
     }
 
     public void start() {
