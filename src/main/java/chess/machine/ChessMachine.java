@@ -66,6 +66,7 @@ public class ChessMachine {
             return;
         }
         chessBoardService.saveChessBoard(chessGame.getChessBoard());
+        outputView.printMessage("게임이 저장되었습니다.");
     }
 
     private void printStatus(ChessGame chessGame) {
