@@ -5,6 +5,7 @@ import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class King extends Piece {
 
@@ -14,7 +15,7 @@ public class King extends Piece {
 
     @Override
     public Set<Square> findLegalMoves(Set<Piece> entirePieces) {
-        Set<Square> candidateSquares = candidateSquares();
+        Set<Square> candidateSquares = findCandidateSquares();
         for (Piece other : entirePieces) {
             removeIfAllyExist(other, candidateSquares);
         }
@@ -33,33 +34,11 @@ public class King extends Piece {
         }
     }
 
-    public Set<Square> candidateSquares() {
-        Set<Square> squares = new HashSet<>();
+    public Set<Square> findCandidateSquares() {
         Square currentSquare = currentSquare();
-        if (currentSquare.canMoveUp()) {
-            squares.add(currentSquare.moveUp());
-        }
-        if (currentSquare.canMoveDown()) {
-            squares.add(currentSquare.moveDown());
-        }
-        if (currentSquare.canMoveLeft()) {
-            squares.add(currentSquare.moveLeft());
-        }
-        if (currentSquare.canMoveRight()) {
-            squares.add(currentSquare.moveRight());
-        }
-        if (currentSquare.canMoveLeftUp()) {
-            squares.add(currentSquare.moveLeftUp());
-        }
-        if (currentSquare.canMoveLeftDown()) {
-            squares.add(currentSquare.moveLeftDown());
-        }
-        if (currentSquare.canMoveRightUp()) {
-            squares.add(currentSquare.moveRightUp());
-        }
-        if (currentSquare.canMoveRightDown()) {
-            squares.add(currentSquare.moveRightDown());
-        }
-        return squares;
+        return movements().stream()
+                .filter(currentSquare::canMove)
+                .map(currentSquare::move)
+                .collect(Collectors.toSet());
     }
 }
