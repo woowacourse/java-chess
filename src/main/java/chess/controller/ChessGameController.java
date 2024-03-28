@@ -45,7 +45,7 @@ public class ChessGameController {
             return true;
         }
         if (command.isCommand(MOVE)) {
-            return isFinishedAfterMove(chessGame, command);
+            return move(chessGame, command);
         }
         return continueCommand(chessGame, command);
     }
@@ -65,12 +65,16 @@ public class ChessGameController {
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
     }
 
-    private boolean isFinishedAfterMove(final ChessGame chessGame, final Command command) {
+    private boolean move(final ChessGame chessGame, final Command command) {
         Position source = Position.of(command.getSource());
         Position target = Position.of(command.getTarget());
         chessGame.move(source, target);
 
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
+        return isFinished(chessGame);
+    }
+
+    private static boolean isFinished(ChessGame chessGame) {
         if (chessGame.isWin()) {
             OutputView.printWinner(chessGame.getTurn());
             return true;
