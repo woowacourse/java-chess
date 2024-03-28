@@ -45,6 +45,7 @@ public class ChessMachine {
             outputView.printMessage("저장된 데이터로 게임을 시작합니다");
             return new ChessGame(chessBoard);
         } catch (IllegalArgumentException e) {
+            outputView.printMessage("오류: " + e.getMessage());
             outputView.printMessage("데이터가 없어 새로 게임을 시작합니다");
         }
 
