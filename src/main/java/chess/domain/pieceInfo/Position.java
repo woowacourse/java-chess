@@ -74,4 +74,8 @@ public class Position {
     public int getYPosition() {
         return y.getIndex() - 1;
     }
+
+    public String getPosition() {
+        return x.getFile() + y.getRank();
+    }
 }

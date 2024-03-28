@@ -38,4 +38,7 @@ public enum Rank {
         return index;
     }
 
+    public String getRank() {
+        return rank;
+    }
 }

@@ -37,4 +37,8 @@ public enum File {
     public int getIndex() {
         return index;
     }
+
+    public String getFile() {
+        return file;
+    }
 }
