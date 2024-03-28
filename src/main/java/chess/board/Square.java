@@ -1,14 +1,13 @@
 package chess.board;
 
 import chess.piece.Color;
-import chess.piece.MovedPawn;
 import chess.piece.Piece;
 import chess.position.UnitMovement;
 import chess.score.Score;
 
 public class Square {
 
-    private Piece piece;
+    private final Piece piece;
 
     public Square(Piece piece) {
         this.piece = piece;
@@ -28,13 +27,7 @@ public class Square {
 
     public Square movePieceTo(Square destination) {
         validateSource(destination);
-        return getDestinationSquareAfterMovePieceTo(destination);
-    }
-
-    private Square getDestinationSquareAfterMovePieceTo(Square destination) {
-        destination.piece = changePieceOnInitPawn(piece);
-        piece = null;
-        return destination;
+        return new Square(piece.move());
     }
 
     public boolean canPieceMoveToward(UnitMovement movement, int step) {
@@ -52,13 +45,6 @@ public class Square {
         if (hasSameColoredPieceWith(destination)) {
             throw new IllegalArgumentException("도착 칸에 자신의 기물이 있습니다.");
         }
-    }
-
-    private Piece changePieceOnInitPawn(Piece piece) {
-        if (piece.isInitPawn()) {
-            return new MovedPawn(piece.getColor());
-        }
-        return piece;
     }
 
     private boolean hasSameColoredPieceWith(Square other) {

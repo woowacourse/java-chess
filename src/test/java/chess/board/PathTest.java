@@ -2,7 +2,6 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.piece.Bishop;
 import chess.piece.Color;
@@ -74,10 +73,7 @@ class PathTest {
         // when
         Square destination = path.traverse(Color.WHITE);
         // then
-        assertAll(
-                () -> assertThat(source.hasPiece()).isFalse(),
-                () -> assertThat(destination.hasPiece()).isTrue()
-        );
+        assertThat(destination.hasPiece()).isTrue();
     }
 
     @Test
