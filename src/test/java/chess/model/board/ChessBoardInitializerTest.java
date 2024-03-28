@@ -1,17 +1,15 @@
 package chess.model.board;
 
 import chess.model.piece.*;
-import chess.model.position.Position;
 import chess.model.position.File;
+import chess.model.position.Position;
 import chess.model.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

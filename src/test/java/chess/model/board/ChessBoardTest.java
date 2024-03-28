@@ -1,19 +1,17 @@
 package chess.model.board;
 
 import chess.model.piece.*;
-import chess.model.position.Position;
 import chess.model.position.File;
+import chess.model.position.Position;
 import chess.model.position.Rank;
+import chess.util.ChessBoardFixture;
+import chess.util.TestChessBoardGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -110,9 +108,10 @@ class ChessBoardTest {
         // given
         Knight knight = Knight.from(Side.WHITE);
         Position knightPosition = Position.of(File.A, Rank.ONE);
-        ChessBoard customChessBoard = createCustomChessBoard(knight, knightPosition);
-
         Position targetPosition = Position.of(File.B, Rank.THREE);
+
+        ChessBoardGenerator chessBoardGenerator = new TestChessBoardGenerator(ChessBoardFixture.KNIGHT_MOVEMENT_BOARD);
+        ChessBoard customChessBoard = new ChessBoard(chessBoardGenerator.create());
 
         // when
         customChessBoard.move(knightPosition, targetPosition, Turn.from(Side.WHITE));
@@ -120,20 +119,6 @@ class ChessBoardTest {
         // then
         Map<Position, Piece> actualBoard = customChessBoard.getBoard();
         assertThat(actualBoard).containsEntry(targetPosition, knight);
-    }
-
-    private ChessBoard createCustomChessBoard(Knight knight, Position knightPosition) {
-        Map<Position, Piece> chessBoard = Arrays.stream(File.values())
-                .flatMap(this::createPositionStream)
-                .collect(toMap(identity(), position -> Blank.INSTANCE));
-        chessBoard.put(knightPosition, knight);
-        chessBoard.put(knightPosition.calculateNextPosition(0, 1), Pawn.from(Side.WHITE));
-        return new ChessBoard(chessBoard);
-    }
-
-    private Stream<Position> createPositionStream(File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> Position.of(file, rank));
     }
 
     @Test
