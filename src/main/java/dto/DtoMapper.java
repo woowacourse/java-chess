@@ -14,6 +14,13 @@ public class DtoMapper {
     private DtoMapper() {
     }
 
+
+    public static GameResultResponse generateGameResultResponse(final Double whiteScore, final Double blackScore,
+                                                                final boolean isWhiteKingDead,
+                                                                final boolean isBlackKingDead) {
+        return new GameResultResponse(whiteScore, blackScore, isWhiteKingDead, isBlackKingDead);
+    }
+
     public static BoardResponse generateBoardResponse(final Map<Position, Piece> squares) {
         final List<RankResponse> rankResponses = new ArrayList<>();
         for (int rank = 7; rank >= 0; rank--) {
@@ -34,7 +41,8 @@ public class DtoMapper {
     }
 
     private static List<Piece> findPiecesByOrderOfRank(final Map<Position, Piece> squares, final int rank) {
-        return squares.entrySet().stream()
+        return squares.entrySet()
+                .stream()
                 .filter(entry -> entry.getKey().toRankIndex() == rank)
                 .sorted(Comparator.comparingInt(entry -> entry.getKey().toFileIndex()))
                 .map(Entry::getValue)

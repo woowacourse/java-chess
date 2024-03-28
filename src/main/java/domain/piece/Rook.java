@@ -4,9 +4,10 @@ import domain.board.position.Vector;
 
 
 public class Rook extends Piece {
+    private static final double SCORE = 5;
 
     public Rook(final Color color) {
-        super(color);
+        super(color,SCORE);
     }
 
     @Override

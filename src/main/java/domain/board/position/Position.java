@@ -1,8 +1,9 @@
 package domain.board.position;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Serializable {
     private final File file;
     private final Rank rank;
 
@@ -12,12 +13,16 @@ public class Position {
     }
 
     public static Position from(final String command) {
-        if (command.length() != 2) {
-            throw new IllegalArgumentException(String.format("입력된 명령어: %s, 명령어는 파일, 랭크로 구성되어 있어야 합니다", command));
-        }
+        validateCommandLength(command);
         final File file = File.from(command.substring(0, 1));
         final Rank rank = Rank.from(command.substring(1, 2));
         return new Position(file, rank);
+    }
+
+    private static void validateCommandLength(final String command) {
+        if (command.length() != 2) {
+            throw new IllegalArgumentException(String.format("입력된 명령어: %s, 명령어는 파일, 랭크로 구성되어 있어야 합니다", command));
+        }
     }
 
     public Position next(final int fileDelta, final int rankDelta) {
@@ -30,6 +35,20 @@ public class Position {
 
     public int toRankIndex() {
         return rank.toIndex();
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+
+    @Override
+    public String toString() {
+        return file.name().toLowerCase() + (rank.toIndex() + 1);
     }
 
     @Override

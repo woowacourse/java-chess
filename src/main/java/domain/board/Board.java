@@ -8,6 +8,7 @@ import domain.piece.Piece;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> squares;
@@ -25,7 +26,44 @@ public class Board {
     public void move(final Position source, final Position target) {
         validateMovement(source, target);
         updateBoard(source, target);
+        if (isKingDead()) {
+            return;
+        }
         switchTurn();
+    }
+
+    public double calculateScore(final Color color) {
+        final List<Piece> pieces = squares.values().stream().filter(piece -> piece.hasColor(color)).toList();
+        double totalSCore = calculateWithoutPawnScore(color, pieces);
+        totalSCore += calculatePawnScore(color);
+        return totalSCore;
+    }
+
+    private double calculateWithoutPawnScore(final Color color, final List<Piece> pieces) {
+        return pieces.stream()
+                .filter(piece -> piece.hasColor(color))
+                .filter(piece -> !piece.isPawn())
+                .map(Piece::getScore)
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+
+    private double calculatePawnScore(final Color color) {
+        final Map<Integer, Long> collect = squares.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().hasColor(color))
+                .filter(entry -> entry.getValue().isPawn())
+                .map(entry -> entry.getKey().toFileIndex())
+                .collect(Collectors.groupingBy(fileIndex -> fileIndex, Collectors.counting()));
+
+        return collect.values().stream().map(this::determinePawnScore).mapToDouble(Double::doubleValue).sum();
+    }
+
+    private double determinePawnScore(final Long counter) {
+        if (counter >= 2) {
+            return (double) counter / 2;
+        }
+        return counter;
     }
 
     private void validateMovement(final Position source, final Position target) {
@@ -80,10 +118,32 @@ public class Board {
     private void updateBoard(final Position source, final Position target) {
         squares.put(target, squares.get(source).move());
         squares.put(source, Empty.INSTANCE);
+
     }
+
+    public boolean isKingDead() {
+        return squares.values().stream().filter(Piece::isKing).count() != 2;
+    }
+
+    public boolean isKingDeadOf(final Color color) {
+        return squares.values()
+                .stream()
+                .filter(Piece::isKing)
+                .map(Piece::getColor)
+                .noneMatch(r -> r.isSameColor(color));
+    }
+
 
     private void switchTurn() {
         currentTurnColor = currentTurnColor.reverse();
+    }
+
+    public Color getColor() {
+        return this.currentTurnColor;
+    }
+
+    public Piece getPiece(final String source) {
+        return squares.get(Position.from(source));
     }
 
     public Map<Position, Piece> getSquares() {

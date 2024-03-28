@@ -22,5 +22,4 @@ class PositionTest {
     void commandException(final String command) {
         assertThatThrownBy(() -> Position.from(command)).isInstanceOf(IllegalArgumentException.class);
     }
-
 }

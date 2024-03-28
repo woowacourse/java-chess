@@ -4,8 +4,10 @@ import domain.board.position.Vector;
 import java.util.List;
 
 public abstract class AbstractPawn extends Piece {
+    private static final double SCORE_HIGH = 1;
+
     protected AbstractPawn(final Color color) {
-        super(color);
+        super(color, SCORE_HIGH);
     }
 
     protected List<Vector> getWhiteOneStepForwardVectors(final Piece targetPiece) {
@@ -27,5 +29,10 @@ public abstract class AbstractPawn extends Piece {
             return vector.reflectHorizontally();
         }
         return vector;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

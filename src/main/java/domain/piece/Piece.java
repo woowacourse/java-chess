@@ -5,8 +5,16 @@ import domain.board.position.Vector;
 public abstract class Piece {
     private final Color color;
 
+    private final double score;
+
     protected Piece(final Color color) {
         this.color = color;
+        this.score = 0;
+    }
+
+    protected Piece(final Color color, final double score) {
+        this.color = color;
+        this.score = score;
     }
 
     public Piece move() {
@@ -35,11 +43,26 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
     public boolean hasColor(final Color color) {
         return this.color == color;
     }
 
     public Color getColor() {
         return color;
+    }
+
+    public double getScore() {
+        return score;
+    }
+    public String getName(){
+        return getClass().getSimpleName();
     }
 }

@@ -31,9 +31,11 @@ import domain.piece.Piece;
 import domain.piece.Queen;
 import domain.piece.Rook;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public enum BoardInitiator {
 
@@ -91,5 +93,24 @@ public enum BoardInitiator {
         for (final Rank rank : ranks) {
             positions.add(new Position(file, rank));
         }
+    }
+
+    public static Map<Position, Piece> createEmpty() {
+        final LinkedHashMap<Position, Piece> squares = new LinkedHashMap<>();
+        for (int fileIndex = 0; fileIndex < 8; fileIndex++) {
+            for (int rankIndex = 0; rankIndex < 8; rankIndex++) {
+                squares.put(new Position(File.of(fileIndex), Rank.of(rankIndex)), Empty.INSTANCE);
+            }
+        }
+        return squares;
+    }
+
+    @SafeVarargs
+    public static Map<Position, Piece> create(final Entry<Position, Piece>... entries) {
+        final Map<Position, Piece> squares = createEmpty();
+        for (final Entry<Position, Piece> entry : entries) {
+            squares.put(entry.getKey(), entry.getValue());
+        }
+        return Collections.unmodifiableMap(squares);
     }
 }
