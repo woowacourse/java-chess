@@ -8,6 +8,8 @@ import model.position.Position;
 
 public class ScoreCalculator {
 
+    private static final double EQUAL_COLUMN_PAWN_SCORE = 0.5;
+
     private final Map<Camp, Double> result;
 
     public ScoreCalculator(Map<Position, Piece> board) {
@@ -26,7 +28,7 @@ public class ScoreCalculator {
                 .filter(piece -> piece.isSameCamp(camp))
                 .toList();
         if (isKingDie(pieces)) {
-            return 0;
+            return 0D;
         }
         double total = pieces.stream()
                 .map(piece -> piece.getPieceType().getScore())
@@ -43,7 +45,7 @@ public class ScoreCalculator {
                 .filter(position -> board.get(position).isSameCamp(camp))
                 .filter(position -> board.get(position).isPawn())
                 .toList();
-        return sameColumnPawnsCount(pawnPositions) * 0.5;
+        return sameColumnPawnsCount(pawnPositions) * EQUAL_COLUMN_PAWN_SCORE;
     }
 
     private int sameColumnPawnsCount(List<Position> pawnPositions) {
@@ -62,7 +64,7 @@ public class ScoreCalculator {
         return count;
     }
 
-    private static int getCount(Position pawnPosition, Position position) {
+    private int getCount(Position pawnPosition, Position position) {
         if (!pawnPosition.equals(position) && pawnPosition.isSameColumn(position)) {
             return 1;
         }

@@ -12,9 +12,6 @@ public class Application {
         final OutputView outputView = new OutputView();
         final ChessController chessController = new ChessController(inputView, outputView);
 
-        /*DBConnection dbConnection = new DBConnection();
-        DBService dbService = new DBService(dbConnection.getConnection());
-        dbService.reset();*/
         chessController.run();
     }
 }

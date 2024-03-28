@@ -25,6 +25,7 @@ import model.position.Row;
 public class ChessGame {
 
     private static final Map<Column, Function<Camp, Piece>> initPosition = new EnumMap<>(Column.class);
+    private static final int ALL_KING_COUNT = 2;
 
     static {
         initPosition.put(Column.A, Rook::new);
@@ -169,7 +170,7 @@ public class ChessGame {
     }
 
     public boolean isKingDie() {
-        return 2 > board.values().stream()
+        return ALL_KING_COUNT > board.values().stream()
                 .filter(Piece::isKing)
                 .count();
     }

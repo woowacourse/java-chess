@@ -17,6 +17,8 @@ public enum Command {
     STATUS("status", input -> new Status()),
     END("end", input -> new End());
 
+    private static final int POSITION_SIZE = 2;
+
     private final String value;
     private final Function<List<String>, Menu> menu;
 
@@ -34,7 +36,7 @@ public enum Command {
     }
 
     private static Menu toMove(List<String> input) {
-        if (input.get(1).length() == 2 && input.get(2).length() == 2) {
+        if (input.get(1).length() == POSITION_SIZE && input.get(2).length() == POSITION_SIZE) {
             return new Move(Position.from(input.get(1)), Position.from(input.get(2)));
         }
         throw new IllegalArgumentException("잘못된 명령어를 입력하였습니다.");
