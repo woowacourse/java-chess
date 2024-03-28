@@ -13,6 +13,7 @@ dependencies {
     testImplementation platform('org.assertj:assertj-bom:3.25.1')
     testImplementation('org.junit.jupiter:junit-jupiter')
     testImplementation('org.assertj:assertj-core')
+    runtimeOnly("com.mysql:mysql-connector-j:8.3.0")
 }
 
 java {
