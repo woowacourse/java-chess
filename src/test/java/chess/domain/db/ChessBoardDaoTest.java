@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
+import java.util.List;
 
 class ChessBoardDaoTest {
 
@@ -29,6 +30,13 @@ class ChessBoardDaoTest {
         final var piece = chessBoardDao.findByPosition("a1");
 
         assertThat(piece).isEqualTo(new ChessBoard("a1", "WHITE", "KING"));
+    }
+
+    @Test
+    public void findAll() {
+        final var piece = chessBoardDao.findAll();
+
+        assertThat(piece).isEqualTo(List.of(new ChessBoard("a1", "WHITE", "KING")));
     }
 
     @Test

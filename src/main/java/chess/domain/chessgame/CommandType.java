@@ -8,6 +8,7 @@ public enum CommandType {
     END("end"),
     STATUS("status"),
     SAVE("save"),
+    LOAD("load"),
     ;
 
     private final String commandType;

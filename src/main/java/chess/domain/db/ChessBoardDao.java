@@ -3,6 +3,8 @@ package chess.domain.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ChessBoardDao {
 
@@ -55,6 +57,25 @@ public final class ChessBoardDao {
         }
 
         return null;
+    }
+
+    public List<ChessBoard> findAll() {
+        final var query = "SELECT * FROM chessBoard";
+        final List<ChessBoard> result = new ArrayList<>();
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result.add(new ChessBoard(
+                        resultSet.getString("position"),
+                        resultSet.getString("team"),
+                        resultSet.getString("type")
+                ));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     public void deleteAll() {

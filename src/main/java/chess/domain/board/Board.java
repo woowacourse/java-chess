@@ -23,6 +23,14 @@ public class Board {
         this.removedPieces = new RemovedPieces();
     }
 
+    public Board(List<Piece> pieces) {
+        Map<Position, Piece> board = new HashMap<>();
+        pieces.forEach(piece -> board.put(piece.getPosition(), piece));
+
+        this.board = board;
+        this.removedPieces = new RemovedPieces();
+    }
+
     private void initialize(final Map<Position, Piece> board) {
         List<Piece> pieces = BoardInitializer.initialize();
         pieces.forEach(piece -> board.put(piece.getPosition(), piece));

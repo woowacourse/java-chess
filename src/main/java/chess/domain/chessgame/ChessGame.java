@@ -15,6 +15,11 @@ public class ChessGame {
         this.board = new Board();
     }
 
+    public ChessGame(Board board, Team turn) {
+        this.board = board;
+        this.turn = turn;
+    }
+
     public void start() {
         if (notStarted()) {
             turn = Team.WHITE;

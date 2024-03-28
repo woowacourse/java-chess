@@ -1,11 +1,13 @@
 package chess.controller;
 
+import chess.domain.board.Board;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Command;
 import chess.domain.chessgame.ScoreBoard;
 import chess.domain.db.ChessBoardDao;
 import chess.domain.dto.BoardDto;
 import chess.domain.dto.ChessBoardDto;
+import chess.domain.dto.ChessBoardToBoardDto;
 import chess.domain.pieceInfo.Position;
 import chess.domain.pieceInfo.Team;
 import chess.view.InputView;
@@ -15,72 +17,76 @@ import static chess.domain.chessgame.CommandType.*;
 
 public class ChessGameController {
     private final ChessBoardDao chessBoardDao = new ChessBoardDao();
+    private ChessGame chessGame;
 
     public void run() {
-        ChessGame chessGame = new ChessGame();
+        chessGame = new ChessGame();
 
         OutputView.printChessGameStartMessage();
         OutputView.printCommandGuideMessage();
 
-        play(chessGame);
+        play();
     }
 
-    private void play(final ChessGame chessGame) {
+    private void play() {
         try {
-            playChess(chessGame);
+            playChess();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            play(chessGame);
+            play();
         }
     }
 
-    private void playChess(final ChessGame chessGame) {
+    private void playChess() {
         Command command = Command.of(InputView.inputCommand());
-        boolean isEnd = playOneTurn(chessGame, command);
+        boolean isEnd = playOneTurn(command);
         while (!isEnd) {
             command = Command.of(InputView.inputCommand());
-            isEnd = playOneTurn(chessGame, command);
+            isEnd = playOneTurn(command);
         }
     }
 
-    private boolean playOneTurn(final ChessGame chessGame, final Command command) {
+    private boolean playOneTurn(final Command command) {
         if (command.isCommand(END)) {
             return true;
         }
         if (command.isCommand(MOVE)) {
-            return move(chessGame, command);
+            return move(command);
         }
-        return continueCommand(chessGame, command);
+        return continueCommand(command);
     }
 
-    private boolean continueCommand(final ChessGame chessGame, final Command command) {
+    private boolean continueCommand(final Command command) {
         if (command.isCommand(START)) {
-            start(chessGame);
+            start();
         }
         if (command.isCommand(STATUS)) {
-            status(chessGame);
+            status();
         }
         if (command.isCommand(SAVE)) {
-            save(chessGame);
+            save();
+        }
+        if (command.isCommand(LOAD)) {
+            load();
         }
         return false;
     }
 
-    private void start(final ChessGame chessGame) {
+    private void start() {
         chessGame.start();
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
     }
 
-    private boolean move(final ChessGame chessGame, final Command command) {
+    private boolean move(final Command command) {
         Position source = Position.of(command.getSource());
         Position target = Position.of(command.getTarget());
         chessGame.move(source, target);
 
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
-        return isFinished(chessGame);
+        return isFinished();
     }
 
-    private static boolean isFinished(ChessGame chessGame) {
+    private boolean isFinished() {
         if (chessGame.isWin()) {
             OutputView.printWinner(chessGame.getTurn());
             return true;
@@ -88,13 +94,13 @@ public class ChessGameController {
         return false;
     }
 
-    private void status(final ChessGame chessGame) {
+    private void status() {
         ScoreBoard scoreBoard = chessGame.status();
         Team winner = chessGame.findWinner(scoreBoard);
-        result(chessGame, winner, scoreBoard);
+        result(winner, scoreBoard);
     }
 
-    private void result(final ChessGame chessGame, final Team winner, final ScoreBoard scoreBoard) {
+    private void result(final Team winner, final ScoreBoard scoreBoard) {
         double whiteScore = scoreBoard.getWhiteScore();
         double blackScore = scoreBoard.getBlackScore();
         OutputView.printBoard(BoardDto.of(chessGame.getBoard()));
@@ -105,8 +111,13 @@ public class ChessGameController {
         OutputView.printScoreWithWinner(whiteScore, blackScore, winner);
     }
 
-    private void save(final ChessGame chessGame) {
+    private void save() {
         ChessBoardDto chessBoardDto = ChessBoardDto.of(chessGame.getBoard().values().stream().toList());
         chessBoardDto.getPieces().forEach(chessBoardDao::addPiece);
+    }
+
+    private void load() {
+        ChessBoardToBoardDto chessBoardToBoardDto = ChessBoardToBoardDto.of(chessBoardDao.findAll());
+        chessGame = new ChessGame(new Board(chessBoardToBoardDto.getPieces()), Team.WHITE);
     }
 }
