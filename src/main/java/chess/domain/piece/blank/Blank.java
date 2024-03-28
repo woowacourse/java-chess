@@ -1,16 +1,17 @@
 package chess.domain.piece.blank;
 
+import chess.domain.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.strategy.BlankMoveStrategy;
-import chess.domain.strategy.MoveStrategy;
+import chess.domain.state.BlankChessState;
+import chess.domain.state.ChessState;
 import java.util.Map;
 import java.util.Set;
 
-public class Blank extends Piece {
+public final class Blank extends Piece {
     public Blank() {
         super(Color.NONE);
     }
@@ -31,7 +32,12 @@ public class Blank extends Piece {
     }
 
     @Override
-    public MoveStrategy strategy(Map<Position, Piece> board) {
-        return new BlankMoveStrategy(board);
+    public ChessState state(Map<Position, Piece> board) {
+        return new BlankChessState(board);
+    }
+
+    @Override
+    public Score score() {
+        return new Score(0);
     }
 }

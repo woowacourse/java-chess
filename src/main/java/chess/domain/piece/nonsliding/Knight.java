@@ -1,11 +1,12 @@
 package chess.domain.piece.nonsliding;
 
+import chess.domain.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
 import java.util.Set;
 
-public class Knight extends NonSlidingPiece {
+public final class Knight extends NonSlidingPiece {
     private static final Set<Direction> DIRECTIONS = Direction.getKnightDirection();
 
     public Knight(Color color) {
@@ -18,5 +19,10 @@ public class Knight extends NonSlidingPiece {
             return PieceType.WHITE_KNIGHT;
         }
         return PieceType.BLACK_KNIGHT;
+    }
+
+    @Override
+    public Score score() {
+        return new Score(2.5);
     }
 }

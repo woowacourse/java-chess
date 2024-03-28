@@ -4,11 +4,9 @@ import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import java.util.Set;
 
-public class WhitePawn extends Pawn {
+public final class WhitePawn extends Pawn {
     private static final Set<Direction> DIRECTIONS = Set.of(Direction.UP, Direction.LEFT_UP, Direction.RIGHT_UP);
 
     public WhitePawn() {
@@ -16,10 +14,7 @@ public class WhitePawn extends Pawn {
     }
 
     @Override
-    public boolean isCaptureMove(Positions positions) {
-        Position from = positions.from();
-        Position to = positions.to();
-        Direction direction = from.findDirectionTo(to);
+    protected boolean sameWithCaptureMove(Direction direction) {
         return direction == Direction.LEFT_UP || direction == Direction.RIGHT_UP;
     }
 

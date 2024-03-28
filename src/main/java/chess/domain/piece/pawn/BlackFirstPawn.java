@@ -4,11 +4,9 @@ import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
-import chess.domain.position.Positions;
 import java.util.Set;
 
-public class BlackFirstPawn extends Pawn {
+public final class BlackFirstPawn extends Pawn {
     private static final Set<Direction> DIRECTIONS = Direction.getBlackFirstPawnDirection();
 
     public BlackFirstPawn() {
@@ -16,10 +14,7 @@ public class BlackFirstPawn extends Pawn {
     }
 
     @Override
-    public boolean isCaptureMove(Positions positions) {
-        Position from = positions.from();
-        Position to = positions.to();
-        Direction direction = from.findDirectionTo(to);
+    protected boolean sameWithCaptureMove(Direction direction) {
         return direction == Direction.LEFT_DOWN || direction == Direction.RIGHT_DOWN;
     }
 
@@ -30,6 +25,6 @@ public class BlackFirstPawn extends Pawn {
 
     @Override
     public PieceType pieceType() {
-        return PieceType.BLACK_PAWN;
+        return PieceType.BLACK_FIRST_PAWN;
     }
 }

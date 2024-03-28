@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 public enum PieceDisplay {
+    WHITE_FIRST_PAWN(PieceType.WHITE_FIRST_PAWN, "p"),
     WHITE_PAWN(PieceType.WHITE_PAWN, "p"),
     WHITE_KNIGHT(PieceType.WHITE_KNIGHT, "n"),
     WHITE_BISHOP(PieceType.WHITE_BISHOP, "b"),
     WHITE_ROOK(PieceType.WHITE_ROOK, "r"),
     WHITE_QUEEN(PieceType.WHITE_QUEEN, "q"),
     WHITE_KING(PieceType.WHITE_KING, "k"),
+    BLACK_FIRST_PAWN(PieceType.BLACK_FIRST_PAWN, "p"),
     BLACK_PAWN(PieceType.BLACK_PAWN, "P"),
     BLACK_KNIGHT(PieceType.BLACK_KNIGHT, "N"),
     BLACK_BISHOP(PieceType.BLACK_BISHOP, "B"),

@@ -89,6 +89,14 @@ public class Position {
         return positions;
     }
 
+    public int file() {
+        return x;
+    }
+
+    public int rank() {
+        return y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

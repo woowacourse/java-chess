@@ -86,6 +86,6 @@ class BlackFirstPawnTest {
     void getPieceType() {
         BlackFirstPawn blackFirstPawn = new BlackFirstPawn();
 
-        assertThat(blackFirstPawn.pieceType()).isEqualTo(PieceType.BLACK_PAWN);
+        assertThat(blackFirstPawn.pieceType()).isEqualTo(PieceType.BLACK_FIRST_PAWN);
     }
 }
