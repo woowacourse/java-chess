@@ -17,4 +17,24 @@ class ChessBoardDaoTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void addPiece() {
+        final var piece = new ChessBoard("a1", "WHITE", "KING");
+        chessBoardDao.addPiece(piece);
+    }
+
+    @Test
+    public void findByPosition() {
+        final var piece = chessBoardDao.findByPosition("a1");
+
+        assertThat(piece).isEqualTo(new ChessBoard("a1", "WHITE", "KING"));
+    }
+
+    @Test
+    public void deleteAll() {
+        chessBoardDao.deleteAll();
+
+        assertThat(chessBoardDao.findByPosition("a1")).isNull();
+    }
 }

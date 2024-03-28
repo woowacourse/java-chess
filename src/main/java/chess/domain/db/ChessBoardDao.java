@@ -22,4 +22,48 @@ public final class ChessBoardDao {
             return null;
         }
     }
+
+    public void addPiece(final ChessBoard chessBoard) {
+        final var query = "INSERT INTO chessBoard VALUES(?, ?, ?)";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, chessBoard.position());
+            preparedStatement.setString(2, chessBoard.team());
+            preparedStatement.setString(3, chessBoard.type());
+            preparedStatement.execute();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ChessBoard findByPosition(final String position) {
+        final var query = "SELECT * FROM chessBoard WHERE position = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, position);
+
+            final var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new ChessBoard(
+                        resultSet.getString("position"),
+                        resultSet.getString("team"),
+                        resultSet.getString("type")
+                );
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    public void deleteAll() {
+        final var query = "DELETE FROM chessBoard";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.execute();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
