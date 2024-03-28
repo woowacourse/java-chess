@@ -17,19 +17,15 @@ public class ChessGame {
 
     public void start() {
         GameState gameState = retryOnException(this::prepare);
-        retryOnException(() -> play(gameState));
+        while (gameState.canContinue()) {
+            GameState currentGameState = gameState;
+            gameState = retryOnException(() -> currentGameState.run(inputView, outputView));
+        }
     }
 
     private GameState prepare() {
-        GameState prepare = new Prepare();
+        GameState prepare = retryOnException(Prepare::new);
         return prepare.run(inputView, outputView);
-    }
-
-    private void play(GameState prepare) {
-        GameState gameState = prepare;
-        while (gameState.canContinue()) {
-            gameState = gameState.run(inputView, outputView);
-        }
     }
 
     private <T> T retryOnException(Supplier<T> retryOperation) {
@@ -48,23 +44,6 @@ public class ChessGame {
         } catch (IllegalArgumentException e) {
             outputView.printException(e.getMessage());
             return null;
-        }
-    }
-
-    private void retryOnException(Runnable retryOperation) {
-        boolean retry = true;
-        while (retry) {
-            retry = tryOperation(retryOperation);
-        }
-    }
-
-    private boolean tryOperation(Runnable operation) {
-        try {
-            operation.run();
-            return false;
-        } catch (IllegalArgumentException e) {
-            outputView.printException(e.getMessage());
-            return true;
         }
     }
 }
