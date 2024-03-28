@@ -6,14 +6,14 @@ import chess.domain.square.Empty;
 import chess.domain.square.Square;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
     private final Map<Position, Square> squares;
 
     public ChessBoard(Map<Position, Square> squares) {
-        this.squares = new LinkedHashMap<>(squares);
+        this.squares = new HashMap<>(squares);
     }
 
     public void move(PathFinder pathFinder) {
