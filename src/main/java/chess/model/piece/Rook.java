@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 import static java.util.function.Function.identity;
 
 public class Rook extends Piece {
-    private static final Map<Side, Rook> CACHE = Side.colors().stream()
+    private static final Map<Side, Rook> CACHE = Side.colors()
+            .stream()
             .collect(Collectors.toMap(identity(), Rook::new));
 
     private Rook(Side side) {

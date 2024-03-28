@@ -9,7 +9,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Turn {
-    private static final Map<Side, Turn> CACHE = Side.colors().stream()
+    private static final Map<Side, Turn> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Turn::new));
 
     private final Side side;

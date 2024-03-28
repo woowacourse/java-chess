@@ -13,7 +13,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Pawn extends Piece {
-    private static final Map<Side, Pawn> CACHE = Side.colors().stream()
+    private static final Map<Side, Pawn> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Pawn::new));
 
     private static final int DISPLACEMENT = 1;

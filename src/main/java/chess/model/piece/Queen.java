@@ -12,7 +12,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Queen extends Piece {
-    private static final Map<Side, Queen> CACHE = Side.colors().stream()
+    private static final Map<Side, Queen> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Queen::new));
 
     private Queen(Side side) {

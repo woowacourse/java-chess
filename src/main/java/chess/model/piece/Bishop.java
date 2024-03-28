@@ -12,7 +12,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Bishop extends Piece {
-    private static final Map<Side, Bishop> CACHE = Side.colors().stream()
+    private static final Map<Side, Bishop> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Bishop::new));
 
     private Bishop(Side side) {

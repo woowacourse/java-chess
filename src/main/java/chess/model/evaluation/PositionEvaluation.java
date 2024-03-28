@@ -19,7 +19,8 @@ public class PositionEvaluation {
     }
 
     public Map<Side, Double> evaluate(Map<Position, Piece> board) {
-        Map<Piece, List<Position>> positionsByPiece = board.entrySet().stream()
+        Map<Piece, List<Position>> positionsByPiece = board.entrySet()
+                .stream()
                 .collect(groupingBy(Map.Entry::getValue, mapping(Map.Entry::getKey, toList())));
 
         return Side.colors()

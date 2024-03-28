@@ -47,7 +47,8 @@ public class OutputView {
     }
 
     private Piece findByPosition(Rank rank, File file, Map<Position, Piece> board) {
-        Position position = board.keySet().stream()
+        Position position = board.keySet()
+                .stream()
                 .filter(chessPosition -> chessPosition.getRank() == rank && chessPosition.getFile() == file)
                 .findFirst().orElseThrow(() -> new NoSuchElementException("주어진 좌표에 출력을 위한 Piece가 존재하지 않습니다."));
         return board.get(position);

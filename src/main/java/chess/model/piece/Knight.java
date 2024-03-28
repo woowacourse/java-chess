@@ -13,7 +13,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Knight extends Piece {
-    private static final Map<Side, Knight> CACHE = Side.colors().stream()
+    private static final Map<Side, Knight> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Knight::new));
 
     private static final int DISPLACEMENT = 3;
