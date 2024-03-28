@@ -2,6 +2,7 @@ package chess.repository;
 
 import chess.database.JdbcConnectionPool;
 import chess.domain.square.Movement;
+import chess.dto.SquareRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +55,7 @@ public class MovementDao implements MovementRepository {
         while (resultSet.next()) {
             String source = resultSet.getString("source");
             String target = resultSet.getString("target");
-            moves.add(Movement.from(source, target));
+            moves.add(Movement.of(SquareRequest.from(source), SquareRequest.from(target)));
         }
         return moves;
     }

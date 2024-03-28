@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.domain.square.Movement;
+import chess.dto.SquareRequest;
 import chess.repository.MovementRepository;
 import java.util.List;
 
@@ -17,6 +18,6 @@ public class GameService {
     }
 
     public void createMove(final long roomId, final String source, final String target) {
-        movementRepository.save(roomId, Movement.from(source, target));
+        movementRepository.save(roomId, Movement.of(SquareRequest.from(source), SquareRequest.from(target)));
     }
 }
