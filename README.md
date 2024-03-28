@@ -10,7 +10,8 @@
 # 객체 협력 관계
 ![object-relations](src/main/resources/static/chess-step-1.png)
 
-
+# ERD
+![erd](src/main/resources/static/chess-erd.png)
 
 # MySQL Server 실행하기
 ```bash
