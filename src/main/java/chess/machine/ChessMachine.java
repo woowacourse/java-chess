@@ -23,14 +23,18 @@ public class ChessMachine {
         outputView.printStartGameMessage();
         outputView.printCommandGuideMessage();
 
+        ChessGame chessGame = initializeChessGame();
+        playChess(chessGame);
+        saveGameIfKingIsNotDead(chessGame);
+        printStatus(chessGame);
+    }
+
+    private ChessGame initializeChessGame() {
         Command command = inputView.readCommand();
         validateFirstCommand(command);
         ChessGame chessGame = findOrCreateGame();
         command.conductCommand(chessGame, outputView);
-
-        playChess(chessGame);
-        saveGameIfKingIsNotDead(chessGame);
-        printStatus(chessGame);
+        return chessGame;
     }
 
     private void validateFirstCommand(Command command) {
