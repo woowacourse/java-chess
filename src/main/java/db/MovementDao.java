@@ -41,26 +41,6 @@ public final class MovementDao {
         }
     }
 
-    public Movement findByMovementId(final String id) {
-        final var query = "SELECT * FROM movement WHERE movement_id = ? ORDER BY movement_id";
-        try (final var connection = getConnection();
-             final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, id);
-            final var resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new Movement(
-                        Position.from(resultSet.getString("source")),
-                        Position.from(resultSet.getString("target")),
-                        resultSet.getString("shape"),
-                        resultSet.getString("color")
-                );
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
-
     public List<Movement> findAll() {
         final var query = "SELECT * FROM movement";
         try (final var connection = getConnection();
