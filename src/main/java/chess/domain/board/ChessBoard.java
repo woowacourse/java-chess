@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 import chess.domain.position.TerminalPosition;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +15,7 @@ public class ChessBoard {
     private final Map<Position, Piece> pieces;
 
     public ChessBoard(Map<Position, Piece> pieces) {
-        this.pieces = new LinkedHashMap<>(pieces);
+        this.pieces = new HashMap<>(pieces);
     }
 
     public Map<Position, Piece> getPieces() {
