@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.domain.square.Movement;
 import chess.repository.MovementRepository;
-
 import java.util.List;
 
 public class GameService {

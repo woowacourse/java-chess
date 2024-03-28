@@ -1,7 +1,6 @@
 package chess.dto;
 
 import chess.view.InputView;
-
 import java.util.Set;
 
 public enum GameCommand {

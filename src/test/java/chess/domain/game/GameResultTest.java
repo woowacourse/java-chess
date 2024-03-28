@@ -1,6 +1,12 @@
 package chess.domain.game;
 
-import chess.domain.pieces.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import chess.domain.pieces.Bishop;
+import chess.domain.pieces.King;
+import chess.domain.pieces.Knight;
+import chess.domain.pieces.Queen;
+import chess.domain.pieces.Rook;
 import chess.domain.pieces.pawn.Pawn;
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
@@ -8,12 +14,9 @@ import chess.domain.score.Score;
 import chess.domain.square.File;
 import chess.domain.square.Rank;
 import chess.domain.square.Square;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("게임 결과")
 class GameResultTest {

@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.pieces.piece.Color;
-
 import java.util.stream.IntStream;
 
 public class Turn {

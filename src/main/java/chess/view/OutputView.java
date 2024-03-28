@@ -122,7 +122,7 @@ public class OutputView {
         System.out.println(GAME_FINISH_MESSAGE);
     }
 
-    public void printAlreadyOver(){
+    public void printAlreadyOver() {
         System.out.println(GAME_ALREADY_OVER);
     }
 

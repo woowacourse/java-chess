@@ -3,7 +3,6 @@ package chess.domain.pieces.piece;
 import chess.domain.score.Score;
 import chess.domain.score.ScoreStatus;
 import chess.domain.square.Movement;
-
 import java.util.Objects;
 
 public abstract class Piece {

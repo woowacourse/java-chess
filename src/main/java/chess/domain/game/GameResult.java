@@ -1,18 +1,17 @@
 package chess.domain.game;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+
 import chess.domain.pieces.piece.Color;
 import chess.domain.pieces.piece.Piece;
 import chess.domain.score.Score;
 import chess.domain.score.ScoreStatus;
 import chess.domain.square.Square;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
 
 public class GameResult {
     private static final int KING_COUNT = 2;
