@@ -26,11 +26,10 @@ public class Board {
         Optional<Piece> caughtPiece = getCaughtPiece(destination);
         chessBoard.put(destination, piece);
 
-        if (caughtPiece.isPresent()) {
-            PieceType caughtPieceType = caughtPiece.get().getPieceType();
-            return new CaughtMoveResponse(caughtPieceType);
-        }
-        return new NormalMoveResponse();
+        return caughtPiece
+                .map(Piece::getPieceType)
+                .map(pieceType -> (MoveResponse) new CaughtMoveResponse(pieceType))
+                .orElseGet(NormalMoveResponse::new);
     }
 
     private void validateMoveRequest(TeamColor teamColor, Position source, Position destination) {
