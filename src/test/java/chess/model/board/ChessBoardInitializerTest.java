@@ -62,15 +62,4 @@ class ChessBoardInitializerTest {
                 .filter(condition)
                 .count();
     }
-
-    @Test
-    void calculateTotalScore() {
-        ChessBoardInitializer chessBoardInitializer = new ChessBoardInitializer();
-        Map<Position, Piece> chessBoard = chessBoardInitializer.create();
-        Map<Piece, List<Position>> positionsByPiece = chessBoard.entrySet().stream()
-                .collect(
-                        groupingBy(Map.Entry::getValue, mapping(Map.Entry::getKey, toList()))
-                );
-        for(Piece piece: positionsByPiece.keySet()) System.out.println(piece.getClass());
-    }
 }
