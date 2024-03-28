@@ -5,12 +5,24 @@ import chess.domain.attribute.Movement;
 import chess.domain.attribute.Square;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public abstract class Pawn extends Piece {
     public Pawn(final Color color, final Square square) {
         super(color, PieceType.PAWN, square);
+    }
+
+    public abstract Set<Movement> capableOfAttackMovements();
+
+    protected Set<Square> capableOfAttack(Set<Piece> existPieces) {
+        Set<Square> squares = new HashSet<>();
+        for (Movement movement : capableOfAttackMovements()) {
+            Square currentSquare = currentSquare();
+            if (currentSquare.canMove(movement)) {
+                currentSquare = currentSquare.move(movement);
+                addMovableSquareIfOccupiedEnemy(existPieces, currentSquare, squares);
+            }
+        }
+        return squares;
     }
 
     protected Piece getPiece(Set<Piece> entirePieces, Square currentSquare) {
