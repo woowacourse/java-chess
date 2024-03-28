@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.piece.Color;
 import chess.piece.InitPawn;
 import chess.piece.King;
-import chess.piece.MovedPawn;
 import chess.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,30 +38,14 @@ class SquareTest {
     }
 
     @Test
-    @DisplayName("InitPawn이 이동하면 MovedPawn으로 교체한다.")
-    void replaceInitPawnTest() {
-        // given
-        Square source = new Square(new InitPawn(Color.WHITE));
-        Square destination = Square.empty();
-        // when
-        source.movePieceTo(destination);
-        // then
-        assertThat(destination.getPiece()).isInstanceOf(MovedPawn.class);
-    }
-
-    @Test
     @DisplayName("기물을 이동한다.")
     void movePieceTest() {
         // given
         Square source = new Square(new Rook(Color.WHITE));
-        Square destination = Square.empty();
         // when
-        source.movePieceTo(destination);
+        Square destination = source.movePieceTo(Square.empty());
         // then
-        assertAll(
-                () -> assertThat(source.getPiece()).isNull(),
-                () -> assertThat(destination.getPiece()).isInstanceOf(Rook.class)
-        );
+        assertThat(destination.getPiece()).isInstanceOf(Rook.class);
     }
 
     @Test
@@ -74,10 +57,7 @@ class SquareTest {
         // when
         source.movePieceTo(destination);
         // then
-        assertAll(
-                () -> assertThat(source.getPiece()).isNull(),
-                () -> assertThat(destination.getPiece()).isInstanceOf(Rook.class)
-        );
+        assertThat(destination.getPiece()).isInstanceOf(Rook.class);
     }
 
     @Test

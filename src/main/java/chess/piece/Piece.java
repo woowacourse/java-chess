@@ -22,14 +22,14 @@ public abstract class Piece {
                 isReachable(step);
     }
 
+    public Piece move() {
+        return this;
+    }
+
     protected abstract boolean isReachable(int step);
 
     public boolean canAttack(UnitMovement movement, int step) {
         return isMovable(movement, step);
-    }
-
-    public boolean isInitPawn() {
-        return false;
     }
 
     public boolean hasSameColorWith(Piece piece) {

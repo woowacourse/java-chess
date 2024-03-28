@@ -26,4 +26,16 @@ class InitPawnTest {
                 () -> assertThat(isBlackMovable).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("InitPawn이 이동하면 MovedPawn으로 교체한다.")
+    void replaceInitPawnTest() {
+        // given
+        InitPawn initPawn = new InitPawn(Color.WHITE);
+        // when
+        Piece movedPawn = initPawn.move();
+        // then
+        assertThat(movedPawn).isInstanceOf(MovedPawn.class);
+    }
+
 }

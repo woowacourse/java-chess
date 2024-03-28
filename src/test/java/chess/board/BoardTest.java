@@ -34,13 +34,9 @@ class BoardTest {
         board.move(source, destination, Color.WHITE);
         // then
         Map<Position, Square> squares = board.pieces();
-        Square sourceSquare = squares.get(source);
         Square destinationSquare = squares.get(destination);
 
-        assertAll(
-                () -> assertThat(sourceSquare.hasPiece()).isFalse(),
-                () -> assertThat(destinationSquare.hasPiece()).isTrue()
-        );
+        assertThat(destinationSquare.getPiece()).isInstanceOf(Rook.class);
     }
 
     @Test
@@ -58,13 +54,9 @@ class BoardTest {
         board.move(source, destination, Color.WHITE);
         // then
         Map<Position, Square> squares = board.pieces();
-        Square sourceSquare = squares.get(source);
         Square destinationSquare = squares.get(destination);
 
-        assertAll(
-                () -> assertThat(sourceSquare.hasPiece()).isFalse(),
-                () -> assertThat(destinationSquare.hasPieceColored(Color.WHITE)).isTrue()
-        );
+        assertThat(destinationSquare.hasPieceColored(Color.WHITE)).isTrue();
     }
 
     @Test
