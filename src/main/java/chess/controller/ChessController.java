@@ -1,9 +1,9 @@
 package chess.controller;
 
+import chess.ChessGame;
 import chess.command.Command;
 import chess.command.CommandType;
 import chess.domain.CurrentTurn;
-import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardMaker;
 import chess.domain.position.PathFinder;
 import chess.domain.square.piece.Color;
@@ -37,41 +37,41 @@ public class ChessController {
     }
 
     private void startGame() {
-        ChessBoard chessBoard = makeChessBoard();
+        ChessGame chessGame = makeChessGame();
 
-        ExceptionRetryHandler.handle(() -> executeCommandsUntilEnd(chessBoard));
+        ExceptionRetryHandler.handle(() -> executeCommandsUntilEnd(chessGame));
     }
 
-    private ChessBoard makeChessBoard() {
+    private ChessGame makeChessGame() {
         ChessBoardMaker chessBoardMaker = new ChessBoardMaker();
-        ChessBoard chessBoard = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        ChessGame chessGame = new ChessGame(new CurrentTurn(Color.WHITE), chessBoardMaker.make());
+        outputView.printChessBoard(chessGame.getBoard());
 
-        outputView.printChessBoard(chessBoard.getSquares());
-        return chessBoard;
+        return chessGame;
     }
 
-    private void executeCommandsUntilEnd(ChessBoard chessBoard) {
+    private void executeCommandsUntilEnd(ChessGame chessGame) {
         Command command = inputView.readCommand();
 
         while (command.type() != CommandType.END) {
-            executeCommand(command, chessBoard);
+            executeCommand(command, chessGame);
             command = inputView.readCommand();
         }
     }
 
-    private void executeCommand(Command command, ChessBoard chessBoard) {
+    private void executeCommand(Command command, ChessGame chessGame) {
         if (command.type() == CommandType.START) {
             throw new IllegalArgumentException("이미 게임이 진행중이므로 start 외의 커맨드를 입력해 주세요.");
         }
         if (command.type() == CommandType.MOVE) {
-            movePlayerPiece(command, chessBoard);
+            movePlayerPiece(command, chessGame);
         }
     }
 
-    private void movePlayerPiece(Command command, ChessBoard chessBoard) {
+    private void movePlayerPiece(Command command, ChessGame chessGame) {
         PathFinder pathFinder = new PathFinder(command.getStartPosition(), command.getTargetPosition());
-        chessBoard.move(pathFinder);
+        chessGame.move(pathFinder);
 
-        outputView.printChessBoard(chessBoard.getSquares());
+        outputView.printChessBoard(chessGame.getBoard());
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.CurrentTurn;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -35,9 +34,9 @@ public class ChessBoardMaker {
             Rook.from(Color.BLACK), Knight.from(Color.BLACK), Bishop.from(Color.BLACK), Queen.from(Color.BLACK),
             King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
 
-    public ChessBoard make(CurrentTurn initialCurrentTurn) {
+    public ChessBoard make() {
         Queue<Square> orderedSquares = makeOrderedSquares();
-        return new ChessBoard(makeInitialSquares(orderedSquares), initialCurrentTurn);
+        return new ChessBoard(makeInitialSquares(orderedSquares));
     }
 
     private Queue<Square> makeOrderedSquares() {

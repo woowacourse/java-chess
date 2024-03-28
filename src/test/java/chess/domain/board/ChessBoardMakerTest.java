@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.CurrentTurn;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -35,7 +34,7 @@ public class ChessBoardMakerTest {
                 King.from(Color.WHITE), Bishop.from(Color.WHITE), Knight.from(Color.WHITE), Rook.from(Color.WHITE));
         final List<Position> firstRankPositions = makeRankPositions(Rank.FIRST);
 
-        final ChessBoard board = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        final ChessBoard board = chessBoardMaker.make();
         final Map<Position, Square> squares = board.getSquares();
         final List<Square> actual = new ArrayList<>();
         firstRankPositions.forEach(position -> actual.add(squares.get(position)));
@@ -52,7 +51,7 @@ public class ChessBoardMakerTest {
                 Pawn.from(Color.WHITE), Pawn.from(Color.WHITE), Pawn.from(Color.WHITE), Pawn.from(Color.WHITE));
         final List<Position> secondRankPositions = makeRankPositions(Rank.SECOND);
 
-        final ChessBoard board = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        final ChessBoard board = chessBoardMaker.make();
         final Map<Position, Square> squares = board.getSquares();
         final List<Square> actual = new ArrayList<>();
         secondRankPositions.forEach(position -> actual.add(squares.get(position)));
@@ -73,7 +72,7 @@ public class ChessBoardMakerTest {
         rankPositions.addAll(makeRankPositions(Rank.FIFTH));
         rankPositions.addAll(makeRankPositions(Rank.SIXTH));
 
-        final ChessBoard board = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        final ChessBoard board = chessBoardMaker.make();
         final Map<Position, Square> squares = board.getSquares();
         final List<Square> actual = new ArrayList<>();
         rankPositions.forEach(position -> actual.add(squares.get(position)));
@@ -90,7 +89,7 @@ public class ChessBoardMakerTest {
                 Pawn.from(Color.BLACK), Pawn.from(Color.BLACK), Pawn.from(Color.BLACK), Pawn.from(Color.BLACK));
         final List<Position> secondRankPositions = makeRankPositions(Rank.SEVENTH);
 
-        final ChessBoard board = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        final ChessBoard board = chessBoardMaker.make();
         final Map<Position, Square> squares = board.getSquares();
         final List<Square> actual = new ArrayList<>();
         secondRankPositions.forEach(position -> actual.add(squares.get(position)));
@@ -107,7 +106,7 @@ public class ChessBoardMakerTest {
                 King.from(Color.BLACK), Bishop.from(Color.BLACK), Knight.from(Color.BLACK), Rook.from(Color.BLACK));
         final List<Position> firstRankPositions = makeRankPositions(Rank.EIGHTH);
 
-        final ChessBoard board = chessBoardMaker.make(new CurrentTurn(Color.WHITE));
+        final ChessBoard board = chessBoardMaker.make();
         final Map<Position, Square> squares = board.getSquares();
         final List<Square> actual = new ArrayList<>();
         firstRankPositions.forEach(position -> actual.add(squares.get(position)));
