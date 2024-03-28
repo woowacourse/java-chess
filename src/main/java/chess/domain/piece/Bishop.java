@@ -11,6 +11,10 @@ public class Bishop extends SlidingPiece {
         this(new Character(team, Kind.BISHOP), false);
     }
 
+    public Bishop(Team team, boolean isMoved) {
+        this(new Character(team, Kind.BISHOP), isMoved);
+    }
+
     private Bishop(Character character, boolean hasMoved) {
         super(character, hasMoved);
     }

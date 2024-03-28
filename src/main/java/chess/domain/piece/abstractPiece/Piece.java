@@ -3,8 +3,10 @@ package chess.domain.piece.abstractPiece;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public abstract class Piece {
     protected static final int MIN_MOVEMENT = 1;
@@ -23,7 +25,7 @@ public abstract class Piece {
 
     public abstract boolean isMovable(Movement movement, boolean isAttack);
 
-    public abstract List<Position> findBetweenPositions(Movement movement);
+    public abstract Set<Position> findBetweenPositions(Movement movement);
 
     public boolean isMovable(Movement movement) {
         return isMovable(movement.calculateRowDifference(), movement.calculateColumnDifference());
@@ -41,7 +43,36 @@ public abstract class Piece {
         return this.character.equals(character);
     }
 
-    public Character character() {
-        return character;
+    public Kind kind() {
+        return character.kind();
+    }
+
+    public Team team() {
+        return character.team();
+    }
+
+    public double point() {
+        return character.kind().point();
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return Objects.equals(character, piece.character);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(character);
     }
 }

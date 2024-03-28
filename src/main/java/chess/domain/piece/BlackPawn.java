@@ -5,9 +5,11 @@ import chess.domain.Position;
 import chess.domain.piece.abstractPiece.AbstractPawn;
 import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Character;
+import chess.domain.piece.character.Kind;
 import chess.domain.piece.character.Team;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BlackPawn extends AbstractPawn {
     private static final int MOVE_ROW_DIFFERENCE = -1;
@@ -15,6 +17,10 @@ public class BlackPawn extends AbstractPawn {
 
     public BlackPawn() {
         super(Team.BLACK);
+    }
+
+    public BlackPawn(boolean isMoved) {
+        this(new Character(Team.BLACK, Kind.PAWN), isMoved);
     }
 
     private BlackPawn(Character character, boolean hasMoved) {
@@ -45,10 +51,10 @@ public class BlackPawn extends AbstractPawn {
     }
 
     @Override
-    public List<Position> findBetweenPositions(Movement movement) {
+    public Set<Position> findBetweenPositions(Movement movement) {
         if (movement.calculateRowDifference() == FIRST_MOVE_MAX_ROW_DIFFERENCE) {
-            return new ArrayList<>(List.of(movement.source().move(MOVE_ROW_DIFFERENCE, 0)));
+            return new HashSet<>(List.of(movement.source().move(MOVE_ROW_DIFFERENCE, 0)));
         }
-        return new ArrayList<>();
+        return new HashSet<>();
     }
 }

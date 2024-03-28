@@ -13,6 +13,10 @@ public class King extends UnslidingPiece {
         this(new Character(team, Kind.KING), false);
     }
 
+    public King(Team team, boolean isMoved) {
+        this(new Character(team, Kind.KING), isMoved);
+    }
+
     private King(Character character, boolean hasMoved) {
         super(character, hasMoved);
     }

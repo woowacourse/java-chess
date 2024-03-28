@@ -1,29 +1,24 @@
 package chess.dto;
 
 import chess.domain.Position;
-import chess.domain.Status;
+import chess.domain.State;
 import chess.domain.piece.abstractPiece.Piece;
-import chess.view.CharacterViewer;
 import java.util.Map;
 
 public class BoardStatusDto {
-    private static final String EMPTY = ".";
     private final Map<Position, Piece> board;
-    private final Status status;
+    private final State state;
 
-    public BoardStatusDto(Map<Position, Piece> board, Status status) {
+    public BoardStatusDto(Map<Position, Piece> board, State state) {
         this.board = board;
-        this.status = status;
+        this.state = state;
     }
 
-    public String getPieceValue(int row, int column) {
-        if (board.containsKey(Position.of(row, column))) {
-            return CharacterViewer.convertToString(board.get(Position.of(row, column)).character());
-        }
-        return EMPTY;
+    public Map<Position, Piece> board() {
+        return board;
     }
 
-    public Status status() {
-        return status;
+    public State status() {
+        return state;
     }
 }

@@ -12,6 +12,10 @@ public class Queen extends SlidingPiece {
         this(new Character(team, Kind.QUEEN), false);
     }
 
+    public Queen(Team team, boolean isMoved) {
+        this(new Character(team, Kind.QUEEN), isMoved);
+    }
+
     private Queen(Character character, boolean hasMoved) {
         super(character, hasMoved);
     }

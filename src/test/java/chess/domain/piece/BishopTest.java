@@ -4,60 +4,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Movement;
 import chess.domain.Position;
-import chess.domain.piece.character.Character;
-import chess.domain.piece.character.Kind;
+import chess.domain.piece.abstractPiece.Piece;
 import chess.domain.piece.character.Team;
+import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
 
 class BishopTest {
-    @DisplayName("자신의 특징을 반환한다.")
-    @ParameterizedTest
-    @EnumSource
-    void findCharacter(Team team) {
-        assertThat(new Bishop(team).character())
-                .isEqualTo(new Character(team, Kind.BISHOP));
-    }
-
     @DisplayName("비숍은 대각선으로 이동할 수 있다.")
     @ParameterizedTest
     @CsvSource(value = {"1,1", "2,2", "3,3", "5,5", "6,6", "7,7", "8,8", "1,7", "2,6", "3,5", "5,3", "6,2", "7,1"})
     void bishopIsMovable(int row, int column) {
-        assertThat(new Bishop(Team.WHITE).isMovable(new Movement(
-                Position.of(4, 4),
-                Position.of(row, column))))
-                .isTrue();
+        Piece bishop = new Bishop(Team.WHITE);
+
+        boolean movable = bishop.isMovable(new Movement(
+                Position.of(4, 4), Position.of(row, column)));
+
+        assertThat(movable).isTrue();
     }
 
     @DisplayName("비숍은 대각선이 아닌 경우, 이동할 수 없다.")
     @Test
     void bishopMoveOverDiagonalLine() {
-        assertThat(new Bishop(Team.WHITE).isMovable(new Movement(
-                Position.of(4, 4),
-                Position.of(1, 4))))
-                .isFalse();
+        Piece bishop = new Bishop(Team.WHITE);
+
+        boolean movable = bishop.isMovable(new Movement(
+                Position.of(4, 4), Position.of(1, 4)));
+
+        assertThat(movable).isFalse();
     }
 
     @DisplayName("두 위치 사이의 비숍이 갈 수 있는 위치들을 반환한다.")
     @Test
     void betweenPosition() {
-        assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(new Movement(
-                        Position.of(4, 4),
-                        Position.of(7, 7))))
-                .containsExactly(Position.of(5, 5), Position.of(6, 6));
-    }
+        Piece bishop = new Bishop(Team.WHITE);
 
-    @DisplayName("두 위치 사이의 비숍이 갈 수 있는 위치들을 반환한다.")
-    @Test
-    void betweenPositionMinus() {
-        assertThat(new Bishop(Team.WHITE)
-                .findBetweenPositions(new Movement(
-                        Position.of(4, 4),
-                        Position.of(1, 1))))
-                .containsExactly(Position.of(3, 3), Position.of(2, 2));
+        Set<Position> betweenPositions = bishop.findBetweenPositions(new Movement(
+                Position.of(4, 4), Position.of(7, 7)));
+        Set<Position> expectedBetweenPosition = Set.of(Position.of(5, 5), Position.of(6, 6));
+
+        assertThat(betweenPositions).isEqualTo(expectedBetweenPosition);
     }
 }

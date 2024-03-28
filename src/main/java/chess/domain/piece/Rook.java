@@ -11,6 +11,10 @@ public class Rook extends SlidingPiece {
         this(new Character(team, Kind.ROOK), false);
     }
 
+    public Rook(Team team, boolean isMoved) {
+        this(new Character(team, Kind.ROOK), isMoved);
+    }
+
     private Rook(Character character, boolean hasMoved) {
         super(character, hasMoved);
     }

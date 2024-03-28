@@ -4,7 +4,8 @@ import chess.domain.piece.abstractPiece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Position {
     private static final int MIN_ROW = 1;
@@ -63,18 +64,12 @@ public class Position {
         return Position.of(row + rowDifference, column + columnDifference);
     }
 
-    public Stream<Position> findAllMovablePosition(Piece piece) {
+    public Set<Position> findAllMovablePosition(Piece piece, boolean isAttack) {
         return positions.values()
                 .stream()
                 .filter(position -> position != this)
-                .filter(position -> piece.isMovable(new Movement(this, position)));
-    }
-
-    public Stream<Position> findAllMovablePosition(Piece piece, boolean isAttack) {
-        return positions.values()
-                .stream()
-                .filter(position -> position != this)
-                .filter(position -> piece.isMovable(new Movement(this, position), isAttack));
+                .filter(position -> piece.isMovable(new Movement(this, position), isAttack))
+                .collect(Collectors.toSet());
     }
 
     public int calculateRowDifference(Position targetPosition) {
@@ -83,6 +78,28 @@ public class Position {
 
     public int calculateColumnDifference(Position targetPosition) {
         return targetPosition.column - column;
+    }
+
+    public static int sameColumnPositionCount(Set<Position> positions) {
+        Map<Integer, Integer> columnPositions = positions.stream()
+                .collect(Collectors.toMap(
+                        position -> position.column,
+                        position -> 1,
+                        Integer::sum
+                ));
+        return columnPositions.values()
+                .stream()
+                .filter(value -> value > 1)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
     }
 
     @Override

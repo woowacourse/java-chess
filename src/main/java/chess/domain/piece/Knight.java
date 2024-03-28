@@ -16,6 +16,10 @@ public class Knight extends UnslidingPiece {
         this(new Character(team, Kind.KNIGHT), false);
     }
 
+    public Knight(Team team, boolean isMoved) {
+        this(new Character(team, Kind.KNIGHT), isMoved);
+    }
+
     private Knight(Character character, boolean hasMoved) {
         super(character, hasMoved);
     }

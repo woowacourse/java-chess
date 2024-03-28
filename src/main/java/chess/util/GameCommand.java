@@ -1,21 +1,19 @@
-package chess.view;
+package chess.util;
 
 import chess.exception.InvalidCommandException;
 import java.util.Arrays;
 
 public enum GameCommand {
     START("start"),
+    LOAD("load"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    STATUS("status");
 
     private final String value;
 
     GameCommand(String value) {
         this.value = value;
-    }
-
-    public static boolean isStart(String value) {
-        return START.value.equals(value);
     }
 
     public static GameCommand find(String value) {

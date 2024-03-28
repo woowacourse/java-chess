@@ -1,4 +1,4 @@
-package chess.view;
+package chess.util;
 
 import chess.domain.Position;
 import chess.exception.InvalidCommandException;
@@ -12,14 +12,20 @@ public class PositionConverter {
     private PositionConverter() {
     }
 
-    public static Position generate(String value) {
-        if (!Pattern.matches(REGEX, value)) {
+    public static Position toPosition(String notation) {
+        if (!Pattern.matches(REGEX, notation)) {
             throw new InvalidCommandException("잘못된 위치 입력입니다.");
         }
 
-        int row = value.charAt(ROW_INDEX) - '0';
-        int column = value.charAt(COLUMN_INDEX) - 'a' + 1;
+        int row = notation.charAt(ROW_INDEX) - '0';
+        int column = notation.charAt(COLUMN_INDEX) - 'a' + 1;
 
         return Position.of(row, column);
+    }
+
+    public static String toNotation(Position position) {
+        char file = (char) ('a' + position.column() - 1);
+
+        return String.valueOf(file) + position.row();
     }
 }
