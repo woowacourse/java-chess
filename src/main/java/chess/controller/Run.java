@@ -42,7 +42,7 @@ public class Run implements GameState {
     }
 
     private void evaluateCurrentBoard(OutputView outputView) {
-        PositionEvaluation positionEvaluation = new PositionEvaluation(chessBoard.getBoard());
+        PositionEvaluation positionEvaluation = chessBoard.evaluateNow();
         outputView.printPositionEvaluation(positionEvaluation);
     }
 

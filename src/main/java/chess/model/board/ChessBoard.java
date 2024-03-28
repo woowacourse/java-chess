@@ -1,5 +1,6 @@
 package chess.model.board;
 
+import chess.model.game.PositionEvaluation;
 import chess.model.piece.Blank;
 import chess.model.piece.King;
 import chess.model.piece.Piece;
@@ -67,6 +68,10 @@ public class ChessBoard {
         return Side.colors()
                 .stream()
                 .allMatch(side -> board.containsValue(King.from(side)));
+    }
+
+    public PositionEvaluation evaluateNow() {
+        return new PositionEvaluation(board);
     }
 
     public Map<ChessPosition, Piece> getBoard() {
