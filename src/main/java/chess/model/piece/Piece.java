@@ -1,6 +1,7 @@
 package chess.model.piece;
 
-import chess.model.position.ChessPosition;
+import chess.model.evaluation.PieceValue;
+import chess.model.position.Position;
 import chess.model.position.Path;
 
 import java.util.Objects;
@@ -12,10 +13,16 @@ public abstract class Piece {
         this.side = side;
     }
 
-    public abstract Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece);
+    public abstract Path findPath(Position source, Position target, Piece targetPiece);
+
+    public abstract PieceValue value();
 
     public final boolean isSameSide(Piece other) {
         return this.side == other.side;
+    }
+
+    public final boolean isSameSide(Side side) {
+        return this.side == side;
     }
 
     @Override

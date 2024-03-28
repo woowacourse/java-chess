@@ -8,21 +8,21 @@ import java.util.stream.Stream;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public class ChessPosition {
+public class Position {
     private final File file;
     private final Rank rank;
 
-    private ChessPosition(File file, Rank rank) {
+    private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
     }
 
-    public static ChessPosition of(File file, Rank rank) {
+    public static Position of(File file, Rank rank) {
         int key = Objects.hash(file, rank);
-        return ChessPositionCache.CACHE.get(key);
+        return PositionCache.CACHE.get(key);
     }
 
-    public Movement calculateMovement(ChessPosition source) {
+    public Movement calculateMovement(Position source) {
         Difference fileDifference = file.minus(source.file);
         Difference rankDifference = rank.minus(source.rank);
         return new Movement(fileDifference, rankDifference);
@@ -32,10 +32,10 @@ public class ChessPosition {
         return this.rank == rank;
     }
 
-    public ChessPosition calculateNextPosition(int fileOffset, int rankOffset) {
+    public Position calculateNextPosition(int fileOffset, int rankOffset) {
         File nextFile = file.calculateNextFile(fileOffset);
         Rank nextRank = rank.calculateNextRank(rankOffset);
-        return ChessPosition.of(nextFile, nextRank);
+        return Position.of(nextFile, nextRank);
     }
 
     public File getFile() {
@@ -50,7 +50,7 @@ public class ChessPosition {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChessPosition that = (ChessPosition) o;
+        Position that = (Position) o;
         return file == that.file && rank == that.rank;
     }
 
@@ -59,19 +59,19 @@ public class ChessPosition {
         return Objects.hash(file, rank);
     }
 
-    private static class ChessPositionCache {
-        static final Map<Integer, ChessPosition> CACHE = Arrays.stream(File.values())
-                .flatMap(ChessPositionCache::createChessPositionStream)
+    private static class PositionCache {
+        static final Map<Integer, Position> CACHE = Arrays.stream(File.values())
+                .flatMap(PositionCache::createPositionStream)
                 .collect(toMap(
-                        chessPosition -> Objects.hash(chessPosition.getFile(), chessPosition.getRank()),
+                        position -> Objects.hash(position.getFile(), position.getRank()),
                         identity()));
 
-        private static Stream<ChessPosition> createChessPositionStream(File file) {
+        private static Stream<Position> createPositionStream(File file) {
             return Arrays.stream(Rank.values())
-                    .map(rank -> new ChessPosition(file, rank));
+                    .map(rank -> new Position(file, rank));
         }
 
-        private ChessPositionCache() {
+        private PositionCache() {
         }
     }
 }

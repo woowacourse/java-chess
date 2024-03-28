@@ -1,6 +1,8 @@
 package chess.model.piece;
 
-import chess.model.position.ChessPosition;
+import chess.model.evaluation.CommonValue;
+import chess.model.evaluation.PieceValue;
+import chess.model.position.Position;
 import chess.model.position.Path;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,14 +17,24 @@ class PieceTest {
         // given
         Piece piece = new Piece(Side.BLACK) {
             @Override
-            public Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+            public Path findPath(Position source, Position target, Piece targetPiece) {
                 return null;
+            }
+
+            @Override
+            public PieceValue value() {
+                return new CommonValue(0);
             }
         };
         Piece other = new Piece(Side.BLACK) {
             @Override
-            public Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+            public Path findPath(Position source, Position target, Piece targetPiece) {
                 return null;
+            }
+
+            @Override
+            public PieceValue value() {
+                return new CommonValue(0);
             }
         };
 

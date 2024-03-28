@@ -1,40 +1,38 @@
 package chess.model.board;
 
 import chess.model.piece.*;
-import chess.model.position.ChessPosition;
 import chess.model.position.File;
+import chess.model.position.Position;
 import chess.model.position.Rank;
+import chess.model.board.util.ChessBoardFixture;
+import chess.model.board.util.TestChessBoardGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class ChessBoardTest {
 
-    private ChessBoard chessBoard;
+    private ChessBoard defaltChessBoard;
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard(new ChessBoardInitializer().create());
+        defaltChessBoard = new ChessBoard(new ChessBoardInitializer().create());
     }
 
     @Test
     @DisplayName("Source 위치의 기물을 Target 위치로 이동한다.")
     void move() {
-        ChessPosition source = ChessPosition.of(File.B, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.B, Rank.FOUR);
-        chessBoard.move(source, target);
+        Position source = Position.of(File.B, Rank.TWO);
+        Position target = Position.of(File.B, Rank.FOUR);
+        defaltChessBoard.move(source, target, Turn.from(Side.WHITE));
 
-        Map<ChessPosition, Piece> board = chessBoard.getBoard();
+        Map<Position, Piece> board = defaltChessBoard.getBoard();
 
         assertAll(
                 () -> assertThat(board).containsEntry(source, Blank.INSTANCE),
@@ -46,11 +44,24 @@ class ChessBoardTest {
     @DisplayName("Source 위치에 기물이 없으면 예외가 발생한다.")
     void moveWithBlankSource() {
         // given
-        ChessPosition source = ChessPosition.of(File.H, Rank.SEVEN);
-        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+        Position source = Position.of(File.H, Rank.SEVEN);
+        Position target = Position.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.BLACK)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("게임 차례에 맞지 않는 Source 기물의 위치를 입력하면 예외가 발생한다.")
+    void moveWithInvalidTurn() {
+        // given
+        Position source = Position.of(File.B, Rank.TWO);
+        Position target = Position.of(File.B, Rank.FOUR);
+        Turn turn = Turn.from(Side.BLACK);
+
+        // when & then
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, turn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -58,12 +69,12 @@ class ChessBoardTest {
     @DisplayName("Target 위치에 아군 기물이 존재하면 예외가 발생한다.")
     void moveWhenTargetIsSameSide() {
         // given
-        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
-        ChessPosition target = ChessPosition.of(File.A, Rank.TWO);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.A, Rank.TWO);
         ChessBoard chessBoard = new ChessBoard(Map.of(source, Pawn.from(Side.BLACK), target, Bishop.from(Side.BLACK)));
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> chessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -71,11 +82,11 @@ class ChessBoardTest {
     @DisplayName("경로가 비어있다면 예외가 발생한다.")
     void moveWhenPathEmpty() {
         // given
-        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
-        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.D, Rank.TWO);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -83,11 +94,11 @@ class ChessBoardTest {
     @DisplayName("이동 경로에 기물이 존재한다면 예외가 발생한다.")
     void moveWhenPathContainsPiece() {
         // given
-        ChessPosition source = ChessPosition.of(File.A, Rank.ONE);
-        ChessPosition target = ChessPosition.of(File.A, Rank.SIX);
+        Position source = Position.of(File.A, Rank.ONE);
+        Position target = Position.of(File.A, Rank.SIX);
 
         // when & then
-        assertThatThrownBy(() -> chessBoard.move(source, target))
+        assertThatThrownBy(() -> defaltChessBoard.move(source, target, Turn.from(Side.WHITE)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -96,30 +107,41 @@ class ChessBoardTest {
     void moveKnightWhenPathContainsPiece() {
         // given
         Knight knight = Knight.from(Side.WHITE);
-        ChessPosition knightPosition = ChessPosition.of(File.A, Rank.ONE);
-        ChessBoard customChessBoard = createCustomChessBoard(knight, knightPosition);
+        Position knightPosition = Position.of(File.A, Rank.ONE);
+        Position targetPosition = Position.of(File.B, Rank.THREE);
 
-        ChessPosition targetPosition = ChessPosition.of(File.B, Rank.THREE);
+        ChessBoardGenerator chessBoardGenerator = new TestChessBoardGenerator(ChessBoardFixture.KNIGHT_MOVEMENT_BOARD);
+        ChessBoard customChessBoard = new ChessBoard(chessBoardGenerator.create());
 
         // when
-        customChessBoard.move(knightPosition, targetPosition);
+        customChessBoard.move(knightPosition, targetPosition, Turn.from(Side.WHITE));
 
         // then
-        Map<ChessPosition, Piece> actualBoard = customChessBoard.getBoard();
+        Map<Position, Piece> actualBoard = customChessBoard.getBoard();
         assertThat(actualBoard).containsEntry(targetPosition, knight);
     }
 
-    private ChessBoard createCustomChessBoard(Knight knight, ChessPosition knightPosition) {
-        Map<ChessPosition, Piece> chessBoard = Arrays.stream(File.values())
-                .flatMap(this::createChessPositionStream)
-                .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
-        chessBoard.put(knightPosition, knight);
-        chessBoard.put(knightPosition.calculateNextPosition(0, 1), Pawn.from(Side.WHITE));
-        return new ChessBoard(chessBoard);
+    @Test
+    @DisplayName("체스보드에 각 진영의 King이 모두 존재하면 게임을 이어갈 수 있다.")
+    void canContinue() {
+        // when
+        boolean result = defaltChessBoard.canContinue();
+
+        // then
+        assertThat(result).isTrue();
     }
 
-    private Stream<ChessPosition> createChessPositionStream(File file) {
-        return Arrays.stream(Rank.values())
-                .map(rank -> ChessPosition.of(file, rank));
+    @Test
+    @DisplayName("한 쪽이 이겨 한 King이 존재하지 않을 경우 게임이 종료된다.")
+    void canContinueNotExistingKing() {
+        // given
+        ChessBoardGenerator chessBoardGenerator = new TestChessBoardGenerator(ChessBoardFixture.WHITE_FOOLS_MATE_LOSE);
+        ChessBoard customChessBoard = new ChessBoard(chessBoardGenerator.create());
+
+        // when
+        boolean result = customChessBoard.canContinue();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

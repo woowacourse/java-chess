@@ -1,8 +1,10 @@
 package chess.view.output;
 
 import chess.model.board.ChessBoard;
+import chess.model.evaluation.PositionEvaluation;
 import chess.model.piece.Piece;
-import chess.model.position.ChessPosition;
+import chess.model.piece.Side;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Rank;
 
@@ -12,13 +14,13 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public void printChessBoard(ChessBoard chessBoard) {
-        Map<ChessPosition, Piece> board = chessBoard.getBoard();
+        Map<Position, Piece> board = chessBoard.getBoard();
         List<List<String>> outputBoard = createOutputBoard(board);
         String text = convertToText(outputBoard);
         System.out.println(text);
     }
 
-    private List<List<String>> createOutputBoard(Map<ChessPosition, Piece> board) {
+    private List<List<String>> createOutputBoard(Map<Position, Piece> board) {
         List<List<String>> outputBoard = new ArrayList<>();
         List<Rank> reversedRanks = reverseRanks();
         for (Rank rank : reversedRanks) {
@@ -34,7 +36,7 @@ public class OutputView {
         return ranks;
     }
 
-    private List<String> getLineByRank(Rank rank, Map<ChessPosition, Piece> board) {
+    private List<String> getLineByRank(Rank rank, Map<Position, Piece> board) {
         List<String> line = new ArrayList<>();
         for (File file : File.values()) {
             Piece piece = findByPosition(rank, file, board);
@@ -44,8 +46,9 @@ public class OutputView {
         return line;
     }
 
-    private Piece findByPosition(Rank rank, File file, Map<ChessPosition, Piece> board) {
-        ChessPosition position = board.keySet().stream()
+    private Piece findByPosition(Rank rank, File file, Map<Position, Piece> board) {
+        Position position = board.keySet()
+                .stream()
                 .filter(chessPosition -> chessPosition.getRank() == rank && chessPosition.getFile() == file)
                 .findFirst().orElseThrow(() -> new NoSuchElementException("주어진 좌표에 출력을 위한 Piece가 존재하지 않습니다."));
         return board.get(position);
@@ -60,6 +63,14 @@ public class OutputView {
         return result.stream()
                 .map(strings -> String.join("", strings))
                 .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public void printPositionEvaluation(PositionEvaluation positionEvaluation) {
+        Side.colors().forEach(side -> printScoreBySide(side, positionEvaluation));
+    }
+
+    private void printScoreBySide(Side side, PositionEvaluation positionEvaluation) {
+        System.out.println(side.name() + ": " + positionEvaluation.getEvaluationBySide(side) + "점");
     }
 
     public void printException(String message) {

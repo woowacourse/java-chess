@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Path;
 import chess.model.position.Rank;
@@ -34,57 +34,57 @@ class BishopTest {
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("Bishop은 대각선으로 원하는 만큼 움직일 수 있다.")
-    void findPath(ChessPosition target, List<ChessPosition> expected) {
+    void findPath(Position target, List<Position> expected) {
         // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        Position source = Position.of(File.C, Rank.TWO);
         Bishop bishop = Bishop.from(Side.WHITE);
 
         // when
         Path path = bishop.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path.getChessPositions()).isEqualTo(expected);
+        assertThat(path.getPositions()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
         return Stream.of(
                 Arguments.of(
-                        ChessPosition.of(File.D, Rank.THREE),
+                        Position.of(File.D, Rank.THREE),
                         List.of(
-                                ChessPosition.of(File.D, Rank.THREE)
+                                Position.of(File.D, Rank.THREE)
                         )
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.D, Rank.ONE),
+                        Position.of(File.D, Rank.ONE),
                         List.of(
-                                ChessPosition.of(File.D, Rank.ONE)
+                                Position.of(File.D, Rank.ONE)
                         )
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.B, Rank.THREE),
+                        Position.of(File.B, Rank.THREE),
                         List.of(
-                                ChessPosition.of(File.B, Rank.THREE)
+                                Position.of(File.B, Rank.THREE)
                         )
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.B, Rank.ONE),
+                        Position.of(File.B, Rank.ONE),
                         List.of(
-                                ChessPosition.of(File.B, Rank.ONE)
+                                Position.of(File.B, Rank.ONE)
                         )
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.A, Rank.FOUR),
+                        Position.of(File.A, Rank.FOUR),
                         List.of(
-                                ChessPosition.of(File.B, Rank.THREE),
-                                ChessPosition.of(File.A, Rank.FOUR)
+                                Position.of(File.B, Rank.THREE),
+                                Position.of(File.A, Rank.FOUR)
                         )
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.F, Rank.FIVE),
+                        Position.of(File.F, Rank.FIVE),
                         List.of(
-                                ChessPosition.of(File.D, Rank.THREE),
-                                ChessPosition.of(File.E, Rank.FOUR),
-                                ChessPosition.of(File.F, Rank.FIVE)
+                                Position.of(File.D, Rank.THREE),
+                                Position.of(File.E, Rank.FOUR),
+                                Position.of(File.F, Rank.FIVE)
                         )
                 )
         );
@@ -94,8 +94,8 @@ class BishopTest {
     @DisplayName("Bishop은 직교로 움직일 수 없다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.D, Rank.TWO);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.D, Rank.TWO);
         Bishop bishop = Bishop.from(Side.BLACK);
 
         // when

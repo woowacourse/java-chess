@@ -1,7 +1,7 @@
 package chess.model.board;
 
 import chess.model.piece.*;
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Rank;
 
@@ -15,12 +15,13 @@ import static java.util.Collections.unmodifiableMap;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public class ChessBoardInitializer {
+public class ChessBoardInitializer implements ChessBoardGenerator {
     private static final int FIRST_BLANK_RANK_COORDINATE = 3;
     private static final int LAST_BLANK_RANK_COORDINATE = 6;
 
-    public Map<ChessPosition, Piece> create() {
-        Map<ChessPosition, Piece> board = new HashMap<>();
+    @Override
+    public Map<Position, Piece> create() {
+        Map<Position, Piece> board = new HashMap<>();
         board.putAll(createSpecialPieces(Side.BLACK));
         board.putAll(createPawns(Side.BLACK));
         board.putAll(createSpecialPieces(Side.WHITE));
@@ -29,17 +30,17 @@ public class ChessBoardInitializer {
         return unmodifiableMap(board);
     }
 
-    private Map<ChessPosition, Piece> createSpecialPieces(Side side) {
+    private Map<Position, Piece> createSpecialPieces(Side side) {
         Rank rank = convertSpecialPieceRankWithSide(side);
         return Map.of(
-                ChessPosition.of(File.A, rank), Rook.from(side),
-                ChessPosition.of(File.B, rank), Knight.from(side),
-                ChessPosition.of(File.C, rank), Bishop.from(side),
-                ChessPosition.of(File.D, rank), Queen.from(side),
-                ChessPosition.of(File.E, rank), King.from(side),
-                ChessPosition.of(File.F, rank), Bishop.from(side),
-                ChessPosition.of(File.G, rank), Knight.from(side),
-                ChessPosition.of(File.H, rank), Rook.from(side)
+                Position.of(File.A, rank), Rook.from(side),
+                Position.of(File.B, rank), Knight.from(side),
+                Position.of(File.C, rank), Bishop.from(side),
+                Position.of(File.D, rank), Queen.from(side),
+                Position.of(File.E, rank), King.from(side),
+                Position.of(File.F, rank), Bishop.from(side),
+                Position.of(File.G, rank), Knight.from(side),
+                Position.of(File.H, rank), Rook.from(side)
         );
     }
 
@@ -50,11 +51,11 @@ public class ChessBoardInitializer {
         return Rank.ONE;
     }
 
-    private Map<ChessPosition, Piece> createPawns(Side side) {
+    private Map<Position, Piece> createPawns(Side side) {
         Rank rank = convertPawnRanksWithSide(side);
         return Arrays.stream(File.values())
                 .collect(toMap(
-                        file -> ChessPosition.of(file, rank),
+                        file -> Position.of(file, rank),
                         file -> Pawn.from(side))
                 );
     }
@@ -66,15 +67,15 @@ public class ChessBoardInitializer {
         return Rank.TWO;
     }
 
-    private Map<ChessPosition, Piece> createBlanks() {
+    private Map<Position, Piece> createBlanks() {
         return IntStream.range(FIRST_BLANK_RANK_COORDINATE, LAST_BLANK_RANK_COORDINATE + 1)
                 .boxed()
                 .flatMap(this::createBlankPositionStream)
-                .collect(toMap(identity(), chessPosition -> Blank.INSTANCE));
+                .collect(toMap(identity(), position -> Blank.INSTANCE));
     }
 
-    private Stream<ChessPosition> createBlankPositionStream(int rankCoordinate) {
+    private Stream<Position> createBlankPositionStream(int rankCoordinate) {
         return Arrays.stream(File.values())
-                .map(file -> ChessPosition.of(file, Rank.from(rankCoordinate)));
+                .map(file -> Position.of(file, Rank.from(rankCoordinate)));
     }
 }

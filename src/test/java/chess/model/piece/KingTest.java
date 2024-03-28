@@ -1,6 +1,6 @@
 package chess.model.piece;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Path;
 import chess.model.position.Rank;
@@ -35,51 +35,51 @@ class KingTest {
     @ParameterizedTest
     @MethodSource("provideTargetPositionAndResult")
     @DisplayName("King이 상하좌우, 대각선으로 한 칸씩 움직일 수 있다.")
-    void findPath(ChessPosition target, List<ChessPosition> expected) {
+    void findPath(Position target, List<Position> expected) {
         // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
+        Position source = Position.of(File.C, Rank.TWO);
         King king = King.from(Side.WHITE);
 
         // when
         Path path = king.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path.getChessPositions()).isEqualTo(expected);
+        assertThat(path.getPositions()).isEqualTo(expected);
     }
 
     private static Stream<Arguments> provideTargetPositionAndResult() {
         return Stream.of(
                 Arguments.of(
-                        ChessPosition.of(File.B, Rank.ONE),
-                        List.of(ChessPosition.of(File.B, Rank.ONE))
+                        Position.of(File.B, Rank.ONE),
+                        List.of(Position.of(File.B, Rank.ONE))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.C, Rank.ONE),
-                        List.of(ChessPosition.of(File.C, Rank.ONE))
+                        Position.of(File.C, Rank.ONE),
+                        List.of(Position.of(File.C, Rank.ONE))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.D, Rank.ONE),
-                        List.of(ChessPosition.of(File.D, Rank.ONE))
+                        Position.of(File.D, Rank.ONE),
+                        List.of(Position.of(File.D, Rank.ONE))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.B, Rank.TWO),
-                        List.of(ChessPosition.of(File.B, Rank.TWO))
+                        Position.of(File.B, Rank.TWO),
+                        List.of(Position.of(File.B, Rank.TWO))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.D, Rank.TWO),
-                        List.of(ChessPosition.of(File.D, Rank.TWO))
+                        Position.of(File.D, Rank.TWO),
+                        List.of(Position.of(File.D, Rank.TWO))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.B, Rank.THREE),
-                        List.of(ChessPosition.of(File.B, Rank.THREE))
+                        Position.of(File.B, Rank.THREE),
+                        List.of(Position.of(File.B, Rank.THREE))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.C, Rank.THREE),
-                        List.of(ChessPosition.of(File.C, Rank.THREE))
+                        Position.of(File.C, Rank.THREE),
+                        List.of(Position.of(File.C, Rank.THREE))
                 ),
                 Arguments.of(
-                        ChessPosition.of(File.D, Rank.THREE),
-                        List.of(ChessPosition.of(File.D, Rank.THREE))
+                        Position.of(File.D, Rank.THREE),
+                        List.of(Position.of(File.D, Rank.THREE))
                 )
         );
     }
@@ -88,14 +88,14 @@ class KingTest {
     @DisplayName("King 움직임으로 타겟 위치에 도달할 수 없다면 빈 리스트를 반환한다.")
     void findPathWhenCanNotReachTargetPiece() {
         // given
-        ChessPosition source = ChessPosition.of(File.C, Rank.TWO);
-        ChessPosition target = ChessPosition.of(File.H, Rank.THREE);
+        Position source = Position.of(File.C, Rank.TWO);
+        Position target = Position.of(File.H, Rank.THREE);
         King king = King.from(Side.BLACK);
 
         // when
         Path path = king.findPath(source, target, Blank.INSTANCE);
 
         // then
-        assertThat(path.getChessPositions()).isEmpty();
+        assertThat(path.getPositions()).isEmpty();
     }
 }

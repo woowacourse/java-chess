@@ -1,10 +1,11 @@
 package chess.model.piece;
 
-import chess.model.position.ChessPosition;
+import chess.model.evaluation.CommonValue;
+import chess.model.evaluation.PieceValue;
+import chess.model.position.Position;
 import chess.model.position.Movement;
 import chess.model.position.Path;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,8 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 public class Knight extends Piece {
-    private static final Map<Side, Knight> CACHE = Arrays.stream(Side.values())
+    private static final Map<Side, Knight> CACHE = Side.colors()
+            .stream()
             .collect(toMap(identity(), Knight::new));
 
     private static final int DISPLACEMENT = 3;
@@ -26,7 +28,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Path findPath(ChessPosition source, ChessPosition target, Piece targetPiece) {
+    public Path findPath(Position source, Position target, Piece targetPiece) {
         Movement movement = target.calculateMovement(source);
         if (canMove(movement)) {
             return new Path(List.of(target));
@@ -39,5 +41,10 @@ public class Knight extends Piece {
             return false;
         }
         return movement.hasLengthOf(DISPLACEMENT);
+    }
+
+    @Override
+    public PieceValue value() {
+        return new CommonValue(2.5);
     }
 }

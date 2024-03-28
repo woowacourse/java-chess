@@ -1,6 +1,6 @@
 package chess.view.input;
 
-import chess.model.position.ChessPosition;
+import chess.model.position.Position;
 import chess.model.position.File;
 import chess.model.position.Rank;
 
@@ -48,11 +48,11 @@ public record MoveArguments(String sourceFile, int sourceRank, String targetFile
         }
     }
 
-    public ChessPosition createSourcePosition() {
-        return ChessPosition.of(File.from(sourceFile), Rank.from(sourceRank));
+    public Position createSourcePosition() {
+        return Position.of(File.from(sourceFile), Rank.from(sourceRank));
     }
 
-    public ChessPosition createTargetPosition() {
-        return ChessPosition.of(File.from(targetFile), Rank.from(targetRank));
+    public Position createTargetPosition() {
+        return Position.of(File.from(targetFile), Rank.from(targetRank));
     }
 }
