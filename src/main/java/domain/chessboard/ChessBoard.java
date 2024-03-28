@@ -1,5 +1,7 @@
-package domain;
+package domain.chessboard;
 
+import domain.ChessVector;
+import domain.Team;
 import domain.piece.*;
 import domain.square.File;
 import domain.square.Rank;
@@ -30,9 +32,9 @@ public class ChessBoard {
     private final Map<Square, Piece> pieceSquares;
     private Team currentTeam;
 
-    private ChessBoard(final Map<Square, Piece> pieceSquares) {
+    public ChessBoard(final Map<Square, Piece> pieceSquares, final Team currentTeam) {
         this.pieceSquares = pieceSquares;
-        this.currentTeam = Team.WHITE;
+        this.currentTeam = currentTeam;
     }
 
     public static ChessBoard create() {
@@ -45,7 +47,7 @@ public class ChessBoard {
             chessBoard.put(new Square(file, Rank.ONE), WHITE_PIECE_TYPE_ORDERS.get(file));
         }
 
-        return new ChessBoard(chessBoard);
+        return new ChessBoard(chessBoard, Team.WHITE);
     }
 
     public void move(final Square source, final Square target) {
@@ -130,5 +132,9 @@ public class ChessBoard {
 
     public Map<Square, Piece> getPieceSquares() {
         return Collections.unmodifiableMap(pieceSquares);
+    }
+
+    public Team currentTeam() {
+        return currentTeam;
     }
 }

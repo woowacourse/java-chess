@@ -1,4 +1,4 @@
-package view;
+package view.format;
 
 import domain.Team;
 import domain.piece.*;
@@ -19,7 +19,7 @@ public enum PieceFormat {
     WHITE_QUEEN("q", new Queen(Team.WHITE)),
     WHITE_KING("k", new King(Team.WHITE));
 
-    static final String EMPTY_PIECE = ".";
+    public static final String EMPTY_PIECE = ".";
 
     private final String format;
     private final Piece piece;
@@ -29,7 +29,7 @@ public enum PieceFormat {
         this.piece = piece;
     }
 
-    public static String findFormat(final Piece piece) {
+    public static String formatOf(final Piece piece) {
         return Arrays.stream(values())
                 .filter(type -> type.piece.equals(piece))
                 .map(pieceFormat -> pieceFormat.format)

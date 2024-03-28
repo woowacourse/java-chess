@@ -24,6 +24,10 @@ public class Square {
         return new Square(File.from(file), Rank.from(rank));
     }
 
+    public static Square of(final String fileName, final String rankName) {
+        return new Square(File.valueOf(fileName), Rank.valueOf(rankName));
+    }
+
     public ChessVector calculateVector(final Square other) {
         final int fileSub = this.file.subtract(other.file);
         final int rankSub = this.rank.subtract(other.rank);
@@ -40,6 +44,14 @@ public class Square {
 
     public boolean isRank(final Rank rank) {
         return this.rank == rank;
+    }
+
+    public File file() {
+        return file;
+    }
+
+    public Rank rank() {
+        return rank;
     }
 
     @Override

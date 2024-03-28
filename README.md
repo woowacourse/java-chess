@@ -2,9 +2,34 @@
 
 체스 미션 저장소
 
-## 우아한테크코스 코드리뷰
+## STEP4 기능 명세
 
-- [온라인 코드 리뷰 과정](https://github.com/woowacourse/woowacourse-docs/blob/master/maincourse/README.md)
+- [x] Square, Piece 저장
+- [x] Square, Piece 로딩
+- [x] 현재 Team 저장
+- [x] 현재 Team 로딩
+
+
+- 선택 요구 사항
+- [x] 체스 게임방 생성
+- [x] 게임방 입장
+- [ ] 사용자별 게임 기록 관리
+    - [x] 게임 시작시 팀 별 사용자 이름 입력받기
+    - [x] 사용자 이름 저장하기
+    - [x] 게임에 사용자 팀 저장하기
+    - [x] 사용자 별 승패 기록하기
+    - [ ] 사용자 랭킹 계산하기
+    - [ ] 사용자 랭킹(순위, 승, 패) 출력하기
+    - [x] 사용자 게임 기록 저장하기
+
+## STEP3 기능 명세
+
+- [x] King이 잡히면 게임 종료
+- [x] 남아있는 말의 점수 계산
+    - [x] queen: 9점, rook: 5점, bishop: 3점, knight: 2.5점, king: 0점
+    - [x] pawn: 1점, 세로줄에 같은 색 pawn 있는 경우 0.5점
+- [x] 승패 계산
+- [x] 점수 및 승패 출력
 
 ## STEP2 기능 명세
 

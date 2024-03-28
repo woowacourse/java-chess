@@ -1,14 +1,19 @@
 package domain.piece;
 
+import domain.Score;
 import domain.Team;
 import domain.square.Square;
 
+import java.util.Objects;
+
 public abstract class Piece {
 
-    protected final Team team;
+    private final PieceType pieceType;
+    private final Team team;
 
-    protected Piece(final Team team) {
+    protected Piece(final Team team, final PieceType pieceType) {
         this.team = team;
+        this.pieceType = pieceType;
     }
 
     public abstract boolean canMove(Square source, Square target);
@@ -31,7 +36,32 @@ public abstract class Piece {
         return team != other;
     }
 
-    public abstract boolean equals(final Object o);
+    public final boolean isTeam(final Team other) {
+        return team == other;
+    }
 
-    public abstract int hashCode();
+    public Score getScore() {
+        return pieceType.getScore();
+    }
+
+    public Team team() {
+        return team;
+    }
+
+    public PieceType pieceType() {
+        return pieceType;
+    }
+
+    @Override
+    public final boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && team == piece.team;
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(pieceType, team);
+    }
 }
