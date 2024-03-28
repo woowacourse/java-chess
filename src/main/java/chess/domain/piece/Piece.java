@@ -1,11 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.score.Score;
 import chess.domain.color.Color;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.score.Score;
 import chess.domain.state.ChessState;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
