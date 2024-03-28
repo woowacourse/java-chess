@@ -8,7 +8,9 @@ import domain.player.Player;
 import domain.player.PlayerName;
 import domain.square.Square;
 import dto.PlayerGameRecordDto;
-import service.ChessService;
+import service.ChessBoardService;
+import service.ChessGameService;
+import service.ChessResultService;
 import service.PlayerService;
 import view.InputView;
 import view.OutputView;
@@ -24,7 +26,9 @@ public class ChessController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ChessService chessService;
+    private final ChessBoardService chessBoardService;
+    private final ChessGameService chessGameService;
+    private final ChessResultService chessResultService;
     private final PlayerService playerService;
     private final CommandRouter commandRouter;
     private boolean isRunning;
@@ -34,7 +38,9 @@ public class ChessController {
         this.outputView = new OutputView();
 
         final Connection connection = ChessConnectionGenerator.getConnection();
-        this.chessService = new ChessService(connection);
+        this.chessBoardService = new ChessBoardService(connection);
+        this.chessGameService = new ChessGameService(connection);
+        this.chessResultService = new ChessResultService(connection);
         this.playerService = new PlayerService(connection);
 
         this.commandRouter = new CommandRouter(this);
@@ -55,7 +61,7 @@ public class ChessController {
     public void startNewGame() throws SQLException {
         final Player blackPlayer = roadPlayer(Team.BLACK);
         final Player whitePlayer = roadPlayer(Team.WHITE);
-        final int gameId = chessService.createNewGame(blackPlayer, whitePlayer);
+        final int gameId = chessGameService.createNewGame(blackPlayer, whitePlayer);
         play(gameId);
     }
 
@@ -73,7 +79,7 @@ public class ChessController {
     private void play(final int gameId) throws SQLException {
         printGameOptions(gameId);
 
-        while (isRunning && chessService.isNotEnd(gameId)) {
+        while (isRunning && chessGameService.isNotEnd(gameId)) {
             try {
                 final PlayCommandFormat command = readCommand(gameId);
                 commandRouter.execute(command, gameId);
@@ -86,13 +92,13 @@ public class ChessController {
     }
 
     private PlayCommandFormat readCommand(final int gameId) {
-        final Team currentTeam = chessService.currentTeam(gameId);
-        final PlayerName currentPlayerName = chessService.findPlayerName(gameId, currentTeam);
+        final Team currentTeam = chessGameService.findCurrentTeam(gameId);
+        final PlayerName currentPlayerName = chessGameService.findPlayerName(gameId, currentTeam);
         return inputView.readGameCommand(currentTeam, currentPlayerName);
     }
 
     public void continueGame() throws SQLException {
-        final List<Integer> runningGame = chessService.findRunningGame();
+        final List<Integer> runningGame = chessGameService.findRunningGame();
         final int gameId = readGameId(runningGame);
         play(gameId);
     }
@@ -100,7 +106,7 @@ public class ChessController {
     private int readGameId(final List<Integer> runningGame) {
         while (true) {
             final int input = inputView.readContinueGame(runningGame);
-            final boolean hasGame = chessService.containRunningGame(input);
+            final boolean hasGame = chessGameService.containRunningGame(input);
             if (hasGame) {
                 return input;
             }
@@ -109,16 +115,16 @@ public class ChessController {
     }
 
     public void printPlayerRecord() {
-        final PlayerName name = readPlayerName();
-        final PlayerGameRecordDto gameRecord = chessService.findGameRecord(name);
+        final Player player = readPlayer();
+        final PlayerGameRecordDto gameRecord = chessResultService.findGameRecord(player);
         outputView.printGameRecord(gameRecord);
     }
 
-    private PlayerName readPlayerName() {
+    private Player readPlayer() {
         while (true) {
             try {
                 final String name = inputView.readPlayerName();
-                return playerService.findPlayerName(name);
+                return playerService.findPlayer(name);
             } catch (final IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
@@ -130,14 +136,14 @@ public class ChessController {
     }
 
     private void printGameOptions(final int gameId) {
-        final PlayerName blackPlayerName = chessService.findPlayerName(gameId, Team.BLACK);
-        final PlayerName whitePlayerName = chessService.findPlayerName(gameId, Team.WHITE);
+        final PlayerName blackPlayerName = chessGameService.findPlayerName(gameId, Team.BLACK);
+        final PlayerName whitePlayerName = chessGameService.findPlayerName(gameId, Team.WHITE);
         outputView.printGameOption(gameId, blackPlayerName, whitePlayerName);
         printBoard(gameId);
     }
 
     public void runStatus(final int gameId) {
-        final ChessGameResult chessGameResult = chessService.calculateResult(gameId);
+        final ChessGameResult chessGameResult = chessResultService.calculateResult(gameId);
         outputView.printStatus(chessGameResult);
     }
 
@@ -145,22 +151,22 @@ public class ChessController {
         final Square source = Square.from(command.getSourceInput());
         final Square target = Square.from(command.getTargetInput());
 
-        chessService.move(gameId, source, target);
+        chessBoardService.move(gameId, source, target);
         printBoard(gameId);
     }
 
     public void endGame(final int gameId) {
-        chessService.endGame(gameId);
+        chessGameService.endGame(gameId);
     }
 
     private void printBoard(final int gameId) {
-        final Map<Square, Piece> pieceSquares = chessService.getPieceSquares(gameId);
+        final Map<Square, Piece> pieceSquares = chessBoardService.getPieceSquares(gameId);
         outputView.printChessBoard(pieceSquares);
     }
 
     private void finishGame(final int gameId) {
-        if (chessService.isEnd(gameId)) {
-            chessService.saveResult(gameId);
+        if (chessGameService.isEnd(gameId)) {
+            chessResultService.saveResult(gameId);
             runStatus(gameId);
         }
     }

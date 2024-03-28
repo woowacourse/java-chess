@@ -1,14 +1,16 @@
 package service;
 
 import domain.ChessGameResult;
+import domain.WinStatus;
 import domain.piece.Piece;
-import domain.player.PlayerName;
+import domain.player.Player;
 import domain.square.Square;
 import dto.PlayerGameRecordDto;
 import repository.ChessBoardDao;
 import repository.ChessResultDao;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 public class ChessResultService {
@@ -32,11 +34,23 @@ public class ChessResultService {
         return ChessGameResult.from(pieceSquares);
     }
 
-    public PlayerGameRecordDto findGameRecord(final PlayerName name) {
-        final int countWin = chessResultDao.countWin(name);
-        final int countLose = chessResultDao.countLose(name);
-        final int countDraw = chessResultDao.countDraw(name);
+    public PlayerGameRecordDto findGameRecord(final Player player) {
+        final List<WinStatus> blackWinStatuses = chessResultDao.findBlackWinStatus(player);
+        final List<WinStatus> whiteWinStatuses = chessResultDao.findWhiteWinStatus(player);
+
+        final int countWin = countWinStatus(blackWinStatuses, WinStatus.BLACK_WIN)
+                + countWinStatus(whiteWinStatuses, WinStatus.WHITE_WIN);
+        final int countLose = countWinStatus(blackWinStatuses, WinStatus.WHITE_WIN)
+                + countWinStatus(whiteWinStatuses, WinStatus.BLACK_WIN);
+        final int countDraw = countWinStatus(blackWinStatuses, WinStatus.DRAW)
+                + countWinStatus(blackWinStatuses, WinStatus.DRAW);
 
         return new PlayerGameRecordDto(countWin, countLose, countDraw);
+    }
+
+    private int countWinStatus(final List<WinStatus> winStatuses, final WinStatus winStatus) {
+        return (int) winStatuses.stream()
+                .filter(status -> status == winStatus)
+                .count();
     }
 }

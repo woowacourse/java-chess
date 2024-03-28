@@ -1,10 +1,13 @@
 package repository;
 
 import domain.ChessGameResult;
-import domain.player.PlayerName;
+import domain.WinStatus;
+import domain.player.Player;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessResultDao {
 
@@ -33,72 +36,45 @@ public class ChessResultDao {
         }
     }
 
-    public int countWin(final PlayerName name) {
-        final var query = "SELECT count(*) AS win_count FROM result AS R " +
-                "LEFT JOIN player AS BP ON R.black_player_id = BP.id " +
-                "LEFT JOIN player AS WP ON R.white_player_id = WP.id " +
-                "WHERE (BP.name = (?) AND R.win_status = 'BLACK_WIN') " +
-                "OR (WP.name = (?) AND R.win_status = 'WHITE_WIN')";
-
+    public List<WinStatus> findBlackWinStatus(final Player player) {
+        final var query = "SELECT win_status FROM result AS R " +
+                "LEFT JOIN player AS P ON R.black_player_id = P.id " +
+                "WHERE P.name = (?)";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, name.getName());
-            preparedStatement.setString(2, name.getName());
+            preparedStatement.setString(1, player.getName());
 
             final var resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                return resultSet.getInt("win_count");
+            final List<WinStatus> statuses = new ArrayList<>();
+
+            while (resultSet.next()) {
+                statuses.add(WinStatus.valueOf(resultSet.getString("win_status")));
             }
+            return statuses;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        return 0;
     }
 
-    public int countLose(final PlayerName name) {
-        final var query = "SELECT count(*) AS lose_count FROM result AS R " +
-                "LEFT JOIN player AS BP ON R.black_player_id = BP.id " +
-                "LEFT JOIN player AS WP ON R.white_player_id = WP.id " +
-                "WHERE (BP.name = (?) AND R.win_status = 'WHITE_WIN') " +
-                "OR (WP.name = (?) AND R.win_status = 'BLACK_WIN')";
-
+    public List<WinStatus> findWhiteWinStatus(final Player player) {
+        final var query = "SELECT win_status FROM result AS R " +
+                "LEFT JOIN player AS P ON R.white_player_id = P.id " +
+                "WHERE P.name = (?)";
 
         try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, name.getName());
-            preparedStatement.setString(2, name.getName());
+            preparedStatement.setString(1, player.getName());
 
             final var resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                return resultSet.getInt("lose_count");
+            final List<WinStatus> statuses = new ArrayList<>();
+
+            while (resultSet.next()) {
+                statuses.add(WinStatus.valueOf(resultSet.getString("win_status")));
             }
+            return statuses;
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
-        return 0;
-    }
-
-    public int countDraw(final PlayerName name) {
-        final var query = "SELECT count(*) AS draw_count FROM result AS R " +
-                "LEFT JOIN player AS BP ON R.black_player_id = BP.id " +
-                "LEFT JOIN player AS WP ON R.white_player_id = WP.id " +
-                "WHERE (R.win_status = 'DRAW') " +
-                "AND (WP.name = (?) OR BP.name = (?))";
-
-
-        try (final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, name.getName());
-            preparedStatement.setString(2, name.getName());
-
-            final var resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt("draw_count");
-            }
-        } catch (final SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 0;
     }
 }
