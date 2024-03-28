@@ -7,19 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class PiecesDao {
     private static final String TABLE = "pieces";
 
-    private final Supplier<Connection> connector;
+    private final ChessGameDBConnector connector;
 
-    public PiecesDao(Supplier<Connection> connector) {
+    public PiecesDao(ChessGameDBConnector connector) {
         this.connector = connector;
     }
 
     public void create(PieceDto pieceDto) {
-        try (final Connection connection = connector.get()) {
+        try (final Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO " + TABLE + " (board_file, board_rank, type) VALUES (?, ?, ?)");
             statement.setInt(1, pieceDto.file());
@@ -32,7 +31,7 @@ public class PiecesDao {
     }
 
     public List<PieceDto> findAll() {
-        try (final Connection connection = connector.get()) {
+        try (final Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + TABLE);
             ResultSet resultSet = statement.executeQuery();
 
@@ -50,7 +49,7 @@ public class PiecesDao {
     }
 
     public void deleteAll() {
-        try (Connection connection = connector.get()) {
+        try (Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM " + TABLE);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -59,7 +58,7 @@ public class PiecesDao {
     }
 
     public int count() {
-        try (final Connection connection = connector.get()) {
+        try (final Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS count FROM " + TABLE);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

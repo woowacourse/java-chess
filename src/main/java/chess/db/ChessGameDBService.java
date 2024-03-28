@@ -7,17 +7,15 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.dto.PieceDto;
 import chess.dto.TurnDto;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class ChessGameDBService {
     private final PiecesDao piecesDao;
     private final TurnsDao turnsDao;
 
-    public ChessGameDBService(Supplier<Connection> connector) {
+    public ChessGameDBService(ChessGameDBConnector connector) {
         this.piecesDao = new PiecesDao(connector);
         this.turnsDao = new TurnsDao(connector);
     }

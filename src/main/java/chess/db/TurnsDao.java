@@ -5,19 +5,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.function.Supplier;
 
 public class TurnsDao {
     private static final String TABLE = "turns";
 
-    private final Supplier<Connection> connector;
+    private final ChessGameDBConnector connector;
 
-    public TurnsDao(Supplier<Connection> connector) {
+    public TurnsDao(ChessGameDBConnector connector) {
         this.connector = connector;
     }
 
     public void create(TurnDto turnDto) {
-        try (final Connection connection = connector.get()) {
+        try (final Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO " + TABLE + " (color) VALUES (?)");
             statement.setString(1, turnDto.color());
@@ -28,7 +27,7 @@ public class TurnsDao {
     }
 
     public TurnDto find() {
-        try (final Connection connection = connector.get()) {
+        try (final Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + TABLE);
             ResultSet resultSet = statement.executeQuery();
 
@@ -42,7 +41,7 @@ public class TurnsDao {
     }
 
     public void deleteAll() {
-        try (Connection connection = connector.get()) {
+        try (Connection connection = connector.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM " + TABLE);
             statement.executeUpdate();
         } catch (SQLException e) {

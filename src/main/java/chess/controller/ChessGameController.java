@@ -5,8 +5,8 @@ import chess.db.ChessGameDBService;
 import chess.domain.BoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.position.Positions;
-import chess.dto.Status;
 import chess.domain.score.Scores;
+import chess.dto.Status;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -14,9 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChessGameController {
-    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile("^" + Command.MOVE.command() + "\\s+(\\w\\d\\s+\\w\\d)$");
+    private static final Pattern MOVE_COMMAND_PATTERN = Pattern.compile(
+            "^" + Command.MOVE.command() + "\\s+(\\w\\d\\s+\\w\\d)$");
 
-    private final ChessGameDBService chessGameDbService = new ChessGameDBService(() -> new ChessGameDBConnector().getConnection());
+    private final ChessGameDBService chessGameDbService = new ChessGameDBService(new ChessGameDBConnector());
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -68,7 +69,7 @@ public class ChessGameController {
     }
 
     private void validateIllegalGameCommand(String command) {
-        if  (!Command.hasCommand(command) && !Command.MOVE.startsWith(command)) {
+        if (!Command.hasCommand(command) && !Command.MOVE.startsWith(command)) {
             throw new IllegalArgumentException("올바른 명령어를 입력해 주세요.");
         }
     }
@@ -83,9 +84,9 @@ public class ChessGameController {
     }
 
     private void showStatus(ChessGame chessGame) {
-            Scores scores = chessGame.calculateScores();
-            Status status = Status.of(scores);
-            outputView.printStatus(status);
+        Scores scores = chessGame.calculateScores();
+        Status status = Status.of(scores);
+        outputView.printStatus(status);
     }
 
     private void movePiece(ChessGame chessGame, String command) {
