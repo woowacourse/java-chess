@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.ChessGame;
 import chess.domain.board.ChessBoard;
 import chess.domain.position.File;
 import chess.domain.position.PathFinder;

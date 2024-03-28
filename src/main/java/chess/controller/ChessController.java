@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.ChessGame;
+import chess.domain.ChessGame;
 import chess.command.Command;
 import chess.command.CommandType;
 import chess.domain.CurrentTurn;

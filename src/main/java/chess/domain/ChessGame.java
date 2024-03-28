@@ -1,6 +1,5 @@
-package chess;
+package chess.domain;
 
-import chess.domain.CurrentTurn;
 import chess.domain.board.ChessBoard;
 import chess.domain.position.PathFinder;
 import chess.domain.position.Position;
