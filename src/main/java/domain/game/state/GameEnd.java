@@ -1,9 +1,6 @@
 package domain.game.state;
 
-import domain.game.Board;
-import domain.game.MoveResponse;
 import domain.game.TeamColor;
-import domain.position.Position;
 import java.util.EnumMap;
 
 public final class GameEnd implements GameState {
@@ -33,11 +30,6 @@ public final class GameEnd implements GameState {
 
     @Override
     public TeamColor currentTurn() {
-        throw new IllegalStateException(GAME_END_MESSAGE);
-    }
-
-    @Override
-    public MoveResponse move(Board board, Position source, Position destination) {
         throw new IllegalStateException(GAME_END_MESSAGE);
     }
 

@@ -36,13 +36,22 @@ public class ChessGame {
     }
 
     public void move(Position source, Position destination) {
-        MoveResponse moveResponse = state.move(board, source, destination);
+        checkMovableState();
+        MoveResponse moveResponse = board.movePiece(state.currentTurn(), source, destination);
+        state = changeState(moveResponse);
+    }
 
-        if (shouldGameEnd(moveResponse)) {
-            state = winStateOf(state);
-            return;
+    private void checkMovableState() {
+        if (isGameEnd()) {
+            throw new IllegalStateException("게임이 종료되어 더 이상 움직일 수 없습니다.");
         }
-        state = nextStateOf(state);
+    }
+
+    private GameState changeState(MoveResponse moveResponse) {
+        if (shouldGameEnd(moveResponse)) {
+            return winStateOf(state);
+        }
+        return nextPlayingStateOf(state);
     }
 
     private boolean shouldGameEnd(MoveResponse moveResponse) {
@@ -54,11 +63,10 @@ public class ChessGame {
     }
 
     private GameState winStateOf(GameState state) {
-        TeamColor winner = state.currentTurn();
-        return GameEnd.getInstance(winner);
+        return GameEnd.getInstance(state.currentTurn());
     }
 
-    private GameState nextStateOf(GameState state) {
+    private GameState nextPlayingStateOf(GameState state) {
         if (state.isTurnOf(TeamColor.WHITE)) {
             return BlackTurn.getInstance();
         }
