@@ -1,9 +1,9 @@
 package chess.domain.piece.sliding;
 
-import chess.domain.score.Score;
 import chess.domain.color.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
+import chess.domain.score.Score;
 import java.util.Set;
 
 public final class Rook extends SlidingPiece {

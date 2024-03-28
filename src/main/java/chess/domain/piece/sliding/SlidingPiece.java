@@ -5,8 +5,8 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.state.GeneralChessState;
 import chess.domain.state.ChessState;
+import chess.domain.state.GeneralChessState;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +28,7 @@ public abstract class SlidingPiece extends Piece {
         }
         return from.findCourses(direction, to);
     }
+
     @Override
     public final boolean isBlank() {
         return false;
