@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public abstract class ChessState {
+    private static final int FILE_MIN = 1;
+    private static final int FILE_MAX = 8;
     private static final int KING_TOTAL = 2;
 
     protected final Map<Position, Piece> board;
@@ -59,15 +61,15 @@ public abstract class ChessState {
 
     public final Score calculateScore(Color color) {
         ScoreManager scoreManager = new ScoreManager();
-        return IntStream.rangeClosed(1, 8)
-                .mapToObj(i -> findFilePieces(color, i))
+        return IntStream.rangeClosed(FILE_MIN, FILE_MAX)
+                .mapToObj(file -> findFilePieces(color, file))
                 .map(scoreManager::calculateFileScore)
                 .reduce(new Score(0), Score::add);
     }
 
     private List<Piece> findFilePieces(Color color, int file) {
-        return IntStream.rangeClosed(1, 8)
-                .mapToObj(i -> board.get(new Position(file, i)))
+        return IntStream.rangeClosed(FILE_MIN, FILE_MAX)
+                .mapToObj(rank -> board.get(new Position(file, rank)))
                 .filter(piece -> piece.isSameColor(color))
                 .toList();
     }
