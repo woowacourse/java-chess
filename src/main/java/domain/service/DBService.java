@@ -19,12 +19,15 @@ public class DBService {
     public ChessGame loadGame(int gameId) {
         TeamColor savedTurn = findSavedTurn(gameId);
         List<PieceDto> savedPieces = findSavedPieces(gameId);
-        Map<Position, Piece> piecePositions = savedPieces.stream()
+        return ChessGame.of(savedTurn, separatePositionAndPiece(savedPieces));
+    }
+
+    private Map<Position, Piece> separatePositionAndPiece(List<PieceDto> savedPieces) {
+        return savedPieces.stream()
                 .collect(Collectors.toMap(
                         PieceDto::getPosition,
                         dto -> PieceFactory.create(dto.getPieceType())
                 ));
-        return ChessGame.of(savedTurn, piecePositions);
     }
 
     private TeamColor findSavedTurn(int gameId) {
@@ -38,12 +41,14 @@ public class DBService {
     public int saveGame(ChessGame chessGame) {
         int gameId = addGame();
         saveTurn(gameId, chessGame.currentPlayingTeam());
+        saveAllPieces(gameId, collectPositionOfPieces(chessGame));
+        return gameId;
+    }
 
-        List<PieceDto> pieces = chessGame.getPositionsOfPieces().entrySet().stream()
+    private List<PieceDto> collectPositionOfPieces(ChessGame chessGame) {
+        return chessGame.getPositionsOfPieces().entrySet().stream()
                 .map(entry -> PieceDto.of(entry.getKey(), entry.getValue()))
                 .toList();
-        saveAllPieces(gameId, pieces);
-        return gameId;
     }
 
     private int addGame() {
