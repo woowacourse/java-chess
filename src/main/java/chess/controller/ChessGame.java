@@ -24,7 +24,7 @@ public class ChessGame {
     }
 
     private GameState prepare() {
-        GameState prepare = retryOnException(Prepare::new);
+        GameState prepare = new Prepare();
         return prepare.run(inputView, outputView);
     }
 
