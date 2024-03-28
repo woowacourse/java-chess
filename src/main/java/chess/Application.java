@@ -3,6 +3,7 @@ package chess;
 import chess.controller.GameController;
 import chess.controller.RoomController;
 import chess.controller.UserController;
+import chess.database.DatabaseInitializer;
 import chess.database.JdbcConnectionPool;
 import chess.repository.MovementDao;
 import chess.repository.MovementRepository;
@@ -23,6 +24,7 @@ public class Application {
         OutputView outputView = new OutputView();
 
         JdbcConnectionPool connectionPool = JdbcConnectionPool.getInstance();
+        new DatabaseInitializer(connectionPool).initialize();
 
         MovementRepository movementRepository = new MovementDao(connectionPool);
         RoomRepository roomRepository = new RoomDao(connectionPool);

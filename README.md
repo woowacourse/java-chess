@@ -8,7 +8,7 @@
 
 
 # 객체 협력 관계
-![object-relations](src/main/java/resources/static/chess-step-1.png)
+![object-relations](src/main/resources/static/chess-step-1.png)
 
 # 기능 요구사항(step 1&2)
 
