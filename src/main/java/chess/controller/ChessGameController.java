@@ -6,8 +6,8 @@ import chess.domain.chessgame.Command;
 import chess.domain.chessgame.ScoreBoard;
 import chess.domain.db.ChessBoardDao;
 import chess.domain.dto.BoardDto;
-import chess.domain.dto.ChessBoardDto;
-import chess.domain.dto.ChessBoardToBoardDto;
+import chess.domain.dto.ChessBoardEntityDto;
+import chess.domain.dto.BoardEntityDto;
 import chess.domain.pieceInfo.Position;
 import chess.domain.pieceInfo.Team;
 import chess.view.InputView;
@@ -112,13 +112,13 @@ public class ChessGameController {
     }
 
     private void save() {
-        ChessBoardDto chessBoardDto = ChessBoardDto.of(chessGame.getBoard().values().stream().toList());
-        chessBoardDto.getPieces().forEach(chessBoardDao::addPiece);
+        ChessBoardEntityDto chessBoardEntityDto = ChessBoardEntityDto.of(chessGame.getBoard().values().stream().toList());
+        chessBoardEntityDto.getPieces().forEach(chessBoardDao::addPiece);
         chessBoardDao.addTurn(chessGame.getTurn());
     }
 
     private void load() {
-        ChessBoardToBoardDto chessBoardToBoardDto = ChessBoardToBoardDto.of(chessBoardDao.findAll());
-        chessGame = new ChessGame(new Board(chessBoardToBoardDto.getPieces()), chessBoardDao.findTurn());
+        BoardEntityDto boardEntityDto = BoardEntityDto.of(chessBoardDao.findAll());
+        chessGame = new ChessGame(new Board(boardEntityDto.getPieces()), chessBoardDao.findTurn());
     }
 }

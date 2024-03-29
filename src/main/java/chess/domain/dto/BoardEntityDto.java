@@ -1,6 +1,6 @@
 package chess.domain.dto;
 
-import chess.domain.db.ChessBoard;
+import chess.domain.db.ChessBoardEntity;
 import chess.domain.piece.*;
 import chess.domain.pieceInfo.PieceInfo;
 import chess.domain.pieceInfo.Position;
@@ -9,29 +9,29 @@ import chess.domain.pieceInfo.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChessBoardToBoardDto {
+public class BoardEntityDto {
     private final List<Piece> pieces;
 
-    private ChessBoardToBoardDto(List<Piece> pieces) {
+    private BoardEntityDto(List<Piece> pieces) {
         this.pieces = pieces;
     }
 
-    public static ChessBoardToBoardDto of(List<ChessBoard> board) {
+    public static BoardEntityDto of(List<ChessBoardEntity> board) {
         List<Piece> boards = makePieces(board);
-        return new ChessBoardToBoardDto(boards);
+        return new BoardEntityDto(boards);
     }
 
-    private static List<Piece> makePieces(List<ChessBoard> boards) {
+    private static List<Piece> makePieces(List<ChessBoardEntity> boards) {
         List<Piece> newBoard = new ArrayList<>();
         boards.forEach(board -> newBoard.add(piece(board)));
         return newBoard;
     }
 
-    private static Position position(ChessBoard board) {
+    private static Position position(ChessBoardEntity board) {
         return Position.of(board.position());
     }
 
-    private static Piece piece(ChessBoard board) {
+    private static Piece piece(ChessBoardEntity board) {
         List<Piece> allPieces = pieces(position(board), Team.valueOf(board.team()));
         return allPieces.stream()
                 .map(Piece::rearrangeStrategyByPosition)

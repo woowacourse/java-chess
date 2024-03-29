@@ -15,7 +15,7 @@ class ChessBoardDaoTest {
     @BeforeEach
     @Test
     public void addPiece() {
-        final var piece = new ChessBoard("a1", "WHITE", "KING");
+        final var piece = new ChessBoardEntity("a1", "WHITE", "KING");
         chessBoardDao.addPiece(piece);
     }
 
@@ -32,14 +32,14 @@ class ChessBoardDaoTest {
     public void findByPosition() {
         final var piece = chessBoardDao.findByPosition("a1");
 
-        assertThat(piece).isEqualTo(new ChessBoard("a1", "WHITE", "KING"));
+        assertThat(piece).isEqualTo(new ChessBoardEntity("a1", "WHITE", "KING"));
     }
 
     @Test
     public void findAll() {
         final var piece = chessBoardDao.findAll();
 
-        assertThat(piece).isEqualTo(List.of(new ChessBoard("a1", "WHITE", "KING")));
+        assertThat(piece).isEqualTo(List.of(new ChessBoardEntity("a1", "WHITE", "KING")));
     }
 
     @Test

@@ -27,22 +27,22 @@ public final class ChessBoardDao {
         }
     }
 
-    public void addPiece(final ChessBoard chessBoard) {
+    public void addPiece(final ChessBoardEntity chessBoardEntity) {
         final var query = "INSERT INTO chessBoard VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE team = ?, type = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, chessBoard.position());
-            preparedStatement.setString(2, chessBoard.team());
-            preparedStatement.setString(3, chessBoard.type());
-            preparedStatement.setString(4, chessBoard.team());
-            preparedStatement.setString(5, chessBoard.type());
+            preparedStatement.setString(1, chessBoardEntity.position());
+            preparedStatement.setString(2, chessBoardEntity.team());
+            preparedStatement.setString(3, chessBoardEntity.type());
+            preparedStatement.setString(4, chessBoardEntity.team());
+            preparedStatement.setString(5, chessBoardEntity.type());
             preparedStatement.execute();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ChessBoard findByPosition(final String position) {
+    public ChessBoardEntity findByPosition(final String position) {
         final var query = "SELECT * FROM chessBoard WHERE position = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
@@ -50,7 +50,7 @@ public final class ChessBoardDao {
 
             final var resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new ChessBoard(
+                return new ChessBoardEntity(
                         resultSet.getString("position"),
                         resultSet.getString("team"),
                         resultSet.getString("type")
@@ -63,14 +63,14 @@ public final class ChessBoardDao {
         return null;
     }
 
-    public List<ChessBoard> findAll() {
+    public List<ChessBoardEntity> findAll() {
         final var query = "SELECT * FROM chessBoard";
-        final List<ChessBoard> result = new ArrayList<>();
+        final List<ChessBoardEntity> result = new ArrayList<>();
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                result.add(new ChessBoard(
+                result.add(new ChessBoardEntity(
                         resultSet.getString("position"),
                         resultSet.getString("team"),
                         resultSet.getString("type")
