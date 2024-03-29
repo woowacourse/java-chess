@@ -2,6 +2,8 @@ package chess.domain.db;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,6 +12,13 @@ class ChessBoardDaoTest {
 
     private final ChessBoardDao chessBoardDao = new ChessBoardDao();
 
+    @BeforeEach
+    @Test
+    public void addPiece() {
+        final var piece = new ChessBoard("a1", "WHITE", "KING");
+        chessBoardDao.addPiece(piece);
+    }
+
     @Test
     public void connection() {
         try (final var connection = chessBoardDao.getConnection()) {
@@ -17,12 +26,6 @@ class ChessBoardDaoTest {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Test
-    public void addPiece() {
-        final var piece = new ChessBoard("a1", "WHITE", "KING");
-        chessBoardDao.addPiece(piece);
     }
 
     @Test
@@ -40,6 +43,7 @@ class ChessBoardDaoTest {
     }
 
     @Test
+    @AfterEach
     public void deleteAll() {
         chessBoardDao.deleteAll();
 

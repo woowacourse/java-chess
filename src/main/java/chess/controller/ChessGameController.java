@@ -114,7 +114,6 @@ public class ChessGameController {
     private void save() {
         ChessBoardDto chessBoardDto = ChessBoardDto.of(chessGame.getBoard().values().stream().toList());
         chessBoardDto.getPieces().forEach(chessBoardDao::addPiece);
-        //TODO: save 이전에 load를 호출할 때에 분기처리 - selectAll 했을 때에 길이가 0이면
     }
 
     private void load() {
