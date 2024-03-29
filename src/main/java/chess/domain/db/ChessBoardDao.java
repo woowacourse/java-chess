@@ -26,12 +26,14 @@ public final class ChessBoardDao {
     }
 
     public void addPiece(final ChessBoard chessBoard) {
-        final var query = "INSERT INTO chessBoard VALUES(?, ?, ?)";
+        final var query = "INSERT INTO chessBoard VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE team = ?, type = ?";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, chessBoard.position());
             preparedStatement.setString(2, chessBoard.team());
             preparedStatement.setString(3, chessBoard.type());
+            preparedStatement.setString(4, chessBoard.team());
+            preparedStatement.setString(5, chessBoard.type());
             preparedStatement.execute();
         } catch (final SQLException e) {
             throw new RuntimeException(e);
