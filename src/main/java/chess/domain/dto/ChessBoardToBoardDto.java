@@ -52,6 +52,9 @@ public class ChessBoardToBoardDto {
     }
 
     public List<Piece> getPieces() {
+        if (pieces.isEmpty()) {
+            throw new IllegalArgumentException("이전에 save 한 정보가 없습니다.");
+        }
         return pieces;
     }
 }
