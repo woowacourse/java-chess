@@ -21,4 +21,6 @@ public interface Piece {
     boolean isSameTeam(Team otherTeam);
 
     boolean isSamePieceWithSameTeam(List<Piece> pieces);
+
+    Piece rearrangeStrategyByPosition();
 }

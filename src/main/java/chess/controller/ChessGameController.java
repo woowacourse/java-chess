@@ -120,7 +120,6 @@ public class ChessGameController {
         ChessBoardToBoardDto chessBoardToBoardDto = ChessBoardToBoardDto.of(chessBoardDao.findAll());
         chessGame = new ChessGame(new Board(chessBoardToBoardDto.getPieces()), Team.WHITE);
     }
-    //TODO: 폰들을 불러올 때에 4종류를 어떻게 할 것인가 - 팀과 위치로 확인할건가? - 그래도 결국 전략을 주입해야 하지 않은가
     //TODO: 차례는 어떻게 저장하고 불러올 것인가 - 게임 정보 table 설계
     //TODO: DB 설계 시 - 게임정보(게임아이디, 턴), 말들(게임아이디, 위치(가로, 세로), 말 종류, 팀)
 }

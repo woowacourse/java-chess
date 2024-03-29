@@ -34,6 +34,7 @@ public class ChessBoardToBoardDto {
     private static Piece piece(ChessBoard board) {
         List<Piece> allPieces = pieces(position(board), Team.valueOf(board.team()));
         return allPieces.stream()
+                .map(Piece::rearrangeStrategyByPosition)
                 .filter(piece -> piece.getType().name().equals(board.type()))
                 .findFirst()
                 .orElse(new EmptyPiece(new PieceInfo(position(board), Team.valueOf(board.team()))));

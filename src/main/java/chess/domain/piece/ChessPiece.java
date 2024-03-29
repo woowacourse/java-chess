@@ -70,4 +70,9 @@ public abstract class ChessPiece implements Piece {
     public int hashCode() {
         return Objects.hash(pieceInfo, moveStrategy);
     }
+
+    @Override
+    public Piece rearrangeStrategyByPosition() {
+        return this;
+    }
 }

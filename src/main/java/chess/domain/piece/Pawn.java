@@ -15,6 +15,22 @@ public class Pawn extends ChessPiece {
         this(pieceInfo, decidePawnMoveStrategy(pieceInfo));
     }
 
+    @Override
+    public Pawn rearrangeStrategyByPosition() {
+        boolean isMoved = isNotInStartPosition();
+        if (isMoved) {
+            return new Pawn(pieceInfo, changeMovedStrategy());
+        }
+        return this;
+    }
+
+    private boolean isNotInStartPosition() {
+        if (pieceInfo.getTeam() == Team.WHITE && pieceInfo.getPosition().getYPosition() == 1) {
+            return false;
+        }
+        return pieceInfo.getTeam() != Team.BLACK || pieceInfo.getPosition().getYPosition() != 6;
+    }
+
     private static MoveStrategy decidePawnMoveStrategy(final PieceInfo pieceInfo) {
         if (pieceInfo.getTeam() == Team.WHITE) {
             return new WhitePawnFirstMoveStrategy();
