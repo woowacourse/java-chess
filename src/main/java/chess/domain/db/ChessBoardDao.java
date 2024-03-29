@@ -1,5 +1,7 @@
 package chess.domain.db;
 
+import chess.domain.pieceInfo.Team;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -88,5 +90,32 @@ public final class ChessBoardDao {
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addTurn(Team turn) {
+        final var query = "INSERT INTO gameInfo VALUES(?) ON DUPLICATE KEY UPDATE turn = ?";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, turn.name());
+            preparedStatement.setString(2, turn.name());
+            preparedStatement.execute();
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Team findTurn() {
+        final var query = "SELECT * FROM gameInfo";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Team.valueOf(resultSet.getString("turn"));
+            }
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 }

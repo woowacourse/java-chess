@@ -114,12 +114,11 @@ public class ChessGameController {
     private void save() {
         ChessBoardDto chessBoardDto = ChessBoardDto.of(chessGame.getBoard().values().stream().toList());
         chessBoardDto.getPieces().forEach(chessBoardDao::addPiece);
+        chessBoardDao.addTurn(chessGame.getTurn());
     }
 
     private void load() {
         ChessBoardToBoardDto chessBoardToBoardDto = ChessBoardToBoardDto.of(chessBoardDao.findAll());
-        chessGame = new ChessGame(new Board(chessBoardToBoardDto.getPieces()), Team.WHITE);
+        chessGame = new ChessGame(new Board(chessBoardToBoardDto.getPieces()), chessBoardDao.findTurn());
     }
-    //TODO: 차례는 어떻게 저장하고 불러올 것인가 - 게임 정보 table 설계
-    //TODO: DB 설계 시 - 게임정보(게임아이디, 턴), 말들(게임아이디, 위치(가로, 세로), 말 종류, 팀)
 }
