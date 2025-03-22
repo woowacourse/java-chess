@@ -5,22 +5,14 @@ import chess.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King {
-
-    private final Position position;
+public class King extends ChessPiece {
 
     public King(final Position position) {
-        this.position = position;
+        super(position);
     }
 
-    public King move(final Position newPosition) {
-        if (!calculateCanMovePositions().contains(newPosition)) {
-            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
-        }
-        return new King(newPosition);
-    }
-
-    private List<Position> calculateCanMovePositions() {
+    @Override
+    protected List<Position> calculateCanMovePositions() {
         final List<Position> positions = new ArrayList<>();
         if (position.canMoveLeft()) {
             positions.add(position.moveLeft());

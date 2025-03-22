@@ -6,22 +6,14 @@ import chess.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight {
-
-    private final Position position;
+public class Knight extends ChessPiece {
 
     public Knight(final Position position) {
-        this.position = position;
+        super(position);
     }
 
-    public Knight move(final Position newPosition) {
-        if (!calculateCanMovePositions().contains(newPosition)) {
-            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
-        }
-        return new Knight(newPosition);
-    }
-
-    private List<Position> calculateCanMovePositions() {
+    @Override
+    protected List<Position> calculateCanMovePositions() {
         final List<Position> positions = new ArrayList<>();
         if (position.canMove(Movement.DOWN_DOWN_RIGHT)) {
             positions.add(position.move(Movement.DOWN_DOWN_RIGHT));
