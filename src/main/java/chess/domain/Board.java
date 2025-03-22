@@ -1,8 +1,8 @@
-package chess;
+package chess.domain;
 
-import chess.pieces.ChessPieces;
-import chess.pieces.Color;
-import chess.position.Position;
+import chess.domain.pieces.ChessPieces;
+import chess.domain.pieces.Color;
+import chess.domain.position.Position;
 
 public class Board {
 

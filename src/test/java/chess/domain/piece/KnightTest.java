@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.position.Column;
-import chess.position.Position;
-import chess.position.Row;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
