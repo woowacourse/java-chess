@@ -9,6 +9,7 @@ import chess.position.Row;
 public final class BoardView {
 
     public void display(Board board) {
+        System.out.println();
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
                 Position position = new Position(row, column);
@@ -21,5 +22,6 @@ public final class BoardView {
             }
             System.out.println();
         }
+        System.out.print("> ");
     }
 }
