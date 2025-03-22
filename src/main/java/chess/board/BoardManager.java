@@ -1,8 +1,8 @@
 package chess.board;
 
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
 import chess.view.InputView;
 import chess.view.OutputView;
 

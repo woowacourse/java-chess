@@ -1,9 +1,9 @@
 package chess.board;
 
-import chess.Color;
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.position.Color;
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
 import chess.piece.Bishop;
 import chess.piece.King;
 import chess.piece.Knight;

@@ -3,9 +3,9 @@ package chess.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.Color;
+import chess.position.Color;
 import chess.Fixtures;
-import chess.Position;
+import chess.position.Position;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

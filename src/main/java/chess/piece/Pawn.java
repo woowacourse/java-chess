@@ -1,8 +1,8 @@
 package chess.piece;
 
-import chess.Color;
-import chess.Position;
-import chess.Row;
+import chess.position.Color;
+import chess.position.Position;
+import chess.position.Row;
 
 public class Pawn extends Piece {
 
