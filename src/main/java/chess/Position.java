@@ -167,4 +167,69 @@ public record Position(
         }
         return this;
     }
+
+    public Position moveUpRightUp() {
+        return moveRightUp().moveUp();
+    }
+
+    public boolean canMoveUpRightUp() {
+        return canMoveRightUp() && moveRightUp().canMoveUp();
+    }
+
+    public Position moveUpLeftUp() {
+        return moveLeftUp().moveUp();
+    }
+
+    public boolean canMoveUpLeftUp() {
+        return canMoveLeftUp() && moveLeftUp().canMoveUp();
+    }
+
+    public Position moveRightUpRight() {
+        return moveRightUp().moveRight();
+    }
+
+    public boolean canMoveRightUpRight() {
+        return canMoveRightUp() && moveRightUp().canMoveRight();
+    }
+
+    public Position moveRightDownRight() {
+        return moveRightDown().moveRight();
+    }
+
+    public boolean canMoveRightDownRight() {
+        return canMoveRightDown() && moveRightDown().canMoveRight();
+    }
+
+    public Position moveDownRightDown() {
+        return moveRightDown().moveDown();
+    }
+
+    public boolean canMoveDownRightDown() {
+        return canMoveRightDown() && moveRightDown().canMoveDown();
+    }
+
+    public Position moveDownLeftDown() {
+        return moveLeftDown().moveDown();
+    }
+
+    public boolean canMoveDownLeftDown() {
+        return canMoveLeftDown() && moveLeftDown().canMoveDown();
+    }
+
+    public Position moveLeftUpLeft() {
+        return moveLeftUp().moveLeft();
+    }
+
+    public boolean canMoveLeftUpLeft() {
+        return canMoveLeftUp() && moveLeftUp().canMoveLeft();
+    }
+
+    public Position moveLeftDownLeft() {
+        return moveLeftDown().moveLeft();
+    }
+
+    public boolean canMoveLeftDownLeft() {
+        return canMoveLeftDown() && moveLeftDown().canMoveLeft();
+    }
+
 }

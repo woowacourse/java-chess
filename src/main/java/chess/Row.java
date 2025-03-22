@@ -2,14 +2,29 @@ package chess;
 
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT("8"),
+    SEVEN("7"),
+    SIX("6"),
+    FIVE("5"),
+    FOUR("4"),
+    THREE("3"),
+    TWO("2"),
+    ONE("1");
+
+    private final String number;
+
+    Row(final String number) {
+        this.number = number;
+    }
+
+    public static Row from(final String input) {
+        for (Row row : Row.values()) {
+            if (input.equals(row.number)) {
+                return row;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 
     public boolean isTop() {
         return ordinal() == 0;

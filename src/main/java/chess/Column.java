@@ -11,6 +11,15 @@ public enum Column {
     G,
     H;
 
+    public static Column from(final String input) {
+        for (Column col : Column.values()) {
+            if (input.toUpperCase().equals(col.name())) {
+                return col;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
