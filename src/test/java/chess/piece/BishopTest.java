@@ -39,6 +39,18 @@ class BishopTest {
     }
 
     @Test
+    void failIfNotStraight() {
+        Bishop bishop = new Bishop(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                bishop
+        ));
+        Position newPosition = new Position(Column.G, Row.SIX);
+
+        assertThatThrownBy(() -> bishop.move(newPosition, board))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void failIfHurdleExists() {
         Bishop bishop = new Bishop(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(

@@ -21,14 +21,14 @@ public class Pawn implements Piece {
         Movement movement = findMovement(targetPosition);
         int step =calculateStep(targetPosition);
         if (isMovingInitially()) {
-            if (step > 2) {
-                throw new IllegalArgumentException("폰은 시작 시 3칸 이상 전진할 수 없습니다.");
+            if (step > 2 || step == 0) {
+                throw new IllegalArgumentException("폰은 시작 시 1칸 또는 2칸만 전진할 수 있습니다.");
             }
             repeatMove(movement, board, step);
             return;
         }
-        if (step >= 2) {
-            throw new IllegalArgumentException("폰은 2칸 이상 전진할 수 없습니다.");
+        if (step >= 2 || step == 0) {
+            throw new IllegalArgumentException("폰은 1칸만 전진할 수 없습니다.");
         }
         repeatMove(movement, board, step);
     }

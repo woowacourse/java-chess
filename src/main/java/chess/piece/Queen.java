@@ -17,13 +17,14 @@ public class Queen implements Piece {
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition)); //TODO 수정
+        int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
     }
 
     private Movement findMovement(Position targetPosition) {
         int columnGap = position.calculateColumnGap(targetPosition);
         int rowGap = position.calculateRowGap(targetPosition);
+        validateStraightMove(rowGap, columnGap);
         if (rowGap == 0) {
             if (position.calculateColumnGap(targetPosition) > 0) {
                 return Movement.LEFT;
@@ -46,6 +47,22 @@ public class Queen implements Piece {
             return Movement.LEFT_DOWN;
         }
         return Movement.RIGHT_DOWN;
+    }
+
+    private void validateStraightMove(int rowGap, int columnGap) {
+        if (rowGap == 0 || columnGap == 0 || Math.abs(rowGap) == Math.abs(columnGap)) {
+            return;
+        }
+        throw new IllegalArgumentException("퀸은 한 방향으로만 움직일 수 있습니다.");
+    }
+
+    private int calculateStep(Position targetPosition) {
+        int rowGap = position.calculateRowGap(targetPosition);
+        int columnGap = position.calculateColumnGap(targetPosition);
+        if (rowGap == 0) {
+            return Math.abs(columnGap);
+        }
+        return Math.abs(rowGap);
     }
 
     private void repeatMove(Movement movement, Board board, int step) {

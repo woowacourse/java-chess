@@ -26,6 +26,19 @@ class RookTest {
     }
 
     @Test
+    void moveRightTwice() {
+        Rook rook = new Rook(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                rook
+        ));
+        Position newPosition = new Position(Column.G, Row.FIVE);
+
+        rook.move(newPosition, board);
+
+        assertThat(rook).isEqualTo(new Rook(Color.WHITE, newPosition));
+    }
+
+    @Test
     void failIfDiagonalMove() {
         Rook rook = new Rook(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
@@ -50,4 +63,15 @@ class RookTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void failIfNotStraight() {
+        Rook rook = new Rook(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                rook
+        ));
+        Position newPosition = new Position(Column.F, Row.SEVEN);
+
+        assertThatThrownBy(() -> rook.move(newPosition, board))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

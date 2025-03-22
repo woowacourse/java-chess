@@ -17,8 +17,15 @@ public class Rook implements Piece {
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition));
+        int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
+    }
+
+    private int calculateStep(Position targetPosition) {
+        if (position.isRowEquals(targetPosition)) {
+            return Math.abs(position.calculateColumnGap(targetPosition));
+        }
+        return Math.abs(position.calculateRowGap(targetPosition));
     }
 
     private Movement findMovement(Position targetPosition) {

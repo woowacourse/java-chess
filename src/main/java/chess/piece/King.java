@@ -17,11 +17,11 @@ public class King implements Piece {
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition));
-        if (step > 1) {
-            throw new IllegalArgumentException("킹은 1칸 이상 전진할 수 없습니다.");
+        int step = calculateStep(targetPosition);
+        if (step != 1) {
+            throw new IllegalArgumentException("킹은 1칸만 전진할 수 있습니다.");
         }
-        repeatMove(movement, board, step);
+        repeatMove(movement, board);
     }
 
     private Movement findMovement(Position targetPosition) {
@@ -51,17 +51,24 @@ public class King implements Piece {
         return Movement.RIGHT_DOWN;
     }
 
-    private void repeatMove(Movement movement, Board board, int step) {
-        for (int s = 0; s < step; s++) {
-            if (!this.position.canMove(movement)) {
-                throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
-            }
-            Position newPosition = this.position.move(movement);
-            if (board.findByPosition(newPosition).isPresent()) {
-                throw new IllegalArgumentException("장애물이 존재합니다.");
-            }
-            this.position = newPosition;
+    private int calculateStep(Position targetPosition) {
+        int rowGap = position.calculateRowGap(targetPosition);
+        int columnGap = position.calculateColumnGap(targetPosition);
+        if (rowGap == 0) {
+            return Math.abs(columnGap);
         }
+        return Math.abs(rowGap);
+    }
+
+    private void repeatMove(Movement movement, Board board) {
+        if (!this.position.canMove(movement)) {
+            throw new IllegalArgumentException("보드의 범위를 벗어난 위치입니다.");
+        }
+        Position newPosition = this.position.move(movement);
+        if (board.findByPosition(newPosition).isPresent()) {
+            throw new IllegalArgumentException("장애물이 존재합니다.");
+        }
+        this.position = newPosition;
     }
 
     @Override

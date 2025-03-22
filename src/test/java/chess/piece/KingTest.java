@@ -25,6 +25,19 @@ class KingTest {
     }
 
     @Test
+    void moveRightOnce() {
+        King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                king
+        ));
+        Position newPosition = new Position(Column.F, Row.FIVE);
+
+        king.move(newPosition, board);
+
+        assertThat(king).isEqualTo(new King(Color.WHITE, newPosition));
+    }
+
+    @Test
     void moveLeftUpOnce() {
         King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
@@ -56,6 +69,17 @@ class KingTest {
         ));
 
         assertThatThrownBy(() -> king.move(new Position(Column.E, Row.THREE), board))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void failIfNotStraight() {
+        King king = new King(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                king
+        ));
+
+        assertThatThrownBy(() -> king.move(new Position(Column.D, Row.THREE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

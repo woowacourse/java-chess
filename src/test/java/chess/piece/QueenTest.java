@@ -26,6 +26,19 @@ class QueenTest {
     }
 
     @Test
+    void moveRightTwice() {
+        Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                queen
+        ));
+        Position newPosition = new Position(Column.G, Row.FIVE);
+
+        queen.move(newPosition, board);
+
+        assertThat(queen).isEqualTo(new Queen(Color.WHITE, newPosition));
+    }
+
+    @Test
     void moveLeftUpTwice() {
         Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
         Board board = new Board(List.of(
@@ -51,4 +64,15 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void failIfNotStraight() {
+        Queen queen = new Queen(Color.WHITE, new Position(Column.E, Row.FIVE));
+        Board board = new Board(List.of(
+                queen
+        ));
+        Position newPosition = new Position(Column.F, Row.SEVEN);
+
+        assertThatThrownBy(() -> queen.move(newPosition, board))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

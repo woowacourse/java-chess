@@ -17,13 +17,14 @@ public class Bishop implements Piece{
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition));
+        int step = calculateStep(targetPosition);
         repeatMove(movement, board, step);
     }
 
     private Movement findMovement(Position targetPosition) {
         int columnGap = position.calculateColumnGap(targetPosition);
         int rowGap = position.calculateRowGap(targetPosition);
+        validateStraightMove(rowGap, columnGap);
         if (rowGap > 0) {
             if (columnGap > 0) {
                 return Movement.LEFT_UP;
@@ -41,6 +42,16 @@ public class Bishop implements Piece{
             }
         }
         throw new IllegalArgumentException("비숍은 대각선 방향으로만 이동 가능합니다.");
+    }
+
+    private void validateStraightMove(int rowGap, int columnGap) {
+        if (Math.abs(rowGap) != Math.abs(columnGap)) {
+            throw new IllegalArgumentException("비숍은 한 방향으로만 이동 가능합니다.");
+        }
+    }
+
+    private int calculateStep(Position targetPosition) {
+        return Math.abs(position.calculateRowGap(targetPosition));
     }
 
     private void repeatMove(Movement movement, Board board, int step) {
