@@ -26,6 +26,14 @@ public class Board {
         nextTurn();
     }
 
+    public void take(
+            final Position piecePosition,
+            final Position newPosition
+    ) {
+        getCurrentTurnPieces().take(piecePosition, newPosition, getEnemyPieces());
+        nextTurn();
+    }
+
     private void nextTurn() {
         turn = turn.opposite();
     }

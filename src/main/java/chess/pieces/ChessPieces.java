@@ -21,25 +21,48 @@ public class ChessPieces {
             final ChessPieces otherChessPieces
     ) {
 
-        final ChessPiece chessPiece = chessPieces.stream()
+        final ChessPiece chessPiece = getTargetPiece(piecePosition);
+        if (isIsMyChessPieceExistInNewPosition(newPosition)) {
+            throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
+        }
+        if (isOtherChessPieceExistInNewPosition(newPosition, otherChessPieces)) {
+            throw new IllegalArgumentException("상대방 기물이 존재합니다. 공격 명령을 사용하세요.");
+        }
+        chessPiece.move(newPosition);
+    }
+
+    public void take(
+            final Position piecePosition,
+            final Position newPosition,
+            final ChessPieces otherChessPieces
+    ) {
+        final ChessPiece chessPiece = getTargetPiece(piecePosition);
+
+        if (isIsMyChessPieceExistInNewPosition(newPosition)) {
+            throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
+        }
+        if (isOtherChessPieceExistInNewPosition(newPosition, otherChessPieces)) {
+            throw new IllegalArgumentException("상대방 기물이 존재하지 않습니다. 이동 명령을 사용하세요.");
+        }
+
+        chessPieces.remove(getTargetPiece(newPosition));
+        chessPiece.move(newPosition);
+    }
+
+    private static boolean isOtherChessPieceExistInNewPosition(final Position newPosition, final ChessPieces otherChessPieces) {
+        return otherChessPieces.chessPieces.stream()
+                .anyMatch(piece -> piece.getPosition().equals(newPosition));
+    }
+
+    private boolean isIsMyChessPieceExistInNewPosition(final Position newPosition) {
+        return chessPieces.stream()
+                .anyMatch(piece -> piece.getPosition().equals(newPosition));
+    }
+
+    private ChessPiece getTargetPiece(final Position piecePosition) {
+        return chessPieces.stream()
                 .filter(piece -> piece.getPosition().equals(piecePosition))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("대상 기물이 존재하지 않습니다."));
-
-        boolean isMyChessPieceExistInNewPosition = chessPieces.stream()
-                .anyMatch(piece -> piece.getPosition().equals(newPosition));
-
-        boolean isOtherChessPieceExistInNewPosition = otherChessPieces.chessPieces.stream()
-                .anyMatch(piece -> piece.getPosition().equals(newPosition));
-
-        if (isMyChessPieceExistInNewPosition) {
-            throw new IllegalArgumentException("우리팀 기물이 존재합니다.");
-        }
-
-        if (isOtherChessPieceExistInNewPosition) {
-            throw new IllegalArgumentException("상대방 기물이 존재합니다. 공격 명령을 사용하세요.");
-        }
-
-        chessPiece.move(newPosition);
     }
 }
