@@ -43,15 +43,15 @@ public class InputView {
         final String colInput = input.substring(0, 1);
         final String rowInput = input.substring(1, 2);
 
-        Column col = switch (colInput) {
-            case "A", "a" -> Column.A;
-            case "B", "b" -> Column.B;
-            case "C", "c" -> Column.C;
-            case "D", "d" -> Column.D;
-            case "E", "e" -> Column.E;
-            case "F", "f" -> Column.F;
-            case "G", "g" -> Column.G;
-            case "H", "h" -> Column.H;
+        Column col = switch (colInput.toUpperCase()) {
+            case "A" -> Column.A;
+            case "B" -> Column.B;
+            case "C" -> Column.C;
+            case "D" -> Column.D;
+            case "E" -> Column.E;
+            case "F" -> Column.F;
+            case "G" -> Column.G;
+            case "H" -> Column.H;
             default -> throw new IllegalArgumentException("잘못된 입력: " + colInput);
         };
 
@@ -71,10 +71,10 @@ public class InputView {
     }
 
     private OrderOption parseOrderType(final String orderType) {
-        return switch (orderType) {
-            case "M", "m" -> OrderOption.MOVE;
-            case "T", "t" -> OrderOption.TAKE;
-            case "C", "c" -> OrderOption.CASTLING;
+        return switch (orderType.toUpperCase()) {
+            case "M" -> OrderOption.MOVE;
+            case "T" -> OrderOption.TAKE;
+            case "C" -> OrderOption.CASTLING;
             default -> throw new IllegalArgumentException("잘못된 입력: " + orderType);
         };
     }
@@ -92,11 +92,11 @@ public class InputView {
         System.out.println(getPromotionDescription());
 
         final String input = readLine();
-        return switch (input) {
-            case "Q", "q" -> PromotionOrder.QUEEN;
-            case "R", "r" -> PromotionOrder.ROOK;
-            case "B", "b" -> PromotionOrder.BISHOP;
-            case "K", "k" -> PromotionOrder.KNIGHT;
+        return switch (input.toUpperCase()) {
+            case "Q" -> PromotionOrder.QUEEN;
+            case "R" -> PromotionOrder.ROOK;
+            case "B" -> PromotionOrder.BISHOP;
+            case "K" -> PromotionOrder.KNIGHT;
             default -> throw new IllegalArgumentException("잘못된 입력: " + input);
         };
     }

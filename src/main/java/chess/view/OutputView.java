@@ -64,12 +64,10 @@ public class OutputView {
     }
 
     public void outputWinner(final Color winnerColor) {
-        if (winnerColor == Color.BLACK) {
-            System.out.println("검정 승리!");
+        switch (winnerColor) {
+            case BLACK -> System.out.println("검정 승리!");
+            case WHITE -> System.out.println("하양 승리!");
+            default -> throw new IllegalStateException();
         }
-        if (winnerColor == Color.WHITE) {
-            System.out.println("하양 승리!");
-        }
-        throw new IllegalStateException();
     }
 }
