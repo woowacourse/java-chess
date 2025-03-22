@@ -167,4 +167,12 @@ public record Position(
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "column=" + column +
+                ", row=" + row +
+                '}';
+    }
 }

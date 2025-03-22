@@ -32,7 +32,7 @@ public enum Row {
             return values()[ordinal() - step];
         }
 
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        throw new IllegalStateException("움직일 수 없는 위치입니다. row up");
     }
 
     public boolean canMoveDown(final int step) {
@@ -48,6 +48,6 @@ public enum Row {
             return values()[ordinal() + step];
         }
 
-        throw new IllegalStateException("움직일 수 없는 위치입니다.");
+        throw new IllegalStateException("움직일 수 없는 위치입니다. row down");
     }
 }

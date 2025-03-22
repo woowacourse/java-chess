@@ -21,7 +21,7 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     public void validateCanMove(Position origin, Position destination) {
         boolean canMove = false;
         for (Movement movement : movements) {
-            if (origin.move(movement).equals(destination)) {
+            if (origin.canMove(movement) && origin.move(movement).equals(destination)) {
                 canMove = true;
                 break;
             }
@@ -34,7 +34,7 @@ public abstract class LimitedMovingChessPiece implements ChessPiece {
     @Override
     public List<Movement> findRoute(Position origin, Position destination) {
         for (Movement movement : movements) {
-            if (origin.move(movement).equals(destination)) {
+            if (origin.canMove(movement) && origin.move(movement).equals(destination)) {
                 return List.of(movement);
             }
         }
