@@ -29,14 +29,15 @@ public class Knight implements ChessPiece {
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
         List<Position> destinations = new ArrayList<>();
         for (Movement movement : movements) {
-            if (startPosition.canMove(movement)
-                    && (!positions.containsKey(startPosition.move(movement))
-                    || positions.get(startPosition.move(movement)).getColor() != color
-            )) {
+            if (startPosition.canMove(movement) && canMove(startPosition.move(movement), positions)) {
                 destinations.add(startPosition.move(movement));
             }
         }
         return destinations;
+    }
+
+    private boolean canMove(Position targetPosition, Map<Position, ChessPiece> positions) {
+        return !positions.containsKey(targetPosition) || positions.get(targetPosition).getColor() != color;
     }
 
     @Override
