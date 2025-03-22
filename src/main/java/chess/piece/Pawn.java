@@ -22,7 +22,7 @@ public class Pawn implements ChessPiece {
 
     @Override
     public Color getColor() {
-        return null;
+        return color;
     }
 
     @Override
