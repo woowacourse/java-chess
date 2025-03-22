@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.limited_moving_chess_piece;
 
 import chess.domain.Color;
 import chess.domain.Movement;

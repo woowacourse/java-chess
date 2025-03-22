@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.limited_moving_chess_piece;
 
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.Position;
+import chess.domain.piece.ChessPiece;
 import java.util.List;
 
 public class None implements ChessPiece {
@@ -41,7 +42,6 @@ public class None implements ChessPiece {
     @Override
     public void capture() {
         throw new IllegalStateException("말이 존재하지 않습니다.");
-
     }
 
     @Override

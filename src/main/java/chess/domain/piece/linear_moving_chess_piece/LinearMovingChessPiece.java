@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.linear_moving_chess_piece;
 
 import chess.domain.Color;
 import chess.domain.Movement;
 import chess.domain.Position;
+import chess.domain.piece.ChessPiece;
 import java.util.Collections;
 import java.util.List;
 

@@ -8,7 +8,7 @@ import chess.domain.Column;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.Row;
-import org.assertj.core.api.Assertions;
+import chess.domain.piece.linear_moving_chess_piece.Rook;
 import org.junit.jupiter.api.Test;
 
 class RookTest {

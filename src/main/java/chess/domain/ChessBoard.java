@@ -1,15 +1,15 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.BlackPawn;
+import chess.domain.piece.linear_moving_chess_piece.Bishop;
+import chess.domain.piece.limited_moving_chess_piece.BlackPawn;
 import chess.domain.piece.ChessPiece;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.None;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.WhitePawn;
+import chess.domain.piece.limited_moving_chess_piece.King;
+import chess.domain.piece.limited_moving_chess_piece.Knight;
+import chess.domain.piece.limited_moving_chess_piece.None;
+import chess.domain.piece.limited_moving_chess_piece.Pawn;
+import chess.domain.piece.linear_moving_chess_piece.Queen;
+import chess.domain.piece.linear_moving_chess_piece.Rook;
+import chess.domain.piece.limited_moving_chess_piece.WhitePawn;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

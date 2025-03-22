@@ -1,19 +1,20 @@
-package chess.domain.piece;
+package chess.domain.piece.limited_moving_chess_piece;
 
 import chess.domain.Color;
 import chess.domain.Movement;
 import java.util.List;
 
-public class Bishop extends LinearMovingChessPiece {
+public class King extends LimitedMovingChessPiece {
 
-    public Bishop(Color side) {
+    public King(Color side) {
         super(List.of(
+                Movement.LEFT, Movement.LEFT_DOWN, Movement.UP, Movement.RIGHT,
                 Movement.LEFT_DOWN, Movement.LEFT_UP, Movement.RIGHT_DOWN, Movement.RIGHT_UP
         ), side);
     }
 
     @Override
     public String name() {
-        return "B";
+        return "K";
     }
 }

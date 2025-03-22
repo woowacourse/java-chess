@@ -8,7 +8,7 @@ import chess.domain.Column;
 import chess.domain.Movement;
 import chess.domain.Position;
 import chess.domain.Row;
-import org.assertj.core.api.Assertions;
+import chess.domain.piece.limited_moving_chess_piece.Knight;
 import org.junit.jupiter.api.Test;
 
 class KnightTest {
