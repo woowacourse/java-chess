@@ -4,6 +4,7 @@ import chess.Board;
 import chess.Column;
 import chess.Position;
 import chess.Row;
+import chess.Team;
 import chess.piece.Piece;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class ResultView {
                 Position position = new Position(col, row);
                 if (!pieces.containsKey(position)) {
                     sb.append(".");
-                    if (col.isFarRight()){
+                    if (col.isFarRight()) {
                         break;
                     }
                     col = col.moveRight();
@@ -31,18 +32,22 @@ public class ResultView {
                 }
                 Piece piece = pieces.get(position);
                 sb.append(piece.getMoveType().getValue());
-                if (col.isFarRight()){
+                if (col.isFarRight()) {
                     break;
                 }
                 col = col.moveRight();
             }
             sb.append("\n");
-            if (row.isBottom()){
+            if (row.isBottom()) {
                 break;
             }
             row = row.moveDown();
             col = Column.A;
         }
         System.out.println(sb.toString());
+    }
+
+    public void showTeam(final Team team){
+        System.out.printf("%s 팀 차례입니다\n", team.name());
     }
 }

@@ -15,8 +15,8 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void move(final Position startPosition, final Position arrivalPosition) {
-        Piece piece = getPiece(startPosition);
+    public void move(final Position startPosition, final Position arrivalPosition, final Team currentTeam) {
+        Piece piece = getPiece(startPosition, currentTeam);
         Set<Route> routes = makeTotalRoute(piece, startPosition, arrivalPosition);
         // 경로 찾기
         Route route = getRoute(routes, arrivalPosition);
@@ -86,11 +86,15 @@ public class Board {
         routes.add(route);
     }
 
-    private Piece getPiece(final Position position) {
+    private Piece getPiece(final Position position, final Team currentTeam) {
         if (pieces.containsKey(position)) {
-            return pieces.get(position);
+            Piece piece = pieces.get(position);
+            if (piece.getTeam() == currentTeam) {
+                return piece;
+            }
+            throw new IllegalArgumentException("같은 팀의 기물을 잡을 수 없습니다.");
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
     }
 
     public Map<Position, Piece> getPieces() {
