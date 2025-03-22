@@ -25,6 +25,13 @@ public enum Row {
         return result;
     }
 
+    // 얘는 1베이스로 입력받을까? 인간 친화적으로
+    public static Row getRow(int indexBaseByOne) {
+        indexBaseByOne -= 1;
+        validateIndexIsInRowRange(indexBaseByOne);
+        return Row.values()[indexBaseByOne];
+    }
+
     private static void validateIndexIsInRowRange(int index) {
         if (index < 0 || index >= 8) {
             throw new IllegalArgumentException("Row index should be in range 0 to 7");

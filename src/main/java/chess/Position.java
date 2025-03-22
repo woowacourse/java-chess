@@ -12,6 +12,10 @@ public record Position(
         this(Row.getRow(row), Column.getColumn(column));
     }
 
+    public Position(final int rowBaseByOne, final int columnBaseByOne) {
+        this(Row.getRow(rowBaseByOne), Column.getColumn(columnBaseByOne));
+    }
+
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }

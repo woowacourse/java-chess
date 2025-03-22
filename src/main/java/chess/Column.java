@@ -25,6 +25,14 @@ public enum Column {
         return result;
     }
 
+    // 얘는 1베이스로 입력받을까? 인간 친화적으로
+    public static Column getColumn(int indexBaseByOne) {
+        indexBaseByOne -= 1;
+        validateIndexIsInColumnRange(indexBaseByOne);
+        Column result = Column.values()[indexBaseByOne];
+        return result;
+    }
+
     private static void validateIndexIsInColumnRange(int index) {
         if (index < 0 || index >= 8) {
             throw new IllegalArgumentException("Column index should be in range 0 to 7");
