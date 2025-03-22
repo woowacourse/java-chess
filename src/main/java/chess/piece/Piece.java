@@ -13,6 +13,16 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public boolean isSameColor(Piece other) {
+        return this.color == other.color;
+    }
+
+    public abstract void move(int x, int y);
+
+    public Color getColor() {
+        return color;
+    }
+
     public Position getPosition() {
         return position;
     }

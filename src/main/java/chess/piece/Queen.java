@@ -42,7 +42,6 @@ public class Queen extends Piece {
     }
 
     private void moveDiagonal(final int x, final int y) {
-        int step = Math.abs(x);
         boolean canMove = position.canMoveDiagonal(x, y);
 
         if (canMove) {
