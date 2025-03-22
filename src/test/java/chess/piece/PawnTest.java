@@ -107,4 +107,53 @@ class PawnTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
+
+    @DisplayName("WHITE - 전진 방향의 대각선에 상대편 기물이 있는 경우 해당 위치로 이동할 수 있다.")
+    @Test
+    void existEnemyAtDiagonal_WHITE() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.THREE, Column.E), new Knight(Color.BLACK)
+        );
+        List<Position> expected = List.of(
+                new Position(Row.THREE, Column.D),
+                new Position(Row.FOUR, Column.D),
+                new Position(Row.THREE, Column.E)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(
+                pawnPosition, positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
+
+    @DisplayName("WHITE - 전진 방향의 대각선에 같은편 기물이 있는 경우 해당 위치로 이동할 수 없다.")
+    @Test
+    void existSameTeamHurdle_WHITE() {
+        // given
+        Position pawnPosition = new Position(Row.TWO, Column.D);
+        Pawn pawn = new Pawn(Color.WHITE);
+        Map<Position, ChessPiece> positions = Map.of(
+                pawnPosition, pawn,
+                new Position(Row.THREE, Column.E), new Knight(Color.WHITE)
+        );
+        List<Position> expected = List.of(
+                new Position(Row.THREE, Column.D),
+                new Position(Row.FOUR, Column.D)
+        );
+
+        // when
+        List<Position> destinations = pawn.getAvailableDestinations(
+                pawnPosition, positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
