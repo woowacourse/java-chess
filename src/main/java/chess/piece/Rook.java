@@ -1,5 +1,11 @@
 package chess.piece;
 
-public class Rook {
+import chess.board.Position;
 
+public class Rook implements Piece {
+
+    @Override
+    public void moveToDestination(Position start, Position end) {
+
+    }
 }

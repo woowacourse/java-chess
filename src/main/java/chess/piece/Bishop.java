@@ -1,5 +1,10 @@
 package chess.piece;
 
-public class Bishop {
+import chess.board.Position;
 
+public class Bishop implements Piece {
+    @Override
+    public void moveToDestination(Position start, Position end) {
+
+    }
 }
