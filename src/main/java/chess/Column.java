@@ -1,16 +1,24 @@
 package chess;
 
+import java.util.Arrays;
+
 // Column에 들어가는 거 문자열임~
 public enum Column {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H;
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
+
+    private final int index;
+
+    Column(int index) {
+        this.index = index;
+    }
 
     // 문자열 이상한 거 주면 터짐
     public static Column getColumn(String col) {
@@ -19,27 +27,30 @@ public enum Column {
 
     // 정확한 범위 내 문자를 주지 않으면 예외 발생
     public static Column getColumn(char col) {
-        int index = col - 'A';
-        validateIndexIsInColumnRange(index);
-        Column result = Column.values()[index];
+        int indexBaseByOne = col - 'A' + 1;
+        Column result = getColumnByIndex(indexBaseByOne);
         return result;
     }
 
     // 얘는 1베이스로 입력받을까? 인간 친화적으로
     public static Column getColumn(int indexBaseByOne) {
-        indexBaseByOne -= 1;
-        validateIndexIsInColumnRange(indexBaseByOne);
-        Column result = Column.values()[indexBaseByOne];
+        Column result = getColumnByIndex(indexBaseByOne);
         return result;
     }
 
-    private static void validateIndexIsInColumnRange(int index) {
-        if (index < 0 || index >= 8) {
-            throw new IllegalArgumentException("Column index should be in range 0 to 7");
-        }
+    private static Column getColumnByIndex(int indexBaseByOne) {
+        return Arrays.stream(values())
+                .filter(column -> column.index == indexBaseByOne)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Column index should be in range 1 to 8"));
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 
 
+    // 지금은 미리 구현된 이것들 다 안 쓸 것 같은데?
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
@@ -78,9 +89,5 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
-    }
-
-    public int getIndex() {
-        return this.ordinal() + 1;
     }
 }

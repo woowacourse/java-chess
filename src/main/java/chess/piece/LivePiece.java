@@ -17,6 +17,7 @@ public class LivePiece {
         this.position = position;
     }
 
+    // 배열에 기물 채울 때 쓰는 index임
     public int getRowIndex() {
         return position.row().getIndex();
     }

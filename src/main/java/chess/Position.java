@@ -29,7 +29,18 @@ public record Position(
         return false;
     }
 
+    // 세로 위치임
+    public int i() {
+        return row.getIndex();
+    }
 
+    // 가로 위치임
+    public int j() {
+        return column.getIndex();
+    }
+
+
+    // 지금은 미리 구현된 이것들 다 안 쓸 것 같은데?
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }
