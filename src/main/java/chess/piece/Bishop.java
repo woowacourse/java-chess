@@ -28,13 +28,17 @@ public class Bishop implements Piece{
             if (columnGap > 0) {
                 return Movement.LEFT_UP;
             }
-            return Movement.RIGHT_UP;
+            if (columnGap < 0) {
+                return Movement.RIGHT_UP;
+            }
         }
         if (rowGap < 0) {
             if (columnGap > 0) {
                 return Movement.LEFT_DOWN;
             }
-            return Movement.RIGHT_DOWN;
+            if (columnGap < 0) {
+                return Movement.RIGHT_DOWN;
+            }
         }
         throw new IllegalArgumentException("비숍은 대각선 방향으로만 이동 가능합니다.");
     }

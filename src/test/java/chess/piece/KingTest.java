@@ -58,5 +58,4 @@ class KingTest {
         assertThatThrownBy(() -> king.move(new Position(Column.E, Row.THREE), board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

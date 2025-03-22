@@ -17,7 +17,7 @@ public class Queen implements Piece {
 
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
-        int step = Math.abs(position.calculateRowGap(targetPosition));
+        int step = Math.abs(position.calculateRowGap(targetPosition)); //TODO 수정
         repeatMove(movement, board, step);
     }
 

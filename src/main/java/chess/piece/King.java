@@ -28,13 +28,13 @@ public class King implements Piece {
         int columnGap = position.calculateColumnGap(targetPosition);
         int rowGap = position.calculateRowGap(targetPosition);
         if (rowGap == 0) {
-            if (position.calculateColumnGap(targetPosition) > 0) {
+            if (columnGap > 0) {
                 return Movement.LEFT;
             }
             return Movement.RIGHT;
         }
         if (columnGap == 0) {
-            if (position.calculateRowGap(targetPosition) > 0) {
+            if (rowGap > 0) {
                 return Movement.UP;
             }
             return Movement.DOWN;
