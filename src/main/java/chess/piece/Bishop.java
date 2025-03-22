@@ -21,6 +21,19 @@ public class Bishop implements ChessPiece {
         this.color = color;
     }
 
+    @Override
+    public Position move(Position from, Position to, Map<Position, ChessPiece> positions) {
+        if (!isValidPath(from, to, positions)) {
+            throw new IllegalArgumentException("경로가 유효하지 않습니다.");
+        }
+        return to;
+    }
+
+    private boolean isValidPath(Position from, Position to, Map<Position, ChessPiece> positions) {
+        List<Position> availableDestinations = getAvailableDestinations(from, positions);
+        return availableDestinations.contains(to);
+    }
+
     public List<Position> getAvailableDestinations(Position startPosition, Map<Position, ChessPiece> positions) {
         List<Position> destinations = new ArrayList<>();
 
