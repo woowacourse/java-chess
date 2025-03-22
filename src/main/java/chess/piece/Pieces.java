@@ -3,15 +3,12 @@ package chess.piece;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-import chess.board.Board;
 import chess.board.Position;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public final class Pieces {
 
@@ -19,7 +16,7 @@ public final class Pieces {
 
     private final Map<Position, Piece> value;
 
-    public static Pieces generate(Board board) {
+    public static Pieces generate() {
         Map<Position, Piece> value = new HashMap<>();
 
         for (InitPieces initPieces : InitPieces.values()) {
@@ -29,7 +26,7 @@ public final class Pieces {
         return new Pieces(Color.WHITE, value);
     }
 
-    Pieces(final Color color, final Set<Piece> value) {
+    public Pieces(final Color color, final Set<Piece> value) {
         this(color, value.stream().collect(toMap(Piece::position, identity())));
     }
 
@@ -40,6 +37,15 @@ public final class Pieces {
 
     public Piece get(final Position position) {
         return value.getOrDefault(position, new Blank(position));
+    }
+
+    public Set<Piece> toSet(){
+        return new HashSet<>(value.values());
+    }
+
+    public void update(Position destination, Piece piece){
+        value.put(destination, piece);
+
     }
 
     public boolean isSameColor(final Position position) {

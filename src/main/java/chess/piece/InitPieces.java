@@ -41,6 +41,8 @@ import chess.board.Position;
 import chess.piece.nonsliding.King;
 import chess.piece.nonsliding.Knight;
 import chess.piece.pawn.BlackPawn;
+import chess.piece.pawn.FirstBlackPawn;
+import chess.piece.pawn.FirstWhitePawn;
 import chess.piece.pawn.WhitePawn;
 import chess.piece.sliding.Bishop;
 import chess.piece.sliding.Queen;
@@ -58,14 +60,14 @@ public enum InitPieces {
     KNIGHT_WHITE_RIGHT(G1.position, new Knight(WHITE, G1.position)),
     ROOK_WHITE_RIGHT(H1.position, new Rook(WHITE, H1.position)),
 
-    PAWN_WHITE_1(A2.position, new WhitePawn(A2.position)),
-    PAWN_WHITE_2(B2.position, new WhitePawn(B2.position)),
-    PAWN_WHITE_3(C2.position, new WhitePawn(C2.position)),
-    PAWN_WHITE_4(D2.position, new WhitePawn(D2.position)),
-    PAWN_WHITE_5(E2.position, new WhitePawn(E2.position)),
-    PAWN_WHITE_6(F2.position, new WhitePawn(F2.position)),
-    PAWN_WHITE_7(G2.position, new WhitePawn(G2.position)),
-    PAWN_WHITE_8(H2.position, new WhitePawn(H2.position)),
+    PAWN_WHITE_1(A2.position, new FirstWhitePawn(A2.position)),
+    PAWN_WHITE_2(B2.position, new FirstWhitePawn(B2.position)),
+    PAWN_WHITE_3(C2.position, new FirstWhitePawn(C2.position)),
+    PAWN_WHITE_4(D2.position, new FirstWhitePawn(D2.position)),
+    PAWN_WHITE_5(E2.position, new FirstWhitePawn(E2.position)),
+    PAWN_WHITE_6(F2.position, new FirstWhitePawn(F2.position)),
+    PAWN_WHITE_7(G2.position, new FirstWhitePawn(G2.position)),
+    PAWN_WHITE_8(H2.position, new FirstWhitePawn(H2.position)),
 
     ROOK_BLACK_LEFT(A8.position, new Rook(BLACK, A8.position)),
     KNIGHT_BLACK_LEFT(B8.position, new Knight(BLACK, B8.position)),
@@ -78,14 +80,14 @@ public enum InitPieces {
     KNIGHT_BLACK_RIGHT(G8.position, new Knight(BLACK, G8.position)),
     ROOK_BLACK_RIGHT(H8.position, new Rook(BLACK, H8.position)),
 
-    PAWN_BLACK_1(A7.position, new BlackPawn(A7.position)),
-    PAWN_BLACK_2(B7.position, new BlackPawn(B7.position)),
-    PAWN_BLACK_3(C7.position, new BlackPawn(C7.position)),
-    PAWN_BLACK_4(D7.position, new BlackPawn(D7.position)),
-    PAWN_BLACK_5(E7.position, new BlackPawn(E7.position)),
-    PAWN_BLACK_6(F7.position, new BlackPawn(F7.position)),
-    PAWN_BLACK_7(G7.position, new BlackPawn(G7.position)),
-    PAWN_BLACK_8(H7.position, new BlackPawn(H7.position)),
+    PAWN_BLACK_1(A7.position, new FirstBlackPawn(A7.position)),
+    PAWN_BLACK_2(B7.position, new FirstBlackPawn(B7.position)),
+    PAWN_BLACK_3(C7.position, new FirstBlackPawn(C7.position)),
+    PAWN_BLACK_4(D7.position, new FirstBlackPawn(D7.position)),
+    PAWN_BLACK_5(E7.position, new FirstBlackPawn(E7.position)),
+    PAWN_BLACK_6(F7.position, new FirstBlackPawn(F7.position)),
+    PAWN_BLACK_7(G7.position, new FirstBlackPawn(G7.position)),
+    PAWN_BLACK_8(H7.position, new FirstBlackPawn(H7.position)),
     ;
 
     private final Position position;
@@ -103,4 +105,6 @@ public enum InitPieces {
     public Piece piece() {
         return piece;
     }
+
+
 }

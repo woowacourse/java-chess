@@ -3,6 +3,7 @@ package console;
 import chess.board.Column;
 import chess.board.Position;
 import chess.board.Row;
+import chess.piece.Color;
 import chess.piece.Piece;
 import chess.piece.Pieces;
 import console.util.ColorOutput;
@@ -26,5 +27,17 @@ public class Output {
             System.out.println();
         }
         System.out.println("  abcdefgh");
+    }
+
+    public void display(Color color) {
+        System.out.println();
+        if(color.isWhite()){
+            System.out.print(ColorOutput.apply(color, '백'));
+        }
+        else{
+            System.out.print(ColorOutput.apply(color, '흑'));
+        }
+
+        System.out.println("의 차례입니다. ex) a7 a6");
     }
 }

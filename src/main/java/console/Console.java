@@ -1,5 +1,6 @@
 package console;
 
+import chess.piece.Color;
 import chess.piece.Pieces;
 
 public class Console {
@@ -21,5 +22,9 @@ public class Console {
 
     public void display(Pieces pieces) {
         output.display(pieces);
+    }
+
+    public void turn(Color color) {
+        output.display(color);
     }
 }

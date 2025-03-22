@@ -14,8 +14,8 @@ public final class Position {
     }
 
     public Position(final Row row, final Column column) {
-        this.row = row;
         this.column = column;
+        this.row = row;
     }
 
     public boolean canMove(final Direction direction) {
