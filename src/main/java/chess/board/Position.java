@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.piece.Color;
 import chess.piece.Direction;
 import java.util.Objects;
 
@@ -58,4 +59,5 @@ public final class Position {
                 ", row=" + row +
                 '}';
     }
+
 }

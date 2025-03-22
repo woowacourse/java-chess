@@ -27,4 +27,8 @@ public class Console {
     public void turn(Color color) {
         output.display(color);
     }
+
+    public void retry(IllegalArgumentException e) {
+        output.display(e);
+    }
 }

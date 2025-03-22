@@ -24,7 +24,4 @@ public enum Row {
         throw new IllegalStateException("움직일 수 없는 위치입니다. ");
     }
 
-    public int minus(Row dst){
-        return values()[Math.abs(this.ordinal()-dst.ordinal())].ordinal();
-    }
 }

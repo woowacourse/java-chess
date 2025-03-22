@@ -40,4 +40,8 @@ public class Output {
 
         System.out.println("의 차례입니다. ex) a7 a6");
     }
+
+    public void display(IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+    }
 }
