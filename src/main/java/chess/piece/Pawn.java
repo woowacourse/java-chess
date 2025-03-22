@@ -41,13 +41,16 @@ public class Pawn implements Piece {
     }
 
     private Movement findMovement(Position targetPosition) {
-        if (position.isRowEquals(targetPosition)) {
+        //TODO 앞으로만 갈수 있음
+        int columnGap = position.calculateColumnGap(targetPosition);
+        int rowGap = position.calculateRowGap(targetPosition);
+        if (rowGap == 0) {
             if (position.calculateColumnGap(targetPosition) > 0) {
                 return Movement.LEFT;
             }
             return Movement.RIGHT;
         }
-        if (position.isColumnEquals(targetPosition)) {
+        if (columnGap == 0) {
             if (position.calculateRowGap(targetPosition) > 0) {
                 return Movement.UP;
             }
