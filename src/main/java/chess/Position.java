@@ -8,6 +8,10 @@ public record Position(
         this(column, row);
     }
 
+    public Position(final String row, final String column) {
+        this(Row.getRow(row), Column.getColumn(column));
+    }
+
     public boolean canMoveUp() {
         return row.canMoveUp(1);
     }
