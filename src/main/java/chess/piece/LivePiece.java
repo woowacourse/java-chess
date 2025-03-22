@@ -17,4 +17,26 @@ public class LivePiece {
         this.position = position;
     }
 
+    public int getRowIndex() {
+        return position.row().getIndex();
+    }
+
+    public int getColumnIndex() {
+        return position.column().getIndex();
+    }
+
+
+    public char getSymbol() {
+        char candidate = 'X';
+        if (piece instanceof Rook) {
+            candidate = 'R';
+        }
+
+        // 팀에 따라 검정말이면 소문자로 변환하기
+        if (piece.isBlack()) {
+            candidate = Character.toLowerCase(candidate);
+        }
+        return candidate;
+    }
+
 }

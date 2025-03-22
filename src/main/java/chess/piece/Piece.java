@@ -13,6 +13,10 @@ public abstract class Piece {
 
     abstract public boolean canMove(Position start, Position end);
 
+    public boolean isBlack() {
+        return color == color.BLACK;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

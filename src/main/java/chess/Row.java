@@ -78,4 +78,8 @@ public enum Row {
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
+
+    public int getIndex() {
+        return (8 - this.ordinal());
+    }
 }

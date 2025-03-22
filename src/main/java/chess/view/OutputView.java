@@ -9,7 +9,16 @@ public class OutputView {
         // 0과 9는 index 정보 주기
 
         char[][] arr = createCharArrayWithBorder();
+        arrAddBoardInfo(arr, board);
         printCharArray(arr);
+    }
+
+    private void arrAddBoardInfo(char[][] arr, Board board) {
+        for (LivePiece live : board.getPieces()) {
+            int i = live.getRowIndex();
+            int j = live.getColumnIndex();
+            arr[i][j] = live.getSymbol();
+        }
     }
 
     private void printCharArray(char[][] arr) {
