@@ -4,6 +4,7 @@ import chess.board.Position;
 import chess.piece.Color;
 import chess.piece.Direction;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import java.util.Set;
 
 public final class Knight extends NonSlidingPiece {
@@ -20,5 +21,10 @@ public final class Knight extends NonSlidingPiece {
     @Override
     protected Piece update(final Position destination) {
         return new Knight(color(), destination);
+    }
+
+    @Override
+    public char symbol() {
+        return PieceType.KNIGHT.symbol();
     }
 }

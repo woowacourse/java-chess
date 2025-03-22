@@ -1,12 +1,8 @@
 import chess.board.Board;
-import chess.board.Position;
-import chess.piece.Color;
-import chess.piece.Piece;
 import chess.piece.Pieces;
 import console.Console;
 import console.Input;
 import console.Output;
-import java.util.Map;
 
 public class Application {
 
@@ -21,10 +17,8 @@ public class Application {
         console.start();
 
         Board board = Board.generate();
-        Pieces pieces = Pieces.generate();
+        Pieces pieces = Pieces.generate(board);
 
-        // Pieces(final Color color, final Map<Position, Piece> value) {
-
-        console.display(board);
+        console.display(pieces);
     }
 }

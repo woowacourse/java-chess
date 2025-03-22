@@ -3,6 +3,7 @@ package chess.piece;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
+import chess.board.Board;
 import chess.board.Position;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,6 +19,16 @@ public final class Pieces {
 
     private final Map<Position, Piece> value;
 
+    public static Pieces generate(Board board) {
+        Map<Position, Piece> value = new HashMap<>();
+
+        for (InitPieces initPieces : InitPieces.values()) {
+            value.put(initPieces.position(), initPieces.piece());
+        }
+
+        return new Pieces(Color.WHITE, value);
+    }
+
     Pieces(final Color color, final Set<Piece> value) {
         this(color, value.stream().collect(toMap(Piece::position, identity())));
     }
@@ -25,9 +36,6 @@ public final class Pieces {
     Pieces(final Color color, final Map<Position, Piece> value) {
         this.color = color;
         this.value = new HashMap<>(value);
-    }
-
-    public static Pieces generate() {
     }
 
     public Piece get(final Position position) {
@@ -44,6 +52,14 @@ public final class Pieces {
 
     public boolean isBlank(final Position position) {
         return get(position).color().isEmpty();
+    }
+
+    public Color color() {
+        return color;
+    }
+
+    public Map<Position, Piece> value() {
+        return value;
     }
 
     @Override

@@ -23,4 +23,9 @@ public final class Blank extends Piece {
     protected Piece update(final Position destination) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public char symbol() {
+        return PieceType.EMPTY.symbol();
+    }
 }

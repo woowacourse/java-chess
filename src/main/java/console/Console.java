@@ -1,6 +1,6 @@
 package console;
 
-import chess.board.Board;
+import chess.piece.Pieces;
 
 public class Console {
     private final Input input;
@@ -19,7 +19,7 @@ public class Console {
         output.start();
     }
 
-    public void display(Board board) {
-        output.display(board);
+    public void display(Pieces pieces) {
+        output.display(pieces);
     }
 }

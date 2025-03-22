@@ -44,6 +44,8 @@ public abstract class Piece {
 
     protected abstract Piece update(Position destination);
 
+    public abstract char symbol();
+
     public final Color color() {
         return color;
     }

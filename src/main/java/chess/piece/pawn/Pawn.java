@@ -4,6 +4,7 @@ import chess.board.Position;
 import chess.piece.Color;
 import chess.piece.Direction;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import chess.piece.Pieces;
 import java.util.Set;
 
@@ -24,5 +25,10 @@ public abstract class Pawn extends Piece {
         }
 
         return Set.of();
+    }
+
+    @Override
+    public char symbol() {
+        return PieceType.PAWN.symbol();
     }
 }

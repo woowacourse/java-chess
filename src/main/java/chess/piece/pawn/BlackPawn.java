@@ -4,11 +4,12 @@ import chess.board.Position;
 import chess.piece.Color;
 import chess.piece.Direction;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import java.util.Set;
 
 public final class BlackPawn extends Pawn {
 
-    BlackPawn(final Position position) {
+    public BlackPawn(final Position position) {
         super(Color.BLACK, position);
     }
 
@@ -20,5 +21,10 @@ public final class BlackPawn extends Pawn {
     @Override
     protected Piece update(final Position destination) {
         return new BlackPawn(destination);
+    }
+
+    @Override
+    public char symbol() {
+        return PieceType.PAWN.symbol();
     }
 }

@@ -4,11 +4,12 @@ import chess.board.Position;
 import chess.piece.Color;
 import chess.piece.Direction;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import java.util.Set;
 
 public final class WhitePawn extends Pawn {
 
-    WhitePawn(final Position position) {
+    public WhitePawn(final Position position) {
         super(Color.WHITE, position);
     }
 
@@ -20,5 +21,10 @@ public final class WhitePawn extends Pawn {
     @Override
     protected Piece update(final Position destination) {
         return new WhitePawn(destination);
+    }
+
+    @Override
+    public char symbol() {
+        return PieceType.PAWN.symbol();
     }
 }
