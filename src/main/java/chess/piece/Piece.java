@@ -5,29 +5,32 @@ import chess.position.Position;
 import java.util.List;
 
 public abstract class Piece {
-    private final List<Movement> movements;
-    private final PieceType pieceType;
+
+    protected final List<Movement> movements;
+    protected final PieceType pieceType;
 
     public Piece(List<Movement> movements, PieceType pieceType) {
         this.movements = movements;
         this.pieceType = pieceType;
     }
 
-    public PieceType type() {
-        return pieceType;
-    }
+    public abstract void validateMove(Position start, Position end);
 
-    public void validateMove(Position start, Position end) {
+    public Movement getValidateMovement(Position start, Position end) {
         for (Movement movement : movements) {
-            if (!start.canMove(movement)) {
-                continue;
-            }
-            Position nextPosition = start.move(movement);
-            if (nextPosition.equals(end)) { // 일치하는게 있음
-                return;
+            Position nextPosition = start;
+            while (nextPosition.canMove(movement)) { // 보드 끝까지 가면 끝
+                nextPosition = nextPosition.move(movement); // 1칸 움직임
+                if (nextPosition.equals(end)) { // 가고자 하는 위치랑 일치함
+                    return movement;
+                }
             }
         }
         // 일치하는거 못찾음
-        throw new IllegalArgumentException("[ERROR] 기물의 이동 규칙에 어긋나는 움직임입니다.");
+        throw new IllegalStateException("[ERROR] 해당하는 규칙을 찾을 수 없습니다..");
+    }
+
+    public PieceType type() {
+        return pieceType;
     }
 }

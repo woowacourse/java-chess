@@ -9,6 +9,7 @@ import chess.piece.PieceType;
 import chess.piece.Queen;
 import chess.piece.Rook;
 import chess.position.Column;
+import chess.position.Movement;
 import chess.position.Position;
 import chess.position.Row;
 import java.util.HashMap;
@@ -75,8 +76,20 @@ public final class Board {
         Color color = colorAt(start);
         validateEndPosition(start, end);
         piece.validateMove(start, end);
+        if (piece.type().canBeBlocked()) {
+            validateRouteNotBlocked(piece.getValidateMovement(start, end), start, end);
+        }
         pieces.put(end, piece);
         colors.put(end, color);
+    }
+
+    private void validateRouteNotBlocked(Movement movement, Position start, Position end) {
+        Position nextPosition = start;
+        while (!(nextPosition = nextPosition.move(movement)).equals(end)) { // end 끝까지 가면 끝
+            if (pieces.containsKey(nextPosition)) { // 이 위치에 어떤 기물이 있는 경우
+                throw new IllegalArgumentException("[ERROR] 다른 기물에 의해 막혀서 이동할 수 없는 경로입니다.");
+            }
+        }
     }
 
     private void validateEndPosition(Position start, Position end) {

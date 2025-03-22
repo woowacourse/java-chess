@@ -17,7 +17,7 @@ public class BoardFixture {
                 Map.of(position1, piece1, position2, piece2));
     }
 
-    public static Board createBoardWithTWoOppositePiece(Position whitePosition,
+    public static Board createBoardWithTwoOppositePiece(Position whitePosition,
                                                         Position blackPosition,
                                                         Piece whitePiece,
                                                         Piece blackPiece) {

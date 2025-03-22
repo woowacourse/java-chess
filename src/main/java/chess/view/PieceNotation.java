@@ -11,7 +11,7 @@ public enum PieceNotation {
     KNIGHT('n', PieceType.KNIGHT),
     PAWN('p', PieceType.PAWN),
     QUEEN('q', PieceType.QUEEN),
-    ROOk('r', PieceType.ROOk);
+    ROOk('r', PieceType.ROOK);
 
     private final Character notation;
     private final PieceType pieceType;
