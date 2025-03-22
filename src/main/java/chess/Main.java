@@ -55,7 +55,8 @@ public class Main {
             for (int j = 0; j < 8; j++) {
                 Position startPosition = Position.of(i, j);
                 try {
-                    validateMove(startPosition, kingPosition);
+                    Piece piece = validateMove(startPosition, kingPosition);
+                    System.out.print("piece로 인해 ");
                     return true;
                 } catch (Exception ignored) {
                 }
