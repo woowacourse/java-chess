@@ -2,6 +2,7 @@ package chess.piece;
 
 import chess.Color;
 import chess.position.Offset;
+import java.util.Objects;
 
 public class King implements Piece {
 
@@ -21,6 +22,20 @@ public class King implements Piece {
         return color;
     }
 
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final King king = (King) o;
+        return color == king.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(color);
+    }
 
     @Override
     public String toString() {

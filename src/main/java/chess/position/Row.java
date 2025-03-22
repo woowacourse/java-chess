@@ -68,6 +68,13 @@ public enum Row {
                 .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
     }
 
+    public static Row from(final int i) {
+        return Arrays.stream(values())
+                .filter(value -> value.y == i)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
+    }
+
     public int offset(final Row row) {
         return row.y - this.y;
     }

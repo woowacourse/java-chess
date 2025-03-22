@@ -12,11 +12,11 @@ public class 쭈 implements Piece {
 
     private final Color color;
 
-    private static final Set<Movement> BLACK_INITIAL_MOVEMENTS = Set.of(Movement.DOWN, Movement.DOWN_DOWN, Movement.LEFT, Movement.RIGHT);
-    private static final Set<Movement> WHITE_INITIAL_MOVEMENTS = Set.of(Movement.UP, Movement.UP_UP, Movement.LEFT, Movement.RIGHT);
+    private static final Set<Movement> BLACK_INITIAL_MOVEMENTS = Set.of(Movement.DOWN, Movement.DOWN_DOWN);
+    private static final Set<Movement> WHITE_INITIAL_MOVEMENTS = Set.of(Movement.UP, Movement.UP_UP);
 
-    private static final Set<Movement> BLACK_MOVEMENTS = Set.of(Movement.DOWN, Movement.LEFT, Movement.RIGHT);
-    private static final Set<Movement> WHITE_MOVEMENTS = Set.of(Movement.UP, Movement.LEFT, Movement.RIGHT);
+    private static final Set<Movement> BLACK_MOVEMENTS = Set.of(Movement.DOWN);
+    private static final Set<Movement> WHITE_MOVEMENTS = Set.of(Movement.UP);
 
     private static final Set<Movement> BLACK_KILL_MOVEMENTS = Set.of(Movement.LEFT_DOWN, Movement.RIGHT_DOWN);
     private static final Set<Movement> WHITE_KILL_MOVEMENTS = Set.of(Movement.LEFT_UP, Movement.RIGHT_UP);

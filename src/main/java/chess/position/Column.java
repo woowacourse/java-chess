@@ -66,7 +66,14 @@ public enum Column {
                 .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
     }
 
+    public static Column from(final int j) {
+        return Arrays.stream(values())
+                .filter(value -> value.x == j)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
+    }
+
     public int offset(final Column column) {
-        return column.x - this.x;
+        return this.x - column.x;
     }
 }

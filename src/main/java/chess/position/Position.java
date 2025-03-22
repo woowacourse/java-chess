@@ -206,6 +206,10 @@ public record Position(
         return this;
     }
 
+    public static Position of(final int i, final int j) {
+        return new Position(Column.from(j), Row.from(i));
+    }
+
     @Override
     public String toString() {
         return "(" + column + " , " + row + ")";
