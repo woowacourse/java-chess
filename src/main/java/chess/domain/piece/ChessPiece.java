@@ -23,10 +23,14 @@ public abstract class ChessPiece {
     }
 
     public void take(final Position newPosition) {
-        if (!calculateCanTakePositions().contains(newPosition)) {
-            throw new IllegalArgumentException("움직일 수 없는 위치입니다.");
+        if (!canTake(newPosition)) {
+            throw new IllegalArgumentException("잡을 수 없는 위치입니다.");
         }
         this.position = newPosition;
+    }
+
+    public boolean canTake(final Position newPosition) {
+        return calculateCanTakePositions().contains(newPosition);
     }
 
     public Position getPosition() {
