@@ -186,4 +186,12 @@ public record Position(
 
         return rowDiff == colDiff;
     }
+
+    public int rowValue() {
+        return this.row().intValue();
+    }
+
+    public int colValue() {
+        return this.column.intValue();
+    }
 }

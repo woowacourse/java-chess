@@ -3,6 +3,8 @@ package chess.piece;
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +47,19 @@ class QueenTest {
 
         // then
         assertThat(canMove).isFalse();
+    }
+
+    @DisplayName("퀸의 이동경로에 있는 모든 좌표 반환")
+    @Test
+    void Queen_findAllRoute() {
+        // given
+        Queen queen = new Queen();
+
+        // when
+        List<Position> routes = queen.findAllRouteToTarget(D4, G7);
+
+        // then
+        assertThat(routes).hasSize(3);
     }
 
 }

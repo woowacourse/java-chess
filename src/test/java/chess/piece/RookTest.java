@@ -3,6 +3,8 @@ package chess.piece;
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,6 +47,22 @@ class RookTest {
 
         // then
         assertThat(canMove).isFalse();
+    }
+
+    @DisplayName("룩 이동 경로의 위치를 모두 반환한다.")
+    @Test
+    void Rook_findAllRoute() {
+        // given
+        Rook rook = new Rook();
+
+        // when
+        List<Position> routes = rook.findAllRouteToTarget(A1, A4);
+
+        // then
+        assertThat(routes).hasSize(3);
+        assertThat(routes.get(0)).isEqualTo(A2);
+        assertThat(routes.get(1)).isEqualTo(A3);
+        assertThat(routes.get(2)).isEqualTo(A4);
     }
 
 }

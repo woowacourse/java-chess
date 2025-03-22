@@ -3,6 +3,8 @@ package chess.piece;
 import static chess.Fixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.Position;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +34,18 @@ class BishopTest {
 
         // then
         assertThat(canMove).isFalse();
+    }
+
+    @DisplayName("이동경로 사이에 있는 모든 좌표 반환")
+    @Test
+    void Bishop_findAllRoute() {
+        // given
+        Bishop bishop = new Bishop();
+
+        // when
+        List<Position> routes = bishop.findAllRouteToTarget(A1, D4);
+
+        // then
+        assertThat(routes).hasSize(3);
     }
 }

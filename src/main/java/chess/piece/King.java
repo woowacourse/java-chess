@@ -4,7 +4,7 @@ import chess.Movement;
 import chess.Position;
 import java.util.List;
 
-public class King {
+public class King extends Piece{
     private final static List<Movement> kingMovement =
             List.of(Movement.UP,
                     Movement.DOWN,
@@ -33,5 +33,10 @@ public class King {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Position> findAllRouteToTarget(Position start, Position target) {
+        return List.of(target);
     }
 }

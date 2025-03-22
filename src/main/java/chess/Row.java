@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
 
     EIGHT(8),
@@ -15,6 +17,13 @@ public enum Row {
 
     Row(int value) {
         this.value = value;
+    }
+
+    public static Row from(int value) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.value == value)
+                .findAny()
+                .orElseThrow();
     }
 
     public boolean isTop() {

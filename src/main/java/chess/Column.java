@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Column {
 
     A(1),
@@ -15,6 +17,13 @@ public enum Column {
 
     Column(int value) {
         this.value = value;
+    }
+
+    public static Column from(int value) {
+        return Arrays.stream(Column.values())
+                .filter(col -> col.value == value)
+                .findAny()
+                .orElseThrow();
     }
 
     public boolean isFarLeft() {

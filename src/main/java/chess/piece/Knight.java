@@ -9,8 +9,11 @@ import static chess.Movement.RIGHT_RIGHT_UP;
 import static chess.Movement.UP_UP_LEFT;
 import static chess.Movement.UP_UP_RIGHT;
 
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece{
@@ -43,5 +46,14 @@ public class Knight extends Piece{
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Position> findAllRouteToTarget(Position start, Position target) {
+        Row row = Row.from((start.rowValue() + target.rowValue()) / 2);
+        Column column = Column.from((start.colValue() + target.colValue()) / 2);
+
+        Position position = new Position(row, column);
+        return List.of(position);
     }
 }
