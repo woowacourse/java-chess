@@ -9,9 +9,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-/**
- * Test 위치 조정 TODO
- */
 class BoardTest {
     @DisplayName("중간에_다른_기물이_존재하면_예외를_발생한다")
     @Test

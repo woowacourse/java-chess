@@ -20,6 +20,9 @@ public class Board {
 
     public boolean isSameColorPieceExists(Position goal, Color color) {
         Piece piece = board.get(goal);
+        if (piece == null) {
+            return false;
+        }
         return piece.isSameColor(color);
     }
 
