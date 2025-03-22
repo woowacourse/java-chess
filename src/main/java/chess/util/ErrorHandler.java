@@ -18,6 +18,7 @@ public class ErrorHandler {
         while (true) {
             try {
                 runnable.run();
+                break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

@@ -51,7 +51,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canAttack(Position source, Position destination, ChessBoard board) {
+    public boolean canAttack(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }

@@ -24,6 +24,11 @@ public class ChessBoard {
         this.isEnd = false;
     }
 
+    public ChessBoard(Map<Position, Piece> pieceByPosition) {
+        this.pieceByPosition = pieceByPosition;
+        this.isEnd = false;
+    }
+
     public boolean existsPiece(Position position) {
         return pieceByPosition.containsKey(position);
     }
@@ -109,8 +114,8 @@ public class ChessBoard {
         pieceByPosition.put(destination, piece);
         piece.moved();
         System.out.println(
-                piece.type().getTitleByTeam(piece.team()) + ": " +
-                        attacked.type().getTitleByTeam(piece.team()) + " 먹었당");
+                piece.type().getTitleByTeam(piece.team()) + " -> "
+                        + attacked.type().getTitleByTeam(piece.team()) + " 먹었당");
     }
 
     public boolean isEnd() {

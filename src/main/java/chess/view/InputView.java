@@ -15,7 +15,10 @@ public class InputView {
 
         List<String> parsed = Arrays.stream(input.split(" ", -1)).toList();
         if (parsed.size() != 3) {
-            throw new IllegalArgumentException(input + ": 형식에 맞게 입력해주세요.");
+            throw new IllegalArgumentException(input + ": 형식에 맞게 입력해주세요. (ex. move 7,1 5,1)");
+        }
+        if (!"move".equals(parsed.get(0))) {
+            throw new IllegalArgumentException(parsed.get(0) + ": 형식에 맞게 입력해주세요. (ex. move)");
         }
 
         Position source = createPosition(parsed.get(1));

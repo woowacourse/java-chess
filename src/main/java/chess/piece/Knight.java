@@ -8,7 +8,6 @@ import static chess.board.Direction.UP;
 import chess.board.ChessBoard;
 import chess.board.Movement;
 import chess.board.Position;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -29,7 +28,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position destination, ChessBoard board) {
+    public boolean canMove(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -37,23 +36,16 @@ public class Knight extends Piece {
         return findMovablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findMovablePositions(Position source, ChessBoard board) {
-        List<Position> candidates = new ArrayList<>();
-        for (Movement movement : MOVABLE_MOVEMENTS) {
-            if (!source.canMoveByDirections(movement)) {
-                continue;
-            }
-            Position nextPosition = source.moveByDirections(movement);
-            if (board.existsPiece(nextPosition)) {
-                continue;
-            }
-            candidates.add(nextPosition);
-        }
-        return candidates;
+    private List<Position> findMovablePositions(final Position source, final ChessBoard board) {
+        return MOVABLE_MOVEMENTS.stream()
+                .filter(source::canMoveByDirections)
+                .map(source::moveByDirections)
+                .filter(position -> !board.existsPiece(position))
+                .toList();
     }
 
     @Override
-    public boolean canAttack(Position source, Position destination, ChessBoard board) {
+    public boolean canAttack(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -61,18 +53,12 @@ public class Knight extends Piece {
         return findAttackablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findAttackablePositions(Position source, ChessBoard board) {
-        List<Position> candidates = new ArrayList<>();
-        for (Movement movement : MOVABLE_MOVEMENTS) {
-            if (!source.canMoveByDirections(movement)) {
-                continue;
-            }
-            Position nextPosition = source.moveByDirections(movement);
-            if (board.existsPiece(nextPosition) && board.hasProperTeam(nextPosition, this.team.inverse())) {
-                candidates.add(nextPosition);
-            }
-        }
-        return candidates;
+    private List<Position> findAttackablePositions(final Position source, final ChessBoard board) {
+        return MOVABLE_MOVEMENTS.stream()
+                .filter(source::canMoveByDirections)
+                .map(source::moveByDirections)
+                .filter(position -> board.existsPiece(position) && board.hasProperTeam(position, this.team.inverse()))
+                .toList();
     }
 
     @Override

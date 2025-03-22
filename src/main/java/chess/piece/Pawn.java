@@ -30,7 +30,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position destination, ChessBoard board) {
+    public boolean canMove(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -38,41 +38,42 @@ public class Pawn extends Piece {
         return findMovablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findMovablePositions(Position source, ChessBoard board) {
+    private List<Position> findMovablePositions(final Position source, final ChessBoard board) {
         List<Position> candidates = new ArrayList<>();
         switch (this.team) {
             case BLACK -> {
-                if (isFirstMove && source.canMoveByDirections(BLACK_FIRST_MOVEMENT)
-                        && board.existsPieceInPath(source, BLACK_FIRST_MOVEMENT)) {
-                    Position nextPosition = source.moveByDirections(BLACK_FIRST_MOVEMENT);
-                    candidates.add(nextPosition);
-                }
-
-                candidates.addAll(BLACK_MOVABLE_DIRECTIONS
-                        .stream()
-                        .map(source::moveByDirection)
-                        .filter(position -> !board.existsPiece(position))
-                        .toList());
+                checkAndAddWhenFirstMove(source, BLACK_FIRST_MOVEMENT, board, candidates);
+                findNormalMovablePositions(candidates, BLACK_MOVABLE_DIRECTIONS, source, board);
             }
             case WHITE -> {
-                if (isFirstMove && source.canMoveByDirections(WHITE_FIRST_MOVEMENT)
-                        && board.existsPieceInPath(source, WHITE_FIRST_MOVEMENT)) {
-                    Position nextPosition = source.moveByDirections(WHITE_FIRST_MOVEMENT);
-                    candidates.add(nextPosition);
-                }
-
-                candidates.addAll(WHITE_MOVABLE_DIRECTIONS
-                        .stream()
-                        .map(source::moveByDirection)
-                        .filter(position -> !board.existsPiece(position))
-                        .toList());
+                checkAndAddWhenFirstMove(source, WHITE_FIRST_MOVEMENT, board, candidates);
+                findNormalMovablePositions(candidates, WHITE_MOVABLE_DIRECTIONS, source, board);
             }
         }
         return candidates;
     }
 
+    private void checkAndAddWhenFirstMove(final Position source, final Movement blackFirstMovement,
+                                          final ChessBoard board, final List<Position> candidates) {
+        if (isFirstMove && source.canMoveByDirections(blackFirstMovement)
+                && board.existsPieceInPath(source, blackFirstMovement)) {
+            Position nextPosition = source.moveByDirections(blackFirstMovement);
+            candidates.add(nextPosition);
+        }
+    }
+
+    private void findNormalMovablePositions(final List<Position> candidates,
+                                            final List<Direction> blackMovableDirections,
+                                            final Position source, final ChessBoard board) {
+        candidates.addAll(blackMovableDirections
+                .stream()
+                .map(source::moveByDirection)
+                .filter(position -> !board.existsPiece(position))
+                .toList());
+    }
+
     @Override
-    public boolean canAttack(Position source, Position destination, ChessBoard board) {
+    public boolean canAttack(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -80,27 +81,24 @@ public class Pawn extends Piece {
         return findAttackablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findAttackablePositions(Position source, ChessBoard board) {
+    private List<Position> findAttackablePositions(final Position source, final ChessBoard board) {
         List<Position> candidates = new ArrayList<>();
         switch (this.team) {
-            case BLACK -> {
-                candidates.addAll(BLACK_ATTACKABLE_DIRECTIONS
-                        .stream()
-                        .map(source::moveByDirection)
-                        .filter(position -> board.existsPiece(position) && board.hasProperTeam(position,
-                                this.team.inverse()))
-                        .toList());
-            }
-            case WHITE -> {
-                candidates.addAll(WHITE_ATTACKABLE_DIRECTIONS
-                        .stream()
-                        .map(source::moveByDirection)
-                        .filter(position -> board.existsPiece(position) && board.hasProperTeam(position,
-                                this.team.inverse()))
-                        .toList());
-            }
+            case BLACK -> findAttackablePositions(candidates, BLACK_ATTACKABLE_DIRECTIONS, source, board);
+            case WHITE -> findAttackablePositions(candidates, WHITE_ATTACKABLE_DIRECTIONS, source, board);
         }
         return candidates;
+    }
+
+    private void findAttackablePositions(final List<Position> candidates,
+                                         final List<Direction> blackAttackableDirections,
+                                         final Position source, final ChessBoard board) {
+        candidates.addAll(blackAttackableDirections
+                .stream()
+                .map(source::moveByDirection)
+                .filter(position
+                        -> board.existsPiece(position) && board.hasProperTeam(position, this.team.inverse()))
+                .toList());
     }
 
     @Override

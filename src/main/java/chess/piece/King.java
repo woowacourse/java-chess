@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position destination, ChessBoard board) {
+    public boolean canMove(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -23,7 +23,7 @@ public class King extends Piece {
         return findMovablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findMovablePositions(Position source, ChessBoard board) {
+    private List<Position> findMovablePositions(final Position source, final ChessBoard board) {
         return MOVABLE_DIRECTIONS.stream()
                 .map(source::moveByDirection)
                 .filter(position -> !board.existsPiece(position))
@@ -31,7 +31,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canAttack(Position source, Position destination, ChessBoard board) {
+    public boolean canAttack(final Position source, final Position destination, final ChessBoard board) {
         if (!board.equalsByPosition(source, this)) {
             return false;
         }
@@ -39,10 +39,10 @@ public class King extends Piece {
         return findAttackablePositions(source, board).contains(destination);
     }
 
-    private List<Position> findAttackablePositions(Position source, ChessBoard board) {
+    private List<Position> findAttackablePositions(final Position source, final ChessBoard board) {
         return MOVABLE_DIRECTIONS.stream()
                 .map(source::moveByDirection)
-                .filter(position -> !board.existsPiece(position))
+                .filter(position -> board.existsPiece(position) && board.hasProperTeam(position, this.team.inverse()))
                 .toList();
     }
 
