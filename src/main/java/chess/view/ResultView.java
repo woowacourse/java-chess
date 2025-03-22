@@ -40,10 +40,13 @@ public class ResultView {
                 Position position = new Position(rows.get(i), columns.get(j));
                 if (getBoard.containsKey(position)) {
                     sb.append(getBoard.get(position).getDisplay());
+                } else {
+                    sb.append(".");
                 }
             }
             sb.append(System.lineSeparator());
         }
+        System.out.println(sb);
     }
 
 }

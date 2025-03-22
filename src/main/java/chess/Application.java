@@ -19,8 +19,8 @@ public class Application {
             String[] tokens = movement.split(" ");
             String[] tokens1 = tokens[0].split(",");
             String[] tokens2 = tokens[1].split(",");
-            Position start = new Position(Row.valueOf(tokens1[1]), Column.valueOf(tokens1[0]));
-            Position destination = new Position(Row.valueOf(tokens2[1]), Column.valueOf(tokens2[0]));
+            Position start = new Position(Row.of(tokens1[1]), Column.valueOf(tokens1[0]));
+            Position destination = new Position(Row.of(tokens2[1]), Column.valueOf(tokens2[0]));
             board.move(start, destination);
 
             resultView.printBoard(board);

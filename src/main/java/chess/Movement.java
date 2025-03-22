@@ -37,18 +37,15 @@ public enum Movement {
     public static Map<Movement, Integer> calculate(final int rowDiff, final int columnDiff) {
         int row = rowDiff;
         int column = columnDiff;
+        System.out.println(row + ", " + column);
         Map<Movement, Integer> movements = new HashMap<>();
-        for (Movement value : values()) {
-            if (value.y == row && value.x == column) {
-                movements.put(value, movements.getOrDefault(value, 0) + 1);
-                row -= row;
-                column -= column;
-            }
-        }
-
-        if (row > 0 && column == 0) {
-            while (row != 0) {
-                movements.put(UP, movements.getOrDefault(UP, 0) + 1);
+        while (row != 0 && column != 0) {
+            for (Movement value : values()) {
+                if (value.y == row && value.x == column) {
+                    movements.put(value, movements.getOrDefault(value, 0) + 1);
+                    row -= row;
+                    column -= column;
+                }
             }
         }
 

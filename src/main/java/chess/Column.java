@@ -12,7 +12,7 @@ public enum Column {
     H;
 
     public static int calculateDiff(Column column, Column otherColumn) {
-        return column.ordinal() - otherColumn.ordinal();
+        return otherColumn.ordinal() - column.ordinal();
     }
 
     public boolean isFarLeft() {

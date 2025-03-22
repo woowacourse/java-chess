@@ -1,18 +1,33 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT("8"),
+    SEVEN("7"),
+    SIX("6"),
+    FIVE("5"),
+    FOUR("4"),
+    THREE("3"),
+    TWO("2"),
+    ONE("1");
+
+    private final String text;
+
+    Row(final String text) {
+        this.text = text;
+    }
+
+    public static Row of(final String text) {
+        return Arrays.stream(values())
+                .filter(value -> value.text.equals(text))
+                .findAny()
+                .orElseThrow();
+    }
 
     public static int calculateDiff(Row row, Row otherRow) {
-        return row.ordinal() - otherRow.ordinal();
+        return Integer.parseInt(otherRow.text) - Integer.parseInt(row.text);
     }
 
     public boolean isTop() {
