@@ -2,10 +2,9 @@ package chess;
 
 import chess.piece.Piece;
 import chess.position.Column;
+import chess.position.Movement;
 import chess.position.Position;
 import chess.position.Row;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,8 +16,10 @@ public class Main {
     public static void main(String[] args) {
         Output.printBoard();
 
-        while(true) {
-            Position position = inputPosition();
+        while (true) {
+            Position before = inputPosition();
+            Position after = inputPosition();
+            Movement movement = Movement.getMovement(before, after);
         }
     }
 

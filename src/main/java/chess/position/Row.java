@@ -4,14 +4,20 @@ import java.util.Arrays;
 
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
+
+    private final int y;
+
+    Row(final int y) {
+        this.y = y;
+    }
 
     public boolean isTop() {
         return ordinal() == 0;
@@ -58,5 +64,9 @@ public enum Row {
                 .filter(value -> value.name().equals(s))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("입력이상해"));
+    }
+
+    public int offset(final Row row) {
+        return row.y - this.y;
     }
 }
