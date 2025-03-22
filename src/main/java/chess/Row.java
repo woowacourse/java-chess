@@ -20,6 +20,14 @@ public enum Row {
                 .orElseThrow(IllegalStateException::new);
     }
 
+    public static String ofOrdinal(int ordinal) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.ordinal() == ordinal)
+                .map(row -> ((8 - row.ordinal()) + ""))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
+
     public boolean isTop() {
         return ordinal() == 0;
     }

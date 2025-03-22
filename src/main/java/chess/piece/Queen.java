@@ -18,6 +18,7 @@ public class Queen implements Piece {
         this.position = position;
     }
 
+    @Override
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
@@ -86,6 +87,16 @@ public class Queen implements Piece {
             return List.of(new Queen(color, new Position(Column.D, Row.ONE)));
         }
         return List.of(new Queen(color, new Position(Column.D, Row.EIGHT)));
+    }
+
+    @Override
+    public boolean isBlack() {
+        return this.color.isBlack();
+    }
+
+    @Override
+    public String getName() {
+        return "퀸";
     }
 
     @Override

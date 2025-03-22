@@ -8,6 +8,7 @@ import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,16 +34,28 @@ public class Board {
     }
 
     //TODO 존재하는 포지션만 주기
-
     public Hurdles findHurdlePositions() {
         return new Hurdles(pieces.stream()
                 .map(Piece::getPosition)
                 .toList());
     }
 
-    public Optional<Piece> findByPosition(Position newPosition) {
+    public Optional<Piece> findByPosition(Position position) {
         return pieces.stream()
-                .filter(piece -> piece.getPosition().equals(newPosition)) //TODO 수정
+                .filter(piece -> piece.getPosition().equals(position)) //TODO 수정
                 .findFirst();
+    }
+
+    public List<Piece> getPieces() {
+        return Collections.unmodifiableList(pieces);
+    }
+
+    public Piece findByPositionOrThrow(Position position) {
+        return findByPosition(position)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 좌표에 기물이 없습니다."));
+    }
+
+    public void move(Piece movingPiece, Position targetPosition) {
+        movingPiece.move(targetPosition, this);
     }
 }

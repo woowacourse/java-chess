@@ -6,7 +6,6 @@ import chess.Column;
 import chess.Movement;
 import chess.Position;
 import chess.Row;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +18,7 @@ public class King implements Piece {
         this.position = position;
     }
 
+    @Override
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step = calculateStep(targetPosition);
@@ -80,6 +80,16 @@ public class King implements Piece {
             return List.of(new King(color, new Position(Column.E, Row.ONE)));
         }
         return List.of(new King(color, new Position(Column.E, Row.EIGHT)));
+    }
+
+    @Override
+    public boolean isBlack() {
+        return this.color.isBlack();
+    }
+
+    @Override
+    public String getName() {
+        return "킹";
     }
 
     @Override

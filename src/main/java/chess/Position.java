@@ -190,5 +190,11 @@ public record Position(
         return this.column.ordinal() - targetPosition.column.ordinal();
     }
 
+    public int getRow() {
+        return row.ordinal();
+    }
 
+    public int getColumn() {
+        return column.ordinal();
+    }
 }

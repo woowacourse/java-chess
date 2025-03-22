@@ -19,6 +19,7 @@ public class Pawn implements Piece {
         this.position = position;
     }
 
+    @Override
     public void move(Position targetPosition, Board board) {
         Movement movement = findMovement(targetPosition);
         int step =calculateStep(targetPosition);
@@ -91,6 +92,16 @@ public class Pawn implements Piece {
             pieces.add(new Pawn(color, standardPawnPosition.move(0, i)));
         }
         return pieces;
+    }
+
+    @Override
+    public boolean isBlack() {
+        return this.color.isBlack();
+    }
+
+    @Override
+    public String getName() {
+        return "폰";
     }
 
     @Override
