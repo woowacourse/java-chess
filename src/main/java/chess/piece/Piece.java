@@ -17,4 +17,8 @@ public abstract class Piece {
     public Color getColor() {
         return this.color;
     }
+
+    public boolean isSameType(Piece piece) {
+        return this.getClass() == piece.getClass();
+    }
 }

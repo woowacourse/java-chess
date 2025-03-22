@@ -1,5 +1,6 @@
 package chess;
 
+import chess.piece.Knight;
 import chess.piece.Piece;
 import java.util.List;
 import java.util.Map;
@@ -17,18 +18,19 @@ public class Board {
         Piece piece = pieces.get(departure);
 
         List<Position> canMovePositions = piece.calculateCanMovePosition(departure, arrival);
-        Optional<Position> isAlreadyExistAnotherPiece = canMovePositions.stream()
-            .filter(position -> !position.equals(arrival)) // 도착지 탐색 제외
-            .filter(position -> pieces.get(position) != null)
-            .findAny();
 
-        if (isAlreadyExistAnotherPiece.isPresent()) {
-            throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
+        if (!piece.isSameType(new Knight(Color.WHITE))) {
+            Optional<Position> isAlreadyExistAnotherPiece = canMovePositions.stream()
+                .filter(position -> !position.equals(arrival)) // 도착지 탐색 제외
+                .filter(position -> pieces.get(position) != null)
+                .findAny();
+            if (isAlreadyExistAnotherPiece.isPresent()) {
+                throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
+            }
         }
-
         // 해당 위치에 아무것도 존재하지 않는다면 이동한다
         if (pieces.get(arrival) == null) {
-            pieces.put(departure, piece);
+            pieces.put(arrival, piece);
             pieces.remove(departure);
             return;
         }
@@ -44,7 +46,11 @@ public class Board {
         pieces.remove(departure);
     }
 
-    public Optional<Piece> getPiece(Column column, Row row) {
+    public Optional<Piece> getPieceOfOptional(Column column, Row row) {
         return Optional.ofNullable(pieces.get(new Position(column, row)));
+    }
+
+    public Piece getPiece(Position position) {
+        return pieces.get(position);
     }
 }
