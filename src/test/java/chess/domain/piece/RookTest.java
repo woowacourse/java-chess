@@ -20,7 +20,7 @@ class RookTest {
         Position origin = new Position(Row.FOUR, Column.B);
         Position destination = new Position(Row.FOUR, Column.G);
 
-        assertDoesNotThrow(() -> rook.validateCanMove(origin, destination));
+        assertDoesNotThrow(() -> rook.findRoute(origin, destination));
     }
 
     @Test
@@ -29,7 +29,7 @@ class RookTest {
         Position origin = new Position(Row.FOUR, Column.B);
         Position destination = new Position(Row.SIX, Column.F);
 
-        assertThatThrownBy(() -> rook.validateCanMove(origin, destination))
+        assertThatThrownBy(() -> rook.findRoute(origin, destination))
                 .isInstanceOf(IllegalStateException.class);
     }
 

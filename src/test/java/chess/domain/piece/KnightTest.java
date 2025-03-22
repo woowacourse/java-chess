@@ -20,7 +20,7 @@ class KnightTest {
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.FIVE, Column.F);
 
-        assertDoesNotThrow(() -> knight.validateCanMove(origin, destination));
+        assertDoesNotThrow(() -> knight.findRoute(origin, destination));
     }
 
     @Test
@@ -29,7 +29,7 @@ class KnightTest {
         Position origin = new Position(Row.FOUR, Column.D);
         Position destination = new Position(Row.SIX, Column.F);
 
-        assertThatThrownBy(() -> knight.validateCanMove(origin, destination));
+        assertThatThrownBy(() -> knight.findRoute(origin, destination));
     }
 
     @Test

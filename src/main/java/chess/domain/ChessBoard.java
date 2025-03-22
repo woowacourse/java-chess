@@ -71,83 +71,35 @@ public class ChessBoard {
         return board.get(position);
     }
 
-    // 1. 도착지 자체가 말이 갈 수 있는 도착지인지 확인(Piece.canMove에 출발, 도착지 넘겨줌) O
-    // 2. 장애물 있는지 확인 O
-    // 3. 도착지 말 색 확인 O
-    public void movePiece(Position origin, Position destination) {
+    public void moveAndCapturePiece(Position origin, Position destination) {
 
         ChessPiece movePiece = getPieceOfPosition(origin);
-        movePiece.validateCanMove(origin, destination); // 움직일 수 있는 경로에 있는지 확인
-
-
-        // 나이트
-        if (movePiece.getClass().equals(Knight.class)) {
-            // 장애물 있어도 됨
-        }
-        // 폰
-        else if (movePiece.getClass().equals(BlackPawn.class) || movePiece.getClass().equals(WhitePawn.class)) {
-            // 첫 움직임 -> 앞으로 두칸까지 가능
-            Pawn pawn = (Pawn) movePiece;
-            Movement route = pawn.findRoute(origin, destination).get(0);
-
-            // if route가 대각선 -> 도착지에 상대 말 있어야 움직일 수 있음 -> 무조건 먹음이 일어남
-            if (route.isDiagonal()) {
-                if (pawn.getColor() != getPieceOfPosition(destination).getColor().opposite()) {
-                    throw new IllegalStateException("대각선 위치에 상대 말이 없기 때문에 움직일 수 없습니다.");
-                }
-                getPieceOfPosition(destination).capture();
-            }
-            // 앞으로 움직임 -> 도착지와 경로에 장애물 없으면 가능F
-            else {
-                validateExistHurdleOnRouteWithDestination(pawn, origin, destination);
-            }
-
-            pawn.isMoved();
-        }
-
-        // 나머지 말
-        else {
-            // 장애물 있는지 확인
-            validateExistHurdleOnRouteWithoutDestination(movePiece, origin, destination);
-        }
-
+        List<Movement> route = movePiece.findRoute(origin, destination);
+        boolean isExistHurdleOnRoute = checkHurdleExistOnRouteWithoutDestination(origin, route);
         ChessPiece targetPiece = getPieceOfPosition(destination);
-        if (movePiece.getColor().opposite() == targetPiece.getColor()) {
-            targetPiece.capture();
-        }
-        else if (movePiece.getColor() == targetPiece.getColor()) {
-            throw new IllegalStateException("도착지에 같은 편의 기물이 존재하기 때문에 움직일 수 없습니다.");
+        movePiece.validateCanMove(route, isExistHurdleOnRoute, targetPiece);
+
+        if (movePiece.getClass().equals(BlackPawn.class) || movePiece.getClass().equals(WhitePawn.class)) {
+            ((Pawn) movePiece).isMoved();
         }
 
+        targetPiece.capture();
         board.put(origin, new None());
         board.put(destination, movePiece);
     }
 
-    private void validateExistHurdleOnRouteWithoutDestination(ChessPiece piece, Position origin, Position destination) {
-        List<Movement> route = piece.findRoute(origin, destination);
+    private boolean checkHurdleExistOnRouteWithoutDestination(Position origin, List<Movement> route) {
         List<Movement> routeWithoutDestination = route.subList(0, route.size() - 1);
         Position origin2 = origin;
         for (Movement movement : routeWithoutDestination) {
             if (origin2.canMove(movement)) {
                 origin2 = origin2.move(movement);
                 if (!getPieceOfPosition(origin2).isEmpty()) {
-                    throw new IllegalStateException("경로에 장애물이 존재하여 움직일 수 없습니다.");
+                    return true;
                 }
             }
         }
-    }
-
-    private void validateExistHurdleOnRouteWithDestination(ChessPiece piece, Position origin, Position destination) {
-        List<Movement> route = piece.findRoute(origin, destination);
-        Position origin2 = origin;
-        for (Movement movement : route) {
-            if (origin2.canMove(movement)) {
-                origin2 = origin2.move(movement);
-                if (!getPieceOfPosition(origin2).isEmpty()) {
-                    throw new IllegalStateException("경로 및 도착지에 장애물이 존재하여 움직일 수 없습니다.");
-                }
-            }
-        }
+        return false;
     }
 
     public boolean checkOppositeKingCaptured(Color color) {

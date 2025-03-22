@@ -8,7 +8,7 @@ import java.util.List;
 public interface ChessPiece {
 
     String name();
-    void validateCanMove(Position origin, Position destination);
+    void validateCanMove(List<Movement> route, boolean isExistHurdleOnRoute, ChessPiece targetPiece);
     List<Movement> findRoute(Position origin, Position destination);
     default boolean isEmpty() {
         return false;

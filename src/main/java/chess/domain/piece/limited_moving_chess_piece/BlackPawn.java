@@ -7,6 +7,6 @@ import java.util.List;
 public class BlackPawn extends Pawn {
 
     public BlackPawn() {
-        super(List.of(Movement.DOWN_DOWN, Movement.DOWN, Movement.LEFT_DOWN, Movement.LEFT_UP), Color.BLACK);
+        super(List.of(Movement.DOWN_DOWN, Movement.DOWN, Movement.LEFT_DOWN, Movement.RIGHT_DOWN), Color.BLACK);
     }
 }

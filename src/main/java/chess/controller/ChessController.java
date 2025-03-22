@@ -46,7 +46,7 @@ public class ChessController {
             }
             Position destination = originAndDestination.get(1);
 
-            chessBoard.movePiece(origin, destination);
+            chessBoard.moveAndCapturePiece(origin, destination);
         }, OutputView::printErrorMessage);
     }
 }

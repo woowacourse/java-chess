@@ -15,11 +15,6 @@ public class None implements ChessPiece {
     }
 
     @Override
-    public void validateCanMove(Position origin, Position destination) {
-        throw new IllegalStateException("움직일 말이 존재하지 않습니다.");
-    }
-
-    @Override
     public List<Movement> findRoute(Position origin, Position destination) {
         throw new IllegalStateException("움직일 말이 존재하지 않습니다.");
     }
@@ -27,6 +22,11 @@ public class None implements ChessPiece {
     @Override
     public String name() {
         return "-";
+    }
+
+    @Override
+    public void validateCanMove(List<Movement> route, boolean isExistHurdleOnRoute, ChessPiece targetPiece) {
+        throw new IllegalStateException("움직일 말이 존재하지 않습니다.");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class None implements ChessPiece {
 
     @Override
     public void capture() {
-        throw new IllegalStateException("말이 존재하지 않습니다.");
+
     }
 
     @Override

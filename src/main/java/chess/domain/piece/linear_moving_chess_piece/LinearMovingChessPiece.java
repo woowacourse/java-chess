@@ -20,20 +20,12 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
     }
 
     @Override
-    public void validateCanMove(Position origin, Position destination) {
-        boolean canMove = false;
-        for (Movement direction : directions) {
-            Position origin2 = origin;
-            while (origin2.canMove(direction)) {
-                origin2 = origin2.move(direction);
-                if (origin2.equals(destination)) {
-                    canMove = true;
-                    break;
-                }
-            }
+    public void validateCanMove(List<Movement> route, boolean isExistHurdleOnRoute, ChessPiece targetPiece) {
+        if (isExistHurdleOnRoute) {
+            throw new IllegalStateException("경로에 장애물이 존재하기 때문에 이동할 수 없습니다.");
         }
-        if (!canMove) {
-            throw new IllegalStateException("해당 기물은 해당 경로로 이동할 수 없습니다.");
+        if (this.getColor() == targetPiece.getColor()) {
+            throw new IllegalStateException("도착지에 같은 팀의 말이 존재하기 때문에 이동할 수 없습니다.");
         }
     }
 
@@ -50,7 +42,7 @@ public abstract class LinearMovingChessPiece implements ChessPiece {
                 }
             }
         }
-        return List.of();
+        throw new IllegalStateException("해당 기물은 해당 경로로 이동할 수 없습니다.");
     }
 
     @Override
