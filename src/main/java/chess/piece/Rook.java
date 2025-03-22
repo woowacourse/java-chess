@@ -16,11 +16,6 @@ public final class Rook extends Piece {
         if (!start.isOnlyVerticalOrHorizontalAndNotSame(end)) {
             return false;
         }
-
-        // NOTE: 아래 것 때문에 모든 기물 위치 받아와야겠네
-        // NOTE: 그럼 일단 다른 말들을 사용해 검증하는 건 나중에 하기
-        // TODO: 경로상에 기물 있으면 안됨,
-
         return true;
     }
 
@@ -31,5 +26,11 @@ public final class Rook extends Piece {
             return true;
         }
         return !pieces.isSameColor(end, this);
+    }
+
+    @Override
+    public boolean isPathAble(Position start, Position end, Pieces pieces) {
+        // TODO: 경로상에 기물 있으면 안됨,
+        return true;
     }
 }

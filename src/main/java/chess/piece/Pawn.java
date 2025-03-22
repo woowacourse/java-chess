@@ -38,11 +38,6 @@ public final class Pawn extends Piece {
                 return false;
             }
         }
-
-        // NOTE: 아래 것 때문에 모든 기물 위치 받아와야겠네
-        // NOTE: 그럼 일단 다른 말들을 사용해 검증하는 건 나중에 하기
-        // TODO: 첫 2칸 이동시 경로상에 기물 있으면 안됨,
-
         return true;
     }
 
@@ -50,6 +45,13 @@ public final class Pawn extends Piece {
     public boolean isEndAble(Position end, Pieces pieces) {
         // 도착지에 말이 있으면 안됨
         return pieces.isEmpty(end);
+    }
+
+    @Override
+    public boolean isPathAble(Position start, Position end, Pieces pieces) {
+        // TODO: 첫 2칸 이동시 경로상에 기물 있으면 안됨,
+        // TODO: 경로상에 기물 있으면 안됨,
+        return true;
     }
 
     private boolean isMoved(Position start) {

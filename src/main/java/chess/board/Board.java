@@ -101,13 +101,15 @@ public class Board {
         if (!startPiece.canMove(startPosition, endPosition)) {
             return false;
         }
+        // 도착지 고려 (적, 아군 등)
         if (!startPiece.isEndAble(endPosition, pieces)) {
+            return false;
+        }
+        if (!startPiece.isPathAble(startPosition, endPosition, pieces)) {
             return false;
         }
 
         startPiece.setPosition(Position.of(end));
         return true;
-
-        // 도착지에 적 고려 ㄴㄴ
     }
 }

@@ -16,6 +16,8 @@ public abstract class Piece {
 
     abstract public boolean isEndAble(Position end, Pieces pieces);
 
+    abstract public boolean isPathAble(Position start, Position end, Pieces pieces);
+
     public boolean isBlack() {
         return color == color.BLACK;
     }
@@ -28,7 +30,7 @@ public abstract class Piece {
         return color;
     }
 
-    
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

@@ -75,4 +75,8 @@ public class LivePiece {
     public boolean isSameColor(Piece piece) {
         return this.piece.isSameColor(piece);
     }
+
+    public boolean isPathAble(Position startPosition, Position endPosition, Pieces pieces) {
+        return piece.isPathAble(startPosition, endPosition, pieces);
+    }
 }
