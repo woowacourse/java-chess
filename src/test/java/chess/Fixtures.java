@@ -100,12 +100,11 @@ public final class Fixtures {
     public static final Position H6 = new Position(Column.H, Row.SIX);
     public static final Position H7 = new Position(Column.H, Row.SEVEN);
     public static final Position H8 = new Position(Column.H, Row.EIGHT);
-    public static final Board generalBoard = new Board(makeGeneralBoard());
 
     private Fixtures() {
     }
 
-    private static Map<Position, Piece> makeGeneralBoard() {
+    public static Board makeGeneralBoard() {
         Map<Position, Piece> board = new HashMap<>();
         for (Column column : Column.values()) {
             board.put(new Position(TWO, column), new Pawn(WHITE));
@@ -132,6 +131,6 @@ public final class Fixtures {
         board.put(new Position(ONE, E), new King(WHITE));
         board.put(new Position(EIGHT, E), new King(BLACK));
 
-        return board;
+        return new Board(board);
     }
 }

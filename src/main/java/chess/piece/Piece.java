@@ -16,6 +16,7 @@ public abstract class Piece {
     public void validateMovable(Board board, Position start, Position goal) {
         List<Position> root = findRoot(start, goal);
         validateMiddlePath(board, root);
+
         validateSameColorPieceOnGoal(board, goal);
     }
 
