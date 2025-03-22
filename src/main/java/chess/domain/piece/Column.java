@@ -1,4 +1,7 @@
-package chess;
+package chess.domain.piece;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum Column {
 
@@ -49,5 +52,9 @@ public enum Column {
         }
 
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
+    }
+
+    public static List<Column> getAllColumns() {
+        return Arrays.stream(values()).toList();
     }
 }

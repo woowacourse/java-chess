@@ -1,4 +1,4 @@
-package chess;
+package chess.domain.piece;
 
 public record Position(
         Column column,
@@ -166,5 +166,9 @@ public record Position(
             return moveLeft(-step);
         }
         return this;
+    }
+
+    public boolean hasSameRowAndColumn(Row row, Column column) {
+        return this.row == row && this.column == column;
     }
 }
