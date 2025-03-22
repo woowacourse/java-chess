@@ -29,26 +29,31 @@ public class Pawn extends Piece {
     @Override
     public boolean canMove(List<Piece> piecesOnRoute, Position start, Position target) {
 
-        if (target.rowValue() - start.rowValue() == 2) {
-            if (!start.canMoveUp(2)) {
+        // 백팀은 2번 행에서 시작하고 위로 이동
+        int direction = (teamColor == TeamColor.WHITE) ? 1 : -1;
+
+        // 두 칸 전진 가능
+        if (target.rowValue() - start.rowValue() == 2 * direction) {
+            if (!start.canMoveUp(2 * direction)) {
                 return false;
             }
-            if (start.row() != Row.TWO) {
+            if(moveCount != 0) {
                 return false;
             }
-            Position moved = start.moveUp(2);
+            Position moved = start.moveUp(2 * direction);
             return moved.equals(target);
         }
 
-        if (piecesOnRoute.getLast().isEmpty()) {
-            if (!start.canMoveUp(1)) {
+        // 한 칸 전진 가능
+        if (piecesOnRoute.isEmpty()) {
+            if (!start.canMoveUp(1 * direction)) {
                 return false;
             }
-            Position moved = start.moveUp(1);
+            Position moved = start.moveUp(1 * direction);
             return moved.equals(target);
         }
 
-        //적이 있을때
+        // 적이 있을 때
         for (Movement takeMovement : pawnTakeMovements) {
             if (!start.canMove(takeMovement)) {
                 continue;

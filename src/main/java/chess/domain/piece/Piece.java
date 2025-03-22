@@ -5,8 +5,9 @@ import chess.domain.TeamColor;
 import java.util.List;
 
 public abstract class Piece {
-    private final TeamColor teamColor;
-    private final PieceType pieceType;
+    final TeamColor teamColor;
+    final PieceType pieceType;
+    int moveCount;
 
     Piece(TeamColor teamColor, PieceType pieceType) {
         this.teamColor = teamColor;
@@ -14,6 +15,7 @@ public abstract class Piece {
     }
 
     public abstract boolean availablePath(Position start, Position target);
+
     public abstract List<Position> findAllRouteToTarget(Position start, Position target);
 
     public abstract boolean canMove(List<Piece> piecesOnRoute, Position start, Position target);
@@ -26,5 +28,13 @@ public abstract class Piece {
 
     public PieceType getPieceType() {
         return pieceType;
+    }
+
+    public TeamColor getTeamColor() {
+        return teamColor;
+    }
+
+    public void incrementMoveCount() {
+        moveCount++;
     }
 }
