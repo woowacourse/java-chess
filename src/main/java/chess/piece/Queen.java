@@ -45,6 +45,6 @@ public class Queen extends Piece {
                 throw new IllegalArgumentException("기물이 존재합니다");
             }
         }
-        return new Bishop(currentPosition.move(lastMovement), color);
+        return new Queen(currentPosition.move(lastMovement), color);
     }
 }
