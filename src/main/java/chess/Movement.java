@@ -1,5 +1,9 @@
 package chess;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public enum Movement {
     UP(0, 1),
     UP_UP(UP.x * 2, UP.y * 2),
@@ -30,6 +34,25 @@ public enum Movement {
         this.y = y;
     }
 
+    public static Map<Movement, Integer> calculate(final int rowDiff, final int columnDiff) {
+        int row = rowDiff;
+        int column = columnDiff;
+        System.out.println(row + ", " + column);
+        Map<Movement, Integer> movements = new HashMap<>();
+        while (!(row == 0 && column == 0)) {
+            for (Movement value : values()) {
+                if (value.y == row && value.x == column) {
+                    movements.put(value, movements.getOrDefault(value, 0) + 1);
+                    System.out.println(value.name());
+                    row -= row;
+                    column -= column;
+                }
+            }
+        }
+
+        return movements;
+    }
+
     public int x() {
         return x;
     }
@@ -40,6 +63,10 @@ public enum Movement {
 
     public boolean isVertical() {
         return x == 0 && y != 0;
+    }
+
+    public boolean isHorizontal() {
+        return x != 0 && y == 0;
     }
 
     public boolean isDiagonal() {

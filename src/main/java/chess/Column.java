@@ -11,6 +11,10 @@ public enum Column {
     G,
     H;
 
+    public static int calculateDiff(Column column, Column otherColumn) {
+        return otherColumn.ordinal() - column.ordinal();
+    }
+
     public boolean isFarLeft() {
         return ordinal() == 0;
     }
