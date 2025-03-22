@@ -73,4 +73,36 @@ class BishopTest {
         // then
         assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
     }
+
+    @DisplayName("이동경로에 다른 팀 기물이 존재하는 경우, 해당 기물들의 위치로 움직일 수 있다.")
+    @Test
+    void existOtherTeamHurdle() {
+        // given
+        Map<Position, ChessPiece> positions = Map.of(
+                new Position(Row.SIX, Column.F), new Bishop(Color.WHITE),
+                new Position(Row.ONE, Column.G), new Bishop(Color.WHITE)
+        );
+        Bishop bishop = new Bishop(Color.BLACK);
+        List<Position> expected = List.of(
+                new Position(Row.FIVE, Column.C),
+                new Position(Row.SIX, Column.B),
+                new Position(Row.SEVEN, Column.A),
+                new Position(Row.THREE, Column.E),
+                new Position(Row.TWO, Column.F),
+                new Position(Row.ONE, Column.G),
+                new Position(Row.FIVE, Column.E),
+                new Position(Row.SIX, Column.F),
+                new Position(Row.THREE, Column.C),
+                new Position(Row.TWO, Column.B),
+                new Position(Row.ONE, Column.A)
+        );
+
+        // when
+        List<Position> destinations = bishop.getAvailableDestinations(
+                new Position(Row.FOUR, Column.D), positions
+        );
+
+        // then
+        assertThat(destinations).containsExactlyInAnyOrderElementsOf(expected);
+    }
 }
