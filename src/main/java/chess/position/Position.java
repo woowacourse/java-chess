@@ -167,4 +167,9 @@ public record Position(
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "(" + column + " , " + row + ")";
+    }
 }
