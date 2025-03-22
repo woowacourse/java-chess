@@ -1,15 +1,35 @@
 package chess;
 
+import java.lang.module.FindException;
+import java.util.Arrays;
+
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
+
+    private final int index;
+
+    Row(int index) {
+        this.index = index;
+    }
+
+    public static Row from(int index) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.index == index)
+                .findFirst()
+                .get();
+    }
+
+    public String getRowName() {
+        return String.valueOf(index);
+    }
 
     public boolean isTop() {
         return ordinal() == 0;

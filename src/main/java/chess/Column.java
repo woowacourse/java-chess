@@ -1,15 +1,31 @@
 package chess;
 
+import java.util.Arrays;
+import javax.lang.model.element.NestingKind;
+
 public enum Column {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H;
+    A("A"),
+    B("B"),
+    C("C"),
+    D("D"),
+    E("E"),
+    F("F"),
+    G("G"),
+    H("H");
+
+    private final String index;
+
+    Column(String index) {
+        this.index = index;
+    }
+
+    public static Column from(String index) {
+        return Arrays.stream(Column.values())
+                .filter(column -> column.index.equals(index))
+                .findFirst()
+                .get();
+    }
 
     public boolean isFarLeft() {
         return ordinal() == 0;
