@@ -31,7 +31,6 @@ public enum Column {
         if (canMoveLeft(step)) {
             return values()[ordinal() - step];
         }
-
         throw new IllegalStateException("움직일 수 없는 위치입니다.");
     }
 
