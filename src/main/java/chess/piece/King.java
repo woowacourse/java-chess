@@ -1,5 +1,6 @@
 package chess.piece;
 
+import chess.Color;
 import chess.Movement;
 import chess.Position;
 import chess.board.Board;
@@ -18,6 +19,10 @@ public class King extends Piece {
         allMovements.add(List.of(Movement.LEFT_UP));
         allMovements.add(List.of(Movement.RIGHT_DOWN));
         allMovements.add(List.of(Movement.LEFT_DOWN));
+    }
+
+    public King(final Color color) {
+        super(color);
     }
 
     @Override
