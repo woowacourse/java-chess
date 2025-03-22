@@ -6,6 +6,8 @@ import chess.Column;
 import chess.Movement;
 import chess.Position;
 import chess.Row;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Pawn implements Piece {
@@ -77,6 +79,18 @@ public class Pawn implements Piece {
             return position.isRowEquals(new Position(Column.A, Row.TWO));
         }
         return position.isRowEquals(new Position(Column.A, Row.SEVEN));
+    }
+
+    public static List<Piece> initialize(Color color) {
+        List<Piece> pieces = new ArrayList<>();
+        Position standardPawnPosition = new Position(Column.A, Row.TWO);
+        if (color.isBlack()) {
+            standardPawnPosition = new Position(Column.A, Row.SEVEN);
+        }
+        for (int i = 0; i <= 7; i++) {
+            pieces.add(new Pawn(color, standardPawnPosition.move(0, i)));
+        }
+        return pieces;
     }
 
     @Override

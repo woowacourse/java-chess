@@ -2,8 +2,11 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.List;
 import java.util.Objects;
 
 public class Queen implements Piece {
@@ -76,6 +79,13 @@ public class Queen implements Piece {
             }
             this.position = newPosition;
         }
+    }
+
+    public static List<Piece> initialize(Color color) {
+        if (color.isWhite()) {
+            return List.of(new Queen(color, new Position(Column.D, Row.ONE)));
+        }
+        return List.of(new Queen(color, new Position(Column.D, Row.EIGHT)));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 public enum Row {
 
     EIGHT, // 0
@@ -10,6 +12,13 @@ public enum Row {
     THREE,
     TWO,
     ONE;
+
+    public static Row fromNumber(int number) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.ordinal() == 8 - number)
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+    }
 
     public boolean isTop() {
         return ordinal() == 0;

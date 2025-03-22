@@ -2,8 +2,11 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,6 +75,16 @@ public class Knight implements Piece {
             return Movement.RIGHT;
         }
         throw new IllegalArgumentException("나이트는 L자모양 이동만 가능합니다.");
+    }
+
+    public static List<Piece> initialize(Color color) {
+        Position standard = new Position(Column.B, Row.ONE);
+        if (color.isBlack()) {
+            standard = new Position(Column.B, Row.EIGHT);
+        }
+        return List.of(new Knight(color, standard),
+                new Knight(color, standard.move(0, 5))
+        );
     }
 
     @Override

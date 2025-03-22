@@ -2,8 +2,12 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class King implements Piece {
@@ -69,6 +73,13 @@ public class King implements Piece {
             throw new IllegalArgumentException("장애물이 존재합니다.");
         }
         this.position = newPosition;
+    }
+
+    public static List<Piece> initialize(Color color) {
+        if (color.isWhite()) {
+            return List.of(new King(color, new Position(Column.E, Row.ONE)));
+        }
+        return List.of(new King(color, new Position(Column.E, Row.EIGHT)));
     }
 
     @Override

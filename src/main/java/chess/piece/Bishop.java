@@ -2,8 +2,12 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Bishop implements Piece{
@@ -65,6 +69,16 @@ public class Bishop implements Piece{
             }
             this.position = newPosition;
         }
+    }
+
+    public static List<Piece> initialize(Color color) {
+        Position standard = new Position(Column.C, Row.ONE);
+        if (color.isBlack()) {
+            standard = new Position(Column.C, Row.EIGHT);
+        }
+        return List.of(new Bishop(color, standard),
+                new Bishop(color, standard.move(0, 3))
+        );
     }
 
     @Override

@@ -148,6 +148,10 @@ public record Position(
         return moveVertical(movement.y()).moveHorizontal(movement.x());
     }
 
+    public Position move(final int x, final int y) {
+        return moveVertical(x).moveHorizontal(y);
+    }
+
     public Position moveVertical(final int step) {
         if (step > 0) {
             return moveUp(step);

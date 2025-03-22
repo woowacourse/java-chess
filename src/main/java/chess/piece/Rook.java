@@ -2,8 +2,12 @@ package chess.piece;
 
 import chess.Board;
 import chess.Color;
+import chess.Column;
 import chess.Movement;
 import chess.Position;
+import chess.Row;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Rook implements Piece {
@@ -57,6 +61,16 @@ public class Rook implements Piece {
             }
             this.position = newPosition;
         }
+    }
+
+    public static List<Piece> initialize(Color color) {
+        Position standard = new Position(Column.A, Row.ONE);
+        if (color.isBlack()) {
+            standard = new Position(Column.A, Row.EIGHT);
+        }
+        return List.of(new Rook(color, standard),
+                new Rook(color, standard.move(0, 7))
+        );
     }
 
     @Override
