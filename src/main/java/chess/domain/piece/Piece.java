@@ -1,9 +1,9 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Movement;
-import chess.Position;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Movement;
+import chess.domain.Position;
 import java.util.List;
 
 public abstract class Piece {

@@ -1,8 +1,8 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Position;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Position;
 
 public class Empty extends Piece {
     public Empty(final Position position) {

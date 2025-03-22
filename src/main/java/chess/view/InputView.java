@@ -1,8 +1,8 @@
 package chess.view;
 
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.domain.Column;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.Scanner;
 
 public class InputView {

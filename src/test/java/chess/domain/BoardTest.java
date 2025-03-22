@@ -1,7 +1,7 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Pawn;
-import chess.piece.Piece;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

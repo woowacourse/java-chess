@@ -1,11 +1,12 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Column;
-import chess.Movement;
-import chess.Position;
-import chess.Row;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Column;
+import chess.domain.Direction;
+import chess.domain.Movement;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -24,7 +25,7 @@ public class Queen extends Piece {
     @Override
     public Piece move(final Board board, final Position destination) {
 
-        List<Movement> movements = destination.calculateDirection(position);
+        List<Movement> movements = Direction.calculateDirection(position, destination);
 
         if (position.equals(destination)) {
             throw new IllegalArgumentException("같은 위치입니다");

@@ -1,11 +1,11 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Column;
-import chess.Movement;
-import chess.Position;
-import chess.Row;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Column;
+import chess.domain.Movement;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

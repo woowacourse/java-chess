@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.Column;
-import chess.Position;
-import chess.Row;
-import chess.piece.Piece;
+import chess.domain.Column;
+import chess.domain.Position;
+import chess.domain.Row;
+import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class OutputView {

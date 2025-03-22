@@ -1,8 +1,8 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Empty;
-import chess.piece.Piece;
-import chess.piece.PieceType;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

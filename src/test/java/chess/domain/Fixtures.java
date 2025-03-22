@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 @SuppressWarnings("unused")
 public final class Fixtures {

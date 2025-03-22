@@ -1,11 +1,12 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Column;
-import chess.Movement;
-import chess.Position;
-import chess.Row;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Column;
+import chess.domain.Direction;
+import chess.domain.Movement;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Bishop extends Piece {
     @Override
     public Piece move(final Board board, final Position destination) {
 
-        List<Movement> movements = destination.calculateDirection(position);
+        List<Movement> movements = Direction.calculateDirection(position, destination);
 
         if (!movements.stream().allMatch(Movement::isDiagonal)) {
             throw new IllegalArgumentException("규칙에 맞지 않은 움직임 입니다");

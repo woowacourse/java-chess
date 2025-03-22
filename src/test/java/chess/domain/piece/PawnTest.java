@@ -1,10 +1,10 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Column;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

@@ -1,10 +1,10 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Board;
-import chess.Color;
-import chess.Column;
-import chess.Position;
-import chess.Row;
+import chess.domain.Board;
+import chess.domain.Color;
+import chess.domain.Column;
+import chess.domain.Position;
+import chess.domain.Row;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,15 +13,15 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-class BishopTest {
+class QueenTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"EIGHT,A", "EIGHT,G", "TWO,A", "TWO,G"})
-    @DisplayName("비숍은 대각선으로 이동한다")
-    void moveBishop(Row row, Column column) {
+    @CsvSource(value = {"EIGHT,A", "EIGHT,G", "TWO,A", "ONE,H", "ONE,D", "EIGHT,D", "FIVE,A", "FIVE,H"})
+    @DisplayName("퀸은 상하좌우, 대각선으로 직선 이동한다")
+    void movePawn(Row row, Column column) {
         //given
         Position position = new Position(Row.FIVE, Column.D);
-        Piece piece = new Bishop(position, Color.BLACK);
+        Piece piece = new Queen(position, Color.BLACK);
         List<Piece> pieces = List.of(piece);
         Board board = new Board(pieces);
 
@@ -33,13 +33,17 @@ class BishopTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = {"EIGHT,A", "EIGHT,G", "TWO,A", "TWO,G"})
+    @CsvSource(value = {"EIGHT,A", "EIGHT,G", "TWO,A", "ONE,H", "ONE,D", "EIGHT,D", "FIVE,A", "FIVE,H"})
     @DisplayName("경로에 기물이 존재하면 이동할 수 없다")
     void cannotMoveRook(Row row, Column column) {
         //given
         Position position = new Position(Row.FIVE, Column.D);
-        Piece piece = new Bishop(position, Color.BLACK);
+        Piece piece = new Queen(position, Color.BLACK);
         List<Piece> pieces = List.of(piece,
+                new Rook(position.moveUp(), Color.BLACK),
+                new Rook(position.moveDown(), Color.BLACK),
+                new Rook(position.moveLeft(), Color.BLACK),
+                new Rook(position.moveRight(), Color.BLACK),
                 new Rook(position.moveLeftUp(), Color.BLACK),
                 new Rook(position.moveRightUp(), Color.BLACK),
                 new Rook(position.moveLeftDown(), Color.BLACK),

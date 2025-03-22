@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Color;
+import chess.domain.Color;
 
 public enum PieceType {
     KING("♔", "♚"),
