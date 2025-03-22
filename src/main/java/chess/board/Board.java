@@ -13,13 +13,18 @@ public class Board {
         this.board = new HashMap<>(board);
     }
 
+    public void move(Position start, Position goal) {
+        Piece piece = board.get(start);
+        piece.validateMovable(this, start, goal);
+    }
+
     public boolean isSameColorPieceExists(Position goal, Color color) {
         // TODO
         return false;
     }
 
     public boolean isPieceExists(Position position) {
-        // TODO
-        return false;
+        Piece piece = board.get(position);
+        return piece != null;
     }
 }
