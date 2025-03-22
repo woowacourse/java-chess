@@ -18,7 +18,7 @@ public class ChessPieces {
     public void move(
             final Position piecePosition,
             final Position newPosition,
-            final List<ChessPiece> otherChessPieces
+            final ChessPieces otherChessPieces
     ) {
 
         final ChessPiece chessPiece = chessPieces.stream()
@@ -29,7 +29,7 @@ public class ChessPieces {
         boolean isMyChessPieceExistInNewPosition = chessPieces.stream()
                 .anyMatch(piece -> piece.getPosition().equals(newPosition));
 
-        boolean isOtherChessPieceExistInNewPosition = otherChessPieces.stream()
+        boolean isOtherChessPieceExistInNewPosition = otherChessPieces.chessPieces.stream()
                 .anyMatch(piece -> piece.getPosition().equals(newPosition));
 
         if (isMyChessPieceExistInNewPosition) {
