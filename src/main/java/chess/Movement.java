@@ -22,7 +22,6 @@ public enum Movement {
     ;
 
     private final int x;
-
     private final int y;
 
     Movement(final int x, final int y) {
@@ -40,6 +39,10 @@ public enum Movement {
 
     public boolean isVertical() {
         return x == 0 && y != 0;
+    }
+
+    public boolean isHorizontal() {
+        return x != 0 && y == 0;
     }
 
     public boolean isDiagonal() {
