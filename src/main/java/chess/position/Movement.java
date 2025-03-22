@@ -5,6 +5,7 @@ import java.util.Optional;
 
 // 단위 이동이 정의된 이넘
 public enum Movement {
+    NO_MOVEMENT(0, 0),
     UP(0, 1),
     UP_UP(UP.x * 2, UP.y * 2),
     DOWN(0, -1),
@@ -55,5 +56,26 @@ public enum Movement {
                 .filter(movement -> movement.x == offset.x())
                 .filter(movement -> movement.y == offset.y())
                 .findAny();
+    }
+
+    public static Movement findDirection(final Offset offset) {
+        if (offset.x() > 0 && offset.y() == 0) {
+            return RIGHT;
+        } else if (offset.x() < 0 && offset.y() == 0) {
+            return LEFT;
+        } else if (offset.x() == 0 && offset.y() > 0) {
+            return UP;
+        } else if (offset.x() == 0 && offset.y() < 0) {
+            return DOWN;
+        } else if (offset.x() > 0 && offset.y() > 0) {
+            return RIGHT_UP;
+        } else if (offset.x() < 0 && offset.y() > 0) {
+            return LEFT_UP;
+        } else if (offset.x() > 0 && offset.y() < 0) {
+            return RIGHT_DOWN;
+        } else if (offset.x() < 0 && offset.y() < 0) {
+            return LEFT_DOWN;
+        }
+        return NO_MOVEMENT;
     }
 }

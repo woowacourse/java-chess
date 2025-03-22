@@ -55,6 +55,6 @@ public class 쭈 implements Piece {
 
     @Override
     public String toString() {
-        return "쭈";
+        return color + "쭈";
     }
 }

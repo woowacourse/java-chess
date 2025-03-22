@@ -1,6 +1,7 @@
 package chess;
 
 import chess.piece.Piece;
+import chess.piece.퀸비숍룩;
 import chess.position.Column;
 import chess.position.Offset;
 import chess.position.Position;
@@ -19,7 +20,7 @@ public class Main {
 
             Position before = inputPosition();
             Position after = inputPosition();
-            Offset offset = Offset.calculate(before, after);
+            Offset offset = Offset.calculate(after, before);
             if (offset.is00()) {
                 throw new IllegalArgumentException("안움직였어");
             }
@@ -41,6 +42,12 @@ public class Main {
                 throw new IllegalArgumentException("거기로 못가는 기물임");
             }
 
+            if (selectPiece instanceof 퀸비숍룩) {
+                퀸비숍룩 piece = (퀸비숍룩) selectPiece;
+                if (piece.경로상_장애물_확인(before, after)) {
+                    throw new IllegalArgumentException("경로상 장애물 발견 !!");
+                }
+            }
             pieceBoard[before.getI()][before.getJ()] = null;
             pieceBoard[after.getI()][after.getJ()] = selectPiece;
         }

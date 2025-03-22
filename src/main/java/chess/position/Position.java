@@ -1,5 +1,7 @@
 package chess.position;
 
+import chess.piece.Rook;
+
 public record Position(
         Column column,
         Row row
@@ -174,6 +176,34 @@ public record Position(
 
     public int getJ() {
         return column.x;
+    }
+
+    public Position plus(final Movement movement) {
+        if (movement == Movement.RIGHT) {
+            return moveRight();
+        }
+        if (movement == Movement.LEFT) {
+            return moveLeft();
+        }
+        if (movement == Movement.UP) {
+            return moveUp();
+        }
+        if (movement == Movement.DOWN) {
+            return moveDown();
+        }
+        if (movement == Movement.RIGHT_UP) {
+            return moveRightUp();
+        }
+        if (movement == Movement.LEFT_UP) {
+            return moveLeftUp();
+        }
+        if (movement == Movement.RIGHT_DOWN) {
+            return moveRightDown();
+        }
+        if (movement == Movement.LEFT_DOWN) {
+            return moveLeftDown();
+        }
+        return this;
     }
 
     @Override
