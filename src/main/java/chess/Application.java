@@ -14,10 +14,32 @@ import chess.piece.Queen;
 import chess.piece.Rook;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Application {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
         Board board = new Board(makeInitialBoard());
+        System.out.println("체스 게임을 시작합니다.");
+        Color currentColor = WHITE;
+        while(true) {
+            System.out.printf("%s 차례입니다.\n움직이려는 말의 좌표와 도착 좌표를 입력하세요.\n", currentColor);
+            String input = scanner.nextLine();
+            String[] split = input.split(" ");
+            String[] startString = split[0].split("");
+            String[] goalString = split[1].split("");
+            Position start = createPosition(startString);
+            Position goal = createPosition(goalString);
+            board.move(start, goal);
+            currentColor = currentColor.opposite();
+        }
+    }
+
+    public static Position createPosition(String[] positionString) {
+        Column column = getColumn(positionString[0]);
+        Row row = getRow(positionString[1]);
+        return new Position(row, column);
     }
 
     private static Map<Position, Piece> makeInitialBoard() {

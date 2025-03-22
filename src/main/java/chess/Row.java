@@ -1,15 +1,41 @@
 package chess;
 
+import java.util.InputMismatchException;
+
 public enum Row {
 
-    EIGHT,
-    SEVEN,
-    SIX,
-    FIVE,
-    FOUR,
-    THREE,
-    TWO,
-    ONE;
+    EIGHT(8),
+    SEVEN(7),
+    SIX(6),
+    FIVE(5),
+    FOUR(4),
+    THREE(3),
+    TWO(2),
+    ONE(1);
+
+    private final int value;
+
+    Row(int value) {
+        this.value = value;
+    }
+
+    public static Row getRow(String value) {
+        try {
+            int intValue = Integer.parseInt(value);
+            return getRow(intValue);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("유효하지 않은 Row입니다.");
+        }
+    }
+
+    public static Row getRow(int value) {
+        for (Row row : values()) {
+            if (row.value == value) {
+                return row;
+            }
+        }
+        throw new IllegalArgumentException("유효하지 않은 Row입니다.");
+    }
 
     public boolean isTop() {
         return ordinal() == 0;

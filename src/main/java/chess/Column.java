@@ -2,14 +2,29 @@ package chess;
 
 public enum Column {
 
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H;
+    A("A"),
+    B("B"),
+    C("C"),
+    D("D"),
+    E("E"),
+    F("F"),
+    G("G"),
+    H("H");
+
+    private final String value;
+
+    Column(String value) {
+        this.value = value;
+    }
+
+    public static Column getColumn(String value) {
+        for (Column column : values()) {
+            if (column.value.equals(value)) {
+                return column;
+            }
+        }
+        throw new IllegalArgumentException("유효하지 않은 Column입니다.");
+    }
 
     public boolean isFarLeft() {
         return ordinal() == 0;
