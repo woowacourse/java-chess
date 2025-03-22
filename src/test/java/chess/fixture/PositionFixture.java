@@ -1,7 +1,11 @@
-package chess;
+package chess.fixture;
+
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
 
 @SuppressWarnings("unused")
-public final class Fixtures {
+public final class PositionFixture {
 
     public static final Position A1 = new Position(Column.A, Row.ONE);
     public static final Position A2 = new Position(Column.A, Row.TWO);
@@ -75,6 +79,6 @@ public final class Fixtures {
     public static final Position H7 = new Position(Column.H, Row.SEVEN);
     public static final Position H8 = new Position(Column.H, Row.EIGHT);
 
-    private Fixtures() {
+    private PositionFixture() {
     }
 }

@@ -1,0 +1,111 @@
+package chess.board;
+
+import chess.piece.Bishop;
+import chess.piece.King;
+import chess.piece.Knight;
+import chess.piece.Pawn;
+import chess.piece.Piece;
+import chess.piece.PieceType;
+import chess.piece.Queen;
+import chess.piece.Rook;
+import chess.position.Column;
+import chess.position.Position;
+import chess.position.Row;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+public final class Board {
+
+    private final Map<Position, Color> colors;
+    private final Map<Position, Piece> pieces;
+
+    {
+        // 기본 Empty
+        Map<Position, Color> colors = new HashMap<>();
+        for (Row row : Row.values()) {
+            for (Column column : Column.values()) {
+                colors.put(new Position(row, column), Color.EMPTY);
+            }
+        }
+        this.colors = colors;
+    }
+
+    public Board(Map<Position, Color> colors, Map<Position, Piece> pieces) {
+        for (Entry<Position, Color> newColorEntry : colors.entrySet()) {
+            Position position = newColorEntry.getKey();
+            Color color = newColorEntry.getValue();
+            this.colors.put(position, color);
+        }
+        this.pieces = new HashMap<>(pieces);
+    }
+
+    public Board() {
+        // 색깔 넣기
+        for (Column column : Column.values()) {
+            // Rank 8, 7 -> Black
+            colors.put(new Position(Row.EIGHT, column), Color.BLACK);
+            colors.put(new Position(Row.SEVEN, column), Color.BLACK);
+            // Rank 2, 1 -> White
+            colors.put(new Position(Row.TWO, column), Color.WHITE);
+            colors.put(new Position(Row.ONE, column), Color.WHITE);
+        }
+        // 기물 넣기
+        Map<Position, Piece> pieces = new HashMap<>();
+        for (Column column : Column.values()) { // 폰
+            pieces.put(new Position(Row.SEVEN, column), Pawn.black());
+            pieces.put(new Position(Row.TWO, column), Pawn.white());
+        }
+        for (Row row : List.of(Row.ONE, Row.EIGHT)) { // 폰을 제외한 기물
+            pieces.put(new Position(row, Column.A), Rook.create());
+            pieces.put(new Position(row, Column.B), Knight.create());
+            pieces.put(new Position(row, Column.C), Bishop.create());
+            pieces.put(new Position(row, Column.D), Queen.create());
+            pieces.put(new Position(row, Column.E), King.create());
+            pieces.put(new Position(row, Column.F), Bishop.create());
+            pieces.put(new Position(row, Column.G), Knight.create());
+            pieces.put(new Position(row, Column.H), Rook.create());
+        }
+        this.pieces = pieces;
+    }
+
+    public void move(Position start, Position end) {
+        Piece piece = findPiece(start);
+        Color color = colorAt(start);
+        validateEndPosition(start, end);
+        piece.validateMove(start, end);
+        pieces.put(end, piece);
+        colors.put(end, color);
+    }
+
+    private void validateEndPosition(Position start, Position end) {
+        if (colors.get(end).isEmpty()) {
+            return;
+        }
+        if (colors.get(end) == colors.get(start)) {
+            throw new IllegalArgumentException("[ERROR] 같은 팀의 기물은 잡을 수 없습니다.");
+        }
+    }
+
+    public Color colorAt(Position position) {
+        if (!colors.containsKey(position)) {
+            throw new IllegalStateException("[ERROR] 해당 위치의 색깔을 찾을 수 없습니다.");
+        }
+        return colors.get(position);
+    }
+
+    public PieceType pieceTypeAt(Position position) {
+        if (!pieces.containsKey(position)) {
+            throw new IllegalStateException("[ERROR] 해당 위치에 기물이 없습니다.");
+        }
+        return pieces.get(position).type();
+    }
+
+    private Piece findPiece(Position position) {
+        if (!pieces.containsKey(position)) {
+            throw new IllegalArgumentException("[ERROR] 해당 위치에 기물이 없습니다.");
+        }
+        return pieces.get(position);
+    }
+}
