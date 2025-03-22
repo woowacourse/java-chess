@@ -27,9 +27,9 @@ class BishopTest {
     @MethodSource
     @ParameterizedTest
     void 비숍은_원하는_만큼_대각선으로_이동한다(Movement movement, int moveCount, Position position) {
-        Bishop bishop = new Bishop(D4);
+        Bishop bishop = new Bishop(Team.A, D4);
 
-        assertThat(bishop.move(movement, moveCount)).isEqualTo(new Bishop(position));
+        assertThat(bishop.move(movement, moveCount)).isEqualTo(new Bishop(Team.A, position));
     }
 
     private static Stream<Arguments> 비숍은_원하는_만큼_대각선으로_이동한다() {
@@ -44,7 +44,7 @@ class BishopTest {
     @MethodSource
     @ParameterizedTest
     void 바숍이_이동할_수_없다(Movement movement, int moveCount) {
-        Bishop bishop = new Bishop(D4);
+        Bishop bishop = new Bishop(Team.A, D4);
 
         assertThatThrownBy(() -> bishop.move(movement, moveCount))
                 .isInstanceOf(IllegalArgumentException.class);

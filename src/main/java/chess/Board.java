@@ -10,6 +10,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.piece.Team;
 
 public class Board {
 
@@ -26,32 +27,32 @@ public class Board {
             if (value == Column.A || value == Column.H) {
                 Position teamAPosition = new Position(Row.ONE, value);
                 Position teamBPosition = new Position(Row.EIGHT, value);
-                board.put(teamAPosition, new Rook(teamAPosition));
-                board.put(teamBPosition, new Rook(teamBPosition));
+                board.put(teamAPosition, new Rook(Team.A, teamAPosition));
+                board.put(teamBPosition, new Rook(Team.B, teamBPosition));
             }
             if (value == Column.B || value == Column.G) {
                 Position teamAPosition = new Position(Row.ONE, value);
                 Position teamBPosition = new Position(Row.EIGHT, value);
-                board.put(teamAPosition, new Knight(teamAPosition));
-                board.put(teamBPosition, new Knight(teamBPosition));
+                board.put(teamAPosition, new Knight(Team.A, teamAPosition));
+                board.put(teamBPosition, new Knight(Team.B, teamBPosition));
             }
             if (value == Column.C || value == Column.F) {
                 Position teamAPosition = new Position(Row.ONE, value);
                 Position teamBPosition = new Position(Row.EIGHT, value);
-                board.put(teamAPosition, new Bishop(teamAPosition));
-                board.put(teamBPosition, new Bishop(teamBPosition));
+                board.put(teamAPosition, new Bishop(Team.A, teamAPosition));
+                board.put(teamBPosition, new Bishop(Team.B, teamBPosition));
             }
             if (value == Column.D) {
                 Position teamAPosition = new Position(Row.ONE, value);
                 Position teamBPosition = new Position(Row.EIGHT, value);
-                board.put(teamAPosition, new Queen(teamAPosition));
-                board.put(teamBPosition, new Queen(teamBPosition));
+                board.put(teamAPosition, new Queen(Team.A, teamAPosition));
+                board.put(teamBPosition, new Queen(Team.B, teamBPosition));
             }
             if (value == Column.E) {
                 Position teamAPosition = new Position(Row.ONE, value);
                 Position teamBPosition = new Position(Row.EIGHT, value);
-                board.put(teamAPosition, new King(teamAPosition));
-                board.put(teamBPosition, new King(teamBPosition));
+                board.put(teamAPosition, new King(Team.A, teamAPosition));
+                board.put(teamBPosition, new King(Team.B, teamBPosition));
             }
         }
     }
@@ -60,8 +61,8 @@ public class Board {
         for (Column column : Column.values()) {
             Position teamAPosition = new Position(Row.TWO, column);
             Position teamBPosition = new Position(Row.SEVEN, column);
-            board.put(teamAPosition, new Pawn(teamAPosition));
-            board.put(teamBPosition, new Pawn(teamBPosition));
+            board.put(teamAPosition, new Pawn(Team.A, teamAPosition));
+            board.put(teamBPosition, new Pawn(Team.B, teamBPosition));
         }
     }
 

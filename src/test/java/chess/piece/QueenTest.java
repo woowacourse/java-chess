@@ -28,9 +28,9 @@ class QueenTest {
     @MethodSource
     @ParameterizedTest
     void 퀸은_일직선으로_원하는_만큼_이동한다(Movement movement, int moveCount, Position position) {
-        Queen queen = new Queen(new Position(Row.THREE, Column.D));
+        Queen queen = new Queen(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(position));
+        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(Team.A, position));
     }
 
     private static Stream<Arguments> 퀸은_일직선으로_원하는_만큼_이동한다() {
@@ -45,9 +45,9 @@ class QueenTest {
     @MethodSource
     @ParameterizedTest
     void 퀸은_대각선으로_원하는_만큼_이동한다(Movement movement, int moveCount, Position position) {
-        Queen queen = new Queen(new Position(Row.THREE, Column.D));
+        Queen queen = new Queen(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(position));
+        assertThat(queen.move(movement, moveCount)).isEqualTo(new Queen(Team.A, position));
     }
 
     private static Stream<Arguments> 퀸은_대각선으로_원하는_만큼_이동한다() {
@@ -62,7 +62,7 @@ class QueenTest {
     @MethodSource
     @ParameterizedTest
     void 퀸이_움직일_수_없다(Movement movement, int moveCount) {
-        Queen queen = new Queen(new Position(Row.ONE, Column.A));
+        Queen queen = new Queen(Team.A, new Position(Row.ONE, Column.A));
 
         assertThatThrownBy(() -> queen.move(movement, moveCount))
                 .isInstanceOf(IllegalArgumentException.class);

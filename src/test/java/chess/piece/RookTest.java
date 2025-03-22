@@ -27,9 +27,9 @@ class RookTest {
     @MethodSource
     @ParameterizedTest
     void 룩은_원하는_만큼_직선으로_이동할_수_있다(Movement movement, int moveCount, Position position) {
-        Rook rook = new Rook(new Position(Row.THREE, Column.D));
+        Rook rook = new Rook(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(rook.move(movement, moveCount)).isEqualTo(new Rook(position));
+        assertThat(rook.move(movement, moveCount)).isEqualTo(new Rook(Team.A, position));
     }
 
     private static Stream<Arguments> 룩은_원하는_만큼_직선으로_이동할_수_있다() {
@@ -44,7 +44,7 @@ class RookTest {
     @MethodSource
     @ParameterizedTest
     void 룩이_이동할_수_없다(Movement movement, int moveCount) {
-        Rook rook = new Rook(new Position(Row.ONE, Column.A));
+        Rook rook = new Rook(Team.A, new Position(Row.ONE, Column.A));
 
         assertThatThrownBy(() -> rook.move(movement, moveCount))
                 .isInstanceOf(IllegalArgumentException.class);

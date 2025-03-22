@@ -9,7 +9,8 @@ public class Rook extends Piece {
 
     private final Position position;
 
-    public Rook(final Position position) {
+    public Rook(Team team, final Position position) {
+        super(team);
         this.position = position;
     }
 
@@ -24,7 +25,7 @@ public class Rook extends Piece {
             }
             movedPosition = movedPosition.move(movement);
         }
-        return new Rook(movedPosition);
+        return new Rook(team, movedPosition);
     }
 
     @Override

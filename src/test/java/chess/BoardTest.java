@@ -17,6 +17,7 @@ import chess.piece.Pawn;
 import chess.piece.Piece;
 import chess.piece.Queen;
 import chess.piece.Rook;
+import chess.piece.Team;
 
 class BoardTest {
 
@@ -25,7 +26,7 @@ class BoardTest {
     void 체스_보드를_생성하면_2선에_폰만존재한다(Position position) {
         Board board = new Board();
 
-        assertThat(board.findByPosition(position)).isEqualTo(new Pawn(position));
+        assertThat(board.findByPosition(position)).isEqualTo(new Pawn(Team.A, position));
     }
 
     private static Stream<Arguments> 체스_보드를_생성하면_2선에_폰만존재한다() {
@@ -48,14 +49,14 @@ class BoardTest {
 
     private static Stream<Arguments> 체스_보드를_생성하면_일선에_기물들이_존재한다() {
         return Stream.of(
-                Arguments.of(A1, new Rook(A1)), Arguments.of(H1, new Rook(H1)),
-                Arguments.of(A8, new Rook(A8)), Arguments.of(H8, new Rook(H8)),
-                Arguments.of(B1, new Knight(B1)), Arguments.of(G1, new Knight(G1)),
-                Arguments.of(B8, new Knight(B8)), Arguments.of(G8, new Knight(G8)),
-                Arguments.of(C1, new Bishop(C1)), Arguments.of(F1, new Bishop(F1)),
-                Arguments.of(C8, new Bishop(C8)), Arguments.of(F8, new Bishop(F8)),
-                Arguments.of(D1, new Queen(D1)), Arguments.of(D8, new Queen(D8)),
-                Arguments.of(E1, new King(E1)), Arguments.of(E8, new King(E8))
+                Arguments.of(A1, new Rook(Team.A, A1)), Arguments.of(H1, new Rook(Team.A, H1)),
+                Arguments.of(A8, new Rook(Team.B, A8)), Arguments.of(H8, new Rook(Team.B, H8)),
+                Arguments.of(B1, new Knight(Team.A, B1)), Arguments.of(G1, new Knight(Team.A, G1)),
+                Arguments.of(B8, new Knight(Team.B, B8)), Arguments.of(G8, new Knight(Team.B, G8)),
+                Arguments.of(C1, new Bishop(Team.A, C1)), Arguments.of(F1, new Bishop(Team.A, F1)),
+                Arguments.of(C8, new Bishop(Team.B, C8)), Arguments.of(F8, new Bishop(Team.B, F8)),
+                Arguments.of(D1, new Queen(Team.A, D1)), Arguments.of(D8, new Queen(Team.B, D8)),
+                Arguments.of(E1, new King(Team.A, E1)), Arguments.of(E8, new King(Team.B, E8))
         );
     }
 

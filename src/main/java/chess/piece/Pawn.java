@@ -13,12 +13,14 @@ public class Pawn extends Piece {
     private final Position position;
     private final boolean hasMoveExperience;
 
-    public Pawn(final Position position) {
+    public Pawn(final Team team, final Position position) {
+        super(team);
         this.position = position;
         this.hasMoveExperience = false;
     }
 
-    public Pawn(final Position position, final boolean hasMoveExperience) {
+    public Pawn(final Team team, final Position position, final boolean hasMoveExperience) {
+        super(team);
         this.position = position;
         this.hasMoveExperience = hasMoveExperience;
     }
@@ -30,7 +32,7 @@ public class Pawn extends Piece {
         if (movement.equals(Movement.UP_UP) && hasMoveExperience) {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
-        return new Pawn(position.move(movement), true);
+        return new Pawn(team, position.move(movement), true);
     }
 
     @Override

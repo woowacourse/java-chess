@@ -24,7 +24,8 @@ public class Knight extends Piece {
 
     private final Position position;
 
-    public Knight(final Position position) {
+    public Knight(final Team team, final Position position) {
+        super(team);
         this.position = position;
     }
 
@@ -33,7 +34,7 @@ public class Knight extends Piece {
             throw new IllegalArgumentException("움직일 수 없습니다.");
         }
         if (canMove(movement)) {
-            return new Knight(position.move(movement));
+            return new Knight(team, position.move(movement));
         }
         throw new IllegalArgumentException("움직일 수 없습니다.");
     }

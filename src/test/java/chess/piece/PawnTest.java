@@ -15,21 +15,21 @@ class PawnTest {
 
     @Test
     void 폰은_앞으로_한칸_움직인다() {
-        Pawn pawn = new Pawn(Fixtures.A2);
+        Pawn pawn = new Pawn(Team.A, Fixtures.A2);
 
-        assertThat(pawn.move(Movement.UP)).isEqualTo(new Pawn(Fixtures.A3));
+        assertThat(pawn.move(Movement.UP)).isEqualTo(new Pawn(Team.A, Fixtures.A3));
     }
 
     @Test
     void 처음_움직이는_폰은_앞으로_두칸_움직일_수_있다() {
-        Pawn pawn = new Pawn(Fixtures.A2);
+        Pawn pawn = new Pawn(Team.A, Fixtures.A2);
 
-        assertThat(pawn.move(Movement.UP_UP)).isEqualTo(new Pawn(Fixtures.A4));
+        assertThat(pawn.move(Movement.UP_UP)).isEqualTo(new Pawn(Team.A, Fixtures.A4));
     }
 
     @Test
     void 이미_움직인_폰은_앞으로_두칸_갈_수_없다() {
-        Pawn pawn = new Pawn(Fixtures.A2);
+        Pawn pawn = new Pawn(Team.A, Fixtures.A2);
         Pawn movedPawn = pawn.move(Movement.UP_UP);
 
         assertThatThrownBy(() -> movedPawn.move(Movement.UP_UP))
@@ -43,7 +43,7 @@ class PawnTest {
     )
     @ParameterizedTest
     void 폰이_움직일_수_없다(Movement movement) {
-        Pawn pawn = new Pawn(Fixtures.A2);
+        Pawn pawn = new Pawn(Team.A, Fixtures.A2);
 
         assertThatThrownBy(() -> pawn.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);

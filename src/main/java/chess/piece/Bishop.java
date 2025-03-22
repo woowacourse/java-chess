@@ -9,7 +9,8 @@ public class Bishop extends Piece {
 
     private final Position position;
 
-    public Bishop(final Position position) {
+    public Bishop(final Team team, final Position position) {
+        super(team);
         this.position = position;
     }
 
@@ -28,7 +29,7 @@ public class Bishop extends Piece {
                 throw new IllegalArgumentException("움직일 수 없습니다.");
             }
         }
-        return new Bishop(movedPosition);
+        return new Bishop(team, movedPosition);
     }
 
     @Override

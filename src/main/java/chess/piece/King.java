@@ -9,7 +9,8 @@ public class King extends Piece {
 
     private final Position position;
 
-    public King(final Position position) {
+    public King(final Team team, final Position position) {
+        super(team);
         this.position = position;
     }
 
@@ -17,7 +18,7 @@ public class King extends Piece {
         if (!movement.isHorizontal() && !movement.isVertical() && !movement.isDiagonal()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
-        return new King(position.move(movement));
+        return new King(team, position.move(movement));
     }
 
     @Override

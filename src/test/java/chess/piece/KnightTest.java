@@ -29,9 +29,9 @@ class KnightTest {
     @MethodSource
     @ParameterizedTest
     void 나이트는_한_방향_두_칸_그와_90도를_이루는_방향_한_칸을_움직일_수_있다(Movement movement, Position position) {
-        Knight knight = new Knight(new Position(Row.THREE, Column.D));
+        Knight knight = new Knight(Team.A, new Position(Row.THREE, Column.D));
 
-        assertThat(knight.move(movement)).isEqualTo(new Knight(position));
+        assertThat(knight.move(movement)).isEqualTo(new Knight(Team.A, position));
     }
 
     private static Stream<Arguments> 나이트는_한_방향_두_칸_그와_90도를_이루는_방향_한_칸을_움직일_수_있다() {
@@ -50,7 +50,7 @@ class KnightTest {
     @MethodSource
     @ParameterizedTest
     void 나이트가_움직일_수_없다(Position position, Movement movement) {
-        Knight knight = new Knight(position);
+        Knight knight = new Knight(Team.A, position);
 
         assertThatThrownBy(() -> knight.move(movement))
                 .isInstanceOf(IllegalArgumentException.class);

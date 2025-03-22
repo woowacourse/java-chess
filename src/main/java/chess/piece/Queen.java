@@ -9,7 +9,8 @@ public class Queen extends Piece {
 
     private final Position position;
 
-    public Queen(final Position position) {
+    public Queen(final Team team, final Position position) {
+        super(team);
         this.position = position;
     }
 
@@ -24,7 +25,7 @@ public class Queen extends Piece {
             }
             movedPosition = movedPosition.move(movement);
         }
-        return new Queen(movedPosition);
+        return new Queen(team, movedPosition);
     }
 
     @Override

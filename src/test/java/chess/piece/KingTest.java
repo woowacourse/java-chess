@@ -18,9 +18,9 @@ class KingTest {
     @MethodSource
     @ParameterizedTest
     void 킹은_직선을_한칸_움직일_수_있다(Movement movement, Position target) {
-        King king = new King(new Position(Row.TWO, Column.D));
+        King king = new King(Team.A, new Position(Row.TWO, Column.D));
 
-        assertThat(king.move(movement)).isEqualTo(new King(target));
+        assertThat(king.move(movement)).isEqualTo(new King(Team.A, target));
     }
 
     private static Stream<Arguments> 킹은_직선을_한칸_움직일_수_있다() {
@@ -35,9 +35,9 @@ class KingTest {
     @MethodSource
     @ParameterizedTest
     void 킹은_대각선을_한칸_움직일_수_있다(Movement movement, Position target) {
-        King king = new King(new Position(Row.TWO, Column.D));
+        King king = new King(Team.A, new Position(Row.TWO, Column.D));
 
-        assertThat(king.move(movement)).isEqualTo(new King(target));
+        assertThat(king.move(movement)).isEqualTo(new King(Team.A, target));
     }
 
     private static Stream<Arguments> 킹은_대각선을_한칸_움직일_수_있다() {
