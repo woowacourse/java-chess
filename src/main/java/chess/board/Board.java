@@ -4,6 +4,7 @@ import chess.Color;
 import chess.Position;
 import chess.piece.Bishop;
 import chess.piece.King;
+import chess.piece.Knight;
 import chess.piece.LivePiece;
 import chess.piece.Queen;
 import chess.piece.Rook;
@@ -39,6 +40,10 @@ public class Board {
         result.add(new LivePiece(new Position(1, 1), new Rook(Color.WHITE)));
         result.add(new LivePiece(new Position(1, 8), new Rook(Color.WHITE)));
 
+        // 나이트 추가
+        result.add(new LivePiece(new Position(1, 2), new Knight(Color.WHITE)));
+        result.add(new LivePiece(new Position(1, 7), new Knight(Color.WHITE)));
+
         // 비숍 추가
         result.add(new LivePiece(new Position(1, 3), new Bishop(Color.WHITE)));
         result.add(new LivePiece(new Position(1, 6), new Bishop(Color.WHITE)));
@@ -58,6 +63,10 @@ public class Board {
         // 룩 추가
         result.add(new LivePiece(new Position(8, 1), new Rook(Color.BLACK)));
         result.add(new LivePiece(new Position(8, 8), new Rook(Color.BLACK)));
+
+        // 나이트 추가
+        result.add(new LivePiece(new Position(8, 2), new Knight(Color.BLACK)));
+        result.add(new LivePiece(new Position(8, 7), new Knight(Color.BLACK)));
 
         // 비숍 추가
         result.add(new LivePiece(new Position(8, 3), new Bishop(Color.BLACK)));

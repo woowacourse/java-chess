@@ -32,6 +32,9 @@ public class LivePiece {
         if (piece instanceof Rook) {
             candidate = 'R';
         }
+        if (piece instanceof Knight) {
+            candidate = 'N';
+        }
         if (piece instanceof Bishop) {
             candidate = 'B';
         }
